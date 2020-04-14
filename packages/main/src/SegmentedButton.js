@@ -176,15 +176,16 @@ class SegmentedButton extends UI5Element {
 
 	_handleResize() {
 		const parentWidth = this.parentNode.offsetWidth;
+		const items = Array.from(this.shadowRoot.querySelector(".ui5-segmentedbutton-root").children);
 
 		if (!this.style.width || this.percentageWidthSet) {
 			this.style.width = `${Math.max(...this.widths) * this.buttons.length}px`;
 			this.absoluteWidthSet = true;
 		}
 
-		this.buttons.forEach(button => {
-			button.style.width = "100%";
-		});
+		items.forEach( item => {
+			item.style.width = "100%";
+		})
 
 		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet) {
 			this.style.width = "100%";

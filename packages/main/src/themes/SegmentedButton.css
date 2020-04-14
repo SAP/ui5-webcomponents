@@ -13,6 +13,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	width: 100%;
 }
 
 ::slotted(ui5-togglebutton:nth-child(odd)) {
