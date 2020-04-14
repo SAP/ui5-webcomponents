@@ -25,7 +25,7 @@
 	margin-left: 0.5rem;
 	border: none;
 	background: transparent;
-	outline-color:  var(--sapShell_TextColor);
+	outline-color: var(--sapShell_TextColor);
 	color: var(--sapShell_TextColor);
 	box-sizing: border-box;
 	cursor: pointer;
