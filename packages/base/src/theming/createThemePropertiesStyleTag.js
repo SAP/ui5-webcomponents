@@ -8,7 +8,6 @@ import createStyleInHead from "../util/createStyleInHead.js";
 const createThemePropertiesStyleTag = (cssText, packageName) => {
 	const styleElement = document.head.querySelector(`style[data-ui5-theme-properties="${packageName}"]`);
 	if (styleElement) {
-		styleElement.removeAttribute("disabled");
 		styleElement.textContent = cssText || "";	// in case of undefined
 	} else {
 		const attributes = {
