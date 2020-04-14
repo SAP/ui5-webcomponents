@@ -1,5 +1,7 @@
-commit 3665193d6132e2ba873915e057155372cad52e6f
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Tue Apr 14 09:02:00 2020 +0300
+commit 185851a982721fdbf51b187fedff64afe47bc14d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Apr 14 16:51:21 2020 +0300
 
-    feat(ui5-wheelslider): swipe feature implementation (#1470)
+    fix(ui5-shellbar): enable items keyboard handling (#1473)
+    
+    All ui5-icon elements now become ui5-button, the ui5-button has tabindex=0 and also can be triggered with SPACE and ENTER. To ensure the correct tab order, the layout of the items is changed in such way that their DOM order is the same as their display order.
