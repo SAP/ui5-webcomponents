@@ -381,12 +381,13 @@ class ShellBar extends UI5Element {
 		});
 
 		this._header = {
-			press: event => {
+			press: async () => {
 				this._updateClonedMenuItems();
 
 				if (this.menuItems.length) {
 					this.updateStaticAreaItemContentDensity();
-					this.menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
+					const menuPopover = await this._getMenuPopover();
+					menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
 				}
 			},
 		};
@@ -738,6 +739,11 @@ class ShellBar extends UI5Element {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		this.overflowPopover = staticAreaItem.querySelector(".ui5-shellbar-overflow-popover");
 		this.menuPopover = staticAreaItem.querySelector(".ui5-shellbar-menu-popover");
+	}
+
+	async _getMenuPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector(".ui5-shellbar-menu-popover");
 	}
 
 	isIconHidden(name) {
