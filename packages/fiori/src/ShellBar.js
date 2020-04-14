@@ -420,10 +420,14 @@ class ShellBar extends UI5Element {
 		});
 	}
 
-	_coPilotPress(event) {
+	_fireCoPilotClick() {
 		this.fireEvent("coPilotClick", {
 			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
 		});
+	}
+
+	_coPilotClick() {
+		this._fireCoPilotClick();
 	}
 
 	_coPilotKeydown(event) {
@@ -431,20 +435,17 @@ class ShellBar extends UI5Element {
 			this.coPilotActive = true;
 			event.preventDefault();
 			return;
-		} 
+		}
 
 		if (isEnter(event)) {
 			this.coPilotActive = true;
-			this.fireEvent("coPilotClick", {
-				targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
-			});
+			this._fireCoPilotClick();
 		}
 	}
+
 	_coPilotKeyup(event) {
 		if (isSpace(event)) {
-			this.fireEvent("coPilotClick", {
-				targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
-			});
+			this._fireCoPilotClick();
 		}
 		this.coPilotActive = false;
 	}
