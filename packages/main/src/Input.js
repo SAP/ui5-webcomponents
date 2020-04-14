@@ -536,10 +536,16 @@ class Input extends UI5Element {
 		this.previousValue = this.value;
 	}
 
-	_onfocusout(event) {
+	async _onfocusout(event) {
 		// if focusout is triggered by pressing on suggestion item skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
 		if (this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover)) {
+			return;
+		}
+
+		const toBeFocused = event.relatedTarget;
+
+		if (toBeFocused && ([].indexOf.call(toBeFocused.classList, this._id) > -1)) {
 			return;
 		}
 
