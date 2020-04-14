@@ -1,7 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
+import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/Timeline.css.js";
@@ -69,11 +71,20 @@ class Timeline extends UI5Element {
 		super();
 
 		this.initItemNavigation();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this);
 		this._itemNavigation.getItemsCallback = () => this.items;
+	}
+
+	get ariaLabel() {
+		return this.i18nBundle.getText(TIMELINE_ARIA_LABEL);
 	}
 }
 
