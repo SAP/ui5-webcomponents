@@ -75,13 +75,13 @@ const getRegisteredPackages = () => {
 	return registeredPackages;
 };
 
-const getRegisteredThemes = () => {
-	return registeredThemes;
+const isThemeRegistered = theme => {
+	return registeredThemes.has(theme);
 };
 
 export {
 	registerThemeProperties,
 	getThemeProperties,
 	getRegisteredPackages,
-	getRegisteredThemes,
+	isThemeRegistered,
 };

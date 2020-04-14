@@ -1,12 +1,7 @@
-import { getThemeProperties, getRegisteredPackages, getRegisteredThemes } from "../asset-registries/Themes.js";
+import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
 import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
 import getExternalThemeInfo from "./getExternalThemeInfo.js";
 import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
-
-const isSupported = theme => {
-	const registeredThemes = getRegisteredThemes();
-	return registeredThemes.has(theme);
-};
 
 const loadThemeBase = async theme => {
 	const cssText = await getThemeProperties("@ui5/webcomponents-theme-base", theme);
@@ -30,7 +25,7 @@ const applyTheme = async theme => {
 
 	// If there is an externally loaded theme, and it is currently being loaded, skip theme_base and only load packages, otherwise load everything
 	if (externalThemeInfo && theme === externalThemeInfo.themeName) {
-		const packagesTheme = isSupported(theme) ? theme : externalThemeInfo.baseThemeName;
+		const packagesTheme = isThemeRegistered(theme) ? theme : externalThemeInfo.baseThemeName;
 		await loadComponentPackages(packagesTheme);
 	} else {
 		await loadThemeBase(theme);
