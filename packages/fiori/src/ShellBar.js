@@ -863,6 +863,10 @@ class ShellBar extends UI5Element {
 		return !!this.profile.length;
 	}
 
+	get menuBtnTabindex() {
+		return this.menuItems.length > 0 ? "0" : "-1";
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			Button.define(),

@@ -13,7 +13,7 @@
 		{{/unless}}
 
 		{{#if showArrowDown}}
-			<button tabindex="0" class="{{classes.button}}" @click="{{_header.press}}">
+			<button tabindex="{{menuBtnTabindex}}" class="{{classes.button}}" @click="{{_header.press}}">
 				{{#if interactiveLogo}}
 					<img class="ui5-shellbar-logo" src="{{logo}}" @click="{{_logoPress}}" />
 				{{/if}}
