@@ -303,12 +303,24 @@ class List extends UI5Element {
 		return !this.header.length && this.headerText;
 	}
 
+	get headerID() {
+		return `${this._id}-header`;
+	}
+
 	get showNoDataText() {
 		return this.items.length === 0 && this.noDataText;
 	}
 
 	get showBusy() {
 		return this.busy || this.infiniteScroll;
+	}
+
+	get isMultiSelect() {
+		return this.mode === ListMode.MultiSelect;
+	}
+
+	get ariaLabelledBy() {
+		return this.shouldRenderH1 ? this.headerID : undefined;
 	}
 
 	onBeforeRendering() {
