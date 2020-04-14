@@ -1,31 +1,41 @@
-import { getThemeProperties, getRegisteredPackages } from "../asset-registries/Themes.js";
+import { getThemeProperties, getRegisteredPackages, getRegisteredThemes } from "../asset-registries/Themes.js";
 import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
 import getExternalThemeInfo from "./getExternalThemeInfo.js";
 import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
 
+const isSupported = theme => {
+	const registeredThemes = getRegisteredThemes();
+	return registeredThemes.has(theme);
+};
+
+const loadThemeBase = async theme => {
+	const cssText = await getThemeProperties("@ui5/webcomponents-theme-base", theme);
+	createThemePropertiesStyleTag(cssText, "@ui5/webcomponents-theme-base");
+};
+
+const loadComponentPackages = async theme => {
+	const registeredPackages = getRegisteredPackages();
+	registeredPackages.forEach(async packageName => {
+		if (packageName === "@ui5/webcomponents-theme-base") {
+			return;
+		}
+
+		const cssText = await getThemeProperties(packageName, theme);
+		createThemePropertiesStyleTag(cssText, packageName);
+	});
+};
+
 const applyTheme = async theme => {
 	const externalThemeInfo = getExternalThemeInfo();
 
-	let cssText = "";
-
-	const registeredPackages = getRegisteredPackages();
-	const fallbackTheme = externalThemeInfo ? externalThemeInfo.baseThemeName : undefined;
-
-	// Theme base
-	const hasThemeBase = registeredPackages.has("@ui5/webcomponents-theme-base");
-	if (hasThemeBase) {
-		if (!externalThemeInfo) {
-			cssText = await getThemeProperties("@ui5/webcomponents-theme-base", theme);
-			createThemePropertiesStyleTag(cssText, "@ui5/webcomponents-theme-base");
-		}
+	// If there is an externally loaded theme, and it is currently being loaded, skip theme_base and only load packages, otherwise load everything
+	if (externalThemeInfo && theme === externalThemeInfo.themeName) {
+		const packagesTheme = isSupported(theme) ? theme : externalThemeInfo.baseThemeName;
+		await loadComponentPackages(packagesTheme);
+	} else {
+		await loadThemeBase(theme);
+		await loadComponentPackages(theme);
 	}
-
-	// All other packages
-	registeredPackages.delete("@ui5/webcomponents-theme-base");
-	registeredPackages.forEach(async packageName => {
-		cssText = await getThemeProperties(packageName, theme, fallbackTheme);
-		createThemePropertiesStyleTag(cssText, packageName);
-	});
 
 	// When changing the theme, run the ponyfill immediately
 	if (ponyfillNeeded()) {

@@ -42,18 +42,10 @@ const registerThemeProperties = (packageName, themeName, style) => {
 	registeredThemes.add(themeName);
 };
 
-const getThemeProperties = async (packageName, themeName, fallbackThemeName) => {
+const getThemeProperties = async (packageName, themeName) => {
 	const style = themeStyles.get(`${packageName}_${themeName}`);
 	if (style) {
 		return style;
-	}
-
-	if (fallbackThemeName && !registeredThemes.has(themeName)) {
-		themeName = fallbackThemeName;
-		const style2 = themeStyles.get(`${packageName}_${themeName}`);
-		if (style2) {
-			return style2;
-		}
 	}
 
 	if (!registeredThemes.has(themeName)) {
@@ -83,8 +75,13 @@ const getRegisteredPackages = () => {
 	return registeredPackages;
 };
 
+const getRegisteredThemes = () => {
+	return registeredThemes;
+};
+
 export {
 	registerThemeProperties,
 	getThemeProperties,
 	getRegisteredPackages,
+	getRegisteredThemes,
 };

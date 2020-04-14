@@ -1,6 +1,5 @@
 import createStyleInHead from "../util/createStyleInHead.js";
 
-
 /**
  * Creates/updates a style element holding all CSS Custom Properties
  * @param cssText
