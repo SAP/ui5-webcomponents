@@ -377,6 +377,33 @@ ui5-icon[data-count]::before {
 }
 
 
+.ui5-shellbar-copilot-wrapper {
+	position: relative;
+	outline: none;
+	box-sizing: border-box;
+}
+
+.ui5-shellbar-copilot-wrapper:hover {
+	background: var(--sapShell_Hover_Background);
+}
+
+.ui5-shellbar-copilot-wrapper:active,
+.ui5-shellbar-copilot-wrapper[active] {
+	background: var(--sapShell_Active_Background);
+}
+
+.ui5-shellbar-copilot-wrapper:focus::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: calc(100% - 0.75rem);
+	border: 1px dotted var(--sapContent_ContrastFocusColor);
+	pointer-events: none;
+	left: 0;
+	top: 0.25rem;
+	z-index: 1;
+}
+
 .ui5-shellbar-co-pilot-placeholder {
 	width: 2.75rem;
 	height: 2.75rem;

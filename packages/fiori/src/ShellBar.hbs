@@ -33,7 +33,13 @@
 
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-middle">
 		{{#if showCoPilot}}
-			{{> coPilot}}
+			<div class="ui5-shellbar-copilot-wrapper"
+				tabindex="0"
+				@keydown="{{_coPilotKeydown}}"
+				@keyup="{{_coPilotKeyup}}"
+				?active="{{coPilotActive}}">
+				{{> coPilot}}
+			</div>
 		{{else}}
 			<span class="ui5-shellbar-co-pilot-placeholder"></span>
 		{{/if}}
@@ -124,7 +130,7 @@
 </div>
 
 {{#*inline "coPilot"}}
-	<svg @click="{{_coPilotPress}}" width="44" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-shellbar-coPilot">
+	<svg @click="{{_coPilotPress}}" focusable="false" width="44" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-shellbar-coPilot">
 		<defs>
 			<linearGradient id="f" x1="0%" x2="100%" y1="100%" y2="0%"><stop offset="0%" stop-color="#c0d9f2" stop-opacity=".87"/><stop offset="80%" stop-color="#fff" stop-opacity=".87"/></linearGradient>
 			<linearGradient id="e" x1="0%" x2="100%" y1="100%" y2="0%"><stop offset="0%" stop-color="#b4d2ff" stop-opacity=".16"/><stop offset="80%" stop-color="#fff" stop-opacity=".16"/></linearGradient>

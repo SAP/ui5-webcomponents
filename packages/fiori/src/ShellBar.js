@@ -5,6 +5,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
@@ -116,6 +117,10 @@ const metadata = {
 		 * @private
 		 */
 		showSearchField: {
+			type: Boolean,
+		},
+
+		coPilotActive: {
 			type: Boolean,
 		},
 
@@ -419,6 +424,29 @@ class ShellBar extends UI5Element {
 		this.fireEvent("coPilotClick", {
 			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
 		});
+	}
+
+	_coPilotKeydown(event) {
+		if (isSpace(event)) {
+			this.coPilotActive = true;
+			event.preventDefault();
+			return;
+		} 
+
+		if (isEnter(event)) {
+			this.coPilotActive = true;
+			this.fireEvent("coPilotClick", {
+				targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
+			});
+		}
+	}
+	_coPilotKeyup(event) {
+		if (isSpace(event)) {
+			this.fireEvent("coPilotClick", {
+				targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
+			});
+		}
+		this.coPilotActive = false;
 	}
 
 	onBeforeRendering() {
