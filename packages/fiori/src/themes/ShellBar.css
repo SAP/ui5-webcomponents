@@ -36,6 +36,7 @@
 }
 
 .ui5-shellbar-menu-button,
+.ui5-shellbar-button,
 ::slotted(ui5-button[slot="startButton"]) {
 	outline: none;
 }
@@ -49,7 +50,7 @@
 
 ::slotted(ui5-button[slot="startButton"][active]),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
-.ui5-shellbar-button:active,
+.ui5-shellbar-button[active],
 .ui5-shellbar-image-button:active {
 	background: var(--sapShell_Active_Background);
 	color: var(--sapShell_Active_TextColor);
@@ -57,7 +58,7 @@
 
 ::slotted(ui5-button[slot="startButton"][focused])::after,
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus::after,
-.ui5-shellbar-button:focus::after,
+.ui5-shellbar-button[focused]::after,
 .ui5-shellbar-image-button:focus::after {
 	content: "";
 	position: absolute;
@@ -80,6 +81,7 @@ slot[name="profile"] {
 	height: 2.25rem;
 	padding: .25rem;
 	background-color: transparent;
+	pointer-events: none;
 }
 
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive::-moz-focus-inner {
@@ -200,10 +202,7 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-button {
-	min-width: 2.25rem;
 	width: 2.5rem;
-	font-size: 1rem;
-	padding: .625rem;
 }
 
 .ui5-shellbar-image-buttonImage {
@@ -420,4 +419,8 @@ ui5-icon[data-count]::before {
 	margin-left: 0;
 	justify-content: center;
 	align-items: center;
+}
+
+::slotted(ui5-button[profile-btn]) {
+	width: auto;
 }
