@@ -37,6 +37,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 const metadata = {
 	tag: "ui5-datepicker",
+	managedSlots: true,
 	properties: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
 		 * Defines a formatted date value.
@@ -199,6 +200,26 @@ const metadata = {
 			type: Object,
 		},
 	},
+
+	slots: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
+		/**
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-datepicker</code>.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 * <br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+		 * when the <code>ui5-input</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * @type {HTMLElement}
+		 * @since 1.0.0-rc.7
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
+			type: HTMLElement,
+		},
+	},
+
 	events: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
 
 		/**

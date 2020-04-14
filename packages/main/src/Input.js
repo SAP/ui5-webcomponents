@@ -838,7 +838,9 @@ class Input extends UI5Element {
 	}
 
 	get valueStateMessageText() {
-		const valueStateMessage = this.valueStateMessage.map(x => x.cloneNode(true));
+		const valueStateMessage = [];
+		const slottedContent = this.valueStateMessage[0].tagName === "SLOT" ? this.valueStateMessage[0].assignedNodes()[0] : this.valueStateMessage[0];
+		valueStateMessage.push(slottedContent.cloneNode(true));
 
 		return valueStateMessage;
 	}
