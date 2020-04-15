@@ -475,7 +475,7 @@ class Input extends UI5Element {
 
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
-				this.getInputDOMRef().focus();
+				this.inputDomRef.focus();
 			}
 		}
 
@@ -536,11 +536,12 @@ class Input extends UI5Element {
 		}
 	}
 
-	_onfocusin(event) {
+	async _onfocusin(event) {
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 
-		this._inputFocused = event.target !== this.getInputDOMRef();
+		await this.getInputDOMRef();
+		this._inputFocused = event.target !== this.inputDomRef;
 	}
 
 	_onfocusout(event) {
@@ -571,7 +572,7 @@ class Input extends UI5Element {
 	}
 
 	_handleInput(event) {
-		if (event.target === this.getInputDOMRef()) {
+		if (event.target === this.inputDomRef) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
 		}
@@ -580,7 +581,7 @@ class Input extends UI5Element {
 			- value of the host and the internal input should be differnt in case of actual input
 			- input is called when a key is pressed => keyup should not be called yet
 		*/
-		const skipFiring = (this.getInputDOMRef().value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
+		const skipFiring = (this.inputDomRef.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
 
 		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
 
@@ -601,10 +602,11 @@ class Input extends UI5Element {
 		this.Suggestions.close();
 	}
 
-	_afterOpenPopover() {
+	async _afterOpenPopover() {
 		// Set initial focus to the native input
 		if (isPhone()) {
-			this.getInputDOMRef().focus();
+			await this.inputDomRef;
+			this.inputDomRef.focus();
 		}
 	}
 
@@ -727,15 +729,16 @@ class Input extends UI5Element {
 	getInputValue() {
 		const inputDOM = this.getDomRef();
 		if (inputDOM) {
-			return this.getInputDOMRef().value;
+			return this.inputDomRef.value;
 		}
 		return "";
 	}
 
-	getInputDOMRef() {
+	async getInputDOMRef() {
 		let inputDomRef;
 
-		if (isPhone()) {
+		if (isPhone() && this.Suggestions) {
+			await this.Suggestions._respPopover();
 			inputDomRef = this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
@@ -743,7 +746,8 @@ class Input extends UI5Element {
 			inputDomRef = this.getDomRef().querySelector(`#${this.getInputId()}`);
 		}
 
-		return inputDomRef;
+		this.inputDomRef = inputDomRef;
+		return this.inputDomRef;
 	}
 
 	getLabelableElementId() {
