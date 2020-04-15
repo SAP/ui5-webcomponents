@@ -15,6 +15,10 @@ import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 import Label from "./Label.js";
@@ -422,6 +426,29 @@ class Select extends UI5Element {
 			this.fireEvent("change", { selectedOption: this.options[this._selectedIndex] });
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
+	}
+
+	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings()[this.valueState];
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined
 	}
 
 	get _headerTitleText() {

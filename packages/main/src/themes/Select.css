@@ -4,6 +4,11 @@
 .ui5-select-root {
 	width: 100%;
 	height: 100%;
+}
+
+.ui5-select-wrapper {
+	width: 100%;
+	height: 100%;
 	display: flex;
 	outline: none;
 	cursor: pointer;

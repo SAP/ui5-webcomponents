@@ -1,6 +1,5 @@
 <div
 	class="ui5-select-root"
-	tabindex="{{tabIndex}}"
 	dir="{{dir}}"
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
@@ -8,16 +7,29 @@
 	@focusout="{{_onfocusout}}"
 	@click="{{_toggleRespPopover}}"
 >
-	<div class="ui5-select-label-root">
-		<ui5-label>{{_text}}</ui5-label>
+	<div class="ui5-select-wrapper"
+		id="{{_id}}-select"
+		role="button"
+		aria-haspopup="listbox"
+		tabindex="{{tabIndex}}"
+		aria-labelledby="{{_id}}-label"
+		aria-describedby="{{valueStateTextId}}"
+		?disabled="{{disabled}}"
+	>
+		<div class="ui5-select-label-root">
+			<ui5-label id="{{_id}}-label" for="{{_id}}-select">{{_text}}</ui5-label>
+		</div>
+
+		<ui5-icon
+			name="slim-arrow-down"
+			input-icon
+			?pressed="{{_iconPressed}}"
+			dir="{{dir}}"
+		></ui5-icon>
+
+		{{#if hasValueState}}
+			<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
+		{{/if}}
 	</div>
-
-	<ui5-icon
-		name="slim-arrow-down"
-		input-icon
-		?pressed="{{_iconPressed}}"
-		dir="{{dir}}"
-	></ui5-icon>
-
 	<slot name="formSupport"></slot>
 </div>
