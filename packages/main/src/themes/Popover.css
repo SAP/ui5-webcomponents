@@ -112,8 +112,7 @@
 	display: none;
 }
 
-.ui5-popover-header-root,
-.ui5-popup-header-text {
+.ui5-popover-header-root {
 	border-bottom: 1px solid var(--sapPageFooter_BorderColor);
 }
 

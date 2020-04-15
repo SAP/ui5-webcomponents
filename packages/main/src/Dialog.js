@@ -93,7 +93,6 @@ class Dialog extends Popup {
 		return DialogBlockLayerTemplate;
 	}
 
-
 	reposition() {
 		this.style.display = "inline-block";
 	}
@@ -103,13 +102,15 @@ class Dialog extends Popup {
 	* @public
 	*/
 	open() {
+		// create static area item ref for block layer
+		this.getStaticAreaItemDomRef();
+
 		this._focusedElementBeforeOpen = getFocusedElement();
 		this.fireEvent("beforeOpen", {});
 		this.reposition();
 		this.applyInitialFocus();
 
 		this.style.zIndex = getNextZIndex();
-
 		this._blockLayerVisible = true;
 
 		addOpenedPopup(this);

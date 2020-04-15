@@ -1,31 +1,29 @@
-<div class="ui5-popover-root" role="dialog" aria-modal="true" aria-labelledby="ui5-popover-header">
+<section class="ui5-popover-root" role="dialog" aria-modal="true" aria-labelledby="ui5-popover-header">
 
 	<span class="first-fe" tabindex="0" @focusin={{forwardToLast}}></span>
 
 	{{#if _displayHeader}}
-		{{#if header.length }}
-			<div class="ui5-popover-header-root" id="ui5-popover-header" role="toolbar">
+		<header class="ui5-popover-header-root" id="ui5-popover-header" role="toolbar">
+			{{#if header.length }}
 				<slot name="header"></slot>
-			</div>
-		{{else}}
-			<h2 class="ui5-popup-header-text" id="ui5-popover-header">{{headerText}}</h2>
-		{{/if}}
+			{{else}}
+				<h2 class="ui5-popup-header-text" id="ui5-popover-header">{{headerText}}</h2>
+			{{/if}}
+		</header>
 	{{/if}}
-
 
 	<div class="ui5-popover-content">
 		<slot></slot>
 	</div>
 
-
 	{{#if _displayFooter}}
 		{{#if footer.length }}
-			<div class="ui5-popover-footer-root" role="toolbar">
+			<footer class="ui5-popover-footer-root">
 				<slot name="footer"></slot>
-			</div>
+			</footer>
 		{{/if}}
 	{{/if}}
 
 	<span class="last-fe" tabindex="0" @focusin={{forwardToFirst}}></span>
 
-</div>
+</section>
