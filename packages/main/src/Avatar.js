@@ -153,6 +153,7 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
+		 * @since 1.0.0-rc.7
 		 */
 		accessibleName: {
 			type: String,
@@ -210,8 +211,10 @@ class Avatar extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
-		await Icon.define();
+		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
+			Icon.define(),
+		]);
 	}
 
 	get validInitials() {
