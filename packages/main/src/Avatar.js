@@ -229,7 +229,7 @@ class Avatar extends UI5Element {
 			return this.accessibleName;
 		}
 
-		return this.i18nBundle.getText(AVATAR_TOOLTIP) || undefined
+		return this.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
 	}
 }
 
