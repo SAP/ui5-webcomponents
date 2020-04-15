@@ -2,8 +2,6 @@ import { fetchJsonOnce } from "../util/FetchHelper.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.js";
 
-const OpenUI5Support = getFeature("OpenUI5Support");
-
 const resources = new Map();
 const cldrData = {};
 const cldrUrls = {};
@@ -86,6 +84,7 @@ const fetchCldr = async (language, region, script) => {
 	let cldrObj = cldrData[localeId];
 	const url = cldrUrls[localeId];
 
+	const OpenUI5Support = getFeature("OpenUI5Support");
 	if (!cldrObj && OpenUI5Support) {
 		cldrObj = OpenUI5Support.getLocaleDataObject();
 	}

@@ -1,7 +1,8 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
 import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
-import getExternalThemeInfo from "./getExternalThemeInfo.js";
+import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
+import { getFeature } from "../FeaturesRegistry.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
 
@@ -38,18 +39,42 @@ const loadComponentPackages = async theme => {
 	});
 };
 
+const detectExternalTheme = () => {
+	// If theme designer theme is detected, use this
+	const extTheme = getThemeDesignerTheme();
+	if (extTheme) {
+		return extTheme;
+	}
+
+	// If OpenUI5Support is enabled, try to find if it loaded variables
+	const OpenUI5Support = getFeature("OpenUI5Support");
+	if (OpenUI5Support) {
+		const varsLoaded = OpenUI5Support.cssVariablesLoaded();
+		if (varsLoaded) {
+			return {
+				themeName: OpenUI5Support.getConfigurationSettingsObject().theme,
+			};
+		}
+	}
+};
+
 const applyTheme = async theme => {
-	const externalThemeInfo = getExternalThemeInfo();
+	const OpenUI5Support = getFeature("OpenUI5Support");
+	if (OpenUI5Support) {
+		await OpenUI5Support.init();
+	}
+
+	const extTheme = detectExternalTheme();
 
 	// Only load theme_base properties if there is no externally loaded theme, or there is, but it is not being loaded
-	if (!externalThemeInfo || theme !== externalThemeInfo.themeName) {
+	if (!extTheme || theme !== extTheme.themeName) {
 		await loadThemeBase(theme);
 	} else {
 		deleteThemeBase();
 	}
 
 	// Always load component packages properties. For non-registered themes, try with the base theme, if any
-	const packagesTheme = isThemeRegistered(theme) ? theme : externalThemeInfo && externalThemeInfo.baseThemeName;
+	const packagesTheme = isThemeRegistered(theme) ? theme : extTheme && extTheme.baseThemeName;
 	await loadComponentPackages(packagesTheme);
 
 	// When changing the theme, run the ponyfill immediately

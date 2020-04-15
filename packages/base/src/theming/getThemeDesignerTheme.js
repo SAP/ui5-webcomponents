@@ -54,9 +54,9 @@ const processThemeMetadata = metadata => {
 	};
 };
 
-const getExternalThemeInfo = () => {
+const getThemeDesignerTheme = () => {
 	const metadataString = getThemeMetadata();
-	if (!metadataString) {
+	if (!metadataString || metadataString === "none") {
 		return;
 	}
 
@@ -64,4 +64,4 @@ const getExternalThemeInfo = () => {
 	return processThemeMetadata(metadata);
 };
 
-export default getExternalThemeInfo;
+export default getThemeDesignerTheme;

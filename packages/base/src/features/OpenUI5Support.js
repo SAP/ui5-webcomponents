@@ -35,7 +35,7 @@ const getConfigurationSettingsObject = () => {
 		rtl: config.getRTL(),
 		calendarType: config.getCalendarType(),
 		formatSettings: {
-			firstDayOfWeek: LocaleData.getInstance(config.getLocale()).getFirstDayOfWeek(),
+			firstDayOfWeek: LocaleData ? LocaleData.getInstance(config.getLocale()).getFirstDayOfWeek() : undefined,
 		},
 	};
 };
@@ -65,12 +65,26 @@ const attachListeners = () => {
 	listenForThemeChange();
 };
 
+const cssVariablesLoaded = () => {
+	if (!core) {
+		return;
+	}
+
+	const link = [...document.head.children].find(el => el.id === "sap-ui-theme-sap.ui.core"); // more reliable than querySelector early
+	if (!link) {
+		return;
+	}
+
+	return !!link.href.match(/css-variables\.css/);
+};
+
 const OpenUI5Support = {
 	isLoaded,
 	init,
 	getConfigurationSettingsObject,
 	getLocaleDataObject,
 	attachListeners,
+	cssVariablesLoaded,
 };
 
 registerFeature("OpenUI5Support", OpenUI5Support);
