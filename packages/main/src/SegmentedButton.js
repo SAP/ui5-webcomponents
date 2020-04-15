@@ -1,7 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { SEGMENTEDBUTTON_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTemplate.lit.js";
@@ -31,10 +33,6 @@ const metadata = {
 		"default": {
 			propertyName: "buttons",
 			type: HTMLElement,
-			individualSlots: true,
-			listenFor: {
-				include: ["pressed"],
-			},
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
@@ -94,6 +92,10 @@ class SegmentedButton extends UI5Element {
 		return SegmentedButtonCss;
 	}
 
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
+	}
+
 	constructor() {
 		super();
 		this.initItemNavigation();
@@ -103,6 +105,7 @@ class SegmentedButton extends UI5Element {
 		this.hasPreviouslyFocusedItem = false;
 
 		this._handleResizeBound = this._handleResize.bind(this);
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onEnterDOM() {
@@ -179,15 +182,14 @@ class SegmentedButton extends UI5Element {
 
 	_handleResize() {
 		const parentWidth = this.parentNode.offsetWidth;
-		const items = Array.from(this.shadowRoot.querySelectorAll(".ui5-segmentedbutton-item"));
 
 		if (!this.style.width || this.percentageWidthSet) {
 			this.style.width = `${Math.max(...this.widths) * this.buttons.length}px`;
 			this.absoluteWidthSet = true;
 		}
 
-		items.forEach(item => {
-			item.style.width = "100%";
+		this.buttons.forEach(button => {
+			button.style.width = "100%";
 		});
 
 		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet) {
@@ -205,6 +207,10 @@ class SegmentedButton extends UI5Element {
 	 */
 	get selectedButton() {
 		return this._selectedButton;
+	}
+
+	get ariaDescription() {
+		return this.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIPTION);
 	}
 }
 
