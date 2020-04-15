@@ -296,6 +296,11 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
+		_inputFocused: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
 		/**
@@ -534,6 +539,8 @@ class Input extends UI5Element {
 	_onfocusin(event) {
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
+
+		this._inputFocused = event.target !== this.getInputDOMRef();
 	}
 
 	_onfocusout(event) {
@@ -858,7 +865,7 @@ class Input extends UI5Element {
 	}
 
 	get hasValueStateMessage() {
-		return this.hasValueState && this.valueState !== ValueState.Success;
+		return this.hasValueState && this.valueState !== ValueState.Success && !this._inputFocused;
 	}
 
 	get valueStateText() {
