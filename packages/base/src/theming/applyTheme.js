@@ -5,7 +5,16 @@ import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
 
+const isThemeBaseRegistered = () => {
+	const registeredPackages = getRegisteredPackages();
+	return registeredPackages.has(BASE_THEME_PACKAGE);
+};
+
 const loadThemeBase = async theme => {
+	if (!isThemeBaseRegistered()) {
+		return;
+	}
+
 	const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
 	createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE);
 };
