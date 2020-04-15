@@ -13,9 +13,12 @@
 		*:not(:defined) {
 			visibility: hidden;
 		}
+		.body-bg {
+			background-color: var(--sapBackgroundColor);
+		}
 	</style>
 
-    <link id="my_custom_theme" rel="stylesheet" type="text/css" href="./css/css_variables.css">
+	<link rel="stylesheet" type="text/css" href="./css/css_variables.css">
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
@@ -24,7 +27,7 @@
 	<script>delete Document.prototype.adoptedStyleSheets;</script>
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body class="body-bg">
 	<div id="nav" class="navbar">
 		<ui5-togglebutton id="menu-btn" icon="menu" design="Transparent"></ui5-togglebutton>
 		<ui5-title level="H5">UI5 webcomponents</ui5-title>
