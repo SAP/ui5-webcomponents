@@ -1,6 +1,8 @@
 <section
     class="ui5-carousel-root"
     tabindex="0"
+    role="listbox"
+    aria-activedescendant="{{ariaActiveDescendant}}"
     @keydown={{_onkeydown}}
 >
     <div class="ui5-carousel-overflow-hidden">
@@ -8,7 +10,12 @@
             {{#each pages}}
                 <div class="{{../classes.page}}">
                     {{#each this}}
-                        <div class="ui5-carousel-item" style="width: {{this.width}}%">
+                        <div id="carousel-item-{{posinset}}"
+                             class="ui5-carousel-item"
+                             style="width: {{this.width}}%"
+                             role="option"
+                             aria-posinset="{{posinset}}"
+                             aria-setsize="{{setsize}}">
                             <slot name="{{this.item._individualSlot}}" tabindex="{{this.tabIndex}}"></slot>
                         </div>
                     {{/each}}
@@ -51,7 +58,9 @@
                     {{#if isPageTypeDots}}
                         {{#each dots}}
                             <div
-                                ?active="{{this.active}}"
+                                role="image"
+                                aria-label="{{ariaLabel}}"
+                                ?active="{{active}}"
                                 class="ui5-carousel-navigation-dot"
                             ></div>
                         {{/each}}

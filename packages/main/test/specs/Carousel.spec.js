@@ -54,6 +54,35 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(pages, 3, "There are only 3 pages.");
 	});
 
+	it("Aria attributes are set", () => {
+		const carousel = browser.$("#carousel5");
+		const ITEMS = "8";
+		const ACTIVEDESCENDANT_PAGE_1 = "carousel-item-1";
+		const ACTIVEDESCENDANT_PAGE_2 = "carousel-item-5";
+
+		// check page indicators ARIA
+		const pageIndicatorDot1 = carousel.shadow$(".ui5-carousel-navigation-dot:first-child");
+		const pageIndicatorDot2 = carousel.shadow$(".ui5-carousel-navigation-dot:nth-child(2)");
+		assert.strictEqual(pageIndicatorDot1.getAttribute("aria-label"), "Item 1 of 2 displayed", "The aria-label of page indicator is correct.");
+		assert.strictEqual(pageIndicatorDot2.getAttribute("aria-label"), "Item 2 of 2 displayed", "The aria-label of page indicator is correct.");
+
+		// check random carousel items ARIA
+		const carouselItem3 = carousel.shadow$(".ui5-carousel-item:nth-child(3)");
+		const carouselItem4 = carousel.shadow$(".ui5-carousel-item:nth-child(4)");
+		assert.strictEqual(carouselItem3.getAttribute("aria-posinset"), "3", "The aria-posinset of carousel item is correct.");
+		assert.strictEqual(carouselItem3.getAttribute("aria-setsize"), ITEMS, "The aria-setsize of carousel item  is correct.");
+		assert.strictEqual(carouselItem4.getAttribute("aria-posinset"), "4", "The aria-posinset of carousel item is correct.");
+		assert.strictEqual(carouselItem4.getAttribute("aria-setsize"), ITEMS, "The aria-setsize of carousel item is correct.");
+
+		// check root tag ARIA
+		const carouselRoot = carousel.shadow$(".ui5-carousel-root");
+		assert.strictEqual(carouselRoot.getAttribute("aria-activedescendant"), ACTIVEDESCENDANT_PAGE_1, "The aria-activedescendant of carousel is correct.");
+
+		// check root tag ARIA after navigating to 2nd page
+		carousel.shadow$(".ui5-carousel-navigation-button:nth-child(2)").click();
+		assert.strictEqual(carouselRoot.getAttribute("aria-activedescendant"), ACTIVEDESCENDANT_PAGE_2, "The aria-activedescendant of carousel is correct.");
+	});
+
 	it("Arrows and Dots not displayed in case of single page", () => {
 		const carousel = browser.$("#carousel6");
 		const pages = carousel.getProperty("pages").length;

@@ -18,6 +18,7 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import {
 	CAROUSEL_OF_TEXT,
+	CAROUSEL_DOT_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
@@ -304,6 +305,8 @@ class Carousel extends UI5Element {
 					result[pageIdx].push({
 						item,
 						tabIndex: pageIdx === this.selectedIndex ? "0" : "-1",
+						posinset: pageIdx * this.effectiveItemsPerPage + itemIdx + 1,
+						setsize: this.content.length,
 					});
 				}
 			}
@@ -364,6 +367,7 @@ class Carousel extends UI5Element {
 		return this.pages.map((item, index) => {
 			return {
 				active: index === this.selectedIndex,
+				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [this.pages.length]),
 			};
 		});
 	}
@@ -387,6 +391,10 @@ class Carousel extends UI5Element {
 
 	get showNavigationArrows() {
 		return !this.hideNavigation && this.pages.length > 1;
+	}
+
+	get ariaActiveDescendant() {
+		return this.content.length ? `carousel-item-${(this.selectedIndex * this.effectiveItemsPerPage) + 1}` : undefined;
 	}
 
 	static async onDefine() {
