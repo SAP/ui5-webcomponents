@@ -161,7 +161,22 @@ const metadata = {
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
-		//
+		/**
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-timepicker</code>.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 * <br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+		 * when the <code>ui5-input</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * @type {HTMLElement}
+		 * @since 1.0.0-rc.7
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
 		/**

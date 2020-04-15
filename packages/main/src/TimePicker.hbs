@@ -10,6 +10,11 @@
 			@ui5-change="{{_handleInputChange}}"
 			@ui5-input="{{_handleInputLiveChange}}"
 	>
+
+	{{#if valueStateMessage.length}}
+		<slot name="valueStateMessage" slot="valueStateMessage"></slot>
+	{{/if}}
+
 	{{#unless readonly}}
 		<ui5-icon
 			slot="icon"
