@@ -448,7 +448,7 @@ class Select extends UI5Element {
 	}
 
 	get valueStateTextId() {
-		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
 	}
 
 	get _headerTitleText() {
