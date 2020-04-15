@@ -1,8 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
+
+import { AVATAR_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import AvatarCss from "./generated/themes/Avatar.css.js";
@@ -142,6 +145,18 @@ const metadata = {
 			type: String,
 			defaultValue: AvatarBackgroundColor.Accent6,
 		},
+
+		/**
+		 * Defines the text alternative of the <code>ui5-avatar</code>.
+		 * If not provided a default text alternative will be set, if present.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		accessibleName: {
+			type: String,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 	},
@@ -173,6 +188,11 @@ const metadata = {
  * @public
  */
 class Avatar extends UI5Element {
+	constructor() {
+		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -190,6 +210,7 @@ class Avatar extends UI5Element {
 	}
 
 	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 		await Icon.define();
 	}
 
@@ -201,6 +222,14 @@ class Avatar extends UI5Element {
 		}
 
 		return null;
+	}
+
+	get accessibleNameText() {
+		if (this.accessibleName) {
+			return this.accessibleName;
+		}
+
+		return this.i18nBundle.getText(AVATAR_TOOLTIP) || undefined
 	}
 }
 
