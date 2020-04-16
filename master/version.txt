@@ -1,7 +1,5 @@
-commit 185851a982721fdbf51b187fedff64afe47bc14d
+commit 38ffd25c38e49ba88cf76bfae274d425040047a0
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Apr 14 16:51:21 2020 +0300
+Date:   Thu Apr 16 06:59:51 2020 +0300
 
-    fix(ui5-shellbar): enable items keyboard handling (#1473)
-    
-    All ui5-icon elements now become ui5-button, the ui5-button has tabindex=0 and also can be triggered with SPACE and ENTER. To ensure the correct tab order, the layout of the items is changed in such way that their DOM order is the same as their display order.
+    fix(ui5-dialog): improve accessibility (#1477)
