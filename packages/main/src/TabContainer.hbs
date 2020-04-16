@@ -25,7 +25,9 @@
 							?disabled="{{this.disabled}}"
 							aria-labelledby="{{this.ariaLabelledBy}}"
 						>
-							{{#if this.isInline}}
+							{{#if this.isCustom}}
+								{{{ this.customHtml }}}
+							{{else if this.isInline}}
 								{{> inlineTab}}
 							{{else}}
 								{{> standardTab}}

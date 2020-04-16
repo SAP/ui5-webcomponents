@@ -27,6 +27,17 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
+		 * If set this HTML will be used to render the tab inside <code>ui5-tabcontainer</code>
+		 * @private
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.7
+		 */
+		customTabHtml: {
+			type: String,
+		},
+
+		/**
 		 * The text to be displayed for the item.
 		 * @type {string}
 		 * @defaultvalue ""

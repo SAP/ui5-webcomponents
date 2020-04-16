@@ -253,6 +253,8 @@ class TabContainer extends UI5Element {
 
 			return {
 				item,
+				isCustom: item.customTabHtml.length > 0,
+				customHtml: this.getHTML(item.customTabHtml),
 				isInline: this.tabLayout === TabLayout.Inline,
 				isMixedModeTab: !item.icon && this.mixedMode,
 				isTextOnlyTab: !item.icon && !this.mixedMode,
@@ -274,6 +276,20 @@ class TabContainer extends UI5Element {
 				overflowItemState: calculateOverflowItemState(item),
 			};
 		}, this);
+	}
+
+	getHTML(htmlToCreate) {
+		const parser = this.constructor.getParser();
+		const doc = parser.parseFromString(htmlToCreate, "text/html");
+		return doc.body;
+	}
+
+	static getParser() {
+		if (!this.parser) {
+			this.parser = new DOMParser();
+		}
+
+		return this.parser;
 	}
 
 	onAfterRendering() {

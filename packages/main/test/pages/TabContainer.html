@@ -58,9 +58,9 @@
 			<ui5-tab text="Products" additional-text="125">
 			</ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab icon="sap-icon://menu2" text="Laptops" semantic-color="Positive" additional-text="25">
+			<ui5-tab id="custom-tab" icon="sap-icon://menu2" text="Laptops" semantic-color="Positive" additional-text="25">
 			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu" text="Monitors" selected semantic-color="Critical" additional-text="45">
+			<ui5-tab id="custom-tab1" icon="sap-icon://menu" text="Monitors" selected semantic-color="Critical" additional-text="45">
 			</ui5-tab>
 			<ui5-tab icon="sap-icon://menu2" text="Keyboards" semantic-color="Negative" additional-text="15">
 			</ui5-tab>
@@ -73,7 +73,12 @@
 		</ui5-tabcontainer>
 	</section>
 
-	<section>
+	<script>
+		document.getElementById("custom-tab").customTabHtml = "<div>custom tab here</div>";
+		document.getElementById("custom-tab1").customTabHtml = "<div>another custom tab</div>";
+	</script>
+
+	<!-- <section>
 		<h2>Icon only</h2>
 		<ui5-tabcontainer show-overflow="true" id="tabContainerIconOnly">
 			<ui5-tab icon="sap-icon://card" selected>
@@ -367,6 +372,6 @@
 			result.innerHTML = event.detail.tab.text;
 			resultIdx.innerHTML = event.detail.tabIndex;
 		});
-	</script>
+	</script> -->
 </body>
 </html>
