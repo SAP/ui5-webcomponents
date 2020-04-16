@@ -128,6 +128,10 @@ const metadata = {
 		_width: {
 			type: Integer,
 		},
+
+		_itemWidth: {
+			type: Integer,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
@@ -205,6 +209,7 @@ class Carousel extends UI5Element {
 
 		this._scrollEnablement = new ScrollEnablement(this);
 		this._scrollEnablement.attachEvent("touchend", event => {
+			debugger;
 			this._updateScrolling(event);
 		});
 
@@ -226,19 +231,27 @@ class Carousel extends UI5Element {
 
 	_onResize() {
 		const oldItemsPerPage = this.effectiveItemsPerPage;
+		const oldPagesCount = this.pagesCount;
 
 		// Change transitively effectiveItemsPerPage by modifying _width
 		this._width = this.offsetWidth;
 
-		// Items per page did not change, therefore page index does not need to be re-adjusted
+		this._itemWidth = Math.floor(this._width / this.effectiveItemsPerPage);
+
+		// Items per page did not change or the current 
+		// therefore page index does not need to be re-adjusted
 		if (this.effectiveItemsPerPage === oldItemsPerPage) {
 			return;
 		}
 
-		// Whenever the number of items per page changes, the selected index needs to be re-adjusted so that the items
-		// that were visible before, can be visible as much as possible afterwards.
-		const adjustment = oldItemsPerPage / this.effectiveItemsPerPage;
-		this.selectedIndex = Math.round(this.selectedIndex * adjustment);
+		if (this.selectedIndex !== oldPagesCount - 1) {
+			return;
+		}
+		
+		// We need to adjust the index, when the last index is selected
+		// (1) transition from more pages towards less pages (decrease with the difference of old and new page number)
+		// (2) transition from less pages towards more pages (increase with the difference of old and new page number)
+		this.selectedIndex = this.selectedIndex + this.pagesCount - oldPagesCount;
 	}
 
 	_updateScrolling(event) {
@@ -268,7 +281,7 @@ class Carousel extends UI5Element {
 	navigateLeft() {
 		if (this.selectedIndex - 1 < 0) {
 			if (this.cyclic) {
-				this.selectedIndex = this.pages.length - 1;
+				this.selectedIndex = this.pagesCount - 1;
 			}
 		} else {
 			--this.selectedIndex;
@@ -276,7 +289,7 @@ class Carousel extends UI5Element {
 	}
 
 	navigateRight() {
-		if (this.selectedIndex + 1 > this.pages.length - 1) {
+		if (this.selectedIndex + 1 > this.pagesCount - 1) {
 			if (this.cyclic) {
 				this.selectedIndex = 0;
 			}
@@ -285,41 +298,22 @@ class Carousel extends UI5Element {
 		}
 	}
 
-	get shouldAnimate() {
-		return getAnimationMode() === AnimationMode.None;
-	}
-
 	/**
 	 * Assuming that all items have the same width
 	 * @private
 	 */
-	get pages() {
-		const result = [],
-			pagesCount = Math.ceil(this.content.length / this.effectiveItemsPerPage);
-
-		for (let pageIdx = 0; pageIdx < pagesCount; pageIdx++) {
-			result.push([]);
-			for (let itemIdx = 0; itemIdx < this.effectiveItemsPerPage; itemIdx++) {
-				const item = this.content[(pageIdx * this.effectiveItemsPerPage) + itemIdx];
-				if (item) {
-					const posinset = pageIdx * this.effectiveItemsPerPage + itemIdx + 1;
-					result[pageIdx].push({
-						id: `${this._id}-carousel-item-${posinset}`,
-						item,
-						tabIndex: pageIdx === this.selectedIndex ? "0" : "-1",
-						posinset,
-						setsize: this.content.length,
-					});
-				}
-			}
-			const itemsOnThisPage = result[pageIdx].length;
-			const itemWidth = Math.floor(100 / itemsOnThisPage);
-			result[pageIdx].forEach(item => {
-				item.width = itemWidth;
-			});
-		}
-
-		return result;
+	get items() {
+		return this.content.map((item, idx) => {
+			return {
+				id: `${this._id}-carousel-item-${idx + 1}`,
+				item,
+				tabIndex: idx === this.selectedIndex ? "0" : "-1",
+				posinset: idx + 1,
+				setsize: this.content.length,
+				width: this._itemWidth,
+				visible: this.selectedIndex + this.effectiveItemsPerPage - 1 >= idx ? "visible" : "hidden",
+			};
+		});
 	}
 
 	get effectiveItemsPerPage() {
@@ -337,7 +331,7 @@ class Carousel extends UI5Element {
 	get styles() {
 		return {
 			content: {
-				transform: `translateX(-${this.selectedIndex * 100}%)`,
+				transform: `translateX(-${this.selectedIndex * this._itemWidth}px`,
 			},
 		};
 	}
@@ -354,24 +348,35 @@ class Carousel extends UI5Element {
 				"ui5-carousel-navigation-wrapper": true,
 				"ui5-carousel-navigation-with-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
-			page: {
-				"ui5-carousel-page": true,
-				"ui5-carousel-page-multiple": this.effectiveItemsPerPage > 1,
+			navPrevButton: {
+				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
+			},
+			navNextButton: {
+				"ui5-carousel-navigation-button--hidden": !this.hasNext,
 			},
 		};
 	}
 
+	get pagesCount() {
+		return this.content.length - this.effectiveItemsPerPage + 1;
+	}
+
 	get isPageTypeDots() {
-		return this.pages.length < Carousel.pageTypeLimit;
+		return this.pagesCount < Carousel.pageTypeLimit;
 	}
 
 	get dots() {
-		return this.pages.map((item, index) => {
-			return {
+		const dots = [];
+		const pages = this.pagesCount;
+
+		for (let index = 0; index < pages; index++) {
+			dots.push({
 				active: index === this.selectedIndex,
-				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [this.pages.length]),
-			};
-		});
+				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [pages]),
+			});
+		}
+
+		return dots;
 	}
 
 	get arrows() {
@@ -383,8 +388,16 @@ class Carousel extends UI5Element {
 		};
 	}
 
-	get ofText() {
-		return this.i18nBundle.getText(CAROUSEL_OF_TEXT);
+	get hasPrev() {
+		return this.cyclic || this.selectedIndex - 1 >= 0;
+	}
+
+	get hasNext() {
+		return this.cyclic || this.selectedIndex + 1 <= this.pagesCount - 1;
+	}
+
+	get shouldAnimate() {
+		return getAnimationMode() === AnimationMode.None;
 	}
 
 	get selectedIndexToShow() {
@@ -392,7 +405,11 @@ class Carousel extends UI5Element {
 	}
 
 	get showNavigationArrows() {
-		return !this.hideNavigation && this.pages.length > 1;
+		return !this.hideNavigation && this.pagesCount > 1;
+	}
+
+	get ofText() {
+		return this.i18nBundle.getText(CAROUSEL_OF_TEXT);
 	}
 
 	get ariaActiveDescendant() {

@@ -107,7 +107,7 @@ class ScrollEnablement extends EventProvider {
 		const container = this._container;
 		const dragX = this.isPhone ? event.pageX : event.x;
 		const dragY = this.isPhone ? event.pageY : event.y;
-
+debugger;
 		container.scrollLeft += this._prevDragX - dragX;
 		container.scrollTop += this._prevDragY - dragY;
 

@@ -5,20 +5,17 @@
     aria-activedescendant="{{ariaActiveDescendant}}"
     @keydown={{_onkeydown}}
 >
-    <div class="ui5-carousel-overflow-hidden">
+    <div class="ui5-carousel-viewport">
         <div class="{{classes.content}}" style="{{styles.content}}">
-            {{#each pages}}
-                <div class="{{../classes.page}}">
-                    {{#each this}}
-                        <div id="{{id}}"
-                             class="ui5-carousel-item"
-                             style="width: {{this.width}}%"
-                             role="option"
-                             aria-posinset="{{posinset}}"
-                             aria-setsize="{{setsize}}">
-                            <slot name="{{this.item._individualSlot}}" tabindex="{{this.tabIndex}}"></slot>
-                        </div>
-                    {{/each}}
+            {{#each items}}
+                <div id="{{id}}"
+                    class="ui5-carousel-item"
+                    style="width: {{this.width}}px; visibility: {{visible}}"
+                    role="option"
+                    aria-posinset="{{posinset}}"
+                    aria-setsize="{{setsize}}"
+                    >
+                    <slot name="{{this.item._individualSlot}}" tabindex="{{this.tabIndex}}"></slot>
                 </div>
             {{/each}}
         </div>
@@ -26,14 +23,14 @@
         {{#if arrows.content}}
             <div class="ui5-carousel-navigation-arrows">
                 <ui5-button
-                    class="ui5-carousel-navigation-button"
+                    class="ui5-carousel-navigation-button {{classes.navPrevButton}}"
                     icon="slim-arrow-left"
                     tabindex="-1"
                     @click={{navigateLeft}}
                     @keydown={{_onbuttonkeydown}}
                 ></ui5-button>
                 <ui5-button
-                    class="ui5-carousel-navigation-button"
+                    class="ui5-carousel-navigation-button {{classes.navNextButton}}"
                     icon="slim-arrow-right"
                     tabindex="-1"
                     @click={{navigateRight}}
@@ -46,7 +43,7 @@
             <div class="{{classes.navigation}}">
                 {{#if arrows.navigation}}
                 <ui5-button
-                    class="ui5-carousel-navigation-button"
+                    class="ui5-carousel-navigation-button {{classes.navPrevButton}}"
                     icon="slim-arrow-left"
                     tabindex="-1"
                     @click={{navigateLeft}}
@@ -65,13 +62,14 @@
                             ></div>
                         {{/each}}
                     {{else}}
-                        <ui5-label>{{selectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pages.length}}</ui5-label>
+                        <ui5-label>{{selectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pagesCount}}</ui5-label>
                     {{/if}}
                 </div>
 
                 {{#if arrows.navigation}}
                     <ui5-button
-                        class="ui5-carousel-navigation-button"
+                        class="ui5-carousel-navigation-button {{classes.navNextButton}}"
+                        style="visibility: "
                         icon="slim-arrow-right"
                         tabindex="-1"
                         @click={{navigateRight}}
