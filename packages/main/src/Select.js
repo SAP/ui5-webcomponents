@@ -451,6 +451,10 @@ class Select extends UI5Element {
 		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
 	}
 
+	get isDisabled() {
+		return this.disabled || undefined
+	}
+
 	get _headerTitleText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
