@@ -1,5 +1,13 @@
-commit df19edee153846f0e55318ed109ade52006ade77
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Apr 16 14:20:03 2020 +0300
+commit ae7b3958cf1a57d6d75355fc7e9b33c622c86280
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Thu Apr 16 14:33:13 2020 +0300
 
-    fix(scroll enablement): fix scrolling on android devices (#1491)
+    feat(ui5-segmentedbutton): implement accessibility spec (#1475)
+    
+    * feat(ui5-segmentedbutton): implement acc spec
+    
+    * fixed styling
+    
+    * fixed comments
+    
+    * changes related to spec changing
