@@ -428,7 +428,7 @@ class Select extends UI5Element {
 		}
 	}
 
-	valueStateTextMappings() {
+	get valueStateTextMappings() {
 		const i18nBundle = this.i18nBundle;
 
 		return {
@@ -440,7 +440,7 @@ class Select extends UI5Element {
 	}
 
 	get valueStateText() {
-		return this.valueStateTextMappings()[this.valueState];
+		return this.valueStateTextMappings[this.valueState];
 	}
 
 	get hasValueState() {
