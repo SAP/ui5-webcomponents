@@ -1,5 +1,5 @@
-commit 38ffd25c38e49ba88cf76bfae274d425040047a0
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 16 06:59:51 2020 +0300
+commit df19edee153846f0e55318ed109ade52006ade77
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Apr 16 14:20:03 2020 +0300
 
-    fix(ui5-dialog): improve accessibility (#1477)
+    fix(scroll enablement): fix scrolling on android devices (#1491)
