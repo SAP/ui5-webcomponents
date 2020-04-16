@@ -302,10 +302,12 @@ class Carousel extends UI5Element {
 			for (let itemIdx = 0; itemIdx < this.effectiveItemsPerPage; itemIdx++) {
 				const item = this.content[(pageIdx * this.effectiveItemsPerPage) + itemIdx];
 				if (item) {
+					const posinset = pageIdx * this.effectiveItemsPerPage + itemIdx + 1;
 					result[pageIdx].push({
+						id: `${this._id}-carousel-item-${posinset}`,
 						item,
 						tabIndex: pageIdx === this.selectedIndex ? "0" : "-1",
-						posinset: pageIdx * this.effectiveItemsPerPage + itemIdx + 1,
+						posinset,
 						setsize: this.content.length,
 					});
 				}
@@ -394,7 +396,7 @@ class Carousel extends UI5Element {
 	}
 
 	get ariaActiveDescendant() {
-		return this.content.length ? `carousel-item-${(this.selectedIndex * this.effectiveItemsPerPage) + 1}` : undefined;
+		return this.content.length ? `${this._id}-carousel-item-${(this.selectedIndex * this.effectiveItemsPerPage) + 1}` : undefined;
 	}
 
 	static async onDefine() {

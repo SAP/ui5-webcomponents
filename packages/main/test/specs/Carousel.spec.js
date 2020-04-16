@@ -57,8 +57,8 @@ describe("Carousel general interaction", () => {
 	it("Aria attributes are set", () => {
 		const carousel = browser.$("#carousel5");
 		const ITEMS = "8";
-		const ACTIVEDESCENDANT_PAGE_1 = "carousel-item-1";
-		const ACTIVEDESCENDANT_PAGE_2 = "carousel-item-5";
+		const ACTIVEDESCENDANT_PAGE_1 = `${carousel.getProperty("_id")}-carousel-item-1`;
+		const ACTIVEDESCENDANT_PAGE_2 = `${carousel.getProperty("_id")}-carousel-item-5`;
 
 		// check page indicators ARIA
 		const pageIndicatorDot1 = carousel.shadow$(".ui5-carousel-navigation-dot:first-child");
