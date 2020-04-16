@@ -94,9 +94,6 @@ class ScrollEnablement extends EventProvider {
 			isLeft: dragX > this._prevDragX,
 			isRight: dragX < this._prevDragX,
 		});
-
-		this._prevDragX = dragX;
-		this._prevDragY = dragY;
 	}
 
 	ontouchend(event) {
@@ -105,9 +102,9 @@ class ScrollEnablement extends EventProvider {
 		}
 
 		const container = this._container;
-		const dragX = this.isPhone ? event.pageX : event.x;
-		const dragY = this.isPhone ? event.pageY : event.y;
-debugger;
+		const dragX = this.isPhone ? event.changedTouches[0].pageX : event.x;
+		const dragY = this.isPhone ? event.changedTouches[0].pageY : event.y;
+
 		container.scrollLeft += this._prevDragX - dragX;
 		container.scrollTop += this._prevDragY - dragY;
 

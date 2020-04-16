@@ -129,6 +129,10 @@ const metadata = {
 			type: Integer,
 		},
 
+		/**
+		 * Defines the carousel item width in pixels
+		 * @private
+		 */
 		_itemWidth: {
 			type: Integer,
 		},
@@ -209,7 +213,6 @@ class Carousel extends UI5Element {
 
 		this._scrollEnablement = new ScrollEnablement(this);
 		this._scrollEnablement.attachEvent("touchend", event => {
-			debugger;
 			this._updateScrolling(event);
 		});
 
@@ -238,7 +241,7 @@ class Carousel extends UI5Element {
 
 		this._itemWidth = Math.floor(this._width / this.effectiveItemsPerPage);
 
-		// Items per page did not change or the current 
+		// Items per page did not change or the current,
 		// therefore page index does not need to be re-adjusted
 		if (this.effectiveItemsPerPage === oldItemsPerPage) {
 			return;
@@ -247,8 +250,8 @@ class Carousel extends UI5Element {
 		if (this.selectedIndex !== oldPagesCount - 1) {
 			return;
 		}
-		
-		// We need to adjust the index, when the last index is selected
+
+		// We need to adjust the index, when the last index was selected:
 		// (1) transition from more pages towards less pages (decrease with the difference of old and new page number)
 		// (2) transition from less pages towards more pages (increase with the difference of old and new page number)
 		this.selectedIndex = this.selectedIndex + this.pagesCount - oldPagesCount;
@@ -311,7 +314,7 @@ class Carousel extends UI5Element {
 				posinset: idx + 1,
 				setsize: this.content.length,
 				width: this._itemWidth,
-				visible: this.selectedIndex + this.effectiveItemsPerPage - 1 >= idx ? "visible" : "hidden",
+				classes: this.isItemInViewport(idx) ? "" : "ui5-carousel-item--hidden",
 			};
 		});
 	}
@@ -328,6 +331,10 @@ class Carousel extends UI5Element {
 		return this.itemsPerPageL;
 	}
 
+	isItemInViewport(index) {
+		return index >= this.selectedIndex && index <= this.selectedIndex + this.effectiveItemsPerPage - 1;
+	}
+
 	get styles() {
 		return {
 			content: {
@@ -338,6 +345,9 @@ class Carousel extends UI5Element {
 
 	get classes() {
 		return {
+			viewport: {
+				"ui5-carousel-viewport--single": this.pagesCount === 1,
+			},
 			content: {
 				"ui5-carousel-content": true,
 				"ui5-carousel-content-no-animation": this.shouldAnimate,
@@ -358,7 +368,8 @@ class Carousel extends UI5Element {
 	}
 
 	get pagesCount() {
-		return this.content.length - this.effectiveItemsPerPage + 1;
+		const items = this.content.length;
+		return items > this.effectiveItemsPerPage ? items - this.effectiveItemsPerPage + 1 : 1;
 	}
 
 	get isPageTypeDots() {
@@ -413,7 +424,7 @@ class Carousel extends UI5Element {
 	}
 
 	get ariaActiveDescendant() {
-		return this.content.length ? `${this._id}-carousel-item-${(this.selectedIndex * this.effectiveItemsPerPage) + 1}` : undefined;
+		return this.content.length ? `${this._id}-carousel-item-${this.selectedIndex + 1}` : undefined;
 	}
 
 	static async onDefine() {
