@@ -100,4 +100,14 @@ describe("Carousel general interaction", () => {
 		assert.ok(!navigationArrows.isExisting(), "Navigation arrows are not rendered");
 		assert.strictEqual(pages, 1, "There is only 1 page.");
 	});
+
+
+	it("Invalid selectedIndex normalized", () => {
+		const carousel = browser.$("#carousel7");
+		const selectedIndex = carousel.getProperty("selectedIndex");
+		const NORMALIZED_INDEX = 0;
+
+		assert.strictEqual(selectedIndex, NORMALIZED_INDEX,
+			"Although '15' is set, the actual selectedIndex is changed to 0.");
+	});
 });

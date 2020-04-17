@@ -220,6 +220,10 @@ class Carousel extends UI5Element {
 		this._onResizeBound = this._onResize.bind(this);
 	}
 
+	onBeforeRendering() {
+		this.validateSelectedIndex();
+	}
+
 	onAfterRendering() {
 		this._scrollEnablement.scrollContainer = this.getDomRef();
 	}
@@ -232,9 +236,15 @@ class Carousel extends UI5Element {
 		ResizeHandler.deregister(this, this._onResizeBound);
 	}
 
+	validateSelectedIndex() {
+		if (!this.isIndexInRange(this.selectedIndex)) {
+			this.selectedIndex = 0;
+			console.warn(`The "selectedIndex" is out of range, changed to: ${0}`); // eslint-disable-line
+		}
+	}
+
 	_onResize() {
-		const oldItemsPerPage = this.effectiveItemsPerPage;
-		const oldPagesCount = this.pagesCount;
+		const previousItemsPerPage = this.effectiveItemsPerPage;
 
 		// Change transitively effectiveItemsPerPage by modifying _width
 		this._width = this.offsetWidth;
@@ -243,18 +253,13 @@ class Carousel extends UI5Element {
 
 		// Items per page did not change or the current,
 		// therefore page index does not need to be re-adjusted
-		if (this.effectiveItemsPerPage === oldItemsPerPage) {
+		if (this.effectiveItemsPerPage === previousItemsPerPage) {
 			return;
 		}
 
-		if (this.selectedIndex !== oldPagesCount - 1) {
-			return;
+		if (this.selectedIndex > this.pagesCount - 1) {
+			this.selectedIndex = this.pagesCount - 1;
 		}
-
-		// We need to adjust the index, when the last index was selected:
-		// (1) transition from more pages towards less pages (decrease with the difference of old and new page number)
-		// (2) transition from less pages towards more pages (increase with the difference of old and new page number)
-		this.selectedIndex = this.selectedIndex + this.pagesCount - oldPagesCount;
 	}
 
 	_updateScrolling(event) {
@@ -333,6 +338,10 @@ class Carousel extends UI5Element {
 
 	isItemInViewport(index) {
 		return index >= this.selectedIndex && index <= this.selectedIndex + this.effectiveItemsPerPage - 1;
+	}
+
+	isIndexInRange(index) {
+		return index >= 0 && index <= this.pagesCount - 1;
 	}
 
 	get styles() {
