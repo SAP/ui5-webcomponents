@@ -1,13 +1,10 @@
-commit ae7b3958cf1a57d6d75355fc7e9b33c622c86280
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Thu Apr 16 14:33:13 2020 +0300
+commit 746f9076b964177ffaefe6923f7386d0a3e4eff1
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Apr 21 09:39:52 2020 +0300
 
-    feat(ui5-segmentedbutton): implement accessibility spec (#1475)
+    fix(ui5-information): fix component visual (#1498)
     
-    * feat(ui5-segmentedbutton): implement acc spec
+    - fix type="Information" appearance, by setting the correct varialbes, previously the "neutral" semantic variables has been used
+    - fix the icons colors in all types, they used to remain grey (their default color), instead of being in the respective semantic color according to the component type
     
-    * fixed styling
-    
-    * fixed comments
-    
-    * changes related to spec changing
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1496
