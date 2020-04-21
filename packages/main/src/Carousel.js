@@ -218,6 +218,7 @@ class Carousel extends UI5Element {
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._onResizeBound = this._onResize.bind(this);
+		this._resizing = false; // indicates if the carousel is in process of resizing
 	}
 
 	onBeforeRendering() {
@@ -226,6 +227,7 @@ class Carousel extends UI5Element {
 
 	onAfterRendering() {
 		this._scrollEnablement.scrollContainer = this.getDomRef();
+		this._resizing = false; // not invalidating
 	}
 
 	onEnterDOM() {
@@ -246,9 +248,11 @@ class Carousel extends UI5Element {
 	_onResize() {
 		const previousItemsPerPage = this.effectiveItemsPerPage;
 
+		// Set the resizing flag to suppress animation while resizing
+		this._resizing = true;
+
 		// Change transitively effectiveItemsPerPage by modifying _width
 		this._width = this.offsetWidth;
-
 		this._itemWidth = Math.floor(this._width / this.effectiveItemsPerPage);
 
 		// Items per page did not change or the current,
@@ -359,7 +363,7 @@ class Carousel extends UI5Element {
 			},
 			content: {
 				"ui5-carousel-content": true,
-				"ui5-carousel-content-no-animation": this.shouldAnimate,
+				"ui5-carousel-content-no-animation": this.supressAimation,
 				"ui5-carousel-content-has-navigation": this.showNavigationArrows,
 				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
@@ -416,8 +420,8 @@ class Carousel extends UI5Element {
 		return this.cyclic || this.selectedIndex + 1 <= this.pagesCount - 1;
 	}
 
-	get shouldAnimate() {
-		return getAnimationMode() === AnimationMode.None;
+	get supressAimation() {
+		return this._resizing || getAnimationMode() === AnimationMode.None;
 	}
 
 	get selectedIndexToShow() {
