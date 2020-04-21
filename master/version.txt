@@ -1,5 +1,9 @@
-commit ac6e8d268ac32ef25936777c1f22f4af073dc768
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Apr 21 14:33:57 2020 +0300
+commit 0e57d78dfd8b0d118aa7221eda7d556f49846a1b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Apr 21 16:13:16 2020 +0300
 
-    fix(ui5-button): make aria-labelledby work with numeric id (#1500)
+    fix(ui5-busyindicator): fix component placement and appearance in IE (#1505)
+    
+    The opacity of 0.6 used to apply to the busy indicator inter elements in IE due to the absence of shadow DOM, also the position of the circles used to be wrong. Both the visual and the placement is now fixed.
+    
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1497
