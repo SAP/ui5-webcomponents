@@ -1,5 +1,5 @@
-commit b0195b73ea17018d3bc05140c232e11bd715ad57
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Tue Apr 21 14:17:50 2020 +0300
+commit ac6e8d268ac32ef25936777c1f22f4af073dc768
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Apr 21 14:33:57 2020 +0300
 
-    fix(ui5-timepicker): periods apply fix (#1502)
+    fix(ui5-button): make aria-labelledby work with numeric id (#1500)
