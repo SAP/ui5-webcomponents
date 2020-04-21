@@ -7,13 +7,12 @@
 	pointer-events: none;
 }
 
-:host([active]) ::slotted(*) {
+/**
+ * IE fix: using just the "*" all selector in IE,
+ * will set the opacity=0.6 to busy indicator internal elements
+ */
+:host([active]) ::slotted(:not([class^="ui5-busyindicator-"])) {
 	opacity: 0.6;
-}
-
-/* IE sets opacity 0.6 to busy indicatore internal elements */
-:host([active]) ::slotted([class^="ui5-busyindicator-"]) {
-	opacity: 1;
 }
 
 :host([size="Small"]) .ui5-busyindicator-root {
