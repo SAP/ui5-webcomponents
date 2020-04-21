@@ -13,13 +13,16 @@
 }
 
 .ui5-responsive-popover-header {
+	height: var(--_ui5-responnsive_popover_header_height);
 	display: flex;
 	justify-content: space-between;
-	margin: 0 0 0 1rem;
+	align-items: center;
+	padding: 0 0 0 1rem;
+	box-shadow: var(--sapContent_HeaderShadow);
 }
 
 :host [dir="rtl"] .ui5-responsive-popover-header {
-	margin: 0 1rem 0 0;
+	padding: 0 1rem 0 0;
 }
 
 .ui5-responsive-popover-header-text {
