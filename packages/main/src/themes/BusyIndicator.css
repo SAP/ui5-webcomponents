@@ -11,6 +11,11 @@
 	opacity: 0.6;
 }
 
+/* IE sets opacity 0.6 to busy indicatore internal elements */
+:host([active]) ::slotted([class^="ui5-busyindicator-"]) {
+	opacity: 1;
+}
+
 :host([size="Small"]) .ui5-busyindicator-root {
 	min-width: 1.5em;
 	min-height: .5rem;
@@ -73,6 +78,11 @@
 	justify-content: center;
 	align-items: center;
 	background-color: inherit;
+	/* Fixes IE positioning */
+	left: 0;
+	right: 0;
+	top: 50%;
+	transform: translate(0, -50%);
 }
 
 .circle-animation-0 {
