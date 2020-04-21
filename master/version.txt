@@ -1,10 +1,16 @@
-commit 746f9076b964177ffaefe6923f7386d0a3e4eff1
+commit 710053b63f01540032c10546c2cff597c8e56789
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Apr 21 09:39:52 2020 +0300
+Date:   Tue Apr 21 13:54:10 2020 +0300
 
-    fix(ui5-information): fix component visual (#1498)
+    feat(ui5-panel): enable configuring the heading level (#1504)
     
-    - fix type="Information" appearance, by setting the correct varialbes, previously the "neutral" semantic variables has been used
-    - fix the icons colors in all types, they used to remain grey (their default color), instead of being in the respective semantic color according to the component type
+    **Background**
+    Our native title used to be "h1", which is indeed wrong. In openui5 it is "h2" and it is not configurable. But, in the related issue the author wants to be able to change the title level in general. Although we provide the possibility of a custom header, the author is asking for this feature to make use of the fact that the the entire native header is clickable and focusable, which is not the case with the custom one.
+    **Options**
+    So, we either reject this and (1) hardcode it to "h2" as in openui5, (2) introduce a property as in this change, or (3) make another slot for the title, but then we will have the current "header" slot and "headerTitle" slot and it might be confusing.
+    **In this change:**
+    - [refactoring] Use div with role="heading" and "aria-level" attrs, instead of "h" tag to  enable the configuration of the level. Reuse the existing TitleLevel enum ("H1" to "H6") and extract the number part, but AriaLevel type ("1" - "6") is also an option.
+    - [FIX] sync the parameters in the latest visual design and change few variables
+    - [FIX] title now truncates, previously it used to wrap.
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1496
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1495
