@@ -254,7 +254,7 @@ class Suggestions {
 	async _getScrollContainer() {
 		if (!this._scrollContainer) {
 			await this._respPopover();
-			this._scrollContainer = this.responsivePopover.shadowRoot.querySelector(".ui5-popover-content");
+			this._scrollContainer = this.responsivePopover.shadowRoot.querySelector(".ui5-popup-content");
 		}
 
 		return this._scrollContainer;

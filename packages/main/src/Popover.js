@@ -12,6 +12,7 @@ import { getFocusedElement, getClosedPopupParent, getNextZIndex } from "./popup-
 
 // Styles
 import PopoverCss from "./generated/themes/Popover.css.js";
+import PopupCss from "./generated/themes/Popup.css.js";
 
 const arrowSize = 8;
 
@@ -307,7 +308,7 @@ class Popover extends UI5Element {
 	}
 
 	static get styles() {
-		return PopoverCss;
+		return [PopoverCss, PopupCss];
 	}
 
 	static get template() {
@@ -502,7 +503,7 @@ class Popover extends UI5Element {
 	}
 
 	get contentDOM() {
-		return this.shadowRoot.querySelector(".ui5-popover-content");
+		return this.shadowRoot.querySelector(".ui5-popup-content");
 	}
 
 	get arrowDOM() {
@@ -597,7 +598,7 @@ class Popover extends UI5Element {
 		const hasHeader = this.header.length || this.headerText;
 
 		if (hasHeader) {
-			const headerDomRef = this.shadowRoot.querySelector(".ui5-popover-header-root")
+			const headerDomRef = this.shadowRoot.querySelector(".ui5-popup-header-root")
 				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
 
 			if (headerDomRef) {

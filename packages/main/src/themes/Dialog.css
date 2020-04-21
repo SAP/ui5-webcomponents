@@ -5,10 +5,9 @@
 	min-width: auto;
 	box-shadow: none;
 	position: fixed;
-  top: 50%;
-  left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 :host([stretch]) {
@@ -16,17 +15,11 @@
 	height: 90%;
 }
 
-.ui5-popover-root {
+.ui5-popup-root {
 	display: flex;
 	flex-direction: column;
 }
 
-.ui5-popover-content {
+.ui5-popup-content {
 	flex: 1;
-}
-
-@media screen and (-ms-high-contrast: active) {
-	.ui5-popover-root {
-			border: 1px solid var(--sapPageFooter_BorderColor);
-	}
 }

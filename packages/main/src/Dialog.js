@@ -8,7 +8,7 @@ import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 import DialogBlockLayerTemplate from "./generated/templates/DialogBlockLayerTemplate.lit.js";
 
 // Styles
-import popoverCSS from "./generated/themes/Popover.css.js";
+import popupCSS from "./generated/themes/Popup.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 import { getFocusedElement, getNextZIndex } from "./popup-utils/PopupUtils.js";
 import BlockLayer from "./BlockLayer.js";
@@ -86,7 +86,7 @@ class Dialog extends Popup {
 	}
 
 	static get styles() {
-		return [dialogCSS, popoverCSS];
+		return [dialogCSS, popupCSS];
 	}
 
 	static get staticAreaTemplate() {

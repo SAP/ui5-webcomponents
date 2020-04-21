@@ -21,8 +21,7 @@
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 </head>
 
 <body>
@@ -170,7 +169,7 @@
 			window["msg-dialog"].open();
 		});
 
-		window["prevent-dialog"].addEventListener("ui5-beforeClose", event => {
+		window["prevent-dialog"].addEventListener("ui5-beforeClose", function (event) {
 			if (preventClosing) {
 				event.preventDefault();
 				window["confirm-dialog"].open();
@@ -181,18 +180,18 @@
 			}
 		});
 
-		yes.addEventListener("click", event => {
+		yes.addEventListener("click", function (event) {
 			preventClosing = false;
 			window["confirm-dialog"].close();
 			window["prevent-dialog"].close();
 		});
 
-		no.addEventListener("click", event => {
+		no.addEventListener("click", function (event) {
 			window["confirm-dialog"].close();
 			preventClosing = true;
 		});
 
-		window["modals-open"].addEventListener("click", event => pop.openBy(event.target));
+		window["modals-open"].addEventListener("click", function (event) { pop.openBy(event.target) });
 
 		popbtn.addEventListener('click', function (event) {
 			danger.open();
