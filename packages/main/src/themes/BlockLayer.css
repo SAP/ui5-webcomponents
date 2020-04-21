@@ -1,16 +1,17 @@
-:host([visible]) {
-	display: inline-block;
-}
-
 :host {
-  display: none;
-  position: absolute;
-	background-color: #000000;
+	display: none;
+	position: absolute;
+	background-color: var(--sapBlockLayer_Background);
 	opacity: 0.6;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	outline: 0 none;
+	outline: none;
+	pointer-events: all;
 	z-index: -1;
+}
+
+:host([visible]) {
+	display: inline-block;
 }

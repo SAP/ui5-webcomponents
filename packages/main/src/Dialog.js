@@ -93,6 +93,13 @@ class Dialog extends Popup {
 		return DialogBlockLayerTemplate;
 	}
 
+	constructor() {
+		super();
+
+		// mark dialog for registry as it is always modal
+		this.modal = true;
+	}
+
 	reposition() {
 		this.style.display = "inline-block";
 	}
