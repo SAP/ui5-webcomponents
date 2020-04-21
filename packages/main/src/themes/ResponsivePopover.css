@@ -14,5 +14,15 @@
 
 .ui5-responsive-popover-header {
 	display: flex;
-    justify-content: flex-end;
+	justify-content: space-between;
+	margin: 0 0 0 1rem;
+}
+
+:host [dir="rtl"] .ui5-responsive-popover-header {
+	margin: 0 1rem 0 0;
+}
+
+.ui5-responsive-popover-header-text {
+	display: flex;
+    align-items: center;
 }

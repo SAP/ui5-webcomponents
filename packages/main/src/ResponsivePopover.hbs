@@ -13,6 +13,9 @@
 			<slot slot="header" name="header"></slot>
 		{{else}}
 			<header class="ui5-responsive-popover-header">
+				{{#if headerText}}
+					<ui5-title class="ui5-responsive-popover-header-text">{{headerText}}</ui5-title>
+				{{/if}}
 				<ui5-button
 					icon="decline"
 					design="Transparent"

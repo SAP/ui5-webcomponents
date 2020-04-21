@@ -5,6 +5,7 @@ import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTe
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
+import Title from "./Title.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 
 // Styles
@@ -87,6 +88,7 @@ class ResponsivePopover extends Popover {
 		await Promise.all([
 			Button.define(),
 			Dialog.define(),
+			Title.define(),
 		]);
 	}
 
