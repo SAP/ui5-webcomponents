@@ -1,12 +1,18 @@
 <div class="ui5-busyindicator-root">
-
-	{{#if active}}
-		<div class="ui5-busyindicator-dynamic-content" tabindex="0" role="progressbar" aria-valuemin="0" aria-valuemax="100" title="{{ariaTitle}}">
-			<div class="ui5-busyindicator-circle circle-animation-0"></div>
-			<div class="ui5-busyindicator-circle circle-animation-1"></div>
-			<div class="ui5-busyindicator-circle circle-animation-2"></div>
-		</div>
-	{{/if}}
+	<div class="ui5-busyindicator-wrapper">
+		{{#if active}}
+			<div class="ui5-busyindicator-dynamic-content" tabindex="0" role="progressbar" aria-valuemin="0" aria-valuemax="100" title="{{ariaTitle}}">
+				<div class="ui5-busyindicator-circle circle-animation-0"></div>
+				<div class="ui5-busyindicator-circle circle-animation-1"></div>
+				<div class="ui5-busyindicator-circle circle-animation-2"></div>
+			</div>
+		{{/if}}
+		{{#if text.length}}
+			<ui5-label class="ui5-busyindicator-text">
+				{{text}}
+			</ui5-label>
+		{{/if}}
+	</div>
 
 	<slot></slot>
 </div>

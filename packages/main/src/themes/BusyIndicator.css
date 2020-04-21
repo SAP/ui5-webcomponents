@@ -2,6 +2,10 @@
 	display: inline-block;
 }
 
+:host(:not([active])) .ui5-busyindicator-wrapper{
+	display: none
+}
+
 :host([active]) {
 	color: var(--sapContent_IconColor);
 	pointer-events: none;
@@ -13,7 +17,7 @@
 
 :host([size="Small"]) .ui5-busyindicator-root {
 	min-width: 1.5em;
-	min-height: .5rem;
+	min-height: 1.5rem;
 }
 
 :host([size="Small"]) .ui5-busyindicator-circle {
@@ -24,7 +28,7 @@
 :host(:not([size])) .ui5-busyindicator-root,
 :host([size="Medium"]) .ui5-busyindicator-root {
 	min-width: 3rem;
-	min-height: 1rem;
+	min-height: 2rem;
 }
 
 :host(:not([size])) .ui5-busyindicator-circle,
@@ -35,7 +39,7 @@
 
 :host([size="Large"]) .ui5-busyindicator-root {
 	min-width: 6rem;
-	min-height: 2rem;
+	min-height: 3rem;
 }
 
 :host([size="Large"]) .ui5-busyindicator-circle {
@@ -49,6 +53,12 @@
 	align-items: center;
 	position: relative;
 	background-color: inherit;
+}
+
+.ui5-busyindicator-wrapper {
+	position: absolute;
+	z-index: 99;
+	width: 100%;
 }
 
 .ui5-busyindicator-circle {
@@ -65,9 +75,6 @@
 }
 
 .ui5-busyindicator-dynamic-content {
-	position: absolute;
-	z-index: 99;
-	width: 100%;
 	height: 100%;
 	display: flex;
 	justify-content: center;
@@ -87,6 +94,11 @@
 .circle-animation-2 {
 	animation: grow 1.6s infinite cubic-bezier(0.32, 0.06, 0.85, 1.11);
 	animation-delay: 400ms;
+}
+
+.ui5-busyindicator-text {
+	width: 100%;
+    text-align: center;
 }
 
 @keyframes grow {
