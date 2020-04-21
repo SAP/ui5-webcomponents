@@ -25,11 +25,17 @@
 							?disabled="{{this.disabled}}"
 							aria-labelledby="{{this.ariaLabelledBy}}"
 						>
-							{{#if this.isInline}}
-								{{> inlineTab}}
+							{{#if this.item.constructor.customTabTemplate}}
+								{{this.item.customTabContent}}
 							{{else}}
-								{{> standardTab}}
+								{{#if this.isInline}}
+									{{> inlineTab}}
+								{{else}}
+									{{> standardTab}}
+								{{/if}}
 							{{/if}}
+
+
 						</li>
 					{{/unless}}
 					{{#if this.isSeparator}}

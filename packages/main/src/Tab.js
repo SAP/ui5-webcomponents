@@ -152,6 +152,10 @@ class Tab extends UI5Element {
 		return false;
 	}
 
+	get customTabContent() {
+		return this.constructor.customTabTemplate(this);
+	}
+
 	getFocusDomRef() {
 		let focusedDomRef = super.getFocusDomRef();
 
