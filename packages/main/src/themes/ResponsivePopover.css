@@ -11,3 +11,8 @@
 :host([opened]) {
 	display: inline-block;
 }
+
+.ui5-responsive-popover-header {
+	display: flex;
+    justify-content: flex-end;
+}
