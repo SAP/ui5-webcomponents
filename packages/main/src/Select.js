@@ -452,7 +452,7 @@ class Select extends UI5Element {
 	}
 
 	get isDisabled() {
-		return this.disabled || undefined
+		return this.disabled || undefined;
 	}
 
 	get _headerTitleText() {
