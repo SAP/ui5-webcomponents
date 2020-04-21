@@ -76,6 +76,11 @@
 	position: absolute;
 	z-index: 99;
 	width: 100%;
+	/* Fixes IE positioning */
+	left: 0;
+	right: 0;
+	top: 50%;
+	transform: translate(0, -50%);
 }
 
 .ui5-busyindicator-circle {
@@ -97,11 +102,6 @@
 	justify-content: center;
 	align-items: center;
 	background-color: inherit;
-	/* Fixes IE positioning */
-	left: 0;
-	right: 0;
-	top: 50%;
-	transform: translate(0, -50%);
 }
 
 .circle-animation-0 {
