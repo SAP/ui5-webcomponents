@@ -33,7 +33,9 @@ catch (e) {}
  * };
  */
 const getTextInfo = (key, value, defaultLanguageValue) => {
-	const effectiveValue = defaultLanguageValue || value;
+	let effectiveValue = defaultLanguageValue || value;
+	effectiveValue.replace(/"/g, "\\\""); // escape double quotes in translations
+
 	return `const ${key} = {key: "${key}", defaultText: "${effectiveValue}"};`;
 };
 
