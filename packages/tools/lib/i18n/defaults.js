@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const PropertiesReader = require('properties-reader');
+const mkdirp = require("mkdirp");
 const assets = require('../../assets-meta.js');
 
 const defaultLanguage = assets.languages.default;
@@ -67,4 +68,5 @@ const writeI18nDefaultsFile = (file, content) => {
 	});
 };
 
+mkdirp.sync(path.dirname(outputFile));
 writeI18nDefaultsFile(outputFile, getOutputFileContent(properties, defaultLanguageProperties));
