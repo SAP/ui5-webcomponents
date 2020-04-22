@@ -28,8 +28,8 @@ const getScripts = (options) => {
 			},
 			jsonImports: {
 				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
-				themes: `node "${LIB}/generate-json-imports/themes.js"`,
-				i18n: `node "${LIB}/generate-json-imports/i18n.js"`,
+				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/json-imports`,
+				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
 			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
 			samples: {
