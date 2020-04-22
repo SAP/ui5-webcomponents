@@ -91,10 +91,6 @@ const metadata = {
 
 		/**
 		 * Defines the index of the initially selected item.
-		 * <br><br>
-		 * <b>Note:</b>
-		 * When there are multiple items displayed,
-		 * the <code>selectedIndex</code> would define the first item within view.
 		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
