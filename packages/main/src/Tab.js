@@ -3,6 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import SemanticColor from "./types/SemanticColor.js";
 import TabLayout from "./types/TabLayout.js";
 import Icon from "./Icon.js";
+
+// Templates
 import TabTemplate from "./generated/templates/TabTemplate.lit.js";
 import TabInStripTemplate from "./generated/templates/TabInStripTemplate.lit.js";
 import TabInOverflowTemplate from "./generated/templates/TabInOverflowTemplate.lit.js";
