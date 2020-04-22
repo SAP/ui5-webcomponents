@@ -15,7 +15,6 @@ import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import SemanticColor from "./types/SemanticColor.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -132,10 +131,6 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
-		_textOnly: {
-			type: Boolean,
-			noAttribute: true,
-		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 
@@ -228,52 +223,21 @@ class TabContainer extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		// Set selected
 		const hasSelected = this.items.some(item => item.selected);
-		this._textOnly = this.items.every(item => !item.icon);
-
-		this.items.forEach(item => {
-			item._getTabContainerHeaderItemCallback = _ => {
-				return this.getDomRef().querySelector(`#${item._id}`);
-			};
-		});
 		if (this.items.length && !hasSelected) {
 			this.items[0].selected = true;
 		}
 
-		this.calculateRenderItems();
-	}
-
-	calculateRenderItems() {
-		this.renderItems = this.items.map((item, index) => {
-			const isSeparator = item.isSeparator;
-
-			if (isSeparator) {
-				return { isSeparator, _tabIndex: item._tabIndex, _id: item._id };
-			}
-
-			return {
-				item,
-				isInline: this.tabLayout === TabLayout.Inline,
-				isMixedModeTab: !item.icon && this.mixedMode,
-				isTextOnlyTab: !item.icon && !this.mixedMode,
-				isIconTab: item.icon,
-				position: index + 1,
-				disabled: item.disabled || undefined,
-				selected: item.selected || false,
-				hidden: !item.selected,
-				ariaLabelledBy: calculateAriaLabelledBy(item),
-				contentItemClasses: calculateContentItemClasses(item),
-				headerItemClasses: calculateHeaderItemClasses(item, this.mixedMode),
-				headerItemContentClasses: calculateHeaderItemContentClasses(item),
-				headerItemIconClasses: calculateHeaderItemIconClasses(item),
-				headerItemSemanticIconClasses: calculateHeaderItemSemanticIconClasses(item),
-				headerItemTextClasses: calculateHeaderItemTextClasses(item),
-				headerItemAdditionalTextClasses: calculateHeaderItemAdditionalTextClasses(item),
-				overflowItemClasses: calculateOverflowItemClasses(item),
-				overflowItemContentClasses: calculateOverflowItemContentClasses(item),
-				overflowItemState: calculateOverflowItemState(item),
+		// Set external properties to items
+		this.items.forEach((item, index) => {
+			item._isInline = this.tabLayout === TabLayout.Inline;
+			item._mixedMode = this.mixedMode;
+			item._position = index + 1;
+			item._getTabContainerHeaderItemCallback = _ => {
+				return this.getDomRef().querySelector(`#${item._id}`);
 			};
-		}, this);
+		});
 	}
 
 	onAfterRendering() {
@@ -410,7 +374,7 @@ class TabContainer extends UI5Element {
 		return {
 			root: {
 				"ui5-tc-root": true,
-				"ui5-tc--textOnly": this._textOnly,
+				"ui5-tc--textOnly": this.textOnly,
 			},
 			header: {
 				"ui5-tc__header": true,
@@ -448,6 +412,10 @@ class TabContainer extends UI5Element {
 
 	get mixedMode() {
 		return this.items.some(item => item.icon) && this.items.some(item => item.text);
+	}
+
+	get textOnly() {
+		return this.items.every(item => !item.icon);
 	}
 
 	get previousIconACCName() {
@@ -488,124 +456,6 @@ const findIndex = (arr, predicate) => {
 	}
 
 	return -1;
-};
-
-/* CSS classes calculation helpers */
-
-const calculateAriaLabelledBy = item => {
-	const labels = [];
-
-	if (item.text) {
-		labels.push(`${item._id}-text`);
-	}
-
-	if (item.additionalText) {
-		labels.push(`${item._id}-additionalText`);
-	}
-
-	if (item.icon) {
-		labels.push(`${item._id}-icon`);
-	}
-
-	return labels.join(" ");
-};
-
-const calculateHeaderItemClasses = (item, mixedMode) => {
-	const classes = ["ui5-tc__headerItem"];
-
-	if (item.selected) {
-		classes.push("ui5-tc__headerItem--selected");
-	}
-
-	if (item.disabled) {
-		classes.push("ui5-tc__headerItem--disabled");
-	}
-
-	if (item.tabLayout === TabLayout.Inline) {
-		classes.push("ui5-tc__headerItem--inline");
-	}
-
-	if (!item.icon && !mixedMode) {
-		classes.push("ui5-tc__headerItem--textOnly");
-	}
-
-	if (item.icon) {
-		classes.push("ui5-tc__headerItem--withIcon");
-	}
-
-	if (!item.icon && mixedMode) {
-		classes.push("ui5-tc__headerItem--mixedMode");
-	}
-
-	if (item.semanticColor !== SemanticColor.Default) {
-		classes.push(`ui5-tc__headerItem--${item.semanticColor.toLowerCase()}`);
-	}
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemContentClasses = item => {
-	const classes = ["ui5-tc__headerItemContent"];
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemIconClasses = item => {
-	const classes = ["ui5-tc-headerItemIcon"];
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemSemanticIconClasses = item => {
-	const classes = ["ui5-tc-headerItemSemanticIcon"];
-
-	if (item.semanticColor !== SemanticColor.Default) {
-		classes.push(`ui5-tc-headerItemSemanticIcon--${item.semanticColor.toLowerCase()}`);
-	}
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemTextClasses = item => {
-	const classes = ["ui5-tc__headerItemText"];
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemAdditionalTextClasses = item => {
-	const classes = ["ui5-tc__headerItemAdditionalText"];
-
-	return classes.join(" ");
-};
-
-const calculateOverflowItemClasses = item => {
-	const classes = ["ui5-tc__overflowItem"];
-
-	if (item.semanticColor !== SemanticColor.Default) {
-		classes.push(`ui5-tc__overflowItem--${item.semanticColor.toLowerCase()}`);
-	}
-
-	if (item.disabled) {
-		classes.push("ui5-tc__overflowItem--disabled");
-	}
-
-	return classes.join(" ");
-};
-
-const calculateOverflowItemContentClasses = item => {
-	const classes = ["ui5-tc__overflowItemContent"];
-
-	return classes.join(" ");
-};
-
-const calculateOverflowItemState = item => {
-	return item.disabled ? "Inactive" : "Active";
-};
-
-const calculateContentItemClasses = item => {
-	const classes = ["ui5-tc__contentItem"];
-
-	return classes.join(" ");
 };
 
 TabContainer.define();

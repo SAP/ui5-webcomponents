@@ -7,25 +7,15 @@
 	no-arrow
 >
 	<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
-		{{#each renderItems}}
+		{{#each items}}
 			{{#unless this.isSeparator}}
-				<ui5-li-custom id="{{this.item._id}}"
-					class="{{this.overflowItemClasses}}"
-					type="{{this.overflowItemState}}"
-					?selected="{{this.selected}}"
-					?disabled="{{this.disabled}}"
+				<ui5-li-custom id="{{this._id}}"
+					class="{{this.overflowClasses}}"
+					type="{{this.overflowState}}"
+					?selected="{{this.effectiveSelected}}"
+					?disabled="{{this.effectiveDisabled}}"
 				>
-					<div class="{{this.overflowItemContentClasses}}">
-						{{#if this.item.icon}}
-							<ui5-icon name="{{this.item.icon}}"></ui5-icon>
-						{{/if}}
-
-						{{this.item.text}}
-
-						{{#if this.item.additionalText}}
-							({{this.item.additionalText}})
-						{{/if}}
-					</div>
+					{{this.overflowPresentation}}
 				</ui5-li-custom>
 			{{/unless}}
 		{{/each}}
