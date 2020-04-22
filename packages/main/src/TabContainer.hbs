@@ -7,26 +7,16 @@
 
 		<!-- tab items -->
 		<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
-			<ul role="tablist" class="{{classes.headerList}}">
+			<ul
+                role="tablist"
+                class="{{classes.headerList}}"
+                @click="{{_onHeaderClick}}"
+                @keydown="{{_onHeaderKeyDown}}"
+                @keyup="{{_onHeaderKeyUp}}"
+            >
 				{{#each items}}
 					{{#unless this.isSeparator}}
-						<li class="{{this.headerClasses}}"
-							id="{{this._id}}"
-							tabindex="{{this._tabIndex}}"
-							@click="{{../_onHeaderItemSelect}}"
-							@keydown="{{../	_onHeaderItemKeyDown}}"
-							@keyup="{{../_onHeaderItemKeyUp}}"
-							role="tab"
-							aria-posinset="{{this._position}}"
-							aria-setsize="{{../items.length}}"
-							aria-controls="ui5-tc-contentItem-{{this._position}}"
-							aria-selected="{{this.effectiveSelected}}"
-							?aria-disabled="{{this.effectiveDisabled}}"
-							?disabled="{{this.effectiveDisabled}}"
-							aria-labelledby="{{this.ariaLabelledBy}}"
-						>
-                            {{this.stripPresentation}}
-						</li>
+						{{this.stripPresentation}}
 					{{/unless}}
 					{{#if this.isSeparator}}
 						<li id="{{this._id}}" role="separator" class="{{../classes.separator}}"></li>

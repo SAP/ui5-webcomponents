@@ -1,35 +1,51 @@
-{{#if this.icon}}
-    <div id="{{this._id}}" class="ui5-tc-headerItemIcon-outer">
-        <ui5-icon name="{{this.icon}}" class="ui5-tc-headerItemIcon"></ui5-icon>
-    </div>
-{{/if}}
+<li id="{{this._id}}"
+	class="{{this.headerClasses}}"
+	tabindex="{{this._tabIndex}}"
+	role="tab"
+	aria-posinset="{{this._posinset}}"
+	aria-setsize="{{this._setsize}}"
+	aria-controls="ui5-tc-contentItem-{{this._posinset}}"
+	aria-selected="{{this.effectiveSelected}}"
+	?aria-disabled="{{this.effectiveDisabled}}"
+	?disabled="{{this.effectiveDisabled}}"
+	aria-labelledby="{{this.ariaLabelledBy}}"
+>
 
-<div class="ui5-tc__headerItemContent">
+	{{#if this.icon}}
+		<div id="{{this._id}}" class="ui5-tc-headerItemIcon-outer">
+			<ui5-icon name="{{this.icon}}" class="ui5-tc-headerItemIcon"></ui5-icon>
+		</div>
+	{{/if}}
 
-    {{#if this._isInline}}
-        {{#if this.text}}
-            <span class="ui5-tc__headerItemText" id="{{this._id}}-text">
-                <span class="{{this.headerSemanticIconClasses}}"></span>
-                {{this.text}}
-            </span>
-        {{/if}}
+	<div class="ui5-tc__headerItemContent">
 
-        {{#if this.additionalText}}
-            <span class="ui5-tc__headerItemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
-        {{/if}}
+		{{#if this._isInline}}
 
-    {{else}}
+			{{#if this.text}}
+				<span class="ui5-tc__headerItemText" id="{{this._id}}-text">
+					<span class="{{this.headerSemanticIconClasses}}"></span>
+					{{this.text}}
+				</span>
+			{{/if}}
 
-        {{#if this.additionalText}}
-                <span class="ui5-tc__headerItemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
-        {{/if}}
+			{{#if this.additionalText}}
+				<span class="ui5-tc__headerItemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
+			{{/if}}
 
-        {{#if this.text}}
-                <span class="ui5-tc__headerItemText" id="{{this._id}}-text">
-            <span class="{{this.headerSemanticIconClasses}}"></span>
-                    {{this.text}}
-        </span>
-        {{/if}}
+		{{else}}
 
-    {{/if}}
-</div>
+			{{#if this.additionalText}}
+					<span class="ui5-tc__headerItemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
+			{{/if}}
+
+			{{#if this.text}}
+					<span class="ui5-tc__headerItemText" id="{{this._id}}-text">
+				<span class="{{this.headerSemanticIconClasses}}"></span>
+						{{this.text}}
+			</span>
+			{{/if}}
+
+		{{/if}}
+	</div>
+
+</li>

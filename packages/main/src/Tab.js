@@ -2,7 +2,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import SemanticColor from "./types/SemanticColor.js";
 import TabLayout from "./types/TabLayout.js";
+import TabContainer from "./TabContainer.js";
 import Icon from "./Icon.js";
+import CustomListItem from "./CustomListItem.js";
 
 // Templates
 import TabTemplate from "./generated/templates/TabTemplate.lit.js";
@@ -11,6 +13,8 @@ import TabInOverflowTemplate from "./generated/templates/TabInOverflowTemplate.l
 
 // Styles
 import css from "./generated/themes/Tab.css.js";
+import stripCss from "./generated/themes/TabInStrip.css.js";
+import overflowCss from "./generated/themes/TabInOverflow.css.js";
 
 /**
  * @public
@@ -158,7 +162,10 @@ class Tab extends UI5Element {
 	}
 
 	static async onDefine() {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			CustomListItem.define(),
+		]);
 	}
 
 	get isSeparator() {
@@ -289,5 +296,8 @@ class Tab extends UI5Element {
 }
 
 Tab.define();
+
+TabContainer.registerTabStyles(stripCss);
+TabContainer.registerStaticAreaTabStyles(overflowCss);
 
 export default Tab;

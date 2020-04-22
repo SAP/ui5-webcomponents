@@ -11,7 +11,6 @@ import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
 import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
-import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -22,11 +21,13 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
-import tabContainerPopoverCss from "./generated/themes/TabContainerPopup.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import TabLayout from "./types/TabLayout.js";
 
 const SCROLL_STEP = 128;
+
+const tabStyles = [];
+const staticAreaTabStyles = [];
 
 /**
  * @public
@@ -188,11 +189,11 @@ class TabContainer extends UI5Element {
 	}
 
 	static get styles() {
-		return tabContainerCss;
+		return [...tabStyles, tabContainerCss];
 	}
 
 	static get staticAreaStyles() {
-		return [tabContainerPopoverCss, ResponsivePopoverCommonCss];
+		return [...staticAreaTabStyles, ResponsivePopoverCommonCss];
 	}
 
 	static get render() {
@@ -205,6 +206,14 @@ class TabContainer extends UI5Element {
 
 	static get staticAreaTemplate() {
 		return TabContainerPopoverTemplate;
+	}
+
+	static registerTabStyles(styles) {
+		tabStyles.push(styles);
+	}
+
+	static registerStaticAreaTabStyles(styles) {
+		staticAreaTabStyles.push(styles);
 	}
 
 	constructor() {
@@ -233,10 +242,12 @@ class TabContainer extends UI5Element {
 		this.items.forEach((item, index) => {
 			item._isInline = this.tabLayout === TabLayout.Inline;
 			item._mixedMode = this.mixedMode;
-			item._position = index + 1;
+			item._posinset = index + 1;
+			item._setsize = this.items.length;
 			item._getTabContainerHeaderItemCallback = _ => {
 				return this.getDomRef().querySelector(`#${item._id}`);
 			};
+			item._itemSelectCallback = this._onItemSelect.bind(this);
 		});
 	}
 
@@ -253,7 +264,19 @@ class TabContainer extends UI5Element {
 		ResizeHandler.deregister(this._getHeader(), this._handleHeaderResize);
 	}
 
-	_onHeaderItemKeyDown(event) {
+	_onHeaderClick(event) {
+		if (!tabIsClicked(event.target)) {
+			return;
+		}
+
+		this._onHeaderItemSelect(event);
+	}
+
+	_onHeaderKeyDown(event) {
+		if (!tabIsClicked(event.target)) {
+			return;
+		}
+
 		if (isEnter(event)) {
 			this._onHeaderItemSelect(event);
 		}
@@ -264,7 +287,11 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_onHeaderItemKeyUp(event) {
+	_onHeaderKeyUp(event) {
+		if (!tabIsClicked(event.target)) {
+			return;
+		}
+
 		if (isSpace(event)) {
 			this._onHeaderItemSelect(event);
 		}
@@ -437,7 +464,6 @@ class TabContainer extends UI5Element {
 	static async onDefine() {
 		await Promise.all([
 			Button.define(),
-			CustomListItem.define(),
 			Icon.define(),
 			List.define(),
 			ResponsivePopover.define(),
@@ -445,6 +471,10 @@ class TabContainer extends UI5Element {
 		]);
 	}
 }
+
+const tabIsClicked = el => {
+	return el.localName === "li" && el.getAttribute("role") === "tab";
+};
 
 const findIndex = (arr, predicate) => {
 	for (let i = 0; i < arr.length; i++) {

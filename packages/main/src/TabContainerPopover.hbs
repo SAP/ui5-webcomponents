@@ -9,14 +9,7 @@
 	<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
 		{{#each items}}
 			{{#unless this.isSeparator}}
-				<ui5-li-custom id="{{this._id}}"
-					class="{{this.overflowClasses}}"
-					type="{{this.overflowState}}"
-					?selected="{{this.effectiveSelected}}"
-					?disabled="{{this.effectiveDisabled}}"
-				>
-					{{this.overflowPresentation}}
-				</ui5-li-custom>
+                {{this.overflowPresentation}}
 			{{/unless}}
 		{{/each}}
 	</ui5-list>
