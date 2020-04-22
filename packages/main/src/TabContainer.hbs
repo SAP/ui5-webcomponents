@@ -8,12 +8,12 @@
 		<!-- tab items -->
 		<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
 			<ul
-                role="tablist"
-                class="{{classes.headerList}}"
-                @click="{{_onHeaderClick}}"
-                @keydown="{{_onHeaderKeyDown}}"
-                @keyup="{{_onHeaderKeyUp}}"
-            >
+				role="tablist"
+				class="{{classes.headerList}}"
+				@click="{{_onHeaderClick}}"
+				@keydown="{{_onHeaderKeyDown}}"
+				@keyup="{{_onHeaderKeyUp}}"
+			>
 				{{#each items}}
 					{{#unless this.isSeparator}}
 						{{this.stripPresentation}}
