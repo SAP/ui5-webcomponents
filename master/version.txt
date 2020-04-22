@@ -1,5 +1,14 @@
-commit df2671f38ed3061e513bb5334224dce64b581620
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Apr 21 18:09:12 2020 +0300
+commit f337d470300027e56a40fa13ae73665afd55302e
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Apr 22 10:11:38 2020 +0300
 
-    chore(ui5-busyindicator): merge changes (#1509)
+    refactor(ui5-carousel): rework component behaviour (#1486)
+    
+    - [ Refactor ] Previously entire page of items is being moved in and out of the view during navigation. Now, the items are moved in and out the visible area one by one, in other words all the items are shifted to the left and to the right by one.
+    - [ New Implementation ] Initial accessibility spec is implemented (as in openui5), but can be further improved as it does not handle the multiple items per page case the best way.
+    - [ Bug Fix ] Previously the navigation arrows were remaining displayed, although no previous or next item is available and pressing the arrows didn't perform any action. Now, the arrows remain hidden if no previous/next item is available to navigate towards.
+    - [ Bug Fix ] Previously the navigation arrows have been misplaced in IE, making the component not usable at all
+    as the next arrow is out of the viewport ([reproduce in IE](https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Carousel/)). Now the arrows are displayed correctly in IE too.
+    - [ Bug Fix ] Previously setting "selectedIndex" that is out of range brings the component to unacceptable/ broken state. Now, the "selectedIndex" is validated and changed to its default value when not valid.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1277
