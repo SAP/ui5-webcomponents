@@ -233,58 +233,58 @@ class Tab extends UI5Element {
 	}
 
 	get headerClasses() {
-		const classes = ["ui5-tc__headerItem"];
+		const classes = ["ui5-tab-strip-item"];
 
 		if (this.selected) {
-			classes.push("ui5-tc__headerItem--selected");
+			classes.push("ui5-tab-strip-item--selected");
 		}
 
 		if (this.disabled) {
-			classes.push("ui5-tc__headerItem--disabled");
+			classes.push("ui5-tab-strip-item--disabled");
 		}
 
 		if (this.tabLayout === TabLayout.Inline) {
-			classes.push("ui5-tc__headerItem--inline");
+			classes.push("ui5-tab-strip-item--inline");
 		}
 
 		if (!this.icon && !this._mixedMode) {
-			classes.push("ui5-tc__headerItem--textOnly");
+			classes.push("ui5-tab-strip-item--textOnly");
 		}
 
 		if (this.icon) {
-			classes.push("ui5-tc__headerItem--withIcon");
+			classes.push("ui5-tab-strip-item--withIcon");
 		}
 
 		if (!this.icon && this._mixedMode) {
-			classes.push("ui5-tc__headerItem--mixedMode");
+			classes.push("ui5-tab-strip-item--mixedMode");
 		}
 
 		if (this.semanticColor !== SemanticColor.Default) {
-			classes.push(`ui5-tc__headerItem--${this.semanticColor.toLowerCase()}`);
+			classes.push(`ui5-tab-strip-item--${this.semanticColor.toLowerCase()}`);
 		}
 
 		return classes.join(" ");
 	}
 
 	get headerSemanticIconClasses() {
-		const classes = ["ui5-tc-headerItemSemanticIcon"];
+		const classes = ["ui5-tab-strip-item-semanticIcon"];
 
 		if (this.semanticColor !== SemanticColor.Default) {
-			classes.push(`ui5-tc-headerItemSemanticIcon--${this.semanticColor.toLowerCase()}`);
+			classes.push(`ui5-tab-strip-item-semanticIcon--${this.semanticColor.toLowerCase()}`);
 		}
 
 		return classes.join(" ");
 	}
 
 	get overflowClasses() {
-		const classes = ["ui5-tc__overflowItem"];
+		const classes = ["ui5-tab-overflow-item"];
 
 		if (this.semanticColor !== SemanticColor.Default) {
-			classes.push(`ui5-tc__overflowItem--${this.semanticColor.toLowerCase()}`);
+			classes.push(`ui5-tab-overflow-item--${this.semanticColor.toLowerCase()}`);
 		}
 
 		if (this.disabled) {
-			classes.push("ui5-tc__overflowItem--disabled");
+			classes.push("ui5-tab-overflow-item--disabled");
 		}
 
 		return classes.join(" ");
