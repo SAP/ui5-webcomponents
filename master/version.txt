@@ -1,5 +1,5 @@
-commit ede363509b2e11ca65707355a5f9d780a8d29929
+commit 501740e0ad9656c11316a35e81c348ee939c8943
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Apr 22 12:23:51 2020 +0300
+Date:   Wed Apr 22 12:34:33 2020 +0300
 
-    feat(ui5-select): implement accessibility spec (#1485)
+    feat(ui5-avatar): implement accessibility spec (#1484)
