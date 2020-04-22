@@ -90,7 +90,11 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the index of the initially selected page.
+		 * Defines the index of the initially selected item.
+		 * <br><br>
+		 * <b>Note:</b>
+		 * When there are multiple items displayed,
+		 * the <code>selectedIndex</code> would define the first item within view.
 		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
@@ -154,8 +158,9 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 
 		/**
-		 * Fired when the user clicks on the navigation arrows
-		 * and changes the selected page.
+		 * Fired whenever the <code>selectedIndex</code> changes due to user interaction,
+		 * when the user clicks on the navigation arrows or while resizing,
+		 * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
 		 *
 		 * @event
 		 * @param {Integer} selectedIndex the current <code>selectedIndex</code>.
