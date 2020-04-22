@@ -54,8 +54,8 @@ describe("Wheel Slider general interaction", () => {
 		const slider = browser.$("#wheelslider");
 		const sliderElements = slider.shadow$$(".ui5-wheelslider-item");
 
-		sliderElements[5].click();
+		sliderElements[3].click();
 
-		assert.strictEqual(slider.getValue(), "6", "Wheel Slider pick elements with click works");
+		assert.strictEqual(slider.getValue(), "4", "Wheel Slider pick elements with click works");
 	});
 });

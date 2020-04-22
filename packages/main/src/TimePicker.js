@@ -373,7 +373,7 @@ class TimePicker extends UI5Element {
 			}
 		}
 		if (this._hoursParameters.isTwelveHoursFormat && periodsSlider && this._hoursParameters.minHour === 1) {
-			periodsSlider.value = currentDate.getHours() > this._hoursParameters.maxHour ? this.periodsArray[1] : this.periodsArray[0];
+			periodsSlider.value = currentDate.getHours() >= this._hoursParameters.maxHour ? this.periodsArray[1] : this.periodsArray[0];
 		} else if (this._hoursParameters.isTwelveHoursFormat && periodsSlider) {
 			periodsSlider.value = (currentDate.getHours() > this._hoursParameters.maxHour || currentDate.getHours() === this._hoursParameters.minHour) ? this.periodsArray[1] : this.periodsArray[0];
 		}
@@ -498,7 +498,7 @@ class TimePicker extends UI5Element {
 			seconds = secondsSlider ? secondsSlider.getAttribute("value") : "0",
 			period = periodsSlider ? periodsSlider.getAttribute("value") : this.periodsArray[0];
 
-		if (period === this.periodsArray[1]) {
+		if (this._hoursParameters.isTwelveHoursFormat && period === this.periodsArray[0]) {
 			selectedDate.setHours(hours * 1 + 12);
 		} else {
 			selectedDate.setHours(hours);
@@ -581,7 +581,7 @@ class TimePicker extends UI5Element {
 		}
 	}
 
-	_oncontainerkeydown(e) {
+	async _oncontainerkeydown(e) {
 		if (isLeft(e)) {
 			let expandedSliderIndex = 0;
 			for (let i = 0; i < this._slidersDomRefs.length; i++) {
@@ -610,11 +610,13 @@ class TimePicker extends UI5Element {
 		}
 
 		if (isTabNext(e) && e.target === this._slidersDomRefs[this._slidersDomRefs.length - 1]) {
+			const responsivePopover = await this._getPopover();
 			e.preventDefault();
-			this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-footer").firstElementChild.focus();
+			responsivePopover.querySelector(".ui5-timepicker-footer").firstElementChild.focus();
 		} else if (isTabPrevious(e) && e.target === this._slidersDomRefs[0]) {
+			const responsivePopover = await this._getPopover();
 			e.preventDefault();
-			this.getStaticAreaItemDomRef().querySelector(`.ui5-timepicker-footer`).lastElementChild.focus();
+			responsivePopover.querySelector(`.ui5-timepicker-footer`).lastElementChild.focus();
 		}
 	}
 

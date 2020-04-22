@@ -1,5 +1,5 @@
 <div class="ui5-timeline-root">
-	<ul class="ui5-timeline-list">
+	<ul class="ui5-timeline-list" role="listbox" aria-live="polite" aria-label="{{ariaLabel}}">
 		{{#each items}}
 			<li class="ui5-timeline-list-item">
 				<slot name="{{this._individualSlot}}"></slot>
