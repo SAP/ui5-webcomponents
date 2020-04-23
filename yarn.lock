@@ -704,10 +704,10 @@
   resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.76.0.tgz#351fe3b11922fa7100d7c88bdf5138ad025e531e"
   integrity sha512-b2+LPxORY4qKgGggqGeP4ckEuMqG0HHy7zwT/vMGGl1L2zLJ/xzruVvsl46KfOcCqEcdjxW+tSGP7dLEe1O4bQ==
 
-"@sap-theming/theming-base-content@11.1.18":
-  version "11.1.18"
-  resolved "https://registry.npmjs.org/@sap-theming/theming-base-content/-/theming-base-content-11.1.18.tgz#041965002a47326f2791241e3539e9bffeb2359f"
-  integrity sha512-NDqUq35hc/eZQomLhsDQEO8PeCnNCZmJIittafuho5VlGNdJWR1ZsXj97MZSJnLLfttVWcpb5KNrj+b84F6aAw==
+"@sap-theming/theming-base-content@11.1.19":
+  version "11.1.19"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.1.19.tgz#301b8085807cd410e5c7269cca55cd4ca385534c"
+  integrity sha512-0RIoniX0XgQDMfMsySvNDeXVGtH3UQRQMkJYFIkaq/nrTGSyfXT9k+B4CbTf4546dyrlLM0YoaHIOtxmMsh1ZA==
 
 "@testim/chrome-version@^1.0.7":
   version "1.0.7"
