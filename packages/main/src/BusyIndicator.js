@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
+import Label from "./Label.js";
 
 // Template
 import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.lit.js";
@@ -30,6 +31,18 @@ const metadata = {
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
+
+		/**
+		 * Defines text to be displayed below the busy indicator. It can be used to inform the user of the current operation.
+		 * @type {String}
+		 * @public
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.7
+		 */
+		text: {
+			type: String,
+		},
+
 		/**
 		 * Defines the size of the <code>ui5-busyindicator</code>.
 		 * <br><br>
@@ -101,7 +114,10 @@ class BusyIndicator extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
+			Label.define(),
+		]);
 	}
 
 	get ariaTitle() {

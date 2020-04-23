@@ -12,6 +12,7 @@
 }
 
 :host(:not([wrap])) .ui5-label-root {
+	width: 100%;
 	font-weight: inherit;
 	display: inline-block;
 	white-space: nowrap;

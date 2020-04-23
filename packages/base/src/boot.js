@@ -6,7 +6,6 @@ import whenPolyfillLoaded from "./compatibility/whenPolyfillLoaded.js";
 import { getFeature } from "./FeaturesRegistry.js";
 
 let bootPromise;
-const OpenUI5Support = getFeature("OpenUI5Support");
 
 const boot = () => {
 	if (bootPromise) {
@@ -14,6 +13,7 @@ const boot = () => {
 	}
 
 	bootPromise = new Promise(async resolve => {
+		const OpenUI5Support = getFeature("OpenUI5Support");
 		if (OpenUI5Support) {
 			await OpenUI5Support.init();
 		}

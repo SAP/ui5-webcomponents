@@ -220,7 +220,7 @@ class Dialog extends Popup {
 		this._blockLayerVisible = false;
 		unblockBodyScrolling();
 
-		if (this._focusedElementBeforeOpen) {
+		if (this._focusedElementBeforeOpen && !this._disableInitialFocus) {
 			this._focusedElementBeforeOpen.focus();
 		}
 	}

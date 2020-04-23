@@ -12,6 +12,7 @@ const glob = require("glob");
 const PropertiesReader = require('properties-reader');
 const fs = require('fs');
 const assets = require('../../assets-meta.js');
+const mkdirp = require("mkdirp");
 
 const allLanguages = assets.languages.all;
 
@@ -32,6 +33,7 @@ const messagesJSONDist = path.normalize(`${process.argv[3]}`);
 	console.log(`[i18n]: "${filename}.json" has been generated!`);
 };
 
+mkdirp.sync(messagesJSONDist);
  glob(messagesBundles, {}, (err, files) => {
 	if (err) {
 		return console.log("No messagebundle files found!");

@@ -428,7 +428,10 @@ class MultiComboBox extends UI5Element {
 
 		if (tokensCount === 0 && this._deleting) {
 			setTimeout(() => {
-				this.shadowRoot.querySelector("input").focus();
+				if (!isPhone()) {
+					this.shadowRoot.querySelector("input").focus();
+				}
+
 				this._deleting = false;
 			}, 0);
 		}
@@ -600,7 +603,9 @@ class MultiComboBox extends UI5Element {
 	}
 
 	rootFocusIn() {
-		this.expandedTokenizer = true;
+		if (!isPhone()) {
+			this.expandedTokenizer = true;
+		}
 	}
 
 	rootFocusOut(event) {
