@@ -6,6 +6,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
@@ -73,6 +74,19 @@ const metadata = {
 		 * @public
 		 */
 		collapsed: {
+			type: Boolean,
+		},
+
+		/**
+		 * When set to <code>true</code>, the tab content area is displayed above rather than below the tabs.
+		 * <br><br>
+		 * <b>Note:</b> Use this property only when the <code>ui5-tabcontainer</code> is at the bottom of the page.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		contentAbove: {
 			type: Boolean,
 		},
 
@@ -460,6 +474,10 @@ class TabContainer extends UI5Element {
 
 	get overflowMenuTitle() {
 		return this.i18nBundle.getText(TABCONTAINER_OVERFLOW_MENU_TITLE);
+	}
+
+	get overflowMenuIcon() {
+		return this.contentAbove ? "slim-arrow-up" : "slim-arrow-down";
 	}
 
 	get rtl() {
