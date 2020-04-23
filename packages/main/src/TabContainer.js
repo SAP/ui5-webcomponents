@@ -17,6 +17,7 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import SemanticColor from "./types/SemanticColor.js";
+import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -78,16 +79,19 @@ const metadata = {
 		},
 
 		/**
-		 * When set to <code>true</code>, the tab content area is displayed above rather than below the tabs.
+		 * Defines the placement of the tab strip (tab buttons area) relative to the actual tabs' content.
 		 * <br><br>
-		 * <b>Note:</b> Use this property only when the <code>ui5-tabcontainer</code> is at the bottom of the page.
+		 * <b>Note:</b> By default the tab strip is displayed above the tabs' content area and this is the recommended
+		 * layout for most scenarios. Set to <code>Bottom</code> only when the <code>ui5-tabcontainer</code> is at the
+		 * bottom of the page and you want the tab strip to act as a menu.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		contentAbove: {
-			type: Boolean,
+		tabsPlacement: {
+			type: TabContainerTabsPlacement,
+			defaultValue: TabContainerTabsPlacement.Top,
 		},
 
 		/**
@@ -476,8 +480,12 @@ class TabContainer extends UI5Element {
 		return this.i18nBundle.getText(TABCONTAINER_OVERFLOW_MENU_TITLE);
 	}
 
+	get tabsAtTheBottom() {
+		return this.tabsPlacement === TabContainerTabsPlacement.Bottom;
+	}
+
 	get overflowMenuIcon() {
-		return this.contentAbove ? "slim-arrow-up" : "slim-arrow-down";
+		return this.tabsAtTheBottom ? "slim-arrow-up" : "slim-arrow-down";
 	}
 
 	get rtl() {

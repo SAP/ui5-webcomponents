@@ -2,7 +2,7 @@
 	class="{{classes.root}}"
 	dir="{{rtl}}"
 >
-	{{#if contentAbove}}
+	{{#if tabsAtTheBottom}}
 		{{> contentArea}}
 	{{/if}}
 
@@ -58,7 +58,7 @@
 		{{/if}}
 	</div>
 
-	{{#unless contentAbove}}
+	{{#unless tabsAtTheBottom}}
 		{{> contentArea}}
 	{{/unless}}
 
