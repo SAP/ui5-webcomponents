@@ -354,7 +354,7 @@ class Button extends UI5Element {
 		let result = "";
 
 		ids.forEach((elementId, index) => {
-			const element = owner.querySelector(`#${elementId}`);
+			const element = owner.querySelector(`[id='${elementId}']`);
 			result += `${element ? element.textContent : ""}`;
 
 			if (index < ids.length - 1) {
