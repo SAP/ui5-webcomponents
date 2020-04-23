@@ -307,6 +307,8 @@ class Carousel extends UI5Element {
 	}
 
 	navigateLeft() {
+		this._resizing = false;
+
 		const peviousSelectedIndex = this.selectedIndex;
 
 		if (this.selectedIndex - 1 < 0) {
@@ -323,6 +325,8 @@ class Carousel extends UI5Element {
 	}
 
 	navigateRight() {
+		this._resizing = false;
+
 		const peviousSelectedIndex = this.selectedIndex;
 
 		if (this.selectedIndex + 1 > this.pagesCount - 1) {
