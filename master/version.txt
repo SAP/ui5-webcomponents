@@ -1,5 +1,5 @@
-commit b0317824c6e16b44a31d2320439ab4bd665703ae
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Apr 23 08:43:26 2020 +0300
+commit ddc612f8a655950787cb0263bd8492f2155483e9
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Apr 23 08:49:33 2020 +0300
 
-    feat(framework): external themes support (#1463)
+    chore: use the changed value (#1512)
