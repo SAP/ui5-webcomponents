@@ -1,18 +1,5 @@
-commit ee7f3000eb5fa1e37e06a05716032a0fc3b4a077
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Apr 22 17:45:30 2020 +0300
+commit b0317824c6e16b44a31d2320439ab4bd665703ae
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Apr 23 08:43:26 2020 +0300
 
-    fix(build): escape quotes in translation texts (#1511)
-    
-    **Background**
-    The Translation Delivery pull request fails and I found out that one of the new texts in messagebundle_en.properties has has quoted word  `Drop files to upload them or use the "Upload" button `.
-    
-    **Issue:**
-    Later when building the i18n-defaults.js, the following fails:
-    
-    ```js
-    // effectiveValue  has double quotes itself and a word inside with double quotes in addition
-    return `const ${key} = {key: "${key}", defaultText: "${effectiveValue}"};`;
-    ```
-    
-    **Solution**: escaping those quotes.
+    feat(framework): external themes support (#1463)
