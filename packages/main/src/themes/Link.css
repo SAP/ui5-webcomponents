@@ -36,7 +36,7 @@
 
 :host([design="Subtle"]) .ui5-link-root,
 :host([design="Subtle"]) .ui5-link-root:visited {
-	color: var(--sapSubtleLinkColor);
+	color: var(--sapLink_SubtleColor);
 }
 
 :host([design="Subtle"]) .ui5-link-root:focus {
