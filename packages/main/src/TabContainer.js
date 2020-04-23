@@ -86,7 +86,8 @@ const metadata = {
 		 * bottom of the page and you want the tab strip to act as a menu.
 		 *
 		 * @type {boolean}
-		 * @defaultvalue false
+		 * @defaultvalue "Top"
+		 * @since 1.0.0-rc.7
 		 * @public
 		 */
 		tabsPlacement: {
