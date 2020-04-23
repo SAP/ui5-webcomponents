@@ -1,5 +1,5 @@
-commit ddc612f8a655950787cb0263bd8492f2155483e9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 23 08:49:33 2020 +0300
+commit 71a25ad4142cbf4024719d313043ccd4d1a57a39
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Apr 23 01:09:05 2020 -0700
 
-    chore: use the changed value (#1512)
+    Translation Delivery (#1488)
