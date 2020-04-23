@@ -485,6 +485,15 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
+	_setInitialFocusInResponsivePopover() {
+		this._innerInput.focus();
+	}
+
+	_onAllItemsPopoverAfterOpen() {
+		this._setInitialFocusInResponsivePopover();
+		this._toggleIcon();
+	}
+
 	_getSelectedItems() {
 		// Angular 2 way data binding
 		this.selectedValues = this.items.filter(item => item.selected);
