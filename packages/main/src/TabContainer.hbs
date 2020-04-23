@@ -2,6 +2,10 @@
 	class="{{classes.root}}"
 	dir="{{rtl}}"
 >
+	{{#if tabsAtTheBottom}}
+		{{> contentArea}}
+	{{/if}}
+
 	<div class="{{classes.header}}" id="{{_id}}-header">
 		<ui5-icon @click="{{_onHeaderBackArrowClick}}" class="{{classes.headerBackArrow}}" name="slim-arrow-left" tabindex="-1" accessible-name="{{previousIconACCName}}" show-tooltip></ui5-icon>
 
@@ -46,7 +50,7 @@
 			<ui5-button
 				@click="{{_onOverflowButtonClick}}"
 				class="{{classes.overflowButton}}"
-				icon="slim-arrow-down"
+				icon="{{overflowMenuIcon}}"
 				type="Transparent"
 				title="{{overflowMenuTitle}}"
 				design="Transparent"
@@ -54,7 +58,13 @@
 		{{/if}}
 	</div>
 
-	<!-- content area -->
+	{{#unless tabsAtTheBottom}}
+		{{> contentArea}}
+	{{/unless}}
+
+</div>
+
+{{#*inline "contentArea"}}
 	<div class="{{classes.content}}">
 		{{#each renderItems}}
 			{{#unless this.isSeparator}}
@@ -64,7 +74,7 @@
 			{{/unless}}
 		{{/each}}
 	</div>
-</div>
+{{/inline}}
 
 {{#*inline "standardTab"}}
 	{{#if this.item.icon}}

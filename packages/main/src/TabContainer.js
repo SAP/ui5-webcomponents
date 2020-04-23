@@ -6,6 +6,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
@@ -16,6 +17,7 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import SemanticColor from "./types/SemanticColor.js";
+import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -74,6 +76,23 @@ const metadata = {
 		 */
 		collapsed: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the placement of the tab strip (tab buttons area) relative to the actual tabs' content.
+		 * <br><br>
+		 * <b>Note:</b> By default the tab strip is displayed above the tabs' content area and this is the recommended
+		 * layout for most scenarios. Set to <code>Bottom</code> only when the <code>ui5-tabcontainer</code> is at the
+		 * bottom of the page and you want the tab strip to act as a menu.
+		 *
+		 * @type {TabContainerTabsPlacement}
+		 * @defaultvalue "Top"
+		 * @since 1.0.0-rc.7
+		 * @public
+		 */
+		tabsPlacement: {
+			type: TabContainerTabsPlacement,
+			defaultValue: TabContainerTabsPlacement.Top,
 		},
 
 		/**
@@ -460,6 +479,14 @@ class TabContainer extends UI5Element {
 
 	get overflowMenuTitle() {
 		return this.i18nBundle.getText(TABCONTAINER_OVERFLOW_MENU_TITLE);
+	}
+
+	get tabsAtTheBottom() {
+		return this.tabsPlacement === TabContainerTabsPlacement.Bottom;
+	}
+
+	get overflowMenuIcon() {
+		return this.tabsAtTheBottom ? "slim-arrow-up" : "slim-arrow-down";
 	}
 
 	get rtl() {
