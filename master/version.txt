@@ -1,5 +1,5 @@
-commit 71a25ad4142cbf4024719d313043ccd4d1a57a39
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Apr 23 01:09:05 2020 -0700
+commit 77e6ab6a33e8bad3d7c8f716d9f191153e6fe2eb
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Apr 23 12:13:08 2020 +0300
 
-    Translation Delivery (#1488)
+    fix(ui5-multi-combobox): fix initial focus on mobile (#1508)
