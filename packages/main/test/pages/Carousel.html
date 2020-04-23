@@ -484,5 +484,26 @@
 	<ui5-button>Button 9</ui5-button>
 </ui5-carousel>
 
+<ui5-carousel id="carousel8" items-per-page-m="4" items-per-page-l="4">
+	<ui5-button>Button 1</ui5-button>
+	<ui5-button>Button 2</ui5-button>
+	<ui5-button>Button 3</ui5-button>
+	<ui5-button>Button 4</ui5-button>
+	<ui5-button>Button 5</ui5-button>
+	<ui5-button>Button 6</ui5-button>
+	<ui5-button>Button 7</ui5-button>
+	<ui5-button>Button 8</ui5-button>
+</ui5-carousel>
+<ui5-input id="result"></ui5-input>
+<ui5-input id="resultCounter"></ui5-input>
+
 </body>
+
+<script>
+	var counter = 0;
+	carousel8.addEventListener("ui5-navigate", function(event){
+		result.value = event.detail.selectedIndex;
+		resultCounter.value = ++counter;
+	});
+</script>
 </html>

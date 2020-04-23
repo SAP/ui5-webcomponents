@@ -24,6 +24,7 @@
         {{#if arrows.content}}
             <div class="ui5-carousel-navigation-arrows">
                 <ui5-button
+                    arrow-back
                     class="ui5-carousel-navigation-button {{classes.navPrevButton}}"
                     icon="slim-arrow-left"
                     tabindex="-1"
@@ -31,6 +32,7 @@
                     @keydown={{_onbuttonkeydown}}
                 ></ui5-button>
                 <ui5-button
+                    arrow-forward
                     class="ui5-carousel-navigation-button {{classes.navNextButton}}"
                     icon="slim-arrow-right"
                     tabindex="-1"
@@ -44,6 +46,7 @@
             <div class="{{classes.navigation}}">
                 {{#if arrows.navigation}}
                 <ui5-button
+                    arrow-back
                     class="ui5-carousel-navigation-button {{classes.navPrevButton}}"
                     icon="slim-arrow-left"
                     tabindex="-1"
@@ -69,6 +72,7 @@
 
                 {{#if arrows.navigation}}
                     <ui5-button
+                        arrow-forward
                         class="ui5-carousel-navigation-button {{classes.navNextButton}}"
                         icon="slim-arrow-right"
                         tabindex="-1"

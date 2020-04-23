@@ -90,7 +90,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the index of the initially selected page.
+		 * Defines the index of the initially selected item.
 		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
@@ -152,7 +152,22 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
-		//
+
+		/**
+		 * Fired whenever the <code>selectedIndex</code> changes due to user interaction,
+		 * when the user clicks on the navigation arrows or while resizing,
+		 * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
+		 *
+		 * @event
+		 * @param {Integer} selectedIndex the current <code>selectedIndex</code>.
+		 * @public
+		 * @since 1.0.0-rc.7
+		 */
+		navigate: {
+			detail: {
+				selectedIndex: { type: Integer },
+			},
+		},
 	},
 };
 
@@ -263,6 +278,7 @@ class Carousel extends UI5Element {
 
 		if (this.selectedIndex > this.pagesCount - 1) {
 			this.selectedIndex = this.pagesCount - 1;
+			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
 		}
 	}
 
@@ -291,6 +307,10 @@ class Carousel extends UI5Element {
 	}
 
 	navigateLeft() {
+		this._resizing = false;
+
+		const peviousSelectedIndex = this.selectedIndex;
+
 		if (this.selectedIndex - 1 < 0) {
 			if (this.cyclic) {
 				this.selectedIndex = this.pagesCount - 1;
@@ -298,15 +318,27 @@ class Carousel extends UI5Element {
 		} else {
 			--this.selectedIndex;
 		}
+
+		if (peviousSelectedIndex !== this.selectedIndex) {
+			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		}
 	}
 
 	navigateRight() {
+		this._resizing = false;
+
+		const peviousSelectedIndex = this.selectedIndex;
+
 		if (this.selectedIndex + 1 > this.pagesCount - 1) {
 			if (this.cyclic) {
 				this.selectedIndex = 0;
 			}
 		} else {
 			++this.selectedIndex;
+		}
+
+		if (peviousSelectedIndex !== this.selectedIndex) {
+			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
 		}
 	}
 

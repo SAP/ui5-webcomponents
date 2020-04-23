@@ -110,4 +110,43 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(selectedIndex, NORMALIZED_INDEX,
 			"Although '15' is set, the actual selectedIndex is changed to 0.");
 	});
+
+	it("Event navigate fired when pressing navigation arrows", () => {
+		const carousel = browser.$("#carousel8");
+		const selectedIndex = browser.$("#result");
+		const eventCounter = browser.$("#resultCounter");
+		const navigationArrowForward = carousel.shadow$("ui5-button[arrow-forward]");
+		const navigationArrowsBack = carousel.shadow$("ui5-button[arrow-back]");
+
+		// using the navigtion arrows
+		navigationArrowForward.click(); // forward
+		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct.");
+		assert.strictEqual(eventCounter.getProperty("value"), "1", "The navigate event is fired.");
+
+		navigationArrowForward.click(); // forward
+		assert.strictEqual(selectedIndex.getProperty("value"), "2", "The selectedIndex is correct.");
+		assert.strictEqual(eventCounter.getProperty("value"), "2", "The navigate event is fired.");
+
+		navigationArrowsBack.click(); // back
+		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct");
+		assert.strictEqual(eventCounter.getProperty("value"), "3", "The navigate event is fired.");
+
+		navigationArrowsBack.click(); // back
+		assert.strictEqual(selectedIndex.getProperty("value"), "0", "The selectedIndex is correct.");
+		assert.strictEqual(eventCounter.getProperty("value"), "4", "The navigate event is fired.");
+
+		// using the keyboard navigation
+		carousel.click();
+		carousel.keys("ArrowRight");
+		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct.");
+		assert.strictEqual(eventCounter.getProperty("value"), "5", "The navigate event is fired.");
+
+		carousel.keys("ArrowLeft");
+		assert.strictEqual(selectedIndex.getProperty("value"), "0", "The selectedIndex is correct.");
+		assert.strictEqual(eventCounter.getProperty("value"), "6", "The navigate event is fired.");
+
+		carousel.keys("ArrowLeft");
+		assert.strictEqual(selectedIndex.getProperty("value"), "0", "The selectedIndex is correct.");
+		assert.strictEqual(eventCounter.getProperty("value"), "6", "The navigate event is not fired as no previous item.");
+	});
 });
