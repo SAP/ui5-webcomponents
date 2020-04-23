@@ -1,5 +1,5 @@
-commit 77e6ab6a33e8bad3d7c8f716d9f191153e6fe2eb
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Apr 23 12:13:08 2020 +0300
+commit 4e00e5559e3dbada4759910947c91ebff5c587c9
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Apr 23 19:31:46 2020 +0300
 
-    fix(ui5-multi-combobox): fix initial focus on mobile (#1508)
+    chore(theme-base): Update to the newest version of theming-base-content (#1518)
