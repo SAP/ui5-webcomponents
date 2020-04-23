@@ -340,7 +340,7 @@ class Button extends UI5Element {
 		};
 	}
 
-	get ariaLabellText() {
+	get ariaLabelText() {
 		if (!this.ariaLabelledby) {
 			if (this.ariaLabel) {
 				return this.ariaLabel;
