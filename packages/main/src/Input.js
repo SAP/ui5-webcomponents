@@ -541,7 +541,7 @@ class Input extends UI5Element {
 		this.previousValue = this.value;
 
 		await this.getInputDOMRef();
-		this._inputFocused = event.target !== this.inputDomRef;
+		this._inputFocused = event.target === this.inputDomRef;
 	}
 
 	_onfocusout(event) {
@@ -593,9 +593,7 @@ class Input extends UI5Element {
 	}
 
 	_handleResize() {
-		if (this.hasValueStateMessage) {
-			this._inputWidth = this.offsetWidth;
-		}
+		this._inputWidth = this.offsetWidth;
 	}
 
 	_closeRespPopover() {
@@ -869,7 +867,9 @@ class Input extends UI5Element {
 	}
 
 	get hasValueStateMessage() {
-		return this.hasValueState && this.valueState !== ValueState.Success && !this._inputFocused;
+		return this.hasValueState && this.valueState !== ValueState.Success
+			&& (this._inputFocused // Handles the cases when valueStateMessage is forwarded (from datepicker e.g.)
+			|| (this._isPhone && this.Suggestions)); // Handles Input with suggestions on mobile
 	}
 
 	get valueStateText() {
