@@ -196,6 +196,10 @@ const metadata = {
 		expandedTokenizer: {
 			type: Boolean,
 		},
+
+		filterSelected: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
@@ -320,7 +324,6 @@ class MultiComboBox extends UI5Element {
 		this._inputLastValue = "";
 		this._deleting = false;
 		this._validationTimeout = null;
-		this._selectedItemsPopoverOpened = false;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -333,24 +336,20 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		this._showMorePressed = true;
-		this._selectedItemsPopoverOpened = true;
-		this._toggleRespPopover(true);
+		this.filterSelected = true;
+		this._toggleRespPopover();
 	}
 
-	_showAllItemsPopover() {
-		this._selectedItemsPopoverOpened = false;
-		this._toggleRespPopover(false);
+	togglePopover() {
+		this._toggleRespPopover();
 
-		this._inputDom.focus();
+		if (!isPhone()) {
+			this._inputDom.focus();
+		}
 	}
 
-	_closeMorePopover() {
-		this.selectedItemsPopover.close();
-	}
-
-	_closeAllItemsPopover() {
-		this.allItemsPopover.close();
+	filterSelectedItems(event) {
+		this.filterSelected = event.target.pressed;
 	}
 
 	get _inputDom() {
@@ -470,7 +469,9 @@ class MultiComboBox extends UI5Element {
 
 	_filterItems(value) {
 		return this.items.filter(item => {
-			return item.text && item.text.toLowerCase().startsWith(value.toLowerCase());
+			return item.text
+				&& item.text.toLowerCase().startsWith(value.toLowerCase())
+				&& (this.filterSelected ? item.selected : true);
 		});
 	}
 
@@ -517,7 +518,6 @@ class MultiComboBox extends UI5Element {
 
 	async _getRespPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.selectedItemsPopover = staticAreaItem.querySelector(`.ui5-multi-combobox-selected-items-responsive-popover`);
 		this.allItemsPopover = staticAreaItem.querySelector(`.ui5-multi-combobox-all-items-responsive-popover`);
 	}
 
@@ -526,21 +526,9 @@ class MultiComboBox extends UI5Element {
 		this.list = staticAreaItem.querySelector(".ui5-multi-combobox-all-items-list");
 	}
 
-	_toggleRespPopover(isMorePopover) {
+	_toggleRespPopover() {
 		this.updateStaticAreaItemContentDensity();
-
-		if (isMorePopover) {
-			this.allItemsPopover.close();
-			return this.selectedItemsPopover.open(this);
-		}
-
-		if (this.allItemsPopover && this.allItemsPopover.opened) {
-			return this.allItemsPopover.close();
-		}
-
-		this.selectedItemsPopover && this.selectedItemsPopover.close();
-
-		this.allItemsPopover && this.allItemsPopover.open(this);
+		this.allItemsPopover.toggle(this);
 	}
 
 	_focusin() {
@@ -565,35 +553,13 @@ class MultiComboBox extends UI5Element {
 		if (isPhone()) {
 			this.blur();
 		}
-	}
 
-	_toggleButtonPress(event) {
-		const showSelectedItems = event.target.hasAttribute("show-selected");
-
-		if (showSelectedItems) {
-			this.allItemsPopover.close();
-			this.selectedItemsPopover.open(this);
-		} else {
-			this.selectedItemsPopover.close();
-			this.allItemsPopover.open(this);
-		}
-
-		// always keep the toggle-button pressed
-		event.target.pressed = true;
+		this.filterSelected = false;
 	}
 
 	onBeforeRendering() {
-		this._inputLastValue = this.value;
-
-		const hasSelectedItem = this.items.some(item => item.selected);
-
-		if (this.getDomRef() && !hasSelectedItem) {
-			const morePopover = this.selectedItemsPopover;
-
-			morePopover && morePopover.close();
-		}
-
 		const input = this.shadowRoot.querySelector("input");
+		this._inputLastValue = this.value;
 
 		if (input && !input.value) {
 			this._filteredItems = this.items;
@@ -605,12 +571,6 @@ class MultiComboBox extends UI5Element {
 
 	async onAfterRendering() {
 		await this._getRespPopover();
-		if (this.open && !this.allItemsPopover.opened) {
-			this.updateStaticAreaItemContentDensity();
-			this.allItemsPopover.open(this);
-			// Set initial focus to the native input
-			this._innerInput.focus();
-		}
 	}
 
 	get valueStateTextMappings() {
@@ -674,8 +634,6 @@ class MultiComboBox extends UI5Element {
 			if (this.allItemsPopover.opened) {
 				return this.allItemsPopover.querySelector("input");
 			}
-
-			return this.selectedItemsPopover.querySelector("input");
 		}
 
 		return this.getDomRef().querySelector("#ui5-multi-combobox-input");

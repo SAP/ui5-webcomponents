@@ -360,6 +360,10 @@ class Popover extends UI5Element {
 		this.fireEvent("afterOpen", {});
 	}
 
+	isOpen() {
+		return this.opened;
+	}
+
 	/**
 	 * Closes the popover.
 	 * @public

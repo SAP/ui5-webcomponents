@@ -1,5 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 import Popup from "./Popup.js";
@@ -11,6 +12,7 @@ import DialogBlockLayerTemplate from "./generated/templates/DialogBlockLayerTemp
 import popupCSS from "./generated/themes/Popup.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 import { getFocusedElement, getNextZIndex } from "./popup-utils/PopupUtils.js";
+
 import BlockLayer from "./BlockLayer.js";
 
 /**
@@ -36,7 +38,47 @@ const metadata = {
 		_blockLayerVisible: {
 			type: Boolean,
 		},
+
+		onPhone: {
+			type: Boolean,
+		},
 	},
+};
+
+let customBlockingStyleInserted = false;
+
+const createBlockingStyle = () => {
+	if (customBlockingStyleInserted) {
+		return;
+	}
+
+	const styleTag = document.createElement("style");
+
+	styleTag.innerHTML = `
+		.ui5-dialog-scroll-blocker {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			overflow: hidden;
+		}
+	`;
+
+	customBlockingStyleInserted = true;
+
+	document.head.appendChild(styleTag);
+};
+
+createBlockingStyle();
+
+const blockBodyScrolling = () => {
+	document.body.style.top = `-${window.pageYOffset}px`;
+	document.body.classList.add("ui5-dialog-scroll-blocker");
+};
+
+const unblockBodyScrolling = () => {
+	document.body.classList.remove("ui5-dialog-scroll-blocker");
+	window.scrollTo(0, -parseFloat(document.body.style.top));
+	document.body.style.top = "";
 };
 
 /**
@@ -98,6 +140,7 @@ class Dialog extends Popup {
 
 		// mark dialog for registry as it is always modal
 		this.modal = true;
+		this.onPhone = isPhone();
 	}
 
 	reposition() {
@@ -120,7 +163,15 @@ class Dialog extends Popup {
 		this.style.zIndex = getNextZIndex();
 		this._blockLayerVisible = true;
 
+		blockBodyScrolling();
+
 		addOpenedPopup(this);
+		this.opened = true;
+		this.fireEvent("afterOpen", {});
+	}
+
+	isOpen() {
+		return this.opened;
 	}
 
 	applyInitialFocus() {
@@ -161,13 +212,17 @@ class Dialog extends Popup {
 		}
 
 		this._close();
+		this.opened = false;
 
 		this.fireEvent("afterClose", {});
 
 		removeOpenedPopup(this);
 		this._blockLayerVisible = false;
+		unblockBodyScrolling();
 
-		this._focusedElementBeforeOpen.focus();
+		if (this._focusedElementBeforeOpen) {
+			this._focusedElementBeforeOpen.focus();
+		}
 	}
 
 	_close() {

@@ -67,9 +67,10 @@
 }
 
 /* Phone mode */
+/* TODO: Improve that layouting */
 .ui5-dt-picker-content--phone.ui5-dt-picker-content {
 	min-width: auto;
-	height: calc(100% - 3rem);
+	height: calc(100% - 4rem);
 }
 
 .ui5-dt-picker-content--phone .ui5-dt-cal {

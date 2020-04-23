@@ -45,12 +45,10 @@ describe("MultiComboBox general interaction", () => {
 			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#multi1")
 			const showMore = $("#multi1").shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-tokenizer-more-text");
 			const allPopover = $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const selectedPopover = $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-selected-items-responsive-popover");
 
 			showMore.click();
 
-			assert.ok(!allPopover.getProperty("opened"), "All popover should not be displayed");
-			assert.ok(selectedPopover.getProperty("opened"), "All popover should be displayed");
+			assert.ok(allPopover.getProperty("opened"), "All popover should not be displayed");
 		});
 	});
 
