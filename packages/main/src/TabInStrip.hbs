@@ -19,33 +19,28 @@
 
 	<div class="ui5-tab-strip-itemContent">
 
-		{{#if this._isInline}}
+		{{#unless this._isInline}}
+			{{> additionalText}}
+		{{/unless}}
 
-			{{#if this.text}}
-				<span class="ui5-tab-strip-itemText" id="{{this._id}}-text">
-					<span class="{{this.headerSemanticIconClasses}}"></span>
-					{{this.text}}
-				</span>
-			{{/if}}
-
-			{{#if this.additionalText}}
-				<span class="ui5-tab-strip-itemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
-			{{/if}}
-
-		{{else}}
-
-			{{#if this.additionalText}}
-					<span class="ui5-tab-strip-itemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
-			{{/if}}
-
-			{{#if this.text}}
-					<span class="ui5-tab-strip-itemText" id="{{this._id}}-text">
+		{{#if this.text}}
+			<span class="ui5-tab-strip-itemText" id="{{this._id}}-text">
 				<span class="{{this.headerSemanticIconClasses}}"></span>
-						{{this.text}}
+				{{this.text}}
 			</span>
-			{{/if}}
-
 		{{/if}}
+
+		{{#if this._isInline}}
+			{{> additionalText}}
+		{{/if}}
+
 	</div>
 
 </li>
+
+<!-- Additional text -->
+{{#*inline additionalText}}
+	{{#if this.additionalText}}
+		<span class="ui5-tab-strip-itemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
+	{{/if}}
+{{/inline}}
