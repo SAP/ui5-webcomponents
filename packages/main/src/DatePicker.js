@@ -614,6 +614,14 @@ class DatePicker extends UI5Element {
 		return getRTL() ? "rtl" : "ltr";
 	}
 
+	/**
+	 * Defines whether the dialog on mobile should have header
+	 * @private
+	 */
+	get _shouldHideHeader() {
+		return false;
+	}
+
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector("ui5-responsive-popover");

@@ -376,6 +376,14 @@ class DateTimePicker extends DatePicker {
 	}
 
 	/**
+	 * Defines whether the dialog on mobile should have header
+	 * @private
+	 */
+	get _shouldHideHeader() {
+		return true;
+	}
+
+	/**
 	 * EVENT HANDLERS
 	 */
 
