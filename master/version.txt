@@ -1,5 +1,5 @@
-commit f0f896466c58ceb52182caa95e8be15dee715e77
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Apr 24 10:20:04 2020 +0300
+commit a8c8bc8f2035ee60d04c90b62f150a386f224c18
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Apr 24 14:40:27 2020 +0300
 
-    fix(ui5-button): make aria-label work for ui5-button (#1445)
+    chore(ui5-datetime-picker): fix icon blinking on open (#1521)
