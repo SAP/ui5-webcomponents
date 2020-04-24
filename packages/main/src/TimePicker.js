@@ -384,6 +384,8 @@ class TimePicker extends UI5Element {
 	 * @public
 	 */
 	async closePicker() {
+		await this._getPopover();
+		this.responsivePopover.close();
 		this._isPickerOpen = false;
 
 		for (let i = 0; i < this._slidersDomRefs.length; i++) {
