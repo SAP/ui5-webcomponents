@@ -235,8 +235,8 @@ class DateTimePicker extends DatePicker {
 	 * @public
 	 */
 	async openPicker(options) {
-		await this.setSlidersValue();
 		await super.openPicker(options);
+		await this.setSlidersValue();
 		this.expandHoursSlider();
 		this.storePreviousValue();
 	}
