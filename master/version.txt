@@ -1,5 +1,5 @@
-commit 4e00e5559e3dbada4759910947c91ebff5c587c9
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Apr 23 19:31:46 2020 +0300
+commit f0f896466c58ceb52182caa95e8be15dee715e77
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Apr 24 10:20:04 2020 +0300
 
-    chore(theme-base): Update to the newest version of theming-base-content (#1518)
+    fix(ui5-button): make aria-label work for ui5-button (#1445)

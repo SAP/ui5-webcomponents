@@ -66,8 +66,8 @@
 	<br/>
 	<br/>
 
-	<ui5-button icon="employee">Action Bar Button</ui5-button>
-	<ui5-button icon="download"></ui5-button>
+	<ui5-button icon="download" aria-label="Download application"></ui5-button>
+	<ui5-button icon="employee" aria-label="Download book">Action Bar Button</ui5-button>
 	<ui5-button icon="download"></ui5-button>
 
 	<br />
@@ -75,8 +75,13 @@
 
 	<ui5-label id="1download-text">Download Application</ui5-label>
 	<ui5-label id="download-text2">From This Button</ui5-label>
+
+	<ui5-button icon="employee" aria-label="Help me">Action Bar Button</ui5-button>
+	<ui5-button icon="download" aria-label="Help me" aria-labelledby="1download-text"></ui5-button>
+
 	<ui5-button icon="employee" aria-labelledby="1download-text download-text2">Action Bar Button</ui5-button>
 	<ui5-button icon="download" aria-labelledby="1download-text"></ui5-button>
+
 
 
 	<br/>
