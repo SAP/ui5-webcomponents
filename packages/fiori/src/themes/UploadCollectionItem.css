@@ -47,6 +47,7 @@
 
 .ui5-uci-content {
 	flex: 1 1 auto;
+	margin-right: .5rem;
 	min-width: 0; /* fixes chrome overflow issue */
 }
 
@@ -112,6 +113,18 @@ ui5-link.ui5-uci-file-name {
 		display: block;
 	}
 
+	.ui5-uci-content-and-progress {
+		flex-wrap: wrap;
+	}
+
+	.ui5-uci-progress-box {
+		margin-top: .5rem;
+	}
+	
+	.ui5-uci-content {
+		width: 100%;
+	}
+
 	.ui5-uci-edit-buttons,
 	.ui5-li-detailbtn,
 	.ui5-li-deletebtn {
@@ -126,7 +139,6 @@ ui5-link.ui5-uci-file-name {
 /* Progress Box */
 .ui5-uci-progress-box {
 	width: 20%;
-	margin-left: 0.5rem;
 	min-width: 4rem;
 }
 
@@ -136,9 +148,9 @@ ui5-link.ui5-uci-file-name {
 	height: 1.125rem;
 	min-height: 1rem;
 	width: 100%;
-	min-width: 4rem;
+	min-width: 3.375;
 	margin-bottom: 0.5rem;
-	padding: 5px;
+	padding: 5px 0;
 	box-sizing: border-box;
 }
 
