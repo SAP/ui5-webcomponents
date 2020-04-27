@@ -1,5 +1,5 @@
-commit a8c8bc8f2035ee60d04c90b62f150a386f224c18
+commit 715e4434929f1d5878635f20b6b0bd860fa898c6
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Apr 24 14:40:27 2020 +0300
+Date:   Mon Apr 27 09:00:55 2020 +0300
 
-    chore(ui5-datetime-picker): fix icon blinking on open (#1521)
+    chore(ui5-tabcontainer): hide header in overflow dialog (#1523)
