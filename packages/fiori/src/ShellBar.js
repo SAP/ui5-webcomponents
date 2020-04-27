@@ -10,10 +10,22 @@ import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/search.js";
 import "@ui5/webcomponents-icons/dist/icons/bell.js";
 import "@ui5/webcomponents-icons/dist/icons/overflow.js";
 import "@ui5/webcomponents-icons/dist/icons/grid.js";
+
+import {
+	SHELLBAR_LABEL,
+	SHELLBAR_LOGO,
+	SHELLBAR_COPILOT,
+	SHELLBAR_NOTIFICATIONS,
+	SHELLBAR_PROFILE,
+	SHELLBAR_PRODUCTS,
+	SHELLBAR_SEARCH,
+	SHELLBAR_OVERFLOW,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Templates
 import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
@@ -414,6 +426,8 @@ class ShellBar extends UI5Element {
 			this.overflowPopover.close();
 			this._overflowActions();
 		};
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_menuItemPress(event) {
@@ -928,23 +942,55 @@ class ShellBar extends UI5Element {
 		return this.hasMenuItems ? this._menuPopoverExpanded : undefined;
 	}
 
+	get _shellbarText() {
+		return this.i18nBundle.getText(SHELLBAR_LABEL);
+	}
+
+	get _logoText() {
+		return this.i18nBundle.getText(SHELLBAR_LOGO);
+	}
+
+	get _copilotText() {
+		return this.i18nBundle.getText(SHELLBAR_COPILOT);
+	}
+
+	get _notificationsText() {
+		return this.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationCount);
+	}
+
+	get _profileText() {
+		return this.i18nBundle.getText(SHELLBAR_PROFILE);
+	}
+
+	get _productsText() {
+		return this.i18nBundle.getText(SHELLBAR_PRODUCTS);
+	}
+
+	get _searchText() {
+		return this.i18nBundle.getText(SHELLBAR_SEARCH);
+	}
+
+	get _overflowText() {
+		return this.i18nBundle.getText(SHELLBAR_OVERFLOW);
+	}
+
 	get accInfo() {
 		return {
 			notifications: {
-				"title": `${this.notificationCount} Notications`,
+				"title": this._notificationsText,
 			},
 			profile: {
-				"title": "Profile",
+				"title": this._profileText,
 			},
 			products: {
-				"title": "Products",
+				"title": this._productsText,
 			},
 			search: {
 				"ariaExpanded": this.showSearchField,
-				"title": "Search",
+				"title": this._searchText,
 			},
 			overflow: {
-				"title": "More",
+				"title": this._overflowText,
 				"ariaHaspopup": true,
 				"ariaExpanded": this._overflowPopoverExpanded,
 			},
@@ -953,6 +999,7 @@ class ShellBar extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
 			Button.define(),
 			List.define(),
 			Popover.define(),
