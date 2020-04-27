@@ -173,4 +173,42 @@ describe("DateTimePicker general interaction", () => {
 
 		closePickerById("dt");
 	});
+
+	it("tests selection of 12:00:00 AM", () => {
+		const dtPicker = browser.$("#dtTest12AM");
+
+		// act
+		openPickerById("dtTest12AM");
+		browser.pause(500);
+
+		const picker = getPicker("dtTest12AM");
+		picker.$(".ui5-dt-hours-wheel").setProperty("value","12");
+		picker.$(".ui5-dt-minutes-wheel").setProperty("value","00");
+		picker.$(".ui5-dt-seconds-wheel").setProperty("value","00");
+		picker.$("#ok").click();
+		browser.pause(500);
+
+		// assert
+		const newValue = dtPicker.shadow$("ui5-input").getValue();
+		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:00:00 AM", "The new date/time is correctly selected.");
+	});
+
+	it("tests selection of 12:00:00 PM", () => {
+		const dtPicker = browser.$("#dtTest12PM");
+
+		// act
+		openPickerById("dtTest12PM");
+		browser.pause(500);
+
+		const picker = getPicker("dtTest12PM");
+		picker.$(".ui5-dt-hours-wheel").setProperty("value","12");
+		picker.$(".ui5-dt-minutes-wheel").setProperty("value","00");
+		picker.$(".ui5-dt-seconds-wheel").setProperty("value","00");
+		picker.$(".ui5-dt-periods-wheel").setProperty("value","PM");
+		picker.$("#ok").click();
+
+		// assert
+		const newValue = dtPicker.shadow$("ui5-input").getValue();
+		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:00:00 PM", "The new date/time is correctly selected.");
+	});
 });
