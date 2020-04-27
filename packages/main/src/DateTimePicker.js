@@ -592,11 +592,12 @@ class DateTimePicker extends DatePicker {
 		const seconds = secondsSlider ? secondsSlider.value : "0";
 		const period = periodsSlider ? periodsSlider.value : this.periodsArray[0];
 
-		if (period === this.periodsArray[1]) {
-			hours = hours === "12" ? hours : hours * 1 + 12;
+		if (period === this.periodsArray[0]) { // AM
+			hours = hours === "12" ? 0 : hours;
 		}
-		if (period === this.periodsArray[0]) {
-			hours = hours === "12" ? hours * 1 + 12 : hours;
+
+		if (period === this.periodsArray[1]) { // PM
+			hours = hours === "12" ? hours : hours * 1 + 12;
 		}
 
 		return {

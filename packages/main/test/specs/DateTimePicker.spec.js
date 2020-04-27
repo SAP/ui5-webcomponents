@@ -185,6 +185,7 @@ describe("DateTimePicker general interaction", () => {
 		picker.$(".ui5-dt-hours-wheel").setProperty("value","12");
 		picker.$(".ui5-dt-minutes-wheel").setProperty("value","00");
 		picker.$(".ui5-dt-seconds-wheel").setProperty("value","00");
+		picker.$(".ui5-dt-periods-wheel").setProperty("value","AM");
 		picker.$("#ok").click();
 		browser.pause(500);
 
