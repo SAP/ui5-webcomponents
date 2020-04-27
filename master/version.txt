@@ -1,5 +1,5 @@
-commit 715e4434929f1d5878635f20b6b0bd860fa898c6
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 27 09:00:55 2020 +0300
+commit fb1fd6678f69e807bc8511228a0a565e676cb105
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Apr 27 09:32:22 2020 +0300
 
-    chore(ui5-tabcontainer): hide header in overflow dialog (#1523)
+    chore: update wdio version (#1522)
