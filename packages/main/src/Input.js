@@ -297,7 +297,7 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		_inputFocused: {
+		_inputIconFocused: {
 			type: Boolean,
 			noAttribute: true,
 		},
@@ -541,7 +541,7 @@ class Input extends UI5Element {
 		this.previousValue = this.value;
 
 		await this.getInputDOMRef();
-		this._inputFocused = event.target === this.inputDomRef;
+		this._inputIconFocused = event.target === this.querySelector("ui5-icon");
 	}
 
 	_onfocusout(event) {
@@ -571,7 +571,8 @@ class Input extends UI5Element {
 		this.fireEvent(this.EVENT_CHANGE);
 	}
 
-	_handleInput(event) {
+	async _handleInput(event) {
+		await this.getInputDOMRef();
 		if (event.target === this.inputDomRef) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
@@ -695,7 +696,9 @@ class Input extends UI5Element {
 		this.value = item.group ? "" : item.textContent;
 	}
 
-	fireEventByAction(action) {
+	async fireEventByAction(action) {
+		await this.getInputDOMRef();
+
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -868,7 +871,7 @@ class Input extends UI5Element {
 
 	get hasValueStateMessage() {
 		return this.hasValueState && this.valueState !== ValueState.Success
-			&& (this._inputFocused // Handles the cases when valueStateMessage is forwarded (from datepicker e.g.)
+			&& (!this._inputIconFocused // Handles the cases when valueStateMessage is forwarded (from datepicker e.g.)
 			|| (this._isPhone && this.Suggestions)); // Handles Input with suggestions on mobile
 	}
 
