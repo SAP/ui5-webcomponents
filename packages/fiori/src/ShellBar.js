@@ -144,6 +144,14 @@ const metadata = {
 			type: String,
 			multiple: true,
 		},
+		_menuPopoverExpanded: {
+			type: Boolean,
+			noAttribute: true,
+		},
+		_overflowPopoverExpanded: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
@@ -389,7 +397,7 @@ class ShellBar extends UI5Element {
 			press: async () => {
 				this._updateClonedMenuItems();
 
-				if (this.menuItems.length) {
+				if (this.hasMenuItems) {
 					this.updateStaticAreaItemContentDensity();
 					const menuPopover = await this._getMenuPopover();
 					menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
@@ -414,10 +422,43 @@ class ShellBar extends UI5Element {
 		}, true);
 	}
 
-	_logoPress(event) {
+	_logoPress() {
 		this.fireEvent("logoClick", {
 			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-logo"),
 		});
+	}
+
+	_menuPopoverBeforeOpen() {
+		this._menuPopoverExpanded = true;
+	}
+
+	_menuPopoverAfterClose() {
+		this._menuPopoverExpanded = false;
+	}
+
+	_overflowPopoverBeforeOpen() {
+		this._overflowPopoverExpanded = true;
+	}
+
+	_overflowPopoverAfterClose() {
+		this._overflowPopoverExpanded = false;
+	}
+
+	_logoKeyup(event) {
+		if (isSpace(event)) {
+			this._logoPress();
+		}
+	}
+
+	_logoKeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+			return;
+		}
+
+		if (isEnter(event)) {
+			this._logoPress();
+		}
 	}
 
 	_fireCoPilotClick() {
@@ -792,7 +833,7 @@ class ShellBar extends UI5Element {
 				"ui5-shellbar-with-searchfield": this.searchField.length,
 			},
 			button: {
-				"ui5-shellbar-menu-button--interactive": !!this.menuItems.length,
+				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
 				"ui5-shellbar-menu-button": true,
 			},
 			items: {
@@ -840,11 +881,19 @@ class ShellBar extends UI5Element {
 	}
 
 	get interactiveLogo() {
-		return this.breakpointSize === "S";
+		return this.breakpointSize === "S" && this.hasMenuItems;
+	}
+
+	get hasNonInteractiveLogo() {
+		return this.logo && !this.interactiveLogo;
+	}
+
+	get hasInteractiveLogo() {
+		return this.logo && this.interactiveLogo;
 	}
 
 	get showArrowDown() {
-		return this.primaryTitle || (this.logo && this.interactiveLogo);
+		return this.primaryTitle || this.hasInteractvieLogo;
 	}
 
 	get popoverHorizontalAlign() {
@@ -863,8 +912,43 @@ class ShellBar extends UI5Element {
 		return !!this.profile.length;
 	}
 
+	get hasMenuItems() {
+		return this.menuItems.length > 0;
+	}
+
+	get menuBtnHasPopup() {
+		return this.hasMenuItems ? true : undefined;
+	}
+
 	get menuBtnTabindex() {
-		return this.menuItems.length > 0 ? "0" : "-1";
+		return this.hasMenuItems ? "0" : "-1";
+	}
+
+	get menuPopoverExpanded() {
+		return this.hasMenuItems ? this._menuPopoverExpanded : undefined;
+	}
+
+	get accInfo() {
+		return {
+			notifications: {
+				"title": `${this.notificationCount} Notications`,
+			},
+			profile: {
+				"title": "Profile",
+			},
+			products: {
+				"title": "Products",
+			},
+			search: {
+				"ariaExpanded": this.showSearchField,
+				"title": "Search",
+			},
+			overflow: {
+				"title": "More",
+				"ariaHaspopup": true,
+				"ariaExpanded": this._overflowPopoverExpanded,
+			},
+		};
 	}
 
 	static async onDefine() {

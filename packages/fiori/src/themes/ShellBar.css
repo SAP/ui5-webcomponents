@@ -197,10 +197,6 @@ slot[name="profile"] {
 	height: 1.675rem;
 }
 
-.ui5-shellbar-logo:not([src]) {
-	display: none;
-}
-
 .ui5-shellbar-button {
 	width: 2.5rem;
 }
@@ -281,7 +277,8 @@ slot[name="profile"] {
 	display: none;
 }
 
-:host([breakpoint-size="S"]) .ui5-shellbar-menu-button-title {
+:host([breakpoint-size="S"]) .ui5-shellbar-logo + .ui5-shellbar-menu-button-title,
+:host([breakpoint-size="S"]) .ui5-shellbar-menu-button + .ui5-shellbar-menu-button-title {
 	display: none;
 }
 
@@ -372,6 +369,7 @@ ui5-icon[data-count]::before {
 	background: var(--sapShell_Hover_Background);
 }
 
+.ui5-shellbar-logo:focus,
 ::slotted(ui5-input[focused]) {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }

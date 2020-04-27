@@ -8,14 +8,27 @@
 				<slot name="startButton"></slot>
 		{{/if}}
 
-		{{#unless interactiveLogo}}
-			<img class="ui5-shellbar-logo" src="{{logo}}" @click="{{_logoPress}}" />
-		{{/unless}}
+		{{#if hasNonInteractiveLogo}}
+			<img class="ui5-shellbar-logo"
+				src="{{logo}}"
+				@click="{{_logoPress}}"
+				aria-label="Logo"
+				title="Logo"
+				@keydown="{{_logoKeydown}}"
+				@keyup="{{_logoKeyup}}"
+				tabindex="0"
+			/>
+		{{/if}}
 
 		{{#if showArrowDown}}
-			<button tabindex="{{menuBtnTabindex}}" class="{{classes.button}}" @click="{{_header.press}}">
-				{{#if interactiveLogo}}
-					<img class="ui5-shellbar-logo" src="{{logo}}" @click="{{_logoPress}}" />
+			<button tabindex="{{menuBtnTabindex}}"
+				class="{{classes.button}}"
+				@click="{{_header.press}}"
+				aria-haspopup="{{menuBtnHasPopup}}"
+				aria-expanded="{{menuPopoverExpanded}}"
+			>
+				{{#if hasInteractiveLogo}}
+					<img class="ui5-shellbar-logo" src="{{logo}}"/>
 				{{/if}}
 
 				{{#if primaryTitle}}
@@ -35,6 +48,8 @@
 		{{#if showCoPilot}}
 			<div class="ui5-shellbar-copilot-wrapper"
 				tabindex="0"
+				aria-label="CoPilot"
+				title="CoPilot"
 				@keydown="{{_coPilotKeydown}}"
 				@keyup="{{_coPilotKeyup}}"
 				?active="{{coPilotActive}}">
@@ -66,6 +81,8 @@
 					data-ui5-text="Search"
 					data-ui5-notification-count="{{notificationCount}}"
 					@click={{_handleSearchIconPress}}
+					aria-label="Search"
+					._buttonAccInfo="{{accInfo.search}}"
 				></ui5-button>
 			{{/if}}
 
@@ -91,6 +108,8 @@
 				data-ui5-text="Notifications"
 				data-ui5-notification-count="{{notificationCount}}"
 				@click={{_handleNotificationsPress}}
+				aria-label="{{notificationCount}} Notifications"
+				._buttonAccInfo="{{accInfo.notifications}}"
 			></ui5-button>
 			{{/if}}
 
@@ -100,6 +119,8 @@
 				class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button"
 				icon="sap-icon://overflow"
 				@click="{{_handleOverflowPress}}"
+				aria-label="More"
+				._buttonAccInfo="{{accInfo.overflow}}"
 			></ui5-button>
 
 			{{#if hasProfile}}
@@ -108,6 +129,8 @@
 					id="{{this._id}}-item-3"
 					@click={{_handleProfilePress}}
 					style="{{styles.items.profile}}"
+					aria-label="Profile"
+					._buttonAccInfo="{{accInfo.profile}}"
 					class="ui5-shellbar-button ui5-shellbar-image-button">
 						<slot
 							name="profile"
@@ -123,6 +146,8 @@
 				icon="sap-icon://grid"
 				data-ui5-text="Product Switch"
 				@click={{_handleProductSwitchPress}}
+				aria-label="Products"
+				._buttonAccInfo="{{accInfo.products}}"
 			></ui5-button>
 			{{/if}}
 		</div>
@@ -130,7 +155,7 @@
 </div>
 
 {{#*inline "coPilot"}}
-	<svg @click="{{_coPilotClick}}" focusable="false" width="44" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-shellbar-coPilot">
+	<svg @click="{{_coPilotClick}}" focusable="false" width="44" role="presentation" aria-hidden="true" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-shellbar-coPilot">
 		<defs>
 			<linearGradient id="f" x1="0%" x2="100%" y1="100%" y2="0%"><stop offset="0%" stop-color="#c0d9f2" stop-opacity=".87"/><stop offset="80%" stop-color="#fff" stop-opacity=".87"/></linearGradient>
 			<linearGradient id="e" x1="0%" x2="100%" y1="100%" y2="0%"><stop offset="0%" stop-color="#b4d2ff" stop-opacity=".16"/><stop offset="80%" stop-color="#fff" stop-opacity=".16"/></linearGradient>
