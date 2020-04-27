@@ -95,7 +95,7 @@ class SegmentedButton extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
-			await fetchI18nBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents"),
 			ToggleButton.define(),
 		]);
 	}
