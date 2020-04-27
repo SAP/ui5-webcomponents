@@ -1,7 +1,5 @@
-commit 0305da8f9936fc7c6a8237cc11b9a419954f6cfd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 27 13:36:44 2020 +0300
+commit c26e8aa775875b09000f5d335f8a12201d6bd269
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Apr 27 16:32:49 2020 +0300
 
-    fix(ui5-product-switch-item): fix active state (#1547)
-    
-    Fixes: #1543
+    fix(framework): rendering is no longer delayed  (#1552)
