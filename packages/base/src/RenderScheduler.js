@@ -1,4 +1,5 @@
 import RenderQueue from "./RenderQueue.js";
+import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 
 const MAX_RERENDER_COUNT = 10;
 
@@ -118,29 +119,12 @@ class RenderScheduler {
 		return renderTaskPromise;
 	}
 
-	static getNotDefinedComponents() {
-		return Array.from(document.querySelectorAll("*")).filter(el => el.localName.startsWith("ui5-") && !el.isUI5Element);
-	}
-
 	/**
 	 * return a promise that will be resolved once all ui5 webcomponents on the page have their shadow root ready
 	 */
 	static async whenShadowDOMReady() {
-		const undefinedElements = this.getNotDefinedComponents();
-
-		const definedPromises = undefinedElements.map(
-		  el => customElements.whenDefined(el.localName)
-		);
-		const timeoutPromise = new Promise(resolve => setTimeout(resolve, 5000));
-
-		await Promise.race([Promise.all(definedPromises), timeoutPromise]);
-		const stillUndefined = this.getNotDefinedComponents();
-		if (stillUndefined.length) {
-			// eslint-disable-next-line
-			console.warn("undefined elements after 5 seconds are: " + [...stillUndefined].map(el => el.localName).join(" ; "));
-		}
-
-		return Promise.resolve();
+		const definedPromises = getAllRegisteredTags().map(tag => customElements.whenDefined(tag));
+		return Promise.all(definedPromises);
 	}
 
 	static async whenFinished() {
