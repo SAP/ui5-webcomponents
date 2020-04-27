@@ -1,5 +1,5 @@
-commit fb1fd6678f69e807bc8511228a0a565e676cb105
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Apr 27 09:32:22 2020 +0300
+commit 56e5ba7146c4e6861ed506a1ae0c19f10ff46485
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Apr 27 12:52:13 2020 +0300
 
-    chore: update wdio version (#1522)
+    fix(ui5-popover): show arrow border (#1528)
