@@ -1,5 +1,7 @@
-commit b0f180d9ea986b439c08883ac50f610a154e8fef
+commit 0305da8f9936fc7c6a8237cc11b9a419954f6cfd
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 27 13:12:38 2020 +0300
+Date:   Mon Apr 27 13:36:44 2020 +0300
 
-    fix(ui5-groupheade-li): fix focus handling (#1544)
+    fix(ui5-product-switch-item): fix active state (#1547)
+    
+    Fixes: #1543
