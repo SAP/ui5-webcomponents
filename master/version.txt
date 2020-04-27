@@ -1,5 +1,5 @@
-commit 56e5ba7146c4e6861ed506a1ae0c19f10ff46485
+commit b0f180d9ea986b439c08883ac50f610a154e8fef
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 27 12:52:13 2020 +0300
+Date:   Mon Apr 27 13:12:38 2020 +0300
 
-    fix(ui5-popover): show arrow border (#1528)
+    fix(ui5-groupheade-li): fix focus handling (#1544)
