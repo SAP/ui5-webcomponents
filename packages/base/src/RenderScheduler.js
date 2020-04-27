@@ -119,16 +119,13 @@ class RenderScheduler {
 		return renderTaskPromise;
 	}
 
-	/**
-	 * return a promise that will be resolved once all ui5 webcomponents on the page have their shadow root ready
-	 */
-	static async whenShadowDOMReady() {
+	static whenAllCustomElementsAreDefined() {
 		const definedPromises = getAllRegisteredTags().map(tag => customElements.whenDefined(tag));
 		return Promise.all(definedPromises);
 	}
 
 	static async whenFinished() {
-		await RenderScheduler.whenShadowDOMReady();
+		await RenderScheduler.whenAllCustomElementsAreDefined();
 		await RenderScheduler.whenDOMUpdated();
 	}
 
