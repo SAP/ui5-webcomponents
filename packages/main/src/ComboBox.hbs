@@ -1,4 +1,8 @@
 <div class="ui5-combobox-root">
+	{{#if hasValueState}}
+		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
+	{{/if}}
+
 	<input id="ui5-combobox-input"
 		.value="{{_tempValue}}"
 		inner-input
@@ -13,13 +17,12 @@
 		@keydown="{{_keydown}}"
 		@focusin="{{_focusin}}"
 		@focusout="{{_focusout}}"
-		role="combobox"
-		aria-haspopup="listbox"
 		aria-expanded="{{open}}"
-		aria-autocomplete="both"
-	    aria-activedescendant="{{ariaActiveDescendant}}"
-		aria-controls="{{ariaControls}}"
-		aria-describedby="{{ariaDescribedBy}}"
+		role="{{accInfo.role}}"
+		aria-haspopup="{{accInfo.ariaHasPopup}}"
+		aria-autocomplete="{{accInfo.ariaAutoComplete}}"
+		aria-controls="{{accInfo.ariaControls}}"
+		aria-describedby="{{accInfo.ariaDescribedBy}}"
 	/>
 
 	{{#unless readonly}}
