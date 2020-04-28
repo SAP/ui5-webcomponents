@@ -1,7 +1,5 @@
-commit af9ff8a7a29951635669969a493176862327507f
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Apr 28 09:46:08 2020 +0300
+commit bccf03b2c80f4f316d9509d857000dc5e0d00f85
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Apr 28 12:03:04 2020 +0300
 
-    fix(ui5-datetime-picker): fix AM/PM selection (#1551)
-    
-    FIXES: #1530
+    fix(ui5-segmentedbutton): import ui5-togglebutton by default (#1549)
