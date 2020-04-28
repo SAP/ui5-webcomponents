@@ -21,6 +21,7 @@ import {
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
+import Option from "./Option.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
@@ -477,6 +478,7 @@ class Select extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
+			Option.define(),
 			Label.define(),
 			ResponsivePopover.define(),
 			List.define(),

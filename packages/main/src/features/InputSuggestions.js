@@ -2,6 +2,7 @@ import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.j
 
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
+import "../SuggestionItem.js";
 
 /**
  * A class to manage the <code>Input</code suggestion items.
