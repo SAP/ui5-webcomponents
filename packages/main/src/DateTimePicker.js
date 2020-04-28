@@ -558,6 +558,7 @@ class DateTimePicker extends DatePicker {
 		// the time set in the timepicker
 		const selectedTime = new Date();
 		const timeValues = await this.getTimePickerValues();
+
 		selectedTime.setHours(timeValues.hours);
 		selectedTime.setMinutes(timeValues.minutes);
 		selectedTime.setSeconds(timeValues.seconds);
@@ -590,7 +591,14 @@ class DateTimePicker extends DatePicker {
 		const minutes = minutesSlider ? minutesSlider.value : "0";
 		const seconds = secondsSlider ? secondsSlider.value : "0";
 		const period = periodsSlider ? periodsSlider.value : this.periodsArray[0];
-		hours = period === this.periodsArray[1] ? hours * 1 + 12 : hours;
+
+		if (period === this.periodsArray[0]) { // AM
+			hours = hours === "12" ? 0 : hours;
+		}
+
+		if (period === this.periodsArray[1]) { // PM
+			hours = hours === "12" ? hours : hours * 1 + 12;
+		}
 
 		return {
 			hours,
@@ -659,7 +667,7 @@ class DateTimePicker extends DatePicker {
 
 		if (config.isTwelveHoursFormat) {
 			if (config.minHour === 1) {
-				periodsSlider.value = hours > config.maxHour ? this.periodsArray[1] : this.periodsArray[0];
+				periodsSlider.value = hours >= config.maxHour ? this.periodsArray[1] : this.periodsArray[0];
 			} else {
 				periodsSlider.value = (hours > config.maxHour || hours === config.minHour) ? this.periodsArray[1] : this.periodsArray[0];
 			}
