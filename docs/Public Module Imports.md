@@ -345,30 +345,7 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 
 For more details, please check [Configuration](https://sap.github.io/ui5-webcomponents/playground/docs/configuration/).
 
-### 6. Assets registration
-
-In order to register a **custom theme**:
-
-```js
-import { registerThemeProperties } from "@ui5/webcomponents-base/dist/AssetRegistry.js"
-```
-
-And then call the method above to register CSS Variables for each theme/package pair.
-
-You can pass the parameters directly, as an object, or as a URL:
-1) Pass the CSS Vars as a string directly.
-
-	`registerThemeProperties("my-package", "my_theme", ":root{--var1: red;}");`
-
-2) Pass the CSS Vars as an object directly. The object must have a "_" property, pointing to a string with the CSS Vars.
-
-	`registerThemeProperties("my-package", "my_theme", {"_": ":root{--var1: red;}"});`
-	
-3) Pass a URL to a JSON file, containing the CSS Vars in its "_" property. Will be fetched on demand, not upon registration.
-
-	`registerThemeProperties("my-package", "my_theme", "http://url/to/my/theme.json");`
-
-### 7. OpenUI5 integration
+### 6. OpenUI5 integration
 
 ```js
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
