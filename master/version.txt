@@ -1,5 +1,7 @@
-commit c26e8aa775875b09000f5d335f8a12201d6bd269
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Apr 27 16:32:49 2020 +0300
+commit af9ff8a7a29951635669969a493176862327507f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Apr 28 09:46:08 2020 +0300
 
-    fix(framework): rendering is no longer delayed  (#1552)
+    fix(ui5-datetime-picker): fix AM/PM selection (#1551)
+    
+    FIXES: #1530
