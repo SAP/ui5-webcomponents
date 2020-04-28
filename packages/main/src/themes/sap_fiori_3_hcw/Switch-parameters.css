@@ -1,0 +1,37 @@
+@import "../base/Switch-parameters.css";
+
+:root {
+	/* Switch */
+	--_ui5_switch_outline: 0.125rem;
+
+	/* Switch Track */
+	--_ui5_switch_track_hover_border_color: var(--sapTextColor);
+	--_ui5_switch_track_border_color: var(--sapButton_Background);
+
+	--_ui5_switch_track_disabled_checked_bg: var(--sapHC_ReducedBackground);
+	--_ui5_switch_track_disabled_border_color: var(--sapHC_ReducedForeground);
+	--_ui5_switch_track_disabled_semantic_checked_bg: var(--sapHC_ReducedBackground);
+	--_ui5_switch_track_disabled_semantic_checked_border_color: var(--sapHC_ReducedForeground);
+	--_ui5_switch_track_disabled_semantic_bg: var(--sapButton_Background);
+	--_ui5_switch_track_disabled_semantic_border_color: var(--sapHC_ReducedForeground);
+
+	/* Switch Handle */
+	--_ui5_switch_handle_bg: var(--sapButton_Background);
+	--_ui5_switch_handle_semantic_hover_bg: var(--sapButton_Hover_Background);
+	--_ui5_switch_handle_semantic_checked_hover_bg: var(--sapButton_Hover_Background);
+	--_ui5_switch_handle_semantic_hover_border_color: var(--sapContent_ForegroundBorderColor);
+	--_ui5_switch_handle_semantic_checked_hover_border_color: var(--sapContent_ForegroundBorderColor);
+	--_ui5_switch_handle_border_width: 0.125rem;
+
+	--_ui5_switch_handle_disabled_bg: var(--sapButton_Background);
+	--_ui5_switch_handle_disabled_checked_bg: var(--sapHC_ReducedForeground);
+	--_ui5_switch_handle_disabled_border_color: var(--sapHC_ReducedForeground);
+	--_ui5_switch_handle_disabled_semantic_checked_bg: var(--sapHC_ReducedBackground);
+	--_ui5_switch_handle_disabled_semantic_checked_border_color: var(--sapHC_ReducedForeground);
+	--_ui5_switch_handle_disabled_semantic_border_color: var(--sapHC_ReducedForeground);
+
+	/* Switch sementic text */
+	--_ui5_switch_text_on_semantic_color: var(--sapTextColor);
+	--_ui5_switch_text_off_semantic_color: var(--sapTextColor);
+	--_ui5_switch_text_disabled_color: var(--sapHC_ReducedAltForeground);
+}
