@@ -18,7 +18,7 @@ class ScrollEnablement extends EventProvider {
 		// On Android devices touchmove is thrown one more time than neccessary (together with touchend)
 		// so we have to cache the previus coordinates in order to provide correct parameters in the
 		// event for Android
-		this.cashedValue = {};
+		this.cachedValue = {};
 
 		// In components like Carousel you need to know if the user has clicked on something or swiped
 		// in order to throw the needed event or not
@@ -109,18 +109,21 @@ class ScrollEnablement extends EventProvider {
 			isRight: dragX < this._prevDragX,
 		});
 
-		this.cashedValue.dragX = this._prevDragX;
-		this.cashedValue.dragY = this._prevDragY;
+		this.cachedValue.dragX = this._prevDragX;
+		this.cachedValue.dragY = this._prevDragY;
 
 		this._prevDragX = dragX;
 		this._prevDragY = dragY;
 	}
 
 	ontouchend(event) {
-		if (this.isPhone
-			&& (Math.abs(event.changedTouches[0].pageX - this.startX) < 10
-			&& Math.abs(event.changedTouches[0].pageY - this.startY) < 10)) {
-			return;
+		if (this.isPhone) {
+			const deltaX = Math.abs(event.changedTouches[0].pageX - this.startX);
+			const deltaY = Math.abs(event.changedTouches[0].pageY - this.startY);
+
+			if (deltaX < 10 && deltaY < 10) {
+				return;
+			}
 		}
 
 		if (!this._canScroll) {
@@ -135,8 +138,8 @@ class ScrollEnablement extends EventProvider {
 		container.scrollTop += this._prevDragY - dragY;
 
 		const useCachedValues = dragX === this._prevDragX;
-		const _dragX = useCachedValues ? this.cashedValue.dragX : dragX;
-		// const _dragY = useCachedValues ? this.cashedValue.dragY : dragY; if needed
+		const _dragX = useCachedValues ? this.cachedValue.dragX : dragX;
+		// const _dragY = useCachedValues ? this.cachedValue.dragY : dragY; add if needed
 
 		this.fireEvent(touchEndEventName, {
 			isLeft: _dragX < this._prevDragX,
