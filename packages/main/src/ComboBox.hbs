@@ -1,8 +1,4 @@
-<div class="ui5-combobox-root"
-	role="combobox"
-	aria-haspopup="listbox"
-	aria-expanded="{{open}}"
->
+<div class="ui5-combobox-root">
 	<input id="ui5-combobox-input"
 		.value="{{_tempValue}}"
 		inner-input
@@ -17,7 +13,13 @@
 		@keydown="{{_keydown}}"
 		@focusin="{{_focusin}}"
 		@focusout="{{_focusout}}"
+		role="combobox"
+		aria-haspopup="listbox"
+		aria-expanded="{{open}}"
 		aria-autocomplete="both"
+	    aria-activedescendant="{{ariaActiveDescendant}}"
+		aria-controls="{{ariaControls}}"
+		aria-describedby="{{ariaDescribedBy}}"
 	/>
 
 	{{#unless readonly}}
@@ -29,6 +31,7 @@
 			?pressed="{{_iconPressed}}"
 			@click="{{_arrowClick}}"
 			dir="{{dir}}"
+			accessibleName="Select Options"
 		></ui5-icon>
 	{{/unless}}
 </div>
