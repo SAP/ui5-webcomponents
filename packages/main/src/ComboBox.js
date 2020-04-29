@@ -9,6 +9,9 @@ import { isBackSpace, isDelete, isShow } from "@ui5/webcomponents-base/dist/Keys
 import * as Filters from "./ComboBoxFilters.js";
 
 import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -488,6 +491,22 @@ class ComboBox extends UI5Element {
 
 	get editable() {
 		return !this.readonly;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get valueStateTextMappings() {
+		return {
+			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
+		};
 	}
 
 	static async onDefine() {
