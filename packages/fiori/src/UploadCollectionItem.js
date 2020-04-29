@@ -256,17 +256,15 @@ class UploadCollectionItem extends ListItem {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+
+		this._editPressed = false; // indicates if the edit btn has been pressed
 	}
 
-	onBeforeRendering() {
-		if (!this.focused) {
-			console.log("editing = false");
-			this._editing = false;
-		}
-	}
 	
 	onAfterRendering() {
-		if (this.focused && this._editing) {
+		if (this._editPressed) {
+			this._editing = true;
+			this._editPressed = false;
 			this.focusAndSelectText();
 		}
 	}
@@ -286,8 +284,26 @@ class UploadCollectionItem extends ListItem {
 	 */
 	onDetailClick(event) {
 		super.onDetailClick(event);
-		console.log("_editing = true");
 		this._editing = true;
+	}
+
+	/**
+	 * @override
+	 */
+	_onfocusout(event) {
+		super._onfocusout(event);
+
+		this._editPressed = this.isDetailPressed(event);
+
+		if (!this.editPressed) {
+			this._editing = false;
+		}
+	}
+
+	isDetailPressed(event) {
+		return event.path.some(e => {
+			return e.classList &&  e.classList.contains("ui5-uci-edit")
+		});
 	}
 
 	_onInputChange(event) {
@@ -295,14 +311,12 @@ class UploadCollectionItem extends ListItem {
 			return;
 		}
 
-		console.log("editing = false");
 		this._editing = false;
 		this.fileName = event.target.value + this._fileExtension;
 		this.fireEvent("rename");
 	}
 
 	_onRenameCancel(event) {
-		console.log("editing = false");
 		this._editing = false;
 	}
 
