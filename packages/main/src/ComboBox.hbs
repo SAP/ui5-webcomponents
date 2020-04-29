@@ -18,11 +18,10 @@
 		@focusin="{{_focusin}}"
 		@focusout="{{_focusout}}"
 		aria-expanded="{{open}}"
-		role="{{accInfo.role}}"
-		aria-haspopup="{{accInfo.ariaHasPopup}}"
-		aria-autocomplete="{{accInfo.ariaAutoComplete}}"
-		aria-controls="{{accInfo.ariaControls}}"
-		aria-describedby="{{accInfo.ariaDescribedBy}}"
+		role="combobox"
+		aria-haspopup="listbox"
+		aria-autocomplete="both"
+		aria-describedby="{{_id}}-valueStateDesc"
 	/>
 
 	{{#unless readonly}}
@@ -34,7 +33,7 @@
 			?pressed="{{_iconPressed}}"
 			@click="{{_arrowClick}}"
 			dir="{{dir}}"
-			accessibleName="Select Options"
+			accessibleName="{{_accessibleNameText}}"
 		></ui5-icon>
 	{{/unless}}
 </div>

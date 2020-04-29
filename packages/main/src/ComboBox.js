@@ -493,16 +493,6 @@ class ComboBox extends UI5Element {
 		return !this.readonly;
 	}
 
-	get accInfo() {
-		return {
-			"role": "combobox",
-			"ariaHasPopup": "listbox",
-			"ariaAutoComplete": "both",
-			"ariaControls": this.responsivePopover && this.responsivePopover.opened ? this.responsivePopover.id : undefined,
-			"ariaDescribedBy": `${this._id}-valueStateDesc`,
-		};
-	}
-
 	get hasValueState() {
 		return this.valueState !== ValueState.None;
 	}
