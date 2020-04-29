@@ -61,6 +61,10 @@
 		.fixed-height {
 			height: 160px;
 		}
+
+		.customTextArea::part(textarea) {
+			background: bisque;
+		}
 	</style>
 	</head>
 
@@ -175,6 +179,15 @@
 	</section>
 	<section class="group">
 		<ui5-input id="inputResult" class="fixed-width"></ui5-input>
+	</section>
+
+	<section class="group">
+		<ui5-textarea
+			class="customTextArea fixed-width fixed-height"
+			maxlength="20"
+			show-exceeded-text
+		>
+		</ui5-textarea>
 	</section>
 
 	<script>

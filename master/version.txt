@@ -1,5 +1,5 @@
-commit 3d56b4d729ab4c52ba3d28db59c29df9a56869d8
+commit 6cd3da8d96c55d49db736945a7b437b01cef3c2a
 Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Wed Apr 29 09:06:26 2020 +0300
+Date:   Wed Apr 29 10:10:47 2020 +0300
 
-    feat(ui5-combobox): implement accessibility spec (#1560)
+    fix(ui5-combobox): translate accessibleName (#1563)
