@@ -999,7 +999,7 @@ class ShellBar extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents-fiori"),
 			Button.define(),
 			List.define(),
 			Popover.define(),
