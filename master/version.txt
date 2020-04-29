@@ -1,5 +1,5 @@
-commit bccf03b2c80f4f316d9509d857000dc5e0d00f85
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Apr 28 12:03:04 2020 +0300
+commit 3d56b4d729ab4c52ba3d28db59c29df9a56869d8
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Wed Apr 29 09:06:26 2020 +0300
 
-    fix(ui5-segmentedbutton): import ui5-togglebutton by default (#1549)
+    feat(ui5-combobox): implement accessibility spec (#1560)
