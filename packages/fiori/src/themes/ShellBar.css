@@ -197,6 +197,11 @@ slot[name="profile"] {
 	height: 1.675rem;
 }
 
+.ui5-shellbar-logo:focus {
+	outline: 1px dotted var(--sapContent_ContrastFocusColor);
+
+}
+
 .ui5-shellbar-button {
 	width: 2.5rem;
 }
@@ -369,7 +374,6 @@ ui5-icon[data-count]::before {
 	background: var(--sapShell_Hover_Background);
 }
 
-.ui5-shellbar-logo:focus,
 ::slotted(ui5-input[focused]) {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }

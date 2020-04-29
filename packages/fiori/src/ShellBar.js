@@ -427,7 +427,7 @@ class ShellBar extends UI5Element {
 			this._overflowActions();
 		};
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	_menuItemPress(event) {
@@ -894,16 +894,16 @@ class ShellBar extends UI5Element {
 		return this._itemsInfo.filter(itemInfo => !!itemInfo.custom);
 	}
 
-	get interactiveLogo() {
+	get nonFocusableLogo() {
 		return this.breakpointSize === "S" && this.hasMenuItems;
 	}
 
-	get hasNonInteractiveLogo() {
-		return this.logo && !this.interactiveLogo;
+	get hasFocusableLogo() {
+		return this.logo && !this.nonFocusableLogo;
 	}
 
-	get hasInteractiveLogo() {
-		return this.logo && this.interactiveLogo;
+	get hasNonFocusableLogo() {
+		return this.logo && this.nonFocusableLogo;
 	}
 
 	get showArrowDown() {

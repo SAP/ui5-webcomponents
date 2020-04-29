@@ -10,7 +10,7 @@
 				<slot name="startButton"></slot>
 		{{/if}}
 
-		{{#if hasNonInteractiveLogo}}
+		{{#if hasFocusableLogo}}
 			<img class="ui5-shellbar-logo"
 				src="{{logo}}"
 				@click="{{_logoPress}}"
@@ -30,8 +30,8 @@
 				aria-haspopup="{{menuBtnHasPopup}}"
 				aria-expanded="{{menuPopoverExpanded}}"
 			>
-				{{#if hasInteractiveLogo}}
-					<img class="ui5-shellbar-logo" src="{{logo}}"/>
+				{{#if hasNonFocusableLogo}}
+					<img class="ui5-shellbar-logo" src="{{logo}}" aria-label="{{_logoText}}" title="{{_logoText}}"/>
 				{{/if}}
 
 				{{#if primaryTitle}}
