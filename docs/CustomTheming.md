@@ -34,9 +34,20 @@ Follow this simple tutorial to get a custom theme running with UI5 Web Component
 	
 5. Include the file in your project's `.html` page:
 
+	The simplest option would be to use a `<link>` tag and point to where you copied the file: 
+
 	```html
 	<link rel="stylesheet" type="text/css" href="<path-to-your-css-file>/css_variables.css">
 	```
+	
+	but you could as well use a `<style>` tag and paste the content of `css_variables.css` inside, 
+	if that's what you prefer:
+	
+	```html
+    <style>
+   		/* Here goes the content of css_variables.css */
+    </style>
+    ```
 	
 And that's it! Now you can use your custom theme by setting it either in the URL of your page,
 or in your configuration script:
