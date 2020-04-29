@@ -57,7 +57,6 @@
 	font-size: var(--sapFontLargeSize);
 	color: var(--sapTextColor);
 	margin-bottom: 0.25rem;
-	white-space: pre-wrap;
 }
 
 ui5-link.ui5-uci-file-name {
@@ -70,6 +69,13 @@ ui5-link.ui5-uci-file-name {
 	font-size: var(--sapFontMediumSize);
 	color: var(--sapContent_LabelColor);
 	white-space: initial;
+}
+
+.ui5-uci-file-name,
+.ui5-uci-description {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 /* Edit mode */
