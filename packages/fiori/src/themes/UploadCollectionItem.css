@@ -108,6 +108,12 @@ ui5-link.ui5-uci-file-name {
 	margin-right: 0.125rem;
 }
 
+/* Progress Box */
+.ui5-uci-progress-box {
+	width: 20%;
+	min-width: 4rem;
+}
+
 @media(max-width: 30rem) {
 	.ui5-uci-content-and-edit-container {
 		display: block;
@@ -118,6 +124,7 @@ ui5-link.ui5-uci-file-name {
 	}
 
 	.ui5-uci-progress-box {
+		width: 100%;
 		margin-top: .5rem;
 	}
 	
@@ -134,12 +141,6 @@ ui5-link.ui5-uci-file-name {
 	.ui5-uci-edit-buttons {
 		margin-left: 0;
 	}
-}
-
-/* Progress Box */
-.ui5-uci-progress-box {
-	width: 20%;
-	min-width: 4rem;
 }
 
 .ui5-uci-progress-indicator {

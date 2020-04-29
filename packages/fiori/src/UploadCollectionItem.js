@@ -1,5 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
@@ -10,6 +11,7 @@ import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension
 import UploadState from "./types/UploadState.js";
 import "@ui5/webcomponents-icons/dist/icons/refresh.js";
 import "@ui5/webcomponents-icons/dist/icons/stop.js";
+import "@ui5/webcomponents-icons/dist/icons/edit.js";
 import {
 	UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT,
@@ -258,10 +260,11 @@ class UploadCollectionItem extends ListItem {
 
 	onBeforeRendering() {
 		if (!this.focused) {
+			console.log("editing = false");
 			this._editing = false;
 		}
 	}
-
+	
 	onAfterRendering() {
 		if (this.focused && this._editing) {
 			this.focusAndSelectText();
@@ -283,6 +286,7 @@ class UploadCollectionItem extends ListItem {
 	 */
 	onDetailClick(event) {
 		super.onDetailClick(event);
+		console.log("_editing = true");
 		this._editing = true;
 	}
 
@@ -291,12 +295,14 @@ class UploadCollectionItem extends ListItem {
 			return;
 		}
 
+		console.log("editing = false");
 		this._editing = false;
 		this.fileName = event.target.value + this._fileExtension;
 		this.fireEvent("rename");
 	}
 
 	_onRenameCancel(event) {
+		console.log("editing = false");
 		this._editing = false;
 	}
 
@@ -397,6 +403,17 @@ class UploadCollectionItem extends ListItem {
 
 	get _terminateButtonTooltip() {
 		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
+	}
+
+	/**
+	 * override
+	 */
+	get typeDetail() {
+		return false;
+	}
+
+	get showEditButton() {
+		return this.type === ListItemType.Detail;
 	}
 }
 

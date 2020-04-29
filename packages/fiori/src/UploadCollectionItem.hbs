@@ -65,6 +65,15 @@
 						@click="{{_onTerminate}}">
 					</ui5-button>
 				{{/if}}
+
+				{{#if showEditButton}}
+					<ui5-button
+						id="{{_id}}-editing-button"
+						design="Transparent"
+						icon="edit"
+						@click="{{onDetailClick}}"
+					></ui5-button>
+				{{/if}}
 			{{/if}}
 		</div>
 	</div>
