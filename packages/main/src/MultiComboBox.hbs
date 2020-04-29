@@ -1,16 +1,13 @@
 <div class="ui5-multi-combobox-root"
 	@focusin={{rootFocusIn}}
 	@focusout={{rootFocusOut}}
-	role="combobox"
-	aria-haspopup="listbox"
-	aria-expanded="{{open}}"
 >
 	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{nMoreCountText}}</span>
-	
+
 	{{#if hasValueState}}
 		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
 	{{/if}}
-	
+
 	<ui5-tokenizer slot="_beginContent"
 		show-more
 		class="ui5-multi-combobox-tokenizer"
@@ -50,6 +47,9 @@
 		@focusin="{{_focusin}}"
 		@focusout="{{_focusout}}"
 		@click={{_click}}
+		role="combobox"
+		aria-haspopup="listbox"
+		aria-expanded="{{open}}"
 		aria-autocomplete="both"
 		aria-labelledby="{{_id}}-hiddenText-nMore"
 		aria-describedby="{{_id}}-valueStateDesc"
@@ -63,6 +63,7 @@
 			@click={{_showAllItemsPopover}}
 			?pressed="{{_iconPressed}}"
 			dir="{{dir}}"
+			accessible-name="{{_iconAccessibleNameText}}"
 		></ui5-icon>
 	{{/unless}}
 </div>
