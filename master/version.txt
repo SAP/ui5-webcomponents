@@ -1,5 +1,5 @@
-commit 39bd3067f76dbca4b103c5131e602be06fbdba50
+commit dc606098a08a6079377252a253a75dbda8eb080c
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Apr 29 11:33:29 2020 +0300
+Date:   Wed Apr 29 14:41:35 2020 +0300
 
-    refactor(ui5-tabcontainer): tabs can be modified completely (#1507)
+    fix(ui5-tabcontainer): clicking a tab now always works (#1567)
