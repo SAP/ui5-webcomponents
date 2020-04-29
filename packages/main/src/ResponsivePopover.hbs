@@ -9,7 +9,22 @@
 		@ui5-afterClose="{{_afterDialogClose}}"
 	>
 		{{!-- forward slot header to inner dialog slot header --}}
-		<slot slot="header" name="header"></slot>
+		{{#unless _hideHeader}}
+			{{#if header.length}}
+				<slot slot="header" name="header"></slot>
+			{{else}}
+				<header class="ui5-responsive-popover-header">
+					<ui5-title level="H5" class="ui5-responsive-popover-header-text">{{headerText}}</ui5-title>
+					<ui5-button
+						icon="decline"
+						design="Transparent"
+						@click="{{close}}"
+					>
+					</ui5-button>
+				</header>
+			{{/if}}
+		{{/unless}}
+
 		<slot></slot>
 		{{!-- forward slot footer to inner dialog slot footer --}}
 		<slot slot="footer" name="footer"></slot>

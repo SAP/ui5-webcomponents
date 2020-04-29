@@ -26,7 +26,7 @@ module.exports = {
 				...buildThemesCommands
 			},
 			postcss: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
-			jsonImports: `node "${jsonImportsScript}"`,
+			jsonImports: `node "${jsonImportsScript}" dist/generated/json-imports`,
 		}
 	},
 };

@@ -10,6 +10,7 @@ import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import "@ui5/webcomponents-icons/dist/icons/multiselect-all.js";
+import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -485,6 +486,15 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
+	_setInitialFocusInResponsivePopover() {
+		this._innerInput.focus();
+	}
+
+	_onAllItemsPopoverAfterOpen() {
+		this._setInitialFocusInResponsivePopover();
+		this._toggleIcon();
+	}
+
 	_getSelectedItems() {
 		// Angular 2 way data binding
 		this.selectedValues = this.items.filter(item => item.selected);
@@ -687,6 +697,7 @@ class MultiComboBox extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
+			MultiComboBoxItem.define(),
 			Tokenizer.define(),
 			Token.define(),
 			Icon.define(),

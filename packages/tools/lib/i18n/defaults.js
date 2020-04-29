@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const PropertiesReader = require('properties-reader');
+const mkdirp = require("mkdirp");
 const assets = require('../../assets-meta.js');
 
 const defaultLanguage = assets.languages.default;
@@ -32,7 +33,9 @@ catch (e) {}
  * };
  */
 const getTextInfo = (key, value, defaultLanguageValue) => {
-	const effectiveValue = defaultLanguageValue || value;
+	let effectiveValue = defaultLanguageValue || value;
+	effectiveValue = effectiveValue.replace(/\"/g, "\\\""); // escape double quotes in translations
+
 	return `const ${key} = {key: "${key}", defaultText: "${effectiveValue}"};`;
 };
 
@@ -67,4 +70,5 @@ const writeI18nDefaultsFile = (file, content) => {
 	});
 };
 
+mkdirp.sync(path.dirname(outputFile));
 writeI18nDefaultsFile(outputFile, getOutputFileContent(properties, defaultLanguageProperties));

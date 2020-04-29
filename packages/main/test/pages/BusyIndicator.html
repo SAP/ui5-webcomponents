@@ -23,17 +23,23 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
-	<ui5-title>Default (Large) ui5-busyindicator</ui5-title>
-	<ui5-busyindicator active></ui5-busyindicator>
+	<ui5-title>Large ui5-busyindicator</ui5-title>
+	<ui5-busyindicator active size="Large"></ui5-busyindicator>
 	<br/>
 	<br/>
 
-	<ui5-title>Medium ui5-busyindicator</ui5-title>
+	<ui5-title>Default Medium ui5-busyindicator</ui5-title>
 	<ui5-busyindicator size="Medium" active id="indicator1"></ui5-busyindicator>
 
 	<br />
 	<br />
 	<ui5-busyindicator size="Medium" active id="indicator2"></ui5-busyindicator>
+
+	<ui5-title>ui5-busyindicator with text</ui5-title>
+
+	<br />
+	<br />
+	<ui5-busyindicator active id="indicator2" text="Loading" style="width: 10rem; border: 1px solid red"></ui5-busyindicator>
 
 	<br />
 	<br />
@@ -44,7 +50,7 @@
 
 	<br />
 	<br />
-	<ui5-busyindicator size="Medium" active>
+	<ui5-busyindicator size="Medium" active text="Loading">
 		<ui5-checkbox text="Hello World"></ui5-checkbox>
 	</ui5-busyindicator>
 
@@ -54,7 +60,7 @@
 	<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
 	<br>
 	<br>
-	<ui5-busyindicator id="busy-container" style="width: 520px" size="Medium">
+	<ui5-busyindicator id="busy-container" style="width: 520px" size="Medium" text="Loading">
 		<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items" style="width: 100%"></ui5-list>
 	</ui5-busyindicator>
 
@@ -62,7 +68,7 @@
 	<br>
 	<br>
 	<br>
-	<br>
+	<br> 
 
 	<ui5-busyindicator size="Medium" active style="width: 500px; margin-left: 100px">
 		<ui5-list style="width: 100%; border: 1px solid black;">
@@ -72,7 +78,7 @@
 		</ui5-list>
 	</ui5-busyindicator>
 
-	<br>
+	 <br>
 	<br>
 	<br>
 

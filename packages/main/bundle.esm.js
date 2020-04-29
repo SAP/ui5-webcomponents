@@ -1,5 +1,3 @@
-// import "@ui5/webcomponents-base/test/dev-helpers/ExternalThemePresent.js";
-
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
 
@@ -32,8 +30,6 @@ import Card from "./dist/Card.js";
 import Carousel from "./dist/Carousel.js";
 import CheckBox from "./dist/CheckBox.js";
 import ComboBox from "./dist/ComboBox.js";
-import ComboBoxItem from "./dist/ComboBoxItem.js";
-import MultiComboBoxItem from "./dist/MultiComboBoxItem.js";
 import DatePicker from "./dist/DatePicker.js";
 import DateTimePicker from "./dist/DateTimePicker.js";
 import DurationPicker from "./dist/DurationPicker.js";
@@ -47,10 +43,8 @@ import Popover from "./dist/Popover.js";
 import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
 import ResponsivePopover from "./dist/ResponsivePopover.js";
-import SuggestionItem from "./dist/SuggestionItem.js";
 import SegmentedButton from "./dist/SegmentedButton.js";
 import Select from "./dist/Select.js";
-import Option from "./dist/Option.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
 import MultiComboBox from "./dist/MultiComboBox.js";
@@ -63,7 +57,6 @@ import TableRow from "./dist/TableRow.js";
 import TableCell from "./dist/TableCell.js";
 import TextArea from "./dist/TextArea.js";
 import Timeline from "./dist/Timeline.js";
-import TimelineItem from "./dist/TimelineItem.js";
 import TimePicker from "./dist/TimePicker.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";

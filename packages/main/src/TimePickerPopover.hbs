@@ -1,16 +1,17 @@
 <ui5-responsive-popover
-			id="{{_id}}-responsive-popover"
-			allow-target-overlap="{{_respPopover.allowTargetOverlap}}"
-			placement-type="{{_respPopover.placementType}}"
-			no-arrow
-			horizontal-align="{{_respPopover.horizontalAlign}}"
-			stay-open-on-scroll="{{_respPopover.stayOpenOnScroll}}"
-			@ui5-afterClose="{{_respPopover.afterClose}}"
-			@ui5-afterOpen="{{_respPopover.afterOpen}}"
-			class="ui5-timepicker-popover"
-			@keydown="{{_ontimepickerpopoverkeydown}}"
-			@wheel="{{_handleWheel}}"
-	>
+	id="{{_id}}-responsive-popover"
+	allow-target-overlap="{{_respPopover.allowTargetOverlap}}"
+	placement-type="{{_respPopover.placementType}}"
+	no-arrow
+	_hide-header
+	horizontal-align="{{_respPopover.horizontalAlign}}"
+	stay-open-on-scroll="{{_respPopover.stayOpenOnScroll}}"
+	@ui5-afterClose="{{_respPopover.afterClose}}"
+	@ui5-afterOpen="{{_respPopover.afterOpen}}"
+	class="ui5-timepicker-popover"
+	@keydown="{{_ontimepickerpopoverkeydown}}"
+	@wheel="{{_handleWheel}}"
+>
 	<div class="{{classes.container}}" @keydown={{_oncontainerkeydown}} tabindex="0" @focusin="{{_onfocuscontainerin}}">
 		{{#if shouldBuildHoursSlider}}
 			<ui5-wheelslider 

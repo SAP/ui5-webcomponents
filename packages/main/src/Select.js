@@ -15,8 +15,13 @@ import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
+import Option from "./Option.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
@@ -424,6 +429,33 @@ class Select extends UI5Element {
 		}
 	}
 
+	get valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
+	get isDisabled() {
+		return this.disabled || undefined;
+	}
+
 	get _headerTitleText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
@@ -446,6 +478,7 @@ class Select extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
+			Option.define(),
 			Label.define(),
 			ResponsivePopover.define(),
 			List.define(),

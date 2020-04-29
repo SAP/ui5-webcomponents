@@ -18,6 +18,7 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import {
 	CAROUSEL_OF_TEXT,
+	CAROUSEL_DOT_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
@@ -89,7 +90,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the index of the initially selected page.
+		 * Defines the index of the initially selected item.
 		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
@@ -127,6 +128,14 @@ const metadata = {
 		_width: {
 			type: Integer,
 		},
+
+		/**
+		 * Defines the carousel item width in pixels
+		 * @private
+		 */
+		_itemWidth: {
+			type: Integer,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
@@ -143,7 +152,22 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
-		//
+
+		/**
+		 * Fired whenever the <code>selectedIndex</code> changes due to user interaction,
+		 * when the user clicks on the navigation arrows or while resizing,
+		 * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
+		 *
+		 * @event
+		 * @param {Integer} selectedIndex the current <code>selectedIndex</code>.
+		 * @public
+		 * @since 1.0.0-rc.7
+		 */
+		navigate: {
+			detail: {
+				selectedIndex: { type: Integer },
+			},
+		},
 	},
 };
 
@@ -209,10 +233,16 @@ class Carousel extends UI5Element {
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._onResizeBound = this._onResize.bind(this);
+		this._resizing = false; // indicates if the carousel is in process of resizing
+	}
+
+	onBeforeRendering() {
+		this.validateSelectedIndex();
 	}
 
 	onAfterRendering() {
 		this._scrollEnablement.scrollContainer = this.getDomRef();
+		this._resizing = false; // not invalidating
 	}
 
 	onEnterDOM() {
@@ -223,21 +253,33 @@ class Carousel extends UI5Element {
 		ResizeHandler.deregister(this, this._onResizeBound);
 	}
 
+	validateSelectedIndex() {
+		if (!this.isIndexInRange(this.selectedIndex)) {
+			this.selectedIndex = 0;
+			console.warn(`The "selectedIndex" is out of range, changed to: ${0}`); // eslint-disable-line
+		}
+	}
+
 	_onResize() {
-		const oldItemsPerPage = this.effectiveItemsPerPage;
+		const previousItemsPerPage = this.effectiveItemsPerPage;
+
+		// Set the resizing flag to suppress animation while resizing
+		this._resizing = true;
 
 		// Change transitively effectiveItemsPerPage by modifying _width
 		this._width = this.offsetWidth;
+		this._itemWidth = Math.floor(this._width / this.effectiveItemsPerPage);
 
-		// Items per page did not change, therefore page index does not need to be re-adjusted
-		if (this.effectiveItemsPerPage === oldItemsPerPage) {
+		// Items per page did not change or the current,
+		// therefore page index does not need to be re-adjusted
+		if (this.effectiveItemsPerPage === previousItemsPerPage) {
 			return;
 		}
 
-		// Whenever the number of items per page changes, the selected index needs to be re-adjusted so that the items
-		// that were visible before, can be visible as much as possible afterwards.
-		const adjustment = oldItemsPerPage / this.effectiveItemsPerPage;
-		this.selectedIndex = Math.round(this.selectedIndex * adjustment);
+		if (this.selectedIndex > this.pagesCount - 1) {
+			this.selectedIndex = this.pagesCount - 1;
+			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		}
 	}
 
 	_updateScrolling(event) {
@@ -265,56 +307,57 @@ class Carousel extends UI5Element {
 	}
 
 	navigateLeft() {
+		this._resizing = false;
+
+		const peviousSelectedIndex = this.selectedIndex;
+
 		if (this.selectedIndex - 1 < 0) {
 			if (this.cyclic) {
-				this.selectedIndex = this.pages.length - 1;
+				this.selectedIndex = this.pagesCount - 1;
 			}
 		} else {
 			--this.selectedIndex;
 		}
+
+		if (peviousSelectedIndex !== this.selectedIndex) {
+			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		}
 	}
 
 	navigateRight() {
-		if (this.selectedIndex + 1 > this.pages.length - 1) {
+		this._resizing = false;
+
+		const peviousSelectedIndex = this.selectedIndex;
+
+		if (this.selectedIndex + 1 > this.pagesCount - 1) {
 			if (this.cyclic) {
 				this.selectedIndex = 0;
 			}
 		} else {
 			++this.selectedIndex;
 		}
-	}
 
-	get shouldAnimate() {
-		return getAnimationMode() === AnimationMode.None;
+		if (peviousSelectedIndex !== this.selectedIndex) {
+			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		}
 	}
 
 	/**
 	 * Assuming that all items have the same width
 	 * @private
 	 */
-	get pages() {
-		const result = [],
-			pagesCount = Math.ceil(this.content.length / this.effectiveItemsPerPage);
-
-		for (let pageIdx = 0; pageIdx < pagesCount; pageIdx++) {
-			result.push([]);
-			for (let itemIdx = 0; itemIdx < this.effectiveItemsPerPage; itemIdx++) {
-				const item = this.content[(pageIdx * this.effectiveItemsPerPage) + itemIdx];
-				if (item) {
-					result[pageIdx].push({
-						item,
-						tabIndex: pageIdx === this.selectedIndex ? "0" : "-1",
-					});
-				}
-			}
-			const itemsOnThisPage = result[pageIdx].length;
-			const itemWidth = Math.floor(100 / itemsOnThisPage);
-			result[pageIdx].forEach(item => {
-				item.width = itemWidth;
-			});
-		}
-
-		return result;
+	get items() {
+		return this.content.map((item, idx) => {
+			return {
+				id: `${this._id}-carousel-item-${idx + 1}`,
+				item,
+				tabIndex: idx === this.selectedIndex ? "0" : "-1",
+				posinset: idx + 1,
+				setsize: this.content.length,
+				width: this._itemWidth,
+				classes: this.isItemInViewport(idx) ? "" : "ui5-carousel-item--hidden",
+			};
+		});
 	}
 
 	get effectiveItemsPerPage() {
@@ -329,19 +372,30 @@ class Carousel extends UI5Element {
 		return this.itemsPerPageL;
 	}
 
+	isItemInViewport(index) {
+		return index >= this.selectedIndex && index <= this.selectedIndex + this.effectiveItemsPerPage - 1;
+	}
+
+	isIndexInRange(index) {
+		return index >= 0 && index <= this.pagesCount - 1;
+	}
+
 	get styles() {
 		return {
 			content: {
-				transform: `translateX(-${this.selectedIndex * 100}%)`,
+				transform: `translateX(-${this.selectedIndex * this._itemWidth}px`,
 			},
 		};
 	}
 
 	get classes() {
 		return {
+			viewport: {
+				"ui5-carousel-viewport--single": this.pagesCount === 1,
+			},
 			content: {
 				"ui5-carousel-content": true,
-				"ui5-carousel-content-no-animation": this.shouldAnimate,
+				"ui5-carousel-content-no-animation": this.supressAimation,
 				"ui5-carousel-content-has-navigation": this.showNavigationArrows,
 				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
@@ -349,23 +403,36 @@ class Carousel extends UI5Element {
 				"ui5-carousel-navigation-wrapper": true,
 				"ui5-carousel-navigation-with-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
-			page: {
-				"ui5-carousel-page": true,
-				"ui5-carousel-page-multiple": this.effectiveItemsPerPage > 1,
+			navPrevButton: {
+				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
+			},
+			navNextButton: {
+				"ui5-carousel-navigation-button--hidden": !this.hasNext,
 			},
 		};
 	}
 
+	get pagesCount() {
+		const items = this.content.length;
+		return items > this.effectiveItemsPerPage ? items - this.effectiveItemsPerPage + 1 : 1;
+	}
+
 	get isPageTypeDots() {
-		return this.pages.length < Carousel.pageTypeLimit;
+		return this.pagesCount < Carousel.pageTypeLimit;
 	}
 
 	get dots() {
-		return this.pages.map((item, index) => {
-			return {
+		const dots = [];
+		const pages = this.pagesCount;
+
+		for (let index = 0; index < pages; index++) {
+			dots.push({
 				active: index === this.selectedIndex,
-			};
-		});
+				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [pages]),
+			});
+		}
+
+		return dots;
 	}
 
 	get arrows() {
@@ -377,8 +444,16 @@ class Carousel extends UI5Element {
 		};
 	}
 
-	get ofText() {
-		return this.i18nBundle.getText(CAROUSEL_OF_TEXT);
+	get hasPrev() {
+		return this.cyclic || this.selectedIndex - 1 >= 0;
+	}
+
+	get hasNext() {
+		return this.cyclic || this.selectedIndex + 1 <= this.pagesCount - 1;
+	}
+
+	get supressAimation() {
+		return this._resizing || getAnimationMode() === AnimationMode.None;
 	}
 
 	get selectedIndexToShow() {
@@ -386,7 +461,15 @@ class Carousel extends UI5Element {
 	}
 
 	get showNavigationArrows() {
-		return !this.hideNavigation && this.pages.length > 1;
+		return !this.hideNavigation && this.pagesCount > 1;
+	}
+
+	get ofText() {
+		return this.i18nBundle.getText(CAROUSEL_OF_TEXT);
+	}
+
+	get ariaActiveDescendant() {
+		return this.content.length ? `${this._id}-carousel-item-${this.selectedIndex + 1}` : undefined;
 	}
 
 	static async onDefine() {

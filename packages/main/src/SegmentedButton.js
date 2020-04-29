@@ -4,6 +4,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
+import ToggleButton from "./ToggleButton.js";
 
 // Template
 import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTemplate.lit.js";
@@ -93,7 +94,10 @@ class SegmentedButton extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
+			ToggleButton.define(),
+		]);
 	}
 
 	constructor() {

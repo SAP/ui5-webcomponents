@@ -1,6 +1,9 @@
 const fs = require("fs");
+const path = require('path');
 const mkdirp = require("mkdirp");
 const assets = require("../../assets-meta.js");
+
+const outputFile = path.normalize(`${process.argv[2]}/Themes.js`);
 
 const optionalThemes = assets.themes.all.filter(theme => theme !== assets.themes.default);
 
@@ -26,5 +29,5 @@ Suggested pattern: "assets\\\\\\/.*\\\\\\.json"\`);
 ${registerLines};
 `;
 
-mkdirp.sync("dist/generated/json-imports/");
-fs.writeFileSync("dist/generated/json-imports/Themes.js", content);
+mkdirp.sync(path.dirname(outputFile));
+fs.writeFileSync(outputFile, content);
