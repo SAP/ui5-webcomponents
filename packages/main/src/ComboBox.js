@@ -479,6 +479,13 @@ class ComboBox extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
+<<<<<<< Updated upstream
+=======
+	get _iconAccessibleNameText() {
+		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
+	}
+
+>>>>>>> Stashed changes
 	get inner() {
 		return isPhone() ? this.responsivePopover.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
 	}
