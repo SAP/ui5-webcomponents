@@ -1,5 +1,5 @@
-commit 6cd3da8d96c55d49db736945a7b437b01cef3c2a
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Wed Apr 29 10:10:47 2020 +0300
+commit 39bd3067f76dbca4b103c5131e602be06fbdba50
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Apr 29 11:33:29 2020 +0300
 
-    fix(ui5-combobox): translate accessibleName (#1563)
+    refactor(ui5-tabcontainer): tabs can be modified completely (#1507)
