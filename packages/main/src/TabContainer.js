@@ -284,20 +284,22 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderClick(event) {
-		if (!tabIsClicked(event.target)) {
+		const tab = getTab(event.target);
+		if (!tab) {
 			return;
 		}
 
-		this._onHeaderItemSelect(event);
+		this._onHeaderItemSelect(tab);
 	}
 
 	_onHeaderKeyDown(event) {
-		if (!tabIsClicked(event.target)) {
+		const tab = getTab(event.target);
+		if (!tab) {
 			return;
 		}
 
 		if (isEnter(event)) {
-			this._onHeaderItemSelect(event);
+			this._onHeaderItemSelect(tab);
 		}
 
 		// Prevent Scrolling
@@ -307,12 +309,13 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderKeyUp(event) {
-		if (!tabIsClicked(event.target)) {
+		const tab = getTab(event.target);
+		if (!tab) {
 			return;
 		}
 
 		if (isSpace(event)) {
-			this._onHeaderItemSelect(event);
+			this._onHeaderItemSelect(tab);
 		}
 	}
 
@@ -321,9 +324,9 @@ class TabContainer extends UI5Element {
 		this._itemNavigation.getItemsCallback = () => this._getTabs();
 	}
 
-	_onHeaderItemSelect(event) {
-		if (!event.target.hasAttribute("disabled")) {
-			this._onItemSelect(event.target);
+	_onHeaderItemSelect(tab) {
+		if (!tab.hasAttribute("disabled")) {
+			this._onItemSelect(tab);
 		}
 	}
 
@@ -499,8 +502,18 @@ class TabContainer extends UI5Element {
 	}
 }
 
-const tabIsClicked = el => {
-	return el.localName === "li" && el.getAttribute("role") === "tab";
+const isTabLi = el => el.localName === "li" && el.getAttribute("role") === "tab";
+
+const getTab = el => {
+	while (el) {
+		if (isTabLi(el)) {
+			return el;
+		}
+
+		el = el.parentElement;
+	}
+
+	return false;
 };
 
 const findIndex = (arr, predicate) => {
