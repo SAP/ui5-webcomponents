@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/SAP/ui5-webcomponents/compare/v0.19.0...v0.20.0) (2020-04-30)
+
+
+### Bug Fixes
+
+* **framework:** allow the creation of components with static area content only ([#1450](https://github.com/SAP/ui5-webcomponents/issues/1450)) ([b0505ce](https://github.com/SAP/ui5-webcomponents/commit/b0505ce))
+* **framework:** apply CSS Vars in Static Styles on IE11 ([#1440](https://github.com/SAP/ui5-webcomponents/issues/1440)) ([b8ae60e](https://github.com/SAP/ui5-webcomponents/commit/b8ae60e))
+* **framework:** rendering is no longer delayed  ([#1552](https://github.com/SAP/ui5-webcomponents/issues/1552)) ([c26e8aa](https://github.com/SAP/ui5-webcomponents/commit/c26e8aa))
+* **scroll enablement:** fix scrolling issue on scroll & mobile ([#1557](https://github.com/SAP/ui5-webcomponents/issues/1557)) ([e79482a](https://github.com/SAP/ui5-webcomponents/commit/e79482a))
+* **scroll enablement:** fix scrolling on android devices ([#1491](https://github.com/SAP/ui5-webcomponents/issues/1491)) ([df19ede](https://github.com/SAP/ui5-webcomponents/commit/df19ede))
+
+
+
+### Features
+
+* **framework:** enable external themes support ([#1463](https://github.com/SAP/ui5-webcomponents/issues/1463)) ([b031782](https://github.com/SAP/ui5-webcomponents/commit/b031782))
+* **framework:** register theme variables via CSS file ([#1451](https://github.com/SAP/ui5-webcomponents/issues/1451)) ([3173fb9](https://github.com/SAP/ui5-webcomponents/commit/3173fb9))
+
+
+
+
 # [0.19.0](https://github.com/SAP/ui5-webcomponents/compare/v0.18.0...v0.19.0) (2020-03-27)
 
 
