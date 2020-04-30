@@ -680,6 +680,10 @@ class MultiComboBox extends UI5Element {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
 	get _innerInput() {
 		if (isPhone()) {
 			if (this.allItemsPopover.opened) {
