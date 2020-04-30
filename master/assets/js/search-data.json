@@ -660,7 +660,7 @@
   "95": {
     "id": "95",
     "title": "Text Area",
-    "content": "&lt;!DOCTYPE html&gt; Playground Evoground Value State Message Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. Simple TextArea TextArea with value Disabled TextArea Readonly TextArea Required TextArea Text Area: Growing Text Area: Growing with 8 initial rows Text Area: Growing up to 4 Text Area: Growing with initial rows 4 and growing up to 12 Text Area: growing with max length 20 characters Text Area: max length 20 characters Text Area: showExceededText with maxlength Text Area: change event Text Area: input event",
+    "content": "&lt;!DOCTYPE html&gt; Playground Evoground Value State Message Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. Simple TextArea This msg will not be displayed as no value-state is set. TextArea with value Disabled TextArea Readonly TextArea Required TextArea Text Area: Growing Text Area: Growing with 8 initial rows Text Area: Growing up to 4 Text Area: Growing with initial rows 4 and growing up to 12 Text Area: growing with max length 20 characters Text Area: max length 20 characters Text Area: showExceededText with maxlength Text Area: change event Text Area: input event",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/TextArea/",
     "relUrl": "/playground/main/pages/TextArea/"
   },

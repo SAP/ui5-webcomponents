@@ -1,5 +1,8 @@
-commit dc606098a08a6079377252a253a75dbda8eb080c
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Apr 29 14:41:35 2020 +0300
+commit 832c34ede23e7e9888c0df30cd857312547ed42d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Apr 30 13:42:37 2020 +0300
 
-    fix(ui5-tabcontainer): clicking a tab now always works (#1567)
+    fix(ui5-textarea): stop showing valueStateMsg in value-state="None" (#1568)
+    
+    Previously if value state msg slot is set, it used to be displayed in all value states.
+    But, by spec the no matter as slot or built-in text, the value state message should be displayed in Error, Warning and Information states only.

@@ -84,7 +84,11 @@
 
 	<section class="group">
 		<ui5-title>Simple TextArea</ui5-title>
-		<ui5-textarea id="basic-textarea" placeholder="Basic text area"></ui5-textarea>
+		<ui5-textarea id="basic-textarea" placeholder="Basic text area">
+			<div slot="valueStateMessage">
+				This msg will not be displayed as no value-state is set.
+			</div>
+		</ui5-textarea>
 
 		<br>
 		<br>
