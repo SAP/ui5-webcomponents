@@ -1,8 +1,7 @@
-commit 832c34ede23e7e9888c0df30cd857312547ed42d
+commit ad923a2b79f98dc322a76fc86a2f9961d47fe422
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 30 13:42:37 2020 +0300
+Date:   Thu Apr 30 14:05:47 2020 +0300
 
-    fix(ui5-textarea): stop showing valueStateMsg in value-state="None" (#1568)
+    fix(ui5-timepicker): fix AM/PM selection (#1569)
     
-    Previously if value state msg slot is set, it used to be displayed in all value states.
-    But, by spec the no matter as slot or built-in text, the value state message should be displayed in Error, Warning and Information states only.
+    Fix period selection. Previously selecting "PM" results in "AM" within the input field and vice versa.
