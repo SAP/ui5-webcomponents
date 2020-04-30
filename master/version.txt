@@ -1,7 +1,5 @@
-commit ad923a2b79f98dc322a76fc86a2f9961d47fe422
+commit 5eda61b7f0d52161ab2a9420d334bace0922943d
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 30 14:05:47 2020 +0300
+Date:   Thu Apr 30 16:01:26 2020 +0300
 
-    fix(ui5-timepicker): fix AM/PM selection (#1569)
-    
-    Fix period selection. Previously selecting "PM" results in "AM" within the input field and vice versa.
+    chore(release): publish v1.0.0-rc.7 (#1572)
