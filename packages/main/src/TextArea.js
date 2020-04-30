@@ -427,7 +427,7 @@ class TextArea extends UI5Element {
 	}
 
 	_onResize() {
-		if (this.displayValueStateMessage) {
+		if (this.displayValueStateMessagePopover) {
 			this._width = this.offsetWidth;
 		}
 	}
@@ -546,19 +546,19 @@ class TextArea extends UI5Element {
 	}
 
 	get openValueStateMsgPopover() {
-		return !this._firstRendering && this._openValueStateMsgPopover && this.displayValueStateMessage;
+		return !this._firstRendering && this._openValueStateMsgPopover && this.displayValueStateMessagePopover;
 	}
 
-	get displayValueStateMessage() {
-		return !!this.valueStateMessage.length || this.exceeding || (this.valueState !== ValueState.Success && this.valueState !== ValueState.None);
+	get displayValueStateMessagePopover() {
+		return this.hasCustomValueState || this.hasValueState || this.exceeding;
 	}
 
-	get displayDefaultValueStateMessage() {
-		if (this.valueStateMessage.length) {
-			return false;
-		}
+	get hasCustomValueState() {
+		return !!this.valueStateMessage.length && this.hasValueState;
+	}
 
-		return this.exceeding || (this.valueState !== ValueState.Success && this.valueState !== ValueState.None);
+	get hasValueState() {
+		return this.valueState === ValueState.Error || this.valueState === ValueState.Warning || this.valueState === ValueState.Information;
 	}
 
 	get valueStateMessageText() {
