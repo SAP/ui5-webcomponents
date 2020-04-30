@@ -493,16 +493,21 @@ class TimePicker extends UI5Element {
 			minutesSlider = this.minutesSlider,
 			hoursSlider = this.hoursSlider,
 			periodsSlider = this.periodsSlider,
-			hours = hoursSlider ? hoursSlider.getAttribute("value") : this._hoursParameters.minHour.toString(),
 			minutes = minutesSlider ? minutesSlider.getAttribute("value") : "0",
 			seconds = secondsSlider ? secondsSlider.getAttribute("value") : "0",
 			period = periodsSlider ? periodsSlider.getAttribute("value") : this.periodsArray[0];
 
-		if (this._hoursParameters.isTwelveHoursFormat && period === this.periodsArray[0]) {
-			selectedDate.setHours(hours * 1 + 12);
-		} else {
-			selectedDate.setHours(hours);
+		let hours = hoursSlider ? hoursSlider.getAttribute("value") : this._hoursParameters.minHour.toString();
+
+		if (period === this.periodsArray[0]) { // AM
+			hours = hours === "12" ? 0 : hours;
 		}
+
+		if (period === this.periodsArray[1]) { // PM
+			hours = hours === "12" ? hours : hours * 1 + 12;
+		}
+
+		selectedDate.setHours(hours);
 		selectedDate.setMinutes(minutes);
 		selectedDate.setSeconds(seconds);
 
