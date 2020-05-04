@@ -1,5 +1,5 @@
-commit 5eda61b7f0d52161ab2a9420d334bace0922943d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 30 16:01:26 2020 +0300
+commit 3b7b439726ce084f5f00ee24e8d51cbb7ed4ec6c
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon May 4 12:54:52 2020 +0300
 
-    chore(release): publish v1.0.0-rc.7 (#1572)
+    feat(ui5-shellbar): implement accessibility spec (#1553)
