@@ -48,10 +48,6 @@ class ToolbarSpacer extends UI5Element {
 	static get render() {
 		return litRender;
 	}
-
-	static async define(...params) {
-		super.define(...params);
-	}
 }
 
 ToolbarSpacer.define();
