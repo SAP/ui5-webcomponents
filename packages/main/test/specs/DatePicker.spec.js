@@ -39,6 +39,15 @@ describe("Date Picker Tests", () => {
 		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
+	it("Can focus the input after open", () => {
+		datepicker.id = "#dp1";
+		datepicker.openPicker({ focusInput: true });
+		const a = datepicker.innerInput.isFocusedDeep();
+
+		console.log(datepicker.innerInput.isFocusedDeep());
+		assert.ok(a, "inner input is focused");
+	});
+
 	it("Value State Message", () => {
 		datepicker.id = "#dp17"
 		datepicker.root.click();
@@ -90,13 +99,6 @@ describe("Date Picker Tests", () => {
 		datepicker.root.setAttribute("value", "Rab. I 6, 1440 AH");
 
 		assert.equal(datepicker.innerInput.getAttribute("value"), "Rab. I 6, 1440 AH", "input has correct Islamic value");
-	});
-
-	it("Can focus the input after open", () => {
-		datepicker.id = "#dp1";
-		datepicker.openPicker({ focusInput: true });
-
-		assert.ok(datepicker.innerInput.isFocusedDeep(), "inner input is focused");
 	});
 
 	it("Selected date from daypicker is the same as datepicker date", () => {
