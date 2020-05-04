@@ -6,16 +6,16 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
 import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
-import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import SemanticColor from "./types/SemanticColor.js";
+import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -23,11 +23,13 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
-import tabContainerPopoverCss from "./generated/themes/TabContainerPopup.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import TabLayout from "./types/TabLayout.js";
 
 const SCROLL_STEP = 128;
+
+const tabStyles = [];
+const staticAreaTabStyles = [];
 
 /**
  * @public
@@ -74,6 +76,23 @@ const metadata = {
 		 */
 		collapsed: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the placement of the tab strip (tab buttons area) relative to the actual tabs' content.
+		 * <br><br>
+		 * <b>Note:</b> By default the tab strip is displayed above the tabs' content area and this is the recommended
+		 * layout for most scenarios. Set to <code>Bottom</code> only when the <code>ui5-tabcontainer</code> is at the
+		 * bottom of the page and you want the tab strip to act as a menu.
+		 *
+		 * @type {TabContainerTabsPlacement}
+		 * @defaultvalue "Top"
+		 * @since 1.0.0-rc.7
+		 * @public
+		 */
+		tabsPlacement: {
+			type: TabContainerTabsPlacement,
+			defaultValue: TabContainerTabsPlacement.Top,
 		},
 
 		/**
@@ -129,10 +148,6 @@ const metadata = {
 		},
 
 		_scrollableForward: {
-			type: Boolean,
-			noAttribute: true,
-		},
-		_textOnly: {
 			type: Boolean,
 			noAttribute: true,
 		},
@@ -193,11 +208,11 @@ class TabContainer extends UI5Element {
 	}
 
 	static get styles() {
-		return tabContainerCss;
+		return [...tabStyles, tabContainerCss];
 	}
 
 	static get staticAreaStyles() {
-		return [tabContainerPopoverCss, ResponsivePopoverCommonCss];
+		return [...staticAreaTabStyles, ResponsivePopoverCommonCss];
 	}
 
 	static get render() {
@@ -210,6 +225,14 @@ class TabContainer extends UI5Element {
 
 	static get staticAreaTemplate() {
 		return TabContainerPopoverTemplate;
+	}
+
+	static registerTabStyles(styles) {
+		tabStyles.push(styles);
+	}
+
+	static registerStaticAreaTabStyles(styles) {
+		staticAreaTabStyles.push(styles);
 	}
 
 	constructor() {
@@ -228,52 +251,23 @@ class TabContainer extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		// Set selected
 		const hasSelected = this.items.some(item => item.selected);
-		this._textOnly = this.items.every(item => !item.icon);
-
-		this.items.forEach(item => {
-			item._getTabContainerHeaderItemCallback = _ => {
-				return this.getDomRef().querySelector(`#${item._id}`);
-			};
-		});
 		if (this.items.length && !hasSelected) {
 			this.items[0].selected = true;
 		}
 
-		this.calculateRenderItems();
-	}
-
-	calculateRenderItems() {
-		this.renderItems = this.items.map((item, index) => {
-			const isSeparator = item.isSeparator;
-
-			if (isSeparator) {
-				return { isSeparator, _tabIndex: item._tabIndex, _id: item._id };
-			}
-
-			return {
-				item,
-				isInline: this.tabLayout === TabLayout.Inline,
-				isMixedModeTab: !item.icon && this.mixedMode,
-				isTextOnlyTab: !item.icon && !this.mixedMode,
-				isIconTab: item.icon,
-				position: index + 1,
-				disabled: item.disabled || undefined,
-				selected: item.selected || false,
-				hidden: !item.selected,
-				ariaLabelledBy: calculateAriaLabelledBy(item),
-				contentItemClasses: calculateContentItemClasses(item),
-				headerItemClasses: calculateHeaderItemClasses(item, this.mixedMode),
-				headerItemContentClasses: calculateHeaderItemContentClasses(item),
-				headerItemIconClasses: calculateHeaderItemIconClasses(item),
-				headerItemSemanticIconClasses: calculateHeaderItemSemanticIconClasses(item),
-				headerItemTextClasses: calculateHeaderItemTextClasses(item),
-				headerItemAdditionalTextClasses: calculateHeaderItemAdditionalTextClasses(item),
-				overflowItemClasses: calculateOverflowItemClasses(item),
-				overflowItemContentClasses: calculateOverflowItemContentClasses(item),
-				overflowItemState: calculateOverflowItemState(item),
+		// Set external properties to items
+		this.items.forEach((item, index) => {
+			item._isInline = this.tabLayout === TabLayout.Inline;
+			item._mixedMode = this.mixedMode;
+			item._posinset = index + 1;
+			item._setsize = this.items.length;
+			item._getTabContainerHeaderItemCallback = _ => {
+				return this.getDomRef().querySelector(`#${item._id}`);
 			};
-		}, this);
+			item._itemSelectCallback = this._onItemSelect.bind(this);
+		});
 	}
 
 	onAfterRendering() {
@@ -289,9 +283,23 @@ class TabContainer extends UI5Element {
 		ResizeHandler.deregister(this._getHeader(), this._handleHeaderResize);
 	}
 
-	_onHeaderItemKeyDown(event) {
+	_onHeaderClick(event) {
+		const tab = getTab(event.target);
+		if (!tab) {
+			return;
+		}
+
+		this._onHeaderItemSelect(tab);
+	}
+
+	_onHeaderKeyDown(event) {
+		const tab = getTab(event.target);
+		if (!tab) {
+			return;
+		}
+
 		if (isEnter(event)) {
-			this._onHeaderItemSelect(event);
+			this._onHeaderItemSelect(tab);
 		}
 
 		// Prevent Scrolling
@@ -300,9 +308,14 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_onHeaderItemKeyUp(event) {
+	_onHeaderKeyUp(event) {
+		const tab = getTab(event.target);
+		if (!tab) {
+			return;
+		}
+
 		if (isSpace(event)) {
-			this._onHeaderItemSelect(event);
+			this._onHeaderItemSelect(tab);
 		}
 	}
 
@@ -311,9 +324,9 @@ class TabContainer extends UI5Element {
 		this._itemNavigation.getItemsCallback = () => this._getTabs();
 	}
 
-	_onHeaderItemSelect(event) {
-		if (!event.target.hasAttribute("disabled")) {
-			this._onItemSelect(event.target);
+	_onHeaderItemSelect(tab) {
+		if (!tab.hasAttribute("disabled")) {
+			this._onItemSelect(tab);
 		}
 	}
 
@@ -410,7 +423,7 @@ class TabContainer extends UI5Element {
 		return {
 			root: {
 				"ui5-tc-root": true,
-				"ui5-tc--textOnly": this._textOnly,
+				"ui5-tc--textOnly": this.textOnly,
 			},
 			header: {
 				"ui5-tc__header": true,
@@ -450,6 +463,10 @@ class TabContainer extends UI5Element {
 		return this.items.some(item => item.icon) && this.items.some(item => item.text);
 	}
 
+	get textOnly() {
+		return this.items.every(item => !item.icon);
+	}
+
 	get previousIconACCName() {
 		return this.i18nBundle.getText(TABCONTAINER_PREVIOUS_ICON_ACC_NAME);
 	}
@@ -462,6 +479,14 @@ class TabContainer extends UI5Element {
 		return this.i18nBundle.getText(TABCONTAINER_OVERFLOW_MENU_TITLE);
 	}
 
+	get tabsAtTheBottom() {
+		return this.tabsPlacement === TabContainerTabsPlacement.Bottom;
+	}
+
+	get overflowMenuIcon() {
+		return this.tabsAtTheBottom ? "slim-arrow-up" : "slim-arrow-down";
+	}
+
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
 	}
@@ -469,7 +494,6 @@ class TabContainer extends UI5Element {
 	static async onDefine() {
 		await Promise.all([
 			Button.define(),
-			CustomListItem.define(),
 			Icon.define(),
 			List.define(),
 			ResponsivePopover.define(),
@@ -477,6 +501,20 @@ class TabContainer extends UI5Element {
 		]);
 	}
 }
+
+const isTabLi = el => el.localName === "li" && el.getAttribute("role") === "tab";
+
+const getTab = el => {
+	while (el) {
+		if (isTabLi(el)) {
+			return el;
+		}
+
+		el = el.parentElement;
+	}
+
+	return false;
+};
 
 const findIndex = (arr, predicate) => {
 	for (let i = 0; i < arr.length; i++) {
@@ -488,124 +526,6 @@ const findIndex = (arr, predicate) => {
 	}
 
 	return -1;
-};
-
-/* CSS classes calculation helpers */
-
-const calculateAriaLabelledBy = item => {
-	const labels = [];
-
-	if (item.text) {
-		labels.push(`${item._id}-text`);
-	}
-
-	if (item.additionalText) {
-		labels.push(`${item._id}-additionalText`);
-	}
-
-	if (item.icon) {
-		labels.push(`${item._id}-icon`);
-	}
-
-	return labels.join(" ");
-};
-
-const calculateHeaderItemClasses = (item, mixedMode) => {
-	const classes = ["ui5-tc__headerItem"];
-
-	if (item.selected) {
-		classes.push("ui5-tc__headerItem--selected");
-	}
-
-	if (item.disabled) {
-		classes.push("ui5-tc__headerItem--disabled");
-	}
-
-	if (item.tabLayout === TabLayout.Inline) {
-		classes.push("ui5-tc__headerItem--inline");
-	}
-
-	if (!item.icon && !mixedMode) {
-		classes.push("ui5-tc__headerItem--textOnly");
-	}
-
-	if (item.icon) {
-		classes.push("ui5-tc__headerItem--withIcon");
-	}
-
-	if (!item.icon && mixedMode) {
-		classes.push("ui5-tc__headerItem--mixedMode");
-	}
-
-	if (item.semanticColor !== SemanticColor.Default) {
-		classes.push(`ui5-tc__headerItem--${item.semanticColor.toLowerCase()}`);
-	}
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemContentClasses = item => {
-	const classes = ["ui5-tc__headerItemContent"];
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemIconClasses = item => {
-	const classes = ["ui5-tc-headerItemIcon"];
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemSemanticIconClasses = item => {
-	const classes = ["ui5-tc-headerItemSemanticIcon"];
-
-	if (item.semanticColor !== SemanticColor.Default) {
-		classes.push(`ui5-tc-headerItemSemanticIcon--${item.semanticColor.toLowerCase()}`);
-	}
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemTextClasses = item => {
-	const classes = ["ui5-tc__headerItemText"];
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemAdditionalTextClasses = item => {
-	const classes = ["ui5-tc__headerItemAdditionalText"];
-
-	return classes.join(" ");
-};
-
-const calculateOverflowItemClasses = item => {
-	const classes = ["ui5-tc__overflowItem"];
-
-	if (item.semanticColor !== SemanticColor.Default) {
-		classes.push(`ui5-tc__overflowItem--${item.semanticColor.toLowerCase()}`);
-	}
-
-	if (item.disabled) {
-		classes.push("ui5-tc__overflowItem--disabled");
-	}
-
-	return classes.join(" ");
-};
-
-const calculateOverflowItemContentClasses = item => {
-	const classes = ["ui5-tc__overflowItemContent"];
-
-	return classes.join(" ");
-};
-
-const calculateOverflowItemState = item => {
-	return item.disabled ? "Inactive" : "Active";
-};
-
-const calculateContentItemClasses = item => {
-	const classes = ["ui5-tc__contentItem"];
-
-	return classes.join(" ");
 };
 
 TabContainer.define();

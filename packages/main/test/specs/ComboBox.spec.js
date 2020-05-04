@@ -25,7 +25,6 @@ describe("General interaction", () => {
 		const input = combo.shadow$("#ui5-combobox-input");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const listItems = popover.$("ui5-list").$$("ui5-li");
 
 		input.click();
 		input.keys("b");
@@ -40,6 +39,7 @@ describe("General interaction", () => {
 
 		assert.strictEqual(selection, "ahrain", "ahrain should be selected");
 		assert.strictEqual(combo.getProperty("value"), "Bulgaria", "Value should be Bulgaria");
+		const listItems = popover.$("ui5-list").$$("ui5-li");
 		assert.ok(listItems[0].getProperty("selected"), "List Item should be selected");
 
 		lazy.click();

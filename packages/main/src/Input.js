@@ -72,7 +72,11 @@ const metadata = {
 		 * property is set to <code>true</code>.
 		 * <br><br>
 		 * <b>Note:</b> The &lt;ui5-suggestion-item> is recommended to be used as a suggestion item.
-		 * and you need to import the <code>"@ui5/webcomponents/dist/SuggestionItem"</code> module.
+		 * Importing the Input Suggestions Support feature:
+		 * <br>
+		 * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code>
+		 * <br>
+		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot

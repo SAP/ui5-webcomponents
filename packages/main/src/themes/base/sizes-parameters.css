@@ -56,6 +56,9 @@
 	--_ui5_tc_item_text_line_height: normal;
 	--_ui5_tc_item_icon_size: 1.5rem;
 	--_ui5_tc_item_add_text_margin_top: 0.625rem;
+
+	/* Responsive Popover */
+	--_ui5-responnsive_popover_header_height: 2.75rem;
 }
 
 [data-ui5-compact-size],
@@ -176,4 +179,7 @@
 
 	/* Radio Button */
 	--_ui5_radiobutton_min_width: var(--_ui5_radiobutton_min_width_compact);
+
+	/* Responsive Popover */
+	--_ui5-responnsive_popover_header_height: 2.5rem;
 }

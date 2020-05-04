@@ -15,6 +15,16 @@ class ScrollEnablement extends EventProvider {
 
 		this.isPhone = isPhone();
 
+		// On Android devices touchmove is thrown one more time than neccessary (together with touchend)
+		// so we have to cache the previus coordinates in order to provide correct parameters in the
+		// event for Android
+		this.cachedValue = {};
+
+		// In components like Carousel you need to know if the user has clicked on something or swiped
+		// in order to throw the needed event or not
+		this.startX = 0;
+		this.startY = 0;
+
 		if (this.isPhone) {
 			containerComponent.addEventListener("touchstart", this.touchStart, { passive: true });
 			containerComponent.addEventListener("touchmove", this.mouseMove, { passive: true });
@@ -68,6 +78,10 @@ class ScrollEnablement extends EventProvider {
 		if (!this.isPhone) {
 			document.addEventListener("mouseup", this.mouseUp, { passive: true });
 			document.addEventListener("mousemove", this.mouseMove, { passive: true });
+		} else {
+			// Needed only on mobile
+			this.startX = touch.pageX;
+			this.startY = touch.pageY;
 		}
 
 		this._prevDragX = this.isPhone ? touch.pageX : event.x;
@@ -95,25 +109,41 @@ class ScrollEnablement extends EventProvider {
 			isRight: dragX < this._prevDragX,
 		});
 
+		this.cachedValue.dragX = this._prevDragX;
+		this.cachedValue.dragY = this._prevDragY;
+
 		this._prevDragX = dragX;
 		this._prevDragY = dragY;
 	}
 
 	ontouchend(event) {
+		if (this.isPhone) {
+			const deltaX = Math.abs(event.changedTouches[0].pageX - this.startX);
+			const deltaY = Math.abs(event.changedTouches[0].pageY - this.startY);
+
+			if (deltaX < 10 && deltaY < 10) {
+				return;
+			}
+		}
+
 		if (!this._canScroll) {
 			return;
 		}
 
 		const container = this._container;
-		const dragX = this.isPhone ? event.pageX : event.x;
-		const dragY = this.isPhone ? event.pageY : event.y;
+		const dragX = this.isPhone ? event.changedTouches[0].pageX : event.x;
+		const dragY = this.isPhone ? event.changedTouches[0].pageY : event.y;
 
 		container.scrollLeft += this._prevDragX - dragX;
 		container.scrollTop += this._prevDragY - dragY;
 
+		const useCachedValues = dragX === this._prevDragX;
+		const _dragX = useCachedValues ? this.cachedValue.dragX : dragX;
+		// const _dragY = useCachedValues ? this.cachedValue.dragY : dragY; add if needed
+
 		this.fireEvent(touchEndEventName, {
-			isLeft: dragX > this._prevDragX,
-			isRight: dragX < this._prevDragX,
+			isLeft: _dragX < this._prevDragX,
+			isRight: _dragX > this._prevDragX,
 		});
 
 		this._prevDragX = dragX;

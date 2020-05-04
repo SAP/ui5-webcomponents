@@ -14,7 +14,7 @@ describe("Toast general interaction", () => {
 	it("tests open attribute after show", () => {
 		const button = browser.$("#wcBtnShowToastMC");
 		const toast = browser.$("#wcToastMC");
-		const toastShadowContent = toast.shadow$(".ui5-toast-content");
+		const toastShadowContent = toast.shadow$(".ui5-toast-root");
 
 		button.click();
 
@@ -48,7 +48,7 @@ describe("Toast general interaction", () => {
 		const toastShadowContent = browser.$("#wcToastBE").shadow$(".ui5-toast-root");
 
 		assert.strictEqual(toastShadowContent.getAttribute("role"), "alert",
-			"The role of the shadow ui5-toast-content div should be alert");
+			"The role of the shadow ui5-toast-root div should be alert");
 	});
 
 	it("tests shadow content div inline styles with default duration", () => {
@@ -76,7 +76,7 @@ describe("Toast general interaction", () => {
 
 		assert.strictEqual(toastShadowContent.getAttribute("style"),
 				`transition-duration: ${maximumAllowedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`,
-				"The correct custom inline styles are applied to the shadow ui5-toast-content," +
+				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is longer than default. Transition is not longer than allowed (1000ms).");
 	});
 
@@ -94,7 +94,7 @@ describe("Toast general interaction", () => {
 
 		assert.strictEqual(toastShadowContent.getAttribute("style"),
 				`transition-duration: ${calculatedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`,
-				"The correct custom inline styles are applied to the shadow ui5-toast-content," +
+				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is shorter than default. Transition is a third of the duration.");
 	});
 
