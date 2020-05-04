@@ -1,149 +1,149 @@
-const assert = require("chai").assert;
+// const assert = require("chai").assert;
 
-describe("UploadCollection", () => {
-	describe("Rendering", () => {
-		browser.url("http://localhost:8081/test-resources/pages/UploadCollection.html");
+// describe("UploadCollection", () => {
+// 	describe("Rendering", () => {
+// 		browser.url("http://localhost:8081/test-resources/pages/UploadCollection.html");
 
-		it("should show Link when 'fileNameClickable'", () => {
-			const firstItem = browser.$("#firstItem");
-			assert.ok(firstItem.shadow$("ui5-link").isDisplayed(), "Link should be rendered");
-		});
+// 		it("should show Link when 'fileNameClickable'", () => {
+// 			const firstItem = browser.$("#firstItem");
+// 			assert.ok(firstItem.shadow$("ui5-link").isDisplayed(), "Link should be rendered");
+// 		});
 
-		it("should show span when file name is NOT clickable", () => {
-			const secondItem = browser.$("#secondItem");
-			assert.ok(secondItem.shadow$("span.ui5-uci-file-name").isDisplayed(), "span should be rendered");
-		});
+// 		it("should show span when file name is NOT clickable", () => {
+// 			const secondItem = browser.$("#secondItem");
+// 			assert.ok(secondItem.shadow$("span.ui5-uci-file-name").isDisplayed(), "span should be rendered");
+// 		});
 
-		it("should show input and buttons when editing", () => {
-			const secondItem = browser.$("#secondItem");
-			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
-			editButton.click();
+// 		it("should show input and buttons when editing", () => {
+// 			const secondItem = browser.$("#secondItem");
+// 			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
+// 			editButton.click();
 
-			assert.ok(secondItem.shadow$(".ui5-uci-edit-container").isDisplayed(), "edit container should be rendered");
-			assert.ok(secondItem.shadow$(".ui5-uci-edit-buttons").isDisplayed(), "edit buttons should be rendered");
-			assert.notOk(secondItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
+// 			assert.ok(secondItem.shadow$(".ui5-uci-edit-container").isDisplayed(), "edit container should be rendered");
+// 			assert.ok(secondItem.shadow$(".ui5-uci-edit-buttons").isDisplayed(), "edit buttons should be rendered");
+// 			assert.notOk(secondItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
 
-			// focus out the second item, to hide edit buttons (reset state for the following tests)
-			browser.$("#firstItem").click();
-		});
+// 			// focus out the second item, to hide edit buttons (reset state for the following tests)
+// 			browser.$("#firstItem").click();
+// 		});
 
-		it("should show NOT show any buttons besides 'Terminate', when uploadState is 'Uploading'", () => {
-			const uploadingStateItem = browser.$("#uploadingState");
+// 		it("should show NOT show any buttons besides 'Terminate', when uploadState is 'Uploading'", () => {
+// 			const uploadingStateItem = browser.$("#uploadingState");
 
-			assert.ok(uploadingStateItem.shadow$("ui5-button[icon=stop]").isDisplayed(), "'Terminate' button is displayed'");
-			assert.notOk(uploadingStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
-			assert.notOk(uploadingStateItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "detail button should be hidden");
-		});
+// 			assert.ok(uploadingStateItem.shadow$("ui5-button[icon=stop]").isDisplayed(), "'Terminate' button is displayed'");
+// 			assert.notOk(uploadingStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
+// 			assert.notOk(uploadingStateItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "detail button should be hidden");
+// 		});
 
-		it("should show 'Retry' button when uploadState is 'Error'", () => {
-			const errorStateItem = browser.$("#errorState");
+// 		it("should show 'Retry' button when uploadState is 'Error'", () => {
+// 			const errorStateItem = browser.$("#errorState");
 
-			assert.ok(errorStateItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "'Retry' button is displayed");
-			assert.ok(errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is also displayed");
+// 			assert.ok(errorStateItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "'Retry' button is displayed");
+// 			assert.ok(errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is also displayed");
 
-			errorStateItem.shadow$(".ui5-li-detailbtn").click();
+// 			errorStateItem.shadow$(".ui5-li-detailbtn").click();
 
-			assert.notOk(errorStateItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "'Retry' button is NOT displayed when editing");
-			assert.notOk(errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is NOT displayed when editing");
-		});
-	});
+// 			assert.notOk(errorStateItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "'Retry' button is NOT displayed when editing");
+// 			assert.notOk(errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is NOT displayed when editing");
+// 		});
+// 	});
 
-	describe("Events", () => {
-		it("item should fire 'rename'", () => {
-			const secondItem = browser.$("#secondItem");
-			const secondItemIndex = 1;
-			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
+// 	describe("Events", () => {
+// 		it("item should fire 'rename'", () => {
+// 			const secondItem = browser.$("#secondItem");
+// 			const secondItemIndex = 1;
+// 			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
 
-			editButton.click();
-			browser.keys("fileNameSuffix");
-			browser.keys("Enter");
+// 			editButton.click();
+// 			browser.keys("fileNameSuffix");
+// 			browser.keys("Enter");
 
-			assert.strictEqual(parseInt(browser.$("#renamedFileIndex").getText()), secondItemIndex, "renamed file index should be updated after rename")
-		});
+// 			assert.strictEqual(parseInt(browser.$("#renamedFileIndex").getText()), secondItemIndex, "renamed file index should be updated after rename")
+// 		});
 
-		it("upload collection should fire 'fileDeleted'", () => {
-			const uploadCollection = browser.$("#uploadCollection");
-			const firstItem = browser.$("#firstItem");
+// 		it("upload collection should fire 'fileDeleted'", () => {
+// 			const uploadCollection = browser.$("#uploadCollection");
+// 			const firstItem = browser.$("#firstItem");
 
-			browser.execute(() => {
-				uploadCollection.setAttribute("mode", "Delete");
-			});
+// 			browser.execute(() => {
+// 				uploadCollection.setAttribute("mode", "Delete");
+// 			});
 
-			const deleteBtn = firstItem.shadow$(".ui5-li-deletebtn");
-			deleteBtn.click();
+// 			const deleteBtn = firstItem.shadow$(".ui5-li-deletebtn");
+// 			deleteBtn.click();
 
-			assert.strictEqual(uploadCollection.getProperty("items").length, 3, "item should be deleted when 'fileDeleted' event is fired");
-		});
+// 			assert.strictEqual(uploadCollection.getProperty("items").length, 3, "item should be deleted when 'fileDeleted' event is fired");
+// 		});
 
-		it("item should fire 'retry'", () => {
-			const errorStateItem = browser.$("#errorState");
+// 		it("item should fire 'retry'", () => {
+// 			const errorStateItem = browser.$("#errorState");
 
-			errorStateItem.shadow$("ui5-button[icon=refresh]").click();
+// 			errorStateItem.shadow$("ui5-button[icon=refresh]").click();
 
-			assert.ok(browser.$("#uploadStateEvent").getText().includes("Retry"), "Retry event is fired");
-		});
+// 			assert.ok(browser.$("#uploadStateEvent").getText().includes("Retry"), "Retry event is fired");
+// 		});
 
-		it("item should fire 'terminate'", () => {
-			const uploadingStateItem = browser.$("#uploadingState");
+// 		it("item should fire 'terminate'", () => {
+// 			const uploadingStateItem = browser.$("#uploadingState");
 
-			uploadingStateItem.shadow$("ui5-button[icon=stop]").click();
+// 			uploadingStateItem.shadow$("ui5-button[icon=stop]").click();
 
-			assert.ok(browser.$("#uploadStateEvent").getText().includes("Terminate"), "Terminate event is fired");
-		});
-	});
+// 			assert.ok(browser.$("#uploadStateEvent").getText().includes("Terminate"), "Terminate event is fired");
+// 		});
+// 	});
 
-	describe("Edit - various file names", () => {
-		it("should preserve dots in the file name", () => {
-			const latestReportsPdf = browser.$("#latestReportsPdf");
-			const editButton = latestReportsPdf.shadow$(".ui5-li-detailbtn");
+// 	describe("Edit - various file names", () => {
+// 		it("should preserve dots in the file name", () => {
+// 			const latestReportsPdf = browser.$("#latestReportsPdf");
+// 			const editButton = latestReportsPdf.shadow$(".ui5-li-detailbtn");
 
-			editButton.click();
-			browser.keys("last.reports-edited");
-			browser.keys("Enter");
+// 			editButton.click();
+// 			browser.keys("last.reports-edited");
+// 			browser.keys("Enter");
 
-			assert.strictEqual(latestReportsPdf.getProperty("fileName"), "last.reports-edited.pdf", "file extension '.pdf' should be preserved");
-		});
+// 			assert.strictEqual(latestReportsPdf.getProperty("fileName"), "last.reports-edited.pdf", "file extension '.pdf' should be preserved");
+// 		});
 
-		it("should be able to add extension, if there isn't such", () => {
-			const noFileExtensionItem = browser.$("#noFileExtension");
-			const editButton = noFileExtensionItem.shadow$(".ui5-li-detailbtn");
-			const newFileName = "newFileName.newExtension";
+// 		it("should be able to add extension, if there isn't such", () => {
+// 			const noFileExtensionItem = browser.$("#noFileExtension");
+// 			const editButton = noFileExtensionItem.shadow$(".ui5-li-detailbtn");
+// 			const newFileName = "newFileName.newExtension";
 
-			editButton.click();
-			browser.keys(newFileName);
-			browser.keys("Enter");
+// 			editButton.click();
+// 			browser.keys(newFileName);
+// 			browser.keys("Enter");
 
-			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName, "file name should be changed");
+// 			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName, "file name should be changed");
 
-			const newFileName2 = "newFileName2";
+// 			const newFileName2 = "newFileName2";
 
-			editButton.click();
-			browser.keys(newFileName2);
-			browser.keys("Enter");
+// 			editButton.click();
+// 			browser.keys(newFileName2);
+// 			browser.keys("Enter");
 
-			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName2 + ".newExtension", "the string after the last dot is considered as extension");
-		});
+// 			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName2 + ".newExtension", "the string after the last dot is considered as extension");
+// 		});
 
-		it("should NOT consider hidden file name as extension", () => {
-			const secondItem = browser.$("#secondItem");
-			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
+// 		it("should NOT consider hidden file name as extension", () => {
+// 			const secondItem = browser.$("#secondItem");
+// 			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
 
-			editButton.click();
+// 			editButton.click();
 
-			assert.notOk(secondItem.shadow$(".ui5-uci-file-extension").getText(), "no extension is calculated for .gitignore.");
+// 			assert.notOk(secondItem.shadow$(".ui5-uci-file-extension").getText(), "no extension is calculated for .gitignore.");
 
-		});
-	});
+// 		});
+// 	});
 
-	describe("Drag and Drop", () => {
-		it("should NOT show drag and drop overlay when NOT dragging files", () => {
-			const uploadCollection = browser.$("#uploadCollection");
-			const draggableElement = browser.$("#draggableElement");
+// 	describe("Drag and Drop", () => {
+// 		it("should NOT show drag and drop overlay when NOT dragging files", () => {
+// 			const uploadCollection = browser.$("#uploadCollection");
+// 			const draggableElement = browser.$("#draggableElement");
 
-			draggableElement.scrollIntoView();
-			draggableElement.dragAndDrop(uploadCollection);
+// 			draggableElement.scrollIntoView();
+// 			draggableElement.dragAndDrop(uploadCollection);
 
-			assert.notOk(browser.$(".uc-dnd-overlay").isDisplayed(), "drag and drop overlay is not displayed");
-		});
-	});
-});
+// 			assert.notOk(browser.$(".uc-dnd-overlay").isDisplayed(), "drag and drop overlay is not displayed");
+// 		});
+// 	});
+// });
