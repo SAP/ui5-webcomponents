@@ -260,7 +260,7 @@ class UploadCollectionItem extends ListItem {
 		this._editPressed = false; // indicates if the edit btn has been pressed
 	}
 
-	
+
 	onAfterRendering() {
 		if (this._editPressed) {
 			this._editing = true;
@@ -295,14 +295,16 @@ class UploadCollectionItem extends ListItem {
 
 		this._editPressed = this.isDetailPressed(event);
 
-		if (!this.editPressed) {
+		if (!this._editPressed && event.target !== this.shadowRoot.querySelector("li")) {
 			this._editing = false;
 		}
 	}
 
 	isDetailPressed(event) {
-		return event.path.some(e => {
-			return e.classList &&  e.classList.contains("ui5-uci-edit")
+		const path = event.path || (event.composedPath && event.composedPath());
+
+		return path.some(e => {
+			return e.classList && e.classList.contains("ui5-uci-edit");
 		});
 	}
 
