@@ -604,7 +604,7 @@ class Input extends UI5Element {
 	async _afterOpenPopover() {
 		// Set initial focus to the native input
 		if (isPhone()) {
-			await this.inputDomRef;
+			await this.getInputDOMRef();
 			this.inputDomRef.focus();
 		}
 	}
