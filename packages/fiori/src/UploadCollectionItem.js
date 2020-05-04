@@ -27,6 +27,7 @@ import UploadCollectionItemTemplate from "./generated/templates/UploadCollection
 
 // Styles
 import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 
 /**
  * @public
@@ -274,6 +275,7 @@ class UploadCollectionItem extends ListItem {
 
 		const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
 
+		await RenderScheduler.whenFinished();
 		if (inp.getFocusDomRef()) {
 			inp.getFocusDomRef().setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
@@ -293,9 +295,11 @@ class UploadCollectionItem extends ListItem {
 	_onfocusout(event) {
 		super._onfocusout(event);
 
+		const path = event.path || (event.composedPath && event.composedPath());
+
 		this._editPressed = this.isDetailPressed(event);
 
-		if (!this._editPressed && event.target !== this.shadowRoot.querySelector("li")) {
+		if (!this._editPressed && path.indexOf(this) > -1) {
 			this._editing = false;
 		}
 	}

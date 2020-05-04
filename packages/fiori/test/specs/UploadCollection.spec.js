@@ -96,11 +96,11 @@ describe("UploadCollection", () => {
 		it("should preserve dots in the file name", () => {
 			const latestReportsPdf = browser.$("#latestReportsPdf");
 			const editButton = latestReportsPdf.shadow$(".ui5-li-detailbtn");
-	
+
 			editButton.click();
 			browser.keys("last.reports-edited");
 			browser.keys("Enter");
-	
+
 			assert.strictEqual(latestReportsPdf.getProperty("fileName"), "last.reports-edited.pdf", "file extension '.pdf' should be preserved");
 		});
 
@@ -108,11 +108,11 @@ describe("UploadCollection", () => {
 			const noFileExtensionItem = browser.$("#noFileExtension");
 			const editButton = noFileExtensionItem.shadow$(".ui5-li-detailbtn");
 			const newFileName = "newFileName.newExtension";
-	
+
 			editButton.click();
 			browser.keys(newFileName);
 			browser.keys("Enter");
-	
+
 			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName, "file name should be changed");
 
 			const newFileName2 = "newFileName2";
@@ -139,7 +139,7 @@ describe("UploadCollection", () => {
 		it("should NOT show drag and drop overlay when NOT dragging files", () => {
 			const uploadCollection = browser.$("#uploadCollection");
 			const draggableElement = browser.$("#draggableElement");
-		
+
 			draggableElement.scrollIntoView();
 			draggableElement.dragAndDrop(uploadCollection);
 
