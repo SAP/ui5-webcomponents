@@ -39,6 +39,17 @@ describe("Date Picker Tests", () => {
 		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
+	it("Value State Message", () => {
+		datepicker.id = "#dp17"
+		datepicker.root.click();
+
+		const inputStaticAreaItem = datepicker.inputStaticAreaItem;
+		const popover = inputStaticAreaItem.shadow$("ui5-popover");
+
+		const slot = popover.$("#coolValueStateMessage");
+		assert.notOk(slot.error, "Value State message slot is working");
+	});
+
 	it("disabled", () => {
 		datepicker.id = "#dp2";
 		datepicker.root.setAttribute("disabled", "");
@@ -551,7 +562,7 @@ describe("Date Picker Tests", () => {
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
- 
+
 		datepicker.root.keys("May 5, 2100");
 		datepicker.root.keys("Enter");
 
@@ -568,7 +579,7 @@ describe("Date Picker Tests", () => {
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
- 
+
 		datepicker.root.keys("Jan 8, 2100");
 		datepicker.root.keys("Enter");
 
@@ -578,7 +589,7 @@ describe("Date Picker Tests", () => {
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
- 
+
 		datepicker.root.keys("Jan 1, 2000");
 		datepicker.root.keys("Enter");
 
