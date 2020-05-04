@@ -1,5 +1,5 @@
-commit 3b7b439726ce084f5f00ee24e8d51cbb7ed4ec6c
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon May 4 12:54:52 2020 +0300
+commit cdab106cf7e95a102eff75aa5030ca0e5f9417d8
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon May 4 17:51:38 2020 +0300
 
-    feat(ui5-shellbar): implement accessibility spec (#1553)
+    docs: document custom theme integration (#1556)
