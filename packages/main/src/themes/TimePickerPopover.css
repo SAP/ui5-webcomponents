@@ -1,0 +1,30 @@
+.ui5-timepicker-sliders-container {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	direction: ltr;
+	padding: 0.5rem;
+	min-width: 18rem;
+	box-sizing: border-box;
+}
+
+.ui5-timepicker-sliders-container.ui5-phone{
+	height: 90vh;
+}
+
+.ui5-timepicker-footer {
+	height: fit-content;
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+}
+
+.ui5-timepicker-wheelslider {
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+}
+
+.ui5-timepicker-footer > ui5-button {
+	margin: 1%;
+	width: 20%;
+}

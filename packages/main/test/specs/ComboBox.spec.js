@@ -25,7 +25,6 @@ describe("General interaction", () => {
 		const input = combo.shadow$("#ui5-combobox-input");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const listItems = popover.$("ui5-list").$$("ui5-li");
 
 		input.click();
 		input.keys("b");
@@ -40,6 +39,7 @@ describe("General interaction", () => {
 
 		assert.strictEqual(selection, "ahrain", "ahrain should be selected");
 		assert.strictEqual(combo.getProperty("value"), "Bulgaria", "Value should be Bulgaria");
+		const listItems = popover.$("ui5-list").$$("ui5-li");
 		assert.ok(listItems[0].getProperty("selected"), "List Item should be selected");
 
 		lazy.click();
@@ -140,8 +140,10 @@ describe("General interaction", () => {
 
 		input.keys("d");
 		listItems = popover.$("ui5-list").$$("ui5-li");
+		const firstListItemText = listItems[0].shadow$(".ui5-li-title").getText();
+
 		assert.strictEqual(listItems.length, 1, "Items should be 1");
-		assert.strictEqual(listItems[0].getText(), "Canada");
+		assert.strictEqual(firstListItemText, "Canada");
 	});
 
 	it ("Tests Combo with startswith filter", () => {
@@ -158,8 +160,10 @@ describe("General interaction", () => {
 
 		input.keys("a");
 		listItems = popover.$("ui5-list").$$("ui5-li");
+		const firstListItemText = listItems[0].shadow$(".ui5-li-title").getText();
+
 		assert.strictEqual(listItems.length, 1, "Items should be 1");
-		assert.strictEqual(listItems[0].getText(), "Argentina");
+		assert.strictEqual(firstListItemText, "Argentina");
 
 		input.keys("a");
 		listItems = popover.$("ui5-list").$$("ui5-li");

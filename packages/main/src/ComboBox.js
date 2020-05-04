@@ -3,12 +3,17 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isBackSpace, isDelete, isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isBackSpace, isDelete, isShow } from "@ui5/webcomponents-base/dist/Keys.js";
 import * as Filters from "./ComboBoxFilters.js";
 
 import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
+	ICON_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -25,12 +30,16 @@ import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
+import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-combobox",
 	defaultSlot: "items",
-	properties: {
+	properties: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
 		 * Defines the value of the <code>ui5-combobox</code>.
 		 *
@@ -47,6 +56,8 @@ const metadata = {
 		 * Defines the "live" value of the <code>ui5-combobox</code>.
 		 * <br><br>
 		 * <b>Note:</b> The property is updated upon typing.
+		 *
+		 * <br><br>
 		 * <b>Note:</b> Initially the filter value is synced with value.
 		 *
 		 * @type {string}
@@ -85,9 +96,17 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-combobox</code>.
-		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -116,14 +135,16 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0-rc.5
 		 */
 		required: {
 			type: Boolean,
 		},
 
 		/**
-		 * Indicates whether a loading indicator should be shown in the picker
+		 * Indicates whether a loading indicator should be shown in the picker.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		loading: {
@@ -166,7 +187,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
 		 * Defines the <code>ui5-combobox</code> items.
 		 * <br><br>
@@ -187,7 +208,7 @@ const metadata = {
 			listenFor: { include: ["*"] },
 		},
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
 		 * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
 		 *
@@ -212,11 +233,9 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-combobox</code> represents a drop-down menu with a list of the available options and a text input field to narrow down the options.
+ * The <code>ui5-combobox</code> component represents a drop-down menu with a list of the available options and a text input field to narrow down the options.
  *
- * A drop-down list for selecting and filtering values.
- * <h3>Description</h3>
- * The <code>ui5-combobox</code> component is commonly used to enable users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow of available options.
+ * It is commonly used to enable users to select one or more options from a predefined list.
  * <h3>Structure</h3>
  * The <code>ui5-combobox</code> consists of the following elements:
  * <ul>
@@ -228,7 +247,7 @@ const metadata = {
  *
  * The <code>ui5-combobox</code> provides advanced keyboard handling.
  *
- * <h2>Picker</h2>
+ * <h4>Picker</h4>
  * If the <code>ui5-combobox</code> is focused,
  * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
  * <br>
@@ -244,6 +263,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ComboBox
  * @extends UI5Element
  * @tagname ui5-combobox
+ * @appenddocs ComboBoxItem
  * @public
  * @since 1.0.0-rc.6
  */
@@ -299,8 +319,9 @@ class ComboBox extends UI5Element {
 		this._initialRendering = false;
 	}
 
-	onAfterRendering() {
-		if (isPhone() && this._respPopover.opened) {
+	async onAfterRendering() {
+		await this._respPopover();
+		if (isPhone() && this.responsivePopover.opened) {
 			// Set initial focus to the native input
 			this.inner.focus();
 		}
@@ -334,7 +355,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_toggleRespPopover() {
-		if (this._respPopover.opened) {
+		if (this.responsivePopover.opened) {
 			this._closeRespPopover();
 		} else {
 			this._openRespPopover();
@@ -388,12 +409,12 @@ class ComboBox extends UI5Element {
 	}
 
 	_closeRespPopover() {
-		this._respPopover.close();
+		this.responsivePopover.close();
 	}
 
 	_openRespPopover() {
 		this.updateStaticAreaItemContentDensity();
-		this._respPopover.open(this);
+		this.responsivePopover.open(this);
 	}
 
 	_filterItems(str) {
@@ -459,16 +480,38 @@ class ComboBox extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
-	get inner() {
-		return isPhone() ? this._respPopover.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
+	get _iconAccessibleNameText() {
+		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
 	}
 
-	get _respPopover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+	get inner() {
+		return isPhone() ? this.responsivePopover.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
+	}
+
+	async _respPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		return this.responsivePopover;
 	}
 
 	get editable() {
 		return !this.readonly;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get valueStateTextMappings() {
+		return {
+			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
+		};
 	}
 
 	static async onDefine() {
@@ -478,6 +521,7 @@ class ComboBox extends UI5Element {
 			ResponsivePopover.define(),
 			List.define(),
 			BusyIndicator.define(),
+			Button.define(),
 			StandardListItem.define(),
 		]);
 	}

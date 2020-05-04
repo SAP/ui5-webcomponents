@@ -1,8 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
+
+import { AVATAR_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import AvatarCss from "./generated/themes/Avatar.css.js";
@@ -33,9 +36,9 @@ const metadata = {
 		/**
 		 * Defines the name of the UI5 Icon, that would be displayed.
 		 * <br>
-		 * <b>Note:</b> if <code>image</code> is set, the property would be ignored.
+		 * <b>Note:</b> If <code>image</code> is set, the property would be ignored.
 		 * <br>
-		 * <b>Note:</b> you should import the desired icon first, then use its name as "icon".
+		 * <b>Note:</b> You should import the desired icon first, then use its name as "icon".
 		 * <br><br>
 		 * import "@ui5/webcomponents-icons/dist/icons/{icon_name}.js"
 		 * <br>
@@ -56,6 +59,7 @@ const metadata = {
 		 * Up to two Latin letters can be displayed as initials in a <code>ui5-avatar</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		initials: {
@@ -70,8 +74,9 @@ const metadata = {
 		 * <li><code>Circle</code></li>
 		 * <li><code>Square</code></li>
 		 * <ul>
-		 * @public
+		 * @type {AvatarShape}
 		 * @defaultvalue "Circle"
+		 * @public
 		 */
 		shape: {
 			type: String,
@@ -89,8 +94,9 @@ const metadata = {
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
 		 * <ul>
-		 * @public
+		 * @type {AvatarSize}
 		 * @defaultvalue "S"
+		 * @public
 		 */
 		size: {
 			type: String,
@@ -105,7 +111,7 @@ const metadata = {
 		 * <li><code>Cover</code></li>
 		 * <li><code>Contain</code></li>
 		 * <ul>
-		 * @type {String}
+		 * @type {AvatarFitType}
 		 * @defaultvalue "Cover"
 		 * @public
 		 */
@@ -131,13 +137,26 @@ const metadata = {
 		 * <li><code>Accent10</code></li>
 		 * <li><code>Placeholder</code></li>
 		 * <ul>
-		 * @type {String}
+		 * @type {AvatarBackgroundColor}
 		 * @defaultvalue "Accent6"
 		 * @public
 		 */
 		backgroundColor: {
 			type: String,
 			defaultValue: AvatarBackgroundColor.Accent6,
+		},
+
+		/**
+		 * Defines the text alternative of the <code>ui5-avatar</code>.
+		 * If not provided a default text alternative will be set, if present.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.7
+		 */
+		accessibleName: {
+			type: String,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
@@ -170,6 +189,11 @@ const metadata = {
  * @public
  */
 class Avatar extends UI5Element {
+	constructor() {
+		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -187,7 +211,10 @@ class Avatar extends UI5Element {
 	}
 
 	static async onDefine() {
-		await Icon.define();
+		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
+			Icon.define(),
+		]);
 	}
 
 	get validInitials() {
@@ -198,6 +225,14 @@ class Avatar extends UI5Element {
 		}
 
 		return null;
+	}
+
+	get accessibleNameText() {
+		if (this.accessibleName) {
+			return this.accessibleName;
+		}
+
+		return this.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
 	}
 }
 

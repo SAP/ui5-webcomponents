@@ -12,13 +12,11 @@ class I18nBundle {
 		if (!textObj || !textObj.key || !textObj.defaultText) {
 			return "";
 		}
+
 		const bundle = getI18nBundleData(this.packageName);
+		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : textObj.defaultText;
 
-		if (!bundle || !bundle[textObj.key]) {
-			return formatMessage(textObj.defaultText, params); // Fallback to "en"
-		}
-
-		return formatMessage(bundle[textObj.key], params);
+		return formatMessage(messageText, params);
 	}
 }
 
@@ -27,9 +25,9 @@ const getI18nBundle = packageName => {
 		return I18nBundleInstances.get(packageName);
 	}
 
-	const i18nBunle = new I18nBundle(packageName);
-	I18nBundleInstances.set(packageName, i18nBunle);
-	return i18nBunle;
+	const i18nBundle = new I18nBundle(packageName);
+	I18nBundleInstances.set(packageName, i18nBundle);
+	return i18nBundle;
 };
 
 export { fetchI18nBundle, getI18nBundle };

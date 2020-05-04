@@ -2,6 +2,7 @@ import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.j
 
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
+import "../SuggestionItem.js";
 
 /**
  * A class to manage the <code>Input</code suggestion items.
@@ -37,8 +38,13 @@ class Suggestions {
 		const suggestions = [];
 		inputSuggestionItems.map(suggestion => {
 			return suggestions.push({
-				text: suggestion.textContent,
-				icon: suggestion.icon,
+				text: suggestion.text || suggestion.textContent, // keep textContent for compatibility
+				description: suggestion.description || undefined,
+				image: suggestion.image || undefined,
+				icon: suggestion.icon || undefined,
+				info: suggestion.info || undefined,
+				infoState: suggestion.infoState,
+				group: suggestion.group,
 			});
 		});
 
@@ -84,13 +90,15 @@ class Suggestions {
 		}
 	}
 
-	open() {
+	async open() {
+		this.responsivePopover = await this._respPopover();
 		this._beforeOpen();
-		this._respPopover.open(this._getComponent());
+		this.responsivePopover.open(this._getComponent());
 	}
 
-	close() {
-		this._respPopover.close();
+	async close() {
+		this.responsivePopover = await this._respPopover();
+		this.responsivePopover.close();
 	}
 
 	updateSelectedItemPosition(pos) {
@@ -126,8 +134,8 @@ class Suggestions {
 		this._attachPopupListeners();
 	}
 
-	_attachItemsListeners() {
-		const list = this._getList();
+	async _attachItemsListeners() {
+		const list = await this._getList();
 		list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
 		list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
 		list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
@@ -170,8 +178,7 @@ class Suggestions {
 	}
 
 	isOpened() {
-		const popover = this._respPopover;
-		return !!(popover && popover.opened);
+		return !!(this.responsivePopover && this.responsivePopover.opened);
 	}
 
 	_handleItemNavigation(forward) {
@@ -245,32 +252,45 @@ class Suggestions {
 		this._getScrollContainer().scrollTop = pos;
 	}
 
-	_getScrollContainer() {
+	async _getScrollContainer() {
 		if (!this._scrollContainer) {
-			this._scrollContainer = this._respPopover.getDomRef().shadowRoot.querySelector(".ui5-popover-content");
+			await this._respPopover();
+			this._scrollContainer = this.responsivePopover.shadowRoot.querySelector(".ui5-popover-content");
 		}
 
 		return this._scrollContainer;
 	}
 
 	_getItems() {
-		return [].slice.call(this._respPopover.querySelectorAll("ui5-li"));
+		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li, ui5-li-groupheader"));
 	}
 
 	_getComponent() {
 		return this.component;
 	}
 
-	_getList() {
-		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-responsive-popover").querySelector("ui5-list");
+	async _getList() {
+		this.responsivePopover = await this._respPopover();
+		return this.responsivePopover.querySelector("ui5-list");
+	}
+
+	async _getListWidth() {
+		const list = await this._getList();
+		return list.offsetWidth;
 	}
 
 	_getRealItems() {
 		return this._getComponent().getSlottedNodes(this.slotName);
 	}
 
-	get _respPopover() {
-		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+	async _respPopover() {
+		if (this.responsivePopover) {
+			return this.responsivePopover;
+		}
+
+		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
+		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		return this.responsivePopover;
 	}
 }
 
@@ -280,7 +300,6 @@ Suggestions.SCROLL_STEP = 48;
 // by the issuer component`s template.
 List.define();
 ResponsivePopover.define();
-
 
 // Add suggestions support to the global features registry so that Input.js can use it
 registerFeature("InputSuggestions", Suggestions);

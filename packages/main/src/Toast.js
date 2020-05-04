@@ -8,9 +8,9 @@ import ToastPlacement from "./types/ToastPlacement.js";
 // Styles
 import ToastCss from "./generated/themes/Toast.css.js";
 
-// Static Constants
-const MAXIMUM_ALLOWED_TRANSITION_DURATION_IN_MILLISECONDS = 1000;
-const MINIMUM_ALLOWED_DURATION_IN_MILLISECONDS = 500;
+// Constants
+const MIN_DURATION = 500;
+const MAX_DURATION = 1000;
 
 /**
  * @public
@@ -22,9 +22,9 @@ const metadata = {
 		/**
 		 * Defines the duration in milliseconds for which <code>ui5-toast</code>
 		 * remains on the screen before it's automatically closed.
-		 * <br>
-		 * <b>Note:</b> The minimum supported value is <code>500</code>.
-		 * If a lower value is passed, it's forced to be <code>500</code>.
+		 * <br><br>
+		 * <b>Note:</b> The minimum supported value is <code>500</code> ms
+		 * and even if a lower value is set, the duration would remain <code>500</code> ms.
 		 *
 		 * @type {Integer}
 		 * @defaultvalue 3000
@@ -49,9 +49,9 @@ const metadata = {
 		 * <li><code>BottomStart</code></li>
 		 * <li><code>BottomCenter</code></li>
 		 * <li><code>BottomEnd</code></li>
-		 * <ul>
+		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ToastPlacement}
 		 * @defaultvalue "BottomCenter"
 		 * @public
 		 */
@@ -68,11 +68,21 @@ const metadata = {
 		open: {
 			type: Boolean,
 		},
+
+		/**
+		 * Indicates whether <code>ui5-toast</code> is hovered.
+		 * @type {boolean}
+		 * @private
+		 */
+		hover: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Toast.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-toast</code> web component.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -138,22 +148,6 @@ class Toast extends UI5Element {
 		return ToastTemplate;
 	}
 
-	static get maximumAllowedTransition() {
-		return MAXIMUM_ALLOWED_TRANSITION_DURATION_IN_MILLISECONDS;
-	}
-
-	static get minimumAllowedDuration() {
-		return MINIMUM_ALLOWED_DURATION_IN_MILLISECONDS;
-	}
-
-	onBeforeRendering() {
-		// If the minimum duration is lower than 500ms, we force
-		// it to be 500ms, as described in the documentation.
-		if (this.duration < Toast.minimumAllowedDuration) {
-			this.duration = Toast.minimumAllowedDuration;
-		}
-	}
-
 	onAfterRendering() {
 		if (this._reopen) {
 			this._reopen = false;
@@ -178,6 +172,16 @@ class Toast extends UI5Element {
 		}
 	}
 
+	/**
+	 * If the minimum duration is lower than 500ms, we force
+	 * it to be 500ms, as described in the documentation.
+	 * @private
+	 * @returns {*}
+	 */
+	get effectiveDuration() {
+		return this.duration < MIN_DURATION ? MIN_DURATION : this.duration;
+	}
+
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
 	}
@@ -185,7 +189,7 @@ class Toast extends UI5Element {
 	get styles() {
 		// Transition duration (animation) should be a third of the duration
 		// property, but not bigger than the maximum allowed (1000ms).
-		const transitionDuration = Math.min(this.duration / 3, Toast.maximumAllowedTransition);
+		const transitionDuration = Math.min(this.effectiveDuration / 3, MAX_DURATION);
 
 		return {
 			root: {
@@ -193,10 +197,10 @@ class Toast extends UI5Element {
 
 				// Transition delay is the duration property minus the
 				// transition duration (animation).
-				"transition-delay": this.open ? `${this.duration - transitionDuration}ms` : "",
+				"transition-delay": this.open ? `${this.effectiveDuration - transitionDuration}ms` : "",
 
 				// We alter the opacity property, in order to trigger transition
-				"opacity": this.open ? "0" : "",
+				"opacity": this.open && !this.hover ? "0" : "",
 			},
 		};
 	}
@@ -208,7 +212,18 @@ class Toast extends UI5Element {
 	}
 
 	_ontransitionend() {
+		if (this.hover) {
+			return;
+		}
 		this.open = false;
+	}
+
+	_onmouseover() {
+		this.hover = true;
+	}
+
+	_onmouseleave() {
+		this.hover = false;
 	}
 }
 

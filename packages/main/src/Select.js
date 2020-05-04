@@ -7,15 +7,21 @@ import {
 	isEnter,
 	isEscape,
 	isShow,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
+import Option from "./Option.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
@@ -40,9 +46,11 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-select</code> options.
+		 *
 		 * <br><br>
 		 * <b>Note:</b> Only one selected option is allowed.
 		 * If more than one option is defined as selected, the last one would be considered as the selected one.
+		 *
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
 		 * @type {HTMLElement[]}
@@ -74,9 +82,11 @@ const metadata = {
 		 * Determines the name with which the <code>ui5-select</code> will be submitted in an HTML form.
 		 * The value of the <code>ui5-select</code> will be the value of the currently selected <code>ui5-option</code>.
 		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-select</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -90,10 +100,18 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of <code>ui5-select</code>.
-		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code> and <code>Error</code>.
+		 * Defines the value state of the <code>ui5-select</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -145,6 +163,7 @@ const metadata = {
 /**
  * @class
  *
+ * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-select</code> component is used to create a drop-down list.
  * The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-option</code> component.
  *
@@ -218,15 +237,17 @@ class Select extends UI5Element {
 	}
 
 	get _isPickerOpen() {
-		return this._respPopover && this._respPopover.opened;
+		return this.responsivePopover && this.responsivePopover.opened;
 	}
 
-	get _respPopover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+	async _respPopover() {
+		this._iconPressed = true;
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("ui5-responsive-popover");
 	}
 
 	/**
-	 * Currently selected option
+	 * Currently selected option.
 	 * @readonly
 	 * @type { ui5-option }
 	 * @public
@@ -235,7 +256,8 @@ class Select extends UI5Element {
 		return this.options.find(option => option.selected);
 	}
 
-	_toggleRespPopover() {
+	async _toggleRespPopover() {
+		this.responsivePopover = await this._respPopover();
 		if (this.disabled) {
 			return;
 		}
@@ -243,9 +265,9 @@ class Select extends UI5Element {
 		this.updateStaticAreaItemContentDensity();
 
 		if (this._isPickerOpen) {
-			this._respPopover.close();
+			this.responsivePopover.close();
 		} else {
-			this._respPopover.open(this);
+			this.responsivePopover.open(this);
 		}
 	}
 
@@ -304,6 +326,10 @@ class Select extends UI5Element {
 			this._toggleRespPopover();
 		}
 
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+
 		if (!this._isPickerOpen) {
 			this._handleArrowNavigation(event, true);
 		}
@@ -333,13 +359,11 @@ class Select extends UI5Element {
 	}
 
 	_applyFocusAfterOpen() {
-		this._toggleIcon();
-
 		if (!this._currentlySelectedOption) {
 			return;
 		}
 
-		const li = this._respPopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
+		const li = this.responsivePopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();
@@ -394,7 +418,7 @@ class Select extends UI5Element {
 	}
 
 	_afterClose() {
-		this._toggleIcon();
+		this._iconPressed = false;
 
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
@@ -405,8 +429,31 @@ class Select extends UI5Element {
 		}
 	}
 
-	_toggleIcon() {
-		this._iconPressed = !this._iconPressed;
+	get valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
+	get isDisabled() {
+		return this.disabled || undefined;
 	}
 
 	get _headerTitleText() {
@@ -431,6 +478,7 @@ class Select extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
+			Option.define(),
 			Label.define(),
 			ResponsivePopover.define(),
 			List.define(),

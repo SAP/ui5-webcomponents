@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
@@ -27,6 +27,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-li</code> header.
+		 * <br><br>
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
 		 *
@@ -40,7 +41,8 @@ const metadata = {
 
 		/**
 		 * Defines the items of the <code>ui5-list</code>.
-		 * <br><b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> for the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -59,7 +61,7 @@ const metadata = {
 		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		headerText: {
@@ -70,7 +72,7 @@ const metadata = {
 		 * Defines the footer text.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		footerText: {
@@ -94,7 +96,7 @@ const metadata = {
 		 * <b>Note:</b> Avalaible options are <code>None</code>, <code>SingleSelect</code>,
 		 * <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
-		 * @type {string}
+		 * @type {ListMode}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -107,7 +109,7 @@ const metadata = {
 		 * Defines the text that is displayed when the <code>ui5-list</code> contains no items.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		noDataText: {
@@ -120,12 +122,12 @@ const metadata = {
 		 * <b>Notes:</b>
 		 * <ul>
 		 * <li>Avalaible options are <code>All</code>, <code>Inner</code>, and <code>None</code>.</li>
-		 * <li>When set to <code>None</code>, none of the items is separated by horizontal lines.</li>
+		 * <li>When set to <code>None</code>, none of the items are separated by horizontal lines.</li>
 		 * <li>When set to <code>Inner</code>, the first item doesn't have a top separator and the last
 		 * item doesn't have a bottom separator.</li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ListSeparators}
 		 * @defaultvalue "All"
 		 * @public
 		 */
@@ -135,8 +137,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the component would fire the <code>loadMore</code> event,
-		 * when the user scrolls to the bottom of the list and help achieving an "infinite scroll" effect
+		 * Defines if the component would fire the <code>loadMore</code> event
+		 * when the user scrolls to the bottom of the list, and helps achieving an "infinite scroll" effect
 		 * by adding new items each time.
 		 *
 		 * @type {boolean}
@@ -197,8 +199,8 @@ const metadata = {
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
 		 * @event
-		 * @param {Array} selectedItems an array of the selected items.
-		 * @param {Array} previouslySelectedItems an array of the previously selected items.
+		 * @param {Array} selectedItems An array of the selected items.
+		 * @param {Array} previouslySelectedItems An array of the previously selected items.
 		 * @public
 		 */
 		selectionChange: {
@@ -211,7 +213,7 @@ const metadata = {
 
 		/**
 		 * Fired when the user scrolls to the bottom of the list.
-		 * <br>
+		 * <br><br>
 		 * <b>Note:</b> The event is fired when the <code>infiniteScroll</code> property is enabled.
 		 *
 		 * @event
@@ -301,12 +303,24 @@ class List extends UI5Element {
 		return !this.header.length && this.headerText;
 	}
 
+	get headerID() {
+		return `${this._id}-header`;
+	}
+
 	get showNoDataText() {
 		return this.items.length === 0 && this.noDataText;
 	}
 
 	get showBusy() {
 		return this.busy || this.infiniteScroll;
+	}
+
+	get isMultiSelect() {
+		return this.mode === ListMode.MultiSelect;
+	}
+
+	get ariaLabelledBy() {
+		return this.shouldRenderH1 ? this.headerID : undefined;
 	}
 
 	onBeforeRendering() {

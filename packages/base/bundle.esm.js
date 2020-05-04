@@ -1,10 +1,5 @@
 import { registerThemeProperties } from "./dist/AssetRegistry.js";
 
-import "./dist/features/calendar/Buddhist.js";
-import "./dist/features/calendar/Islamic.js";
-import "./dist/features/calendar/Japanese.js";
-import "./dist/features/calendar/Persian.js";
-
 // ESM bundle targets Edge + browsers with native support
 import "./dist/features/browsersupport/Edge.js";
 import "./dist/features/OpenUI5Support.js";
@@ -14,6 +9,7 @@ import "./dist/test-resources/elements/Generic.js";
 import "./dist/test-resources/elements/NoShadowDOM.js";
 import "./dist/test-resources/elements/Parent.js";
 import "./dist/test-resources/elements/Child.js";
+import "./dist/test-resources/elements/WithStaticArea.js";
 import "./dist/test-resources/elements/GenericExt.js";
 
 // Test themes - CSS Vars for the sap_fiori_3, sap_fiori_3_dark, sap_belize and sap_belize_hcb themes

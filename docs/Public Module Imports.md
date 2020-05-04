@@ -17,48 +17,59 @@ Table of contents:
 
 The `main` package provides general purpose UI building blocks such as buttons, labels, inputs and popups.
 
-For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/playground/)
+For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/master/playground/components).
 
 ### 1. Web Components
 
 |      Web Component       |       Tag name       |                       Module import                        |
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
+| Avatar                   | `ui5-avatar`         | `import "@ui5/webcomponents/dist/Avatar.js";`              |
 | Badge                    | `ui5-badge`          | `import "@ui5/webcomponents/dist/Badge.js";`               |
 | Busy Indicator           | `ui5-busyindicator`  | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`         | `import "@ui5/webcomponents/dist/Button.js";`              |
 | Card                     | `ui5-card`           | `import "@ui5/webcomponents/dist/Card.js";`                |
+| Carousel                 | `ui5-carousel`       | `import "@ui5/webcomponents/dist/Carousel.js";`            |
 | Checkbox                 | `ui5-checkbox`       | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
+| ComboBox                 | `ui5-combobox`       | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
+| ComboBox Item            | `ui5-cb-item`        | comes with `ui5-combobox`                                    |
 | Date Picker              | `ui5-datepicker`     | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
 | Dialog                   | `ui5-dialog`         | `import "@ui5/webcomponents/dist/Dialog.js";`              |
+| File Uploader            | `ui5-file-uploader`  | `import "@ui5/webcomponents/dist/FileUploader.js";`        |
 | Icon                     | `ui5-icon`           | `import "@ui5/webcomponents/dist/Icon.js";`                |
 | Input                    | `ui5-input`          | `import "@ui5/webcomponents/dist/Input.js";`               |
 | Label                    | `ui5-label`          | `import "@ui5/webcomponents/dist/Label.js";`               |
 | Link                     | `ui5-link`           | `import "@ui5/webcomponents/dist/Link.js";`                |
 | List                     | `ui5-list`           | `import "@ui5/webcomponents/dist/List.js";`                |
-| List - Standard Item     | `ui5-li`             | `import "@ui5/webcomponents/dist/StandardListItem.js";`   |
+| List - Standard Item     | `ui5-li`             | `import "@ui5/webcomponents/dist/StandardListItem.js";`    |
 | List - Custom Item       | `ui5-li-custom`      | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
 | List - Group Header Item | `ui5-li-groupheader` | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
 | Message Strip            | `ui5-messagestrip`   | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
-| Multi Combo Box          | `ui5-multi-combobox`  | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
-| Overfow Toolbar          | `ui5-overflow-toolbar`| `import "@ui5/webcomponents/dist/OverflowToolbar.js";`    |
+| Multi ComboBox           | `ui5-multi-combobox` | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
+| Multi ComboBox Item      | `ui5-mcb-item`       | comes with `ui5-multi-combobox`   |
+| Overflow Toolbar         | `ui5-overflow-toolbar`| `import "@ui5/webcomponents/dist/OverflowToolbar.js";`    |
 | Panel                    | `ui5-panel`          | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`        | `import "@ui5/webcomponents/dist/Popover.js";`             |
 | Radio Button             | `ui5-radiobutton`    | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
+| Responsive Popover       | `ui5-responsive-popover`| `import "@ui5/webcomponents/dist/ResponsivePopover.js";`|
 | Select                   | `ui5-select`         | `import "@ui5/webcomponents/dist/Select.js";`              |
-| Select Option            | `ui5-option`         | comes with ui5-select              |
+| Select Option            | `ui5-option`         | comes with `ui5-select `                                     |
+| Segmented Button         | `ui5-segmentedbutton`|`import "@ui5/webcomponents/dist/SegmentedButton.js";`      |
+| Suggestion Item          | `ui5-suggestion-item`|`import "@ui5/webcomponents/dist/SuggestionItem.js";`       |
 | Switch                   | `ui5-switch`         | `import "@ui5/webcomponents/dist/Switch.js";`              |
 | Tab Container            | `ui5-tabcontainer`   | `import "@ui5/webcomponents/dist/TabContainer.js";`        |
 | Tab                      | `ui5-tab`            | `import "@ui5/webcomponents/dist/Tab.js";`                 |
 | Tab Separator            | `ui5-tab-separator`  | `import "@ui5/webcomponents/dist/TabSeparator.js";`        |
 | Table                    | `ui5-table`          | `import "@ui5/webcomponents/dist/Table.js";`               |
-| Table Column             | `ui5-table-column`   | `import "@ui5/webcomponents/dist/TableColumn.js";`               |
-| Table Row                | `ui5-table-row`      | `import "@ui5/webcomponents/dist/TableRow.js";`               |
-| Table Cell               | `ui5-table-cell`     | `import "@ui5/webcomponents/dist/TableCell.js";`               |
+| Table Column             | `ui5-table-column`   | `import "@ui5/webcomponents/dist/TableColumn.js";`         |
+| Table Row                | `ui5-table-row`      | `import "@ui5/webcomponents/dist/TableRow.js";`            |
+| Table Cell               | `ui5-table-cell`     | `import "@ui5/webcomponents/dist/TableCell.js";`           |
 | Textarea                 | `ui5-textarea`       | `import "@ui5/webcomponents/dist/TextArea.js";`            |
+| TimePicker               | `ui5-timepicker`     | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
 | Timeline                 | `ui5-timeline`       | `import "@ui5/webcomponents/dist/Timeline.js";`            |
-| Timeline Item            | `ui5-timeline-item`  | comes with ui5-timeline                                    |
+| Timeline Item            | `ui5-timeline-item`  | comes with `ui5-timeline`                                   |
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
-| Toolbar Spacer           | `ui5-toolbar-spacer` | comes with ui5-overflow-toolbar                            |
+| Toast                    | `ui5-toast`          | `import "@ui5/webcomponents/dist/Toast.js";`               |
+| Toolbar Spacer           | `ui5-toolbar-spacer` | comes with `ui5-overflow-toolbar`                            |
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 
 ### 2. Assets
@@ -76,12 +87,13 @@ For additional `main` package assets (other themes, i18n and CLDR), use:
 import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 ```
 
-The ```<ui5-input>``` element acts as an ```<input>``` with the Fiori design and added functionality, such as for example value state.
+The ```<ui5-input>``` element acts as an ```<input>``` with the Fiori design and added functionality, such as value state.
 
 An advanced feature is the so called "input suggestions", allowing the user to choose from a list of predefined options while typing.
 Since input suggestions may not always be needed, they do not come as part of the ```<ui5-input>``` itself.
 
-To enable the functionality, import the above module into your app.
+To enable the functionality, import the above module into your app. This will also automatically import `ui5-suggestion-item`
+for your convenience.
 
 <a name="formsupport"></a>
 #### 3.2 Form Support
@@ -108,10 +120,7 @@ If you however need to submit forms, you can import the module above and it will
 with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
 any standard HTML input element would be.
 
-In addition, the:
-- `ui5-button`
-
-element will be able to submit the closest ```form``` it's placed in, provided you set its `submits` attribute.
+In addition, the `ui5-button` element will be able to submit the closest ```form``` it's placed in, provided you set its `submits` attribute.
 
 <a name="fiori"></a>
 ## Fiori package (```@ui5/webcomponents-fiori```)
@@ -119,7 +128,7 @@ element will be able to submit the closest ```form``` it's placed in, provided y
 The `fiori` package provides essential building blocks, necessary to implement the Fiori UX concept, 
 such as a common header (`ShellBar`).
 
-For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/playground/)
+For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/playground/).
 
 ### 1. Web Components
 
@@ -194,7 +203,7 @@ If your app needs to be able to run additionally on the old **Edge (EdgeHTML-bas
 import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 ```
 
-and if your app needs to run on both **Edge** and **IE11**, you should instead import:
+And if your app needs to run on both **Edge** and **IE11**, you should instead import:
 
 ```js
 import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";
@@ -213,7 +222,26 @@ Example:
 <script src="path/to/your/javasacript/app.js" type="module"></script>
 ```
 
-As shown in the example above, it's recommended to load the webcomponents polyfill first, and the web components next.
+As shown in the example above, it's recommended to load the Web Components Polyfill first, and the web components next.
+
+Finally, there is an alternative to the `IE11.js` import:
+
+```js
+import "@ui5/webcomponents-base/dist/features/browsersupport/IE11WithWebComponentsPolyfill.js";
+```
+
+that includes the Web Components Polyfill too, so you don't have to import it manually.
+
+This may be useful in certain use cases when your app has polyfills of its own and you need to guarantee the order of exectution.
+
+The three old browser support options are summarized below:
+
+| |`Edge.js` | `IE11.js` | `IE11WithWebComponentsPolyfill.js` |
+|---|----------|-----------|------------------------------------|
+|Browsers supported| Edge | Edge & IE11 | Edge & IE11 |
+|Includes Web Components Polyfill | No* | No* | Yes|
+
+`* You must include the Web Components Polyfill manually`
 
 <a name="theming"></a>
 ### 2. Theming
@@ -258,7 +286,7 @@ import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
 
-For more general information on assets, click [here](Assets.md).
+For more general information on assets, click [here](https://sap.github.io/ui5-webcomponents/playground/docs/assets/).
 
 Find out how you can bundle your themes more efficiently [here](Assets.md#bundling).
 
@@ -287,22 +315,22 @@ Example:
 </script>
 ```
 
-For more general information on assets, click [here](Assets.md).
+For more general information on assets, click [here](https://sap.github.io/ui5-webcomponents/playground/docs/assets/).
 
 Find out how you can bundle your i18n texts more efficiently [here](Assets.md#bundling).
 
 ### 4. Advanced calendar types
 
 ```js
-import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 ```
 
 The `ui5-datepicker` web component supports Gregorian Calendar by default.
 
-In order to to be able to use Buddhist, Islamic, Japanese or Persian calendar with this web component
+In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with this web component
 (by setting its `primaryCalendarType` property), you should import one or more of the modules above.
 
 <a name="config"></a>
@@ -318,7 +346,7 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 ```
 
-For more details, please check [Configuration](Configuration.md)
+For more details, please check [Configuration](https://sap.github.io/ui5-webcomponents/playground/docs/configuration/).
 
 ### 6. Assets registration
 
@@ -328,7 +356,7 @@ In order to register a **custom theme**:
 import { registerThemeProperties } from "@ui5/webcomponents-base/dist/AssetRegistry.js"
 ```
 
-and then call the method above to register CSS Variables for each theme/package pair.
+And then call the method above to register CSS Variables for each theme/package pair.
 
 You can pass the parameters directly, as an object, or as a URL:
 1) Pass the CSS Vars as a string directly.

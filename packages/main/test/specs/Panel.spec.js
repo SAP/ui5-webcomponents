@@ -101,6 +101,7 @@ describe("Panel general interaction", () => {
 
 		it("tests whether aria attributes are set correctly with native header", () => {
 			const header = browser.$("#panel1").shadow$(".ui5-panel-header");
+			const title = browser.$("#panel1").shadow$(".ui5-panel-header-title");
 			const button = browser.$("#panel1").shadow$(".ui5-panel-header-button");
 
 			assert.ok(!button.getAttribute("aria-expanded"), "aria-expanded shouldn't be set on the button");
@@ -109,6 +110,8 @@ describe("Panel general interaction", () => {
 
 			assert.ok(header.getAttribute("aria-expanded"), "aria-expanded should be set on the header");
 			assert.ok(header.getAttribute("aria-controls"), "aria-controls should be set on the header");
+
+			assert.strictEqual(title.getAttribute("aria-level"), "3", "title aria-level is set to 3 correctly");
 		});
 
 		it("tests whether aria attributes are set correctly in case of custom header", () => {

@@ -15,11 +15,15 @@ const newComponents = [
   "Avatar",
   "Carousel",
   "ComboBox",
+  "DateTimePicker",
+  "DurationPicker",
   "FileUploader",
   "ResponsivePopover",
   "SegmentedButton",
+  "TimePicker",
   "Toast",
   "OverflowToolbar",
+  "UploadCollection"
 ];
 
 packages.forEach(package => {

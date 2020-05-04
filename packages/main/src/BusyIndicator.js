@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
+import Label from "./Label.js";
 
 // Template
 import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.lit.js";
@@ -30,16 +31,28 @@ const metadata = {
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
+
+		/**
+		 * Defines text to be displayed below the busy indicator. It can be used to inform the user of the current operation.
+		 * @type {String}
+		 * @public
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.7
+		 */
+		text: {
+			type: String,
+		},
+
 		/**
 		 * Defines the size of the <code>ui5-busyindicator</code>.
 		 * <br><br>
-		 * <b>Note:</b> Available options are "Small", "Medium" and "Large"
+		 * <b>Note:</b> Available options are "Small", "Medium", and "Large".
 		 *
 		 * @type {BusyIndicatorSize}
-		 * @defaultvalue "Large"
+		 * @defaultvalue "Medium"
 		 * @public
 		 */
-		size: { type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Large },
+		size: { type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium },
 
 		/**
 		 * Defines if the busy indicator is visible on the screen. By default it is not.
@@ -62,7 +75,7 @@ const metadata = {
  *  triggered in parallel.
  *
  * <h3>Usage</h3>
- * For the <code>ui5-busyindicator</code> you can define the size of the indicator as well
+ * For the <code>ui5-busyindicator</code> you can define the size of the indicator, as well
  * as whether it is shown or hidden. In order to hide it, use the html attribute <code>hidden</code> or <code>display: none;</code>
  *
  * <h3>ES6 Module Import</h3>
@@ -101,7 +114,10 @@ class BusyIndicator extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
+			Label.define(),
+		]);
 	}
 
 	get ariaTitle() {

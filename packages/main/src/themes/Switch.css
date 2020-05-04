@@ -33,7 +33,7 @@
 	width: 100%;
 	display: flex;
 	align-items: center;
-	background: var(--_ui5_switch_track_bg);
+	background: var(--sapButton_Track_Background);
 	border: 1px solid;
 	border-color: var(--sapContent_ForegroundBorderColor);
 	border-radius: var(--_ui5_switch_track_border_radius);
@@ -124,7 +124,6 @@
 }
 
 .ui5-switch-root.ui5-switch--disabled .ui5-switch-track {
-	background: var(--_ui5_switch_track_disabled_bg);
 	border-color: var(--_ui5_switch_track_disabled_border_color);
 }
 
@@ -157,7 +156,7 @@
 }
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled:not(.ui5-switch--checked) .ui5-switch-handle {
-	background: var(--_ui5_switch_handle_disabled_semantic_bg);
+	background: var(--sapButton_Background);
 	border-color: var(--_ui5_switch_handle_disabled_semantic_border_color);
 }
 
@@ -173,14 +172,18 @@
 }
 
 .ui5-switch-root.ui5-switch--checked .ui5-switch-track {
-	background: var(--_ui5_switch_track_checked_bg);
-	border-color: var(--_ui5_switch_track_checked_border_color);
+	background: var(--sapButton_Track_Selected_Background);
 }
 
 .ui5-switch-root.ui5-switch--checked .ui5-switch-slider {
 	/* Move slider to oposite end, taking into account the handle as an offset. */
 	/* Note: translate(calc()) does not work in IE11 */
 	transform	: var(--_ui5_switch_slide_transform);
+}
+
+.ui5-switch-root.ui5-switch--checked .ui5-switch-text--on,
+.ui5-switch-root.ui5-switch--checked .ui5-switch-text--off {
+	color: var(--sapButton_Track_Selected_TextColor);
 }
 
 /* switch semantic off */
@@ -194,7 +197,7 @@
 }
 
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-handle {
-	background: var(--sapSuccessBackground_Lighten5); /* lighten(var(--sapSuccessBackground), 5) */
+	background: var(--sapButton_Background);
 }
 
 /* switch semantic icon */
@@ -227,30 +230,25 @@
 }
 
 .ui5-switch-root.ui5-switch--semantic:not(.ui5-switch--checked) .ui5-switch-handle {
-	background: var(--sapErrorBackground_Lighten4); /*lighten(var(--sapErrorBackground),4);*/
+	background: var(--sapButton_Background);
 }
 
 /* switch hover effects */
 
 /* switch on hover, when switched off */
 .ui5-switch-desktop.ui5-switch-root:not(.ui5-switch--disabled):hover .ui5-switch-track {
-	border-color: var(--sapContent_ForegroundBorderColor);
+	border-color: var(--sapButton_Hover_BorderColor);
 }
 
 .ui5-switch-desktop.ui5-switch-root:not(.ui5-switch--disabled):hover .ui5-switch-handle {
-	background: var(--_ui5_switch_handle_hover_bg);
-	border-color: var(--sapContent_ForegroundBorderColor);
+	background: var(--sapButton_Hover_Background);
+	border-color: var(--sapButton_Hover_BorderColor);
 }
 
  /* switch on hover, when switched on */
 .ui5-switch-desktop.ui5-switch-root.ui5-switch--checked:not(.ui5-switch--disabled):hover .ui5-switch-handle {
-	background: var(--sapToggleButton_Pressed_HoverBackground);
-	border-color: var(--sapToggleButton_Pressed_HoverBorderColor);
-}
-
-.ui5-switch-desktop.ui5-switch-root.ui5-switch--checked:not(.ui5-switch--disabled):hover .ui5-switch-track {
-	background: var(--_ui5_switch_track_hover_checked_bg);
-	border-color: var(--_ui5_switch_track_hover_border_color);
+	background: var(--sapButton_Selected_Hover_Background);
+	border-color: var(--sapButton_Hover_BorderColor);
 }
 
 /* semantic switch on hover, when switched off */

@@ -1,7 +1,6 @@
 @import "../base/sizes-parameters.css";
 @import "../base/Badge-parameters.css";
 @import "./Button-parameters.css";
-@import "../base/BusyIndicator-parameters.css";
 @import "../base/Card-parameters.css";
 @import "../base/Carousel-parameters.css";
 @import "./CheckBox-parameters.css";
@@ -24,7 +23,8 @@
 @import "../base/TextArea-parameters.css";
 @import "../base/TimelineItem-parameters.css";
 @import "../base/Toast-parameters.css";
-@import "./ToggleButton-parameters.css";
+@import "./WheelSlider-parameters.css";
+@import "../base/ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";
 @import "../base/Table-parameters.css";

@@ -20,7 +20,7 @@ const metadata = {
 		 * <b>Note:</b> The <code>ui5-dialog</code> will be stretched to aproximetly
 		 * 90% of the viewport.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -139,6 +139,13 @@ class Dialog extends Popup {
 
 	get blockLayer() {
 		return `z-index: ${this._zIndex};`;
+	}
+
+	get headerAriaLabelledBy() {
+		if (this.headerText || this.header) {
+			return `${this._id}-popup-heading`;
+		}
+		return undefined;
 	}
 }
 

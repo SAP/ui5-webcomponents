@@ -11,6 +11,14 @@
 	--_ui5_day_picker_item_width: 2.25rem;
 	--_ui5_day_picker_item_height: 2.875rem;
 	--_ui5_day_picker_empty_height: 3rem;
+
+	/* DateTimePicker */
+	--_ui5_datetime_picker_width: 40.0625rem;
+	--_ui5_datetime_picker_height: 25rem;
+	--_ui5_datetime_timeview_width: 17rem;
+	--_ui5_datetime_timeview_phonemode_width: 19.5rem;
+	--_ui5_datetime_timeview_padding: 1rem;
+
 	--_ui5_input_inner_padding: 0 0.75rem;
 	--_ui5_input_value_state_icon_padding: var(--_ui5-input-icon-padding);
 	--_ui5_list_no_data_height: 3rem;
@@ -44,9 +52,13 @@
 	--_ui5_switch_rtl_transform: translateX(1.875rem) translateX(-100%);
 	--_ui5_switch_text_right: calc(-100% + 1.9125rem);
 	--_ui5_tc_item_text: 3rem;
+	--_ui5_tc_item_text_text_only: 3rem;
 	--_ui5_tc_item_text_line_height: normal;
 	--_ui5_tc_item_icon_size: 1.5rem;
 	--_ui5_tc_item_add_text_margin_top: 0.625rem;
+
+	/* Responsive Popover */
+	--_ui5-responnsive_popover_header_height: 2.75rem;
 }
 
 [data-ui5-compact-size],
@@ -94,6 +106,13 @@
 	--_ui5_day_picker_item_height: 2rem;
 	--_ui5_day_picker_empty_height: 2.125rem;
 
+	/* DateTimePicker */
+	--_ui5_datetime_picker_height: 17rem;
+	--_ui5_datetime_picker_width: 34.0625rem;
+	--_ui5_datetime_timeview_width: 17rem;
+	--_ui5_datetime_timeview_phonemode_width: 18.5rem;
+	--_ui5_datetime_timeview_padding: 0.5rem;
+
 	/* Input */
 	--_ui5_input_height: var(--_ui5_input_compact_height);
 	--_ui5_input_inner_padding: 0 0.5rem;
@@ -104,7 +123,7 @@
 	/* List */
 	--_ui5_list_no_data_height: 2rem;
 	--_ui5_list_item_cb_margin_right: .5rem;
-	--_ui5_list_item_title_size: var(--sapFontMediumSize);
+	--_ui5_list_item_title_size: var(--sapFontSize);
 	--_ui5_list_item_img_size: 1.75rem;
 	--_ui5_list_item_img_margin: 0.55rem 0.75rem 0.5rem 0rem;
 	--_ui5_list_item_base_height: 2rem;
@@ -135,6 +154,12 @@
 	--_ui5_rb_label_width: calc(100% - 2rem + 1px);
 	--_ui5_rb_rtl_focus_right: 0.375rem;
 
+	--_ui5_wheelslider_item_width: 4rem;
+	--_ui5_wheelslider_item_height: 2rem;
+	--_ui5_wheelslider_height: 14rem;
+	--_ui5_wheelslider_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 2);
+	--_ui5_wheelslider_arrows_visibility: visible;
+
 	--_ui5_switch_height: var(--_ui5_switch_compact_height);
 	--_ui5_switch_width: var(--_ui5_switch_compact_width);
 	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);
@@ -150,9 +175,11 @@
 	--_ui5_tc_item_text_line_height: 1.325rem;
 	--_ui5_tc_item_icon_size: 1rem;
 	--_ui5_tc_item_add_text_margin_top: 0.3125rem;
-	--_ui5_tc_header_height_text_only: var(--_ui5_tc_header_height_text_only_compact);
 	--_ui5_tc_header_height: var(--_ui5_tc_header_height_compact);
 
 	/* Radio Button */
 	--_ui5_radiobutton_min_width: var(--_ui5_radiobutton_min_width_compact);
+
+	/* Responsive Popover */
+	--_ui5-responnsive_popover_header_height: 2.5rem;
 }

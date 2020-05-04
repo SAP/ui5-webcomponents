@@ -1,4 +1,3 @@
-
 import isNodeTabbable from "./isNodeTabbable.js";
 
 const getTabbableElements = node => {

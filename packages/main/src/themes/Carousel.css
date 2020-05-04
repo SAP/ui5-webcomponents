@@ -20,37 +20,29 @@
     align-items: center;
 }
 
-.ui5-carousel-overflow-hidden {
+.ui5-carousel-viewport {
     width: 100%;
     height: inherit;
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     overflow: hidden;
 }
 
-.ui5-carousel-navigation-arrows {
-    width: 100%;
-    padding: 0 .5rem;
-    position: absolute;
-    top: 50%;
-    display: flex;
-    justify-content: space-between;
-    box-sizing: border-box;
+.ui5-carousel-viewport.ui5-carousel-viewport--single {
+    align-items: center;
 }
 
 .ui5-carousel-content {
-    width: 100%;
     height: 100%;
-    height: inherit;
     position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     background: var(--sapBackgroundColor);
-	transition: transform 0.5s cubic-bezier(.46, 0, .44, 1);
-	will-change: transform;
+    transition: transform 0.5s cubic-bezier(.46, 0, .44, 1);
+    will-change: transform;
 }
 
 .ui5-carousel-content.ui5-carousel-content-no-animation {
@@ -66,26 +58,29 @@
 }
 
 .ui5-carousel-item {
-    width: 100%;
-    padding: 0 3rem;
-    flex: 0 0 auto;
+    height: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    padding: 0 0.75rem;
     box-sizing: border-box;
+    transition: visibility 0.5s linear;
+    will-change: visibility;
 }
 
-.ui5-carousel-item-multiple {
-    justify-content: space-around;
+.ui5-carousel-item--hidden {
+    visibility: hidden;
 }
 
-.ui5-carousel-navigation-button {
-    width: var(--ui5_carousel_button_size);
-    height: var(--ui5_carousel_button_size);
-    border-radius: 50%;
-    box-shadow: var(--sapContent_Shadow1);
-    cursor: pointer;
-    outline-offset: .1rem;
+.ui5-carousel-navigation-arrows {
+    width: 100%;
+    padding:0 1.5rem;
+    position: absolute;
+    top: calc(50% - 2.5rem);
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
 }
 
 .ui5-carousel-navigation-wrapper {
@@ -101,6 +96,20 @@
 
 .ui5-carousel-navigation-wrapper.ui5-carousel-navigation-with-buttons {
     height: 3.5rem;
+}
+
+.ui5-carousel-navigation-button {
+    width: var(--ui5_carousel_button_size);
+    height: var(--ui5_carousel_button_size);
+    border-radius: 50%;
+    box-shadow: var(--sapContent_Shadow1);
+    cursor: pointer;
+    outline-offset: .1rem;
+}
+
+.ui5-carousel-navigation-button--hidden {
+    visibility: hidden;
+    padding: 0;
 }
 
 .ui5-carousel-navigation {

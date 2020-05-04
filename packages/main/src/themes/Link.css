@@ -8,7 +8,7 @@
 	max-width: 100%;
 	color: var(--sapLinkColor);
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapFontMediumSize);
+	font-size: var(--sapFontSize);
 	cursor: pointer;
 }
 
@@ -36,7 +36,7 @@
 
 :host([design="Subtle"]) .ui5-link-root,
 :host([design="Subtle"]) .ui5-link-root:visited {
-	color: var(--_ui5_link_subtle_color);
+	color: var(--sapLink_SubtleColor);
 }
 
 :host([design="Subtle"]) .ui5-link-root:focus {

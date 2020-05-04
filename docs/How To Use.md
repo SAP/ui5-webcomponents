@@ -89,7 +89,7 @@ Therefore, in the next example, the text inside the `<ui5-icon>` will be ignored
 <ui5-icon name="add">This is an icon</ui5-icon>
 ```
 
-Other UI5 Web Components, such as `<ui5-button>` accept text (and in addition HTML elements that make sense when writing text)
+Other UI5 Web Components, such as `<ui5-button>` accept text (and in addition HTML elements that make sense when writing text).
 
 ```html
 <ui5-button id="btn">This is the content of the button</ui5-button>
@@ -161,7 +161,7 @@ of each child.
 
 Let's have a look at the `<ui5-popover>` again. After consulting the documentation we can see that this particular
 Web Component accepts three categories of children: `default, footer, header`. For `footer` and `header`
-the children can be any type of HTML Element (hence `HTMLElement`) while for `default` they can be both
+the children can be any type of HTML Element (hence `HTMLElement`), while for `default` they can be both
 HTML Elements and text (hence `Node`).
 
 To tell the `<ui5-popover>` which child goes where, use the `slot` attribute on it.
@@ -215,11 +215,11 @@ For the events fired by each UI5 Web Component, consult the documentation.
 Like with most other tasks, you'll use your framework's syntax to bind to events and you'll rarely,
 if ever, need to call `addEventListener` yourself.
 
-Please note however that some frameworks (f.e. React) cannot use their standard syntax
+Please note however that some frameworks (e.g. React) cannot use their standard syntax
 for binding to custom events (such as `close`), but only for standard ones (such as `click`).
-So for custom events in React you'd have to get a reference to the element and call `addEventListener` manually.
+So, for custom events in React you'd have to get a reference to the element and call `addEventListener` manually.
 
-For more information, please check our [React tutorial](React-tutorial.md);
+For more information, please check our [React tutorial](React-tutorial.md).
 
 <a name="methods"></a>
 ## 5. How do I call public methods?

@@ -7,6 +7,7 @@
 	_disable-initial-focus
 	content-only-on-desktop
 	@ui5-afterClose={{_afterClosePopover}}
+	@ui5-afterOpen={{_setInitialFocusInResponsivePopover}}
 >
 	<div slot="header" class="ui5-responsive-popover-header">
 		<div class="row">
@@ -52,7 +53,7 @@
 		@ui5-selectionChange={{_listSelectionChange}}>
 		{{#each items}}
 			{{#if this.selected}}
-				<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../editable}}">{{this.textContent}}</ui5-li>
+				<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../editable}}">{{this.text}}</ui5-li>
 			{{/if}}
 		{{/each}}
 	</ui5-list>
@@ -75,7 +76,7 @@
 	content-only-on-desktop
 	@ui5-selectionChange={{_listSelectionChange}}
 	@ui5-afterClose={{_toggleIcon}}
-	@ui5-afterOpen={{_toggleIcon}}
+	@ui5-afterOpen={{_onAllItemsPopoverAfterOpen}}
 >
 	<div slot="header" class="ui5-responsive-popover-header">
 		<div class="row">
@@ -106,19 +107,20 @@
 						aria-describedby="{{_id}}-valueStateDesc"
 					/>
 				</div>
-				<ui5-togglebutton
+				<ui5-button
 					slot="header"
 					class="ui5-multi-combobox-toggle-button"
 					icon="multiselect-all"
 					design="Transparent"
 					@click="{{_toggleButtonPress}}"
-				></ui5-togglebutton>
+					show-selected
+				></ui5-button>
 		</div>
 	</div>
 
 	<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 		{{#each _filteredItems}}
-				<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.textContent}}</ui5-li>
+				<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.text}}</ui5-li>
 		{{/each}}
 	</ui5-list>
 

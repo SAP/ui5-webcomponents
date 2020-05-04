@@ -3,7 +3,7 @@
 	background: var(--sapButton_Background);
 	border-width: 1px;
 	border-style: solid;
-	border-color: var(--_ui5_token_border_color);
+	border-color: var(--sapButton_TokenBorderColor);
 	border-radius: var(--_ui5_token_border_radius);
 	color: var(--_ui5_token_text_color);
 	height: var(--_ui5_token_height);
@@ -16,7 +16,7 @@
 
 :host(:not([readonly]):hover) {
 	background: var(--sapButton_Hover_Background);
-	border-color: var(--_ui5_token_hover_border_color);
+	border-color: var(--sapButton_Hover_BorderColor);
 }
 
 :host([selected]:not([readonly])) {
@@ -26,8 +26,8 @@
 }
 
 :host([selected]:not([readonly]):hover) {
-	background: var(--sapToggleButton_Pressed_HoverBackground);
-	border: 1px solid var(--sapToggleButton_Pressed_HoverBorderColor);
+	background: var(--sapButton_Selected_Hover_Background);
+	border: 1px solid var(--sapButton_Selected_Hover_BorderColor);
 }
 
 :host([readonly]) {
@@ -52,7 +52,7 @@
 	padding-top: 0.25rem;
 	padding-bottom: 0.25rem;
 	box-sizing: border-box;
-	font-size: var(--sapFontMediumSize);
+	font-size: var(--sapFontSize);
 	font-family: var(--sapFontFamily);
 	user-select: none;
 }

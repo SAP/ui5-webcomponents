@@ -1,5 +1,4 @@
 :root {
 	--_ui5_link_opacity: 0.5;
 	--_ui5_link_outline_element_size: calc(100% - 0.125rem);
-	--_ui5_link_subtle_color: var(--sapLinkColor_Darken15);
 }

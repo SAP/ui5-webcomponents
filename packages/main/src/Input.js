@@ -1,5 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -8,17 +10,19 @@ import {
 	isDown,
 	isSpace,
 	isEnter,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-// import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import InputType from "./types/InputType.js";
+import Popover from "./Popover.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
 
 import {
 	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS,
@@ -28,6 +32,7 @@ import {
 // Styles
 import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 /**
  * @public
@@ -51,19 +56,27 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-input</code> suggestion items.
 		 * <br><br>
-		 * Example: <br>
+		 * Example:
+		 * <br><br>
 		 * &lt;ui5-input show-suggestions><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #1">&lt;/ui5-suggestion-item><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #2">&lt;/ui5-suggestion-item><br>
 		 * &lt;/ui5-input>
-		 * <ui5-input show-suggestions><ui5-li>Item #1</ui5-li><ui5-li>Item #2</ui5-li></ui5-input>
+		 * <br>
+		 * <ui5-input show-suggestions>
+		 * <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
+		 * <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
+		 * </ui5-input>
 		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
 		 * <br><br>
-		 * <b>Note:</b> The &lt;ui5-li> and  &lt;ui5-li-custom> are recommended to be used as suggestion items.
+		 * <b>Note:</b> The &lt;ui5-suggestion-item> is recommended to be used as a suggestion item.
+		 * Importing the Input Suggestions Support feature:
 		 * <br>
-		 * In order to use them, you need to import either <code>"@ui5/webcomponents/dist/StandardListItem"</code>, or  <code>"@ui5/webcomponents/dist/CustomListItem"</code> module.
+		 * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code>
+		 * <br>
+		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -83,13 +96,33 @@ const metadata = {
 		formSupport: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-input</code>.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 * <br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+		 * when the <code>ui5-input</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * <br>
+		 * <b>Note:</b> If the <code>ui5-input</code> has <code>suggestionItems</code>,
+		 * the <code>valueStateMessage</code> would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
+		 * @type {HTMLElement[]}
+		 * @since 1.0.0-rc.6
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
 
 		/**
-		 * Defines whether <code>ui5-input</code> is in disabled state.
+		 * Defines whether the <code>ui5-input</code> is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely non interactive.
+		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -149,7 +182,7 @@ const metadata = {
 		 * that use different soft keyboard layouts depending on the given input type.</li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {InputType}
 		 * @defaultvalue "Text"
 		 * @public
 		 */
@@ -173,9 +206,17 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-input</code>.
-		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -187,9 +228,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the <code>ui5-input</code> will be submitted in an HTML form.
 		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-input</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -206,8 +249,8 @@ const metadata = {
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
 		 * <br><br>
 		 * <b>Note:</b>
-		 * Don`t forget to import the <code>InputSuggestions</code> module from "@ui5/webcomponents/dist/features/InputSuggestions.js" to enable this functionality.
-		 * @type {Boolean}
+		 * Don`t forget to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -244,6 +287,19 @@ const metadata = {
 		_wrapperAccInfo: {
 			type: Object,
 		},
+
+		_inputWidth: {
+			type: Integer,
+		},
+
+		_listWidth: {
+			type: Integer,
+		},
+
+		_isPopoverOpen: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
 		/**
@@ -276,7 +332,7 @@ const metadata = {
 		submit: {},
 
 		/**
-		 * Fired when a suggestion item, which displayed in the suggestion popup, is selected.
+		 * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
 		 *
 		 * @event
 		 * @param {HTMLElement} item The selected item
@@ -300,13 +356,13 @@ const metadata = {
  * that are displayed in a popover right under the input.
  * <br><br>
  * The text field can be editable or read-only (<code>readonly</code> property),
- * and and it can be enabled or disabled (<code>enabled</code> property).
+ * and it can be enabled or disabled (<code>enabled</code> property).
  * To visualize semantic states, such as "error" or "warning", the <code>valueState</code> property is provided.
  * When the user makes changes to the text, the change event is fired,
  * which enables you to react on any text change.
  * <br><br>
  * <b>Note:</b> If you are using the <code>ui5-input</code> as a single npm module,
- * don"t forget to import the <code>InputSuggestions</code> module from
+ * don't forget to import the <code>InputSuggestions</code> module from
  * "@ui5/webcomponents/dist/features/InputSuggestions.js"
  * to enable the suggestions functionality.
  *
@@ -321,6 +377,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Input
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
+ * @appenddocs SuggestionItem
  * @public
  */
 class Input extends UI5Element {
@@ -345,7 +402,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return ResponsivePopoverCommonCss;
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
 	}
 
 	constructor() {
@@ -378,6 +435,16 @@ class Input extends UI5Element {
 		this.suggestionsTexts = [];
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
+		this._handleResizeBound = this._handleResize.bind(this);
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResizeBound);
 	}
 
 	onBeforeRendering() {
@@ -401,10 +468,18 @@ class Input extends UI5Element {
 			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.toggle(shouldOpenSuggestions);
 
+			RenderScheduler.whenFinished().then(async () => {
+				this._listWidth = await this.Suggestions._getListWidth();
+			});
+
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
 				this.getInputDOMRef().focus();
 			}
+		}
+
+		if (!this.firstRendering && this.hasValueStateMessage) {
+			this.toggle(this.shouldDisplayOnlyValueStateMessage);
 		}
 
 		this.firstRendering = false;
@@ -436,13 +511,13 @@ class Input extends UI5Element {
 
 	/* Event handling */
 	_handleUp(event) {
-		if (this.Suggestions) {
+		if (this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onUp(event);
 		}
 	}
 
 	_handleDown(event) {
-		if (this.Suggestions) {
+		if (this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onDown(event);
 		}
 	}
@@ -468,8 +543,12 @@ class Input extends UI5Element {
 	_onfocusout(event) {
 		// if focusout is triggered by pressing on suggestion item skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
-		if (this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot.contains(this.Suggestions._respPopover)) {
+		if (this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover)) {
 			return;
+		}
+
+		if (this.popover) {
+			this.popover.close(false, false, true);
 		}
 
 		this.previousValue = "";
@@ -480,6 +559,7 @@ class Input extends UI5Element {
 		if (isPhone() && !this.readonly && this.Suggestions) {
 			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.open(this);
+			this.isRespPopoverOpen = true;
 		}
 	}
 
@@ -508,6 +588,12 @@ class Input extends UI5Element {
 		}
 	}
 
+	_handleResize() {
+		if (this.hasValueStateMessage) {
+			this._inputWidth = this.offsetWidth;
+		}
+	}
+
 	_closeRespPopover() {
 		this.Suggestions.close();
 	}
@@ -524,6 +610,41 @@ class Input extends UI5Element {
 		if (isPhone()) {
 			this.blur();
 		}
+	}
+
+	toggle(isToggled) {
+		if (isToggled && !this.isRespPopoverOpen) {
+			this.openPopover();
+		} else {
+			this.closePopover();
+		}
+	}
+
+	/**
+	 * Checks if the popover is open.
+	 * @returns {Boolean} true if the popover is open, false otherwise
+	 * @public
+	 */
+	isOpen() {
+		return !!this._isPopoverOpen;
+	}
+
+	async openPopover() {
+		this._isPopoverOpen = true;
+		this.popover = await this._getPopover();
+		this.popover.openBy(this);
+	}
+
+	closePopover() {
+		if (this.isOpen()) {
+			this._isPopoverOpen = false;
+			this.popover.close();
+		}
+	}
+
+	async _getPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("ui5-popover");
 	}
 
 	enableSuggestions() {
@@ -547,7 +668,11 @@ class Input extends UI5Element {
 	}
 
 	selectSuggestion(item, keyboardUsed) {
-		const itemText = item.textContent;
+		if (item.group) {
+			return;
+		}
+
+		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 
@@ -564,7 +689,7 @@ class Input extends UI5Element {
 
 	previewSuggestion(item) {
 		this.valueBeforeItemSelection = this.value;
-		this.value = item.textContent;
+		this.value = item.group ? "" : item.textContent;
 	}
 
 	fireEventByAction(action) {
@@ -596,7 +721,6 @@ class Input extends UI5Element {
 		}
 	}
 
-
 	getInputValue() {
 		const inputDOM = this.getDomRef();
 		if (inputDOM) {
@@ -609,7 +733,7 @@ class Input extends UI5Element {
 		let inputDomRef;
 
 		if (isPhone()) {
-			inputDomRef = this.getStaticAreaItemDomRef().querySelector(".ui5-input-inner-phone");
+			inputDomRef = this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
 		if (!inputDomRef) {
@@ -647,6 +771,7 @@ class Input extends UI5Element {
 
 		return {
 			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
 			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
@@ -691,8 +816,51 @@ class Input extends UI5Element {
 		};
 	}
 
+	get classes() {
+		return {
+			popoverValueState: {
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			popoverHeader: {
+				"width": `${this._inputWidth}px`,
+			},
+			suggestionPopoverHeader: {
+				"display": this._listWidth === 0 ? "none" : "inline-block",
+				"width": `${this._listWidth}px`,
+				"padding": "0.5625rem 1rem",
+			},
+		};
+	}
+
+	get valueStateMessageText() {
+		const valueStateMessage = this.valueStateMessage.map(x => x.cloneNode(true));
+
+		return valueStateMessage;
+	}
+
+	get shouldDisplayOnlyValueStateMessage() {
+		return this.hasValueStateMessage && !this.shouldOpenSuggestions() && this.focused;
+	}
+
+	get shouldDisplayDefaultValueStateMessage() {
+		return !this.valueStateMessage.length && this.hasValueStateMessage;
+	}
+
 	get hasValueState() {
 		return this.valueState !== ValueState.None;
+	}
+
+	get hasValueStateMessage() {
+		return this.hasValueState && this.valueState !== ValueState.Success;
 	}
 
 	get valueStateText() {
@@ -703,8 +871,15 @@ class Input extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
+	get _isPhone() {
+		return isPhone();
+	}
+
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		await Promise.all([
+			Popover.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 	}
 }
 

@@ -1,21 +1,20 @@
-import "@ui5/webcomponents-base/dist/shims/jquery-shim.js";
-import "@ui5/webcomponents-base/dist/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
-import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
-import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
-import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
-import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -26,7 +25,7 @@ import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js"
 import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
-import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 // Styles
 import datePickerCss from "./generated/themes/DatePicker.css.js";
@@ -51,11 +50,18 @@ const metadata = {
 		},
 
 		/**
-		 * Visualizes the validation state of the Web Component, for example
-		 * <code>Error</code>, <code>Warning</code> and
-		 * <code>Success</code>.
+		 * Defines the value state of the <code>ui5-datepicker</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -76,9 +82,9 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the мinimum date available for selection.
+		 * Determines the minimum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
@@ -90,7 +96,7 @@ const metadata = {
 		/**
 		 * Determines the maximum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
@@ -101,10 +107,20 @@ const metadata = {
 
 		/**
 		 * Determines the calendar type.
-		 * The input value is formated according to the calendar type and the picker shows
-		 * months and years from the specified calendar. Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
+		 * The input value is formated according to the calendar type
+		 * and the picker shows the months and years from the specified calendar.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Gregorian</code></li>
+		 * <li><code>Islamic</code></li>
+		 * <li><code>Japanese</code></li>
+		 * <li><code>Buddhist</code></li>
+		 * <li><code>Persian</code></li>
+		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {CalendarType}
+		 * @defaultvalue "Gregorian"
 		 * @public
 		 */
 		primaryCalendarType: {
@@ -123,7 +139,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-datepicker</code> is displayed as readonly.
+		 * Determines whether the <code>ui5-datepicker</code> is displayed as read-only.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -137,6 +153,7 @@ const metadata = {
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * <code>ui5-datepicker</code> has no value.
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 		 * Passing an empty string as the value of this property will make the <code>ui5-datepicker</code> appear empty - without placeholder or format pattern.
 		 *
@@ -152,9 +169,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the <code>ui5-datepicker</code> will be submitted in an HTML form.
 		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-datepicker</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -236,9 +255,9 @@ const metadata = {
  * The <code>ui5-datepicker</code> provides advanced keyboard handling.
  * If the <code>ui5-datepicker</code> is focused,
  * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
- * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>right</code> arrow keys
+ * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>RIGHT</code> arrow keys
  * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
- * use tab to reach the buttons for changing month and year.
+ * use TAB to reach the buttons for changing month and year.
  * <br>
  *
  * <h3>ES6 Module Import</h3>
@@ -284,8 +303,6 @@ class DatePicker extends UI5Element {
 			allowTargetOverlap: true,
 			stayOpenOnScroll: true,
 			afterClose: () => {
-				const calendar = this._respPopover.querySelector(`#${this._id}-calendar`);
-
 				this._isPickerOpen = false;
 
 				if (isPhone()) {
@@ -296,13 +313,20 @@ class DatePicker extends UI5Element {
 					this._focusInputAfterClose = false;
 				}
 
-				calendar._hideMonthPicker();
-				calendar._hideYearPicker();
+				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+				if (calendar) {
+					calendar._hideMonthPicker();
+					calendar._hideYearPicker();
+				}
 			},
 			afterOpen: () => {
-				const calendar = this._respPopover.querySelector(`#${this._id}-calendar`);
-				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
+				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
 
+				if (!calendar) {
+					return;
+				}
+
+				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
 				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
 				let focusableDay = selectedDay || today;
@@ -327,7 +351,7 @@ class DatePicker extends UI5Element {
 		};
 
 		this._calendar = {
-			onSelectedDatesChange: this._handleCalendarSelectedDatesChange.bind(this),
+			onSelectedDatesChange: this._handleCalendarChange.bind(this),
 			selectedDates: [],
 		};
 
@@ -399,7 +423,8 @@ class DatePicker extends UI5Element {
 
 	_handleInputChange() {
 		let nextValue = this._getInput().getInputValue();
-		const isValid = this.isValid(nextValue);
+		const emptyValue = nextValue === "";
+		const isValid = emptyValue || this.isValid(nextValue);
 		const isInValidRange = this.isInValidRange(this._getTimeStampFromString(nextValue));
 
 		if (isValid && isInValidRange) {
@@ -418,7 +443,8 @@ class DatePicker extends UI5Element {
 
 	_handleInputLiveChange() {
 		const nextValue = this._getInput().getInputValue();
-		const isValid = this.isValid(nextValue) && this.isInValidRange(this._getTimeStampFromString(nextValue));
+		const emptyValue = nextValue === "";
+		const isValid = emptyValue || (this.isValid(nextValue) && this.isInValidRange(this._getTimeStampFromString(nextValue)));
 
 		this.value = nextValue;
 		this.fireEvent("input", { value: nextValue, valid: isValid });
@@ -426,13 +452,13 @@ class DatePicker extends UI5Element {
 
 	_click(event) {
 		if (isPhone()) {
-			this._respPopover.open(this);
+			this.responsivePopover.open(this);
 			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
 
 	/**
-	 * Checks if a value is valid against the current date format of the DatePicker
+	 * Checks if a value is valid against the current date format of the DatePicker.
 	 * @param {string} value A value to be tested against the current date format
 	 * @public
 	 */
@@ -441,7 +467,7 @@ class DatePicker extends UI5Element {
 	}
 
 	/**
-	 * Checks if a date is in range between minimum and maximum date
+	 * Checks if a date is in range between minimum and maximum date.
 	 * @param {object} value
 	 * @public
 	 */
@@ -471,8 +497,12 @@ class DatePicker extends UI5Element {
 
 	// because the parser understands more than one format
 	// but we need values in one format
-	normalizeValue(sValue) {
-		return this.getFormat().format(this.getFormat().parse(sValue));
+	normalizeValue(value) {
+		if (value === "") {
+			return value;
+		}
+
+		return this.getFormat().format(this.getFormat().parse(value));
 	}
 
 	get validValue() {
@@ -513,6 +543,18 @@ class DatePicker extends UI5Element {
 
 	get _headerTitleText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
+	get phone() {
+		return isPhone();
+	}
+
+	get showHeader() {
+		return this.phone;
+	}
+
+	get showFooter() {
+		return this.phone;
 	}
 
 	getFormat() {
@@ -560,6 +602,10 @@ class DatePicker extends UI5Element {
 		return this.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
 	}
 
+	get openIconName() {
+		return "appointment-2";
+	}
+
 	get dateAriaDescription() {
 		return this.i18nBundle.getText(DATEPICKER_DATE_ACC_TEXT);
 	}
@@ -568,33 +614,48 @@ class DatePicker extends UI5Element {
 		return getRTL() ? "rtl" : "ltr";
 	}
 
-	get _respPopover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+	/**
+	 * Defines whether the dialog on mobile should have header
+	 * @private
+	 */
+	get _shouldHideHeader() {
+		return false;
+	}
+
+	async _respPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("ui5-responsive-popover");
 	}
 
 	_canOpenPicker() {
 		return !this.disabled && !this.readonly;
 	}
 
-	_handleCalendarSelectedDatesChange(event) {
+	_handleCalendarChange(event) {
 		const iNewValue = event.detail.dates && event.detail.dates[0];
 
 		if (this._calendar.selectedDates.indexOf(iNewValue) !== -1) {
 			this.closePicker();
-			return;
+			return false;
 		}
 
-		this.value = this.getFormat().format(
-			new Date(CalendarDate.fromTimestamp(
-				iNewValue * 1000,
-				this._primaryCalendarType
-			).valueOf()),
-			true
-		);
-		this._calendar.timestamp = iNewValue;
+		const fireChange = this._handleCalendarSelectedDatesChange(event, iNewValue);
+
+		if (fireChange) {
+			this.fireEvent("change", { value: this.value, valid: true });
+			// Angular two way data binding
+			this.fireEvent("value-changed", { value: this.value, valid: true });
+		}
+
+		this.closePicker();
+	}
+
+	_handleCalendarSelectedDatesChange(event, newValue) {
+		this._updateValueCalendarSelectedDatesChange(newValue);
+
+		this._calendar.timestamp = newValue;
 		this._calendar.selectedDates = event.detail.dates;
 		this._focusInputAfterClose = true;
-		this.closePicker();
 
 		if (this.isInValidRange(this._getTimeStampFromString(this.value))) {
 			this.valueState = ValueState.None;
@@ -602,9 +663,17 @@ class DatePicker extends UI5Element {
 			this.valueState = ValueState.Error;
 		}
 
-		this.fireEvent("change", { value: this.value, valid: true });
-		// Angular two way data binding
-		this.fireEvent("value-changed", { value: this.value, valid: true });
+		return true;
+	}
+
+	_updateValueCalendarSelectedDatesChange(newValue) {
+		this.value = this.getFormat().format(
+			new Date(CalendarDate.fromTimestamp(
+				newValue * 1000,
+				this._primaryCalendarType
+			).valueOf()),
+			true
+		);
 	}
 
 	/**
@@ -612,7 +681,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	closePicker() {
-		this._respPopover.close();
+		this.responsivePopover.close();
 	}
 
 	/**
@@ -622,15 +691,16 @@ class DatePicker extends UI5Element {
 	 * Specify this option to focus the input field.
 	 * @public
 	 */
-	openPicker(options) {
+	async openPicker(options) {
+		this._isPickerOpen = true;
+		this.responsivePopover = await this._respPopover();
 		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;
 		}
 
-		this._respPopover.open(this);
-		this._isPickerOpen = true;
+		this.responsivePopover.open(this);
 	}
 
 	togglePicker() {
@@ -684,7 +754,7 @@ class DatePicker extends UI5Element {
 	}
 
 	/**
-	 * Currently selected date represented as JavaScript Date instance
+	 * Currently selected date represented as JavaScript Date instance.
 	 *
 	 * @readonly
 	 * @type { Date }

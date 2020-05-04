@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
@@ -23,7 +23,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			type: Node,
+			type: HTMLElement,
 		},
 
 		/**
@@ -53,7 +53,7 @@ const metadata = {
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		initialFocus: {
@@ -62,10 +62,11 @@ const metadata = {
 
 		/**
 		 * Defines the header text.
-		 * <br><b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		headerText: {

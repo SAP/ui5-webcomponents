@@ -25,26 +25,26 @@
 	<h3>Basic MultiComboBox</h3>
 	<div class="snippet" style="display: flex; flex-wrap: wrap;">
 		<ui5-multi-combobox placeholder="Type your value">
-			<ui5-li selected>UI5</ui5-li>
+			<ui5-mcb-item selected text="UI5"></ui5-mcb-item>
 		</ui5-multi-combobox>
 		<ui5-multi-combobox readonly value="Readonly combo">
-			<ui5-li selected>UI5</ui5-li>
+			<ui5-mcb-item selected text="UI5"></ui5-mcb-item>
 		</ui5-multi-combobox>
 		<ui5-multi-combobox disabled value="Disabled combo">
-			<ui5-li selected>UI5</ui5-li>
+			<ui5-mcb-item selected text="UI5"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-multi-combobox placeholder="Type your value">
-	<ui5-li selected>UI5</ui5-li>
+	<ui5-mcb-item selected text="UI5"></ui5-mcb-item>
 </ui5-multi-combobox>
 
 <ui5-multi-combobox readonly value="Readonly combo">
-	<ui5-li selected>UI5</ui5-li>
+	<ui5-mcb-item selected text="UI5"></ui5-mcb-item>
 </ui5-multi-combobox>
 
 <ui5-multi-combobox disabled value="Disabled combo">
-	<ui5-li selected>UI5</ui5-li>
+	<ui5-mcb-item selected text="UI5"></ui5-mcb-item>
 </ui5-multi-combobox>
 	</xmp></pre>
 </section>
@@ -53,30 +53,30 @@
 	<h3>MultiComboBox with items</h3>
 	<div class="snippet">
 		<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries">
-			<ui5-li selected>Argentina</ui5-li>
-			<ui5-li>Bulgaria</ui5-li>
-			<ui5-li>Denmark</ui5-li>
-			<ui5-li>England</ui5-li>
-			<ui5-li>Albania</ui5-li>
-			<ui5-li>Morocco</ui5-li>
-			<ui5-li>Portugal</ui5-li>
-			<ui5-li>Germany</ui5-li>
-			<ui5-li>Philippines</ui5-li>
-			<ui5-li>Paraguay</ui5-li>
+			<ui5-mcb-item selected text="Argentina"></ui5-mcb-item>
+			<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
+			<ui5-mcb-item text="Denmark"></ui5-mcb-item>
+			<ui5-mcb-item text="England"></ui5-mcb-item>
+			<ui5-mcb-item text="Albania"></ui5-mcb-item>
+			<ui5-mcb-item text="Morocco"></ui5-mcb-item>
+			<ui5-mcb-item text="Portugal"></ui5-mcb-item>
+			<ui5-mcb-item text="Germany"></ui5-mcb-item>
+			<ui5-mcb-item text="Philippines"></ui5-mcb-item>
+			<ui5-mcb-item text="Paraguay"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-multi-combobox placeholder="Choose your countries">
-	<ui5-li selected>Argentina</ui5-li>
-	<ui5-li>Bulgaria</ui5-li>
-	<ui5-li>Denmark</ui5-li>
-	<ui5-li>England</ui5-li>
-	<ui5-li>Albania</ui5-li>
-	<ui5-li>Morocco</ui5-li>
-	<ui5-li>Portugal</ui5-li>
-	<ui5-li>Germany</ui5-li>
-	<ui5-li>Philippines</ui5-li>
-	<ui5-li>Paraguay</ui5-li>
+	<ui5-mcb-item selected text="Argentina"></ui5-mcb-item>
+	<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
+	<ui5-mcb-item text="Denmark"></ui5-mcb-item>
+	<ui5-mcb-item text="England"></ui5-mcb-item>
+	<ui5-mcb-item text="Albania"></ui5-mcb-item>
+	<ui5-mcb-item text="Morocco"></ui5-mcb-item>
+	<ui5-mcb-item text="Portugal"></ui5-mcb-item>
+	<ui5-mcb-item text="Germany"></ui5-mcb-item>
+	<ui5-mcb-item text="Philippines"></ui5-mcb-item>
+	<ui5-mcb-item text="Paraguay"></ui5-mcb-item>
 </ui5-multi-combobox>
 	</xmp></pre>
 </section>
@@ -85,30 +85,30 @@
 	<h3>MultiComboBox with free text input</h3>
 	<div class="snippet">
 		<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries" allow-custom-values>
-			<ui5-li>Argentina</ui5-li>
-			<ui5-li selected>Bulgaria</ui5-li>
-			<ui5-li>Denmark</ui5-li>
-			<ui5-li selected>England</ui5-li>
-			<ui5-li>Albania</ui5-li>
-			<ui5-li>Morocco</ui5-li>
-			<ui5-li>Portugal</ui5-li>
-			<ui5-li selected>Germany</ui5-li>
-			<ui5-li>Philippines</ui5-li>
-			<ui5-li>Paraguay</ui5-li>
+			<ui5-mcb-item text="Argentina"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Bulgaria"></ui5-mcb-item>
+			<ui5-mcb-item text="Denmark"></ui5-mcb-item>
+			<ui5-mcb-item selected text="England"></ui5-mcb-item>
+			<ui5-mcb-item text="Albania"></ui5-mcb-item>
+			<ui5-mcb-item text="Morocco"></ui5-mcb-item>
+			<ui5-mcb-item text="Portugal"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Germany"></ui5-mcb-item>
+			<ui5-mcb-item text="Philippines"></ui5-mcb-item>
+			<ui5-mcb-item text="Paraguay"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-multi-combobox placeholder="Choose your countries">
-	<ui5-li>Argentina</ui5-li>
-	<ui5-li selected>Bulgaria</ui5-li>
-	<ui5-li>Denmark</ui5-li>
-	<ui5-li selected>England</ui5-li>
-	<ui5-li>Albania</ui5-li>
-	<ui5-li>Morocco</ui5-li>
-	<ui5-li>Portugal</ui5-li>
-	<ui5-li selected>Germany</ui5-li>
-	<ui5-li>Philippines</ui5-li>
-	<ui5-li>Paraguay</ui5-li>
+	<ui5-mcb-item text="Argentina"></ui5-mcb-item>
+	<ui5-mcb-item selected text="Bulgaria"></ui5-mcb-item>
+	<ui5-mcb-item text="Denmark"></ui5-mcb-item>
+	<ui5-mcb-item selected text="England"></ui5-mcb-item>
+	<ui5-mcb-item text="Albania"></ui5-mcb-item>
+	<ui5-mcb-item text="Morocco"></ui5-mcb-item>
+	<ui5-mcb-item text="Portugal"></ui5-mcb-item>
+	<ui5-mcb-item selected text="Germany"></ui5-mcb-item>
+	<ui5-mcb-item text="Philippines"></ui5-mcb-item>
+	<ui5-mcb-item text="Paraguay"></ui5-mcb-item>
 </ui5-multi-combobox>
 	</xmp></pre>
 </section>
@@ -117,40 +117,40 @@
 	<h3>MultiComboBox with Value State</h3>
 	<div class="snippet" style="display: flex; flex-wrap: wrap;">
 		<ui5-multi-combobox value-state="Success">
-			<ui5-li>Fortune</ui5-li>
-			<ui5-li>Luck</ui5-li>
-			<ui5-li selected>Success</ui5-li>
+			<ui5-mcb-item text="Fortune"></ui5-mcb-item>
+			<ui5-mcb-item text="Luck"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Success"></ui5-mcb-item>
 		</ui5-multi-combobox>
 		
 		<ui5-multi-combobox value-state="Warning">
-			<ui5-li>Attention</ui5-li>
-			<ui5-li>Caution</ui5-li>
-			<ui5-li selected>Warning</ui5-li>
+			<ui5-mcb-item text="Attention"></ui5-mcb-item>
+			<ui5-mcb-item text="Caution"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Warning"></ui5-mcb-item>
 		</ui5-multi-combobox>
 		
 		<ui5-multi-combobox value-state="Error">
-			<ui5-li>Fault</ui5-li>
-			<ui5-li selected>Error</ui5-li>
-			<ui5-li>Mistake</ui5-li>
+			<ui5-mcb-item text="Fault"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Error"></ui5-mcb-item>
+			<ui5-mcb-item text="Mistake"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-multi-combobox value-state="Success">
-	<ui5-li>Fortune</ui5-li>
-	<ui5-li>Luck</ui5-li>
-	<ui5-li selected>Success</ui5-li>
+	<ui5-mcb-item text="Fortune"></ui5-mcb-item>
+	<ui5-mcb-item text="Luck"></ui5-mcb-item>
+	<ui5-mcb-item selected text="Success"></ui5-mcb-item>
 </ui5-multi-combobox>
 
 <ui5-multi-combobox value-state="Warning">
-	<ui5-li>Attention</ui5-li>
-	<ui5-li>Caution</ui5-li>
-	<ui5-li selected>Warning</ui5-li>
+	<ui5-mcb-item text="Attention"></ui5-mcb-item>
+	<ui5-mcb-item text="Caution"></ui5-mcb-item>
+	<ui5-mcb-item selected text="Warning"></ui5-mcb-item>
 </ui5-multi-combobox>
 
 <ui5-multi-combobox value-state="Error">
-	<ui5-li>Fault</ui5-li>
-	<ui5-li selected>Error</ui5-li>
-	<ui5-li>Mistake</ui5-li>
+	<ui5-mcb-item text="Fault"></ui5-mcb-item>
+	<ui5-mcb-item selected text="Error"></ui5-mcb-item>
+	<ui5-mcb-item text="Mistake"></ui5-mcb-item>
 </ui5-multi-combobox>
 	</xmp></pre>
 </section>

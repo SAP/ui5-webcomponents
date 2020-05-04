@@ -7,9 +7,9 @@ import {
 	isEnter,
 	isSpace,
 	isDelete,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
-import "@ui5/webcomponents-icons/dist/icons/cancel.js";
+import "@ui5/webcomponents-icons/dist/icons/sys-cancel.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
@@ -27,7 +27,8 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-token</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot

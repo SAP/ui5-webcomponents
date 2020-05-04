@@ -1,9 +1,5 @@
 :root {
-	--_ui5_yearpicker_item_background_color: var(--sapContent_ForegroundColor_Lighten7); /* lighten(@sapContent_ForegroundColor, 7); */
-	--_ui5_yearpicker_item_hover_background_color: var(--sapContent_ForegroundColor_Lighten7); /* lighten(@sapContent_ForegroundColor, 7); */
-	--_ui5_yearpicker_item_focus_background_color: var(--sapContent_ForegroundColor_Darken5); /* darken(@sapContent_ForegroundColor, 5); */
-	--_ui5_yearpicker_item_selected_focus: var(--sapSelectedColor_Darken15); /* darken(var(--sapSelectedColor), 10); */
-
+	--_ui5_yearpicker_item_selected_focus: var(--sapContent_Selected_Background);
 	--_ui5_yearpicker_item_border: none;
 	--_ui5_yearpicker_item_border_radius: 0;
 	--_ui5_yearpicker_item_margin: 1px;

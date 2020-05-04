@@ -1,15 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
+import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
-import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
-import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
-import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
 
 // Styles
@@ -33,7 +32,7 @@ const metadata = {
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
-		 * @type {string}
+		 * @type {CalendarType}
 		 * @public
 		 */
 		primaryCalendarType: {
@@ -43,7 +42,7 @@ const metadata = {
 		/**
 		 * Determines the мinimum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
@@ -55,7 +54,7 @@ const metadata = {
 		/**
 		 * Determines the maximum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue undefined
 		 * @since 1.0.0-rc.6
 		 * @public
@@ -132,7 +131,7 @@ class YearPicker extends UI5Element {
 	constructor() {
 		super();
 
-		this._oLocale = getFormatLocale();
+		this._oLocale = getLocale();
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 4 });
 		this._itemNav.getItemsCallback = function getItemsCallback() {

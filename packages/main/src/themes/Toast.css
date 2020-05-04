@@ -1,26 +1,16 @@
 :host {
 	font-family: var(--sapFontFamily);
 	color: var(--sapTextColor);
-	font-size: var(--sapFontMediumSize);
+	font-size: var(--sapFontSize);
+}
+
+:host([open]) .ui5-toast-root {
+	display: block;
 }
 
 .ui5-toast-root {
 	position: fixed;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	width: 100%;
 	display: none;
-	height: 100%;
-	pointer-events: none;
-	overflow: hidden;
-	z-index: 999;
-	justify-content: center;
-	align-items: flex-end;
-}
-
-.ui5-toast-content {
 	box-sizing: border-box;
 	max-width: 15rem;
 	overflow: hidden;
@@ -30,9 +20,6 @@
 	border-radius: .25rem;
 	transition-property: opacity;
 	opacity: 1;
-	margin: 2rem;
-
-	/* Text styling */
 	font-family: inherit;
 	color: inherit;
 	font-weight: inherit;
@@ -41,48 +28,67 @@
 	text-align: center;
 	text-overflow: ellipsis;
 	white-space: pre-line;
+	z-index: 999;
 }
 
-:host([open]) .ui5-toast-root {
-	display: flex;
+@media screen and (-ms-high-contrast: active) {
+    .ui5-toast-root {
+        border: 1px solid var(--sapPageFooter_BorderColor);
+    }
+}
+
+:host(:not([placement])) .ui5-toast-root {
+	bottom: var(--_ui5_toast_vertical_offset);
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 :host([placement="TopStart"]) .ui5-toast-root {
-	justify-content: flex-start;
-	align-items: flex-start;
-}
-
-:host([placement="TopCenter"]) .ui5-toast-root {
-	justify-content: center;
-	align-items: flex-start;
-}
-
-:host([placement="TopEnd"]) .ui5-toast-root {
-	justify-content: flex-end;
-	align-items: flex-start;
+	top: var(--_ui5_toast_vertical_offset);
+	left: var(--_ui5_toast_horizontal_offset);
 }
 
 :host([placement="MiddleStart"]) .ui5-toast-root {
-	justify-content: flex-start;
-	align-items: center;
-}
-
-:host([placement="MiddleCenter"]) .ui5-toast-root {
-	justify-content: center;
-	align-items: center;
-}
-
-:host([placement="MiddleEnd"]) .ui5-toast-root {
-	justify-content: flex-end;
-	align-items: center;
+	left: var(--_ui5_toast_horizontal_offset);
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 :host([placement="BottomStart"]) .ui5-toast-root {
-	justify-content: flex-start;
-	align-items: flex-end;
+	left: var(--_ui5_toast_horizontal_offset);
+	bottom: var(--_ui5_toast_vertical_offset);
+}
+
+ :host([placement="TopCenter"]) .ui5-toast-root {
+	top: var(--_ui5_toast_vertical_offset);
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+:host([placement="MiddleCenter"]) .ui5-toast-root {
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+:host([placement="BottomCenter"]) .ui5-toast-root {
+	bottom: var(--_ui5_toast_vertical_offset);
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+:host([placement="TopEnd"]) .ui5-toast-root {
+	right: var(--_ui5_toast_horizontal_offset);
+	top: var(--_ui5_toast_vertical_offset);
+}
+
+:host([placement="MiddleEnd"]) .ui5-toast-root {
+	right: var(--_ui5_toast_horizontal_offset);
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 :host([placement="BottomEnd"]) .ui5-toast-root {
-	justify-content: flex-end;
-	align-items: flex-end;
+	right: var(--_ui5_toast_horizontal_offset);
+	bottom: var(--_ui5_toast_vertical_offset);
 }

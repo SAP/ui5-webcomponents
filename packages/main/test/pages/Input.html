@@ -39,7 +39,18 @@
 		</ui5-input>
 	</div>
 
-	<h3> Input with suggestions</h3>
+	<h3> Input suggestions with ui5-suggestion-item</h3>
+	<ui5-input show-suggestions style="width: 100%">
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+	</ui5-input>
+	<br/>
+	<br/>
+	<h3>Input suggestions with ui5-li</h3>
 	<ui5-input id="myInput2" show-suggestions style="width: 100%">
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
@@ -47,6 +58,18 @@
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+	<br/>
+	<br/>
+	<h3>Input suggestions with grouping</h3>
+	<ui5-input id="myInputGrouping"show-suggestions style="width: 100%">
+		<ui5-suggestion-item group text="Content Density"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item group text="Themes"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Quartz"></ui5-suggestion-item>
+		<ui5-suggestion-item text="HCB"></ui5-suggestion-item>
 	</ui5-input>
 
 	<h3> Input disabled</h3>
@@ -63,21 +86,48 @@
 		<ui5-icon slot="icon" name="message-success"></ui5-icon>
 	</ui5-input>
 
+	<h3> Input valueState Information</h3>
+	<ui5-input value-state="Information" placeholder="Info state ...">
+		<ui5-icon slot="icon" name="message-information"></ui5-icon>
+	</ui5-input>
+
 	<h3> Test 'change' event</h3>
 	<ui5-input id="input1" value-state="Warning" placeholder="Warning state ...">
 		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
 	</ui5-input>
+
+	<h3>Input with valueState and Dynamic suggestions</h3>
+	<ui5-input id="inputError"
+		style="width: 500px"
+		show-suggestions
+		value-state="Error"
+		placeholder="Search for a country ...">
+	<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+	</ui5-input>
+
+	<h3>Input suggestions with valueState and ui5-li</h3>
+	<ui5-input show-suggestions style="width: 500px" value-state="Information">
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Extra long text used as a list item. Extra long text used as a list item -2.</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
 	<h3> 'change' event result</h3>
 	<ui5-input id="inputResult"></ui5-input>
 
+	<h3> 'suggestionItemSelect' event result on group item</h3>
+	<ui5-input id="inputResultGrouping"></ui5-input>
+
 	<h3> Test 'input' event</h3>
 	<ui5-input id="input2" value-state="Error" placeholder="Error state ...">
+		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 		<ui5-icon slot="icon" name="message-error"></ui5-icon>
 	</ui5-input>
 	<h3> 'input' test result</h3>
 	<ui5-input id="inputLiveChangeResult"></ui5-input>
-
-
 
 	<h3> Input test change</h3>
 	<ui5-input id="inputChange">	</ui5-input>
@@ -119,21 +169,36 @@
 			title='Delivery Date!'>
 	</ui5-datepicker>
 
+	<ui5-datepicker
+			placeholder='Delivery Date...'
+			value-state="Information"
+			title='Delivery Date!'>
+	</ui5-datepicker>
+
 	<ui5-select id="mySelect2">
 		<ui5-option>Cozy</ui5-option>
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
-	
+
 	<ui5-input  value="input" value-state="Error">
 		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
 	</ui5-input>
+
 	<ui5-select id="mySelect2" value-state="Error">
 		<ui5-option>Cozy</ui5-option>
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
+
+	<ui5-select value-state="Information">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+
 	<ui5-multi-combobox value-state="Error"></ui5-multi-combobox>
+	<ui5-multi-combobox value-state="Information"></ui5-multi-combobox>
 
 	<h3> Input with multiple icons</h3>
 	<ui5-input id="input3" placeholder="Search ...">
@@ -142,18 +207,23 @@
 	</ui5-input>
 
 	<script>
-		var sap_database_entries = [{ key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
+		var sap_database_entries = [{ key: "A", text: "A" }, { key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "B", text: "B" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "C", text: "C" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "L", text: "L" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "P", text: "P" }, { key: "Prt", text: "Portugal" }, { key: "S", text: "S" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Sey", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
 
 		var input = document.getElementById('myInput');
+		var inputGrouping = document.getElementById('myInputGrouping');
 		var myInput2 = document.getElementById('myInput2');
+		var inputError = document.getElementById("inputError");
 		var input1 = document.getElementById('input1');
 		var input2 = document.getElementById('input2');
 		var inputResult = document.getElementById('inputResult');
+		var inputResultGrouping = document.getElementById('inputResultGrouping');
 		var inputLiveChangeResult = document.getElementById('inputLiveChangeResult');
 		var label = document.getElementById('myLabel');
 		var labelChange = document.getElementById('myLabelChange');
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
 		var labelSubmit = document.getElementById('myLabelSubmit');
+
+		var suggestionSelectedCounterWithGrouping = 0;
 
 		var suggest = function (event) {
 			var input = event.target;
@@ -166,14 +236,19 @@
 				});
 			}
 
-			while (input.firstChild) {
-				input.removeChild(input.firstChild);
+			while (input.lastChild && input.lastChild !== input.valueStateMessage[0]) {
+				input.removeChild(input.lastChild);
 			}
 
-			suggestionItems.forEach(function(item) {
-				var li = document.createElement("ui5-li");
+			suggestionItems.forEach(function(item, idx) {
+				var li = document.createElement("ui5-suggestion-item");
 				li.id = item.key;
-				li.textContent = item.text;
+				li.icon = "world";
+				li.info = "explore";
+				li.group = item.text.length === 1;
+				li.infoState = "Success";
+				li.description = "travel the world";
+				li.text = item.text;
 				input.appendChild(li);
 			});
 
@@ -182,12 +257,19 @@
 
 		input.addEventListener("ui5-input", suggest);
 		inputCompact.addEventListener("ui5-input", suggest);
+		inputError.addEventListener("ui5-input", suggest);
 
 		input.addEventListener("ui5-suggestionItemSelect", function (event) {
 			var item = event.detail.item;
 			label.innerHTML = "Event [suggestionSelectEvent] :: " + item.id;
 			suggestionSelectedCounter += 1;
 			inputResult.value = suggestionSelectedCounter;
+		});
+
+		inputGrouping.addEventListener("ui5-suggestionItemSelect", function (event) {
+			var item = event.detail.item;
+			suggestionSelectedCounterWithGrouping += 1;
+			inputResultGrouping.value = suggestionSelectedCounterWithGrouping;
 		});
 
 		input.addEventListener("ui5-change", function (event) {

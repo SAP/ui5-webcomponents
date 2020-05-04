@@ -60,13 +60,13 @@
 .ui5-dp-item {
 	position: relative;
 	color: var(--sapTextColor);
-	background: var(--_ui5_daypicker_item_background_color);
-	font-size: var(--sapFontMediumSize);
+	background: var(--sapLegend_WorkingBackground);
+	font-size: var(--sapFontSize);
 	border: var(--_ui5_daypicker_item_border);
 }
 
 .ui5-dp-item:hover {
-	background: var(--_ui5_daypicker_item_hover_background_color);
+	background: var(--sapList_Hover_Background);
 }
 
 .ui5-dp-daytext {
@@ -84,7 +84,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--weeekend {
-	background: var(--_ui5_daypicker_item_weekend_background_color);
+	background: var(--sapLegend_NonWorkingBackground);
 }
 
 .ui5-dp-item.ui5-dp-item--disabled {
@@ -94,7 +94,7 @@
 
 
 .ui5-dp-item.ui5-dp-item--weeekend:hover {
-	background: var(--_ui5_daypicker_item_weekend_hover_background_color);
+	background: var(--sapList_Hover_Background);
 }
 
 .ui5-dp-item.ui5-dp-item--othermonth {
@@ -106,7 +106,7 @@
 .ui5-dp-item.ui5-dp-item--othermonth:hover,
 .ui5-dp-item.ui5-dp-item--weeekend.ui5-dp-item--othermonth:hover {
 	color: var(--_ui5_daypicker_item_othermonth_hover_color);
-	background: var(--_ui5_daypicker_item_othermonth_hover_background_color);
+	background: var(--sapList_Hover_Background);
 }
 
 .ui5-dp-item:focus::after {
@@ -120,16 +120,16 @@
 }
 
 .ui5-dp-item.ui5-dp-item--now {
-	border: 0.125rem solid var(--_ui5_daypicker_item_today_border_color);
+	border: 0.125rem solid var(--sapLegend_CurrentDateTime);
 }
 
 .ui5-dp-item.ui5-dp-item--selected .ui5-dp-daytext {
-	background: var(--_ui5_daypicker_item_selected_background_color);
-	color: var(--sapContent_ContrastTextColor);
+	background: var(--sapContent_Selected_Background);
+	color: var(--sapContent_Selected_TextColor);
 }
 
 .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-daytext {
-	border: 1px solid var(--_ui5_daypicker_item_now_selected_text_border_color);
+	border: 1px solid var(--sapList_Background);
 	border-radius: var(--_ui5_daypicker_item_now_inner_border_radius);
 }
 

@@ -15,7 +15,7 @@ const getScripts = (options) => {
 		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
 		build: {
 			default: "nps lint prepare build.bundle",
-			templates: `mkdirp dist/generated/templates && node ${LIB}/hbs2ui5/index.js -d src/ -o dist/generated/templates`,
+			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
 			styles: {
 				default: "nps build.styles.themes build.styles.components",
 				themes: "postcss src/**/parameters-bundle.css --config config/postcss.themes --base src --dir dist/css/",
@@ -23,19 +23,19 @@ const getScripts = (options) => {
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
-				defaultsjs: `mkdirp dist/generated/i18n && node ${LIB}/i18n/defaults.js src/i18n dist/generated/i18n`,
-				json: `mkdirp dist/generated/assets/i18n && node ${LIB}/i18n/toJSON.js src/i18n dist/generated/assets/i18n`,
+				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n dist/generated/i18n`,
+				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
 			},
 			jsonImports: {
 				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
-				themes: `node ${LIB}/generate-json-imports/themes.js`,
-				i18n: `node ${LIB}/generate-json-imports/i18n.js`,
+				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/json-imports`,
+				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
 			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
 			samples: {
 				default: "nps build.samples.api build.samples.docs",
-				api: `jsdoc -c  ${LIB}/jsdoc/config.json`,
-				docs: `node ${LIB}/documentation/index.js dist/api.json`,
+				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
+				docs: `node "${LIB}/documentation/index.js" dist/api.json`,
 			}
 		},
 		copy: {

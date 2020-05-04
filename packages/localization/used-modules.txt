@@ -1,0 +1,25 @@
+# Needed files from OpenUI5 - the commented ones are currently overlaid, therefore should not be copied
+
+sap/base/Log.js
+sap/base/assert.js
+sap/base/strings/formatMessage.js
+sap/base/util/ObjectPath.js
+sap/base/util/array/uniqueSort.js
+sap/base/util/deepEqual.js
+sap/base/util/isPlainObject.js
+sap/base/util/now.js
+sap/base/util/_merge.js
+sap/base/util/extend.js
+sap/ui/base/Interface.js
+sap/ui/base/Metadata.js
+sap/ui/base/Object.js
+sap/ui/core/CalendarType.js
+sap/ui/core/Locale.js
+sap/ui/core/LocaleData.js
+sap/ui/core/date/Buddhist.js
+sap/ui/core/date/Gregorian.js
+sap/ui/core/date/Islamic.js
+sap/ui/core/date/Japanese.js
+sap/ui/core/date/Persian.js
+sap/ui/core/date/UniversalDate.js
+sap/ui/core/format/DateFormat.js

@@ -2,7 +2,7 @@
 
 **Q: How can I play with UI5 Web Components easily?**
 
-**A:** Use this [CodeSandBox](https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html) 
+**A:** Use this [CodeSandBox](https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html).
 
 
 **Q: Where is the documentation?**
@@ -10,9 +10,9 @@
 **A:** There are several resources:
 - [Web Components APIs](https://sap.github.io/ui5-webcomponents/playground/)
 - [How to get started?](https://blogs.sap.com/2019/04/01/the-fastest-way-to-get-started-with-ui5-web-components/)
-- [List of all public module imports](https://github.com/SAP/ui5-webcomponents/blob/master/docs/PublicModuleImports.md)
-- [How to use](https://github.com/SAP/ui5-webcomponents/blob/master/docs/HowToUse.md)
-- [How to configure](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Configuration.md)
+- [List of all public module imports](https://sap.github.io/ui5-webcomponents/master/playground/docs/public-module-imports/)
+- [How to use](https://sap.github.io/ui5-webcomponents/master/playground/docs/how-to-use/)
+- [How to configure](https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/)
 
 
 **Q: Is there a CDN to load UI5 Web Components from?**
@@ -43,11 +43,11 @@ Additional features, settings and old browser support will increase bundle size 
 **A:** See the project's [readme.md](https://github.com/SAP/ui5-webcomponents) for more on this.
 
 
-**Q: ?** Can I use UI5 Web Components in a OpenUI5 application?
+**Q: Can I use UI5 Web Components in a OpenUI5 application?**
 **A:** This is not necessary as OpenUI5 already provides equivalents in the form of UI5 Controls. 
 
 
-**Q: ?** How can I hide not yet upgraded Web Components so that users don't see them until styled?
+**Q: How can I hide not yet upgraded Web Components so that users don't see them until styled?**
 **A:** You can place a CSS rule such as:
 
 ```CSS

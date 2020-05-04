@@ -1,7 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { SEGMENTEDBUTTON_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
+import ToggleButton from "./ToggleButton.js";
 
 // Template
 import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTemplate.lit.js";
@@ -55,7 +58,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>SegmentedButton</code> shows a group of buttons. When the user clicks or taps
+ * The <code>ui5-segmentedbutton</code> shows a group of buttons. When the user clicks or taps
  * one of the buttons, it stays in a pressed state. It automatically resizes the buttons
  * to fit proportionally within the component. When no width is set, the component uses the available width.
  * <br><br>
@@ -90,6 +93,13 @@ class SegmentedButton extends UI5Element {
 		return SegmentedButtonCss;
 	}
 
+	static async onDefine() {
+		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
+			ToggleButton.define(),
+		]);
+	}
+
 	constructor() {
 		super();
 		this.initItemNavigation();
@@ -99,6 +109,7 @@ class SegmentedButton extends UI5Element {
 		this.hasPreviouslyFocusedItem = false;
 
 		this._handleResizeBound = this._handleResize.bind(this);
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onEnterDOM() {
@@ -136,6 +147,10 @@ class SegmentedButton extends UI5Element {
 	}
 
 	_onclick(event) {
+		if (event.target.disabled || event.target === this.getDomRef()) {
+			return;
+		}
+
 		if (event.target !== this._selectedButton) {
 			if (this._selectedButton) {
 				this._selectedButton.pressed = false;
@@ -196,6 +211,10 @@ class SegmentedButton extends UI5Element {
 	 */
 	get selectedButton() {
 		return this._selectedButton;
+	}
+
+	get ariaDescription() {
+		return this.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIPTION);
 	}
 }
 

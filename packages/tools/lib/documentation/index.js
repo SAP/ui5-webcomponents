@@ -52,7 +52,7 @@ Handlebars.registerPartial('events', eventsTemplate);
 Handlebars.registerPartial('methods', methodsTemplate);
 Handlebars.registerPartial('cssVariables', cssVariablesTemplate);
 
-mkdirp(`dist/test-resources/api`);
+mkdirp.sync(`dist/test-resources/api`);
 
 let entriesAPI = [];
 

@@ -25,7 +25,7 @@ const metadata = {
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		initialFocus: {
@@ -34,10 +34,11 @@ const metadata = {
 
 		/**
 		 * Defines the header text.
-		 * <br><b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		headerText: {
@@ -46,6 +47,14 @@ const metadata = {
 
 		/**
 		 * Determines on which side the <code>ui5-popover</code> is placed at.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Left</code></li>
+		 * <li><code>Right</code></li>
+		 * <li><code>Top</code></li>
+		 * <li><code>Bottom</code></li>
+		 * </ul>
 		 *
 		 * @type {PopoverPlacementType}
 		 * @defaultvalue "Right"
@@ -58,6 +67,14 @@ const metadata = {
 
 		/**
 		 * Determines the horizontal alignment of the <code>ui5-popover</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Center</code></li>
+		 * <li><code>Left</code></li>
+		 * <li><code>Right</code></li>
+		 * <li><code>Stretch</code></li>
+		 * </ul>
 		 *
 		 * @type {PopoverHorizontalAlign}
 		 * @defaultvalue "Center"
@@ -70,6 +87,14 @@ const metadata = {
 
 		/**
 		 * Determines the vertical alignment of the <code>ui5-popover</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Center</code></li>
+		 * <li><code>Top</code></li>
+		 * <li><code>Bottom</code></li>
+		 * <li><code>Stretch</code></li>
+		 * </ul>
 		 *
 		 * @type {PopoverVerticalAlign}
 		 * @defaultvalue "Center"
@@ -307,7 +332,8 @@ class Popover extends UI5Element {
 	}
 
 	isOpenerClicked(event) {
-		return !!event.composedPath().find(item => item === this._opener);
+		const target = event.target;
+		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener);
 	}
 
 	isClickInPopover(event) {
@@ -353,7 +379,7 @@ class Popover extends UI5Element {
 	 * Closes the popover.
 	 * @public
 	 */
-	close(escPressed = false, preventRegitryUpdate = false) {
+	close(escPressed = false, preventRegitryUpdate = false, preventFocusRestore = false) {
 		if (!this.opened) {
 			return;
 		}
@@ -369,7 +395,7 @@ class Popover extends UI5Element {
 			removeOpenedPopover(this);
 		}
 
-		if (!this._prevetFocusRestore) {
+		if (!preventFocusRestore) {
 			this.resetFocus();
 		}
 
@@ -417,10 +443,10 @@ class Popover extends UI5Element {
 		const threshold = 32;
 
 		const limits = {
-			"Right": openerRect.top,
-			"Left": openerRect.top,
+			"Right": openerRect.right,
+			"Left": openerRect.left,
 			"Top": openerRect.top,
-			"Bottom": openerRect.top,
+			"Bottom": openerRect.bottom,
 		};
 		let overflowsBottom = false;
 		let overflowsTop = false;
@@ -621,6 +647,28 @@ class Popover extends UI5Element {
 		};
 	}
 
+	/**
+	 * Fallbacks to new placement, prioritizing <code>Left</code> and <code>Right</code> placements.
+	 * @private
+	 */
+	fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) {
+		if (targetRect.left > popoverSize.width) {
+			return PopoverPlacementType.Left;
+		}
+
+		if (clientWidth - targetRect.right > targetRect.left) {
+			return PopoverPlacementType.Right;
+		}
+
+		if (clientHeight - targetRect.bottom > popoverSize.height) {
+			return PopoverPlacementType.Bottom;
+		}
+
+		if (clientHeight - targetRect.bottom < targetRect.top) {
+			return PopoverPlacementType.Top;
+		}
+	}
+
 	getActualPlacementType(targetRect, popoverSize) {
 		const placementType = this.placementType;
 		let actualPlacementType = placementType;
@@ -642,15 +690,13 @@ class Popover extends UI5Element {
 			}
 			break;
 		case PopoverPlacementType.Left:
-			if (targetRect.left < popoverSize.width
-				&& targetRect.left < clientWidth - targetRect.right) {
-				actualPlacementType = PopoverPlacementType.Right;
+			if (targetRect.left < popoverSize.width) {
+				actualPlacementType = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placementType;
 			}
 			break;
 		case PopoverPlacementType.Right:
-			if (clientWidth - targetRect.right < popoverSize.width
-				&& clientWidth - targetRect.right < targetRect.left) {
-				actualPlacementType = PopoverPlacementType.Left;
+			if (clientWidth - targetRect.right < popoverSize.width) {
+				actualPlacementType = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placementType;
 			}
 			break;
 		}

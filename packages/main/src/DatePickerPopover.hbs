@@ -1,6 +1,5 @@
 <ui5-responsive-popover
 	id="{{_id}}-responsive-popover"
-	content-only-on-desktop
 	allow-target-overlap="{{_respPopoverConfig.allowTargetOverlap}}"
 	stay-open-on-scroll="{{_respPopoverConfig.stayOpenOnScroll}}"
 	placement-type="Bottom"
@@ -8,9 +7,22 @@
 	no-arrow
 	with-padding
 	no-stretch
+	?_hide-header={{_shouldHideHeader}}
 	@ui5-afterClose="{{_respPopoverConfig.afterClose}}"
 	@ui5-afterOpen="{{_respPopoverConfig.afterOpen}}"
 >
+	{{#if showHeader}}
+		{{> header}}
+	{{/if}}
+
+	{{> content}}
+
+	{{#if showFooter}}
+		{{> footer}}
+	{{/if}}
+</ui5-responsive-popover>
+
+{{#*inline "header"}}
 	<div slot="header" class="ui5-responsive-popover-header">
 		<div class="row">
 			<span>{{_headerTitleText}}</span>
@@ -22,6 +34,9 @@
 			</ui5-button>
 		</div>
 	</div>
+{{/inline}}
+
+{{#*inline "content"}}
 	<ui5-calendar
 		id="{{_id}}-calendar"
 		primary-calendar-type="{{_calendar.primaryCalendarType}}"
@@ -32,4 +47,6 @@
 		.maxDate="{{_calendar.maxDate}}"
 		@ui5-selectedDatesChange="{{_calendar.onSelectedDatesChange}}"
 	></ui5-calendar>
-</ui5-responsive-popover>
+{{/inline}}
+
+{{#*inline "footer"}}{{/inline}}

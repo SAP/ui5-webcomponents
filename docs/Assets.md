@@ -16,14 +16,14 @@ Currently our npm packages follow the scheme:
 <a name="packages"></a>
 ## Packages
 
-### `base` package
+### `localization` package
 
-The `base` package provides CLDR assets.
+The `localization` package provides CLDR assets.
 
-`import "@ui5/webcomponents-base/dist/Assets.js";`
+`import "@ui5/webcomponents-localization/dist/Assets.js";`
 
 Usually you don't need to import the assets directly from the `base` package (unless you are developing a Web Components package of your own),
-but rather from the package(s) containing the actual web components you'll be using in your app.
+but rather from the package(s) containing the actual Web Components you'll be using in your app.
 
 ### `theme-base` package
 
@@ -32,11 +32,11 @@ The `theme-base` package provides common parameters for all themes.
 `import "@ui5/webcomponents-theme-base/dist/Assets.js";`
 
 Usually you don't need to import the assets directly from the `theme-base` package (unless you are developing a Web Components package of your own),
-but rather from the package(s) containing the actual web components you'll be using in your app.
+but rather from the package(s) containing the actual Web Components you'll be using in your app.
 
 ### `main` package
 
-The `main` package's `Assets.js` import provides package specific additional theming parameters and i18n assets. 
+The `main` package's `Assets.js` import provides package-specific additional theming parameters and i18n assets. 
 All assets from the `base` and `theme-base` packages are also imported automatically so you don't have to worry about them.
 
 `import "@ui5/webcomponents/dist/Assets.js";`
@@ -62,7 +62,7 @@ Along with the icons, it also includes all translatable texts.
 <a name="bundling"></a>
 ## Efficient asset bundling
 
-You may notice that `Assets.js` imports, for example:
+You may notice that `Assets.js` imports, such as:
 
 `import "@ui5/webcomponents/dist/Assets.js"`
  
@@ -73,7 +73,7 @@ You may notice that `Assets.js` imports, for example:
 
 What this means is that it's recommended to instruct your source code bundling software
 (some of the most popular being Webpack and Rollup) not to include all the asset files or theming related files
-(files that match the <code>assets\/.*\.json</code> pattern) in your applications's javascript bundle,
+(files that match the <code>assets\/.*\.json</code> pattern) in your applications' JavaScript bundle,
 but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.
 
 [How to do it with Webpack](https://github.com/webpack-contrib/file-loader)

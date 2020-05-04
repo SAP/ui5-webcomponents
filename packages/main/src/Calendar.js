@@ -1,15 +1,12 @@
-import "@ui5/webcomponents-base/dist/shims/jquery-shim.js";
-import "@ui5/webcomponents-base/dist/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
-import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
-import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
-import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
-import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
-import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
@@ -17,7 +14,7 @@ import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 
 // Default calendar for bundling
-import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 // Template
 import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
@@ -44,7 +41,7 @@ const metadata = {
 		 * Defines the calendar type used for display.
 		 * If not defined, the calendar type of the global configuration is used.
 		 * Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
-		 * @type {string}
+		 * @type {CalendarType}
 		 * @public
 		 */
 		primaryCalendarType: {
@@ -64,7 +61,7 @@ const metadata = {
 		/**
 		 * Determines the мinimum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
@@ -76,7 +73,7 @@ const metadata = {
 		/**
 		 * Determines the maximum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
@@ -158,7 +155,7 @@ class Calendar extends UI5Element {
 
 	constructor() {
 		super();
-		this._oLocale = getFormatLocale();
+		this._oLocale = getLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 		this._header = {};
 		this._header.onPressPrevious = this._handlePrevious.bind(this);

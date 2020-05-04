@@ -1,5 +1,5 @@
 :root {
-	--_ui5_card_border_color: var(--sapTile_Background_Darken20);
+	--_ui5_card_border_color: var(--sapTile_SeparatorColor); 
 	--_ui5_card_content_padding: 1rem;
 	--_ui5_card_header_hover_bg: var(--sapList_Hover_Background);
 	--_ui5_card_header_active_bg: var(--_ui5_card_header_hover_bg);

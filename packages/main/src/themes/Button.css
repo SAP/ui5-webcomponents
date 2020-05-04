@@ -8,7 +8,7 @@
 	min-width: var(--_ui5_button_base_min_width);
 	height: var(--_ui5_button_base_height);
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapFontMediumSize);
+	font-size: var(--sapFontSize);
 	text-shadow: var(--_ui5_button_text_shadow);
 	border-radius: var(--_ui5_button_border_radius);
 	border-width: 0.0625rem;
@@ -66,6 +66,7 @@
 	top: -.5rem;
 	position: relative;
 	color: inherit;
+	flex-shrink: 0;
 }
 
 :host([icon-end]) .ui5-button-root {

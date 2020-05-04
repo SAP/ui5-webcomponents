@@ -14,7 +14,7 @@ describe("Toast general interaction", () => {
 	it("tests open attribute after show", () => {
 		const button = browser.$("#wcBtnShowToastMC");
 		const toast = browser.$("#wcToastMC");
-		const toastShadowContent = toast.shadow$(".ui5-toast-content");
+		const toastShadowContent = toast.shadow$(".ui5-toast-root");
 
 		button.click();
 
@@ -45,27 +45,27 @@ describe("Toast general interaction", () => {
 	});
 
 	it("tests shadow content div role", () => {
-		const toastShadowContent = browser.$("#wcToastBE").shadow$(".ui5-toast-content");
+		const toastShadowContent = browser.$("#wcToastBE").shadow$(".ui5-toast-root");
 
 		assert.strictEqual(toastShadowContent.getAttribute("role"), "alert",
-			"The role of the shadow ui5-toast-content div should be alert");
+			"The role of the shadow ui5-toast-root div should be alert");
 	});
 
 	it("tests shadow content div inline styles with default duration", () => {
 		const button = browser.$("#wcBtnShowToastBE");
-		const toastShadowContent = browser.$("#wcToastBE").shadow$(".ui5-toast-content");
+		const toastShadowContent = browser.$("#wcToastBE").shadow$(".ui5-toast-root");
 
 		button.click();
 
 		assert.strictEqual(toastShadowContent.getAttribute("style"),
 			"transition-duration: 1000ms; transition-delay: 2000ms; opacity: 0;",
-			"The correct default inline styles are applied to the shadow ui5-toast-content");
+			"The correct default inline styles are applied to the shadow ui5-toast-root");
 	});
 
 	it("tests shadow content div inline styles with long duration", () => {
 		const button = browser.$("#wcBtnShowToastBS");
 		const toast = browser.$("#wcToastBS");
-		const toastShadowContent = toast.shadow$(".ui5-toast-content");
+		const toastShadowContent = toast.shadow$(".ui5-toast-root");
 		const maximumAllowedTransition = 1000;
 		const durationProperty = toast.getProperty("duration");
 		let calculatedDelay;
@@ -76,14 +76,14 @@ describe("Toast general interaction", () => {
 
 		assert.strictEqual(toastShadowContent.getAttribute("style"),
 				`transition-duration: ${maximumAllowedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`,
-				"The correct custom inline styles are applied to the shadow ui5-toast-content," +
+				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is longer than default. Transition is not longer than allowed (1000ms).");
 	});
 
 	it("tests shadow content div inline styles with short duration", () => {
 		const button = browser.$("#wcBtnShowToastME");
 		const toast = browser.$("#wcToastME");
-		const toastShadowContent = toast.shadow$(".ui5-toast-content");
+		const toastShadowContent = toast.shadow$(".ui5-toast-root");
 		const durationProperty = toast.getProperty("duration");
 		let calculatedTransition, calculatedDelay;
 
@@ -94,14 +94,13 @@ describe("Toast general interaction", () => {
 
 		assert.strictEqual(toastShadowContent.getAttribute("style"),
 				`transition-duration: ${calculatedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`,
-				"The correct custom inline styles are applied to the shadow ui5-toast-content," +
+				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is shorter than default. Transition is a third of the duration.");
 	});
 
 	it("tests closing of toast", () => {
 		const button = browser.$("#wcBtnShowToastMS");
 		const toast = browser.$("#wcToastMS");
-		const toastShadowContent = toast.shadow$(".ui5-toast-content");
 
 		button.click();
 
@@ -110,14 +109,12 @@ describe("Toast general interaction", () => {
 
 		assert.notOk(toast.getProperty("open"),
 		"Open property should be false after Toast is closed");
-		assert.notOk(toastShadowContent.isDisplayedInViewport(),
-		"Toast's content div shouldn't be displayed in the viewport after its closing.")
 	});
 
 	it("tests minimum allowed duration", () => {
 		const toast = browser.$("#wcToastTE");
 
-		assert.strictEqual(toast.getProperty("duration"), 500,
+		assert.strictEqual(toast.getProperty("effectiveDuration"), 500,
 				"Duration property is forced to be 500, when -1 is passed for duration attribute.");
 	});
 });

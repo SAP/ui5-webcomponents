@@ -6,20 +6,26 @@ import {
 	isRight,
 	isDown,
 	isUp,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	fetchI18nBundle,
 	getI18nBundle,
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import {
 	CAROUSEL_OF_TEXT,
+	CAROUSEL_DOT_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+
+import Button from "./Button.js";
 
 // Styles
 import CarouselCss from "./generated/themes/Carousel.css.js";
@@ -32,28 +38,50 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
 		 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		cycling: {
+		cyclic: {
 			type: Boolean,
 		},
 
 		/**
-		 * Sets the amount of items per page. If this property is set, on mobile devices it will always fallback to 1.
+		 * Sets the number of items per page on small size (up to 640px). One item per page shown by default.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
-		itemsPerPage: {
+		itemsPerPageS: {
+			type: Integer,
+			defaultValue: 1,
+		},
+
+		/**
+		 * Sets the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
+		 * @type {Integer}
+		 * @defaultvalue 1
+		 * @public
+		 */
+		itemsPerPageM: {
+			type: Integer,
+			defaultValue: 1,
+		},
+
+		/**
+		 * Sets the number of items per page on large size (more than 1024px). One item per page shown by default.
+		 * @type {Integer}
+		 * @defaultvalue 1
+		 * @public
+		 */
+		itemsPerPageL: {
 			type: Integer,
 			defaultValue: 1,
 		},
 
 		/**
 		 * If set to true the navigation is hidden.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -62,7 +90,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the index of the initially selected page.
+		 * Defines the index of the initially selected item.
 		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
@@ -74,13 +102,39 @@ const metadata = {
 
 		/**
 		 * Defines the position of arrows.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Content</code></li>
+		 * <li><code>Navigation</code></li>
+		 * </ul>
+		 * <br>
+		 * When set to "Content", the arrows are placed on the sides of the current page.
+		 * <br>
+		 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
 		 * @type {CarouselArrowsPlacement}
-		 * @defaultvalue CarouselArrowsPlacement.Content
+		 * @defaultvalue "Content"
 		 * @public
 		 */
 		arrowsPlacement: {
 			type: CarouselArrowsPlacement,
 			defaultValue: CarouselArrowsPlacement.Content,
+		},
+
+		/**
+		 * Defines the carousel width in pixels
+		 * @private
+		 */
+		_width: {
+			type: Integer,
+		},
+
+		/**
+		 * Defines the carousel item width in pixels
+		 * @private
+		 */
+		_itemWidth: {
+			type: Integer,
 		},
 	},
 	managedSlots: true,
@@ -98,7 +152,22 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
-		//
+
+		/**
+		 * Fired whenever the <code>selectedIndex</code> changes due to user interaction,
+		 * when the user clicks on the navigation arrows or while resizing,
+		 * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
+		 *
+		 * @event
+		 * @param {Integer} selectedIndex the current <code>selectedIndex</code>.
+		 * @public
+		 * @since 1.0.0-rc.7
+		 */
+		navigate: {
+			detail: {
+				selectedIndex: { type: Integer },
+			},
+		},
 	},
 };
 
@@ -112,11 +181,13 @@ const metadata = {
  * <h3>Usage</h3>
  *
  * When to use
- *   - The items you want to display are very different from each other.
- *   - You want to display the items one after the other.
+ *
+ * - The items you want to display are very different from each other.
+ * - You want to display the items one after the other.
  * When not to use
- *   - The items you want to display need to be visible at the same time.
- *   - The items you want to display are uniform and very similar
+ *
+ * - The items you want to display need to be visible at the same time.
+ * - The items you want to display are uniform and very similar
  *
  * For the <code>ui5-carousel</code>
  * <h3>ES6 Module Import</h3>
@@ -161,14 +232,54 @@ class Carousel extends UI5Element {
 		});
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._onResizeBound = this._onResize.bind(this);
+		this._resizing = false; // indicates if the carousel is in process of resizing
 	}
 
 	onBeforeRendering() {
-		this.itemsPerPage = this.effectiveItemsPerPage;
+		this.validateSelectedIndex();
 	}
 
 	onAfterRendering() {
 		this._scrollEnablement.scrollContainer = this.getDomRef();
+		this._resizing = false; // not invalidating
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._onResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._onResizeBound);
+	}
+
+	validateSelectedIndex() {
+		if (!this.isIndexInRange(this.selectedIndex)) {
+			this.selectedIndex = 0;
+			console.warn(`The "selectedIndex" is out of range, changed to: ${0}`); // eslint-disable-line
+		}
+	}
+
+	_onResize() {
+		const previousItemsPerPage = this.effectiveItemsPerPage;
+
+		// Set the resizing flag to suppress animation while resizing
+		this._resizing = true;
+
+		// Change transitively effectiveItemsPerPage by modifying _width
+		this._width = this.offsetWidth;
+		this._itemWidth = Math.floor(this._width / this.effectiveItemsPerPage);
+
+		// Items per page did not change or the current,
+		// therefore page index does not need to be re-adjusted
+		if (this.effectiveItemsPerPage === previousItemsPerPage) {
+			return;
+		}
+
+		if (this.selectedIndex > this.pagesCount - 1) {
+			this.selectedIndex = this.pagesCount - 1;
+			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		}
 	}
 
 	_updateScrolling(event) {
@@ -196,27 +307,39 @@ class Carousel extends UI5Element {
 	}
 
 	navigateLeft() {
+		this._resizing = false;
+
+		const peviousSelectedIndex = this.selectedIndex;
+
 		if (this.selectedIndex - 1 < 0) {
-			if (this.cycling) {
-				this.selectedIndex = this.items.length - 1;
+			if (this.cyclic) {
+				this.selectedIndex = this.pagesCount - 1;
 			}
 		} else {
 			--this.selectedIndex;
 		}
+
+		if (peviousSelectedIndex !== this.selectedIndex) {
+			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		}
 	}
 
 	navigateRight() {
-		if (this.selectedIndex + 1 > this.items.length - 1) {
-			if (this.cycling) {
+		this._resizing = false;
+
+		const peviousSelectedIndex = this.selectedIndex;
+
+		if (this.selectedIndex + 1 > this.pagesCount - 1) {
+			if (this.cyclic) {
 				this.selectedIndex = 0;
 			}
 		} else {
 			++this.selectedIndex;
 		}
-	}
 
-	get shouldAnimate() {
-		return getAnimationMode() === AnimationMode.None;
+		if (peviousSelectedIndex !== this.selectedIndex) {
+			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		}
 	}
 
 	/**
@@ -224,83 +347,135 @@ class Carousel extends UI5Element {
 	 * @private
 	 */
 	get items() {
-		const result = [],
-			innerArraysLength = Math.ceil(this.content.length / this.itemsPerPage);
-
-		for (let i = 0; i < innerArraysLength; i++) {
-			result.push([]);
-			for (let j = 0; j < this.itemsPerPage; j++) {
-				result[i].push({
-					item: this.content[(i * this.itemsPerPage) + j],
-					tabIndex: i === this.selectedIndex ? "0" : "-1",
-				});
-			}
-		}
-
-		return result;
+		return this.content.map((item, idx) => {
+			return {
+				id: `${this._id}-carousel-item-${idx + 1}`,
+				item,
+				tabIndex: idx === this.selectedIndex ? "0" : "-1",
+				posinset: idx + 1,
+				setsize: this.content.length,
+				width: this._itemWidth,
+				classes: this.isItemInViewport(idx) ? "" : "ui5-carousel-item--hidden",
+			};
+		});
 	}
 
 	get effectiveItemsPerPage() {
-		return isDesktop() ? this.itemsPerPage : 1;
+		if (this._width <= 640) {
+			return this.itemsPerPageS;
+		}
+
+		if (this._width <= 1024) {
+			return this.itemsPerPageM;
+		}
+
+		return this.itemsPerPageL;
+	}
+
+	isItemInViewport(index) {
+		return index >= this.selectedIndex && index <= this.selectedIndex + this.effectiveItemsPerPage - 1;
+	}
+
+	isIndexInRange(index) {
+		return index >= 0 && index <= this.pagesCount - 1;
 	}
 
 	get styles() {
 		return {
 			content: {
-				transform: `translateX(-${this.selectedIndex * 100}%)`,
+				transform: `translateX(-${this.selectedIndex * this._itemWidth}px`,
 			},
 		};
 	}
 
 	get classes() {
 		return {
+			viewport: {
+				"ui5-carousel-viewport--single": this.pagesCount === 1,
+			},
 			content: {
 				"ui5-carousel-content": true,
-				"ui5-carousel-content-no-animation": this.shouldAnimate,
-				"ui5-carousel-content-has-navigation": !this.hideNavigation,
-				"ui5-carousel-content-has-navigation-and-buttons": !this.hideNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-content-no-animation": this.supressAimation,
+				"ui5-carousel-content-has-navigation": this.showNavigationArrows,
+				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-navigation-with-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
-			item: {
-				"ui5-carousel-item": true,
-				"ui5-carousel-item-multiple": this.itemsPerPage > 1,
+			navPrevButton: {
+				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
+			},
+			navNextButton: {
+				"ui5-carousel-navigation-button--hidden": !this.hasNext,
 			},
 		};
+	}
+
+	get pagesCount() {
+		const items = this.content.length;
+		return items > this.effectiveItemsPerPage ? items - this.effectiveItemsPerPage + 1 : 1;
 	}
 
 	get isPageTypeDots() {
-		return this.items.length < Carousel.pageTypeLimit;
+		return this.pagesCount < Carousel.pageTypeLimit;
 	}
 
 	get dots() {
-		return this.items.map((item, index) => {
-			return {
+		const dots = [];
+		const pages = this.pagesCount;
+
+		for (let index = 0; index < pages; index++) {
+			dots.push({
 				active: index === this.selectedIndex,
-			};
-		});
+				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [pages]),
+			});
+		}
+
+		return dots;
 	}
 
 	get arrows() {
+		const showArrows = this.showNavigationArrows && isDesktop();
+
 		return {
-			content: isDesktop() && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: isDesktop() && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
+	}
+
+	get hasPrev() {
+		return this.cyclic || this.selectedIndex - 1 >= 0;
+	}
+
+	get hasNext() {
+		return this.cyclic || this.selectedIndex + 1 <= this.pagesCount - 1;
+	}
+
+	get supressAimation() {
+		return this._resizing || getAnimationMode() === AnimationMode.None;
+	}
+
+	get selectedIndexToShow() {
+		return this.selectedIndex + 1;
+	}
+
+	get showNavigationArrows() {
+		return !this.hideNavigation && this.pagesCount > 1;
 	}
 
 	get ofText() {
 		return this.i18nBundle.getText(CAROUSEL_OF_TEXT);
 	}
 
-	get currenlySelectedIndexToShow() {
-		return this.selectedIndex + 1;
+	get ariaActiveDescendant() {
+		return this.content.length ? `${this._id}-carousel-item-${this.selectedIndex + 1}` : undefined;
 	}
 
 	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
+			Button.define(),
 		]);
 	}
 }

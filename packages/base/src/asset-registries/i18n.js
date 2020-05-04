@@ -1,8 +1,8 @@
-import "../shims/jquery-shim.js";
-import "../shims/Core-shim.js";
-import { getLanguage } from "../LocaleProvider.js";
+import getLocale from "../locale/getLocale.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";
-import { normalizeLocale, nextFallbackLocale } from "../util/normalizeLocale.js";
+import normalizeLocale from "../locale/normalizeLocale.js";
+import nextFallbackLocale from "../locale/nextFallbackLocale.js";
+import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 
 const bundleData = new Map();
 const bundleURLs = new Map();
@@ -49,18 +49,22 @@ const fetchI18nBundle = async packageName => {
 		return;
 	}
 
-	const language = getLanguage();
+	const language = getLocale().getLanguage();
 
 	let localeId = normalizeLocale(language);
 	while (!bundlesForPackage[localeId]) {
 		localeId = nextFallbackLocale(localeId);
 	}
 
+	if (localeId === DEFAULT_LANGUAGE) {
+		return;
+	}
+
 	const bundleURL = bundlesForPackage[localeId];
 
 	if (typeof bundleURL === "object") { // inlined from build
 		setI18nBundleData(packageName, bundleURL);
-		return bundleURL;
+		return;
 	}
 
 	const data = await fetchJsonOnce(bundleURL);

@@ -2,12 +2,13 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-right-arrow.js";
 import Button from "./Button.js";
+import TitleLevel from "./types/TitleLevel.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
 
@@ -46,7 +47,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			type: Node,
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
@@ -58,7 +59,7 @@ const metadata = {
 		 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		headerText: {
@@ -94,11 +95,26 @@ const metadata = {
 		 * to <code>Region</code> or <code>Complementary</code>.
 		 *
 		 * @type {PanelAccessibleRole}
+		 * @defaultvalue "Form"
 		 * @public
 		 */
 		accessibleRole: {
 			type: PanelAccessibleRole,
 			defaultValue: PanelAccessibleRole.Form,
+		},
+
+		/**
+		 * Defines the "aria-level" of <code>ui5-panel</code> heading,
+		 * set by the <code>headerText</code>.
+		 * <br><br>
+		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
+		 * @type {TitleLevel}
+		 * @defaultvalue "H2"
+		 * @public
+		*/
+		headerLevel: {
+			type: TitleLevel,
+			defaultValue: TitleLevel.H2,
 		},
 
 		/**
@@ -344,6 +360,10 @@ class Panel extends UI5Element {
 			"ariaControls": !this._hasHeader ? `${this._id}-content` : undefined,
 			"role": !this._hasHeader ? "button" : undefined,
 		};
+	}
+
+	get headerAriaLevel() {
+		return this.headerLevel.slice(1);
 	}
 
 	get headerTabIndex() {

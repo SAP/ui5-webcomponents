@@ -57,6 +57,10 @@
 		.fixed-height {
 			height: 160px;
 		}
+
+		.customTextArea::part(textarea) {
+			background: bisque;
+		}
 	</style>
 	</head>
 
@@ -67,23 +71,39 @@
 	</header>
 
 	<section class="group">
-			<ui5-title>Simple TextArea</ui5-title>
-			<ui5-textarea id="basic-textarea" placeholder="Basic text area"></ui5-textarea>
+		<ui5-title>Value State Message</ui5-title>
+		<br>
+		<ui5-textarea id="textarea-value-state-msg" value="Test" value-state="Error">
+			<div id="value-state-msg" slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		</ui5-textarea>
+	</section>
 
-			<br>
-			<br>
-			<ui5-textarea id="basic-textarea-error" value="Test" value-state="Error"></ui5-textarea>
+	<section class="group">
+		<ui5-title>Simple TextArea</ui5-title>
+		<ui5-textarea id="basic-textarea" placeholder="Basic text area">
+			<div slot="valueStateMessage">
+				This msg will not be displayed as no value-state is set.
+			</div>
+		</ui5-textarea>
 
-			<br>
-			<br>
-			<ui5-textarea id="basic-textarea-warning" value="Test" value-state="Warning"></ui5-textarea>
-			<br>
-			<br>
+		<br>
+		<br>
+		<ui5-textarea id="basic-textarea-error" value="Test" value-state="Error"></ui5-textarea>
 
-			<ui5-textarea id="basic-textarea-success" value="Test" value-state="Success"></ui5-textarea>
-			<br>
-			<br>
-		</section>
+		<br>
+		<br>
+		<ui5-textarea id="basic-textarea-warning" value="Test" value-state="Warning"></ui5-textarea>
+		<br>
+		<br>
+
+		<ui5-textarea id="basic-textarea-success" value="Test" value-state="Success"></ui5-textarea>
+		<br>
+		<br>
+
+		<br>
+		<br>
+		<ui5-textarea id="basic-textarea-error" value="Test" value-state="Information"></ui5-textarea>
+	</section>
 
 	<section class="group">
 		<ui5-title>TextArea with value</ui5-title>
@@ -159,6 +179,15 @@
 	</section>
 	<section class="group">
 		<ui5-input id="inputResult" class="fixed-width"></ui5-input>
+	</section>
+
+	<section class="group">
+		<ui5-textarea
+			class="customTextArea fixed-width fixed-height"
+			maxlength="20"
+			show-exceeded-text
+		>
+		</ui5-textarea>
 	</section>
 
 	<script>

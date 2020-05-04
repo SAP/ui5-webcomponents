@@ -95,3 +95,84 @@ export class AppModule {}
 ```html
 <ui5-input [(ngModel)]="value" origami></ui5-input>
 ```
+
+### Internet Explorer 11 Support
+
+If you need your application to run on Internet Explorer 11, there are some additional steps you should to:
+
+*Note* These steps have been tested with Angular 7. For other versions of Angular, there might be some differences.
+
+1. Install all needed dependencies:
+```bash
+npm install --save @angular-builders/custom-webpack@7.5 @angular-builders/dev-server@7.3 @babel/core @babel/preset-env babel-loader
+```
+
+2. After that we need to make Angular use custom webpack configuration. In angular.json add the following configuration lines:
+
+In architect object, about the build command:
+
+```json
+"architect": {
+        "build": {
+          "builder": "@angular-builders/custom-webpack:browser",
+          "options": {
+            "customWebpackConfig": {"path": "./custom-webpack.config.js"},
+```
+
+And about the serve command:
+```json
+       "serve": {
+             "builder": "@angular-builders/dev-server:generic",
+```
+
+3. On root level create custom-webpack.config.js file with the following content(this is the config that Angular will use):
+```js
+const path = require('path');
+const env = process.env.WEBPACK_ENV;
+ 
+const OUTPUT_FILENAME = 'result';
+const DEST_FOLDER = 'dist';
+ 
+const OUTPUT_FILE = `${OUTPUT_FILENAME}.js`;
+const OUTPUT_FILE_MIN = `${OUTPUT_FILENAME}.min.js`;
+ 
+const { outputfile, mode } = env == 'build' 
+    ? {
+        outputfile: OUTPUT_FILE_MIN,
+        mode: 'production'
+    } 
+    : {
+        outputfile: OUTPUT_FILE,
+        mode: 'development'
+    };
+ 
+module.exports = {
+    mode,
+    output: {
+        path: path.join(__dirname, DEST_FOLDER),
+        filename: outputfile,
+        libraryTarget: 'umd',
+        umdNamedDefine: true
+    },
+    module: {
+        rules: [{
+            // Only run `.js` files through Babel
+            test: /\.m?js$/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env']
+                }
+            }
+        }],
+    },
+    devtool: 'source-map',
+};
+```
+
+4. Add the following import ```to app.module.ts``` file:
+```js
+import "@ui5/webcomponents-base/dist/features/browsersupport/IE11WithWebComponentsPolyfill.js";
+```
+
+*Note*: The ```IE11WithWebComponentsPolyfill.js``` file includes the official webcomponents polyfill, so you don’t have to import it by yourself. (This file was released in our latest @next version. It will be shipped with our next stable release rc.6, so until then it would be available only with the @next tag)

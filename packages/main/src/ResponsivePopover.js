@@ -1,8 +1,12 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
+import Button from "./Button.js";
+import Title from "./Title.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
@@ -42,6 +46,14 @@ const metadata = {
 		contentOnlyOnDesktop: {
 			type: Boolean,
 		},
+
+		/**
+		 * Used internaly for controls which must not have header.
+		 * @private
+		 */
+		_hideHeader: {
+			type: Boolean,
+		},
 	},
 };
 
@@ -49,11 +61,11 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The ResponsivePopover acts as a Popover on desktop and tablet, while on phone it acts as a Dialog.
+ * The <code>ui5-responsive-popover</code> acts as a Popover on desktop and tablet, while on phone it acts as a Dialog.
  * The component improves tremendously the user experience on mobile.
  *
  * <h3>Usage</h3>
- * When you want to make sure that all the content is visible on any device.
+ * Use it when you want to make sure that all the content is visible on any device.
  *
  * @constructor
  * @author SAP SE
@@ -81,7 +93,11 @@ class ResponsivePopover extends Popover {
 	}
 
 	static async onDefine() {
-		await Dialog.define();
+		await Promise.all([
+			Button.define(),
+			Dialog.define(),
+			Title.define(),
+		]);
 	}
 
 	/**
@@ -98,6 +114,7 @@ class ResponsivePopover extends Popover {
 
 			this.openBy(opener);
 		} else {
+			this.style.zIndex = getNextZIndex();
 			this._dialog.open();
 		}
 	}

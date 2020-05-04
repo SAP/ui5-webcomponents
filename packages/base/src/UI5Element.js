@@ -1,13 +1,15 @@
-import merge from "@ui5/webcomponents-utils/dist/sap/base/util/merge.js";
+import merge from "./thirdparty/merge.js";
 import boot from "./boot.js";
-import { skipOriginalEvent } from "./config/NoConflict.js";
-import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import StaticAreaItem from "./StaticAreaItem.js";
-import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { getConstructableStyle, createHeadStyle } from "./CSS.js";
-import { getEffectiveStyle } from "./Theming.js";
+import { registerTag, isTagRegistered } from "./CustomElementsRegistry.js";
+import DOMObserver from "./compatibility/DOMObserver.js";
+import { skipOriginalEvent } from "./config/NoConflict.js";
+import getConstructableStyle from "./theming/getConstructableStyle.js";
+import createComponentStyleTag from "./theming/createComponentStyleTag.js";
+import getEffectiveStyle from "./theming/getEffectiveStyle.js";
+import Integer from "./types/Integer.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 
@@ -17,7 +19,6 @@ const metadata = {
 	},
 };
 
-const DefinitionsSet = new Set();
 let autoId = 0;
 
 const elementTimeouts = new Map();
@@ -72,7 +73,7 @@ class UI5Element extends HTMLElement {
 
 			// IE11, Edge
 			if (window.ShadyDOM) {
-				createHeadStyle(this.constructor);
+				createComponentStyleTag(this.constructor);
 			}
 
 			// Chrome
@@ -94,7 +95,6 @@ class UI5Element extends HTMLElement {
 	 */
 	async connectedCallback() {
 		const needsShadowDOM = this.constructor._needsShadowDOM();
-		const needsStaticArea = this.constructor._needsStaticArea();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
 		// Render the Shadow DOM
@@ -105,16 +105,15 @@ class UI5Element extends HTMLElement {
 				await this._processChildren();
 			}
 
+			if (!this.shadowRoot) { // Workaround for Firefox74 bug
+				await Promise.resolve();
+			}
+
 			await RenderScheduler.renderImmediately(this);
 			this._domRefReadyPromise._deferredResolve();
 			if (typeof this.onEnterDOM === "function") {
 				this.onEnterDOM();
 			}
-		}
-
-		// Render Fragment if neccessary
-		if (needsStaticArea) {
-			this.staticAreaItem._updateFragment(this);
 		}
 	}
 
@@ -150,9 +149,11 @@ class UI5Element extends HTMLElement {
 		if (!shouldObserveChildren) {
 			return;
 		}
+
+		const canSlotText = this.constructor.getMetadata().canSlotText();
 		const mutationObserverOptions = {
 			childList: true,
-			subtree: true,
+			subtree: canSlotText,
 			characterData: true,
 		};
 		DOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
@@ -181,7 +182,7 @@ class UI5Element extends HTMLElement {
 	 */
 	async _updateSlots() {
 		const slotsMap = this.constructor.getMetadata().getSlots();
-		const canSlotText = slotsMap.default && slotsMap.default.type === Node;
+		const canSlotText = this.constructor.getMetadata().canSlotText();
 		const domChildren = Array.from(canSlotText ? this.childNodes : this.children);
 
 		// Init the _state object based on the supported slots
@@ -252,7 +253,7 @@ class UI5Element extends HTMLElement {
 		slottedChildrenMap.forEach((children, slot) => {
 			this._state[slot] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
 		});
-		this._invalidate();
+		this._invalidate("slots");
 	}
 
 	/**
@@ -465,7 +466,7 @@ class UI5Element extends HTMLElement {
 		this._upToDate = true;
 		this._updateShadowRoot();
 
-		if (this.constructor._needsStaticArea()) {
+		if (this._shouldUpdateFragment()) {
 			this.staticAreaItem._updateFragment(this);
 		}
 
@@ -484,6 +485,10 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateShadowRoot() {
+		if (!this.constructor._needsShadowDOM()) {
+			return;
+		}
+
 		let styleToPrepend;
 		const renderResult = this.constructor.template(this);
 
@@ -663,6 +668,10 @@ class UI5Element extends HTMLElement {
 		return !!this.template;
 	}
 
+	_shouldUpdateFragment() {
+		return this.constructor._needsStaticArea() && this.staticAreaItem.isRendered();
+	}
+
 	/**
 	 * @private
 	 */
@@ -739,8 +748,20 @@ class UI5Element extends HTMLElement {
 				throw new Error(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`);
 			}
 
-			if (propData.type === "boolean" && propData.defaultValue) {
+			if (propData.type === Boolean && propData.defaultValue) {
 				throw new Error(`Cannot set a default value for property "${prop}". All booleans are false by default.`);
+			}
+
+			if (propData.type === Array) {
+				throw new Error(`Wrong type for property "${prop}". Properties cannot be of type Array - use "multiple: true" and set "type" to the single value type, such as "String", "Object", etc...`);
+			}
+
+			if (propData.type === Object && propData.defaultValue) {
+				throw new Error(`Cannot set a default value for property "${prop}". All properties of type "Object" are empty objects by default.`);
+			}
+
+			if (propData.multiple && propData.defaultValue) {
+				throw new Error(`Cannot set a default value for property "${prop}". All multiple properties are empty arrays by default.`);
 			}
 
 			Object.defineProperty(proto, prop, {
@@ -816,6 +837,14 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * Returns the Static Area CSS for this UI5 Web Component Class
+	 * @protected
+	 */
+	static get staticAreaStyles() {
+		return "";
+	}
+
+	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
 	 * @returns {Promise<UI5Element>}
@@ -829,14 +858,14 @@ class UI5Element extends HTMLElement {
 
 		const tag = this.getMetadata().getTag();
 
-		const definedLocally = DefinitionsSet.has(tag);
+		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);
 
 		if (definedGlobally && !definedLocally) {
 			console.warn(`Skipping definition of tag ${tag}, because it was already defined by another instance of ui5-webcomponents.`); // eslint-disable-line
 		} else if (!definedGlobally) {
 			this._generateAccessors();
-			DefinitionsSet.add(tag);
+			registerTag(tag);
 			window.customElements.define(tag, this);
 		}
 		return this;

@@ -11,6 +11,8 @@
 	@touchstart="{{_ontouchstart}}"
 	@touchend="{{_ontouchend}}"
 	@click="{{_onclick}}"
+	aria-selected="{{ariaSelected}}"
+	role="option"
 >
 		{{#if placeSelectionElementBefore}}
 			{{> selectionElement}}
@@ -23,6 +25,15 @@
 		</div>
 
 		{{> iconEnd}}
+		{{#if typeDetail}}
+			<div class="ui5-li-detailbtn">
+				<ui5-button
+					design="Transparent"
+					icon="edit"
+					@click="{{onDetailClick}}"
+				></ui5-button>
+			</div>
+		{{/if}}
 
 		{{#if placeSelectionElementAfter}}
 			{{> selectionElement}}
@@ -65,6 +76,7 @@
 				design="Transparent"
 				icon="decline"
 				@click="{{onDelete}}"
+				title="{{deleteText}}"
 			></ui5-button>
 		</div>
 	{{/if}}

@@ -1,9 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import findNodeOwner from "@ui5/webcomponents-base/dist/util/findNodeOwner.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -84,7 +85,7 @@ const metadata = {
 		/**
 		 * When set to <code>true</code>, the <code>ui5-button</code> will
 		 * automatically submit the nearest form element upon <code>press</code>.
-		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
@@ -129,6 +130,30 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the aria-label attribute for the button
+		 * @type {String}
+		 * @defaultvalue: ""
+		 * @private
+		 * @since 1.0.0-rc.7
+		 */
+		ariaLabel: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the button
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.7
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
+
+		/**
 		 * Indicates if the element if focusable
 		 * @private
 		 */
@@ -150,10 +175,12 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-button</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -269,7 +296,7 @@ class Button extends UI5Element {
 	_onmousedown(event) {
 		event.isMarked = "button";
 		this.active = true;
-		activeButton = this;
+		activeButton = this; // eslint-disable-line
 	}
 
 	_onmouseup(event) {
@@ -311,6 +338,31 @@ class Button extends UI5Element {
 			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
 			"title": this._buttonAccInfo && this._buttonAccInfo.title,
 		};
+	}
+
+	get ariaLabelText() {
+		if (!this.ariaLabelledby) {
+			if (this.ariaLabel) {
+				return this.ariaLabel;
+			}
+
+			return undefined;
+		}
+
+		const ids = this.ariaLabelledby.split(" ");
+		const owner = findNodeOwner(this);
+		let result = "";
+
+		ids.forEach((elementId, index) => {
+			const element = owner.querySelector(`[id='${elementId}']`);
+			result += `${element ? element.textContent : ""}`;
+
+			if (index < ids.length - 1) {
+				result += " ";
+			}
+		});
+
+		return result;
 	}
 
 	static typeTextMappings() {

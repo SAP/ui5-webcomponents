@@ -12,7 +12,7 @@ import {
 	isLeft,
 	isUp,
 	isRight,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 
@@ -35,7 +35,7 @@ const metadata = {
 		/**
 		 * Determines whether the <code>ui5-radiobutton</code> is disabled.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-radiobutton</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-radiobutton</code> is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -78,6 +78,7 @@ const metadata = {
 		 * Defines the text of the <code>ui5-radiobutton</code>.
 		 *
 		 * @type  {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		text: {
@@ -86,13 +87,15 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-radiobutton</code>.
-		 * Available options are <code>Warning</code>, <code>Error</code>, and
-		 * <code>None</code> (by default).
 		 * <br><br>
-		 * <b>Note:</b> Using the value states affects the visual appearance of
-		 * the <code>ui5-radiobutton</code>.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -104,20 +107,26 @@ const metadata = {
 		/**
 		 * Defines the name of the <code>ui5-radiobutton</code>.
 		 * Radio buttons with the same <code>name</code> will form a radio button group.
-		 * <br><b>Note:</b>
-		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radios in same group.
-		 * <br><b>Note:</b>
+		 *
+		 * <br><br>
+		 * <b>Note:</b>
+		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radio buttons in same group.
+		 *
+		 * <br><br>
+		 * <b>Note:</b>
 		 * Only one radio button can be selected per group.
-		 * <br>
+		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect when submitting forms, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-radiobutton</code> so that it can be submitted as
 		 * part of an HTML form.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		name: {
@@ -133,7 +142,7 @@ const metadata = {
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		value: {
@@ -176,7 +185,7 @@ const metadata = {
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
  * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
  * <br>
- * Note: if <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
+ * <b>Note:</b> If <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
  *
  * <h3>Keyboard Handling</h3>
  *
@@ -185,7 +194,7 @@ const metadata = {
  * The Arrow Down/Arrow Up and Arrow Left/Arrow Right keys can be used to change selection between next/previous radio buttons in one group,
  * while TAB and SHIFT + TAB can be used to enter or leave the radio button group.
  * <br>
- * Note: On entering radio button group, the focus goes to the currently selected radio button.
+ * <b>Note:</b> On entering radio button group, the focus goes to the currently selected radio button.
  *
  * <h3>ES6 Module Import</h3>
  *

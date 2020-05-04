@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Styles
@@ -11,6 +11,16 @@ import styles from "./generated/themes/ListItemBase.css.js";
  */
 const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
+
+		/**
+		 * Defines the selected state of the <code>ListItem</code>.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		selected: {
+			type: Boolean,
+		},
 
 		/**
 		* Defines if the list item should display its bottom border.

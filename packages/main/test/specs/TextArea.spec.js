@@ -61,6 +61,30 @@ describe("disabled and readonly textarea", () => {
 describe("when enabled", () => {
 	browser.url('http://localhost:8080/test-resources/pages/TextArea.html');
 
+	it("shows value state message", () => {
+		const textarea = $("#textarea-value-state-msg")
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#textarea-value-state-msg");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover")
+
+		// act
+		textarea.click();
+
+		// assert
+		assert.ok(popover.isDisplayedInViewport(), "The value state message popover is displayed");
+	});
+
+	it("does not show value state msg when valueState='None'", () => {
+		const textarea = browser.$("#basic-textarea");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#basic-textarea");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover")
+
+		// act
+		textarea.click();
+
+		// assert
+		assert.ok(!popover.isDisplayedInViewport(), "The value state message popover is not displayed");
+	});
+
 	it("can type inside", () => {
 		const textarea = browser.$("#basic-textarea");
 		const textareaInner = browser.$("#basic-textarea").shadow$("textarea");

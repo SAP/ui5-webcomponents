@@ -1,7 +1,13 @@
 <div
 	class="ui5-select-root"
-	tabindex="{{tabIndex}}"
 	dir="{{dir}}"
+	tabindex="{{tabIndex}}"
+	id="{{_id}}-select"
+	role="button"
+	aria-haspopup="listbox"
+	aria-labelledby="{{_id}}-label"
+	aria-describedby="{{valueStateTextId}}"
+	aria-disabled="{{isDisabled}}"
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
 	@focusin="{{_onfocusin}}"
@@ -9,7 +15,7 @@
 	@click="{{_toggleRespPopover}}"
 >
 	<div class="ui5-select-label-root">
-		<ui5-label>{{_text}}</ui5-label>
+		<ui5-label id="{{_id}}-label" for="{{_id}}-select">{{_text}}</ui5-label>
 	</div>
 
 	<ui5-icon
@@ -19,5 +25,8 @@
 		dir="{{dir}}"
 	></ui5-icon>
 
+	{{#if hasValueState}}
+		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
+	{{/if}}
 	<slot name="formSupport"></slot>
 </div>

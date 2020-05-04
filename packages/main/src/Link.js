@@ -67,7 +67,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
-		 * @type {string}
+		 * @type {LinkDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -80,7 +80,7 @@ const metadata = {
 		 * Defines whether the <code>ui5-link</code> text should wrap
 		 * when there is no sufficient space.
 		 * <br><br>
-		 * <b>Note:</b> the text is truncated by default.
+		 * <b>Note:</b> The text is truncated by default.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -125,8 +125,8 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-link</code> is a hyperlink component is used to navigate to other
- * apps and web pages or to trigger actions.
+ * The <code>ui5-link</code> is a hyperlink component that is used to navigate to other
+ * apps and web pages, or to trigger actions.
  * It is a clickable text element, visualized in such a way that it stands out
  * from the standard text.
  * On hover, it changes its style to an underlined text to provide additional feedback to the user.
@@ -137,7 +137,7 @@ const metadata = {
  * You can set the <code>ui5-link</code> to be enabled or disabled.
  * <br><br>
  * To create a visual hierarchy in large lists of links, you can set the less important links as
- * <code>Subtle</code> or the more important ones as <code>Emphasized</code>
+ * <code>Subtle</code> or the more important ones as <code>Emphasized</code>,
  * by using the <code>design</code> property.
  * <br><br>
  * If the <code>href</code> property is set, the link behaves as the basic HTML
@@ -226,7 +226,7 @@ class Link extends UI5Element {
 	}
 
 	get parsedRef() {
-		return this.href.length > 0 ? this.href : undefined;
+		return (this.href && this.href.length > 0) ? this.href : undefined;
 	}
 
 	static async onDefine() {
