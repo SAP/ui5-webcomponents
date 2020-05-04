@@ -12,9 +12,6 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-  "Avatar",
-  "Carousel",
-  "ComboBox",
   "DateTimePicker",
   "DurationPicker",
   "FileUploader",
