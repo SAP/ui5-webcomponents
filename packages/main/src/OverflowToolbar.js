@@ -213,10 +213,11 @@ class OverflowToolbar extends UI5Element {
 		});
 	}
 
-	attachEventHandlers() {
+	async attachEventHandlers() {
+		const popover = await this._getPopover();
 		this.eventsHandler = this.fireEventOnRealTarget.bind(this);
 		OverflowToolbar.events.forEach(event => {
-			this._getPopover().addEventListener(event, this.eventsHandler);
+			popover.addEventListener(event, this.eventsHandler);
 		});
 	}
 
@@ -319,8 +320,8 @@ class OverflowToolbar extends UI5Element {
 		}
 	}
 
-	_handleToggleOverflowMenu(event) {
-		const popover = this._getPopover();
+	async _handleToggleOverflowMenu(event) {
+		const popover = await this._getPopover();
 		if (popover.opened) {
 			popover.close();
 		} else {
@@ -328,8 +329,9 @@ class OverflowToolbar extends UI5Element {
 		}
 	}
 
-	_getPopover() {
-		return this.getStaticAreaItemDomRef().querySelector(`#${this._id}-overflowMenu`);
+	async _getPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 
 	_getItemsWrapper() {
