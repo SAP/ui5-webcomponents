@@ -506,6 +506,10 @@ class ComboBox extends UI5Element {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
 	get valueStateTextMappings() {
 		return {
 			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
