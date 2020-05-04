@@ -1,0 +1,77 @@
+<li
+	class="ui5-nli-root"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+	@keydown="{{_onkeydown}}"
+	@keyup="{{_onkeyup}}"
+	@click="{{_onclick}}"
+	role="option"
+	tabindex="{{_tabIndex}}"
+>
+
+	<div class="ui5-nli-avatar">
+		<slot name="avatar"></slot>
+	</div>
+
+	<div class="ui5-nli-content {{classes.content}}">
+		<div class="ui5-nli-heading">
+			{{#if hasPriority}}
+				<ui5-icon
+					class="ui5-nli-prio-icon ui5-nli-prio-icon--{{priorityIcon}}"
+					name="{{priorityIcon}}">
+				</ui5-icon>
+			{{/if}}
+
+			<div class="ui5-nli-title" part="heading">
+				{{heading}}
+			</div>
+		</div>
+
+		{{#if hasDesc}}
+			<div class="ui5-nli-description">
+				<slot></slot>
+			</div>
+		{{/if}}
+
+		<div class="ui5-nli-footer">
+			{{#each footerItems}}
+				<slot name="{{slotName}}"></slot>
+				{{#if showDivider}}
+					<div class="ui5-nli-footer-divider"></div>
+				{{/if}}
+			{{/each}}
+
+			<ui5-link
+				class="ui5-nli-footer-showMore"
+				?hidden="{{hideShowMore}}"
+				@click="{{_onShowMoreClick}}">{{showMoreText}}</ui5-link>
+		</div>
+	</div>
+
+	<div class="ui5-nli-actions">
+		{{#unless showOverflow}}
+			{{#each standardActions}}
+				<ui5-button
+					icon="{{this.icon}}"
+					class="ui5-nli-action"
+					@click="{{this.press}}"
+					data-ui5-external-action-item-id="{{this.refItemid}}"
+				>{{this.text}}
+				</ui5-button>
+			{{/each}}
+		{{/unless}}
+
+		{{#if showOverflow}}
+			<ui5-button
+				icon="overflow"
+				design="Transparent"
+				@click="{{_onBtnOverflowClick}}"
+				class="ui5-nli-overflow-btn">
+			</ui5-button>
+		{{/if}}
+
+		{{#if showClose}}
+			<ui5-button icon="decline" design="Transparent" @click="{{_onBtnCloseClick}}"></ui5-button>
+		{{/if}}
+	</div>
+</li>	

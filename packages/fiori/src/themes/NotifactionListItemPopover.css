@@ -1,0 +1,12 @@
+.ui5-nli-overflow-list {
+	display: flex;
+	flex-direction: column;
+	padding: 0 0.5rem;
+}
+
+.ui5-nli-overflow-content {
+	display: flex;
+	align-items: center;
+	height: var(--_ui5_tc_item_text);
+	pointer-events: none;
+}

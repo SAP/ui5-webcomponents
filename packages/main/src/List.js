@@ -180,6 +180,22 @@ const metadata = {
 		},
 
 		/**
+		 * Fired when the Close button of any item is clicked
+		 * <br><br>
+		 * <b>Note:</b> This event is applicable to NotificationListItem only,
+		 * to not be confused with <code>itemDelete</code>.
+		 * @event
+		 * @param {HTMLElement} item the item about to be closed.
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		itemClose: {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+
+		/**
 		 * Fired when the Delete button of any item is pressed.
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
@@ -293,6 +309,7 @@ class List extends UI5Element {
 		this._previouslySelectedItem = null;
 
 		this.addEventListener("ui5-_press", this.onItemPress.bind(this));
+		this.addEventListener("ui5-_close", this.onItemClose.bind(this));
 		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
 		this.addEventListener("ui5-_forwardAfter", this.onForwardAfter.bind(this));
 		this.addEventListener("ui5-_forwardBefore", this.onForwardBefore.bind(this));
@@ -536,6 +553,11 @@ class List extends UI5Element {
 		}
 
 		this._selectionRequested = false;
+	}
+
+	// This is applicable to NoficationListItem
+	onItemClose(event) {
+		this.fireEvent("itemClose", { item: event.detail.item });
 	}
 
 	onForwardBefore(event) {
