@@ -1,11 +1,20 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import SemanticColor from "./types/SemanticColor.js";
+import TabLayout from "./types/TabLayout.js";
+import TabContainer from "./TabContainer.js";
 import Icon from "./Icon.js";
+import CustomListItem from "./CustomListItem.js";
+
+// Templates
 import TabTemplate from "./generated/templates/TabTemplate.lit.js";
+import TabInStripTemplate from "./generated/templates/TabInStripTemplate.lit.js";
+import TabInOverflowTemplate from "./generated/templates/TabInOverflowTemplate.lit.js";
 
 // Styles
 import css from "./generated/themes/Tab.css.js";
+import stripCss from "./generated/themes/TabInStrip.css.js";
+import overflowCss from "./generated/themes/TabInOverflow.css.js";
 
 /**
  * @public
@@ -140,16 +149,35 @@ class Tab extends UI5Element {
 		return TabTemplate;
 	}
 
+	static get stripTemplate() {
+		return TabInStripTemplate;
+	}
+
+	static get overflowTemplate() {
+		return TabInOverflowTemplate;
+	}
+
 	static get styles() {
 		return css;
 	}
 
 	static async onDefine() {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			CustomListItem.define(),
+		]);
 	}
 
 	get isSeparator() {
 		return false;
+	}
+
+	get stripPresentation() {
+		return this.constructor.stripTemplate(this);
+	}
+
+	get overflowPresentation() {
+		return this.constructor.overflowTemplate(this);
 	}
 
 	getFocusDomRef() {
@@ -161,8 +189,115 @@ class Tab extends UI5Element {
 
 		return focusedDomRef;
 	}
+
+	get isMixedModeTab() {
+		return !this.icon && this._mixedMode;
+	}
+
+	get isTextOnlyTab() {
+		return !this.icon && !this._mixedMode;
+	}
+
+	get isIconTab() {
+		return !!this.icon;
+	}
+
+	get effectiveDisabled() {
+		return this.disabled || undefined;
+	}
+
+	get effectiveSelected() {
+		return this.selected || false;
+	}
+
+	get effectiveHidden() {
+		return !this.selected;
+	}
+
+	get ariaLabelledBy() {
+		const labels = [];
+
+		if (this.text) {
+			labels.push(`${this._id}-text`);
+		}
+
+		if (this.additionalText) {
+			labels.push(`${this._id}-additionalText`);
+		}
+
+		if (this.icon) {
+			labels.push(`${this._id}-icon`);
+		}
+
+		return labels.join(" ");
+	}
+
+	get headerClasses() {
+		const classes = ["ui5-tab-strip-item"];
+
+		if (this.selected) {
+			classes.push("ui5-tab-strip-item--selected");
+		}
+
+		if (this.disabled) {
+			classes.push("ui5-tab-strip-item--disabled");
+		}
+
+		if (this.tabLayout === TabLayout.Inline) {
+			classes.push("ui5-tab-strip-item--inline");
+		}
+
+		if (!this.icon && !this._mixedMode) {
+			classes.push("ui5-tab-strip-item--textOnly");
+		}
+
+		if (this.icon) {
+			classes.push("ui5-tab-strip-item--withIcon");
+		}
+
+		if (!this.icon && this._mixedMode) {
+			classes.push("ui5-tab-strip-item--mixedMode");
+		}
+
+		if (this.semanticColor !== SemanticColor.Default) {
+			classes.push(`ui5-tab-strip-item--${this.semanticColor.toLowerCase()}`);
+		}
+
+		return classes.join(" ");
+	}
+
+	get headerSemanticIconClasses() {
+		const classes = ["ui5-tab-strip-item-semanticIcon"];
+
+		if (this.semanticColor !== SemanticColor.Default) {
+			classes.push(`ui5-tab-strip-item-semanticIcon--${this.semanticColor.toLowerCase()}`);
+		}
+
+		return classes.join(" ");
+	}
+
+	get overflowClasses() {
+		const classes = ["ui5-tab-overflow-item"];
+
+		if (this.semanticColor !== SemanticColor.Default) {
+			classes.push(`ui5-tab-overflow-item--${this.semanticColor.toLowerCase()}`);
+		}
+
+		if (this.disabled) {
+			classes.push("ui5-tab-overflow-item--disabled");
+		}
+
+		return classes.join(" ");
+	}
+
+	get overflowState() {
+		return this.disabled ? "Inactive" : "Active";
+	}
 }
 
 Tab.define();
+
+TabContainer.registerTabStyles(stripCss);
+TabContainer.registerStaticAreaTabStyles(overflowCss);
 
 export default Tab;

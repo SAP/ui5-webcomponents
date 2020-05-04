@@ -4,6 +4,9 @@ import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
+import Button from "./Button.js";
+import Title from "./Title.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
@@ -41,6 +44,14 @@ const metadata = {
 		 * @private
 		 */
 		contentOnlyOnDesktop: {
+			type: Boolean,
+		},
+
+		/**
+		 * Used internaly for controls which must not have header.
+		 * @private
+		 */
+		_hideHeader: {
 			type: Boolean,
 		},
 	},
@@ -82,7 +93,11 @@ class ResponsivePopover extends Popover {
 	}
 
 	static async onDefine() {
-		await Dialog.define();
+		await Promise.all([
+			Button.define(),
+			Dialog.define(),
+			Title.define(),
+		]);
 	}
 
 	/**

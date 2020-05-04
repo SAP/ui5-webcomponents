@@ -8,6 +8,7 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-right-arrow.js";
 import Button from "./Button.js";
+import TitleLevel from "./types/TitleLevel.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
 
@@ -100,6 +101,20 @@ const metadata = {
 		accessibleRole: {
 			type: PanelAccessibleRole,
 			defaultValue: PanelAccessibleRole.Form,
+		},
+
+		/**
+		 * Defines the "aria-level" of <code>ui5-panel</code> heading,
+		 * set by the <code>headerText</code>.
+		 * <br><br>
+		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
+		 * @type {TitleLevel}
+		 * @defaultvalue "H2"
+		 * @public
+		*/
+		headerLevel: {
+			type: TitleLevel,
+			defaultValue: TitleLevel.H2,
 		},
 
 		/**
@@ -345,6 +360,10 @@ class Panel extends UI5Element {
 			"ariaControls": !this._hasHeader ? `${this._id}-content` : undefined,
 			"role": !this._hasHeader ? "button" : undefined,
 		};
+	}
+
+	get headerAriaLevel() {
+		return this.headerLevel.slice(1);
 	}
 
 	get headerTabIndex() {

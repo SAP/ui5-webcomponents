@@ -130,6 +130,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the aria-label attribute for the button
+		 * @type {String}
+		 * @defaultvalue: ""
+		 * @private
+		 * @since 1.0.0-rc.7
+		 */
+		ariaLabel: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
 		 * Receives id(or many ids) of the elements that label the button
 		 * @type {String}
 		 * @defaultvalue ""
@@ -328,8 +340,12 @@ class Button extends UI5Element {
 		};
 	}
 
-	get ariaLabelledByText() {
+	get ariaLabelText() {
 		if (!this.ariaLabelledby) {
+			if (this.ariaLabel) {
+				return this.ariaLabel;
+			}
+
 			return undefined;
 		}
 
@@ -338,7 +354,7 @@ class Button extends UI5Element {
 		let result = "";
 
 		ids.forEach((elementId, index) => {
-			const element = owner.querySelector(`#${elementId}`);
+			const element = owner.querySelector(`[id='${elementId}']`);
 			result += `${element ? element.textContent : ""}`;
 
 			if (index < ids.length - 1) {
