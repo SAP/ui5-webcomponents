@@ -77,6 +77,7 @@
 .ui5-nli-content {
 	display: flex;
 	flex-direction: column;
+	flex: 1;
 	width: 100%;
 	padding: 0 1rem 0 0.75rem;
 	font-family: var(--sapFontFamily);
