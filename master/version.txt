@@ -1,5 +1,5 @@
-commit cdab106cf7e95a102eff75aa5030ca0e5f9417d8
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon May 4 17:51:38 2020 +0300
+commit 82b3d4149a2ff70cda1a364fbd4c084643497991
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue May 5 14:09:55 2020 +0300
 
-    docs: document custom theme integration (#1556)
+    feat(ui5-datepicker): implement valuestatemessage slot (#1476)
