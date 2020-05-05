@@ -50,6 +50,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 const metadata = {
 	tag: "ui5-timepicker",
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
 		/**
 		 * Defines a formatted time value.
@@ -170,7 +171,7 @@ const metadata = {
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the <code>ui5-input</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement}
-		 * @since 1.0.0-rc.7
+		 * @since 1.0.0-rc.8
 		 * @slot
 		 * @public
 		 */
@@ -316,12 +317,12 @@ class TimePicker extends UI5Element {
 		this._initHoursFormatParameters();
 	}
 
-	_handleInputClick() {
+	async _handleInputClick() {
 		if (this._isPickerOpen) {
 			return;
 		}
 
-		const inputField = this._getInputField();
+		const inputField = await this._getInputField();
 
 		if (inputField) {
 			inputField.select();
