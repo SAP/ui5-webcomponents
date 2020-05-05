@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TreeItem from "./TreeItem.js";
 import List from "./List.js";
+import "@ui5/webcomponents-icons/dist/icons/navigation-right-arrow.js";
 
 // Template
 import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
@@ -101,8 +102,9 @@ class Tree extends UI5Element {
 const buildTree = (el, level, result) => {
 	el.items.forEach(item => {
 		item._level = level;
+
 		result.push(item);
-		if (item.items.length) {
+		if (item.expanded && item.items.length) {
 			buildTree(item, level + 1, result);
 		}
 	});

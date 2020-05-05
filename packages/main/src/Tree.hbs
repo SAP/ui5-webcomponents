@@ -1,11 +1,7 @@
 <div class="ui5-tree-root">
     <ui5-list mode="None">
         {{#each _listItems}}
-            <ui5-li-custom type="Active">
-                <div style="padding: {{this._indent}}rem;">
-                    {{this.text}}
-                </div>
-            </ui5-li-custom>
+            {{this.itemInTreePresentation}}
         {{/each}}
     </ui5-list>
 </div>
