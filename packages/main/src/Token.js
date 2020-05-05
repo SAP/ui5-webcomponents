@@ -131,6 +131,7 @@ class Token extends UI5Element {
 
 	_select() {
 		this.fireEvent("select");
+		this.selected = true;
 	 }
 
 	 _delete() {
@@ -152,6 +153,7 @@ class Token extends UI5Element {
 
 		if (isEnter(event) || isSpace(event)) {
 			this.fireEvent("select", {});
+			this.selected = true;
 		}
 	}
 

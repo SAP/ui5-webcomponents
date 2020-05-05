@@ -31,7 +31,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Carousel                 | `ui5-carousel`       | `import "@ui5/webcomponents/dist/Carousel.js";`            |
 | Checkbox                 | `ui5-checkbox`       | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
 | ComboBox                 | `ui5-combobox`       | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
-| ComboBox Item            | `ui5-cb-item`        | comes with ui5-combobox                                    |
+| ComboBox Item            | `ui5-cb-item`        | comes with `ui5-combobox`                                    |
 | Date Picker              | `ui5-datepicker`     | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
 | Dialog                   | `ui5-dialog`         | `import "@ui5/webcomponents/dist/Dialog.js";`              |
 | File Uploader            | `ui5-file-uploader`  | `import "@ui5/webcomponents/dist/FileUploader.js";`        |
@@ -45,13 +45,13 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | List - Group Header Item | `ui5-li-groupheader` | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
 | Message Strip            | `ui5-messagestrip`   | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi ComboBox           | `ui5-multi-combobox` | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
-| Multi ComboBox Item      | `ui5-mcb-item`       | `import "@ui5/webcomponents/dist/MultiComboBoxItem.js";`   |
+| Multi ComboBox Item      | `ui5-mcb-item`       | comes with `ui5-multi-combobox`   |
 | Panel                    | `ui5-panel`          | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`        | `import "@ui5/webcomponents/dist/Popover.js";`             |
 | Radio Button             | `ui5-radiobutton`    | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
 | Responsive Popover       | `ui5-responsive-popover`| `import "@ui5/webcomponents/dist/ResponsivePopover.js";`|
 | Select                   | `ui5-select`         | `import "@ui5/webcomponents/dist/Select.js";`              |
-| Select Option            | `ui5-option`         | comes with ui5-select                                      |
+| Select Option            | `ui5-option`         | comes with `ui5-select `                                     |
 | Segmented Button         | `ui5-segmentedbutton`|`import "@ui5/webcomponents/dist/SegmentedButton.js";`      |
 | Suggestion Item          | `ui5-suggestion-item`|`import "@ui5/webcomponents/dist/SuggestionItem.js";`       |
 | Switch                   | `ui5-switch`         | `import "@ui5/webcomponents/dist/Switch.js";`              |
@@ -65,7 +65,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Textarea                 | `ui5-textarea`       | `import "@ui5/webcomponents/dist/TextArea.js";`            |
 | TimePicker               | `ui5-timepicker`     | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
 | Timeline                 | `ui5-timeline`       | `import "@ui5/webcomponents/dist/Timeline.js";`            |
-| Timeline Item            | `ui5-timeline-item`  | comes with ui5-timeline                                    |
+| Timeline Item            | `ui5-timeline-item`  | comes with `ui5-timeline`                                   |
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toast                    | `ui5-toast`          | `import "@ui5/webcomponents/dist/Toast.js";`               |
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
@@ -90,7 +90,8 @@ The ```<ui5-input>``` element acts as an ```<input>``` with the Fiori design and
 An advanced feature is the so called "input suggestions", allowing the user to choose from a list of predefined options while typing.
 Since input suggestions may not always be needed, they do not come as part of the ```<ui5-input>``` itself.
 
-To enable the functionality, import the above module into your app.
+To enable the functionality, import the above module into your app. This will also automatically import `ui5-suggestion-item`
+for your convenience.
 
 <a name="formsupport"></a>
 #### 3.2 Form Support
@@ -345,30 +346,7 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 
 For more details, please check [Configuration](https://sap.github.io/ui5-webcomponents/playground/docs/configuration/).
 
-### 6. Assets registration
-
-In order to register a **custom theme**:
-
-```js
-import { registerThemeProperties } from "@ui5/webcomponents-base/dist/AssetRegistry.js"
-```
-
-And then call the method above to register CSS Variables for each theme/package pair.
-
-You can pass the parameters directly, as an object, or as a URL:
-1) Pass the CSS Vars as a string directly.
-
-	`registerThemeProperties("my-package", "my_theme", ":root{--var1: red;}");`
-
-2) Pass the CSS Vars as an object directly. The object must have a "_" property, pointing to a string with the CSS Vars.
-
-	`registerThemeProperties("my-package", "my_theme", {"_": ":root{--var1: red;}"});`
-	
-3) Pass a URL to a JSON file, containing the CSS Vars in its "_" property. Will be fetched on demand, not upon registration.
-
-	`registerThemeProperties("my-package", "my_theme", "http://url/to/my/theme.json");`
-
-### 7. OpenUI5 integration
+### 6. OpenUI5 integration
 
 ```js
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";

@@ -6,15 +6,15 @@ describe("TabContainer general interaction", () => {
 	it("tests initially selected tab", () => {
 		const tabContainer = browser.$("#tabContainer1");
 		const selectedTab = tabContainer.$("[selected]");
-		const selectedFilter = tabContainer.shadow$(".ui5-tc__headerItem:nth-child(4)");
-		const SELECTION_CSS_CLASS = "ui5-tc__headerItem--selected";
+		const selectedFilter = tabContainer.shadow$(".ui5-tab-strip-item:nth-child(4)");
+		const SELECTION_CSS_CLASS = "ui5-tab-strip-item--selected";
 
 		assert.ok(selectedFilter.getHTML().indexOf(SELECTION_CSS_CLASS) > -1, "The item has the selection css class set.");
 		assert.strictEqual(selectedFilter.id, selectedTab.id, "The IDs of the ui5-tab and the rendered tab filter matches.");
 	});
 
 	it("tests tabSelect event", () => {
-		const item = browser.$("#tabContainer1").shadow$(".ui5-tc__headerItem:nth-child(3)");
+		const item = browser.$("#tabContainer1").shadow$(".ui5-tab-strip-item:nth-child(3)");
 		const result = browser.$("#result");
 		const resultIdx = browser.$("#resultIdx");
 
@@ -74,7 +74,7 @@ describe("TabContainer general interaction", () => {
 	it("tests if content is scrollable when tabcontainer takes limited height by its parent", () => {
 		const { tcHeight, tcScrollHeight } = browser.execute(() => {
 			const scrollableContent = document.getElementById("tc-scrollable-child");
-	
+
 			return {
 				tcHeight: scrollableContent.offsetHeight,
 				tcScrollHeight: scrollableContent.scrollHeight,
@@ -83,13 +83,13 @@ describe("TabContainer general interaction", () => {
 
 		const { tabHeight, tabScrollHeight } = browser.execute(() => {
 			const scrollableContent = document.getElementById("scrollable-tab").shadowRoot.querySelector("div");
-	
+
 			return {
 				tabHeight: scrollableContent.offsetHeight,
 				tabScrollHeight: scrollableContent.scrollHeight,
 			}
 		});
-	
+
 		assert.ok(tabHeight < tabScrollHeight, "Tab Content is scrollable");
 		assert.ok(tcHeight >= tcScrollHeight, "TabContainer is not scrollable scrollable");
 	});

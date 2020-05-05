@@ -10,6 +10,7 @@ import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import "@ui5/webcomponents-icons/dist/icons/multiselect-all.js";
+import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -25,6 +26,7 @@ import {
 	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
 	INPUT_SUGGESTIONS_TITLE,
+	ICON_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -485,6 +487,15 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
+	_setInitialFocusInResponsivePopover() {
+		this._innerInput.focus();
+	}
+
+	_onAllItemsPopoverAfterOpen() {
+		this._setInitialFocusInResponsivePopover();
+		this._toggleIcon();
+	}
+
 	_getSelectedItems() {
 		// Angular 2 way data binding
 		this.selectedValues = this.items.filter(item => item.selected);
@@ -669,6 +680,10 @@ class MultiComboBox extends UI5Element {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
 	get _innerInput() {
 		if (isPhone()) {
 			if (this.allItemsPopover.opened) {
@@ -685,8 +700,13 @@ class MultiComboBox extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
+	get _iconAccessibleNameText() {
+		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
+	}
+
 	static async onDefine() {
 		await Promise.all([
+			MultiComboBoxItem.define(),
 			Tokenizer.define(),
 			Token.define(),
 			Icon.define(),

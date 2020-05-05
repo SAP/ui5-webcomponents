@@ -197,8 +197,9 @@ slot[name="profile"] {
 	height: 1.675rem;
 }
 
-.ui5-shellbar-logo:not([src]) {
-	display: none;
+.ui5-shellbar-logo:focus {
+	outline: 1px dotted var(--sapContent_ContrastFocusColor);
+
 }
 
 .ui5-shellbar-button {
@@ -281,7 +282,8 @@ slot[name="profile"] {
 	display: none;
 }
 
-:host([breakpoint-size="S"]) .ui5-shellbar-menu-button-title {
+:host([breakpoint-size="S"]) .ui5-shellbar-logo + .ui5-shellbar-menu-button-title,
+:host([breakpoint-size="S"]) .ui5-shellbar-menu-button + .ui5-shellbar-menu-button-title {
 	display: none;
 }
 

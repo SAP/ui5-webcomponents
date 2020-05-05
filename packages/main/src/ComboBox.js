@@ -9,7 +9,11 @@ import { isBackSpace, isDelete, isShow } from "@ui5/webcomponents-base/dist/Keys
 import * as Filters from "./ComboBoxFilters.js";
 
 import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
+	ICON_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -476,6 +480,10 @@ class ComboBox extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
+	get _iconAccessibleNameText() {
+		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
+	}
+
 	get inner() {
 		return isPhone() ? this.responsivePopover.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
 	}
@@ -488,6 +496,26 @@ class ComboBox extends UI5Element {
 
 	get editable() {
 		return !this.readonly;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
+	get valueStateTextMappings() {
+		return {
+			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
+		};
 	}
 
 	static async onDefine() {

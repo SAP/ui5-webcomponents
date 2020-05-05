@@ -57,6 +57,10 @@
 		.fixed-height {
 			height: 160px;
 		}
+
+		.customTextArea::part(textarea) {
+			background: bisque;
+		}
 	</style>
 	</head>
 
@@ -76,7 +80,11 @@
 
 	<section class="group">
 		<ui5-title>Simple TextArea</ui5-title>
-		<ui5-textarea id="basic-textarea" placeholder="Basic text area"></ui5-textarea>
+		<ui5-textarea id="basic-textarea" placeholder="Basic text area">
+			<div slot="valueStateMessage">
+				This msg will not be displayed as no value-state is set.
+			</div>
+		</ui5-textarea>
 
 		<br>
 		<br>
@@ -171,6 +179,15 @@
 	</section>
 	<section class="group">
 		<ui5-input id="inputResult" class="fixed-width"></ui5-input>
+	</section>
+
+	<section class="group">
+		<ui5-textarea
+			class="customTextArea fixed-width fixed-height"
+			maxlength="20"
+			show-exceeded-text
+		>
+		</ui5-textarea>
 	</section>
 
 	<script>

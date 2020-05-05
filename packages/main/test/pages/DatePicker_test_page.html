@@ -56,6 +56,15 @@
 	<ui5-datepicker id="dp14" format-pattern="MMM d, y"></ui5-datepicker>
 	<ui5-datepicker id="dp15" format-pattern="MMM d, y" placeholder="Delivery date"></ui5-datepicker>
 
+	<h3>DatePicker with valueStateMessage</h3>
+		<ui5-datepicker
+		id="dp17"
+		value-state="Error">
+			<div slot="valueStateMessage" id="coolValueStateMessage">
+				This date is wrong
+			</div>
+		</ui5-datepicker>
+
 	<script>
 		var originalGetDate = Date.prototype.getDate;
 

@@ -7,6 +7,7 @@
 	_disable-initial-focus
 	content-only-on-desktop
 	@ui5-afterClose={{_afterClosePopover}}
+	@ui5-afterOpen={{_setInitialFocusInResponsivePopover}}
 >
 	<div slot="header" class="ui5-responsive-popover-header">
 		<div class="row">
@@ -75,7 +76,7 @@
 	content-only-on-desktop
 	@ui5-selectionChange={{_listSelectionChange}}
 	@ui5-afterClose={{_toggleIcon}}
-	@ui5-afterOpen={{_toggleIcon}}
+	@ui5-afterOpen={{_onAllItemsPopoverAfterOpen}}
 >
 	<div slot="header" class="ui5-responsive-popover-header">
 		<div class="row">

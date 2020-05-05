@@ -5,28 +5,12 @@
 	content-only-on-desktop
 	with-padding
 	no-arrow
+	_hide-header
 >
 	<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
-		{{#each renderItems}}
+		{{#each items}}
 			{{#unless this.isSeparator}}
-				<ui5-li-custom id="{{this.item._id}}"
-					class="{{this.overflowItemClasses}}"
-					type="{{this.overflowItemState}}"
-					?selected="{{this.selected}}"
-					?disabled="{{this.disabled}}"
-				>
-					<div class="{{this.overflowItemContentClasses}}">
-						{{#if this.item.icon}}
-							<ui5-icon name="{{this.item.icon}}"></ui5-icon>
-						{{/if}}
-
-						{{this.item.text}}
-
-						{{#if this.item.additionalText}}
-							({{this.item.additionalText}})
-						{{/if}}
-					</div>
-				</ui5-li-custom>
+				{{this.overflowPresentation}}
 			{{/unless}}
 		{{/each}}
 	</ui5-list>
