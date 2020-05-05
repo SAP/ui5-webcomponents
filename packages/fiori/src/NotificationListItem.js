@@ -14,6 +14,7 @@ import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import "@ui5/webcomponents-icons/dist/icons/message-success.js";
 import "@ui5/webcomponents-icons/dist/icons/message-error.js";
 import "@ui5/webcomponents-icons/dist/icons/message-warning.js";
+import "@ui5/webcomponents-icons/dist/icons/overflow.js";
 
 // text
 import { NOTIFICATIONLISTITEM_SHOW_MORE } from "./generated/i18n/i18n-defaults.js";
@@ -112,7 +113,6 @@ const metadata = {
 		 */
 		actions: {
 			type: HTMLElement,
-			propertyName: "actions",
 		},
 
 		/**
@@ -353,7 +353,7 @@ class NotificationListItem extends ListItemBase {
 			return [];
 		}
 
-		return this.clonedActions;
+		return this.actionsInfo;
 	}
 
 	get standardActions() {
@@ -361,10 +361,10 @@ class NotificationListItem extends ListItemBase {
 			return [];
 		}
 
-		return this.clonedActions;
+		return this.actionsInfo;
 	}
 
-	get clonedActions() {
+	get actionsInfo() {
 		return this.actions.map(action => {
 			return {
 				icon: action.icon,
