@@ -700,6 +700,10 @@ class Input extends UI5Element {
 		}
 	}
 
+	get _announceItemsSelected() {
+		return this.Suggestions._announceSelectedItem();
+	}
+
 	previewSuggestion(item) {
 		this.valueBeforeItemSelection = this.value;
 		this.value = item.group ? "" : item.textContent;
@@ -773,6 +777,14 @@ class Input extends UI5Element {
 
 	onItemSelected(item, keyboardUsed) {
 		this.selectSuggestion(item, keyboardUsed);
+	}
+
+	get generateAccAnnounce() {
+		const i18nBundle = this.i18nBundle;
+		const itemPositionText = i18nBundle.getText(LIST_ITEM_POSITION, [this.Suggestions.accInfo.currentPos], [this.Suggestions.accInfo.size]);
+		const itemSelectionText = i18nBundle.getText(LIST_ITEM_SELECTED);
+
+		return `${itemPositionText} ${this.Suggestions.accInfo.text} ${itemSelectionText}`;
 	}
 
 	onItemPreviewed(item) {
