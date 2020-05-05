@@ -38,11 +38,11 @@
 	overflow: hidden;
 }
 
-:host([no-truncation]) .ui5-nli-title {
+:host([_show-more-pressed]) .ui5-nli-title {
 	-webkit-line-clamp: unset;
 }
 
-:host([no-truncation]) .ui5-nli-description  {
+:host([_show-more-pressed]) .ui5-nli-description  {
 	-webkit-line-clamp: unset;
 }
 
@@ -56,11 +56,11 @@
 	max-height: 32px;
 }
 
-:host([no-truncation]) .ui5-nli-content--ie .ui5-nli-title {
+:host([_show-more-pressed]) .ui5-nli-content--ie .ui5-nli-title {
 	max-height: inherit;
 }
 
-:host([no-truncation]) .ui5-nli-content--ie .ui5-nli-description  {
+:host([_show-more-pressed]) .ui5-nli-content--ie .ui5-nli-description  {
 	max-height: inherit;
 }
 /* End */

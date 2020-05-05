@@ -85,10 +85,11 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the truncation of the <code>heading</code> and <code>decription</code>.
+		 * Defines the state of the <code>heading</code> and <code>decription</code>,
+		 * if less or more information is displayed.
 		 * @private
 		 */
-		noTruncation: {
+		_showMorePressed: {
 			type: Boolean,
 		},
 
@@ -96,7 +97,7 @@ const metadata = {
 		 * Defines the visibility of the <code>showMore</code> button.
 		 * @private
 		 */
-		showMore: {
+		_showMore: {
 			type: Boolean,
 		},
 	},
@@ -202,16 +203,15 @@ class NotificationListItem extends ListItemBase {
 	constructor() {
 		super();
 
-		// indicates if the showMore has been pressed
-		this._showMorePressed = false;
-
 		// the heading overflow height
 		this._headingOverflowHeight = 0;
 
 		// the description overflow height
 		this._descOverflowHeight = 0;
 
+		// the resize handler
 		this.onResizeBind = this.onResize.bind(this);
+
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
@@ -289,7 +289,7 @@ class NotificationListItem extends ListItemBase {
 	}
 
 	get hideShowMore() {
-		if (this.truncate && this.showMore) {
+		if (this.truncate && this._showMore) {
 			return undefined;
 		}
 
@@ -397,7 +397,6 @@ class NotificationListItem extends ListItemBase {
 
 	_onShowMoreClick() {
 		this._showMorePressed = !this._showMorePressed;
-		this.noTruncation = !this.noTruncation;
 	}
 
 	_onBtnCloseClick() {
@@ -435,7 +434,7 @@ class NotificationListItem extends ListItemBase {
 
 	onResize() {
 		if (!this.truncate) {
-			this.showMore = false;
+			this._showMore = false;
 			return;
 		}
 
@@ -444,18 +443,18 @@ class NotificationListItem extends ListItemBase {
 		const overflows = headingWouldOverflow || descWouldOverflow;
 
 		if (this._showMorePressed && overflows) {
-			this.showMore = true;
+			this._showMore = true;
 			return;
 		}
 
 		if (this.headingOverflows || this.descriptionOverflows) {
 			this._headingOverflowHeight = this.headingHeight;
 			this._descOverflowHeight = this.descriptionHeight;
-			this.showMore = true;
+			this._showMore = true;
 			return;
 		}
 
-		this.showMore = false;
+		this._showMore = false;
 	}
 
 	_onCustomActionPress(event) {
