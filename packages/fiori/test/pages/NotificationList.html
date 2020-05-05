@@ -18,9 +18,7 @@
 	<ui5-shellbar id="shellbar" primary-title="Product Title" show-notifications>
 	</ui5-shellbar>
 
-	<div style="display: flex; justify-content: flex-end; padding: 0.25rem; border-bottom: 1px solid grey">
-		<ui5-button id="openNotifications" design="Transparent" icon="bell"></ui5-button>
-	</div>
+	<br/><br/>
 
 	<div style="display: flex; flex-direction: column;">
 		<ui5-label>click event:</ui5-label>
@@ -37,6 +35,20 @@
 		<ui5-input id="closeInput">
 		</ui5-input>
 	</div>
+
+	<h3>Properties</h3>
+	<ul>
+		<li>heading</li>
+		<li>truncate</li>
+		<li>show-close</li>
+	</ul>
+
+	<h3>Slots</h3>
+	<ul>
+		<li>avatar</li>
+		<li>actions</li>
+		<li>footnotes</li>
+	</ul>
 
 	<ui5-list id="notificationList" header-text="Notifications heading and content 'truncates'">
 
@@ -202,7 +214,7 @@
 	</ui5-popover>
 
 	<div style="display: flex; justify-content: flex-end; padding: 0.25rem; border-bottom: 1px solid grey;">
-		<ui5-button id="openNotifications2" design="Transparent" icon="bell"></ui5-button>
+		<ui5-button id="openNotifications" design="Transparent" icon="bell"></ui5-button>
 	</div>
 
 	<script>
@@ -274,9 +286,6 @@
 
 		openNotifications.addEventListener("click", function(event) {
 			notificationsPopover.openBy(openNotifications);
-		});
-		openNotifications2.addEventListener("click", function(event) {
-			notificationsPopover.openBy(openNotifications2);
 		});
 
 		shellbar.addEventListener("ui5-notificationsClick", function(event) {

@@ -7,7 +7,7 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Priority from "./types/Priority.js";
+import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 
 // icons
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
@@ -439,9 +439,11 @@ class NotificationListItem extends ListItemBase {
 			return;
 		}
 
-		if (this._showMorePressed
-			&& (this.headingHeight > this._headingOverflowHeight
-				|| this.descriptionHeight > this._descOverflowHeight)) {
+		const headingWouldOverflow = this.headingHeight > this._headingOverflowHeight;
+		const descWouldOverflow = this.descriptionHeight > this._descOverflowHeight;
+		const overflows = headingWouldOverflow || descWouldOverflow;
+
+		if (this._showMorePressed && overflows) {
 			this.showMore = true;
 			return;
 		}
