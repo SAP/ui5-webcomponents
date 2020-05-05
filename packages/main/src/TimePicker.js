@@ -459,7 +459,7 @@ class TimePicker extends UI5Element {
 
 	async slidersDomRefs() {
 		await this._getPopover();
-		return this.responsivePopover.default.length ? [...this.responsivePopover.default[0].children].filter(x => x.isUI5Element) : this.responsivePopover.default;
+		return this.responsivePopover.content.length ? [...this.responsivePopover.content[0].children].filter(x => x.isUI5Element) : this.responsivePopover.content;
 	}
 
 	_getInput() {
