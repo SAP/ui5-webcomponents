@@ -29,6 +29,8 @@ class Suggestions {
 		// An integer value to store the currently selected item position,
 		// that changes due to user interaction.
 		this.selectedItemIndex = null;
+
+		this.accInfo = {};
 	}
 
 	/* Public methods */
@@ -114,6 +116,12 @@ class Suggestions {
 		const item = selectedItem || this._getItems()[this.selectedItemIndex];
 
 		this.selectedItemIndex = this._getItems().indexOf(item);
+
+		this.accInfo = {
+			currentPos: this.selectedItemIndex,
+			size: this._getItems().length,
+			text: item.textContent,
+		};
 
 		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
 		item.selected = false;
