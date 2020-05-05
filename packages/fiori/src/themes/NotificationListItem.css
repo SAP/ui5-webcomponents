@@ -3,6 +3,7 @@
 	width: 100%;
 	min-height: var(--_ui5_list_item_base_height);
 	background: var(--ui5-listitem-background-color);
+	cursor: pointer;
 }
 
 :host([has-border]) {
@@ -67,6 +68,7 @@
 
 .ui5-nli-root {
 	display: flex;
+	flex-direction: row-reverse;
 	position: relative;
 	width: 100%;
 	padding: 1rem 0.5rem 1rem 1rem;

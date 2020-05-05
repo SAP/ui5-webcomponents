@@ -245,7 +245,7 @@
 		var getItems = function getItems(items) {
 			return items.map(function (item) {
 				return '<ui5-li  id="' + item.id + '">' + item.textContent + '</ui5-li>';
-			}).join();
+			}).join("");
 		};
 
 		var cleanList = function cleanList() {

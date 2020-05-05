@@ -71,6 +71,10 @@ class ListItemBase extends UI5Element {
 	}
 
 	_onfocusin(event) {
+		if (event.isMarked === "button") {
+			return;
+		}
+
 		this.focused = true;
 		this.fireEvent("_focused", event);
 	}

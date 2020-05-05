@@ -10,17 +10,21 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 
-// icons
+// Icons
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import "@ui5/webcomponents-icons/dist/icons/message-success.js";
 import "@ui5/webcomponents-icons/dist/icons/message-error.js";
 import "@ui5/webcomponents-icons/dist/icons/message-warning.js";
 import "@ui5/webcomponents-icons/dist/icons/overflow.js";
 
-// text
-import { NOTIFICATIONLISTITEM_SHOW_MORE } from "./generated/i18n/i18n-defaults.js";
+// Texts
+import {
+	NOTIFICATIONLISTITEM_SHOW_MORE,
+	NOTIFICATIONLISTITEM_OVERLOW_BTN_TITLE,
+	NOTIFICATIONLISTITEM_CLOSE_BTN_TITLE,
+} from "./generated/i18n/i18n-defaults.js";
 
-// Template
+// Templates
 import NotificationListItemTemplate from "./generated/templates/NotificationListItemTemplate.lit.js";
 import NotificationListItemPopoverTemplate from "./generated/templates/NotificationListItemPopoverTemplate.lit.js";
 
@@ -287,6 +291,14 @@ class NotificationListItem extends ListItemBase {
 
 	get showMoreText() {
 		return this.i18nBundle.getText(NOTIFICATIONLISTITEM_SHOW_MORE);
+	}
+
+	get overflowBtnTitle() {
+		return this.i18nBundle.getText(NOTIFICATIONLISTITEM_OVERLOW_BTN_TITLE);
+	}
+
+	get closeBtnTitle() {
+		return this.i18nBundle.getText(NOTIFICATIONLISTITEM_CLOSE_BTN_TITLE);
 	}
 
 	get hideShowMore() {
