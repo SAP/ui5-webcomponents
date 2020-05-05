@@ -41,7 +41,7 @@ const metadata = {
 /**
  * @class
  * The <code>ui5-notification-overflow-action</code> represents an astract action,
- * used in the <code>ui5-li-notication</code>.
+ * used in the <code>ui5-li-notification</code>.
  *
  * @constructor
  * @author SAP SE

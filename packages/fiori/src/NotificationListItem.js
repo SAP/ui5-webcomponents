@@ -42,9 +42,9 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListItem.prototype */ {
 		/**
-		 * Defines the heading.
+		 * Defines the <code>heading</code>.
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		heading: {
@@ -52,9 +52,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the priority of the notification.
+		 * Defines the <code>priority</code> of the notification.
 		 * @type {Priority}
-		 * @defaultvalue: "None"
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		priority: {
@@ -74,7 +74,7 @@ const metadata = {
 
 		/**
 		 * Defines if the <code>heading</code> and <code>decription</code> should truncate,
-		 * they would wrap by default.
+		 * otherwise they would wrap by default.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -103,8 +103,8 @@ const metadata = {
 
 		/**
 		 * Defines the actions, displayed in the <code>ui5-li-notification</code>.
-		 *
-		 * <b>Note:</b> Consider using the <code>ui5-notification-action</code>.
+		 * <br><br>
+		 * <b>Note:</b> Consider using the <code>ui5-notification-overflow-action</code>.
 		 *
 		 * @type {HTMLElement}
 		 * @slot
@@ -119,7 +119,7 @@ const metadata = {
 		 * Defines the avatar, displayed in the <code>ui5-li-notification</code>.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> Consider using the <code>ui5-avatar</code> to dipslay icons, initials or images.
+		 * <b>Note:</b> Consider using the <code>ui5-avatar</code> to display icons, initials or images.
 		 *
 		 * @type {HTMLElement}
 		 * @slot
@@ -130,9 +130,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the elements dipalyed in the footer of the of the <code>ui5-li-notification</code>.
-		 *
-		 *
+		 * Defines the elements, dipalyed in the footer of the of the <code>ui5-li-notification</code>.
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -144,7 +142,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the description of the <code>ui5-li-notification</code>.
+		 * Defines the content of the <code>ui5-li-notification</code>,
+		 * usually a description of the notification.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -169,21 +168,23 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-li-notification</code> is a type of list item, meant to dispaly notifcatations.
- * The component has a rich set of various properties that allows the user to set an <code>avatar, <code>heading, descriptive <code>content</code>
- * and <code>footnotes</code> that appear at the bottom of the notifcation.
+ * <br>
  *
- * The user can optionally display a <code>close</code> button.
- * The user can control whether the <code>heading</code> and <code>description</code> should wrap or truncate
- * and display a <code>ShomeMore</code> button to switch between less and more information.
+ * The component has a rich set of various properties that allows the user to set <code>avatar</code>, <code>heading</code>, descriptive <code>content</code>
+ * and <code>footnotes</code> to fully describe a notifcation.
+ * <br>
  *
- * The user can also add custom actions by using the <code>ui5-notification-overflow-action</code>.
- * When it is a single action, it would appear nex to the heading and
- * but there are multiple actions, they would be displayed within a popover, that can be opened by an <code>overflow</code> button.
+ * The user can:
+ * <ul>
+ * <li>display a <code>Close</code> button</code></li>
+ * <li>can control whether the <code>heading</code> and <code>description</code> should wrap or truncate
+ * and display a <code>ShomeMore</code> button to switch between less and more information</code></li>
+ * <li>add custom actions by using the <code>ui5-notification-overflow-action</code></code> component</li>
+ * </ul>
  *
  * <h3>Usage</h3>
  * The component can be used in a standard <code>ui5-list</code>.
  *
- * For the <code>ui5-li-notification</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/NotificationListItem.js";</code>
@@ -194,6 +195,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-li-notification
  * @appenddocs NotificationOverflowAction
+ * @since 1.0.0-rc.8
  * @public
  */
 class NotificationListItem extends ListItemBase {
