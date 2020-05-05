@@ -39,6 +39,26 @@ describe("Date Picker Tests", () => {
 		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
+	it("Can focus the input after open", () => {
+		datepicker.id = "#dp1";
+		datepicker.openPicker({ focusInput: true });
+		const a = datepicker.innerInput.isFocusedDeep();
+
+		console.log(datepicker.innerInput.isFocusedDeep());
+		assert.ok(a, "inner input is focused");
+	});
+
+	it("Value State Message", () => {
+		datepicker.id = "#dp17"
+		datepicker.root.click();
+
+		const inputStaticAreaItem = datepicker.inputStaticAreaItem;
+		const popover = inputStaticAreaItem.shadow$("ui5-popover");
+
+		const slot = popover.$("#coolValueStateMessage");
+		assert.notOk(slot.error, "Value State message slot is working");
+	});
+
 	it("disabled", () => {
 		datepicker.id = "#dp2";
 		datepicker.root.setAttribute("disabled", "");
@@ -79,13 +99,6 @@ describe("Date Picker Tests", () => {
 		datepicker.root.setAttribute("value", "Rab. I 6, 1440 AH");
 
 		assert.equal(datepicker.innerInput.getAttribute("value"), "Rab. I 6, 1440 AH", "input has correct Islamic value");
-	});
-
-	it("Can focus the input after open", () => {
-		datepicker.id = "#dp1";
-		datepicker.openPicker({ focusInput: true });
-
-		assert.ok(datepicker.innerInput.isFocusedDeep(), "inner input is focused");
 	});
 
 	it("Selected date from daypicker is the same as datepicker date", () => {
@@ -551,7 +564,7 @@ describe("Date Picker Tests", () => {
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
- 
+
 		datepicker.root.keys("May 5, 2100");
 		datepicker.root.keys("Enter");
 
@@ -568,7 +581,7 @@ describe("Date Picker Tests", () => {
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
- 
+
 		datepicker.root.keys("Jan 8, 2100");
 		datepicker.root.keys("Enter");
 
@@ -578,7 +591,7 @@ describe("Date Picker Tests", () => {
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
- 
+
 		datepicker.root.keys("Jan 1, 2000");
 		datepicker.root.keys("Enter");
 
