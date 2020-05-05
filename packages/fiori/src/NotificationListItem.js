@@ -3,6 +3,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -373,6 +374,10 @@ class NotificationListItem extends ListItemBase {
 				refItemid: action._id,
 			};
 		});
+	}
+
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	get classes() {
