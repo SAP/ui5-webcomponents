@@ -1,0 +1,26 @@
+:host(:not([hidden])) {
+	display: block;
+	width: 100%;
+	min-height: var(--_ui5_list_item_base_height);
+	background: var(--ui5-listitem-background-color);
+	cursor: pointer;
+}
+
+:host([has-border]) {
+	border-bottom: var(--ui5-listitem-border-bottom);
+}
+
+:host([focused]) .ui5-nli-focusable {
+	outline: none;
+}
+
+:host([focused]) .ui5-nli-focusable:after {
+	content: "";
+	border: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+}

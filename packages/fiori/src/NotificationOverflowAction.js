@@ -40,8 +40,8 @@ const metadata = {
 
 /**
  * @class
- * The <code>ui5-notification-overflow-action</code> represents an astract action,
- * used in the <code>ui5-li-notification</code>.
+ * The <code>ui5-notification-overflow-action</code> represents an abstract action,
+ * used in the <code>ui5-li-notification</code> and the <code>ui5-li-notification-group</code> items.
  *
  * @constructor
  * @author SAP SE

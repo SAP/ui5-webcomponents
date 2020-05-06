@@ -1,5 +1,5 @@
 <li
-	class="ui5-nli-root"
+	class="ui5-nli-root ui5-nli-focusable"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 	@keydown="{{_onkeydown}}"
@@ -8,11 +8,18 @@
 	role="option"
 	tabindex="{{_tabIndex}}"
 	dir="{{rtl}}"
-	aria-labelledby="{{_id}}-heading {{_id}}-description {{_id}}-footer"
+	aria-labelledby="{{ariaLabelledBy}}"
 >
-	{{!-- render the actions first in order to be first in the tab chain as well--}}
 	<div class="ui5-nli-actions">
-		{{#unless showOverflow}}
+		{{#if showOverflow}}
+			<ui5-button
+				icon="overflow"
+				design="Transparent"
+				@click="{{_onBtnOverflowClick}}"
+				class="ui5-nli-overflow-btn"
+				title="{{overflowBtnTitle}}"
+			></ui5-button>
+		{{else}}
 			{{#each standardActions}}
 				<ui5-button
 					icon="{{this.icon}}"
@@ -23,16 +30,6 @@
 					{{this.text}}
 				</ui5-button>
 			{{/each}}
-		{{/unless}}
-
-		{{#if showOverflow}}
-			<ui5-button
-				icon="overflow"
-				design="Transparent"
-				@click="{{_onBtnOverflowClick}}"
-				class="ui5-nli-overflow-btn"
-				title="{{overflowBtnTitle}}"
-			></ui5-button>
 		{{/if}}
 
 		{{#if showClose}}
@@ -49,7 +46,7 @@
 		<div class="ui5-nli-heading">
 			{{#if hasPriority}}
 				<ui5-icon
-					class="ui5-nli-prio-icon ui5-nli-prio-icon--{{priorityIcon}}"
+					class="ui5-prio-icon ui5-prio-icon--{{priorityIcon}}"
 					name="{{priorityIcon}}">
 				</ui5-icon>
 			{{/if}}

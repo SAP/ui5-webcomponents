@@ -1,29 +1,5 @@
-:host(:not([hidden])) {
-	display: block;
-	width: 100%;
-	min-height: var(--_ui5_list_item_base_height);
-	background: var(--ui5-listitem-background-color);
-	cursor: pointer;
-}
-
-:host([has-border]) {
-	border-bottom: var(--ui5-listitem-border-bottom);
-}
-
-:host([focused]) .ui5-nli-root {
-	outline: none;
-}
-
-:host([focused]) .ui5-nli-root:after {
-	content: "";
-	border: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	pointer-events: none;
-}
+@import "./NotificationListItemBase.css";
+@import "./NotificationPrioIcon.css";
 
 :host([truncate]) .ui5-nli-title {
 	display: -webkit-box;
@@ -47,6 +23,9 @@
 	-webkit-line-clamp: unset;
 }
 
+:host([read]) .ui5-nli-title {
+	font-weight: normal;
+}
 
 /* IE */
 :host([truncate]) .ui5-nli-content--ie .ui5-nli-description {
@@ -89,10 +68,13 @@
 .ui5-nli-heading {
 	display: flex;
 	margin-bottom: 0.25rem;
+	box-sizing: border-box;
+}
+
+.ui5-nli-title {
 	color: var(--sapGroup_TitleTextColor);
 	font-weight: bold;
 	font-size: var(--sapFontHeader6Size);
-	box-sizing: border-box;
 }
 
 .ui5-nli-description {
@@ -139,28 +121,10 @@
 	overflow: hidden;
 }
 
-/* Priority icon */
-.ui5-nli-prio-icon {
-	min-width: 1rem;
-	min-height: 1rem;
-	padding-right: 0.5rem;
-}
-
-.ui5-nli-prio-icon--message-error {
-	color: var(--sapNegativeElementColor);
-}
-
-.ui5-nli-prio-icon--message-warning {
-	color: var(--sapCriticalElementColor);
-}
-
-.ui5-nli-prio-icon--message-success {
-	color: var(--sapPositiveElementColor);
-}
-
 /* Actions */
 .ui5-nli-actions {
 	display: flex;
+	box-sizing: border-box;
 }
 
 .ui5-nli-action {
@@ -180,10 +144,6 @@
 
 [dir="rtl"] .ui5-nli-footer-showMore {
 	margin-right: 1rem;
-}
-
-[dir="rtl"] .ui5-nli-prio-icon {
-	padding-right: 0.5rem;
 }
 
 [dir="rtl"] .ui5-nli-action {

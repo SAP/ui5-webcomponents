@@ -1,0 +1,74 @@
+<li
+	class="ui5-ng-root ui5-nli-focusable"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+	@keydown="{{_onkeydown}}"
+	role="option"
+	tabindex="{{_tabIndex}}"
+	dir="{{rtl}}"
+	aria-labelledby="{{_id}}-heading {{_id}}-invisibleText"
+>
+	<div class="ui5-ng-header">
+		<ui5-button
+			icon="navigation-right-arrow"
+			design="Transparent"
+			@click="{{_onBtnToggleClick}}"
+			class="ui5-ng-toggle-btn"
+		></ui5-button>
+
+		{{#if hasPriority}}
+			<ui5-icon
+				class="ui5-prio-icon ui5-prio-icon--{{priorityIcon}}"
+				name="{{priorityIcon}}">
+			</ui5-icon>
+		{{/if}}
+
+		<div id="{{_id}}-heading" class="ui5-ng-heading" part="heading">
+			{{heading}}
+		</div>
+
+		{{#if showCounter}}
+			<span class="ui5-ng-counter">{{counter}}</span>
+		{{/if}}
+
+		<div class="ui5-ng-divider"></div>
+
+		{{#unless collapsed}}
+			{{#if showOverflow}}
+				<ui5-button
+					icon="overflow"
+					design="Transparent"
+					@click="{{_onBtnOverflowClick}}"
+					class="ui5-ng-overflow-btn"
+					title="{{overflowBtnTitle}}"
+				></ui5-button>
+			{{else}}
+				{{#each standardActions}}
+					<ui5-button
+						icon="{{this.icon}}"
+						class="ui5-ng-action"
+						@click="{{this.press}}"
+						data-ui5-external-action-item-id="{{this.refItemid}}"
+					>
+						{{this.text}}
+					</ui5-button>
+				{{/each}}
+			{{/if}}
+		{{/unless}}
+
+		{{#if showClose}}
+			<ui5-button
+				icon="decline"
+				design="Transparent"
+				@click="{{_onBtnCloseClick}}"
+				title="{{closeBtnTitle}}"
+			></ui5-button>
+		{{/if}}
+
+		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
+	</div>
+
+	<ui5-list class="ui5-ng-items">
+		<slot></slot>
+	</ui5-list>
+</li>

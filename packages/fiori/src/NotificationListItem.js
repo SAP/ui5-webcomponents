@@ -89,6 +89,20 @@ const metadata = {
 			type: Boolean,
 		},
 
+
+		/**
+		 * Defines if the <code>notification</code> is new or has been already read.
+		 * <br><br>
+		 * <b>Note:</b> when set to <code>false</code> the <code>heading</code> has bold font
+		 * and if set to true - it has a normal font.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		read: {
+			type: Boolean,
+		},
+
 		/**
 		 * Defines the state of the <code>heading</code> and <code>decription</code>,
 		 * if less or more information is displayed.
@@ -194,11 +208,12 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/NotificationListItem.js";</code>
+ * <br>
  * <code>import @ui5/webcomponents/dist/NotificationOverflowAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListItem
- * @extends UI5Element
+ * @extends ListItemBase
  * @tagname ui5-li-notification
  * @appenddocs NotificationOverflowAction
  * @since 1.0.0-rc.8
@@ -388,6 +403,24 @@ class NotificationListItem extends ListItemBase {
 		});
 	}
 
+	get ariaLabelledBy() {
+		const ids = [];
+
+		if (this.hasHeading) {
+			ids.push(`${this._id}-heading`);
+		}
+		if (this.hasDesc) {
+			ids.push(`${this._id}-description`);
+		}
+
+		if (this.hasFootNotes) {
+			ids.push(`${this._id}-footer`);
+		}
+
+		return ids.join(" ");
+	}
+
+
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
 	}
@@ -492,18 +525,18 @@ class NotificationListItem extends ListItemBase {
 	}
 
 	async openOverflow() {
-		const overflowPopover = await this.overflowPopover();
+		const overflowPopover = await this.getOverflowPopover();
 		overflowPopover.openBy(this.overflowButtonDOM);
 	}
 
 	async closeOverflow() {
-		const overflowPopover = await this.overflowPopover();
+		const overflowPopover = await this.getOverflowPopover();
 		overflowPopover.close();
 	}
 
-	async overflowPopover() {
+	async getOverflowPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector(".ui5-nli-overflow-popover");
+		return staticAreaItem.querySelector(".ui5-notification-overflow-popover");
 	}
 }
 

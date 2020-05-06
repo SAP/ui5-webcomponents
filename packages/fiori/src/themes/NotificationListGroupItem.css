@@ -1,0 +1,81 @@
+@import "./InvisibleTextStyles.css";
+@import "./NotificationListItemBase.css";
+@import "./NotificationPrioIcon.css";
+
+:host(:not([collapsed])) .ui5-ng-toggle-btn {
+	transform: rotate(90deg);
+}
+
+:host([collapsed]) .ui5-ng-items {
+	display: none;
+}
+
+.ui5-ng-root {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ui5-ng-header {
+	display: flex;
+	align-items: center;
+	padding: 0.75rem 0.5rem 0.25rem 0.75rem;
+	width: 100%;
+	border-bottom: 0.0625rem solid var(--sapList_GroupHeaderBorderColor);
+	box-sizing: border-box;
+	cursor: default;
+}
+
+.ui5-ng-toggle-btn {
+	margin-right: 1rem;
+	cursor: pointer;
+}
+
+.ui5-ng-heading {
+	color: var(--sapGroup_TitleTextColor);
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontHeader6Size);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ui5-ng-divider {
+	flex: 1;
+}
+
+.ui5-ng-counter {
+	margin-left: 0.25rem;
+	margin-right: 1rem;
+	color: var(--sapList_TableGroupHeaderTextColor);
+	font-size: var(--sapFontHeader6Size);
+	font-family: var(--sapFontHeaderFamily);
+}
+
+.ui5-ng-action {
+	flex-shrink: 0;
+	margin-right: 0.5rem;
+}
+
+.ui5-ng-overflow-btn {
+	margin-right: 0.5rem;
+}
+
+[dir="rtl"] .ui5-ng-action {
+	margin-left: 0.5rem;
+}
+
+[dir="rtl"] .ui5-ng-overflow-btn {
+	margin-left: 0.5rem;
+}
+
+[dir="rtl"] .ui5-ng-toggle-btn {
+	margin-left: 1rem;
+}
+
+[dir="rtl"] .ui5-ng-counter {
+	margin-right: 0.25rem;
+	margin-left: 1rem;
+}
