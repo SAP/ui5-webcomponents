@@ -71,7 +71,7 @@ class ListItemBase extends UI5Element {
 	}
 
 	_onfocusin(event) {
-		if (event.isMarked === "button") {
+		if (event.isMarked === "button" || event.isMarked === "link") {
 			return;
 		}
 
@@ -92,6 +92,8 @@ class ListItemBase extends UI5Element {
 			return this._handleTabPrevious(event);
 		}
 	}
+
+	_onkeyup() {}
 
 	_handleTabNext(event) {
 		const target = event.target;

@@ -1,16 +1,19 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
 // Texts
 import {
-	NOTIFICATIONGROUPITEM_TXT,
-	NOTIFICATIONGROUPITEM_PRIORITY_TXT,
-	NOTIFICATIONGROUPITEM_COUNTER_TXT,
-	NOTIFICATIONLISTITEM_OVERLOW_BTN_TITLE,
-	NOTIFICATIONLISTITEM_CLOSE_BTN_TITLE,
+	NOTIFICATION_LIST_GROUP_ITEM_TXT,
+	NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT,
+	NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT,
+	NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT,
+	NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT,
+	NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE,
+	NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -147,20 +150,49 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	get overflowBtnTitle() {
-		return this.i18nBundle.getText(NOTIFICATIONLISTITEM_OVERLOW_BTN_TITLE);
+		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
 	}
 
 	get closeBtnTitle() {
-		return this.i18nBundle.getText(NOTIFICATIONLISTITEM_CLOSE_BTN_TITLE);
+		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
+	}
+
+	get priorityText() {
+		if (this.priority === Priority.High) {
+			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
+		}
+
+		if (this.priority === Priority.Medium) {
+			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
+		}
+
+		if (this.priority === Priority.Low) {
+			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
+		}
+
+		return "";
 	}
 
 	get accInvisibleText() {
-		const groupTxt = this.i18nBundle.getText(NOTIFICATIONGROUPITEM_TXT);
-		const prioTxt = this.i18nBundle.getText(NOTIFICATIONGROUPITEM_PRIORITY_TXT);
-		const counterTxt = this.i18nBundle.getText(NOTIFICATIONGROUPITEM_COUNTER_TXT);
+		const groupTxt = this.i18nBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TXT);
+		const counterTxt = this.i18nBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT);
 		const counter = this.showCounter ? `${counterTxt} ${this.itemsCount}` : "";
+		const priorityText = this.priorityText;
 
-		return `${groupTxt}. ${this.priority} ${prioTxt}. ${counter}`;
+		return `${groupTxt} ${priorityText} ${counter}`;
+	}
+
+	get ariaLabelledBy() {
+		const id = this._id;
+		const ids = [];
+
+		if (this.hasHeading) {
+			ids.push(`${id}-heading`);
+		}
+
+		ids.push(`${id}-invisibleText`);
+
+		return ids.join(" ");
 	}
 
 	/**

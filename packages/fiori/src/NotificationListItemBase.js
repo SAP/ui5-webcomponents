@@ -65,7 +65,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
 
 		/**
-		 * Defines the actions, displayed in the <code>ui5-li-notification-group</code>.
+		 * Defines the actions, displayed in the top-right area.
 		 * <br><br>
 		 * <b>Note:</b> use the <code>ui5-notification-overflow-action</code> component.
 		 *
@@ -104,7 +104,6 @@ const metadata = {
  * @public
  */
 class NotificationListItemBase extends ListItemBase {
-
 	static get metadata() {
 		return metadata;
 	}
@@ -119,6 +118,10 @@ class NotificationListItemBase extends ListItemBase {
 
 	static get staticAreaStyles() {
 		return NotifactionOverflowActionsPopoverCss;
+	}
+
+	get hasHeading() {
+		return !!this.heading.length;
 	}
 
 	get hasPriority() {

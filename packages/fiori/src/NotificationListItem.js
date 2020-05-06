@@ -4,15 +4,23 @@ import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 
+import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
 // Texts
 import {
-	NOTIFICATIONLISTITEM_SHOW_MORE,
-	NOTIFICATIONLISTITEM_OVERLOW_BTN_TITLE,
-	NOTIFICATIONLISTITEM_CLOSE_BTN_TITLE,
+	NOTIFICATION_LIST_ITEM_TXT,
+	NOTIFICATION_LIST_ITEM_READ,
+	NOTIFICATION_LIST_ITEM_UNREAD,
+	NOTIFICATION_LIST_ITEM_SHOW_MORE,
+	NOTIFICATION_LIST_ITEM_SHOW_LESS,
+	NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT,
+	NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT,
+	NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT,
+	NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE,
+	NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -205,10 +213,6 @@ class NotificationListItem extends NotificationListItemBase {
 		ResizeHandler.deregister(this, this.onResizeBind);
 	}
 
-	get hasHeading() {
-		return !!this.heading.length;
-	}
-
 	get hasDesc() {
 		return !!this.description.length;
 	}
@@ -218,15 +222,19 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get showMoreText() {
-		return this.i18nBundle.getText(NOTIFICATIONLISTITEM_SHOW_MORE);
+		if (this._showMorePressed) {
+			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_LESS);
+		}
+
+		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
 	}
 
 	get overflowBtnTitle() {
-		return this.i18nBundle.getText(NOTIFICATIONLISTITEM_OVERLOW_BTN_TITLE);
+		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
 	}
 
 	get closeBtnTitle() {
-		return this.i18nBundle.getText(NOTIFICATIONLISTITEM_CLOSE_BTN_TITLE);
+		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
 	}
 
 	get hideShowMore() {
@@ -291,20 +299,47 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get ariaLabelledBy() {
+		const id = this._id;
 		const ids = [];
 
 		if (this.hasHeading) {
-			ids.push(`${this._id}-heading`);
+			ids.push(`${id}-heading`);
 		}
 		if (this.hasDesc) {
-			ids.push(`${this._id}-description`);
+			ids.push(`${id}-description`);
 		}
 
 		if (this.hasFootNotes) {
-			ids.push(`${this._id}-footer`);
+			ids.push(`${id}-footer`);
 		}
 
+		ids.push(`${id}-invisibleText`);
+
 		return ids.join(" ");
+	}
+
+	get priorityText() {
+		if (this.priority === Priority.High) {
+			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
+		}
+
+		if (this.priority === Priority.Medium) {
+			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
+		}
+
+		if (this.priority === Priority.Low) {
+			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
+		}
+
+		return "";
+	}
+
+	get accInvisibleText() {
+		const notifcatationTxt = this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
+		const readTxt = this.read ? this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_READ) : this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
+		const priorityText = this.priorityText;
+
+		return `${notifcatationTxt} ${readTxt} ${priorityText}`;
 	}
 
 	get classes() {
@@ -319,13 +354,11 @@ class NotificationListItem extends NotificationListItemBase {
 	 * Event handlers
 	 */
 	_onclick(event) {
-		if (event.isMarked === "button") {
-			return;
-		}
 		this.fireItemPress(event);
 	}
 
-	_onShowMoreClick() {
+	_onShowMoreClick(event) {
+		event.preventDefault();
 		this._showMorePressed = !this._showMorePressed;
 	}
 
@@ -338,7 +371,16 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	_onkeyup(event) {
-		if (isSpace(event)) {
+		super._onkeyup(event);
+
+		const space = isSpace(event);
+
+		if (space && event.isMarked === "link") {
+			this._onShowMoreClick(event);
+			return;
+		}
+
+		if (space) {
 			this.fireItemPress(event);
 		}
 	}
@@ -346,7 +388,11 @@ class NotificationListItem extends NotificationListItemBase {
 	/**
 	 * Private
 	 */
-	fireItemPress() {
+	fireItemPress(event) {
+		if (event.isMarked === "button" || event.isMarked === "link") {
+			return;
+		}
+
 		this.fireEvent("_press", { item: this });
 	}
 

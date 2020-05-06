@@ -76,10 +76,13 @@
 				?hidden="{{hideShowMore}}"
 				@click="{{_onShowMoreClick}}"
 				aria-hidden="true"
+				href="#" {{!--without href ENTER does not trigger click --}}
 			>
 				{{showMoreText}}
 			</ui5-link>
 		</div>
+
+		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	</div>
 
 	<div class="ui5-nli-avatar">
