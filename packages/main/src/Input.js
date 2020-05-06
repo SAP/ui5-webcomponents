@@ -27,8 +27,6 @@ import {
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS,
 	INPUT_SUGGESTIONS_TITLE,
-	LIST_ITEM_POSITION,
-	LIST_ITEM_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -834,11 +832,7 @@ class Input extends UI5Element {
 	}
 
 	get itemSelectionAnnounce() {
-		const i18nBundle = this.i18nBundle,
-			itemPositionText = i18nBundle.getText(LIST_ITEM_POSITION, [this.Suggestions.accInfo.currentPos], [this.Suggestions.accInfo.listSize]),
-			itemSelectionText = i18nBundle.getText(LIST_ITEM_SELECTED);
-
-		return `${itemPositionText} ${this.Suggestions.accInfo.itemText} ${itemSelectionText}`;
+		return this.hasSuggestionItemSelected ? this.Suggestions.itemSelectionAnnounce : undefined;
 	}
 
 	get classes() {
