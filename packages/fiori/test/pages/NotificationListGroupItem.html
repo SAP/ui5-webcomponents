@@ -248,7 +248,7 @@
 					<span slot="footnotes">Office Notifications</span>
 					<span slot="footnotes">3 Days</span>
 		
-					<ui5-notification-overflow-action id="acceptBtn2InPopover" icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
+					<ui5-notification-overflow-action icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
 				</ui5-li-notification>
 	
 			</ui5-li-notification-group>
@@ -310,15 +310,11 @@
 		acceptBtnInPopover.addEventListener("click", function(event) {
 			wcToastBS.textContent = "Accept btn In popover btn clicked";
 			wcToastBS.show();
-
-			console.log("acceptBtnInPopover btn clicked");
 		});
 
 		rejectBtnInPopover.addEventListener("click", function(event) {
 			wcToastBS.textContent = "Reject btn In popover btn clicked";
 			wcToastBS.show();
-
-			console.log("rejectBtnInPopover btn clicked");
 		});
 
 		openNotifications.addEventListener("click", function(event) {

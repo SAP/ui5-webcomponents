@@ -27,6 +27,7 @@
 					class="ui5-nli-action"
 					@click="{{this.press}}"
 					data-ui5-external-action-item-id="{{this.refItemid}}"
+					custom-btn
 				>
 					{{this.text}}
 				</ui5-button>
@@ -39,6 +40,7 @@
 				design="Transparent"
 				@click="{{_onBtnCloseClick}}"
 				title="{{closeBtnTitle}}"
+				close-btn
 			></ui5-button>
 		{{/if}}
 	</div>
@@ -77,6 +79,7 @@
 				@click="{{_onShowMoreClick}}"
 				aria-hidden="true"
 				href="#" {{!--without href ENTER does not trigger click --}}
+				showMore-btn
 			>
 				{{showMoreText}}
 			</ui5-link>

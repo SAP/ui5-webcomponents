@@ -1,6 +1,7 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
+import List from "@ui5/webcomponents/dist/List.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
@@ -90,7 +91,7 @@ const metadata = {
  * <li><code>Toggle</code> button to expand and collapse the group</li>
  * <li><code>Priority</code> icon to display the priority of the group</li>
  * <li><code>Heading</code> to entitle the group</li>
- * <li>Custom actions</li>
+ * <li>Custom actions - with the use of <code>ui5-notification-overflow-action</code></li>
  * <li>Items of the group</li>
  * </ul>
  *
@@ -135,6 +136,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	static async onDefine() {
 		await Promise.all([
+			List.define(),
 			Button.define(),
 			Icon.define(),
 			fetchI18nBundle("@ui5/webcomponents-fiori"),

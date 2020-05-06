@@ -77,7 +77,7 @@
 			<span slot="footnotes">Office Notifications</span>
 			<span slot="footnotes">3 Days</span>
 
-			<ui5-notification-overflow-action id="acceptBtn2" icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
+			<ui5-notification-overflow-action icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
 		</ui5-li-notification>
 
 		<ui5-li-notification
@@ -105,22 +105,6 @@
 	</ui5-list>
 
 	<br><br>
-	<div style="display: flex; flex-direction: column;">
-		<ui5-label>click event:</ui5-label>
-
-		<ui5-input id="clickInput">
-		</ui5-input>
-	</div>
-
-	<br><br>
-
-	<div style="display: flex; flex-direction: column;">
-		<ui5-label>close event:</ui5-label>
-
-		<ui5-input id="closeInput">
-		</ui5-input>
-	</div>
-
 
 	<ui5-list id="notificationList2" header-text="Notifications heading and content 'wraps'">
 
@@ -165,7 +149,6 @@
 			<span slot="footnotes">3 Days</span>
 		</ui5-li-notification>
 	</ui5-list>
-
 
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
@@ -232,21 +215,18 @@
 
 	<script>
 		notificationList.addEventListener("itemClick", function(event) {
-			clickInput.value = event.detail.item.heading;
+			wcToastBS.textContent = event.detail.item.heading;
+			wcToastBS.show();
 		});
 
 		notificationList.addEventListener("itemClose", function(event) {
-			closeInput.value = event.detail.item.heading;
-
 			wcToastBS.textContent = event.detail.item.heading;
 			wcToastBS.show();
 		});
 
 		notificationList2.addEventListener("itemClick", function(event) {
-			var item = event.detail.item;
-			item.read = true;
-
-			wcToastBS.textContent = item.heading;
+			event.detail.item.read = true;
+			wcToastBS.textContent = event.detail.item.heading;
 			wcToastBS.show();
 		});
 
@@ -258,36 +238,21 @@
 		acceptBtn.addEventListener("click", function(event) {
 			wcToastBS.textContent = "Accept btn clicked";
 			wcToastBS.show();
-
-			console.log("Accept btn clicked");
-		});
-
-		acceptBtn2.addEventListener("click", function(event) {
-			wcToastBS.textContent = "Accept2 btn clicked";
-			wcToastBS.show();
-
-			console.log("Accept2 btn clicked");
 		});
 
 		acceptBtnInPopover.addEventListener("click", function(event) {
 			wcToastBS.textContent = "Accept btn In popover btn clicked";
 			wcToastBS.show();
-
-			console.log("acceptBtnInPopover btn clicked");
 		});
 
 		rejectBtn.addEventListener("click", function(event) {
 			wcToastBS.textContent = "Reject btn clicked";
 			wcToastBS.show();
-
-			console.log("Reject btn clicked");
 		});
 
 		rejectBtnInPopover.addEventListener("click", function(event) {
 			wcToastBS.textContent = "Reject btn In popover btn clicked";
 			wcToastBS.show();
-
-			console.log("rejectBtnInPopover btn clicked");
 		});
 
 		openNotifications.addEventListener("click", function(event) {

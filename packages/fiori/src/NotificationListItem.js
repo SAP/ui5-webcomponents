@@ -6,6 +6,7 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import Link from "@ui5/webcomponents/dist/Link.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
@@ -201,6 +202,7 @@ class NotificationListItem extends NotificationListItemBase {
 		await Promise.all([
 			Button.define(),
 			Icon.define(),
+			Link.define(),
 			fetchI18nBundle("@ui5/webcomponents-fiori"),
 		]);
 	}
