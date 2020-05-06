@@ -20,29 +20,13 @@
 
 	<br/><br/>
 
-	<div style="display: flex; flex-direction: column;">
-		<ui5-label>click event:</ui5-label>
-
-		<ui5-input id="clickInput">
-		</ui5-input>
-	</div>
-
-	<br/>
-	
-	<div style="display: flex; flex-direction: column;">
-		<ui5-label>close event:</ui5-label>
-
-		<ui5-input id="closeInput">
-		</ui5-input>
-	</div>
-
 	<h3>Properties</h3>
 	<ul>
 		<li>heading</li>
-		<li>truncate</li>
-		<li>priority</li>
-		<li>read</li>
-		<li>show-close</li>
+		<li>truncate (default: "false")</li>
+		<li>priority (default: "None")</li>
+		<li>read (default: "false")</li>
+		<li>show-close (default: "false")</li>
 	</ul>
 
 	<h3>Slots</h3>
@@ -50,6 +34,12 @@
 		<li>avatar</li>
 		<li>actions</li>
 		<li>footnotes</li>
+	</ul>
+
+	<h3>Events</h3>
+	<ul>
+		<li>click</li>
+		<li>close</li>
 	</ul>
 
 	<h3>Events on ui5-list level</h3>
@@ -115,6 +105,21 @@
 	</ui5-list>
 
 	<br><br>
+	<div style="display: flex; flex-direction: column;">
+		<ui5-label>click event:</ui5-label>
+
+		<ui5-input id="clickInput">
+		</ui5-input>
+	</div>
+
+	<br><br>
+
+	<div style="display: flex; flex-direction: column;">
+		<ui5-label>close event:</ui5-label>
+
+		<ui5-input id="closeInput">
+		</ui5-input>
+	</div>
 
 
 	<ui5-list id="notificationList2" header-text="Notifications heading and content 'wraps'">
@@ -238,7 +243,10 @@
 		});
 
 		notificationList2.addEventListener("itemClick", function(event) {
-			wcToastBS.textContent = event.detail.item.heading;
+			var item = event.detail.item;
+			item.read = true;
+
+			wcToastBS.textContent = item.heading;
 			wcToastBS.show();
 		});
 

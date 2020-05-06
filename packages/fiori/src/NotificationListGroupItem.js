@@ -1,19 +1,8 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-
-import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Priority from "@ui5/webcomponents/dist/types/Priority.js";
-
-// Icons
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
-import "@ui5/webcomponents-icons/dist/icons/message-success.js";
-import "@ui5/webcomponents-icons/dist/icons/message-error.js";
-import "@ui5/webcomponents-icons/dist/icons/message-warning.js";
-import "@ui5/webcomponents-icons/dist/icons/overflow.js";
+import NotificationListItemBase from "./NotificationListItemBase.js";
 
 // Texts
 import {
@@ -26,17 +15,9 @@ import {
 
 // Templates
 import NotificationListGroupItemTemplate from "./generated/templates/NotificationListGroupItemTemplate.lit.js";
-import NotificationListItemPopoverTemplate from "./generated/templates/NotificationListItemPopoverTemplate.lit.js";
 
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
-import NotifactionListItemPopoverCss from "./generated/themes/NotifactionListItemPopover.css.js";
-
-const PRIORITY_ICONS_MAP = {
-	"High": "message-error",
-	"Medium": "message-warning",
-	"Low": "message-success",
-};
 
 /**
  * @public
@@ -45,26 +26,6 @@ const metadata = {
 	tag: "ui5-li-notification-group",
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListGroupItem.prototype */ {
-		/**
-		 * Defines the <code>heading</code> of the group.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		heading: {
-			type: String,
-		},
-
-		/**
-		 * Defines the <code>priority</code> of the group.
-		 * @type {Priority}
-		 * @defaultvalue "None"
-		 * @public
-		 */
-		priority: {
-			type: Priority,
-			defaultValue: Priority.None,
-		},
 
 		/**
 		 * Defines if the group is collapsed or expanded.
@@ -73,16 +34,6 @@ const metadata = {
 		 * @public
 		 */
 		collapsed: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines if the <code>close</code> button would be displayed.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		showClose: {
 			type: Boolean,
 		},
 
@@ -99,19 +50,6 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.fiori.NotificationListGroupItem.prototype */ {
 
 		/**
-		 * Defines the actions, displayed in the <code>ui5-li-notification-group</code>.
-		 * <br><br>
-		 * <b>Note:</b> use the <code>ui5-notification-overflow-action</code> component.
-		 *
-		 * @type {HTMLElement}
-		 * @slot
-		 * @public
-		 */
-		actions: {
-			type: HTMLElement,
-		},
-
-		/**
 		 * Defines the items of the <code>ui5-li-notification-group</code>,
 		 * usually <code>ui5-li-notification</code> items.
 		 *
@@ -125,7 +63,6 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.NotificationListGroupItem.prototype */ {
-		_close: {},
 
 		/**
 		 * Fired when the <code>ui5-li-notification-group</code> is expanded/collapsed by user interaction.
@@ -165,13 +102,13 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListGroupItem
- * @extends ListItemBase
+ * @extends NotificationListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
  * @appenddocs NotificationOverflowAction
  * @public
  */
-class NotificationListGroupItem extends ListItemBase {
+class NotificationListGroupItem extends NotificationListItemBase {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
@@ -193,14 +130,6 @@ class NotificationListGroupItem extends ListItemBase {
 		return NotificationListGroupItemTemplate;
 	}
 
-	static get staticAreaTemplate() {
-		return NotificationListItemPopoverTemplate;
-	}
-
-	static get staticAreaStyles() {
-		return NotifactionListItemPopoverCss;
-	}
-
 	static async onDefine() {
 		await Promise.all([
 			Button.define(),
@@ -209,12 +138,12 @@ class NotificationListGroupItem extends ListItemBase {
 		]);
 	}
 
-	get hasPriority() {
-		return this.priority !== Priority.None;
+	get itemsCount() {
+		return this.items.length;
 	}
 
-	get priorityIcon() {
-		return PRIORITY_ICONS_MAP[this.priority];
+	get counter() {
+		return `(${this.itemsCount})`;
 	}
 
 	get overflowBtnTitle() {
@@ -223,53 +152,6 @@ class NotificationListGroupItem extends ListItemBase {
 
 	get closeBtnTitle() {
 		return this.i18nBundle.getText(NOTIFICATIONLISTITEM_CLOSE_BTN_TITLE);
-	}
-
-	get overflowButtonDOM() {
-		return this.shadowRoot.querySelector(".ui5-ng-overflow-btn");
-	}
-
-	get showOverflow() {
-		return !!this.overflowActions.length;
-	}
-
-	get overflowActions() {
-		if (this.actions.length <= 1) {
-			return [];
-		}
-
-		return this.actionsInfo;
-	}
-
-	get standardActions() {
-		if (this.actions.length > 1) {
-			return [];
-		}
-
-		return this.actionsInfo;
-	}
-
-	get actionsInfo() {
-		return this.actions.map(action => {
-			return {
-				icon: action.icon,
-				text: action.text,
-				press: this._onCustomActionClick.bind(this),
-				refItemid: action._id,
-			};
-		});
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
-	}
-
-	get itemsCount() {
-		return this.items.length;
-	}
-
-	get counter() {
-		return `(${this.itemsCount})`;
 	}
 
 	get accInvisibleText() {
@@ -285,60 +167,9 @@ class NotificationListGroupItem extends ListItemBase {
 	 * Event handlers
 	 *
 	 */
-
-	_onBtnCloseClick() {
-		this.fireEvent("_close", { item: this });
-	}
-
-	_onBtnOverflowClick() {
-		this.openOverflow();
-	}
-
 	_onBtnToggleClick() {
 		this.collapsed = !this.collapsed;
 		this.fireEvent("toggle", { item: this });
-	}
-
-	_onCustomActionClick(event) {
-		const refItemId = event.target.getAttribute("data-ui5-external-action-item-id");
-
-		if (refItemId) {
-			this.getActionByID(refItemId).fireEvent("click", {
-				targetRef: event.target,
-			}, true);
-
-			this.closeOverflow();
-		}
-	}
-
-	_onkeydown(event) {
-		super._onkeydown(event);
-
-		if (isSpace(event)) {
-			event.preventDefault();
-		}
-	}
-
-	/**
-	 * Private
-	 */
-	getActionByID(id) {
-		return this.actions.find(action => action._id === id);
-	}
-
-	async openOverflow() {
-		const overflowPopover = await this.getOverflowPopover();
-		overflowPopover.openBy(this.overflowButtonDOM);
-	}
-
-	async closeOverflow() {
-		const overflowPopover = await this.getOverflowPopover();
-		overflowPopover.close();
-	}
-
-	async getOverflowPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector(".ui5-notification-overflow-popover");
 	}
 }
 

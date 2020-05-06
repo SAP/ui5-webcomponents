@@ -324,7 +324,7 @@ class List extends UI5Element {
 		this._previouslySelectedItem = null;
 
 		this.addEventListener("ui5-_press", this.onItemPress.bind(this));
-		this.addEventListener("ui5-_close", this.onItemClose.bind(this));
+		this.addEventListener("ui5-close", this.onItemClose.bind(this));
 		this.addEventListener("ui5-toggle", this.onItemToggle.bind(this));
 		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
 		this.addEventListener("ui5-_forwardAfter", this.onForwardAfter.bind(this));

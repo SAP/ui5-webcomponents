@@ -2,15 +2,15 @@
 @import "./NotificationListItemBase.css";
 @import "./NotificationPrioIcon.css";
 
-:host(:not([collapsed])) .ui5-ng-toggle-btn {
+:host(:not([collapsed])) .ui5-nli-group-toggle-btn {
 	transform: rotate(90deg);
 }
 
-:host([collapsed]) .ui5-ng-items {
+:host([collapsed]) .ui5-nli-group-items {
 	display: none;
 }
 
-.ui5-ng-root {
+.ui5-nli-group-root {
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -18,7 +18,7 @@
 	box-sizing: border-box;
 }
 
-.ui5-ng-header {
+.ui5-nli-group-header {
 	display: flex;
 	align-items: center;
 	padding: 0.75rem 0.5rem 0.25rem 0.75rem;
@@ -28,12 +28,12 @@
 	cursor: default;
 }
 
-.ui5-ng-toggle-btn {
+.ui5-nli-group-toggle-btn {
 	margin-right: 1rem;
 	cursor: pointer;
 }
 
-.ui5-ng-heading {
+.ui5-nli-group-heading {
 	color: var(--sapGroup_TitleTextColor);
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontHeader6Size);
@@ -42,11 +42,11 @@
 	text-overflow: ellipsis;
 }
 
-.ui5-ng-divider {
+.ui5-nli-group-divider {
 	flex: 1;
 }
 
-.ui5-ng-counter {
+.ui5-nli-group-counter {
 	margin-left: 0.25rem;
 	margin-right: 1rem;
 	color: var(--sapList_TableGroupHeaderTextColor);
@@ -54,28 +54,28 @@
 	font-family: var(--sapFontHeaderFamily);
 }
 
-.ui5-ng-action {
+.ui5-nli-group-action {
 	flex-shrink: 0;
 	margin-right: 0.5rem;
 }
 
-.ui5-ng-overflow-btn {
+.ui5-nli-group-overflow-btn {
 	margin-right: 0.5rem;
 }
 
-[dir="rtl"] .ui5-ng-action {
+[dir="rtl"] .ui5-nli-group-action {
 	margin-left: 0.5rem;
 }
 
-[dir="rtl"] .ui5-ng-overflow-btn {
+[dir="rtl"] .ui5-nli-group-overflow-btn {
 	margin-left: 0.5rem;
 }
 
-[dir="rtl"] .ui5-ng-toggle-btn {
+[dir="rtl"] .ui5-nli-group-toggle-btn {
 	margin-left: 1rem;
 }
 
-[dir="rtl"] .ui5-ng-counter {
+[dir="rtl"] .ui5-nli-group-counter {
 	margin-right: 0.25rem;
 	margin-left: 1rem;
 }

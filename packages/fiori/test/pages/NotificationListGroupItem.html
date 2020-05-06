@@ -23,10 +23,10 @@
 	<h3>Properties</h3>
 	<ul>
 		<li>heading</li>
-		<li>priority</li>
-		<li>collapsed</li>
-		<li>show-close</li>
-		<li>show-counter</li>
+		<li>priority (default: "None")</li>
+		<li>collapsed (default: "false")</li>
+		<li>show-close (default: "false")</li>
+		<li>show-counter (default: "false")</li>
 	</ul>
 
 	<h3>Slots</h3>
@@ -35,8 +35,15 @@
 		<li>actions</li>
 	</ul>
 
+	<h3>Events</h3>
+	<ul>
+		<li>close</li>
+		<li>toggle</li>
+	</ul>
+
 	<h3>Events on ui5-list level</h3>
 	<ul>
+		<li>itemClose</li>
 		<li>itemToggle</li>
 	</ul>
 
@@ -60,7 +67,7 @@
 				<span slot="footnotes">3 Days</span>
 
 				<ui5-notification-overflow-action icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
-				<ui5-notification-overflow-action icon="reject" text="Reject" slot="actions"></ui5-notification-overflow-action>
+				<ui5-notification-overflow-action icon="message-error" text="Reject" slot="actions"></ui5-notification-overflow-action>
 			</ui5-li-notification>
 
 			<ui5-li-notification

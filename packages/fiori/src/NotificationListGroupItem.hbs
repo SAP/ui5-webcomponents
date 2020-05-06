@@ -1,5 +1,5 @@
 <li
-	class="ui5-ng-root ui5-nli-focusable"
+	class="ui5-nli-group-root ui5-nli-focusable"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 	@keydown="{{_onkeydown}}"
@@ -8,12 +8,12 @@
 	dir="{{rtl}}"
 	aria-labelledby="{{_id}}-heading {{_id}}-invisibleText"
 >
-	<div class="ui5-ng-header">
+	<div class="ui5-nli-group-header">
 		<ui5-button
 			icon="navigation-right-arrow"
 			design="Transparent"
 			@click="{{_onBtnToggleClick}}"
-			class="ui5-ng-toggle-btn"
+			class="ui5-nli-group-toggle-btn"
 		></ui5-button>
 
 		{{#if hasPriority}}
@@ -23,15 +23,15 @@
 			</ui5-icon>
 		{{/if}}
 
-		<div id="{{_id}}-heading" class="ui5-ng-heading" part="heading">
+		<div id="{{_id}}-heading" class="ui5-nli-group-heading" part="heading">
 			{{heading}}
 		</div>
 
 		{{#if showCounter}}
-			<span class="ui5-ng-counter">{{counter}}</span>
+			<span class="ui5-nli-group-counter">{{counter}}</span>
 		{{/if}}
 
-		<div class="ui5-ng-divider"></div>
+		<div class="ui5-nli-group-divider"></div>
 
 		{{#unless collapsed}}
 			{{#if showOverflow}}
@@ -39,14 +39,15 @@
 					icon="overflow"
 					design="Transparent"
 					@click="{{_onBtnOverflowClick}}"
-					class="ui5-ng-overflow-btn"
+					class="ui5-nli-group-overflow-btn"
 					title="{{overflowBtnTitle}}"
+					overflow-btn
 				></ui5-button>
 			{{else}}
 				{{#each standardActions}}
 					<ui5-button
 						icon="{{this.icon}}"
-						class="ui5-ng-action"
+						class="ui5-nli-group-action"
 						@click="{{this.press}}"
 						data-ui5-external-action-item-id="{{this.refItemid}}"
 					>
@@ -68,7 +69,7 @@
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	</div>
 
-	<ui5-list class="ui5-ng-items">
+	<ui5-list class="ui5-nli-group-items">
 		<slot></slot>
 	</ui5-list>
 </li>
