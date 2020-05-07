@@ -163,6 +163,8 @@ class NotificationListItemBase extends ListItemBase {
 				text: action.text,
 				press: this._onCustomActionClick.bind(this),
 				refItemid: action._id,
+				disabled: action.disabled ? true : undefined,
+				design: action.design,
 			};
 		});
 	}

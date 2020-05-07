@@ -10,6 +10,8 @@
 				icon="{{this.icon}}"
 				design="Transparent"
 				@click="{{this.press}}"
+				?disabled="{{this.disabled}}"
+				design="{{this.design}}"
 				data-ui5-external-action-item-id="{{this.refItemid}}"
 				>{{this.text}}
 			</ui5-button>

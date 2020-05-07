@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 
 /**
  * @public
@@ -15,6 +16,34 @@ const metadata = {
 		 */
 		text: {
 			type: String,
+		},
+
+		/**
+		 * Defines if the action is disabled.
+		 * <br><br>
+		 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		disabled: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the action design.
+		 * <br><br>
+		 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
+		 * "Negative", and "Transparent".
+		 *
+		 * @type {ButtonDesign}
+		 * @defaultvalue "Transparent"
+		 * @public
+		 */
+		design: {
+			type: ButtonDesign,
+			defaultValue: ButtonDesign.Transparent,
 		},
 
 		/**

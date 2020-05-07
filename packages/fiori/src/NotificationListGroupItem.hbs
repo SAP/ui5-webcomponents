@@ -49,6 +49,8 @@
 					<ui5-button
 						icon="{{this.icon}}"
 						class="ui5-nli-group-action"
+						?disabled="{{this.disabled}}"
+						design="{{this.design}}"
 						@click="{{this.press}}"
 						data-ui5-external-action-item-id="{{this.refItemid}}"
 						custom-btn

@@ -62,7 +62,13 @@
 			<span slot="footnotes">Other stuff</span>
 
 			<ui5-notification-overflow-action id="acceptBtn" icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
-			<ui5-notification-overflow-action id="rejectBtn" icon="message-error" text="Reject" slot="actions"></ui5-notification-overflow-action>
+			<ui5-notification-overflow-action
+				id="rejectBtn"
+				icon="message-error"
+				text="Reject"
+				slot="actions"
+				design="Negative"
+			></ui5-notification-overflow-action>
 		</ui5-li-notification>
 
 		<ui5-li-notification
@@ -91,7 +97,7 @@
 			<span slot="footnotes">3 Days</span>
 
 			<ui5-notification-overflow-action icon="accept" text="Accept All Requested Information" slot="actions"></ui5-notification-overflow-action>
-			<ui5-notification-overflow-action icon="decline" text="Reject All Requested Information" slot="actions"></ui5-notification-overflow-action>
+			<ui5-notification-overflow-action icon="decline" design="Negative" text="Reject All Requested Information" slot="actions"></ui5-notification-overflow-action>
 		</ui5-li-notification>
 
 		<ui5-li-notification heading="New order (#2523)" truncate>
@@ -100,7 +106,14 @@
 			<span slot="footnotes">John SMith</span>
 			<span slot="footnotes">3 Days</span>
 
-			<ui5-notification-overflow-action icon="message-error" text="Reject" slot="actions"></ui5-notification-overflow-action>
+			<ui5-notification-overflow-action
+				icon="message-error"
+				design="Negative"
+				text="Reject"
+				slot="actions">
+			</ui5-notification-overflow-action>
+
+			<ui5-notification-overflow-action icon="decline" disabled design="Negative" text="Reject All Requested Information" slot="actions"></ui5-notification-overflow-action>
 		</ui5-li-notification>
 	</ui5-list>
 
@@ -166,7 +179,13 @@
 				<span slot="footnotes">Other stuff</span>
 	
 				<ui5-notification-overflow-action id="acceptBtnInPopover" icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
-				<ui5-notification-overflow-action id="rejectBtnInPopover" icon="message-error" text="Reject" slot="actions"></ui5-notification-overflow-action>
+				<ui5-notification-overflow-action
+					id="rejectBtnInPopover"
+					icon="message-error"
+					text="Reject"
+					design="Negative"
+					slot="actions">
+				</ui5-notification-overflow-action>
 			</ui5-li-notification>
 	
 			<ui5-li-notification
@@ -195,7 +214,7 @@
 				<span slot="footnotes">3 Days</span>
 	
 				<ui5-notification-overflow-action icon="accept" text="Accept All Requested Information" slot="actions"></ui5-notification-overflow-action>
-				<ui5-notification-overflow-action icon="decline" text="Reject All Requested Information" slot="actions"></ui5-notification-overflow-action>
+				<ui5-notification-overflow-action icon="decline" design="Negative" text="Reject All Requested Information" slot="actions"></ui5-notification-overflow-action>
 			</ui5-li-notification>
 	
 			<ui5-li-notification heading="New order (#2523)" truncate>
@@ -204,7 +223,7 @@
 				<span slot="footnotes">John SMith</span>
 				<span slot="footnotes">3 Days</span>
 	
-				<ui5-notification-overflow-action icon="message-error" text="Reject" slot="actions"></ui5-notification-overflow-action>
+				<ui5-notification-overflow-action icon="message-error" design="Negative" text="Reject" slot="actions"></ui5-notification-overflow-action>
 			</ui5-li-notification>
 		</ui5-list>
 	</ui5-popover>
