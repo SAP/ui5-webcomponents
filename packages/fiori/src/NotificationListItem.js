@@ -42,8 +42,11 @@ const metadata = {
 
 		/**
 		 * Defines if the <code>heading</code> and <code>decription</code> should truncate,
-		 * otherwise they would wrap by default.
-		 * @type {boolean}
+		 * they wrap by default.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> when set to <code>true</code>
+		 * a <code>ShowMore/Less</code> button would be displayed.
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -54,8 +57,8 @@ const metadata = {
 		/**
 		 * Defines if the <code>notification</code> is new or has been already read.
 		 * <br><br>
-		 * <b>Note:</b> when set to <code>false</code> the <code>heading</code> has bold font
-		 * and if set to true - it has a normal font.
+		 * <b>Note:</b> if set to <code>false</code> the <code>heading</code> has bold font,
+		 * if set to true - it has a normal font.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public

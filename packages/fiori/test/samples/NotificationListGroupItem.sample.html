@@ -61,6 +61,7 @@
 				show-counter
 				heading="Deliveries"
 				priority="Medium"
+				collapsed
 			>
 				<ui5-li-notification
 					show-close
@@ -99,14 +100,15 @@
 			<ui5-li-notification-group
 				show-close
 				show-counter
-				priority="High"
+				priority="Low"
+				collapsed
 				heading="Meetings With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 			>
 				<ui5-li-notification
 					show-close
 					truncate
 					heading="New meeting at Building (#35001)"
-					priority="High"
+					priority="Low"
 					read
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -120,7 +122,7 @@
 					show-close
 					truncate
 					heading="New meeting at Building (#35001)"
-					priority="High"
+					priority="Low"
 					read
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -176,7 +178,13 @@
 <section>
 	<h3>NotificationListGroupItem In ShellBar</h3>
 	<div class="snippet">
-		<ui5-shellbar id="shellbar" primary-title="Product Title" show-notifications>
+		<ui5-shellbar
+			id="shellbar"
+			primary-title="Corporate Portal"
+			logo="../../../assets/images/sap-logo-svg.svg"
+			show-notifications
+			notification-count="6"
+		>
 		</ui5-shellbar>
 
 		<ui5-popover id="notificationsPopover" style="max-width: 400px" placement-type="Bottom" horizontal-align="Right">
@@ -228,6 +236,7 @@
 					show-counter
 					heading="Deliveries"
 					priority="Medium"
+					collapsed
 				>
 					<ui5-li-notification
 						show-close
@@ -267,6 +276,7 @@
 					show-close
 					show-counter
 					priority="High"
+					collapsed
 					heading="Meetings With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				>
 					<ui5-li-notification
@@ -308,7 +318,13 @@
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-shellbar id="shellbar" primary-title="Product Title" show-notifications>
+<ui5-shellbar
+	id="shellbar"
+	primary-title="Corporate Portal"
+	logo="../../../assets/images/sap-logo-svg.svg"
+	show-notifications
+	notification-count="6"
+>
 </ui5-shellbar>
 
 <ui5-popover
