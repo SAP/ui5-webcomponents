@@ -1,5 +1,5 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
@@ -314,12 +314,6 @@ class Suggestions {
 			itemSelectionText = i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;
-	}
-
-	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
 	}
 }
 
