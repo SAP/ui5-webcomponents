@@ -27,7 +27,6 @@ import UploadCollectionItemTemplate from "./generated/templates/UploadCollection
 
 // Styles
 import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 
 /**
  * @public
@@ -275,7 +274,6 @@ class UploadCollectionItem extends ListItem {
 
 		const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
 
-		await RenderScheduler.whenFinished();
 		if (inp.getFocusDomRef()) {
 			inp.getFocusDomRef().setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
