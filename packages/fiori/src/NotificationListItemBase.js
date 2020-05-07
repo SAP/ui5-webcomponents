@@ -199,6 +199,10 @@ class NotificationListItemBase extends ListItemBase {
 	_onkeydown(event) {
 		super._onkeydown(event);
 
+		if (event.isMarked === "button") {
+			return;
+		}
+
 		if (isSpace(event)) {
 			event.preventDefault();
 		}
