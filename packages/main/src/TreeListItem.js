@@ -19,6 +19,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 		level: {
 			type: Integer,
+			defaultValue: 1,
 		},
 		icon: {
 			type: String,
@@ -26,12 +27,7 @@ const metadata = {
 		expanded: {
 			type: Boolean,
 		},
-
-		_showToggle: {
-			type: Boolean,
-		},
-
-		hasTitle: {
+		showToggle: {
 			type: Boolean,
 		},
 	},
@@ -50,7 +46,11 @@ const metadata = {
 		},
 	},
 	events: {
-		toggle: {},
+		toggle: {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
 	},
 };
 
@@ -86,11 +86,6 @@ class TreeListItem extends ListItem {
 		await Icon.define();
 	}
 
-	onBeforeRendering(...params) {
-		super.onBeforeRendering(...params);
-		this.hasTitle = !!this.textContent;
-	}
-
 	get styles() {
 		const indent = this.level * 0.5;
 
@@ -101,7 +96,7 @@ class TreeListItem extends ListItem {
 		};
 	}
 
-	get _toggleIcon() {
+	get _toggleIconName() {
 		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
 	}
 

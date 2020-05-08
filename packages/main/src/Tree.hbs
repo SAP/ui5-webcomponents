@@ -1,24 +1,24 @@
 <ui5-list class="ui5-tree-root"
-    .mode="{{mode}}"
-    .noDataText="{{noDataText}}"
-    @ui5-itemClick="{{_onListItemClick}}"
-    @ui5-itemDelete="{{_onListItemDelete}}"
-    @ui5-selectionChange="{{_onListSelectionChange}}"
+	.mode="{{mode}}"
+	.noDataText="{{noDataText}}"
+	@ui5-itemClick="{{_onListItemClick}}"
+	@ui5-itemDelete="{{_onListItemDelete}}"
+	@ui5-selectionChange="{{_onListSelectionChange}}"
 >
-    <slot name="header" slot="header"></slot>
-    {{#each _listItems}}
-        <ui5-li-tree
-            type="Active"
-            level="{{this.level}}"
-            icon="{{this.treeItem.icon}}"
-            .treeItem="{{this.treeItem}}"
-            .expanded="{{this.treeItem.expanded}}"
-            .selected="{{this.treeItem.selected}}"
-            ._id="{{this.treeItem._id}}"
-            ._showToggle="{{this.treeItem.hasChildren}}"
-            @ui5-toggle="{{../_onListItemToggle}}"
-        >
-            {{this.treeItem.text}}
-        </ui5-li-tree>
-    {{/each}}
+	<slot name="header" slot="header"></slot>
+	{{#each _listItems}}
+		<ui5-li-tree
+			type="Active"
+			level="{{this.level}}"
+			icon="{{this.treeItem.icon}}"
+			.treeItem="{{this.treeItem}}"
+			.expanded="{{this.treeItem.expanded}}"
+			.selected="{{this.treeItem.selected}}"
+			._id="{{this.treeItem._id}}"
+			.showToggle="{{this.treeItem.hasChildren}}"
+			@ui5-toggle="{{../_onListItemToggle}}"
+		>
+			{{this.treeItem.text}}
+		</ui5-li-tree>
+	{{/each}}
 </ui5-list>

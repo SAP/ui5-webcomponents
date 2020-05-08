@@ -24,9 +24,6 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
-		//
-	},
 };
 
 /**
@@ -55,7 +52,7 @@ class TreeItem extends UI5Element {
 	}
 
 	get items() {
-		return [...this.children].filter(child => child.localName === "ui5-tree-item");
+		return [...this.children];
 	}
 
 	get hasChildren() {
