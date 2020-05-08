@@ -1,5 +1,5 @@
-commit 8e0463f70bb977ab2dde5cd0f5d836e8469ca7e7
-Author: Dusan Sacha <sacha.dusan@gmail.com>
-Date:   Fri May 8 08:15:24 2020 +0200
+commit f1f3d4f51dd319f36d63c7fd1573ca98c67f54d8
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri May 8 10:56:35 2020 +0300
 
-    docs(React-tutorial): correct end tag by example (#1584)
+    feat(ui5-select): implement angular two way data binding (#1583)
