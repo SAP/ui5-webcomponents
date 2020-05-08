@@ -125,7 +125,7 @@ class Suggestions {
 		this.selectedItemIndex = this._getItems().indexOf(item);
 
 		this.accInfo = {
-			currentPos: this.selectedItemIndex,
+			currentPos: this.selectedItemIndex + 1,
 			listSize: this._getItems().length,
 			itemText: item.textContent,
 		};
@@ -234,6 +234,12 @@ class Suggestions {
 		const items = this._getItems();
 		const currentItem = items[nextIdx];
 		const previousItem = items[previousIdx];
+
+		this.accInfo = {
+			currentPos: nextIdx + 1,
+			listSize: items.length,
+			itemText: currentItem.textContent,
+		};
 
 		if (previousItem) {
 			previousItem.selected = false;

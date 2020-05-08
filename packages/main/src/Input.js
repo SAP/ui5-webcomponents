@@ -832,7 +832,7 @@ class Input extends UI5Element {
 	}
 
 	get itemSelectionAnnounce() {
-		return this.hasSuggestionItemSelected ? this.Suggestions.itemSelectionAnnounce : undefined;
+		return this.Suggestions.selectedItemIndex !== null ? this.Suggestions.itemSelectionAnnounce : undefined;
 	}
 
 	get classes() {
