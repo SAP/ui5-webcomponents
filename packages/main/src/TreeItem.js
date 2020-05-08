@@ -1,8 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-
-// Template
-import TreeItemTemplate from "./generated/templates/TreeItemTemplate.lit.js";
 
 /**
  * @public
@@ -15,9 +11,6 @@ const metadata = {
 		},
 		expanded: {
 			type: Boolean,
-		},
-		_level: {
-			type: Integer,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
@@ -59,22 +52,8 @@ class TreeItem extends UI5Element {
 		return [...this.children].filter(child => child.localName === "ui5-tree-item");
 	}
 
-	get _indent() {
-		const extraPadding = this.items.length ? 0 : 2.25;
-		return this._level * 1.5 + extraPadding;
-	}
-
-	get expandedClass() {
-		return this.expanded ? "" : "expand-button-expanded";
-	}
-
-	get itemInTreePresentation() {
-		return TreeItemTemplate(this);
-	}
-
-	_toggleButtonClick(event) {
-		const treeItem = this._listItems.find(item => item._id === event.target.dataset.itemId);
-		treeItem.expanded = !treeItem.expanded;
+	get hasChildren() {
+		return this.items.length > 0;
 	}
 }
 

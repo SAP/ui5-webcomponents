@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TreeItem from "./TreeItem.js";
 import List from "./List.js";
-import "@ui5/webcomponents-icons/dist/icons/navigation-right-arrow.js";
+import TreeListItem from "./TreeListItem.js";
 
 // Template
 import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
@@ -76,6 +76,7 @@ class Tree extends UI5Element {
 	static async onDefine() {
 		await Promise.all([
 			List.define(),
+			TreeListItem.define(),
 			TreeItem.define(),
 		]);
 	}
@@ -97,14 +98,21 @@ class Tree extends UI5Element {
 	onTreeStructureChange() {
 		this._listItems = []; // trigger onBeforeRendering by modifying the tracked property and force tree re-build
 	}
+
+	get hasChildren() {
+		return this.items.length > 0;
+	}
 }
 
 const buildTree = (el, level, result) => {
 	el.items.forEach(item => {
-		item._level = level;
+		const listItem = {
+			treeItem: item,
+			level,
+		};
 
-		result.push(item);
-		if (item.expanded && item.items.length) {
+		result.push(listItem);
+		if (item.expanded && item.hasChildren) {
 			buildTree(item, level + 1, result);
 		}
 	});

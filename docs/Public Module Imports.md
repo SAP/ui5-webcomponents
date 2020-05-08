@@ -69,6 +69,8 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toast                    | `ui5-toast`          | `import "@ui5/webcomponents/dist/Toast.js";`               |
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
+| Tree                     | `ui5-tree`           | `import "@ui5/webcomponents/dist/Tree.js";`                |
+| Tree Item                | `ui5-tree-item`      | comes with `ui5-tree`                                      |
 
 ### 2. Assets
 

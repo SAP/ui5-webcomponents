@@ -8,11 +8,3 @@
     width: 100%;
     height: 100%;
 }
-
-.expand-button {
-    transform: rotate(90deg);
-}
-
-.expand-button-expanded {
-    transform: rotate(0deg);
-}

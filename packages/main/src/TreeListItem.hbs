@@ -1,0 +1,25 @@
+{{>include "./ListItem.hbs"}}
+
+{{#*inline "listItemContent"}}
+	<div class="ui5-li-tree-root" style="{{styles.content}}">
+        <div class="ui5-li-tree-expand-box">
+            {{#if _showExpandCollapse}}
+                <ui5-icon
+                    name="{{_toggleIcon}}"
+                    @click="{{_toggleClick}}"
+                ></ui5-icon>
+            {{/if}}
+        </div>
+
+		{{#if textContent.length}}
+			<div part="title" class="ui5-li-title"><slot></slot></div>
+		{{/if}}
+
+	</div>
+{{/inline}}
+
+{{#*inline "imageBegin"}}{{/inline}}
+
+{{#*inline "iconBegin"}}{{/inline}}
+
+{{#*inline "iconEnd"}}{{/inline}}

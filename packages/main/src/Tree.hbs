@@ -1,7 +1,16 @@
 <div class="ui5-tree-root">
     <ui5-list mode="None">
         {{#each _listItems}}
-            {{this.itemInTreePresentation}}
+            <ui5-li-tree
+                type="Active"
+                level="{{this.level}}"
+                .expanded="{{this.treeItem.expanded}}"
+                ._id="{{this.treeItem._id}}"
+                ._item="{{this.treeItem}}"
+                ._showExpandCollapse="{{this.treeItem.hasChildren}}"
+            >
+                {{this.treeItem.text}}
+            </ui5-li-tree>
         {{/each}}
     </ui5-list>
 </div>

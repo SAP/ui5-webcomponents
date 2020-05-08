@@ -1,0 +1,27 @@
+:host(:not([hidden])) {
+	display: block;
+}
+
+.ui5-li-tree-root {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    flex: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ui5-li-tree-expand-box {
+    width: 2.25rem;
+}
+
+.ui5-li-tree-collapsed {
+    transform: rotate(90deg);
+}
+
+.ui5-li-tree-expanded {
+    transform: rotate(0deg);
+}
+
+
