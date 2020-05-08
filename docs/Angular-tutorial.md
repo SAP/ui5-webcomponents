@@ -98,7 +98,7 @@ export class AppModule {}
 
 4. Make Angular boot after UI5 Web Components are defined:
 
-In the module, where you are using UI5 Web Components, you should add the ```APP_INITIALIZER``` provider. In order to do so, import ```APP_INITIALIZER``` and add it to the providers array like this(In this example we will add it in the ```app.module.ts```):
+In the module, where you are using UI5 Web Components, you should add the ```APP_INITIALIZER``` provider. In order to do so, import ```APP_INITIALIZER``` and add it to the providers array like this (In this example we will add it in the ```app.module.ts```):
 ```js
 import { ..., APP_INITIALIZER  } from '@angular/core';
 
