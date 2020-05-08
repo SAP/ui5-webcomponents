@@ -1,5 +1,5 @@
-commit 82b3d4149a2ff70cda1a364fbd4c084643497991
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue May 5 14:09:55 2020 +0300
+commit 8e0463f70bb977ab2dde5cd0f5d836e8469ca7e7
+Author: Dusan Sacha <sacha.dusan@gmail.com>
+Date:   Fri May 8 08:15:24 2020 +0200
 
-    feat(ui5-datepicker): implement valuestatemessage slot (#1476)
+    docs(React-tutorial): correct end tag by example (#1584)
