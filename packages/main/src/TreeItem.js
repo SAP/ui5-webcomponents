@@ -55,6 +55,10 @@ class TreeItem extends UI5Element {
 	get hasChildren() {
 		return this.items.length > 0;
 	}
+
+	toggle() {
+		this.expanded = !this.expanded;
+	}
 }
 
 TreeItem.define();

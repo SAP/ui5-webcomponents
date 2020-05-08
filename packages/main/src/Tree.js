@@ -102,6 +102,11 @@ class Tree extends UI5Element {
 	get hasChildren() {
 		return this.items.length > 0;
 	}
+
+	_onItemToggle(event) {
+		const treeItem = event.target._item;
+		treeItem.toggle();
+	}
 }
 
 const buildTree = (el, level, result) => {

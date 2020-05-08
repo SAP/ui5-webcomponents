@@ -8,6 +8,7 @@
                 ._id="{{this.treeItem._id}}"
                 ._item="{{this.treeItem}}"
                 ._showExpandCollapse="{{this.treeItem.hasChildren}}"
+                @ui5-toggle="{{../_onItemToggle}}"
             >
                 {{this.treeItem.text}}
             </ui5-li-tree>

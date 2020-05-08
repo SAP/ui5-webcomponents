@@ -51,6 +51,9 @@ const metadata = {
 			type: Node,
 		},
 	},
+	events: {
+		toggle: {},
+	},
 };
 
 /**
@@ -104,7 +107,7 @@ class TreeListItem extends ListItem {
 	}
 
 	_toggleClick(event) {
-		this._item.expanded = !this._item.expanded;
+		this.fireEvent("toggle");
 	}
 }
 
