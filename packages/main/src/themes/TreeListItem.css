@@ -2,17 +2,11 @@
 	display: block;
 }
 
-.ui5-li-tree-root {
-    pointer-events: auto;
-    display: flex;
-    align-items: center;
-    flex: auto;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .ui5-li-tree-toggle-box {
     width: 1rem;
     margin-right: 0.5rem;
+}
+
+:host([active][actionable]) .ui5-li-tree-toggle-icon {
+    color: var(--sapList_Active_TextColor);
 }

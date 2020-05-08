@@ -4,7 +4,6 @@ import TreeItem from "./TreeItem.js";
 import List from "./List.js";
 import TreeListItem from "./TreeListItem.js";
 import ListMode from "./types/ListMode.js";
-import TreeMode from "./types/TreeMode.js";
 
 // Template
 import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
@@ -19,8 +18,11 @@ const metadata = {
 	tag: "ui5-tree",
 	properties: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
 		mode: {
-			type: TreeMode,
-			defaultValue: TreeMode.None,
+			type: ListMode,
+			defaultValue: ListMode.None,
+		},
+		noDataText: {
+			type: String,
 		},
 		_listItems: {
 			type: Object,
@@ -127,16 +129,6 @@ class Tree extends UI5Element {
 
 	get hasChildren() {
 		return this.items.length > 0;
-	}
-
-	get listMode() {
-		const treeToListModesMap = {
-			None: ListMode.None,
-			SingleSelect: ListMode.SingleSelectBegin,
-			MultiSelect: ListMode.MultiSelect,
-			Delete: ListMode.Delete,
-		};
-		return treeToListModesMap[this.mode];
 	}
 
 	_onListItemToggle(event) {

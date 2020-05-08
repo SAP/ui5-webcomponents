@@ -87,6 +87,7 @@ class TreeListItem extends ListItem {
 	}
 
 	onBeforeRendering(...params) {
+		super.onBeforeRendering(...params);
 		this.hasTitle = !!this.textContent;
 	}
 

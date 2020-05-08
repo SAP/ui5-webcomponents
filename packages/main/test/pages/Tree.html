@@ -47,14 +47,17 @@
 
     <br><br>
 
-    <ui5-tree id="tree" show-checkboxes mode="MultiSelect">
+    <ui5-tree id="tree" no-data-text="No data" mode="MultiSelect">
         <div slot="header" class="hdr">
             <ui5-title>My tree</ui5-title>
             <div class="spacer"></div>
             <ui5-select id="modeSelect">
                 <ui5-option>None</ui5-option>
                 <ui5-option>SingleSelect</ui5-option>
-                <ui5-option>MultiSelect</ui5-option>
+                <ui5-option>SingleSelectBegin</ui5-option>
+                <ui5-option>SingleSelectEnd</ui5-option>
+                <ui5-option selected>MultiSelect</ui5-option>
+
                 <ui5-option>Delete</ui5-option>
             </ui5-select>
             <ui5-button id="expandLevel1" icon="expand">Expand Level 1</ui5-button>
@@ -99,6 +102,8 @@
 
 		document.getElementById("tree").addEventListener("itemDelete", function(event) {
 			console.log("Item delete button pressed: ", event.detail.item);
+			var node = event.detail.item;
+			node.parentElement.removeChild(node);
 		});
 
 		document.getElementById("tree").addEventListener("selectionChange", function(event) {
