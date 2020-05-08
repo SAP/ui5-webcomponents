@@ -55,7 +55,7 @@ class Home extends Component {
 
     render(){
         return(
-            <ui5-switch ref={this.switch}></ui5-buttswitchon>
+            <ui5-switch ref={this.switch}></ui5-switch>
         );
     }
 }
