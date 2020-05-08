@@ -32,7 +32,16 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
-		//
+		itemToggle: {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+		itemSelect: {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
 	},
 };
 
@@ -103,9 +112,19 @@ class Tree extends UI5Element {
 		return this.items.length > 0;
 	}
 
-	_onItemToggle(event) {
-		const treeItem = event.target._item;
-		treeItem.toggle();
+	_onListItemToggle(event) {
+		const listItem = event.detail.item;
+		const treeItem = listItem.treeItem;
+		const defaultPrevented = !this.fireEvent("itemToggle", { item: treeItem });
+		if (!defaultPrevented) {
+			treeItem.toggle();
+		}
+	}
+
+	_onItemSelect(event) {
+		const listItem = event.detail.item;
+		const treeItem = listItem.treeItem;
+		this.fireEvent("itemSelect", { item: treeItem });
 	}
 }
 

@@ -36,7 +36,7 @@
 
 <body style="background-color: var(--sapBackgroundColor);">
 
-    <ui5-tree show-checkboxes>
+    <ui5-tree id="tree" show-checkboxes>
         <div slot="header">Optional header</div>
 
         <ui5-tree-item expanded text="Tree 1" icon="paste" checked>
@@ -58,6 +58,16 @@
         </ui5-tree-item>
 
     </ui5-tree>
+
+    <script>
+        document.getElementById("tree").addEventListener("itemSelect", function(event) {
+            console.log("Item selected: ", event.detail.item);
+        });
+
+		document.getElementById("tree").addEventListener("itemToggle", function(event) {
+			console.log("Item toggled: ", event.detail.item);
+		});
+    </script>
 
 </body>
 

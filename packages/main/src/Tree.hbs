@@ -1,14 +1,17 @@
 <div class="ui5-tree-root">
-    <ui5-list mode="None">
+    <ui5-list
+        mode="None"
+        @ui5-itemClick="{{_onItemSelect}}"
+    >
         {{#each _listItems}}
             <ui5-li-tree
                 type="Active"
                 level="{{this.level}}"
+                .treeItem="{{this.treeItem}}"
                 .expanded="{{this.treeItem.expanded}}"
                 ._id="{{this.treeItem._id}}"
-                ._item="{{this.treeItem}}"
                 ._showExpandCollapse="{{this.treeItem.hasChildren}}"
-                @ui5-toggle="{{../_onItemToggle}}"
+                @ui5-toggle="{{../_onListItemToggle}}"
             >
                 {{this.treeItem.text}}
             </ui5-li-tree>

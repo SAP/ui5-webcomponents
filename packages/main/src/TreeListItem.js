@@ -25,10 +25,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_item: {
-			type: Object,
-		},
-
 		_showExpandCollapse: {
 			type: Boolean,
 		},
@@ -107,7 +103,8 @@ class TreeListItem extends ListItem {
 	}
 
 	_toggleClick(event) {
-		this.fireEvent("toggle");
+		event.stopPropagation();
+		this.fireEvent("toggle", { item: this });
 	}
 }
 
