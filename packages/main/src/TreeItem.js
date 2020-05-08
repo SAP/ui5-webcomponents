@@ -12,6 +12,9 @@ const metadata = {
 		expanded: {
 			type: Boolean,
 		},
+		selected: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
 		"default": {

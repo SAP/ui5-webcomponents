@@ -164,6 +164,13 @@ class Tree extends UI5Element {
 		const previouslySelectedItems = event.detail.previouslySelectedItems.map(item => item.treeItem);
 		const selectedItems = event.detail.selectedItems.map(item => item.treeItem);
 
+		previouslySelectedItems.forEach(item => {
+			item.selected = false;
+		});
+		selectedItems.forEach(item => {
+			item.selected = true;
+		});
+
 		this.fireEvent("selectionChange", {
 			previouslySelectedItems,
 			selectedItems,
