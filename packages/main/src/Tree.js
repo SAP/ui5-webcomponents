@@ -3,6 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TreeItem from "./TreeItem.js";
 import List from "./List.js";
 import TreeListItem from "./TreeListItem.js";
+import ListMode from "./types/ListMode.js";
+import TreeMode from "./types/TreeMode.js";
 
 // Template
 import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
@@ -16,6 +18,10 @@ import TreeCss from "./generated/themes/Tree.css.js";
 const metadata = {
 	tag: "ui5-tree",
 	properties: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
+		mode: {
+			type: TreeMode,
+			defaultValue: TreeMode.None,
+		},
 		_listItems: {
 			type: Object,
 			multiple: true,
@@ -37,9 +43,20 @@ const metadata = {
 				item: { type: HTMLElement },
 			},
 		},
-		itemSelect: {
+		itemClick: {
 			detail: {
 				item: { type: HTMLElement },
+			},
+		},
+		itemDelete: {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+		selectionChange: {
+			detail: {
+				selectedItems: { type: Array },
+				previouslySelectedItems: { type: Array },
 			},
 		},
 	},
@@ -112,6 +129,16 @@ class Tree extends UI5Element {
 		return this.items.length > 0;
 	}
 
+	get listMode() {
+		const treeToListModesMap = {
+			None: ListMode.None,
+			SingleSelect: ListMode.SingleSelectBegin,
+			MultiSelect: ListMode.MultiSelect,
+			Delete: ListMode.Delete,
+		};
+		return treeToListModesMap[this.mode];
+	}
+
 	_onListItemToggle(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
@@ -121,10 +148,26 @@ class Tree extends UI5Element {
 		}
 	}
 
-	_onItemSelect(event) {
+	_onListItemClick(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
-		this.fireEvent("itemSelect", { item: treeItem });
+		this.fireEvent("itemClick", { item: treeItem });
+	}
+
+	_onListItemDelete(event) {
+		const listItem = event.detail.item;
+		const treeItem = listItem.treeItem;
+		this.fireEvent("itemDelete", { item: treeItem });
+	}
+
+	_onListSelectionChange(event) {
+		const previouslySelectedItems = event.detail.previouslySelectedItems.map(item => item.treeItem);
+		const selectedItems = event.detail.selectedItems.map(item => item.treeItem);
+
+		this.fireEvent("selectionChange", {
+			previouslySelectedItems,
+			selectedItems,
+		});
 	}
 }
 

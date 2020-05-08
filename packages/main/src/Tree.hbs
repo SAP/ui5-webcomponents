@@ -1,7 +1,9 @@
 <div class="ui5-tree-root">
     <ui5-list
-        mode="None"
-        @ui5-itemClick="{{_onItemSelect}}"
+        mode="{{listMode}}"
+        @ui5-itemClick="{{_onListItemClick}}"
+        @ui5-itemDelete="{{_onListItemDelete}}"
+        @ui5-selectionChange="{{_onListSelectionChange}}"
     >
         {{#each _listItems}}
             <ui5-li-tree
@@ -10,7 +12,7 @@
                 .treeItem="{{this.treeItem}}"
                 .expanded="{{this.treeItem.expanded}}"
                 ._id="{{this.treeItem._id}}"
-                ._showExpandCollapse="{{this.treeItem.hasChildren}}"
+                ._showToggle="{{this.treeItem.hasChildren}}"
                 @ui5-toggle="{{../_onListItemToggle}}"
             >
                 {{this.treeItem.text}}

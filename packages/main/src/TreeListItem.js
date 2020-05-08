@@ -25,7 +25,7 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_showExpandCollapse: {
+		_showToggle: {
 			type: Boolean,
 		},
 
@@ -92,7 +92,7 @@ class TreeListItem extends ListItem {
 		const indent = this.level * 0.5;
 
 		return {
-			content: {
+			toggleBox: {
 				"padding-left": `${indent}rem`,
 			},
 		};

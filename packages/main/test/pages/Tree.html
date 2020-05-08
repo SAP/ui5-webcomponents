@@ -36,7 +36,15 @@
 
 <body style="background-color: var(--sapBackgroundColor);">
 
-    <ui5-tree id="tree" show-checkboxes>
+    <ui5-select id="modeSelect">
+        <ui5-option>None</ui5-option>
+        <ui5-option>SingleSelect</ui5-option>
+        <ui5-option>MultiSelect</ui5-option>
+        <ui5-option>Delete</ui5-option>
+    </ui5-select>
+    <br><br>
+
+    <ui5-tree id="tree" show-checkboxes mode="None">
         <div slot="header">Optional header</div>
 
         <ui5-tree-item expanded text="Tree 1" icon="paste" checked>
@@ -60,12 +68,29 @@
     </ui5-tree>
 
     <script>
-        document.getElementById("tree").addEventListener("itemSelect", function(event) {
-            console.log("Item selected: ", event.detail.item);
+        document.getElementById("tree").addEventListener("itemClick", function(event) {
+            console.log("Item clicked: ", event.detail.item);
         });
 
 		document.getElementById("tree").addEventListener("itemToggle", function(event) {
 			console.log("Item toggled: ", event.detail.item);
+		});
+
+		document.getElementById("tree").addEventListener("itemDelete", function(event) {
+			console.log("Item delete button pressed: ", event.detail.item);
+		});
+
+		document.getElementById("tree").addEventListener("selectionChange", function(event) {
+			console.log("Selection changed from: ", event.detail.previouslySelectedItems, "to: ", event.detail.selectedItems);
+		});
+
+		document.getElementById("modeSelect").addEventListener("change", function(event) {
+			var newMode = event.detail.selectedOption.textContent;
+			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
+			trees.forEach(function(tree) {
+				tree.mode = newMode;
+            });
+
 		});
     </script>
 

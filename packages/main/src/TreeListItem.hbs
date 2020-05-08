@@ -1,16 +1,19 @@
 {{>include "./ListItem.hbs"}}
 
-{{#*inline "listItemContent"}}
-	<div class="ui5-li-tree-root" style="{{styles.content}}">
-        <div class="ui5-li-tree-expand-box">
-            {{#if _showExpandCollapse}}
-                <ui5-icon
+
+{{#*inline "listItemPreContent"}}
+    <div class="ui5-li-tree-toggle-box" style="{{styles.toggleBox}}">
+        {{#if _showToggle}}
+            <ui5-icon
                     name="{{_toggleIcon}}"
                     @click="{{_toggleClick}}"
-                ></ui5-icon>
-            {{/if}}
-        </div>
+            ></ui5-icon>
+        {{/if}}
+    </div>
+{{/inline}}
 
+{{#*inline "listItemContent"}}
+	<div class="ui5-li-tree-root">
 		{{#if textContent.length}}
 			<div part="title" class="ui5-li-title"><slot></slot></div>
 		{{/if}}
