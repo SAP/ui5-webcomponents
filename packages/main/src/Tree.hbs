@@ -5,10 +5,12 @@
         @ui5-itemDelete="{{_onListItemDelete}}"
         @ui5-selectionChange="{{_onListSelectionChange}}"
     >
+        <slot name="header" slot="header"></slot>
         {{#each _listItems}}
             <ui5-li-tree
                 type="Active"
                 level="{{this.level}}"
+                icon="{{this.treeItem.icon}}"
                 .treeItem="{{this.treeItem}}"
                 .expanded="{{this.treeItem.expanded}}"
                 .selected="{{this.treeItem.selected}}"

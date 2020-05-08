@@ -20,7 +20,9 @@ const metadata = {
 		level: {
 			type: Integer,
 		},
-
+		icon: {
+			type: String,
+		},
 		expanded: {
 			type: Boolean,
 		},

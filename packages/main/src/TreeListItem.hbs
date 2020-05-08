@@ -23,6 +23,10 @@
 
 {{#*inline "imageBegin"}}{{/inline}}
 
-{{#*inline "iconBegin"}}{{/inline}}
+{{#*inline "iconBegin"}}
+    {{#if icon}}
+        <ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon"></ui5-icon>
+    {{/if}}
+{{/inline}}
 
 {{#*inline "iconEnd"}}{{/inline}}

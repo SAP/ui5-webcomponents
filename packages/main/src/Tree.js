@@ -176,7 +176,26 @@ class Tree extends UI5Element {
 			selectedItems,
 		});
 	}
+
+	/**
+	 * Perform Depth-First-Search walk on the tree and run a callback on each node
+	 *
+	 * @public
+	 * @param callback - function to execute on each node of the tree with 2 arguments: the node and the level
+	 */
+	walk(callback) {
+		walkTree(this, 1, callback);
+	}
 }
+
+const walkTree = (el, level, callback) => {
+	el.items.forEach(item => {
+		callback(item, level);
+		if (item.hasChildren) {
+			walkTree(item, level + 1, callback);
+		}
+	});
+};
 
 const buildTree = (el, level, result) => {
 	el.items.forEach(item => {

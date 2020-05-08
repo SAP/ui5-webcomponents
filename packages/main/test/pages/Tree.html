@@ -28,24 +28,40 @@
 			margin: 0;
 		}
 
-		.group {
-			padding: 1rem;
-		}
+		.hdr {
+            display: flex;
+        }
+
+        .hdr>* {
+            margin: 0.25rem;
+        }
+
+        .spacer {
+            flex: 1;
+        }
 	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
 
-    <ui5-select id="modeSelect">
-        <ui5-option>None</ui5-option>
-        <ui5-option>SingleSelect</ui5-option>
-        <ui5-option>MultiSelect</ui5-option>
-        <ui5-option>Delete</ui5-option>
-    </ui5-select>
+
     <br><br>
 
     <ui5-tree id="tree" show-checkboxes mode="MultiSelect">
-        <div slot="header">Optional header</div>
+        <div slot="header" class="hdr">
+            <ui5-title>My tree</ui5-title>
+            <div class="spacer"></div>
+            <ui5-select id="modeSelect">
+                <ui5-option>None</ui5-option>
+                <ui5-option>SingleSelect</ui5-option>
+                <ui5-option>MultiSelect</ui5-option>
+                <ui5-option>Delete</ui5-option>
+            </ui5-select>
+            <ui5-button id="expandLevel1" icon="expand">Expand Level 1</ui5-button>
+            <ui5-button id="expandLevel2" icon="expand">Expand Level 2</ui5-button>
+            <ui5-button id="expandAll" icon="expand-all">Expand All</ui5-button>
+            <ui5-button id="collapseAll" icon="collapse-all">Collapse All</ui5-button>
+        </div>
 
         <ui5-tree-item expanded text="Tree 1" icon="paste" selected>
             <ui5-tree-item expanded text="Tree 1.1" selected>
@@ -54,15 +70,20 @@
             </ui5-tree-item>
         </ui5-tree-item>
 
-        <ui5-tree-item text="Tree 2">
+        <ui5-tree-item text="Tree 2" icon="copy">
             <ui5-tree-item text="Tree 2.1">
                 <ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
-                <ui5-tree-item text="Tree 2.1.2"></ui5-tree-item>
+                <ui5-tree-item text="Tree 2.1.2">
+                    <ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+                    <ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+                    <ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+                    <ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+                </ui5-tree-item>
             </ui5-tree-item>
             <ui5-tree-item text="Tree 2.2"></ui5-tree-item>
         </ui5-tree-item>
 
-        <ui5-tree-item expanded text="Tree 3.1">
+        <ui5-tree-item expanded text="Tree 3 (no icon)">
         </ui5-tree-item>
 
     </ui5-tree>
@@ -90,7 +111,42 @@
 			trees.forEach(function(tree) {
 				tree.mode = newMode;
             });
+		});
 
+		document.getElementById("expandAll").addEventListener("click", function(event) {
+			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
+			trees.forEach(function(tree) {
+				tree.walk(function(node) {
+					node.expanded = true;
+                });
+			});
+        });
+
+		document.getElementById("collapseAll").addEventListener("click", function(event) {
+			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
+			trees.forEach(function(tree) {
+				tree.walk(function(node) {
+					node.expanded = false;
+				});
+			});
+		});
+
+		document.getElementById("expandLevel1").addEventListener("click", function(event) {
+			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
+			trees.forEach(function(tree) {
+				tree.walk(function(node, level) {
+					node.expanded = (level === 1) ? true : false;
+				});
+			});
+		});
+
+		document.getElementById("expandLevel2").addEventListener("click", function(event) {
+			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
+			trees.forEach(function(tree) {
+				tree.walk(function(node, level) {
+					node.expanded = (level <= 2) ? true : false;
+				});
+			});
 		});
     </script>
 
