@@ -267,7 +267,7 @@ class UploadCollectionItem extends ListItem {
 		this._focused = true;
 	}
 
-	_onfocusout() {
+	_onfocusout(event) {
 		super._onfocusout(event);
 		this._focused = false;
 	}
