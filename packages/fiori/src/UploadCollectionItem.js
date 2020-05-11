@@ -257,13 +257,13 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	onBeforeRendering() {
-		if (!this.focused) {
+		if (!this._focused) {
 			this._editing = false;
 		}
 	}
 
 	onAfterRendering() {
-		if (this.focused && this._editing) {
+		if (this._focused && this._editing) {
 			this.focusAndSelectText();
 		}
 	}
@@ -284,6 +284,16 @@ class UploadCollectionItem extends ListItem {
 	onDetailClick(event) {
 		super.onDetailClick(event);
 		this._editing = true;
+	}
+
+	_onfocusin(event) {
+		super._onfocusin(event);
+		this._focused = true;
+	}
+
+	_onfocusout() {
+		super._onfocusout(event);
+		this._focused = false;
 	}
 
 	_onInputChange(event) {
