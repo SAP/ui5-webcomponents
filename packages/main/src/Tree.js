@@ -196,7 +196,7 @@ const metadata = {
  * <code>ui5-tree</code> provides advanced keyboard handling. You can use the up/down arrow keys to navigate to the previous/next item in the list,
  * representing the tree, regardless of nesting, but also the left/right arrow keys to drill down and go up the tree. If you press the right arrow
  * on a tree node, it will expand, if not expanded. If you press the right arrow key once more, the first child of this node will be selected.
- * If you press the left arrow on a tree node, it will collapse, it expanded. If you press the left arrow key once more, the parent node of this
+ * If you press the left arrow on a tree node, it will collapse, if expanded. If you press the left arrow key once more, the parent node of this
  * tree node will be selected.
  *
  * <h3>ES6 Module Import</h3>
@@ -334,7 +334,7 @@ class Tree extends UI5Element {
 	 * Perform Depth-First-Search walk on the tree and run a callback on each node
 	 *
 	 * @public
-	 * @param callback - function to execute on each node of the tree with 2 arguments: the node and the level
+	 * @param {function} callback function to execute on each node of the tree with 2 arguments: the node and the level
 	 */
 	walk(callback) {
 		walkTree(this, 1, callback);
