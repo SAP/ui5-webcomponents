@@ -105,7 +105,7 @@ const metadata = {
 	},
 	events: {
 		/**
-		 * Fired on mouseup, space and enter
+		 * Fired on mouseup, space and enter if icon is interactive
 		 * @private
 		 * @since 1.0.0-rc.8
 		 */
