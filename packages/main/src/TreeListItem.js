@@ -18,23 +18,55 @@ import treeListItemCss from "./generated/themes/TreeListItem.css.js";
 const metadata = {
 	tag: "ui5-li-tree",
 	properties: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
+
+		/**
+		 * Defines the indentation of the tree list item. Level 1 represents a top level tree node.
+		 *
+		 * @type {Integer}
+		 * @public
+		 * @defaultValue 1
+		 */
 		level: {
 			type: Integer,
 			defaultValue: 1,
 		},
+
+		/**
+		 * If set, an icon will be displayed before the text, representing the tree item.
+		 *
+		 * @public
+		 * @type {String}
+		 * @defaultValue ""
+		 */
 		icon: {
 			type: String,
 		},
+
+		/**
+		 * Defines whether the tree node is expanded or collapsed.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
 		expanded: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines whether the tree node has children. Nodes with children will have an expand/collapse button.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
 		hasChildren: {
 			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-li</code>.
+		 * Defines the text of the <code>ui5-li-tree</code>.
 		 * <br><br>
 		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
@@ -47,24 +79,36 @@ const metadata = {
 		},
 	},
 	events: {
+
 		/**
-		 * Fired when the user expands/collapses a tree node by clicking the caret icon or using the keyboard
+		 * Fired when the tree item is expanded or collapsed.
+		 * @event
+		 * @param {HTMLElement} item the toggled item.
+		 * @public
 		 */
 		toggle: {
 			detail: {
 				item: { type: HTMLElement },
 			},
 		},
+
 		/**
-		 * Fired when the user presses right arrow on an expanded tree item
+		 * Fired when the user drills down into the tree hierarchy by pressing the right arrow on the tree node.
+		 * @event
+		 * @param {HTMLElement} item the item on which right arrow was pressed.
+		 * @public
 		 */
 		stepIn: {
 			detail: {
 				item: { type: HTMLElement },
 			},
 		},
+
 		/**
-		 * Fired when a user presses left arrow on a tree item
+		 * Fired when the user goes up the tree hierarchy by pressing the left arrow on the tree node.
+		 * @event
+		 * @param {HTMLElement} item the item on which left arrow was pressed.
+		 * @public
 		 */
 		stepOut: {
 			detail: {
@@ -77,6 +121,9 @@ const metadata = {
 /**
  * @class
  * The <code>ui5-li-tree</code> represents a node in a tree structure, shown as a <code>ui5-list</code>.
+ * <br>
+ * <i>Note:</i> Do not use <code>ui5-li-tree</code> directly in your apps. Use <code>ui5-tree-item</code> instead, as it can be nested inside a <code>ui5-tree</code>.
+ * On the other hand, <code>ui5-li-tree</code> can only be slotted inside a <code>ui5-list</code>, being a list item. It may be useful if you want to build a custom tree component, for example.
  *
  * @constructor
  * @author SAP SE

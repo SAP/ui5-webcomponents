@@ -189,14 +189,16 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
  * The <code>ui5-tree</code> component provides a tree structure for displaying data in a hierarchy.
  *
- * <h3>Usage</h3>
+ * <h3>Keyboard Handling</h3>
+ * <code>ui5-tree</code> provides advanced keyboard handling. You can use the up/down arrow keys to navigate to the previous/next item in the list,
+ * representing the tree, regardless of nesting, but also the left/right arrow keys to drill down and go up the tree. If you press the right arrow
+ * on a tree node, it will expand, if not expanded. If you press the right arrow key once more, the first child of this node will be selected.
+ * If you press the left arrow on a tree node, it will collapse, it expanded. If you press the left arrow key once more, the parent node of this
+ * tree node will be selected.
  *
- * For the <code>ui5-tree</code>
  * <h3>ES6 Module Import</h3>
- *
  * <code>import @ui5/webcomponents/dist/Tree.js";</code>
  * <br>
  * <code>import @ui5/webcomponents/dist/TreeItem.js";</code> (for its respective item element)

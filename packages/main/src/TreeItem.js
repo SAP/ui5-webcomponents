@@ -19,7 +19,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the tree node is expanded or collapsed. Only has effect for tree nodes with children.
+		 * Defines whether the tree node is expanded or collapsed. Only has visual effect for tree nodes with children.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -71,15 +71,15 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
  * This is the item to use inside a <code>ui5-tree</code>.
  * You can represent an arbitrary tree structure by recursively nesting tree items.
  *
  * <h3>Usage</h3>
+ * <code>ui5-tree-item</code> is an abstract element, representing a node in a <code>ui5-tree</code>. The tree itself is rendered as a list,
+ * and each <code>ui5-tree-item</code> is represented by a list item(<code>ui5-li-tree</code>) in that list. Therefore, you should only use
+ * <code>ui5-tree-item</code> directly in your apps. The <code>ui5-li-tree</code> list item is internal for the list, and not intended for public use.
  *
- * For the <code>ui5-tree-item</code>
  * <h3>ES6 Module Import</h3>
- *
  * <code>import @ui5/webcomponents/dist/TreeItem.js";</code>
  *
  * @constructor
