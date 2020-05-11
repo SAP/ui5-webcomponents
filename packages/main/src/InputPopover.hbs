@@ -34,7 +34,7 @@
 			{{#if hasValueStateMessage}}
 				<div class="row {{classes.popoverValueState}}" style="{{styles.suggestionPopoverHeader}}">
 					{{> valueStateMessage}}
-				</div>		
+				</div>
 			{{/if}}
 		</div>
 	{{/if}}
@@ -43,7 +43,7 @@
 		{{#if hasValueStateMessage}}
 			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.suggestionPopoverHeader}}>
 				{{> valueStateMessage}}
-			</div>		
+			</div>
 		{{/if}}
 	{{/unless}}
 
@@ -51,7 +51,7 @@
 		<ui5-list separators="Inner">
 			{{#each suggestionsTexts}}
 				{{#if group}}
-					<ui5-li-groupheader>{{ this.text }}</ui5-groupheader>
+					<ui5-li-groupheader>{{ this.text }}</ui5-li-groupheader>
 				{{else}}
 					<ui5-li
 						image="{{this.image}}"
@@ -59,7 +59,7 @@
 						description="{{this.description}}"
 						info="{{this.info}}"
 						info-state="{{this.infoState}}"
-						@ui5-_itemPress="{{ fnOnSuggestionItemPress }}" 
+						@ui5-_itemPress="{{ fnOnSuggestionItemPress }}"
 					>{{ this.text }}</ui5-li>
 				{{/if}}
 			{{/each}}

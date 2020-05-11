@@ -18,6 +18,11 @@
 			data-sap-focus-ref
 			._inputAccInfo ="{{accInfo}}"
 	>
+
+		{{#if valueStateMessage.length}}
+			<slot name="valueStateMessage" slot="valueStateMessage"></slot>
+		{{/if}}
+
 		{{#unless readonly}}
 			<ui5-icon
 				slot="icon"

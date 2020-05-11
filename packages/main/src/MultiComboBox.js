@@ -26,6 +26,7 @@ import {
 	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
 	INPUT_SUGGESTIONS_TITLE,
+	ICON_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -679,6 +680,10 @@ class MultiComboBox extends UI5Element {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
 	get _innerInput() {
 		if (isPhone()) {
 			if (this.allItemsPopover.opened) {
@@ -693,6 +698,10 @@ class MultiComboBox extends UI5Element {
 
 	get _headerTitleText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
+	get _iconAccessibleNameText() {
+		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
 	}
 
 	static async onDefine() {

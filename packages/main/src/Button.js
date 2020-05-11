@@ -164,6 +164,9 @@ const metadata = {
 		_iconSettings: {
 			type: Object,
 		},
+		_buttonAccInfo: {
+			type: Object,
+		},
 
 		/**
 		 * Defines the tabIndex of the component.
@@ -339,6 +342,7 @@ class Button extends UI5Element {
 		return {
 			"ariaExpanded": this._buttonAccInfo && this._buttonAccInfo.ariaExpanded,
 			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
+			"ariaHaspopup": this._buttonAccInfo && this._buttonAccInfo.ariaHaspopup,
 			"title": this._buttonAccInfo && this._buttonAccInfo.title,
 		};
 	}
