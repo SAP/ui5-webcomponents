@@ -1,4 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
+import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
@@ -68,7 +70,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the elements is on focus
+		 * Indicates if the elements is open
 		 * @private
 		 */
 		opened: {
@@ -140,6 +142,44 @@ class Popup extends UI5Element {
 
 	static get styles() {
 		return styles;
+	}
+
+	static get template() {
+		return PopupTemplate;
+	}
+
+	forwardToFirst() {
+		const firstFocusable = getFirstFocusableElement(this);
+
+		if (firstFocusable) {
+			firstFocusable.focus();
+		}
+	}
+
+	forwardToLast() {
+		const lastFocusable = getLastFocusableElement(this);
+
+		if (lastFocusable) {
+			lastFocusable.focus();
+		}
+	}
+
+	applyInitialFocus() {
+		if (this._disableInitialFocus) {
+			return;
+		}
+
+		const element = this.getRootNode().getElementById(this.initialFocus)
+			|| document.getElementById(this.initialFocus)
+			|| getFirstFocusableElement(this);
+
+		if (element) {
+			element.focus();
+		}
+	}
+
+	isOpen() {
+		return this.opened;
 	}
 }
 

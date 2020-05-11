@@ -1,5 +1,4 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
@@ -168,36 +167,6 @@ class Dialog extends Popup {
 		addOpenedPopup(this);
 		this.opened = true;
 		this.fireEvent("afterOpen", {});
-	}
-
-	isOpen() {
-		return this.opened;
-	}
-
-	applyInitialFocus() {
-		const element = 				this.getRootNode().getElementById(this.initialFocus)
-			|| document.getElementById(this.initialFocus)
-			|| getFirstFocusableElement(this);
-
-		if (element) {
-			element.focus();
-		}
-	}
-
-	forwardToFirst() {
-		const firstFocusable = getFirstFocusableElement(this);
-
-		if (firstFocusable) {
-			firstFocusable.focus();
-		}
-	}
-
-	forwardToLast() {
-		const lastFocusable = getLastFocusableElement(this);
-
-		if (lastFocusable) {
-			lastFocusable.focus();
-		}
 	}
 
 	/**

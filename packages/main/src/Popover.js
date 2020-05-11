@@ -1,8 +1,8 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
+import Popup from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -22,30 +22,6 @@ const arrowSize = 8;
 const metadata = {
 	tag: "ui5-popover",
 	properties: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
-		/**
-		 * Defines the ID of the HTML Element, which will get the initial focus.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		initialFocus: {
-			type: String,
-		},
-
-		/**
-		 * Defines the header text.
-		 * <br><br>
-		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		headerText: {
-			type: String,
-		},
-
 		/**
 		 * Determines on which side the <code>ui5-popover</code> is placed at.
 		 * <br><br>
@@ -174,21 +150,7 @@ const metadata = {
 			defaultValue: PopoverPlacementType.Right,
 		},
 
-		/**
-		 * Defines whether the <code>ui5-popover</code> is open
-		 *
-		 * @private
-		 */
-		opened: { type: Boolean },
-
 		_maxContentHeight: { type: Integer },
-
-		/**
-		 * @private
-		 */
-		_disableInitialFocus: {
-			type: Boolean,
-		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
@@ -293,12 +255,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Popover
- * @extends UI5Element
+ * @extends Popup
  * @tagname ui5-popover
  * @since 1.0.0-rc.6
  * @public
  */
-class Popover extends UI5Element {
+class Popover extends Popup {
 	static get metadata() {
 		return metadata;
 	}
@@ -313,22 +275,6 @@ class Popover extends UI5Element {
 
 	static get template() {
 		return PopoverTemplate;
-	}
-
-	forwardToFirst() {
-		const firstFocusable = getFirstFocusableElement(this.contentDOM);
-
-		if (firstFocusable) {
-			firstFocusable.focus();
-		}
-	}
-
-	forwardToLast() {
-		const lastFocusable = getLastFocusableElement(this.contentDOM);
-
-		if (lastFocusable) {
-			lastFocusable.focus();
-		}
 	}
 
 	isOpenerClicked(event) {
@@ -358,10 +304,6 @@ class Popover extends UI5Element {
 
 		this.opened = true;
 		this.fireEvent("afterOpen", {});
-	}
-
-	isOpen() {
-		return this.opened;
 	}
 
 	/**
@@ -400,18 +342,6 @@ class Popover extends UI5Element {
 		}
 
 		return (element && typeof element.focus === "function") ? element : null;
-	}
-
-	applyInitialFocus() {
-		if (this._disableInitialFocus) {
-			return;
-		}
-
-		const element = this.getRootNode().getElementById(this.initialFocus) || document.getElementById(this.initialFocus) || getFirstFocusableElement(this);
-
-		if (element) {
-			element.focus();
-		}
 	}
 
 	resetFocus() {

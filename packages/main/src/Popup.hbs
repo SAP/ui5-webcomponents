@@ -1,0 +1,37 @@
+<section class="ui5-popup-root" role="dialog" aria-modal="true" aria-labelledby="ui5-popup-header">
+
+	<span class="first-fe" tabindex="0" @focusin={{forwardToLast}}></span>
+
+	{{> header}}
+
+	<div class="ui5-popup-content">
+		<slot></slot>
+	</div>
+
+	{{> footer}}
+
+	<span class="last-fe" tabindex="0" @focusin={{forwardToFirst}}></span>
+
+</section>
+
+{{#*inline "footer"}}
+	{{#if _displayFooter}}
+		{{#if footer.length }}
+			<footer class="ui5-popup-footer-root">
+				<slot name="footer"></slot>
+			</footer>
+		{{/if}}
+	{{/if}}
+{{/inline}}
+
+{{#*inline "header"}}
+	{{#if _displayHeader}}
+		<header class="ui5-popup-header-root" id="ui5-popup-header">
+			{{#if header.length }}
+				<slot name="header"></slot>
+			{{else}}
+				<h2 class="ui5-popup-header-text" id="ui5-popup-header">{{headerText}}</h2>
+			{{/if}}
+		</header>
+	{{/if}}
+{{/inline}}
