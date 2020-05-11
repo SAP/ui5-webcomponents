@@ -326,8 +326,6 @@ class Button extends UI5Element {
 	}
 
 	_onfocusin(event) {
-		event.isMarked = "button";
-
 		this.focused = true;
 	}
 
