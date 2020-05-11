@@ -14,7 +14,8 @@ const components = [];
 const newComponents = [
   "DateTimePicker",
   "DurationPicker",
-  "UploadCollection"
+  "UploadCollection",
+  "Tree"
 ];
 
 packages.forEach(package => {
