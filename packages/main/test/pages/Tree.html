@@ -29,72 +29,85 @@
 		}
 
 		.hdr {
-            display: flex;
-        }
+			display: flex;
+		}
 
-        .hdr>* {
-            margin: 0.25rem;
-        }
+		.hdr>* {
+			margin: 0.25rem;
+		}
 
-        .spacer {
-            flex: 1;
-        }
+		.spacer {
+			flex: 1;
+		}
 	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
 
 
-    <br><br>
+	<br><br>
 
-    <ui5-tree id="tree" no-data-text="No data" mode="MultiSelect">
-        <div slot="header" class="hdr">
-            <ui5-title>My tree</ui5-title>
-            <div class="spacer"></div>
-            <ui5-select id="modeSelect">
-                <ui5-option>None</ui5-option>
-                <ui5-option>SingleSelect</ui5-option>
-                <ui5-option>SingleSelectBegin</ui5-option>
-                <ui5-option>SingleSelectEnd</ui5-option>
-                <ui5-option selected>MultiSelect</ui5-option>
+	<ui5-tree id="tree" no-data-text="No data" mode="MultiSelect">
+		<div slot="header" class="hdr">
+			<ui5-title>My tree</ui5-title>
+			<div class="spacer"></div>
+			<ui5-select id="modeSelect">
+				<ui5-option>None</ui5-option>
+				<ui5-option>SingleSelect</ui5-option>
+				<ui5-option>SingleSelectBegin</ui5-option>
+				<ui5-option>SingleSelectEnd</ui5-option>
+				<ui5-option selected>MultiSelect</ui5-option>
 
-                <ui5-option>Delete</ui5-option>
-            </ui5-select>
-            <ui5-button id="expandLevel1" icon="expand">Expand Level 1</ui5-button>
-            <ui5-button id="expandLevel2" icon="expand">Expand Level 2</ui5-button>
-            <ui5-button id="expandAll" icon="expand-all">Expand All</ui5-button>
-            <ui5-button id="collapseAll" icon="collapse-all">Collapse All</ui5-button>
-        </div>
+				<ui5-option>Delete</ui5-option>
+			</ui5-select>
+			<ui5-button id="expandLevel1" icon="expand">Expand Level 1</ui5-button>
+			<ui5-button id="expandLevel2" icon="expand">Expand Level 2</ui5-button>
+			<ui5-button id="expandAll" icon="expand-all">Expand All</ui5-button>
+			<ui5-button id="collapseAll" icon="collapse-all">Collapse All</ui5-button>
+		</div>
 
-        <ui5-tree-item expanded text="Tree 1" icon="paste" selected>
-            <ui5-tree-item expanded text="Tree 1.1" selected>
-                <ui5-tree-item text="Tree 1.1.1"></ui5-tree-item>
-                <ui5-tree-item text="Tree 1.1.2"></ui5-tree-item>
-            </ui5-tree-item>
-        </ui5-tree-item>
+		<ui5-tree-item expanded text="Tree 1" icon="paste" selected>
+			<ui5-tree-item expanded text="Tree 1.1" selected>
+				<ui5-tree-item text="Tree 1.1.1"></ui5-tree-item>
+				<ui5-tree-item text="Tree 1.1.2"></ui5-tree-item>
+			</ui5-tree-item>
+		</ui5-tree-item>
 
-        <ui5-tree-item text="Tree 2" icon="copy">
-            <ui5-tree-item text="Tree 2.1">
-                <ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
-                <ui5-tree-item text="Tree 2.1.2">
-                    <ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
-                    <ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
-                    <ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
-                    <ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
-                </ui5-tree-item>
-            </ui5-tree-item>
-            <ui5-tree-item text="Tree 2.2"></ui5-tree-item>
-        </ui5-tree-item>
+		<ui5-tree-item text="Tree 2" icon="copy">
+			<ui5-tree-item text="Tree 2.1">
+				<ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2">
+					<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+				</ui5-tree-item>
+			</ui5-tree-item>
+			<ui5-tree-item text="Tree 2.2"></ui5-tree-item>
+		</ui5-tree-item>
 
-        <ui5-tree-item expanded text="Tree 3 (no icon)">
-        </ui5-tree-item>
+		<ui5-tree-item expanded text="Tree 3 (no icon)">
+		</ui5-tree-item>
 
-    </ui5-tree>
+	</ui5-tree>
 
-    <script>
-        document.getElementById("tree").addEventListener("itemClick", function(event) {
-            console.log("Item clicked: ", event.detail.item);
-        });
+	<br><br>
+
+	<ui5-tree id="treeDynamic">
+		<ui5-tree-item text="Has preloaded children">
+			<ui5-tree-item text="Child 1"></ui5-tree-item>
+			<ui5-tree-item text="Child 2"></ui5-tree-item>
+		</ui5-tree-item>
+
+		<ui5-tree-item text="Has no children at all"></ui5-tree-item>
+
+		<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
+	</ui5-tree>
+
+	<script>
+		document.getElementById("tree").addEventListener("itemClick", function(event) {
+			console.log("Item clicked: ", event.detail.item);
+		});
 
 		document.getElementById("tree").addEventListener("itemToggle", function(event) {
 			console.log("Item toggled: ", event.detail.item);
@@ -112,48 +125,57 @@
 
 		document.getElementById("modeSelect").addEventListener("change", function(event) {
 			var newMode = event.detail.selectedOption.textContent;
-			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
-			trees.forEach(function(tree) {
-				tree.mode = newMode;
-            });
+			const tree = document.getElementById("tree");
+			tree.mode = newMode;
 		});
 
 		document.getElementById("expandAll").addEventListener("click", function(event) {
 			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
-			trees.forEach(function(tree) {
-				tree.walk(function(node) {
-					node.expanded = true;
-                });
+			const tree = document.getElementById("tree");
+			tree.walk(function(node) {
+				node.expanded = true;
 			});
-        });
+		});
 
 		document.getElementById("collapseAll").addEventListener("click", function(event) {
-			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
-			trees.forEach(function(tree) {
-				tree.walk(function(node) {
-					node.expanded = false;
-				});
+			const tree = document.getElementById("tree");
+			tree.walk(function(node) {
+				node.expanded = false;
 			});
 		});
 
 		document.getElementById("expandLevel1").addEventListener("click", function(event) {
-			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
-			trees.forEach(function(tree) {
-				tree.walk(function(node, level) {
-					node.expanded = (level === 1) ? true : false;
-				});
+			const tree = document.getElementById("tree");
+			tree.walk(function(node, level) {
+				node.expanded = (level === 1);
 			});
 		});
 
 		document.getElementById("expandLevel2").addEventListener("click", function(event) {
-			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
-			trees.forEach(function(tree) {
-				tree.walk(function(node, level) {
-					node.expanded = (level <= 2) ? true : false;
-				});
+			const tree = document.getElementById("tree");
+			tree.walk(function(node, level) {
+				node.expanded = (level <= 2);
 			});
 		});
-    </script>
+
+		const dynamicTree = document.getElementById("treeDynamic");
+		dynamicTree.addEventListener("itemToggle", function(event) {
+			const item = event.detail.item; // get the node that is toggled
+
+			// Only for the dynamic node, only when it's empty
+			if (item.id === "dynamicNode" && item.children.length === 0) {
+				dynamicTree.busy = true;
+				event.preventDefault(); // do not let the toggle button switch yet
+				setTimeout(function() {
+					const newItem = document.createElement("ui5-tree-item"); // Fetching from db....
+					newItem.text = "Node fetched from DB after 2 sec";
+					item.appendChild(newItem);
+					item.toggle(); // now manually switch
+					dynamicTree.busy = false;
+				}, 2000);
+			}
+		});
+	</script>
 
 </body>
 

@@ -20,7 +20,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 
 		/**
-		 * Defines the indentation of the tree list item. Level 1 represents a top level tree node.
+		 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
 		 *
 		 * @type {Integer}
 		 * @public
@@ -32,7 +32,7 @@ const metadata = {
 		},
 
 		/**
-		 * If set, an icon will be displayed before the text, representing the tree item.
+		 * If set, an icon will be displayed before the text of the tree list item.
 		 *
 		 * @public
 		 * @type {String}
@@ -43,24 +43,24 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the tree node is expanded or collapsed.
+		 * Defines whether the tree list item should display an expand/collapse button.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		showToggleButton: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the tree list item will show a collapse or expand icon inside its toggle button.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
 		expanded: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines whether the tree node has children. Nodes with children will have an expand/collapse button.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		hasChildren: {
 			type: Boolean,
 		},
 	},
@@ -81,7 +81,7 @@ const metadata = {
 	events: {
 
 		/**
-		 * Fired when the tree item is expanded or collapsed.
+		 * Fired when the user interacts with the expand/collapse button of the tree list item.
 		 * @event
 		 * @param {HTMLElement} item the toggled item.
 		 * @public
@@ -179,7 +179,7 @@ class TreeListItem extends ListItem {
 	_onkeydown(event) {
 		super._onkeydown(event);
 
-		if (this.hasChildren && isRight(event)) {
+		if (this.showToggleButton && isRight(event)) {
 			if (!this.expanded) {
 				this.fireEvent("toggle", { item: this });
 			} else {

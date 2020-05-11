@@ -30,6 +30,21 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
+		 * <br>
+		 * <i>Note:</i> This property is useful for showing big tree structures where not all nodes are initially loaded due to performance reasons.
+		 * Set this to <code>true</code> for nodes you intend to load lazily, when the user clicks the expand button.
+		 * It is not necessary to set this property otherwise. If a tree item has children, the expand button will be displayed anyway.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		hasChildren: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines whether the tree node is selected by the user. Only has effect if the <code>ui5-tree</code> is in one of the
 		 * following modes: in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code>.
 		 *
@@ -98,8 +113,8 @@ class TreeItem extends UI5Element {
 		return [...this.children];
 	}
 
-	get hasChildren() {
-		return this.items.length > 0;
+	get requiresToggleButton() {
+		return this.hasChildren || this.items.length > 0;
 	}
 
 	/**

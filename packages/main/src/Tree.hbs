@@ -1,29 +1,34 @@
-<ui5-list class="ui5-tree-root"
-	.mode="{{mode}}"
-	.busy="{{busy}}"
-	.headerText="{{headerText}}"
-	.footerText="{{footerText}}"
-	.noDataText="{{noDataText}}"
-	@ui5-itemClick="{{_onListItemClick}}"
-	@ui5-itemDelete="{{_onListItemDelete}}"
-	@ui5-selectionChange="{{_onListSelectionChange}}"
+<ui5-busyindicator
+	class="ui5-tree-busy-indicator"
+	.active="{{busy}}"
 >
-	<slot name="header" slot="header"></slot>
-	{{#each _listItems}}
-		<ui5-li-tree
-			type="Active"
-			level="{{this.level}}"
-			icon="{{this.treeItem.icon}}"
-			.treeItem="{{this.treeItem}}"
-			.expanded="{{this.treeItem.expanded}}"
-			.selected="{{this.treeItem.selected}}"
-			._id="{{this.treeItem._id}}"
-			.hasChildren="{{this.treeItem.hasChildren}}"
-			@ui5-toggle="{{../_onListItemToggle}}"
-			@ui5-stepIn="{{../_onListItemStepIn}}"
-			@ui5-stepOut="{{../_onListItemStepOut}}"
-		>
-			{{this.treeItem.text}}
-		</ui5-li-tree>
-	{{/each}}
-</ui5-list>
+	<ui5-list
+		class="ui5-tree-root"
+		.mode="{{mode}}"
+		.headerText="{{headerText}}"
+		.footerText="{{footerText}}"
+		.noDataText="{{noDataText}}"
+		@ui5-itemClick="{{_onListItemClick}}"
+		@ui5-itemDelete="{{_onListItemDelete}}"
+		@ui5-selectionChange="{{_onListSelectionChange}}"
+	>
+		<slot name="header" slot="header"></slot>
+		{{#each _listItems}}
+			<ui5-li-tree
+				type="Active"
+				level="{{this.level}}"
+				icon="{{this.treeItem.icon}}"
+				.treeItem="{{this.treeItem}}"
+				.expanded="{{this.treeItem.expanded}}"
+				.selected="{{this.treeItem.selected}}"
+				._id="{{this.treeItem._id}}"
+				.showToggleButton="{{this.treeItem.requiresToggleButton}}"
+				@ui5-toggle="{{../_onListItemToggle}}"
+				@ui5-stepIn="{{../_onListItemStepIn}}"
+				@ui5-stepOut="{{../_onListItemStepOut}}"
+			>
+				{{this.treeItem.text}}
+			</ui5-li-tree>
+		{{/each}}
+	</ui5-list>
+</ui5-busyindicator>

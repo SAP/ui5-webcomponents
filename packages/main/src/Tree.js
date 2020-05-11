@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TreeItem from "./TreeItem.js";
+import BusyIndicator from "./BusyIndicator.js";
 import List from "./List.js";
 import TreeListItem from "./TreeListItem.js";
 import ListMode from "./types/ListMode.js";
@@ -69,8 +70,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the component would display a loading indicator at the bottom of the list.
-		 * Use this for example when you need to dynamically load tree items upon the user expanding a node.
+		 * When set to <code>true</code>, a busy indicator will be displayed on the <code>ui5-tree</code>, blocking any user interaction.
+		 * Use this when you need to dynamically load tree items.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -230,6 +231,7 @@ class Tree extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
+			BusyIndicator.define(),
 			List.define(),
 			TreeListItem.define(),
 			TreeItem.define(),
@@ -254,38 +256,46 @@ class Tree extends UI5Element {
 		this._listItems = []; // trigger onBeforeRendering by modifying the tracked property and force tree re-build
 	}
 
-	get hasChildren() {
-		return this.items.length > 0;
-	}
-
 	get list() {
 		return this.shadowRoot.querySelector(`ui5-list`);
 	}
 
 	_onListItemStepIn(event) {
+		if (this.busy) {
+			return;
+		}
+
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
-		if (treeItem.hasChildren) {
+		if (treeItem.items.length > 0) {
 			const firstChildId = treeItem.items[0]._id;
 			const firstChildListItem = this.list.getSlottedNodes("items").find(item => item._id === firstChildId);
-			this.list.focusItem(firstChildListItem);
+			firstChildListItem && this.list.focusItem(firstChildListItem);
 		}
 	}
 
 	_onListItemStepOut(event) {
+		if (this.busy) {
+			return;
+		}
+
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
 		if (treeItem.parentElement !== this) {
 			const parentId = treeItem.parentElement._id;
 			const parentListItem = this.list.getSlottedNodes("items").find(item => item._id === parentId);
-			this.list.focusItem(parentListItem);
+			parentListItem && this.list.focusItem(parentListItem);
 		}
 	}
 
 	_onListItemToggle(event) {
+		if (this.busy) {
+			return;
+		}
+
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
-		const defaultPrevented = !this.fireEvent("itemToggle", { item: treeItem });
+		const defaultPrevented = !this.fireEvent("itemToggle", { item: treeItem }, true);
 		if (!defaultPrevented) {
 			treeItem.toggle();
 		}
@@ -334,7 +344,7 @@ class Tree extends UI5Element {
 const walkTree = (el, level, callback) => {
 	el.items.forEach(item => {
 		callback(item, level);
-		if (item.hasChildren) {
+		if (item.items.length > 0) {
 			walkTree(item, level + 1, callback);
 		}
 	});
@@ -348,7 +358,7 @@ const buildTree = (el, level, result) => {
 		};
 
 		result.push(listItem);
-		if (item.expanded && item.hasChildren) {
+		if (item.expanded && item.items.length > 0) {
 			buildTree(item, level + 1, result);
 		}
 	});
