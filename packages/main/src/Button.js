@@ -307,8 +307,6 @@ class Button extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		event.isMarked = "button";
-
 		if (isSpace(event) || isEnter(event)) {
 			this.active = true;
 		}
@@ -326,7 +324,6 @@ class Button extends UI5Element {
 	}
 
 	_onfocusin(event) {
-		event.isMarked = "button";
 		this.focused = true;
 	}
 
