@@ -257,13 +257,23 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	onBeforeRendering() {
-		if (!this.focused) {
+		if (!this._focused) {
 			this._editing = false;
 		}
 	}
 
+	_onfocusin(event) {
+		super._onfocusin(event);
+		this._focused = true;
+	}
+
+	_onfocusout() {
+		super._onfocusout(event);
+		this._focused = false;
+	}
+
 	onAfterRendering() {
-		if (this.focused && this._editing) {
+		if (this._focused && this._editing) {
 			this.focusAndSelectText();
 		}
 	}
