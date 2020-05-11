@@ -1,5 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-right-arrow.js";
@@ -27,7 +28,7 @@ const metadata = {
 		expanded: {
 			type: Boolean,
 		},
-		showToggle: {
+		hasChildren: {
 			type: Boolean,
 		},
 	},
@@ -46,7 +47,26 @@ const metadata = {
 		},
 	},
 	events: {
+		/**
+		 * Fired when the user expands/collapses a tree node by clicking the caret icon or using the keyboard
+		 */
 		toggle: {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+		/**
+		 * Fired when the user presses right arrow on an expanded tree item
+		 */
+		stepIn: {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+		/**
+		 * Fired when a user presses left arrow on a tree item
+		 */
+		stepOut: {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -96,6 +116,10 @@ class TreeListItem extends ListItem {
 		};
 	}
 
+	get hasParent() {
+		return this.level > 1;
+	}
+
 	get _toggleIconName() {
 		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
 	}
@@ -103,6 +127,26 @@ class TreeListItem extends ListItem {
 	_toggleClick(event) {
 		event.stopPropagation();
 		this.fireEvent("toggle", { item: this });
+	}
+
+	_onkeydown(event) {
+		super._onkeydown(event);
+
+		if (this.hasChildren && isRight(event)) {
+			if (!this.expanded) {
+				this.fireEvent("toggle", { item: this });
+			} else {
+				this.fireEvent("stepIn", { item: this });
+			}
+		}
+
+		if (isLeft(event)) {
+			if (this.expanded) {
+				this.fireEvent("toggle", { item: this });
+			} else if (this.hasParent) {
+				this.fireEvent("stepOut", { item: this });
+			}
+		}
 	}
 }
 

@@ -582,6 +582,10 @@ class List extends UI5Element {
 		}
 	}
 
+	focusItem(item) {
+		item.focus();
+	}
+
 	setForwardingFocus(forwardingFocus) {
 		this._forwardingFocus = forwardingFocus;
 	}

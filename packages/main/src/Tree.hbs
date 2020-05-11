@@ -15,8 +15,10 @@
 			.expanded="{{this.treeItem.expanded}}"
 			.selected="{{this.treeItem.selected}}"
 			._id="{{this.treeItem._id}}"
-			.showToggle="{{this.treeItem.hasChildren}}"
+			.hasChildren="{{this.treeItem.hasChildren}}"
 			@ui5-toggle="{{../_onListItemToggle}}"
+			@ui5-stepIn="{{../_onListItemStepIn}}"
+			@ui5-stepOut="{{../_onListItemStepOut}}"
 		>
 			{{this.treeItem.text}}
 		</ui5-li-tree>

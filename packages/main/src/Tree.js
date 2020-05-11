@@ -131,6 +131,30 @@ class Tree extends UI5Element {
 		return this.items.length > 0;
 	}
 
+	get list() {
+		return this.shadowRoot.querySelector(`ui5-list`);
+	}
+
+	_onListItemStepIn(event) {
+		const listItem = event.detail.item;
+		const treeItem = listItem.treeItem;
+		if (treeItem.hasChildren) {
+			const firstChildId = treeItem.items[0]._id;
+			const firstChildListItem = this.list.getSlottedNodes("items").find(item => item._id === firstChildId);
+			this.list.focusItem(firstChildListItem);
+		}
+	}
+
+	_onListItemStepOut(event) {
+		const listItem = event.detail.item;
+		const treeItem = listItem.treeItem;
+		if (treeItem.parentElement !== this) {
+			const parentId = treeItem.parentElement._id;
+			const parentListItem = this.list.getSlottedNodes("items").find(item => item._id === parentId);
+			this.list.focusItem(parentListItem);
+		}
+	}
+
 	_onListItemToggle(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
