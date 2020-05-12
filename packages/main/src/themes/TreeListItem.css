@@ -2,9 +2,25 @@
 	display: block;
 }
 
+.ui5-li-root-tree {
+    padding-left: 0;
+}
+
 .ui5-li-tree-toggle-box {
-    width: 1rem;
-    margin-right: 0.5rem;
+    width: var(--_ui5-tree-toggle-box-width);
+    height: var(--_ui5-tree-toggle-box-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui5-li-tree-toggle-icon {
+    width: var(--_ui5-tree-toggle-icon-size);
+    height: var(--_ui5-tree-toggle-icon-size);
+}
+
+:host([actionable]) .ui5-li-tree-toggle-icon {
+    color: var(--sapButton_TextColor);
 }
 
 :host([active][actionable]) .ui5-li-tree-toggle-icon {

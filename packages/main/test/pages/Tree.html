@@ -42,8 +42,12 @@
 	</style>
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body style="padding: 5px; background-color: var(--sapBackgroundColor);">
 
+	<ui5-segmentedbutton id="density">
+		<ui5-togglebutton pressed>Cozy</ui5-togglebutton>
+		<ui5-togglebutton>Compact</ui5-togglebutton>
+	</ui5-segmentedbutton>
 
 	<br><br>
 
@@ -105,6 +109,16 @@
 	</ui5-tree>
 
 	<script>
+
+		document.getElementById("density").addEventListener("selectionChange", function(event) {
+			var selectedButton = event.detail.selectedButton;
+			if (selectedButton.textContent === "Compact") {
+				document.body.classList.add("sapUiSizeCompact");
+			} else {
+				document.body.classList.remove("sapUiSizeCompact");
+			}
+		});
+
 		document.getElementById("tree").addEventListener("itemClick", function(event) {
 			console.log("Item clicked: ", event.detail.item);
 		});

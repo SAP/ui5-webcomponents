@@ -4,7 +4,6 @@
 	--_ui5_calendar_header_arrow_button_width: 2.5rem;
 	--_ui5_calendar_header_padding: 0.25rem 0;
 	--_ui5_checkbox_root_side_padding: .6875rem;
-	--_ui5_checkbox_root_side_padding: .6875rem;
 	--_ui5_checkbox_icon_size: 1rem;
 	--_ui5_custom_list_item_height: 3rem;
 	--_ui5_custom_list_item_rb_min_width: 3rem;
@@ -59,6 +58,12 @@
 
 	/* Responsive Popover */
 	--_ui5-responnsive_popover_header_height: 2.75rem;
+
+	/* Tree */
+	--_ui5-tree-indent-step: 1.5rem;
+	--_ui5-tree-toggle-box-width: 2.75rem;
+	--_ui5-tree-toggle-box-height: 2.25rem;
+	--_ui5-tree-toggle-icon-size: 1.0625rem;
 }
 
 [data-ui5-compact-size],
@@ -74,26 +79,14 @@
 	--_ui5_calendar_header_arrow_button_width: 2rem;
 
 	/* CheckBox */
-	--_ui5_checkbox_wrapper_padding: 0;
-	--_ui5_checkbox_root_side_padding: var(--_ui5_checkbox_wrapped_focus_padding);
 	--_ui5_checkbox_root_side_padding: var(--_ui5_checkbox_wrapped_focus_padding);
 	--_ui5_checkbox_wrapped_content_margin_top: var(--_ui5_checkbox_compact_wrapped_label_margin_top);
 	--_ui5_checkbox_wrapped_focus_left_top_bottom_position: var(--_ui5_checkbox_compact_focus_position);
 	--_ui5_checkbox_width_height: var(--_ui5_checkbox_compact_width_height);
-	--_ui5_checkbox_width_height: var(--_ui5_checkbox_compact_width_height);
 	--_ui5_checkbox_wrapper_padding: var(--_ui5_checkbox_compact_wrapper_padding);
 	--_ui5_checkbox_focus_position: var(--_ui5_checkbox_compact_focus_position);
-	--_ui5_checkbox_focus_position: var(--_ui5_checkbox_compact_focus_position);
-	--_ui5_checkbox_focus_position: var(--_ui5_checkbox_compact_focus_position);
-	--_ui5_checkbox_focus_position: var(--_ui5_checkbox_compact_focus_position);
 	--_ui5_checkbox_inner_width_height: var(--_ui5_checkbox_compact_inner_size);
-	--_ui5_checkbox_inner_width_height: var(--_ui5_checkbox_compact_inner_size);
-	--_ui5_checkbox_inner_width_height: var(--_ui5_checkbox_compact_inner_size);
-	--_ui5_checkbox_inner_width_height: var(--_ui5_checkbox_compact_inner_size);
-	--_ui5_checkbox_wrapper_padding: var(--_ui5_checkbox_compact_wrapper_padding);
 	--_ui5_checkbox_icon_size: .75rem;
-	--_ui5_checkbox_wrapper_padding: var(--_ui5_checkbox_compact_wrapper_padding);
-	--_ui5_checkbox_focus_position: var(--_ui5_checkbox_compact_focus_position);
 
 
 	/* Custom List Item */
@@ -182,4 +175,10 @@
 
 	/* Responsive Popover */
 	--_ui5-responnsive_popover_header_height: 2.5rem;
+
+	/* Tree */
+	--_ui5-tree-indent-step: 0.5rem;
+	--_ui5-tree-toggle-box-width: 2rem;
+	--_ui5-tree-toggle-box-height: 1.5rem;
+	--_ui5-tree-toggle-icon-size: 0.8125rem;
 }

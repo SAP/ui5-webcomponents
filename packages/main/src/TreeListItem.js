@@ -154,14 +154,14 @@ class TreeListItem extends ListItem {
 		await Icon.define();
 	}
 
-	get styles() {
-		const indent = this.level * 0.5;
+	get classes() {
+		const allClasses = super.classes;
+		allClasses.main["ui5-li-root-tree"] = true;
+		return allClasses;
+	}
 
-		return {
-			toggleBox: {
-				"padding-left": `${indent}rem`,
-			},
-		};
+	get effectiveLevel() {
+		return this.level - 1;
 	}
 
 	get hasParent() {
