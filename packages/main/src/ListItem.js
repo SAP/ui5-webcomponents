@@ -283,6 +283,14 @@ class ListItem extends ListItemBase {
 		return this.i18nBundle.getText(DELETE);
 	}
 
+	get _accInfo() {
+		return {
+			role: "option",
+			ariaExpanded: undefined,
+			ariaLevel: undefined,
+		};
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),

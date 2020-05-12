@@ -12,7 +12,9 @@
 	@touchend="{{_ontouchend}}"
 	@click="{{_onclick}}"
 	aria-selected="{{ariaSelected}}"
-	role="option"
+	role="{{_accInfo.role}}"
+	aria-expanded="{{_accInfo.ariaExpanded}}"
+	aria-level="{{_accInfo.ariaLevel}}"
 >
 		{{> listItemPreContent}}
 

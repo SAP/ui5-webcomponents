@@ -172,6 +172,14 @@ class TreeListItem extends ListItem {
 		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
 	}
 
+	get _accInfo() {
+		return {
+			role: "treeitem",
+			ariaExpanded: this.expanded,
+			ariaLevel: this.level,
+		};
+	}
+
 	_toggleClick(event) {
 		event.stopPropagation();
 		this.fireEvent("toggle", { item: this });
