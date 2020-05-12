@@ -187,8 +187,8 @@ class Icon extends UI5Element {
 	}
 
 	_onclick(event) {
-		event.preventDefault();
 		if (this.interactive) {
+			event.preventDefault();
 			// Prevent the native event and fire custom event because otherwise the noConfict event won't be thrown
 			this.fireEvent("click");
 		}
