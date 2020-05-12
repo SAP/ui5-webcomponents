@@ -58,3 +58,27 @@ describe("Tree proxies properties to list", () => {
 	})
 
 });
+
+describe("Tree has screen reader support", () => {
+	browser.url("http://localhost:8080/test-resources/pages/Tree.html");
+
+	it("List role is correct", () => {
+		const tree = browser.$("#tree");
+		const list = tree.shadow$("ui5-list");
+		assert.ok(list.shadow$("ul").getAttribute("role") === "tree", "List role is tree");
+	});
+
+	it("List item acc attributes correct", () => {
+		const tree = browser.$("#tree");
+		const listItems = tree.shadow$$("ui5-li-tree");
+		listItems.forEach(item => {
+			const li = item.shadow$("li");
+
+			assert.ok(li.getAttribute("role") === "treeitem", "List item role is correct");
+			assert.ok(li.getAttribute("aria-level") === item.getAttribute("level"), "aria level is correct");
+			assert.ok(li.getAttribute("aria-expanded") === item.getAttribute("expanded"), "aria expanded is correct");
+		});
+
+	});
+
+});
