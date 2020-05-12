@@ -1,5 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
@@ -7,9 +8,11 @@ import Link from "@ui5/webcomponents/dist/Link.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import UploadState from "./types/UploadState.js";
 import "@ui5/webcomponents-icons/dist/icons/refresh.js";
 import "@ui5/webcomponents-icons/dist/icons/stop.js";
+import "@ui5/webcomponents-icons/dist/icons/edit.js";
 import {
 	UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT,
@@ -254,16 +257,15 @@ class UploadCollectionItem extends ListItem {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+
+		this._editPressed = false; // indicates if the edit btn has been pressed
 	}
 
-	onBeforeRendering() {
-		if (!this._focused) {
-			this._editing = false;
-		}
-	}
 
 	onAfterRendering() {
-		if (this._focused && this._editing) {
+		if (this._editPressed) {
+			this._editing = true;
+			this._editPressed = false;
 			this.focusAndSelectText();
 		}
 	}
@@ -273,6 +275,7 @@ class UploadCollectionItem extends ListItem {
 
 		const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
 
+		await RenderScheduler.whenDOMUpdated();
 		if (inp.getFocusDomRef()) {
 			inp.getFocusDomRef().setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
@@ -286,14 +289,27 @@ class UploadCollectionItem extends ListItem {
 		this._editing = true;
 	}
 
-	_onfocusin(event) {
-		super._onfocusin(event);
-		this._focused = true;
-	}
-
+	/**
+	 * @override
+	 */
 	_onfocusout(event) {
 		super._onfocusout(event);
-		this._focused = false;
+
+		const path = event.path || (event.composedPath && event.composedPath());
+
+		this._editPressed = this.isDetailPressed(event);
+
+		if (!this._editPressed && path.indexOf(this) > -1) {
+			this._editing = false;
+		}
+	}
+
+	isDetailPressed(event) {
+		const path = event.path || (event.composedPath && event.composedPath());
+
+		return path.some(e => {
+			return e.classList && e.classList.contains("ui5-uci-edit");
+		});
 	}
 
 	_onInputChange(event) {
@@ -407,6 +423,17 @@ class UploadCollectionItem extends ListItem {
 
 	get _terminateButtonTooltip() {
 		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
+	}
+
+	/**
+	 * override
+	 */
+	get typeDetail() {
+		return false;
+	}
+
+	get showEditButton() {
+		return this.type === ListItemType.Detail;
 	}
 }
 

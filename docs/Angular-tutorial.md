@@ -96,6 +96,39 @@ export class AppModule {}
 <ui5-input [(ngModel)]="value" origami></ui5-input>
 ```
 
+4. Make Angular boot after UI5 Web Components are defined:
+
+In the module, where you are using UI5 Web Components, you should add the ```APP_INITIALIZER``` provider. In order to do so, import ```APP_INITIALIZER``` and add it to the providers array like this (In this example we will add it in the ```app.module.ts```):
+```js
+import { ..., APP_INITIALIZER  } from '@angular/core';
+
+import CheckBox from "@ui5/webcomponents/dist/CheckBox";
+
+function onAppInit(): () => Promise<any> {
+  return (): Promise<any> => {
+    return CheckBox.define();
+  };
+}
+
+@NgModule({
+  declarations: [
+        ...
+  ],
+  imports: [
+        ...
+  ],
+  providers: [
+    {
+        provide: APP_INITIALIZER,
+        useFactory: onAppInit,
+        multi: true
+    },
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  bootstrap: [AppComponent]
+})
+```
+
 ### Internet Explorer 11 Support
 
 If you need your application to run on Internet Explorer 11, there are some additional steps you should to:
