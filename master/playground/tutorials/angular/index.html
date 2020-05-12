@@ -1775,6 +1775,40 @@ In order to use it, you have to use a library called <a href="https://github.com
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-input</span> <span class="na">[(ngModel)]=</span><span class="s">"value"</span> <span class="na">origami</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 </code></pre></div></div>
 
+<ol>
+  <li>Make Angular boot after UI5 Web Components are defined:</li>
+</ol>
+
+<p>In the module, where you are using UI5 Web Components, you should add the <code class="highlighter-rouge">APP_INITIALIZER</code> provider. In order to do so, import <code class="highlighter-rouge">APP_INITIALIZER</code> and add it to the providers array like this (In this example we will add it in the <code class="highlighter-rouge">app.module.ts</code>):</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="p">...,</span> <span class="nx">APP_INITIALIZER</span>  <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="nx">CheckBox</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/CheckBox</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">onAppInit</span><span class="p">():</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">():</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">CheckBox</span><span class="p">.</span><span class="nx">define</span><span class="p">();</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="p">@</span><span class="nd">NgModule</span><span class="p">({</span>
+  <span class="na">declarations</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">...</span>
+  <span class="p">],</span>
+  <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">...</span>
+  <span class="p">],</span>
+  <span class="na">providers</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="na">provide</span><span class="p">:</span> <span class="nx">APP_INITIALIZER</span><span class="p">,</span>
+        <span class="na">useFactory</span><span class="p">:</span> <span class="nx">onAppInit</span><span class="p">,</span>
+        <span class="na">multi</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+  <span class="p">],</span>
+  <span class="na">schemas</span><span class="p">:</span> <span class="p">[</span> <span class="nx">CUSTOM_ELEMENTS_SCHEMA</span> <span class="p">],</span>
+  <span class="na">bootstrap</span><span class="p">:</span> <span class="p">[</span><span class="nx">AppComponent</span><span class="p">]</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
 <h3 id="internet-explorer-11-support">Internet Explorer 11 Support</h3>
 
 <p>If you need your application to run on Internet Explorer 11, there are some additional steps you should to:</p>

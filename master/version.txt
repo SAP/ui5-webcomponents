@@ -1,5 +1,5 @@
-commit 76943bca7f436a8c2e67c02a8149ee72b3e5fbd7
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Tue May 12 11:00:52 2020 +0300
+commit 292455bedfbd1c614aed1535ab46eeef8aa3f71c
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue May 12 11:52:27 2020 +0300
 
-    feat(ui5-fileuploader): Implementing accessiblity specification (#1585)
+     docs: improve angular tutorial (#1587)
