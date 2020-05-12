@@ -162,6 +162,17 @@ const metadata = {
 		busy: {
 			type: Boolean,
 		},
+
+		/**
+		 * Used to externally manipulate the role of the list
+		 *
+		 * @private
+		 */
+		_role: {
+			type: String,
+			defaultValue: "listbox",
+			noAttribute: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 

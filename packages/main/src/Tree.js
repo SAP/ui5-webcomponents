@@ -265,6 +265,10 @@ class Tree extends UI5Element {
 		return this.shadowRoot.querySelector(`ui5-list`);
 	}
 
+	get _role() {
+		return "tree";
+	}
+
 	_onListItemStepIn(event) {
 		if (this.busy) {
 			return;
