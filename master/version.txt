@@ -1,5 +1,5 @@
-commit 292455bedfbd1c614aed1535ab46eeef8aa3f71c
+commit 47d37c30180080188abd435a14cc6b721ca43e1e
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue May 12 11:52:27 2020 +0300
+Date:   Tue May 12 14:42:26 2020 +0300
 
-     docs: improve angular tutorial (#1587)
+    fix(ui5-upload-collection-item): make component responsive (#1579)

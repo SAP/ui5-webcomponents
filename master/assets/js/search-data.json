@@ -65,7 +65,7 @@
   "10": {
     "id": "10",
     "title": "Button",
-    "content": "&lt;!DOCTYPE html&gt; Button Press Action Bar Button Primary button Secondary button Inactive Accept Decline Action Bar Button Primary button Secondary button Inactive Agree Decline Action Bar Button Download Application From This Button Action Bar Button Action Bar Button Default Default Agree Agree Decline Decline Transparent Transparent Emphasized Emphasized Icon last &quot;This is a label, this is a label&quot; Action Bar Button Primary button Secondary button Inactive Agree Decline Action Bar Button Default Default Agree Agree Decline Decline Transparent Transparent Emphasized Emphasized Download Download Download",
+    "content": "&lt;!DOCTYPE html&gt; Button Press Action Bar Button Primary button Secondary button Inactive Accept Decline Action Bar Button Primary button Secondary button Inactive Agree Decline Action Bar Button Action Bar Button Action Bar Button Download Application From This Button Action Bar Button Action Bar Button Default Default Agree Agree Decline Decline Transparent Transparent Emphasized Emphasized Icon last &quot;This is a label, this is a label&quot; Action Bar Button Primary button Secondary button Inactive Agree Decline Action Bar Button Default Default Agree Agree Decline Decline Transparent Transparent Emphasized Emphasized Download Download Download",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Button/",
     "relUrl": "/playground/main/pages/Button/"
   },
