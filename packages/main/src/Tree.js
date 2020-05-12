@@ -254,7 +254,9 @@ class Tree extends UI5Element {
 	}
 
 	onTreeStructureChange() {
-		this._listItems = []; // trigger onBeforeRendering by modifying the tracked property and force tree re-build
+		setTimeout(() => {
+			this._listItems = []; // trigger onBeforeRendering by modifying the tracked property and force tree re-build
+		}, 0);
 	}
 
 	get list() {
