@@ -305,6 +305,10 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
+		_showListAnnouncement: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
 		/**
@@ -621,6 +625,7 @@ class Input extends UI5Element {
 		if (isPhone()) {
 			this.blur();
 		}
+		this._announceSelectedItem = false;
 	}
 
 	toggle(isToggled) {
@@ -774,6 +779,7 @@ class Input extends UI5Element {
 	}
 
 	onItemPreviewed(item) {
+		this._announceSelectedItem = true;
 		this.previewSuggestion(item);
 	}
 
@@ -832,7 +838,7 @@ class Input extends UI5Element {
 	}
 
 	get itemSelectionAnnounce() {
-		return this.Suggestions.selectedItemIndex !== null ? this.Suggestions.itemSelectionAnnounce : undefined;
+		return this.Suggestions && this.Suggestions._isItemOnTarget() ? this.Suggestions.itemSelectionAnnounce : undefined;
 	}
 
 	get classes() {
