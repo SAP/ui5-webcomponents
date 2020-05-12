@@ -131,6 +131,7 @@ const metadata = {
  * @extends ListItem
  * @tagname ui5-li-tree
  * @public
+ * @since 1.0.0-rc.8
  */
 class TreeListItem extends ListItem {
 	static get render() {

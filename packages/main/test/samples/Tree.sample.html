@@ -1,5 +1,8 @@
-<header>
-	<h2 class="control-header">Tree</h2>
+<header class="component-heading">
+    <h2 class="control-header">Tree</h2>
+    <div class="component-heading-since">
+        <span><!--since_tag_marker--></span>
+    </div>
 </header>
 
 <div class="component-package">@ui5/webcomponents</div>
@@ -146,14 +149,14 @@
 <script>
 	var dynamicTree = document.getElementById("treeDynamic");
 	dynamicTree.addEventListener("itemToggle", function(event) {
-		const item = event.detail.item; // get the node that is toggled
+		var item = event.detail.item; // get the node that is toggled
 
 		// Only for the dynamic node, and only when it's empty
 		if (item.id === "dynamicNode" && item.children.length === 0) {
 			dynamicTree.busy = true; // block the tree from the user
 			event.preventDefault(); // do not let the toggle button switch yet
 			setTimeout(function() {
-				const newItem = document.createElement("ui5-tree-item"); // Fetching from db....
+				var newItem = document.createElement("ui5-tree-item"); // Fetching from db....
 				newItem.text = "Node fetched from DB after 2 sec";
 				item.appendChild(newItem); // add the newly fetched node to the tree
 				item.toggle(); // now manually switch the toggle button
@@ -167,14 +170,14 @@
     <script>
 		var dynamicTree = document.getElementById("treeDynamic");
 		dynamicTree.addEventListener("itemToggle", function(event) {
-			const item = event.detail.item; // get the node that is toggled
+			var item = event.detail.item; // get the node that is toggled
 
 			// Only for the dynamic node, and only when it's empty
 			if (item.id === "dynamicNode" && item.children.length === 0) {
 				dynamicTree.busy = true; // block the tree from the user
 				event.preventDefault(); // do not let the toggle button switch yet
 				setTimeout(function() {
-					const newItem = document.createElement("ui5-tree-item"); // Fetching from db....
+					var newItem = document.createElement("ui5-tree-item"); // Fetching from db....
 					newItem.text = "Node fetched from DB after 2 sec";
 					item.appendChild(newItem); // add the newly fetched node to the tree
 					item.toggle(); // now manually switch the toggle button

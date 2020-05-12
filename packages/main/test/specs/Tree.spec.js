@@ -5,7 +5,6 @@ describe("Tree general interaction", () => {
 
 	it("Tree is rendered", () => {
 		const treeRoot = browser.$("#tree").shadow$(".ui5-tree-root");
-
 		assert.ok(treeRoot.isExisting(), "Tree is rendered.");
 	});
 
@@ -27,6 +26,35 @@ describe("Tree general interaction", () => {
 		toggleButton.click();
 		const listItemsAfter = tree.shadow$$("ui5-li-tree").length;
 		assert.ok(listItemsAfter > listItemsBefore, "After expanding a node, there are more items in the list");
+	})
+
+});
+
+describe("Tree proxies properties to list", () => {
+	browser.url("http://localhost:8080/test-resources/pages/Tree.html");
+
+	it("Mode works", () => {
+		const tree = browser.$("#tree");
+		const list = tree.shadow$("ui5-list");
+
+		const modes = ["None", "SingleSelect", "SingleSelectBegin", "SingleSelectEnd", "MultiSelect", "Delete"];
+		modes.forEach(mode => {
+			tree.setAttribute("mode", mode);
+			assert.ok(list.getAttribute("mode") === mode, "Mode applied");
+		});
 	});
+
+	it("headerText, footerText, noDataText work", () => {
+		const tree = browser.$("#tree");
+		const list = tree.shadow$("ui5-list");
+
+		tree.setAttribute("header-text", "header text");
+		tree.setAttribute("footer-text", "footer text");
+		tree.setAttribute("no-data-text", "no data text");
+
+		assert.ok(list.getAttribute("header-text") === "header text", "header text applied");
+		assert.ok(list.getAttribute("footer-text") === "footer text", "footer text applied");
+		assert.ok(list.getAttribute("no-data-text") === "no data text", "no data text applied");
+	})
 
 });

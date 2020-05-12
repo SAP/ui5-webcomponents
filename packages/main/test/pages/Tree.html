@@ -125,34 +125,34 @@
 
 		document.getElementById("modeSelect").addEventListener("change", function(event) {
 			var newMode = event.detail.selectedOption.textContent;
-			const tree = document.getElementById("tree");
+			var tree = document.getElementById("tree");
 			tree.mode = newMode;
 		});
 
 		document.getElementById("expandAll").addEventListener("click", function(event) {
 			var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
-			const tree = document.getElementById("tree");
+			var tree = document.getElementById("tree");
 			tree.walk(function(node) {
 				node.expanded = true;
 			});
 		});
 
 		document.getElementById("collapseAll").addEventListener("click", function(event) {
-			const tree = document.getElementById("tree");
+			var tree = document.getElementById("tree");
 			tree.walk(function(node) {
 				node.expanded = false;
 			});
 		});
 
 		document.getElementById("expandLevel1").addEventListener("click", function(event) {
-			const tree = document.getElementById("tree");
+			var tree = document.getElementById("tree");
 			tree.walk(function(node, level) {
 				node.expanded = (level === 1);
 			});
 		});
 
 		document.getElementById("expandLevel2").addEventListener("click", function(event) {
-			const tree = document.getElementById("tree");
+			var tree = document.getElementById("tree");
 			tree.walk(function(node, level) {
 				node.expanded = (level <= 2);
 			});
@@ -160,14 +160,14 @@
 
 		var dynamicTree = document.getElementById("treeDynamic");
 		dynamicTree.addEventListener("itemToggle", function(event) {
-			const item = event.detail.item; // get the node that is toggled
+			var item = event.detail.item; // get the node that is toggled
 
 			// Only for the dynamic node, only when it's empty
 			if (item.id === "dynamicNode" && item.children.length === 0) {
 				dynamicTree.busy = true;
 				event.preventDefault(); // do not let the toggle button switch yet
 				setTimeout(function() {
-					const newItem = document.createElement("ui5-tree-item"); // Fetching from db....
+					var newItem = document.createElement("ui5-tree-item"); // Fetching from db....
 					newItem.text = "Node fetched from DB after 2 sec";
 					item.appendChild(newItem);
 					item.toggle(); // now manually switch

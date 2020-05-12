@@ -211,6 +211,7 @@ const metadata = {
  * @tagname ui5-tree
  * @appenddocs TreeItem
  * @public
+ * @since 1.0.0-rc.8
  */
 class Tree extends UI5Element {
 	static get metadata() {

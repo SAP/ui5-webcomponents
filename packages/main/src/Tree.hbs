@@ -15,13 +15,13 @@
 		<slot name="header" slot="header"></slot>
 		{{#each _listItems}}
 			<ui5-li-tree
+				_id="{{this.treeItem._id}}"
 				type="Active"
 				level="{{this.level}}"
 				icon="{{this.treeItem.icon}}"
 				.treeItem="{{this.treeItem}}"
 				.expanded="{{this.treeItem.expanded}}"
 				.selected="{{this.treeItem.selected}}"
-				._id="{{this.treeItem._id}}"
 				.showToggleButton="{{this.treeItem.requiresToggleButton}}"
 				@ui5-toggle="{{../_onListItemToggle}}"
 				@ui5-stepIn="{{../_onListItemStepIn}}"
