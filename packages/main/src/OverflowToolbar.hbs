@@ -1,0 +1,26 @@
+<section class="ui5-overflow-toolbar-root">	
+	<div class="ui5-overflow-toolbar-content-wrapper">
+		<div class="{{classes.items}}">
+			{{#each _items}}
+				{{#unless this.overflowed}}
+					{{#if this.isSpacer}}
+						<div class="ui5-overflow-toolbar-spacer"></div>
+					{{else}}
+						<div class="ui5-overflow-toolbar-item">
+							<slot name="{{this.ref._individualSlot}}" />				
+						</div>
+					{{/if}}
+				{{/unless}}
+			{{/each}}
+		</div>
+
+		{{#if _showOverflowButton}}
+			<ui5-button
+				class="ui5-overflow-toolbar-popover-button"
+				type="Transparent"
+				icon="sap-icon://overflow"
+				@click="{{_handleToggleOverflowMenu}}">
+			</ui5-button>
+		{{/if}}
+	</div>
+</section>

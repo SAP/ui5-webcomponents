@@ -198,7 +198,8 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			type: HTMLElement,
+			propertyName: "content",
+			type: Node,
 		},
 
 		/**
@@ -335,6 +336,21 @@ class Popover extends UI5Element {
 		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener);
 	}
 
+	isClickInPopover(event) {
+		if (event.detail.preventPopoverClose) {
+			return true;
+		}
+
+		const eventPath = event.composedPath();
+		for (let i = 0; i < eventPath.length - 1; i++) { // Always skip the last element which is Window object and doesn't have contains method
+			if (this.content[0].contains(eventPath[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	/**
 	 * Opens the popover.
 	 * @param {HTMLElement} opener the element that the popover is opened by
@@ -419,6 +435,11 @@ class Popover extends UI5Element {
 	}
 
 	shouldCloseDueOverflow(placement, openerRect) {
+		const closedPopupParent = getClosedPopupParent(this._opener);
+		if (!closedPopupParent) {
+			return true;
+		}
+
 		const threshold = 32;
 
 		const limits = {
@@ -427,8 +448,6 @@ class Popover extends UI5Element {
 			"Top": openerRect.top,
 			"Bottom": openerRect.bottom,
 		};
-
-		const closedPopupParent = getClosedPopupParent(this._opener);
 		let overflowsBottom = false;
 		let overflowsTop = false;
 

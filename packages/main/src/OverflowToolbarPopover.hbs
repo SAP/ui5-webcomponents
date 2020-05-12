@@ -1,0 +1,11 @@
+<ui5-popover
+	id="{{_id}}-overflowMenu"
+	allowTargetOverlap="true"
+	placement-type="Bottom"
+	horizontal-align="Right">
+		<div class="ui5-overflow-toolbar-popover-content">
+			{{#each _overflowedItems}}
+				{{this}}
+			{{/each}}
+		</div>
+</ui5-popover>

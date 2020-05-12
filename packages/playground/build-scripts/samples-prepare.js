@@ -14,6 +14,12 @@ const components = [];
 const newComponents = [
   "DateTimePicker",
   "DurationPicker",
+  "FileUploader",
+  "ResponsivePopover",
+  "SegmentedButton",
+  "TimePicker",
+  "Toast",
+  "OverflowToolbar",
   "UploadCollection"
 ];
 

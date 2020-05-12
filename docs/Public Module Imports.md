@@ -46,6 +46,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Message Strip            | `ui5-messagestrip`   | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi ComboBox           | `ui5-multi-combobox` | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
 | Multi ComboBox Item      | `ui5-mcb-item`       | comes with `ui5-multi-combobox`   |
+| Overflow Toolbar         | `ui5-overflow-toolbar`| `import "@ui5/webcomponents/dist/OverflowToolbar.js";`    |
 | Panel                    | `ui5-panel`          | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`        | `import "@ui5/webcomponents/dist/Popover.js";`             |
 | Radio Button             | `ui5-radiobutton`    | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
@@ -68,6 +69,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Timeline Item            | `ui5-timeline-item`  | comes with `ui5-timeline`                                   |
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toast                    | `ui5-toast`          | `import "@ui5/webcomponents/dist/Toast.js";`               |
+| Toolbar Spacer           | `ui5-toolbar-spacer` | comes with `ui5-overflow-toolbar`                            |
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 
 ### 2. Assets

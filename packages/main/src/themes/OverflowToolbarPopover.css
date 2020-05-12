@@ -1,0 +1,15 @@
+.ui5-overflow-toolbar-popover-content {
+    min-width: 3.25rem;
+    padding: 0.1875rem 0.375rem;
+	display: flex;
+	flex-direction: column;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+}
+
+.ui5-overflowed-item{
+    flex-grow: 1;
+    max-width: 100%;
+    min-width: unset;
+    margin: 0.125rem 0;
+}
