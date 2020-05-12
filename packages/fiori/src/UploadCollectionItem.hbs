@@ -36,7 +36,9 @@
 						<div class="ui5-uci-progress-bar-remaining" style="{{styles.progressBarRemaining}}"></div>
 					</div>
 					<div class="ui5-uci-progress-labels">
-						<ui5-label>{{_progressText}}</ui5-label>
+						<ui5-label
+							show-colon
+						>{{_progressText}}</ui5-label>
 						<ui5-label>{{progress}}%</ui5-label>
 					</div>
 				</div>
@@ -61,6 +63,17 @@
 						design="Transparent"
 						title="{{_terminateButtonTooltip}}" 
 						@click="{{_onTerminate}}">
+					</ui5-button>
+				{{/if}}
+
+				{{#if showEditButton}}
+					<ui5-button
+						id="{{_id}}-editing-button"
+						design="Transparent"
+						icon="edit"
+						@click="{{onDetailClick}}"
+						class="ui5-li-detailbtn ui5-uci-edit"
+					>
 					</ui5-button>
 				{{/if}}
 			{{/if}}
