@@ -46,6 +46,14 @@ const metadata = {
 		contentOnlyOnDesktop: {
 			type: Boolean,
 		},
+
+		/**
+		 * Used internaly for controls which must not have header.
+		 * @private
+		 */
+		_hideHeader: {
+			type: Boolean,
+		},
 	},
 };
 

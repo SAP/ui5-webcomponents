@@ -1,4 +1,8 @@
-<ui5-popover class="ui5-shellbar-menu-popover" placement-type="Bottom">
+<ui5-popover class="ui5-shellbar-menu-popover"
+	placement-type="Bottom"
+	@ui5-beforeOpen={{_menuPopoverBeforeOpen}}
+	@ui5-afterClose={{_menuPopoverAfterClose}}
+>
 	<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}}>
 		{{#each _menuPopoverItems}}
 			{{ this }}
@@ -6,7 +10,13 @@
 	</ui5-list>
 </ui5-popover>
 
-<ui5-popover class="ui5-shellbar-overflow-popover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
+<ui5-popover class="ui5-shellbar-overflow-popover"
+	placement-type="Bottom"
+	horizontal-align="{{popoverHorizontalAlign}}"
+	no-arrow
+	@ui5-beforeOpen={{_overflowPopoverBeforeOpen}}
+	@ui5-afterClose={{_overflowPopoverAfterClose}}
+>
 	<ui5-list separators="None" @ui5-itemPress="{{_actionList.itemPress}}">
 		{{#each _hiddenIcons}}
 			<ui5-li

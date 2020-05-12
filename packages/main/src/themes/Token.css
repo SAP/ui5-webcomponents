@@ -66,6 +66,10 @@
 	white-space: nowrap;
 }
 
+:host([selected]) .ui5-token--icon {
+	color: var(--sapButton_Selected_TextColor);
+}
+
 .ui5-token--icon {
 	color: inherit;
 	cursor: pointer;

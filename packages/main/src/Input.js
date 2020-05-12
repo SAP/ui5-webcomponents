@@ -72,7 +72,11 @@ const metadata = {
 		 * property is set to <code>true</code>.
 		 * <br><br>
 		 * <b>Note:</b> The &lt;ui5-suggestion-item> is recommended to be used as a suggestion item.
-		 * and you need to import the <code>"@ui5/webcomponents/dist/SuggestionItem"</code> module.
+		 * Importing the Input Suggestions Support feature:
+		 * <br>
+		 * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code>
+		 * <br>
+		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -296,6 +300,11 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
+		_inputIconFocused: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
 		/**
@@ -470,7 +479,7 @@ class Input extends UI5Element {
 
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
-				this.getInputDOMRef().focus();
+				this.inputDomRef.focus();
 			}
 		}
 
@@ -531,15 +540,21 @@ class Input extends UI5Element {
 		}
 	}
 
-	_onfocusin(event) {
+	async _onfocusin(event) {
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
+
+		await this.getInputDOMRef();
+		this._inputIconFocused = event.target === this.querySelector("ui5-icon");
 	}
 
-	async _onfocusout(event) {
-		// if focusout is triggered by pressing on suggestion item skip invalidation, because re-rendering
+	_onfocusout(event) {
+		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
+		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
+
+		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
-		if (this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover)) {
+		if (focusedOutToSuggestions	|| focusedOutToValueStateMessage) {
 			return;
 		}
 
@@ -569,8 +584,9 @@ class Input extends UI5Element {
 		this.fireEvent(this.EVENT_CHANGE);
 	}
 
-	_handleInput(event) {
-		if (event.target === this.getInputDOMRef()) {
+	async _handleInput(event) {
+		await this.getInputDOMRef();
+		if (event.target === this.inputDomRef) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
 		}
@@ -579,7 +595,7 @@ class Input extends UI5Element {
 			- value of the host and the internal input should be differnt in case of actual input
 			- input is called when a key is pressed => keyup should not be called yet
 		*/
-		const skipFiring = (this.getInputDOMRef().value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
+		const skipFiring = (this.inputDomRef.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
 
 		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
 
@@ -591,19 +607,18 @@ class Input extends UI5Element {
 	}
 
 	_handleResize() {
-		if (this.hasValueStateMessage) {
-			this._inputWidth = this.offsetWidth;
-		}
+		this._inputWidth = this.offsetWidth;
 	}
 
 	_closeRespPopover() {
 		this.Suggestions.close();
 	}
 
-	_afterOpenPopover() {
+	async _afterOpenPopover() {
 		// Set initial focus to the native input
 		if (isPhone()) {
-			this.getInputDOMRef().focus();
+			await this.getInputDOMRef();
+			this.inputDomRef.focus();
 		}
 	}
 
@@ -694,7 +709,9 @@ class Input extends UI5Element {
 		this.value = item.group ? "" : item.textContent;
 	}
 
-	fireEventByAction(action) {
+	async fireEventByAction(action) {
+		await this.getInputDOMRef();
+
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -726,15 +743,16 @@ class Input extends UI5Element {
 	getInputValue() {
 		const inputDOM = this.getDomRef();
 		if (inputDOM) {
-			return this.getInputDOMRef().value;
+			return this.inputDomRef.value;
 		}
 		return "";
 	}
 
-	getInputDOMRef() {
+	async getInputDOMRef() {
 		let inputDomRef;
 
-		if (isPhone()) {
+		if (isPhone() && this.Suggestions) {
+			await this.Suggestions._respPopover();
 			inputDomRef = this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
@@ -742,7 +760,8 @@ class Input extends UI5Element {
 			inputDomRef = this.getDomRef().querySelector(`#${this.getInputId()}`);
 		}
 
-		return inputDomRef;
+		this.inputDomRef = inputDomRef;
+		return this.inputDomRef;
 	}
 
 	getLabelableElementId() {
@@ -844,7 +863,17 @@ class Input extends UI5Element {
 	}
 
 	get valueStateMessageText() {
-		const valueStateMessage = this.valueStateMessage.map(x => x.cloneNode(true));
+		const valueStateMessage = [];
+
+		this.valueStateMessage.forEach(el => {
+			if (el.localName === "slot") {
+				el.assignedNodes({ flatten: true }).forEach(assignedNode => {
+					valueStateMessage.push(assignedNode.cloneNode(true));
+				});
+			} else {
+				valueStateMessage.push(el.cloneNode(true));
+			}
+		});
 
 		return valueStateMessage;
 	}
@@ -862,7 +891,9 @@ class Input extends UI5Element {
 	}
 
 	get hasValueStateMessage() {
-		return this.hasValueState && this.valueState !== ValueState.Success;
+		return this.hasValueState && this.valueState !== ValueState.Success
+			&& (!this._inputIconFocused // Handles the cases when valueStateMessage is forwarded (from datepicker e.g.)
+			|| (this._isPhone && this.Suggestions)); // Handles Input with suggestions on mobile
 	}
 
 	get valueStateText() {

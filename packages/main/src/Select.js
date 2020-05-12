@@ -21,6 +21,7 @@ import {
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
+import Option from "./Option.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
@@ -390,7 +391,7 @@ class Select extends UI5Element {
 			this._selectedIndex = nextIndex === -1 ? this._selectedIndex : nextIndex;
 
 			if (shouldFireEvent) {
-				this.fireEvent("change", { selectedOption: this.options[nextIndex] });
+				this._fireChangeEvent(this.options[nextIndex]);
 			}
 		}
 
@@ -423,9 +424,17 @@ class Select extends UI5Element {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
 		} else if (this._lastSelectedOption !== this.options[this._selectedIndex]) {
-			this.fireEvent("change", { selectedOption: this.options[this._selectedIndex] });
+			this._fireChangeEvent(this.options[this._selectedIndex]);
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
+	}
+
+	_fireChangeEvent(selectedOption) {
+		this.fireEvent("change", { selectedOption });
+
+		//  Angular two way data binding
+		this.selectedItem = selectedOption;
+		this.fireEvent("selected-item-changed");
 	}
 
 	get valueStateTextMappings() {
@@ -477,6 +486,7 @@ class Select extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
+			Option.define(),
 			Label.define(),
 			ResponsivePopover.define(),
 			List.define(),

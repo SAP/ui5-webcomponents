@@ -1,4 +1,4 @@
-{{#if displayValueStateMessage}}
+{{#if displayValueStateMessagePopover}}
 	<ui5-popover
 		skip-registry-update
 		no-padding
@@ -16,11 +16,11 @@
 {{/if}}
 
 {{#*inline "valueStateMessage"}}
-	{{#if displayDefaultValueStateMessage}}
-		{{valueStateText}}
-	{{else}}
+	{{#if hasCustomValueState}}
 		{{#each valueStateMessageText}}
 			{{this}}
 		{{/each}}
+	{{else}}
+		{{valueStateText}}
 	{{/if}}
 {{/inline}}

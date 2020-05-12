@@ -39,6 +39,10 @@ class DatePickerTestPage {
 		return browser.$(this._sut).shadow$("ui5-input").shadow$("input");
 	}
 
+	get inputStaticAreaItem() {
+		return browser.$(`.${this.input.getProperty("_id")}`);
+	}
+
 	hasIcon() {
 		return browser.execute(function(id) {
 			return !!document.querySelector(id).shadowRoot.querySelector("ui5-icon");
