@@ -1,5 +1,8 @@
-commit f1f3d4f51dd319f36d63c7fd1573ca98c67f54d8
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri May 8 10:56:35 2020 +0300
+commit 2a426dd3b5b3ed87137cf67700154071e6192db2
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue May 12 10:29:03 2020 +0300
 
-    feat(ui5-select): implement angular two way data binding (#1583)
+    fix(hbs2ui5): enables 3 or more levels of inheritance with templates (#1593)
+    
+    - lookup for include statements in the hbs files used to be just
+    one level above the class.
