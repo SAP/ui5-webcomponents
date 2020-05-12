@@ -1,8 +1,5 @@
-commit 2a426dd3b5b3ed87137cf67700154071e6192db2
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue May 12 10:29:03 2020 +0300
+commit 76943bca7f436a8c2e67c02a8149ee72b3e5fbd7
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Tue May 12 11:00:52 2020 +0300
 
-    fix(hbs2ui5): enables 3 or more levels of inheritance with templates (#1593)
-    
-    - lookup for include statements in the hbs files used to be just
-    one level above the class.
+    feat(ui5-fileuploader): Implementing accessiblity specification (#1585)
