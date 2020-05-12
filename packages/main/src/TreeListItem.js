@@ -154,6 +154,10 @@ class TreeListItem extends ListItem {
 		await Icon.define();
 	}
 
+	onBeforeRendering() {
+		this.actionable = false;
+	}
+
 	get classes() {
 		const allClasses = super.classes;
 		allClasses.main["ui5-li-root-tree"] = true;
