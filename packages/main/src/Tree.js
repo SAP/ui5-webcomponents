@@ -254,7 +254,11 @@ class Tree extends UI5Element {
 	}
 
 	onTreeStructureChange() {
-		this._listItems = []; // trigger onBeforeRendering by modifying the tracked property and force tree re-build
+		// setTimeout is needed for IE11 so that it does not interfere with ItemNavigation.js and its await on RenderScheduler.
+		// Otherwise this invalidation happens too soon and the ItemNavigation is blocked on waiting the tree to finish
+		setTimeout(() => {
+			this._listItems = []; // trigger onBeforeRendering by modifying the tracked property and force tree re-build
+		}, 0);
 	}
 
 	get list() {
