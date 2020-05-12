@@ -340,11 +340,11 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get accInvisibleText() {
-		const notifcatationTxt = this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
+		const notifcationTxt = this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
 		const readTxt = this.read ? this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_READ) : this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 		const priorityText = this.priorityText;
 
-		return `${notifcatationTxt} ${readTxt} ${priorityText}`;
+		return `${notifcationTxt} ${readTxt} ${priorityText}`;
 	}
 
 	get classes() {
