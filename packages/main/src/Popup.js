@@ -181,6 +181,13 @@ class Popup extends UI5Element {
 	isOpen() {
 		return this.opened;
 	}
+
+	get styles() {
+		return {
+			content: {},
+			root: {},
+		};
+	}
 }
 
 export default Popup;

@@ -8,8 +8,8 @@ import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 import DialogBlockLayerTemplate from "./generated/templates/DialogBlockLayerTemplate.lit.js";
 
 // Styles
-import popupCSS from "./generated/themes/Popup.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
+import popupCSS from "./generated/themes/Popup.css.js";
 import { getFocusedElement, getNextZIndex } from "./popup-utils/PopupUtils.js";
 
 import BlockLayer from "./BlockLayer.js";
@@ -159,7 +159,9 @@ class Dialog extends Popup {
 		this.reposition();
 		this.applyInitialFocus();
 
-		this.style.zIndex = getNextZIndex();
+		this._zIndex = getNextZIndex();
+		this.style.zIndex = this._zIndex;
+
 		this._blockLayerVisible = true;
 
 		blockBodyScrolling();
@@ -167,6 +169,10 @@ class Dialog extends Popup {
 		addOpenedPopup(this);
 		this.opened = true;
 		this.fireEvent("afterOpen", {});
+	}
+
+	onBeforeRendering() { 
+		console.log("render")
 	}
 
 	/**
@@ -209,7 +215,7 @@ class Dialog extends Popup {
 	get styles() {
 		return {
 			blockLayer: {
-				"zIndex": (getNextZIndex() - 3),
+				"zIndex": this._zIndex - 1,
 			},
 		};
 	}
