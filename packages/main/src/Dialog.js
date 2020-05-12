@@ -5,14 +5,11 @@ import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsReg
 import Popup from "./Popup.js";
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
-import DialogBlockLayerTemplate from "./generated/templates/DialogBlockLayerTemplate.lit.js";
 
 // Styles
 import dialogCSS from "./generated/themes/Dialog.css.js";
 import popupCSS from "./generated/themes/Popup.css.js";
-import { getFocusedElement, getNextZIndex } from "./popup-utils/PopupUtils.js";
-
-import BlockLayer from "./BlockLayer.js";
+import { getFocusedElement } from "./popup-utils/PopupUtils.js";
 
 /**
  * @public
@@ -34,50 +31,10 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_blockLayerVisible: {
-			type: Boolean,
-		},
-
 		onPhone: {
 			type: Boolean,
 		},
 	},
-};
-
-let customBlockingStyleInserted = false;
-
-const createBlockingStyle = () => {
-	if (customBlockingStyleInserted) {
-		return;
-	}
-
-	const styleTag = document.createElement("style");
-
-	styleTag.innerHTML = `
-		.ui5-dialog-scroll-blocker {
-			width: 100%;
-			height: 100%;
-			position: fixed;
-			overflow: hidden;
-		}
-	`;
-
-	customBlockingStyleInserted = true;
-
-	document.head.appendChild(styleTag);
-};
-
-createBlockingStyle();
-
-const blockBodyScrolling = () => {
-	document.body.style.top = `-${window.pageYOffset}px`;
-	document.body.classList.add("ui5-dialog-scroll-blocker");
-};
-
-const unblockBodyScrolling = () => {
-	document.body.classList.remove("ui5-dialog-scroll-blocker");
-	window.scrollTo(0, -parseFloat(document.body.style.top));
-	document.body.style.top = "";
 };
 
 /**
@@ -130,10 +87,6 @@ class Dialog extends Popup {
 		return [dialogCSS, popupCSS];
 	}
 
-	static get staticAreaTemplate() {
-		return DialogBlockLayerTemplate;
-	}
-
 	constructor() {
 		super();
 
@@ -151,28 +104,18 @@ class Dialog extends Popup {
 	* @public
 	*/
 	open() {
-		// create static area item ref for block layer
-		this.getStaticAreaItemDomRef();
+		super.open();
 
 		this._focusedElementBeforeOpen = getFocusedElement();
 		this.fireEvent("beforeOpen", {});
 		this.reposition();
 		this.applyInitialFocus();
 
-		this._zIndex = getNextZIndex();
-		this.style.zIndex = this._zIndex;
-
-		this._blockLayerVisible = true;
-
-		blockBodyScrolling();
+		Dialog.blockBodyScrolling();
 
 		addOpenedPopup(this);
 		this.opened = true;
 		this.fireEvent("afterOpen", {});
-	}
-
-	onBeforeRendering() { 
-		console.log("render")
 	}
 
 	/**
@@ -182,18 +125,18 @@ class Dialog extends Popup {
 	close(escPressed) {
 		const prevented = !this.fireEvent("beforeClose", { escPressed }, true);
 
-		if (prevented) {
+		if (prevented || !this.opened) {
 			return;
 		}
 
+		super.close();
 		this._close();
 		this.opened = false;
 
 		this.fireEvent("afterClose", {});
 
 		removeOpenedPopup(this);
-		this._blockLayerVisible = false;
-		unblockBodyScrolling();
+		Dialog.unblockBodyScrolling();
 
 		if (this._focusedElementBeforeOpen && !this._disableInitialFocus) {
 			this._focusedElementBeforeOpen.focus();
@@ -210,18 +153,6 @@ class Dialog extends Popup {
 
 	get _displayHeader() {
 		return true;
-	}
-
-	get styles() {
-		return {
-			blockLayer: {
-				"zIndex": this._zIndex - 1,
-			},
-		};
-	}
-
-	static async onDefine() {
-		await BlockLayer.define();
 	}
 }
 

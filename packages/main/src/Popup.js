@@ -1,6 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import DialogBlockLayerTemplate from "./generated/templates/DialogBlockLayerTemplate.lit.js";
+import BlockLayer from "./BlockLayer.js";
+import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
@@ -83,6 +86,10 @@ const metadata = {
 		_disableInitialFocus: {
 			type: Boolean,
 		},
+
+		_blockLayerVisible: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
@@ -124,6 +131,31 @@ const metadata = {
 	},
 };
 
+let customBlockingStyleInserted = false;
+
+const createBlockingStyle = () => {
+	if (customBlockingStyleInserted) {
+		return;
+	}
+
+	const styleTag = document.createElement("style");
+
+	styleTag.innerHTML = `
+		.ui5-dialog-scroll-blocker {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			overflow: hidden;
+		}
+	`;
+
+	customBlockingStyleInserted = true;
+
+	document.head.appendChild(styleTag);
+};
+
+createBlockingStyle();
+
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
@@ -146,6 +178,21 @@ class Popup extends UI5Element {
 
 	static get template() {
 		return PopupTemplate;
+	}
+
+	static get staticAreaTemplate() {
+		return DialogBlockLayerTemplate;
+	}
+
+	static blockBodyScrolling() {
+		document.body.style.top = `-${window.pageYOffset}px`;
+		document.body.classList.add("ui5-dialog-scroll-blocker");
+	}
+
+	static unblockBodyScrolling() {
+		document.body.classList.remove("ui5-dialog-scroll-blocker");
+		window.scrollTo(0, -parseFloat(document.body.style.top));
+		document.body.style.top = "";
 	}
 
 	forwardToFirst() {
@@ -182,11 +229,36 @@ class Popup extends UI5Element {
 		return this.opened;
 	}
 
+	open() {
+		if (this.modal) {
+			// create static area item ref for block layer
+			this.getStaticAreaItemDomRef();
+		}
+
+		this._zIndex = getNextZIndex();
+		this.style.zIndex = this._zIndex;
+
+		this._blockLayerVisible = true;
+	}
+
+	close() {
+		if (this.modal) {
+			this._blockLayerVisible = false;
+		}
+	}
+
 	get styles() {
 		return {
 			content: {},
 			root: {},
+			blockLayer: {
+				"zIndex": (this._zIndex - 1),
+			},
 		};
+	}
+
+	static async onDefine() {
+		await BlockLayer.define();
 	}
 }
 
