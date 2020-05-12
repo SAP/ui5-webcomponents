@@ -45,7 +45,7 @@ describe("Notification List Item Tests", () => {
 	it("tests click fired on custom actions", () => {
 		const customActionInput = $("#customActionInput");
 		const secondItem = $("#nli2");
-		const customAction =  secondItem.shadow$("[custom-btn]");
+		const customAction =  secondItem.shadow$(".ui5-nli-action");
 	
 		// act	
 		customAction.click();
@@ -59,7 +59,7 @@ describe("Notification List Item Tests", () => {
 		const toggleInput = $("#toggleInput");
 		const EXPECTED_RESULT = "Orders";
 		const firstGroupItem = $("#nlgi1");
-		const btnListGroupItemToggle = firstGroupItem.shadow$("[toggle-btn]");
+		const btnListGroupItemToggle = firstGroupItem.shadow$(".ui5-nli-group-toggle-btn");
 	
 		// act
 		btnListGroupItemToggle.click();
@@ -99,7 +99,7 @@ describe("Notification List Item Tests", () => {
 
 	it("tests no custom actions, when group item collapsed", () => {
 		const fifthItem = $("#nlgi3");
-		const overflow = fifthItem.shadow$("[overflow-btn]");
+		const overflow = fifthItem.shadow$(".ui5-nli-overflow-btn");
 
 		assert.ok(!overflow.isExisting(),
 			"The custom actions are hidden when the group is collapsed");

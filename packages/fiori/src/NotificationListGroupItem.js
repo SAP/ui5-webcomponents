@@ -1,9 +1,10 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
 // Texts
@@ -113,11 +114,6 @@ const metadata = {
  * @public
  */
 class NotificationListGroupItem extends NotificationListItemBase {
-	constructor() {
-		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -139,16 +135,13 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			List.define(),
 			Button.define(),
 			Icon.define(),
+			Popover.define(),
 			fetchI18nBundle("@ui5/webcomponents-fiori"),
 		]);
 	}
 
 	get itemsCount() {
 		return this.items.length;
-	}
-
-	get counter() {
-		return `(${this.itemsCount})`;
 	}
 
 	get overflowBtnTitle() {

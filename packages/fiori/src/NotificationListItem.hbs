@@ -18,7 +18,6 @@
 				@click="{{_onBtnOverflowClick}}"
 				class="ui5-nli-overflow-btn"
 				title="{{overflowBtnTitle}}"
-				overflow-btn
 			></ui5-button>
 		{{else}}
 			{{#each standardActions}}
@@ -29,7 +28,6 @@
 					?disabled="{{this.disabled}}"
 					design="{{this.design}}"
 					data-ui5-external-action-item-id="{{this.refItemid}}"
-					custom-btn
 				>
 					{{this.text}}
 				</ui5-button>

@@ -14,7 +14,6 @@
 			design="Transparent"
 			@click="{{_onBtnToggleClick}}"
 			class="ui5-nli-group-toggle-btn"
-			toggle-btn
 		></ui5-button>
 
 		{{#if hasPriority}}
@@ -29,7 +28,7 @@
 		</div>
 
 		{{#if showCounter}}
-			<span class="ui5-nli-group-counter">{{counter}}</span>
+			<span class="ui5-nli-group-counter">({{itemsCount}})</span>
 		{{/if}}
 
 		<div class="ui5-nli-group-divider"></div>
@@ -40,20 +39,18 @@
 					icon="overflow"
 					design="Transparent"
 					@click="{{_onBtnOverflowClick}}"
-					class="ui5-nli-group-overflow-btn"
+					class="ui5-nli-overflow-btn"
 					title="{{overflowBtnTitle}}"
-					overflow-btn
 				></ui5-button>
 			{{else}}
 				{{#each standardActions}}
 					<ui5-button
 						icon="{{this.icon}}"
-						class="ui5-nli-group-action"
+						class="ui5-nli-action"
 						?disabled="{{this.disabled}}"
 						design="{{this.design}}"
 						@click="{{this.press}}"
 						data-ui5-external-action-item-id="{{this.refItemid}}"
-						custom-btn
 					>
 						{{this.text}}
 					</ui5-button>

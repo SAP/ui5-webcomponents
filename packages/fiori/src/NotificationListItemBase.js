@@ -1,6 +1,7 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
@@ -17,12 +18,6 @@ import NotifactionOverflowActionsPopoverTemplate from "./generated/templates/Not
 
 // Styles
 import NotifactionOverflowActionsPopoverCss from "./generated/themes/NotifactionOverflowActionsPopover.css.js";
-
-const PRIORITY_ICONS_MAP = {
-	"High": "message-error",
-	"Medium": "message-warning",
-	"Low": "message-success",
-};
 
 /**
  * @public
@@ -104,6 +99,12 @@ const metadata = {
  * @public
  */
 class NotificationListItemBase extends ListItemBase {
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -120,6 +121,14 @@ class NotificationListItemBase extends ListItemBase {
 		return NotifactionOverflowActionsPopoverCss;
 	}
 
+	static priorityIconsMappings() {
+		return {
+			"High": "message-error",
+			"Medium": "message-warning",
+			"Low": "message-success",
+		};
+	}
+
 	get hasHeading() {
 		return !!this.heading.length;
 	}
@@ -129,11 +138,11 @@ class NotificationListItemBase extends ListItemBase {
 	}
 
 	get priorityIcon() {
-		return PRIORITY_ICONS_MAP[this.priority];
+		return NotificationListItemBase.priorityIconsMappings()[this.priority];
 	}
 
 	get overflowButtonDOM() {
-		return this.shadowRoot.querySelector("[overflow-btn]");
+		return this.shadowRoot.querySelector(".ui5-nli-overflow-btn");
 	}
 
 	get showOverflow() {

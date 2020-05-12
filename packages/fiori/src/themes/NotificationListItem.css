@@ -127,14 +127,6 @@
 	box-sizing: border-box;
 }
 
-.ui5-nli-action {
-	margin-right: 0.5rem;
-}
-
-.ui5-nli-overflow-btn {
-	margin-right: 0.5rem;
-}
-
 /* RTL */
 
 [dir="rtl"] .ui5-nli-footer-divider {
@@ -144,12 +136,4 @@
 
 [dir="rtl"] .ui5-nli-footer-showMore {
 	margin-right: 1rem;
-}
-
-[dir="rtl"] .ui5-nli-action {
-	margin-left: 0.5rem;
-}
-
-[dir="rtl"] .ui5-nli-overflow-btn {
-	margin-left: 0.5rem;
 }

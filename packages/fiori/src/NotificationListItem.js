@@ -1,6 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 
@@ -8,6 +8,7 @@ import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
 // Texts
@@ -181,8 +182,6 @@ class NotificationListItem extends NotificationListItemBase {
 
 		// the resize handler
 		this.onResizeBind = this.onResize.bind(this);
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {
@@ -206,6 +205,7 @@ class NotificationListItem extends NotificationListItemBase {
 			Button.define(),
 			Icon.define(),
 			Link.define(),
+			Popover.define(),
 			fetchI18nBundle("@ui5/webcomponents-fiori"),
 		]);
 	}

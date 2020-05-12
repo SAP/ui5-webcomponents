@@ -138,6 +138,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Product Switch Item      | `ui5-product-switch-item`  | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`  |
 | Notification List Item      | `ui5-li-notifcation`      | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`     |
 | Notification Group List Item|`ui5-li-notification-group`| `import "@ui5/webcomponents-fiori/dist/NotifcationListGroupItem.js";`|
+| Notification Overflow Action| `ui5-notification-overflow-action` | `import "@ui5/webcomponents-fiori/dist/NotificationOverflowAction.js";`|
 
 ### 2. Assets
 
