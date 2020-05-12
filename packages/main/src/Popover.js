@@ -1,5 +1,4 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 import Popup from "./Popup.js";

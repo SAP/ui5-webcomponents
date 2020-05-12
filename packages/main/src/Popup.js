@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import DialogBlockLayerTemplate from "./generated/templates/DialogBlockLayerTemplate.lit.js";
+import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
+import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import BlockLayer from "./BlockLayer.js";
 import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 
@@ -181,7 +181,7 @@ class Popup extends UI5Element {
 	}
 
 	static get staticAreaTemplate() {
-		return DialogBlockLayerTemplate;
+		return PopupBlockLayer;
 	}
 
 	static blockBodyScrolling() {
