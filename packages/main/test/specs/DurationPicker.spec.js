@@ -37,4 +37,30 @@ describe("Duration Picker general interaction", () => {
 		assert.strictEqual(durationPicker.getProperty("_maxValue")[2], "08", "max value is read correctly");
 	});
 
+	it("Tests seconds-step property", () => {
+		const durationPicker = browser.$("#duration-picker6");
+
+		assert.strictEqual(durationPicker.getProperty("value"), "05:10:00", "The initial value is taking in consideration the seconds-step property");
+		
+		durationPicker.click();
+		durationPicker.keys("Backspace");
+		durationPicker.keys("2");
+		durationPicker.keys("Enter");
+		
+		assert.strictEqual(durationPicker.getProperty("value"), "05:10:00", "Editing the value is taking in consideration the seconds-step property");
+	});
+
+	it("Tests minutes-step property", () => {
+		const durationPicker = browser.$("#duration-picker7");
+
+		assert.strictEqual(durationPicker.getProperty("value"), "05:10", "The initial value is taking in consideration the minutes-step property");
+		
+		durationPicker.click();
+		durationPicker.keys("Backspace");
+		durationPicker.keys("2");
+		durationPicker.keys("Enter");
+		
+		assert.strictEqual(durationPicker.getProperty("value"), "05:10", "Editing the value is taking in consideration the minutes-step property");
+	});
+
 });

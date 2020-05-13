@@ -4,6 +4,7 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import DurationPickerTemplate from "./generated/templates/DurationPickerTemplate.lit.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -41,6 +42,30 @@ const metadata = {
 		value: {
 			type: String,
 			defaultValue: "00:00:00",
+		},
+
+		/**
+		 * Defines the selection step for the minutes
+		 * @type {Integer}
+		 * @public
+		 * @defaultValue 1
+		 * @since 1.0.0-rc.8
+		 */
+		minutesStep: {
+			type: Integer,
+			defaultValue: 1,
+		},
+
+		/**
+		 * Defines the selection step for the seconds
+		 * @type {Integer}
+		 * @public
+		 * @defaultValue 1
+		 * @since 1.0.0-rc.8
+		 */
+		secondsStep: {
+			type: Integer,
+			defaultValue: 1,
 		},
 
 		/**
@@ -250,8 +275,8 @@ class DurationPicker extends UI5Element {
 	}
 
 	/**
-	 * reads string from format hh:mm:ss
-	 * @private
+	 * reads string from format hh:mm:ss and returns an array which contains the hours, minutes and seconds
+	 * @param {string} value string in formathh:mm:ss
 	 */
 	readFormattedValue(value) {
 		value = value.replace(/\s/g, ""); // Remove spaces
@@ -301,6 +326,9 @@ class DurationPicker extends UI5Element {
 		}
 
 		if (currentMinutes > -1) {
+			if (currentMinutes && parseInt(currentMinutes) % this.minutesStep !== 0) {
+				currentMinutes = this.findNearestStep(currentMinutes, this.minutesStep);
+			}
 			if (this._maxValue[0] && this.selectedHours === this._maxValue[0]) {
 				currentMinutes = currentMinutes > this._maxValue[1] ? this._maxValue[1] : currentMinutes;
 			} else if (currentMinutes > this._maxValue[1]) {
@@ -311,6 +339,9 @@ class DurationPicker extends UI5Element {
 		}
 
 		if (currentSeconds > -1) {
+			if (currentSeconds && parseInt(currentSeconds) % this.secondsStep !== 0) {
+				currentSeconds = this.findNearestStep(currentSeconds, this.secondsStep);
+			}
 			if (this._maxValue[0] && this._maxValue[1] && this.selectedHours >= this._maxValue[0] && this.selectedSeconds >= this._maxValue[1]) {
 				currentSeconds = currentSeconds > this._maxValue[2] ? this._maxValue[2] : currentSeconds;
 			} else if (currentSeconds > this._maxValue[2]) {
@@ -347,13 +378,37 @@ class DurationPicker extends UI5Element {
 		this[`_${name}`] = temp;
 	}
 
+	findNearestStep(currentValue, step) {
+		const curr = parseInt(currentValue);
+		const biggerClosest = this._getClosest(curr, step, true),
+			lowerClosest = this._getClosest(curr, step, false);
+
+		const diffToBiggerClosest = biggerClosest - curr,
+			diffToLowerClosest = curr - lowerClosest;
+
+		return diffToBiggerClosest > diffToLowerClosest ? lowerClosest.toString() : biggerClosest.toString();
+	}
+
+	/**
+	 * Finds the nearest lower/bigger number to the givent curr
+	 * @param {Integer} curr the starting number
+	 * @param {Boolean} larger defines if we are searching for bigger or lower number
+	 */
+	_getClosest(curr, step, larger = true) {
+		while (curr % step !== 0) {
+			curr = larger ? ++curr : --curr;
+		}
+
+		return curr;
+	}
+
 	_onkeydown(event) {
 		if (isShow(event)) {
 			this.togglePicker();
 		}
 	}
 
-	generateTimeItemsArray(arrayLength) {
+	generateTimeItemsArray(arrayLength, step = 1) {
 		const resultArray = [];
 		for (let i = 0; i < arrayLength; i++) {
 			let tempString = i.toString();
@@ -361,7 +416,9 @@ class DurationPicker extends UI5Element {
 				tempString = `0${tempString}`;
 			}
 
-			resultArray.push(tempString);
+			if (tempString % step === 0) {
+				resultArray.push(tempString);
+			}
 		}
 
 		return resultArray;
@@ -445,13 +502,13 @@ class DurationPicker extends UI5Element {
 	get minutesArray() {
 		const currentMinutes = parseInt(this.readFormattedValue(this.maxValue)[1]);
 		const minutes = currentMinutes && currentMinutes > 0 && currentMinutes < 60 ? currentMinutes + 1 : 60;
-		return this.generateTimeItemsArray(minutes);
+		return this.generateTimeItemsArray(minutes, this.minutesStep);
 	}
 
 	get secondsArray() {
 		const currentSeconds = parseInt(this.readFormattedValue(this.maxValue)[2]);
 		const seconds = currentSeconds && currentSeconds > 0 && currentSeconds < 60 ? currentSeconds + 1 : 60;
-		return this.generateTimeItemsArray(seconds);
+		return this.generateTimeItemsArray(seconds, this.secondsStep);
 	}
 
 	get secondsSlider() {
