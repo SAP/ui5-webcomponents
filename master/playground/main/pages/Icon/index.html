@@ -83,7 +83,29 @@
 		></ui5-icon>
 	</ui5-datepicker>
 
-    <br/><br/>
+	<br/><br/>
+	
+	<ui5-icon id="interactive-icon" name="add-equipment" class="icon-blue icon-medium" interactive></ui5-icon>
+	<ui5-icon id="non-interactive-icon" name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
+	<ui5-input id="click-event" value="0"></ui5-input>
+
+	<br/>
+	<br/>
+
+	<script>
+		var icon = document.getElementById("interactive-icon"),
+			nonInteractiveIcon = document.getElementById("non-interactive-icon"),
+			input = document.getElementById("click-event"),
+			inputValue = 0;
+
+		icon.addEventListener("ui5-click", function() {
+			input.value = ++inputValue;
+		});
+
+		nonInteractiveIcon.addEventListener("ui5-click", function() {
+			input.value = ++inputValue;
+		});
+	</script>
 
     <script type="module">
 		(async () => {

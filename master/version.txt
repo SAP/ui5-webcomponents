@@ -1,5 +1,10 @@
-commit 47d37c30180080188abd435a14cc6b721ca43e1e
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue May 12 14:42:26 2020 +0300
+commit ef62f81461ff608659f404c7ad344645db3ac26d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed May 13 12:11:01 2020 +0300
 
-    fix(ui5-upload-collection-item): make component responsive (#1579)
+    feat(ui5-li-notification, ui5-li-notification-group): introduce new components (#1576)
+    
+    The component covers the main functionaly of the sap.m.NotificationListItem.
+    It is meant to display a notification and has a rich set of properties and slots to do it.
+    
+    Fixes: #1478
