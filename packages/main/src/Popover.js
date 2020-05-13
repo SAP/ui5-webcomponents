@@ -11,7 +11,6 @@ import { getFocusedElement, getClosedPopupParent } from "./popup-utils/PopupUtil
 
 // Styles
 import PopoverCss from "./generated/themes/Popover.css.js";
-import PopupCss from "./generated/themes/Popup.css.js";
 
 const arrowSize = 8;
 
@@ -269,7 +268,7 @@ class Popover extends Popup {
 	}
 
 	static get styles() {
-		return [PopoverCss, PopupCss];
+		return [PopoverCss, Popup.styles];
 	}
 
 	static get template() {
@@ -293,7 +292,7 @@ class Popover extends Popup {
 
 		super.open();
 
-		if (this.modal) {
+		if (this.isModal) {
 			Popover.blockBodyScrolling();
 		}
 
@@ -321,7 +320,7 @@ class Popover extends Popup {
 
 		super.close();
 
-		if (this.modal) {
+		if (this.isModal) {
 			Popover.unblockBodyScrolling();
 		}
 
@@ -363,7 +362,7 @@ class Popover extends Popup {
 		this._focusedElementBeforeOpen = null;
 	}
 
-	shouldCloseDueOverflow(placement, openerRect) {
+	shouldCloseDueToOverflow(placement, openerRect) {
 		const threshold = 32;
 		const limits = {
 			"Right": openerRect.right,
@@ -389,14 +388,14 @@ class Popover extends Popup {
 		const popoverSize = this.popoverSize;
 		const openerRect = this._opener.getBoundingClientRect();
 		const placement = this.calcPlacement(openerRect, popoverSize);
-		const streching = this.horizontalAlign === PopoverHorizontalAlign.Stretch;
+		const stretching = this.horizontalAlign === PopoverHorizontalAlign.Stretch;
 
 		if (this._preventRepositionAndClose) {
 			return this.close();
 		}
 
-		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && streching) {
-			this.style.display = "inline-block";
+		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
+			this.show();
 			this.style.width = this._width;
 			return;
 		}
@@ -409,15 +408,11 @@ class Popover extends Popup {
 
 		this.style.left = `${this._left}px`;
 		this.style.top = `${this._top}px`;
-		this.style.display = "inline-block";
+		this.show();
 
-		if (streching && this._width) {
+		if (stretching && this._width) {
 			this.style.width = this._width;
 		}
-	}
-
-	hide() {
-		this.style.display = "none";
 	}
 
 	get popoverSize() {
@@ -433,14 +428,14 @@ class Popover extends Popup {
 		}
 
 		this.style.visibility = "hidden";
-		this.style.display = "inline-block";
+		this.show();
 
 		rect = this.getBoundingClientRect();
 
 		width = rect.width;
 		height = rect.height;
 
-		this.style.display = "none";
+		this.hide();
 		this.style.visibility = "visible";
 
 		return { width, height };
@@ -451,7 +446,7 @@ class Popover extends Popup {
 	}
 
 	get arrowDOM() {
-		return this.shadowRoot.querySelector(".ui5-popover-arr");
+		return this.shadowRoot.querySelector(".ui5-popover-arrow");
 	}
 
 	calcPlacement(targetRect, popoverSize) {
@@ -469,7 +464,7 @@ class Popover extends Popup {
 
 		const placementType = this.getActualPlacementType(targetRect, popoverSize);
 
-		this._preventRepositionAndClose = this.shouldCloseDueOverflow(placementType, targetRect);
+		this._preventRepositionAndClose = this.shouldCloseDueToOverflow(placementType, targetRect);
 
 		const isVertical = placementType === PopoverPlacementType.Top
 			|| placementType === PopoverPlacementType.Bottom;
@@ -665,6 +660,10 @@ class Popover extends Popup {
 		}
 
 		return top;
+	}
+
+	get isModal() {
+		return this.modal;
 	}
 
 	get styles() {

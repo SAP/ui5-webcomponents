@@ -8,7 +8,6 @@ import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 
 // Styles
 import dialogCSS from "./generated/themes/Dialog.css.js";
-import popupCSS from "./generated/themes/Popup.css.js";
 import { getFocusedElement } from "./popup-utils/PopupUtils.js";
 
 /**
@@ -84,19 +83,13 @@ class Dialog extends Popup {
 	}
 
 	static get styles() {
-		return [dialogCSS, popupCSS];
+		return [dialogCSS, Popup.styles];
 	}
 
 	constructor() {
 		super();
 
-		// mark dialog for registry as it is always modal
-		this.modal = true;
 		this.onPhone = isPhone();
-	}
-
-	reposition() {
-		this.style.display = "inline-block";
 	}
 
 	/**
@@ -108,7 +101,7 @@ class Dialog extends Popup {
 
 		this._focusedElementBeforeOpen = getFocusedElement();
 		this.fireEvent("beforeOpen", {});
-		this.reposition();
+		this.show();
 		this.applyInitialFocus();
 
 		Dialog.blockBodyScrolling();
@@ -130,7 +123,7 @@ class Dialog extends Popup {
 		}
 
 		super.close();
-		this._close();
+		this.hide();
 		this.opened = false;
 
 		this.fireEvent("afterClose", {});
@@ -143,8 +136,8 @@ class Dialog extends Popup {
 		}
 	}
 
-	_close() {
-		this.style.display = "none";
+	get isModal() {
+		return true;
 	}
 
 	get _displayFooter() {

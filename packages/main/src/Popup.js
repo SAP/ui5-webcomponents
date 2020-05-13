@@ -2,11 +2,11 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import BlockLayer from "./BlockLayer.js";
 import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
+import staticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
 
 /**
  * @public
@@ -87,7 +87,7 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_blockLayerVisible: {
+		_blockLayerHidden: {
 			type: Boolean,
 		},
 	},
@@ -184,6 +184,10 @@ class Popup extends UI5Element {
 		return PopupBlockLayer;
 	}
 
+	static get staticAreaStyles() {
+		return staticAreaStyles;
+	}
+
 	static blockBodyScrolling() {
 		document.body.style.top = `-${window.pageYOffset}px`;
 		document.body.classList.add("ui5-dialog-scroll-blocker");
@@ -230,7 +234,7 @@ class Popup extends UI5Element {
 	}
 
 	open() {
-		if (this.modal) {
+		if (this.isModal) {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
 		}
@@ -238,13 +242,36 @@ class Popup extends UI5Element {
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
 
-		this._blockLayerVisible = true;
+		this._blockLayerHidden = false;
 	}
 
 	close() {
-		if (this.modal) {
-			this._blockLayerVisible = false;
+		if (this.isModal) {
+			this._blockLayerHidden = true;
 		}
+	}
+
+	/**
+	 * Sets "inline-block" display to the popup
+	 *
+	 * @protected
+	 */
+	show() {
+		this.style.display = "inline-block";
+	}
+
+
+	/**
+	 * Sets "none" display to the popup
+	 *
+	 * @protected
+	 */
+	hide() {
+		this.style.display = "none";
+	}
+
+	get isModal() {
+		return false;
 	}
 
 	get styles() {
@@ -255,10 +282,6 @@ class Popup extends UI5Element {
 				"zIndex": (this._zIndex - 1),
 			},
 		};
-	}
-
-	static async onDefine() {
-		await BlockLayer.define();
 	}
 }
 

@@ -560,7 +560,7 @@ class Input extends UI5Element {
 
 		const toBeFocused = event.relatedTarget;
 
-		if (toBeFocused && ([].indexOf.call(toBeFocused.classList, this._id) > -1)) {
+		if (toBeFocused && toBeFocused.contains(this._id)) {
 			return;
 		}
 

@@ -17,13 +17,13 @@ describe("Attributes propagation", () => {
 
 		btnOpenPopover.click();
 
-		assert.ok(popover.shadow$(".ui5-popover-arr").isDisplayedInViewport(), "Initially popover has arrow.");
+		assert.ok(popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "Initially popover has arrow.");
 
 		browser.execute(() => {
 			document.getElementById("pop").toggleAttribute("no-arrow");
 		});
 
-		assert.ok(!popover.shadow$(".ui5-popover-arr").isDisplayedInViewport(), "The arrow was hidden.");
+		assert.ok(!popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "The arrow was hidden.");
 	});
 
 });

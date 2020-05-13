@@ -50,7 +50,7 @@ const clickHandler = event => {
 		const popup = openedPopups[i];
 
 		// if popup is modal, opener is clicked, popup is dialog skip closing
-		if (popup.modal || popup.isOpenerClicked(event)) {
+		if (popup.isModal || popup.isOpenerClicked(event)) {
 			return;
 		}
 

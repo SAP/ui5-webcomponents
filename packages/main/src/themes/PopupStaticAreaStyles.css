@@ -1,4 +1,4 @@
-:host {
+.ui5-block-layer {
 	display: none;
 	position: absolute;
 	background-color: var(--sapBlockLayer_Background);
@@ -12,6 +12,6 @@
 	z-index: -1;
 }
 
-:host([visible]) {
+.ui5-block-layer:not([hidden]) {
 	display: inline-block;
 }
