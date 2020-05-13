@@ -1,5 +1,5 @@
-commit 37ee069ce648556800b175dbba6ed7d1d14d85af
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed May 13 12:42:49 2020 +0300
+commit 2dd97cfcebf4db0341b0f33fcf8aa837b4dfcfce
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed May 13 13:10:42 2020 +0300
 
-    feat(ui5-duration-picker): implement seconds-step & minutes-step properties (#1603)
+    feat: ui5-tree (new component) (#1580)
