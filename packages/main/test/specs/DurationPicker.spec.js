@@ -63,4 +63,22 @@ describe("Duration Picker general interaction", () => {
 		assert.strictEqual(durationPicker.getProperty("value"), "05:10", "Editing the value is taking in consideration the minutes-step property");
 	});
 
+	it("Tests hide-seconds property", () => {
+		const durationPicker = browser.$("#duration-picker3");
+
+		assert.strictEqual(durationPicker.getProperty("value"), "07:20", "Hours and minutes are considered");
+	});
+
+	it("Tests hide-minutes property", () => {
+		const durationPicker = browser.$("#duration-picker3-1");
+
+		assert.strictEqual(durationPicker.getProperty("value"), "07:10", "Hours and seconds are considered");
+	});
+
+	it("Tests hide-hours property", () => {
+		const durationPicker = browser.$("#duration-picker3-2");
+
+		assert.strictEqual(durationPicker.getProperty("value"), "20:10", "Minutes and seconds are considered");
+	});
+
 });

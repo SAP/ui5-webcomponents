@@ -20,14 +20,26 @@
 </section>
 
 <section>
-	<h3>Duration Picker With Seconds & Steps</h3>
+	<h3>Duration Picker With Steps</h3>
 	<div class="snippet">
-			<ui5-duration-picker value="05:00:30" show-seconds></ui5-duration-picker>
-			<ui5-duration-picker value="05:08:32" show-seconds seconds-step="5" minutes-step="10"></ui5-duration-picker>
+		<ui5-duration-picker value="05:08:32" seconds-step="5" minutes-step="10"></ui5-duration-picker>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-duration-picker value="05:00:30" show-seconds></ui5-duration-picker>
-<ui5-duration-picker value="05:08:32" show-seconds seconds-step="5" minutes-step="10"></ui5-duration-picker>
+<ui5-duration-picker value="05:08:32" seconds-step="5" minutes-step="10"></ui5-duration-picker>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Duration Picker With No Seconds, Minutes or Hours</h3>
+	<div class="snippet">
+		<ui5-duration-picker value="05:00" hide-seconds></ui5-duration-picker>
+		<ui5-duration-picker value="01:30" hide-minutes></ui5-duration-picker>
+		<ui5-duration-picker value="10:30" hide-hours></ui5-duration-picker>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-duration-picker value="05:00" hide-seconds></ui5-duration-picker>
+<ui5-duration-picker value="01:30" hide-minutes></ui5-duration-picker>
+<ui5-duration-picker value="10:30" hide-hours></ui5-duration-picker>
 	</xmp></pre>
 </section>
 
