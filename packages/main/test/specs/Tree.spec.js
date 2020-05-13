@@ -4,7 +4,7 @@ describe("Tree general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Tree.html");
 
 	it("Tree is rendered", () => {
-		const treeRoot = browser.$("#tree").shadow$(".ui5-tree-root");
+		const treeRoot = browser.$("#tree").shadow$("ui5-list");
 		assert.ok(treeRoot.isExisting(), "Tree is rendered.");
 	});
 
