@@ -1,5 +1,6 @@
 :host(:not([hidden])) {
 	display: block;
+	cursor: pointer;
 }
 
 .ui5-li-root-tree {

@@ -2,9 +2,6 @@
 
 :host(:not([hidden])) {
     display: block;
-}
-
-.ui5-tree-busy-indicator {
     width: 100%;
 }
 

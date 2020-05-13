@@ -39,6 +39,10 @@
 		.spacer {
 			flex: 1;
 		}
+
+		.full-width {
+			width: 100%;
+		}
 	</style>
 </head>
 
@@ -97,20 +101,22 @@
 
 	<br><br>
 
-	<ui5-tree id="treeDynamic">
-		<div slot="header" class="hdr">
-			<ui5-title>Dynamic tree</ui5-title>
-		</div>
+	<ui5-busyindicator id="busy" class="full-width">
+		<ui5-tree id="treeDynamic" class="full-width">
+			<div slot="header" class="hdr">
+				<ui5-title>Dynamic tree</ui5-title>
+			</div>
 
-		<ui5-tree-item text="Has preloaded children">
-			<ui5-tree-item text="Child 1"></ui5-tree-item>
-			<ui5-tree-item text="Child 2"></ui5-tree-item>
-		</ui5-tree-item>
+			<ui5-tree-item text="Has preloaded children">
+				<ui5-tree-item text="Child 1"></ui5-tree-item>
+				<ui5-tree-item text="Child 2"></ui5-tree-item>
+			</ui5-tree-item>
 
-		<ui5-tree-item text="Has no children at all"></ui5-tree-item>
+			<ui5-tree-item text="Has no children at all"></ui5-tree-item>
 
-		<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
-	</ui5-tree>
+			<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
+		</ui5-tree>
+	</ui5-busyindicator>
 
 	<script>
 
@@ -177,19 +183,20 @@
 		});
 
 		var dynamicTree = document.getElementById("treeDynamic");
+		var busyIndicator = document.getElementById("busy");
 		dynamicTree.addEventListener("itemToggle", function(event) {
 			var item = event.detail.item; // get the node that is toggled
 
 			// Only for the dynamic node, only when it's empty
 			if (item.id === "dynamicNode" && item.children.length === 0) {
-				dynamicTree.busy = true;
+				busyIndicator.active = true;
 				event.preventDefault(); // do not let the toggle button switch yet
 				setTimeout(function() {
 					var newItem = document.createElement("ui5-tree-item"); // Fetching from db....
 					newItem.text = "Node fetched from DB after 2 sec";
 					item.appendChild(newItem);
 					item.toggle(); // now manually switch
-					dynamicTree.busy = false;
+					busyIndicator.active = false;
 				}, 2000);
 			}
 		});

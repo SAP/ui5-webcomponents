@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TreeItem from "./TreeItem.js";
-import BusyIndicator from "./BusyIndicator.js";
 import List from "./List.js";
 import TreeListItem from "./TreeListItem.js";
 import ListMode from "./types/ListMode.js";
@@ -48,7 +47,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-tree</code> header text.
 		 * <br><br>
-		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
+		 * <b>Note:</b> If the <code>header</code> slot is set, this property is ignored.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -67,18 +66,6 @@ const metadata = {
 		 */
 		footerText: {
 			type: String,
-		},
-
-		/**
-		 * When set to <code>true</code>, a busy indicator will be displayed on the <code>ui5-tree</code>, blocking any user interaction.
-		 * Use this when you need to dynamically load tree items.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		busy: {
-			type: Boolean,
 		},
 
 		/**
@@ -111,7 +98,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-tree</code> header.
 		 * <br><br>
-		 * <b>Note:</b> When <code>header</code> is set, the
+		 * <b>Note:</b> When the <code>header</code> slot is set, the
 		 * <code>headerText</code> property is ignored.
 		 *
 		 * @type {HTMLElement[]}
@@ -232,11 +219,15 @@ class Tree extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
-			BusyIndicator.define(),
 			List.define(),
 			TreeListItem.define(),
 			TreeItem.define(),
 		]);
+	}
+
+	constructor() {
+		super();
+		this._observer = new MutationObserver(this.onTreeStructureChange.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -245,7 +236,6 @@ class Tree extends UI5Element {
 	}
 
 	onEnterDOM() {
-		this._observer = new MutationObserver(this.onTreeStructureChange.bind(this));
 		this._observer.observe(this, { attributes: true, childList: true, subtree: true });
 	}
 
@@ -262,7 +252,7 @@ class Tree extends UI5Element {
 	}
 
 	get list() {
-		return this.shadowRoot.querySelector(`ui5-list`);
+		return this.getDomRef();
 	}
 
 	get _role() {
@@ -270,10 +260,6 @@ class Tree extends UI5Element {
 	}
 
 	_onListItemStepIn(event) {
-		if (this.busy) {
-			return;
-		}
-
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
 		if (treeItem.items.length > 0) {
@@ -284,10 +270,6 @@ class Tree extends UI5Element {
 	}
 
 	_onListItemStepOut(event) {
-		if (this.busy) {
-			return;
-		}
-
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
 		if (treeItem.parentElement !== this) {
@@ -298,10 +280,6 @@ class Tree extends UI5Element {
 	}
 
 	_onListItemToggle(event) {
-		if (this.busy) {
-			return;
-		}
-
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
 		const defaultPrevented = !this.fireEvent("itemToggle", { item: treeItem }, true);
