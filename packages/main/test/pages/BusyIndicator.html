@@ -111,6 +111,24 @@
 	<br>
 	<br>
 
+	<ui5-busyindicator id="busy-tree" style="width: 100%;">
+		<ui5-tree id="treeDynamic">
+			<div slot="header">
+				<ui5-title>Dynamic tree</ui5-title>
+			</div>
+
+			<ui5-tree-item text="Has preloaded children">
+				<ui5-tree-item text="Child 1"></ui5-tree-item>
+				<ui5-tree-item text="Child 2"></ui5-tree-item>
+			</ui5-tree-item>
+
+			<ui5-tree-item text="Has no children at all"></ui5-tree-item>
+
+			<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
+		</ui5-tree>
+	</ui5-busyindicator>
+
+	<ui5-input value="0" id="tree-input"></ui5-input>
 
 	<script>
 		const busyIndocator = document.getElementById("busy-container");
@@ -130,6 +148,37 @@
 				list.noDataText = "";
 				busyIndocator.removeAttribute("active");
 			}, 2000);
+		});
+
+		var dynamicTree = document.getElementById("treeDynamic");
+		var busyIndicator = document.getElementById("busy-tree");
+		var input = document.getElementById("tree-input");
+		var inputValue = 0;
+
+		dynamicTree.addEventListener("ui5-itemToggle", function(event) {
+			var item = event.detail.item; // get the node that is toggled
+			console.log(item);
+			// Only for the dynamic node, only when it's empty
+			if (item.id === "dynamicNode" && item.children.length === 0) {
+				busyIndicator.active = true;
+				event.preventDefault(); // do not let the toggle button switch yet
+				setTimeout(function() {
+					var newItem = document.createElement("ui5-tree-item"); // Fetching from db....
+					newItem.text = "Node fetched from DB after 2 sec";
+					item.appendChild(newItem);
+					item.toggle(); // now manually switch
+					busyIndicator.active = false;
+				}, 2000);
+			}
+		});
+
+		dynamicTree.addEventListener("ui5-itemClick", function(event) {
+			var item = event.detail.item; // get the node that is toggled
+
+			// Only for the dynamic node, only when it's empty
+			if (item.id === "dynamicNode") {
+				input.value = ++inputValue;
+			}
 		});
 	</script>
 </body>
