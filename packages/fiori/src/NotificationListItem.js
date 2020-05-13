@@ -51,7 +51,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		truncate: {
+		wrap: {
 			type: Boolean,
 		},
 
@@ -243,7 +243,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get hideShowMore() {
-		if (this.truncate && this._showMore) {
+		if (!this.wrap && this._showMore) {
 			return undefined;
 		}
 
@@ -402,7 +402,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	onResize() {
-		if (!this.truncate) {
+		if (this.wrap) {
 			this._showMore = false;
 			return;
 		}

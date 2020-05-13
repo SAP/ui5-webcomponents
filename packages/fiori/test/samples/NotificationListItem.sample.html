@@ -89,66 +89,6 @@
 </section>
 
 <section>
-	<h3>NotificationListItem - Show "more/less"</h3>
-	<div class="snippet">
-		<ui5-list id="myList2" class="full-width" header-text="Notifications">
-			<ui5-li-notification
-				truncate
-				show-close
-				priority="Medium"
-				heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-			>
-				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				<ui5-avatar initials="ML" size="XS" slot="avatar"></ui5-avatar>
-				<span slot="footnotes">Monique Legrand</span>
-				<span slot="footnotes">2 Days</span>
-			</ui5-li-notification>
-
-			<ui5-li-notification
-				truncate
-				show-close
-				priority="Medium"
-				heading="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-			>
-				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				<ui5-avatar initials="AC" size="XS" slot="avatar"></ui5-avatar>
-				<span slot="footnotes">Alain Chevalier</span>
-				<span slot="footnotes">2 Days</span>
-			</ui5-li-notification>
-
-			<ui5-li-notification
-				show-close
-				priority="Medium"
-				truncate
-				heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-			>
-				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				<ui5-avatar initials="JD" size="XS" slot="avatar"></ui5-avatar>
-				<span slot="footnotes">John Doe</span>
-				<span slot="footnotes">2 Days</span>
-			</ui5-li-notification>
-		</ui5-list>
-	</div>
-	<pre class="prettyprint lang-html"><xmp>
-<ui5-list header-text="Notifications">
-	<ui5-li-notification
-		truncate
-		show-close
-		priority="Medium"
-		heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-	>
-		And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-		<ui5-avatar initials="ML" size="XS" slot="avatar"></ui5-avatar>
-		<span slot="footnotes">Monique Legrand</span>
-		<span slot="footnotes">2 Days</span>
-	</ui5-li-notification>
-
-	...
-</ui5-list>
-	</xmp></pre>
-</section>
-
-<section>
 	<h3>NotificationListItem - Custom Actions</h3>
 	<div class="snippet">
 		<ui5-list id="myList3" class="full-width" header-text="Notifications">
@@ -228,7 +168,6 @@
 			<ui5-list id="notificationListTop" header-text="Notifications">
 				<ui5-li-notification
 					show-close
-					truncate
 					heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -242,7 +181,6 @@
 		
 				<ui5-li-notification
 					show-close
-					truncate
 					heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 					priority="High"
 				>
@@ -258,7 +196,7 @@
 				<ui5-li-notification
 					heading="New order (#2565) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 					priority="Medium"
-					truncate>
+				>
 						Short description
 					<ui5-avatar initials="JS" size="XS" slot="avatar"></ui5-avatar>
 		
@@ -269,7 +207,7 @@
 					<ui5-notification-overflow-action icon="decline" text="Reject All Requested Information" slot="actions"></ui5-notification-overflow-action>
 				</ui5-li-notification>
 		
-				<ui5-li-notification heading="New order (#2523)" truncate>
+				<ui5-li-notification heading="New order (#2523)">
 					<div>. With a very long description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.</div>
 		
 					<span slot="footnotes">John SMith</span>
@@ -305,7 +243,6 @@
 	<ui5-list header-text="Notifications">
 		<ui5-li-notification
 			show-close
-			truncate
 			heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 		>
 			And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
@@ -328,6 +265,5 @@
 	
 	</xmp></pre>
 </section>
-
 
 <!-- JSDoc marker -->
