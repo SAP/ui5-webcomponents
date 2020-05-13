@@ -11,7 +11,7 @@ const removeWhiteSpaces = (source) => {
 const compileString = async (sInput, config) => {
 	let sPreprocessed = sInput;
 
-	sPreprocessed = await includesReplacer.replace(sPreprocessed, config);
+	sPreprocessed = includesReplacer.replace(sPreprocessed, config);
 	sPreprocessed = removeWhiteSpaces(sPreprocessed);
 
 	const ast = Handlebars.parse(sPreprocessed);

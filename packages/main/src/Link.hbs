@@ -6,7 +6,11 @@
 	rel="{{_rel}}"
 	tabindex="{{tabIndex}}"
 	?disabled="{{disabled}}"
-	aria-disabled="{{ariaDisabled}}">
+	aria-disabled="{{ariaDisabled}}"
+	@focusin={{_onfocusin}}
+	@click={{_onclick}}
+	@keydown={{_onkeydown}}
+	@keyup={{_onkeyup}}>
 	<slot></slot>
 	{{#if hasLinkType}}
 		<span class="ui5-hidden-text">{{linkTypeText}}</span>

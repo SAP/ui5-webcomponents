@@ -16,7 +16,6 @@
 	pointer-events: none;
 }
 
-:host(:not([disabled])) .ui5-link-root:hover,
 :host(:not([disabled])) .ui5-link-root:hover {
 	text-decoration: underline;
 	color: var(--sapLinkColor);

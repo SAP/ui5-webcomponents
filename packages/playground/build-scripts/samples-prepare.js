@@ -14,6 +14,8 @@ const components = [];
 const newComponents = [
   "DateTimePicker",
   "DurationPicker",
+  "NotificationListItem",
+  "NotificationListGroupItem",
   "UploadCollection",
   "Tree"
 ];
