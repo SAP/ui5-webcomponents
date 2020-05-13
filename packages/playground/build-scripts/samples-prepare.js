@@ -17,6 +17,7 @@ const newComponents = [
   "NotificationListItem",
   "NotificationListGroupItem",
   "UploadCollection",
+  "Tree"
 ];
 
 packages.forEach(package => {

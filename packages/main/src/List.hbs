@@ -16,7 +16,7 @@
 
 	<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
 
-	<ul id="{{_id}}-listUl" class="ui5-list-ul" aria-multiselectable="{{isMultiSelect}}" aria-labelledby="{{ariaLabelledBy}}" role="listbox">
+	<ul id="{{_id}}-listUl" class="ui5-list-ul" aria-multiselectable="{{isMultiSelect}}" aria-labelledby="{{ariaLabelledBy}}" role="{{_role}}">
 		<slot></slot>
 
 		{{#if showNoDataText}}

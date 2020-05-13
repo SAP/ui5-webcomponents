@@ -26,7 +26,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-li</code> header.
+		 * Defines the <code>ui5-list</code> header.
 		 * <br><br>
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
@@ -93,8 +93,8 @@ const metadata = {
 		/**
 		 * Defines the mode of the <code>ui5-list</code>.
 		 * <br><br>
-		 * <b>Note:</b> Avalaible options are <code>None</code>, <code>SingleSelect</code>,
-		 * <code>MultiSelect</code>, and <code>Delete</code>.
+		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
+		 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
 		 * @type {ListMode}
 		 * @defaultvalue "None"
@@ -162,6 +162,17 @@ const metadata = {
 		busy: {
 			type: Boolean,
 		},
+
+		/**
+		 * Used to externally manipulate the role of the list
+		 *
+		 * @private
+		 */
+		_role: {
+			type: String,
+			defaultValue: "listbox",
+			noAttribute: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
@@ -227,7 +238,7 @@ const metadata = {
 
 		/**
 		 * Fired when selection is changed by user interaction
-		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+		 * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
 		 *
 		 * @event
 		 * @param {Array} selectedItems An array of the selected items.
@@ -622,6 +633,10 @@ class List extends UI5Element {
 		if (firstSelectedItem) {
 			firstSelectedItem.focus();
 		}
+	}
+
+	focusItem(item) {
+		item.focus();
 	}
 
 	setForwardingFocus(forwardingFocus) {
