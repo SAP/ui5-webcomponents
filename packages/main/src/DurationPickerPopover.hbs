@@ -10,21 +10,27 @@
 
 >
     <div class="{{classes.container}}">
-        <ui5-wheelslider
-            cyclic="true"
-            ._items="{{hoursArray}}"
-            value="{{selectedHours}}"
-            class="ui5-duration-picker-wheelslider ui5-duration-picker-hours-wheelslider"
-            label = "{{hoursSliderTitle}}"
-        ></ui5-wheelslider>
-        <ui5-wheelslider
-            cyclic="true"
-            ._items="{{minutesArray}}"
-            value="{{selectedMinutes}}"
-            class="ui5-duration-picker-wheelslider ui5-duration-picker-minutes-wheelslider"
-            label = "{{minutesSliderTitle}}"
-        ></ui5-wheelslider>
-        {{#if showSeconds}}
+        {{#unless hideHours}}
+            <ui5-wheelslider
+                cyclic="true"
+                ._items="{{hoursArray}}"
+                value="{{selectedHours}}"
+                class="ui5-duration-picker-wheelslider ui5-duration-picker-hours-wheelslider"
+                label = "{{hoursSliderTitle}}"
+            ></ui5-wheelslider>
+        {{/unless}}
+
+        {{#unless hideMinutes}}
+            <ui5-wheelslider
+                cyclic="true"
+                ._items="{{minutesArray}}"
+                value="{{selectedMinutes}}"
+                class="ui5-duration-picker-wheelslider ui5-duration-picker-minutes-wheelslider"
+                label = "{{minutesSliderTitle}}"
+            ></ui5-wheelslider>
+        {{/unless}}
+
+        {{#unless hideSeconds}}
             <ui5-wheelslider
                 cyclic="true"
                 ._items="{{secondsArray}}"
@@ -32,7 +38,7 @@
                 class="ui5-duration-picker-wheelslider ui5-duration-picker-seconds-wheelslider"
                 label = "{{secondsSliderTitle}}"
             ></ui5-wheelslider>
-        {{/if}}
+        {{/unless}}
     </div>
 
     <div slot="footer" class="ui5-duration-picker-footer" @keydown={{_onfooterkeydown}}>

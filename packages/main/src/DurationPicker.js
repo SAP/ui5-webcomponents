@@ -53,13 +53,36 @@ const metadata = {
 		maxValue: {
 			type: String,
 		},
+
 		/**
-		 * Defines whether a slider for secconds will be available. By default there are sliders for hours and minutes only.
+		 * Defines whether a slider for seconds will be available. By default there are sliders for hours, minutes and seconds.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		showSeconds: {
+		hideSeconds: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the slider for minutes will be available. By default there are sliders for hours, minutes and seconds.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		hideMinutes: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the slider for hours will be available. By default there are sliders for hours, minutes and seconds.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		hideHours: {
 			type: Boolean,
 		},
 
@@ -223,7 +246,7 @@ class DurationPicker extends UI5Element {
 	}
 
 	normalizaValue() {
-		this.value = `${this.selectedHours || "00"}:${this.selectedMinutes || "00"}${this.showSeconds ? `:${this.selectedSeconds || "00"}` : ""}`;
+		this.value = `${!this.hideHours ? this.selectedHours || "00" : ""}${!this.hideHours && !this.hideMinutes ? ":" : ""}${!this.hideMinutes ? this.selectedMinutes || "00" : ""}${!this.hideSeconds ? `:${this.selectedSeconds || "00"}` : ""}`;
 	}
 
 	/**
@@ -235,11 +258,39 @@ class DurationPicker extends UI5Element {
 		return value.split(":");
 	}
 
+	getSecondsFromFormattedValue(destructuredValues) {
+		if (this.hideSeconds) {
+			return "";
+		}
+
+		if (this.hideHours && this.hideMinutes) {
+			return destructuredValues[0];
+		}
+
+		if (this.hideHours || this.hideMinutes) {
+			return destructuredValues[1];
+		}
+
+		return destructuredValues[2];
+	}
+
+	getMinutesFromFormattedValue(destructuredValues) {
+		if (this.hideMinutes) {
+			return "";
+		}
+
+		if (this.hideHours) {
+			return destructuredValues[0];
+		}
+
+		return destructuredValues[1];
+	}
+
 	setSelectedValues() {
 		const destructuredValues = this.readFormattedValue(this.value || "");
-		let currentHours = destructuredValues[0],
-			currentMinutes = destructuredValues[1],
-			currentSeconds = destructuredValues[2];
+		let currentHours = this.hideHours ? "" : destructuredValues[0],
+			currentMinutes = this.getMinutesFromFormattedValue(destructuredValues), // this.hideHours && !this.hideMinutes ? destructuredValues[0] : "",
+			currentSeconds = this.getSecondsFromFormattedValue(destructuredValues); //  this.hideHours && this.hideHours ? destructuredValues[0] : {};
 
 		if (currentHours > -1) {
 			if (currentHours > this._maxValue[0]) {
@@ -318,7 +369,7 @@ class DurationPicker extends UI5Element {
 
 	submitPickers() {
 		const prevValue = this.value;
-		this.value = `${this.hoursSlider.value}:${this.minutesSlider.value}${this.showSeconds ? `:${this.secondsSlider.value}` : ""}`;
+		this.value = `${!this.hideHours ? this.hoursSlider.value : ""}${!this.hideHours && !this.hideMinutes ? ":" : ""}${!this.hideMinutes ? this.minutesSlider.value : ""}${!this.hideSeconds ? `:${this.secondsSlider.value}` : ""}`;
 		this.togglePicker();
 		if (prevValue !== this.value) {
 			this.fireEvent("change", { value: this.value });
