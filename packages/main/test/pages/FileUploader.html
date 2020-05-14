@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>FileUploader test page</title>
-	
+
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
@@ -103,11 +103,11 @@
 		</div>
 	</div>
 	<script>
-		document.getElementById("uploadBtn").addEventListener("click", () => {
-			const fu = document.getElementById("fuFetch");
-			const data = new FormData();
+		document.getElementById("uploadBtn").addEventListener("click", function() {
+			var fu = document.getElementById("fuFetch");
+			var data = new FormData();
 
-			for (let i = 0; i < fu.files.length; i++) {
+			for (var i = 0; i < fu.files.length; i++) {
 				data.append("file", fu.files[i]);
 			}
 
@@ -115,10 +115,10 @@
 				method: "POST",
 				body: data
 			})
-			.then(res => {
+			.then(function(res) {
 				console.log(`Success! Response status: ${res.status}`);
 			})
-			.catch(err => {
+			.catch(function(err) {
 				console.log("Error")
 			})
 		});

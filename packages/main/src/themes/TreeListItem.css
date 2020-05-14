@@ -1,0 +1,37 @@
+:host(:not([hidden])) {
+	display: block;
+	cursor: pointer;
+}
+
+.ui5-li-root-tree {
+    padding-left: 0;
+}
+
+:host(:not([level="1"])) {
+    border-bottom: none !important;
+}
+
+:host(:not([level="1"])) .ui5-li-root-tree {
+    background: var(--sapList_AlternatingBackground);
+}
+
+.ui5-li-tree-toggle-box {
+    width: var(--_ui5-tree-toggle-box-width);
+    height: var(--_ui5-tree-toggle-box-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui5-li-tree-toggle-icon {
+    width: var(--_ui5-tree-toggle-icon-size);
+    height: var(--_ui5-tree-toggle-icon-size);
+}
+
+:host([actionable]) .ui5-li-tree-toggle-icon {
+    color: var(--sapButton_TextColor);
+}
+
+:host([active][actionable]) .ui5-li-tree-toggle-icon {
+    color: var(--sapList_Active_TextColor);
+}

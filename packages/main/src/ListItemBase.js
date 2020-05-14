@@ -1,3 +1,4 @@
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -66,11 +67,19 @@ class ListItemBase extends UI5Element {
 		return metadata;
 	}
 
+	static get render() {
+		return litRender;
+	}
+
 	static get styles() {
 		return styles;
 	}
 
 	_onfocusin(event) {
+		if (event.isMarked === "button" || event.isMarked === "link") {
+			return;
+		}
+
 		this.focused = true;
 		this.fireEvent("_focused", event);
 	}
@@ -88,6 +97,8 @@ class ListItemBase extends UI5Element {
 			return this._handleTabPrevious(event);
 		}
 	}
+
+	_onkeyup() {}
 
 	_handleTabNext(event) {
 		const target = event.target;

@@ -25,5 +25,5 @@
 
 .ui5-duration-picker-footer > ui5-button {
 	margin: 1%;
-	width: 20%;
+	min-width: 20%;
 }

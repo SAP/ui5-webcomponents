@@ -1,0 +1,20 @@
+<ui5-popover
+	class="ui5-notification-overflow-popover"
+	placement-type="Bottom"
+	horizontal-align="Right"
+	no-arrow
+>
+	<div class="ui5-notification-overflow-list">
+		{{#each overflowActions}}
+			<ui5-button
+				icon="{{this.icon}}"
+				design="Transparent"
+				@click="{{this.press}}"
+				?disabled="{{this.disabled}}"
+				design="{{this.design}}"
+				data-ui5-external-action-item-id="{{this.refItemid}}"
+				>{{this.text}}
+			</ui5-button>
+		{{/each}}
+	</div>
+</ui5-popover>

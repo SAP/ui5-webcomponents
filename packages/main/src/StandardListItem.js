@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
@@ -126,16 +125,8 @@ const metadata = {
  * @public
  */
 class StandardListItem extends ListItem {
-	static get render() {
-		return litRender;
-	}
-
 	static get template() {
 		return StandardListItemTemplate;
-	}
-
-	static get styles() {
-		return ListItem.styles;
 	}
 
 	static get metadata() {

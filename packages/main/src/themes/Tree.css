@@ -1,0 +1,6 @@
+@import "./InvisibleTextStyles.css";
+
+:host(:not([hidden])) {
+    display: block;
+    width: 100%;
+}

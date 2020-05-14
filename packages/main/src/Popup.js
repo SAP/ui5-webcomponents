@@ -1,3 +1,4 @@
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
@@ -170,6 +171,10 @@ createBlockingStyle();
 class Popup extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get styles() {

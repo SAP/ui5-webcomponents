@@ -92,11 +92,11 @@ class ListItem extends ListItemBase {
 	}
 
 	static get styles() {
-		return [styles, ListItemBase.styles];
+		return [ListItemBase.styles, styles];
 	}
 
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 
 		this.deactivateByKey = event => {
 			if (isEnter(event)) {
@@ -281,6 +281,14 @@ class ListItem extends ListItemBase {
 
 	get deleteText() {
 		return this.i18nBundle.getText(DELETE);
+	}
+
+	get _accInfo() {
+		return {
+			role: "option",
+			ariaExpanded: undefined,
+			ariaLevel: undefined,
+		};
 	}
 
 	static async onDefine() {

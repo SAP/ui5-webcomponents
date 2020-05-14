@@ -1,6 +1,7 @@
 :host(:not([hidden])) {
 	display: block;
 	max-width: 100%;
+	width: 100%;
 }
 
 :host([inset]) .ui5-list-root {

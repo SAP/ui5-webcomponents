@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 import Popup from "./Popup.js";
@@ -261,10 +260,6 @@ const metadata = {
 class Popover extends Popup {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 
 	static get styles() {

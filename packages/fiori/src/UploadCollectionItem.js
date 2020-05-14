@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -230,10 +229,6 @@ const metadata = {
 class UploadCollectionItem extends ListItem {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 
 	static get styles() {

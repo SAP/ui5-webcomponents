@@ -131,7 +131,7 @@
 	flex-shrink: 0;
 }
 
-:host() ui5-checkbox.ui5-li-singlesel-radiobtn {
+:host ui5-checkbox.ui5-li-singlesel-radiobtn {
 	margin-right: var(--_ui5_list_item_cb_margin_right);
 }
 

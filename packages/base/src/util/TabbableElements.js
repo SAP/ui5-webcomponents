@@ -12,8 +12,12 @@ const getLastTabbableElement = node => {
 const getTabbables = (nodes, tabbables) => {
 	const tabbablesNodes = tabbables || [];
 
+	if (!nodes) {
+		return tabbablesNodes;
+	}
+
 	Array.from(nodes).forEach(currentNode => {
-		if (currentNode.nodeType === Node.TEXT_NODE) {
+		if (currentNode.nodeType === Node.TEXT_NODE || currentNode.nodeType === Node.COMMENT_NODE) {
 			return;
 		}
 

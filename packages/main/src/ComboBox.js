@@ -281,7 +281,7 @@ class ComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ComboBoxPopoverCss, ResponsivePopoverCommonCss];
+		return [ResponsivePopoverCommonCss, ComboBoxPopoverCss];
 	}
 
 	static get template() {
