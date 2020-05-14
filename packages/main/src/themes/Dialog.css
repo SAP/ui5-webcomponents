@@ -1,13 +1,8 @@
 :host {
-	background: transparent;
-	display: inline;
-	min-height: auto;
-	min-width: auto;
-	box-shadow: none;
-	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	min-width: 20rem;
 }
 
 :host([stretch]) {

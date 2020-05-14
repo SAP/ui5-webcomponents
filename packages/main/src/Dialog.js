@@ -83,7 +83,7 @@ class Dialog extends Popup {
 	}
 
 	static get styles() {
-		return [dialogCSS, Popup.styles];
+		return [Popup.styles, dialogCSS];
 	}
 
 	constructor() {

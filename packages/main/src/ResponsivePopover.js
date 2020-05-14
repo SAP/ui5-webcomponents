@@ -9,8 +9,6 @@ import Title from "./Title.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 
 // Styles
-import PopupCss from "./generated/themes/Popup.css.js";
-import PopoverCss from "./generated/themes/Popover.css.js";
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 
 const POPOVER_MIN_WIDTH = 100;
@@ -87,7 +85,7 @@ class ResponsivePopover extends Popover {
 	}
 
 	static get styles() {
-		return [PopupCss, PopoverCss, ResponsivePopoverCss];
+		return [Popover.styles, ResponsivePopoverCss];
 	}
 
 	static get template() {

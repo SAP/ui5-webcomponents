@@ -268,7 +268,7 @@ class Popover extends Popup {
 	}
 
 	static get styles() {
-		return [PopoverCss, Popup.styles];
+		return [Popup.styles, PopoverCss];
 	}
 
 	static get template() {
