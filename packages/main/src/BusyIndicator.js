@@ -95,11 +95,18 @@ class BusyIndicator extends UI5Element {
 		super();
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._preventHandler = this._preventEvent.bind(this);
+	}
+
+	onBeforeRendering() {
+		if (this.active) {
+			this.tabIndex = -1;
+		} else {
+			this.tabIndex = 0;
+		}
 	}
 
 	onEnterDOM() {
-		this._preventHandler = this._preventEvent.bind(this);
-
 		this.addEventListener("keyup", this._preventHandler, {
 			capture: true,
 		});
