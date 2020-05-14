@@ -146,13 +146,13 @@
 
     <script type="module">
 		document.getElementById("lazy").addEventListener("ui5-input", async event => {
-			var { filterValue } = event.target;
+			const { filterValue } = event.target;
 
 			// set busy state
 			event.target.loading = true;
 
 			// load data
-			var items = (await(await fetch("https://restcountries.eu/rest/v2/?fields=name")).json());
+			const items = (await(await fetch("https://restcountries.eu/rest/v2/?fields=name")).json());
 
 			// cleanup old items
 			while (document.getElementById("lazy").firstChild) {
@@ -161,7 +161,7 @@
 
 			// fill new items
 			items.map(data => {
-				var element = document.createElement("ui5-cb-item");
+				const element = document.createElement("ui5-cb-item");
 				element.setAttribute("text", data.name);
 
 				document.getElementById("lazy").appendChild(element);
@@ -173,11 +173,11 @@
     </script>
 
 	<script>
-		document.getElementById("combo").addEventListener("ui5-change", event => {
+		document.getElementById("combo").addEventListener("ui5-change", function(event) {
 			document.getElementById("change-event-result").innerHTML = event.target.value;
 		});
 
-		document.getElementById("change-cb").addEventListener("ui5-change", event => {
+		document.getElementById("change-cb").addEventListener("ui5-change", function(event) {
 			document.getElementById("change-placeholder").innerHTML = event.target.value;
 			document.getElementById("change-count").innerHTML = parseInt(document.getElementById("change-count").innerHTML) + 1;
 		});
