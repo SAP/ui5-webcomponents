@@ -5,7 +5,7 @@ const includesReplacer = require("./includesReplacer");
 const svgProcessor = require("./svgProcessor");
 
 const removeWhiteSpaces = (source) => {
-	return source.replace(/\n+/g, "").replace(/\s+</g, "<").replace(/}}\s+{{/g, "}}{{");
+	return source.replace(/\n+/g, "").replace(/\s+</g, "<").replace(/}}\s+{{/g, "}}{{").replace(/\t+/g, " ");
 };
 
 const compileString = async (sInput, config) => {
