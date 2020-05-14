@@ -49,14 +49,13 @@
 	<script>
 		var tbl = document.getElementById("tbl");
 
-
-		Array(1000).map(function(item) {
+		for (var i=1; i<=1000; i++) {
 			var row = document.createElement("ui5-table-row");
 
-			[1,2,3,4,5].map(function() {
+			for (var j=1; j<=5; j++) {
 				var cell = document.createElement("ui5-table-cell");
 				var span = document.createElement("span");
-				if (_ !== 1) {
+				if (j !== 1) {
 					span.innerText = "Hello World!";
 				} else {
 					var datepicker = document.createElement("ui5-datepicker");
@@ -65,10 +64,10 @@
 
 				cell.appendChild(span);
 				row.appendChild(cell);
-			});
+			}
 
 			tbl.appendChild(row);
-		})
+		}
 	</script>
 </body>
 

@@ -51,21 +51,20 @@
 	<script>
 		var tbl = document.getElementById("tbl");
 
-
-		Array(1000).map(function(item) {
+		for (var i=1; i<=1000; i++) {
 			var row = document.createElement("tr");
 
-			Array(5).map(function() {
+			for (var j=1; j<=5; j++) {
 				var cell = document.createElement("td");
 				var span = document.createElement("span");
 				span.innerText = "Hello World!";
 
 				cell.appendChild(span);
 				row.appendChild(cell);
-			});
+			}
 
 			tbl.appendChild(row);
-		})
+		}
 	</script>
 </body>
 
