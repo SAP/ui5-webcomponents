@@ -1,5 +1,5 @@
-commit 031b6ca82175de645d60827091b4b89162c829e4
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu May 14 13:00:20 2020 +0300
+commit b524ba925da51b3cda98b8cc16c49e299de66d93
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu May 14 14:15:52 2020 +0300
 
-    fix(ui5-busyindicator): prevent keyboard events propagation to controls (#1607)
+    chore: cleanup static class members (#1614)
