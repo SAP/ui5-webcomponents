@@ -92,11 +92,11 @@ class ListItem extends ListItemBase {
 	}
 
 	static get styles() {
-		return [styles, ListItemBase.styles];
+		return [ListItemBase.styles, styles];
 	}
 
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 
 		this.deactivateByKey = event => {
 			if (isEnter(event)) {

@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import List from "@ui5/webcomponents/dist/List.js";
@@ -116,10 +115,6 @@ const metadata = {
 class NotificationListGroupItem extends NotificationListItemBase {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 
 	static get styles() {

@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -186,10 +185,6 @@ class NotificationListItem extends NotificationListItemBase {
 
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 
 	static get styles() {

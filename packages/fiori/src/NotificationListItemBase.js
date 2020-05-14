@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -107,10 +106,6 @@ class NotificationListItemBase extends ListItemBase {
 
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 
 	static get staticAreaTemplate() {
