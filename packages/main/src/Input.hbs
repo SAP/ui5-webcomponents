@@ -4,6 +4,8 @@
 	@focusout="{{_onfocusout}}"
 >
 	<div class="ui5-input-content">
+		{{> preContent}}
+
 		<input id="{{_id}}-inner"
 			class="ui5-input-inner"
 			type="{{inputType}}"
@@ -50,3 +52,6 @@
 
 	<slot name="formSupport"></slot>
 </div>
+
+
+{{#*inline "preContent"}}{{/inline}}
