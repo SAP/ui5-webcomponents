@@ -41,6 +41,13 @@
 		<ui5-timepicker id="timepickerEmptyValue"></ui5-timepicker>
 		<ui5-button id="testBtn">btn for testing</ui5-button>
 
+		<br /><br />
+		<ui5-title>Test valueStateMessage slot</ui5-title>
+		<ui5-timepicker id="timepickerValueStateMessage" value-state="Error">
+			<div slot="valueStateMessage" id="customValueStateMessage">Please provide valid value</div>
+		</ui5-timepicker>
+		<ui5-button id="testBtn">btn for testing</ui5-button>
+
 		<script>
 				var counter = 0;
 				timepickerChange.addEventListener("change", function() {
