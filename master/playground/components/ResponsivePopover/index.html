@@ -1882,18 +1882,6 @@
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          headerText
-                            <br>
-                            <code>header-text</code>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the header text. <br><br> <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           horizontalAlign
                             <br>
                             <code>horizontal-align</code>
@@ -1902,18 +1890,6 @@
                         <div class="cell api-table-content-cell">&quot;Center&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Determines the horizontal alignment of the <code>ui5-popover</code>. <br><br> Available options are: <ul> <li><code>Center</code></li> <li><code>Left</code></li> <li><code>Right</code></li> <li><code>Stretch</code></li> </ul>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          initialFocus
-                            <br>
-                            <code>initial-focus</code>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the ID of the HTML Element, which will get the initial focus.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -1963,6 +1939,30 @@
                             Determines the vertical alignment of the <code>ui5-popover</code>. <br><br> Available options are: <ul> <li><code>Center</code></li> <li><code>Top</code></li> <li><code>Bottom</code></li> <li><code>Stretch</code></li> </ul>
                         </div>
                       </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          headerText
+                            <br>
+                            <code>header-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the header text. <br><br> <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          initialFocus
+                            <br>
+                            <code>initial-focus</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the ID of the HTML Element, which will get the initial focus.
+                        </div>
+                      </div>
             
                   </div>
             
@@ -1995,6 +1995,21 @@
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the header HTML Element.</div>
                     </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">Node [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content of the Web Component.</div>
+                    </div>
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">footer</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the footer HTML Element.</div>
+                    </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">header</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the header HTML Element.</div>
+                    </div>
             
                 </div>
             
@@ -2006,6 +2021,40 @@
                       <div class="cell api-table-header-cell">Name</div>
                       <div class="cell api-table-header-cell">Description</div>
                     </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">afterClose</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired after the component is closed.
+                        </div>
+                      </div>
+            
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">afterOpen</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired after the component is opened.
+                        </div>
+                      </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">beforeClose</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired before the component is closed.
+                        </div>
+                      </div>
+            
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">escPressed</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Boolean <br/> <strong class="api-table-event-description bold">description:</strong> Indicates that <code>ESC</code> key has triggered the event.</div>
+                          </div>
+                        </tr>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">beforeOpen</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired before the component is opened.
+                        </div>
+                      </div>
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">afterClose</div>

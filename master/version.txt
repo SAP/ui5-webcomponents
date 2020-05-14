@@ -1,5 +1,7 @@
-commit b524ba925da51b3cda98b8cc16c49e299de66d93
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu May 14 14:15:52 2020 +0300
+commit 0dbc6df53fc7958c7c7177fb7a656c3963f2ecd7
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu May 14 15:40:02 2020 +0300
 
-    chore: cleanup static class members (#1614)
+    refactor(ui5-dialog): improve layouting (#1472)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1443
