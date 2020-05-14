@@ -80,7 +80,7 @@ class ResponsivePopover extends Popover {
 	}
 
 	static get styles() {
-		return [Popover.styles, ResponsivePopoverCss];
+		return [...Popover.styles, ResponsivePopoverCss];
 	}
 
 	static get template() {
