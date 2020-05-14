@@ -1,5 +1,5 @@
-commit 2dd97cfcebf4db0341b0f33fcf8aa837b4dfcfce
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed May 13 13:10:42 2020 +0300
+commit b1d30f3277857fd49bb43c86b65e72d31361ed74
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu May 14 10:47:47 2020 +0300
 
-    feat: ui5-tree (new component) (#1580)
+    feat(ui5-timepicker): implement valuestatemessage slot (#1482)
