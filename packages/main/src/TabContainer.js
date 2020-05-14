@@ -212,7 +212,7 @@ class TabContainer extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [...staticAreaTabStyles, ResponsivePopoverCommonCss];
+		return [ResponsivePopoverCommonCss, ...staticAreaTabStyles];
 	}
 
 	static get render() {

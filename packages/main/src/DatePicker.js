@@ -314,7 +314,7 @@ class DatePicker extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [datePickerPopoverCss, ResponsivePopoverCommonCss];
+		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
 	}
 
 	constructor() {

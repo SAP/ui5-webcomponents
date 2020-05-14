@@ -273,7 +273,7 @@ class TimePicker extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [TimePickerPopoverCss, ResponsivePopoverCommonCss];
+		return [ResponsivePopoverCommonCss, TimePickerPopoverCss];
 	}
 
 
