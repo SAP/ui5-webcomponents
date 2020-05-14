@@ -80,7 +80,7 @@ class ResponsivePopover extends Popover {
 	}
 
 	static get styles() {
-		return ResponsivePopoverCss;
+		return [...Popover.styles, ResponsivePopoverCss];
 	}
 
 	static get template() {
@@ -101,6 +101,12 @@ class ResponsivePopover extends Popover {
 	 * @public
 	 */
 	open(opener) {
+		this.style.display = this._isPhone ? "contents" : "";
+
+		if (this.isOpen() || (this._dialog && this._dialog.isOpen())) {
+			return;
+		}
+
 		if (!isPhone()) {
 			// make popover width be >= of the opener's width
 			if (!this.noStretch) {
@@ -124,6 +130,18 @@ class ResponsivePopover extends Popover {
 		} else {
 			this._dialog.close();
 		}
+	}
+
+	toggle(opener) {
+		if (this.isOpen()) {
+			return this.close();
+		}
+
+		this.open(opener);
+	}
+
+	isOpen() {
+		return isPhone() ? this._dialog.isOpen() : super.isOpen();
 	}
 
 	get styles() {

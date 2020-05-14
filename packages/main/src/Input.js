@@ -558,6 +558,12 @@ class Input extends UI5Element {
 			return;
 		}
 
+		const toBeFocused = event.relatedTarget;
+
+		if (toBeFocused && toBeFocused.classList.contains(this._id)) {
+			return;
+		}
+
 		if (this.popover) {
 			this.popover.close(false, false, true);
 		}

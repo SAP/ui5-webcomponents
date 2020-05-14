@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,42 +15,192 @@
 		}
 	</script>
 
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
-
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
-	<ui5-button id="btnOpenDialog">Open Dialog</ui5-button>
+<body>
+	<ui5-button id="btnOpenDialog">Open Streched Dialog</ui5-button>
+	<br>
+	<br>
+	<ui5-button id="message">Open Message Dialog</ui5-button>
+	<br>
+	<br>
+	<ui5-button id="prevent">Open Prevent closing Dialog</ui5-button>
+	<br>
+	<br>
+	<ui5-button id="modals-open">Open Multiple modals</ui5-button>
+	<br>
+	<br>
 
-	<ui5-dialog id="dialog" header-text="Dialog" stretch>
+	<ui5-block-layer></ui5-block-layer>
+
+	<ui5-dialog id="msg-dialog" header-text="Message dialog">
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+
+		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<ui5-button design="Emphasized">OK</ui5-button>
+		</div>
+	</ui5-dialog>
+
+
+	<ui5-dialog id="dialog" stretch>
+		<div slot="header">
+			<ui5-button id="header-button">focus stop</ui5-button>
+		</div>
+
 		<div style="padding: 1rem;text-align: center;">
 			<ui5-title level="H2">Hello World!</ui5-title>
 		</div>
-		<ui5-textarea
-			placeholder="Type some text"
-			max-length="2"
-			show-exceeded-text>
-		</ui5-textarea>
+
 		<ui5-select id="mySelect">
-			<ui5-option >Cozy</ui5-option>
-			<ui5-option >Compact</ui5-option>
-			<ui5-option selected>Condensed</ui5-option>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
 		</ui5-select>
-		<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
+
+		<ui5-textarea id="area" placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+		<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem; width: 100%">
 			<div style="flex: 1;"></div>
 			<ui5-button id="btnCloseDialog">Close</ui5-button>
 		</div>
 	</ui5-dialog>
 
+
+
+	<ui5-dialog id="prevent-dialog" header-text="Message dialog">
+		<p>Prevent closing the dialog.</p>
+
+		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<ui5-button design="Emphasized">OK</ui5-button>
+		</div>
+	</ui5-dialog>
+
+	<ui5-dialog id="confirm-dialog">
+		<p>Are you sure?</p>
+		<div>
+			<ui5-button id="yes">YES</ui5-button>
+			<ui5-button id="no">NO</ui5-button>
+		</div>
+	</ui5-dialog>
+
+	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
+		<!-- <div slot="header">
+			Hello World
+		</div> -->
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+
+		<br>
+		<br>
+
+		<ui5-button id='popbtn'>Open Popover</ui5-button>
+
+	
+
+		<br>
+		<br>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<br>
+		<br>
+
+		<!-- <ui5-datepicker></ui5-datepicker> -->
+
+		<div slot="footer">
+			Hello World Footer
+		</div>
+	</ui5-popover>
+
+	<ui5-dialog placement-type="Bottom" no-arrow id='danger'>
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+
+		<br>
+		<br>
+
+		<ui5-button id='bigDanger'>Super Danger !</ui5-button>
+
+
+	</ui5-dialog>
+
+	<ui5-popover id='bigDangerPop'>
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
 	<script>
-		btnOpenDialog.addEventListener("click", function() {
+
+		let preventClosing = true;
+
+		btnOpenDialog.addEventListener("click", function () {
 			dialog.open();
 		});
-		btnCloseDialog.addEventListener("click", function() {
+		btnCloseDialog.addEventListener("click", function () {
 			dialog.close();
+		});
+
+		prevent.addEventListener("click", function () {
+			window["prevent-dialog"].open();
+		});
+
+		message.addEventListener("click", function () {
+			window["msg-dialog"].open();
+		});
+
+		window["prevent-dialog"].addEventListener("ui5-beforeClose", function (event) {
+			if (preventClosing) {
+				event.preventDefault();
+				window["confirm-dialog"].open();
+			}
+
+			if (!preventClosing) {
+				preventClosing = true;
+			}
+		});
+
+		yes.addEventListener("click", function (event) {
+			preventClosing = false;
+			window["confirm-dialog"].close();
+			window["prevent-dialog"].close();
+		});
+
+		no.addEventListener("click", function (event) {
+			window["confirm-dialog"].close();
+			preventClosing = true;
+		});
+
+		window["modals-open"].addEventListener("click", function (event) { pop.openBy(event.target) });
+
+		popbtn.addEventListener('click', function (event) {
+			danger.open();
+		});
+
+		bigDanger.addEventListener('click', function (event) {
+			bigDangerPop.openBy(bigDanger);
 		});
 	</script>
 </body>
+
 </html>
