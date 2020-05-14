@@ -1,7 +1,9 @@
-commit 0dbc6df53fc7958c7c7177fb7a656c3963f2ecd7
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu May 14 15:40:02 2020 +0300
+commit ed8e6ee65b63937185e757501add033a8160c3fa
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu May 14 17:25:05 2020 +0300
 
-    refactor(ui5-dialog): improve layouting (#1472)
+    refactor(ui5-input): add template hook (#1608)
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1443
+    Adds a template hook to allow components, extending the Input to add content, positioned right before the input field. The use case is an ui5-input, used as a search field that needs to show a "transitive search" info, the category that the users search in. For more info see the related issue.
+    
+    Related to: #1588
