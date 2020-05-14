@@ -396,7 +396,7 @@ class TabContainer extends UI5Element {
 			// click on already selected tab - animate both directions
 			this.collapsed = !this.collapsed;
 			animationPromise = this.collapsed ? this.slideContentUp(content) : this.slideContentDown(content);
-		} else { 
+		} else {
 			// click on new tab - animate if the content is currently collapsed
 			animationPromise = this.collapsed ? this.slideContentDown(content) : Promise.resolve();
 			this.collapsed = false;
