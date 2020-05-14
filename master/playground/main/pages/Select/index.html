@@ -135,9 +135,9 @@
 
 	// HCB button
 	btn.addEventListener("click", function(event) {
-		const hcb = event.target.pressed;
-		const styles = hcb ? "background:#333;color:palegoldenrod;" : "background:#fff;color:#333;";
-		const theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
+		var hcb = event.target.pressed;
+		var styles = hcb ? "background:#333;color:palegoldenrod;" : "background:#fff;color:#333;";
+		var theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
 
 		document.body.setAttribute("style", styles);
 		var Conf = window["sap-ui-webcomponents-bundle"].configuration;

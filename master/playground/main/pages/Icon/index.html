@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
 	<title>Icon</title>
@@ -84,7 +85,7 @@
 	</ui5-datepicker>
 
 	<br/><br/>
-	
+
 	<ui5-icon id="interactive-icon" name="add-equipment" class="icon-blue icon-medium" interactive></ui5-icon>
 	<ui5-icon id="non-interactive-icon" name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
 	<ui5-input id="click-event" value="0"></ui5-input>
@@ -109,9 +110,9 @@
 
     <script type="module">
 		(async () => {
-			const iconNames = await window["sap-ui-webcomponents-bundle"].getIconNames();
+			var iconNames = await window["sap-ui-webcomponents-bundle"].getIconNames();
 			iconNames.forEach(iconName => {
-				const icon = document.createElement("ui5-icon");
+				var icon = document.createElement("ui5-icon");
 				icon.name = iconName;
 				document.body.appendChild(icon);
 			});
@@ -121,7 +122,7 @@
     <script nomodule>
 		window["sap-ui-webcomponents-bundle"].getIconNames().then(function(iconNames) {
 			iconNames.forEach(function(iconName) {
-				const icon = document.createElement("ui5-icon");
+				var icon = document.createElement("ui5-icon");
 				icon.name = iconName;
 				document.body.appendChild(icon);
 			});

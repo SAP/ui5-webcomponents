@@ -1,5 +1,5 @@
-commit b1d30f3277857fd49bb43c86b65e72d31361ed74
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu May 14 10:47:47 2020 +0300
+commit 187b7d45d064ec5adbf049a9d66434a1a4ffbe9f
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu May 14 12:53:21 2020 +0300
 
-    feat(ui5-timepicker): implement valuestatemessage slot (#1482)
+    chore: normalize test pages (#1610)

@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Web components Table</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<script data-config type="application/json">
 		{
 			"language": "EN"
@@ -53,23 +53,22 @@
 
 
 	<script>
-		const tbl = document.getElementById("tbl");
+		var tbl = document.getElementById("tbl");
 
+		for (var i=1; i<=1000; i++) {
+			var row = document.createElement("tr");
 
-		[...Array(1000)].map(item => {
-			const row = document.createElement("tr");
-
-			[...Array(5)].map(_ => {
-				const cell = document.createElement("td");
-				const span = document.createElement("span");
+			for (var j=1; j<=5; j++) {
+				var cell = document.createElement("td");
+				var span = document.createElement("span");
 				span.innerText = "Hello World!";
 
 				cell.appendChild(span);
 				row.appendChild(cell);
-			});
+			}
 
 			tbl.appendChild(row);
-		})
+		}
 	</script>
 </body>
 

@@ -3,6 +3,7 @@
 
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
 	<title>Busy Indicator</title>
@@ -72,7 +73,7 @@
 	<br>
 	<br>
 	<br>
-	<br> 
+	<br>
 
 	<ui5-busyindicator size="Medium" active style="width: 500px; margin-left: 100px">
 		<ui5-list style="width: 100%; border: 1px solid black;">
@@ -117,15 +118,15 @@
 
 
 	<script>
-		const busyIndocator = document.getElementById("busy-container");
-		const list = document.getElementById("fetch-list");
+		var busyIndocator = document.getElementById("busy-container");
+		var list = document.getElementById("fetch-list");
 
-		document.getElementById("fetch-btn").addEventListener("click", event => {
+		document.getElementById("fetch-btn").addEventListener("click", function(event) {
 			busyIndocator.setAttribute("active", "");
 
-			setTimeout(() => {
-				const elements = ["UI5", "Web", "Components"].forEach(title => {
-					const el = document.createElement("ui5-li");
+			setTimeout(function() {
+				var elements = ["UI5", "Web", "Components"].forEach(function(title) {
+					var el = document.createElement("ui5-li");
 					el.textContent = title;
 
 					list.appendChild(el);
