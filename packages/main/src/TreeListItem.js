@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import ListItem from "./ListItem.js";
@@ -134,10 +133,6 @@ const metadata = {
  * @since 1.0.0-rc.8
  */
 class TreeListItem extends ListItem {
-	static get render() {
-		return litRender;
-	}
-
 	static get template() {
 		return TreeListItemTemplate;
 	}
