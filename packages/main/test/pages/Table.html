@@ -2856,8 +2856,8 @@
 			}
 		};
 		var html = '';
-		const table = document.getElementById("tbl");
-		let tableLable = document.getElementById("tableLabel");
+		var table = document.getElementById("tbl");
+		var tableLable = document.getElementById("tableLabel");
 
 		products.ProductCollection.forEach(function (product, index) {
 			var test = "<ui5-table-row  id=roll-".concat(index, ">\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<div class=\"double-line-content\">\n\t\t\t\t\t\t\t\t\t<ui5-label>\n\t\t\t\t\t\t\t\t\t\t<b>").concat(product.Name, "</b>\n\t\t\t\t\t\t\t\t\t</ui5-label>\n\t\t\t\t\t\t\t\t\t<ui5-label style=\"margin-top: 0.5rem\">").concat(product.ProductId, "</ui5-label>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.SupplierName, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.Width, " x ").concat(product.Depth, " x ").concat(product.Height, " ").concat(product.DimUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label style=\"color: #2b7c2b\" class=\"middle\">\n\t\t\t\t\t\t\t\t\t<b>").concat(product.WeightMeasure, "</b> ").concat(product.WeightUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >\n\t\t\t\t\t\t\t\t\t<b>").concat(product.Price, "</b> ").concat(product.CurrencyCode, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t</ui5-table-row>");

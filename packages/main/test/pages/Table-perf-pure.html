@@ -49,15 +49,15 @@
 
 
 	<script>
-		const tbl = document.getElementById("tbl");
+		var tbl = document.getElementById("tbl");
 
 
-		[...Array(1000)].map(item => {
-			const row = document.createElement("tr");
+		Array(1000).map(function(item) {
+			var row = document.createElement("tr");
 
-			[...Array(5)].map(_ => {
-				const cell = document.createElement("td");
-				const span = document.createElement("span");
+			Array(5).map(function() {
+				var cell = document.createElement("td");
+				var span = document.createElement("span");
 				span.innerText = "Hello World!";
 
 				cell.appendChild(span);

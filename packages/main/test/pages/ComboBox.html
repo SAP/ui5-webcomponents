@@ -82,7 +82,7 @@
 	</div>
 
 	<div class="demo-section">
-		<span>Lazy Loading</span>
+		<span>Lazy Loading - example does not work on IE11</span>
 
 		<br />
 		<br />
@@ -123,7 +123,7 @@
 
 	<div class="demo-section">
 			<span>StartsWith filter</span>
-	
+
 			<ui5-combobox style="width: 360px;" filter="StartsWith" id="startswith-cb">
 				<ui5-cb-item text="Argentina"></ui5-cb-item>
 				<ui5-cb-item text="United States of America"></ui5-cb-item>
@@ -144,19 +144,15 @@
 		</div>
 	</section>
 
-	<script>
-		document.getElementById("combo").addEventListener("ui5-change", event => {
-			document.getElementById("change-event-result").innerHTML = event.target.value;
-		});
-
+    <script type="module">
 		document.getElementById("lazy").addEventListener("ui5-input", async event => {
-			const { filterValue } = event.target;
+			var { filterValue } = event.target;
 
 			// set busy state
 			event.target.loading = true;
 
 			// load data
-			const items = (await(await fetch("https://restcountries.eu/rest/v2/?fields=name")).json());
+			var items = (await(await fetch("https://restcountries.eu/rest/v2/?fields=name")).json());
 
 			// cleanup old items
 			while (document.getElementById("lazy").firstChild) {
@@ -165,7 +161,7 @@
 
 			// fill new items
 			items.map(data => {
-				const element = document.createElement("ui5-cb-item");
+				var element = document.createElement("ui5-cb-item");
 				element.setAttribute("text", data.name);
 
 				document.getElementById("lazy").appendChild(element);
@@ -173,6 +169,12 @@
 
 			// remove busy state
 			event.target.loading = false;
+		});
+    </script>
+
+	<script>
+		document.getElementById("combo").addEventListener("ui5-change", event => {
+			document.getElementById("change-event-result").innerHTML = event.target.value;
 		});
 
 		document.getElementById("change-cb").addEventListener("ui5-change", event => {
