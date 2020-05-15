@@ -1,9 +1,5 @@
-commit 0c3295022904df4f6e66d7386cf20cebc1d5fd86
+commit bd46d7bea9bbe1a22617d7c748de51b0051cef31
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri May 15 10:50:32 2020 +0300
+Date:   Fri May 15 16:33:14 2020 +0300
 
-    feat(ui5-tabcontainer): add expand/collapse animation (#1617)
-    
-    The TabContainer now toggles with animation.
-    
-    Related to: #1540
+    fix(ui5-popover): close popup when no opener (#1630)
