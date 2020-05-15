@@ -1,5 +1,10 @@
-commit ec5a9cfc3ce45784b1661ff0c33e72dca0b4fc56
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu May 14 17:35:40 2020 +0300
+commit 28326c5e021baaf52f04f2cf1951f29a745885d2
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri May 15 09:30:57 2020 +0300
 
-    fix(framework): remove white spaces from hbs parser (#1613)
+    fix(ui5-list): fire itemClick after the selection (#1618)
+    
+    We used to fire the "itemClick" and "itemPress" before the selection finishes and if someone gets the "event.detail.item.selected" - it is will be the old one.
+    Now, they are fired after the selection finishes and provide the correct "item" state, although it is not common to listen for  "itemClick" in selection modes, but rather for "selectionChange".
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1615
