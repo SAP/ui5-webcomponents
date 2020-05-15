@@ -34,7 +34,7 @@
 }
 
 :host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100% - 0.725rem);
+	max-width: calc(100% - .85rem);
 }
 
 :host(:not([wrap])[required]) .ui5-label-text-wrapper {
@@ -55,6 +55,11 @@
 	font-size: 1.25rem;
 	font-weight: bold;
 	position: relative;
+	font-style: normal;
 	vertical-align: middle;
 	line-height: 0;
+}
+
+:host([required][show-colon]) .ui5-label-required-colon:after {
+	margin-left: 2px;
 }
