@@ -3,6 +3,8 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import ToggleButton from "./ToggleButton.js";
 
@@ -125,8 +127,24 @@ class SegmentedButton extends UI5Element {
 	}
 
 	async onAfterRendering() {
-		await Promise.all(this.buttons.map(button => button._waitForDomRef));
-		this.widths = this.buttons.map(button => button.offsetWidth);
+		await this.measureButtonsWidth();
+	}
+
+	async measureButtonsWidth() {
+		await RenderScheduler.whenDOMUpdated();
+
+		this.widths = this.buttons.map(button => {
+			// +1 is added because for width 100.44px the offsetWidth property returns 100px and not 101px
+			let width = button.offsetWidth + 1;
+
+			if (isIE()) {
+				// in IE we are adding 1 one px beacause the width of the border on a button in the middle is not calculated and if the
+				// longest button is in the middle, it truncates
+				width += 1;
+			}
+
+			return width;
+		});
 	}
 
 	initItemNavigation() {
