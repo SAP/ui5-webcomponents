@@ -379,6 +379,13 @@ class Popover extends Popup {
 		return (limits[placement] < 0 || (limits[placement] + threshold > closedPopupParent.innerHeight)) || overflowsBottom || overflowsTop;
 	}
 
+	shouldCloseDueToNoOpener(openerRect) {
+		return openerRect.top === 0
+			&& openerRect.bottom === 0
+			&& openerRect.left === 0
+			&& openerRect.right === 0;
+	}
+
 	reposition() {
 		const popoverSize = this.popoverSize;
 		const openerRect = this._opener.getBoundingClientRect();
@@ -459,7 +466,7 @@ class Popover extends Popup {
 
 		const placementType = this.getActualPlacementType(targetRect, popoverSize);
 
-		this._preventRepositionAndClose = this.shouldCloseDueToOverflow(placementType, targetRect);
+		this._preventRepositionAndClose = this.shouldCloseDueToNoOpener(targetRect) || this.shouldCloseDueToOverflow(placementType, targetRect);
 
 		const isVertical = placementType === PopoverPlacementType.Top
 			|| placementType === PopoverPlacementType.Bottom;
