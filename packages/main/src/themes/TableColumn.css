@@ -4,15 +4,15 @@
 
 th {
 	background: var(--sapList_HeaderBackground);
-    border: none;
+	border: none;
 	border-bottom: 1px solid var(--sapList_BorderColor);
 	width: inherit;
 	font-weight: normal;
-    padding: 0.25rem;
-    box-sizing: border-box;
-    height: 3rem;
-    text-align: left;
-    vertical-align: middle;
+	padding: 0.25rem;
+	box-sizing: border-box;
+	height: 3rem;
+	text-align: left;
+	vertical-align: middle;
 }
 
 :host([first]) th {
