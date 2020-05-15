@@ -1,5 +1,3 @@
-@import "./Popover.css";
-
 :host {
 	--_ui5_input_width: 100%;
 	min-width: 6.25rem;

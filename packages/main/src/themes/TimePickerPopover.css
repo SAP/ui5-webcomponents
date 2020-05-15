@@ -26,5 +26,5 @@
 
 .ui5-timepicker-footer > ui5-button {
 	margin: 1%;
-	width: 20%;
+	min-width: 20%;
 }

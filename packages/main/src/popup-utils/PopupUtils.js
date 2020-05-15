@@ -34,7 +34,7 @@ const isClickInRect = (event, rect) => {
 const getClosedPopupParent = el => {
 	const parent = el.parentElement || (el.getRootNode && el.getRootNode().host);
 
-	if ((parent.openBy && parent.isUI5Element) || parent === document.documentElement) {
+	if ((parent.openBy && parent.isUI5Element) || (parent.open && parent.isUI5Element) || parent === document.documentElement) {
 		return parent;
 	}
 

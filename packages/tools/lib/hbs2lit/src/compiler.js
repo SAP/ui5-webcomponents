@@ -5,13 +5,13 @@ const includesReplacer = require("./includesReplacer");
 const svgProcessor = require("./svgProcessor");
 
 const removeWhiteSpaces = (source) => {
-	return source.replace(/\n+/g, "").replace(/\s+</g, "<").replace(/}}\s+{{/g, "}}{{");
+	return source.replace(/\n+/g, "").replace(/\s+</g, "<").replace(/}}\s+{{/g, "}}{{").replace(/\t+/g, " ");
 };
 
 const compileString = async (sInput, config) => {
 	let sPreprocessed = sInput;
 
-	sPreprocessed = await includesReplacer.replace(sPreprocessed, config);
+	sPreprocessed = includesReplacer.replace(sPreprocessed, config);
 	sPreprocessed = removeWhiteSpaces(sPreprocessed);
 
 	const ast = Handlebars.parse(sPreprocessed);

@@ -1,12 +1,13 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
+
 import Popup from "./Popup.js";
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 
 // Styles
-import dialogCss from "./generated/themes/Dialog.css.js";
+import dialogCSS from "./generated/themes/Dialog.css.js";
+import { getFocusedElement } from "./popup-utils/PopupUtils.js";
 
 /**
  * @public
@@ -25,6 +26,10 @@ const metadata = {
 		 * @public
 		 */
 		stretch: {
+			type: Boolean,
+		},
+
+		onPhone: {
 			type: Boolean,
 		},
 	},
@@ -68,16 +73,18 @@ class Dialog extends Popup {
 		return metadata;
 	}
 
-	static get render() {
-		return litRender;
-	}
-
 	static get template() {
 		return DialogTemplate;
 	}
 
 	static get styles() {
-		return [Popup.styles, dialogCss];
+		return [Popup.styles, dialogCSS];
+	}
+
+	constructor() {
+		super();
+
+		this.onPhone = isPhone();
 	}
 
 	/**
@@ -85,67 +92,55 @@ class Dialog extends Popup {
 	* @public
 	*/
 	open() {
-		if (this.opened) {
-			return;
-		}
+		super.open();
 
-		const cancelled = super.open();
-		if (cancelled) {
-			return true;
-		}
+		this._focusedElementBeforeOpen = getFocusedElement();
+		this.fireEvent("beforeOpen", {});
+		this.show();
+		this.applyInitialFocus();
 
-		this.storeCurrentFocus();
+		Dialog.blockBodyScrolling();
 
+		addOpenedPopup(this);
 		this.opened = true;
+		this.fireEvent("afterOpen", {});
 	}
 
 	/**
 	* Closes the <code>ui5-dialog</code>.
 	* @public
 	*/
-	close() {
-		if (!this.opened) {
+	close(escPressed) {
+		const prevented = !this.fireEvent("beforeClose", { escPressed }, true);
+
+		if (prevented || !this.opened) {
 			return;
 		}
 
-		const cancelled = super.close();
-		if (cancelled) {
-			return;
-		}
-
+		super.close();
+		this.hide();
 		this.opened = false;
 
-		this.resetFocus();
+		this.fireEvent("afterClose", {});
 
-		this.fireEvent("afterClose", { });
-	}
+		removeOpenedPopup(this);
+		Dialog.unblockBodyScrolling();
 
-	get classes() {
-		return {
-			dialogParent: {
-				"ui5-phone": isPhone(),
-			},
-			blockLayer: {
-				"ui5-popup-BLy": true,
-				"ui5-popup-blockLayer": true,
-				"ui5-popup-blockLayer--hidden": this._hideBlockLayer,
-			},
-		};
-	}
-
-	get zindex() {
-		return `z-index: ${this._zIndex + 1};`;
-	}
-
-	get blockLayer() {
-		return `z-index: ${this._zIndex};`;
-	}
-
-	get headerAriaLabelledBy() {
-		if (this.headerText || this.header) {
-			return `${this._id}-popup-heading`;
+		if (this._focusedElementBeforeOpen && !this._disableInitialFocus) {
+			this._focusedElementBeforeOpen.focus();
 		}
-		return undefined;
+	}
+
+	get isModal() {
+		return true;
+	}
+
+	get _displayFooter() {
+		return true;
+	}
+
+	get _displayHeader() {
+		return true;
 	}
 }
 

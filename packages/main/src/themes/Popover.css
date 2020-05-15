@@ -1,45 +1,4 @@
-:host {
-	display: none;
-	position: fixed;
-	min-width: 6.25rem;
-	background: var(--sapGroup_ContentBackground);
-	box-shadow: var(--sapContent_Shadow2);
-	border-radius: 0.25rem;
-	min-height: 2rem;
-	box-sizing: border-box;
-}
-
-.ui5-popover-root {
-	background: inherit;
-	border-radius: inherit;
-	width: 100%;
-	height: 100%;
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
-}
-
-@media screen and (-ms-high-contrast: active) {
-    .ui5-popover-root {
-        border: 1px solid var(--sapPageFooter_BorderColor);
-    }
-}
-
-:host([modal])::before {
-	content: "";
-	position: fixed;
-	background-color: #000000;
-	opacity: 0.6;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	outline: 0 none;
-	z-index: -1;
-}
-
-.ui5-popover-arr {
+.ui5-popover-arrow {
 	pointer-events: none;
 	display: block;
 	width: 1rem;
@@ -48,7 +7,7 @@
 	overflow: hidden;
 }
 
-.ui5-popover-arr:after {
+.ui5-popover-arrow:after {
 	content: "";
 	display: block;
 	width: 0.7rem;
@@ -59,105 +18,52 @@
 }
 
 /* pointing upward arrow */
-:host([actual-placement-type="Bottom"]) .ui5-popover-arr {
+:host([actual-placement-type="Bottom"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
 	top: -0.5rem;
 	height: 0.5625rem;
 
 }
-:host([actual-placement-type="Bottom"]) .ui5-popover-arr:after {
+:host([actual-placement-type="Bottom"]) .ui5-popover-arrow:after {
 	margin: 0.1875rem 0 0 0.1875rem;
 }
 
 /* pointing right arrow */
-:host([actual-placement-type="Left"]) .ui5-popover-arr {
+:host([actual-placement-type="Left"]) .ui5-popover-arrow {
 	top: calc(50% - 0.5625rem);
 	right: -0.5625rem;
 	width: 0.5625rem;
 }
 
-:host([actual-placement-type="Left"]) .ui5-popover-arr:after {
+:host([actual-placement-type="Left"]) .ui5-popover-arrow:after {
 	margin: 0.1875rem 0 0 -0.375rem;
 }
 
 /* pointing downward arrow */
-:host([actual-placement-type="Top"]) .ui5-popover-arr {
+:host([actual-placement-type="Top"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
 	height: 0.5625rem;
 	bottom: calc(-1 * (var(--_ui5_popover_content_padding) + 2px));
 }
 
-:host([actual-placement-type="Top"]) .ui5-popover-arr:after {
+:host([actual-placement-type="Top"]) .ui5-popover-arrow:after {
 	margin: -0.375rem 0 0 0.125rem;
 }
 
 /* pointing left arrow */
-:host(:not([actual-placement-type])) .ui5-popover-arr,
-:host([actual-placement-type="Right"]) .ui5-popover-arr {
+:host(:not([actual-placement-type])) .ui5-popover-arrow,
+:host([actual-placement-type="Right"]) .ui5-popover-arrow {
 	left: -0.5625rem;
 	top: calc(50% - 0.5625rem);
 	width: 0.5625rem;
 	height: 1rem;
 }
 
-:host(:not([actual-placement-type])) .ui5-popover-arr:after,
-:host([actual-placement-type="Right"]) .ui5-popover-arr:after {
+:host(:not([actual-placement-type])) .ui5-popover-arrow:after,
+:host([actual-placement-type="Right"]) .ui5-popover-arrow:after {
 	margin: 0.125rem 0 0 0.25rem;
 }
 
-:host([no-arrow]) .ui5-popover-arr {
-	display: none;
-}
-
-.ui5-popover-header-root,
-.ui5-popup-header-text {
-	border-bottom: 1px solid var(--sapPageFooter_BorderColor);
-}
-
-.ui5-popover-footer-root {
-	background: var(--sapPageFooter_Background);
-	border-top: 1px solid var(--sapPageFooter_BorderColor);
-	color: var(--sapPageFooter_TextColor);
-}
-
-.ui5-popover-header-root,
-.ui5-popover-footer-root,
-:host([header-text]) .ui5-popup-header-text {
-	margin: 0;
-	color: var(--sapPageHeader_TextColor);
-	font-size: 1rem;
-	font-weight: 400;
-	font-family: var(--sapFontFamily);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.ui5-popover-content {
-	overflow: auto;
-
-	/* Consider how to make this top level */
-	padding: var(--_ui5_popover_content_padding);
-	box-sizing: border-box;
-}
-
-:host([no-padding]) .ui5-popover-content {
-	padding: 0;
-}
-
-:host([header-text]) .ui5-popup-header-text {
-	padding: 0 0.25rem;
-	text-align: center;
-	min-height: 3rem;
-	max-height: 3rem;
-	line-height: 3rem;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-	max-width: 100%;
-	display: inline-block;
-}
-
-:host(:not([header-text])) .ui5-popup-header-text {
+:host([no-arrow]) .ui5-popover-arrow {
 	display: none;
 }

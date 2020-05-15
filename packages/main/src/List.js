@@ -26,7 +26,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-li</code> header.
+		 * Defines the <code>ui5-list</code> header.
 		 * <br><br>
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
@@ -93,8 +93,8 @@ const metadata = {
 		/**
 		 * Defines the mode of the <code>ui5-list</code>.
 		 * <br><br>
-		 * <b>Note:</b> Avalaible options are <code>None</code>, <code>SingleSelect</code>,
-		 * <code>MultiSelect</code>, and <code>Delete</code>.
+		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
+		 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
 		 * @type {ListMode}
 		 * @defaultvalue "None"
@@ -162,6 +162,17 @@ const metadata = {
 		busy: {
 			type: Boolean,
 		},
+
+		/**
+		 * Used to externally manipulate the role of the list
+		 *
+		 * @private
+		 */
+		_role: {
+			type: String,
+			defaultValue: "listbox",
+			noAttribute: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
@@ -174,6 +185,37 @@ const metadata = {
 		 * @public
 		 */
 		itemClick: {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired when the <code>Close</code> button of any item is clicked
+		 * <br><br>
+		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification</code> items only,
+		 * not to be confused with <code>itemDelete</code>.
+		 * @event
+		 * @param {HTMLElement} item the item about to be closed.
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		itemClose: {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired when the <code>Toggle</code> button of any item is clicked.
+		 * <br><br>
+		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification-group</code> items only.
+		 * @event
+		 * @param {HTMLElement} item the toggled item.
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		itemToggle: {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -196,7 +238,7 @@ const metadata = {
 
 		/**
 		 * Fired when selection is changed by user interaction
-		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+		 * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
 		 *
 		 * @event
 		 * @param {Array} selectedItems An array of the selected items.
@@ -293,6 +335,8 @@ class List extends UI5Element {
 		this._previouslySelectedItem = null;
 
 		this.addEventListener("ui5-_press", this.onItemPress.bind(this));
+		this.addEventListener("ui5-close", this.onItemClose.bind(this));
+		this.addEventListener("ui5-toggle", this.onItemToggle.bind(this));
 		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
 		this.addEventListener("ui5-_forwardAfter", this.onForwardAfter.bind(this));
 		this.addEventListener("ui5-_forwardBefore", this.onForwardBefore.bind(this));
@@ -520,9 +564,6 @@ class List extends UI5Element {
 	onItemPress(event) {
 		const pressedItem = event.detail.item;
 
-		this.fireEvent("itemPress", { item: pressedItem });
-		this.fireEvent("itemClick", { item: pressedItem });
-
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
 			this._selectionRequested = true;
 			this.onSelectionRequested({
@@ -535,7 +576,19 @@ class List extends UI5Element {
 			});
 		}
 
+		this.fireEvent("itemPress", { item: pressedItem });
+		this.fireEvent("itemClick", { item: pressedItem });
+
 		this._selectionRequested = false;
+	}
+
+	// This is applicable to NoficationListItem
+	onItemClose(event) {
+		this.fireEvent("itemClose", { item: event.detail.item });
+	}
+
+	onItemToggle(event) {
+		this.fireEvent("itemToggle", { item: event.detail.item });
 	}
 
 	onForwardBefore(event) {
@@ -580,6 +633,10 @@ class List extends UI5Element {
 		if (firstSelectedItem) {
 			firstSelectedItem.focus();
 		}
+	}
+
+	focusItem(item) {
+		item.focus();
 	}
 
 	setForwardingFocus(forwardingFocus) {

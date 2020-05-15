@@ -59,6 +59,18 @@ describe("TimePicker general interaction", () => {
 		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("valueState"), "Error", "The value state is on error");
 	});
 
+	it("tests valueStateMessage slot", () => {
+		const timepicker = browser.$("#timepickerValueStateMessage");
+
+		timepicker.click();
+
+		const inputId = timepicker.shadow$("ui5-input").getProperty("_id");
+		const inputStaticAreaItem = browser.$(`.${inputId}`);
+		const slot = inputStaticAreaItem.shadow$("ui5-popover").$("#customValueStateMessage");
+
+		assert.notOk(slot.error, "cValue State message slot is working");
+	});
+
 	it("tests value state", () => {
 		const timepicker = browser.$("#timepickerEmptyValue");
 		const button = browser.$("#testBtn");

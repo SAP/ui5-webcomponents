@@ -8,6 +8,7 @@ import {
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	FILEUPLOAD_BROWSE,
+	FILEUPLOADER_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 
@@ -303,6 +304,10 @@ class FileUploader extends UI5Element {
 
 	get browseText() {
 		return this.i18nBundle.getText(FILEUPLOAD_BROWSE);
+	}
+
+	get titleText() {
+		return this.i18nBundle.getText(FILEUPLOADER_TITLE);
 	}
 
 	get _canUseNativeFormSupport() {

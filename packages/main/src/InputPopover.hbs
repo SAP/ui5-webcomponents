@@ -12,6 +12,7 @@
 			<div class="row">
 				<span>{{_headerTitleText}}</span>
 				<ui5-button
+					class="ui5-responsive-popover-close-btn"
 					icon="decline"
 					design="Transparent"
 					@click="{{_closeRespPopover}}"
@@ -77,6 +78,7 @@
 {{#if hasValueStateMessage}}
 		<ui5-popover
 			skip-registry-update
+			_disable-initial-focus
 			no-padding
 			no-arrow
 			class="ui5-valuestatemessage-popover"

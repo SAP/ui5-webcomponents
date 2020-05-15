@@ -37,4 +37,48 @@ describe("Duration Picker general interaction", () => {
 		assert.strictEqual(durationPicker.getProperty("_maxValue")[2], "08", "max value is read correctly");
 	});
 
+	it("Tests seconds-step property", () => {
+		const durationPicker = browser.$("#duration-picker6");
+
+		assert.strictEqual(durationPicker.getProperty("value"), "05:10:00", "The initial value is taking in consideration the seconds-step property");
+		
+		durationPicker.click();
+		durationPicker.keys("Backspace");
+		durationPicker.keys("2");
+		durationPicker.keys("Enter");
+		
+		assert.strictEqual(durationPicker.getProperty("value"), "05:10:00", "Editing the value is taking in consideration the seconds-step property");
+	});
+
+	it("Tests minutes-step property", () => {
+		const durationPicker = browser.$("#duration-picker7");
+
+		assert.strictEqual(durationPicker.getProperty("value"), "05:10", "The initial value is taking in consideration the minutes-step property");
+		
+		durationPicker.click();
+		durationPicker.keys("Backspace");
+		durationPicker.keys("2");
+		durationPicker.keys("Enter");
+		
+		assert.strictEqual(durationPicker.getProperty("value"), "05:10", "Editing the value is taking in consideration the minutes-step property");
+	});
+
+	it("Tests hide-seconds property", () => {
+		const durationPicker = browser.$("#duration-picker3");
+
+		assert.strictEqual(durationPicker.getProperty("value"), "07:20", "Hours and minutes are considered");
+	});
+
+	it("Tests hide-minutes property", () => {
+		const durationPicker = browser.$("#duration-picker3-1");
+
+		assert.strictEqual(durationPicker.getProperty("value"), "07:10", "Hours and seconds are considered");
+	});
+
+	it("Tests hide-hours property", () => {
+		const durationPicker = browser.$("#duration-picker3-2");
+
+		assert.strictEqual(durationPicker.getProperty("value"), "20:10", "Minutes and seconds are considered");
+	});
+
 });

@@ -95,6 +95,30 @@ class BusyIndicator extends UI5Element {
 		super();
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._preventHandler = this._preventEvent.bind(this);
+	}
+
+	onBeforeRendering() {
+		if (this.active) {
+			this.tabIndex = -1;
+		} else {
+			this.tabIndex = 0;
+		}
+	}
+
+	onEnterDOM() {
+		this.addEventListener("keyup", this._preventHandler, {
+			capture: true,
+		});
+
+		this.addEventListener("keydown", this._preventHandler, {
+			capture: true,
+		});
+	}
+
+	onExitDOM() {
+		this.removeEventListener("keyup", this._preventHandler, true);
+		this.removeEventListener("keydown", this._preventHandler, true);
 	}
 
 	static get metadata() {
@@ -122,6 +146,12 @@ class BusyIndicator extends UI5Element {
 
 	get ariaTitle() {
 		return this.i18nBundle.getText(BUSY_INDICATOR_TITLE);
+	}
+
+	_preventEvent(event) {
+		if (this.active) {
+			event.stopImmediatePropagation();
+		}
 	}
 }
 

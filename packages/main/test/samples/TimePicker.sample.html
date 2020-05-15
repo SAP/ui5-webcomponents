@@ -35,7 +35,21 @@
 			<ui5-timepicker id="timepicker1" format-pattern="mm:ss"></ui5-timepicker>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-timepicker id="timepicker1" format-pattern="mm:ss"></ui5-timepicker>
+<ui5-timepicker id="timepicker2" format-pattern="mm:ss"></ui5-timepicker>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>TimePicker with value-state and valueStateMessage</h3>
+	<div class="snippet">
+		<ui5-timepicker id="timepicker3" format-pattern="mm:ss" value-state="Error">
+			<div slot="valueStateMessage">Please provide valid value</div>
+		</ui5-timepicker>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-timepicker id="timepicker3" format-pattern="mm:ss" value-state="Error">
+	<div slot="valueStateMessage">Please provide valid value</div>
+</ui5-timepicker>
 	</xmp></pre>
 </section>
 
