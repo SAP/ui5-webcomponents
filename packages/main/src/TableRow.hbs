@@ -13,13 +13,15 @@
 			<slot name="{{this._individualSlot}}"></slot>
 		{{/each}}
 	{{/if}}
-</tr>	
+</tr>
 
 {{#if shouldPopin}}
 	{{#each popinCells}}
 		<tr class="ui5-table-popin-row" @ui5-_cellclick="{{_oncellclick}}">
 			<td colspan="{{../visibleCellsCount}}">
-				<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
+				{{#if this.popinText}}
+					<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
+				{{/if}}
 				<div>
 					<slot name="{{this.cell._individualSlot}}"></slot>
 				</div>
