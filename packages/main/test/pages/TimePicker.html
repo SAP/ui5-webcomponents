@@ -41,6 +41,11 @@
 		<ui5-timepicker id="timepickerEmptyValue"></ui5-timepicker>
 		<ui5-button id="testBtn">btn for testing</ui5-button>
 
+		<br /><br />
+		<ui5-title>Test set time value</ui5-title>
+		<ui5-timepicker id="timepickerSetTime" value=""></ui5-timepicker>
+		<ui5-button id="setTimeButton">Set time</ui5-button>
+
 		<script>
 				var counter = 0;
 				timepickerChange.addEventListener("change", function() {
@@ -50,6 +55,10 @@
 				var inputCounter = 0;
 				timepickerInput.addEventListener("input", function() {
 					inputResult.value = ++inputCounter;
+				});
+
+				document.getElementById('setTimeButton').addEventListener("click", function(e) {
+					document.getElementById('timepickerSetTime').setUTCValue(new Date(2020, 3, 13, 3, 16, 16));
 				});
 		</script>
 	</body>

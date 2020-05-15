@@ -38,6 +38,8 @@
 	<ui5-datepicker id="dp10" disabled></ui5-datepicker>
 	<ui5-datepicker id="dp11"></ui5-datepicker>
 	<ui5-datepicker id="dp13"></ui5-datepicker>
+	<ui5-datepicker id="dp16" format-pattern="long"></ui5-datepicker>
+	<ui5-button id="b1" design="Default">Set date</ui5-button>
 	
 	<label id='lbl'>0</label>
 	<label for="inputTimezone">Timezone:</label>
@@ -92,6 +94,10 @@
 		document.querySelector("#dp13").addEventListener("ui5-change", function(e) {
 			document.querySelector('#lblTomorrow').innerHTML = ++counterTomorrow;
 			document.querySelector('#lblTomorrowDate').innerHTML = e.target.value;
+		});
+
+		document.getElementById('b1').addEventListener("click", function(e) {
+			document.getElementById('dp16').setUTCValue(new Date(2018, 11, 11));
 		});
 	</script>
 </body>

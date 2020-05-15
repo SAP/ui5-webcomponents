@@ -1,9 +1,19 @@
 const assert = require("chai").assert;
 
 describe("TimePicker general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/TimePicker.html");
+	it("input receives value in format pattern depending on the set language", () => {
+		browser.url("http://localhost:8080/test-resources/pages/TimePicker.html?sap-ui-language=bg");
+
+		const timepicker = browser.$("#timepickerSetTime");
+		const setTimeButton = browser.$("#setTimeButton");
+
+		setTimeButton.click();
+
+		assert.equal(timepicker.shadow$("ui5-input").getValue(), "3:16:16 ч.");
+	});
 
 	it("tests sliders value", () => {
+		browser.url("http://localhost:8080/test-resources/pages/TimePicker.html");
 		const timepicker = browser.$("#timepicker");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#timepicker");
 		const timepickerPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
