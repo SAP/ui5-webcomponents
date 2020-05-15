@@ -686,9 +686,11 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleNotificationsPress(event) {
-		this.fireEvent("notificationsClick", {
-			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-bell-button"),
-		});
+		const notificationIconRef = this.shadowRoot.querySelector(".ui5-shellbar-bell-button");
+
+		this._defaultItemPressPrevented = !this.fireEvent("notificationsClick", {
+			targetRef: notificationIconRef.classList.contains("ui5-shellbar-hidden-button") ? event.target : notificationIconRef,
+		}, true);
 	}
 
 	_handleProfilePress(event) {
