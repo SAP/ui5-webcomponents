@@ -8,7 +8,7 @@ const removeWhiteSpaces = (source) => {
 	return source
 		.replace(/\n+/g, "")
 		.replace(/\s*<\s*/g, "<")
-		.replace(/\s*>\s*/g, ">")
+		.replace(/(!?[a-z\/\"])>\s+/g, "$1>") // skips striping of =>(arrow functions) and -->(comments). Strips only when needed.
 		.replace(/}}\s+{{/g, "}}{{")
 		.replace(/\t+/g, " ");
 };
