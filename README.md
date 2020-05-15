@@ -183,7 +183,7 @@ yarn build # to build the project
 ```
 
 Afterwards, you can find the static **UI5 Web Components** in the `dist` folder of the corresponding package folder.
-For example, to find the Button component (that belongs to the `main` package), look inside `packages/main/dist` folder.
+For example, to find the Button component (that belongs to the `main` package), look inside the `packages/main/dist` folder.
 
 ## FAQ
 ### What's the thing with Yarn?
