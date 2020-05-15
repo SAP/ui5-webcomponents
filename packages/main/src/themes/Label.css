@@ -20,6 +20,11 @@
 	overflow: hidden;
 }
 
+.ui5-label-text-wrapper:after {
+	padding-right: 2.5px;
+    content: "";
+}
+
 :host(:not([wrap])) .ui5-label-text-wrapper {
 	text-overflow: ellipsis;
 	overflow: hidden;
