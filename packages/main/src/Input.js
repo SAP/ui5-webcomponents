@@ -904,6 +904,10 @@ class Input extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
+	get step() {
+		return this.type === InputType.Number ? "any" : undefined;
+	}
+
 	get _isPhone() {
 		return isPhone();
 	}

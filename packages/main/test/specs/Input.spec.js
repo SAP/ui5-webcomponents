@@ -29,6 +29,7 @@ describe("Attributes propagation", () => {
 	it("Type attribute is propagated properly", () => {
 		const sExpectedType = "number";
 		assert.strictEqual(browser.$("#input-number").shadow$(".ui5-input-inner").getAttribute("type"), sExpectedType, "Type property was propagated");
+		assert.strictEqual(browser.$("#input-number").shadow$(".ui5-input-inner").getAttribute("step"), "any", "The step attr is set");
 	});
 
 	it("Value attribute is propagated properly", () => {
