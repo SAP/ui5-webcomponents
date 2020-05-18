@@ -1,5 +1,5 @@
-commit bd46d7bea9bbe1a22617d7c748de51b0051cef31
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri May 15 16:33:14 2020 +0300
+commit 396993ee695d200fca76da547db194c32dbf75d0
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon May 18 10:03:31 2020 +0300
 
-    fix(ui5-popover): close popup when no opener (#1630)
+    fix(ui5-segmentedbutton): fix rendering in ie (#1622)
