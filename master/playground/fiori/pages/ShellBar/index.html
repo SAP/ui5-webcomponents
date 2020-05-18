@@ -138,7 +138,7 @@
 <section class="ui5-content-density-compact">
 	<h3>ShellBar in Compact</h3>
 	<div>
-		<ui5-shellbar primary-title="Product Title" show-notifications>
+		<ui5-shellbar id="shelbarCompact" primary-title="Product Title" show-notifications show-product-switch>
 			<ui5-button icon="nav-back" slot="startButton" id="start-button"></ui5-button>
 			<ui5-shellbar-item icon="disconnected" text="Disconnect"></ui5-shellbar-item>
 			<ui5-shellbar-item icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
@@ -237,16 +237,18 @@
 	});
 
 	shellbar.addEventListener("ui5-notificationsClick", function(event) {
-		window["press-input"].value = "Notifications"
+		window["press-input"].value = "Notifications";
+		event.preventDefault();
+		popover.openBy(event.detail.targetRef);
 	});
 
 	shellbar.addEventListener("ui5-productSwitchClick", function(event) {
 		event.preventDefault();
-		window["press-input"].value = "Product Switch"
+		window["press-input"].value = "Product Switch";
 	});
 
 	shellbar.addEventListener("ui5-logoClick", function(event) {
-		window["press-input"].value = "Logo"
+		window["press-input"].value = "Logo";
 	});
 
 	shellbarWithLogoClick.addEventListener("ui5-logoClick", function(event) {
@@ -254,13 +256,23 @@
 	});
 
 	shellbar.addEventListener("ui5-coPilotClick", function(event) {
-		window["press-input"].value = "CoPilot"
+		window["press-input"].value = "CoPilot";
 	});
 
 	shellbar.addEventListener("ui5-menuItemClick", function(event) {
 		var item = event.detail.item;
 		window["press-input"].value = item.textContent;
 		window["press-data"].value = item.getAttribute("data-key");
+	});
+
+	shelbarCompact.addEventListener("ui5-notificationsClick", function(event) {
+		event.preventDefault();
+		popover.openBy(event.detail.targetRef);
+	});
+
+	shelbarCompact.addEventListener("ui5-productSwitchClick", function(event) {
+		event.preventDefault();
+		popover.openBy(event.detail.targetRef);
 	});
 
 	menuItemsSB.addEventListener("ui5-menuItemClick", function(event) {

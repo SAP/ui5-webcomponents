@@ -1,13 +1,8 @@
-commit c65010b977265387bb646800d07e60b1e9a1fa51
+commit 04b44b42e0e752efdc6e29f293bdc34a7267bee3
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon May 18 10:06:57 2020 +0300
+Date:   Mon May 18 10:08:47 2020 +0300
 
-    fix(ui5-shellbar): fix search field focus handling (#1636)
+    fix(ui5-shellbar): fix open popup on notificationClick (#1632)
     
-    **Issue**: the valueStateMsg popover does not show up when the user clicks on the search icon.
-    **Root cause**: the ShellBar uses a timeout to focus the input to ensure it is displayed and ready to be focused, but sometimes the timeout executes too late.
-    - First, the Iinput checks (onAfterRendering) if it should show a valueStateMessage and one of the requirements is to be on focus, which is still false (the timeout is called later) and does not show the popover.
-    - Then, the timeout is called, moves the focus to the input, but it does not trigger re-rendering and the popover does not show up.
-    **Solution:** update the state (Input "focused" property) immediately, keep the focus move delayed.
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1590
+    The built-in notification icon can overflow and if you try to open another popover by clicking on the corresponding list item within the overflow, it does not open as the provided targetRef is not correct.
+    Now it provides the correct targetRef, considering whether the notification icon is in or out of the overflow. In addition, all samples and test pages that opens popover from the notification icon use event.preventDefault() to prevent the overflow popover from closing.

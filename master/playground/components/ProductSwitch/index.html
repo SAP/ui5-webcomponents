@@ -1845,6 +1845,7 @@
 				if (popover.opened) {
 					popover.close();
 				} else {
+					event.preventDefault();
 					popover.openBy(event.detail.targetRef);
 				}
 			});

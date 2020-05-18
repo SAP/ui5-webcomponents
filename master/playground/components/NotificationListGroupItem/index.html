@@ -2078,6 +2078,7 @@
 
 		<script>
 			shellbar.addEventListener("ui5-notificationsClick", function(event) {
+				event.preventDefault();
 				notificationsPopover.openBy(event.detail.targetRef);
 			});
 		</script>
