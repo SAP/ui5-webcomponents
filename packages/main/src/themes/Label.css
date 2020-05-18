@@ -20,9 +20,9 @@
 	overflow: hidden;
 }
 
-.ui5-label-text-wrapper:after {
-	padding-right: 2.5px;
+bdi{
     content: "";
+	padding-right: 2.5px;
 }
 
 :host(:not([wrap])) .ui5-label-text-wrapper {
@@ -61,5 +61,12 @@
 }
 
 :host([required][show-colon]) .ui5-label-required-colon:after {
+	margin-right: 0;
 	margin-left: 2px;
+}
+
+:host([required][show-colon]) [dir="rtl"] .ui5-label-required-colon:after {
+	margin-right: 2px;
+	margin-left: 0;
+
 }
