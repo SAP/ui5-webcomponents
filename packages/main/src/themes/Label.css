@@ -22,7 +22,7 @@
 
 bdi{
     content: "";
-	padding-right: 2.5px;
+	padding-right: 0.15625rem;
 }
 
 :host(:not([wrap])) .ui5-label-text-wrapper {
