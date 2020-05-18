@@ -296,7 +296,7 @@ describe("Component Behavior", () => {
 
 			it("tests if searchfield toggles when clicking on search icon", () => {
 				const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-				const searchField = browser.$("#shellbar ui5-input");
+				const searchField = browser.$("#shellbar").shadow$(".ui5-shellbar-search-field");
 
 				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");
 
@@ -379,7 +379,7 @@ describe("Component Behavior", () => {
 
 			it("tests if searchfield toggles when clicking on search icon", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const searchField = browser.$("#shellbar ui5-input");
+				const searchField = browser.$("#shellbar").shadow$(".ui5-shellbar-search-field");
 				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
 				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 				const searchListItem = overflowPopover.$("ui5-list ui5-li:nth-child(1)");

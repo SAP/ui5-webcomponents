@@ -658,11 +658,19 @@ class ShellBar extends UI5Element {
 			"right": right,
 		});
 
-		setTimeout(() => {
-			const inputSlot = searchField.children[0];
 
-			if (inputSlot) {
-				inputSlot.assignedNodes()[0].focus();
+		const inputSlot = searchField.children[0];
+		const input = inputSlot && inputSlot.assignedNodes()[0];
+
+		// update the state immediately
+		if (input) {
+			input.focused = true;
+		}
+
+		// move the focus later
+		setTimeout(() => {
+			if (input) {
+				input.focus();
 			}
 		}, 100);
 	}

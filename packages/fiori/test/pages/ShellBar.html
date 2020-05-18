@@ -120,7 +120,9 @@
 	<ui5-shellbar-item id="disc" icon="disconnected" text="Disconnect"></ui5-shellbar-item>
 	<ui5-shellbar-item id="call" icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
 
-	<ui5-input slot="searchField"></ui5-input>
+	<ui5-input placeholder="Instructions" slot="searchField" show-suggestions value-state="Information">
+		<div slot="valueStateMessage">Instructions</div>
+	</ui5-input>
 
 	<ui5-li id="menu-item-1" slot="menuItems" data-key="key1">Application 1</ui5-li>
 	<ui5-li id="menu-item-2" slot="menuItems" data-key="key2">Application 2</ui5-li>
@@ -184,7 +186,8 @@
 
 
 <ui5-shellbar>
-	<ui5-input id="mySearch" slot="searchField" show-suggestions>
+	<ui5-input id="mySearch" slot="searchField" show-suggestions value-state="Information">
+		<div slot="valueStateMessage">Instructions</div>
 		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">1</ui5-li>
 		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">2</ui5-li>
 		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">3</ui5-li>
