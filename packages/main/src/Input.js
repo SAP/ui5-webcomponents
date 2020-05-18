@@ -479,7 +479,7 @@ class Input extends UI5Element {
 
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
-				this.inputDomRef.focus();
+				this.inputDomRef && this.inputDomRef.focus();
 			}
 		}
 
@@ -545,7 +545,7 @@ class Input extends UI5Element {
 		this.previousValue = this.value;
 
 		await this.getInputDOMRef();
-		this._inputIconFocused = event.target === this.querySelector("ui5-icon");
+		this._inputIconFocused = event.target && event.target === this.querySelector("ui5-icon");
 	}
 
 	_onfocusout(event) {
@@ -902,6 +902,10 @@ class Input extends UI5Element {
 
 	get suggestionsText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
+	}
+
+	get step() {
+		return this.type === InputType.Number ? "any" : undefined;
 	}
 
 	get _isPhone() {
