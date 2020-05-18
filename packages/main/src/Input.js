@@ -479,7 +479,7 @@ class Input extends UI5Element {
 
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
-				this.inputDomRef.focus();
+				this.inputDomRef && this.inputDomRef.focus();
 			}
 		}
 
@@ -545,7 +545,7 @@ class Input extends UI5Element {
 		this.previousValue = this.value;
 
 		await this.getInputDOMRef();
-		this._inputIconFocused = event.target === this.querySelector("ui5-icon");
+		this._inputIconFocused = event.target && event.target === this.querySelector("ui5-icon");
 	}
 
 	_onfocusout(event) {
@@ -555,6 +555,12 @@ class Input extends UI5Element {
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
 		if (focusedOutToSuggestions	|| focusedOutToValueStateMessage) {
+			return;
+		}
+
+		const toBeFocused = event.relatedTarget;
+
+		if (toBeFocused && toBeFocused.classList.contains(this._id)) {
 			return;
 		}
 
@@ -913,6 +919,10 @@ class Input extends UI5Element {
 
 	get suggestionsText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
+	}
+
+	get step() {
+		return this.type === InputType.Number ? "any" : undefined;
 	}
 
 	get _isPhone() {

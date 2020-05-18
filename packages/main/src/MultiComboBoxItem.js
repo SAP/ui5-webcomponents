@@ -27,9 +27,6 @@ const metadata = {
  * @public
  */
 class MultiComboBoxItem extends ComboBoxItem {
-	/**
-	 * @public
-	 */
 	static get metadata() {
 		return metadata;
 	}

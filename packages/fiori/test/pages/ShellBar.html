@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Shell Bar</title>
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 	<script data-ui5-config type="application/json">
 		{
@@ -120,7 +120,9 @@
 	<ui5-shellbar-item id="disc" icon="disconnected" text="Disconnect"></ui5-shellbar-item>
 	<ui5-shellbar-item id="call" icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
 
-	<ui5-input slot="searchField"></ui5-input>
+	<ui5-input placeholder="Instructions" slot="searchField" show-suggestions value-state="Information">
+		<div slot="valueStateMessage">Instructions</div>
+	</ui5-input>
 
 	<ui5-li id="menu-item-1" slot="menuItems" data-key="key1">Application 1</ui5-li>
 	<ui5-li id="menu-item-2" slot="menuItems" data-key="key2">Application 2</ui5-li>
@@ -132,7 +134,7 @@
 <section class="ui5-content-density-compact">
 	<h3>ShellBar in Compact</h3>
 	<div>
-		<ui5-shellbar primary-title="Product Title" show-notifications>
+		<ui5-shellbar id="shelbarCompact" primary-title="Product Title" show-notifications show-product-switch>
 			<ui5-button icon="nav-back" slot="startButton" id="start-button"></ui5-button>
 			<ui5-shellbar-item icon="disconnected" text="Disconnect"></ui5-shellbar-item>
 			<ui5-shellbar-item icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
@@ -184,7 +186,8 @@
 
 
 <ui5-shellbar>
-	<ui5-input id="mySearch" slot="searchField" show-suggestions>
+	<ui5-input id="mySearch" slot="searchField" show-suggestions value-state="Information">
+		<div slot="valueStateMessage">Instructions</div>
 		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">1</ui5-li>
 		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">2</ui5-li>
 		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">3</ui5-li>
@@ -230,16 +233,18 @@
 	});
 
 	shellbar.addEventListener("ui5-notificationsClick", function(event) {
-		window["press-input"].value = "Notifications"
+		window["press-input"].value = "Notifications";
+		event.preventDefault();
+		popover.openBy(event.detail.targetRef);
 	});
 
 	shellbar.addEventListener("ui5-productSwitchClick", function(event) {
 		event.preventDefault();
-		window["press-input"].value = "Product Switch"
+		window["press-input"].value = "Product Switch";
 	});
 
 	shellbar.addEventListener("ui5-logoClick", function(event) {
-		window["press-input"].value = "Logo"
+		window["press-input"].value = "Logo";
 	});
 
 	shellbarWithLogoClick.addEventListener("ui5-logoClick", function(event) {
@@ -247,13 +252,23 @@
 	});
 
 	shellbar.addEventListener("ui5-coPilotClick", function(event) {
-		window["press-input"].value = "CoPilot"
+		window["press-input"].value = "CoPilot";
 	});
 
 	shellbar.addEventListener("ui5-menuItemClick", function(event) {
 		var item = event.detail.item;
 		window["press-input"].value = item.textContent;
 		window["press-data"].value = item.getAttribute("data-key");
+	});
+
+	shelbarCompact.addEventListener("ui5-notificationsClick", function(event) {
+		event.preventDefault();
+		popover.openBy(event.detail.targetRef);
+	});
+
+	shelbarCompact.addEventListener("ui5-productSwitchClick", function(event) {
+		event.preventDefault();
+		popover.openBy(event.detail.targetRef);
 	});
 
 	menuItemsSB.addEventListener("ui5-menuItemClick", function(event) {

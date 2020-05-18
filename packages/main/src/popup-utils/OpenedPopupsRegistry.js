@@ -30,7 +30,7 @@ const _keydownListener = event => {
 	if (isEscape(event)) {
 		const topPopup = registry[registry.length - 1];
 
-		topPopup && topPopup.close();
+		topPopup && topPopup.close(true);
 	}
 };
 

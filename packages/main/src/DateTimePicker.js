@@ -170,7 +170,7 @@ class DateTimePicker extends DatePicker {
 	}
 
 	static get staticAreaStyles() {
-		return [DateTimePickerPopoverCss, ...super.staticAreaStyles];
+		return [...super.staticAreaStyles, DateTimePickerPopoverCss];
 	}
 
 	static async onDefine() {

@@ -9,7 +9,8 @@ describe("Dialog general interaction", () => {
 
 		btnOpenDialog.click();
 
-		const dialog = browser.$("ui5-dialog").shadow$(".ui5-dialog-root");
+		const dialog = browser.$("#dialog");
+		
 		assert.ok(dialog.isDisplayedInViewport(), "Dialog is opened.");
 
 		btnCloseDialog.click();
@@ -25,10 +26,9 @@ describe("Dialog general interaction", () => {
 		btnOpenDialog.click();
 		select.click();
 
-		const dialogZIndex = parseInt(browser.$("ui5-dialog").shadow$(".ui5-dialog-root-parent").getCSSProperty('z-index').value);
-		const popoverZIndex = parseInt(popover.getCSSProperty('z-index').value);
+		const dialogZIndex = parseInt(browser.$("#dialog").getCSSProperty('z-index').value);
+		const popoverZIndex = parseInt(browser.$(`.${select.getProperty("_id")}`).shadow$("ui5-responsive-popover").getCSSProperty('z-index').value);
 
 		assert.ok(popoverZIndex > dialogZIndex, "Popover is above dialog.");
 	});
-
 });

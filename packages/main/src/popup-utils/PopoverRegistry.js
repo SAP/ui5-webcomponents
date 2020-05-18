@@ -38,27 +38,27 @@ const detachGlobalClickHandler = () => {
 };
 
 const clickHandler = event => {
-	const openedPopovers = openedRegistry;
 	const openedPopups = getOpenedPopups();
+	const isTopPopupPopover = openedPopups[openedPopups.length - 1].openBy;
 
-	if (openedPopups.length === 0 || !(openedPopups[openedPopups.length - 1].openBy)) {
+	if (openedPopups.length === 0 || !isTopPopupPopover) {
 		return;
 	}
 
 	// loop all open popovers
-	for (let i = (openedPopovers.length - 1); i !== -1; i--) {
-		const popover = openedPopovers[i];
+	for (let i = (openedPopups.length - 1); i !== -1; i--) {
+		const popup = openedPopups[i];
 
-		// if popover is modal, opener is clicked or there is one more popover above, skip closing
-		if (popover.modal || popover.isOpenerClicked(event)) {
+		// if popup is modal, opener is clicked, popup is dialog skip closing
+		if (popup.isModal || popup.isOpenerClicked(event)) {
 			return;
 		}
 
-		if (isClickInRect(event, popover.getBoundingClientRect())) {
+		if (isClickInRect(event, popup.getBoundingClientRect())) {
 			break;
 		}
 
-		popover.close();
+		popup.close();
 	}
 };
 

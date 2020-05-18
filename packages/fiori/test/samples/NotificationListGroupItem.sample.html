@@ -1,0 +1,358 @@
+<header class="component-heading">
+	<h2 class="control-header">NotificationListGroupItem</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents-fiori</div>
+
+<div class="control-tag">&lt;ui5-li-notification-group&gt;</div>
+
+<!--Basic -->
+<section>
+	<h3>NotificationListGroupItem</h3>
+	<div class="snippet">
+		<ui5-list id="myList" header-text="Notifications grouped">
+			<ui5-li-notification-group
+				show-close
+				show-counter
+				heading="Orders"
+				priority="High"
+			>
+				<ui5-li-notification
+					show-close
+					heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+					priority="High"
+				>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+	
+					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">3 Days</span>
+	
+					<ui5-notification-overflow-action icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
+					<ui5-notification-overflow-action icon="message-error" text="Reject" slot="actions"></ui5-notification-overflow-action>
+				</ui5-li-notification>
+	
+				<ui5-li-notification
+					show-close
+					heading="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+					priority="High"
+				>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+	
+					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">3 Days</span>
+	
+					<ui5-notification-overflow-action icon="message-error" text="Reject" slot="actions"></ui5-notification-overflow-action>
+					<ui5-notification-overflow-action icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
+				</ui5-li-notification>
+	
+				<ui5-notification-overflow-action icon="accept" text="Accept All" slot="actions"></ui5-notification-overflow-action>
+				<ui5-notification-overflow-action icon="message-error" text="Reject All" slot="actions"></ui5-notification-overflow-action>
+			</ui5-li-notification-group>
+	
+			<ui5-li-notification-group
+				show-close
+				show-counter
+				heading="Deliveries"
+				priority="Medium"
+				collapsed
+			>
+				<ui5-li-notification
+					show-close
+					heading="New Delivery (#2900) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+					priority="Medium"
+				>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+	
+					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">3 Days</span>
+	
+					<ui5-notification-overflow-action icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
+				</ui5-li-notification>
+	
+				<ui5-li-notification
+					show-close
+					heading="New Delivery (#29001) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+					priority="Medium"
+				>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+	
+					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">3 Days</span>
+	
+					<ui5-notification-overflow-action icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
+				</ui5-li-notification>
+
+				<ui5-notification-overflow-action icon="accept" text="Accept All" slot="actions"></ui5-notification-overflow-action>
+				<ui5-notification-overflow-action icon="message-error" text="Reject All" slot="actions"></ui5-notification-overflow-action>
+			</ui5-li-notification-group>
+	
+			<ui5-li-notification-group
+				show-close
+				show-counter
+				priority="Low"
+				collapsed
+				heading="Meetings With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+			>
+				<ui5-li-notification
+					show-close
+					heading="New meeting at Building (#35001)"
+					priority="Low"
+					read
+				>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+	
+					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">3 Days</span>
+				</ui5-li-notification>
+	
+				<ui5-li-notification
+					show-close
+					heading="New meeting at Building (#35001)"
+					priority="Low"
+					read
+				>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+	
+					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">3 Days</span>
+				</ui5-li-notification>
+
+			</ui5-li-notification-group>
+		</ui5-list>
+
+		<script>
+			myList.addEventListener("itemClose", function(e) {
+				e.detail.item.hidden = true;
+			});
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-list id="myList" header-text="Notifications grouped">
+	<ui5-li-notification-group
+		show-close
+		show-counter
+		heading="Orders"
+		priority="High"
+	>
+		<ui5-li-notification
+			show-close
+			heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+			priority="High"
+		>
+		...
+		</ui5-li-notification>
+
+		<ui5-li-notification
+			show-close
+			heading="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+			priority="High"
+		>
+		...
+		</ui5-li-notification>
+
+		<ui5-notification-overflow-action icon="accept" text="Accept All" slot="actions"></ui5-notification-overflow-action>
+		<ui5-notification-overflow-action icon="message-error" text="Reject All" slot="actions"></ui5-notification-overflow-action>
+	</ui5-li-notification-group>
+
+	...
+</ui5-list>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>NotificationListGroupItem In ShellBar</h3>
+	<div class="snippet">
+		<ui5-shellbar
+			id="shellbar"
+			primary-title="Corporate Portal"
+			logo="../../../assets/images/sap-logo-svg.svg"
+			show-notifications
+			notification-count="6"
+		>
+		</ui5-shellbar>
+
+		<ui5-popover id="notificationsPopover" style="max-width: 400px" placement-type="Bottom" horizontal-align="Right">
+			<ui5-list id="notificationListTop" header-text="Notifications grouped">
+				<ui5-li-notification-group
+					show-close
+					show-counter
+					heading="Orders"
+					priority="High"
+				>
+					<ui5-li-notification
+						show-close
+						heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+						priority="High"
+					>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+						<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+		
+						<span slot="footnotes">Office Notifications</span>
+						<span slot="footnotes">3 Days</span>
+		
+						<ui5-notification-overflow-action icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
+						<ui5-notification-overflow-action icon="message-error" text="Reject" slot="actions"></ui5-notification-overflow-action>
+					</ui5-li-notification>
+		
+					<ui5-li-notification
+						show-close
+						heading="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+						priority="High"
+					>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+						<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+		
+						<span slot="footnotes">Office Notifications</span>
+						<span slot="footnotes">3 Days</span>
+		
+						<ui5-notification-overflow-action icon="message-error" text="Reject" slot="actions"></ui5-notification-overflow-action>
+						<ui5-notification-overflow-action icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
+					</ui5-li-notification>
+		
+					<ui5-notification-overflow-action icon="accept" text="Accept All" slot="actions"></ui5-notification-overflow-action>
+					<ui5-notification-overflow-action icon="message-error" text="Reject All" slot="actions"></ui5-notification-overflow-action>
+				</ui5-li-notification-group>
+		
+				<ui5-li-notification-group
+					show-close
+					show-counter
+					heading="Deliveries"
+					priority="Medium"
+					collapsed
+				>
+					<ui5-li-notification
+						show-close
+						heading="New Delivery (#2900) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+						priority="Medium"
+					>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+						<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+		
+						<span slot="footnotes">Office Notifications</span>
+						<span slot="footnotes">3 Days</span>
+		
+						<ui5-notification-overflow-action icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
+					</ui5-li-notification>
+		
+					<ui5-li-notification
+						show-close
+						heading="New Delivery (#29001) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+						priority="Medium"
+					>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+						<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+		
+						<span slot="footnotes">Office Notifications</span>
+						<span slot="footnotes">3 Days</span>
+		
+						<ui5-notification-overflow-action icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
+					</ui5-li-notification>
+	
+					<ui5-notification-overflow-action icon="accept" text="Accept All" slot="actions"></ui5-notification-overflow-action>
+					<ui5-notification-overflow-action icon="message-error" text="Reject All" slot="actions"></ui5-notification-overflow-action>
+				</ui5-li-notification-group>
+		
+				<ui5-li-notification-group
+					show-close
+					show-counter
+					priority="High"
+					collapsed
+					heading="Meetings With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+				>
+					<ui5-li-notification
+						show-close
+						heading="New meeting at Building (#35001)"
+						priority="High"
+						read
+					>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+						<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+		
+						<span slot="footnotes">Office Notifications</span>
+						<span slot="footnotes">3 Days</span>
+					</ui5-li-notification>
+		
+					<ui5-li-notification
+						show-close
+						heading="New meeting at Building (#35001)"
+						priority="High"
+						read
+					>
+						And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+						<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+		
+						<span slot="footnotes">Office Notifications</span>
+						<span slot="footnotes">3 Days</span>
+					</ui5-li-notification>
+	
+				</ui5-li-notification-group>
+			</ui5-list>
+		</ui5-popover>
+
+		<script>
+			shellbar.addEventListener("ui5-notificationsClick", function(event) {
+				event.preventDefault();
+				notificationsPopover.openBy(event.detail.targetRef);
+			});
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-shellbar
+	id="shellbar"
+	primary-title="Corporate Portal"
+	logo="../../../assets/images/sap-logo-svg.svg"
+	show-notifications
+	notification-count="6"
+>
+</ui5-shellbar>
+
+<ui5-popover
+	id="notificationsPopover"
+	style="max-width: 400px"
+	placement-type="Bottom"
+	horizontal-align="Right"
+>
+	<ui5-list header-text="Notifications">
+		<ui5-li-notification-group
+			show-close
+			show-counter
+			heading="Orders"
+			priority="High"
+		>
+			<ui5-li-notification
+				show-close
+				heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+			>
+				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+				<ui5-avatar image="./img/man_avatar_1.png" size="XS" slot="avatar"></ui5-avatar>
+				<span slot="footnotes">John Doe</span>
+				<span slot="footnotes">2 Days</span>
+
+				<ui5-notification-overflow-action id="acceptBtnInPopover" icon="accept" text="Accept" slot="actions"></ui5-notification-overflow-action>
+				<ui5-notification-overflow-action id="rejectBtnInPopover" icon="message-error" text="Reject" slot="actions"></ui5-notification-overflow-action>
+			</ui5-li-notification>
+		</ui5-li-notification-group>
+		...
+	</ui5-list>
+</ui5-popover>
+
+<script>
+	shellbar.addEventListener("ui5-notificationsClick", function(event) {
+		notificationsPopover.openBy(event.detail.targetRef);
+	});
+</script>
+	
+	</xmp></pre>
+</section>
+
+
+<!-- JSDoc marker -->
