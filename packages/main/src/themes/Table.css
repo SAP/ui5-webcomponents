@@ -3,8 +3,9 @@
 	width: 100%;
 }
 
-.ui5-table {
+.ui5-table-root {
 	display: table;
+    table-layout: fixed;
 	width: 100%;
 	border-spacing: 0;
 	border-collapse: collapse;

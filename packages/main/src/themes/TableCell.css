@@ -8,22 +8,22 @@
 	color: var(--sapContent_LabelColor);
 }
 
-.ui5-table-cell {
+.ui5-table-cell-root {
 	display: table-cell;
 	padding: .5rem .25rem;
 	box-sizing: border-box;
 }
 
-:host([first-in-row]) .ui5-table-cell,
-.ui5-table-popin-row .ui5-table-cell {
+:host([first-in-row]) .ui5-table-cell-root,
+.ui5-table-popin-row .ui5-table-cell-root {
 	padding-left: 1rem;
 
 }
 
-:host([first-in-row]) .ui5-table-cell {
+:host([first-in-row]) .ui5-table-cell-root {
 	padding-left: 1rem;
 }
 
-:host([popined]) .ui5-table-cell {
+:host([popined]) .ui5-table-cell-root {
 	padding-left: 0;
 }
