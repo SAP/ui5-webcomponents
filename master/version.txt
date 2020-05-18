@@ -1,5 +1,5 @@
-commit 0cef1404e180f3e015cbda985f09feb18a39fa86
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon May 18 10:50:25 2020 +0300
+commit 14a48d1c06780d8264cd1b689e6d8cc3f649998e
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon May 18 16:23:30 2020 +0300
 
-    fix(framework): allow for empty theme files (#1639)
+    fix(ui5-label): fix width for italic labels (#1625)
