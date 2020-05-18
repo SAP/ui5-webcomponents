@@ -305,10 +305,6 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
-
-		_showListAnnouncement: {
-			type: Boolean,
-		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
 		/**
@@ -621,11 +617,12 @@ class Input extends UI5Element {
 	}
 
 	_afterClosePopover() {
+		this._announceSelectedItem();
+
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this.blur();
 		}
-		this._announceSelectedItem = false;
 	}
 
 	toggle(isToggled) {
@@ -706,6 +703,7 @@ class Input extends UI5Element {
 	previewSuggestion(item) {
 		this.valueBeforeItemSelection = this.value;
 		this.value = item.group ? "" : item.textContent;
+		this._announceSelectedItem();
 	}
 
 	async fireEventByAction(action) {
@@ -779,7 +777,6 @@ class Input extends UI5Element {
 	}
 
 	onItemPreviewed(item) {
-		this._announceSelectedItem = true;
 		this.previewSuggestion(item);
 	}
 
@@ -796,6 +793,16 @@ class Input extends UI5Element {
 			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
+	}
+
+	_announceSelectedItem () {
+		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
+
+		if (this.Suggestions && this.Suggestions._isItemOnTarget()) {
+			invisibleText.textContent = this.itemSelectionAnnounce
+		} else {
+			invisibleText.textContent = "";
+		}
 	}
 
 	get _readonly() {
@@ -838,7 +845,7 @@ class Input extends UI5Element {
 	}
 
 	get itemSelectionAnnounce() {
-		return this.Suggestions && this.Suggestions._isItemOnTarget() ? this.Suggestions.itemSelectionAnnounce : undefined;
+		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : undefined;
 	}
 
 	get classes() {
