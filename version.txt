@@ -1,5 +1,6 @@
-commit 5f62bdba6274f042068c39619a5f7660a20ac76f
-Author: ilhan <ilhan.myumyun@sap.com>
-Date:   Sat Mar 28 13:48:02 2020 +0200
+commit 9eb5348c4df1917b5d8aec6117b4e561b1da22e9
+Merge: 5f62bdb 5eda61b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon May 18 15:14:33 2020 +0300
 
-    add HCW theme switch
+    Update playground to 1.0.0-rc.7

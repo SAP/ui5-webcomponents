@@ -99,6 +99,26 @@
 	<ui5-input id="input1" value-state="Warning" placeholder="Warning state ...">
 		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
 	</ui5-input>
+
+	<h3>Input with valueState and Dynamic suggestions</h3>
+	<ui5-input id="inputError"
+		style="width: 500px"
+		show-suggestions
+		value-state="Error"
+		placeholder="Search for a country ...">
+	<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+	</ui5-input>
+
+	<h3>Input suggestions with valueState and ui5-li</h3>
+	<ui5-input show-suggestions style="width: 500px" value-state="Information">
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Extra long text used as a list item. Extra long text used as a list item -2.</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
 	<h3> 'change' event result</h3>
 	<ui5-input id="inputResult"></ui5-input>
 
@@ -196,6 +216,7 @@
 		var input = document.getElementById('myInput');
 		var inputGrouping = document.getElementById('myInputGrouping');
 		var myInput2 = document.getElementById('myInput2');
+		var inputError = document.getElementById("inputError");
 		var input1 = document.getElementById('input1');
 		var input2 = document.getElementById('input2');
 		var inputResult = document.getElementById('inputResult');
@@ -219,8 +240,8 @@
 				});
 			}
 
-			while (input.firstChild) {
-				input.removeChild(input.firstChild);
+			while (input.lastChild && input.lastChild !== input.valueStateMessage[0]) {
+				input.removeChild(input.lastChild);
 			}
 
 			suggestionItems.forEach(function(item, idx) {
@@ -240,6 +261,7 @@
 
 		input.addEventListener("ui5-input", suggest);
 		inputCompact.addEventListener("ui5-input", suggest);
+		inputError.addEventListener("ui5-input", suggest);
 
 		input.addEventListener("ui5-suggestionItemSelect", function (event) {
 			var item = event.detail.item;

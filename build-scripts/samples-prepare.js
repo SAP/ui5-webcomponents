@@ -12,14 +12,9 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-  "Avatar",
-  "Carousel",
-  "ComboBox",
-  "FileUploader",
-  "ResponsivePopover",
-  "SegmentedButton",
-  "TimePicker",
-  "Toast",
+  "DateTimePicker",
+  "DurationPicker",
+  "UploadCollection"
 ];
 
 packages.forEach(package => {
