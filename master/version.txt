@@ -1,5 +1,13 @@
-commit 396993ee695d200fca76da547db194c32dbf75d0
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon May 18 10:03:31 2020 +0300
+commit c65010b977265387bb646800d07e60b1e9a1fa51
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon May 18 10:06:57 2020 +0300
 
-    fix(ui5-segmentedbutton): fix rendering in ie (#1622)
+    fix(ui5-shellbar): fix search field focus handling (#1636)
+    
+    **Issue**: the valueStateMsg popover does not show up when the user clicks on the search icon.
+    **Root cause**: the ShellBar uses a timeout to focus the input to ensure it is displayed and ready to be focused, but sometimes the timeout executes too late.
+    - First, the Iinput checks (onAfterRendering) if it should show a valueStateMessage and one of the requirements is to be on focus, which is still false (the timeout is called later) and does not show the popover.
+    - Then, the timeout is called, moves the focus to the input, but it does not trigger re-rendering and the popover does not show up.
+    **Solution:** update the state (Input "focused" property) immediately, keep the focus move delayed.
+    
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1590

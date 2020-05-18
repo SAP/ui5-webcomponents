@@ -618,7 +618,7 @@
   "89": {
     "id": "89",
     "title": "Shell Bar",
-    "content": "&lt;!DOCTYPE html&gt; Shell Bar Application 1 Application 2 Application 3 Application 4 Application 5 ShellBar in Compact Application 1 Application 2 Application 3 Application 4 Application 5 John Doe App Finder Settings Edit Home Page Help Sign out Application 1 Application 2 Application 3 Application 4 Application 5 Custom Popover Item 1 Custom Popover Item 2 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Menu Items value key App 1 App 2 &lt;ui5-li id=&quot;mi-3&quot;slot=&quot;menuItems&quot; data-key=&quot;key3&quot;&gt;App 3&lt;/ui5-li&gt; &lt;ui5-li id=&quot;mi-4&quot;slot=&quot;menuItems&quot; data-key=&quot;key4&quot;&gt;App 4&lt;/ui5-li&gt;",
+    "content": "&lt;!DOCTYPE html&gt; Shell Bar Instructions Application 1 Application 2 Application 3 Application 4 Application 5 ShellBar in Compact Application 1 Application 2 Application 3 Application 4 Application 5 John Doe App Finder Settings Edit Home Page Help Sign out Application 1 Application 2 Application 3 Application 4 Application 5 Custom Popover Item 1 Custom Popover Item 2 Instructions 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Menu Items value key App 1 App 2 &lt;ui5-li id=&quot;mi-3&quot;slot=&quot;menuItems&quot; data-key=&quot;key3&quot;&gt;App 3&lt;/ui5-li&gt; &lt;ui5-li id=&quot;mi-4&quot;slot=&quot;menuItems&quot; data-key=&quot;key4&quot;&gt;App 4&lt;/ui5-li&gt;",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/fiori/pages/ShellBar/",
     "relUrl": "/playground/fiori/pages/ShellBar/"
   },
