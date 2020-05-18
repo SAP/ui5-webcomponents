@@ -9,7 +9,7 @@
 }
 
 .ui5-table-cell {
-    display: table-cell;
+	display: table-cell;
 	padding: .5rem .25rem;
 	box-sizing: border-box;
 }
