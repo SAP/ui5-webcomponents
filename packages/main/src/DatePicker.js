@@ -700,17 +700,12 @@ class DatePicker extends UI5Element {
 
 	/**
 	 * Formats a Java Script date object into a string representing a locale date
-	 * and set the result as value of the DatePicker
+	 * according to the <code>formatPattern</code> property of the DatePicker instance
 	 * @param {object} oDate A Java Script date object to be formatted as string
 	 * @public
 	 */
-	setUTCValue(oDate) {
-		this.value = this.getFormat().format(oDate);
-		if (this.isInValidRange(this._getTimeStampFromString(this.value))) {
-			this.valueState = ValueState.None;
-		} else {
-			this.valueState = ValueState.Error;
-		}
+	formatValue(oDate) {
+		return this.getFormat().format(oDate);
 	}
 
 	/**

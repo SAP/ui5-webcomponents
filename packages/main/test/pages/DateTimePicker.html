@@ -171,8 +171,9 @@
 			input4.value = "{ value: " + dt2.value + " , valid: " + event.detail.valid + " }";
 		});
 
+		var dtp = document.getElementById('defaultPattern');
 		document.getElementById('setButton').addEventListener("click", function(e) {
-			document.getElementById('defaultPattern').setUTCValue(new Date(2020, 3, 13, 3, 16, 16));
+			dtp.setAttribute("value", dtp.formatValue(new Date(2020, 3, 13, 3, 16, 16)));
 		});
 
 	</script>

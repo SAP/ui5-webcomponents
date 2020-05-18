@@ -97,8 +97,10 @@
 			document.querySelector('#lblTomorrowDate').innerHTML = e.target.value;
 		});
 
+		var dp16 = document.getElementById('dp16');
+
 		document.getElementById('b1').addEventListener("click", function(e) {
-			document.getElementById('dp16').setUTCValue(new Date(2018, 11, 11));
+			dp16.setAttribute("value", dp16.formatValue(new Date(2018, 11, 11)));
 		});
 	</script>
 </body>

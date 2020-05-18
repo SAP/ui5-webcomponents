@@ -63,8 +63,9 @@
 					inputResult.value = ++inputCounter;
 				});
 
+				var tp = document.getElementById('timepickerSetTime'); 
 				document.getElementById('setTimeButton').addEventListener("click", function(e) {
-					document.getElementById('timepickerSetTime').setUTCValue(new Date(2020, 3, 13, 3, 16, 16));
+					tp.setAttribute("value", tp.formatValue(new Date(2020, 3, 13, 3, 16, 16)));
 				});
 		</script>
 	</body>
