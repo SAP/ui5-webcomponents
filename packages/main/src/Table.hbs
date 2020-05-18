@@ -1,29 +1,29 @@
-<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}">
+<div class="ui5-table" border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}">
 
-	<thead>
-		<tr id="{{_id}}-columnHeader" class="ui5-table-header-row" tabindex="0" style="height: 48px" @click="{{_onColumnHeaderClick}}">
+	<div class="ui5-table-header">
+		<div id="{{_id}}-columnHeader" class="ui5-table-header-row" tabindex="0" style="height: 48px" @click="{{_onColumnHeaderClick}}">
 			{{#each visibleColumns}}
 				<slot name="{{this._individualSlot}}"></slot>
 			{{/each}}
-		</tr>
-	</thead>
+		</div>
+	</div>
 
-	<tbody>
+	<div class="ui5-table-body">
 		{{#each rows}}
 			<slot name="{{this._individualSlot}}"></slot>
 		{{/each}}
 
 		{{#unless rows.length}}
 			{{#if showNoData}}
-				<tr class="ui5-table-no-data-row-root">
-					<td colspan="{{visibleColumnsCount}}">
+				<div class="ui5-table-no-data-row-root">
+					<div class="ui5-table-no-data-cell" colspan="{{visibleColumnsCount}}">
 
 						<div class="ui5-table-no-data-row">
 							<span>{{noDataText}}</span>
 						</div>
-					</td>
-				</tr>
+					</div>
+				</div>
 			{{/if}}
 		{{/unless}}
-	</tbody>
-</table>
+	</div>
+</div>

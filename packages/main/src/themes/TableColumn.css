@@ -7,7 +7,8 @@
 	box-sizing: border-box;
 }
 
-th {
+.ui5-table-column {
+    display: table-cell;
 	background: var(--sapList_HeaderBackground);
 	border-bottom: 1px solid var(--sapList_BorderColor);
 	border: none;
@@ -26,7 +27,7 @@ th {
 	padding-left: 1rem;
 }
 
-:host([sticky]) th {
+:host([sticky]) .ui5-table-column {
 	position: sticky;
 	top: 0;
 	z-index: 99;

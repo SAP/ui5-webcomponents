@@ -20,58 +20,57 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+    <style>
+        .demo-table {
+            width: 100%;
+            display: inline-block;
+        }
+
+        body,
+        html {
+            margin: 0;
+            height: 100%;
+        }
+
+        .double-line-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .middle {
+            height: 100%;
+            vertical-align: middle;
+            line-height: 3;
+        }
+
+        .right-align {
+            display: inline-block;
+            text-align: right;
+            width: 100%;
+        }
+
+        .center-align {
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+
+        .headerToolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 48px;
+            padding: 0 16px;
+        }
+
+        .column-content {
+            height: 100%;
+            width: 100%;
+            align-items: center;
+            display: flex;
+        }
+    </style>
 </head>
-
-<style>
-	.demo-table {
-		width: 100%;
-		display: inline-block;
-	}
-
-	body,
-	html {
-		margin: 0;
-		height: 100%;
-	}
-
-	.double-line-content {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.middle {
-		height: 100%;
-		vertical-align: middle;
-		line-height: 3;
-	}
-
-	.right-align {
-		display: inline-block;
-		text-align: right;
-		width: 100%;
-	}
-
-	.center-align {
-		display: inline-block;
-		text-align: center;
-		width: 100%;
-	}
-
-	.headerToolbar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 48px;
-		padding: 0 16px;
-	}
-
-	.column-content {
-		height: 100%;
-		width: 100%;
-		align-items: center;
-		display: flex;
-	}
-</style>
 
 <body style="background-color: var(--sapBackgroundColor);">
 
@@ -140,7 +139,6 @@
 				</th>
 				<th>
 					<ui5-label>Price</ui5-label>
-				</th>
 				</th>
 			</tr>
 		</thead>
@@ -242,7 +240,7 @@
 		</ui5-table-row>
 	</ui5-table>
 
-	<label id="testRowClickResult" />
+    <label id="testRowClickResult"></label>
 	<script>
 		"use strict";
 
@@ -2883,7 +2881,7 @@
 		});
 
 		table.addEventListener("popinChange", function (e) {
-			tableLable.textContent = `Number of poppedColumns: ${e.detail.poppedColumns.length}`;
+			tableLable.textContent = "Number of poppedColumns: " + e.detail.poppedColumns.length;
 		});
 
 		testRowClick.addEventListener("rowClick", function (e) {

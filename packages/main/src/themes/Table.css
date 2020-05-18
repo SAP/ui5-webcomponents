@@ -3,17 +3,27 @@
 	width: 100%;
 }
 
-table {
+.ui5-table {
+    display: table;
 	width: 100%;
 	border-spacing: 0;
 	border-collapse: collapse;
 }
 
+.ui5-table-header {
+    display: table-header-group;
+}
+
 .ui5-table-header-row {
+    display: table-row;
 	color: var(--sapTextColor);
 	height: 3rem;
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSize);
+}
+
+.ui5-table-body {
+    display: table-row-group;
 }
 
 .ui5-table-header-row:focus {
@@ -21,7 +31,8 @@ table {
 	outline-offset: -0.125rem;
 }
 
-tr {
+.ui5-table-no-data-row-root {
+    display: table-row;
 	height: 3rem;
 }
 
@@ -40,6 +51,10 @@ tr {
 	min-height: 3rem;
 	background-color: var(--sapList_Background);
 	border-top: 1px solid var(--sapList_BorderColor);
+}
+
+.ui5-table-no-data-cell {
+    display: table-cell;
 }
 
 :host([_no-data-displayed]) {

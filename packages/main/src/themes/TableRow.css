@@ -3,6 +3,7 @@
 }
 
 .ui5-table-row-root {
+    display: table-row;
 	background-color: var(--sapList_Background);
 	border-top: 1px solid var(--sapList_BorderColor);
 }
@@ -12,7 +13,12 @@
 	outline-offset: -0.125rem;
 }
 
-.ui5-table-popin-row td {
+.ui5-table-popin-row {
+    display: table-row;
+}
+
+.ui5-table-popin-row .ui5-table-popin-row-cell {
+    display: table-cell;
 	padding: .25rem;
 	padding-left: 1rem;
 }

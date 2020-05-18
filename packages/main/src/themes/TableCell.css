@@ -8,21 +8,22 @@
 	color: var(--sapContent_LabelColor);
 }
 
-td {
+.ui5-table-cell {
+    display: table-cell;
 	padding: .5rem .25rem;
 	box-sizing: border-box;
 }
 
-:host([first-in-row]) td,
-.ui5-table-popin-row td {
+:host([first-in-row]) .ui5-table-cell,
+.ui5-table-popin-row .ui5-table-cell {
 	padding-left: 1rem;
 
 }
 
-:host([first-in-row]) td {
+:host([first-in-row]) .ui5-table-cell {
 	padding-left: 1rem;
 }
 
-:host([popined]) td {
+:host([popined]) .ui5-table-cell {
 	padding-left: 0;
 }
