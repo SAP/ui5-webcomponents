@@ -1,8 +1,5 @@
-commit 04b44b42e0e752efdc6e29f293bdc34a7267bee3
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon May 18 10:08:47 2020 +0300
+commit 0cef1404e180f3e015cbda985f09feb18a39fa86
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon May 18 10:50:25 2020 +0300
 
-    fix(ui5-shellbar): fix open popup on notificationClick (#1632)
-    
-    The built-in notification icon can overflow and if you try to open another popover by clicking on the corresponding list item within the overflow, it does not open as the provided targetRef is not correct.
-    Now it provides the correct targetRef, considering whether the notification icon is in or out of the overflow. In addition, all samples and test pages that opens popover from the notification icon use event.preventDefault() to prevent the overflow popover from closing.
+    fix(framework): allow for empty theme files (#1639)
