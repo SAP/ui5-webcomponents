@@ -62,11 +62,10 @@ bdi{
 
 :host([required][show-colon]) .ui5-label-required-colon:after {
 	margin-right: 0;
-	margin-left: 2px;
+	margin-left: .125rem;
 }
 
 :host([required][show-colon]) [dir="rtl"] .ui5-label-required-colon:after {
-	margin-right: 2px;
+	margin-right: .125rem;
 	margin-left: 0;
-
 }
