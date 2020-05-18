@@ -20,6 +20,11 @@
 	overflow: hidden;
 }
 
+bdi{
+    content: "";
+	padding-right: 0.15625rem;
+}
+
 :host(:not([wrap])) .ui5-label-text-wrapper {
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -29,7 +34,7 @@
 }
 
 :host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100% - 0.725rem);
+	max-width: calc(100% - .85rem);
 }
 
 :host(:not([wrap])[required]) .ui5-label-text-wrapper {
@@ -50,6 +55,17 @@
 	font-size: 1.25rem;
 	font-weight: bold;
 	position: relative;
+	font-style: normal;
 	vertical-align: middle;
 	line-height: 0;
+}
+
+:host([required][show-colon]) .ui5-label-required-colon:after {
+	margin-right: 0;
+	margin-left: .125rem;
+}
+
+:host([required][show-colon]) [dir="rtl"] .ui5-label-required-colon:after {
+	margin-right: .125rem;
+	margin-left: 0;
 }
