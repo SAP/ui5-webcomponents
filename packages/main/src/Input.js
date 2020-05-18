@@ -801,11 +801,11 @@ class Input extends UI5Element {
 		};
 	}
 
-	_announceSelectedItem () {
+	_announceSelectedItem() {
 		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
 
 		if (this.Suggestions && this.Suggestions._isItemOnTarget()) {
-			invisibleText.textContent = this.itemSelectionAnnounce
+			invisibleText.textContent = this.itemSelectionAnnounce;
 		} else {
 			invisibleText.textContent = "";
 		}
