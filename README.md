@@ -153,13 +153,26 @@ UI5 Web Components support different calendar types (Gregorian, Islamic, Japanes
 - [Yarn](https://yarnpkg.com/en)
 - [Node.js](https://nodejs.org/) (**version 8.5 or higher**)
 
-You can clone the UI5 Web Components repository and start the Playground app with the following commands:
+You can explore components test pages on http://localhost:8080/test-resources/pages/ for the `main` package
+and  http://localhost:8081/test-resources/pages/ for the `fiori` package.
 
 ```sh
 yarn # to install all dependencies
 yarn start # to serve the project
 ```
-This will open the Playground page in the browser!
+
+You can start the Playground app with the following commands:
+
+```sh
+# install palyground specific dependencies (one time only)
+cd packages/playground
+yarn install:dependencies
+
+# start the playground from the project root
+yarn start:playground
+
+# open http://localhost:4000/
+```
 
 ## Production Build
 To build the UI5 Web Components, just run the following commands:
@@ -169,7 +182,8 @@ yarn # to install all dependecies
 yarn build # to build the project
 ```
 
-Afterwards, you can find the static **UI5 Web Components - Playground** in the `dist` folder of the playground.
+Afterwards, you can find the static **UI5 Web Components** in the `dist` folder of the corresponding package folder.
+For example, to find the Button component (that belongs to the `main` package), look inside the `packages/main/dist` folder.
 
 ## FAQ
 ### What's the thing with Yarn?
