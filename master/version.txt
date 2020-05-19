@@ -1,5 +1,5 @@
-commit 1786593b59ab73dcde85974085e0cf909c595cb0
+commit 232e7f5f48eda1702f4ee7c0c75db69a664cc6c6
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue May 19 15:09:04 2020 +0300
+Date:   Tue May 19 15:11:42 2020 +0300
 
-    chore(tools): blank files are no longer copied to dist (#1646)
+    feat(ui5-table): allow for custom styling (#1627)
