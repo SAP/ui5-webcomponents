@@ -1,5 +1,7 @@
-commit 14a48d1c06780d8264cd1b689e6d8cc3f649998e
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon May 18 16:23:30 2020 +0300
+commit afec3fe8066e0658f0bb3713ce07aa2eee1be238
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue May 19 09:49:26 2020 +0300
 
-    fix(ui5-label): fix width for italic labels (#1625)
+    fix(ui5-shellbar): fix search field visual in IE (#1643)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1640
