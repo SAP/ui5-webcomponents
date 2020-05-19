@@ -1,5 +1,5 @@
-commit 232e7f5f48eda1702f4ee7c0c75db69a664cc6c6
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue May 19 15:11:42 2020 +0300
+commit 45a18c3cccd4f77e33f196ae69f738a5a3508715
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue May 19 16:07:15 2020 +0300
 
-    feat(ui5-table): allow for custom styling (#1627)
+    chore: remove pages from search results on the playground (#1645)
