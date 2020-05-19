@@ -373,14 +373,28 @@ ui5-icon[data-count]::before {
 	height: 100%;
 }
 
-::slotted(ui5-input:hover) {
-	background: var(--sapShell_Hover_Background);
-}
-
 ::slotted(ui5-input[focused]) {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 
+/**
+* IE styles
+*/
+ui5-input[value-state]:not([readonly]) {
+	background: var(--sapShellColor);
+	border: 1px solid var(--sapShell_InteractiveBorderColor);
+}
+
+ui5-input[value-state]:not([readonly]):hover,
+ui5-input:not([value-state]):not([readonly]):hover {
+	background: var(--sapShell_Hover_Background);
+	border: 1px solid var(--sapShell_InteractiveBorderColor);
+}
+
+ui5-input[value-state]:not([value-stat="None"])[focused] {
+	outline: 1px dotted var(--sapContent_ContrastFocusColor);
+}
+/* IE styles end */
 
 .ui5-shellbar-copilot-wrapper {
 	position: relative;
