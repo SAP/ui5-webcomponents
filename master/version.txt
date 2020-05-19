@@ -1,5 +1,5 @@
-commit 4d7586d1cb926faf98f05a66f35dba9b3493f4f5
-Author: Boyan Rakilovski <boyanrakilovski@gmail.com>
-Date:   Tue May 19 09:57:44 2020 +0300
+commit 1786593b59ab73dcde85974085e0cf909c595cb0
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue May 19 15:09:04 2020 +0300
 
-    feat(ui5-datepicker): set value attribute through date object (#1624)
+    chore(tools): blank files are no longer copied to dist (#1646)
