@@ -1,5 +1,5 @@
-commit 45a18c3cccd4f77e33f196ae69f738a5a3508715
+commit 0fcda382e1c5163e12cef77b96cbd236671efff9
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue May 19 16:07:15 2020 +0300
+Date:   Tue May 19 16:10:48 2020 +0300
 
-    chore: remove pages from search results on the playground (#1645)
+    fix(framework): strip whitespaces around < and > (#1623)
