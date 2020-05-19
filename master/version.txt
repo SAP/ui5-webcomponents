@@ -1,7 +1,5 @@
-commit afec3fe8066e0658f0bb3713ce07aa2eee1be238
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue May 19 09:49:26 2020 +0300
+commit 4d7586d1cb926faf98f05a66f35dba9b3493f4f5
+Author: Boyan Rakilovski <boyanrakilovski@gmail.com>
+Date:   Tue May 19 09:57:44 2020 +0300
 
-    fix(ui5-shellbar): fix search field visual in IE (#1643)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1640
+    feat(ui5-datepicker): set value attribute through date object (#1624)

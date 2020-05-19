@@ -35,6 +35,16 @@
 
 	<section>
 		<ui5-title wrap>DateTimePicker format pattern</ui5-title>
+
+		<br><ui5-label>Default format pattern</ui5-label><br>
+		<ui5-datetime-picker
+			id="defaultPattern"
+			value="13/04/2020, 03:16:16 AM"
+		></ui5-datetime-picker>
+		<ui5-button id="setButton" design="Default">Set date</ui5-button>
+
+		<br>
+
 		<br><ui5-label>d/MM/yyyy, hh:mm aa</ui5-label><br>
 		<ui5-datetime-picker
 			id="dtMinutes"
@@ -164,6 +174,12 @@
 			input3.value = ++counter2;
 			input4.value = "{ value: " + dt2.value + " , valid: " + event.detail.valid + " }";
 		});
+
+		var dtp = document.getElementById('defaultPattern');
+		document.getElementById('setButton').addEventListener("click", function(e) {
+			dtp.setAttribute("value", dtp.formatValue(new Date(2020, 3, 13, 3, 16, 16)));
+		});
+
 	</script>
 </body>
 </html>

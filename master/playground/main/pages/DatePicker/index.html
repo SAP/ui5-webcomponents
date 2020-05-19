@@ -76,6 +76,10 @@
 		<h3>Try the value - 'today'</h3>
 		<ui5-datepicker id='dp10'></ui5-datepicker>
 
+		<h3>Value is set using Java Script Date object</h3>
+		<ui5-datepicker id="dp11" value="11/11/2018" format-pattern="long"></ui5-datepicker>
+		<ui5-button id="b1" design="Default">Set date</ui5-button>
+
 		<h3>disabled</h3>
 		<ui5-datepicker id='dp2' value='11/11/2018' disabled></ui5-datepicker>
 
@@ -162,6 +166,13 @@
 				dp.openPicker({ focusInput: true });
 			}
 		});
+
+		var dp11 = document.getElementById('dp11');
+
+		document.getElementById('b1').addEventListener("click", function(e) {
+			dp11.setAttribute("value", dp11.formatValue(new Date(2018, 11, 11)));
+		});
+
 	</script>
 </body>
 </html>
