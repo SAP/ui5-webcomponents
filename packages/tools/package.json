@@ -39,7 +39,6 @@
     "clean-css": "^4.2.1",
     "command-line-args": "^5.1.1",
     "concurrently": "^5.0.0",
-    "copy-and-watch": "^0.1.4",
     "cross-env": "^5.2.0",
     "cssnano": "^4.1.10",
     "escodegen": "^1.11.0",

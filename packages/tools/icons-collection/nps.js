@@ -8,8 +8,8 @@ const getScripts = () => {
 		clean: "rimraf dist",
 		copy: {
 			default: "nps copy.json-imports copy.icon-collections",
-			"json-imports": 'copy-and-watch "src/**/*.js" dist/',
-			"icon-collections": 'copy-and-watch "src/icon-collections/**/*.json" dist/generated/assets/icon-collections/'
+			"json-imports": `node "${LIB}/copy-and-watch/index.js" "src/**/*.js" dist/`,
+			"icon-collections": `node "${LIB}/copy-and-watch/index.js" "src/icon-collections/**/*.json" dist/generated/assets/icon-collections/`
 		},
 		build: {
 			default: "nps clean copy build.i18n build.icons",
