@@ -35,7 +35,7 @@ In order to do that, just create a `<style type="text/css" data-ui5-font-face=""
 provide arbitrary content for it.
 
 Then, when the `UI5 Web Components` framework boots, it will detect the existence of this tag by the `data-ui5-font-face`
-attribute, and will not create it. The one you provided will be ued instead.
+attribute, and will not create it. The one you provided will be used instead.
 
 ## Example
 
