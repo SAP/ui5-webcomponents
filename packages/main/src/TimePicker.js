@@ -696,6 +696,16 @@ class TimePicker extends UI5Element {
 		}
 	}
 
+	/**
+	 * Formats a Java Script date object into a string representing a locale date and time
+	 * according to the <code>formatPattern</code> property of the TimePicker instance
+	 * @param {object} oDate A Java Script date object to be formatted as string
+	 * @public
+	 */
+	formatValue(oDate) {
+		return this.getFormat().format(oDate);
+	}
+
 	_getSlidersContained() {
 		const formatArray = this.getFormat().aFormatArray;
 		return getTimeControlsByFormat(formatArray, this._hoursParameters);

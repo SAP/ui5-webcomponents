@@ -42,6 +42,10 @@
 		<ui5-button id="testBtn">btn for testing</ui5-button>
 
 		<br /><br />
+		<ui5-title>Test set time value</ui5-title>
+		<ui5-timepicker id="timepickerSetTime" value=""></ui5-timepicker>
+		<ui5-button id="setTimeButton">Set time</ui5-button>
+
 		<ui5-title>Test valueStateMessage slot</ui5-title>
 		<ui5-timepicker id="timepickerValueStateMessage" value-state="Error">
 			<div slot="valueStateMessage" id="customValueStateMessage">Please provide valid value</div>
@@ -57,6 +61,11 @@
 				var inputCounter = 0;
 				timepickerInput.addEventListener("input", function() {
 					inputResult.value = ++inputCounter;
+				});
+
+				var tp = document.getElementById('timepickerSetTime'); 
+				document.getElementById('setTimeButton').addEventListener("click", function(e) {
+					tp.setAttribute("value", tp.formatValue(new Date(2020, 3, 13, 3, 16, 16)));
 				});
 		</script>
 	</body>
