@@ -1,6 +1,7 @@
 import DataType from "./types/DataType.js";
 import isDescendantOf from "./util/isDescendantOf.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
+import isSlot from "./util/isSlot.js";
 
 /**
  *
@@ -150,10 +151,7 @@ const validateSingleSlot = (value, slotData) => {
 	}
 
 	const getSlottedNodes = el => {
-		const isTag = el instanceof HTMLElement;
-		const isSlot = isTag && el.localName === "slot";
-
-		if (isSlot) {
+		if (isSlot(el)) {
 			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
 		}
 

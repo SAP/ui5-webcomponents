@@ -863,19 +863,7 @@ class Input extends UI5Element {
 	}
 
 	get valueStateMessageText() {
-		const valueStateMessage = [];
-
-		this.valueStateMessage.forEach(el => {
-			if (el.localName === "slot") {
-				el.assignedNodes({ flatten: true }).forEach(assignedNode => {
-					valueStateMessage.push(assignedNode.cloneNode(true));
-				});
-			} else {
-				valueStateMessage.push(el.cloneNode(true));
-			}
-		});
-
-		return valueStateMessage;
+		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
