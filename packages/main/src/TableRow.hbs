@@ -3,7 +3,9 @@
 	tabindex="{{_tabIndex}}"
 	@focusin="{{_onfocusin}}"
 	@ui5-_cellclick="{{_oncellclick}}"
-	data-sap-focus-ref>
+	data-sap-focus-ref
+	part="row"
+>
 	{{#if shouldPopin}}
 		{{#each visibleCells}}
 			<slot name="{{this._individualSlot}}"></slot>
@@ -17,7 +19,7 @@
 
 {{#if shouldPopin}}
 	{{#each popinCells}}
-		<tr class="ui5-table-popin-row" @ui5-_cellclick="{{_oncellclick}}">
+		<tr part="popin-row" class="ui5-table-popin-row" @ui5-_cellclick="{{_oncellclick}}">
 			<td colspan="{{../visibleCellsCount}}">
 				{{#if this.popinText}}
 					<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
