@@ -269,7 +269,7 @@ const metadata = {
 /**
  * @class
  *
- * <h3 class="comment-api-title"> Overview </h3>
+ * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-list</code> component allows displaying a list of items, advanced keyboard
  * handling support for navigating between items, and predefined modes to improve the development efficiency.

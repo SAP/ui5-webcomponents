@@ -199,6 +199,9 @@ function initSearch() {
             searchResults.appendChild(resultsList);
   
             for (var i in results) {
+              if (store[results[i].ref].url.indexOf("pages") > -1) {
+                continue;
+              }
               var resultsListItem = document.createElement("li");
               var resultsLink = document.createElement("a");
               var resultsUrlDesc = document.createElement("span");
