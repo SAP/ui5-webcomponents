@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Toggle Button - UI5 Web Components</title>
+    <title>CustomFonts - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Toggle Button | UI5 Web Components</title>
+<title>CustomFonts | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Toggle Button" />
+<meta property="og:title" content="CustomFonts" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/ToggleButton/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/ToggleButton/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/docs/customfonts/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/docs/customfonts/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/ToggleButton/","headline":"Toggle Button","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/docs/customfonts/","headline":"CustomFonts","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -248,7 +248,7 @@
     
       
         
-          <li class="navigation-list-item">
+          <li class="navigation-list-item active">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs" class="navigation-list-link">Documentation</a>
             
@@ -444,9 +444,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/customfonts/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/customfonts/" class="navigation-list-link active">
                         <div class="component-name">CustomFonts</div>
                         
                       </a>
@@ -942,7 +942,7 @@
     
       
         
-          <li class="navigation-list-item active">
+          <li class="navigation-list-item">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/components" class="navigation-list-link">Components</a>
             
@@ -1564,9 +1564,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/ToggleButton/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/ToggleButton/" class="navigation-list-link">
                         <div class="component-name">Toggle Button</div>
                         
                       </a>
@@ -1796,336 +1796,116 @@
             <nav class="breadcrumb-nav">
               <ol class="breadcrumb-nav-list">
                 
-                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/docs">Documentation</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Toggle Button</span></li>
+                <li class="breadcrumb-nav-list-item"><span>CustomFonts</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <header>
-	<h2 class="control-header">ToggleButton</h2>
-</header>
+          <h1 id="customizing-fonts">Customizing fonts</h1>
 
-<div class="component-package">@ui5/webcomponents</div>
+<h2 id="the-data-ui5-font-face-font-face-style-tag">The <code class="highlighter-rouge">data-ui5-font-face</code> font-face <code class="highlighter-rouge">style</code> tag</h2>
 
-<div class="control-tag">&lt;ui5-togglebutton&gt;</div>
+<p>Upon <code class="highlighter-rouge">boot</code>, the <code class="highlighter-rouge">UI5 Web Components</code> framework creates a <code class="highlighter-rouge">&lt;style data-ui5-font-face&gt;</code> tag in the <code class="highlighter-rouge">&lt;head&gt;</code> in order to load the necessary fonts.</p>
 
-<section>
-	<h3>ToggleButton States</h3>
-	<div class="snippet">
-		<ui5-togglebutton class="samples-margin">ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" pressed>Pressed ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" disabled>Disabled ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" disabled pressed>Disabled ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Positive">Accept ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Positive" pressed>Accept ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Negative">Reject ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Negative" pressed>Reject ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Transparent">Transparent ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Transparent" pressed>Transparent ToggleButton</ui5-togglebutton>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-togglebutton&gt;</span>ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">pressed</span><span class="nt">&gt;</span>Pressed ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">disabled</span><span class="nt">&gt;</span>Disabled ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">disabled</span> <span class="na">pressed</span><span class="nt">&gt;</span>Disabled ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Positive"</span><span class="nt">&gt;</span>Accept ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">pressed</span><span class="nt">&gt;</span>Accept ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Negative"</span><span class="nt">&gt;</span>Reject ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">pressed</span><span class="nt">&gt;</span>Reject ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Transparent"</span><span class="nt">&gt;</span>Transparent ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">pressed</span><span class="nt">&gt;</span>Transparent ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<p>It may look something like this:</p>
 
-<section>
-	<h3>ToggleButton with Icon</h3>
-	<div class="snippet">
-		<ui5-togglebutton class="samples-margin" icon="menu">Menu</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Emphasized" icon="add">Add</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Default" icon="nav-back">Back</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Positive" icon="accept">Accept</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Negative" icon="sys-cancel">Deny</ui5-togglebutton>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"menu"</span><span class="nt">&gt;</span>Menu<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Emphasized"</span> <span class="na">icon=</span><span class="s">"add"</span><span class="nt">&gt;</span>Add<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Default"</span> <span class="na">icon=</span><span class="s">"nav-back"</span><span class="nt">&gt;</span>Back<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">icon=</span><span class="s">"accept"</span><span class="nt">&gt;</span>Accept<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">icon=</span><span class="s">"sys-cancel"</span><span class="nt">&gt;</span>Deny<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span> <span class="na">data-ui5-font-face=</span><span class="s">""</span><span class="nt">&gt;</span>
+	<span class="k">@font-face</span> <span class="p">{</span>
+		<span class="nl">font-family</span><span class="p">:</span> <span class="s1">"72"</span><span class="p">;</span>
+		<span class="nl">font-style</span><span class="p">:</span> <span class="nb">normal</span><span class="p">;</span>
+		<span class="nl">font-weight</span><span class="p">:</span> <span class="m">400</span><span class="p">;</span>
+		<span class="nl">src</span><span class="p">:</span> <span class="n">local</span><span class="p">(</span><span class="s1">"72"</span><span class="p">),</span>
+			<span class="sx">url(https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Regular.woff2?ui5-webcomponents)</span> <span class="n">format</span><span class="p">(</span><span class="s1">"woff2"</span><span class="p">),</span>
+			<span class="sx">url(https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Regular.woff?ui5-webcomponents)</span> <span class="n">format</span><span class="p">(</span><span class="s1">"woff"</span><span class="p">);</span>
+	<span class="p">}</span>
+	
+	<span class="o">................</span>
+<span class="nt">&lt;/style&gt;</span>
+</code></pre></div></div>
 
-<section>
-	<h3>ToggleButton with Icon Only</h3>
-	<div class="snippet">
-			<ui5-togglebutton class="samples-margin" icon="away"></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="action-settings" pressed></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="add"></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="alert" pressed></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="accept" design="Positive"></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="bookmark" design="Positive" pressed></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="cancel" design="Negative"></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="call" design="Negative" pressed></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="camera" design="Transparent"></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="cart" design="Transparent" pressed></ui5-togglebutton>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"accept"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"action-settings"</span> <span class="na">pressed</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"add"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"alert"</span> <span class="na">pressed</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"away"</span> <span class="na">design=</span><span class="s">"Positive"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"bookmark"</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">pressed</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"cancel"</span> <span class="na">design=</span><span class="s">"Negative"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"call"</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">pressed</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"camera"</span> <span class="na">design=</span><span class="s">"Transparent"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"cart"</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">pressed</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<p>*Important: * Notice the <code class="highlighter-rouge">data-ui5-font-face</code> attribute. It is unique and recognized by <code class="highlighter-rouge">UI5 Web Components</code>.</p>
 
-<section>
-	<h3>ToggleButton</h3>
-	<div class="snippet">
-			<ui5-togglebutton class="samples-margin">Yes/No</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" pressed>Yes/No</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin">Toggle Button</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" pressed>Toggle Button pressed</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Positive">On/Off</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Positive" pressed>On/Off</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Negative">Menu</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Negative" pressed>Menu</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Negative">Transparent</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Negative" pressed>Transparent</ui5-togglebutton>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-togglebutton&gt;</span>Yes/No<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">pressed</span><span class="nt">&gt;</span>Yes/No<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton&gt;</span>Toggle Button<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">pressed</span><span class="nt">&gt;</span>Toggle Button pressed<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Positive"</span><span class="nt">&gt;</span>On/Off<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">pressed</span><span class="nt">&gt;</span>On/Off<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Negative"</span><span class="nt">&gt;</span>Menu<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">pressed</span><span class="nt">&gt;</span>Menu<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Transparent"</span><span class="nt">&gt;</span>Transparent<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">pressed</span><span class="nt">&gt;</span>Transparent<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<h2 id="customizing-fonts-1">Customizing fonts</h2>
+
+<p>You might need to customize fonts for several reasons:</p>
+<ul>
+  <li>In order to provide different paths for the fonts (e.g. no public internet connection on the server)</li>
+  <li>Provide additional declarations inside <code class="highlighter-rouge">@font-face</code></li>
+  <li>Download additional fonts, such as f.e. <code class="highlighter-rouge">72-Light</code></li>
+  <li>Not download any of the default fonts</li>
+</ul>
+
+<p>In order to do that, just create a <code class="highlighter-rouge">&lt;style type="text/css" data-ui5-font-face=""&gt;</code> tag in the <code class="highlighter-rouge">head</code> of your HTML page and 
+provide arbitrary content for it.</p>
+
+<p>Then, when the <code class="highlighter-rouge">UI5 Web Components</code> framework boots, it will detect the existence of this tag by the <code class="highlighter-rouge">data-ui5-font-face</code>
+attribute, and will not create it. The one you provided will be used instead.</p>
+
+<h2 id="example">Example</h2>
+
+<p>In order to use the <code class="highlighter-rouge">72-Light</code> font in your app, and have an additional setting (<code class="highlighter-rouge">font-display</code>), you could add the following markup in the <code class="highlighter-rouge">&lt;head&gt;</code> of your HTML page:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span> <span class="na">data-ui5-font-face=</span><span class="s">""</span><span class="nt">&gt;</span>
+        <span class="k">@font-face</span> <span class="p">{</span>
+            <span class="nl">font-family</span><span class="p">:</span> <span class="s1">"72"</span><span class="p">;</span>
+            <span class="nl">font-style</span><span class="p">:</span> <span class="nb">normal</span><span class="p">;</span>
+            <span class="nl">font-weight</span><span class="p">:</span> <span class="m">200</span><span class="p">;</span>
+            <span class="py">font-display</span><span class="p">:</span> <span class="n">swap</span><span class="p">;</span>
+            <span class="nl">src</span><span class="p">:</span> <span class="n">local</span><span class="p">(</span><span class="s1">"72-Light"</span><span class="p">),</span>
+            <span class="sx">url(https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Light.woff2?ui5-webcomponents)</span> <span class="n">format</span><span class="p">(</span><span class="s1">"woff2"</span><span class="p">),</span>
+            <span class="sx">url(https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Light.woff?ui5-webcomponents)</span> <span class="n">format</span><span class="p">(</span><span class="s1">"woff"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+</code></pre></div></div>
 
 
-    <div class="page-container">
-      <div class="api-container">
-        <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3>
-
-The <code>ui5-togglebutton</code> component is an enhanced <code>ui5-button</code> that can be toggled between pressed and normal states. Users can use the <code>ui5-togglebutton</code> as a switch to turn a setting on or off. It can also be used to represent an independent choice similar to a check box. <br><br> Clicking or tapping on a <code>ui5-togglebutton</code> changes its state to <code>pressed</code>. The button returns to its initial state when the user clicks or taps on it again. By applying additional custom CSS-styling classes, apps can give a different style to any <code>ui5-togglebutton</code>.
-
-<h3>ES6 Module Import</h3>
-
-<code>import "@ui5/webcomponents/dist/ToggleButton";</code>
-          <section class="component-api space-top">
-            
-                  <h3 class="comment-api-title" >Properties/Attributes</h3>
-                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Type</div>
-                      <div class="cell api-table-header-cell">Default Value</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          pressed
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the <code>ui5-togglebutton</code> is displayed as pressed.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          design
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">ButtonDesign</div>
-                        <div class="cell api-table-content-cell">&quot;Default&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>ui5-button</code> design. <br><br> <b>Note:</b> Available options are "Default", "Emphasized", "Positive", "Negative", and "Transparent".
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          disabled
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the <code>ui5-button</code> is disabled (default is set to <code>false</code>). A disabled <code>ui5-button</code> can't be pressed or focused, and it is not in the tab chain.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          icon
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the icon to be displayed as graphical element within the <code>ui5-button</code>. The SAP-icons font provides numerous options. <br><br> Example: <br> <pre>ui5-button icon="palette"</pre>
-            
-            See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          iconEnd
-                            <br>
-                            <code>icon-end</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the icon should be displayed after the <code>ui5-button</code> text.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          submits
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            When set to <code>true</code>, the <code>ui5-button</code> will automatically submit the nearest form element upon <code>press</code>. <br><br> <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project: <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
-                        </div>
-                      </div>
-            
-                  </div>
-            
-                <h3 class="comment-api-title space-top" >Slots</h3>
-            	<p class="small-space-top" >
-            	  This Element provides slot(s). This means it can display its child nodes.<br>
-            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
-            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
-            	</p>
-            
-                <div class="small-space-top api-table">
-                  <div class="head api-table-header-roll">
-                    <div class="cell api-table-header-cell">Slot</div>
-                    <div class="cell api-table-header-cell">Type</div>
-                    <div class="cell api-table-header-cell">Description</div>
-                  </div>
-            
-                    <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the <code>ui5-button</code>. <br><br> <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
-                    </div>
-            
-                </div>
-            
-                  <h3 class="comment-api-title space-top">Events</h3>
-                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">click</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the <code>ui5-button</code> is activated either with a mouse/tap or by using the Enter or Space key. <br><br> <b>Note:</b> The event will not be fired if the <code>disabled</code> property is set to <code>true</code>.
-                        </div>
-                      </div>
-            
-                  </div>
-            
-            
-          </section>
-        </section>
-      </div>
-    </div>
-    <footer class="footer-wrapper">
-      <div class="footer-links">
+<footer class="footer-wrapper">
+    <div class="footer-links">
         <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
         <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
-      </div>
-      <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
-    </footer>
-
-
-<div class="settings" id="settings-button">
-    <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"
-    width="340.274px" height="340.274px" viewBox="0 0 340.274 340.274" style="enable-background:new 0 0 340.274 340.274;"
-    xml:space="preserve">
-        <path d="M293.629,127.806l-5.795-13.739c19.846-44.856,18.53-46.189,14.676-50.08l-25.353-24.77l-2.516-2.12h-2.937
-        c-1.549,0-6.173,0-44.712,17.48l-14.184-5.719c-18.332-45.444-20.212-45.444-25.58-45.444h-35.765
-        c-5.362,0-7.446-0.006-24.448,45.606l-14.123,5.734C86.848,43.757,71.574,38.19,67.452,38.19l-3.381,0.105L36.801,65.032
-        c-4.138,3.891-5.582,5.263,15.402,49.425l-5.774,13.691C0,146.097,0,147.838,0,153.33v35.068c0,5.501,0,7.44,46.585,24.127
-        l5.773,13.667c-19.843,44.832-18.51,46.178-14.655,50.032l25.353,24.8l2.522,2.168h2.951c1.525,0,6.092,0,44.685-17.516
-        l14.159,5.758c18.335,45.438,20.218,45.427,25.598,45.427h35.771c5.47,0,7.41,0,24.463-45.589l14.195-5.74
-        c26.014,11,41.253,16.585,45.349,16.585l3.404-0.096l27.479-26.901c3.909-3.945,5.278-5.309-15.589-49.288l5.734-13.702
-        c46.496-17.967,46.496-19.853,46.496-25.221v-35.029C340.268,146.361,340.268,144.434,293.629,127.806z M170.128,228.474
-        c-32.798,0-59.504-26.187-59.504-58.364c0-32.153,26.707-58.315,59.504-58.315c32.78,0,59.43,26.168,59.43,58.315
-        C229.552,202.287,202.902,228.474,170.128,228.474z"></path>
-    </svg>
-</div>
-<ui5-dialog id="settings-dialog" header-text="Settings">
-    <section class="settings-form">
-        <div class="settings-content">
-            <div class="setting">
-                <ui5-label for="themeSwitch">Theme:</ui5-label>
-                <ui5-select id="themeSwitch">
-                    <ui5-option value="sap_fiori_3">Quartz Light</ui5-option>
-                    <ui5-option value="sap_fiori_3_dark">Quartz Dark</ui5-option>
-                    <ui5-option value="sap_belize">Belize</ui5-option>
-                    <ui5-option value="sap_belize_hcb">High Contrast Black</ui5-option>
-                    <ui5-option value="sap_belize_hcw">High Contrast White</ui5-option>
-                </ui5-select>
-            </div>
-            <div class="setting">
-                <ui5-label for="contentDensitySwitch">Content Density:</ui5-label>
-                <ui5-select id="contentDensitySwitch">
-                    <ui5-option>Cozy</ui5-option>
-                    <ui5-option>Compact</ui5-option>
-                </ui5-select>
-            </div>
-            <div class="setting">
-                <ui5-label for="textDirectionSwitch">Text Direction:</ui5-label>
-                <ui5-select id="textDirectionSwitch">
-                    <ui5-option>LTR</ui5-option>
-                    <ui5-option>RTL</ui5-option>
-                </ui5-select>
-            </div>
-        </div>
-    </section>
-    <div slot="footer" class="closing-buttons">
-        <ui5-button id="applyButton" design="Emphasized" class="padding-end">Apply</ui5-button>
-        <ui5-button id="cancelButton">Cancel</ui5-button>
     </div>
-</ui5-dialog>
-
-<!-- UI5 Web Components Assests -->
-<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
-<script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
-<script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
-
-<link rel="stylesheet" href="https://sap.github.io/ui5-webcomponents/master/assets/css/api.css">
+    <img src="https://sap.github.io/ui5-webcomponents/master/ui5-webcomponents/assets/images/sap-logo-svg.svg" alt="SAP Logo" />
+</footer>
 
 <style>
-    pre {
-        margin-bottom: 0;
+    .footer-wrapper {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border-top: 1px solid #D8D8D8;
+        font-family: "72-Regular";
     }
-    pre.highlight {
-        padding: 1.5rem;
-        padding-bottom: 0;
-        border: 0.0625rem solid #C1C1C1;
+
+    .footer-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        font-family: "72-Regular";
+    }
+
+    .footer-links > a {
+        color: #333333;
+        text-decoration: none;
+    }
+
+    .footer-links > a:hover {
+        text-decoration: underline;
+    }
+
+    .separator::after {
+        content: "|";
+        padding: 0 1rem;
+        color: #D8D8D8;
+        text-decoration: none;
     }
 </style>
 

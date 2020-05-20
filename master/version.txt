@@ -1,5 +1,5 @@
-commit 0fcda382e1c5163e12cef77b96cbd236671efff9
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue May 19 16:10:48 2020 +0300
+commit 366537613fc16a7a4ccbf79812c0ba9676a914ec
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed May 20 10:03:10 2020 +0300
 
-    fix(framework): strip whitespaces around < and > (#1623)
+    chore: Update to ChromeDriver 83 (#1653)
