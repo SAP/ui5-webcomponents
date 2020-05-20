@@ -1,5 +1,5 @@
-commit 366537613fc16a7a4ccbf79812c0ba9676a914ec
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed May 20 10:03:10 2020 +0300
+commit 61ce2844c47d44723d2d0737135cb5ac3b79ed8c
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed May 20 10:16:53 2020 +0300
 
-    chore: Update to ChromeDriver 83 (#1653)
+    fix(ui5-table-cell): fix popin of long texts (#1648)
