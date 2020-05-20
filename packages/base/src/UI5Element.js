@@ -12,6 +12,7 @@ import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import Integer from "./types/Integer.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
+import isSlot from "./util/isSlot.js";
 
 const metadata = {
 	events: {
@@ -237,6 +238,10 @@ class UI5Element extends HTMLElement {
 				this._attachChildPropertyUpdated(child, slotData.listenFor);
 			}
 
+			if (isSlot(child)) {
+				this._attachSlotChange(child);
+			}
+
 			const propertyName = slotData.propertyName || slotName;
 
 			if (slottedChildrenMap.has(propertyName)) {
@@ -271,6 +276,10 @@ class UI5Element extends HTMLElement {
 		children.forEach(child => {
 			if (child && child.isUI5Element) {
 				this._detachChildPropertyUpdated(child);
+			}
+
+			if (isSlot(child)) {
+				this._detachSlotChange(child);
 			}
 		});
 
@@ -420,6 +429,25 @@ class UI5Element extends HTMLElement {
 		if (observedProps.includes(prop.detail.name) && !notObservedProps.includes(prop.detail.name)) {
 			parentNode._invalidate("_parent_", this);
 		}
+	}
+
+	/**
+	 * @private
+	 */
+	_attachSlotChange(child) {
+		if (!this._invalidateOnSlotChange) {
+			this._invalidateOnSlotChange = () => {
+				this._invalidate("slotchange");
+			};
+		}
+		child.addEventListener("slotchange", this._invalidateOnSlotChange);
+	}
+
+	/**
+	 * @private
+	 */
+	_detachSlotChange(child) {
+		child.removeEventListener("slotchange", this._invalidateOnSlotChange);
 	}
 
 	/**
@@ -605,7 +633,7 @@ class UI5Element extends HTMLElement {
 	 */
 	getSlottedNodes(slotName) {
 		const reducer = (acc, curr) => {
-			if (curr.localName !== "slot") {
+			if (!isSlot(curr)) {
 				return acc.concat([curr]);
 			}
 			return acc.concat(curr.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement));
