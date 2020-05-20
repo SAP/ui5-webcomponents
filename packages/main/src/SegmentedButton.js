@@ -211,7 +211,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	async _handleResize() {
-		const buttonsHaveWidth = this.widths.some(button => button.offsetWidth > 2); // 2 are the pixelx's added for rounding & IE
+		const buttonsHaveWidth = this.widths.some(button => button.offsetWidth > 2); // 2 are the pixel's added for rounding & IE
 		if (!buttonsHaveWidth) {
 			await this.measureButtonsWidth();
 		}
