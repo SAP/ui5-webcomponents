@@ -198,6 +198,14 @@ class Icon extends UI5Element {
 		return this.interactive ? "0" : "-1";
 	}
 
+	get role() {
+		if (this.interactive) {
+			return "button";
+		}
+
+		return this.accessibleNameText ? "img" : "presentation";
+	}
+
 	static createGlobalStyle() {
 		if (!window.ShadyDOM) {
 			return;
