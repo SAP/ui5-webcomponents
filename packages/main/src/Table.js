@@ -201,7 +201,6 @@ class Table extends UI5Element {
 		}.bind(this);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
-		this.fnOnRowClick = this.onRowClick.bind(this);
 
 		this._handleResize = this.popinContent.bind(this);
 	}
@@ -218,9 +217,6 @@ class Table extends UI5Element {
 
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
-
-			row.removeEventListener("ui5-_click", this.fnOnRowClick);
-			row.addEventListener("ui5-_click", this.fnOnRowClick);
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
@@ -242,10 +238,6 @@ class Table extends UI5Element {
 
 	onRowFocused(event) {
 		this._itemNavigation.update(event.target);
-	}
-
-	onRowClick(event) {
-		this.fireEvent("rowClick", { row: event.target });
 	}
 
 	_onColumnHeaderClick(event) {
