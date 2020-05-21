@@ -52,7 +52,7 @@
 	width: 100%;
 	height: 100%;
 	margin: 0;
-	padding: 0.5625rem 0.6875rem;
+	padding: var(--_ui5_textarea_padding);
 	line-height: 1.4;
 	box-sizing: border-box;
 	color: inherit;
@@ -72,6 +72,7 @@
 
 :host([growing]) .ui5-textarea-root {
 	position: relative;
+	min-height: var(--_ui5_input_height);
 }
 
 :host([growing]) .ui5-textarea-inner {
@@ -80,12 +81,16 @@
 	left: 0;
 }
 
+:host([growing][growing-max-lines="1"]) .ui5-textarea-inner {
+	line-height: normal;
+}
+
 .ui5-textarea-mirror {
 	line-height: 1.4;
 	visibility: hidden;
 	width: 100%;
 	word-break: break-all;
-	padding: 0.5625rem 0.6875rem;
+	padding: var(--_ui5_textarea_padding);
 	font-size: var(--sapFontSize);
 	font-family: var(--sapFontFamily);
 	white-space: pre-wrap;
