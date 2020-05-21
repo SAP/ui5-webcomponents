@@ -81,10 +81,6 @@
 	left: 0;
 }
 
-:host([growing][growing-max-lines="1"]) .ui5-textarea-inner {
-	line-height: normal;
-}
-
 .ui5-textarea-mirror {
 	line-height: 1.4;
 	visibility: hidden;
