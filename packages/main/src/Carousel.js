@@ -168,6 +168,16 @@ const metadata = {
 				selectedIndex: { type: Integer },
 			},
 		},
+
+		/**
+		 * Fired when 80% or more of the content of the <code>ui5-carousel</code> is scrolled and the direction of scrolling is to the end.
+		 * @event
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		loadMore: {
+
+		},
 	},
 };
 
@@ -332,6 +342,8 @@ class Carousel extends UI5Element {
 		if (this.selectedIndex + 1 > this.pagesCount - 1) {
 			if (this.cyclic) {
 				this.selectedIndex = 0;
+			} else {
+				return;
 			}
 		} else {
 			++this.selectedIndex;
@@ -339,6 +351,10 @@ class Carousel extends UI5Element {
 
 		if (peviousSelectedIndex !== this.selectedIndex) {
 			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		}
+
+		if (100 / this.pagesCount * (this.selectedIndex + 1) >= 80) {
+			this.fireEvent("loadMore");
 		}
 	}
 

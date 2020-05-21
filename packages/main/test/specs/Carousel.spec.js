@@ -101,7 +101,6 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(pages, 1, "There is only 1 page.");
 	});
 
-
 	it("Invalid selectedIndex normalized", () => {
 		const carousel = browser.$("#carousel7");
 		const selectedIndex = carousel.getProperty("selectedIndex");
@@ -148,5 +147,26 @@ describe("Carousel general interaction", () => {
 		carousel.keys("ArrowLeft");
 		assert.strictEqual(selectedIndex.getProperty("value"), "0", "The selectedIndex is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "6", "The navigate event is not fired as no previous item.");
+	});
+
+	it("loadMore event is thrown only when neccessary", () => {
+		const carousel = browser.$("#carousel9");
+		const eventCounter = browser.$("#loadmore-result");
+		const navigationArrowForward = carousel.shadow$("ui5-button[arrow-forward]");
+
+		navigationArrowForward.click();
+		navigationArrowForward.click();
+		navigationArrowForward.click();
+		navigationArrowForward.click();
+		navigationArrowForward.click();
+		navigationArrowForward.click();
+
+		assert.strictEqual("0", eventCounter.getProperty("value"), "loadMore event is not thrown");
+
+		navigationArrowForward.click();
+		navigationArrowForward.click();
+		navigationArrowForward.click();
+		
+		assert.strictEqual("3", eventCounter.getProperty("value"), "loadMore event is thrown 3 times");
 	});
 });
