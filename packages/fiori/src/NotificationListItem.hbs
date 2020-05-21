@@ -91,4 +91,8 @@
 	<div class="ui5-nli-avatar">
 		<slot name="avatar"></slot>
 	</div>
+
+	{{#if busy}} 
+		<ui5-busyindicator active size="Medium" class="ui5-nli-busy"></ui5-busyindicator>
+	{{/if}}
 </li>

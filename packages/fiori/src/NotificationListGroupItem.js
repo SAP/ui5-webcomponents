@@ -2,6 +2,7 @@ import { fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
@@ -125,11 +126,28 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return NotificationListGroupItemTemplate;
 	}
 
+	onBeforeRendering() {
+		if (this.busy) {
+			this.clearChildBusyIndicator();
+		}
+	}
+
+	/**
+	 * Clears child items busy state to show a single busy over the entire group,
+	 * instead of multiple BusyIndicator instances
+	 */
+	clearChildBusyIndicator() {
+		this.items.forEach(item => {
+			item.busy = false;
+		});
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			List.define(),
 			Button.define(),
 			Icon.define(),
+			BusyIndicator.define(),
 			Popover.define(),
 			fetchI18nBundle("@ui5/webcomponents-fiori"),
 		]);

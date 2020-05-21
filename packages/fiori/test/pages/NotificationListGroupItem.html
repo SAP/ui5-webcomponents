@@ -108,6 +108,7 @@
 			priority="High"
 		>
 			<ui5-li-notification
+				busy
 				show-close
 				heading="New order (#2900) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="High"
@@ -151,12 +152,14 @@
 		</ui5-li-notification-group>
 
 		<ui5-li-notification-group
+			id="busyGroup"
 			show-close
 			show-counter
 			priority="High"
 			heading="Meetings With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 		>
 			<ui5-li-notification
+				busy
 				show-close
 				heading="New order (#35001) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="High"
@@ -195,7 +198,7 @@
 				<span slot="footnotes">3 Days</span>
 			</ui5-li-notification>
 
-			<ui5-notification-overflow-action icon="accept" text="Accept All" slot="actions"></ui5-notification-overflow-action>
+			<ui5-notification-overflow-action id="btnMakeGroupBusy"icon="accept" text="Accept All" slot="actions"></ui5-notification-overflow-action>
 		</ui5-li-notification-group>
 	</ui5-list>
 
@@ -312,6 +315,16 @@
 		openNotifications.addEventListener("click", function(event) {
 			notificationsPopover.openBy(openNotifications);
 		});
+
+		btnMakeGroupBusy.addEventListener("click", function(event) {
+			busyGroup.busy = true;
+
+			setTimeout(function() {
+				busyGroup.busy = false;
+			}, 2000);
+		});
+
+		
 
 		shellbar.addEventListener("ui5-notificationsClick", function(event) {
 			event.preventDefault();
