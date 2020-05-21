@@ -1,5 +1,13 @@
-commit 61ce2844c47d44723d2d0737135cb5ac3b79ed8c
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed May 20 10:16:53 2020 +0300
+commit 9cfcbbf8139eca69dd53d6d3af0d74161d3b9c1c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu May 21 15:18:32 2020 +0300
 
-    fix(ui5-table-cell): fix popin of long texts (#1648)
+    fix(ui5-timepicker, ui5-duration-picker):  enable  width customization (#1669)
+    
+    Several issues has been resolved with this change:
+    - the input field now expands together with the host tag
+    - the Popover with the time sliders remains the same, when the input gets bigger
+    - the TimePicker on phone used to have a header with a close button that is not supposed to be displayed,
+    the component has a cancel button in the footer, this default header is meant for other components.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1659
