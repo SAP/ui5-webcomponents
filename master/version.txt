@@ -1,13 +1,5 @@
-commit 9cfcbbf8139eca69dd53d6d3af0d74161d3b9c1c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu May 21 15:18:32 2020 +0300
+commit da30bc128c64e2cdd19a45fc580ea32400608dec
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu May 21 15:51:02 2020 +0300
 
-    fix(ui5-timepicker, ui5-duration-picker):  enable  width customization (#1669)
-    
-    Several issues has been resolved with this change:
-    - the input field now expands together with the host tag
-    - the Popover with the time sliders remains the same, when the input gets bigger
-    - the TimePicker on phone used to have a header with a close button that is not supposed to be displayed,
-    the component has a cancel button in the footer, this default header is meant for other components.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1659
+    fix(ui5-duration-picker): make maxValue work with values greater than 23:59:59 (#1666)
