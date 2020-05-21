@@ -101,6 +101,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines when the <code>loadMore</code> event is thrown. If not applied the event will not be thrown.
+		 * @type {Integer}
+		 * @defaultvalue 1
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		infiniteScrollOffset: {
+			type: Integer,
+			defaultValue: 1,
+		},
+
+		/**
 		 * Defines the position of arrows.
 		 * <br><br>
 		 * Available options are:
@@ -353,7 +365,7 @@ class Carousel extends UI5Element {
 			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
 		}
 
-		if (100 / this.pagesCount * (this.selectedIndex + 1) >= 80) {
+		if (this.pagesCount - this.selectedIndex <= this.infiniteScrollOffset) {
 			this.fireEvent("loadMore");
 		}
 	}
