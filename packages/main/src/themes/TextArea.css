@@ -39,6 +39,7 @@
 
 .ui5-textarea-root {
 	height: 100%;
+	min-height: var(--_ui5_input_height);
 	display: inline-flex;
 	vertical-align: top;
 	outline: none;
@@ -72,7 +73,6 @@
 
 :host([growing]) .ui5-textarea-root {
 	position: relative;
-	min-height: var(--_ui5_input_height);
 }
 
 :host([growing]) .ui5-textarea-inner {
