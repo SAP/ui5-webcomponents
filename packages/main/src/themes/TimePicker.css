@@ -2,6 +2,10 @@
 	display: inline-block;
 }
 
+:host .ui5-timepicker-input {
+	width: 100%;
+}
+
 .ui5-timepicker-input-icon-button:hover {
 	cursor: pointer;
 	background: var(--sapButton_Hover_Background);
