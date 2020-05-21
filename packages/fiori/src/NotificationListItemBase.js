@@ -57,10 +57,11 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if busy indicator would be displayed over the item.
+		 * Defines if a busy indicator would be displayed over the item.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
+		 * @since 1.0.0-rc.8
 		 */
 		busy: {
 			type: Boolean,
