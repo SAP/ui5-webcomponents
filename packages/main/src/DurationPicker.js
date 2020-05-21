@@ -318,11 +318,11 @@ class DurationPicker extends UI5Element {
 			currentSeconds = this.getSecondsFromFormattedValue(destructuredValues); //  this.hideHours && this.hideHours ? destructuredValues[0] : {};
 
 		if (currentHours > -1) {
-			if (currentHours > this._maxValue[0]) {
+			if (parseInt(currentHours) > parseInt(this._maxValue[0])) {
 				currentHours = this._maxValue[0];
 			}
 
-			this.selectedHours = this._formatSelectedValue(currentHours, 23);
+			this.selectedHours = this._formatSelectedValue(currentHours, parseInt(this.readFormattedValue(this.maxValue)));
 		}
 
 		if (currentMinutes > -1) {
@@ -331,7 +331,7 @@ class DurationPicker extends UI5Element {
 			}
 			if (this._maxValue[0] && this.selectedHours === this._maxValue[0]) {
 				currentMinutes = currentMinutes > this._maxValue[1] ? this._maxValue[1] : currentMinutes;
-			} else if (currentMinutes > this._maxValue[1]) {
+			} else if (parseInt(currentMinutes) > parseInt(this._maxValue[1])) {
 				currentMinutes = this._maxValue[1];
 			}
 
@@ -344,7 +344,7 @@ class DurationPicker extends UI5Element {
 			}
 			if (this._maxValue[0] && this._maxValue[1] && this.selectedHours >= this._maxValue[0] && this.selectedSeconds >= this._maxValue[1]) {
 				currentSeconds = currentSeconds > this._maxValue[2] ? this._maxValue[2] : currentSeconds;
-			} else if (currentSeconds > this._maxValue[2]) {
+			} else if (parseInt(currentSeconds) > parseInt(this._maxValue[2])) {
 				currentSeconds = this._maxValue[2];
 			}
 
@@ -352,7 +352,7 @@ class DurationPicker extends UI5Element {
 		}
 	}
 
-	_formatSelectedValue(currentValue, maximum) {
+	_formatSelectedValue(currentValue, maximum = Infinity) {
 		if (currentValue.length === 1) {
 			return `0${currentValue}`;
 		}
@@ -494,8 +494,18 @@ class DurationPicker extends UI5Element {
 	}
 
 	get hoursArray() {
-		const currentHours = parseInt(this.readFormattedValue(this.maxValue)[0]);
-		const hours = currentHours && currentHours > 0 && currentHours < 23 ? currentHours + 1 : 24;
+		const _maxHours = parseInt(this.readFormattedValue(this.maxValue)[0]);
+		const _currHours = parseInt(this.selectedHours) + 1;
+		let hours;
+
+		if (_maxHours) {
+			hours = _maxHours + 1;
+		} else if (_currHours < 24) {
+			hours = 24;
+		} else {
+			hours = _currHours;
+		}
+
 		return this.generateTimeItemsArray(hours);
 	}
 
