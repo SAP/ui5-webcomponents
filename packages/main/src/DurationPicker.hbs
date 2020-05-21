@@ -1,24 +1,25 @@
 <div class="ui5-duration-picker-root">
-    <ui5-input
-    value="{{value}}"
-    ?disabled="{{disabled}}"
-    ?readonly="{{readonly}}"
-    value-state="{{valueState}}"
-    @ui5-change="{{_handleInputChange}}"
-    @ui5-input="{{_handleInputLiveChange}}"
-    @keydown="{{_onkeydown}}"
-    >
-        {{#unless readonly}}
-            <ui5-icon
-                slot="icon"
-                name="fob-watch"
-                tabindex="-1"
-                show-tooltip
-                @click="{{togglePicker}}"
-                input-icon
-                ?pressed="{{_isPickerOpen}}"
-                class="ui5-duration-picker-input-icon-button"
-            ></ui5-icon>
-        {{/unless}}
-    </ui5-input>
+	<ui5-input
+		value="{{value}}"
+		?disabled="{{disabled}}"
+		?readonly="{{readonly}}"
+		value-state="{{valueState}}"
+		@ui5-change="{{_handleInputChange}}"
+		@ui5-input="{{_handleInputLiveChange}}"
+		@keydown="{{_onkeydown}}"
+		class="ui5-duration-picker-input"
+	>
+			{{#unless readonly}}
+				<ui5-icon
+					slot="icon"
+					name="fob-watch"
+					tabindex="-1"
+					show-tooltip
+					@click="{{togglePicker}}"
+					input-icon
+					?pressed="{{_isPickerOpen}}"
+					class="ui5-duration-picker-input-icon-button"
+				></ui5-icon>
+			{{/unless}}
+	</ui5-input>
 </div>
