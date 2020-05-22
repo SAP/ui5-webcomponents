@@ -74,4 +74,8 @@
 	<ui5-list class="ui5-nli-group-items">
 		<slot></slot>
 	</ui5-list>
+
+	{{#if busy}} 
+		<ui5-busyindicator active size="Medium" class="ui5-nli-busy"></ui5-busyindicator>
+	{{/if}}
 </li>
