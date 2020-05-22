@@ -130,8 +130,16 @@ class SegmentedButton extends UI5Element {
 		await this.measureButtonsWidth();
 	}
 
+	prepareToMeasureButtons() {
+		this.style.width = "";
+		this.buttons.forEach(button => {
+			button.style.width = "";
+		});
+	}
+
 	async measureButtonsWidth() {
 		await RenderScheduler.whenDOMUpdated();
+		this.prepareToMeasureButtons();
 
 		this.widths = this.buttons.map(button => {
 			// +1 is added because for width 100.44px the offsetWidth property returns 100px and not 101px
@@ -202,7 +210,12 @@ class SegmentedButton extends UI5Element {
 		}
 	}
 
-	_handleResize() {
+	async _handleResize() {
+		const buttonsHaveWidth = this.widths.some(button => button.offsetWidth > 2); // 2 are the pixel's added for rounding & IE
+		if (!buttonsHaveWidth) {
+			await this.measureButtonsWidth();
+		}
+
 		const parentWidth = this.parentNode.offsetWidth;
 
 		if (!this.style.width || this.percentageWidthSet) {
