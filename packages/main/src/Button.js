@@ -284,7 +284,7 @@ class Button extends UI5Element {
 			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 
-		this.iconOnly = this.isIconOnly;
+		this.iconOnly = !this.textContent;
 		this.hasIcon = !!this.icon;
 	}
 
@@ -392,10 +392,6 @@ class Button extends UI5Element {
 		}
 
 		return this.nonFocusable ? "-1" : this._tabIndex;
-	}
-
-	get isIconOnly() {
-		return !Array.from(this.childNodes).filter(node => node.nodeType !== Node.COMMENT_NODE).length;
 	}
 
 	static async onDefine() {
