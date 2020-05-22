@@ -1,9 +1,5 @@
-commit fd9a221604362e294ee9feff9f813829a4b82728
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri May 22 09:57:45 2020 +0300
+commit d00b0befe3edad02f8670703642ec0ffe7730b64
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri May 22 10:28:04 2020 +0300
 
-    feat(ui5-li-notification, ui5-li-notification-group): add busy property (#1674)
-    
-    Add "busy" property to NotificationList(Group)ItemBase to enable users show busy state on notification item and group level.
-    
-    FIXES: #1672
+    fix(ui5-segmentedbutton): fix measuring when parent is not displayed (#1657)
