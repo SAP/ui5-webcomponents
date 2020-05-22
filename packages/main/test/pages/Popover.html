@@ -58,7 +58,7 @@
 
 	<ui5-input id="field"></ui5-input> -->
 
-	<div id="btn">Click me !</div>
+	<ui5-button id="btn">Click me !</ui5-button>
 
 	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
 		<div slot="header">
@@ -74,7 +74,7 @@
 		<br>
 		<br>
 
-		<div id='popbtn'>Open Popover</div>
+		<ui5-button id='popbtn'>Open Popover</ui5-button>
 
 		<ui5-popover placement-type="Bottom" no-arrow id='danger'>
 
@@ -293,27 +293,27 @@
 	</ui5-popover>
 
 	<script>
-		btn.addEventListener('mouseover', function (event) {
+		btn.addEventListener('click', function (event) {
 			pop.openBy(btn);
 		});
 
-		popbtn.addEventListener('mouseover', function (event) {
+		popbtn.addEventListener('click', function (event) {
 			danger.openBy(popbtn);
 		});
 
-		bigDanger.addEventListener('mouseover', function (event) {
+		bigDanger.addEventListener('click', function (event) {
 			bigDangerPop.openBy(bigDanger);
 		});
 
-		btnPopModal.addEventListener('mouseover', function (event) {
+		btnPopModal.addEventListener('click', function (event) {
 			modalPopover.openBy(btnPopModal);
 		});
 
-		modalPopoverClose.addEventListener('mouseover', function (event) {
+		modalPopoverClose.addEventListener('click', function (event) {
 			modalPopover.close();
 		});
 
-		btnPopFocus.addEventListener('mouseover', function (event) {
+		btnPopFocus.addEventListener('click', function (event) {
 			popFocus.openBy(btnPopFocus);
 		});
 
@@ -325,31 +325,31 @@
 			return "<ui5-li>" + item + "</ui5-li>";
 		}).join("");
 
-		document.getElementById("big-popover-button").addEventListener("mouseover", function (event) {
+		document.getElementById("big-popover-button").addEventListener("click", function (event) {
 			document.getElementById("big-popover").openBy(event.target);
 		});
 
-		btnFullWidth.addEventListener('mouseover', function (event) {
+		btnFullWidth.addEventListener('click', function (event) {
 			popFullWidth.openBy(btnFullWidth);
 		});
 
-		btnFullWidthTargetOverlap.addEventListener('mouseover', function (event) {
+		btnFullWidthTargetOverlap.addEventListener('click', function (event) {
 			popFullWidthTargetOverlap.openBy(btnFullWidthTargetOverlap);
 		});
 
-		btnFullWidthLeft.addEventListener('mouseover', function (event) {
+		btnFullWidthLeft.addEventListener('click', function (event) {
 			popFullWidthLeft.openBy(btnFullWidthLeft);
 		});
 
-		btnFullWidthLeftTargetOverlap.addEventListener('mouseover', function (event) {
+		btnFullWidthLeftTargetOverlap.addEventListener('click', function (event) {
 			popFullWidthLeftTargetOverlap.openBy(btnFullWidthLeftTargetOverlap);
 		});
 
-		btnFullWidthTop.addEventListener('mouseover', function (event) {
+		btnFullWidthTop.addEventListener('click', function (event) {
 			popFullWidthTop.openBy(btnFullWidthTop);
 		});
 
-		btnFullWidthBottom.addEventListener('mouseover', function (event) {
+		btnFullWidthBottom.addEventListener('click', function (event) {
 			popFullWidthBottom.openBy(btnFullWidthBottom);
 		});
 	</script>
