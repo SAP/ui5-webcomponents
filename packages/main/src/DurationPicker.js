@@ -453,7 +453,7 @@ class DurationPicker extends UI5Element {
 	async _handleInputLiveChange() {
 		await this._getResponsivePopover();
 
-		if (this.responsivePopover.opened) {
+		if (this.responsivePopover.isOpen()) {
 			this.togglePicker();
 		}
 	}
@@ -461,13 +461,8 @@ class DurationPicker extends UI5Element {
 	async togglePicker() {
 		await this._getResponsivePopover();
 
-		if (this.responsivePopover.opened) {
-			this._isPickerOpen = false;
-			this.responsivePopover.close();
-		} else {
-			this._isPickerOpen = true;
-			this.responsivePopover.open(this);
-		}
+		this.responsivePopover.toggle(this);
+		this._isPickerOpen = this.responsivePopover.isOpen();
 	}
 
 	async _getResponsivePopover() {

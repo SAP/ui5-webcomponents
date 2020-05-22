@@ -32,7 +32,7 @@ class CustomResize {
 
 			if (changed || (entry && !entry._hasBeenRendered)) {
 				CustomResize.updateSizes(entry, ref.offsetWidth, ref.offsetHeight);
-				entry.callbacks.forEach(el => el());
+				entry.callbacks.forEach(el => el(ref));
 				entry._hasBeenRendered = true;
 			}
 		});

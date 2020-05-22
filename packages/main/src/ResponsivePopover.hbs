@@ -1,34 +1,62 @@
-{{#if _isPhone}}
-	<ui5-dialog
-		?with-padding={{withPadding}}
-		stretch
-		_disable-initial-focus
-		@ui5-beforeOpen="{{_propagateDialogEvent}}"
-		@ui5-afterOpen="{{_afterDialogOpen}}"
-		@ui5-beforeClose="{{_propagateDialogEvent}}"
-		@ui5-afterClose="{{_afterDialogClose}}"
-	>
-		{{!-- forward slot header to inner dialog slot header --}}
-		{{#unless _hideHeader}}
-			{{#if header.length}}
-				<slot slot="header" name="header"></slot>
-			{{else}}
-				<header class="ui5-responsive-popover-header">
-					<ui5-title level="H5" class="ui5-responsive-popover-header-text">{{headerText}}</ui5-title>
-					<ui5-button
-						icon="decline"
-						design="Transparent"
-						@click="{{close}}"
-					>
-					</ui5-button>
-				</header>
-			{{/if}}
-		{{/unless}}
+<div class="ui5-rpo-root"
+	@ui5-beforeClose={{forwardEvent}}
+	@ui5-afterClose={{forwardEvent}}
+	@ui5-beforeOpen={{forwardEvent}}
+	@ui5-afterOpen={{forwardEvent}}
+>
+	{{#if _isPhone}}
+		<ui5-dialog 
+			id="ui5-rpo-popup"
+			stretch
+			no-padding
+			_disable-initial-focus
+		>
+			{{> header}}
 
-		<slot></slot>
-		{{!-- forward slot footer to inner dialog slot footer --}}
+			<slot></slot>
+
+			{{> footer}}
+
+		</ui5-dialog>
+	{{else}}
+		<ui5-popover
+			id="ui5-rpo-popup"
+			style={{styles.popover}}
+			?no-padding={{hasPadding}}
+			@ui5-afterClose={{detachResizeHandler}}
+			@ui5-afterOpen={{attachResizeHandler}}
+		>
+
+			{{> header}}
+
+			<slot></slot>
+
+			{{> footer}}
+
+		</ui5-popover>
+	{{/if}}
+</div>
+
+{{#*inline "footer"}}
+	{{#if showFooter}}
 		<slot slot="footer" name="footer"></slot>
-	</ui5-dialog>
-{{else}}
-	{{>include "./Popover.hbs"}}
-{{/if}}
+	{{/if}}
+{{/inline}}
+
+{{#*inline "header"}}
+	{{#if showHeader}}
+		{{#if header.length}}
+			<slot slot="header" name="header"></slot>
+		{{else}}
+			<header class="ui5-responsive-popover-header">
+				<ui5-title level="H5" class="ui5-responsive-popover-header-text">{{headerText}}</ui5-title>
+				<ui5-button
+					icon="decline"
+					design="Transparent"
+					@click="{{close}}"
+				>
+				</ui5-button>
+			</header>
+		{{/if}}
+	{{/if}}
+{{/inline}}

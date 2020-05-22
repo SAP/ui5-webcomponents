@@ -175,6 +175,12 @@
 	<script>
 		document.getElementById("combo").addEventListener("ui5-change", function(event) {
 			document.getElementById("change-event-result").innerHTML = event.target.value;
+
+			console.log("change");
+		});
+
+		document.getElementById("combo").addEventListener("ui5-input", function(event) {
+			console.log("input");
 		});
 
 		document.getElementById("change-cb").addEventListener("ui5-change", function(event) {

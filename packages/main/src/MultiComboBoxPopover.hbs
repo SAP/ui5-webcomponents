@@ -3,10 +3,13 @@
 	horizontal-align="Left"
 	class="ui5-multi-combobox-all-items-responsive-popover"
 	no-arrow
-	_disable-initial-focus
 	content-only-on-desktop
+	prevent-focus-restore
+	_disable-initial-focus
 	@ui5-selectionChange={{_listSelectionChange}}
-	@ui5-afterClose={{_toggleIcon}}
+	@ui5-beforeClose={{_beforeClose}}
+	@ui5-afterClose={{_afterClose}}
+	@ui5-beforeOpen={{_beforeOpen}}
 	@ui5-afterOpen={{_toggleIcon}}
 >
 	<div slot="header" class="ui5-responsive-popover-header">
@@ -16,7 +19,7 @@
 				class="ui5-responsive-popover-close-btn"
 				icon="decline"
 				design="Transparent"
-				@click="{{togglePopover}}"
+				@click="{{_closeAndRestoreSelection}}"
 			>
 			</ui5-button>
 		</div>
@@ -59,7 +62,7 @@
 	<div slot="footer" class="ui5-responsive-popover-footer">
 		<ui5-button
 			design="Transparent"
-			@click="{{togglePopover}}"
+			@click="{{_confirmSelection}}"
 		>OK</ui5-button>
 	</div>
 </ui5-responsive-popover>

@@ -236,14 +236,14 @@ class Select extends UI5Element {
 		this.focused = false;
 	}
 
-	get _isPickerOpen() {
-		return this.responsivePopover && this.responsivePopover.opened;
+	async isOpen() {
+		const popoverRef = await this.getPopoverRef();
+
+		return popoverRef && popoverRef.isOpen();
 	}
 
-	async _respPopover() {
-		this._iconPressed = true;
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+	async getPopoverRef() {
+		return (await this.getStaticAreaItemDomRef()).querySelector("ui5-responsive-popover");
 	}
 
 	/**
@@ -257,18 +257,15 @@ class Select extends UI5Element {
 	}
 
 	async _toggleRespPopover() {
-		this.responsivePopover = await this._respPopover();
+		const popoverRef = await this.getPopoverRef();
+
 		if (this.disabled) {
 			return;
 		}
 
 		this.updateStaticAreaItemContentDensity();
 
-		if (this._isPickerOpen) {
-			this.responsivePopover.close();
-		} else {
-			this.responsivePopover.open(this);
-		}
+		popoverRef.toggle(this);
 	}
 
 	_syncSelection() {
@@ -321,7 +318,9 @@ class Select extends UI5Element {
 		}
 	}
 
-	_onkeydown(event) {
+	async _onkeydown(event) {
+		const isOpen = await this.isOpen();
+
 		if (isShow(event)) {
 			this._toggleRespPopover();
 		}
@@ -330,13 +329,15 @@ class Select extends UI5Element {
 			event.preventDefault();
 		}
 
-		if (!this._isPickerOpen) {
+		if (!isOpen) {
 			this._handleArrowNavigation(event, true);
 		}
 	}
 
-	_onkeyup(event) {
-		if (isSpace(event) && !this._isPickerOpen) {
+	async _onkeyup(event) {
+		const isOpen = await this.isOpen();
+
+		if (isSpace(event) && !isOpen) {
 			this._toggleRespPopover();
 		}
 	}
@@ -358,12 +359,14 @@ class Select extends UI5Element {
 		this._toggleRespPopover();
 	}
 
-	_applyFocusAfterOpen() {
+	async _applyFocusAfterOpen() {
+		const popoverRef = await this.getPopoverRef();
+
 		if (!this._currentlySelectedOption) {
 			return;
 		}
 
-		const li = this.responsivePopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
+		const li = popoverRef.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();

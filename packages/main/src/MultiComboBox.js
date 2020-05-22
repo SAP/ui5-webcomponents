@@ -323,10 +323,26 @@ class MultiComboBox extends UI5Element {
 		super();
 
 		this._filteredItems = [];
+		this._itemsBeforeOpen = [];
 		this._inputLastValue = "";
 		this._deleting = false;
 		this._validationTimeout = null;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
+		// focus out of the combobox should close the responsive popover
+		this.addEventListener("blur", async event => {
+			if (isPhone()) {
+				return;
+			}
+
+			const staticAreaItemRef = await this.getStaticAreaItemDomRef();
+
+			if (staticAreaItemRef.host === event.relatedTarget) {
+				return;
+			}
+
+			this.allItemsPopover.close();
+		});
 	}
 
 	_inputChange() {
@@ -344,10 +360,6 @@ class MultiComboBox extends UI5Element {
 
 	togglePopover() {
 		this._toggleRespPopover();
-
-		if (!isPhone()) {
-			this._inputDom.focus();
-		}
 	}
 
 	filterSelectedItems(event) {
@@ -450,10 +462,11 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (isDown(event) && this.allItemsPopover.opened && this.items.length) {
+			const list = await this._getList();
+
 			event.preventDefault();
-			await this._getList();
-			this.list._itemNavigation.current = 0;
-			this.list.items[0].focus();
+			list._itemNavigation.current = 0;
+			list.items[0].focus();
 		}
 
 		if (isBackSpace(event) && event.target.value === "") {
@@ -498,6 +511,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_listSelectionChange(event) {
+		const onPhone = isPhone();
+		const checkBoxClicked = event.detail.selectionComponentPressed;
+		const shouldClosePopover = !checkBoxClicked && !isSpace(event.detail);
+
 		event.target.items.forEach(item => {
 			this.items.forEach(mcbItem => {
 				if (mcbItem._id === item.getAttribute("data-ui5-token-id")) {
@@ -506,13 +523,35 @@ class MultiComboBox extends UI5Element {
 			});
 		});
 
-		this.fireSelectionChange();
-
-		if (!event.detail.selectionComponentPressed && !isSpace(event.detail)) {
-			this.allItemsPopover.close();
-			this.value = "";
-			this.fireEvent("input");
+		if (!onPhone) {
+			this.fireSelectionChange();
 		}
+
+		if (shouldClosePopover) {
+			this._closedBySelection = true;
+			this.allItemsPopover.close();
+
+			if (!onPhone) {
+				this.value = "";
+				this.fireEvent("input");
+			}
+		}
+	}
+
+	_afterClose() {
+		this._toggleIcon();
+
+		if (isPhone()) {
+			this._handleListSelectionOnPhone();
+		}
+	}
+
+	_handleListSelectionOnPhone() {
+		if (this._closedBySelection) {
+			this.fireSelectionChange();
+		}
+
+		this._closedBySelection = false;
 	}
 
 	fireSelectionChange() {
@@ -524,16 +563,24 @@ class MultiComboBox extends UI5Element {
 	async _getRespPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		this.allItemsPopover = staticAreaItem.querySelector(`.ui5-multi-combobox-all-items-responsive-popover`);
+
+		return this.allItemsPopover;
 	}
 
 	async _getList() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.list = staticAreaItem.querySelector(".ui5-multi-combobox-all-items-list");
+		const list = staticAreaItem.querySelector(".ui5-multi-combobox-all-items-list");
+
+		return list;
 	}
 
 	_toggleRespPopover() {
 		this.updateStaticAreaItemContentDensity();
 		this.allItemsPopover.toggle(this);
+
+		if (!isPhone()) {
+			this._inputDom.focus();
+		}
 	}
 
 	_focusin() {
@@ -545,12 +592,49 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_click(event) {
-		if (isPhone() && !this.readonly && !this._showMorePressed) {
+		if (isPhone() && !this.readonly && !this._showMorePressed && !this._deleting && !this.filterSelected) {
 			this.updateStaticAreaItemContentDensity();
 			this.allItemsPopover.open(this);
 		}
 
 		this._showMorePressed = false;
+	}
+
+	async _closeAndRestoreSelection() {
+		/**
+		 * TODO: Reconsider this logic
+		 * If someone exchanges items when the dialog is open
+		 * restore logic might break
+		 */
+		this._itemsBeforeOpen.forEach(itemInfo => {
+			const itemRef = this.items.find(mcbItem => mcbItem._id === itemInfo._id);
+
+			itemRef.selected = itemInfo.selected;
+		});
+
+		this._closing = true;
+
+		this._toggleRespPopover();
+	}
+
+	async _confirmSelection() {
+		const list = await this._getList();
+
+		this.allItemsPopover.close();
+		this.value = "";
+		this._applySelection(list.items);
+		this.fireSelectionChange();
+		this.fireEvent("input");
+	}
+
+	_applySelection(listItems) {
+		listItems.forEach(item => {
+			this.items.forEach(mcbItem => {
+				if (mcbItem._id === item.getAttribute("data-ui5-token-id")) {
+					mcbItem.selected = item.selected;
+				}
+			});
+		});
 	}
 
 	_afterClosePopover() {
@@ -560,6 +644,16 @@ class MultiComboBox extends UI5Element {
 		}
 
 		this.filterSelected = false;
+	}
+
+	_beforeOpen() {
+		this._itemsBeforeOpen = this.items.map(item => {
+			return {
+				text: item.text,
+				selected: item.selected,
+				_id: item._id,
+			};
+		});
 	}
 
 	onBeforeRendering() {

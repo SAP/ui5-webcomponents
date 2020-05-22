@@ -286,6 +286,18 @@
 			callCountInput.value = openChangeCounter;
 		});
 
+		document.getElementById("multi1").addEventListener("ui5-change", function(event) {
+			console.log("change");
+		});
+
+		document.getElementById("multi1").addEventListener("ui5-selectionChange", function(event) {
+			console.log("selectionChange");
+		});
+
+		document.getElementById("multi1").addEventListener("ui5-input", function(event) {
+			console.log("input");
+		});
+
 		resetBtn.addEventListener("click", function (event) {
 			eventNameInput.value = "";
 			eventParamsInput.value = "";

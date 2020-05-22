@@ -28,7 +28,7 @@
 
 .ui5-popup-root .ui5-popup-header-root {
 	box-shadow: var(--sapContent_Shadow0);
-	margin-bottom: 0.125rem;
+	z-index: 2;
 }
 
 .ui5-popup-footer-root {

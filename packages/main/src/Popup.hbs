@@ -18,25 +18,21 @@
 
 
 {{#*inline "footer"}}
-	{{#if _displayFooter}}
-		{{#if footer.length }}
-			<footer class="ui5-popup-footer-root">
-				<slot name="footer"></slot>
-			</footer>
-		{{/if}}
+	{{#if footer.length }}
+		<footer class="ui5-popup-footer-root">
+			<slot name="footer"></slot>
+		</footer>
 	{{/if}}
 {{/inline}}
 
 {{#*inline "header"}}
-	{{#if _displayHeader}}
-		<header class="ui5-popup-header-root" id="ui5-popup-header">
-			{{#if header.length }}
-				<slot name="header"></slot>
-			{{else}}
-				<h2 class="ui5-popup-header-text" id="ui5-popup-header">{{headerText}}</h2>
-			{{/if}}
-		</header>
-	{{/if}}
+	<header class="ui5-popup-header-root" id="ui5-popup-header">
+		{{#if header.length }}
+			<slot name="header"></slot>
+		{{else}}
+			<h2 class="ui5-popup-header-text" id="ui5-popup-header">{{headerText}}</h2>
+		{{/if}}
+	</header>
 {{/inline}}
 
 

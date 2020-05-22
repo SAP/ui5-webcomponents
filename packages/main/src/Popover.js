@@ -148,6 +148,10 @@ const metadata = {
 		},
 
 		_maxContentHeight: { type: Integer },
+
+		preventFocusRestore: {
+			type: Boolean,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
@@ -330,7 +334,8 @@ class Popover extends Popup {
 			removeOpenedPopover(this);
 		}
 
-		if (!preventFocusRestore) {
+		// TODO: check focus restore
+		if (!this.preventFocusRestore) {
 			this.resetFocus();
 		}
 
@@ -671,20 +676,6 @@ class Popover extends Popup {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
 			},
 		};
-	}
-
-	/**
-	 * Hook for descendants to hide header.
-	 */
-	get _displayHeader() {
-		return true;
-	}
-
-	/**
-	 * Hook for descendants to hide footer.
-	 */
-	get _displayFooter() {
-		return true;
 	}
 }
 

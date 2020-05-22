@@ -1,6 +1,10 @@
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import { getNextZIndex } from "./popup-utils/PopupUtils.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
+import Popup from "./Popup.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
@@ -10,8 +14,6 @@ import "@ui5/webcomponents-icons/dist/icons/decline.js";
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 
-const POPOVER_MIN_WIDTH = 100;
-
 /**
  * @public
  */
@@ -19,6 +21,8 @@ const metadata = {
 	tag: "ui5-responsive-popover",
 	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
 
+		...Popup.metadata.properties,
+		...Popover.metadata.properties,
 		/**
 		 * Defines whether the component will stretch to fit its content.
 		 * <br/><b>Note:</b> by default the popover will be as wide as its opener component and will grow if the content is not fitting.
@@ -46,6 +50,11 @@ const metadata = {
 			type: Boolean,
 		},
 
+
+		showPopoverFooter: {
+			type: Boolean,
+		},
+
 		/**
 		 * Used internaly for controls which must not have header.
 		 * @private
@@ -53,7 +62,15 @@ const metadata = {
 		_hideHeader: {
 			type: Boolean,
 		},
+
+		_minWidth: {
+			type: Integer,
+		},
 	},
+
+	events: { ...Popover.metadata.events },
+	slots: { ...Popover.metadata.slots },
+	managedSlots: true,
 };
 
 /**
@@ -68,13 +85,13 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ResponsivePopover
- * @extends Popover
+ * @alias sap.ui.webcomponents.main.Button
+ * @extends UI5Element
  * @tagname ui5-responsive-popover
  * @since 1.0.0-rc.6
  * @public
  */
-class ResponsivePopover extends Popover {
+class ResponsivePopover extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -87,53 +104,65 @@ class ResponsivePopover extends Popover {
 		return ResponsivePopoverTemplate;
 	}
 
+	static get render() {
+		return litRender;
+	}
+
 	static async onDefine() {
 		await Promise.all([
-			Button.define(),
+			Popover.define(),
 			Dialog.define(),
+			Button.define(),
 			Title.define(),
 		]);
 	}
 
-	/**
-	 * Opens popover on desktop and dialog on mobile.
-	 * @param {HTMLElement} opener the element that the popover is opened by
-	 * @public
-	 */
-	open(opener) {
-		this.style.display = this._isPhone ? "contents" : "";
+	constructor() {
+		super();
+		this._isPhone = isPhone();
 
-		if (this.isOpen() || (this._dialog && this._dialog.isOpen())) {
+		this._openerResizeObserver = ref => {
+			this._minWidth = ref.getBoundingClientRect().width;
+		};
+	}
+
+	detachResizeHandler() {
+		if (this.noStretch) {
 			return;
 		}
 
-		if (!isPhone()) {
-			// make popover width be >= of the opener's width
-			if (!this.noStretch) {
-				this._minWidth = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
-			}
-
-			this.openBy(opener);
-		} else {
-			this.style.zIndex = getNextZIndex();
-			this._dialog.open();
-		}
+		ResizeHandler.detachListener(this._opener, this._openerResizeObserver);
 	}
 
-	/**
-	 * Closes the popover/dialog.
-	 * @public
-	 */
-	close() {
-		if (!isPhone()) {
-			super.close();
-		} else {
-			this._dialog.close();
+	attachResizeHandler() {
+		if (this.noStretch) {
+			return;
 		}
+
+		ResizeHandler.attachListener(this._opener, this._openerResizeObserver);
+	}
+
+	open(opener) {
+		const popup = this.getPopup();
+
+		if (opener && popup.openBy) {
+			this._opener = opener;
+			return popup.openBy(opener);
+		}
+
+		popup.open();
+	}
+
+	close() {
+		const popup = this.getPopup();
+
+		popup.close();
 	}
 
 	toggle(opener) {
-		if (this.isOpen()) {
+		const popup = this.getPopup();
+
+		if (popup.isOpen()) {
 			return this.close();
 		}
 
@@ -141,49 +170,66 @@ class ResponsivePopover extends Popover {
 	}
 
 	isOpen() {
-		return isPhone() ? this._dialog.isOpen() : super.isOpen();
+		return this.getPopup().isOpen();
+	}
+
+	getPopup() {
+		return this.shadowRoot.querySelector("#ui5-rpo-popup");
+	}
+
+	onAfterRendering() {
+		this.forwardPropsToPopup();
+	}
+
+	forwardPropsToPopup() {
+		const props = Object.keys({
+			...Popup.metadata.properties,
+			...Popover.metadata.properties,
+		});
+
+		props.forEach(prop => {
+			if (prop === "opened") {
+				return;
+			}
+
+			this.getPopup() && (this.getPopup()[prop] = this[prop]);
+		});
+	}
+
+	forwardEvent(event) {
+		this.fireEvent(event.type, event.detail);
+	}
+
+	get isPhone() {
+		return this._isPhone;
+	}
+
+	get showHeader() {
+		if (this.isPhone && this.header.length) {
+			return true;
+		}
+
+		return !this.contentOnlyOnDesktop;
+	}
+
+	get showFooter() {
+		if (this.isPhone) {
+			return true;
+		}
+
+		return this.footer.length && this.showPopoverFooter;
 	}
 
 	get styles() {
-		const popoverStyles = super.styles;
-
-		popoverStyles.root = {
-			"min-width": `${this._minWidth}px`,
+		return {
+			popover: {
+				"min-width": `${this._minWidth}px`,
+			},
 		};
-
-		return popoverStyles;
 	}
 
-	get _dialog() {
-		return this.shadowRoot.querySelector("ui5-dialog");
-	}
-
-	get _isPhone() {
-		return isPhone();
-	}
-
-	get _displayHeader() {
-		return this._isPhone || !this.contentOnlyOnDesktop;
-	}
-
-	get _displayFooter() {
-		return this._isPhone || !this.contentOnlyOnDesktop;
-	}
-
-	_afterDialogOpen(event) {
-		this.opened = true;
-		this._propagateDialogEvent(event);
-	}
-
-	_afterDialogClose(event) {
-		this.opened = false;
-		this._propagateDialogEvent(event);
-	}
-
-	_propagateDialogEvent(event) {
-		const type = event.type.replace("ui5-", "");
-
-		this.fireEvent(type, event.detail);
+	get hasPadding() {
+		return !this.withPadding;
 	}
 }
 

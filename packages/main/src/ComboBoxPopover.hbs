@@ -1,9 +1,11 @@
 <ui5-responsive-popover
 	no-arrow
 	content-only-on-desktop
+	prevent-focus-restore
 	_disable-initial-focus
 	placement-type="Bottom"
 	horizontal-align="Left"
+	@ui5-beforeOpen={{_beforeOpenPopover}}
 	@ui5-afterOpen={{_afterOpenPopover}}
 	@ui5-afterClose={{_afterClosePopover}}
 >
@@ -21,7 +23,7 @@
 				class="ui5-responsive-popover-close-btn"
 				icon="decline"
 				design="Transparent"
-				@click="{{_closeRespPopover}}"
+				@click="{{_restoreSelectionAndClose}}"
 			>
 			</ui5-button>
 		</div>
@@ -38,7 +40,6 @@
 					placeholder="{{placeholder}}"
 					value-state="{{valueState}}"
 					@input="{{_input}}"
-					@change="{{_inputChange}}"
 					@keydown="{{_keydown}}"
 					aria-autocomplete="both"
 				/>

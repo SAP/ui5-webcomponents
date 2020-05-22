@@ -5,7 +5,7 @@ class NativeResize {
 			entries.forEach(entry => {
 				const callbacks = NativeResize.observedObjects.get(entry.target);
 
-				callbacks.forEach(el => el());
+				callbacks.forEach(el => el(entry.target));
 			});
 		});
 

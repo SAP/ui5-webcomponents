@@ -134,14 +134,6 @@ class Dialog extends Popup {
 	get isModal() {
 		return true;
 	}
-
-	get _displayFooter() {
-		return true;
-	}
-
-	get _displayHeader() {
-		return true;
-	}
 }
 
 Dialog.define();
