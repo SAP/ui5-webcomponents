@@ -1,5 +1,9 @@
-commit da30bc128c64e2cdd19a45fc580ea32400608dec
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu May 21 15:51:02 2020 +0300
+commit fd9a221604362e294ee9feff9f813829a4b82728
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri May 22 09:57:45 2020 +0300
 
-    fix(ui5-duration-picker): make maxValue work with values greater than 23:59:59 (#1666)
+    feat(ui5-li-notification, ui5-li-notification-group): add busy property (#1674)
+    
+    Add "busy" property to NotificationList(Group)ItemBase to enable users show busy state on notification item and group level.
+    
+    FIXES: #1672

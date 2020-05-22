@@ -56,6 +56,7 @@
 	<ui5-list id="notificationList" header-text="Notifications heading and content 'truncates'">
 
 		<ui5-li-notification
+			busy
 			show-close
 			heading="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 		>
@@ -251,8 +252,15 @@
 		});
 
 		notificationList2.addEventListener("itemClick", function(event) {
-			event.detail.item.read = true;
-			wcToastBS.textContent = event.detail.item.heading;
+			var item = event.detail.item;
+
+			setTimeout(function() {
+				item.busy = false;
+				item.read = true;
+			}, 1000);
+
+			item.busy = true;
+			wcToastBS.textContent = item.heading;
 			wcToastBS.show();
 		});
 
