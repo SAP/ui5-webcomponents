@@ -403,14 +403,14 @@ class TextArea extends UI5Element {
 	}
 
 	_oninput(event) {
-		const nativeTextarea = this.getInputDomRef();
+		const nativeTextArea = this.getInputDomRef();
 
 		/* skip calling change event when an textarea with a placeholder is focused on IE
 			- value of the host and the internal textarea should be different in case of actual input
 			- input is called when a key is pressed => keyup should not be called yet
 		*/
-		const skipFiring = (this.getInputDomRef().value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
-		if (event.target === nativeTextarea) {
+		const skipFiring = (nativeTextArea.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
+		if (event.target === nativeTextArea) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
 		}
@@ -419,7 +419,7 @@ class TextArea extends UI5Element {
 			return;
 		}
 
-		this.value = nativeTextarea.value;
+		this.value = nativeTextArea.value;
 		this.fireEvent("input", {});
 
 		// Angular two way data binding
@@ -456,7 +456,7 @@ class TextArea extends UI5Element {
 	}
 
 	_tokenizeText(value) {
-		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/"/gm, "&#39;").replace(/</gm, "&lt;")
+		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "&lt;")
 			.replace(/>/gm, "&gt;")
 			.split("\n");
 

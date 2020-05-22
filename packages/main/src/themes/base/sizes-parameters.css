@@ -56,6 +56,9 @@
 	--_ui5_tc_item_icon_size: 1.5rem;
 	--_ui5_tc_item_add_text_margin_top: 0.625rem;
 
+	/* TextArea */
+	--_ui5_textarea_padding: 0.5625rem 0.6875rem;
+
 	/* Responsive Popover */
 	--_ui5-responnsive_popover_header_height: 2.75rem;
 
@@ -112,6 +115,9 @@
 	--_ui5_input_icon_min_width: var(--_ui5_input_compact_min_width);
 	--_ui5_input_icon_padding: .25rem .5rem;
 	--_ui5_input_value_state_icon_padding: .1875rem .5rem;
+
+	/* TextArea */
+	--_ui5_textarea_padding: .1875rem .5rem;
 
 	/* List */
 	--_ui5_list_no_data_height: 2rem;

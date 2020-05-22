@@ -27,6 +27,18 @@
 	pointer-events: none;
 }
 
+:host([busy])  {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+:host([busy]) .ui5-nli-busy {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
 .ui5-nli-action {
 	flex-shrink: 0;
 	margin-right: 0.5rem;

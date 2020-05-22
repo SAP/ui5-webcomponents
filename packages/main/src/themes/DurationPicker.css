@@ -1,5 +1,9 @@
 :host(:not([hidden])) {
-    display: inline-block;
+	display: inline-block;
+}
+
+:host .ui5-duration-picker-input {
+	width: 100%;
 }
 
 .ui5-duration-picker-input-icon-button:hover {

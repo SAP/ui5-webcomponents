@@ -423,9 +423,10 @@ class DatePicker extends UI5Element {
 	}
 
 	_getTimeStampFromString(value) {
-		if (this.getFormat().parse(value)) {
-			const jsDate = new Date(this.getFormat().parse(value).getFullYear(), this.getFormat().parse(value).getMonth(), this.getFormat().parse(value).getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
+		const jsDate = this.getFormat().parse(value);
+		if (jsDate) {
+			const jsDateTimeNow = new Date(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDateTimeNow.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
 		}
 		return undefined;
@@ -687,6 +688,16 @@ class DatePicker extends UI5Element {
 			).valueOf()),
 			true
 		);
+	}
+
+	/**
+	 * Formats a Java Script date object into a string representing a locale date
+	 * according to the <code>formatPattern</code> property of the DatePicker instance
+	 * @param {object} oDate A Java Script date object to be formatted as string
+	 * @public
+	 */
+	formatValue(oDate) {
+		return this.getFormat().format(oDate);
 	}
 
 	/**

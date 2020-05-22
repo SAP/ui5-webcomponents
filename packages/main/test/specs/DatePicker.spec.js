@@ -23,7 +23,19 @@ describe("Date Picker Tests", () => {
 		assert.equal(date.getFullYear(), 2011);
 	});
 
+	it("input receives value in format pattern depending on the set language", () => {
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg");
+		datepicker.id = "#dp16";
+
+		const setDateButton = browser.$("#b1");
+
+		setDateButton.click();
+
+		assert.equal(datepicker.innerInput.getValue(), "11 декември 2018 г.");
+	});
+
 	it("custom formatting", () => {
+		datepicker.open();
 		datepicker.id = "#dp2";
 
 		assert.ok(datepicker.isValid("2018, 05/05"), "custom value is valid");

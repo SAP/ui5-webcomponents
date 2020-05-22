@@ -39,8 +39,6 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		_focused: {},
-
-		_click: {},
 	},
 };
 
@@ -59,11 +57,6 @@ const metadata = {
  * @public
  */
 class TableRow extends UI5Element {
-	constructor() {
-		super();
-		this.fnOnCellClick = this._oncellclick.bind(this);
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -88,7 +81,7 @@ class TableRow extends UI5Element {
 		this.fireEvent("_focused", event);
 	}
 
-	_oncellclick(event) {
+	_onrowclick(event) {
 		if (this._getActiveElementTagName() === "body") {
 			// If the user clickes on non-focusable element within the ui5-table-cell,
 			// the focus goes to the body, se we have to bring it back to the row.
@@ -97,7 +90,7 @@ class TableRow extends UI5Element {
 			this._onfocusin(event, true /* force row focus */);
 		}
 
-		this.fireEvent("_click");
+		this.fireEvent("rowClick", { row: this });
 	}
 
 	_getActiveElementTagName() {

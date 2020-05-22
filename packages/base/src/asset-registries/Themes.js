@@ -31,8 +31,8 @@ const registerThemeProperties = (packageName, themeName, style) => {
 	if (style._) {
 		// JSON object like ({"_": ":root"})
 		themeStyles.set(`${packageName}_${themeName}`, style._);
-	} else if (style.includes(":root")) {
-		// pure string
+	} else if (style.includes(":root") || style === "") {
+		// pure string, including empty string
 		themeStyles.set(`${packageName}_${themeName}`, style);
 	} else {
 		// url for fetching
@@ -44,7 +44,7 @@ const registerThemeProperties = (packageName, themeName, style) => {
 
 const getThemeProperties = async (packageName, themeName) => {
 	const style = themeStyles.get(`${packageName}_${themeName}`);
-	if (style) {
+	if (style !== undefined) { // it's valid for style to be an empty string
 		return style;
 	}
 

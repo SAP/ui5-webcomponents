@@ -55,6 +55,17 @@ const metadata = {
 		showClose: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines if a busy indicator would be displayed over the item.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		busy: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
 

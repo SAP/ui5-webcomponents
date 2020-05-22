@@ -105,6 +105,13 @@ describe("Notification List Item Tests", () => {
 			"The custom actions are hidden when the group is collapsed");
 	});
 
+	it("tests busy indicator is displayed", () => {
+		const busyItem = $("#nli4");
+		const busyIndicator = busyItem.shadow$(".ui5-nli-busy");
+
+		assert.ok(busyIndicator.isExisting(), "The busy indicator is displayed");
+	});
+
 	it("tests List Group Item ACC invisible text", () => {
 		const EXPECTED_RESULT = "Notification group High Priority Counter 2";
 		const firstGroupItem = $("#nlgi1");
