@@ -2,9 +2,12 @@ import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 
 let registry = [];
 
-const addOpenedPopup = instance => {
+const addOpenedPopup = (instance, parentPopovers = []) => {
 	if (!registry.includes(instance)) {
-		registry.push(instance);
+		registry.push({
+			instance,
+			parentPopovers,
+		});
 	}
 
 	if (registry.length === 1) {
@@ -14,7 +17,7 @@ const addOpenedPopup = instance => {
 
 const removeOpenedPopup = instance => {
 	registry = registry.filter(el => {
-		return el !== instance;
+		return el !== instance.instance;
 	});
 
 	if (!registry.length) {
@@ -30,7 +33,7 @@ const _keydownListener = event => {
 	if (isEscape(event)) {
 		const topPopup = registry[registry.length - 1];
 
-		topPopup && topPopup.close(true);
+		topPopup && topPopup.instance.close(true);
 	}
 };
 

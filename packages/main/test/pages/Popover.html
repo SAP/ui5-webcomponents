@@ -58,7 +58,7 @@
 
 	<ui5-input id="field"></ui5-input> -->
 
-	<ui5-button id="btn">Click me !</ui5-button>
+	<div id="btn">Click me !</div>
 
 	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
 		<div slot="header">
@@ -74,7 +74,7 @@
 		<br>
 		<br>
 
-		<ui5-button id='popbtn'>Open Popover</ui5-button>
+		<div id='popbtn'>Open Popover</div>
 
 		<ui5-popover placement-type="Bottom" no-arrow id='danger'>
 
@@ -293,27 +293,27 @@
 	</ui5-popover>
 
 	<script>
-		btn.addEventListener('click', function (event) {
+		btn.addEventListener('mouseover', function (event) {
 			pop.openBy(btn);
 		});
 
-		popbtn.addEventListener('click', function (event) {
+		popbtn.addEventListener('mouseover', function (event) {
 			danger.openBy(popbtn);
 		});
 
-		bigDanger.addEventListener('click', function (event) {
+		bigDanger.addEventListener('mouseover', function (event) {
 			bigDangerPop.openBy(bigDanger);
 		});
 
-		btnPopModal.addEventListener('click', function (event) {
+		btnPopModal.addEventListener('mouseover', function (event) {
 			modalPopover.openBy(btnPopModal);
 		});
 
-		modalPopoverClose.addEventListener('click', function (event) {
+		modalPopoverClose.addEventListener('mouseover', function (event) {
 			modalPopover.close();
 		});
 
-		btnPopFocus.addEventListener('click', function (event) {
+		btnPopFocus.addEventListener('mouseover', function (event) {
 			popFocus.openBy(btnPopFocus);
 		});
 
@@ -325,31 +325,31 @@
 			return "<ui5-li>" + item + "</ui5-li>";
 		}).join("");
 
-		document.getElementById("big-popover-button").addEventListener("click", function (event) {
+		document.getElementById("big-popover-button").addEventListener("mouseover", function (event) {
 			document.getElementById("big-popover").openBy(event.target);
 		});
 
-		btnFullWidth.addEventListener('click', function (event) {
+		btnFullWidth.addEventListener('mouseover', function (event) {
 			popFullWidth.openBy(btnFullWidth);
 		});
 
-		btnFullWidthTargetOverlap.addEventListener('click', function (event) {
+		btnFullWidthTargetOverlap.addEventListener('mouseover', function (event) {
 			popFullWidthTargetOverlap.openBy(btnFullWidthTargetOverlap);
 		});
 
-		btnFullWidthLeft.addEventListener('click', function (event) {
+		btnFullWidthLeft.addEventListener('mouseover', function (event) {
 			popFullWidthLeft.openBy(btnFullWidthLeft);
 		});
 
-		btnFullWidthLeftTargetOverlap.addEventListener('click', function (event) {
+		btnFullWidthLeftTargetOverlap.addEventListener('mouseover', function (event) {
 			popFullWidthLeftTargetOverlap.openBy(btnFullWidthLeftTargetOverlap);
 		});
 
-		btnFullWidthTop.addEventListener('click', function (event) {
+		btnFullWidthTop.addEventListener('mouseover', function (event) {
 			popFullWidthTop.openBy(btnFullWidthTop);
 		});
 
-		btnFullWidthBottom.addEventListener('click', function (event) {
+		btnFullWidthBottom.addEventListener('mouseover', function (event) {
 			popFullWidthBottom.openBy(btnFullWidthBottom);
 		});
 	</script>
