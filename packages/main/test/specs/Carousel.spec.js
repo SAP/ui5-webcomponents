@@ -161,12 +161,12 @@ describe("Carousel general interaction", () => {
 		navigationArrowForward.click();
 		navigationArrowForward.click();
 
-		assert.strictEqual("0", eventCounter.getProperty("value"), "loadMore event is not thrown");
+		assert.strictEqual(eventCounter.getProperty("value"), "0" , "loadMore event is not thrown");
 
 		navigationArrowForward.click();
 		navigationArrowForward.click();
 		navigationArrowForward.click();
 		
-		assert.strictEqual("3", eventCounter.getProperty("value"), "loadMore event is thrown 3 times");
+		assert.strictEqual(eventCounter.getProperty("value"), "3", "loadMore event is thrown 3 times");
 	});
 });

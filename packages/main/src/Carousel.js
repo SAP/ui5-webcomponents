@@ -182,7 +182,8 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when 80% or more of the content of the <code>ui5-carousel</code> is scrolled and the direction of scrolling is to the end.
+		 * Fired for the last items of the <code>ui5-carousel</code> if it is scrolled and the direction of scrolling is to the end.
+		 * The number of items for which the event is thrown is controlled by the <code>infiniteScrollOffset</code> property.
 		 * @event
 		 * @public
 		 * @since 1.0.0-rc.8
@@ -365,7 +366,7 @@ class Carousel extends UI5Element {
 			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
 		}
 
-		if (this.pagesCount - this.selectedIndex <= this.infiniteScrollOffset) {
+		if (this.pagesCount - this.selectedIndex <= this.infiniteScrollOffset + 1) {
 			this.fireEvent("loadMore");
 		}
 	}
