@@ -14,7 +14,7 @@
 }
 
 .ui5-uc-content.ui5-uc-content-no-data {
-    min-height: 16rem;
+    min-height: 20rem;
 }
 
 /* No Files */
@@ -54,6 +54,7 @@
 .uc-no-files .subtitle {
 	font-size: var(--ui5_upload_collection_level_5Size);
 	color: var(--sapContent_LabelColor);
+    margin-bottom: 2rem;
 }
 
 /* Drag and Drop */
