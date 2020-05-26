@@ -284,7 +284,7 @@ class Button extends UI5Element {
 			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 
-		this.iconOnly = !this.childNodes.length;
+		this.iconOnly = !this.textContent;
 		this.hasIcon = !!this.icon;
 	}
 
