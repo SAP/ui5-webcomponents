@@ -13,6 +13,8 @@ import { DELETE } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
 
+import { ARIA_LABEL_LIST_ITEM_CHECKBOX } from "./generated/i18n/i18n-defaults.js";
+
 /**
  * @public
  */
@@ -288,6 +290,9 @@ class ListItem extends ListItemBase {
 			role: "option",
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
+			checkbox: {
+				ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
+			},
 		};
 	}
 
