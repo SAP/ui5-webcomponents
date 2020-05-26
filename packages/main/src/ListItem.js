@@ -288,9 +288,7 @@ class ListItem extends ListItemBase {
 			role: "option",
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
-			checkbox: {
-				ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
-			},
+			ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 		};
 	}
 
