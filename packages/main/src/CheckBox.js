@@ -133,7 +133,7 @@ const metadata = {
 		 */
 		ariaLabel: {
 			type: String,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		_label: {
