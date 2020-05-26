@@ -623,6 +623,8 @@ class Input extends UI5Element {
 	}
 
 	_afterClosePopover() {
+		this._announceSelectedItem();
+
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this.blur();
@@ -707,6 +709,7 @@ class Input extends UI5Element {
 	previewSuggestion(item) {
 		this.valueBeforeItemSelection = this.value;
 		this.value = item.group ? "" : item.textContent;
+		this._announceSelectedItem();
 	}
 
 	async fireEventByAction(action) {
@@ -798,6 +801,16 @@ class Input extends UI5Element {
 		};
 	}
 
+	_announceSelectedItem() {
+		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
+
+		if (this.Suggestions && this.Suggestions._isItemOnTarget()) {
+			invisibleText.textContent = this.itemSelectionAnnounce;
+		} else {
+			invisibleText.textContent = "";
+		}
+	}
+
 	get _readonly() {
 		return this.readonly && !this.disabled;
 	}
@@ -835,6 +848,10 @@ class Input extends UI5Element {
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
 			},
 		};
+	}
+
+	get itemSelectionAnnounce() {
+		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : undefined;
 	}
 
 	get classes() {
