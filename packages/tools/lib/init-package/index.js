@@ -107,6 +107,9 @@ const updatePackageFile = () => {
 	packageContent.dependencies["@ui5/webcomponents-theme-base"] = RC_VER;
 	packageContent.dependencies["@ui5/webcomponents-tools"] = RC_VER;
 
+	packageContent.devDependencies = packageContent.devDependencies || {};
+	packageContent.devDependencies["chromedriver"] = "latest";
+
 	fs.writeFileSync("package.json", beautify(packageContent, null, 2, 100));
 };
 
