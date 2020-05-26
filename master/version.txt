@@ -1,5 +1,7 @@
-commit d00b0befe3edad02f8670703642ec0ffe7730b64
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri May 22 10:28:04 2020 +0300
+commit ba1ee7815e72e0627c380636fae83f76f170fbbc
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue May 26 09:50:39 2020 +0300
 
-    fix(ui5-segmentedbutton): fix measuring when parent is not displayed (#1657)
+    fix(ui5-button): determine icon-only ignoring comment nodes (#1679)
+    
+    We used to set icon-only if there are no childNodes, but in this case there are child nodes, because the comments are child nodes. Some styles, that rely on having a text are applied and the button does not look right, the icon is not centred as the button is wider than it should.
