@@ -270,7 +270,7 @@ class Popover extends Popup {
 		return PopoverTemplate;
 	}
 
-	static get POPOVER_OFFSET() {
+	static get MIN_OFFSET() {
 		return 10; // px
 	}
 
@@ -412,11 +412,11 @@ class Popover extends Popup {
 		const popoverOnTopBorder = this._top === 0;
 
 		this.actualPlacementType = placement.placementType;
-		this.arrowTranslateX = popoverOnLeftBorder ? placement.arrowX - Popover.POPOVER_OFFSET : placement.arrowX;
-		this.arrowTranslateY = popoverOnTopBorder ? placement.arrowY - Popover.POPOVER_OFFSET : placement.arrowY;
+		this.arrowTranslateX = popoverOnLeftBorder ? placement.arrowX - Popover.MIN_OFFSET : placement.arrowX;
+		this.arrowTranslateY = popoverOnTopBorder ? placement.arrowY - Popover.MIN_OFFSET : placement.arrowY;
 
-		this.style.left = `${popoverOnLeftBorder ? Popover.POPOVER_OFFSET : this._left}px`;
-		this.style.top = `${popoverOnTopBorder ? Popover.POPOVER_OFFSET : this._top}px`;
+		this.style.left = `${popoverOnLeftBorder ? Popover.MIN_OFFSET : this._left}px`;
+		this.style.top = `${popoverOnTopBorder ? Popover.MIN_OFFSET : this._top}px`;
 		this.show();
 
 		if (stretching && this._width) {
