@@ -273,6 +273,10 @@ class UploadCollection extends UI5Element {
 
 	get classes() {
 		return {
+			content: {
+				"ui5-uc-content": true,
+				"ui5-uc-content-no-data": this._showNoData,
+			},
 			dndOverlay: {
 				"uc-dnd-overlay": true,
 				"uc-drag-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drag,
