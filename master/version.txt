@@ -1,5 +1,5 @@
-commit 168e50581a1aa4d5fc2f41cac4fa692339be3313
+commit 549148d71b66151d565f26c0f07d55dad54dc4a2
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed May 27 09:02:10 2020 +0300
+Date:   Wed May 27 09:52:17 2020 +0300
 
-    feat(framework): CLDR location can now be specified (#1687)
+    fix(ui5-upload-collection): minimum height is guaranteed in no-data mode (#1683)
