@@ -176,7 +176,7 @@ const metadata = {
 		 * @param {Number} tabIndex The selected <code>tab</code> index.
 		 * @public
 		 */
-		tabSelect: {
+		"tab-select": {
 			tab: { type: HTMLElement },
 			tabIndex: { type: Number },
 		},
@@ -418,7 +418,7 @@ class TabContainer extends UI5Element {
 	selectTab(selectedTab, selectedTabIndex) {
 		// select the tab
 		this._selectedTab = selectedTab;
-		this.fireEvent("tabSelect", {
+		this.fireEvent("tab-select", {
 			tab: selectedTab,
 			tabIndex: selectedTabIndex,
 		});

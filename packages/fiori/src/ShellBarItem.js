@@ -50,7 +50,7 @@ const metadata = {
 		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
-		itemClick: {
+		"item-click": {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},

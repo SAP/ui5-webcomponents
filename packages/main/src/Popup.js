@@ -101,7 +101,7 @@ const metadata = {
 		 * @event
 		 */
 
-		beforeOpen: {},
+		"before-open": {},
 		/**
 		 * Fired after the component is opened.
 		 *
@@ -109,7 +109,7 @@ const metadata = {
 		 * @event
 		 */
 
-		afterOpen: {},
+		"after-open": {},
 		/**
 		 * Fired before the component is closed.
 		 *
@@ -118,7 +118,7 @@ const metadata = {
 		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
 
-		beforeClose: {
+		"before-close": {
 			escPressed: { type: Boolean },
 		},
 
@@ -128,7 +128,7 @@ const metadata = {
 		 * @public
 		 * @event
 		 */
-		afterClose: {},
+		"after-close": {},
 	},
 };
 

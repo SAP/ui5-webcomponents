@@ -68,10 +68,10 @@ const metadata = {
 		 * @event
 		 * @public
 		 */
-		detailClick: {},
+		"detail-click": {},
 		_press: {},
 		_focused: {},
-		_focusForward: {},
+		"_selection-requested": {},
 	},
 };
 
@@ -200,7 +200,7 @@ class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent("_selectionRequested", { item: this, selected: event.target.checked, selectionComponentPressed: true });
+		this.fireEvent("_selection-requested", { item: this, selected: event.target.checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(event) {
@@ -208,7 +208,7 @@ class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.selected, selectionComponentPressed: true });
+		this.fireEvent("_selection-requested", { item: this, selected: !event.target.selected, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -218,11 +218,11 @@ class ListItem extends ListItemBase {
 	}
 
 	onDelete(event) {
-		this.fireEvent("_selectionRequested", { item: this, selectionComponentPressed: false });
+		this.fireEvent("_selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
 	onDetailClick(event) {
-		this.fireEvent("detailClick", { item: this, selected: this.selected });
+		this.fireEvent("detail-click", { item: this, selected: this.selected });
 	}
 
 	fireItemPress(event) {

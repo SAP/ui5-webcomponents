@@ -118,7 +118,7 @@ const metadata = {
 		 * @public
 		 * @event
 		 */
-		selectionChange: {},
+		change: {},
 		/**
 		 * Fired when month, year has changed due to item navigation.
 		 * @public
@@ -433,7 +433,7 @@ class DayPicker extends UI5Element {
 			this.selectedDates = [sNewDate];
 		}
 
-		this.fireEvent("selectionChange", { dates: [...this._selectedDates] });
+		this.fireEvent("change", { dates: [...this._selectedDates] });
 	}
 
 	_handleMonthBottomOverflow(event) {

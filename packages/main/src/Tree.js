@@ -121,7 +121,7 @@ const metadata = {
 		 * @param {HTMLElement} item the toggled item.
 		 * @public
 		 */
-		itemToggle: {
+		"item-toggle": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -134,7 +134,7 @@ const metadata = {
 		 * @param {HTMLElement} item the clicked item.
 		 * @public
 		 */
-		itemClick: {
+		"item-click": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -149,7 +149,7 @@ const metadata = {
 		 * @param {HTMLElement} item the deleted item.
 		 * @public
 		 */
-		itemDelete: {
+		"item-delete": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -164,7 +164,7 @@ const metadata = {
 		 * @param {Array} previouslySelectedItems An array of the previously selected items.
 		 * @public
 		 */
-		selectionChange: {
+		"selection-change": {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
@@ -282,7 +282,7 @@ class Tree extends UI5Element {
 	_onListItemToggle(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
-		const defaultPrevented = !this.fireEvent("itemToggle", { item: treeItem }, true);
+		const defaultPrevented = !this.fireEvent("item-toggle", { item: treeItem }, true);
 		if (!defaultPrevented) {
 			treeItem.toggle();
 		}
@@ -291,13 +291,13 @@ class Tree extends UI5Element {
 	_onListItemClick(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
-		this.fireEvent("itemClick", { item: treeItem });
+		this.fireEvent("item-click", { item: treeItem });
 	}
 
 	_onListItemDelete(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
-		this.fireEvent("itemDelete", { item: treeItem });
+		this.fireEvent("item-delete", { item: treeItem });
 	}
 
 	_onListSelectionChange(event) {
@@ -311,7 +311,7 @@ class Tree extends UI5Element {
 			item.selected = true;
 		});
 
-		this.fireEvent("selectionChange", {
+		this.fireEvent("selection-change", {
 			previouslySelectedItems,
 			selectedItems,
 		});

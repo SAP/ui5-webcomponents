@@ -58,7 +58,7 @@ const metadata = {
 		},
 
 		/**
-		 * If set to <code>true</code> the file name will be clickable and it will fire <code>fileNameClick</code> event upon click.
+		 * If set to <code>true</code> the file name will be clickable and it will fire <code>file-name-click</code> event upon click.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -174,7 +174,7 @@ const metadata = {
 		 * @event
 		 * @public
 		 */
-		fileNameClick: { },
+		"file-name-click": { },
 
 		/**
 		 * Fired when the <code>fileName</code> property gets changed.
@@ -322,7 +322,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_onFileNameClick(event) {
-		this.fireEvent("fileNameClick");
+		this.fireEvent("file-name-click");
 	}
 
 	_onRetry(event) {

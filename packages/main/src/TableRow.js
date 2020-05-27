@@ -38,6 +38,7 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
+		"row-click": {},
 		_focused: {},
 	},
 };
@@ -90,7 +91,7 @@ class TableRow extends UI5Element {
 			this._onfocusin(event, true /* force row focus */);
 		}
 
-		this.fireEvent("rowClick", { row: this });
+		this.fireEvent("row-click", { row: this });
 	}
 
 	_getActiveElementTagName() {

@@ -190,7 +190,7 @@ const metadata = {
 		 * @public
 		 * @event
 		 */
-		beforeOpen: {},
+		"before-open": {},
 
 		/**
 		 * Fired after the component is opened.
@@ -198,7 +198,7 @@ const metadata = {
 		 * @public
 		 * @event
 		 */
-		afterOpen: {},
+		"after-open": {},
 
 		/**
 		 * Fired before the component is closed.
@@ -207,7 +207,7 @@ const metadata = {
 		 * @event
 		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
-		beforeClose: {
+		"before-close": {
 			escPressed: { type: Boolean },
 		},
 
@@ -217,7 +217,7 @@ const metadata = {
 		 * @public
 		 * @event
 		 */
-		afterClose: {},
+		"after-close": {},
 	},
 };
 
@@ -294,14 +294,14 @@ class Popover extends Popup {
 		this._opener = opener;
 		this._focusedElementBeforeOpen = getFocusedElement();
 
-		this.fireEvent("beforeOpen", {});
+		this.fireEvent("before-open", {});
 		this.reposition();
 		this.applyInitialFocus();
 
 		addOpenedPopover(this);
 
 		this.opened = true;
-		this.fireEvent("afterOpen", {});
+		this.fireEvent("after-open", {});
 	}
 
 	/**
@@ -319,7 +319,7 @@ class Popover extends Popup {
 			Popover.unblockBodyScrolling();
 		}
 
-		this.fireEvent("beforeClose", {
+		this.fireEvent("before-close", {
 			escPressed,
 		}, true);
 
@@ -335,7 +335,7 @@ class Popover extends Popup {
 		}
 
 		this.hide();
-		this.fireEvent("afterClose", {});
+		this.fireEvent("after-close", {});
 	}
 
 	get focusedElement() {

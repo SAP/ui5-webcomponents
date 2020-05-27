@@ -237,7 +237,7 @@ const metadata = {
 		 * @param {Array} items an array of the selected items.
 		 * @public
 		 */
-		selectionChange: {
+		"selection-change": {
 			detail: {
 				items: { type: Array },
 			},
@@ -516,7 +516,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	fireSelectionChange() {
-		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
+		this.fireEvent("selection-change", { items: this._getSelectedItems() });
 		// Angular 2 way data binding
 		this.fireEvent("value-changed");
 	}

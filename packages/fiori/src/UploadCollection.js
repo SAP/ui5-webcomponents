@@ -133,7 +133,7 @@ const metadata = {
 		 * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
 		 * @public
 		 */
-		fileDeleted: {
+		"file-deleted": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -147,7 +147,7 @@ const metadata = {
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @public
 		 */
-		selectionChange: {
+		"selection-change": {
 			detail: {
 				selectedItems: { type: Array },
 			},
@@ -264,11 +264,11 @@ class UploadCollection extends UI5Element {
 	}
 
 	_onItemDelete(event) {
-		this.fireEvent("fileDeleted", { item: event.detail.item });
+		this.fireEvent("file-deleted", { item: event.detail.item });
 	}
 
 	_onSelectionChange(event) {
-		this.fireEvent("selectionChange", { selectedItems: event.detail.selectedItems });
+		this.fireEvent("selection-change", { selectedItems: event.detail.selectedItems });
 	}
 
 	get classes() {

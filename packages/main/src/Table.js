@@ -116,7 +116,7 @@ const metadata = {
 		 * @param {HTMLElement} row the clicked row.
 		 * @public
 		 */
-		rowClick: {
+		"row-click": {
 			detail: {
 				row: { type: HTMLElement },
 			},
@@ -130,7 +130,7 @@ const metadata = {
 		 * @since 1.0.0-rc.6
 		 * @public
 		 */
-		popinChange: {
+		"popin-change": {
 			detail: {
 				poppedColumns: {},
 			},
@@ -277,7 +277,7 @@ class Table extends UI5Element {
 		if (this._hiddenColumns.length !== hiddenColumns.length) {
 			this._hiddenColumns = hiddenColumns;
 			if (hiddenColumns.length) {
-				this.fireEvent("popinChange", {
+				this.fireEvent("popin-change", {
 					poppedColumns: this._hiddenColumns,
 				});
 			}

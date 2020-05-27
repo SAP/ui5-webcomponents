@@ -97,7 +97,7 @@ const metadata = {
 		 * @param {HTMLElement} item the item on which right arrow was pressed.
 		 * @public
 		 */
-		stepIn: {
+		"step-in": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -109,7 +109,7 @@ const metadata = {
 		 * @param {HTMLElement} item the item on which left arrow was pressed.
 		 * @public
 		 */
-		stepOut: {
+		"step-out": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -191,7 +191,7 @@ class TreeListItem extends ListItem {
 			if (!this.expanded) {
 				this.fireEvent("toggle", { item: this });
 			} else {
-				this.fireEvent("stepIn", { item: this });
+				this.fireEvent("step-in", { item: this });
 			}
 		}
 
@@ -199,7 +199,7 @@ class TreeListItem extends ListItem {
 			if (this.expanded) {
 				this.fireEvent("toggle", { item: this });
 			} else if (this.hasParent) {
-				this.fireEvent("stepOut", { item: this });
+				this.fireEvent("step-out", { item: this });
 			}
 		}
 	}
