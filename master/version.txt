@@ -1,5 +1,5 @@
-commit e7af4808a07df30edf8c2ed0b895456c63c85d54
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed May 27 10:05:59 2020 +0300
+commit 2da6a3479e56c44ea5eabc953f3fccd8dd3b6169
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed May 27 13:37:24 2020 +0300
 
-    feat(ui5-carousel): introduce loadMore event (#1667)
+    feat(ui5-tools): libraries can now control chromedriver version (#1684)
