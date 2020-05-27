@@ -1,509 +1,433 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-	<title>Carousel</title>
+    <title>Carousel</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js"></script>
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../../resources/bundle.esm.js" type="module"></script>
+    <script nomodule src="../../resources/bundle.es5.js"></script>
 
 </head>
 
 <body style="background-color: var(--sapBackgroundColor); padding: 1rem;">
-<style>
-	ui5-carousel {
-		height: 25rem;
-		margin-bottom: 1rem;
-	}
+    <style>
+        ui5-carousel {
+            height: 25rem;
+            margin-bottom: 1rem;
+        }
 
-    .myCard {
-        height: 100%;
-    }
-</style>
+        .myCard {
+            height: 100%;
+        }
+    </style>
 
-<ui5-carousel items-per-page-s="3" items-per-page-m="3" items-per-page-l="3">
-    <ui5-card
-            id="card"
-            status="1 of 11"
-            heading="Quick Links"
-            subheading="quick links"
-            header-interactive
+    <ui5-carousel items-per-page-s="3" items-per-page-m="3" items-per-page-l="3">
+        <ui5-card id="card" status="1 of 11" heading="Quick Links" subheading="quick links" header-interactive
             class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-            <ui5-li icon="line-charts" >Marketing plans</ui5-li>
-        </ui5-list>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+                <ui5-li icon="line-charts">Marketing plans</ui5-li>
+            </ui5-list>
 
-        <ui5-input id="field" value="0"></ui5-input>
-    </ui5-card>
+            <ui5-input id="field" value="0"></ui5-input>
+        </ui5-card>
 
-    <ui5-card
-            id="card2"
-            status="2 of 11"
-            heading="Quick Links"
-            subheading="quick links"
+        <ui5-card id="card2" status="2 of 11" heading="Quick Links" subheading="quick links" class="myCard">
+            <ui5-icon name="group" slot="avatar"></ui5-icon>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card heading="Quick Links" status="3 of 11" subheading="quick links" class="myCard">
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card id="card" status="4 of 11" heading="Quick Links" subheading="quick links" header-interactive
             class="myCard">
-        <ui5-icon name="group" slot="avatar"></ui5-icon>
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+                <ui5-li icon="line-charts">Marketing plans</ui5-li>
+            </ui5-list>
 
-    <ui5-card heading="Quick Links" status="3 of 11" subheading="quick links" class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+            <ui5-input id="field" value="0"></ui5-input>
+        </ui5-card>
 
-    <ui5-card
-            id="card"
-            status="4 of 11"
-            heading="Quick Links"
-            subheading="quick links"
-            header-interactive
+        <ui5-card id="card2" status="5 of 11" heading="Quick Links" subheading="quick links" class="myCard">
+            <ui5-icon name="group" slot="avatar"></ui5-icon>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card heading="Quick Links" status="6 of 11" subheading="quick links" class="myCard">
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card id="card" status="7 of 11" heading="Quick Links" subheading="quick links" header-interactive
             class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-            <ui5-li icon="line-charts" >Marketing plans</ui5-li>
-        </ui5-list>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+                <ui5-li icon="line-charts">Marketing plans</ui5-li>
+            </ui5-list>
 
-        <ui5-input id="field" value="0"></ui5-input>
-    </ui5-card>
+            <ui5-input id="field" value="0"></ui5-input>
+        </ui5-card>
 
-    <ui5-card
-            id="card2"
-            status="5 of 11"
-            heading="Quick Links"
-            subheading="quick links"
+        <ui5-card id="card2" status="8 of 11" heading="Quick Links" subheading="quick links" class="myCard">
+            <ui5-icon name="group" slot="avatar"></ui5-icon>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card heading="Quick Links" status="9 of 11" subheading="quick links" class="myCard">
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card id="card2" status="10 of 11" heading="Quick Links" subheading="quick links" class="myCard">
+            <ui5-icon name="group" slot="avatar"></ui5-icon>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card heading="Quick Links" status="11 of 11" subheading="quick links" class="myCard">
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+    </ui5-carousel>
+
+
+    <ui5-carousel items-per-page-s="1" items-per-page-m="2" items-per-page-l="3">
+        <ui5-card id="card" status="Item 1" heading="Quick Links" subheading="quick links" header-interactive
             class="myCard">
-        <ui5-icon name="group" slot="avatar"></ui5-icon>
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+                <ui5-li icon="line-charts">Marketing plans</ui5-li>
+            </ui5-list>
 
-    <ui5-card heading="Quick Links" status="6 of 11" subheading="quick links" class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+            <ui5-input id="field" value="0"></ui5-input>
+        </ui5-card>
 
-    <ui5-card
-            id="card"
-            status="7 of 11"
-            heading="Quick Links"
-            subheading="quick links"
-            header-interactive
+        <ui5-card id="card2" status="Item 2" heading="Quick Links" subheading="quick links" class="myCard">
+            <ui5-icon name="group" slot="avatar"></ui5-icon>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card heading="Quick Links" status="Item 3" subheading="quick links" class="myCard">
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card id="card" status="Item 4" heading="Quick Links" subheading="quick links" header-interactive
             class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-            <ui5-li icon="line-charts" >Marketing plans</ui5-li>
-        </ui5-list>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+                <ui5-li icon="line-charts">Marketing plans</ui5-li>
+            </ui5-list>
 
-        <ui5-input id="field" value="0"></ui5-input>
-    </ui5-card>
+            <ui5-input id="field" value="0"></ui5-input>
+        </ui5-card>
 
-    <ui5-card
-            id="card2"
-            status="8 of 11"
-            heading="Quick Links"
-            subheading="quick links"
+        <ui5-card id="card2" status="Item 5" heading="Quick Links" subheading="quick links" class="myCard">
+            <ui5-icon name="group" slot="avatar"></ui5-icon>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card heading="Quick Links" status="Item 6" subheading="quick links" class="myCard">
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card id="card" status="Item 7" heading="Quick Links" subheading="quick links" header-interactive
             class="myCard">
-        <ui5-icon name="group" slot="avatar"></ui5-icon>
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+                <ui5-li icon="line-charts">Marketing plans</ui5-li>
+            </ui5-list>
 
-    <ui5-card heading="Quick Links" status="9 of 11" subheading="quick links" class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+            <ui5-input id="field" value="0"></ui5-input>
+        </ui5-card>
 
-    <ui5-card
-            id="card2"
-            status="10 of 11"
-            heading="Quick Links"
-            subheading="quick links"
+        <ui5-card id="card2" status="Item 8" heading="Quick Links" subheading="quick links" class="myCard">
+            <ui5-icon name="group" slot="avatar"></ui5-icon>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card heading="Quick Links" status="Item 9" subheading="quick links" class="myCard">
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card id="card2" status="Item 10" heading="Quick Links" subheading="quick links" class="myCard">
+            <ui5-icon name="group" slot="avatar"></ui5-icon>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card heading="Quick Links" status="Item 11" subheading="quick links" class="myCard">
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+    </ui5-carousel>
+
+    <ui5-carousel items-per-page-s="1" items-per-page-m="2" items-per-page-l="3">
+        <ui5-card id="card" status="1 of 8" heading="Quick Links" subheading="quick links" header-interactive
             class="myCard">
-        <ui5-icon name="group" slot="avatar"></ui5-icon>
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+                <ui5-li icon="line-charts">Marketing plans</ui5-li>
+            </ui5-list>
 
-    <ui5-card heading="Quick Links" status="11 of 11" subheading="quick links" class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+            <ui5-input id="field" value="0"></ui5-input>
+        </ui5-card>
 
-</ui5-carousel>
+        <ui5-card id="card2" status="2 of 8" heading="Quick Links" subheading="quick links" class="myCard">
+            <ui5-icon name="group" slot="avatar"></ui5-icon>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
 
+        <ui5-card heading="Quick Links" status="3 of 8" subheading="quick links" class="myCard">
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
 
-<ui5-carousel items-per-page-s="1" items-per-page-m="2" items-per-page-l="3">
-    <ui5-card
-            id="card"
-            status="Item 1"
-            heading="Quick Links"
-            subheading="quick links"
-            header-interactive
+        <ui5-card id="card" status="4 of 8" heading="Quick Links" subheading="quick links" header-interactive
             class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-            <ui5-li icon="line-charts" >Marketing plans</ui5-li>
-        </ui5-list>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+                <ui5-li icon="line-charts">Marketing plans</ui5-li>
+            </ui5-list>
 
-        <ui5-input id="field" value="0"></ui5-input>
-    </ui5-card>
+            <ui5-input id="field" value="0"></ui5-input>
+        </ui5-card>
 
-    <ui5-card
-            id="card2"
-            status="Item 2"
-            heading="Quick Links"
-            subheading="quick links"
+        <ui5-card id="card2" status="5 of 8" heading="Quick Links" subheading="quick links" class="myCard">
+            <ui5-icon name="group" slot="avatar"></ui5-icon>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card heading="Quick Links" status="6 of 8" subheading="quick links" class="myCard">
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+
+        <ui5-card id="card" status="7 of 8" heading="Quick Links" subheading="quick links" header-interactive
             class="myCard">
-        <ui5-icon name="group" slot="avatar"></ui5-icon>
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+                <ui5-li icon="line-charts">Marketing plans</ui5-li>
+            </ui5-list>
 
-    <ui5-card heading="Quick Links" status="Item 3" subheading="quick links" class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+            <ui5-input id="field" value="0"></ui5-input>
+        </ui5-card>
 
-    <ui5-card
-            id="card"
-            status="Item 4"
-            heading="Quick Links"
-            subheading="quick links"
-            header-interactive
+        <ui5-card id="card2" status="8 of 8" heading="Quick Links" subheading="quick links" class="myCard">
+            <ui5-icon name="group" slot="avatar"></ui5-icon>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+            </ui5-list>
+        </ui5-card>
+    </ui5-carousel>
+
+
+
+    <ui5-carousel id="carousel1" cyclic="true">
+        <ui5-button>Button 1</ui5-button>
+        <ui5-button>Button 2</ui5-button>
+        <ui5-button>Button 3</ui5-button>
+    </ui5-carousel>
+
+    <ui5-carousel id="carousel2">
+        <ui5-button>Button 1</ui5-button>
+        <ui5-button>Button 2</ui5-button>
+        <ui5-button>Button 3</ui5-button>
+        <ui5-button>Button 4</ui5-button>
+        <ui5-button>Button 5</ui5-button>
+        <ui5-button>Button 6</ui5-button>
+        <ui5-button>Button 7</ui5-button>
+        <ui5-button>Button 8</ui5-button>
+        <ui5-button>Button 9</ui5-button>
+    </ui5-carousel>
+
+    <ui5-carousel id="carousel3" arrows-placement="Navigation">
+        <ui5-button>Button 1</ui5-button>
+        <ui5-button>Button 2</ui5-button>
+        <ui5-button>Button 3</ui5-button>
+    </ui5-carousel>
+
+    <ui5-carousel id="carousel4" arrows-placement="Navigation">
+        <ui5-card id="card" status="1 of 3" heading="Quick Links" subheading="quick links" header-interactive
             class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-            <ui5-li icon="line-charts" >Marketing plans</ui5-li>
+            <ui5-list id="myList3" separators="Inner">
+                <ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
+                <ui5-li icon="opportunity">Segmentation Models</ui5-li>
+                <ui5-li icon="line-charts">Marketing plans</ui5-li>
+            </ui5-list>
+
+            <ui5-input id="field" value="0"></ui5-input>
+        </ui5-card>
+
+        <ui5-list header-text="API: GroupHeaderListItem (2/3)" mode="MultiSelect">
+            <ui5-li-groupheader>New Items</ui5-li-groupheader>
+            <ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat
+                elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam.
+                Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad
+                excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex
+                laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+            <ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"
+                info-state="Error">Laptop Lenovo</ui5-li>
+            <ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"
+                info-state="Error">IPhone 3</ui5-li>
         </ui5-list>
 
-        <ui5-input id="field" value="0"></ui5-input>
-    </ui5-card>
-
-    <ui5-card
-            id="card2"
-            status="Item 5"
-            heading="Quick Links"
-            subheading="quick links"
-            class="myCard">
-        <ui5-icon name="group" slot="avatar"></ui5-icon>
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
+        <ui5-list header-text="API: icon (3/3)">
+            <ui5-li icon="navigation-right-arrow">Option 1</ui5-li>
+            <ui5-li icon="navigation-right-arrow">Option 2</ui5-li>
+            <ui5-li icon="navigation-right-arrow">Option 3</ui5-li>
+            <ui5-li icon-end icon="navigation-right-arrow">Option 1</ui5-li>
+            <ui5-li icon-end icon="navigation-right-arrow">Option 2</ui5-li>
+            <ui5-li icon-end icon="navigation-right-arrow">Option 3</ui5-li>
         </ui5-list>
-    </ui5-card>
+    </ui5-carousel>
 
-    <ui5-card heading="Quick Links" status="Item 6" subheading="quick links" class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+    <ui5-carousel id="carousel5" items-per-page-m="4" items-per-page-l="4">
+        <ui5-button>Button 1</ui5-button>
+        <ui5-button>Button 2</ui5-button>
+        <ui5-button>Button 3</ui5-button>
+        <ui5-button>Button 4</ui5-button>
+        <ui5-button>Button 5</ui5-button>
+        <ui5-button>Button 6</ui5-button>
+        <ui5-button>Button 7</ui5-button>
+        <ui5-button>Button 8</ui5-button>
+    </ui5-carousel>
 
-    <ui5-card
-            id="card"
-            status="Item 7"
-            heading="Quick Links"
-            subheading="quick links"
-            header-interactive
-            class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-            <ui5-li icon="line-charts" >Marketing plans</ui5-li>
-        </ui5-list>
+    <ui5-title>Carousel with one page</ui5-title>
+    <ui5-label>The arrows and dots are not displayed</ui5-label>
 
-        <ui5-input id="field" value="0"></ui5-input>
-    </ui5-card>
+    <ui5-carousel id="carousel6" items-per-page-m="3" items-per-page-l="4">
+        <ui5-button>Button 1</ui5-button>
+        <ui5-button>Button 2</ui5-button>
+        <ui5-button>Button 3</ui5-button>
+    </ui5-carousel>
 
-    <ui5-card
-            id="card2"
-            status="Item 8"
-            heading="Quick Links"
-            subheading="quick links"
-            class="myCard">
-        <ui5-icon name="group" slot="avatar"></ui5-icon>
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+    <ui5-title>Carousel with out of range index</ui5-title>
+    <ui5-carousel id="carousel7" items-per-page-s="1" items-per-page-m="4" items-per-page-l="8" selected-index="15">
+        <ui5-button>Button 1</ui5-button>
+        <ui5-button>Button 2</ui5-button>
+        <ui5-button>Button 3</ui5-button>
+        <ui5-button>Button 4</ui5-button>
+        <ui5-button>Button 5</ui5-button>
+        <ui5-button>Button 6</ui5-button>
+        <ui5-button>Button 7</ui5-button>
+        <ui5-button>Button 8</ui5-button>
+        <ui5-button>Button 9</ui5-button>
+    </ui5-carousel>
 
-    <ui5-card heading="Quick Links" status="Item 9" subheading="quick links" class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
+    <ui5-carousel id="carousel8" items-per-page-m="4" items-per-page-l="4">
+        <ui5-button>Button 1</ui5-button>
+        <ui5-button>Button 2</ui5-button>
+        <ui5-button>Button 3</ui5-button>
+        <ui5-button>Button 4</ui5-button>
+        <ui5-button>Button 5</ui5-button>
+        <ui5-button>Button 6</ui5-button>
+        <ui5-button>Button 7</ui5-button>
+        <ui5-button>Button 8</ui5-button>
+    </ui5-carousel>
+    <ui5-input id="result"></ui5-input>
+    <ui5-input id="resultCounter"></ui5-input>
 
-    <ui5-card
-            id="card2"
-            status="Item 10"
-            heading="Quick Links"
-            subheading="quick links"
-            class="myCard">
-        <ui5-icon name="group" slot="avatar"></ui5-icon>
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
-
-    <ui5-card heading="Quick Links" status="Item 11" subheading="quick links" class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
-
-</ui5-carousel>
-
-<ui5-carousel items-per-page-s="1" items-per-page-m="2" items-per-page-l="3">
-    <ui5-card
-            id="card"
-            status="1 of 8"
-            heading="Quick Links"
-            subheading="quick links"
-            header-interactive
-            class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-            <ui5-li icon="line-charts" >Marketing plans</ui5-li>
-        </ui5-list>
-
-        <ui5-input id="field" value="0"></ui5-input>
-    </ui5-card>
-
-    <ui5-card
-            id="card2"
-            status="2 of 8"
-            heading="Quick Links"
-            subheading="quick links"
-            class="myCard">
-        <ui5-icon name="group" slot="avatar"></ui5-icon>
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
-
-    <ui5-card heading="Quick Links" status="3 of 8" subheading="quick links" class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
-
-    <ui5-card
-            id="card"
-            status="4 of 8"
-            heading="Quick Links"
-            subheading="quick links"
-            header-interactive
-            class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-            <ui5-li icon="line-charts" >Marketing plans</ui5-li>
-        </ui5-list>
-
-        <ui5-input id="field" value="0"></ui5-input>
-    </ui5-card>
-
-    <ui5-card
-            id="card2"
-            status="5 of 8"
-            heading="Quick Links"
-            subheading="quick links"
-            class="myCard">
-        <ui5-icon name="group" slot="avatar"></ui5-icon>
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
-
-    <ui5-card heading="Quick Links" status="6 of 8" subheading="quick links" class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
-
-    <ui5-card
-            id="card"
-            status="7 of 8"
-            heading="Quick Links"
-            subheading="quick links"
-            header-interactive
-            class="myCard">
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-            <ui5-li icon="line-charts" >Marketing plans</ui5-li>
-        </ui5-list>
-
-        <ui5-input id="field" value="0"></ui5-input>
-    </ui5-card>
-
-    <ui5-card
-            id="card2"
-            status="8 of 8"
-            heading="Quick Links"
-            subheading="quick links"
-            class="myCard">
-        <ui5-icon name="group" slot="avatar"></ui5-icon>
-        <ui5-list id="myList3" separators="Inner">
-            <ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-            <ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-        </ui5-list>
-    </ui5-card>
-</ui5-carousel>
-
-
-
-<ui5-carousel id="carousel1" cyclic="true">
-	<ui5-button>Button 1</ui5-button>
-	<ui5-button>Button 2</ui5-button>
-	<ui5-button>Button 3</ui5-button>
-</ui5-carousel>
-
-<ui5-carousel id="carousel2">
-	<ui5-button>Button 1</ui5-button>
-	<ui5-button>Button 2</ui5-button>
-	<ui5-button>Button 3</ui5-button>
-	<ui5-button>Button 4</ui5-button>
-	<ui5-button>Button 5</ui5-button>
-	<ui5-button>Button 6</ui5-button>
-	<ui5-button>Button 7</ui5-button>
-	<ui5-button>Button 8</ui5-button>
-	<ui5-button>Button 9</ui5-button>
-</ui5-carousel>
-
-<ui5-carousel id="carousel3" arrows-placement="Navigation">
-	<ui5-button>Button 1</ui5-button>
-	<ui5-button>Button 2</ui5-button>
-	<ui5-button>Button 3</ui5-button>
-</ui5-carousel>
-
-<ui5-carousel id="carousel4" arrows-placement="Navigation">
-	<ui5-card
-		id="card"
-		status="1 of 3"
-		heading="Quick Links"
-		subheading="quick links"
-		header-interactive
-		class="myCard">
-		<ui5-list id="myList3" separators="Inner">
-			<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
-			<ui5-li icon="opportunity" >Segmentation Models</ui5-li>
-			<ui5-li icon="line-charts" >Marketing plans</ui5-li>
-		</ui5-list>
-
-		<ui5-input id="field" value="0"></ui5-input>
-	</ui5-card>
-
-	<ui5-list header-text="API: GroupHeaderListItem (2/3)" mode="MultiSelect">
-		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
-	</ui5-list>
-
-	<ui5-list header-text="API: icon (3/3)">
-		<ui5-li  icon="navigation-right-arrow">Option 1</ui5-li>
-		<ui5-li  icon="navigation-right-arrow">Option 2</ui5-li>
-		<ui5-li  icon="navigation-right-arrow">Option 3</ui5-li>
-		<ui5-li  icon-end icon="navigation-right-arrow">Option 1</ui5-li>
-		<ui5-li  icon-end icon="navigation-right-arrow">Option 2</ui5-li>
-		<ui5-li  icon-end icon="navigation-right-arrow">Option 3</ui5-li>
-	</ui5-list>
-</ui5-carousel>
-
-<ui5-carousel id="carousel5" items-per-page-m="4" items-per-page-l="4">
-	<ui5-button>Button 1</ui5-button>
-	<ui5-button>Button 2</ui5-button>
-	<ui5-button>Button 3</ui5-button>
-	<ui5-button>Button 4</ui5-button>
-	<ui5-button>Button 5</ui5-button>
-	<ui5-button>Button 6</ui5-button>
-	<ui5-button>Button 7</ui5-button>
-	<ui5-button>Button 8</ui5-button>
-</ui5-carousel>
-
-<ui5-title>Carousel with one page</ui5-title>
-<ui5-label>The arrows and dots are not displayed</ui5-label>
-
-<ui5-carousel id="carousel6" items-per-page-m="3" items-per-page-l="4">
-	<ui5-button>Button 1</ui5-button>
-	<ui5-button>Button 2</ui5-button>
-	<ui5-button>Button 3</ui5-button>
-</ui5-carousel>
-
-<ui5-title>Carousel with out of range index</ui5-title>
-<ui5-carousel id="carousel7" items-per-page-s="1" items-per-page-m="4" items-per-page-l="8" selected-index="15">
-	<ui5-button>Button 1</ui5-button>
-	<ui5-button>Button 2</ui5-button>
-	<ui5-button>Button 3</ui5-button>
-	<ui5-button>Button 4</ui5-button>
-	<ui5-button>Button 5</ui5-button>
-	<ui5-button>Button 6</ui5-button>
-	<ui5-button>Button 7</ui5-button>
-	<ui5-button>Button 8</ui5-button>
-	<ui5-button>Button 9</ui5-button>
-</ui5-carousel>
-
-<ui5-carousel id="carousel8" items-per-page-m="4" items-per-page-l="4">
-	<ui5-button>Button 1</ui5-button>
-	<ui5-button>Button 2</ui5-button>
-	<ui5-button>Button 3</ui5-button>
-	<ui5-button>Button 4</ui5-button>
-	<ui5-button>Button 5</ui5-button>
-	<ui5-button>Button 6</ui5-button>
-	<ui5-button>Button 7</ui5-button>
-	<ui5-button>Button 8</ui5-button>
-</ui5-carousel>
-<ui5-input id="result"></ui5-input>
-<ui5-input id="resultCounter"></ui5-input>
+    <ui5-carousel id="carousel9" infinite-scroll-offset="2">
+        <ui5-button>Button 1</ui5-button>
+        <ui5-button>Button 2</ui5-button>
+        <ui5-button>Button 3</ui5-button>
+        <ui5-button>Button 4</ui5-button>
+        <ui5-button>Button 5</ui5-button>
+        <ui5-button>Button 6</ui5-button>
+        <ui5-button>Button 7</ui5-button>
+        <ui5-button>Button 8</ui5-button>
+        <ui5-button>Button 9</ui5-button>
+        <ui5-button>Button 10</ui5-button>
+    </ui5-carousel>
+    <ui5-input id="loadmore-result" value="0"></ui5-input>
 
 </body>
 
 <script>
-	var counter = 0;
-	carousel8.addEventListener("ui5-navigate", function(event){
-		result.value = event.detail.selectedIndex;
-		resultCounter.value = ++counter;
-	});
+    var counter = 0;
+    carousel8.addEventListener("ui5-navigate", function (event) {
+        result.value = event.detail.selectedIndex;
+        resultCounter.value = ++counter;
+    });
+
+    var loadMoreConter = 0,
+        loadMoreInput = document.getElementById("loadmore-result");
+
+    carousel9.addEventListener("ui5-loadMore", function (event) {
+        loadMoreInput.value = ++loadMoreConter;
+    });
 </script>
+
 </html>
