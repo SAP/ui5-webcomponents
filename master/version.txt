@@ -1,5 +1,9 @@
-commit 2da6a3479e56c44ea5eabc953f3fccd8dd3b6169
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed May 27 13:37:24 2020 +0300
+commit b673a0cbcb469ffe38680143f96cb5214657051c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed May 27 14:45:21 2020 +0300
 
-    feat(ui5-tools): libraries can now control chromedriver version (#1684)
+    fix(ui5-popover): ensure offset from window borders (#1690)
+    
+    By design the popover should have a minimum 10 px offset from the window borders.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1656
