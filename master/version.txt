@@ -1,5 +1,5 @@
-commit 549148d71b66151d565f26c0f07d55dad54dc4a2
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed May 27 09:52:17 2020 +0300
+commit e7af4808a07df30edf8c2ed0b895456c63c85d54
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed May 27 10:05:59 2020 +0300
 
-    fix(ui5-upload-collection): minimum height is guaranteed in no-data mode (#1683)
+    feat(ui5-carousel): introduce loadMore event (#1667)

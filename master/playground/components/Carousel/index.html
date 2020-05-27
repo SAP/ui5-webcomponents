@@ -217,6 +217,8 @@
       
     
       
+    
+      
         
       
     
@@ -254,6 +256,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -784,6 +788,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" class="navigation-list-link">
@@ -948,6 +954,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -2043,6 +2051,19 @@ For the <code>ui5-carousel</code> <h3>ES6 Module Import</h3>
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          infiniteScrollOffset
+                            <br>
+                            <code>infinite-scroll-offset</code>
+                        </div>
+                        <div class="cell api-table-content-cell">Integer</div>
+                        <div class="cell api-table-content-cell">1</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines when the <code>loadMore</code> event is thrown. If not applied the event will not be thrown.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           itemsPerPageL
                             <br>
                             <code>items-per-page-l</code>
@@ -2053,7 +2074,7 @@ For the <code>ui5-carousel</code> <h3>ES6 Module Import</h3>
                             Sets the number of items per page on large size (more than 1024px). One item per page shown by default.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           itemsPerPageM
                             <br>
@@ -2065,7 +2086,7 @@ For the <code>ui5-carousel</code> <h3>ES6 Module Import</h3>
                             Sets the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           itemsPerPageS
                             <br>
@@ -2077,7 +2098,7 @@ For the <code>ui5-carousel</code> <h3>ES6 Module Import</h3>
                             Sets the number of items per page on small size (up to 640px). One item per page shown by default.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           selectedIndex
                             <br>
@@ -2124,6 +2145,14 @@ For the <code>ui5-carousel</code> <h3>ES6 Module Import</h3>
                     </div>
             
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">loadMore</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired for the last items of the <code>ui5-carousel</code> if it is scrolled and the direction of scrolling is to the end. The number of items for which the event is thrown is controlled by the <code>infiniteScrollOffset</code> property.
+                            <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
+                        </div>
+                      </div>
+            
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">navigate</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired whenever the <code>selectedIndex</code> changes due to user interaction, when the user clicks on the navigation arrows or while resizing, based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
