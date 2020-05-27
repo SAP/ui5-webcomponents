@@ -18,8 +18,6 @@ let packageContent;
 
 const DEFAULT_PORT = 8080;
 const DEFAULT_TAG = 'ui5-demo';
-const BETA_VER = "0.20.0";
-const RC_VER = "1.0.0-rc.7";
 
 // from where all the files will be copied
 const RESOURCES_DIR = path.join(`${__dirname}`, `resources/`);
@@ -102,14 +100,8 @@ const updatePackageFile = () => {
 		"prepublishOnly": "npm run build"
 	};
 
-	packageContent.dependencies = packageContent.dependencies || {};
-	packageContent.dependencies["@ui5/webcomponents-base"] = BETA_VER;
-	packageContent.dependencies["@ui5/webcomponents-theme-base"] = RC_VER;
-	packageContent.dependencies["@ui5/webcomponents-tools"] = RC_VER;
-
 	packageContent.devDependencies = packageContent.devDependencies || {};
 	packageContent.devDependencies["chromedriver"] = "latest";
-	packageContent.devDependencies["wdio-chromedriver-service"] = "latest";
 
 	fs.writeFileSync("package.json", beautify(packageContent, null, 2, 100));
 };
