@@ -109,6 +109,7 @@ const updatePackageFile = () => {
 
 	packageContent.devDependencies = packageContent.devDependencies || {};
 	packageContent.devDependencies["chromedriver"] = "latest";
+	packageContent.devDependencies["wdio-chromedriver-service"] = "latest";
 
 	fs.writeFileSync("package.json", beautify(packageContent, null, 2, 100));
 };
