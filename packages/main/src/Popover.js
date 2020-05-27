@@ -270,6 +270,10 @@ class Popover extends Popup {
 		return PopoverTemplate;
 	}
 
+	static get POPOVER_OFFSET() {
+		return 10; // px
+	}
+
 	isOpenerClicked(event) {
 		const target = event.target;
 		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener);
@@ -404,12 +408,15 @@ class Popover extends Popup {
 
 		this._oldPlacement = placement;
 
-		this.actualPlacementType = placement.placementType;
-		this.arrowTranslateX = placement.arrowX;
-		this.arrowTranslateY = placement.arrowY;
+		const popoverOnLeftBorder = this._left === 0;
+		const popoverOnTopBorder = this._top === 0;
 
-		this.style.left = `${this._left}px`;
-		this.style.top = `${this._top}px`;
+		this.actualPlacementType = placement.placementType;
+		this.arrowTranslateX = popoverOnLeftBorder ? placement.arrowX - Popover.POPOVER_OFFSET : placement.arrowX;
+		this.arrowTranslateY = popoverOnTopBorder ? placement.arrowY - Popover.POPOVER_OFFSET: placement.arrowY;
+
+		this.style.left = `${popoverOnLeftBorder ? Popover.POPOVER_OFFSET: this._left}px`;
+		this.style.top = `${popoverOnTopBorder ? Popover.POPOVER_OFFSET: this._top}px`;
 		this.show();
 
 		if (stretching && this._width) {
