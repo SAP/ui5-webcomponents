@@ -4,6 +4,7 @@ import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
+import SharedResources from "./SharedResources.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
@@ -19,8 +20,6 @@ const metadata = {
 		_propertyChange: {},
 	},
 };
-
-let autoId = 0;
 
 const elementTimeouts = new Map();
 
@@ -58,7 +57,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_generateId() {
-		this._id = `ui5wc_${++autoId}`;
+		this._id = `ui5wc_${++SharedResources.autoId}`;
 	}
 
 	/**
