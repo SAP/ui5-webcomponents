@@ -35,7 +35,6 @@
     "@webcomponents/webcomponentsjs": "^2.4.0",
     "chai": "^4.2.0",
     "chokidar-cli": "^2.0.0",
-    "chromedriver": "^83.0.0",
     "clean-css": "^4.2.1",
     "command-line-args": "^5.1.1",
     "concurrently": "^5.0.0",
@@ -73,6 +72,9 @@
     "rollup-plugin-visualizer": "^0.9.2",
     "serve": "^10.1.1",
     "wdio-chromedriver-service": "^6.0.2"
+  },
+  "peerDependencies": {
+    "chromedriver": "*"
   },
   "resolutions": {
     "rollup-plugin-livereload/livereload/chokidar": "^3.x"
