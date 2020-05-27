@@ -413,10 +413,10 @@ class Popover extends Popup {
 
 		this.actualPlacementType = placement.placementType;
 		this.arrowTranslateX = popoverOnLeftBorder ? placement.arrowX - Popover.POPOVER_OFFSET : placement.arrowX;
-		this.arrowTranslateY = popoverOnTopBorder ? placement.arrowY - Popover.POPOVER_OFFSET: placement.arrowY;
+		this.arrowTranslateY = popoverOnTopBorder ? placement.arrowY - Popover.POPOVER_OFFSET : placement.arrowY;
 
-		this.style.left = `${popoverOnLeftBorder ? Popover.POPOVER_OFFSET: this._left}px`;
-		this.style.top = `${popoverOnTopBorder ? Popover.POPOVER_OFFSET: this._top}px`;
+		this.style.left = `${popoverOnLeftBorder ? Popover.POPOVER_OFFSET : this._left}px`;
+		this.style.top = `${popoverOnTopBorder ? Popover.POPOVER_OFFSET : this._top}px`;
 		this.show();
 
 		if (stretching && this._width) {
