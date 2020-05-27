@@ -1,7 +1,5 @@
-commit ba1ee7815e72e0627c380636fae83f76f170fbbc
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue May 26 09:50:39 2020 +0300
+commit 168e50581a1aa4d5fc2f41cac4fa692339be3313
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed May 27 09:02:10 2020 +0300
 
-    fix(ui5-button): determine icon-only ignoring comment nodes (#1679)
-    
-    We used to set icon-only if there are no childNodes, but in this case there are child nodes, because the comments are child nodes. Some styles, that rely on having a text are applied and the button does not look right, the icon is not centred as the button is wider than it should.
+    feat(framework): CLDR location can now be specified (#1687)
