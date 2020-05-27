@@ -132,8 +132,10 @@ const getParentPopoversIfNested = instance => {
 	const parentPopovers = [];
 
 	while (currentElement.parentNode) {
-		if (currentElement.isUI5Element && currentElement.tagName === "UI5-POPOVER") {
-			parentPopovers.push(currentElement);
+		for (let i = 0; i < openedRegistry.length; i++) {
+			if (currentElement._id && currentElement._id === openedRegistry[i].instance._id) {
+				parentPopovers.push(currentElement);
+			}
 		}
 
 		currentElement = currentElement.parentNode;
