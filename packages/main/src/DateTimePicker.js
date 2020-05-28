@@ -35,6 +35,7 @@ import {
 import DateTimePickerPopoverTemplate from "./generated/templates/DateTimePickerPopoverTemplate.lit.js";
 
 // Styles
+import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
@@ -167,6 +168,10 @@ class DateTimePicker extends DatePicker {
 
 	static get staticAreaTemplate() {
 		return DateTimePickerPopoverTemplate;
+	}
+
+	static get styles() {
+		return [super.styles, DateTimePickerCss];
 	}
 
 	static get staticAreaStyles() {
