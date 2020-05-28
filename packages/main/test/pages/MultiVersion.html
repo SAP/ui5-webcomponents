@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>Button</title>
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
+    <script src="bundles/button.card.label.link.esm.js" type="module"></script>
+    <script nomodule src="bundles/button.card.label.link.es5.js"></script>
+
+	<script src="bundles/avatar.badge.button.esm.js" type="module"></script>
+	<script nomodule src="bundles/avatar.badge.button.es5.js"></script>
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+    <section>
+        <ui5-button icon="home"><!----><!----></ui5-button>
+        <ui5-button design="Emphasized" icon="add">Press</ui5-button>
+
+        <ui5-button id="button1" design="Emphasized">Action Bar Button</ui5-button>
+        <ui5-button style="height: auto">Primary <br> button</ui5-button>
+        <ui5-button style="height: auto" design="Transparent">Secondary <span style="color:red;">button</span></ui5-button>
+        <ui5-button disabled id="button-disabled">Inactive</ui5-button>
+        <ui5-button design="Positive">Accept</ui5-button>
+        <ui5-button design="Negative">Decline</ui5-button>
+    </section>
+
+    <section>
+        <h3>Avatar - Square [ XS, S, M, L, XL ]</h3>
+        <ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="XS"></ui5-avatar>
+        <ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="S"></ui5-avatar>
+        <ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="M"></ui5-avatar>
+        <ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="L"></ui5-avatar>
+        <ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="XL"></ui5-avatar>
+    </section>
+
+    <section class="group">
+        <h2>Badges</h2>
+        <ui5-badge color-scheme="1">This is a info label</ui5-badge><br>
+        <ui5-badge color-scheme="2">Required Required Required</ui5-badge><br>
+        <ui5-badge color-scheme="3">Hello world</ui5-badge><br>
+        <ui5-badge color-scheme="4">Damn you are right</ui5-badge><br>
+        <ui5-badge color-scheme="5">Solution provided</ui5-badge><br>
+        <ui5-badge color-scheme="6">Available</ui5-badge><br>
+        <ui5-badge color-scheme="7">Required</ui5-badge><br>
+        <ui5-badge color-scheme="8">Required</ui5-badge><br>
+        <ui5-badge color-scheme="9">Required</ui5-badge><br>
+        <ui5-badge color-scheme="10">IN WAREHOUSE</ui5-badge><br>
+    </section>
+
+    <ui5-card
+            id="card2"
+            status="4 of 10"
+            heading="Quick Links"
+            subheading="quick links"
+            class="myCard">
+        <ui5-label>My card</ui5-label>
+    </ui5-card>
+
+    <section class="group">
+        <ui5-label id="basic-label">Basic Label</ui5-label>
+        <ui5-label show-colon id="basic-label2">Basic Label</ui5-label>
+        <ui5-label required id="basic-label2">Basic Label</ui5-label>
+        <ui5-label show-colon required id="basic-label3">Basic Label</ui5-label>
+    </section>
+
+    <div class="group">
+        <ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank">Standard Link</ui5-link>
+        <ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" design="Subtle">Subtle link</ui5-link>
+        <ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" disabled>Disabled</ui5-link>
+        <ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" design="Emphasized">Emphasized</ui5-link>
+    </div>
+
+</body>
+</html>
