@@ -227,7 +227,7 @@ const metadata = {
 		 * @since 1.0.0-rc.5
 		 * @public
 		 */
-		openChange: {},
+		"open-change": {},
 
 		/**
 		 * Fired when selection is changed by user interaction
@@ -484,7 +484,7 @@ class MultiComboBox extends UI5Element {
 		this._iconPressed = !this._iconPressed;
 		this.open = this._iconPressed;
 
-		this.fireEvent("openChange");
+		this.fireEvent("open-change");
 
 		if (!this._iconPressed) {
 			this._afterClosePopover();
