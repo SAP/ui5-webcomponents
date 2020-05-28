@@ -20,18 +20,24 @@ The name that you give to your package will be used by the UI5 Web Components to
 ## Step 2 - add the UI5 Web Components packages as dependencies
 
 `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
+`npm i --save-dev chromedriver`
 
 or
 
-`yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools` 
+`yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
+`yarn add -D chromedriver` 
 
-These 3 will serve as foundation for your own package and web components.
+These three `@ui5/` packages will serve as foundation for your own package and web components.
 
 Package | Description
 ----------------|-----------------------
 `@ui5/webcomponents-base` | Base classes and Framework
 `@ui5/webcomponents-theme-base` | Base theming assets
 `@ui5/webcomponents-tools` | Build and configuration assets
+
+*Note:* `chromedriver` is a peer dependency of `@ui5/webcomponents-tools` so that you get to choose the exact version, 
+if necessary. This is useful if, for example, you manually update Chrome on your system and you'd prefer to not have
+a fixed `chromedriver` version packaged with `@ui5/webcomponents-tools`. 
 
 ## Step 3 - run the package initialization script
 
@@ -85,6 +91,9 @@ and the production build:
 or
 
 `yarn build`.
+
+*Note:* In order to run the tests for the first time, you must have built the project with either `start` or `build`,
+and you must have installed `chromedriver`, as described in the previous step. 
 
 That's it!
 
