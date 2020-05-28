@@ -42,7 +42,7 @@ const metadata = {
 			},
 		},
 
-		"showMoreItems-press": {
+		"show-more-items-press": {
 			detail: {
 				ref: { type: HTMLElement },
 			},
@@ -128,7 +128,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	_openOverflowPopover() {
-		this.fireEvent("showMoreItems-press");
+		this.fireEvent("show-more-items-press");
 	}
 
 	_getTokens() {

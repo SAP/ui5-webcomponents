@@ -119,7 +119,7 @@ const metadata = {
 		 * @param {Array} dates The selected dates' timestamps
 		 * @public
 		 */
-		selectedDatesChange: { type: Array },
+		"selected-dates-change": { type: Array },
 	},
 };
 
@@ -308,7 +308,7 @@ class Calendar extends UI5Element {
 	_handleSelectedDatesChange(event) {
 		this.selectedDates = [...event.detail.dates];
 
-		this.fireEvent("selectedDatesChange", { dates: event.detail.dates });
+		this.fireEvent("selected-dates-change", { dates: event.detail.dates });
 	}
 
 	_handleMonthNavigate(event) {
