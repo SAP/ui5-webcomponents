@@ -92,8 +92,8 @@ or
 
 `yarn build`.
 
-*Note:* In order to run the tests for the first time, you must have built the project with either `start` or the `build`,
-and you must have also installed `chromedriver`, as described in the previous step. 
+*Note:* In order to run the tests for the first time, you must have built the project with either `start` or `build`,
+and you must have installed `chromedriver`, as described in the previous step. 
 
 That's it!
 
