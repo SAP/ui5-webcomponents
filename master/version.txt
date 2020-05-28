@@ -1,9 +1,5 @@
-commit b673a0cbcb469ffe38680143f96cb5214657051c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed May 27 14:45:21 2020 +0300
+commit 06f93242e9f4241f270d22e31fbbd55ab41f2920
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu May 28 14:42:33 2020 +0300
 
-    fix(ui5-popover): ensure offset from window borders (#1690)
-    
-    By design the popover should have a minimum 10 px offset from the window borders.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1656
+    docs: explain chromedriver setup in the init package documentation (#1697)
