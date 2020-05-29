@@ -130,6 +130,56 @@ You'll likely only need to change `bundle.esm.js` to import your new components 
 The `config/` directory serves as a central place for most build and test tools' configuration assets. Normally you 
 don't need to change any files there.
 
+#### Custom configuration
+
+The files in the `config/` directory simply import UI5 Web Components' default configuration for all tasks: `rollup`, `wdio`, `eslint`, etc...
+
+If you need to customize any configuration, simply put your own content into the respective file in `config/`.
+
+Examples: 
+ - Modifying `eslint` settings. 
+ 
+    Open `config/.eslintrc.js`. It should look like this:
+	 ```js
+	module.exports = require("@ui5/webcomponents-tools/components-package/eslint.js");
+	```
+	As you can see, this is just a proxy to UI5 Web Components' default configuration.
+	Put your own content instead:
+	```js
+	module.exports = {
+    	"env": {
+    		"browser": true,
+    		"es6": true
+    	},
+    	"root": true,
+    	"extends": "airbnb-base",
+   		.............
+  	}
+	```
+	
+ - Modifying `wdio` settings.	
+    
+    Open `config/wdio.conf.js`. It should look like this:
+    
+    ```js
+	module.exports = require("@ui5/webcomponents-tools/components-package/wdio.js");
+	```
+	
+	Again, this is a proxy to UI5 Web Components' default configuration.
+	
+	You could just paste the content of `@ui5/webcomponents-tools/components-package/wdio.js` here and modify at will.
+	
+	However, let's not replace the whole file by hand this time, but just modify the exported configuration object.
+	
+	```js
+	const result = require("@ui5/webcomponents-tools/components-package/wdio.js");
+	result.config.capabilities[0]["goog:chromeOptions"].args = ['--disable-gpu']; // Remove headless mode
+	module.exports = result;
+	```
+	
+	In this example, what we did was simply replace one option in the configuration object to disable "headless" mode
+	so that we can use `browser.debug()` in our `*.spec.js` files.
+
 ### The `src/` directory
 
 This is where you'll do most of the development. 
