@@ -8,6 +8,7 @@ import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import UploadState from "./types/UploadState.js";
 import "@ui5/webcomponents-icons/dist/icons/refresh.js";
 import "@ui5/webcomponents-icons/dist/icons/stop.js";
@@ -254,6 +255,8 @@ class UploadCollectionItem extends ListItem {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 
 		this._editPressed = false; // indicates if the edit btn has been pressed
+		this.doNotCloseInput = false; // Indicates whether the input should be closed when using keybord for navigation
+		this.isEnter = false;
 	}
 
 
@@ -299,6 +302,15 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
+	_onInputKeydown(event) {
+		this.isEnter = isEnter(event);
+	}
+
+	_onInputKeyUp(event) {
+		this.doNotCloseInput = true;
+		this.tempValue = event.target.value + this._fileExtension;
+	}
+
 	isDetailPressed(event) {
 		const path = event.path || (event.composedPath && event.composedPath());
 
@@ -312,13 +324,26 @@ class UploadCollectionItem extends ListItem {
 			return;
 		}
 
+		if (!this.isEnter && this.doNotCloseInput) {
+			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
+			return;
+		}
+
 		this._editing = false;
 		this.fileName = event.target.value + this._fileExtension;
 		this.fireEvent("rename");
 	}
 
-	_onRenameCancel(event) {
+	_onRename(event) {
+		this.fileName = this.tempValue;
+		this.doNotCloseInput = false;
 		this._editing = false;
+	}
+
+	_onRenameCancel(event) {
+		[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
+		this._editing = false;
+		this.doNotCloseInput = false;
 	}
 
 	_onFileNameClick(event) {
