@@ -278,6 +278,14 @@ exports.config = {
 	 * @param {Object} error error object if any
 	 */
 	afterCommand: function (commandName, args, result, error) {
+
+		// url -> set configuration first
+		if (commandName === "url" && !args[0].includes("do-not-change-configuration")) {
+			browser.execute(function() {
+				window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
+			});
+		}
+
 		const waitFor = [
 			"addValue",
 			"clearValue",
@@ -291,15 +299,9 @@ exports.config = {
 			"setProperty", // custom
 			"setValue",
 			"setWindowSize",
-			"scrollIntoView",
 			"touchAction",
 			"url"
 		];
-		if (commandName === "url" && !args[0].includes("do-not-change-configuration")) {
-			browser.execute(function() {
-				window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
-			});
-		}
 		if (waitFor.includes(commandName)) {
 			browser.executeAsync(function (done) {
 				window.RenderScheduler.whenFinished().then(done);
