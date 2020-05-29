@@ -204,8 +204,34 @@ exports.config = {
 	 * @param {String} commandName hook command name
 	 * @param {Array} args arguments that command would receive
 	 */
-	// beforeCommand: function (commandName, args) {
-	// },
+	beforeCommand: function (commandName, args) {
+		const waitFor = [
+			"$",
+			"$$",
+			"getAttribute",
+			"getCSSProperty",
+			"getHTML",
+			"getProperty",
+			"getSize",
+			"getStaticAreaItemClassName", // custom
+			"getText",
+			"getValue",
+			"hasClass", // custom
+			"isDisplayed",
+			"isDisplayedInViewport",
+			"isEnabled",
+			"isExisting",
+			"isFocused",
+			"isFocusedDeep", // custom
+			"shadow$",
+			"shadow$$",
+		];
+		if (waitFor.includes(commandName)) {
+			browser.executeAsync(function (done) {
+				window.RenderScheduler.whenFinished().then(done);
+			});
+		}
+	},
 
 	/**
 	 * Hook that gets executed before the suite starts
@@ -252,11 +278,30 @@ exports.config = {
 	 * @param {Object} error error object if any
 	 */
 	afterCommand: function (commandName, args, result, error) {
-		const waitFor = ["$", "$$", "shadow$", "shadow$$", "getStaticAreaItemClassName", "click", "performActions", "elementClick", "keys", "sendKeys", "findElement", "elementClear", "elementSendKeys", "setValue", "addValue", "getHTML", "getProperty", "setProperty", "setAttribute", "removeAttribute", "getElementProperty"];
+		const waitFor = [
+			"addValue",
+			"clearValue",
+			"click",
+			"doubleClick",
+			"dragAndDrop",
+			"keys",
+			"pause",
+			"removeAttribute", // custom
+			"setAttribute", // custom
+			"setProperty", // custom
+			"setValue",
+			"setWindowSize",
+			"scrollIntoView",
+			"touchAction",
+			"url"
+		];
+		if (commandName === "url") {
+			browser.execute(function() {
+				window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
+			});
+		}
 		if (waitFor.includes(commandName)) {
 			browser.executeAsync(function (done) {
-				// run all the tests in no conflict mode
-				window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
 				window.RenderScheduler.whenFinished().then(done);
 			});
 		}
