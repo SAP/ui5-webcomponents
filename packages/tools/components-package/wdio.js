@@ -295,7 +295,7 @@ exports.config = {
 			"touchAction",
 			"url"
 		];
-		if (commandName === "url") {
+		if (commandName === "url" && !args[0].includes("do-not-change-configuration")) {
 			browser.execute(function() {
 				window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
 			});
