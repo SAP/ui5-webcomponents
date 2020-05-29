@@ -1,7 +1,7 @@
 const assert = require("chai").assert;
 
 describe("Configuration script has effect", () => {
-	browser.url("http://localhost:9191/test-resources/pages/ConfigurationScript.html");
+	browser.url("http://localhost:9191/test-resources/pages/ConfigurationScript.html?do-not-change-configuration");
 
 	it("Tests that RTL is applied", () => {
 		const res = browser.execute( () => {
