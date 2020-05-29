@@ -1,5 +1,5 @@
-commit 1f809c91cd07c8d0067cf20477c26e26ffc06030
+commit 88a8c0f475b45ae5a1ce1b58edb2090180576afe
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri May 29 08:06:44 2020 +0300
+Date:   Fri May 29 13:14:22 2020 +0300
 
-    docs: fix spacing (#1699)
+    chore(tools): Improve test setup (#1700)

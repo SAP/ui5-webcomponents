@@ -7,7 +7,11 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>DateTimePicker Test Page</title>
 
-	
+    <script>
+		delete Document.prototype.adoptedStyleSheets;
+    </script>
+
+    
 	
 	
 <script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
@@ -21,7 +25,6 @@
 		}
 
 		ui5-datetime-picker {
-			width: 300px;
 			margin-bottom: 0.25rem;
 		}
 	</style>
@@ -104,7 +107,7 @@
 			id="input1"
 			style="width: 300px">
 		</ui5-input>
-	
+
 		<br><ui5-label>Changed value</ui5-label><br>
 		<ui5-input
 			id="input2"
