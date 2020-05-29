@@ -1,5 +1,5 @@
-commit 06f93242e9f4241f270d22e31fbbd55ab41f2920
+commit 1f809c91cd07c8d0067cf20477c26e26ffc06030
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu May 28 14:42:33 2020 +0300
+Date:   Fri May 29 08:06:44 2020 +0300
 
-    docs: explain chromedriver setup in the init package documentation (#1697)
+    docs: fix spacing (#1699)
