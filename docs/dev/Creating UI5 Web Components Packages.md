@@ -19,13 +19,13 @@ The name that you give to your package will be used by the UI5 Web Components to
 
 ## Step 2 - add the UI5 Web Components packages as dependencies
 
-`npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
-`npm i --save-dev chromedriver`
+With `npm`:
+ - `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
+ - `npm i --save-dev chromedriver`
 
-or
-
-`yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
-`yarn add -D chromedriver` 
+or with `yarn`:
+ - `yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
+ - `yarn add -D chromedriver` 
 
 These three `@ui5/` packages will serve as foundation for your own package and web components.
 
