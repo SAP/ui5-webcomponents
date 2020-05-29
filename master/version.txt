@@ -1,5 +1,5 @@
-commit 7021098d4fad07a43ec4c34b790ec18225ecf43b
+commit 18610cdd611a5bcef7e156e124219684d761e5e7
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri May 29 15:55:21 2020 +0300
+Date:   Fri May 29 16:00:48 2020 +0300
 
-    document custom config (#1703)
+    chore(tools): run single test spec (#1704)
