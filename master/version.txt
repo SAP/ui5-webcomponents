@@ -1,5 +1,5 @@
-commit 88a8c0f475b45ae5a1ce1b58edb2090180576afe
+commit 7021098d4fad07a43ec4c34b790ec18225ecf43b
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri May 29 13:14:22 2020 +0300
+Date:   Fri May 29 15:55:21 2020 +0300
 
-    chore(tools): Improve test setup (#1700)
+    document custom config (#1703)
