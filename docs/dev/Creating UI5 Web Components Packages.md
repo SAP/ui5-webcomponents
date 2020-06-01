@@ -173,12 +173,12 @@ Examples:
 	
 	```js
 	const result = require("@ui5/webcomponents-tools/components-package/wdio.js");
-	result.config.capabilities[0]["goog:chromeOptions"].args = ['--disable-gpu']; // Remove headless mode
+	result.config.capabilities[0]["goog:chromeOptions"].args = ['--disable-gpu']; // From: ['--disable-gpu', '--headless']
 	module.exports = result;
 	```
 	
-	In this example, what we did was simply replace one option in the configuration object to disable "headless" mode
-	so that we can use `browser.debug()` in our `*.spec.js` files.
+	In this example, what we did was simply replace one option in the configuration object to disable `headless` mode
+	so that we can use `browser.debug()` in our `*.spec.js` files. For more on testing, see [Testing Web Components](./Testing%20Web%20Components.md).
 
 ### The `src/` directory
 
@@ -269,6 +269,8 @@ File | Purpose
 `src/specs/*` | Test specs, based on [WDIO](https://www.npmjs.com/package/wdio). They use the test pages for setup.
 
 You can execute all specs by running `yarn test` or `npm run test`.
+
+For more on testing, see our [Testing Web Components](./Testing%20Web%20Components.md) section. 
 
 ## Public consumption of your custom UI5 Web Components package
 
