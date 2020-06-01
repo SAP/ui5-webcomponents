@@ -1,5 +1,5 @@
-commit 18610cdd611a5bcef7e156e124219684d761e5e7
+commit b1e565fea32b63c0a5f172d1eff1279d4a0fbba2
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri May 29 16:00:48 2020 +0300
+Date:   Mon Jun 1 14:02:59 2020 +0300
 
-    chore(tools): run single test spec (#1704)
+    docs: Document the testing process (#1707)
