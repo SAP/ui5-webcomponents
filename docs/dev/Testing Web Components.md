@@ -42,7 +42,9 @@ So our recommendation would be to modify it, if necessary, but not completely re
 ## 2.2 Running all tests
 
 `npm run test`
+
 or
+
 `yarn test`
 
 This will *launch a static server* and execute all tests found in the `test/specs/` directory of your package.
