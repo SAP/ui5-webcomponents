@@ -9,7 +9,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isShow, isF4 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -334,14 +334,14 @@ class DatePicker extends UI5Element {
 					this._focusInputAfterClose = false;
 				}
 
-				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.calendar;
 				if (calendar) {
 					calendar._hideMonthPicker();
 					calendar._hideYearPicker();
 				}
 			},
 			afterOpen: () => {
-				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.calendar;
 
 				if (!calendar) {
 					return;
@@ -434,9 +434,24 @@ class DatePicker extends UI5Element {
 
 	_onkeydown(event) {
 		if (isShow(event)) {
-			this.togglePicker();
-			this._getInput().focus();
+			event.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
+			if (this.isOpen()) {
+				if (isF4(event)) {
+					if (this.calendar._monthPicker._hidden) {
+						this.calendar._showYearPicker();
+					}
+				} else {
+					this._toggleAndFocusInput();
+				}
+			} else {
+				this._toggleAndFocusInput();
+			}
 		}
+	}
+
+	_toggleAndFocusInput() {
+		this.togglePicker();
+		this._getInput().focus();
 	}
 
 	_getInput() {
@@ -532,6 +547,10 @@ class DatePicker extends UI5Element {
 			return this.value;
 		}
 		return this.getFormat().format(new Date());
+	}
+
+	get calendar() {
+		return this.responsivePopover.querySelector(`#${this._id}-calendar`);
 	}
 
 	get _calendarDate() {

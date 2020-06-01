@@ -131,17 +131,25 @@ const isDelete = event => (event.key ? event.key === "Delete" : event.keyCode ==
 
 const isShow = event => {
 	if (event.key) {
-		return (event.key === "F4" && !hasModifierKeys(event)) || (((event.key === "ArrowDown" || event.key === "Down") || (event.key === "ArrowUp" || event.key === "Up")) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false));
+		return isF4(event) || isShowByArrows(event);
 	}
 
 	return (event.keyCode === KeyCodes.F4 && !hasModifierKeys(event)) || (event.keyCode === KeyCodes.ARROW_DOWN && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false));
+};
+
+const isF4 = event => {
+	return event.key === "F4" && !hasModifierKeys(event);
+};
+
+const isShowByArrows = event => {
+	return ((event.key === "ArrowDown" || event.key === "Down") || (event.key === "ArrowUp" || event.key === "Up")) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false);
 };
 
 const hasModifierKeys = event => event.shiftKey || event.altKey || getCtrlKey(event);
 
 const getCtrlKey = event => !!(event.metaKey || event.ctrlKey); // double negation doesn't have effect on boolean but ensures null and undefined are equivalent to false.
 
-const checkModifierKeys = (oEvent, bCtrlKey, bAltKey, bShiftKey) => oEvent.shiftKey === bShiftKey && oEvent.altKey === bAltKey && getCtrlKey(oEvent) === bCtrlKey;
+const checkModifierKeys = (event, bCtrlKey, bAltKey, bShiftKey) => event.shiftKey === bShiftKey && event.altKey === bAltKey && getCtrlKey(event) === bCtrlKey;
 
 export {
 	isEnter,
@@ -158,4 +166,5 @@ export {
 	isBackSpace,
 	isDelete,
 	isShow,
+	isF4,
 };
