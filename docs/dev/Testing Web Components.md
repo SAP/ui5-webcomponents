@@ -84,11 +84,11 @@ Key points:
    - You can modify the DOM with commands such as `setProperty`, `setAttribute` etc...
 
 For `WDIO` capabilities, see:
-    - Official API: [https://webdriver.io/docs/api.html](https://webdriver.io/docs/api.html)
-    - Additional commands, provided in our standard `WDIO` configuration: `setProperty`, `setAttribute`, `removeAttribute`, `hasClass`    
+   - Official API: [https://webdriver.io/docs/api.html](https://webdriver.io/docs/api.html)
+   - Additional commands, provided in our standard `WDIO` configuration: `setProperty`, `setAttribute`, `removeAttribute`, `hasClass`    
 
 *Note:* The standard `WDIO` configuration we provide automatically synchronizes all test commands' execution with the framework's rendering cycle.
-Therefore, in the example above, for example the `shadow$` command will internally wait for all rendering to be over before being executed. The
+Therefore, in the example above, the `shadow$` command will internally wait for all rendering to be over before being executed. The
 same holds true for commands that modify the dom such as `setAttribute` or `click`.
 
 ## 4. Debugging tests
@@ -97,9 +97,17 @@ Debugging with `WDIO` is really simple. Just follow these 3 steps:
 
 1. Change the `WDIO` configuration file `config/wdio.conf.js` to disable `headless` mode for `Google Chrome` as follows:
 
+	From:
+	
+	```js
+	module.exports = require("@ui5/webcomponents-tools/components-package/wdio.js");
+	```
+	
+	to:
+
 	```js
     const result = require("@ui5/webcomponents-tools/components-package/wdio.js");
-    result.config.capabilities[0]["goog:chromeOptions"].args = ['--disable-gpu']; // Remove headless mode
+    result.config.capabilities[0]["goog:chromeOptions"].args = ['--disable-gpu']; // From: ['--disable-gpu', '--headless']
     module.exports = result;
     ```
     
@@ -119,11 +127,21 @@ Debugging with `WDIO` is really simple. Just follow these 3 steps:
 
 3. Run the single test spec and wait for the browser to open and pause on your breakpoint:
 
-	Run the dev server, if you haven't already:
-	`yarn start` or `npm run start`
+ - Run the dev server, if you haven't already:
+	
+	`yarn start` 
+	
+	or 
+	
+	`npm run start`.
 
-	Run the single test spec
-	`yarn test test/specs/Demo.spec.js` or `npm run test test/specs/Demo.spec.js`
+ - Run the single test spec:
+	
+	`yarn test test/specs/Demo.spec.js` 
+	
+	or 
+	
+	`npm run test test/specs/Demo.spec.js`.
 	  
 `Google Chrome` will then open in a new window, controlled by `WDIO` via the `Chrome Driver`, and your test will pause on your 
 breakpoint of choice. Proceed to debug normally.	 
