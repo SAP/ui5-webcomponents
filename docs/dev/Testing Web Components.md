@@ -52,7 +52,9 @@ This will *launch a static server* and execute all tests found in the `test/spec
 ## 2.3 Running a single test spec
 
 `npm run test test/specs/Demo.spec.js`
+
 or
+
 `yarn test test/specs/Demo.spec.js`
 
 *Note:* Executing a single test spec only makes sense for debugging purposes, therefore no test server is launched for it.
