@@ -223,21 +223,21 @@ const metadata = {
 		/**
 		 * Fired when the dropdown is opened or closed.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.MultiComboBox#open-change
 		 * @since 1.0.0-rc.5
 		 * @public
 		 */
-		openChange: {},
+		"open-change": {},
 
 		/**
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.MultiComboBox#selection-change
 		 * @param {Array} items an array of the selected items.
 		 * @public
 		 */
-		selectionChange: {
+		"selection-change": {
 			detail: {
 				items: { type: Array },
 			},
@@ -484,7 +484,7 @@ class MultiComboBox extends UI5Element {
 		this._iconPressed = !this._iconPressed;
 		this.open = this._iconPressed;
 
-		this.fireEvent("openChange");
+		this.fireEvent("open-change");
 
 		if (!this._iconPressed) {
 			this._afterClosePopover();
@@ -516,7 +516,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	fireSelectionChange() {
-		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
+		this.fireEvent("selection-change", { items: this._getSelectedItems() });
 		// Angular 2 way data binding
 		this.fireEvent("value-changed");
 	}

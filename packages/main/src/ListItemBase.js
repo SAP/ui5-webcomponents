@@ -47,7 +47,8 @@ const metadata = {
 	},
 	events: {
 		_focused: {},
-		_focusForward: {},
+		"_forward-after": {},
+		"_forward-before": {},
 	},
 };
 
@@ -104,7 +105,7 @@ class ListItemBase extends UI5Element {
 		const target = event.target;
 
 		if (this.shouldForwardTabAfter(target)) {
-			this.fireEvent("_forwardAfter", { item: target });
+			this.fireEvent("_forward-after", { item: target });
 		}
 	}
 
@@ -114,7 +115,7 @@ class ListItemBase extends UI5Element {
 		if (this.shouldForwardTabBefore(target)) {
 			const eventData = event;
 			eventData.item = target;
-			this.fireEvent("_forwardBefore", eventData);
+			this.fireEvent("_forward-before", eventData);
 		}
 	}
 

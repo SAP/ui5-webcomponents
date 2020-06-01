@@ -17,9 +17,9 @@ describe("Some configuration options can be changed at runtime", () => {
 	it("Tests that noConflict can be changed", () => {
 		const res = browser.execute( () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			config.setNoConflict({events: ["selectionChange"]});
+			config.setNoConflict({events: ["selection-change"]});
 			return config.getNoConflict();
 		});
-		assert.strictEqual(res.events.includes("selectionChange"), true, "selectionChange was successfully registered as a no conflict event");
+		assert.strictEqual(res.events.includes("selection-change"), true, "selection-change was successfully registered as a no conflict event");
 	});
 });

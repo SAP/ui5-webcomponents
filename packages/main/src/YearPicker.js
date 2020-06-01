@@ -95,7 +95,7 @@ const metadata = {
 		 * @public
 		 * @event
 		 */
-		selectedYearChange: {},
+		change: {},
 	},
 };
 
@@ -241,7 +241,7 @@ class YearPicker extends UI5Element {
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
 			this._itemNav.current = YearPicker._MIDDLE_ITEM_INDEX;
-			this.fireEvent("selectedYearChange", { timestamp });
+			this.fireEvent("change", { timestamp });
 		}
 	}
 
@@ -268,7 +268,7 @@ class YearPicker extends UI5Element {
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
 			this._itemNav.current = YearPicker._MIDDLE_ITEM_INDEX;
-			this.fireEvent("selectedYearChange", { timestamp });
+			this.fireEvent("change", { timestamp });
 		}
 	}
 
