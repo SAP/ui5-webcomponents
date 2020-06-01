@@ -100,9 +100,6 @@ const updatePackageFile = () => {
 		"prepublishOnly": "npm run build"
 	};
 
-	packageContent.devDependencies = packageContent.devDependencies || {};
-	packageContent.devDependencies["chromedriver"] = "latest";
-
 	fs.writeFileSync("package.json", beautify(packageContent, null, 2, 100));
 };
 

@@ -29,7 +29,6 @@ describe("TabContainer general interaction", () => {
 
 	it("scroll works on iconsOnly TabContainer", () => {
 		browser.setWindowSize(520, 1080);
-		browser.pause(2000);
 
 		const arrowLeft = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowLeft");
 		const arrowRight = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowRight");
@@ -51,7 +50,6 @@ describe("TabContainer general interaction", () => {
 
 	it("scroll works on textOnly TabContainer", () => {
 		browser.setWindowSize(520, 1080);
-		browser.pause(2000);
 
 		let arrowLeft = browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowLeft");
 		let arrowRight = browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowRight");
