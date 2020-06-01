@@ -1964,7 +1964,7 @@
 <span class="nt">&lt;script&gt;</span>
 	<span class="kd">var</span> <span class="nx">busyIndicator</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">busy</span><span class="dl">"</span><span class="p">);</span>
 	<span class="kd">var</span> <span class="nx">dynamicTree</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">treeDynamic</span><span class="dl">"</span><span class="p">);</span>
-	<span class="nx">dynamicTree</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">itemToggle</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">dynamicTree</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">item-toggle</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 		<span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">item</span><span class="p">;</span> <span class="c1">// get the node that is toggled</span>
 
 		<span class="c1">// Only for the dynamic node, and only when it's empty</span>
@@ -1986,7 +1986,7 @@
 	<script>
 		var busyIndicator = document.getElementById("busy");
 		var dynamicTree = document.getElementById("treeDynamic");
-		dynamicTree.addEventListener("itemToggle", function(event) {
+		dynamicTree.addEventListener("item-toggle", function(event) {
 			var item = event.detail.item; // get the node that is toggled
 
 			// Only for the dynamic node, and only when it's empty
@@ -2114,7 +2114,7 @@
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">itemClick</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">item-click</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when a tree item is activated.
                         </div>
@@ -2127,7 +2127,7 @@
                           </div>
                         </tr>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">itemDelete</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">item-delete</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when the Delete button of any tree item is pressed. <br><br> <b>Note:</b> A Delete button is displayed on each item, when the <code>ui5-tree</code> <code>mode</code> property is set to <code>Delete</code>.
                         </div>
@@ -2140,7 +2140,7 @@
                           </div>
                         </tr>
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">itemToggle</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">item-toggle</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when a tree item is expanded or collapsed. <i>Note:</i> You can call <code>preventDefault()</code> on the event object to suppress the event, if needed. This may be handy for example if you want to dynamically load tree items upon the user expanding a node. Even if you prevented the event's default behavior, you can always manually call <code>toggle()</code> on a tree item.
                         </div>
@@ -2153,7 +2153,7 @@
                           </div>
                         </tr>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">selectionChange</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">selection-change</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when selection is changed by user interaction in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
                         </div>

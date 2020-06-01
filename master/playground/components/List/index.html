@@ -1869,7 +1869,7 @@
 <span class="nt">&lt;script&gt;</span>
 	<span class="kd">const</span> <span class="nx">infiniteScrollEx</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">infiniteScrollEx</span><span class="dl">"</span><span class="p">);</span>
 
-	<span class="nx">infiniteScrollEx</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">loadMore</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="nx">infiniteScrollEx</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">load-more</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
 		<span class="nx">infiniteScrollEx</span><span class="p">.</span><span class="nx">busy</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
 		<span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -1902,7 +1902,7 @@
 			}
 		}
 
-		infiniteScrollEx.addEventListener("loadMore", (e) => {
+		infiniteScrollEx.addEventListener("load-more", (e) => {
 			var el = infiniteScrollEx;
 			el.busy = true;
 
@@ -1926,7 +1926,7 @@
 		</ui5-list>
 
 		<script>
-			document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
+			document.getElementById('country-selector').addEventListener("selection-change", function (event) {
 				var selectedItems = event.detail.selectedItems;
 
 				alert("The selected item:  " + selectedItems[0].textContent);
@@ -1941,7 +1941,7 @@
 <span class="nt">&lt;/ui5-list&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
-	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">country-selector</span><span class="dl">'</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">selectionChange</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">country-selector</span><span class="dl">'</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">selection-change</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 		<span class="kd">var</span> <span class="nx">selectedItems</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">selectedItems</span><span class="p">;</span>
 
 		<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">The selected item:  </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">selectedItems</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">textContent</span><span class="p">);</span>
@@ -2143,7 +2143,7 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines if the component would fire the <code>loadMore</code> event when the user scrolls to the bottom of the list, and helps achieving an "infinite scroll" effect by adding new items each time.
+                            Defines if the component would fire the <code>load-more</code> event when the user scrolls to the bottom of the list, and helps achieving an "infinite scroll" effect by adding new items each time.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
                         </div>
                       </div>
@@ -2232,7 +2232,7 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">itemClick</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">item-click</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when an item is activated, unless the item's <code>type</code> property is set to <code>Inactive</code>.
                         </div>
@@ -2245,9 +2245,9 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                           </div>
                         </tr>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">itemClose</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">item-close</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the <code>Close</code> button of any item is clicked <br><br> <b>Note:</b> This event is applicable to <code>ui5-li-notification</code> items only, not to be confused with <code>itemDelete</code>.
+                        Fired when the <code>Close</code> button of any item is clicked <br><br> <b>Note:</b> This event is applicable to <code>ui5-li-notification</code> items only, not to be confused with <code>item-delete</code>.
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
                         </div>
                       </div>
@@ -2259,7 +2259,7 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                           </div>
                         </tr>
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">itemDelete</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">item-delete</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when the Delete button of any item is pressed. <br><br> <b>Note:</b> A Delete button is displayed on each item, when the <code>ui5-list</code> <code>mode</code> property is set to <code>Delete</code>.
                         </div>
@@ -2272,7 +2272,7 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                           </div>
                         </tr>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">itemToggle</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">item-toggle</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when the <code>Toggle</code> button of any item is clicked. <br><br> <b>Note:</b> This event is applicable to <code>ui5-li-notification-group</code> items only.
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
@@ -2286,7 +2286,7 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                           </div>
                         </tr>
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">loadMore</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">load-more</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when the user scrolls to the bottom of the list. <br><br> <b>Note:</b> The event is fired when the <code>infiniteScroll</code> property is enabled.
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
@@ -2294,7 +2294,7 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                       </div>
             
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">selectionChange</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">selection-change</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when selection is changed by user interaction in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
                         </div>
@@ -2445,6 +2445,23 @@ This is a list item, providing the most common use cases such as <code>text</cod
             
                 </div>
             
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">detail-click</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the user clicks on the detail button when type is <code>Detail</code>.
+                        </div>
+                      </div>
+            
+                  </div>
             
           </section>
         </section>
@@ -2504,6 +2521,23 @@ The <code>ui5-li-custom</code> accepts arbitrary HTML content to allow full cust
             
                 </div>
             
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">detail-click</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the user clicks on the detail button when type is <code>Detail</code>.
+                        </div>
+                      </div>
+            
+                  </div>
             
           </section>
         </section>

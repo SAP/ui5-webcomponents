@@ -1,5 +1,11 @@
-commit b1e565fea32b63c0a5f172d1eff1279d4a0fbba2
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jun 1 14:02:59 2020 +0300
+commit af1cfbe65725586f97fd0a9182c58b78514d905d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jun 1 14:14:16 2020 +0300
 
-    docs: Document the testing process (#1707)
+    refactor(components): rename event names to kebab case (#1692)
+    
+    Rename all components event names that are currently camelCase to kebab-case, but keep the camelCase events firing for backward compatibility for at least one release to allow smooth migrations of the applications.
+    
+    BREAKING_CHANGE: all event names are renamed from camelCase to kebabCase.
+    **Examples**: "selectionChange" becomes "selection-change", "itemClose" becomes "item-close",
+    "afterOpen" becomes "after-open", etc.

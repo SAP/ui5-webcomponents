@@ -1863,7 +1863,7 @@
 		</ui5-list>
 
 		<script>
-			myList.addEventListener("itemClose", function(e) {
+			myList.addEventListener("item-close", function(e) {
 				e.detail.item.hidden = true;
 			});
 		</script>
@@ -1894,7 +1894,7 @@
 <span class="nt">&lt;/ui5-list&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
-	<span class="nx">myList</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">itemClose</span><span class="dl">"</span><span class="p">,</span> <span class="nx">e</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="nx">myList</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">item-close</span><span class="dl">"</span><span class="p">,</span> <span class="nx">e</span> <span class="o">=&gt;</span> <span class="p">{</span>
 		<span class="nx">e</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">item</span><span class="p">.</span><span class="nx">hidden</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 	<span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>
@@ -2031,7 +2031,7 @@
 		</ui5-popover>
 
 		<script>
-			shellbar.addEventListener("ui5-notificationsClick", function(event) {
+			shellbar.addEventListener("ui5-notifications-click", function(event) {
 				event.preventDefault();
 				notificationsPopover.openBy(event.detail.targetRef);
 			});
@@ -2070,7 +2070,7 @@
 <span class="nt">&lt;/ui5-popover&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
-	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-notificationsClick</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-notifications-click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 		<span class="nx">notificationsPopover</span><span class="p">.</span><span class="nx">openBy</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">targetRef</span><span class="p">);</span>
 	<span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>

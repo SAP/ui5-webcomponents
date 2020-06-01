@@ -1876,7 +1876,7 @@
 			var shellBar = document.getElementById("shellbar");
 			var popover = document.getElementById("productswitch-popover");
 
-			shellbar.addEventListener("productSwitchClick", function(event) {
+			shellbar.addEventListener("product-switch-click", function(event) {
 				if (popover.opened) {
 					popover.close();
 				} else {
@@ -1917,7 +1917,7 @@
 	<span class="kd">var</span> <span class="nx">shellBar</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">shellbar</span><span class="dl">"</span><span class="p">);</span>
 	<span class="kd">var</span> <span class="nx">popover</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">productswitch-popover</span><span class="dl">"</span><span class="p">);</span>
 
-	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">productSwitchClick</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">product-switch-click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 		<span class="k">if</span> <span class="p">(</span><span class="nx">popover</span><span class="p">.</span><span class="nx">opened</span><span class="p">)</span> <span class="p">{</span>
 			<span class="nx">popover</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
 		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>

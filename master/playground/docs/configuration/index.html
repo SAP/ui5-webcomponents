@@ -1923,15 +1923,15 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
  All other events will be fired normally - once with the prefix, and once without it. 
  The format of this object is as follows:
     <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="nl">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"selectionChange"</span><span class="p">,</span><span class="w"> </span><span class="s2">"headerClick"</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"selection-change"</span><span class="p">,</span><span class="w"> </span><span class="s2">"header-click"</span><span class="p">]</span><span class="w">
  </span><span class="p">}</span><span class="w">
 </span></code></pre></div>    </div>
     <p><em>Please note that other keys may be added to this object in the future for the purpose of name conflict resolution.</em></p>
   </li>
 </ul>
 
-<p>In the above example, only the <code class="highlighter-rouge">selectionChange</code> and <code class="highlighter-rouge">headerClick</code> events will be fired with a prefix. 
- You can still use them by listening to <code class="highlighter-rouge">ui5-selectionChange</code> and <code class="highlighter-rouge">ui5-headerClick</code>, but the names <code class="highlighter-rouge">selectionChange</code> and <code class="highlighter-rouge">headerClick</code> will be
+<p>In the above example, only the <code class="highlighter-rouge">selection-change</code> and <code class="highlighter-rouge">header-click</code> events will be fired with a prefix. 
+ You can still use them by listening to <code class="highlighter-rouge">ui5-selection-change</code> and <code class="highlighter-rouge">ui5-header-click</code>, but the names <code class="highlighter-rouge">selection-change</code> and <code class="highlighter-rouge">header-click</code> will be
  free for use by other UI components and libraries without name collision.</p>
 
 <p><a name="formatSettings"></a></p>
@@ -1979,7 +1979,7 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
 	<span class="p">},</span>
 	<span class="dl">"</span><span class="s2">theme</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">sap_belize_hcb</span><span class="dl">"</span><span class="p">,</span>
 	<span class="dl">"</span><span class="s2">noConflict</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-		<span class="dl">"</span><span class="s2">events</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">selectionChange</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">headerClick</span><span class="dl">"</span><span class="p">]</span>
+		<span class="dl">"</span><span class="s2">events</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">selection-change</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">header-click</span><span class="dl">"</span><span class="p">]</span>
 	<span class="p">}</span>
 <span class="p">}</span>
 <span class="nt">&lt;/script&gt;</span>

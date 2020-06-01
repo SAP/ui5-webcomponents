@@ -1870,7 +1870,7 @@
 	</ui5-popover>
 
 	<script>
-		shellbar.addEventListener("profileClick", function(event) {
+		shellbar.addEventListener("profile-click", function(event) {
 			window["action-popover"].openBy(event.detail.targetRef);
 		});
 	</script>
@@ -1920,7 +1920,7 @@
 <span class="nt">&lt;/ui5-popover&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
-	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">profileClick</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">profile-click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
 		<span class="nx">popover</span><span class="p">.</span><span class="nx">openBy</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">targetRef</span><span class="p">);</span>
 	<span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>
@@ -2176,7 +2176,7 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">coPilotClick</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">co-pilot-click</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired, when the co pilot is activated.
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v0.10</div>
@@ -2190,7 +2190,7 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                           </div>
                         </tr>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">logoClick</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">logo-click</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired, when the logo is activated.
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v0.10</div>
@@ -2204,7 +2204,7 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                           </div>
                         </tr>
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">menuItemClick</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">menu-item-click</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired, when a menu item is activated <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v0.10</div>
@@ -2218,7 +2218,7 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                           </div>
                         </tr>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">notificationsClick</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">notifications-click</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired, when the notification icon is activated.
                         </div>
@@ -2231,7 +2231,7 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                           </div>
                         </tr>
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">productSwitchClick</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">product-switch-click</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired, when the product switch icon is activated. <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
                         </div>
@@ -2244,7 +2244,7 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                           </div>
                         </tr>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">profileClick</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">profile-click</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired, when the profile slot is present.
                         </div>
@@ -2343,7 +2343,7 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">itemClick</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">item-click</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired, when the item is pressed.
                         </div>
