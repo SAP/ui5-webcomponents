@@ -106,11 +106,11 @@ const metadata = {
 		 * by mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
-		 * @event
+		 * @event sap.ui.webcomponents.main.Card#header-click
 		 * @public
 		 * @since 0.10.0
 		 */
-		headerClick: {},
+		"header-click": {},
 	},
 };
 
@@ -230,7 +230,7 @@ class Card extends UI5Element {
 
 	_headerClick() {
 		if (this.headerInteractive) {
-			this.fireEvent("headerClick");
+			this.fireEvent("header-click");
 		}
 	}
 
@@ -245,7 +245,7 @@ class Card extends UI5Element {
 		this._headerActive = enter || space;
 
 		if (enter) {
-			this.fireEvent("headerClick");
+			this.fireEvent("header-click");
 			return;
 		}
 
@@ -264,7 +264,7 @@ class Card extends UI5Element {
 		this._headerActive = false;
 
 		if (space) {
-			this.fireEvent("headerClick");
+			this.fireEvent("header-click");
 		}
 	}
 }

@@ -109,9 +109,7 @@ const metadata = {
 		 * @private
 		 * @since 1.0.0-rc.8
 		 */
-		click: {
-
-		},
+		click: {},
 	},
 };
 

@@ -61,13 +61,13 @@ The `noConflict` configuration setting allows certain control over this behavior
  The format of this object is as follows:
  ```json
  {
-	 "events": ["selectionChange", "headerClick"]
+	 "events": ["selection-change", "header-click"]
  }
  ```
  *Please note that other keys may be added to this object in the future for the purpose of name conflict resolution.*
  
- In the above example, only the `selectionChange` and `headerClick` events will be fired with a prefix. 
- You can still use them by listening to `ui5-selectionChange` and `ui5-headerClick`, but the names `selectionChange` and `headerClick` will be
+ In the above example, only the `selection-change` and `header-click` events will be fired with a prefix. 
+ You can still use them by listening to `ui5-selection-change` and `ui5-header-click`, but the names `selection-change` and `header-click` will be
  free for use by other UI components and libraries without name collision.
 
 <a name="formatSettings"></a>
@@ -103,7 +103,7 @@ In order to provide configuration settings, include the following ```<script>```
 	},
 	"theme": "sap_belize_hcb",
 	"noConflict": {
-		"events": ["selectionChange", "headerClick"]
+		"events": ["selection-change", "header-click"]
 	}
 }
 </script>

@@ -117,11 +117,11 @@ const metadata = {
 		 * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
 		 * Even if you prevented the event's default behavior, you can always manually call <code>toggle()</code> on a tree item.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Tree#item-toggle
 		 * @param {HTMLElement} item the toggled item.
 		 * @public
 		 */
-		itemToggle: {
+		"item-toggle": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -130,11 +130,11 @@ const metadata = {
 		/**
 		 * Fired when a tree item is activated.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Tree#item-click
 		 * @param {HTMLElement} item the clicked item.
 		 * @public
 		 */
-		itemClick: {
+		"item-click": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -145,11 +145,12 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the <code>ui5-tree</code> <code>mode</code> property is set to <code>Delete</code>.
-		 * @event
+		 *
+		 * @event sap.ui.webcomponents.main.Tree#item-delete
 		 * @param {HTMLElement} item the deleted item.
 		 * @public
 		 */
-		itemDelete: {
+		"item-delete": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -159,12 +160,12 @@ const metadata = {
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Tree#selection-change
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @param {Array} previouslySelectedItems An array of the previously selected items.
 		 * @public
 		 */
-		selectionChange: {
+		"selection-change": {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
@@ -282,7 +283,7 @@ class Tree extends UI5Element {
 	_onListItemToggle(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
-		const defaultPrevented = !this.fireEvent("itemToggle", { item: treeItem }, true);
+		const defaultPrevented = !this.fireEvent("item-toggle", { item: treeItem }, true);
 		if (!defaultPrevented) {
 			treeItem.toggle();
 		}
@@ -291,13 +292,13 @@ class Tree extends UI5Element {
 	_onListItemClick(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
-		this.fireEvent("itemClick", { item: treeItem });
+		this.fireEvent("item-click", { item: treeItem });
 	}
 
 	_onListItemDelete(event) {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
-		this.fireEvent("itemDelete", { item: treeItem });
+		this.fireEvent("item-delete", { item: treeItem });
 	}
 
 	_onListSelectionChange(event) {
@@ -311,7 +312,7 @@ class Tree extends UI5Element {
 			item.selected = true;
 		});
 
-		this.fireEvent("selectionChange", {
+		this.fireEvent("selection-change", {
 			previouslySelectedItems,
 			selectedItems,
 		});

@@ -4,9 +4,9 @@
     .footerText="{{footerText}}"
     .noDataText="{{noDataText}}"
     ._role="{{_role}}"
-    @ui5-itemClick="{{_onListItemClick}}"
-    @ui5-itemDelete="{{_onListItemDelete}}"
-    @ui5-selectionChange="{{_onListSelectionChange}}"
+    @ui5-item-click="{{_onListItemClick}}"
+    @ui5-item-delete="{{_onListItemDelete}}"
+    @ui5-selection-change="{{_onListSelectionChange}}"
 >
     <slot name="header" slot="header"></slot>
     {{#each _listItems}}
@@ -20,8 +20,8 @@
             .selected="{{this.treeItem.selected}}"
             .showToggleButton="{{this.treeItem.requiresToggleButton}}"
             @ui5-toggle="{{../_onListItemToggle}}"
-            @ui5-stepIn="{{../_onListItemStepIn}}"
-            @ui5-stepOut="{{../_onListItemStepOut}}"
+            @ui5-step-in="{{../_onListItemStepIn}}"
+            @ui5-step-out="{{../_onListItemStepOut}}"
         >
             {{this.treeItem.text}}
         </ui5-li-tree>

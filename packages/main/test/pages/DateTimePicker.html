@@ -7,7 +7,11 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>DateTimePicker Test Page</title>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+    <script>
+		delete Document.prototype.adoptedStyleSheets;
+    </script>
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
@@ -17,7 +21,6 @@
 		}
 
 		ui5-datetime-picker {
-			width: 300px;
 			margin-bottom: 0.25rem;
 		}
 	</style>
@@ -100,7 +103,7 @@
 			id="input1"
 			style="width: 300px">
 		</ui5-input>
-	
+
 		<br><ui5-label>Changed value</ui5-label><br>
 		<ui5-input
 			id="input2"

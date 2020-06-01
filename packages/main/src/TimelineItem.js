@@ -98,10 +98,10 @@ const metadata = {
 		 * <b>Note:</b> The event will not be fired if the <code>item-name-clickable</code>
 		 * attribute is not set.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.TimelineItem#item-name-click
 		 * @public
 		 */
-		itemNameClick: {},
+		"item-name-click": {},
 	},
 };
 
@@ -141,7 +141,7 @@ class TimelineItem extends UI5Element {
 	}
 
 	onItemNamePress() {
-		this.fireEvent("itemNameClick", {});
+		this.fireEvent("item-name-click", {});
 	}
 
 	get rtl() {

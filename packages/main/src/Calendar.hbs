@@ -5,10 +5,10 @@
 		month-text="{{_header.monthText}}"
 		year-text="{{_header.yearText}}"
 		.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
-		@ui5-pressPrevious="{{_header.onPressPrevious}}"
-		@ui5-pressNext="{{_header.onPressNext}}"
-		@ui5-btn1Press="{{_header.onBtn1Press}}"
-		@ui5-btn2Press="{{_header.onBtn2Press}}"
+		@ui5-previous-press="{{_header.onPressPrevious}}"
+		@ui5-next-press="{{_header.onPressNext}}"
+		@ui5-show-month-press="{{_header.onBtn1Press}}"
+		@ui5-show-year-press="{{_header.onBtn2Press}}"
 		._isNextButtonDisabled="{{_header._isNextButtonDisabled}}"
 		._isPrevButtonDisabled="{{_header._isPrevButtonDisabled}}"
 	></ui5-calendar-header>
@@ -24,7 +24,7 @@
 			.minDate="{{_oMonth.minDate}}"
 			.maxDate="{{_oMonth.maxDate}}"
 			timestamp="{{_oMonth.timestamp}}"
-			@ui5-selectionChange="{{_oMonth.onSelectedDatesChange}}"
+			@ui5-change="{{_oMonth.onSelectedDatesChange}}"
 			@ui5-navigate="{{_oMonth.onNavigate}}"
 		></ui5-daypicker>
 
@@ -37,20 +37,20 @@
 			.minDate="{{_oMonth.minDate}}"
 			.maxDate="{{_oMonth.maxDate}}"
 			timestamp="{{_monthPicker.timestamp}}"
-			@ui5-selectedMonthChange="{{_monthPicker.onSelectedMonthChange}}"
+			@ui5-change="{{_monthPicker.onSelectedMonthChange}}"
 		></ui5-monthpicker>
 
 		<ui5-yearpicker
-				id="{{_id}}-YP"
-				class="{{classes.yearPicker}}"
-				format-pattern="{{_oMonth.formatPattern}}"
-				._hidden="{{_yearPicker._hidden}}"
-				.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
-				.minDate="{{_oMonth.minDate}}"
-				.maxDate="{{_oMonth.maxDate}}"
-				timestamp="{{_yearPicker.timestamp}}"
-				._selectedYear="{{_yearPicker._selectedYear}}"
-				@ui5-selectedYearChange="{{_yearPicker.onSelectedYearChange}}"
+			id="{{_id}}-YP"
+			class="{{classes.yearPicker}}"
+			format-pattern="{{_oMonth.formatPattern}}"
+			._hidden="{{_yearPicker._hidden}}"
+			.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
+			.minDate="{{_oMonth.minDate}}"
+			.maxDate="{{_oMonth.maxDate}}"
+			timestamp="{{_yearPicker.timestamp}}"
+			._selectedYear="{{_yearPicker._selectedYear}}"
+			@ui5-change="{{_yearPicker.onSelectedYearChange}}"
 		></ui5-yearpicker>
 	</div>
 </div>
