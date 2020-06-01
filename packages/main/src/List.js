@@ -180,7 +180,7 @@ const metadata = {
 		 * Fired when an item is activated, unless the item's <code>type</code> property
 		 * is set to <code>Inactive</code>.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.List#item-click
 		 * @param {HTMLElement} item the clicked item.
 		 * @public
 		 */
@@ -195,7 +195,8 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification</code> items only,
 		 * not to be confused with <code>item-delete</code>.
-		 * @event
+		 *
+		 * @event sap.ui.webcomponents.main.List#item-close
 		 * @param {HTMLElement} item the item about to be closed.
 		 * @public
 		 * @since 1.0.0-rc.8
@@ -210,7 +211,8 @@ const metadata = {
 		 * Fired when the <code>Toggle</code> button of any item is clicked.
 		 * <br><br>
 		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification-group</code> items only.
-		 * @event
+		 *
+		 * @event sap.ui.webcomponents.main.List#item-toggle
 		 * @param {HTMLElement} item the toggled item.
 		 * @public
 		 * @since 1.0.0-rc.8
@@ -226,7 +228,8 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the <code>ui5-list</code> <code>mode</code> property is set to <code>Delete</code>.
-		 * @event
+		 *
+		 * @event sap.ui.webcomponents.main.List#item-delete
 		 * @param {HTMLElement} item the deleted item.
 		 * @public
 		 */
@@ -240,7 +243,7 @@ const metadata = {
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.List#selection-change
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @param {Array} previouslySelectedItems An array of the previously selected items.
 		 * @public
@@ -258,7 +261,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The event is fired when the <code>infiniteScroll</code> property is enabled.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.List#load-more
 		 * @public
 		 * @since 1.0.0-rc.6
 		 */

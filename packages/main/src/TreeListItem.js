@@ -77,7 +77,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 
 		/**
 		 * Fired when the user interacts with the expand/collapse button of the tree list item.
@@ -93,7 +93,8 @@ const metadata = {
 
 		/**
 		 * Fired when the user drills down into the tree hierarchy by pressing the right arrow on the tree node.
-		 * @event
+		 *
+		 * @event sap.ui.webcomponents.main.TreeListItem#step-in
 		 * @param {HTMLElement} item the item on which right arrow was pressed.
 		 * @public
 		 */
@@ -105,7 +106,8 @@ const metadata = {
 
 		/**
 		 * Fired when the user goes up the tree hierarchy by pressing the left arrow on the tree node.
-		 * @event
+		 *
+		 * @event sap.ui.webcomponents.main.TreeListItem#step-out
 		 * @param {HTMLElement} item the item on which left arrow was pressed.
 		 * @public
 		 */

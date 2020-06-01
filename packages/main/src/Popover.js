@@ -188,7 +188,7 @@ const metadata = {
 		 * Fired before the component is opened.
 		 *
 		 * @public
-		 * @event
+		 * @event sap.ui.webcomponents.main.Popover#before-open
 		 */
 		"before-open": {},
 
@@ -196,7 +196,7 @@ const metadata = {
 		 * Fired after the component is opened.
 		 *
 		 * @public
-		 * @event
+		 * @event sap.ui.webcomponents.main.Popover#after-open
 		 */
 		"after-open": {},
 
@@ -204,7 +204,7 @@ const metadata = {
 		 * Fired before the component is closed.
 		 *
 		 * @public
-		 * @event
+		 * @event sap.ui.webcomponents.main.Popover#before-close
 		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
 		"before-close": {
@@ -215,7 +215,7 @@ const metadata = {
 		 * Fired after the component is closed.
 		 *
 		 * @public
-		 * @event
+		 * @event sap.ui.webcomponents.main.Popover#after-close
 		 */
 		"after-close": {},
 	},

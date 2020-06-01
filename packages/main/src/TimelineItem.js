@@ -98,7 +98,7 @@ const metadata = {
 		 * <b>Note:</b> The event will not be fired if the <code>item-name-clickable</code>
 		 * attribute is not set.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.TimelineItem#item-name-click
 		 * @public
 		 */
 		"item-name-click": {},

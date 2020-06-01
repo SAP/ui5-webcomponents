@@ -239,7 +239,7 @@ const metadata = {
 		 * Fired, when the notification icon is activated.
 		 *
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#notifications-click
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
@@ -252,7 +252,7 @@ const metadata = {
 		/**
 		 * Fired, when the profile slot is present.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#profile-click
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
@@ -266,7 +266,7 @@ const metadata = {
 		 * Fired, when the product switch icon is activated.
 		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#product-switch-click
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
@@ -279,7 +279,7 @@ const metadata = {
 		/**
 		 * Fired, when the logo is activated.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#logo-click
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @since 0.10
 		 * @public
@@ -293,7 +293,7 @@ const metadata = {
 		/**
 		 * Fired, when the co pilot is activated.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#co-pilot-click
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @since 0.10
 		 * @public
@@ -308,7 +308,7 @@ const metadata = {
 		 * Fired, when a menu item is activated
 		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#menu-item-click
 		 * @param {HTMLElement} item dom ref of the activated list item
 		 * @since 0.10
 		 * @public

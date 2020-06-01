@@ -171,7 +171,7 @@ const metadata = {
 		/**
 		 * Fired when a tab is selected.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.TabContainer#tab-select
 		 * @param {HTMLElement} tab The selected <code>tab</code>.
 		 * @param {Number} tabIndex The selected <code>tab</code> index.
 		 * @public

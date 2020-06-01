@@ -115,7 +115,7 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Fired when the selected dates changed.
-		 * @event
+		 * @event sap.ui.webcomponents.main.Calendar#selected-dates-change
 		 * @param {Array} dates The selected dates' timestamps
 		 * @public
 		 */

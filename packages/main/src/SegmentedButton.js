@@ -43,7 +43,7 @@ const metadata = {
 		/**
 		 * Fired when the selected button changes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.SegmentedButton#selection-change
 		 * @param {HTMLElement} selectedButton the pressed button.
 		 * @public
 		 */

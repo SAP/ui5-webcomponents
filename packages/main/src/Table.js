@@ -112,7 +112,7 @@ const metadata = {
 		/**
 		 * Fired when a row is clicked.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Table#row-click
 		 * @param {HTMLElement} row the clicked row.
 		 * @public
 		 */
@@ -125,7 +125,7 @@ const metadata = {
 		/**
 		 * Fired when the <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Table#popin-change
 		 * @param {Array} poppedColumns popped-in columns.
 		 * @since 1.0.0-rc.6
 		 * @public

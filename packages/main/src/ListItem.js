@@ -61,11 +61,11 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 		/**
 		 * Fired when the user clicks on the detail button when type is <code>Detail</code>.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.ListItem#detail-click
 		 * @public
 		 */
 		"detail-click": {},

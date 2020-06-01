@@ -223,7 +223,7 @@ const metadata = {
 		/**
 		 * Fired when the dropdown is opened or closed.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.MultiComboBox#open-change
 		 * @since 1.0.0-rc.5
 		 * @public
 		 */
@@ -233,7 +233,7 @@ const metadata = {
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.MultiComboBox#selection-change
 		 * @param {Array} items an array of the selected items.
 		 * @public
 		 */

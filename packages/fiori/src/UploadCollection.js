@@ -129,7 +129,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.UploadCollection#file-deleted
 		 * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
 		 * @public
 		 */
@@ -143,7 +143,7 @@ const metadata = {
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.UploadCollection#selection-change
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @public
 		 */

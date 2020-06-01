@@ -171,7 +171,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> This event is only available when <code>fileNameClickable</code> property is <code>true</code>.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.UploadCollectionItem#file-name-click
 		 * @public
 		 */
 		"file-name-click": { },

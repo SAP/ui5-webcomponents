@@ -117,7 +117,7 @@ const metadata = {
 		 * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
 		 * Even if you prevented the event's default behavior, you can always manually call <code>toggle()</code> on a tree item.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Tree#item-toggle
 		 * @param {HTMLElement} item the toggled item.
 		 * @public
 		 */
@@ -130,7 +130,7 @@ const metadata = {
 		/**
 		 * Fired when a tree item is activated.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Tree#item-click
 		 * @param {HTMLElement} item the clicked item.
 		 * @public
 		 */
@@ -145,7 +145,8 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the <code>ui5-tree</code> <code>mode</code> property is set to <code>Delete</code>.
-		 * @event
+		 *
+		 * @event sap.ui.webcomponents.main.Tree#item-delete
 		 * @param {HTMLElement} item the deleted item.
 		 * @public
 		 */
@@ -159,7 +160,7 @@ const metadata = {
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Tree#selection-change
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @param {Array} previouslySelectedItems An array of the previously selected items.
 		 * @public

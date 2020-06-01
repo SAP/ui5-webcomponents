@@ -184,7 +184,7 @@ const metadata = {
 		/**
 		 * Fired for the last items of the <code>ui5-carousel</code> if it is scrolled and the direction of scrolling is to the end.
 		 * The number of items for which the event is thrown is controlled by the <code>infiniteScrollOffset</code> property.
-		 * @event
+		 * @event sap.ui.webcomponents.main.Carousel#load-more
 		 * @public
 		 * @since 1.0.0-rc.8
 		 */

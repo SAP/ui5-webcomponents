@@ -339,7 +339,7 @@ const metadata = {
 		/**
 		 * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Input#suggestion-item-select
 		 * @param {HTMLElement} item The selected item
 		 * @public
 		 */

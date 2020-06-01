@@ -106,7 +106,7 @@ const metadata = {
 		 * by mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
-		 * @event
+		 * @event sap.ui.webcomponents.main.Card#header-click
 		 * @public
 		 * @since 0.10.0
 		 */
