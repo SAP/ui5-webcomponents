@@ -18,6 +18,8 @@
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	max-height: 94vh;
+	max-width: 90vw;
 }
 
 @media screen and (-ms-high-contrast: active) {

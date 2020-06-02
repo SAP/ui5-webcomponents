@@ -184,40 +184,6 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
-		/**
-		 * Fired before the component is opened.
-		 *
-		 * @public
-		 * @event
-		 */
-		beforeOpen: {},
-
-		/**
-		 * Fired after the component is opened.
-		 *
-		 * @public
-		 * @event
-		 */
-		afterOpen: {},
-
-		/**
-		 * Fired before the component is closed.
-		 *
-		 * @public
-		 * @event
-		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
-		 */
-		beforeClose: {
-			escPressed: { type: Boolean },
-		},
-
-		/**
-		 * Fired after the component is closed.
-		 *
-		 * @public
-		 * @event
-		 */
-		afterClose: {},
 	},
 };
 
@@ -270,6 +236,10 @@ class Popover extends Popup {
 		return PopoverTemplate;
 	}
 
+	static get MIN_OFFSET() {
+		return 10; // px
+	}
+
 	isOpenerClicked(event) {
 		const target = event.target;
 		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener);
@@ -294,14 +264,14 @@ class Popover extends Popup {
 		this._opener = opener;
 		this._focusedElementBeforeOpen = getFocusedElement();
 
-		this.fireEvent("beforeOpen", {});
+		this.fireEvent("before-open", {});
 		this.reposition();
 		this.applyInitialFocus();
 
 		addOpenedPopover(this);
 
 		this.opened = true;
-		this.fireEvent("afterOpen", {});
+		this.fireEvent("after-open", {});
 	}
 
 	/**
@@ -319,7 +289,7 @@ class Popover extends Popup {
 			Popover.unblockBodyScrolling();
 		}
 
-		this.fireEvent("beforeClose", {
+		this.fireEvent("before-close", {
 			escPressed,
 		}, true);
 
@@ -335,7 +305,7 @@ class Popover extends Popup {
 		}
 
 		this.hide();
-		this.fireEvent("afterClose", {});
+		this.fireEvent("after-close", {});
 	}
 
 	get focusedElement() {
@@ -404,12 +374,15 @@ class Popover extends Popup {
 
 		this._oldPlacement = placement;
 
-		this.actualPlacementType = placement.placementType;
-		this.arrowTranslateX = placement.arrowX;
-		this.arrowTranslateY = placement.arrowY;
+		const popoverOnLeftBorder = this._left === 0;
+		const popoverOnTopBorder = this._top === 0;
 
-		this.style.left = `${this._left}px`;
-		this.style.top = `${this._top}px`;
+		this.actualPlacementType = placement.placementType;
+		this.arrowTranslateX = popoverOnLeftBorder ? placement.arrowX - Popover.MIN_OFFSET : placement.arrowX;
+		this.arrowTranslateY = popoverOnTopBorder ? placement.arrowY - Popover.MIN_OFFSET : placement.arrowY;
+
+		this.style.left = `${popoverOnLeftBorder ? Popover.MIN_OFFSET : this._left}px`;
+		this.style.top = `${popoverOnTopBorder ? Popover.MIN_OFFSET : this._top}px`;
 		this.show();
 
 		if (stretching && this._width) {

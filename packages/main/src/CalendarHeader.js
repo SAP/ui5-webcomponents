@@ -41,10 +41,10 @@ const metadata = {
 		},
 	},
 	events: {
-		pressPrevious: {},
-		pressNext: {},
-		btn1Press: {},
-		btn2Press: {},
+		"previous-press": {},
+		"next-press": {},
+		"show-month-press": {},
+		"show-year-press": {},
 	},
 };
 
@@ -96,19 +96,19 @@ class CalendarHeader extends UI5Element {
 	}
 
 	_handlePrevPress(event) {
-		this.fireEvent("pressPrevious", event);
+		this.fireEvent("previous-press", event);
 	}
 
 	_handleNextPress(event) {
-		this.fireEvent("pressNext", event);
+		this.fireEvent("next-press", event);
 	}
 
 	_showMonthPicker(event) {
-		this.fireEvent("btn1Press", event);
+		this.fireEvent("show-month-press", event);
 	}
 
 	_showYearPicker(event) {
-		this.fireEvent("btn2Press", event);
+		this.fireEvent("show-year-press", event);
 	}
 
 	_onkeydown(event) {

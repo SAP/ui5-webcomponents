@@ -16,7 +16,7 @@ import isSlot from "./util/isSlot.js";
 
 const metadata = {
 	events: {
-		_propertyChange: {},
+		"_property-change": {},
 	},
 };
 
@@ -381,7 +381,7 @@ class UI5Element extends HTMLElement {
 			this._monitoredChildProps.set(slotName, { observedProps, notObservedProps });
 		}
 
-		child.addEventListener("_propertyChange", this._invalidateParentOnPropertyUpdate);
+		child.addEventListener("_property-change", this._invalidateParentOnPropertyUpdate);
 		child._firePropertyChange = true;
 	}
 
@@ -389,7 +389,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_detachChildPropertyUpdated(child) {
-		child.removeEventListener("_propertyChange", this._invalidateParentOnPropertyUpdate);
+		child.removeEventListener("_property-change", this._invalidateParentOnPropertyUpdate);
 		child._firePropertyChange = false;
 	}
 
@@ -400,7 +400,7 @@ class UI5Element extends HTMLElement {
 		this._updateAttribute(name, value);
 
 		if (this._firePropertyChange) {
-			this.dispatchEvent(new CustomEvent("_propertyChange", {
+			this.dispatchEvent(new CustomEvent("_property-change", {
 				detail: { name, newValue: value },
 				composed: false,
 				bubbles: true,
@@ -596,6 +596,17 @@ class UI5Element extends HTMLElement {
 	 * @returns {boolean} false, if the event was cancelled (preventDefault called), true otherwise
 	 */
 	fireEvent(name, data, cancelable) {
+		const eventResult = this._fireEvent(name, data, cancelable);
+		const camelCaseEventName = kebabToCamelCase(name);
+
+		if (camelCaseEventName !== name) {
+			return eventResult && this._fireEvent(camelCaseEventName, data, cancelable);
+		}
+
+		return eventResult;
+	}
+
+	_fireEvent(name, data, cancelable) {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
 
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {

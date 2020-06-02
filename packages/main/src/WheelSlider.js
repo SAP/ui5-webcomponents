@@ -103,7 +103,7 @@ const metadata = {
 		/**
 		 *  Fires when new value is selected.
 		 */
-		valueSelect: {
+		select: {
 			value: {
 				type: String,
 			},
@@ -293,7 +293,7 @@ class WheelSlider extends UI5Element {
 			this._scroller.scrollTo(0, scrollBy);
 			this._currentElementIndex = index;
 			this.value = this._items[index - (this._getCurrentRepetition() * this._items.length)];
-			this.fireEvent("valueSelect", { value: this.value });
+			this.fireEvent("select", { value: this.value });
 		}
 	}
 
@@ -359,7 +359,7 @@ class WheelSlider extends UI5Element {
 		if (this._expanded) {
 			this.value = e.target.textContent;
 			this._selectElement(e.target);
-			this.fireEvent("valueSelect", { value: this.value });
+			this.fireEvent("select", { value: this.value });
 		} else {
 			this._expanded = true;
 		}

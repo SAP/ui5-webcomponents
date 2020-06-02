@@ -239,11 +239,11 @@ const metadata = {
 		 * Fired, when the notification icon is activated.
 		 *
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#notifications-click
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
-		notificationsClick: {
+		"notifications-click": {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
@@ -252,11 +252,11 @@ const metadata = {
 		/**
 		 * Fired, when the profile slot is present.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#profile-click
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
-		profileClick: {
+		"profile-click": {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
@@ -266,11 +266,11 @@ const metadata = {
 		 * Fired, when the product switch icon is activated.
 		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#product-switch-click
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
-		productSwitchClick: {
+		"product-switch-click": {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
@@ -279,12 +279,12 @@ const metadata = {
 		/**
 		 * Fired, when the logo is activated.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#logo-click
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @since 0.10
 		 * @public
 		 */
-		logoClick: {
+		"logo-click": {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
@@ -293,12 +293,12 @@ const metadata = {
 		/**
 		 * Fired, when the co pilot is activated.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#co-pilot-click
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @since 0.10
 		 * @public
 		 */
-		coPilotClick: {
+		"co-pilot-click": {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
@@ -308,12 +308,12 @@ const metadata = {
 		 * Fired, when a menu item is activated
 		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBar#menu-item-click
 		 * @param {HTMLElement} item dom ref of the activated list item
 		 * @since 0.10
 		 * @public
 		 */
-		menuItemClick: {
+		"menu-item-click": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -431,13 +431,13 @@ class ShellBar extends UI5Element {
 	}
 
 	_menuItemPress(event) {
-		this.fireEvent("menuItemClick", {
+		this.fireEvent("menu-item-click", {
 			item: event.detail.item,
 		}, true);
 	}
 
 	_logoPress() {
-		this.fireEvent("logoClick", {
+		this.fireEvent("logo-click", {
 			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-logo"),
 		});
 	}
@@ -476,7 +476,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_fireCoPilotClick() {
-		this.fireEvent("coPilotClick", {
+		this.fireEvent("co-pilot-click", {
 			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
 		});
 	}
@@ -683,7 +683,7 @@ class ShellBar extends UI5Element {
 				return item.shadowRoot.querySelector(`#${refItemId}`);
 			});
 
-			const prevented = !shellbarItem.fireEvent("itemClick", { targetRef: event.target }, true);
+			const prevented = !shellbarItem.fireEvent("item-click", { targetRef: event.target }, true);
 
 			this._defaultItemPressPrevented = prevented;
 		}
@@ -696,13 +696,13 @@ class ShellBar extends UI5Element {
 	_handleNotificationsPress(event) {
 		const notificationIconRef = this.shadowRoot.querySelector(".ui5-shellbar-bell-button");
 
-		this._defaultItemPressPrevented = !this.fireEvent("notificationsClick", {
+		this._defaultItemPressPrevented = !this.fireEvent("notifications-click", {
 			targetRef: notificationIconRef.classList.contains("ui5-shellbar-hidden-button") ? event.target : notificationIconRef,
 		}, true);
 	}
 
 	_handleProfilePress(event) {
-		this.fireEvent("profileClick", {
+		this.fireEvent("profile-click", {
 			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-image-button"),
 		});
 	}
@@ -710,7 +710,7 @@ class ShellBar extends UI5Element {
 	_handleProductSwitchPress(event) {
 		const buttonRef = this.shadowRoot.querySelector(".ui5-shellbar-button-product-switch");
 
-		this._defaultItemPressPrevented = !this.fireEvent("productSwitchClick", {
+		this._defaultItemPressPrevented = !this.fireEvent("product-switch-click", {
 			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? event.target : buttonRef,
 		}, true);
 	}

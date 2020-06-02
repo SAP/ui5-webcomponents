@@ -101,6 +101,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines when the <code>load-more</code> event is thrown. If not applied the event will not be thrown.
+		 * @type {Integer}
+		 * @defaultvalue 1
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		infiniteScrollOffset: {
+			type: Integer,
+			defaultValue: 1,
+		},
+
+		/**
 		 * Defines the position of arrows.
 		 * <br><br>
 		 * Available options are:
@@ -168,6 +180,15 @@ const metadata = {
 				selectedIndex: { type: Integer },
 			},
 		},
+
+		/**
+		 * Fired for the last items of the <code>ui5-carousel</code> if it is scrolled and the direction of scrolling is to the end.
+		 * The number of items for which the event is thrown is controlled by the <code>infiniteScrollOffset</code> property.
+		 * @event sap.ui.webcomponents.main.Carousel#load-more
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		"load-more": {},
 	},
 };
 
@@ -332,6 +353,8 @@ class Carousel extends UI5Element {
 		if (this.selectedIndex + 1 > this.pagesCount - 1) {
 			if (this.cyclic) {
 				this.selectedIndex = 0;
+			} else {
+				return;
 			}
 		} else {
 			++this.selectedIndex;
@@ -339,6 +362,10 @@ class Carousel extends UI5Element {
 
 		if (peviousSelectedIndex !== this.selectedIndex) {
 			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		}
+
+		if (this.pagesCount - this.selectedIndex <= this.infiniteScrollOffset + 1) {
+			this.fireEvent("load-more");
 		}
 	}
 

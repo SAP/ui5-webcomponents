@@ -69,8 +69,6 @@ describe("Calendar general interaction", () => {
 			calendar._showYearPicker();
 		}, YEAR);
 
-		browser.pause(100);
-
 		assert.strictEqual(yearPicker.getProperty("_selectedYear"), YEAR, "Year is set");
 	})
 });

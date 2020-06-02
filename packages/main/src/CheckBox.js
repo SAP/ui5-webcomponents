@@ -124,6 +124,18 @@ const metadata = {
 			type: String,
 		},
 
+		/**
+		 * Determines the <code>aria-label</code>, set on the component root tag.
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabel: {
+			type: String,
+			defaultValue: undefined,
+		},
+
 		_label: {
 			type: Object,
 		},
