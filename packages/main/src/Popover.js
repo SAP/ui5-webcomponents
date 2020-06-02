@@ -184,40 +184,6 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
-		/**
-		 * Fired before the component is opened.
-		 *
-		 * @public
-		 * @event sap.ui.webcomponents.main.Popover#before-open
-		 */
-		"before-open": {},
-
-		/**
-		 * Fired after the component is opened.
-		 *
-		 * @public
-		 * @event sap.ui.webcomponents.main.Popover#after-open
-		 */
-		"after-open": {},
-
-		/**
-		 * Fired before the component is closed.
-		 *
-		 * @public
-		 * @event sap.ui.webcomponents.main.Popover#before-close
-		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
-		 */
-		"before-close": {
-			escPressed: { type: Boolean },
-		},
-
-		/**
-		 * Fired after the component is closed.
-		 *
-		 * @public
-		 * @event sap.ui.webcomponents.main.Popover#after-close
-		 */
-		"after-close": {},
 	},
 };
 
