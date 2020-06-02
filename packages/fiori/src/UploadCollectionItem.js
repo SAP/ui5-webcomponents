@@ -8,7 +8,7 @@ import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
-import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isEnter, isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import UploadState from "./types/UploadState.js";
 import "@ui5/webcomponents-icons/dist/icons/refresh.js";
 import "@ui5/webcomponents-icons/dist/icons/stop.js";
@@ -259,7 +259,6 @@ class UploadCollectionItem extends ListItem {
 		this.isEnter = false;
 	}
 
-
 	onAfterRendering() {
 		if (this._editPressed) {
 			this._editing = true;
@@ -304,11 +303,17 @@ class UploadCollectionItem extends ListItem {
 
 	_onInputKeydown(event) {
 		this.isEnter = isEnter(event);
+		this.isEscape = isEscape(event);
 	}
 
 	_onInputKeyUp(event) {
 		this.doNotCloseInput = true;
 		this.tempValue = event.target.value + this._fileExtension;
+
+		if (this.isEscape) {
+			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
+			return this._onRenameCancel();
+		}
 	}
 
 	isDetailPressed(event) {
@@ -324,26 +329,42 @@ class UploadCollectionItem extends ListItem {
 			return;
 		}
 
-		if (!this.isEnter && this.doNotCloseInput) {
+		if ((!this.isEnter && this.doNotCloseInput) || this.isEscape) {
 			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
+			this.isEscape = false;
 			return;
 		}
 
 		this._editing = false;
 		this.fileName = event.target.value + this._fileExtension;
 		this.fireEvent("rename");
+
+		if (this.isEnter) {
+			this._focus();
+		}
 	}
 
 	_onRename(event) {
-		this.fileName = this.tempValue;
 		this.doNotCloseInput = false;
 		this._editing = false;
 	}
 
 	_onRenameCancel(event) {
-		[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
+		if (!this.isEscape) {
+			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
+		}
+
 		this._editing = false;
 		this.doNotCloseInput = false;
+
+		this._focus();
+	}
+
+	_focus() {
+		setTimeout(() => {
+			this.list.setPreviouslyFocusedItem(this);
+			this.list.focusPreviouslyFocusedItem();
+		}, 0);
 	}
 
 	_onFileNameClick(event) {
@@ -356,6 +377,10 @@ class UploadCollectionItem extends ListItem {
 
 	_onTerminate(event) {
 		this.fireEvent("terminate");
+	}
+
+	get list() {
+		return this.assignedSlot.parentElement;
 	}
 
 	/**
