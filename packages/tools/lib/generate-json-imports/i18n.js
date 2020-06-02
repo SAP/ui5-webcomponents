@@ -15,7 +15,7 @@ const files = fs.readdirSync(inputFolder);
 const languages = files.map(file => {
   const matches = file.match(/messagebundle_(.+?).json$/);
   return matches ? matches[1] : undefined;
-}).filter(key => !!key).filter(key => key !== defaultLanguage);
+}).filter(key => !!key && key !== defaultLanguage);
 
 let content;
 
