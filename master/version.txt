@@ -1,5 +1,5 @@
-commit f8b1b393f16c1f1b899567af0096749db3ef84e2
+commit 4b10f4f3c85b49f9a64058f253e98de8369af8dc
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jun 2 15:53:26 2020 +0300
+Date:   Tue Jun 2 16:58:56 2020 +0300
 
-    fix(ui5-file-uploader): setting the value to an empty string also resets the file input (#1715)
+    fix(framework): Allow users to override default language translations (#1716)
