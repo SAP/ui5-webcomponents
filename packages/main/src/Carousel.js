@@ -101,7 +101,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines when the <code>loadMore</code> event is thrown. If not applied the event will not be thrown.
+		 * Defines when the <code>load-more</code> event is thrown. If not applied the event will not be thrown.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
@@ -184,13 +184,11 @@ const metadata = {
 		/**
 		 * Fired for the last items of the <code>ui5-carousel</code> if it is scrolled and the direction of scrolling is to the end.
 		 * The number of items for which the event is thrown is controlled by the <code>infiniteScrollOffset</code> property.
-		 * @event
+		 * @event sap.ui.webcomponents.main.Carousel#load-more
 		 * @public
 		 * @since 1.0.0-rc.8
 		 */
-		loadMore: {
-
-		},
+		"load-more": {},
 	},
 };
 
@@ -367,7 +365,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (this.pagesCount - this.selectedIndex <= this.infiniteScrollOffset + 1) {
-			this.fireEvent("loadMore");
+			this.fireEvent("load-more");
 		}
 	}
 

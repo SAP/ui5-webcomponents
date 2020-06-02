@@ -49,7 +49,7 @@
 		</ui5-list>
 
 		<script>
-			myList.addEventListener("itemClose", function(e) {
+			myList.addEventListener("item-close", function(e) {
 				e.detail.item.hidden = true;
 			});
 		</script>
@@ -81,7 +81,7 @@
 </ui5-list>
 
 <script>
-	myList.addEventListener("itemClose", e => {
+	myList.addEventListener("item-close", e => {
 		e.detail.item.hidden = true;
 	});
 </script>
@@ -219,7 +219,7 @@
 		</ui5-popover>
 
 		<script>
-			shellbar.addEventListener("ui5-notificationsClick", function(event) {
+			shellbar.addEventListener("ui5-notifications-click", function(event) {
 				event.preventDefault();
 				notificationsPopover.openBy(event.detail.targetRef);
 			});
@@ -259,7 +259,7 @@
 </ui5-popover>
 
 <script>
-	shellbar.addEventListener("ui5-notificationsClick", function(event) {
+	shellbar.addEventListener("ui5-notifications-click", function(event) {
 		notificationsPopover.openBy(event.detail.targetRef);
 	});
 </script>

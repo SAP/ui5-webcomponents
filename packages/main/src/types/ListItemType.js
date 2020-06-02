@@ -20,7 +20,7 @@ const ListItemTypes = {
 	Active: "Active",
 
 	/**
-	 * Enables detail button of the list item that fires detailClick event.
+	 * Enables detail button of the list item that fires detail-click event.
 	 * @public
 	 * @type {Detail}
 	 */

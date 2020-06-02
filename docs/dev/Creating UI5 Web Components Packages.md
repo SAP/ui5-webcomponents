@@ -19,19 +19,25 @@ The name that you give to your package will be used by the UI5 Web Components to
 
 ## Step 2 - add the UI5 Web Components packages as dependencies
 
-`npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
+With `npm`:
+ - `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
+ - `npm i --save-dev chromedriver`
 
-or
+or with `yarn`:
+ - `yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
+ - `yarn add -D chromedriver` 
 
-`yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools` 
-
-These 3 will serve as foundation for your own package and web components.
+These three `@ui5/` packages will serve as foundation for your own package and web components.
 
 Package | Description
 ----------------|-----------------------
 `@ui5/webcomponents-base` | Base classes and Framework
 `@ui5/webcomponents-theme-base` | Base theming assets
 `@ui5/webcomponents-tools` | Build and configuration assets
+
+*Note:* `chromedriver` is a peer dependency of `@ui5/webcomponents-tools` so that you get to choose the exact version, 
+if necessary. This is useful if, for example, you manually update Chrome on your system and you'd prefer to not have
+a fixed `chromedriver` version packaged with `@ui5/webcomponents-tools`. 
 
 ## Step 3 - run the package initialization script
 
@@ -86,6 +92,9 @@ or
 
 `yarn build`.
 
+*Note:* In order to run the tests for the first time, you must have built the project with either `start` or `build`,
+and you must have installed `chromedriver`, as described in the previous step. 
+
 That's it!
 
 ## Understanding the project structure
@@ -120,6 +129,56 @@ You'll likely only need to change `bundle.esm.js` to import your new components 
 
 The `config/` directory serves as a central place for most build and test tools' configuration assets. Normally you 
 don't need to change any files there.
+
+#### Custom configuration
+
+The files in the `config/` directory simply import UI5 Web Components' default configuration for all tasks: `rollup`, `wdio`, `eslint`, etc...
+
+If you need to customize any configuration, simply put your own content into the respective file in `config/`.
+
+Examples: 
+ - Modifying `eslint` settings. 
+ 
+    Open `config/.eslintrc.js`. It should look like this:
+	 ```js
+	module.exports = require("@ui5/webcomponents-tools/components-package/eslint.js");
+	```
+	As you can see, this is just a proxy to UI5 Web Components' default configuration.
+	Put your own content instead:
+	```js
+	module.exports = {
+    	"env": {
+    		"browser": true,
+    		"es6": true
+    	},
+    	"root": true,
+    	"extends": "airbnb-base",
+   		.............
+  	}
+	```
+	
+ - Modifying `wdio` settings.	
+    
+    Open `config/wdio.conf.js`. It should look like this:
+    
+    ```js
+	module.exports = require("@ui5/webcomponents-tools/components-package/wdio.js");
+	```
+	
+	Again, this is a proxy to UI5 Web Components' default configuration.
+	
+	You could just paste the content of `@ui5/webcomponents-tools/components-package/wdio.js` here and modify at will.
+	
+	However, let's not replace the whole file by hand this time, but just modify the exported configuration object.
+	
+	```js
+	const result = require("@ui5/webcomponents-tools/components-package/wdio.js");
+	result.config.capabilities[0]["goog:chromeOptions"].args = ['--disable-gpu']; // From: ['--disable-gpu', '--headless']
+	module.exports = result;
+	```
+	
+	In this example, what we did was simply replace one option in the configuration object to disable `headless` mode
+	so that we can use `browser.debug()` in our `*.spec.js` files. For more on testing, see [Testing Web Components](./Testing%20Web%20Components.md).
 
 ### The `src/` directory
 
@@ -210,6 +269,8 @@ File | Purpose
 `src/specs/*` | Test specs, based on [WDIO](https://www.npmjs.com/package/wdio). They use the test pages for setup.
 
 You can execute all specs by running `yarn test` or `npm run test`.
+
+For more on testing, see our [Testing Web Components](./Testing%20Web%20Components.md) section. 
 
 ## Public consumption of your custom UI5 Web Components package
 

@@ -64,13 +64,13 @@ describe("Popover general interaction", () => {
 
 		manyItemsSelect.click();
 
-		const lastListItem = items[items.length - 1];
+		const itemBeforeLastItem = items[items.length - 2];
 
-		assert.strictEqual(lastListItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
+		assert.strictEqual(itemBeforeLastItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
 
-		lastListItem.scrollIntoView();
+		itemBeforeLastItem.scrollIntoView();
 
-		assert.strictEqual(lastListItem.isDisplayedInViewport(), true, "Last item is displayed after scrolling");
+		assert.strictEqual(itemBeforeLastItem.isDisplayedInViewport(), true, "Last item is displayed after scrolling");
 
 		manyItemsSelect.click();
 	});
@@ -82,13 +82,13 @@ describe("Popover general interaction", () => {
 
 		openBigPopoverButton.click();
 
-		const lastListItem = items[items.length - 1];
+		const itemBeforeLastItem = items[items.length - 2];
 
-		assert.strictEqual(lastListItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
+		assert.strictEqual(itemBeforeLastItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
 
-		lastListItem.scrollIntoView();
+		itemBeforeLastItem.scrollIntoView();
 
-		assert.strictEqual(lastListItem.isDisplayedInViewport(), true, "Last item is displayed after scrolling");
+		assert.strictEqual(itemBeforeLastItem.isDisplayedInViewport(), true, "Last item is displayed after scrolling");
 	});
 
 	it("tests modal popover", () => {
@@ -134,7 +134,7 @@ describe("Popover general interaction", () => {
 		browser.keys("Tab");
 
 		assert.ok(!ff.getProperty("focused"), "The first focusable element is focused.");
-		
+
 		// button
 		browser.keys("Tab");
 

@@ -1,7 +1,7 @@
 const assert = require("chai").assert;
 
 describe("Configuration script has effect", () => {
-	browser.url("http://localhost:9191/test-resources/pages/ConfigurationScript.html");
+	browser.url("http://localhost:9191/test-resources/pages/ConfigurationScript.html?do-not-change-configuration");
 
 	it("Tests that RTL is applied", () => {
 		const res = browser.execute( () => {
@@ -48,7 +48,7 @@ describe("Configuration script has effect", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			return config.getNoConflict();
 		});
-		assert.strictEqual(res.events.includes("selectionChange"), true, "selectionChange was successfully registered as a no conflict event");
+		assert.strictEqual(res.events.includes("selection-change"), true, "selectionChange was successfully registered as a no conflict event");
 	});
 
 	it("Tests that animationMode is applied", () => {

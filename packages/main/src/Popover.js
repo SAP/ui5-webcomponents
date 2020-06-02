@@ -184,40 +184,6 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
-		/**
-		 * Fired before the component is opened.
-		 *
-		 * @public
-		 * @event
-		 */
-		beforeOpen: {},
-
-		/**
-		 * Fired after the component is opened.
-		 *
-		 * @public
-		 * @event
-		 */
-		afterOpen: {},
-
-		/**
-		 * Fired before the component is closed.
-		 *
-		 * @public
-		 * @event
-		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
-		 */
-		beforeClose: {
-			escPressed: { type: Boolean },
-		},
-
-		/**
-		 * Fired after the component is closed.
-		 *
-		 * @public
-		 * @event
-		 */
-		afterClose: {},
 	},
 };
 
@@ -298,14 +264,14 @@ class Popover extends Popup {
 		this._opener = opener;
 		this._focusedElementBeforeOpen = getFocusedElement();
 
-		this.fireEvent("beforeOpen", {});
+		this.fireEvent("before-open", {});
 		this.reposition();
 		this.applyInitialFocus();
 
 		addOpenedPopover(this);
 
 		this.opened = true;
-		this.fireEvent("afterOpen", {});
+		this.fireEvent("after-open", {});
 	}
 
 	/**
@@ -323,7 +289,7 @@ class Popover extends Popup {
 			Popover.unblockBodyScrolling();
 		}
 
-		this.fireEvent("beforeClose", {
+		this.fireEvent("before-close", {
 			escPressed,
 		}, true);
 
@@ -339,7 +305,7 @@ class Popover extends Popup {
 		}
 
 		this.hide();
-		this.fireEvent("afterClose", {});
+		this.fireEvent("after-close", {});
 	}
 
 	get focusedElement() {

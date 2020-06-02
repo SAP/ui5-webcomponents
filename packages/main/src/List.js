@@ -137,7 +137,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the component would fire the <code>loadMore</code> event
+		 * Defines if the component would fire the <code>load-more</code> event
 		 * when the user scrolls to the bottom of the list, and helps achieving an "infinite scroll" effect
 		 * by adding new items each time.
 		 *
@@ -180,11 +180,11 @@ const metadata = {
 		 * Fired when an item is activated, unless the item's <code>type</code> property
 		 * is set to <code>Inactive</code>.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.List#item-click
 		 * @param {HTMLElement} item the clicked item.
 		 * @public
 		 */
-		itemClick: {
+		"item-click": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -194,13 +194,14 @@ const metadata = {
 		 * Fired when the <code>Close</code> button of any item is clicked
 		 * <br><br>
 		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification</code> items only,
-		 * not to be confused with <code>itemDelete</code>.
-		 * @event
+		 * not to be confused with <code>item-delete</code>.
+		 *
+		 * @event sap.ui.webcomponents.main.List#item-close
 		 * @param {HTMLElement} item the item about to be closed.
 		 * @public
 		 * @since 1.0.0-rc.8
 		 */
-		itemClose: {
+		"item-close": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -210,12 +211,13 @@ const metadata = {
 		 * Fired when the <code>Toggle</code> button of any item is clicked.
 		 * <br><br>
 		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification-group</code> items only.
-		 * @event
+		 *
+		 * @event sap.ui.webcomponents.main.List#item-toggle
 		 * @param {HTMLElement} item the toggled item.
 		 * @public
 		 * @since 1.0.0-rc.8
 		 */
-		itemToggle: {
+		"item-toggle": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -226,11 +228,12 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the <code>ui5-list</code> <code>mode</code> property is set to <code>Delete</code>.
-		 * @event
+		 *
+		 * @event sap.ui.webcomponents.main.List#item-delete
 		 * @param {HTMLElement} item the deleted item.
 		 * @public
 		 */
-		itemDelete: {
+		"item-delete": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -240,12 +243,12 @@ const metadata = {
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.List#selection-change
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @param {Array} previouslySelectedItems An array of the previously selected items.
 		 * @public
 		 */
-		selectionChange: {
+		"selection-change": {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
@@ -258,11 +261,11 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The event is fired when the <code>infiniteScroll</code> property is enabled.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.List#load-more
 		 * @public
 		 * @since 1.0.0-rc.6
 		 */
-		loadMore: {},
+		"load-more": {},
 	},
 };
 
@@ -338,9 +341,9 @@ class List extends UI5Element {
 		this.addEventListener("ui5-close", this.onItemClose.bind(this));
 		this.addEventListener("ui5-toggle", this.onItemToggle.bind(this));
 		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
-		this.addEventListener("ui5-_forwardAfter", this.onForwardAfter.bind(this));
-		this.addEventListener("ui5-_forwardBefore", this.onForwardBefore.bind(this));
-		this.addEventListener("ui5-_selectionRequested", this.onSelectionRequested.bind(this));
+		this.addEventListener("ui5-_forward-after", this.onForwardAfter.bind(this));
+		this.addEventListener("ui5-_forward-before", this.onForwardBefore.bind(this));
+		this.addEventListener("ui5-_selection-requested", this.onSelectionRequested.bind(this));
 	}
 
 	get shouldRenderH1() {
@@ -407,7 +410,7 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", {
+			this.fireEvent("selection-change", {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: event.detail.selectionComponentPressed,
@@ -441,7 +444,7 @@ class List extends UI5Element {
 	}
 
 	handleDelete(item) {
-		this.fireEvent("itemDelete", { item });
+		this.fireEvent("item-delete", { item });
 	}
 
 	deselectSelectedItems() {
@@ -558,7 +561,7 @@ class List extends UI5Element {
 		const target = event.target;
 
 		this._itemNavigation.update(target);
-		this.fireEvent("itemFocused", { item: target });
+		this.fireEvent("item-focused", { item: target });
 	}
 
 	onItemPress(event) {
@@ -576,19 +579,19 @@ class List extends UI5Element {
 			});
 		}
 
-		this.fireEvent("itemPress", { item: pressedItem });
-		this.fireEvent("itemClick", { item: pressedItem });
+		this.fireEvent("item-press", { item: pressedItem });
+		this.fireEvent("item-click", { item: pressedItem });
 
 		this._selectionRequested = false;
 	}
 
 	// This is applicable to NoficationListItem
 	onItemClose(event) {
-		this.fireEvent("itemClose", { item: event.detail.item });
+		this.fireEvent("item-close", { item: event.detail.item });
 	}
 
 	onItemToggle(event) {
-		this.fireEvent("itemToggle", { item: event.detail.item });
+		this.fireEvent("item-toggle", { item: event.detail.item });
 	}
 
 	onForwardBefore(event) {
@@ -700,7 +703,7 @@ class List extends UI5Element {
 		this.previousScrollPosition = scrollTop;
 
 		if (scrollHeight - BUSYINDICATOR_HEIGHT <= height + scrollTop) {
-			this.fireEvent("loadMore");
+			this.fireEvent("load-more");
 		}
 	}
 

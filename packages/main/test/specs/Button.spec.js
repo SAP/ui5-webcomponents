@@ -21,6 +21,11 @@ describe("Button general interaction", () => {
 		assert.strictEqual(button.shadow$$("ui5-icon").length, 0, "icon is not present");
 	});
 
+	it("tests button's slot rendering", () => {
+		const btnImage = browser.$("#btnImage");
+		assert.strictEqual(btnImage.isDisplayed(), true, "Btn image is rendered");
+	});
+
 	it("tests click event", () => {
 		const button = browser.$("#button1");
 		const field = browser.$("#click-counter");

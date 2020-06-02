@@ -43,11 +43,11 @@ const metadata = {
 		/**
 		 * Fired when the selected button changes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.SegmentedButton#selection-change
 		 * @param {HTMLElement} selectedButton the pressed button.
 		 * @public
 		 */
-		selectionChange: {
+		"selection-change": {
 			detail: {
 				selectedButton: { type: HTMLElement },
 			},
@@ -182,7 +182,7 @@ class SegmentedButton extends UI5Element {
 				this._selectedButton.pressed = false;
 			}
 			this._selectedButton = event.target;
-			this.fireEvent("selectionChange", {
+			this.fireEvent("selection-change", {
 				selectedButton: this._selectedButton,
 			});
 		}

@@ -247,6 +247,12 @@ class FileUploader extends UI5Element {
 		this._enableFormSupport();
 	}
 
+	onAfterRendering() {
+		if (!this.value) {
+			this.getDomRef().querySelector(`input[type="file"]`).value = "";
+		}
+	}
+
 	_enableFormSupport() {
 		const FormSupport = getFeature("FormSupport");
 

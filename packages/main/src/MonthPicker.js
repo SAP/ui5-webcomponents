@@ -89,7 +89,7 @@ const metadata = {
 		 * @public
 		 * @event
 		 */
-		selectedMonthChange: {},
+		change: {},
 	},
 };
 
@@ -215,7 +215,7 @@ class MonthPicker extends UI5Element {
 			const timestamp = this.getTimestampFromDOM(event.target);
 			this.timestamp = timestamp;
 			this._itemNav.current = this._month;
-			this.fireEvent("selectedMonthChange", { timestamp });
+			this.fireEvent("change", { timestamp });
 		}
 	}
 
@@ -230,7 +230,7 @@ class MonthPicker extends UI5Element {
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this.getTimestampFromDOM(event.target);
 			this.timestamp = timestamp;
-			this.fireEvent("selectedMonthChange", { timestamp });
+			this.fireEvent("change", { timestamp });
 		}
 	}
 

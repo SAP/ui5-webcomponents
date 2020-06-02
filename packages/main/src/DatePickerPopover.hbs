@@ -9,8 +9,8 @@
 	no-stretch
 	?_hide-header={{_shouldHideHeader}}
 	@keydown="{{_onkeydown}}"
-	@ui5-afterClose="{{_respPopoverConfig.afterClose}}"
-	@ui5-afterOpen="{{_respPopoverConfig.afterOpen}}"
+	@ui5-after-close="{{_respPopoverConfig.afterClose}}"
+	@ui5-after-open="{{_respPopoverConfig.afterOpen}}"
 >
 	{{#if showHeader}}
 		{{> header}}
@@ -47,7 +47,7 @@
 		.selectedDates="{{_calendar.selectedDates}}"
 		.minDate="{{_calendar.minDate}}"
 		.maxDate="{{_calendar.maxDate}}"
-		@ui5-selectedDatesChange="{{_calendar.onSelectedDatesChange}}"
+		@ui5-selected-dates-change="{{_calendar.onSelectedDatesChange}}"
 	></ui5-calendar>
 {{/inline}}
 
