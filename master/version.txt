@@ -1,9 +1,7 @@
-commit 980beec01cdd0ca6d966959925aaee36a77303a4
+commit c1d6924594079222e125ebd6c379e480dae3b327
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jun 2 11:37:39 2020 +0300
+Date:   Tue Jun 2 12:32:32 2020 +0300
 
-    chore: fix btn slot display (#1708)
+    docs: remove inherited events (#1711)
     
-    Recent fix for how icon-only button with just comment nodes is rendered, has affected rendering of images, avatars inside the button.
-    This can be seen in the ShellBar page, where ui5-avatar is used for profile slot, internally slotted in a ui5-button. The profile image is not visible as "display: none" is applied due to the icon-only state of the ui5-button.
-    Now we filter the comment nodes and check for the childNodes length to determine if its icon-only button or not.
+    Events are being duplicated in the Playground as already present in the base Popup class, we can remove it.
