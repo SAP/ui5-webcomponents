@@ -376,7 +376,7 @@ class Carousel extends UI5Element {
 	get items() {
 		return this.content.map((item, idx) => {
 			return {
-				id: `${this._id}-carousel-item-${idx + 1}`,
+				id: `${this.idPrefix}-item-${idx + 1}`,
 				item,
 				tabIndex: idx === this.selectedIndex ? "0" : "-1",
 				posinset: idx + 1,
@@ -496,7 +496,11 @@ class Carousel extends UI5Element {
 	}
 
 	get ariaActiveDescendant() {
-		return this.content.length ? `${this._id}-carousel-item-${this.selectedIndex + 1}` : undefined;
+		return this.content.length ? `${this.idPrefix}-item-${this.selectedIndex + 1}` : undefined;
+	}
+
+	get idPrefix() {
+		return "__ui5-carousel_aria";
 	}
 
 	static async onDefine() {

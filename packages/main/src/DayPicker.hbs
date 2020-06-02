@@ -16,7 +16,7 @@
 		</div>
 	{{/if}}
 
-	<div id="{{_id}}-content" class="ui5-dp-content">
+	<div class="ui5-dp-content">
 		<div role="row" class="ui5-dp-days-names-container">
 			{{#each _dayNames}}
 				<div
@@ -28,7 +28,7 @@
 				</div>
 			{{/each}}
 		</div>
-		<div id="{{_id}}-days" class="ui5-dp-items-container" tabindex="-1">
+		<div class="ui5-dp-items-container" tabindex="-1">
 			{{#each _weeks}}
 				{{#if this.length}}
 					<div style="display: flex;">

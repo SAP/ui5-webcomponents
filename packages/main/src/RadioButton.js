@@ -371,11 +371,11 @@ class RadioButton extends UI5Element {
 	}
 
 	get ariaLabelledBy() {
-		return this.text ? `${this._id}-label` : undefined;
+		return this.text ? `${this.idPrefix}-label` : undefined;
 	}
 
 	get ariaDescribedBy() {
-		return this.hasValueState ? `${this._id}-descr` : undefined;
+		return this.hasValueState ? `${this.idPrefix}-descr` : undefined;
 	}
 
 	get hasValueState() {
@@ -406,6 +406,10 @@ class RadioButton extends UI5Element {
 
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
+	}
+
+	get idPrefix() {
+		return "__ui5_rb_aria";
 	}
 }
 

@@ -507,7 +507,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get valueStateTextId() {
-		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+		return this.hasValueState ? `${this.idPrefix}-valueStateDesc` : undefined;
 	}
 
 	get valueStateTextMappings() {
@@ -516,6 +516,10 @@ class ComboBox extends UI5Element {
 			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
+	}
+
+	get idPrefix() {
+		return "__ui5_cbx_aria";
 	}
 
 	static async onDefine() {

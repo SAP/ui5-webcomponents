@@ -301,7 +301,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get ariaLabelledBy() {
-		const id = this._id;
+		const id = this.idPrefix;
 		const ids = [];
 
 		if (this.hasHeading) {
@@ -342,6 +342,10 @@ class NotificationListItem extends NotificationListItemBase {
 		const priorityText = this.priorityText;
 
 		return `${notifcationTxt} ${readTxt} ${priorityText}`;
+	}
+
+	get idPrefix() {
+		return "__ui5_nli_aria";
 	}
 
 	get classes() {

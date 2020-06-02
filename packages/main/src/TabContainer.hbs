@@ -6,11 +6,11 @@
 		{{> contentArea}}
 	{{/if}}
 
-	<div class="{{classes.header}}" id="{{_id}}-header">
+	<div class="{{classes.header}}">
 		<ui5-icon @click="{{_onHeaderBackArrowClick}}" class="{{classes.headerBackArrow}}" name="slim-arrow-left" tabindex="-1" accessible-name="{{previousIconACCName}}" show-tooltip></ui5-icon>
 
 		<!-- tab items -->
-		<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
+		<div class="{{classes.headerScrollContainer}}">
 			<ul
 				role="tablist"
 				class="{{classes.headerList}}"

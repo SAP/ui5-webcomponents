@@ -191,7 +191,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	get ariaLabelledBy() {
-		const id = this._id;
+		const id = this.idPrefix;
 		const ids = [];
 
 		if (this.hasHeading) {
@@ -201,6 +201,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		ids.push(`${id}-invisibleText`);
 
 		return ids.join(" ");
+	}
+
+	get idPrefix() {
+		return "__ui5_nli_group_aria";
 	}
 
 	/**

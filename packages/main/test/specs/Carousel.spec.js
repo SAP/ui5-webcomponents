@@ -79,8 +79,8 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(carouselItem4.getAttribute("aria-setsize"), SETSIZE, "The aria-setsize of carousel item is correct.");
 
 		const carouselRoot = carousel.shadow$(".ui5-carousel-root");
-		const ACTIVEDESCENDANT_PAGE_1 = `${carousel.getProperty("_id")}-carousel-item-1`;
-		const ACTIVEDESCENDANT_PAGE_2 = `${carousel.getProperty("_id")}-carousel-item-2`;
+		const ACTIVEDESCENDANT_PAGE_1 = "__ui5-carousel_aria-item-1";
+		const ACTIVEDESCENDANT_PAGE_2 = "__ui5-carousel_aria-item-2";
 
 		// assert: check root tag ARIA
 		assert.strictEqual(carouselRoot.getAttribute("aria-activedescendant"), ACTIVEDESCENDANT_PAGE_1, "The aria-activedescendant of carousel is correct.");

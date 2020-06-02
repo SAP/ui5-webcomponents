@@ -63,7 +63,7 @@
 		{{/if}}
 	</div>
 
-	<div id="{{_id}}-searchfield-wrapper"
+	<div id="{{idPrefix}}-searchfield-wrapper"
 		class="ui5-shellbar-search-field"
 		style="{{styles.searchField}}"
 	>
@@ -78,7 +78,7 @@
 
 			{{#if hasSearchField}}
 				<ui5-button
-					id="{{this._id}}-item-1"
+					id="{{this.idPrefix}}-item-1"
 					class="{{classes.items.search}} ui5-shellbar-button ui5-shellbar-search-button"
 					icon="sap-icon://search"
 					data-ui5-text="Search"
@@ -104,7 +104,7 @@
 
 			{{#if showNotifications}}
 			<ui5-button
-				id="{{this._id}}-item-2"
+				id="{{this.idPrefix}}-item-2"
 				style="{{styles.items.notification}}"
 				class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button"
 				icon="sap-icon://bell"
@@ -117,7 +117,7 @@
 			{{/if}}
 
 			<ui5-button
-				id="{{this._id}}-item-5"
+				id="{{this.idPrefix}}-item-5"
 				style="{{styles.items.overflow}}"
 				class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button"
 				icon="sap-icon://overflow"
@@ -129,7 +129,7 @@
 			{{#if hasProfile}}
 				<ui5-button
 					profile-btn
-					id="{{this._id}}-item-3"
+					id="{{this.idPrefix}}-item-3"
 					@click={{_handleProfilePress}}
 					style="{{styles.items.profile}}"
 					aria-label="{{_profileText}}"
@@ -143,7 +143,7 @@
 
 			{{#if showProductSwitch}}
 			<ui5-button
-				id="{{this._id}}-item-4"
+				id="{{this.idPrefix}}-item-4"
 				style="{{styles.items.product}}"
 				class="{{classes.items.product}} ui5-shellbar-button ui5-shellbar-button-product-switch"
 				icon="sap-icon://grid"

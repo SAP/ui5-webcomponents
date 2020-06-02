@@ -22,7 +22,7 @@
 			{{> selectionElement}}
 		{{/if}}
 
-		<div id="{{_id}}-content" class="ui5-li-content">
+		<div class="ui5-li-content">
 			{{> imageBegin}}
 			{{> iconBegin}}
 			{{> listItemContent}}
@@ -55,7 +55,6 @@
 		<ui5-radiobutton
 				?disabled="{{isInactive}}"
 				tabindex="-1"
-				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
 				?selected="{{selected}}"
 				@click="{{onSingleSelectionComponentPress}}">
@@ -66,7 +65,6 @@
 		<ui5-checkbox
 				?disabled="{{isInactive}}"
 				tabindex="-1"
-				id="{{_id}}-multiSelectionElement"
 				class="ui5-li-multisel-cb"
 				?checked="{{selected}}"
 				@click="{{onMultiSelectionComponentPress}}">
@@ -76,7 +74,6 @@
 	{{#if modeDelete}}
 		<div class="ui5-li-deletebtn">
 			<ui5-button
-				id="{{_id}}-deleteSelectionElement"
 				design="Transparent"
 				icon="decline"
 				@click="{{onDelete}}"

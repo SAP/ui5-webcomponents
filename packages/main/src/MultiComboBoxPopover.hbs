@@ -35,8 +35,8 @@
 						@input="{{_inputLiveChange}}"
 						@change={{_inputChange}}
 						aria-autocomplete="both"
-						aria-labelledby="{{_id}}-hiddenText-nMore"
-						aria-describedby="{{_id}}-valueStateDesc"
+						aria-labelledby="{{ariaLabelledById}}"
+						aria-describedby="{{ariaDescribedById}}"
 					/>
 				</div>
 				<ui5-togglebutton
@@ -52,7 +52,7 @@
 
 	<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 		{{#each _filteredItems}}
-				<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.text}}</ui5-li>
+			<ui5-li type="Active" ?selected={{this.selected}} data-ui5-pos="{{this._pos}}">{{this.text}}</ui5-li>
 		{{/each}}
 	</ui5-list>
 

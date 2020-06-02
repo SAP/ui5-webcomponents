@@ -3,7 +3,7 @@
 	role="checkbox"
 	aria-checked="{{checked}}"
 	aria-disabled="{{ariaDisabled}}"
-	aria-labelledby="{{_id}}-hiddenText"
+	aria-labelledby="__ui5-switch_aria-hiddenText"
 	@click="{{_onclick}}"
 	@keyup="{{_onkeyup}}"
 	@keydown="{{_onkeydown}}"
@@ -30,5 +30,5 @@
 		</div>
 	</div>
 	<input type='checkbox' ?checked="{{checked}}" class="ui5-switch-input" data-sap-no-tab-ref/>
-	<span id="{{_id}}-hiddenText" class="ui5-hidden-text">{{hiddenText}}</span>
+	<span id="__ui5-switch_aria-hiddenText" class="ui5-hidden-text">{{hiddenText}}</span>
 </div>

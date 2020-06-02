@@ -14,14 +14,14 @@
 		</header>
 	{{/if}}
 
-	<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
+	<div tabindex="0" class="ui5-list-focusarea ui5-list-focusarea--before"></div>
 
-	<ul id="{{_id}}-listUl" class="ui5-list-ul" aria-multiselectable="{{isMultiSelect}}" aria-labelledby="{{ariaLabelledBy}}" role="{{_role}}">
+	<ul class="ui5-list-ul" aria-multiselectable="{{isMultiSelect}}" aria-labelledby="{{ariaLabelledBy}}" role="{{_role}}">
 		<slot></slot>
 
 		{{#if showNoDataText}}
-			<li id="{{_id}}-nodata" class="ui5-list-nodata" tabindex="{{noDataTabIndex}}">
-				<div id="{{_id}}-nodata-text" class="ui5-list-nodata-text">
+			<li class="ui5-list-nodata" tabindex="{{noDataTabIndex}}">
+				<div class="ui5-list-nodata-text">
 					{{noDataText}}
 				</div>
 			</li>
@@ -29,7 +29,7 @@
 	</ul>
 
 	{{#if footerText}}
-		<footer id="{{_id}}-footer" class="ui5-list-footer">
+		<footer class="ui5-list-footer">
 			{{footerText}}
 		</footer>
 	{{/if}}
@@ -40,5 +40,5 @@
 		</div>
 	{{/if}}
 
-	<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>
+	<div tabindex="0" class="ui5-list-focusarea ui5-list-focusarea--after"></div>
 </div>

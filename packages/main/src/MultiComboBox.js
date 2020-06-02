@@ -412,12 +412,22 @@ class MultiComboBox extends UI5Element {
 
 	_tokenDelete(event) {
 		const token = event.detail.ref;
-		const deletingItem = this.items.find(item => item._id === token.getAttribute("data-ui5-id"));
+		const deletingItemMCB = this._getMCBItemByToken(token)
 
-		deletingItem.selected = false;
+		deletingItemMCB.selected = false;
 		this._deleting = true;
 
 		this.fireSelectionChange();
+	}
+
+	_getMCBItemByToken(token) {
+		const pos = parseInt(token.getAttribute("data-ui5-pos"));
+		return this.items[pos];
+	}
+
+	_getMCBItemByLItem(item) {
+		const pos = parseInt(item.getAttribute("data-ui5-pos"));
+		return this.items[pos];
 	}
 
 	_tokenizerFocusOut() {
@@ -473,7 +483,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_filterItems(value) {
-		return this.items.filter(item => {
+		return this.items.map((item, idx) => {
+			item._pos = idx;
+			return item;
+		}).filter(item => {
 			return item.text
 				&& item.text.toLowerCase().startsWith(value.toLowerCase())
 				&& (this.filterSelected ? item.selected : true);
@@ -499,11 +512,8 @@ class MultiComboBox extends UI5Element {
 
 	_listSelectionChange(event) {
 		event.target.items.forEach(item => {
-			this.items.forEach(mcbItem => {
-				if (mcbItem._id === item.getAttribute("data-ui5-token-id")) {
-					mcbItem.selected = item.selected;
-				}
-			});
+			const mcbItem = this._getMCBItemByLItem(item);
+			mcbItem.selected = item.selected;
 		});
 
 		this.fireSelectionChange();
@@ -636,8 +646,24 @@ class MultiComboBox extends UI5Element {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
+	get ariaDescribedById () {
+		return this.hasValueState ? this.valueStateTextId : undefined;
+	}
+
 	get valueStateTextId() {
-		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+		return `${this.idPrefix}-valueStateDesc`;
+	}
+
+	get ariaLabelledById() {
+		return this.hiddenTextId;
+	}
+
+	get hiddenTextId() {
+		return `${this.idPrefix}-hiddenText-nMore`;
+	}
+
+	get idPrefix() {
+		return "__ui5_multi_cbx";
 	}
 
 	get _innerInput() {

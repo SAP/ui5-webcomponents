@@ -1,17 +1,16 @@
 <div class="{{classes.main}}"
-	id="{{_id}}"
 	role="alert"
 	aria-live="assertive"
-	aria-labelledby="{{_id}}">
+	aria-labelledby="__ui5-message_strip_aria">
 
 	{{#unless noIcon}}
-        <div class="ui5-messagestrip-icon-wrapper">
-            {{#if iconProvided}}
-                <slot name="icon"></slot>
-            {{else}}
-                <ui5-icon name="{{standardIconName}}" class="ui5-messagestrip-icon"></ui5-icon>
-            {{/if}}
-        </div>
+		<div class="ui5-messagestrip-icon-wrapper">
+			{{#if iconProvided}}
+				<slot name="icon"></slot>
+			{{else}}
+				<ui5-icon name="{{standardIconName}}" class="ui5-messagestrip-icon"></ui5-icon>
+			{{/if}}
+		</div>
 	{{/unless}}
 
 	<span class="ui5-hidden-text">{{hiddenText}}</span>

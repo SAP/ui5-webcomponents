@@ -538,7 +538,7 @@ class TextArea extends UI5Element {
 	}
 
 	get ariaLabelledBy() {
-		return this.showExceededText ? `${this._id}-exceededText` : undefined;
+		return this.showExceededText ? `${this.idPrefix}-exceededText` : undefined;
 	}
 
 	get ariaInvalid() {
@@ -571,6 +571,10 @@ class TextArea extends UI5Element {
 		}
 
 		return this.valueStateTextMappings()[this.valueState];
+	}
+
+	get idPrefix() {
+		return "__ui5_textarea_aria";
 	}
 
 	valueStateTextMappings() {

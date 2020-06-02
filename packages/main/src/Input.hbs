@@ -6,7 +6,7 @@
 	<div class="ui5-input-content">
 		{{> preContent}}
 
-		<input id="{{_id}}-inner"
+		<input
 			class="ui5-input-inner"
 			type="{{inputType}}"
 			inner-input
@@ -39,16 +39,16 @@
 		{{/if}}
 
 		{{#if showSuggestions}}
-			<span id="{{_id}}-suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
-			<span id="{{_id}}-selectionText" class="ui5-hidden-text" aria-live="polite" role="status"></span>
+			<span id="{{idPrefix}}-suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
+			<span id="{{idPrefix}}-selectionText" class="ui5-hidden-text" aria-live="polite" role="status"></span>
 		{{/if}}
 
 		{{#if accInfo.input.ariaDescription}}
-			<span id="{{_id}}-descr" class="ui5-hidden-text">{{accInfo.input.ariaDescription}}</span>
+			<span id="{{idPrefix}}-descr" class="ui5-hidden-text">{{accInfo.input.ariaDescription}}</span>
 		{{/if}}
 
 		{{#if hasValueState}}
-			<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
+			<span id="{{idPrefix}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
 		{{/if}}
 	</div>
 

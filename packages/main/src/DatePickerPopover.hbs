@@ -1,5 +1,5 @@
 <ui5-responsive-popover
-	id="{{_id}}-responsive-popover"
+	id="{{idPrefix}}-responsive-popover"
 	allow-target-overlap="{{_respPopoverConfig.allowTargetOverlap}}"
 	stay-open-on-scroll="{{_respPopoverConfig.stayOpenOnScroll}}"
 	placement-type="Bottom"
@@ -39,7 +39,6 @@
 
 {{#*inline "content"}}
 	<ui5-calendar
-		id="{{_id}}-calendar"
 		primary-calendar-type="{{_calendar.primaryCalendarType}}"
 		format-pattern="{{_calendar.formatPattern}}"
 		timestamp="{{_calendar.timestamp}}"

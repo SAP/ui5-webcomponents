@@ -260,7 +260,7 @@ class DayPicker extends UI5Element {
 				day.classes += " ui5-dp-item--othermonth";
 			}
 
-			day.id = `${this._id}-${timestamp}`;
+			day.id = `d${i}-${timestamp}`;
 
 			if (this._isWeekend(oCalDate)) {
 				day.classes += " ui5-dp-item--weeekend";
@@ -297,7 +297,7 @@ class DayPicker extends UI5Element {
 				weekday -= 7;
 			}
 			dayName = {
-				id: `${this._id}-WH${i.toString()}`,
+				id: `${weekday}-WH${i.toString()}`,
 				name: aDayNamesWide[weekday],
 				ultraShortName: aUltraShortNames[weekday],
 				classes: "ui5-dp-dayname",

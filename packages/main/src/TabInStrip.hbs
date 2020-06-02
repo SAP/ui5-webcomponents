@@ -12,7 +12,7 @@
 >
 
 	{{#if this.icon}}
-		<div id="{{this._id}}" class="ui5-tab-strip-item-icon-outer">
+		<div class="ui5-tab-strip-item-icon-outer">
 			<ui5-icon name="{{this.icon}}" class="ui5-tab-strip-item-icon"></ui5-icon>
 		</div>
 	{{/if}}
@@ -24,7 +24,7 @@
 		{{/unless}}
 
 		{{#if this.text}}
-			<span class="ui5-tab-strip-itemText" id="{{this._id}}-text">
+			<span class="ui5-tab-strip-itemText" id="{{this.idPrefix}}-text-{{this._posinset}}">
 				<span class="{{this.headerSemanticIconClasses}}"></span>
 				{{this.text}}
 			</span>
@@ -41,6 +41,6 @@
 <!-- Additional text -->
 {{#*inline additionalText}}
 	{{#if this.additionalText}}
-		<span class="ui5-tab-strip-itemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
+		<span class="ui5-tab-strip-itemAdditionalText" id="{{this.idPrefix}}-additionalText-{{this._posinset}}">{{this.additionalText}}</span>
 	{{/if}}
 {{/inline}}

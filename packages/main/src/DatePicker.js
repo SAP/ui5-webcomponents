@@ -334,20 +334,20 @@ class DatePicker extends UI5Element {
 					this._focusInputAfterClose = false;
 				}
 
-				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.responsivePopover.querySelector("ui5-calendar");
 				if (calendar) {
 					calendar._hideMonthPicker();
 					calendar._hideYearPicker();
 				}
 			},
 			afterOpen: () => {
-				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.responsivePopover.querySelector("ui5-calendar");
 
 				if (!calendar) {
 					return;
 				}
 
-				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
+				const dayPicker = calendar.shadowRoot.querySelector(`.ui5-cal-daypicker`);
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
 				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
 				let focusableDay = selectedDay || today;
@@ -596,14 +596,17 @@ class DatePicker extends UI5Element {
 
 	get accInfo() {
 		return {
-			"ariaDescribedBy": `${this._id}-date`,
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
 			"role": "combobox",
-			"ariaOwns": `${this._id}-responsive-popover`,
+			"ariaOwns": `${this.idPrefix}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
 		};
+	}
+
+	get idPrefix() {
+		return "__ui5_date_picker";
 	}
 
 	get _maxDate() {

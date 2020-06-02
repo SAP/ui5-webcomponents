@@ -35,7 +35,7 @@ class RadioButtonGroup {
 
 		// Remove the radio button from the given group
 		group.forEach((_radioBtn, idx, arr) => {
-			if (radioBtn._id === _radioBtn._id) {
+			if (radioBtn === _radioBtn) {
 				return arr.splice(idx, 1);
 			}
 		});

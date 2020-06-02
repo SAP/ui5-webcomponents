@@ -1,47 +1,41 @@
 {{#if h1}}
 		<h1
 			class="ui5-title-root">
-				{{> titleInner}}
+				<slot></slot>
 		</h1>
 {{/if}}
 		
 {{#if h2}}
 		<h2
 			class="ui5-title-root">
-				{{> titleInner}}
+				<slot></slot>
 		</h2>
 {{/if}}
 
 {{#if h3}}
 		<h3
 			class="ui5-title-root">
-				{{> titleInner}}
+				<slot></slot>
 		</h3>
 {{/if}}
 
 {{#if h4}}
 		<h4
 			class="ui5-title-root">
-				{{> titleInner}}
+				<slot></slot>
 		</h4>
 {{/if}}
 
 {{#if h5}}
 		<h5
 			class="ui5-title-root">
-				{{> titleInner}}
+				<slot></slot>
 		</h5>
 {{/if}}
 
 {{#if h6}}
 		<h6
 			class="ui5-title-root">
-				{{> titleInner}}
+				<slot></slot>
 		</h6>
 {{/if}}
-
-{{#*inline "titleInner"}}
-	<span id="{{_id}}-inner">
-		<slot></slot>
-	</span>
-{{/inline}}

@@ -246,7 +246,7 @@ class Table extends UI5Element {
 	}
 
 	getColumnHeader() {
-		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
+		return this.getDomRef() && this.getDomRef().querySelector(`.ui5-table-column-header`);
 	}
 
 	popinContent(_event) {

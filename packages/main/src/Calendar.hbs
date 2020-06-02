@@ -1,7 +1,6 @@
 <div class="{{classes.main}}" style="{{styles.main}}">
 
 	<ui5-calendar-header
-		id="{{_id}}-head"
 		month-text="{{_header.monthText}}"
 		year-text="{{_header.yearText}}"
 		.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
@@ -13,10 +12,9 @@
 		._isPrevButtonDisabled="{{_header._isPrevButtonDisabled}}"
 	></ui5-calendar-header>
 
-	<div id="{{_id}}-content">
+	<div>
 		<ui5-daypicker
-			id="{{_id}}-daypicker"
-			class="{{classes.dayPicker}}"
+			class="ui5-cal-daypicker {{classes.dayPicker}}"
 			format-pattern="{{_oMonth.formatPattern}}"
 			.selectedDates="{{_oMonth.selectedDates}}"
 			._hidden="{{_oMonth._hidden}}"
@@ -29,7 +27,6 @@
 		></ui5-daypicker>
 
 		<ui5-monthpicker
-			id="{{_id}}-MP"
 			class="{{classes.monthPicker}}"
 			format-pattern="{{_oMonth.formatPattern}}"
 			._hidden="{{_monthPicker._hidden}}"
@@ -41,7 +38,6 @@
 		></ui5-monthpicker>
 
 		<ui5-yearpicker
-			id="{{_id}}-YP"
 			class="{{classes.yearPicker}}"
 			format-pattern="{{_oMonth.formatPattern}}"
 			._hidden="{{_yearPicker._hidden}}"

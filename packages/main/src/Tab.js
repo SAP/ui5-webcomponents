@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import SemanticColor from "./types/SemanticColor.js";
 import TabLayout from "./types/TabLayout.js";
 import TabContainer from "./TabContainer.js";
@@ -118,6 +119,10 @@ const metadata = {
 			defaultValue: "-1",
 			noAttribute: true,
 		},
+
+		_posinset: {
+			type: Integer,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 	},
@@ -218,18 +223,22 @@ class Tab extends UI5Element {
 		const labels = [];
 
 		if (this.text) {
-			labels.push(`${this._id}-text`);
+			labels.push(`${this.idPrefix}-text-${this._posinset}`);
 		}
 
 		if (this.additionalText) {
-			labels.push(`${this._id}-additionalText`);
+			labels.push(`${this.idPrefix}-additionalText-${this._posinset}`);
 		}
 
 		if (this.icon) {
-			labels.push(`${this._id}-icon`);
+			labels.push(`${this.idPrefix}-icon-${this._posinset}`);
 		}
 
 		return labels.join(" ");
+	}
+
+	get idPrefix() {
+		return "__ui5_tab_aria";
 	}
 
 	get headerClasses() {

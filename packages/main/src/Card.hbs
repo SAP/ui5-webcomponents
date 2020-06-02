@@ -2,14 +2,14 @@
 	class="{{classes.main}}"
 	dir="{{rtl}}"
 	role="region"
-	aria-labelledby="{{_id}}-desc {{_id}}-heading">
+	aria-labelledby="{{idPrefix}}-desc {{idPrefix}}-heading">
 	{{#if hasHeader}}
 		<div class="{{classes.header}}"
 			@click="{{_headerClick}}"
 			@keydown="{{_headerKeydown}}"
 			@keyup="{{_headerKeyup}}"
 			role="{{ariaHeaderRole}}"
-			aria-labelledby="{{_id}}-subheading {{_id}}-status"
+			aria-labelledby="{{idPrefix}}-subheading {{idPrefix}}-status"
 			aria-level="{{ariaLevel}}"
 			aria-roledescription="{{ariaCardHeaderRoleDescription}}"
 			tabindex="0">
@@ -22,19 +22,19 @@
 
 			<div class="ui5-card-header-text">
 				{{#if heading}}
-					<div id="{{_id}}-heading" class="ui5-card-heading" part="heading">{{heading}}</div>
+					<div id="{{idPrefix}}-heading" class="ui5-card-heading" part="heading">{{heading}}</div>
 				{{/if}}
 
 				{{#if subheading}}
-					<div id="{{_id}}-subheading" class="ui5-card-subheading" part="subheading">{{subheading}}</div>
+					<div id="{{idPrefix}}-subheading" class="ui5-card-subheading" part="subheading">{{subheading}}</div>
 				{{/if}}
 			</div>
-			<span id="{{_id}}-status" part="status" class="ui5-card-status">{{status}}</span>
+			<span id="{{idPrefix}}-status" part="status" class="ui5-card-status">{{status}}</span>
 		</div>
 	{{/if}}
 
 	<section role="group" aria-label="{{ariaCardContentLabel}}">
 		<slot></slot>
 	</section>
-	<span id="{{_id}}-desc" class="ui5-hidden-text">{{ariaCardRoleDescription}}</span>
+	<span id="{{idPrefix}}-desc" class="ui5-hidden-text">{{ariaCardRoleDescription}}</span>
 </div>

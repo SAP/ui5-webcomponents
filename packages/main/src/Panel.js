@@ -341,10 +341,6 @@ class Panel extends UI5Element {
 		return !this.collapsed;
 	}
 
-	get ariaLabelledBy() {
-		return this.header.length ? "" : `${this._id}-header`;
-	}
-
 	get accRole() {
 		return this.accessibleRole.toLowerCase();
 	}
@@ -353,11 +349,11 @@ class Panel extends UI5Element {
 		return {
 			"button": {
 				"ariaExpanded": this._hasHeader ? this.expanded : undefined,
-				"ariaControls": this._hasHeader ? `${this._id}-content` : undefined,
+				"ariaControls": this._hasHeader ? `${this.idPrefix}-content` : undefined,
 				"title": this.toggleButtonTitle,
 			},
 			"ariaExpanded": !this._hasHeader ? this.expanded : undefined,
-			"ariaControls": !this._hasHeader ? `${this._id}-content` : undefined,
+			"ariaControls": !this._hasHeader ? `${this.idPrefix}-content` : undefined,
 			"role": !this._hasHeader ? "button" : undefined,
 		};
 	}
@@ -384,6 +380,10 @@ class Panel extends UI5Element {
 				display: this._contentExpanded ? "block" : "none",
 			},
 		};
+	}
+
+	get idPrefix() {
+		return "__ui5_panel_aria";
 	}
 
 	static async onDefine() {

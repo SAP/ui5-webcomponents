@@ -21,10 +21,10 @@
 	</div>
 
 	{{#if text}}
-		<ui5-label id="{{_id}}-label" class="ui5-radio-label" for="{{_id}}" ?wrap="{{wrap}}">{{text}}</ui5-label>
+		<ui5-label id="{{idPrefix}}-label" class="ui5-radio-label" ?wrap="{{wrap}}">{{text}}</ui5-label>
 	{{/if}}
 
 	{{#if hasValueState}}
-		<span id="{{_id}}-descr" class="ui5-hidden-text">{{valueStateText}}</span>
+		<span id="{{idPrefix}}-descr" class="ui5-hidden-text">{{valueStateText}}</span>
 	{{/if}}
 </div>

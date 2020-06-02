@@ -221,6 +221,10 @@ class Card extends UI5Element {
 		return !!this.avatar.length;
 	}
 
+	get idPrefix() {
+		return "__ui5_card_aria";
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			Icon.define(),

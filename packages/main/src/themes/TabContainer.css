@@ -33,7 +33,7 @@
 	height: var(--_ui5_tc_header_height_text_only);
 }
 
-.ui-tc__headerScrollContainer {
+.ui-tc__header-scroll-container {
 	box-sizing: border-box;
 	overflow: hidden;
 	flex: 1;

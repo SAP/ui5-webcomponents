@@ -156,7 +156,7 @@ class MonthPicker extends UI5Element {
 
 			const month = {
 				timestamp: timestamp.toString(),
-				id: `${this._id}-m${i}`,
+				id: `m${i}`,
 				name: this._oLocaleData.getMonths("wide", this._primaryCalendarType)[i],
 				classes: "ui5-mp-item",
 			};

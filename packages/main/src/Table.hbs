@@ -1,7 +1,7 @@
 <table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}">
 
 	<thead>
-		<tr id="{{_id}}-columnHeader" class="ui5-table-header-row" tabindex="0" style="height: 48px" @click="{{_onColumnHeaderClick}}">
+		<tr class="ui5-table-column-header ui5-table-header-row" tabindex="0" style="height: 48px" @click="{{_onColumnHeaderClick}}">
 			{{#each visibleColumns}}
 				<slot name="{{this._individualSlot}}"></slot>
 			{{/each}}

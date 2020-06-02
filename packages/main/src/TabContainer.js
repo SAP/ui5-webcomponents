@@ -465,7 +465,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_getHeader() {
-		return this.shadowRoot.querySelector(`#${this._id}-header`);
+		return this.shadowRoot.querySelector(`.ui5-tc__header`);
 	}
 
 	_getTabs() {
@@ -473,12 +473,12 @@ class TabContainer extends UI5Element {
 	}
 
 	_getHeaderScrollContainer() {
-		return this.shadowRoot.querySelector(`#${this._id}-headerScrollContainer`);
+		return this.shadowRoot.querySelector(`.ui-tc__header-scroll-container`);
 	}
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
+		return staticAreaItem.querySelector(".ui5-tc-overflow-menu");
 	}
 
 	get classes() {
@@ -492,7 +492,7 @@ class TabContainer extends UI5Element {
 				"ui5-tc__header--scrollable": this._scrollable,
 			},
 			headerScrollContainer: {
-				"ui-tc__headerScrollContainer": true,
+				"ui-tc__header-scroll-container": true,
 			},
 			headerList: {
 				"ui5-tc__headerList": true,

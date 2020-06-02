@@ -125,8 +125,8 @@ describe("Notification List Item Tests", () => {
 	it("tests List Group Item ACC ariaLabelledBy", () => {
 		const firstGroupItem = $("#nlgi1");
 		const firstGroupItemRoot = firstGroupItem.shadow$(".ui5-nli-group-root");
-		const headingId = `${firstGroupItem.getProperty("_id")}-heading`;
-		const inivisbleTextId = `${firstGroupItem.getProperty("_id")}-invisibleText`;
+		const headingId = "__ui5_nli_group_aria-heading";
+		const inivisbleTextId = "__ui5_nli_group_aria-invisibleText";
 		const EXPECTED_ARIA_LABELLED_BY = `${headingId} ${inivisbleTextId}`;
 
 		// assert
@@ -148,10 +148,10 @@ describe("Notification List Item Tests", () => {
 		const firstItem = $("#nli1");
 		const firstItemRoot = firstItem.shadow$(".ui5-nli-root");
 
-		const headingId = `${firstItem.getProperty("_id")}-heading`;
-		const descriptionId = `${firstItem.getProperty("_id")}-description`;
-		const footerId = `${firstItem.getProperty("_id")}-footer`;
-		const inivisbleTextId = `${firstItem.getProperty("_id")}-invisibleText`;
+		const headingId = "__ui5_nli_aria-heading";
+		const descriptionId = "__ui5_nli_aria-description";
+		const footerId = "__ui5_nli_aria-footer";
+		const inivisbleTextId = "__ui5_nli_aria-invisibleText";
 		const EXPECTED_ARIA_LABELLED_BY = `${headingId} ${descriptionId} ${footerId} ${inivisbleTextId}`;
 
 		// assert

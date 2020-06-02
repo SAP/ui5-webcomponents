@@ -560,7 +560,7 @@ class Input extends UI5Element {
 
 		const toBeFocused = event.relatedTarget;
 
-		if (toBeFocused && toBeFocused.classList.contains(this._id)) {
+		if (toBeFocused && toBeFocused.classList.contains(this.idPrefix)) {
 			return;
 		}
 
@@ -760,19 +760,11 @@ class Input extends UI5Element {
 		}
 
 		if (!inputDomRef) {
-			inputDomRef = this.getDomRef().querySelector(`#${this.getInputId()}`);
+			inputDomRef = this.getDomRef().querySelector(`.ui5-input-inner`);
 		}
 
 		this.inputDomRef = inputDomRef;
 		return this.inputDomRef;
-	}
-
-	getLabelableElementId() {
-		return this.getInputId();
-	}
-
-	getInputId() {
-		return `${this._id}-inner`;
 	}
 
 	/* Suggestions interface  */
@@ -802,7 +794,7 @@ class Input extends UI5Element {
 	}
 
 	_announceSelectedItem() {
-		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
+		const invisibleText = this.shadowRoot.querySelector(`#${this.idPrefix}-selectionText`);
 
 		if (this.Suggestions && this.Suggestions._isItemOnTarget()) {
 			invisibleText.textContent = this.itemSelectionAnnounce;
@@ -824,11 +816,11 @@ class Input extends UI5Element {
 	}
 
 	get suggestionsTextId() {
-		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
+		return this.showSuggestions ? `${this.idPrefix}-suggestionsText` : "";
 	}
 
 	get valueStateTextId() {
-		return this.hasValueState ? `${this._id}-valueStateDesc` : "";
+		return this.hasValueState ? `${this.idPrefix}-valueStateDesc` : "";
 	}
 
 	get accInfo() {
@@ -911,6 +903,10 @@ class Input extends UI5Element {
 
 	get step() {
 		return this.type === InputType.Number ? "any" : undefined;
+	}
+
+	get idPrefix() {
+		return "__ui5_input_aria";
 	}
 
 	get _isPhone() {

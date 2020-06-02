@@ -351,7 +351,7 @@ class List extends UI5Element {
 	}
 
 	get headerID() {
-		return `${this._id}-header`;
+		return `__ui5_list_aria-header`;
 	}
 
 	get showNoDataText() {
@@ -548,13 +548,7 @@ class List extends UI5Element {
 	}
 
 	isForwardElement(node) {
-		const nodeId = node.id;
-
-		if (this._id === nodeId || this.getBeforeElement().id === nodeId) {
-			return true;
-		}
-
-		return this.getAfterElement().id === nodeId;
+		return this === node || this.getBeforeElement() === node || this.getAfterElement() === node;
 	}
 
 	onItemFocused(event) {
@@ -665,14 +659,14 @@ class List extends UI5Element {
 
 	getAfterElement() {
 		if (!this._afterElement) {
-			this._afterElement = this.shadowRoot.querySelector(`#${this._id}-after`);
+			this._afterElement = this.shadowRoot.querySelector(".ui5-list-focusarea--after");
 		}
 		return this._afterElement;
 	}
 
 	getBeforeElement() {
 		if (!this._beforeElement) {
-			this._beforeElement = this.shadowRoot.querySelector(`#${this._id}-before`);
+			this._beforeElement = this.shadowRoot.querySelector(".ui5-list-focusarea--before");
 		}
 		return this._beforeElement;
 	}

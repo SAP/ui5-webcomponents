@@ -185,7 +185,7 @@ class YearPicker extends UI5Element {
 
 			const year = {
 				timestamp: timestamp.toString(),
-				id: `${this._id}-y${timestamp}`,
+				id: `y${timestamp}`,
 				year: oYearFormat.format(oCalDate.toLocalJSDate()),
 				classes: "ui5-yp-item",
 			};

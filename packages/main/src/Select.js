@@ -285,7 +285,6 @@ class Select extends UI5Element {
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
-				id: opt._id,
 			};
 		});
 
@@ -363,7 +362,7 @@ class Select extends UI5Element {
 			return;
 		}
 
-		const li = this.responsivePopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
+		const li = this.responsivePopover.querySelectorAll(`ui5-li`)[this._selectedIndex];
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();
@@ -457,7 +456,15 @@ class Select extends UI5Element {
 	}
 
 	get valueStateTextId() {
-		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+		return  `${this.idPrefix}-valueStateDesc`;
+	}
+
+	get ariaDescribedBy() {
+		return this.hasValueState ? this.valueStateTextId : undefined;
+	}
+
+	get idPrefix() {
+		return "__ui5_select_aria";
 	}
 
 	get isDisabled() {
@@ -466,10 +473,6 @@ class Select extends UI5Element {
 
 	get _headerTitleText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
-	}
-
-	get _currentSelectedItem() {
-		return this.shadowRoot.querySelector(`#${this.options[this._selectedIndex]._id}-li`);
 	}
 
 	get _currentlySelectedOption() {

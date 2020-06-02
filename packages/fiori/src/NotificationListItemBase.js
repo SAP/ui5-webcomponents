@@ -172,16 +172,20 @@ class NotificationListItemBase extends ListItemBase {
 	}
 
 	get actionsInfo() {
-		return this.actions.map(action => {
+		return this.actions.map((action, idx) => {
 			return {
 				icon: action.icon,
 				text: action.text,
 				press: this._onCustomActionClick.bind(this),
-				refItemid: action._id,
+				refItemid: `${this.actionsIdPrefix}-${idx}`,
 				disabled: action.disabled ? true : undefined,
 				design: action.design,
 			};
 		});
+	}
+
+	get actionsIdPrefix() {
+		return "__ui5_nli_action";
 	}
 
 	get rtl() {
@@ -203,7 +207,8 @@ class NotificationListItemBase extends ListItemBase {
 		const refItemId = event.target.getAttribute("data-ui5-external-action-item-id");
 
 		if (refItemId) {
-			this.getActionByID(refItemId).fireEvent("click", {
+			debugger;
+			this.getActionByRefId(refItemId).fireEvent("click", {
 				targetRef: event.target,
 			}, true);
 
@@ -223,8 +228,9 @@ class NotificationListItemBase extends ListItemBase {
 		}
 	}
 
-	getActionByID(id) {
-		return this.actions.find(action => action._id === id);
+	getActionByRefId(refItemId) {
+		const idx = refItemId.split("-")[1];
+		return this.actions[idx];
 	}
 
 	async openOverflow() {
