@@ -28,7 +28,8 @@ const getI18nBundleData = packageName => {
  * @public
  */
 const registerI18nBundle = (packageName, bundle) => {
-	bundleURLs.set(packageName, bundle);
+	const oldBundle = bundleURLs.get(packageName) || {};
+	bundleURLs.set(packageName, Object.assign({}, oldBundle, bundle));
 };
 
 /**
