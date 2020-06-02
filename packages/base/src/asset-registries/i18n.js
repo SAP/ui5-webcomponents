@@ -28,7 +28,8 @@ const getI18nBundleData = packageName => {
  * @public
  */
 const registerI18nBundle = (packageName, bundle) => {
-	bundleURLs.set(packageName, bundle);
+	const oldBundle = bundleURLs.get(packageName) || {};
+	bundleURLs.set(packageName, Object.assign({}, oldBundle, bundle));
 };
 
 /**
@@ -52,11 +53,11 @@ const fetchI18nBundle = async packageName => {
 	const language = getLocale().getLanguage();
 
 	let localeId = normalizeLocale(language);
-	while (!bundlesForPackage[localeId]) {
+	while (localeId !== DEFAULT_LANGUAGE && !bundlesForPackage[localeId]) {
 		localeId = nextFallbackLocale(localeId);
 	}
 
-	if (localeId === DEFAULT_LANGUAGE) {
+	if (!bundlesForPackage[localeId]) {
 		return;
 	}
 
