@@ -1,11 +1,9 @@
-commit af1cfbe65725586f97fd0a9182c58b78514d905d
+commit 02d352c1fe749523da072a0df1a46ec0757ebb86
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 1 14:14:16 2020 +0300
+Date:   Tue Jun 2 09:24:56 2020 +0300
 
-    refactor(components): rename event names to kebab case (#1692)
+    refactor(ui5-checkbox): enable aria-label forwarding (#1686)
     
-    Rename all components event names that are currently camelCase to kebab-case, but keep the camelCase events firing for backward compatibility for at least one release to allow smooth migrations of the applications.
+    The user now can set an aria-label on the component tag, it will be set on the root element with role="checkbox" and read by the screen readers. This feature is also useful for components that internally use checkbox such as the ListItem, that now can provide aria-label to the CheckBox in MultiSelect mode to meet the ACC requirements for having an accessible name.
     
-    BREAKING_CHANGE: all event names are renamed from camelCase to kebabCase.
-    **Examples**: "selectionChange" becomes "selection-change", "itemClose" becomes "item-close",
-    "afterOpen" becomes "after-open", etc.
+    FIXES: #1664
