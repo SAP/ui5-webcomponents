@@ -3,6 +3,7 @@ const resolve = require("resolve");
 const assets = require('@ui5/webcomponents-tools/assets-meta.js');
 
 const jsonImportsScript = resolve.sync("@ui5/webcomponents-tools/lib/generate-json-imports/themes.js");
+const generateReportScript = resolve.sync("@ui5/webcomponents-theme-base/lib/generate-css-vars-usage-report/index.js");
 
 const allThemes = assets.themes.all;
 const buildThemesCommands = {};
@@ -19,7 +20,7 @@ module.exports = {
 	scripts: {
 		clean: "rimraf dist",
 		build: {
-			default: "nps clean build.src build.themes build.postcss build.jsonImports",
+			default: "nps clean build.src build.themes build.postcss build.jsonImports generateReport",
 			src: `copy-and-watch "src/**/*.js" dist/`,
 			themes: {
 				default: `nps build.themes.prepare ${buildThemesCommandsNames}`,
@@ -27,6 +28,7 @@ module.exports = {
 			},
 			postcss: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
 			jsonImports: `node "${jsonImportsScript}" dist/generated/json-imports`,
-		}
+		},
+		generateReport: `node "${generateReportScript}"`,
 	},
 };
