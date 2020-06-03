@@ -7,9 +7,9 @@ const vars = new Set();
 
 const processFile = file => {
 	const content = fs.readFileSync(file);
-	const matches = `${content}`.match(/var\(--sap[_A-Za-z0-9]+\)/g);
+	const matches = `${content}`.match(/var\(--sap[\-_A-Za-z0-9]+\)/g);
 	matches && matches.forEach(match => {
-		const cssVar = match.match(/--sap[_A-Za-z0-9]+/)[0];
+		const cssVar = match.match(/--sap[\-_A-Za-z0-9]+/)[0];
 		vars.add(cssVar);
 	});
 };
