@@ -395,7 +395,7 @@ class Select extends UI5Element {
 			}
 		}
 
-		if (isEscape(event)) {
+		if (isEscape(event) && this._isPickerOpen) {
 			this._escapePressed = true;
 		}
 
