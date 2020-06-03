@@ -1,0 +1,36 @@
+:host(:not([hidden])) {
+    display: inline-block;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+:host([disabled]) {
+    opacity: .8;
+    cursor: initial;
+    outline: none;
+}
+
+:host([size="Large"]) {
+    font-size: 2rem;
+}
+
+:host([_focused]) {
+	outline: 1px dotted var(--sapContent_FocusColor);
+}
+
+.ui5-rating-indicator-root {
+    outline: none;
+}
+
+.icon {
+    user-select: none;
+    color: var(--sapContent_UnratedColor);
+}
+
+.icon.ui5-rating-indicator-active-icon {
+    color: var(--sapContent_RatedColor);
+}
+
+.ui5-rating-indicator-stars-wrapper {
+    display: flex;
+}

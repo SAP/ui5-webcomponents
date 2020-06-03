@@ -1,0 +1,19 @@
+<div class="ui5-rating-indicator-root"
+    tabindex="{{tabIndex}}"
+    @focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+    @click="{{_onclick}}"
+    @keydown="{{_onkeydown}}"
+>
+    <div
+        class="ui5-rating-indicator-stars-wrapper"
+    >
+        {{#each _stars}}
+            {{#if this.selected}}
+                <div class="icon ui5-rating-indicator-active-icon" data-value="{{this.index}}">&#9733;</div>
+            {{else}}
+                <div class="icon" data-value="{{this.index}}">&#9734;</div>
+            {{/if}}
+        {{/each}}
+    </div>
+</div>

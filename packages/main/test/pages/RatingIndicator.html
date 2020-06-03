@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>Rating Indicator</title>
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+	<ui5-rating-indicator id="rating-indicator1"></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<ui5-rating-indicator id="rating-indicator2" max-value="10" value="6"></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<ui5-rating-indicator id="rating-indicator3" max-value="10" value="6"></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<ui5-rating-indicator id="rating-indicator4" max-value="10" value="6"></ui5-rating-indicator>
+	<ui5-input value="0" id="input-event"></ui5-input>
+	<br>
+	<br>
+	<br>
+
+	<ui5-rating-indicator id="rating-indicator5" max-value="10" value="6"></ui5-rating-indicator>
+	<ui5-input value="0" id="change-event"></ui5-input>
+	<br>
+	<br>
+	<br>
+
+	<ui5-rating-indicator value="1" max-value="3"></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<ui5-rating-indicator value="3" disabled></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<ui5-rating-indicator value="3" max-value="3"></ui5-rating-indicator>
+	<br>
+	<br>
+
+	<script>
+		const ratingIndicator4 = document.getElementById("rating-indicator4"),
+			ratingIndicator5 = document.getElementById("rating-indicator5"),
+			inputEventInput = document.getElementById("input-event"),
+			changeEventInput = document.getElementById("change-event");
+		let inputCount = 0,
+			changeCount = 0;
+
+		ratingIndicator4.addEventListener("input", event => {
+			inputEventInput.value = ++inputCount;
+		});
+
+		ratingIndicator5.addEventListener("change", event => {
+			changeEventInput.value = ++changeCount;
+		});
+	</script>
+
+</body>
+</html>

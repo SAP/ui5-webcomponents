@@ -1,26 +1,26 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.types.BusyIndicatorSize.prototype
+ * @lends sap.ui.webcomponents.main.types.Size.prototype
  * @public
  */
-const BusyIndicatorSizes = {
+const Sizes = {
 	/**
-	 * small size
+	 * Small size
 	 * @public
 	 * @type {Small}
 	 */
 	Small: "Small",
 
 	/**
-	 * medium size
+	 * Medium size
 	 * @public
 	 * @type {Medium}
 	 */
 	Medium: "Medium",
 
 	/**
-	 * large size
+	 * Large size
 	 * @public
 	 * @type {Large}
 	 */
@@ -32,16 +32,16 @@ const BusyIndicatorSizes = {
  * Different types of BusyIndicator.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.BusyIndicatorSize
+ * @alias sap.ui.webcomponents.main.types.Size
  * @public
  * @enum {string}
  */
-class BusyIndicatorSize extends DataType {
+class Size extends DataType {
 	static isValid(value) {
-		return !!BusyIndicatorSizes[value];
+		return !!Sizes[value];
 	}
 }
 
-BusyIndicatorSize.generataTypeAcessors(BusyIndicatorSizes);
+Size.generataTypeAcessors(Sizes);
 
-export default BusyIndicatorSize;
+export default Size;
