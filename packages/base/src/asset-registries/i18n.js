@@ -24,7 +24,7 @@ const getI18nBundleData = packageName => {
 /**
  * Registers a map of locale/url information, to be used by the <code>fetchI18nBundle</code> method.
  * @param {string} packageName package ID that the i18n bundle will be related to
- * @param {Object} bundle an object with string locales as keys and the URLs of where the corresponding locale can be fetched from, f.e {"en": "path/en.json", ...}
+ * @param {Object} bundle an object with string locales as keys and the URLs (in .json or .properties format) where the corresponding locale can be fetched from, f.e {"en": "path/en.json", ...}
  * @public
  */
 const registerI18nBundle = (packageName, bundle) => {
