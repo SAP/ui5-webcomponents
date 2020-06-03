@@ -3,7 +3,7 @@ import boot from "./boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { registerTag, isTagRegistered } from "./CustomElementsRegistry.js";
+import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
@@ -901,7 +901,7 @@ class UI5Element extends HTMLElement {
 		const definedGlobally = customElements.get(tag);
 
 		if (definedGlobally && !definedLocally) {
-			console.warn(`Skipping definition of tag ${tag}, because it was already defined by another instance of ui5-webcomponents.`); // eslint-disable-line
+			recordTagRegistrationFailure(tag);
 		} else if (!definedGlobally) {
 			this._generateAccessors();
 			registerTag(tag);

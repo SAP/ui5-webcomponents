@@ -1,4 +1,3 @@
-import UI5Element from "../UI5Element.js";
 import isNodeHidden from "./isNodeHidden.js";
 import isNodeClickable from "./isNodeClickable.js";
 
@@ -32,7 +31,7 @@ const findFocusableElement = (container, forward) => {
 	while (child) {
 		const originalChild = child;
 
-		child = child instanceof UI5Element ? child.getFocusDomRef() : child;
+		child = child.isUI5Element ? child.getFocusDomRef() : child;
 		if (!child) {
 			return null;
 		}
