@@ -1,5 +1,5 @@
 import getLocale from "../locale/getLocale.js";
-import { fetchJsonOnce } from "../util/FetchHelper.js";
+import { fetchTextOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
@@ -68,7 +68,19 @@ const fetchI18nBundle = async packageName => {
 		return;
 	}
 
-	const data = await fetchJsonOnce(bundleURL);
+	const content = await fetchTextOnce(bundleURL);
+	let data;
+	if (content.startsWith("{")) {
+		data = JSON.parse(content);
+	} else {
+		data = {};
+		content.split("\n").filter(line => !!line.trim() && !line.startsWith("#")).forEach(line => {
+			const dividerIndex = line.indexOf("="); // find first index in case there is the "=" sign in the translation - don't split
+			const key = line.substr(0, dividerIndex);
+			data[key] = line.substr(dividerIndex + 1);
+		});
+	}
+
 	setI18nBundleData(packageName, data);
 };
 
