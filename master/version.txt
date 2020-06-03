@@ -1,5 +1,10 @@
-commit 4b10f4f3c85b49f9a64058f253e98de8369af8dc
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jun 2 16:58:56 2020 +0300
+commit 095d6dc2ab4d32be6f401ea68fd760c3fa0b6138
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jun 3 09:46:12 2020 +0300
 
-    fix(framework): Allow users to override default language translations (#1716)
+    fix(ui5-select): fix use of ESC leads to wrong selection (#1724)
+    
+    When the picker is closed and the user hits ESC, the component saves that action
+    and cancels the next selection. Now ESC cancels selection only if the picker is opened.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1721
