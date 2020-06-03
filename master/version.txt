@@ -1,5 +1,5 @@
-commit 7a3261c97cd988cd7dc3ba57ad7f58d012a7b7ac
+commit d849bec2cb4e6281758c00f1192f6f124d61ed58
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 3 10:36:40 2020 +0300
+Date:   Wed Jun 3 13:29:31 2020 +0300
 
-    feat(framework): support several runtimes simultaneously (#1691)
+    ui5-table: design implemented for popped-in columns (#1726)
