@@ -8,6 +8,10 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	RATING_INDICATOR_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Size from "./types/Size.js";
 import RatingIndicatorTemplate from "./generated/templates/RatingIndicatorTemplate.lit.js";
@@ -67,6 +71,15 @@ const metadata = {
 		 * @public
 		 */
 		disabled: {
+			type: Boolean,
+		},
+
+		/**
+		 * @type {Boolean}
+		 * @defaultvalue falase
+		 * @public
+		 */
+		readOnly: {
 			type: Boolean,
 		},
 
@@ -142,9 +155,17 @@ class RatingIndicator extends UI5Element {
 		return RatingIndicatorTemplate;
 	}
 
+	static async onDefine() {
+		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
+	}
+
 	constructor() {
 		super();
 		this._prevValue = undefined;
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -159,7 +180,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	_onclick(event) {
-		if (this.disabled) {
+		if (this.disabled || this.readOnly) {
 			return;
 		}
 
@@ -174,7 +195,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (this.disabled) {
+		if (this.disabled || this.readOnly) {
 			return;
 		}
 
@@ -195,14 +216,14 @@ class RatingIndicator extends UI5Element {
 	}
 
 	_onfocusin(event) {
-		if (!this.disabled) {
+		if (!(this.disabled)) {
 			this._focused = true;
 			this._prevValue = this.value;
 		}
 	}
 
 	_onfocusout(event) {
-		if (this._focused && !this.disabled && this._prevValue !== this.value) {
+		if (this._focused && !this.disabled && !this.readOnly && this._prevValue !== this.value) {
 			this.fireEvent("change");
 		}
 
@@ -211,6 +232,10 @@ class RatingIndicator extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
+	}
+
+	get _ariaRoleDescription() {
+		return this.i18nBundle.getText(RATING_INDICATOR_TEXT);
 	}
 }
 

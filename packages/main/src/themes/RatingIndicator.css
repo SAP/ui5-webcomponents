@@ -4,7 +4,8 @@
     cursor: pointer;
 }
 
-:host([disabled]) {
+:host([disabled]),
+:host([read-only]) {
     opacity: .8;
     cursor: initial;
     outline: none;
