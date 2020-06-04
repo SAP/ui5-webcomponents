@@ -672,9 +672,12 @@ class UI5Element extends HTMLElement {
 		const dirValues = ["ltr", "rtl"]; // exclude "auto" and "" from all calculations
 		const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);
 
-		// In that order, inspect the CSS Var (for modern browsers), html and body (for IE fallback)
+		// In that order, inspect the CSS Var (for modern browsers), the element itself, html and body (for IE fallback)
 		if (dirValues.includes(locallyAppliedDir)) {
 			return locallyAppliedDir;
+		}
+		if (dirValues.includes(this.dir)) {
+			return this.dir;
 		}
 		if (dirValues.includes(doc.documentElement.dir)) {
 			return doc.documentElement.dir;
