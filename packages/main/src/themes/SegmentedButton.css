@@ -32,3 +32,19 @@
 	border-bottom-left-radius: 0.375rem;
 	border-left: 1px solid var(--sapButton_Selected_BorderColor);
 }
+
+[dir="rtl"] ::slotted(ui5-togglebutton:first-child) {
+	border-top-right-radius: 0.375rem;
+	border-bottom-right-radius: 0.375rem;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-right: 1px solid var(--sapButton_Selected_BorderColor);
+}
+
+[dir="rtl"] ::slotted(ui5-togglebutton:last-child) {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-top-left-radius: 0.375rem;
+	border-bottom-left-radius: 0.375rem;
+	border-left: 1px solid var(--sapButton_Selected_BorderColor);
+}
