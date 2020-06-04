@@ -252,7 +252,6 @@ class SegmentedButton extends UI5Element {
 	get direction() {
 		return getRTL() ? "rtl" : undefined;
 	}
-
 }
 
 SegmentedButton.define();
