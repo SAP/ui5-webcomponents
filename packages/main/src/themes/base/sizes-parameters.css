@@ -67,6 +67,9 @@
 	--_ui5-tree-toggle-box-width: 2.75rem;
 	--_ui5-tree-toggle-box-height: 2.25rem;
 	--_ui5-tree-toggle-icon-size: 1.0625rem;
+
+	/* SegmentedButton */
+	--_ui5_segmented_btn_border_radius: 0.375rem;
 }
 
 [data-ui5-compact-size],
