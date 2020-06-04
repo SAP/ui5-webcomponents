@@ -660,12 +660,31 @@ class UI5Element extends HTMLElement {
 		return getComputedStyle(this).getPropertyValue(GLOBAL_CONTENT_DENSITY_CSS_VAR) === "compact";
 	}
 
+	/**
+	 * Determines whether the component should be rendered in RTL mode or not.
+	 * Returns: "rtl", "ltr" or undefined
+	 *
+	 * @public
+	 * @returns {String|undefined}
+	 */
 	get effectiveDir() {
+		// Modern browsers - detect if "dir" was set anywhere in the DOM
 		const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);
 		if (locallyAppliedDir !== undefined) {
 			return locallyAppliedDir;
 		}
 
+		// IE fallback - since getComputedStyle will return undefined for the CSS var, manually look for "dir=ltr|rtl" on the <html> and <body> tags
+		const doc = window.document;
+		const dirValues = ["ltr", "rtl"];
+		if (dirValues.includes(doc.documentElement.dir)) {
+			return doc.documentElement.dir;
+		}
+		if (dirValues.includes(doc.body.dir)) {
+			return doc.body.dir;
+		}
+
+		// Finally, check the configuration for explicitly set RTL or language-implied RTL
 		const configuredDir = getRTL();
 		return configuredDir ? "rtl" : undefined;
 	}
