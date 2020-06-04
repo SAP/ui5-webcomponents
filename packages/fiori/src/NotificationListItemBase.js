@@ -207,7 +207,6 @@ class NotificationListItemBase extends ListItemBase {
 		const refItemId = event.target.getAttribute("data-ui5-external-action-item-id");
 
 		if (refItemId) {
-			debugger;
 			this.getActionByRefId(refItemId).fireEvent("click", {
 				targetRef: event.target,
 			}, true);

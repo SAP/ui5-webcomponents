@@ -412,7 +412,7 @@ class MultiComboBox extends UI5Element {
 
 	_tokenDelete(event) {
 		const token = event.detail.ref;
-		const deletingItemMCB = this._getMCBItemByToken(token)
+		const deletingItemMCB = this._getMCBItemByToken(token);
 
 		deletingItemMCB.selected = false;
 		this._deleting = true;
@@ -646,7 +646,7 @@ class MultiComboBox extends UI5Element {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
-	get ariaDescribedById () {
+	get ariaDescribedById() {
 		return this.hasValueState ? this.valueStateTextId : undefined;
 	}
 

@@ -456,7 +456,7 @@ class Select extends UI5Element {
 	}
 
 	get valueStateTextId() {
-		return  `${this.idPrefix}-valueStateDesc`;
+		return `${this.idPrefix}-valueStateDesc`;
 	}
 
 	get ariaDescribedBy() {

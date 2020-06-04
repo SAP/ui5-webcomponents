@@ -265,7 +265,7 @@ class Tree extends UI5Element {
 		const treeItem = listItem.treeItem;
 
 		if (treeItem.items.length > 0) {
-			const listItems =  this.list.getSlottedNodes("items");
+			const listItems = this.list.getSlottedNodes("items");
 			const currentListItemIdx = listItems.indexOf(listItem);
 			const firstChildListItem = this.list.getSlottedNodes("items")[currentListItemIdx + 1];
 
@@ -278,7 +278,7 @@ class Tree extends UI5Element {
 		const treeItem = listItem.treeItem;
 
 		if (treeItem.parentElement !== this) {
-			const listItems =  this.list.getSlottedNodes("items");
+			const listItems = this.list.getSlottedNodes("items");
 			const currentListItemIdx = listItems.indexOf(listItem);
 			const parentListItem = this.list.getSlottedNodes("items")[currentListItemIdx - 1];
 
