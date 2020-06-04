@@ -5,20 +5,20 @@ describe("RTL", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Button.html?sap-ui-language=he");
 
 		const buttonRoot = browser.$("#button1").shadow$(".ui5-button-root");
-		assert.strictEqual(buttonRoot.getProperty("effectiveDir"), "rtl", "dir is correctly set");
+		assert.strictEqual(buttonRoot.getProperty("dir"), "rtl", "dir is correctly set");
 	});
 
 	it("config forces RTL", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Button.html?sap-ui-rtl=true");
 
 		const buttonRoot = browser.$("#button1").shadow$(".ui5-button-root");
-		assert.strictEqual(buttonRoot.getProperty("effectiveDir"), "rtl", "dir is correctly set");
+		assert.strictEqual(buttonRoot.getProperty("dir"), "rtl", "dir is correctly set");
 	});
 
 	it("config unsets RTL, although rtl language is used", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Button.html?sap-ui-rtl=false&sap-ui-language=he");
 
 		const buttonRoot = browser.$("#button1").shadow$(".ui5-button-root");
-		assert.notOk(buttonRoot.getProperty("effectiveDir"), "dir is not present");
+		assert.notOk(buttonRoot.getProperty("dir"), "dir is not present");
 	});
 });

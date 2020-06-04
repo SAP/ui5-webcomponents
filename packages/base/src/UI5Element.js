@@ -668,15 +668,14 @@ class UI5Element extends HTMLElement {
 	 * @returns {String|undefined}
 	 */
 	get effectiveDir() {
-		// Modern browsers - detect if "dir" was set anywhere in the DOM
+		const doc = window.document;
+		const dirValues = ["ltr", "rtl"]; // exclude "auto" and "" from all calculations
 		const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);
-		if (locallyAppliedDir !== undefined) {
+
+		// In that order, inspect the CSS Var (for modern browsers), html and body (for IE fallback)
+		if (dirValues.includes(locallyAppliedDir)) {
 			return locallyAppliedDir;
 		}
-
-		// IE fallback - since getComputedStyle will return undefined for the CSS var, manually look for "dir=ltr|rtl" on the <html> and <body> tags
-		const doc = window.document;
-		const dirValues = ["ltr", "rtl"];
 		if (dirValues.includes(doc.documentElement.dir)) {
 			return doc.documentElement.dir;
 		}
@@ -685,8 +684,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Finally, check the configuration for explicitly set RTL or language-implied RTL
-		const configuredDir = getRTL();
-		return configuredDir ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	updateStaticAreaItemContentDensity() {
