@@ -2,21 +2,21 @@ import createStyleInHead from "./util/createStyleInHead.js";
 
 const systemCSSVars = `
 	:root {
-		--_ui5_content_density: cozy;
+		--_ui5_content_density:cozy;
 	}
 	
 	[data-ui5-compact-size],
 	.ui5-content-density-compact,
 	.sapUiSizeCompact {
-		--_ui5_content_density: compact;
+		--_ui5_content_density:compact;
 	}
 	
 	[dir="rtl"] {
-		--_ui5_dir: rtl;
+		--_ui5_dir:rtl;
 	}
 	
 	[dir="ltr"] {
-		--_ui5_dir: ltr;
+		--_ui5_dir:ltr;
 	}
 `;
 
