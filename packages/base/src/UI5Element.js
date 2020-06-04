@@ -6,6 +6,7 @@ import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
+import { getRTL } from "./config/RTL.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
@@ -25,6 +26,8 @@ let autoId = 0;
 const elementTimeouts = new Map();
 
 const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
+const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
+
 /**
  * Base class for all UI5 Web Components
  *
@@ -655,6 +658,16 @@ class UI5Element extends HTMLElement {
 
 	get isCompact() {
 		return getComputedStyle(this).getPropertyValue(GLOBAL_CONTENT_DENSITY_CSS_VAR) === "compact";
+	}
+
+	get effectiveDir() {
+		const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);
+		if (locallyAppliedDir !== undefined) {
+			return locallyAppliedDir;
+		}
+
+		const configuredDir = getRTL();
+		return configuredDir ? "rtl" : undefined;
 	}
 
 	updateStaticAreaItemContentDensity() {

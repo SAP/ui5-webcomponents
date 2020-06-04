@@ -924,10 +924,6 @@ class ShellBar extends UI5Element {
 		return getRTL() ? "Left" : "Right";
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
-	}
-
 	get hasSearchField() {
 		return !!this.searchField.length;
 	}

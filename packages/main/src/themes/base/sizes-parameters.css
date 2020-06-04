@@ -188,3 +188,11 @@
 	--_ui5-tree-toggle-box-height: 1.5rem;
 	--_ui5-tree-toggle-icon-size: 0.8125rem;
 }
+
+[dir="rtl"] {
+    --_ui5_dir: rtl;
+}
+
+[dir="ltr"] {
+    --_ui5_dir: ltr;
+}
