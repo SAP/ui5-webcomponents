@@ -9,7 +9,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 ------------ | ----------------------------------------------- | ------------- | -------------------------------------------------------------
 [theme](#theme)        | sap_fiori_3, sap_fiori_3_dark, sap_belize, sap_belize_hcb, sap_belize_hcw | sap_fiori_3   | Visual theme
 language     | en, de, es, etc...                              | en            | Language to be used for translatable texts
-[RTL](#rtl) (**deprecated since 0.0.0-rc.8**)    | true, false                                     | false         | When true, sets global text direction to right-to-left
+[RTL](#rtl) (**deprecated since 1.0.0-rc.8**)    | true, false                                     | false         | When true, sets global text direction to right-to-left
 [animationMode](#animationMode)  | full, basic, minimal, none  | full          | Defines different animation scenarios or levels
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
 [noConflict](#noConflict)  | true, false | false                            | When set to true, all events will be fired with a "ui5-" prefix only
