@@ -668,17 +668,22 @@ class UI5Element extends HTMLElement {
 	 * @returns {String|undefined}
 	 */
 	get effectiveDir() {
-		// For modern browsers - check the CSS Var and apply its value to the shadow DOM, if set explicitly (rtl|ltr)
-		// For IE "dir" will be naturally applied since there is no Shadow DOM.
-		if (!window.ShadyDOM) {
-			const dirValues = ["ltr", "rtl"]; // exclude "auto" and "" from all calculations
-			const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);
-			if (dirValues.includes(locallyAppliedDir)) {
-				return locallyAppliedDir;
-			}
+		const doc = window.document;
+		const dirValues = ["ltr", "rtl"]; // exclude "auto" and "" from all calculations
+		const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);
+
+		// In that order, inspect the CSS Var (for modern browsers), html and body (for IE fallback)
+		if (dirValues.includes(locallyAppliedDir)) {
+			return locallyAppliedDir;
+		}
+		if (dirValues.includes(doc.documentElement.dir)) {
+			return doc.documentElement.dir;
+		}
+		if (dirValues.includes(doc.body.dir)) {
+			return doc.body.dir;
 		}
 
-		// Finally, check the configuration for explicitly set RTL or language-implied RTL - if so, enforce it
+		// Finally, check the configuration for explicitly set RTL or language-implied RTL
 		return getRTL() ? "rtl" : undefined;
 	}
 

@@ -32,9 +32,9 @@ The `theme` setting values above are the technical names of our themes.
 ### RTL
 **Deprecated as of 1.0.0-rc.8**
 
-In order to have RTL mode, just set the HTML attribute `dir` to `rtl` on the `body` or `html`, or any other relevant region of your application.
+In order to have RTL mode, just set the HTML attribute `dir` to `rtl` on the `body`, `html` or any other relevant region of your application.
 
-This configuration setting should not be used by applications.
+This configuration setting should not be used by applications. It is only internally used for specific integration scenarios.
 
 <a name="animationMode"></a>
 ### Animation Mode
