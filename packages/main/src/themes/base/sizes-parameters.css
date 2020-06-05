@@ -1,5 +1,4 @@
 :root {
-	--_ui5_content_density: cozy;
 	--_ui5_calendar_header_height: 3rem;
 	--_ui5_calendar_header_arrow_button_width: 2.5rem;
 	--_ui5_calendar_header_padding: 0.25rem 0;
@@ -72,7 +71,6 @@
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
-	--_ui5_content_density: compact;
 	--_ui5_button_base_height: 1.625rem;
 	--_ui5_button_base_padding: 0.4375rem;
 	--_ui5_button_base_min_width: 2rem;
