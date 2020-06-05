@@ -6,6 +6,7 @@ import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
+import { getRTL } from "./config/RTL.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
@@ -25,6 +26,8 @@ let autoId = 0;
 const elementTimeouts = new Map();
 
 const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
+const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
+
 /**
  * Base class for all UI5 Web Components
  *
@@ -655,6 +658,36 @@ class UI5Element extends HTMLElement {
 
 	get isCompact() {
 		return getComputedStyle(this).getPropertyValue(GLOBAL_CONTENT_DENSITY_CSS_VAR) === "compact";
+	}
+
+	/**
+	 * Determines whether the component should be rendered in RTL mode or not.
+	 * Returns: "rtl", "ltr" or undefined
+	 *
+	 * @public
+	 * @returns {String|undefined}
+	 */
+	get effectiveDir() {
+		const doc = window.document;
+		const dirValues = ["ltr", "rtl"]; // exclude "auto" and "" from all calculations
+		const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);
+
+		// In that order, inspect the CSS Var (for modern browsers), the element itself, html and body (for IE fallback)
+		if (dirValues.includes(locallyAppliedDir)) {
+			return locallyAppliedDir;
+		}
+		if (dirValues.includes(this.dir)) {
+			return this.dir;
+		}
+		if (dirValues.includes(doc.documentElement.dir)) {
+			return doc.documentElement.dir;
+		}
+		if (dirValues.includes(doc.body.dir)) {
+			return doc.body.dir;
+		}
+
+		// Finally, check the configuration for explicitly set RTL or language-implied RTL
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	updateStaticAreaItemContentDensity() {
