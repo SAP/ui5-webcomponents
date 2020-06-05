@@ -379,7 +379,7 @@ UI5 Web Components deferred.
 import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
 ```
 
-By default, all `i18n` resources are in `JSON` format. Registering a such a resource does not require any additional code:
+By default, all `i18n` resources are in `JSON` format. Registering such a resource does not require any additional code:
 
 ```js
 import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
