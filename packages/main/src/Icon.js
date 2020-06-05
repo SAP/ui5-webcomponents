@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -261,10 +260,6 @@ class Icon extends UI5Element {
 		}
 
 		return this.i18nBundle.getText(this.accData) || undefined;
-	}
-
-	get dir() {
-		return getRTL() ? "rtl" : "ltr";
 	}
 
 	async onEnterDOM() {

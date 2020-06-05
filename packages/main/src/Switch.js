@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/accept.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
@@ -213,10 +212,6 @@ class Switch extends UI5Element {
 
 	get ariaDisabled() {
 		return this.disabled ? "true" : undefined;
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	get accessibilityOnText() {

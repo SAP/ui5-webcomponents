@@ -1,5 +1,4 @@
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
@@ -186,10 +185,6 @@ class NotificationListItemBase extends ListItemBase {
 
 	get actionsIdPrefix() {
 		return "__ui5_nli_action";
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	/**

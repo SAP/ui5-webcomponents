@@ -1,7 +1,7 @@
 <li
 	tabindex="{{_tabIndex}}"
 	class="{{classes.main}}"
-	dir="{{rtl}}"
+	dir="{{effectiveDir}}"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 	@keyup="{{_onkeyup}}"
@@ -67,6 +67,7 @@
 				tabindex="-1"
 				class="ui5-li-multisel-cb"
 				?checked="{{selected}}"
+				aria-label="{{_accInfo.ariaLabel}}"
 				@click="{{onMultiSelectionComponentPress}}">
 		</ui5-checkbox>
 	{{/if}}

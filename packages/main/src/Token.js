@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import {
 	isBackSpace,
 	isEnter,
@@ -159,10 +158,6 @@ class Token extends UI5Element {
 
 	get tokenDeletableText() {
 		return this.i18nBundle.getText(TOKEN_ARIA_DELETABLE);
-	}
-
-	get dir() {
-		return getRTL() ? "rtl" : "ltr";
 	}
 
 	get iconURI() {

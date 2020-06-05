@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import findNodeOwner from "@ui5/webcomponents-base/dist/util/findNodeOwner.js";
@@ -284,7 +283,7 @@ class Button extends UI5Element {
 			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 
-		this.iconOnly = !this.textContent;
+		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
 	}
 
@@ -330,12 +329,12 @@ class Button extends UI5Element {
 		this.focused = true;
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
-	}
-
 	get hasButtonType() {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
+	}
+
+	get isIconOnly() {
+		return !Array.from(this.childNodes).filter(node => node.nodeType !== Node.COMMENT_NODE).length;
 	}
 
 	get accInfo() {

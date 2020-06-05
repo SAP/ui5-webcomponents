@@ -1,18 +1,21 @@
 const fs = require("fs");
 const path = require('path');
 const mkdirp = require("mkdirp");
+const assets = require("../../assets-meta.js");
 
 const packageName = JSON.parse(fs.readFileSync("package.json")).name;
 
 const inputFolder = path.normalize(process.argv[2]);
 const outputFile = path.normalize(`${process.argv[3]}/i18n.js`);
 
+const defaultLanguage = assets.languages.default;
+
 // All languages present in the file system
 const files = fs.readdirSync(inputFolder);
 const languages = files.map(file => {
   const matches = file.match(/messagebundle_(.+?).json$/);
   return matches ? matches[1] : undefined;
-}).filter(key => !!key);
+}).filter(key => !!key && key !== defaultLanguage);
 
 let content;
 

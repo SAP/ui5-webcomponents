@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
@@ -195,10 +194,6 @@ class Card extends UI5Element {
 
 	get hasHeader() {
 		return !!(this.heading || this.subheading || this.status || this.avatar);
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	get ariaCardRoleDescription() {

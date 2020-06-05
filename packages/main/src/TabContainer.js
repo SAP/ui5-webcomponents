@@ -8,7 +8,6 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
@@ -563,10 +562,6 @@ class TabContainer extends UI5Element {
 
 	get overflowMenuIcon() {
 		return this.tabsAtTheBottom ? "slim-arrow-up" : "slim-arrow-down";
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	get animate() {
