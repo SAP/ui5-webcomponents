@@ -1,5 +1,7 @@
-commit 9be085b37bb55c69bcc70bed6e67c54b602343ea
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jun 5 09:12:43 2020 +0300
+commit 1c6a9bb2cf35e1ad6c437538ed0a23bca1dee0f9
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jun 5 09:50:58 2020 +0300
 
-    feature(framework): Deprecate the RTL configuration setting (#1733)
+    fix(ui5-segmentedbutton): add RTL support (#1734)
+    
+    The change adds RTL support, basically mirrors the borders of the first and the last button.

@@ -611,7 +611,7 @@
   "88": {
     "id": "88",
     "title": "Segmented Button",
-    "content": "&lt;!DOCTYPE html&gt; ui5-segmentedbutton ui5-segmentedbutton Segmentedbutton example ToggleButton Button Example with 4 buttons Button Button Click Pressed ToggleButton Example with 5 buttons Word Pressed ToggleButton With Bigger Text Button Pressed ToggleButton A Example with Icons and custom width SegmentedButton with 100% width Pressed ToggleButton ToggleButton ToggleButton SegmentedButton wrapped in a container with set width Initial focus test the focus hould go to the first button Press Press",
+    "content": "&lt;!DOCTYPE html&gt; ui5-segmentedbutton ui5-segmentedbutton Segmentedbutton example Button ToggleButton Button Example with 4 buttons Button Button Click Pressed ToggleButton Example with 5 buttons Word Pressed ToggleButton With Bigger Text Button Pressed ToggleButton A Example with Icons and custom width SegmentedButton with 100% width Pressed ToggleButton ToggleButton ToggleButton SegmentedButton wrapped in a container with set width Initial focus test the focus hould go to the first button Press Press",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/SegmentedButton/",
     "relUrl": "/playground/main/pages/SegmentedButton/"
   },
