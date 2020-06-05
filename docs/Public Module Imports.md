@@ -372,3 +372,29 @@ it is highly recommended to enable OpenUI5 support and benefit from these optimi
 *Note:* In general the order in which OpenUI5 and UI5 Web Components are loaded does not matter.
 However, if your app needs to support Internet Explorer 11, either load OpenUI5 first, or load
 UI5 Web Components deferred.
+
+### 7. Support for registering `i18n` resources in `.properties` format
+
+```js
+import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
+```
+
+By default, all `i18n` resources are in `JSON` format. Registering such a resource does not require any additional code:
+
+```js
+import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+registerI18nBundle("@ui5/webcomponents", {
+	fr: "./lang/fr.json",
+});
+```
+
+However, in order to use `.properties` files for `i18n` registration, you must also import this feature.
+
+```js
+import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
+import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+registerI18nBundle("@ui5/webcomponents", {
+	bg: "./lang/messagebundle_bg.properties",
+});
+```
+
