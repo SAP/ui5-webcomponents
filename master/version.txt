@@ -1,5 +1,5 @@
-commit d849bec2cb4e6281758c00f1192f6f124d61ed58
+commit 9be085b37bb55c69bcc70bed6e67c54b602343ea
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 3 13:29:31 2020 +0300
+Date:   Fri Jun 5 09:12:43 2020 +0300
 
-    ui5-table: design implemented for popped-in columns (#1726)
+    feature(framework): Deprecate the RTL configuration setting (#1733)

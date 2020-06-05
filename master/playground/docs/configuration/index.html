@@ -221,6 +221,8 @@
       
     
       
+    
+      
         
       
     
@@ -258,6 +260,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -796,6 +800,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" class="navigation-list-link">
@@ -960,6 +966,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -1849,7 +1857,7 @@
       <td>Language to be used for translatable texts</td>
     </tr>
     <tr>
-      <td><a href="#rtl">RTL</a></td>
+      <td><a href="#rtl">RTL</a> (<strong>deprecated since 1.0.0-rc.8</strong>)</td>
       <td>true, false</td>
       <td>false</td>
       <td>When true, sets global text direction to right-to-left</td>
@@ -1898,10 +1906,11 @@
 
 <p><a name="rtl"></a></p>
 <h3 id="rtl">RTL</h3>
+<p><strong>Deprecated as of 1.0.0-rc.8</strong></p>
 
-<p>When the <code class="highlighter-rouge">rtl</code> setting is set to <code class="highlighter-rouge">true</code>, UI5 Web Components will adjust their styling accordingly.
-However, you should also set the HTML attribute <code class="highlighter-rouge">dir</code> to <code class="highlighter-rouge">rtl</code> on the <code class="highlighter-rouge">body</code> or <code class="highlighter-rouge">html</code>, or any other relevant region of your application
-so that the rest of your application is also affected.</p>
+<p>In order to have RTL mode, just set the HTML attribute <code class="highlighter-rouge">dir</code> to <code class="highlighter-rouge">rtl</code> on the <code class="highlighter-rouge">body</code>, <code class="highlighter-rouge">html</code> or any other relevant region of your application.</p>
+
+<p>This configuration setting should not be used by applications. It is only internally used for specific integration scenarios.</p>
 
 <p><a name="animationMode"></a></p>
 <h3 id="animation-mode">Animation Mode</h3>
@@ -1979,7 +1988,6 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">data-ui5-config</span> <span class="na">type=</span><span class="s">"application/json"</span><span class="nt">&gt;</span>
 <span class="p">{</span>
-	<span class="dl">"</span><span class="s2">rtl</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
 	<span class="dl">"</span><span class="s2">language</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ja</span><span class="dl">"</span><span class="p">,</span>
 	<span class="dl">"</span><span class="s2">calendarType</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Japanese</span><span class="dl">"</span><span class="p">,</span>
 	<span class="dl">"</span><span class="s2">formatSettings</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
@@ -2004,7 +2012,6 @@ However, reading/modifying the configuration reliably can only be done programma
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">getTheme</span><span class="p">,</span> <span class="nx">setTheme</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Theme.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getNoConflict</span><span class="p">,</span> <span class="nx">setNoConflict</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/NoConflict.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getRTL</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/RTL.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getAnimationMode</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/AnimationMode.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getLanguage</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Language.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getCalendarType</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/CalendarType.js</span><span class="dl">"</span><span class="p">;</span>

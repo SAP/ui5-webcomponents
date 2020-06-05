@@ -221,6 +221,8 @@
       
     
       
+    
+      
         
       
     
@@ -258,6 +260,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -796,6 +800,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" class="navigation-list-link">
@@ -960,6 +966,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -2430,7 +2438,6 @@ All texts are in English by default. In order to get support for other languages
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">getTheme</span><span class="p">,</span> <span class="nx">setTheme</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Theme.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getNoConflict</span><span class="p">,</span> <span class="nx">setNoConflict</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/NoConflict.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getRTL</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/RTL.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getLanguage</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Language.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getCalendarType</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/CalendarType.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getAnimationMode</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/AnimationMode.js</span><span class="dl">"</span><span class="p">;</span>
@@ -2450,7 +2457,7 @@ from OpenUI5 configuration and resources.</p>
 <p>When you import the above module:</p>
 <ol>
   <li>OpenUI5 configuration takes precedence over UI5 Web Components configuration
- for all common entities (theme, language, RTL, etc…). In addition, changing the theme
+ for all common entities (theme, language, etc…). In addition, changing the theme
  in OpenUI5 will also change the theme in UI5 Web Components.</li>
   <li>Fonts will not be loaded twice (just once by OpenUI5, and reused).</li>
   <li>Locale Data assets will not be fetched twice (just once by OpenUI5, and reused).</li>
