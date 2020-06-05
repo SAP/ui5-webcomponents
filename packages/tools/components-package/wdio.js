@@ -198,6 +198,13 @@ exports.config = {
 				return staticAreaItem.host.classList[0];
 			}, selector);
 		}, false);
+
+		browser.addCommand("getStaticAreaRespPopover", function(selector) {
+			return browser.execute(async (selector) => {
+				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
+				return staticAreaItem.querySelector("ui5-responsive-popover");
+			}, selector);
+		}, false);
 	},
 	/**
 	 * Runs before a WebdriverIO command gets executed.
@@ -214,6 +221,7 @@ exports.config = {
 			"getProperty",
 			"getSize",
 			"getStaticAreaItemClassName", // custom
+			"getStaticAreaRespPopover", // custom
 			"getText",
 			"getValue",
 			"hasClass", // custom
