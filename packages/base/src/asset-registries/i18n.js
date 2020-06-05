@@ -1,6 +1,6 @@
+import { getFeature } from "../FeaturesRegistry.js";
 import getLocale from "../locale/getLocale.js";
 import { fetchTextOnce } from "../util/FetchHelper.js";
-import parseProperties from "../util/parseProperties.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
@@ -24,8 +24,12 @@ const getI18nBundleData = packageName => {
 
 /**
  * Registers a map of locale/url information, to be used by the <code>fetchI18nBundle</code> method.
+ * Note: In order to be able to register ".properties" files, you must import the following module:
+ * import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
+ *
  * @param {string} packageName package ID that the i18n bundle will be related to
- * @param {Object} bundle an object with string locales as keys and the URLs (in .json or .properties format) where the corresponding locale can be fetched from, f.e {"en": "path/en.json", ...}
+ * @param {Object} bundle an object with string locales as keys and the URLs (in .json or .properties format - see the note above) where the corresponding locale can be fetched from, f.e {"en": "path/en.json", ...}
+ *
  * @public
  */
 const registerI18nBundle = (packageName, bundle) => {
@@ -70,7 +74,17 @@ const fetchI18nBundle = async packageName => {
 	}
 
 	const content = await fetchTextOnce(bundleURL);
-	const parser = content.startsWith("{") ? JSON.parse : parseProperties;
+	let parser;
+	if (content.startsWith("{")) {
+		parser = JSON.parse;
+	} else {
+		const PropertiesFormatSupport = getFeature("PropertiesFormatSupport");
+		if (!PropertiesFormatSupport) {
+			throw new Error(`In order to support .properties files, please: import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";`);
+		}
+		parser = PropertiesFormatSupport.parser;
+	}
+
 	const data = parser(content);
 
 	setI18nBundleData(packageName, data);
