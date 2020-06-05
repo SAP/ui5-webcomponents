@@ -10,8 +10,11 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT = "Cozy";
 
 		select.click();
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect")
-		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li")[0];
+
+		const picker = browser.getStaticAreaRespPopover("#mySelect");
+		const firstItem = browser.$(browser.execute(async picker => {
+			return picker.querySelectorAll("ui5-li")[0];
+		}, picker));
 
 		firstItem.click();
 
@@ -25,8 +28,11 @@ describe("Select general interaction", () => {
 
 		select.click();
 
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect")
-		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
+		const picker = browser.getStaticAreaRespPopover("#mySelect");
+		const firstItem = browser.$(browser.execute(async picker => {
+			return picker.querySelectorAll("ui5-li")[0];
+		}, picker));
+
 		firstItem.click();
 
 		assert.strictEqual(inputResult.getProperty("value"), "1", "Event not fired when already selected item is selected");
@@ -108,59 +114,81 @@ describe("Select general interaction", () => {
 
 	it("opens upon space", () => {
 		const btn = $("#myBtn2");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const picker = browser.getStaticAreaRespPopover("#mySelect");
 
 		btn.click();
 		btn.keys("Tab");
-
 		browser.keys("Space");
-		assert.ok(popover.getProperty("opened"), "Select is opened.");
+
+		const popoverOpened = browser.execute(async picker => {
+			return picker.hasAttribute("opened");
+		}, picker);
+
+		assert.ok(popoverOpened, "Select is opened.");
 	});
 
 	it("toggles upon F4", () => {
 		const btn = $("#myBtn2");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const picker = browser.getStaticAreaRespPopover("#mySelect");
 
 		btn.click();
 		btn.keys("Tab");
 
 		browser.keys("F4");
-		assert.ok(popover.getProperty("opened"), "Select is opened.");
+
+		const popoverOpened = browser.execute(async picker => {
+			return picker.hasAttribute("opened");
+		}, picker);
+		assert.ok(popoverOpened, "Select is opened.");
 
 		browser.keys("F4");
-		assert.ok(!popover.getProperty("opened"), "Select is closed.");
+
+		const popoverOpened2 = browser.execute(async picker => {
+			return picker.hasAttribute("opened");
+		}, picker);
+		assert.notOk(popoverOpened2, "Select is closed.");
 	});
 
 	it("toggles upon ALT + UP", () => {
 		const btn = $("#myBtn2");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const picker = browser.getStaticAreaRespPopover("#mySelect");
 
 		btn.click();
 		btn.keys("Tab");
 
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
-		assert.ok(popover.getProperty("opened"), "Select is opened.");
+		const popoverOpened = browser.execute(async picker => {
+			return picker.hasAttribute("opened");
+		}, picker);
+		assert.ok(popoverOpened, "Select is opened.");
 
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
-		assert.ok(!popover.getProperty("opened"), "Select is closed.");
+		const popoverOpened2 = browser.execute(async picker => {
+			return picker.hasAttribute("opened");
+		}, picker);
+		assert.notOk(popoverOpened2, "Select is closed.");
 	});
 
 	it("toggles upon ALT + DOWN", () => {
 		const btn = $("#myBtn2");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const picker = browser.getStaticAreaRespPopover("#mySelect");
 
 		btn.click();
 		btn.keys("Tab");
 
 		browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.ok(popover.getProperty("opened"), "Select is opened.");
+
+		const popoverOpened = browser.execute(async picker => {
+			return picker.hasAttribute("opened");
+		}, picker);
+		assert.ok(popoverOpened, "Select is opened.");
 
 		browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.ok(!popover.getProperty("opened"), "Select is closed.");
+
+		const popoverOpened2 = browser.execute(async picker => {
+			return picker.hasAttribute("opened");
+		}, picker);
+		assert.notOk(popoverOpened2, "Select is closed.");
 	});
 
 	it("adds unselected only items to select", () => {
@@ -170,11 +198,13 @@ describe("Select general interaction", () => {
 		addItemsBtn.click();
 
 		const firstOption = browser.$("#mySelect ui5-option:first-child");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-		const firstListItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
+		const picker = browser.getStaticAreaRespPopover("#mySelect");
+		const firstItem = browser.$(browser.execute(async picker => {
+			return picker.querySelectorAll("ui5-li")[0];
+		}, picker));
 
 		assert.ok(firstOption.getProperty("selected"), "First option should be selected");
-		assert.ok(firstListItem.getProperty("selected"), "First list item should be selected");
+		assert.ok(firstItem.getProperty("selected"), "First list item should be selected");
 
 		restoreItemsBtn.click();
 	});
@@ -214,15 +244,16 @@ describe("Select general interaction", () => {
 	it("fires change event after selecting a previewed item", () => {
 		const select = $("#mySelect");
 		const inputResult = browser.$("#inputResult").shadow$("input");
-
+	
 		select.click();
 		select.keys("ArrowDown");
-
 		select.keys("Escape");
-
 		select.click();
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");		
-		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
+
+		const picker = browser.getStaticAreaRespPopover("#mySelect");
+		const firstItem = browser.$(browser.execute(async picker => {
+			return picker.querySelectorAll("ui5-li")[0];
+		}, picker));
 
 		firstItem.click();
 
@@ -236,12 +267,17 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
 		select.click();
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelectEsc")
-		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li")[0];
-		const thirdItem = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li")[2];
+		const picker = browser.getStaticAreaRespPopover("#mySelectEsc");
+
+		const firstItem = browser.$(browser.execute(async picker => {
+			return picker.querySelectorAll("ui5-li")[0];
+		}, picker));
+
+		const thirdItem = browser.$(browser.execute(async picker => {
+			return picker.querySelectorAll("ui5-li")[2];
+		}, picker));
 
 		firstItem.click();
-
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) !== -1, "Select label is correct.");
 
 		// verify that ESC does not interfere when the picker is closed
