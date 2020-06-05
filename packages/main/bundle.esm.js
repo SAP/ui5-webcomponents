@@ -16,6 +16,15 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 // Icons
 import "@ui5/webcomponents-icons/dist/Assets.js";
 
+/* Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
+import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
+registerI18nBundle("@ui5/webcomponents", {
+	bg: "./lang/messagebundle_bg.properties",
+	fr: "./lang/fr.json",
+});
+*/
+
 // asset helpers (needs correct json as url in rollup.config.js)
 import "./dist/Assets.js";
 
