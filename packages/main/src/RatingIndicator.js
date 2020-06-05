@@ -10,6 +10,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
 	RATING_INDICATOR_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
@@ -28,12 +29,19 @@ const metadata = {
 
 		/**
 		 * The indicated value of the rating
-		 * @type {Integer}
+		 * <br><br>
+		 * <b>Note:</b> If you set a number which is not round, it would be shown as follows:
+		 * <ul>
+		 * <li>1.0 - 1.2 -> 1</li>
+		 * <li>1.3 - 1.7 -> 1.5</li>
+		 * <li>1.8 - 1.9 -> 2</li>
+		 * <ul>
+		 * @type {Float}
 		 * @defaultvalue 0
 		 * @public
 		 */
 		value: {
-			type: Integer,
+			type: Float,
 			defaultValue: 0,
 		},
 
@@ -169,12 +177,29 @@ class RatingIndicator extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		this.calcState();
+	}
+
+	calcState() {
 		this._stars = [];
 
 		for (let i = 1; i < this.maxValue + 1; i++) {
+			const remainder = Math.round((this.value - Math.floor(this.value)) * 10);
+			let halfStar = false,
+				tempValue = this.value;
+
+			if (Math.floor(this.value) + 1 === i && remainder > 2 && remainder < 8) {
+				halfStar = true;
+			} else if (remainder <= 2) {
+				tempValue = Math.floor(this.value);
+			} else if (remainder >= 8) {
+				tempValue = Math.ceil(this.value);
+			}
+
 			this._stars.push({
-				selected: i <= this.value,
+				selected: i <= tempValue,
 				index: i,
+				halfStar,
 			});
 		}
 	}
@@ -184,6 +209,7 @@ class RatingIndicator extends UI5Element {
 			return;
 		}
 
+		this._prevValue = this.value;
 		this.value = parseInt(event.target.getAttribute("data-value"));
 		if (this.value === 1 && this._prevValue === 1) {
 			this.value = 0;
@@ -206,10 +232,10 @@ class RatingIndicator extends UI5Element {
 			event.preventDefault();
 
 			if (down && this.value > 0) {
-				--this.value;
+				this.value = Math.round(this.value - 1);
 				this.fireEvent("input");
 			} else if (up && this.value < this.maxValue) {
-				++this.value;
+				this.value = Math.round(this.value + 1);
 				this.fireEvent("input");
 			}
 		}

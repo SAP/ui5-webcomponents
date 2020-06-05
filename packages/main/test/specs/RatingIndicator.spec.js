@@ -1,24 +1,24 @@
 const assert = require("chai").assert;
 
 
-describe("Button general interaction", () => {
+describe("Rating Indicator general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/RatingIndicator.html");
 
 	it("Tests basic rating indicator rendering", () => {
 		const ratingIndicator = browser.$("#rating-indicator1");
 
-		assert.strictEqual(ratingIndicator.shadow$$(".icon").length, 5, "Basic rating indicator renders 5 stars");
+		assert.strictEqual(ratingIndicator.shadow$$(".ui5-rating-indicator-icon").length, 5, "Basic rating indicator renders 5 stars");
 	});
 
 	it("Tests max-value property", () => {
 		const ratingIndicator = browser.$("#rating-indicator2");
 
-		assert.strictEqual(ratingIndicator.shadow$$(".icon").length, 10, "Basic rating indicator renders 5 stars");
+		assert.strictEqual(ratingIndicator.shadow$$(".ui5-rating-indicator-icon").length, 10, "Basic rating indicator renders 5 stars");
 	});
 
 	it("Tests clicking on star", () => {
 		const ratingIndicator = browser.$("#rating-indicator3");
-		const thirdStar = ratingIndicator.shadow$$(".icon")[2];
+		const thirdStar = ratingIndicator.shadow$$(".ui5-rating-indicator-icon")[2];
 
 		assert.strictEqual(ratingIndicator.getProperty("value"), 6, "Initial value is applied");
 
@@ -29,7 +29,7 @@ describe("Button general interaction", () => {
 
 	it("Tests input event", () => {
 		const ratingIndicator = browser.$("#rating-indicator4");
-		const thirdStar = ratingIndicator.shadow$$(".icon")[2];
+		const thirdStar = ratingIndicator.shadow$$(".ui5-rating-indicator-icon")[2];
 		const input = browser.$("#input-event");
 
 		assert.strictEqual(ratingIndicator.getProperty("value"), 6, "Initial value is applied");
@@ -66,7 +66,7 @@ describe("Button general interaction", () => {
 
 	it("Tests change event", () => {
 		const ratingIndicator = browser.$("#rating-indicator5");
-		const thirdStar = ratingIndicator.shadow$$(".icon")[2];
+		const thirdStar = ratingIndicator.shadow$$(".ui5-rating-indicator-icon")[2];
 		const input = browser.$("#change-event");
 
 		thirdStar.click();
