@@ -1,9 +1,9 @@
 <ui5-li-custom
-	id="{{this._id}}"
 	class="{{this.overflowClasses}}"
 	type="{{this.overflowState}}"
 	?selected="{{this.effectiveSelected}}"
 	?disabled="{{this.effectiveDisabled}}"
+	data-ui5-index="{{this._index}}"
 >
 	<div class="ui5-tab-overflow-itemContent">
 		{{#if this.icon}}

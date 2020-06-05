@@ -1,4 +1,4 @@
-<li id="{{this._id}}"
+<li
 	class="{{this.headerClasses}}"
 	tabindex="{{this._tabIndex}}"
 	role="tab"
@@ -9,6 +9,7 @@
 	?aria-disabled="{{this.effectiveDisabled}}"
 	?disabled="{{this.effectiveDisabled}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
+	data-ui5-index="{{this._index}}"
 >
 
 	{{#if this.icon}}

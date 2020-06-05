@@ -275,10 +275,11 @@ class TabContainer extends UI5Element {
 		this.items.forEach((item, index) => {
 			item._isInline = this.tabLayout === TabLayout.Inline;
 			item._mixedMode = this.mixedMode;
+			item._index = index;
 			item._posinset = index + 1;
 			item._setsize = this.items.length;
 			item._getTabContainerHeaderItemCallback = _ => {
-				return this.getDomRef().querySelector(`#${item._id}`);
+				return this._getElByDataIndex(this.getDomRef(), item._index);
 			};
 			item._itemSelectCallback = this._onItemSelect.bind(this);
 		});
@@ -349,20 +350,23 @@ class TabContainer extends UI5Element {
 	}
 
 	_onOverflowListItemSelect(event) {
-		this._onItemSelect(event.detail.item);
+		const overflowItem = event.detail.item;
+		const tabstripItem = this._getElByDataIndex(this.shadowRoot, this._getDataIndex(overflowItem));
+
+		this._onItemSelect(overflowItem);
 		this.responsivePopover.close();
-		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
+		tabstripItem.focus();
 	}
 
 	_onItemSelect(target) {
-		const selectedIndex = findIndex(this.items, item => item._id === target.id);
-		const selectedTabIndex = findIndex(this._getTabs(), item => item._id === target.id);
-		const selectedTab = this.items[selectedIndex];
+		const selectedItemIndex = this._getDataIndexAsInt(target);
+		const selectedTabIndex = findIndex(this._getTabs(), tab => tab._index === selectedItemIndex);
+		const selectedTab = this.items[selectedItemIndex];
 
 		// update selected items
 		this.items.forEach((item, index) => {
 			if (!item.isSeparator) {
-				const selected = selectedIndex === index;
+				const selected = selectedItemIndex === index;
 				item.selected = selected;
 
 				if (selected) {
@@ -384,6 +388,18 @@ class TabContainer extends UI5Element {
 
 		this.toggleAnimated(selectedTab);
 		this.selectTab(selectedTab, selectedTabIndex);
+	}
+
+	_getDataIndex(el) {
+		return el.getAttribute("data-ui5-index");
+	}
+
+	_getDataIndexAsInt(el) {
+		return parseInt(el.getAttribute("data-ui5-index"));
+	}
+
+	_getElByDataIndex(el, idx) {
+		return el.querySelector(`[data-ui5-index="${idx}"]`);
 	}
 
 	async toggleAnimated(selectedTab) {

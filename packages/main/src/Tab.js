@@ -120,7 +120,10 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		_posinset: {
+		/**
+		 * Specifies the index of the tab within the Tabstrip, set by the TabContainer
+		 */
+		_index: {
 			type: Integer,
 		},
 	},
@@ -189,7 +192,7 @@ class Tab extends UI5Element {
 		let focusedDomRef = super.getFocusDomRef();
 
 		if (this._getTabContainerHeaderItemCallback) {
-			focusedDomRef = this._getTabContainerHeaderItemCallback();
+			focusedDomRef = this._getTabContainerHeaderItemCallback(this);
 		}
 
 		return focusedDomRef;
@@ -223,15 +226,15 @@ class Tab extends UI5Element {
 		const labels = [];
 
 		if (this.text) {
-			labels.push(`${this.idPrefix}-text-${this._posinset}`);
+			labels.push(`${this.idPrefix}-text-${this._index}`);
 		}
 
 		if (this.additionalText) {
-			labels.push(`${this.idPrefix}-additionalText-${this._posinset}`);
+			labels.push(`${this.idPrefix}-additionalText-${this._index}`);
 		}
 
 		if (this.icon) {
-			labels.push(`${this.idPrefix}-icon-${this._posinset}`);
+			labels.push(`${this.idPrefix}-icon-${this._index}`);
 		}
 
 		return labels.join(" ");
