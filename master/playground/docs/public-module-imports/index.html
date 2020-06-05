@@ -2470,6 +2470,29 @@ it is highly recommended to enable OpenUI5 support and benefit from these optimi
 However, if your app needs to support Internet Explorer 11, either load OpenUI5 first, or load
 UI5 Web Components deferred.</p>
 
+<h3 id="7-support-for-registering-i18n-resources-in-properties-format">7. Support for registering <code class="highlighter-rouge">i18n</code> resources in <code class="highlighter-rouge">.properties</code> format</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>By default, all <code class="highlighter-rouge">i18n</code> resources are in <code class="highlighter-rouge">JSON</code> format. Registering such a resource does not require any additional code:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/asset-registries/i18n.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">registerI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
+	<span class="na">fr</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./lang/fr.json</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>However, in order to use <code class="highlighter-rouge">.properties</code> files for <code class="highlighter-rouge">i18n</code> registration, you must also import this feature.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/asset-registries/i18n.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">registerI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
+	<span class="na">bg</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./lang/messagebundle_bg.properties</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+
 
 <footer class="footer-wrapper">
     <div class="footer-links">

@@ -1,7 +1,5 @@
-commit 1c6a9bb2cf35e1ad6c437538ed0a23bca1dee0f9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jun 5 09:50:58 2020 +0300
+commit d78d136d1c30cf413922562dd5df86cb0ebf442b
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jun 5 14:56:46 2020 +0300
 
-    fix(ui5-segmentedbutton): add RTL support (#1734)
-    
-    The change adds RTL support, basically mirrors the borders of the first and the last button.
+    feat(framework): Support properties message bundles for i18n (#1728)
