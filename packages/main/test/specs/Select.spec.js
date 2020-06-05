@@ -12,7 +12,7 @@ describe("Select general interaction", () => {
 		select.click();
 
 		const picker = browser.getStaticAreaRespPopover("#mySelect");
-		const firstItem = browser.$(browser.execute(async picker => {
+		const firstItem = browser.$(browser.execute(picker => {
 			return picker.querySelectorAll("ui5-li")[0];
 		}, picker));
 
@@ -29,7 +29,7 @@ describe("Select general interaction", () => {
 		select.click();
 
 		const picker = browser.getStaticAreaRespPopover("#mySelect");
-		const firstItem = browser.$(browser.execute(async picker => {
+		const firstItem = browser.$(browser.execute(picker => {
 			return picker.querySelectorAll("ui5-li")[0];
 		}, picker));
 
@@ -120,7 +120,7 @@ describe("Select general interaction", () => {
 		btn.keys("Tab");
 		browser.keys("Space");
 
-		const popoverOpened = browser.execute(async picker => {
+		const popoverOpened = browser.execute(picker => {
 			return picker.hasAttribute("opened");
 		}, picker);
 
@@ -136,14 +136,14 @@ describe("Select general interaction", () => {
 
 		browser.keys("F4");
 
-		const popoverOpened = browser.execute(async picker => {
+		const popoverOpened = browser.execute(picker => {
 			return picker.hasAttribute("opened");
 		}, picker);
 		assert.ok(popoverOpened, "Select is opened.");
 
 		browser.keys("F4");
 
-		const popoverOpened2 = browser.execute(async picker => {
+		const popoverOpened2 = browser.execute(picker => {
 			return picker.hasAttribute("opened");
 		}, picker);
 		assert.notOk(popoverOpened2, "Select is closed.");
@@ -157,13 +157,13 @@ describe("Select general interaction", () => {
 		btn.keys("Tab");
 
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
-		const popoverOpened = browser.execute(async picker => {
+		const popoverOpened = browser.execute(picker => {
 			return picker.hasAttribute("opened");
 		}, picker);
 		assert.ok(popoverOpened, "Select is opened.");
 
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
-		const popoverOpened2 = browser.execute(async picker => {
+		const popoverOpened2 = browser.execute(picker => {
 			return picker.hasAttribute("opened");
 		}, picker);
 		assert.notOk(popoverOpened2, "Select is closed.");
@@ -178,14 +178,14 @@ describe("Select general interaction", () => {
 
 		browser.keys(["Alt", "ArrowDown", "NULL"]);
 
-		const popoverOpened = browser.execute(async picker => {
+		const popoverOpened = browser.execute(picker => {
 			return picker.hasAttribute("opened");
 		}, picker);
 		assert.ok(popoverOpened, "Select is opened.");
 
 		browser.keys(["Alt", "ArrowDown", "NULL"]);
 
-		const popoverOpened2 = browser.execute(async picker => {
+		const popoverOpened2 = browser.execute(picker => {
 			return picker.hasAttribute("opened");
 		}, picker);
 		assert.notOk(popoverOpened2, "Select is closed.");
@@ -199,7 +199,7 @@ describe("Select general interaction", () => {
 
 		const firstOption = browser.$("#mySelect ui5-option:first-child");
 		const picker = browser.getStaticAreaRespPopover("#mySelect");
-		const firstItem = browser.$(browser.execute(async picker => {
+		const firstItem = browser.$(browser.execute(picker => {
 			return picker.querySelectorAll("ui5-li")[0];
 		}, picker));
 
@@ -251,7 +251,7 @@ describe("Select general interaction", () => {
 		select.click();
 
 		const picker = browser.getStaticAreaRespPopover("#mySelect");
-		const firstItem = browser.$(browser.execute(async picker => {
+		const firstItem = browser.$(browser.execute(picker => {
 			return picker.querySelectorAll("ui5-li")[0];
 		}, picker));
 
@@ -269,11 +269,11 @@ describe("Select general interaction", () => {
 		select.click();
 		const picker = browser.getStaticAreaRespPopover("#mySelectEsc");
 
-		const firstItem = browser.$(browser.execute(async picker => {
+		const firstItem = browser.$(browser.execute(picker => {
 			return picker.querySelectorAll("ui5-li")[0];
 		}, picker));
 
-		const thirdItem = browser.$(browser.execute(async picker => {
+		const thirdItem = browser.$(browser.execute(picker => {
 			return picker.querySelectorAll("ui5-li")[2];
 		}, picker));
 

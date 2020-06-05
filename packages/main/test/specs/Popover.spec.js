@@ -59,12 +59,14 @@ describe("Popover general interaction", () => {
 
 	it("tests if overflown content can be reached by scrolling", () => {
 		const manyItemsSelect = $("#many-items");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#many-items");
-		const items = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li");
+		const picker = browser.getStaticAreaRespPopover("#many-items");
 
 		manyItemsSelect.click();
 
-		const itemBeforeLastItem = items[items.length - 2];
+		const itemBeforeLastItem = browser.$(browser.execute(picker => {
+			const items = picker.querySelectorAll("ui5-li");
+			return items[items.length - 2];
+		}, picker));
 
 		assert.strictEqual(itemBeforeLastItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
 
