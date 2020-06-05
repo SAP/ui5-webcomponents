@@ -22,13 +22,36 @@
 }
 
 ::slotted(ui5-togglebutton:last-child) {
-	border-top-right-radius: 0.375rem;
-	border-bottom-right-radius: 0.375rem;
+	border-top-right-radius: var(--_ui5_segmented_btn_border_radius);
+	border-bottom-right-radius: var(--_ui5_segmented_btn_border_radius);
 	border-right: 1px solid var(--sapButton_Selected_BorderColor);
 }
 
 ::slotted(ui5-togglebutton:first-child) {
-	border-top-left-radius: 0.375rem;
-	border-bottom-left-radius: 0.375rem;
+	border-top-left-radius: var(--_ui5_segmented_btn_border_radius);
+	border-bottom-left-radius: var(--_ui5_segmented_btn_border_radius);
 	border-left: 1px solid var(--sapButton_Selected_BorderColor);
+}
+
+[dir="rtl"] ::slotted(ui5-togglebutton:first-child) {
+	border-top-right-radius: var(--_ui5_segmented_btn_border_radius);
+	border-bottom-right-radius: var(--_ui5_segmented_btn_border_radius);
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-right: 1px solid var(--sapButton_Selected_BorderColor);
+}
+
+[dir="rtl"] ::slotted(ui5-togglebutton:last-child) {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-top-left-radius: var(--_ui5_segmented_btn_border_radius);
+	border-bottom-left-radius: var(--_ui5_segmented_btn_border_radius);
+	border-left: 1px solid var(--sapButton_Selected_BorderColor);
+}
+
+[dir="rtl"] ::slotted(ui5-togglebutton:only-child) {
+	border-top-right-radius: var(--_ui5_segmented_btn_border_radius);
+	border-bottom-right-radius: var(--_ui5_segmented_btn_border_radius);
+	border-top-left-radius: var(--_ui5_segmented_btn_border_radius);
+	border-bottom-left-radius: var(--_ui5_segmented_btn_border_radius);
 }

@@ -228,4 +228,27 @@ describe("Select general interaction", () => {
 
 		assert.strictEqual(inputResult.getProperty("value"), "7", "Change event should be fired");
 	});
+
+	it("tests ESC on closed picker", () => {
+		const select = $("#mySelectEsc");
+		const selectText = browser.$("#mySelectEsc").shadow$("ui5-label");
+		const EXPECTED_SELECTION_TEXT = "Cozy";
+		const EXPECTED_SELECTION_TEXT2 = "Condensed";
+
+		select.click();
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelectEsc")
+		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li")[0];
+		const thirdItem = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li")[2];
+
+		firstItem.click();
+
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) !== -1, "Select label is correct.");
+
+		// verify that ESC does not interfere when the picker is closed
+		select.keys("Escape"); 
+		select.click();
+		thirdItem.click();
+
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
+	});
 });

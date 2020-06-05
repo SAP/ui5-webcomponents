@@ -9,7 +9,6 @@ import {
 } from "../Keys.js";
 
 import EventProvider from "../EventProvider.js";
-import UI5Element from "../UI5Element.js";
 import NavigationMode from "../types/NavigationMode.js";
 import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
 
@@ -193,7 +192,7 @@ class ItemNavigation extends EventProvider {
 
 		const currentItem = items[this.currentIndex];
 
-		if (currentItem instanceof UI5Element) {
+		if (currentItem.isUI5Element) {
 			return currentItem.getFocusDomRef();
 		}
 

@@ -7,7 +7,7 @@
 	@click="{{_onclick}}"
 	role="option"
 	tabindex="{{_tabIndex}}"
-	dir="{{rtl}}"
+	dir="{{effectiveDir}}"
 	aria-labelledby="{{ariaLabelledBy}}"
 >
 	<div class="ui5-nli-actions">
@@ -92,7 +92,7 @@
 		<slot name="avatar"></slot>
 	</div>
 
-	{{#if busy}} 
+	{{#if busy}}
 		<ui5-busyindicator active size="Medium" class="ui5-nli-busy"></ui5-busyindicator>
 	{{/if}}
 </li>
