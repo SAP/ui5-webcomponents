@@ -342,7 +342,6 @@ In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with
 ```js
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
@@ -362,7 +361,7 @@ from OpenUI5 configuration and resources.
 
 When you import the above module:
  1. OpenUI5 configuration takes precedence over UI5 Web Components configuration
- for all common entities (theme, language, RTL, etc...). In addition, changing the theme
+ for all common entities (theme, language, etc...). In addition, changing the theme
  in OpenUI5 will also change the theme in UI5 Web Components.
  2. Fonts will not be loaded twice (just once by OpenUI5, and reused).
  3. Locale Data assets will not be fetched twice (just once by OpenUI5, and reused).
