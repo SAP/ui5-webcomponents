@@ -63,11 +63,10 @@ describe("when enabled", () => {
 
 	it("shows value state message", () => {
 		const textarea = $("#textarea-value-state-msg")
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#textarea-value-state-msg");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover")
-
+		
 		// act
 		textarea.click();
+		const popover = browser.$(browser.getStaticAreaPopover("#textarea-value-state-msg"));
 
 		// assert
 		assert.ok(popover.isDisplayedInViewport(), "The value state message popover is displayed");
@@ -75,14 +74,13 @@ describe("when enabled", () => {
 
 	it("does not show value state msg when valueState='None'", () => {
 		const textarea = browser.$("#basic-textarea");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#basic-textarea");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover")
-
+		
 		// act
 		textarea.click();
+		const popover = browser.getStaticAreaPopover("#basic-textarea");
 
 		// assert
-		assert.ok(!popover.isDisplayedInViewport(), "The value state message popover is not displayed");
+		assert.notOk(popover, "The value state message popover is not displayed");
 	});
 
 	it("can type inside", () => {

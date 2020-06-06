@@ -6,8 +6,7 @@ describe("MultiComboBox general interaction", () => {
 	describe("toggling", () => {
 		it("opens/closes", () => {
 			const icon = browser.$("#multi1").shadow$("[input-icon]");
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#multi1")
-			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = browser.$(browser.getStaticAreaRespPopover("#multi1"));
 
 			icon.click();
 			assert.ok(popover.getProperty("opened"), "Popover should be displayed in the viewport");
@@ -42,9 +41,8 @@ describe("MultiComboBox general interaction", () => {
 			browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
 
 			browser.setWindowSize(400, 1250);
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#multi1")
 			const showMore = $("#multi1").shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-tokenizer-more-text");
-			const allPopover = $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const allPopover = browser.$(browser.getStaticAreaRespPopover("#multi1"));
 
 			showMore.click();
 
@@ -59,8 +57,7 @@ describe("MultiComboBox general interaction", () => {
 
 		it("Opens all items popover, selects and deselects the first item", () => {
 			const icon = browser.$("#mcb").shadow$("[input-icon]");
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mcb")
-			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = browser.$(browser.getStaticAreaRespPopover("#mcb"));
 			const firstItem = popover.$("ui5-list > ui5-li");
 			const firstItemCheckbox = firstItem.shadow$("ui5-checkbox");
 			const eventInput = $("#events-input");
@@ -92,8 +89,7 @@ describe("MultiComboBox general interaction", () => {
 
 		it("Opens all items popover when start typing and filters items", () => {
 			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input");
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mcb")
-			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = browser.$(browser.getStaticAreaRespPopover("#mcb"));
 
 			input.click();
 			input.keys("c");
@@ -138,8 +134,7 @@ describe("MultiComboBox general interaction", () => {
 
 		it("When item is clicked, the popover should be closed and the value in the input should be removed", () => {
 			const input = browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#another-mcb")
-			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = browser.$(browser.getStaticAreaRespPopover("#another-mcb"));
 			const firstItem = popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
 
 			input.click();
@@ -156,8 +151,7 @@ describe("MultiComboBox general interaction", () => {
 
 		it("When item's checkbox is clicked, the popover should not be closed and the value in the input should be kept", () => {
 			const input = browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#another-mcb")
-			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = browser.$(browser.getStaticAreaRespPopover("#another-mcb"));
 			const firstItemCheckbox = popover.$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");
 
 			input.click();

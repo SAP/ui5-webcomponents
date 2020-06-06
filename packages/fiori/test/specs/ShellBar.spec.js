@@ -2,8 +2,11 @@
 const assert = require("chai").assert;
 
 const getOverflowPopover = id => {
-	const staticAreaItemClassName = browser.getStaticAreaItemClassName(`#${id}`);
-	return browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+	return browser.$(browser.getStaticAreaRespPopover(`#${id}`, ".ui5-shellbar-overflow-popover"));
+}
+
+const getMenuPopover = id => {
+	return browser.$(browser.getStaticAreaRespPopover(`#${id}`, ".ui5-shellbar-menu-popover"));
 }
 
 const getOverflowChildProp = (id, pos, prop) => {
@@ -147,8 +150,7 @@ describe("Component Behavior", () => {
 
 			const shellbar = browser.$("#shellbar");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-			const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+			const overflowPopover = getOverflowPopover("shellbar");
 
 			assert.strictEqual(shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
 
@@ -163,8 +165,7 @@ describe("Component Behavior", () => {
 
 			const shellbar = browser.$("#shellbar");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-			const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+			const overflowPopover = getOverflowPopover("shellbar");
 			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
 
 			assert.strictEqual(shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
@@ -198,8 +199,7 @@ describe("Component Behavior", () => {
 			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
 			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
-			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-			const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+			const overflowPopover = getOverflowPopover("shellbar");
 			const listItemsCount = overflowPopover.getHTML().split("</ui5-li>").length - 1;
 
 			assert.strictEqual(shellbar.getProperty("breakpointSize") === "S", true, "S Breakpoint class should be set");
@@ -224,8 +224,7 @@ describe("Component Behavior", () => {
 
 			it("tests opening of menu", () => {
 				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-				const menuPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
+				const menuPopover = getMenuPopover("shellbar");
 
 				primaryTitle.click();
 				assert.ok(menuPopover.isDisplayedInViewport(), "Menu should be shown");
@@ -275,14 +274,15 @@ describe("Component Behavior", () => {
 
 			it("tests menuItemClick event", () => {
 				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-				const menuPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
-				const firstMenuItem = menuPopover.$("ui5-list > ui5-li");
-				const secondMenuItem = menuPopover.$("ui5-list > ui5-li:nth-child(2)");
 				const input = browser.$("#press-input");
 				const inputData = browser.$("#press-data");
 
 				primaryTitle.click();
+
+				const menuPopover = getMenuPopover("shellbar");
+				const firstMenuItem = menuPopover.$("ui5-list > ui5-li");
+				const secondMenuItem = menuPopover.$("ui5-list > ui5-li:nth-child(2)");
+
 				firstMenuItem.click();
 
 				assert.strictEqual(input.getValue(), "Application 1", "Input value is set by click event of the first menu item");
@@ -324,8 +324,7 @@ describe("Component Behavior", () => {
 
 			it("tests opening of menu", () => {
 				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-				const menuPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
+				const menuPopover = getMenuPopover("shellbar");
 
 				primaryTitle.click();
 				assert.ok(menuPopover.isDisplayedInViewport(), "Menu should be shown");
@@ -333,8 +332,7 @@ describe("Component Behavior", () => {
 
 			it("tests notificationsClick event", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+				const overflowPopover = getOverflowPopover("shellbar");
 				const notificationListItem = overflowPopover.$("ui5-list ui5-li:nth-child(4)");
 				const input = browser.$("#press-input");
 
@@ -355,8 +353,7 @@ describe("Component Behavior", () => {
 
 			it("tests productSwitchClick event", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+				const overflowPopover = getOverflowPopover("shellbar");
 				const productSwitchIcon = overflowPopover.$("ui5-list ui5-li:nth-child(5)");
 				const input = browser.$("#press-input");
 
@@ -368,8 +365,7 @@ describe("Component Behavior", () => {
 
 			it("tests preventDefault of productSwitchClick event", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+				const overflowPopover = getOverflowPopover("shellbar");
 				const productSwitchIcon = overflowPopover.$("ui5-list ui5-li:nth-child(5)");
 
 				overflowButton.click();
@@ -381,8 +377,7 @@ describe("Component Behavior", () => {
 			it("tests if searchfield toggles when clicking on search icon", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const searchField = browser.$("#shellbar").shadow$(".ui5-shellbar-search-field");
-				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
-				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+				const overflowPopover = getOverflowPopover("shellbar");
 				const searchListItem = overflowPopover.$("ui5-list ui5-li:nth-child(1)");
 
 				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");

@@ -7,10 +7,9 @@ describe("General interaction", () => {
 
 		const combo = $("#combo");
 		const arrow = combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(browser.getStaticAreaRespPopover("#combo"));
 
-		assert.ok(!popover.getProperty("opened"), "Popover should not be displayed")
+		assert.ok(!popover.getProperty("opened"), "Popover should not be displayed");
 
 		arrow.click();
 
@@ -23,8 +22,7 @@ describe("General interaction", () => {
 		const combo = $("#combo");
 		const lazy = $("#lazy");
 		const input = combo.shadow$("#ui5-combobox-input");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(browser.getStaticAreaRespPopover("#combo"));
 
 		input.click();
 		input.keys("b");
@@ -53,8 +51,8 @@ describe("General interaction", () => {
 		const combo = $("#combo2");
 		const arrow = combo.shadow$("[input-icon]");
 		const input = combo.shadow$("#ui5-combobox-input");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo2");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(browser.getStaticAreaRespPopover("#combo2"));
+
 		let listItems = popover.$("ui5-list").$$("ui5-li");
 
 		arrow.click();
@@ -110,8 +108,8 @@ describe("General interaction", () => {
 		arrow.click();
 
 		// click on first item
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#change-cb");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(browser.getStaticAreaRespPopover("#change-cb"));
+
 		popover.$("ui5-list").$$("ui5-li")[0].click();
 
 		assert.strictEqual(placeholder.getText(), "Argentina", "Text should be empty");
@@ -122,8 +120,7 @@ describe("General interaction", () => {
 		const combo = $("#contains-cb");
 		const input = combo.shadow$("#ui5-combobox-input");
 		const arrow = combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#contains-cb");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(browser.getStaticAreaRespPopover("#contains-cb"));
 		let listItems = popover.$("ui5-list").$$("ui5-li");
 
 		arrow.click();
@@ -150,8 +147,8 @@ describe("General interaction", () => {
 		const combo = $("#startswith-cb");
 		const input = combo.shadow$("#ui5-combobox-input");
 		const arrow = combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#startswith-cb");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(browser.getStaticAreaRespPopover("#startswith-cb"));
+
 		let listItems = popover.$("ui5-list").$$("ui5-li");
 
 		arrow.click();

@@ -19,8 +19,7 @@ const isPickerOpen = id => {
 }
 
 const getPicker = id => {
-	const staticAreaItemClassName = browser.getStaticAreaItemClassName(`#${id}`);
-	return browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+	return browser.$(browser.getStaticAreaRespPopover(`#${id}`));
 }
 
 const getSubmitButton = id => {

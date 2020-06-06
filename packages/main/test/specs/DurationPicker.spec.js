@@ -7,10 +7,8 @@ describe("Duration Picker general interaction", () => {
 	it("Tests opening and closing of popover", () => {
 		const durationPicker = browser.$("#duration-picker1")
 		const duratationPickerIcon = durationPicker.shadow$(".ui5-duration-picker-input-icon-button");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#duration-picker1");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(browser.getStaticAreaRespPopover("#duration-picker1"));
 
-		
 		duratationPickerIcon.click();
 
 		assert.isOk(durationPicker.getProperty("_isPickerOpen"), "Popover is opened");

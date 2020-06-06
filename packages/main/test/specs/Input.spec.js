@@ -58,8 +58,7 @@ describe("Input general interaction", () => {
 
 	it("Should open suggestions popover when focused", () => {
 		const input = $("#myInput2");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#myInput2");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(browser.getStaticAreaRespPopover(`#myInput2`));
 
 		// focus the input field which will display the suggestions
 		input.click();
@@ -135,8 +134,7 @@ describe("Input general interaction", () => {
 		let item;
 		const suggestionsInput = $("#myInput").shadow$("input");
 		const inputResult = $("#inputResult").shadow$("input");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#myInput")
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(browser.getStaticAreaRespPopover(`#myInput`));
 
 		suggestionsInput.click();
 		suggestionsInput.keys("p");
@@ -215,15 +213,14 @@ describe("Input general interaction", () => {
 
 	it("Checks if valueStateMessage is shown", () => {
 		const inputShadowRef = browser.$("#inputError").shadow$("input");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputError");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
-		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-responsive-popover-header");
 
 		inputShadowRef.click();
+		const popover = browser.$(browser.getStaticAreaPopover("#inputError"));
 		
 		assert.ok(popover.getProperty("opened"), "Popover with valueStateMessage should be opened.");
 
 		inputShadowRef.keys("a");
+		const respPopover = browser.$(browser.getStaticAreaRespPopover("#inputError")).shadow$(".ui5-responsive-popover-header");
 
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
 	});

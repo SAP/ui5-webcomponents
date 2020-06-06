@@ -41,7 +41,6 @@ const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
 class UI5Element extends HTMLElement {
 	constructor() {
 		super();
-		this._generateId();
 		this._initializeState();
 		this._upgradeAllProperties();
 		this._initializeContainers();
@@ -55,13 +54,6 @@ class UI5Element extends HTMLElement {
 
 		this._monitoredChildProps = new Map();
 		this._firePropertyChange = false;
-	}
-
-	/**
-	 * @private
-	 */
-	_generateId() {
-		this._id = `ui5wc_${++autoId}`;
 	}
 
 	/**

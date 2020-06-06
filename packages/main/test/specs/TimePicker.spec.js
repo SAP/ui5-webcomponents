@@ -68,9 +68,12 @@ describe("TimePicker general interaction", () => {
 
 		timepicker.click();
 
-		const inputId = timepicker.shadow$("ui5-input").getProperty("_id");
-		const inputStaticAreaItem = browser.$(`.${inputId}`);
-		const slot = inputStaticAreaItem.shadow$("ui5-popover").$("#customValueStateMessage");
+		const input = timepicker.shadow$("ui5-input");
+		const inputPopover = browser.$(browser.execute(async input => {
+			const staticAreaItem = await input.getStaticAreaItemDomRef();
+			return staticAreaItem.querySelector("ui5-popover");
+		}, input));
+		const slot = inputPopover.$("#customValueStateMessage");
 
 		assert.notOk(slot.error, "cValue State message slot is working");
 	});

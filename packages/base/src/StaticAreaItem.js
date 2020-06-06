@@ -29,7 +29,6 @@ class StaticAreaItem {
 
 			this.staticAreaItemDomRef = document.createElement("ui5-static-area-item");
 			this.staticAreaItemDomRef.attachShadow({ mode: "open" });
-			this.staticAreaItemDomRef.classList.add(this.ui5ElementContext._id); // used for getting the popover in the tests
 
 			getStaticAreaInstance().appendChild(this.staticAreaItemDomRef);
 			this._rendered = true;

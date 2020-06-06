@@ -192,17 +192,17 @@ exports.config = {
 			}, this, className);
 		}, true);
 
-		browser.addCommand("getStaticAreaItemClassName", function(selector) {
-			return browser.execute(async (selector) => {
+		browser.addCommand("getStaticAreaRespPopover", function(selector, staticAreaSelector) {
+			return browser.execute(async (selector, staticAreaSelector) => {
 				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
-				return staticAreaItem.host.classList[0];
-			}, selector);
+				return staticAreaItem.querySelector(staticAreaSelector || "ui5-responsive-popover");
+			}, selector, staticAreaSelector);
 		}, false);
 
-		browser.addCommand("getStaticAreaRespPopover", function(selector) {
-			return browser.execute(async (selector) => {
+		browser.addCommand("getStaticAreaPopover", function(selector) {
+			return browser.execute(async selector => {
 				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
-				return staticAreaItem.querySelector("ui5-responsive-popover");
+				return staticAreaItem.querySelector("ui5-popover");
 			}, selector);
 		}, false);
 	},
@@ -220,8 +220,8 @@ exports.config = {
 			"getHTML",
 			"getProperty",
 			"getSize",
-			"getStaticAreaItemClassName", // custom
 			"getStaticAreaRespPopover", // custom
+			"getStaticAreaPopover", // custom
 			"getText",
 			"getValue",
 			"hasClass", // custom
