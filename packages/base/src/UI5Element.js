@@ -745,7 +745,7 @@ class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	getStaticAreaItemDomRef() {
-		return this.staticAreaItem.getDomRef();
+		return this.staticAreaItem && this.staticAreaItem.getDomRef();
 	}
 
 	/**
