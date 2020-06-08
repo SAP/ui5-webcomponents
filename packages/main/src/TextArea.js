@@ -27,6 +27,7 @@ import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js
  */
 const metadata = {
 	tag: "ui5-textarea",
+	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**

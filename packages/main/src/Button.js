@@ -21,6 +21,8 @@ let activeButton = null;
  */
 const metadata = {
 	tag: "ui5-button",
+	rtlAware: true,
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**

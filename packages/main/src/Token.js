@@ -23,6 +23,8 @@ import styles from "./generated/themes/Token.css.js";
  */
 const metadata = {
 	tag: "ui5-token",
+	rtlAware: true,
+	languageAware: true,
 	slots: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-token</code>.
