@@ -11,6 +11,7 @@ import getConstructableStyle from "./theming/getConstructableStyle.js";
 import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import Integer from "./types/Integer.js";
+import Float from "./types/Float.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
@@ -305,6 +306,9 @@ class UI5Element extends HTMLElement {
 			}
 			if (propertyTypeClass === Integer) {
 				newValue = parseInt(newValue);
+			}
+			if (propertyTypeClass === Float) {
+				newValue = parseFloat(newValue);
 			}
 			this[nameInCamelCase] = newValue;
 		}
