@@ -113,6 +113,7 @@ class UI5Element extends HTMLElement {
 				await Promise.resolve();
 			}
 
+			RenderScheduler.register(this);
 			await RenderScheduler.renderImmediately(this);
 			this._domRefReadyPromise._deferredResolve();
 			if (typeof this.onEnterDOM === "function") {
@@ -135,6 +136,7 @@ class UI5Element extends HTMLElement {
 				this._stopObservingDOMChildren();
 			}
 
+			RenderScheduler.deregister(this);
 			if (typeof this.onExitDOM === "function") {
 				this.onExitDOM();
 			}

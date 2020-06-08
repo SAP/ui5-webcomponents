@@ -24,7 +24,7 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);" dir="rtl">
-    <ui5-title>BODY is rtl</ui5-title>
+    <ui5-label>RTL: </ui5-label> <ui5-switch id="sw" checked>RTL</ui5-switch>
 
     <section>
         <ui5-title>This section does not define dir</ui5-title>
@@ -37,7 +37,7 @@
     </section>
 
     <section dir="ltr">
-        <ui5-title>This section defines dir=ltr</ui5-title>
+        <ui5-title>This section defines dir=LTR</ui5-title>
         <br>
         <ui5-checkbox text="Click me"></ui5-checkbox>
         <br>
@@ -46,7 +46,28 @@
         <ui5-checkbox text="This checkbox however defines dir=rtl" dir="rtl"></ui5-checkbox>
     </section>
 
+    <section dir="rtl">
+        <ui5-title>This section defines dir=RTL</ui5-title>
+        <br>
+        <ui5-checkbox text="Click me"></ui5-checkbox>
+        <br>
+        <ui5-checkbox text="Click me"></ui5-checkbox>
+        <br>
+        <ui5-checkbox text="This checkbox however defines dir=ltr" dir="ltr"></ui5-checkbox>
+    </section>
 
+
+    <script>
+        var sw = document.getElementById("sw");
+		sw.addEventListener("click", function() {
+        	if (sw.checked) {
+        		document.body.dir = "rtl";
+            } else {
+        		document.body.dir = "ltr";
+            }
+        	window.RenderScheduler.reRenderAll();
+        });
+    </script>
 
 </body>
 </html>

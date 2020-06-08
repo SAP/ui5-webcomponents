@@ -2,6 +2,7 @@ import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 
 const MAX_RERENDER_COUNT = 10;
+const registeredElements = new Set();
 
 // Tells whether a render task is currently scheduled
 let renderTaskId;
@@ -140,6 +141,20 @@ class RenderScheduler {
 			renderTaskPromiseResolve = undefined;
 			renderTaskPromise = undefined;
 		}
+	}
+
+	static register(element) {
+		registeredElements.add(element);
+	}
+
+	static deregister(element) {
+		registeredElements.delete(element);
+	}
+
+	static reRenderAll() {
+		registeredElements.forEach(element => {
+			RenderScheduler.renderDeferred(element);
+		});
 	}
 }
 
