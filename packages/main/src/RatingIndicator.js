@@ -14,7 +14,6 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
 	RATING_INDICATOR_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
-import Size from "./types/Size.js";
 import RatingIndicatorTemplate from "./generated/templates/RatingIndicatorTemplate.lit.js";
 
 // Styles
@@ -54,20 +53,6 @@ const metadata = {
 		maxValue: {
 			type: Integer,
 			defaultValue: 5,
-		},
-
-		/**
-		 * Defines the size of the <code>ui5-rating-indicator</code>.
-		 * <br><br>
-		 * <b>Note:</b> Available options are "Small", "Medium", and "Large".
-		 *
-		 * @type {Size}
-		 * @defaultvalue "Medium"
-		 * @public
-		 */
-		size: {
-			type: Size,
-			defaultValue: Size.Medium,
 		},
 
 		/**
@@ -130,7 +115,9 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
+ * You can change the size of the Rating Indicator by changing its <code>font-size</code> CSS property.
+ * <br>
+ * Example: <code><ui5-rating-indicator style="font-size: 3rem;"></ui5-rating-indicator></code>
  *
  * <h3>Usage</h3>
  *

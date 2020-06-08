@@ -14,10 +14,6 @@
 	cursor: initial;
 }
 
-:host([size="Large"]) {
-	font-size: 2rem;
-}
-
 :host([_focused]) {
 	outline: 1px dotted var(--sapContent_FocusColor);
 }
@@ -27,7 +23,7 @@
 }
 
 .ui5-rating-indicator-icon {
-	position: relative;	
+	position: relative;
 	color: var(--sapContent_UnratedColor);
 	user-select: none;
 }

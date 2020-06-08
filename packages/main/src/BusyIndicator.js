@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Size from "./types/Size.js";
+import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import Label from "./Label.js";
 
 // Template
@@ -48,14 +48,11 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Available options are "Small", "Medium", and "Large".
 		 *
-		 * @type {Size}
+		 * @type {BusyIndicatorSize}
 		 * @defaultvalue "Medium"
 		 * @public
 		 */
-		size: {
-			type: Size,
-			defaultValue: Size.Medium,
-		},
+		size: { type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium },
 
 		/**
 		 * Defines if the busy indicator is visible on the screen. By default it is not.
