@@ -1,7 +1,5 @@
-commit 6172005e455dbd517ea87904222adf2e2cc7c226
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 8 11:52:01 2020 +0300
+commit a28f201b78a2e0375283ad3a7388edb31d7f07fe
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Jun 8 16:02:58 2020 +0300
 
-    fix(ui5-messagestrip): add RTL support (#1741)
-    
-    FIXES: #1739
+    feat(ui5-rating-indicator): initial implementation (#1729)
