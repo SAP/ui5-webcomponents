@@ -493,6 +493,10 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	isInValidRange(value = "") {
+		if (value === "") {
+			return true;
+		}
+
 		const pickedDate = new Date(value),
 			minDate = this._minDate && new Date(this._minDate),
 			maxDate = this._maxDate && new Date(this._maxDate);
