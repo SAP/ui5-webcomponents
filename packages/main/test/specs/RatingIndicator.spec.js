@@ -27,10 +27,10 @@ describe("Rating Indicator general interaction", () => {
 		assert.strictEqual(ratingIndicator.getProperty("value"), 3, "Value is changed on click");
 	});
 
-	it("Tests input event", () => {
+	it("Tests change event", () => {
 		const ratingIndicator = browser.$("#rating-indicator4");
 		const thirdStar = ratingIndicator.shadow$$(".ui5-rating-indicator-icon")[2];
-		const input = browser.$("#input-event");
+		const input = browser.$("#change-event");
 
 		assert.strictEqual(ratingIndicator.getProperty("value"), 6, "Initial value is applied");
 		
@@ -62,16 +62,5 @@ describe("Rating Indicator general interaction", () => {
 		assert.strictEqual(ratingIndicator.getProperty("value"), 0, "Value is changed on key press");
 
 		assert.strictEqual(input.getProperty("value"), "12", "Input event is always fired")
-	});
-
-	it("Tests change event", () => {
-		const ratingIndicator = browser.$("#rating-indicator5");
-		const thirdStar = ratingIndicator.shadow$$(".ui5-rating-indicator-icon")[2];
-		const input = browser.$("#change-event");
-
-		thirdStar.click();
-		browser.keys("Tab");
-
-		assert.strictEqual(input.getProperty("value"), "1", "Change event is thrown once");
 	});
 });

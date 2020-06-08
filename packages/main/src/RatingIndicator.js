@@ -57,9 +57,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>ui5-rating-indicator</code> is disabled.
-		 */
-		/**
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -68,8 +66,8 @@ const metadata = {
 		},
 
 		/**
-		 * @type {Boolean}
-		 * @defaultvalue falase
+		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		readonly: {
@@ -80,10 +78,13 @@ const metadata = {
 		 * @private
 		 */
 		_stars: {
-			type: Integer,
+			type: Object,
 			multiple: true,
 		},
 
+		/**
+		 * @private
+		 */
 		_focused: {
 			type: Boolean,
 		},
@@ -94,15 +95,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.RatingIndicator.prototype */ {
 
 		/**
-		 * This event is triggered each time the rating value changes.
-		 *
-		 * @event
-		 * @public
-		 */
-		input: {},
-
-		/**
-		 * The event is fired on focuseout if the value has changed.
+		 * The event is fired when the value changes.
 		 *
 		 * @event
 		 * @public
@@ -115,6 +108,13 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
+ * The rating indicator is used to display a specific number of icons that are used to rate an item.
+ * Additionally, it is also used to display the average and overall ratings.
+ *
+ * <h3>Usage</h3>
+ * The preferred number of icons is between 5 and 7.
+ *
+ * <h3>Responsive Behavior</h3>
  * You can change the size of the Rating Indicator by changing its <code>font-size</code> CSS property.
  * <br>
  * Example: <code><ui5-rating-indicator style="font-size: 3rem;"></ui5-rating-indicator></code>
@@ -158,8 +158,8 @@ class RatingIndicator extends UI5Element {
 
 	constructor() {
 		super();
-		this._prevValue = undefined;
 
+		this._liveValue = null; // stores the value to determine when to fire change
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -196,14 +196,15 @@ class RatingIndicator extends UI5Element {
 			return;
 		}
 
-		this._prevValue = this.value;
 		this.value = parseInt(event.target.getAttribute("data-value"));
-		if (this.value === 1 && this._prevValue === 1) {
+
+		if (this.value === 1 && this._liveValue === 1) {
 			this.value = 0;
 		}
 
-		if (this._prevValue !== this.value) {
-			this.fireEvent("input");
+		if (this._liveValue !== this.value) {
+			this.fireEvent("change");
+			this._liveValue = this.value;
 		}
 	}
 
@@ -220,26 +221,24 @@ class RatingIndicator extends UI5Element {
 
 			if (down && this.value > 0) {
 				this.value = Math.round(this.value - 1);
-				this.fireEvent("input");
+				this.fireEvent("change");
 			} else if (up && this.value < this.maxValue) {
 				this.value = Math.round(this.value + 1);
-				this.fireEvent("input");
+				this.fireEvent("change");
 			}
 		}
 	}
 
-	_onfocusin(event) {
-		if (!(this.disabled)) {
-			this._focused = true;
-			this._prevValue = this.value;
+	_onfocusin() {
+		if (this.disabled) {
+			return;
 		}
+
+		this._focused = true;
+		this._liveValue = this.value;
 	}
 
-	_onfocusout(event) {
-		if (this._focused && !this.disabled && !this.readonly && this._prevValue !== this.value) {
-			this.fireEvent("change");
-		}
-
+	_onfocusout() {
 		this._focused = false;
 	}
 
