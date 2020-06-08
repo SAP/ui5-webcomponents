@@ -95,7 +95,7 @@ class Dialog extends Popup {
 		super.open();
 
 		this._focusedElementBeforeOpen = getFocusedElement();
-		this.fireEvent("beforeOpen", {});
+		this.fireEvent("before-open", {});
 		this.show();
 		this.applyInitialFocus();
 
@@ -103,7 +103,7 @@ class Dialog extends Popup {
 
 		addOpenedPopup(this);
 		this.opened = true;
-		this.fireEvent("afterOpen", {});
+		this.fireEvent("after-open", {});
 	}
 
 	/**
@@ -111,7 +111,7 @@ class Dialog extends Popup {
 	* @public
 	*/
 	close(escPressed) {
-		const prevented = !this.fireEvent("beforeClose", { escPressed }, true);
+		const prevented = !this.fireEvent("before-close", { escPressed }, true);
 
 		if (prevented || !this.opened) {
 			return;
@@ -121,7 +121,7 @@ class Dialog extends Popup {
 		this.hide();
 		this.opened = false;
 
-		this.fireEvent("afterClose", {});
+		this.fireEvent("after-close", {});
 
 		removeOpenedPopup(this);
 		Dialog.unblockBodyScrolling();

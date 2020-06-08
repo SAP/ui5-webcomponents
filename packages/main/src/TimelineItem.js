@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
 import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
@@ -98,10 +97,10 @@ const metadata = {
 		 * <b>Note:</b> The event will not be fired if the <code>item-name-clickable</code>
 		 * attribute is not set.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.TimelineItem#item-name-click
 		 * @public
 		 */
-		itemNameClick: {},
+		"item-name-click": {},
 	},
 };
 
@@ -141,11 +140,7 @@ class TimelineItem extends UI5Element {
 	}
 
 	onItemNamePress() {
-		this.fireEvent("itemNameClick", {});
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+		this.fireEvent("item-name-click", {});
 	}
 
 	static async onDefine() {

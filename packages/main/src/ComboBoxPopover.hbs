@@ -5,9 +5,9 @@
 	_disable-initial-focus
 	placement-type="Bottom"
 	horizontal-align="Left"
-	@ui5-beforeOpen={{_beforeOpenPopover}}
-	@ui5-afterOpen={{_afterOpenPopover}}
-	@ui5-afterClose={{_afterClosePopover}}
+	@ui5-before-оpen={{_beforeOpenPopover}}
+	@ui5-after-open={{_afterOpenPopover}}
+	@ui5-after-close={{_afterClosePopover}}
 >
 	<ui5-busyindicator
 		?active={{loading}}
@@ -49,7 +49,7 @@
 
 	<ui5-list
 		separators="None"
-		@ui5-itemClick={{_selectItem}}
+		@ui5-item-click={{_selectItem}}
 		mode="SingleSelect"
 	>
 		{{#each _filteredItems}}

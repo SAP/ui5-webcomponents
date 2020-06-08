@@ -77,6 +77,11 @@ const metadata = {
  * <h3>Usage</h3>
  * For the <code>ui5-busyindicator</code> you can define the size of the indicator, as well
  * as whether it is shown or hidden. In order to hide it, use the html attribute <code>hidden</code> or <code>display: none;</code>
+ * <br><br>
+ * In order to show busy state for an HTML element, simply nest the HTML element in a <code>ui5-busyindicator</code> instance.
+ * <br>
+ * <b>Note:</b> Since <code>ui5-busyindicator</code> has <code>display: inline-block;</code> by default and no width of its own,
+ * whenever you need to wrap a block-level element, you should set <code>display: block</code> to the busy indicator as well.
  *
  * <h3>ES6 Module Import</h3>
  *

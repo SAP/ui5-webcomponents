@@ -1,13 +1,12 @@
-
 <div class="ui5-uc-root">
 	<div class="ui5-uc-header">
 		<slot name="header"></slot>
 	</div>
-	<div class="ui5-uc-content">
+	<div class="{{classes.content}}">
 		<ui5-list
 			mode="{{mode}}"
-			@ui5-selectionChange="{{_onSelectionChange}}"
-			@ui5-itemDelete="{{_onItemDelete}}"
+			@ui5-selection-change="{{_onSelectionChange}}"
+			@ui5-item-delete="{{_onItemDelete}}"
 		>
 			<slot></slot>
 		</ui5-list>

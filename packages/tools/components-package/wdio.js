@@ -204,8 +204,34 @@ exports.config = {
 	 * @param {String} commandName hook command name
 	 * @param {Array} args arguments that command would receive
 	 */
-	// beforeCommand: function (commandName, args) {
-	// },
+	beforeCommand: function (commandName, args) {
+		const waitFor = [
+			"$",
+			"$$",
+			"getAttribute",
+			"getCSSProperty",
+			"getHTML",
+			"getProperty",
+			"getSize",
+			"getStaticAreaItemClassName", // custom
+			"getText",
+			"getValue",
+			"hasClass", // custom
+			"isDisplayed",
+			"isDisplayedInViewport",
+			"isEnabled",
+			"isExisting",
+			"isFocused",
+			"isFocusedDeep", // custom
+			"shadow$",
+			"shadow$$",
+		];
+		if (waitFor.includes(commandName)) {
+			browser.executeAsync(function (done) {
+				window.RenderScheduler.whenFinished().then(done);
+			});
+		}
+	},
 
 	/**
 	 * Hook that gets executed before the suite starts
@@ -252,11 +278,32 @@ exports.config = {
 	 * @param {Object} error error object if any
 	 */
 	afterCommand: function (commandName, args, result, error) {
-		const waitFor = ["$", "$$", "shadow$", "shadow$$", "getStaticAreaItemClassName", "click", "performActions", "elementClick", "keys", "sendKeys", "findElement", "elementClear", "elementSendKeys", "setValue", "addValue", "getHTML", "getProperty", "setProperty", "setAttribute", "removeAttribute", "getElementProperty"];
+
+		// url -> set configuration first
+		if (commandName === "url" && !args[0].includes("do-not-change-configuration")) {
+			browser.execute(function() {
+				window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
+			});
+		}
+
+		const waitFor = [
+			"addValue",
+			"clearValue",
+			"click",
+			"doubleClick",
+			"dragAndDrop",
+			"keys",
+			"pause",
+			"removeAttribute", // custom
+			"setAttribute", // custom
+			"setProperty", // custom
+			"setValue",
+			"setWindowSize",
+			"touchAction",
+			"url"
+		];
 		if (waitFor.includes(commandName)) {
 			browser.executeAsync(function (done) {
-				// run all the tests in no conflict mode
-				window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
 				window.RenderScheduler.whenFinished().then(done);
 			});
 		}

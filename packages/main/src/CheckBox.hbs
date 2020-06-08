@@ -4,13 +4,14 @@
 	aria-checked="{{checked}}"
 	aria-readonly="{{ariaReadonly}}"
 	aria-disabled="{{ariaDisabled}}"
+	aria-label="{{ariaLabel}}"
 	aria-labelledby="{{ariaLabelledBy}}"
 	aria-describedby="{{ariaDescribedBy}}"
 	tabindex="{{tabIndex}}"
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
 	@click="{{_onclick}}"
-	dir="{{rtl}}"
+	dir="{{effectiveDir}}"
 >
 		<div id="{{_id}}-CbBg" class="ui5-checkbox-inner">
 			{{#if checked}}

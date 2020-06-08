@@ -4,7 +4,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/accept.js";
 import Icon from "./Icon.js";
@@ -122,6 +121,18 @@ const metadata = {
 		 */
 		name: {
 			type: String,
+		},
+
+		/**
+		 * Determines the <code>aria-label</code>, set on the component root tag.
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabel: {
+			type: String,
+			defaultValue: undefined,
 		},
 
 		_label: {
@@ -304,10 +315,6 @@ class CheckBox extends UI5Element {
 	get tabIndex() {
 		const tabindex = this.getAttribute("tabindex");
 		return this.disabled ? undefined : tabindex || "0";
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async onDefine() {

@@ -57,7 +57,7 @@
 <script>
 	const infiniteScrollEx = document.getElementById("infiniteScrollEx");
 
-	infiniteScrollEx.addEventListener("loadMore", (e) => {
+	infiniteScrollEx.addEventListener("load-more", (e) => {
 		infiniteScrollEx.busy = true;
 
 		setTimeout(() => {
@@ -90,7 +90,7 @@
 			}
 		}
 
-		infiniteScrollEx.addEventListener("loadMore", (e) => {
+		infiniteScrollEx.addEventListener("load-more", (e) => {
 			var el = infiniteScrollEx;
 			el.busy = true;
 
@@ -114,7 +114,7 @@
 		</ui5-list>
 
 		<script>
-			document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
+			document.getElementById('country-selector').addEventListener("selection-change", function (event) {
 				var selectedItems = event.detail.selectedItems;
 
 				alert("The selected item:  " + selectedItems[0].textContent);
@@ -130,7 +130,7 @@
 </ui5-list>
 
 <script>
-	document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
+	document.getElementById('country-selector').addEventListener("selection-change", function (event) {
 		var selectedItems = event.detail.selectedItems;
 
 		alert("The selected item:  " + selectedItems[0].textContent);

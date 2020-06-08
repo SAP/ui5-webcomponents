@@ -64,7 +64,6 @@ describe("DateTimePicker general interaction", () => {
 
 		// act
 		openPickerById("dtSeconds");
-		browser.pause(500);
 
 		// assert
 		const currentValue = dtPicker.shadow$("ui5-input").getValue();
@@ -84,7 +83,6 @@ describe("DateTimePicker general interaction", () => {
 		picker.$(".ui5-dt-minutes-wheel").setProperty("value","02");
 		picker.$(".ui5-dt-seconds-wheel").setProperty("value","03");
 		picker.$("#ok").click();
-		browser.pause(500);
 
 		// assert
 		const newValue = dtPicker.shadow$("ui5-input").getValue();
@@ -94,21 +92,18 @@ describe("DateTimePicker general interaction", () => {
 	it("tests change event is fired on submit", () => {
 		// test submit from empty value to current date/time value
 		openPickerById("dt1");
-		browser.pause(500);
 
 		const inputCounter = browser.$("#input1");
 		const submitBtn = getSubmitButton("dt1");
 
 		// act
 		submitBtn.click();
-		browser.pause(500);
 
 		// assert
 		assert.strictEqual(inputCounter.getProperty("value"), "1", "Changed should be called 1 time.");
 
 		// tests submit on same value
 		openPickerById("dt1");
-		browser.pause(500);
 
 		// act
 		submitBtn.click();
@@ -120,14 +115,12 @@ describe("DateTimePicker general interaction", () => {
 
 	it("tests change event not fired on cancel", () => {
 		openPickerById("dt2");
-		browser.pause(500);
 
 		const inputCounter = browser.$("#input3");
 		const cancelBtn = getCancelButton("dt2");
 
 		// act
 		cancelBtn.click();
-		browser.pause(500);
 
 		// assert
 		assert.strictEqual(inputCounter.getProperty("value"), "", "Changed should not be called.");
@@ -140,7 +133,6 @@ describe("DateTimePicker general interaction", () => {
 
 		// act
 		openPickerById("dtSeconds");
-		browser.pause(500);
 
 		// assert
 		const hoursMinSecSliders = getTimeSlidersCount("dtSeconds");
@@ -151,7 +143,6 @@ describe("DateTimePicker general interaction", () => {
 
 		// act
 		openPickerById("dtMinutes");
-		browser.pause(500);
 
 		// assert
 		const hoursMinSliders = getTimeSlidersCount("dtMinutes");
@@ -164,7 +155,6 @@ describe("DateTimePicker general interaction", () => {
 	it("tests hours slider is expanded", () => {
 		// act
 		openPickerById("dt");
-		browser.pause(500);
 
 		// assert
 		const picker = getPicker("dt");
@@ -179,7 +169,6 @@ describe("DateTimePicker general interaction", () => {
 
 		// act
 		openPickerById("dtTest12AM");
-		browser.pause(500);
 
 		const picker = getPicker("dtTest12AM");
 		picker.$(".ui5-dt-hours-wheel").setProperty("value","12");
@@ -187,7 +176,6 @@ describe("DateTimePicker general interaction", () => {
 		picker.$(".ui5-dt-seconds-wheel").setProperty("value","00");
 		picker.$(".ui5-dt-periods-wheel").setProperty("value","AM");
 		picker.$("#ok").click();
-		browser.pause(500);
 
 		// assert
 		const newValue = dtPicker.shadow$("ui5-input").getValue();
@@ -199,7 +187,6 @@ describe("DateTimePicker general interaction", () => {
 
 		// act
 		openPickerById("dtTest12PM");
-		browser.pause(500);
 
 		const picker = getPicker("dtTest12PM");
 		picker.$(".ui5-dt-hours-wheel").setProperty("value","12");

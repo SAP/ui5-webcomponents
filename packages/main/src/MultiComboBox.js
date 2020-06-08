@@ -5,7 +5,6 @@ import {
 	isShow, isDown, isBackSpace, isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
@@ -223,21 +222,21 @@ const metadata = {
 		/**
 		 * Fired when the dropdown is opened or closed.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.MultiComboBox#open-change
 		 * @since 1.0.0-rc.5
 		 * @public
 		 */
-		openChange: {},
+		"open-change": {},
 
 		/**
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.MultiComboBox#selection-change
 		 * @param {Array} items an array of the selected items.
 		 * @public
 		 */
-		selectionChange: {
+		"selection-change": {
 			detail: {
 				items: { type: Array },
 			},
@@ -497,7 +496,7 @@ class MultiComboBox extends UI5Element {
 		this._iconPressed = !this._iconPressed;
 		this.open = this._iconPressed;
 
-		this.fireEvent("openChange");
+		this.fireEvent("open-change");
 
 		if (!this._iconPressed) {
 			this._afterClosePopover();
@@ -555,7 +554,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	fireSelectionChange() {
-		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
+		this.fireEvent("selection-change", { items: this._getSelectedItems() });
 		// Angular 2 way data binding
 		this.fireEvent("value-changed");
 	}
@@ -712,10 +711,6 @@ class MultiComboBox extends UI5Element {
 
 	get editable() {
 		return !this.readonly;
-	}
-
-	get dir() {
-		return getRTL() ? "rtl" : "ltr";
 	}
 
 	get selectedItemsListMode() {

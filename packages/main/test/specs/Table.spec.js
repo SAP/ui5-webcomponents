@@ -8,7 +8,6 @@ describe("Table general interaction", () => {
 		const headerTableRow = browser.$("#tbl").shadow$("thead tr");
 
 		btn.click();
-		browser.pause(300);
 
 		assert.strictEqual((headerTableRow.getHTML(false).split("</slot>").length - 1), 4, "Columns should be 4");
 	});
@@ -19,7 +18,7 @@ describe("Table general interaction", () => {
 		const popinRows = browser.$("#roll-0").shadow$$(".ui5-table-popin-row");
 
 		btn.click();
-		browser.pause(300);
+
 		assert.strictEqual((headerTableRow.getHTML(false).split("</slot>").length - 1), 2, "Columns should be 4");
 		assert.strictEqual($("#roll-0").shadow$$(".ui5-table-popin-row").length, 2, "popin rows should be 2");
 	});
@@ -38,11 +37,10 @@ describe("Table general interaction", () => {
 	it("tests if popinChange is fired when min-width is reacted (500px)", () => {
 		let tableLabel = browser.$("#tableLabel");
 		const btn = browser.$("#size-btn-500");
-		
-		btn.click();
-		browser.pause(300);
 
-		assert.strictEqual(tableLabel.getHTML(false), "Number of poppedColumns: 2", "popinChange should be fired and columns should be 4");
+		btn.click();
+
+		assert.strictEqual(tableLabel.getHTML(false), "Number of poppedColumns: 4", "popinChange should be fired and columns should be 4");
 	});
 
 	it("tests rowClick is fired", () => {

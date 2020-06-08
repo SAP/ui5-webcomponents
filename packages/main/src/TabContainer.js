@@ -8,7 +8,6 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
@@ -171,12 +170,12 @@ const metadata = {
 		/**
 		 * Fired when a tab is selected.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.TabContainer#tab-select
 		 * @param {HTMLElement} tab The selected <code>tab</code>.
 		 * @param {Number} tabIndex The selected <code>tab</code> index.
 		 * @public
 		 */
-		tabSelect: {
+		"tab-select": {
 			tab: { type: HTMLElement },
 			tabIndex: { type: Number },
 		},
@@ -418,7 +417,7 @@ class TabContainer extends UI5Element {
 	selectTab(selectedTab, selectedTabIndex) {
 		// select the tab
 		this._selectedTab = selectedTab;
-		this.fireEvent("tabSelect", {
+		this.fireEvent("tab-select", {
 			tab: selectedTab,
 			tabIndex: selectedTabIndex,
 		});
@@ -547,10 +546,6 @@ class TabContainer extends UI5Element {
 
 	get overflowMenuIcon() {
 		return this.tabsAtTheBottom ? "slim-arrow-up" : "slim-arrow-down";
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	get animate() {

@@ -9,7 +9,6 @@ import {
 	isShow,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -398,7 +397,7 @@ class Select extends UI5Element {
 			}
 		}
 
-		if (isEscape(event)) {
+		if (isEscape(event) && this._isPickerOpen) {
 			this._escapePressed = true;
 		}
 
@@ -481,10 +480,6 @@ class Select extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
-	}
-
-	get dir() {
-		return getRTL() ? "rtl" : "ltr";
 	}
 
 	static async onDefine() {

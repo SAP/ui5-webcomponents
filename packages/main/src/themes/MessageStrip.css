@@ -133,3 +133,29 @@
 .ui5-messagestrip-close-icon-wrapper::-moz-focus-inner {
 	border: none;
 }
+
+/* RTL */
+.ui5-messagestrip-root[dir="rtl"] {
+	padding-right: 2.5rem;
+	padding-left: 2rem;
+}
+
+[dir="rtl"] .ui5-messagestrip-icon-wrapper {
+	right: 0.75rem;
+	left: 0;
+}
+
+[dir="rtl"] .ui5-messagestrip-icon--hidden {
+	padding-right: 1rem;
+	padding-left: 2rem;
+}
+
+[dir="rtl"] .ui5-messagestrip-close-icon--hidden {
+	padding-left: 1rem;
+	padding-right: 0;
+}
+
+[dir="rtl"] .ui5-messagestrip-close-icon-wrapper {
+	left: 0.125rem;
+	right: auto;
+}

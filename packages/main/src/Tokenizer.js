@@ -36,13 +36,13 @@ const metadata = {
 		_nMoreText: { type: String },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
-		tokenDelete: {
+		"token-delete": {
 			detail: {
 				ref: { type: HTMLElement },
 			},
 		},
 
-		showMoreItemsPress: {
+		"show-more-items-press": {
 			detail: {
 				ref: { type: HTMLElement },
 			},
@@ -128,7 +128,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	_openOverflowPopover() {
-		this.fireEvent("showMoreItemsPress");
+		this.fireEvent("show-more-items-press");
 	}
 
 	_getTokens() {
@@ -154,7 +154,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._updateAndFocus();
-		this.fireEvent("tokenDelete", { ref: event.target });
+		this.fireEvent("token-delete", { ref: event.target });
 	}
 
 	/* Keyboard handling */

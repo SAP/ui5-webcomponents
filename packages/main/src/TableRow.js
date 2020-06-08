@@ -38,6 +38,7 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
+		"row-click": {},
 		_focused: {},
 	},
 };
@@ -90,7 +91,7 @@ class TableRow extends UI5Element {
 			this._onfocusin(event, true /* force row focus */);
 		}
 
-		this.fireEvent("rowClick", { row: this });
+		this.fireEvent("row-click", { row: this });
 	}
 
 	_getActiveElementTagName() {
@@ -101,6 +102,10 @@ class TableRow extends UI5Element {
 		return this._columnsInfo.filter(el => {
 			return el.demandPopin;
 		}).length;
+	}
+
+	get allColumnsPoppedIn() {
+		return this._columnsInfo.every(el => el.demandPopin && !el.visible);
 	}
 
 	onBeforeRendering() {
@@ -115,6 +120,7 @@ class TableRow extends UI5Element {
 			return;
 		}
 
+		const allColumnsPoppedInClass = this.allColumnsPoppedIn ? "all-columns-popped-in" : "";
 		this._columnsInfo.forEach((info, index) => {
 			const cell = this.cells[index];
 
@@ -127,9 +133,11 @@ class TableRow extends UI5Element {
 				cell.firstInRow = (index === 0);
 				cell.popined = false;
 			} else if (info.demandPopin) {
+				const popinHeaderClass = this.popinCells.length === 0 ? "popin-header" : "";
 				this.popinCells.push({
 					cell,
 					popinText: info.popinText,
+					classes: `ui5-table-popin-row ${allColumnsPoppedInClass} ${popinHeaderClass}`,
 				});
 
 				cell.popined = true;

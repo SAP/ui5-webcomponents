@@ -4,8 +4,8 @@
 		_disable-initial-focus
 		placement-type="Bottom"
 		horizontal-align="Left"
-		@ui5-afterOpen="{{_afterOpenPopover}}"
-		@ui5-afterClose="{{_afterClosePopover}}"
+		@ui5-after-open="{{_afterOpenPopover}}"
+		@ui5-after-close="{{_afterClosePopover}}"
 	>
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header">
@@ -60,7 +60,7 @@
 						description="{{this.description}}"
 						info="{{this.info}}"
 						info-state="{{this.infoState}}"
-						@ui5-_itemPress="{{ fnOnSuggestionItemPress }}"
+						@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
 					>{{ this.text }}</ui5-li>
 				{{/if}}
 			{{/each}}

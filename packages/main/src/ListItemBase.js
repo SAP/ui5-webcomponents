@@ -2,7 +2,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
@@ -47,7 +46,8 @@ const metadata = {
 	},
 	events: {
 		_focused: {},
-		_focusForward: {},
+		"_forward-after": {},
+		"_forward-before": {},
 	},
 };
 
@@ -104,7 +104,7 @@ class ListItemBase extends UI5Element {
 		const target = event.target;
 
 		if (this.shouldForwardTabAfter(target)) {
-			this.fireEvent("_forwardAfter", { item: target });
+			this.fireEvent("_forward-after", { item: target });
 		}
 	}
 
@@ -114,7 +114,7 @@ class ListItemBase extends UI5Element {
 		if (this.shouldForwardTabBefore(target)) {
 			const eventData = event;
 			eventData.item = target;
-			this.fireEvent("_forwardBefore", eventData);
+			this.fireEvent("_forward-before", eventData);
 		}
 	}
 
@@ -146,10 +146,6 @@ class ListItemBase extends UI5Element {
 				"ui5-li--focusable": true,
 			},
 		};
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 }
 
