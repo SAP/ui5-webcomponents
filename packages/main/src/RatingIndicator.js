@@ -87,7 +87,7 @@ const metadata = {
 		 * @defaultvalue falase
 		 * @public
 		 */
-		readOnly: {
+		readonly: {
 			type: Boolean,
 		},
 
@@ -205,7 +205,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	_onclick(event) {
-		if (this.disabled || this.readOnly) {
+		if (this.disabled || this.readonly) {
 			return;
 		}
 
@@ -221,7 +221,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (this.disabled || this.readOnly) {
+		if (this.disabled || this.readonly) {
 			return;
 		}
 
@@ -249,7 +249,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	_onfocusout(event) {
-		if (this._focused && !this.disabled && !this.readOnly && this._prevValue !== this.value) {
+		if (this._focused && !this.disabled && !this.readonly && this._prevValue !== this.value) {
 			this.fireEvent("change");
 		}
 

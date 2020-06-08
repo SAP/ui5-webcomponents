@@ -4,11 +4,14 @@
 	cursor: pointer;
 }
 
-:host([disabled]),
-:host([read-only]) {
-	opacity: .8;
+:host([disabled]) {
+	opacity: .6;
 	cursor: initial;
 	outline: none;
+}
+
+:host([readonly]) {
+	cursor: initial;
 }
 
 :host([size="Large"]) {
