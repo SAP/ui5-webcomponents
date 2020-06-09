@@ -64,7 +64,7 @@ const fetchI18nBundle = async packageName => {
 	}
 
 	if (!bundlesForPackage[localeId]) {
-		setI18nBundleData(packageName, null); // reset for the default language, as in the initial state
+		setI18nBundleData(packageName, null); // reset for the default language (if data was set for a previous language)
 		return;
 	}
 
