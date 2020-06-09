@@ -1,5 +1,7 @@
+import setToArray from "../util/setToArray.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import getLocale from "../locale/getLocale.js";
+import { attachLanguageChange } from "../locale/languageChange.js";
 import { fetchTextOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
@@ -7,6 +9,7 @@ import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 
 const bundleData = new Map();
 const bundleURLs = new Map();
+const allPackages = new Set();
 
 /**
  * Sets a map with texts and ID the are related to.
@@ -15,6 +18,7 @@ const bundleURLs = new Map();
  * @public
  */
 const setI18nBundleData = (packageName, data) => {
+	allPackages.add(packageName);
 	bundleData.set(packageName, data);
 };
 
@@ -63,6 +67,8 @@ const fetchI18nBundle = async packageName => {
 	}
 
 	if (!bundlesForPackage[localeId]) {
+		allPackages.add(packageName);
+		bundleData.delete(packageName);
 		return;
 	}
 
@@ -89,6 +95,11 @@ const fetchI18nBundle = async packageName => {
 
 	setI18nBundleData(packageName, data);
 };
+
+// When the language changes dynamically (the user calls setLanguage), re-fetch all previously fetched bundles
+attachLanguageChange(() => {
+	return Promise.all(setToArray(allPackages).map(fetchI18nBundle));
+});
 
 export {
 	fetchI18nBundle,

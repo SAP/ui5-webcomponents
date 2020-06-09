@@ -39,11 +39,11 @@ class EventProvider {
 		const eventListeners = eventRegistry[eventName];
 
 		if (!eventListeners) {
-			return;
+			return [];
 		}
 
-		eventListeners.forEach(event => {
-			event["function"].call(this, data); // eslint-disable-line
+		return eventListeners.map(event => {
+			return event["function"].call(this, data); // eslint-disable-line
 		});
 	}
 

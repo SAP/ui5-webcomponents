@@ -5,6 +5,7 @@ import "./bundle.esm.js";
 
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
@@ -13,6 +14,8 @@ const configuration = {
 	getAnimationMode,
 	getTheme,
 	setTheme,
+	getLanguage,
+	setLanguage,
 	setNoConflict,
 	getRTL,
 	getFirstDayOfWeek,
