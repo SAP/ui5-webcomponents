@@ -151,9 +151,25 @@ class RenderScheduler {
 		registeredElements.delete(element);
 	}
 
-	static reRenderAll() {
+	/**
+	 * Re-renders all UI5 Elements on the page, with the option to specify filters to rerender only some components.
+	 *
+	 * Usage:
+	 * reRenderAllUI5Elements() -> rerenders all components
+	 * reRenderAllUI5Elements({rtlAware: true}) -> re-renders only rtlAware components
+	 * reRenderAllUI5Elements({languageAware: true}) -> re-renders only languageAware components
+	 * reRenderAllUI5Elements({rtlAware: true, languageAware: true}) -> re-renders components that are rtlAware or languageAware
+	 *
+	 * @public
+	 * @param {Object|undefined} filters - Object with keys that can be "rtlAware" or "languageAware"
+	 */
+	static reRenderAllUI5Elements(filters) {
 		registeredElements.forEach(element => {
-			RenderScheduler.renderDeferred(element);
+			const isRtlAware = element.constructor.getMetadata().isRtlAware();
+			const isLanguageAware = element.constructor.getMetadata().isLanguageAware();
+			if (!filters || (filters.rtlAware && isRtlAware) || (filters.languageAware && isLanguageAware)) {
+				RenderScheduler.renderDeferred(element);
+			}
 		});
 	}
 }

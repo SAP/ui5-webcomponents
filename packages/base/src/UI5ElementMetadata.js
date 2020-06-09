@@ -126,6 +126,22 @@ class UI5ElementMetadata {
 	getEvents() {
 		return this.metadata.events || {};
 	}
+
+	/**
+	 * Determines whether this UI5 Element has rtl-specific CSS (needs to be invalidated upon "dir" change)
+	 * @returns {boolean}
+	 */
+	isRtlAware() {
+		return !!this.metadata.rtlAware;
+	}
+
+	/**
+	 * Determines whether this UI5 Element has any translatable texts (needs to be invalidated upon language change)
+	 * @returns {boolean}
+	 */
+	isLanguageAware() {
+		return !!this.metadata.languageAware;
+	}
 }
 
 const validateSingleProperty = (value, propData) => {
