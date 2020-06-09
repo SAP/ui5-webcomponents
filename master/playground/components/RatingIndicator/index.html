@@ -1857,9 +1857,13 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <header>
-	<div class="control-header">Rating Indicator</div>
+          <header class="component-heading">
+	<h2 class="control-header">Rating Indicator</h2>
+	<div class="component-heading-since">
+		<span>v1.0.0-rc.8</span>
+	</div>
 </header>
+
 <style>
 	.snippet > ui5-rating-indicator {
 		margin: 0 1rem;
@@ -1875,9 +1879,11 @@
 	<div class="snippet">
 		<ui5-rating-indicator></ui5-rating-indicator>
 		<ui5-rating-indicator value="3"></ui5-rating-indicator>
+		<ui5-rating-indicator value="3.7"></ui5-rating-indicator>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-rating-indicator&gt;&lt;/ui5-rating-indicator&gt;</span>
 <span class="nt">&lt;ui5-rating-indicator</span> <span class="na">value=</span><span class="s">"3"</span><span class="nt">&gt;&lt;/ui5-rating-indicator&gt;</span>
+<span class="nt">&lt;ui5-rating-indicator</span> <span class="na">value=</span><span class="s">"3.7"</span><span class="nt">&gt;&lt;/ui5-rating-indicator&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -1911,9 +1917,9 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3> The rating indicator is used to display a specific number of icons that are used to rate an item. Additionally, it is also used to display the average and overall ratings.
 
-<h3>Usage</h3> The preferred number of icons is between 5 and 7.
+<h3>Usage</h3> The reccomended number of icons is between 5 and 7.
 
-<h3>Responsive Behavior</h3> You can change the size of the Rating Indicator by changing its <code>font-size</code> CSS property. <br> Example: <code><ui5-rating-indicator style="font-size: 3rem;"></ui5-rating-indicator></code>
+<h3>Responsive Behavior</h3> You can change the size of the Rating Indicator by changing its <code>font-size</code> CSS property. <br> Example: <code>&lt;ui5-rating-indicator style="font-size: 3rem;">&lt;/ui5-rating-indicator></code>
 
 <h3>Usage</h3>
 
@@ -1942,6 +1948,8 @@ For the <code>ui5-rating-indicator</code> <h3>ES6 Module Import</h3>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines whether the <code>ui5-rating-indicator</code> is disabled.
+            
+            <br><br> <b>Note:</b> A disabled <code>ui5-rating-indicator</code> is completely noninteractive.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
@@ -1964,7 +1972,7 @@ For the <code>ui5-rating-indicator</code> <h3>ES6 Module Import</h3>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            
+                            Defines whether the <code>ui5-rating-indicator</code> is read-only. <br><br> <b>Note:</b> A read-only <code>ui5-rating-indicator</code> is not editable, but still provides visual feedback upon user interaction.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">

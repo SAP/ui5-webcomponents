@@ -1,5 +1,5 @@
-commit b44ea2c0c52b67e93f05a17af64ce4e02d9bc3bf
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jun 9 12:35:36 2020 +0300
+commit 67422958c1a307d9d8142f1a93e2f53501dade62
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Jun 9 15:42:03 2020 +0300
 
-    chore: mark components as rtlAware and languageAware (#1748)
+    fix(ui5-dialog): unblock body scrolling when dialog is removed from DOM (#1756)
