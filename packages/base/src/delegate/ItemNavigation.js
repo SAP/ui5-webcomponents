@@ -27,6 +27,8 @@ class ItemNavigation extends EventProvider {
 		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
 		this.verticalNavigationOn = autoNavigation || navigationMode === NavigationMode.Vertical;
 
+		this.pageSize = options.pageSize;
+
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
 		this.rootWebComponent._onComponentStateFinalized = () => {
@@ -254,18 +256,17 @@ class ItemNavigation extends EventProvider {
 		if (!this.hasNextPage) {
 			this.currentIndex = items.length - 1;
 		} else {
-			this.currentIndex = 0;
+			this.currentIndex -= this.pageSize;
 		}
 	}
 
 	_handlePrevPage() {
 		this.fireEvent(ItemNavigation.PAGE_TOP);
-		const items = this._getItems();
 
 		if (!this.hasPrevPage) {
 			this.currentIndex = 0;
 		} else {
-			this.currentIndex = (this.pageSize || items.length) - 1;
+			this.currentIndex = this.pageSize + this.currentIndex;
 		}
 	}
 }
