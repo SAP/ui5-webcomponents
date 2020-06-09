@@ -347,6 +347,7 @@ class UploadCollectionItem extends ListItem {
 	_onRename(event) {
 		this.doNotCloseInput = false;
 		this._editing = false;
+		this._focus();
 	}
 
 	_onRenameCancel(event) {
@@ -361,10 +362,14 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_focus() {
-		setTimeout(() => {
-			this.list.setPreviouslyFocusedItem(this);
-			this.list.focusPreviouslyFocusedItem();
-		}, 0);
+		const list = this.list;
+
+		if (list) {
+			setTimeout(() => {
+					list.setPreviouslyFocusedItem(this);
+					list.focusPreviouslyFocusedItem();
+			}, 0);
+		}
 	}
 
 	_onFileNameClick(event) {
