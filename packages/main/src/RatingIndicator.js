@@ -56,11 +56,10 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the component is read-only.
+		 * Defines whether the <code>ui5-rating-indicator</code> is disabled.
+		 * 
 		 * <br><br>
-		 * <b>Note:</b> A read-only <code>ui5-rating-indicator</code> is not editable,
-		 * but still provides visual feedback upon user interaction.
-		 *
+		 * <b>Note:</b> A disabled <code>ui5-rating-indicator</code> is completely noninteractive.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -70,6 +69,11 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the <code>ui5-rating-indicator</code> is read-only.
+		 * <br><br>
+		 * <b>Note:</b> A read-only <code>ui5-rating-indicator</code> is not editable,
+		 * but still provides visual feedback upon user interaction.
+		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
