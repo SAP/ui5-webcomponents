@@ -12,6 +12,14 @@
 	outline-offset: -0.125rem;
 }
 
+.ui5-table-popin-row {
+    background-color: var(--sapList_Background);
+}
+
+.ui5-table-popin-row.all-columns-popped-in.popin-header {
+    border-top: 1px solid var(--sapList_BorderColor);
+}
+
 .ui5-table-popin-row td {
 	padding: .25rem;
 	padding-left: 1rem;

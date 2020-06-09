@@ -104,6 +104,10 @@ class TableRow extends UI5Element {
 		}).length;
 	}
 
+	get allColumnsPoppedIn() {
+		return this._columnsInfo.every(el => el.demandPopin && !el.visible);
+	}
+
 	onBeforeRendering() {
 		if (!this.shouldPopin) {
 			return;
@@ -116,6 +120,7 @@ class TableRow extends UI5Element {
 			return;
 		}
 
+		const allColumnsPoppedInClass = this.allColumnsPoppedIn ? "all-columns-popped-in" : "";
 		this._columnsInfo.forEach((info, index) => {
 			const cell = this.cells[index];
 
@@ -128,9 +133,11 @@ class TableRow extends UI5Element {
 				cell.firstInRow = (index === 0);
 				cell.popined = false;
 			} else if (info.demandPopin) {
+				const popinHeaderClass = this.popinCells.length === 0 ? "popin-header" : "";
 				this.popinCells.push({
 					cell,
 					popinText: info.popinText,
+					classes: `ui5-table-popin-row ${allColumnsPoppedInClass} ${popinHeaderClass}`,
 				});
 
 				cell.popined = true;

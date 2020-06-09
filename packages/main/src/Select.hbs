@@ -1,6 +1,6 @@
 <div
 	class="ui5-select-root"
-	dir="{{dir}}"
+	dir="{{effectiveDir}}"
 	tabindex="{{tabIndex}}"
 	id="{{_id}}-select"
 	role="button"
@@ -22,7 +22,7 @@
 		name="slim-arrow-down"
 		input-icon
 		?pressed="{{_iconPressed}}"
-		dir="{{dir}}"
+		dir="{{effectiveDir}}"
 	></ui5-icon>
 
 	{{#if hasValueState}}
