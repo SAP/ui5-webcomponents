@@ -57,7 +57,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>ui5-rating-indicator</code> is disabled.
-		 * 
+		 *
 		 * <br><br>
 		 * <b>Note:</b> A disabled <code>ui5-rating-indicator</code> is completely noninteractive.
 		 * @type {boolean}
