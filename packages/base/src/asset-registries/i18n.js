@@ -1,4 +1,3 @@
-import setToArray from "../util/setToArray.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import getLocale from "../locale/getLocale.js";
 import { attachLanguageChange } from "../locale/languageChange.js";
@@ -9,7 +8,6 @@ import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 
 const bundleData = new Map();
 const bundleURLs = new Map();
-const allPackages = new Set();
 
 /**
  * Sets a map with texts and ID the are related to.
@@ -18,7 +16,6 @@ const allPackages = new Set();
  * @public
  */
 const setI18nBundleData = (packageName, data) => {
-	allPackages.add(packageName);
 	bundleData.set(packageName, data);
 };
 
@@ -67,8 +64,7 @@ const fetchI18nBundle = async packageName => {
 	}
 
 	if (!bundlesForPackage[localeId]) {
-		allPackages.add(packageName);
-		bundleData.delete(packageName);
+		setI18nBundleData(packageName, null); // reset for the default language, as in the initial state
 		return;
 	}
 
@@ -98,7 +94,8 @@ const fetchI18nBundle = async packageName => {
 
 // When the language changes dynamically (the user calls setLanguage), re-fetch all previously fetched bundles
 attachLanguageChange(() => {
-	return Promise.all(setToArray(allPackages).map(fetchI18nBundle));
+	const allPackages = [...bundleData.keys()];
+	return Promise.all(allPackages.map(fetchI18nBundle));
 });
 
 export {
