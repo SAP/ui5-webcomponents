@@ -4,6 +4,10 @@ import RenderScheduler from "../RenderScheduler.js";
 
 let language;
 
+/**
+ * Returns the currently configured language, or the browser language as a fallback
+ * @returns {String}
+ */
 const getLanguage = () => {
 	if (language === undefined) {
 		language = getConfiguredLanguage();
@@ -11,6 +15,13 @@ const getLanguage = () => {
 	return language;
 };
 
+/**
+ * Changes the current language, re-fetches all message bundles, updates all language-aware components
+ * and returns a promise that resolves when all rendering is done
+ *
+ * @param newLanguage
+ * @returns {Promise<void>}
+ */
 const setLanguage = async newLanguage => {
 	if (language === newLanguage) {
 		return;
@@ -21,6 +32,7 @@ const setLanguage = async newLanguage => {
 	const listeners = fireLanguageChange(newLanguage);
 	await Promise.all(listeners);
 	RenderScheduler.reRenderAllUI5Elements({ languageAware: true });
+	return RenderScheduler.whenFinished();
 };
 
 export {
