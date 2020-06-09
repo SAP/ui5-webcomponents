@@ -1,5 +1,9 @@
-commit a28f201b78a2e0375283ad3a7388edb31d7f07fe
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Jun 8 16:02:58 2020 +0300
+commit df0add4df0011fbb53742e02b452340a6f06cfa9
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jun 9 09:45:56 2020 +0300
 
-    feat(ui5-rating-indicator): initial implementation (#1729)
+    fix(ui5-timepicker): adjust hours in 12hours format only (#1752)
+    
+    Consider AM/PM periods in determining hours when 12h format is set, there is no need to adjust the hours in 24hours format. Previously we used to recalculate the hours for both formats, leading to a bug in 24hours format.
+    
+    FIXES: #1714
