@@ -1,9 +1,5 @@
-commit df0add4df0011fbb53742e02b452340a6f06cfa9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jun 9 09:45:56 2020 +0300
+commit b44ea2c0c52b67e93f05a17af64ce4e02d9bc3bf
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Jun 9 12:35:36 2020 +0300
 
-    fix(ui5-timepicker): adjust hours in 12hours format only (#1752)
-    
-    Consider AM/PM periods in determining hours when 12h format is set, there is no need to adjust the hours in 24hours format. Previously we used to recalculate the hours for both formats, leading to a bug in 24hours format.
-    
-    FIXES: #1714
+    chore: mark components as rtlAware and languageAware (#1748)
