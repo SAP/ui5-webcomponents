@@ -23,7 +23,6 @@ const metadata = {
 	tag: "ui5-avatar",
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
-
 		/**
 		 * Defines the source path to the desired image.
 		 * @type {string}
