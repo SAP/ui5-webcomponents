@@ -40,6 +40,8 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 const metadata = {
 	tag: "ui5-select",
+	rtlAware: true,
+	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 

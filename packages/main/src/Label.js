@@ -12,6 +12,7 @@ import labelCss from "./generated/themes/Label.css.js";
  */
 const metadata = {
 	tag: "ui5-label",
+	rtlAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Label.prototype */  {
 
 		/**

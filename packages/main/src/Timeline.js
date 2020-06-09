@@ -14,6 +14,7 @@ import styles from "./generated/themes/Timeline.css.js";
  */
 const metadata = {
 	tag: "ui5-timeline",
+	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
 		/**

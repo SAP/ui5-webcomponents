@@ -36,6 +36,8 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 const metadata = {
 	tag: "ui5-datepicker",
+	rtlAware: true,
+	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
@@ -493,6 +495,10 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	isInValidRange(value = "") {
+		if (value === "") {
+			return true;
+		}
+
 		const pickedDate = new Date(value),
 			minDate = this._minDate && new Date(this._minDate),
 			maxDate = this._maxDate && new Date(this._maxDate);

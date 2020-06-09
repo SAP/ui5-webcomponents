@@ -16,6 +16,7 @@ const MAX_DURATION = 1000;
  */
 const metadata = {
 	tag: "ui5-toast",
+	rtlAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Toast.prototype */ {
 
 		/**

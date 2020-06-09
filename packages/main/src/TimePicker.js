@@ -50,6 +50,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 const metadata = {
 	tag: "ui5-timepicker",
+	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
 		/**
@@ -511,16 +512,19 @@ class TimePicker extends UI5Element {
 			periodsSlider = this.periodsSlider,
 			minutes = minutesSlider ? minutesSlider.getAttribute("value") : "0",
 			seconds = secondsSlider ? secondsSlider.getAttribute("value") : "0",
-			period = periodsSlider ? periodsSlider.getAttribute("value") : this.periodsArray[0];
+			period = periodsSlider ? periodsSlider.getAttribute("value") : this.periodsArray[0],
+			isTwelveHoursFormat = this._hoursParameters.isTwelveHoursFormat;
 
 		let hours = hoursSlider ? hoursSlider.getAttribute("value") : this._hoursParameters.minHour.toString();
 
-		if (period === this.periodsArray[0]) { // AM
-			hours = hours === "12" ? 0 : hours;
-		}
+		if (isTwelveHoursFormat) {
+			if (period === this.periodsArray[0]) { // AM
+				hours = hours === "12" ? 0 : hours;
+			}
 
-		if (period === this.periodsArray[1]) { // PM
-			hours = hours === "12" ? hours : hours * 1 + 12;
+			if (period === this.periodsArray[1]) { // PM
+				hours = hours === "12" ? hours : hours * 1 + 12;
+			}
 		}
 
 		selectedDate.setHours(hours);

@@ -17,6 +17,7 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
  */
 const metadata = {
 	tag: "ui5-busyindicator",
+	languageAware: true,
 	slots: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
 
 		/**

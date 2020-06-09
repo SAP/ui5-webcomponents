@@ -12,6 +12,7 @@ import styles from "./generated/themes/TimelineItem.css.js";
  */
 const metadata = {
 	tag: "ui5-timeline-item",
+	rtlAware: true,
 	slots: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
 		/**
 		 * Determines the description of the <code>ui5-timeline-item</code>.
