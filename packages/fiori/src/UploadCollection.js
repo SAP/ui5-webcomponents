@@ -32,6 +32,7 @@ import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
  */
 const metadata = {
 	tag: "ui5-upload-collection",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		/**
 		 * Defines the mode of the <code>ui5-upload-collection</code>.

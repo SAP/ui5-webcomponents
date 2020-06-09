@@ -45,6 +45,7 @@ const PHONE_MODE_BREAKPOINT = 640; // px
  */
 const metadata = {
 	tag: "ui5-datetime-picker",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.DateTimePicker.prototype */ {
 
 		/**

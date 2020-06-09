@@ -20,6 +20,8 @@ import messageStripCss from "./generated/themes/MessageStrip.css.js";
  */
 const metadata = {
 	tag: "ui5-messagestrip",
+	rtlAware: true,
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**

@@ -24,6 +24,7 @@ import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";
  */
 const metadata = {
 	tag: "ui5-rating-indicator",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.RatingIndicator.prototype */ {
 
 		/**

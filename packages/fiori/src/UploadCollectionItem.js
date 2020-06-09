@@ -33,6 +33,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  */
 const metadata = {
 	tag: "ui5-upload-collection-item",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
 		/**
 		 * Holds <code>File</code>, associated with this item.

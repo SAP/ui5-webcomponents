@@ -16,6 +16,8 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
  */
 const metadata = {
 	tag: "ui5-icon",
+	rtlAware: true,
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
 		/**
 		 * Defines if the icon is interactive (focusable and pressable)
