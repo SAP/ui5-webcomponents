@@ -58,6 +58,9 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>ui5-rating-indicator</code> is disabled.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> A disabled <code>ui5-rating-indicator</code> is completely noninteractive.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -67,6 +70,11 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the <code>ui5-rating-indicator</code> is read-only.
+		 * <br><br>
+		 * <b>Note:</b> A read-only <code>ui5-rating-indicator</code> is not editable,
+		 * but still provides visual feedback upon user interaction.
+		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -113,12 +121,12 @@ const metadata = {
  * Additionally, it is also used to display the average and overall ratings.
  *
  * <h3>Usage</h3>
- * The preferred number of icons is between 5 and 7.
+ * The reccomended number of icons is between 5 and 7.
  *
  * <h3>Responsive Behavior</h3>
  * You can change the size of the Rating Indicator by changing its <code>font-size</code> CSS property.
  * <br>
- * Example: <code><ui5-rating-indicator style="font-size: 3rem;"></ui5-rating-indicator></code>
+ * Example: <code>&lt;ui5-rating-indicator style="font-size: 3rem;">&lt;/ui5-rating-indicator></code>
  *
  * <h3>Usage</h3>
  *
@@ -133,6 +141,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-rating-indicator
  * @public
+ * @since 1.0.0-rc.8
  */
 class RatingIndicator extends UI5Element {
 	static get metadata() {
@@ -152,9 +161,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
