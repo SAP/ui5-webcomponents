@@ -133,7 +133,7 @@ const getParentPopoversIfNested = instance => {
 
 	while (currentElement.parentNode) {
 		for (let i = 0; i < openedRegistry.length; i++) {
-			if (currentElement._id && currentElement._id === openedRegistry[i].instance._id) {
+			if (currentElement && currentElement === openedRegistry[i].instance) {
 				parentPopovers.push(currentElement);
 			}
 		}

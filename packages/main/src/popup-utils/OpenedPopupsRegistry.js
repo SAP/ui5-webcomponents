@@ -31,7 +31,7 @@ const getOpenedPopups = () => {
 
 const _keydownListener = event => {
 	if (isEscape(event)) {
-		openedRegistry.pop().instance.close(true)
+		openedRegistry.pop().instance.close(true);
 	}
 };
 
