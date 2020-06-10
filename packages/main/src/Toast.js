@@ -1,7 +1,6 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ToastTemplate from "./generated/templates/ToastTemplate.lit.js";
 import ToastPlacement from "./types/ToastPlacement.js";
 
@@ -17,6 +16,7 @@ const MAX_DURATION = 1000;
  */
 const metadata = {
 	tag: "ui5-toast",
+	rtlAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Toast.prototype */ {
 
 		/**
@@ -180,10 +180,6 @@ class Toast extends UI5Element {
 	 */
 	get effectiveDuration() {
 		return this.duration < MIN_DURATION ? MIN_DURATION : this.duration;
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	get styles() {

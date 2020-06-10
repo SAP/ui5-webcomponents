@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import findNodeOwner from "@ui5/webcomponents-base/dist/util/findNodeOwner.js";
@@ -22,6 +21,8 @@ let activeButton = null;
  */
 const metadata = {
 	tag: "ui5-button",
+	rtlAware: true,
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
@@ -328,10 +329,6 @@ class Button extends UI5Element {
 	_onfocusin(event) {
 		event.isMarked = "button";
 		this.focused = true;
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	get hasButtonType() {

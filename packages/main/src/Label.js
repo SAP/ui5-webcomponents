@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Template
 import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
@@ -13,6 +12,7 @@ import labelCss from "./generated/themes/Label.css.js";
  */
 const metadata = {
 	tag: "ui5-label",
+	rtlAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Label.prototype */  {
 
 		/**
@@ -130,10 +130,6 @@ class Label extends UI5Element {
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 }
 

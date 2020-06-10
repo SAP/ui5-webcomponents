@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
 import Button from "./Button.js";
@@ -14,6 +13,7 @@ import styles from "./generated/themes/CalendarHeader.css.js";
 
 const metadata = {
 	tag: "ui5-calendar-header",
+	rtlAware: true,
 	properties: {
 		monthText: {
 			type: String,
@@ -119,10 +119,6 @@ class CalendarHeader extends UI5Element {
 				this[`_show${showPickerButton}Picker`]();
 			}
 		}
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async onDefine() {

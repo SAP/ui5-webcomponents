@@ -38,6 +38,8 @@ import StandardListItem from "./StandardListItem.js";
  */
 const metadata = {
 	tag: "ui5-combobox",
+	rtlAware: true,
+	languageAware: true,
 	defaultSlot: "items",
 	properties: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**

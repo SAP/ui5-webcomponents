@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
 import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
@@ -13,6 +12,7 @@ import styles from "./generated/themes/TimelineItem.css.js";
  */
 const metadata = {
 	tag: "ui5-timeline-item",
+	rtlAware: true,
 	slots: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
 		/**
 		 * Determines the description of the <code>ui5-timeline-item</code>.
@@ -142,10 +142,6 @@ class TimelineItem extends UI5Element {
 
 	onItemNamePress() {
 		this.fireEvent("item-name-click", {});
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async onDefine() {

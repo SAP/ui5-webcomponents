@@ -21,6 +21,7 @@ import AvatarBackgroundColor from "./types/AvatarBackgroundColor.js";
  */
 const metadata = {
 	tag: "ui5-avatar",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 
 		/**

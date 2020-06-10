@@ -1,5 +1,6 @@
 import whenDOMReady from "./util/whenDOMReady.js";
 import insertFontFace from "./FontFace.js";
+import insertSystemCSSVars from "./SystemCSSVars.js";
 import { getTheme } from "./config/Theme.js";
 import applyTheme from "./theming/applyTheme.js";
 import whenPolyfillLoaded from "./compatibility/whenPolyfillLoaded.js";
@@ -22,6 +23,7 @@ const boot = () => {
 		await applyTheme(getTheme());
 		OpenUI5Support && OpenUI5Support.attachListeners();
 		insertFontFace();
+		insertSystemCSSVars();
 		await whenPolyfillLoaded();
 		resolve();
 	});

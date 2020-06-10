@@ -50,6 +50,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 const metadata = {
 	tag: "ui5-timepicker",
+	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
 		/**
@@ -280,8 +281,7 @@ class TimePicker extends UI5Element {
 	constructor() {
 		super();
 
-		this.readonly = false;
-		this.disabled = false;
+		this.prevValue = null;
 		this._isPickerOpen = false;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
@@ -511,25 +511,32 @@ class TimePicker extends UI5Element {
 			periodsSlider = this.periodsSlider,
 			minutes = minutesSlider ? minutesSlider.getAttribute("value") : "0",
 			seconds = secondsSlider ? secondsSlider.getAttribute("value") : "0",
-			period = periodsSlider ? periodsSlider.getAttribute("value") : this.periodsArray[0];
+			period = periodsSlider ? periodsSlider.getAttribute("value") : this.periodsArray[0],
+			isTwelveHoursFormat = this._hoursParameters.isTwelveHoursFormat;
 
 		let hours = hoursSlider ? hoursSlider.getAttribute("value") : this._hoursParameters.minHour.toString();
 
-		if (period === this.periodsArray[0]) { // AM
-			hours = hours === "12" ? 0 : hours;
-		}
+		if (isTwelveHoursFormat) {
+			if (period === this.periodsArray[0]) { // AM
+				hours = hours === "12" ? 0 : hours;
+			}
 
-		if (period === this.periodsArray[1]) { // PM
-			hours = hours === "12" ? hours : hours * 1 + 12;
+			if (period === this.periodsArray[1]) { // PM
+				hours = hours === "12" ? hours : hours * 1 + 12;
+			}
 		}
 
 		selectedDate.setHours(hours);
 		selectedDate.setMinutes(minutes);
 		selectedDate.setSeconds(seconds);
 
+		this.setPrevValue(this.value);
 		this.setValue(this.getFormat().format(selectedDate));
 
-		this.fireEvent("change", { value: this.value, valid: true });
+		if (this.prevValue !== this.value) {
+			this.fireEvent("change", { value: this.value, valid: true });
+			this.previousValue = this.value;
+		}
 
 		this.closePicker();
 	}
@@ -693,6 +700,12 @@ class TimePicker extends UI5Element {
 			this.valueState = ValueState.None;
 		} else {
 			this.valueState = ValueState.Error;
+		}
+	}
+
+	setPrevValue(value) {
+		if (this.isValid(value)) {
+			this.prevValue = this.normalizeValue(value);
 		}
 	}
 

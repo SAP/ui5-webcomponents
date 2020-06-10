@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
@@ -16,6 +15,8 @@ import badgeCss from "./generated/themes/Badge.css.js";
  */
 const metadata = {
 	tag: "ui5-badge",
+	rtlAware: true,
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Badge.prototype */  {
 
 		/**
@@ -127,10 +128,6 @@ class Badge extends UI5Element {
 
 	get hasIcon() {
 		return !!this.icon.length;
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	get badgeDescription() {

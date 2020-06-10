@@ -131,6 +131,12 @@ class Dialog extends Popup {
 		}
 	}
 
+	onExitDOM() {
+		if (this.isOpen()) {
+			Dialog.unblockBodyScrolling();
+		}
+	}
+
 	get isModal() {
 		return true;
 	}
