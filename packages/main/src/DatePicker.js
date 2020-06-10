@@ -335,39 +335,26 @@ class DatePicker extends UI5Element {
 					this._focusInputAfterClose = false;
 				}
 
-				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.calendarDOM;
 				if (calendar) {
 					calendar._hideMonthPicker();
 					calendar._hideYearPicker();
 				}
 			},
 			afterOpen: () => {
-				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.calendarDOM;
 
 				if (!calendar) {
 					return;
 				}
 
-				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
-				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
-				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
-				let focusableDay = selectedDay || today;
-				if (!selectedDay && (this.minDate || this.maxDate) && !this.isInValidRange((new Date().getTime()))) {
-					focusableDay = this.findFirstFocusableDay(dayPicker);
-				}
+				const focusableDay = this.findFocusableDay();
 
 				if (this._focusInputAfterOpen) {
 					this._focusInputAfterOpen = false;
 					this._getInput().focus();
 				} else if (focusableDay) {
-					focusableDay.focus();
-
-					let focusableDayIdx = parseInt(focusableDay.getAttribute("data-sap-index"));
-					const focusableItem = dayPicker.focusableDays.find(item => parseInt(item._index) === focusableDayIdx);
-					focusableDayIdx = focusableItem ? dayPicker.focusableDays.indexOf(focusableItem) : focusableDayIdx;
-
-					dayPicker._itemNav.current = focusableDayIdx;
-					dayPicker._itemNav.update();
+					this.focusDay(focusableDay);
 				}
 			},
 		};
@@ -378,14 +365,6 @@ class DatePicker extends UI5Element {
 		};
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
-	findFirstFocusableDay(daypicker) {
-		const today = new Date();
-		if (!this.isInValidRange(today.getTime())) {
-			const focusableItems = Array.from(daypicker.shadowRoot.querySelectorAll(".ui5-dp-item"));
-			return focusableItems.filter(x => !x.classList.contains("ui5-dp-item--disabled"))[0];
-		}
 	}
 
 	onBeforeRendering() {
@@ -420,6 +399,18 @@ class DatePicker extends UI5Element {
 
 		if (this.maxDate) {
 			this._calendar.maxDate = this.maxDate;
+		}
+	}
+
+	onAfterRendering() {
+		requestAnimationFrame(() => {
+			this._applyDayFocus();
+		});
+	}
+
+	_applyDayFocus() {
+		if (!this._focusInputAfterOpen) {
+			this.focusFirstFocusableDay();
 		}
 	}
 
@@ -650,6 +641,18 @@ class DatePicker extends UI5Element {
 		return staticAreaItem.querySelector("ui5-responsive-popover");
 	}
 
+	get dayPickerDOM() {
+		const calendar = this.calendarDOM;
+		if (!calendar) {
+			return null;
+		}
+		return calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
+	}
+
+	get calendarDOM() {
+		return this.responsivePopover && this.responsivePopover.querySelector(`#${this._id}-calendar`);
+	}
+
 	_canOpenPicker() {
 		return !this.disabled && !this.readonly;
 	}
@@ -807,6 +810,59 @@ class DatePicker extends UI5Element {
 
 	get type() {
 		return InputType.Text;
+	}
+
+	findFocusableDay() {
+		if (!this.calendarDOM) {
+			return null;
+		}
+
+		const dayPicker = this.dayPickerDOM;
+		const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
+		const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
+		const dateConstrained = this.minDate || this.maxDate;
+		const todayIsInRange = this.isInValidRange((new Date().getTime()));
+
+		if (selectedDay) {
+			return selectedDay;
+		}
+
+		if (dateConstrained && !todayIsInRange) {
+			return this.findFirstFocusableDay();
+		}
+
+		return today;
+	}
+
+	findFirstFocusableDay() {
+		const daypicker = this.dayPickerDOM;
+		const today = new Date();
+
+		if (!this.isInValidRange(today.getTime())) {
+			const focusableItems = Array.from(daypicker.shadowRoot.querySelectorAll(".ui5-dp-item"));
+			return focusableItems.filter(x => !x.classList.contains("ui5-dp-item--disabled"))[0];
+		}
+	}
+
+	focusDay(focusableDay) {
+		if (!focusableDay) {
+			return;
+		}
+
+		focusableDay.focus();
+
+		const dayPicker = this.dayPickerDOM;
+		let focusableDayIdx = parseInt(focusableDay.getAttribute("data-sap-index"));
+		const focusableItem = dayPicker.focusableDays.find(item => parseInt(item._index) === focusableDayIdx);
+
+		focusableDayIdx = focusableItem ? dayPicker.focusableDays.indexOf(focusableItem) : focusableDayIdx;
+
+		dayPicker._itemNav.current = focusableDayIdx;
+		dayPicker._itemNav.update();
+	}
+
+	focusFirstFocusableDay() {
+		this.focusDay(this.findFocusableDay());
 	}
 
 	static async onDefine() {
