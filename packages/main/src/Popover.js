@@ -278,7 +278,7 @@ class Popover extends Popup {
 	 * Closes the popover.
 	 * @public
 	 */
-	close(escPressed = false, preventRegitryUpdate = false, preventFocusRestore = false) {
+	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
 		if (!this.opened) {
 			return;
 		}
@@ -296,7 +296,7 @@ class Popover extends Popup {
 
 		this.opened = false;
 
-		if (!preventRegitryUpdate) {
+		if (!preventRegistryUpdate) {
 			removeOpenedPopover(this);
 		}
 
