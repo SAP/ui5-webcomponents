@@ -659,7 +659,6 @@ describe("Date Picker Tests", () => {
 		datepicker.root.keys("ArrowRight");
 		datepicker.root.keys("ArrowRight");
 		datepicker.root.keys("ArrowRight");
-		datepicker.root.keys("ArrowDown");
 		assert.ok(datepicker.getDisplayedYear(7).isFocusedDeep(), "Years out of range can not be reached with keyboard");
 	});
 
