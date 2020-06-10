@@ -206,6 +206,13 @@ const metadata = {
 		 * @public
 		 */
 		retry: {},
+
+		/**
+		 * @since 1.0.0-rc.8
+		 * @event
+		 * @private
+		 */
+		"focus--upload-collection-item": {},
 	},
 };
 
@@ -362,14 +369,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_focus() {
-		const list = this.list;
-
-		if (list) {
-			setTimeout(() => {
-				list.setPreviouslyFocusedItem(this);
-				list.focusPreviouslyFocusedItem();
-			}, 0);
-		}
+		this.fireEvent("_focus--upload-collection-item");
 	}
 
 	_onFileNameClick(event) {
