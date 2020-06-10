@@ -9,6 +9,7 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
 
 // Styles
@@ -133,7 +134,12 @@ class YearPicker extends UI5Element {
 
 		this._oLocale = getLocale();
 
-		this._itemNav = new ItemNavigation(this, { rowSize: 4 });
+		this._itemNav = new ItemNavigation(this, {
+			pageSize: 20,
+			rowSize: 4,
+			behavior: ItemNavigationBehavior.Paging,
+		});
+
 		this._itemNav.getItemsCallback = function getItemsCallback() {
 			const focusableYears = [];
 
