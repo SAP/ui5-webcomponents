@@ -30,8 +30,8 @@
 
 		<br /><br />
 		<ui5-title>Test "change" event</ui5-title>
-		<ui5-timepicker id="timepickerChange"></ui5-timepicker>
-		<ui5-input id="changeResult"></ui5-input>
+		<ui5-timepicker id="timepickerChange" format-pattern="HH:mm" value="12:00"></ui5-timepicker>
+		<ui5-input id="changeResult" value="0"></ui5-input>
 
 		<br /><br />
 		<ui5-title>Test "input" event</ui5-title>
@@ -57,12 +57,12 @@
 
 		<script>
 				var counter = 0;
-				timepickerChange.addEventListener("change", function() {
+				timepickerChange.addEventListener("ui5-change", function() {
 					changeResult.value = ++counter;
 				});
 
 				var inputCounter = 0;
-				timepickerInput.addEventListener("input", function() {
+				timepickerInput.addEventListener("ui5-input", function() {
 					inputResult.value = ++inputCounter;
 				});
 

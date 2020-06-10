@@ -281,8 +281,7 @@ class TimePicker extends UI5Element {
 	constructor() {
 		super();
 
-		this.readonly = false;
-		this.disabled = false;
+		this.prevValue = null;
 		this._isPickerOpen = false;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
@@ -531,9 +530,13 @@ class TimePicker extends UI5Element {
 		selectedDate.setMinutes(minutes);
 		selectedDate.setSeconds(seconds);
 
+		this.setPrevValue(this.value);
 		this.setValue(this.getFormat().format(selectedDate));
 
-		this.fireEvent("change", { value: this.value, valid: true });
+		if (this.prevValue !== this.value) {
+			this.fireEvent("change", { value: this.value, valid: true });
+			this.previousValue = this.value;
+		}
 
 		this.closePicker();
 	}
@@ -697,6 +700,12 @@ class TimePicker extends UI5Element {
 			this.valueState = ValueState.None;
 		} else {
 			this.valueState = ValueState.Error;
+		}
+	}
+
+	setPrevValue(value) {
+		if (this.isValid(value)) {
+			this.prevValue = this.normalizeValue(value);
 		}
 	}
 

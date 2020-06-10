@@ -71,6 +71,29 @@ describe("TimePicker general interaction", () => {
 		assert.notOk(slot.error, "cValue State message slot is working");
 	});
 
+	it("tests change event", () => {
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#timepickerChange");
+		const timepicker = browser.$("#timepickerChange");
+		const icon = timepicker.shadow$("ui5-input").$("ui5-icon");
+		const changeResult = browser.$("#changeResult");
+
+		// act - submit value without any time changes
+		icon.click();
+		const timepickerPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		timepickerPopover.$("#submit").click();
+
+		// assert
+		assert.strictEqual(changeResult.getProperty("value"), "0", "Change not fired as expected");
+
+		// act - submit value after changing time
+		icon.click();
+		timepickerPopover.$(".ui5-timepicker-hours-wheelslider").setProperty("value", "10");
+		timepickerPopover.$("#submit").click();
+
+		// assert
+		assert.strictEqual(changeResult.getProperty("value"), "1", "Change not fired as expected");
+	});
+
 	it("tests value state", () => {
 		const timepicker = browser.$("#timepickerEmptyValue");
 		const button = browser.$("#testBtn");
