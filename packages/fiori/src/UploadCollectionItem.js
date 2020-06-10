@@ -366,8 +366,8 @@ class UploadCollectionItem extends ListItem {
 
 		if (list) {
 			setTimeout(() => {
-					list.setPreviouslyFocusedItem(this);
-					list.focusPreviouslyFocusedItem();
+				list.setPreviouslyFocusedItem(this);
+				list.focusPreviouslyFocusedItem();
 			}, 0);
 		}
 	}
