@@ -1,5 +1,5 @@
-commit 14add077ba27207aab6425a5ae580dad40651867
+commit 15e915f3a4f695d1938b1c6c7857eba533ca5545
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Jun 10 13:10:36 2020 +0300
+Date:   Wed Jun 10 14:41:44 2020 +0300
 
-    fix(ui5-popover): fix closing order of popovers (#1676)
+    feat(ui5-datepicker): implement keyboard handling (#1706)
