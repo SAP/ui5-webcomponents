@@ -78,9 +78,9 @@
 		<br>
 		<br>
 
-		<ui5-button id='popbtn'>Open Popover</ui5-button>
+		<ui5-button id="popbtn">Open Popover</ui5-button>
 
-		<ui5-popover placement-type="Bottom" no-arrow id='danger'>
+		<ui5-popover placement-type="Bottom" no-arrow id="danger">
 
 
 			<ui5-list>
@@ -92,9 +92,9 @@
 			<br>
 			<br>
 
-			<ui5-button id='bigDanger'>Super Danger !</ui5-button>
+			<ui5-button id="bigDanger">Super Danger !</ui5-button>
 
-			<ui5-popover id='bigDangerPop'>
+			<ui5-popover id="bigDangerPop">
 				<ui5-list>
 					<ui5-li>Hello</ui5-li>
 					<ui5-li>World</ui5-li>
@@ -297,27 +297,27 @@
 	</ui5-popover>
 
 	<script>
-		btn.addEventListener('click', function (event) {
+		btn.addEventListener("click", function (event) {
 			pop.openBy(btn);
 		});
 
-		popbtn.addEventListener('click', function (event) {
+		popbtn.addEventListener("click", function (event) {
 			danger.openBy(popbtn);
 		});
 
-		bigDanger.addEventListener('click', function (event) {
+		bigDanger.addEventListener("click", function (event) {
 			bigDangerPop.openBy(bigDanger);
 		});
 
-		btnPopModal.addEventListener('click', function (event) {
+		btnPopModal.addEventListener("click", function (event) {
 			modalPopover.openBy(btnPopModal);
 		});
 
-		modalPopoverClose.addEventListener('click', function (event) {
+		modalPopoverClose.addEventListener("click", function (event) {
 			modalPopover.close();
 		});
 
-		btnPopFocus.addEventListener('click', function (event) {
+		btnPopFocus.addEventListener("click", function (event) {
 			popFocus.openBy(btnPopFocus);
 		});
 
@@ -333,27 +333,27 @@
 			document.getElementById("big-popover").openBy(event.target);
 		});
 
-		btnFullWidth.addEventListener('click', function (event) {
+		btnFullWidth.addEventListener("click", function (event) {
 			popFullWidth.openBy(btnFullWidth);
 		});
 
-		btnFullWidthTargetOverlap.addEventListener('click', function (event) {
+		btnFullWidthTargetOverlap.addEventListener("click", function (event) {
 			popFullWidthTargetOverlap.openBy(btnFullWidthTargetOverlap);
 		});
 
-		btnFullWidthLeft.addEventListener('click', function (event) {
+		btnFullWidthLeft.addEventListener("click", function (event) {
 			popFullWidthLeft.openBy(btnFullWidthLeft);
 		});
 
-		btnFullWidthLeftTargetOverlap.addEventListener('click', function (event) {
+		btnFullWidthLeftTargetOverlap.addEventListener("click", function (event) {
 			popFullWidthLeftTargetOverlap.openBy(btnFullWidthLeftTargetOverlap);
 		});
 
-		btnFullWidthTop.addEventListener('click', function (event) {
+		btnFullWidthTop.addEventListener("click", function (event) {
 			popFullWidthTop.openBy(btnFullWidthTop);
 		});
 
-		btnFullWidthBottom.addEventListener('click', function (event) {
+		btnFullWidthBottom.addEventListener("click", function (event) {
 			popFullWidthBottom.openBy(btnFullWidthBottom);
 		});
 	</script>
