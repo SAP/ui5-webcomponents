@@ -1,5 +1,8 @@
-commit 67422958c1a307d9d8142f1a93e2f53501dade62
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Jun 9 15:42:03 2020 +0300
+commit 3a0c7d57ae25f44aacff24f892ae55a18f121deb
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jun 10 09:29:22 2020 +0300
 
-    fix(ui5-dialog): unblock body scrolling when dialog is removed from DOM (#1756)
+    fix(ui5-timepicker): fix firing "change" event for the same value (#1764)
+    
+    Previously the TImePicker used to fire "change" event unconditionally upon "Submit" press.
+    Now, the value is checked and if it is changed, the event will be fired.
