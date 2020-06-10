@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
@@ -342,22 +343,6 @@ class DatePicker extends UI5Element {
 					calendar._hideYearPicker();
 				}
 			},
-			afterOpen: () => {
-				const calendar = this.calendar;
-
-				if (!calendar) {
-					return;
-				}
-
-				const focusableDay = this.findFocusableDay();
-
-				if (this._focusInputAfterOpen) {
-					this._focusInputAfterOpen = false;
-					this._getInput().focus();
-				} else if (focusableDay) {
-					this.focusDay(focusableDay);
-				}
-			},
 		};
 
 		this._calendar = {
@@ -404,13 +389,16 @@ class DatePicker extends UI5Element {
 	}
 
 	onAfterRendering() {
-		requestAnimationFrame(() => {
-			this._applyDayFocus();
-		});
+		this._applyDayFocus();
 	}
 
-	_applyDayFocus() {
-		if (!this._focusInputAfterOpen) {
+	async _applyDayFocus() {
+		await RenderScheduler.whenFinished();
+
+		if (this._focusInputAfterOpen) {
+			this._getInput().focus();
+			this._focusInputAfterOpen = false;
+		} else {
 			this.focusFirstFocusableDay();
 		}
 	}
