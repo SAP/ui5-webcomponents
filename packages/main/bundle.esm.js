@@ -94,7 +94,8 @@ import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/La
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
-import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js"
+import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
@@ -108,4 +109,5 @@ window["sap-ui-webcomponents-bundle"] = {
 	},
 	getIconNames,
 	getLocaleData,
+	applyDirection,
 };

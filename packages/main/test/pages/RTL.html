@@ -24,7 +24,7 @@
 
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);" dir="rtl">
+<body style="background-color: var(--sapBackgroundColor);">
 
 
 	<div style="display: flex; align-items: center;">
@@ -33,10 +33,12 @@
 			<ui5-togglebutton>DE</ui5-togglebutton>
 			<ui5-togglebutton>BG</ui5-togglebutton>
 			<ui5-togglebutton>ES</ui5-togglebutton>
+			<ui5-togglebutton>HE</ui5-togglebutton>
+			<ui5-togglebutton>AR</ui5-togglebutton>
 		</ui5-segmentedbutton>
 		<div style="flex: auto;"></div>
-		<ui5-label style="margin:0 5px;">RTL:</ui5-label>
-		<ui5-switch id="sw" checked>RTL</ui5-switch>
+		<ui5-label style="margin:0 5px;">Manually switch RTL:</ui5-label>
+		<ui5-switch id="sw"></ui5-switch>
 	</div>
 
 	<section>
@@ -75,19 +77,28 @@
 
 
 	<script>
-		var sw = document.getElementById("sw");
-		var tb = document.getElementById("tb");
-		sw.addEventListener("click", function() {
-			if (sw.checked) {
-				document.body.dir = "rtl";
+
+        // Utility function to change RTL and apply the changes
+        function setDir(dir) {
+        	document.body.dir = dir;
+			window['sap-ui-webcomponents-bundle'].applyDirection();
+        }
+
+		document.getElementById("sw").addEventListener("click", function(e) {
+			if (e.target.checked) {
+				setDir("rtl");
 			} else {
-				document.body.dir = "ltr";
+				setDir("ltr");
 			}
-			window.RenderScheduler.reRenderAllUI5Elements({rtlAware: true});
 		});
 
-		tb.addEventListener("selection-change", function(e) {
+		document.getElementById("tb").addEventListener("selection-change", function(e) {
 			var lang = e.detail.selectedButton.textContent.toLowerCase();
+			if (lang === "he" || lang === "ar") {
+				setDir("rtl");
+            } else {
+				setDir("ltr");
+            }
 			window['sap-ui-webcomponents-bundle'].configuration.setLanguage(lang);
 		});
 	</script>
