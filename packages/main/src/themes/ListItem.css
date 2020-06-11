@@ -1,4 +1,3 @@
-@import "./InvisibleTextStyles.css";
 
 /* actionable (type="Active" + desktop) */
 :host([actionable]) {

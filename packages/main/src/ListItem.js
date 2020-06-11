@@ -12,6 +12,7 @@ import { DELETE, ARIA_LABEL_LIST_ITEM_CHECKBOX } from "./generated/i18n/i18n-def
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
+import invisibleTextStyles from "./generated/themes/InvisibleTextStyles.css.js";
 
 /**
  * @public
@@ -93,7 +94,7 @@ class ListItem extends ListItemBase {
 	}
 
 	static get styles() {
-		return [ListItemBase.styles, styles];
+		return [invisibleTextStyles, ListItemBase.styles, styles];
 	}
 
 	constructor() {
