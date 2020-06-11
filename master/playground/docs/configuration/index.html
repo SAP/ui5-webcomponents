@@ -1939,7 +1939,16 @@
 
 <p>In order to have RTL mode, just set the HTML attribute <code class="highlighter-rouge">dir</code> to <code class="highlighter-rouge">rtl</code> on the <code class="highlighter-rouge">body</code>, <code class="highlighter-rouge">html</code> or any other relevant region of your application.</p>
 
-<p>This configuration setting should not be used by applications. It is only internally used for specific integration scenarios.</p>
+<p>The <code class="highlighter-rouge">RTL</code> configuration setting should not be used by applications. It is only internally used for specific integration scenarios.</p>
+
+<p><em>Note:</em> Whenever you change <code class="highlighter-rouge">dir</code> dynamically, make sure you call the <code class="highlighter-rouge">applyDirection</code> method to re-render the RTL-aware components.</p>
+
+<p>Example:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">applyDirection</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/locale/applyDirection.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">dir</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">rtl</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">applyDirection</span><span class="p">();</span>
+</code></pre></div></div>
 
 <p><a name="animationMode"></a></p>
 <h3 id="animation-mode">Animation Mode</h3>
@@ -2042,7 +2051,7 @@ However, reading/modifying the configuration reliably can only be done programma
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">getTheme</span><span class="p">,</span> <span class="nx">setTheme</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Theme.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getNoConflict</span><span class="p">,</span> <span class="nx">setNoConflict</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/NoConflict.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getAnimationMode</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/AnimationMode.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getLanguage</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Language.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">getLanguage</span><span class="p">,</span> <span class="nx">setLanguage</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Language.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getCalendarType</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/CalendarType.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getFirstDayOfWeek</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/FormatSettings.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>

@@ -1,5 +1,5 @@
-commit 33fa055b1a1ff0a501e772a28f9149292733fc3f
+commit 1a5db12c66eb52146170376aef61c9d284d38ffc
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jun 11 10:52:37 2020 +0300
+Date:   Thu Jun 11 17:10:16 2020 +0300
 
-    fix(ui5-upload-collection): Provide min-height also when DND mode is on (#1770)
+    fix: correct styles for some elements (#1773)
