@@ -17,7 +17,6 @@ import styles from "./generated/themes/ListItem.css.js";
  * @public
  */
 const metadata = {
-	rtlAware: true,
 	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.ListItem.prototype */ {
 

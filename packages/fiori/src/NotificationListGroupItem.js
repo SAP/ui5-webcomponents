@@ -29,7 +29,6 @@ import NotificationListGroupItemCss from "./generated/themes/NotificationListGro
  */
 const metadata = {
 	tag: "ui5-li-notification-group",
-	rtlAware: true,
 	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListGroupItem.prototype */ {

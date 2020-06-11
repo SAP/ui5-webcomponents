@@ -1,5 +1,6 @@
 import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
+import { isRtlAware } from "./locale/RTLAwareRegistry.js";
 
 const MAX_RERENDER_COUNT = 10;
 const registeredElements = new Set();
@@ -165,9 +166,9 @@ class RenderScheduler {
 	 */
 	static reRenderAllUI5Elements(filters) {
 		registeredElements.forEach(element => {
-			const isRtlAware = element.constructor.getMetadata().isRtlAware();
-			const isLanguageAware = element.constructor.getMetadata().isLanguageAware();
-			if (!filters || (filters.rtlAware && isRtlAware) || (filters.languageAware && isLanguageAware)) {
+			const rtlAware = isRtlAware(element.constructor);
+			const languageAware = element.constructor.getMetadata().isLanguageAware();
+			if (!filters || (filters.rtlAware && rtlAware) || (filters.languageAware && languageAware)) {
 				RenderScheduler.renderDeferred(element);
 			}
 		});

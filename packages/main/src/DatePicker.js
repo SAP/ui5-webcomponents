@@ -36,7 +36,6 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 const metadata = {
 	tag: "ui5-datepicker",
-	rtlAware: true,
 	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {

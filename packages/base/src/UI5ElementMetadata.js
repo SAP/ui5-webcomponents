@@ -128,14 +128,6 @@ class UI5ElementMetadata {
 	}
 
 	/**
-	 * Determines whether this UI5 Element has rtl-specific CSS (needs to be invalidated upon "dir" change)
-	 * @returns {boolean}
-	 */
-	isRtlAware() {
-		return !!this.metadata.rtlAware;
-	}
-
-	/**
 	 * Determines whether this UI5 Element has any translatable texts (needs to be invalidated upon language change)
 	 * @returns {boolean}
 	 */

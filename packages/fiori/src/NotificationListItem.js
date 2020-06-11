@@ -38,7 +38,6 @@ const MAX_WRAP_HEIGHT = 32; // px.
  */
 const metadata = {
 	tag: "ui5-li-notification",
-	rtlAware: true,
 	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListItem.prototype */ {

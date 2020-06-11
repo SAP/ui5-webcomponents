@@ -39,7 +39,6 @@ const staticAreaTabStyles = [];
  */
 const metadata = {
 	tag: "ui5-tabcontainer",
-	rtlAware: true,
 	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
