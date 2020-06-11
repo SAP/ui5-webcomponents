@@ -276,7 +276,7 @@ class UploadCollection extends UI5Element {
 		return {
 			content: {
 				"ui5-uc-content": true,
-				"ui5-uc-content-no-data": this._showNoData,
+				"ui5-uc-content-no-data": this.items.length === 0,
 			},
 			dndOverlay: {
 				"uc-dnd-overlay": true,
