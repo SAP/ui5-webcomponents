@@ -78,11 +78,11 @@
 
 	<script>
 
-        // Utility function to change RTL and apply the changes
-        function setDir(dir) {
-        	document.body.dir = dir;
+		// Utility function to change RTL and apply the changes
+		function setDir(dir) {
+			document.body.dir = dir;
 			window['sap-ui-webcomponents-bundle'].applyDirection();
-        }
+		}
 
 		document.getElementById("sw").addEventListener("click", function(e) {
 			if (e.target.checked) {
@@ -96,9 +96,9 @@
 			var lang = e.detail.selectedButton.textContent.toLowerCase();
 			if (lang === "he" || lang === "ar") {
 				setDir("rtl");
-            } else {
+			} else {
 				setDir("ltr");
-            }
+			}
 			window['sap-ui-webcomponents-bundle'].configuration.setLanguage(lang);
 		});
 	</script>
