@@ -15,6 +15,7 @@ import Float from "./types/Float.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
+import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 
 const metadata = {
 	events: {
@@ -114,6 +115,7 @@ class UI5Element extends HTMLElement {
 				await Promise.resolve();
 			}
 
+			RenderScheduler.register(this);
 			await RenderScheduler.renderImmediately(this);
 			this._domRefReadyPromise._deferredResolve();
 			if (typeof this.onEnterDOM === "function") {
@@ -136,6 +138,7 @@ class UI5Element extends HTMLElement {
 				this._stopObservingDOMChildren();
 			}
 
+			RenderScheduler.deregister(this);
 			if (typeof this.onExitDOM === "function") {
 				this.onExitDOM();
 			}
@@ -672,6 +675,8 @@ class UI5Element extends HTMLElement {
 	 * @returns {String|undefined}
 	 */
 	get effectiveDir() {
+		markAsRtlAware(this.constructor); // if a UI5 Element calls this method, it's considered to be rtl-aware
+
 		const doc = window.document;
 		const dirValues = ["ltr", "rtl"]; // exclude "auto" and "" from all calculations
 		const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);

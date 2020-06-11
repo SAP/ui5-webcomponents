@@ -21,7 +21,6 @@ import cardCss from "./generated/themes/Card.css.js";
  */
 const metadata = {
 	tag: "ui5-card",
-	rtlAware: true,
 	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {

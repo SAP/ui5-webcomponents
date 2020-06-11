@@ -1,7 +1,9 @@
 import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
+import { isRtlAware } from "./locale/RTLAwareRegistry.js";
 
 const MAX_RERENDER_COUNT = 10;
+const registeredElements = new Set();
 
 // Tells whether a render task is currently scheduled
 let renderTaskId;
@@ -140,6 +142,36 @@ class RenderScheduler {
 			renderTaskPromiseResolve = undefined;
 			renderTaskPromise = undefined;
 		}
+	}
+
+	static register(element) {
+		registeredElements.add(element);
+	}
+
+	static deregister(element) {
+		registeredElements.delete(element);
+	}
+
+	/**
+	 * Re-renders all UI5 Elements on the page, with the option to specify filters to rerender only some components.
+	 *
+	 * Usage:
+	 * reRenderAllUI5Elements() -> rerenders all components
+	 * reRenderAllUI5Elements({rtlAware: true}) -> re-renders only rtlAware components
+	 * reRenderAllUI5Elements({languageAware: true}) -> re-renders only languageAware components
+	 * reRenderAllUI5Elements({rtlAware: true, languageAware: true}) -> re-renders components that are rtlAware or languageAware
+	 *
+	 * @public
+	 * @param {Object|undefined} filters - Object with keys that can be "rtlAware" or "languageAware"
+	 */
+	static reRenderAllUI5Elements(filters) {
+		registeredElements.forEach(element => {
+			const rtlAware = isRtlAware(element.constructor);
+			const languageAware = element.constructor.getMetadata().isLanguageAware();
+			if (!filters || (filters.rtlAware && rtlAware) || (filters.languageAware && languageAware)) {
+				RenderScheduler.renderDeferred(element);
+			}
+		});
 	}
 }
 
