@@ -34,7 +34,18 @@ The `theme` setting values above are the technical names of our themes.
 
 In order to have RTL mode, just set the HTML attribute `dir` to `rtl` on the `body`, `html` or any other relevant region of your application.
 
-This configuration setting should not be used by applications. It is only internally used for specific integration scenarios.
+The `RTL` configuration setting should not be used by applications. It is only internally used for specific integration scenarios.
+
+*Note:* Whenever you change `dir` dynamically, make sure you call the `applyDirection` method to re-render the RTL-aware components.
+
+Example:
+```js
+import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
+
+document.body.dir = "rtl";
+applyDirection();
+```
+
 
 <a name="animationMode"></a>
 ### Animation Mode
@@ -122,7 +133,7 @@ To do so, please import the desired functionality from the respective `"@ui5/web
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 ```

@@ -1,3 +1,5 @@
+import setToArray from "./util/setToArray.js";
+
 const Definitions = new Set();
 const Failures = new Set();
 let failureTimeout;
@@ -11,11 +13,7 @@ const isTagRegistered = tag => {
 };
 
 const getAllRegisteredTags = () => {
-	const arr = [];
-	Definitions.forEach(tag => {
-		arr.push(tag);
-	});
-	return arr;
+	return setToArray(Definitions);
 };
 
 const recordTagRegistrationFailure = tag => {
@@ -29,11 +27,7 @@ const recordTagRegistrationFailure = tag => {
 };
 
 const displayFailedRegistrations = () => {
-	const tags = []; // IE only supports Set.prototype.forEach
-	Failures.forEach(tag => {
-		tags.push(tag);
-	});
-	console.warn(`The following tags have already been defined by a different UI5 Web Components version: ${tags.join(", ")}`); // eslint-disable-line
+	console.warn(`The following tags have already been defined by a different UI5 Web Components version: ${setToArray(Failures).join(", ")}`); // eslint-disable-line
 	Failures.clear();
 };
 
