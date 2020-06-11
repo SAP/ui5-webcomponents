@@ -212,7 +212,7 @@ const metadata = {
 		 * @event
 		 * @private
 		 */
-		"focus--upload-collection-item": {},
+		"_focus-requested": {},
 	},
 };
 
@@ -369,7 +369,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_focus() {
-		this.fireEvent("_focus--upload-collection-item");
+		this.fireEvent("_focus-requested");
 	}
 
 	_onFileNameClick(event) {

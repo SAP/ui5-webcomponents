@@ -344,7 +344,7 @@ class List extends UI5Element {
 		this.addEventListener("ui5-_forward-after", this.onForwardAfter.bind(this));
 		this.addEventListener("ui5-_forward-before", this.onForwardBefore.bind(this));
 		this.addEventListener("ui5-_selection-requested", this.onSelectionRequested.bind(this));
-		this.addEventListener("ui5-_focus--upload-collection-item", this.focusUploadCollectionItem.bind(this));
+		this.addEventListener("ui5-_focus-requested", this.focusUploadCollectionItem.bind(this));
 	}
 
 	get shouldRenderH1() {
