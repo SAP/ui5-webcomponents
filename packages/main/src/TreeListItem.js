@@ -140,7 +140,7 @@ class TreeListItem extends ListItem {
 	}
 
 	static get styles() {
-		return [ListItem.styles, treeListItemCss];
+		return [...ListItem.styles, treeListItemCss];
 	}
 
 	static get metadata() {
