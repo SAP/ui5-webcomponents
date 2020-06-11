@@ -1,5 +1,5 @@
-commit 15e915f3a4f695d1938b1c6c7857eba533ca5545
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Jun 10 14:41:44 2020 +0300
+commit 33fa055b1a1ff0a501e772a28f9149292733fc3f
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Jun 11 10:52:37 2020 +0300
 
-    feat(ui5-datepicker): implement keyboard handling (#1706)
+    fix(ui5-upload-collection): Provide min-height also when DND mode is on (#1770)
