@@ -52,7 +52,10 @@ const metadata = {
 		 * @defaultvalue "Medium"
 		 * @public
 		 */
-		size: { type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium },
+		size: {
+			type: BusyIndicatorSize,
+			defaultValue: BusyIndicatorSize.Medium,
+		},
 
 		/**
 		 * Defines if the busy indicator is visible on the screen. By default it is not.
@@ -61,7 +64,9 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		active: { type: Boolean },
+		active: {
+			type: Boolean,
+		},
 	},
 };
 
@@ -107,7 +112,7 @@ class BusyIndicator extends UI5Element {
 		if (this.active) {
 			this.tabIndex = -1;
 		} else {
-			this.tabIndex = 0;
+			this.removeAttribute("tabindex");
 		}
 	}
 
