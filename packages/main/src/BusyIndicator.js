@@ -55,7 +55,7 @@ const metadata = {
 		 */
 		size: {
 			type: BusyIndicatorSize,
-			defaultValue: BusyIndicatorSize.Medium
+			defaultValue: BusyIndicatorSize.Medium,
 		},
 
 		/**
@@ -66,7 +66,7 @@ const metadata = {
 		 * @public
 		 */
 		active: {
-			type: Boolean
+			type: Boolean,
 		},
 	},
 };
