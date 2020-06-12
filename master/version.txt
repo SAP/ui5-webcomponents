@@ -1,5 +1,5 @@
-commit 1a5db12c66eb52146170376aef61c9d284d38ffc
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jun 11 17:10:16 2020 +0300
+commit 37bf177c3c2dffbf9239735622e3559d259307f7
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Jun 12 11:00:06 2020 +0300
 
-    fix: correct styles for some elements (#1773)
+    feat(ui5-upload-collection-item): implement keyboard handling (#1702)
