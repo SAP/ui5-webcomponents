@@ -743,7 +743,7 @@ class Input extends UI5Element {
 	 * @readonly
 	 * @public
 	 */
-	get previewItem () {
+	get previewItem() {
 		if (!this._previewItem) {
 			return null;
 		}

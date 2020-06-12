@@ -333,7 +333,11 @@
 
 		// Preview suggestion item events
 		inputPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
-			inputItemPreviewRes.value = event.detail.item.textContent;
+			var item = event.detail.item;
+			inputItemPreviewRes.value = item.textContent;
+
+			quickViewCard.close(false, true, true);
+			quickViewCard.openBy(item, true);
 		});
 
 		inputPreview.addEventListener("keyup", function (event) {
@@ -343,15 +347,17 @@
 
 		[].slice.call(document.querySelectorAll(".suggestionItem")).forEach(function(el) {
 			el.addEventListener("mouseover", function (event) {
-				mouseoverResult.value = event.detail.targetRef.textContent;
-				quickViewCard.openBy(event.detail.targetRef);
-				console.log("mouseover");
+				const targetRef = event.detail.targetRef;
+
+				mouseoverResult.value = targetRef.textContent;
+				quickViewCard.openBy(targetRef, true);
 			});
 			
 			el.addEventListener("mouseout", function (event) {
-				mouseoutResult.value = event.detail.targetRef.textContent;
-				quickViewCard.close(false, true, false);
-				console.log("mouseout");
+				const targetRef = event.detail.targetRef;
+
+				mouseoutResult.value = targetRef.textContent;
+				quickViewCard.close(false, true, true);
 			});
 		});
 	</script>
