@@ -1,5 +1,5 @@
-commit a04f48369adfdd2c98c3138f2deaccbc368bb239
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jun 12 13:30:27 2020 +0300
+commit a588ffe7ceadfb2fa26ce1bd1106f55420793d35
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Jun 12 13:36:14 2020 +0300
 
-    fix(tools): Polyfill copied correctly in all scenarios (#1783)
+    feat(ui5-input): implement aria-label (#1782)
