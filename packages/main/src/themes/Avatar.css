@@ -12,8 +12,17 @@
 	width: 3rem;
 	border-radius: 50%;
 	outline: none;
-	color: var(--sapContent_ImagePlaceholderForegroundColor);
+	color: var(--ui5-avatar-initials-color);
 }
+
+:host([initials]) {
+    border: var(--ui5-avatar-initials-border);
+}
+
+:host([icon]) {
+    border: var(--ui5-avatar-initials-border);
+}
+
 
 /* Shapes */
 :host([shape="Square"]) {
@@ -92,51 +101,51 @@
 }
 
 :host(:not([image])) {
-	background-color: var(--sapAccentColor6);
+	background-color: var(--ui5-avatar-accent6);
 }
 
 :host([background-color="Accent1"]) {
-	background-color: var(--sapAccentColor1);
+	background-color: var(--ui5-avatar-accent1);
 }
 
 :host([background-color="Accent2"]) {
-	background-color: var(--sapAccentColor2);
+	background-color: var(--ui5-avatar-accent2);
 }
 
 :host([background-color="Accent3"]) {
-	background-color: var(--sapAccentColor3);
+	background-color: var(--ui5-avatar-accent3);
 }
 
 :host([background-color="Accent4"]) {
-	background-color: var(--sapAccentColor4);
+	background-color: var(--ui5-avatar-accent4);
 }
 
 :host([background-color="Accent5"]) {
-	background-color: var(--sapAccentColor5);
+	background-color: var(--ui5-avatar-accent5);
 }
 
 :host([background-color="Accent6"]) {
-	background-color: var(--sapAccentColor6);
+	background-color: var(--ui5-avatar-accent6);
 }
 
 :host([background-color="Accent7"]) {
-	background-color: var(--sapAccentColor7);
+	background-color: var(--ui5-avatar-accent7);
 }
 
 :host([background-color="Accent8"]) {
-	background-color: var(--sapAccentColor8);
+	background-color: var(--ui5-avatar-accent8);
 }
 
 :host([background-color="Accent9"]) {
-	background-color: var(--sapAccentColor9);
+	background-color: var(--ui5-avatar-accent9);
 }
 
 :host([background-color="Accent10"]) {
-	background-color: var(--sapAccentColor10);
+	background-color: var(--ui5-avatar-accent10);
 }
 
 :host([background-color="Placeholder"]) {
-	background-color: var(--sapContent_ImagePlaceholderBackground);
+	background-color: var(--ui5-avatar-placeholder);
 }
 
 :host(:not([image])) .ui5-avatar-icon {
