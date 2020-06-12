@@ -16,7 +16,7 @@ describe("Button general interaction", () => {
 
 		button.setAttribute("icon", "add");
 		assert.strictEqual(button.shadow$$("ui5-icon").length, 1, "icon is present");
-		
+
 		button.setAttribute("icon", "");
 		assert.strictEqual(button.shadow$$("ui5-icon").length, 0, "icon is not present");
 	});
@@ -78,4 +78,19 @@ describe("Button general interaction", () => {
 
 		assert.strictEqual(field.getProperty("value"), "6", "click should be called 6 times");
 	});
+
+	it("setting aria-expanded on the host is reflected on the button tag", () => {
+		const button = browser.$("#button1");
+		const innerButton = button.shadow$("button");
+
+		assert.strictEqual(innerButton.getAttribute("aria-expanded"), "true", "Attribute is reflected");
+
+		button.setAttribute("aria-expanded", "false");
+
+		assert.strictEqual(innerButton.getAttribute("aria-expanded"), "false", "Attribute is reflected");
+
+		button.removeAttribute("aria-expanded");
+
+		assert.strictEqual(innerButton.getAttribute("aria-expanded"), null, "Attribute is reflected");
+	})
 });
