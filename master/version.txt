@@ -1,5 +1,5 @@
-commit 36d0eca3b4ce03900a2c87ed10a5434b6689a884
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jun 12 11:28:49 2020 +0300
+commit f7bc0aaae872c4e3bca25cc4a8efa441a1cef603
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Jun 12 12:05:33 2020 +0300
 
-    fix(icons): overflow icon is now centered (#1777)
+    fix(ui5-busy-indicator): fix double focus issue (#1779)
