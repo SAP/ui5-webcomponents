@@ -1,10 +1,5 @@
-commit e7f380e9797df738d6587933d2ff85b3d01fec7e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jun 12 12:50:01 2020 +0300
+commit a04f48369adfdd2c98c3138f2deaccbc368bb239
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jun 12 13:30:27 2020 +0300
 
-    feat(ui5-input): add suggestion-item-preview event (#1778)
-    
-    Add "suggestion-item-preview" event to notify when the user navigates to a suggestion item via the ARROW keys,
-    before he/she performs final selection.
-    
-    Related to: #1768
+    fix(tools): Polyfill copied correctly in all scenarios (#1783)
