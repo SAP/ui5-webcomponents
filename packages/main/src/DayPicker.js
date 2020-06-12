@@ -315,11 +315,13 @@ class DayPicker extends UI5Element {
 
 		this._dayNames[0].classes += " ui5-dp-firstday";
 	}
+
 	onAfterRendering() {
-		if (this.selectedDates.length ===  1) {
+		if (this.selectedDates.length === 1) {
 			this.fireEvent("daypickerrendered", { focusedItemIndex: this._itemNav.currentIndex });
 		}
 	}
+
 	_onmousedown(event) {
 		const target = event.target;
 		const dayPressed = this._isDayPressed(target);
@@ -361,13 +363,13 @@ class DayPicker extends UI5Element {
 	}
 
 	_onitemmouseover(event) {
-		if (this.selectedDates.length ===  1) {
+		if (this.selectedDates.length === 1) {
 			this.fireEvent("item-mouseover", event);
 		}
 	}
 
 	_onitemkeydown(event) {
-		if (this.selectedDates.length ===  1) {
+		if (this.selectedDates.length === 1) {
 			this.fireEvent("item-keydown", event);
 		}
 	}

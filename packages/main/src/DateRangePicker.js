@@ -1,5 +1,4 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -10,6 +9,7 @@ import {
 	isUp,
 	isDown,
 } from "@ui5/webcomponents-base/src/Keys.js";
+import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
@@ -47,7 +47,7 @@ const metadata = {
 		*/
 		_lastDateTimestamp: {
 			type: Integer,
-		}
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.DateRangePicker.prototype */ {
 		//
@@ -61,7 +61,7 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The DateRangePicker enables the users to enter a localized date range using touch, mouse, keyboard input, or by selecting a date range in the calendar. 
+ * The DateRangePicker enables the users to enter a localized date range using touch, mouse, keyboard input, or by selecting a date range in the calendar.
  *
  * <h3>Usage</h3>
  * The user can enter a date by:
@@ -118,7 +118,7 @@ class DateRangePicker extends DatePicker {
 	onBeforeRendering() {
 		this._calendar.primaryCalendarType = this._primaryCalendarType;
 		this._calendar.formatPattern = this._formatPattern;
-		
+
 
 		if (this.minDate && !super.isValid(this.minDate)) {
 			this.minDate = null;
@@ -157,20 +157,20 @@ class DateRangePicker extends DatePicker {
 		const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
 		dayPicker.addEventListener("item-mouseover", this._itemMouseoverHandler);
 		// dayPicker.addEventListener("item-keydown", this._itemKeydownHandler);
-		dayPicker.addEventListener("daypickerrendered", this._borderReachedWithHovering)
+		dayPicker.addEventListener("daypickerrendered", this._borderReachedWithHovering);
 
 		this._cleanHoveredAttributeFromVisibleItems(dayPicker);
 	}
 
 	_itemMouseoverHandler(event) {
-		const dayItems = event.target.shadowRoot.querySelectorAll('.ui5-dp-item');
+		const dayItems = event.target.shadowRoot.querySelectorAll(".ui5-dp-item");
 		const firstDateTimestamp = this._selectedDates[0];
 		const lastDateTimestamp = event.detail.target.parentElement.dataset.sapTimestamp;
-		
+
 		for (let i = 0; i < dayItems.length; i++) {
-			if ((dayItems[i].dataset.sapTimestamp < firstDateTimestamp && dayItems[i].dataset.sapTimestamp > lastDateTimestamp) ||
-				(dayItems[i].dataset.sapTimestamp > firstDateTimestamp && dayItems[i].dataset.sapTimestamp < lastDateTimestamp)) {
-					dayItems[i].setAttribute("hovered","");
+			if ((dayItems[i].dataset.sapTimestamp < firstDateTimestamp && dayItems[i].dataset.sapTimestamp > lastDateTimestamp)
+				|| (dayItems[i].dataset.sapTimestamp > firstDateTimestamp && dayItems[i].dataset.sapTimestamp < lastDateTimestamp)) {
+				dayItems[i].setAttribute("hovered", "");
 			} else {
 				dayItems[i].removeAttribute("hovered");
 			}
@@ -178,7 +178,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	_itemKeydownHandler(event) {
-		const dayItems = event.target.shadowRoot.querySelectorAll('.ui5-dp-item'),
+		const dayItems = event.target.shadowRoot.querySelectorAll(".ui5-dp-item"),
 			firstDateTimestamp = this._selectedDates[0],
 			oneDayTimestamp = 24 * 60 * 60,
 			sevenDaysTimestamp = 7 * 24 * 60 * 60;
@@ -193,11 +193,11 @@ class DateRangePicker extends DatePicker {
 		} else if (isRight(event.detail)) {
 			lastDateTimestamp += oneDayTimestamp;
 		}
-		
+
 		for (let i = 0; i < dayItems.length; i++) {
-			if ((dayItems[i].dataset.sapTimestamp < firstDateTimestamp && dayItems[i].dataset.sapTimestamp > lastDateTimestamp) ||
-				(dayItems[i].dataset.sapTimestamp > firstDateTimestamp && dayItems[i].dataset.sapTimestamp < lastDateTimestamp)) {
-					dayItems[i].setAttribute("hovered","");
+			if ((dayItems[i].dataset.sapTimestamp < firstDateTimestamp && dayItems[i].dataset.sapTimestamp > lastDateTimestamp)
+				|| (dayItems[i].dataset.sapTimestamp > firstDateTimestamp && dayItems[i].dataset.sapTimestamp < lastDateTimestamp)) {
+				dayItems[i].setAttribute("hovered", "");
 			} else {
 				dayItems[i].removeAttribute("hovered");
 			}
@@ -209,32 +209,34 @@ class DateRangePicker extends DatePicker {
 			return;
 		}
 
-		const dayItems = event.target.shadowRoot.querySelectorAll('.ui5-dp-item');
+		const dayItems = event.target.shadowRoot.querySelectorAll(".ui5-dp-item");
 		const firstDateTimestamp = this._selectedDates[0];
 		const lastDateTimestamp = dayItems[event.detail.focusedItemIndex].dataset.sapTimestamp;
-		
+
 		for (let i = 0; i < dayItems.length; i++) {
-			if ((dayItems[i].dataset.sapTimestamp < firstDateTimestamp && dayItems[i].dataset.sapTimestamp > lastDateTimestamp) ||
-				(dayItems[i].dataset.sapTimestamp > firstDateTimestamp && dayItems[i].dataset.sapTimestamp < lastDateTimestamp)) {
-					dayItems[i].setAttribute("hovered","");
+			if ((dayItems[i].dataset.sapTimestamp < firstDateTimestamp && dayItems[i].dataset.sapTimestamp > lastDateTimestamp)
+				|| (dayItems[i].dataset.sapTimestamp > firstDateTimestamp && dayItems[i].dataset.sapTimestamp < lastDateTimestamp)) {
+				dayItems[i].setAttribute("hovered", "");
 			} else {
 				dayItems[i].removeAttribute("hovered");
 			}
 		}
 	}
 
-	_splitValueByDelimiter (value, delimiter) {
+	_splitValueByDelimiter(value, delimiter) {
+		let returnValue;
+
 		if (!value) {
 			return ["", ""];
 		}
 
 		if (delimiter) {
-			return String(value).split(delimiter);
+			returnValue = String(value).split(delimiter);
 		} else if (this.delimiter) {
-			return String(value).split(this.delimiter);
+			returnValue = String(value).split(this.delimiter);
 		}
 
-		return;
+		return returnValue;
 	}
 
 	setValue(value) {
@@ -252,22 +254,20 @@ class DateRangePicker extends DatePicker {
 			dates = this._splitValueByDelimiter(value);
 			if (isValid && isInValidRange) {
 				this.valueState("Error");
-				Log.warning("Value can not be converted to a valid dates", this);
+				console.warn("Value can not be converted to a valid dates", this); // eslint-disable-line
 			}
 		}
 
 		this._firstDateTimestamp = dates[0].getTimestamp();
 		this._lastDateTimestamp = dates[1].getTimestamp();
 		this.value = value;
-		alert("Date 1: " + dates[0] + " Date 2: " + dates[1]);
 		this._getInput().setValue(value);
 
 		return this;
-
 	}
 
 	_changeCalendarSelection(focusTimestamp) {
-		if (this._calendarDate.getYear() < 1 ) {
+		if (this._calendarDate.getYear() < 1) {
 			// 0 is a valid year, but we cannot display it
 			return;
 		}
@@ -289,7 +289,7 @@ class DateRangePicker extends DatePicker {
 			oCalDateFirst = CalendarDate.fromTimestamp(
 				millisecondsUTCFirstDate - (millisecondsUTCFirstDate % (24 * 60 * 60 * 1000)),
 				this._primaryCalendarType
-		);
+			);
 
 		return oCalDateFirst;
 	}
@@ -317,8 +317,8 @@ class DateRangePicker extends DatePicker {
 	}
 
 	_handleInputChange() {
-		let nextValue = this._getInput().getInputValue();
-		const emptyValue = nextValue === "",
+		const nextValue = this._getInput().getInputValue(),
+			emptyValue = nextValue === "",
 			isValid = emptyValue || this.isValid(nextValue),
 			isInValidRange = this.isInValidRange(nextValue);
 
@@ -345,7 +345,7 @@ class DateRangePicker extends DatePicker {
 			return isFirstDateValid;
 		}
 
-		return  isFirstDateValid && isLastDateValid;
+		return isFirstDateValid && isLastDateValid;
 	}
 
 	isInValidRange(value) {
@@ -361,11 +361,11 @@ class DateRangePicker extends DatePicker {
 	}
 
 	dateIntervalArrayBuilder(firstTimestamp, lastTimestamp) {
-		let datesTimestamps = [];
-		const jsDate = new Date(firstTimestamp),
+		const datesTimestamps = [],
+			jsDate = new Date(firstTimestamp),
 			tempCalendarDate = new CalendarDate(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
 
-		while(tempCalendarDate.valueOf() < lastTimestamp) {
+		while (tempCalendarDate.valueOf() < lastTimestamp) {
 			datesTimestamps.push(tempCalendarDate.valueOf() / 1000);
 			tempCalendarDate.setDate(tempCalendarDate.getDate() + 1);
 		}
@@ -388,7 +388,7 @@ class DateRangePicker extends DatePicker {
 			this.isFirstDatePick = false;
 			this._firstDateTimestamp = newValue;
 			this._lastDateTimestamp = newValue;
-			this._calendar.timestamp = newValue
+			this._calendar.timestamp = newValue;
 		} else {
 			this.closePicker();
 			this.isFirstDatePick = true;
@@ -431,19 +431,19 @@ class DateRangePicker extends DatePicker {
 			return;
 		}
 
-		const dayItems = dayPicker.shadowRoot.querySelectorAll('.ui5-dp-item');
-		
+		const dayItems = dayPicker.shadowRoot.querySelectorAll(".ui5-dp-item");
+
 		for (let i = 0; i < dayItems.length; i++) {
 			dayItems[i].removeAttribute("hovered");
 		}
 	}
 
 	_updateValueCalendarSelectedDatesChange() {
-		//Collect both dates and merge them into one
+		// Collect both dates and merge them into one
 		this.value = this._formatValue(this._firstDateTimestamp, this._lastDateTimestamp);
 	}
 
-	_formatValue (firstDateValue, lastDateValue) {
+	_formatValue(firstDateValue, lastDateValue) {
 		let value = "";
 		const delimiter = this.delimiter,
 			format = this.getFormat(),
@@ -456,17 +456,16 @@ class DateRangePicker extends DatePicker {
 				this._primaryCalendarType
 			).valueOf()), true);
 
-		if (firstDateValue) {;
-
+		if (firstDateValue) {
 			if (delimiter && delimiter !== "" && lastDateString && lastDateString !== firstDateString) {
-				value = firstDateString + " " + delimiter + " " + lastDateString;
+				value = firstDateString.concat(" ", delimiter, " ", lastDateString);
 			} else {
 				value = firstDateString;
 			}
 		}
 
 		return value;
-	};
+	}
 }
 
 DateRangePicker.define();
