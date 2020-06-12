@@ -65,7 +65,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the мinimum date available for selection.
+		 * Determines the minimum date available for selection.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -225,6 +225,9 @@ class DayPicker extends UI5Element {
 				selected: this._selectedDates.some(d => {
 					return d === timestamp;
 				}),
+				selectedBetween: this._selectedDates.slice(1, this._selectedDates.length - 1).some(d => {
+					return d === timestamp;
+				}),
 				iDay: oCalDate.getDate(),
 				_index: i.toString(),
 				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
@@ -249,6 +252,10 @@ class DayPicker extends UI5Element {
 			if (day.selected) {
 				day.classes += " ui5-dp-item--selected";
 				isDaySelected = true;
+			}
+
+			if (day.selectedBetween) {
+				day.classes += " ui5-dp-item--selected-between";
 			}
 
 			if (isToday) {
@@ -308,7 +315,11 @@ class DayPicker extends UI5Element {
 
 		this._dayNames[0].classes += " ui5-dp-firstday";
 	}
-
+	onAfterRendering() {
+		if (this.selectedDates.length ===  1) {
+			this.fireEvent("daypickerrendered", { focusedItemIndex: this._itemNav.currentIndex });
+		}
+	}
 	_onmousedown(event) {
 		const target = event.target;
 		const dayPressed = this._isDayPressed(target);
@@ -346,6 +357,18 @@ class DayPicker extends UI5Element {
 
 		if (!dayPressed) {
 			this._itemNav.focusCurrent();
+		}
+	}
+
+	_onitemmouseover(event) {
+		if (this.selectedDates.length ===  1) {
+			this.fireEvent("item-mouseover", event);
+		}
+	}
+
+	_onitemkeydown(event) {
+		if (this.selectedDates.length ===  1) {
+			this.fireEvent("item-keydown", event);
 		}
 	}
 

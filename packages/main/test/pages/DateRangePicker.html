@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>DateRangePicker test page</title>
+
+	<script>
+		delete Document.prototype.adoptedStyleSheets;
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"rtl": false,
+			"formatSettings": {
+                "firstDayOfWeek": 0
+            }
+		}
+	</script>
+
+	<style>
+		.sapUiTheme-sap_fiori3 body {
+			background: #f7f7f7;
+		}
+	</style>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+	<div style='width:500px;'>
+		<ui5-daterangepicker></ui5-daterangepicker>
+		<h3>DateRangePicker with delimiter @</h3>
+		<ui5-daterangepicker delimiter="@"></ui5-daterangepicker>
+		<h3>DateRangePicker with format pattern dd/MM/yyyy</h3>
+		<ui5-daterangepicker format-pattern="dd/MM/yyyy"></ui5-daterangepicker>
+		<h3>DateRangePicker with minDate 01/09/2019 and maxDate 01/11/2019</h3>
+		<ui5-daterangepicker format-pattern="dd/MM/yyyy" min-date="01/09/2019" max-date="01/11/2019"></ui5-daterangepicker>
+		<section class="ui5-content-density-compact">
+			<h3>DateRangePicker in Compact</h3>
+			<div>
+				<ui5-daterangepicker delimiter="@"></ui5-daterangepicker>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

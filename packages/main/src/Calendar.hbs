@@ -1,4 +1,6 @@
-<div class="{{classes.main}}" style="{{styles.main}}">
+<div class="{{classes.main}}" style="{{styles.main}}"
+	@mousedown={{_onmousedown}}
+	@mouseup={{_onmouseup}}>
 
 	<ui5-calendar-header
 		id="{{_id}}-head"
