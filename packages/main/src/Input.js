@@ -271,6 +271,15 @@ const metadata = {
 		},
 
 		/**
+		 * @type {String}
+		 * @since 1.0.0-rc.8
+		 * @public
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
 		 * @private
 		 */
 		focused: {
@@ -847,6 +856,7 @@ class Input extends UI5Element {
 				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+				"ariaLabel": this.ariaLabel,
 			},
 		};
 	}
