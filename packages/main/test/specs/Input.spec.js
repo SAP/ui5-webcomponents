@@ -129,6 +129,16 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputChangeResult.getValue(), "2", "change is called twice");
 	});
 
+	it("fires suggestion-item-preview", () => {
+		const inputItemPreview = $("#inputItemPreview").shadow$("input");
+		const inputItemPreviewRes = $("#inputItemPreviewRes");
+
+		inputItemPreview.click();
+		inputItemPreview.keys("ArrowDown");
+
+		assert.strictEqual(inputItemPreviewRes.getValue(), "Cozy", "First item has been previewed");
+	});
+
 	it("handles suggestions", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 
