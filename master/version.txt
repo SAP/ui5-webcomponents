@@ -1,5 +1,5 @@
-commit a588ffe7ceadfb2fa26ce1bd1106f55420793d35
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Jun 12 13:36:14 2020 +0300
+commit 42f17665227df6630d4e1b76405bbeb176a7da99
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jun 12 16:40:55 2020 +0300
 
-    feat(ui5-input): implement aria-label (#1782)
+    fix(ui5-avatar): Correct colors are applied for acc themes (#1786)
