@@ -1,5 +1,10 @@
-commit f7bc0aaae872c4e3bca25cc4a8efa441a1cef603
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Jun 12 12:05:33 2020 +0300
+commit e7f380e9797df738d6587933d2ff85b3d01fec7e
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jun 12 12:50:01 2020 +0300
 
-    fix(ui5-busy-indicator): fix double focus issue (#1779)
+    feat(ui5-input): add suggestion-item-preview event (#1778)
+    
+    Add "suggestion-item-preview" event to notify when the user navigates to a suggestion item via the ARROW keys,
+    before he/she performs final selection.
+    
+    Related to: #1768
