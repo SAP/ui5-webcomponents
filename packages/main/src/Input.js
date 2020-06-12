@@ -357,6 +357,20 @@ const metadata = {
 				item: { type: HTMLElement },
 			},
 		},
+
+		/**
+		 * Fired when the user navigates to a suggestion item via the ARROW keys,
+		 * as a preview, before the final selection.
+		 *
+		 * @event sap.ui.webcomponents.main.Input#suggestion-item-preview
+		 * @param {HTMLElement} item The previewed item
+		 * @public
+		 */
+		"suggestion-item-preview": {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
 	},
 };
 
@@ -793,6 +807,7 @@ class Input extends UI5Element {
 
 	onItemPreviewed(item) {
 		this.previewSuggestion(item);
+		this.fireEvent("suggestion-item-preview", { item });
 	}
 
 	onOpen() {}

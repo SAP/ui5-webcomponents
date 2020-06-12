@@ -40,7 +40,8 @@
 	</div>
 
 	<h3> Input suggestions with ui5-suggestion-item</h3>
-	<ui5-input show-suggestions style="width: 100%">
+	<ui5-input id="inputItemPreviewRes" placeholder="preview item test"></ui5-input>	
+	<ui5-input id="inputItemPreview" show-suggestions style="width: 100%">
 		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
@@ -311,6 +312,10 @@
 		});
 		inputChange.addEventListener("ui5-change", function (event) {
 			inputChangeResult.value = ++inputChangeResultCounter;
+		});
+
+		inputItemPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
+			inputItemPreviewRes.value = event.detail.item.textContent;
 		});
 	</script>
 </body>
