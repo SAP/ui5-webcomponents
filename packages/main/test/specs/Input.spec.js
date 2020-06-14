@@ -130,7 +130,7 @@ describe("Input general interaction", () => {
 	});
 
 	it("fires suggestion-item-preview", () => {
-		const inputItemPreview = $("#inputItemPreview").shadow$("input");
+		const inputItemPreview = $("#inputPreview").shadow$("input");
 		const inputItemPreviewRes = $("#inputItemPreviewRes");
 
 		inputItemPreview.click();
