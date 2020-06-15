@@ -84,7 +84,7 @@ describe("General API", () => {
 			assert.ok(field.isFocused(), "native-textarea should be focussed");
 		});
 
-		it("should focus ui5-datepicker on click", () => {
+		it("should focus ui5-date-picker on click", () => {
 			const label = browser.$("#label-for-ui5-datepicker");
 			const field = browser.$("#ui5-datepicker");
 

@@ -127,7 +127,7 @@ const metadata = {
  * @class
  *
  * The <code>ui5-calendar</code> can be used standale to display the years, months, weeks and days,
- * but the main purpose of the <code>ui5-calendar</code> is to be used within a <code>ui5-datepicker</code>.
+ * but the main purpose of the <code>ui5-calendar</code> is to be used within a <code>ui5-date-picker</code>.
  *
  * @constructor
  * @author SAP SE

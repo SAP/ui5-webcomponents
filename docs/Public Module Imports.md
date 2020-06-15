@@ -32,7 +32,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Checkbox                 | `ui5-checkbox`       | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
 | ComboBox                 | `ui5-combobox`       | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
 | ComboBox Item            | `ui5-cb-item`        | comes with `ui5-combobox`                                    |
-| Date Picker              | `ui5-datepicker`     | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
+| Date Picker              | `ui5-date-picker`     | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
 | Dialog                   | `ui5-dialog`         | `import "@ui5/webcomponents/dist/Dialog.js";`              |
 | File Uploader            | `ui5-file-uploader`  | `import "@ui5/webcomponents/dist/FileUploader.js";`        |
 | Icon                     | `ui5-icon`           | `import "@ui5/webcomponents/dist/Icon.js";`                |
@@ -114,7 +114,7 @@ If you however need to submit forms, you can import the module above and it will
 - `ui5-textarea`
 - `ui5-checkbox`
 - `ui5-radiobutton`
-- `ui5-datepicker`
+- `ui5-date-picker`
 - `ui5-select`
 
 with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
@@ -331,7 +331,7 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 ```
 
-The `ui5-datepicker` web component supports Gregorian Calendar by default.
+The `ui5-date-picker` web component supports Gregorian Calendar by default.
 
 In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with this web component
 (by setting its `primaryCalendarType` property), you should import one or more of the modules above.
