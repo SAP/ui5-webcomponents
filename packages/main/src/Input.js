@@ -734,6 +734,21 @@ class Input extends UI5Element {
 		this.valueBeforeItemSelection = this.value;
 		this.value = item.group ? "" : item.textContent;
 		this._announceSelectedItem();
+		this._previewItem = item;
+	}
+
+	/**
+	 * The suggestion item on preview.
+	 * @type { ui5-suggestion-item }
+	 * @readonly
+	 * @public
+	 */
+	get previewItem() {
+		if (!this._previewItem) {
+			return null;
+		}
+
+		return this.getSuggestionByListItem(this._previewItem);
 	}
 
 	async fireEventByAction(action) {
@@ -795,12 +810,29 @@ class Input extends UI5Element {
 		return this.getInputId();
 	}
 
+	getSuggestionByListItem(item) {
+		const key = parseInt(item.getAttribute("data-ui5-key"));
+		return this.suggestionItems[key];
+	}
+
 	getInputId() {
 		return `${this._id}-inner`;
 	}
 
 	/* Suggestions interface  */
 	onItemFocused() {}
+
+	onItemMouseOver(event) {
+		const item = event.target;
+		const suggestion = this.getSuggestionByListItem(item);
+		suggestion.fireEvent("mouseover", { targetRef: item });
+	}
+
+	onItemMouseOut(event) {
+		const item = event.target;
+		const suggestion = this.getSuggestionByListItem(item);
+		suggestion.fireEvent("mouseout", { targetRef: item });
+	}
 
 	onItemSelected(item, keyboardUsed) {
 		this.selectSuggestion(item, keyboardUsed);
