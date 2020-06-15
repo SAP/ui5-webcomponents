@@ -1,7 +1,5 @@
-commit 0b9272b36284219d876d7c2761bbb73c79b09bbd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 15 15:12:02 2020 +0300
+commit 78ee0ef0b8a78e425aa55e27a8ecf8b8e51212a4
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jun 15 15:53:23 2020 +0300
 
-    docs: fix Toast sample for IE (#1799)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1794
+    refactor: document Popup.js and improve consistency (#1798)
