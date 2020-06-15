@@ -10,7 +10,7 @@
 @import "../base/GroupHeaderListItem-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
-@import "./Link-parameters.css";
+@import "../base/Link-parameters.css";
 @import "../base/List-parameters.css";
 @import "./ListItemBase-parameters.css";
 @import "./MonthPicker-parameters.css";
