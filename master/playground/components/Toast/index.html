@@ -2007,7 +2007,7 @@
 <span class="nt">&lt;script&gt;</span>
 
 	<span class="c1">// Attaching click listeners to the buttons which show the toasts</span>
-	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-button</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">button</span><span class="p">){</span>
+	<span class="nb">Array</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-button</span><span class="dl">"</span><span class="p">)).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">button</span> <span class="o">=&gt;</span> <span class="p">{</span>
 		<span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 			<span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">button</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="dl">"</span><span class="s2">BtnShow</span><span class="dl">"</span><span class="p">,</span> <span class="dl">""</span><span class="p">)).</span><span class="nx">show</span><span class="p">();</span>
 		<span class="p">});</span>
@@ -2020,7 +2020,7 @@
 <script>
 
 	// Attaching click listeners to the buttons which show the toasts
-	document.querySelectorAll("ui5-button").forEach(function(button){
+	[].slice.call(document.querySelectorAll("ui5-button")).forEach(function(button){
 		button.addEventListener('click', function () {
 			document.querySelector("#" + button.id.replace("BtnShow", "")).show();
 		});

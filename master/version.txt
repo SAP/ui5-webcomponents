@@ -1,5 +1,7 @@
-commit f555180a5b8959fae9dbcb7d3a5b00c00a72630d
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Jun 15 14:44:37 2020 +0300
+commit 0b9272b36284219d876d7c2761bbb73c79b09bbd
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jun 15 15:12:02 2020 +0300
 
-    fix(ui5-select): improve keyboard handling (#1771)
+    docs: fix Toast sample for IE (#1799)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1794
