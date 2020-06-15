@@ -1,0 +1,10 @@
+@import "./InvisibleTextStyles.css";
+@import "./InputIcon.css";
+
+:host(:not([hidden])) {
+	display: inline-block;
+}
+
+:host .ui5-datepicker-input {
+	width: 100%;
+}

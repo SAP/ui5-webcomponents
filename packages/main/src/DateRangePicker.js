@@ -3,12 +3,6 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import {
-	isLeft,
-	isRight,
-	isUp,
-	isDown,
-} from "@ui5/webcomponents-base/src/Keys.js";
 import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
 
 // Styles
@@ -19,18 +13,18 @@ import DatePicker from "./DatePicker.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-daterangepicker",
+	tag: "ui5-daterange-picker",
 	properties: /** @lends sap.ui.webcomponents.main.DateRangePicker.prototype */ {
 		/**
 		 * Determines the symbol which separates the dates.
 		 *
 		 * @type {string}
 		 * @defaultvalue "-"
-		 * @since 1.0.0-rc.8
 		 * @public
 		 */
 		delimiter: {
 			type: String,
+			defaultValue: "-",
 		},
 		/**
 		 * Defines the UNIX timestamp of the first date - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -75,7 +69,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DateRangePicker
  * @extends DatePicker
- * @tagname ui5-daterangepicker
+ * @tagname ui5-daterange-picker
  * @since 1.0.0-rc.8
  * @public
  */
@@ -103,7 +97,6 @@ class DateRangePicker extends DatePicker {
 	constructor() {
 		super();
 		this.isFirstDatePick = true;
-		this.delimiter = this.delimiter || "-";
 	}
 
 	_handleInputLiveChange() {
@@ -156,8 +149,7 @@ class DateRangePicker extends DatePicker {
 		const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
 		const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
 		dayPicker.addEventListener("item-mouseover", this._itemMouseoverHandler);
-		// dayPicker.addEventListener("item-keydown", this._itemKeydownHandler);
-		dayPicker.addEventListener("daypickerrendered", this._borderReachedWithHovering);
+		dayPicker.addEventListener("daypickerrendered", this._keyboardNavigationHandler);
 
 		this._cleanHoveredAttributeFromVisibleItems(dayPicker);
 	}
@@ -177,34 +169,7 @@ class DateRangePicker extends DatePicker {
 		}
 	}
 
-	_itemKeydownHandler(event) {
-		const dayItems = event.target.shadowRoot.querySelectorAll(".ui5-dp-item"),
-			firstDateTimestamp = this._selectedDates[0],
-			oneDayTimestamp = 24 * 60 * 60,
-			sevenDaysTimestamp = 7 * 24 * 60 * 60;
-		let lastDateTimestamp = Number(event.detail.target.dataset.sapTimestamp);
-
-		if (isUp(event.detail)) {
-			lastDateTimestamp -= sevenDaysTimestamp;
-		} else if (isDown(event.detail)) {
-			lastDateTimestamp += sevenDaysTimestamp;
-		} else if (isLeft(event.detail)) {
-			lastDateTimestamp -= oneDayTimestamp;
-		} else if (isRight(event.detail)) {
-			lastDateTimestamp += oneDayTimestamp;
-		}
-
-		for (let i = 0; i < dayItems.length; i++) {
-			if ((dayItems[i].dataset.sapTimestamp < firstDateTimestamp && dayItems[i].dataset.sapTimestamp > lastDateTimestamp)
-				|| (dayItems[i].dataset.sapTimestamp > firstDateTimestamp && dayItems[i].dataset.sapTimestamp < lastDateTimestamp)) {
-				dayItems[i].setAttribute("hovered", "");
-			} else {
-				dayItems[i].removeAttribute("hovered");
-			}
-		}
-	}
-
-	_borderReachedWithHovering(event) {
+	_keyboardNavigationHandler(event) {
 		if (!event.detail.focusedItemIndex) {
 			return;
 		}
@@ -223,16 +188,14 @@ class DateRangePicker extends DatePicker {
 		}
 	}
 
-	_splitValueByDelimiter(value, delimiter) {
-		let returnValue;
+	_splitValueByDelimiter(value) {
+		let returnValue = [];
 
 		if (!value) {
 			return ["", ""];
 		}
 
-		if (delimiter) {
-			returnValue = String(value).split(delimiter);
-		} else if (this.delimiter) {
+		if (this.delimiter) {
 			returnValue = String(value).split(this.delimiter);
 		}
 
@@ -249,7 +212,6 @@ class DateRangePicker extends DatePicker {
 			return this;
 		}
 
-
 		if (value) {
 			dates = this._splitValueByDelimiter(value);
 			if (isValid && isInValidRange) {
@@ -258,8 +220,9 @@ class DateRangePicker extends DatePicker {
 			}
 		}
 
-		this._firstDateTimestamp = dates[0].getTimestamp();
-		this._lastDateTimestamp = dates[1].getTimestamp();
+		this._firstDateTimestamp = this._getTimeStampFromString(dates[0]);
+		this._lastDateTimestamp = this._getTimeStampFromString(dates[1]);
+		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp, this._lastDateTimestamp);
 		this.value = value;
 		this._getInput().setValue(value);
 
