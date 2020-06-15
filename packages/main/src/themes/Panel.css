@@ -12,10 +12,6 @@
 	border-bottom: 1px solid var(--sapGroup_TitleBorderColor);
 }
 
-:host([fixed]) .ui5-panel-header-button-root {
-	display: none;
-}
-
 :host([fixed]) .ui5-panel-header {
 	padding-left: 1rem;
 }
