@@ -1,5 +1,5 @@
-commit 0b1dc52b20bdd653afb3e48d869eefd291d49970
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jun 15 10:11:09 2020 +0300
+commit f555180a5b8959fae9dbcb7d3a5b00c00a72630d
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Jun 15 14:44:37 2020 +0300
 
-    fix(ui5-panel): The expand/collapse button is not in the DOM when fixed (#1793)
+    fix(ui5-select): improve keyboard handling (#1771)
