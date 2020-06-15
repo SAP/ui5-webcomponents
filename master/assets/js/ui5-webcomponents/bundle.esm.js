@@ -139,7 +139,7 @@ class yr{constructor(e,t,i){this.__parts=[],this.template=e,this.processor=t,thi
  ?aria-disabled="${e.effectiveDisabled}"
  ?disabled="${e.effectiveDisabled}"
  aria-labelledby="${Wn(e.ariaLabelledBy)}">${e.icon?of(e):void 0}<div class="ui5-tab-strip-itemContent">${e._isInline?void 0:rf(e)}${e.text?af(e):void 0}${e._isInline?sf(e):void 0}</div></li><!-- Additional text -->
-`,of=e=>Rr`<div id="${Wn(e._id)}" class="ui5-tab-strip-item-icon-outer"><ui5-icon name="${Wn(e.icon)}" class="ui5-tab-strip-item-icon"></ui5-icon></div>`,rf=e=>Rr`${e.additionalText?nf(e):void 0}`,nf=e=>Rr`<span class="ui5-tab-strip-itemAdditionalText" id="${Wn(e._id)}-additionalText">${Wn(e.additionalText)}</span>`,af=e=>Rr`<span class="ui5-tab-strip-itemText" id="${Wn(e._id)}-text"><span class="${Wn(e.headerSemanticIconClasses)}"></span>${Wn(e.text)}</span>`,sf=e=>Rr`${e.additionalText?lf(e):void 0}`,lf=e=>Rr`<span class="ui5-tab-strip-itemAdditionalText" id="${Wn(e._id)}-additionalText">${Wn(e.additionalText)}</span>`,uf=e=>Rr`<ui5-li-custom
+`,of=e=>Rr`<div class="ui5-tab-strip-item-icon-outer"><ui5-icon name="${Wn(e.icon)}" class="ui5-tab-strip-item-icon"></ui5-icon></div>`,rf=e=>Rr`${e.additionalText?nf(e):void 0}`,nf=e=>Rr`<span class="ui5-tab-strip-itemAdditionalText" id="${Wn(e._id)}-additionalText">${Wn(e.additionalText)}</span>`,af=e=>Rr`<span class="ui5-tab-strip-itemText" id="${Wn(e._id)}-text"><span class="${Wn(e.headerSemanticIconClasses)}"></span>${Wn(e.text)}</span>`,sf=e=>Rr`${e.additionalText?lf(e):void 0}`,lf=e=>Rr`<span class="ui5-tab-strip-itemAdditionalText" id="${Wn(e._id)}-additionalText">${Wn(e.additionalText)}</span>`,uf=e=>Rr`<ui5-li-custom
  id="${Wn(e._id)}"
  class="${Wn(e.overflowClasses)}"
  type="${Wn(e.overflowState)}"

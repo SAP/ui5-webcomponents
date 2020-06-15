@@ -1,5 +1,7 @@
-commit 42f17665227df6630d4e1b76405bbeb176a7da99
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jun 12 16:40:55 2020 +0300
+commit 511cb400604bd3ba15f7de26f7eb69532f1612ae
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jun 15 09:24:36 2020 +0300
 
-    fix(ui5-avatar): Correct colors are applied for acc themes (#1786)
+    fix(ui5-tabcontainer): fix id duplication (#1789)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1788
