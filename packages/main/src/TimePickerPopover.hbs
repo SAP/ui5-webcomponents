@@ -9,7 +9,7 @@
 	stay-open-on-scroll="{{_respPopover.stayOpenOnScroll}}"
 	@ui5-after-close="{{_respPopover.afterClose}}"
 	@ui5-after-open="{{_respPopover.afterOpen}}"
-	class="ui5-timepicker-popover"
+	class="ui5-time-picker-popover"
 	@keydown="{{_ontimepickerpopoverkeydown}}"
 	@wheel="{{_handleWheel}}"
 >
@@ -19,7 +19,7 @@
 				label = "{{hoursSliderTitle}}"
 				._items="{{hoursArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-wheelslider ui5-timepicker-hours-wheelslider"
+				class="ui5-time-picker-wheelslider ui5-time-picker-hours-wheelslider"
 				cyclic
 			></ui5-wheelslider>
 		{{/if}}
@@ -28,7 +28,7 @@
 				label = "{{minutesSliderTitle}}"
 				._items="{{minutesArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-wheelslider ui5-timepicker-minutes-wheelslider"
+				class="ui5-time-picker-wheelslider ui5-time-picker-minutes-wheelslider"
 				cyclic
 			></ui5-wheelslider>
 		{{/if}}
@@ -37,7 +37,7 @@
 				label = "{{secondsSliderTitle}}"
 				._items="{{secondsArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-wheelslider ui5-timepicker-seconds-wheelslider"
+				class="ui5-time-picker-wheelslider ui5-time-picker-seconds-wheelslider"
 				cyclic
 			></ui5-wheelslider>
 		{{/if}}
@@ -47,11 +47,11 @@
 				value="AM"
 				._items="{{periodsArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-wheelslider ui5-timepicker-period-wheelslider"
+				class="ui5-time-picker-wheelslider ui5-time-picker-period-wheelslider"
 			></ui5-wheelslider>
 		{{/if}}
 	</div>
-		<div slot="footer" class="ui5-timepicker-footer" @keydown={{_onfooterkeydown}}>
+		<div slot="footer" class="ui5-time-picker-footer" @keydown={{_onfooterkeydown}}>
 			<ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
 			<ui5-button id="close" design="Transparent" @click="{{closePicker}}">{{cancelButtonLabel}}</ui5-button>
 		</div>

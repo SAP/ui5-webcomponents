@@ -1,4 +1,4 @@
-.ui5-timepicker-sliders-container {
+.ui5-time-picker-sliders-container {
 	display: flex;
 	justify-content: center;
 	align-items: stretch;
@@ -8,23 +8,23 @@
 	box-sizing: border-box;
 }
 
-.ui5-timepicker-sliders-container.ui5-phone{
+.ui5-time-picker-sliders-container.ui5-phone{
 	height: 90vh;
 }
 
-.ui5-timepicker-footer {
+.ui5-time-picker-footer {
 	height: fit-content;
 	display: flex;
 	justify-content: flex-end;
 	width: 100%;
 }
 
-.ui5-timepicker-wheelslider {
+.ui5-time-picker-wheelslider {
 	padding-left: 0.25rem;
 	padding-right: 0.25rem;
 }
 
-.ui5-timepicker-footer > ui5-button {
+.ui5-time-picker-footer > ui5-button {
 	margin: 1%;
 	min-width: 20%;
 }
