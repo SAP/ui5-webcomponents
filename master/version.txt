@@ -1,9 +1,5 @@
-commit 4359b9ae9ed204db75efaad2d2e5875fa0781248
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 15 10:03:35 2020 +0300
+commit 0b1dc52b20bdd653afb3e48d869eefd291d49970
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jun 15 10:11:09 2020 +0300
 
-    feat(ui5-suggestion-item): enable mouseover|out events (#1784)
-    
-    The user can now bind for mouseover and mouseout events on the ui5-suggestion-item elements and perform some other action. For example: opening another popover, pointing to particular suggestion, when hovered.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1768
+    fix(ui5-panel): The expand/collapse button is not in the DOM when fixed (#1793)
