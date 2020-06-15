@@ -350,15 +350,6 @@ class Popup extends UI5Element {
 	 */
 	get _displayFooter() {} // eslint-disable-line
 
-	/**
-	 * Determines the value of "aria-model" for this popup
-	 * @private
-	 * @returns {*}
-	 */
-	get ariaModal() {
-		return this.isModal ? "true" : undefined;
-	}
-
 	get styles() {
 		return {
 			content: {},
