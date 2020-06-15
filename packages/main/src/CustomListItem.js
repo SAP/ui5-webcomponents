@@ -2,7 +2,7 @@ import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
 
 // Styles
-import columnListItemCss from "./generated/themes/CustomListItem.css.js";
+import customListItemCss from "./generated/themes/CustomListItem.css.js";
 
 /**
  * @public
@@ -50,7 +50,7 @@ class CustomListItem extends ListItem {
 	}
 
 	static get styles() {
-		return [ListItem.styles, columnListItemCss];
+		return [...ListItem.styles, customListItemCss];
 	}
 
 	get classes() {

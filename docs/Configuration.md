@@ -9,7 +9,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 ------------ | ----------------------------------------------- | ------------- | -------------------------------------------------------------
 [theme](#theme)        | sap_fiori_3, sap_fiori_3_dark, sap_belize, sap_belize_hcb, sap_belize_hcw | sap_fiori_3   | Visual theme
 language     | en, de, es, etc...                              | en            | Language to be used for translatable texts
-[RTL](#rtl)          | true, false                                     | false         | When true, sets global text direction to right-to-left
+[RTL](#rtl) (**deprecated since 1.0.0-rc.8**)    | true, false                                     | false         | When true, sets global text direction to right-to-left
 [animationMode](#animationMode)  | full, basic, minimal, none  | full          | Defines different animation scenarios or levels
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
 [noConflict](#noConflict)  | true, false | false                            | When set to true, all events will be fired with a "ui5-" prefix only
@@ -30,10 +30,22 @@ The `theme` setting values above are the technical names of our themes.
 
 <a name="rtl"></a>
 ### RTL
- 
-When the `rtl` setting is set to `true`, UI5 Web Components will adjust their styling accordingly.
-However, you should also set the HTML attribute `dir` to `rtl` on the `body` or `html`, or any other relevant region of your application
-so that the rest of your application is also affected. 
+**Deprecated as of 1.0.0-rc.8**
+
+In order to have RTL mode, just set the HTML attribute `dir` to `rtl` on the `body`, `html` or any other relevant region of your application.
+
+The `RTL` configuration setting should not be used by applications. It is only internally used for specific integration scenarios.
+
+*Note:* Whenever you change `dir` dynamically, make sure you call the `applyDirection` method to re-render the RTL-aware components.
+
+Example:
+```js
+import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
+
+document.body.dir = "rtl";
+applyDirection();
+```
+
 
 <a name="animationMode"></a>
 ### Animation Mode
@@ -95,7 +107,6 @@ In order to provide configuration settings, include the following ```<script>```
 ```html
 <script data-ui5-config type="application/json">
 {
-	"rtl": true,
 	"language": "ja",
 	"calendarType": "Japanese",
 	"formatSettings": {
@@ -121,9 +132,8 @@ To do so, please import the desired functionality from the respective `"@ui5/web
 ```js
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 ```

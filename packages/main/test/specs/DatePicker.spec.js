@@ -1,4 +1,3 @@
-
 const datepicker = require("../pageobjects/DatePickerTestPage");
 const assert = require("chai").assert;
 
@@ -325,6 +324,10 @@ describe("Date Picker Tests", () => {
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
 
 		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
+
+		browser.keys(["Alt", "ArrowUp", "NULL"]);
+
+		assert.notOk(datepicker.isPickerOpen(), "datepicker is closed");
 	});
 
 	it("[Alt] + [DOWN] toggles the calendar", () => {
@@ -336,6 +339,31 @@ describe("Date Picker Tests", () => {
 		browser.keys(["Alt", "ArrowDown", "NULL"]);
 
 		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
+
+		browser.keys(["Alt", "ArrowDown", "NULL"]);
+
+		assert.notOk(datepicker.isPickerOpen(), "datepicker is closed");
+	});
+
+	it("[F4] shows year picker after date picker is open", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click()
+		browser.keys("F4");
+
+		assert.notOk(datepicker.calendar.getProperty("_yearPicker")._hidden, "Year picker is open");
+		datepicker.valueHelpIcon.click(); // close the datepicker
+	});
+
+	it("[F4] on year picker doesn't close the date picker", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click();
+		browser.keys("F4");
+
+		browser.keys("F4");
+
+		assert.ok(datepicker.isPickerOpen, "Datepicker remains open");
 	});
 
 	it("daypicker extreme values max", () => {
@@ -631,7 +659,6 @@ describe("Date Picker Tests", () => {
 		datepicker.root.keys("ArrowRight");
 		datepicker.root.keys("ArrowRight");
 		datepicker.root.keys("ArrowRight");
-		datepicker.root.keys("ArrowDown");
 		assert.ok(datepicker.getDisplayedYear(7).isFocusedDeep(), "Years out of range can not be reached with keyboard");
 	});
 

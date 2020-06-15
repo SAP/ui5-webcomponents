@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import findNodeOwner from "@ui5/webcomponents-base/dist/util/findNodeOwner.js";
@@ -22,6 +21,7 @@ let activeButton = null;
  */
 const metadata = {
 	tag: "ui5-button",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
@@ -151,6 +151,16 @@ const metadata = {
 		ariaLabelledby: {
 			type: String,
 			defaultValue: "",
+		},
+
+		/**
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		ariaExpanded: {
+			type: String,
 		},
 
 		/**
@@ -330,10 +340,6 @@ class Button extends UI5Element {
 		this.focused = true;
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
-	}
-
 	get hasButtonType() {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
@@ -344,7 +350,7 @@ class Button extends UI5Element {
 
 	get accInfo() {
 		return {
-			"ariaExpanded": this._buttonAccInfo && this._buttonAccInfo.ariaExpanded,
+			"ariaExpanded": this.ariaExpanded || (this._buttonAccInfo && this._buttonAccInfo.ariaExpanded),
 			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
 			"ariaHaspopup": this._buttonAccInfo && this._buttonAccInfo.ariaHaspopup,
 			"title": this._buttonAccInfo && this._buttonAccInfo.title,

@@ -6,13 +6,16 @@ import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
+import { getRTL } from "./config/RTL.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import Integer from "./types/Integer.js";
+import Float from "./types/Float.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
+import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 
 const metadata = {
 	events: {
@@ -25,6 +28,8 @@ let autoId = 0;
 const elementTimeouts = new Map();
 
 const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
+const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
+
 /**
  * Base class for all UI5 Web Components
  *
@@ -110,6 +115,7 @@ class UI5Element extends HTMLElement {
 				await Promise.resolve();
 			}
 
+			RenderScheduler.register(this);
 			await RenderScheduler.renderImmediately(this);
 			this._domRefReadyPromise._deferredResolve();
 			if (typeof this.onEnterDOM === "function") {
@@ -132,6 +138,7 @@ class UI5Element extends HTMLElement {
 				this._stopObservingDOMChildren();
 			}
 
+			RenderScheduler.deregister(this);
 			if (typeof this.onExitDOM === "function") {
 				this.onExitDOM();
 			}
@@ -302,6 +309,9 @@ class UI5Element extends HTMLElement {
 			}
 			if (propertyTypeClass === Integer) {
 				newValue = parseInt(newValue);
+			}
+			if (propertyTypeClass === Float) {
+				newValue = parseFloat(newValue);
 			}
 			this[nameInCamelCase] = newValue;
 		}
@@ -655,6 +665,38 @@ class UI5Element extends HTMLElement {
 
 	get isCompact() {
 		return getComputedStyle(this).getPropertyValue(GLOBAL_CONTENT_DENSITY_CSS_VAR) === "compact";
+	}
+
+	/**
+	 * Determines whether the component should be rendered in RTL mode or not.
+	 * Returns: "rtl", "ltr" or undefined
+	 *
+	 * @public
+	 * @returns {String|undefined}
+	 */
+	get effectiveDir() {
+		markAsRtlAware(this.constructor); // if a UI5 Element calls this method, it's considered to be rtl-aware
+
+		const doc = window.document;
+		const dirValues = ["ltr", "rtl"]; // exclude "auto" and "" from all calculations
+		const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);
+
+		// In that order, inspect the CSS Var (for modern browsers), the element itself, html and body (for IE fallback)
+		if (dirValues.includes(locallyAppliedDir)) {
+			return locallyAppliedDir;
+		}
+		if (dirValues.includes(this.dir)) {
+			return this.dir;
+		}
+		if (dirValues.includes(doc.documentElement.dir)) {
+			return doc.documentElement.dir;
+		}
+		if (dirValues.includes(doc.body.dir)) {
+			return doc.body.dir;
+		}
+
+		// Finally, check the configuration for explicitly set RTL or language-implied RTL
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	updateStaticAreaItemContentDensity() {

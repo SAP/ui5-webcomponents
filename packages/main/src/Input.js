@@ -39,6 +39,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
  */
 const metadata = {
 	tag: "ui5-input",
+	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
@@ -270,6 +271,15 @@ const metadata = {
 		},
 
 		/**
+		 * @type {String}
+		 * @since 1.0.0-rc.8
+		 * @public
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
 		 * @private
 		 */
 		focused: {
@@ -344,6 +354,20 @@ const metadata = {
 		 * @public
 		 */
 		"suggestion-item-select": {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired when the user navigates to a suggestion item via the ARROW keys,
+		 * as a preview, before the final selection.
+		 *
+		 * @event sap.ui.webcomponents.main.Input#suggestion-item-preview
+		 * @param {HTMLElement} item The previewed item
+		 * @public
+		 */
+		"suggestion-item-preview": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -710,6 +734,21 @@ class Input extends UI5Element {
 		this.valueBeforeItemSelection = this.value;
 		this.value = item.group ? "" : item.textContent;
 		this._announceSelectedItem();
+		this._previewItem = item;
+	}
+
+	/**
+	 * The suggestion item on preview.
+	 * @type { ui5-suggestion-item }
+	 * @readonly
+	 * @public
+	 */
+	get previewItem() {
+		if (!this._previewItem) {
+			return null;
+		}
+
+		return this.getSuggestionByListItem(this._previewItem);
 	}
 
 	async fireEventByAction(action) {
@@ -771,6 +810,11 @@ class Input extends UI5Element {
 		return this.getInputId();
 	}
 
+	getSuggestionByListItem(item) {
+		const key = parseInt(item.getAttribute("data-ui5-key"));
+		return this.suggestionItems[key];
+	}
+
 	getInputId() {
 		return `${this._id}-inner`;
 	}
@@ -778,12 +822,25 @@ class Input extends UI5Element {
 	/* Suggestions interface  */
 	onItemFocused() {}
 
+	onItemMouseOver(event) {
+		const item = event.target;
+		const suggestion = this.getSuggestionByListItem(item);
+		suggestion.fireEvent("mouseover", { targetRef: item });
+	}
+
+	onItemMouseOut(event) {
+		const item = event.target;
+		const suggestion = this.getSuggestionByListItem(item);
+		suggestion.fireEvent("mouseout", { targetRef: item });
+	}
+
 	onItemSelected(item, keyboardUsed) {
 		this.selectSuggestion(item, keyboardUsed);
 	}
 
 	onItemPreviewed(item) {
 		this.previewSuggestion(item);
+		this.fireEvent("suggestion-item-preview", { item });
 	}
 
 	onOpen() {}
@@ -846,6 +903,7 @@ class Input extends UI5Element {
 				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+				"ariaLabel": this.ariaLabel,
 			},
 		};
 	}

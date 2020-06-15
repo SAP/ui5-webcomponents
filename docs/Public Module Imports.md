@@ -342,7 +342,6 @@ In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with
 ```js
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
@@ -362,7 +361,7 @@ from OpenUI5 configuration and resources.
 
 When you import the above module:
  1. OpenUI5 configuration takes precedence over UI5 Web Components configuration
- for all common entities (theme, language, RTL, etc...). In addition, changing the theme
+ for all common entities (theme, language, etc...). In addition, changing the theme
  in OpenUI5 will also change the theme in UI5 Web Components.
  2. Fonts will not be loaded twice (just once by OpenUI5, and reused).
  3. Locale Data assets will not be fetched twice (just once by OpenUI5, and reused).
@@ -373,3 +372,29 @@ it is highly recommended to enable OpenUI5 support and benefit from these optimi
 *Note:* In general the order in which OpenUI5 and UI5 Web Components are loaded does not matter.
 However, if your app needs to support Internet Explorer 11, either load OpenUI5 first, or load
 UI5 Web Components deferred.
+
+### 7. Support for registering `i18n` resources in `.properties` format
+
+```js
+import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
+```
+
+By default, all `i18n` resources are in `JSON` format. Registering such a resource does not require any additional code:
+
+```js
+import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+registerI18nBundle("@ui5/webcomponents", {
+	fr: "./lang/fr.json",
+});
+```
+
+However, in order to use `.properties` files for `i18n` registration, you must also import this feature.
+
+```js
+import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
+import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+registerI18nBundle("@ui5/webcomponents", {
+	bg: "./lang/messagebundle_bg.properties",
+});
+```
+

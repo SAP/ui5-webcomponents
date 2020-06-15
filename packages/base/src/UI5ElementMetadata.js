@@ -126,6 +126,14 @@ class UI5ElementMetadata {
 	getEvents() {
 		return this.metadata.events || {};
 	}
+
+	/**
+	 * Determines whether this UI5 Element has any translatable texts (needs to be invalidated upon language change)
+	 * @returns {boolean}
+	 */
+	isLanguageAware() {
+		return !!this.metadata.languageAware;
+	}
 }
 
 const validateSingleProperty = (value, propData) => {

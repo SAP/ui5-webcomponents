@@ -14,6 +14,7 @@ import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.j
  */
 const metadata = {
 	tag: "ui5-li-groupheader",
+	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {

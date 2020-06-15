@@ -4,7 +4,6 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
@@ -39,6 +38,7 @@ import styles from "./generated/themes/ShellBar.css.js";
  */
 const metadata = {
 	tag: "ui5-shellbar",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 
 		/**
@@ -570,7 +570,7 @@ class ShellBar extends UI5Element {
 	_handleActionsOverflow() {
 		const rightContainerRect = this.shadowRoot.querySelector(".ui5-shellbar-overflow-container-right").getBoundingClientRect();
 		const icons = this.shadowRoot.querySelectorAll(".ui5-shellbar-button:not(.ui5-shellbar-overflow-button):not(.ui5-shellbar-invisible-button)");
-		const isRTL = getRTL();
+		const isRTL = this.effectiveDir === "rtl";
 
 		let overflowCount = [].filter.call(icons, icon => {
 			const iconRect = icon.getBoundingClientRect();
@@ -645,7 +645,7 @@ class ShellBar extends UI5Element {
 		const triggeredByOverflow = event.target.tagName.toLowerCase() === "ui5-li";
 		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
 		const overflowButtonRect = overflowButton.getBoundingClientRect();
-		const isRTL = getRTL();
+		const isRTL = this.effectiveDir === "rtl";
 		let right = "";
 
 		if (isRTL) {
@@ -880,7 +880,7 @@ class ShellBar extends UI5Element {
 	get styles() {
 		return {
 			searchField: {
-				[getRTL() ? "left" : "right"]: this._searchField.right,
+				[this.effectiveDir === "rtl" ? "left" : "right"]: this._searchField.right,
 				"top": `${parseInt(this._searchField.top)}px`,
 			},
 			items: {
@@ -921,11 +921,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get popoverHorizontalAlign() {
-		return getRTL() ? "Left" : "Right";
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+		return this.effectiveDir === "rtl" ? "Left" : "Right";
 	}
 
 	get hasSearchField() {

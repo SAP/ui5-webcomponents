@@ -72,7 +72,7 @@ describe("UploadCollection", () => {
 			const deleteBtn = firstItem.shadow$(".ui5-li-deletebtn");
 			deleteBtn.click();
 
-			assert.strictEqual(uploadCollection.getProperty("items").length, 3, "item should be deleted when 'fileDeleted' event is fired");
+			assert.strictEqual(uploadCollection.getProperty("items").length, 4, "item should be deleted when 'fileDeleted' event is fired");
 		});
 
 		it("item should fire 'retry'", () => {
@@ -132,6 +132,22 @@ describe("UploadCollection", () => {
 
 			assert.notOk(secondItem.shadow$(".ui5-uci-file-extension").getText(), "no extension is calculated for .gitignore.");
 
+		});
+
+		it("tests cancelling of name change via keyboard", () => {
+			const secondItem = browser.$("#keyboardNavigation");
+			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
+
+			editButton.click();
+
+			browser.keys("new name");
+
+			browser.keys("Tab");
+			browser.keys("Tab");
+
+			browser.keys("Enter"); // Press cancel button
+
+			assert.strictEqual(secondItem.shadow$(".ui5-uci-file-name").getText(), "Graph.docx", "The name of the file is not changed");
 		});
 	});
 

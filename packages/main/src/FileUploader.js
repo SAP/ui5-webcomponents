@@ -23,6 +23,7 @@ import FileUploaderCss from "./generated/themes/FileUploader.css.js";
  */
 const metadata = {
 	tag: "ui5-file-uploader",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
 		 * Comma-separated list of file types that the <code>ui5-file-uploader</code> should accept.

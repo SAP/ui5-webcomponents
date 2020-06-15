@@ -1,9 +1,9 @@
 const path = require("path");
 
 const LIB = path.join(__dirname, `../lib/`);
-const NODE_MODULES_PATH = path.join(__dirname, `../../../node_modules/`);
 const serveConfig = path.join(__dirname, `serve.json`);
-const polyfillPath = path.join(NODE_MODULES_PATH, `/@webcomponents/webcomponentsjs/**/*.*`);
+const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
+const polyfillPath = path.join(polyfillDir, "/**/*.*");
 
 const getScripts = (options) => {
 
