@@ -1,7 +1,9 @@
-commit 511cb400604bd3ba15f7de26f7eb69532f1612ae
+commit 4359b9ae9ed204db75efaad2d2e5875fa0781248
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 15 09:24:36 2020 +0300
+Date:   Mon Jun 15 10:03:35 2020 +0300
 
-    fix(ui5-tabcontainer): fix id duplication (#1789)
+    feat(ui5-suggestion-item): enable mouseover|out events (#1784)
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1788
+    The user can now bind for mouseover and mouseout events on the ui5-suggestion-item elements and perform some other action. For example: opening another popover, pointing to particular suggestion, when hovered.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1768
