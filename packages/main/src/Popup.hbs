@@ -1,4 +1,4 @@
-<section style="{{styles.root}}" class="ui5-popup-root" role="dialog" aria-modal="true" aria-labelledby="ui5-popup-header">
+<section style="{{styles.root}}" class="ui5-popup-root" role="dialog" aria-modal="{{ariaModal}}" aria-labelledby="ui5-popup-header">
 
 	{{> beforeHeader}}
 
@@ -33,7 +33,7 @@
 			{{#if header.length }}
 				<slot name="header"></slot>
 			{{else}}
-				<h2 class="ui5-popup-header-text" id="ui5-popup-header">{{headerText}}</h2>
+				<h2 class="ui5-popup-header-text">{{headerText}}</h2>
 			{{/if}}
 		</header>
 	{{/if}}

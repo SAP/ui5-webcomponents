@@ -5,7 +5,7 @@
 }
 
 :host(:not([with-padding])) {
-	--_ui5_popover_content_padding: 0;
+	--_ui5_popup_content_padding: 0;
 }
 
 :host([opened]) {
