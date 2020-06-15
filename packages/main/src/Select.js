@@ -7,6 +7,8 @@ import {
 	isEnter,
 	isEscape,
 	isShow,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -322,7 +324,14 @@ class Select extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		const isTab = (isTabNext(event) || isTabPrevious(event));
+
+		if (isTab && this.responsivePopover && this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		}
+
 		if (isShow(event)) {
+			event.preventDefault();
 			this._toggleRespPopover();
 		}
 
@@ -477,7 +486,9 @@ class Select extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.disabled ? "-1" : "0";
+		return this.disabled
+		&& this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
+		&& this.responsivePopover.opened ? "-1" : "0";
 	}
 
 	static async onDefine() {
