@@ -365,12 +365,14 @@ const metadata = {
 		 * as a preview, before the final selection.
 		 *
 		 * @event sap.ui.webcomponents.main.Input#suggestion-item-preview
-		 * @param {HTMLElement} item The previewed item
+		 * @param {HTMLElement} item The previewed suggestion item
+		 * @param {HTMLElement} targetRef The DOM ref of the suggestion item.
 		 * @public
 		 */
 		"suggestion-item-preview": {
 			detail: {
 				item: { type: HTMLElement },
+				targetRef: { type: HTMLElement },
 			},
 		},
 	},
@@ -843,7 +845,12 @@ class Input extends UI5Element {
 
 	onItemPreviewed(item) {
 		this.previewSuggestion(item);
-		this.fireEvent("suggestion-item-preview", { item });
+		const suggestionItem = this.getSuggestionByListItem(item);
+
+		this.fireEvent("suggestion-item-preview", {
+			item: suggestionItem,
+			targetRef: item,
+		});
 	}
 
 	onOpen() {}
