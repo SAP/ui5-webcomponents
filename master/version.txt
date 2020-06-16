@@ -1,7 +1,7 @@
-commit 311e4f970a988f648ba1840deb0b3bf6a8f8fcd6
+commit 01fcbe7f61a8b37103b8c8ae29cdb28fb7ff87ae
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jun 16 16:17:51 2020 +0300
+Date:   Tue Jun 16 16:54:50 2020 +0300
 
-    chore(ui5-input):  make ariaLabel private (#1818)
+    chore(ui5-input): change event detail (#1820)
     
-    As we did for the Button, those aria stuff should be private to hide them from the API reference
+    In order to be more consistent with similar cases, when the user needs to open a popover from internal popover, as in the Shellbar, we provide the real DOM ref to an item (ui5-li) as "targetRef" param in the event detail and leave "item" param for the external ui5-suggestion-item the user set.
