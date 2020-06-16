@@ -1,9 +1,5 @@
-commit 0f69b84ba180018fa8954de779d94dfdff0e3821
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 15 17:26:19 2020 +0300
+commit 4198599574a0bcb0057b9c713b77d9ac93ab661c
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Jun 16 10:34:49 2020 +0300
 
-    fix(ui5-link): fix "click twice" issue in Safari (#1799) (#1800)
-    
-    The usage of pseudo elements such as ::after, ::before has side effects on iOs/macOS making the first click to just focus the element and the second to be registered as click. Now, we set the focus with outline, instead of pseudo element. Note: in IE, the focus will be 1px wider on all sides, compared to Safari, Chrome and FF as the outline-offset is not supported.
-    
-    FIXES: #1796
+    fix(ui5-shellbar): Profile is styled correctly on IE (#1807)
