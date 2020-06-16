@@ -846,7 +846,10 @@ class Input extends UI5Element {
 		this.previewSuggestion(item);
 		const suggestionItem = this.getSuggestionByListItem(item);
 
-		this.fireEvent("suggestion-item-preview",{ item: suggestionItem, targetRef: item });
+		this.fireEvent("suggestion-item-preview", {
+			item: suggestionItem,
+			targetRef: item,
+		});
 	}
 
 	onOpen() {}
