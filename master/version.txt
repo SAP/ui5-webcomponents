@@ -1,5 +1,5 @@
-commit 4198599574a0bcb0057b9c713b77d9ac93ab661c
+commit fb07dd4e9861df10c862621330eab9fe1c6bf134
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jun 16 10:34:49 2020 +0300
+Date:   Tue Jun 16 13:51:15 2020 +0300
 
-    fix(ui5-shellbar): Profile is styled correctly on IE (#1807)
+    docs: how to create a Fiori 3 message page (#1816)
