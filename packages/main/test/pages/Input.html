@@ -337,7 +337,7 @@
 
 		// Preview suggestion item events
 		inputPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
-			var item = event.detail.item;
+			var item = event.detail.targetRef;
 			inputItemPreviewRes.value = item.textContent;
 
 			quickViewCard.close(false, true, true);
