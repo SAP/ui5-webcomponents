@@ -1,5 +1,7 @@
-commit 4bd36043bb7189ba73aa04a8cdb6c67b800235e5
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jun 16 15:21:58 2020 +0300
+commit 311e4f970a988f648ba1840deb0b3bf6a8f8fcd6
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jun 16 16:17:51 2020 +0300
 
-    fix(ui5-tabcontainer): aria-controls now points to an existing ID (#1817)
+    chore(ui5-input):  make ariaLabel private (#1818)
+    
+    As we did for the Button, those aria stuff should be private to hide them from the API reference
