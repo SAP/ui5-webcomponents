@@ -925,10 +925,6 @@ class UI5Element extends HTMLElement {
 		return "";
 	}
 
-	static get _getElementsWithMultipleTags() {
-		return ["ui5-date-picker", "ui5-time-picker"];
-	}
-
 	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
@@ -953,7 +949,7 @@ class UI5Element extends HTMLElement {
 			registerTag(tag);
 			window.customElements.define(tag, this);
 
-			if (this._getElementsWithMultipleTags.indexOf(tag) > -1) {
+			if (UI5ElementMetadata.getTags().indexOf(tag) > -1) {
 				const oldTag = tag.slice(0, tag.lastIndexOf("-")) + tag.slice(tag.lastIndexOf("-") + 1);
 				class oldClassName extends this {}
 				registerTag(oldTag);

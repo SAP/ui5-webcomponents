@@ -42,6 +42,14 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Used to get the tags we need to register twice(the recently changed tags)
+	 * @private
+	 */
+	static getTags() {
+		return ["ui5-date-picker", "ui5-time-picker"];
+	}
+
+	/**
 	 * Determines whether a property should have an attribute counterpart
 	 * @public
 	 * @param propName
