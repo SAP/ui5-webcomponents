@@ -273,7 +273,8 @@ const metadata = {
 		/**
 		 * @type {String}
 		 * @since 1.0.0-rc.8
-		 * @public
+		 * @private
+		 * @defaultvalue ""
 		 */
 		ariaLabel: {
 			type: String,
