@@ -1,10 +1,5 @@
-commit cbe8bb8dba2eaca221d37a9f97b454936d711361
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jun 16 14:37:27 2020 +0300
+commit 4bd36043bb7189ba73aa04a8cdb6c67b800235e5
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Jun 16 15:21:58 2020 +0300
 
-    fix(ui5-input): fix JS errors when open/close popups (#1811)
-    
-    There are use cases when the user dynamically appends/removes the value state msg slot
-    and we have to check if the value state msg popover is present before opening or closing it.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1790
+    fix(ui5-tabcontainer): aria-controls now points to an existing ID (#1817)
