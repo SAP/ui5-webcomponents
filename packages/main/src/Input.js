@@ -672,15 +672,17 @@ class Input extends UI5Element {
 	}
 
 	async openPopover() {
-		this._isPopoverOpen = true;
 		this.popover = await this._getPopover();
-		this.popover.openBy(this);
+		if (this.popover) {
+			this._isPopoverOpen = true;
+			this.popover.openBy(this);
+		}
 	}
 
 	closePopover() {
 		if (this.isOpen()) {
 			this._isPopoverOpen = false;
-			this.popover.close();
+			this.popover && this.popover.close();
 		}
 	}
 
