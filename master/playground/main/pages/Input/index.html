@@ -45,17 +45,21 @@
 
 	<h3> Input suggestions with ui5-suggestion-item</h3>
 
-	<div style="width: 200px">Input keyp</div>
-	<ui5-input id="keyupResult" style="width: 100%"></ui5-input> <br>
+	<div style="width: 200px">Test keyup</div>
+	<ui5-input id="keyupResult" style="width: 100%"></ui5-input>
+	<br><br>
 
-	<div style="width: 200px">Input suggestion-item-preview</div>
-	<ui5-input id="inputItemPreviewRes" style="width:100%"></ui5-input><br><br>
+	<div style="width: 200px">Test suggestion-item-preview</div>
+	<ui5-input id="inputItemPreviewRes" style="width:100%"></ui5-input>
+	<br><br>
 
-	<div style="width: 200px">mouseover on item</div>
-	<ui5-input id="mouseoverResult" style="width: 100%"></ui5-input> <br>
+	<div style="width: 200px">Test mouseover on item</div>
+	<ui5-input id="mouseoverResult" style="width: 100%"></ui5-input>
+	<br><br>
 
-	<div style="width: 200px">mouseout on item</div>
-	<ui5-input id="mouseoutResult" style="width:100%"></ui5-input><br>
+	<div style="width: 200px">Test mouseout on item</div>
+	<ui5-input id="mouseoutResult" style="width:100%"></ui5-input>
+	<br><br>
 
 	<ui5-input id="inputPreview" show-suggestions style="width: 200px">
 		<ui5-suggestion-item class="suggestionItem" text="Cozy"></ui5-suggestion-item>
@@ -346,7 +350,9 @@
 
 		inputPreview.addEventListener("keyup", function (event) {
 			const item = event.target.previewItem;
-			keyupResult.value = "[key]: " + event.key +  " , [preview item]:" + (item && item.text);
+			const combination = event.key === "1" && event.shiftKey && event.ctrlKey;
+
+			keyupResult.value = combination ? "[ctr+shift+1] on item: " + (item && item.text) : event.key;
 		});
 
 		[].slice.call(document.querySelectorAll(".suggestionItem")).forEach(function(el) {

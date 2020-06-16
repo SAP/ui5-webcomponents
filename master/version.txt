@@ -1,5 +1,10 @@
-commit fb07dd4e9861df10c862621330eab9fe1c6bf134
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jun 16 13:51:15 2020 +0300
+commit cbe8bb8dba2eaca221d37a9f97b454936d711361
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jun 16 14:37:27 2020 +0300
 
-    docs: how to create a Fiori 3 message page (#1816)
+    fix(ui5-input): fix JS errors when open/close popups (#1811)
+    
+    There are use cases when the user dynamically appends/removes the value state msg slot
+    and we have to check if the value state msg popover is present before opening or closing it.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1790
