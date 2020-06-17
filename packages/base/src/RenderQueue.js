@@ -10,14 +10,24 @@ class RenderQueue {
 		}
 
 		let deferredResolve;
-		const promise = new Promise(resolve => {
+		let deferredReject;
+		const promise = new Promise((resolve, reject) => {
 			deferredResolve = resolve;
+			deferredReject = reject;
 		});
 		promise._deferredResolve = deferredResolve;
+		promise._deferredReject = deferredReject;
 
 		this.list.push(webComponent);
 		this.promises.set(webComponent, promise);
 
+		return promise;
+	}
+
+	remove(webComponent) {
+		const promise = this.promises.get(webComponent);
+		this.list = this.list.filter(item => item !== webComponent);
+		this.promises.delete(webComponent);
 		return promise;
 	}
 

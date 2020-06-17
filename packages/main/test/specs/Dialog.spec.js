@@ -10,7 +10,6 @@ describe("Dialog general interaction", () => {
 		btnOpenDialog.click();
 
 		const dialog = browser.$("#dialog");
-		
 		assert.ok(dialog.isDisplayedInViewport(), "Dialog is opened.");
 
 		btnCloseDialog.click();
@@ -30,5 +29,21 @@ describe("Dialog general interaction", () => {
 		const popoverZIndex = parseInt(browser.$(`.${select.getProperty("_id")}`).shadow$("ui5-responsive-popover").getCSSProperty('z-index').value);
 
 		assert.ok(popoverZIndex > dialogZIndex, "Popover is above dialog.");
+	});
+
+	it("tests dialog lifecycle", () => {
+		browser.url("http://localhost:8080/test-resources/pages/DialogLifecycle.html");
+
+		assert.ok(!browser.$("ui5-static-area").length, "No static area.");
+
+		const openDialogButton = browser.$("#openDialogButton");
+		openDialogButton.click();
+
+		assert.ok(browser.$("ui5-static-area>ui5-static-area-item"), "Static area item exists.");
+
+		const closeDialogButton= browser.$("#closeDialogButton");
+		closeDialogButton.click();
+
+		assert.ok(!browser.$("ui5-static-area").length, "No static area.");
 	});
 });

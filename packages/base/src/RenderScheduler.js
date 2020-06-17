@@ -32,20 +32,27 @@ class RenderScheduler {
 	 */
 	static renderDeferred(webComponent) {
 		// Enqueue the web component
-		const res = invalidatedWebComponents.add(webComponent);
+		const promise = invalidatedWebComponents.add(webComponent);
 
 		// Schedule a rendering task
 		RenderScheduler.scheduleRenderTask();
-		return res;
+		return promise;
 	}
 
 	static renderImmediately(webComponent) {
 		// Enqueue the web component
-		const res = invalidatedWebComponents.add(webComponent);
+		const promise = invalidatedWebComponents.add(webComponent);
 
 		// Immediately start a render task
 		RenderScheduler.runRenderTask();
-		return res;
+		return promise;
+	}
+
+	static cancelRender(webComponent) {
+		const promise = invalidatedWebComponents.remove(webComponent);
+		if (promise) {
+			promise._deferredReject(new Error("Element removed from DOM before having been rendered."));
+		}
 	}
 
 	/**

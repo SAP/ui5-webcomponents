@@ -52,6 +52,10 @@ class ResizeHandler {
 	 * @memberof ResizeHandler
 	 */
 	static deregister(ref, callback) {
+		if (!ref) { // This may be undefined if onExitDOM is called before onEnterDOM async work has finished
+			return;
+		}
+
 		if (ref.isUI5Element) {
 			ref = ref.getDomRef();
 		}

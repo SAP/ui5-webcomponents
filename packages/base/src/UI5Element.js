@@ -48,6 +48,7 @@ class UI5Element extends HTMLElement {
 		this._upgradeAllProperties();
 		this._initializeContainers();
 		this._upToDate = false;
+		this._inDOM = false;
 
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
@@ -103,6 +104,8 @@ class UI5Element extends HTMLElement {
 		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
+		this._inDOM = true;
+
 		// Render the Shadow DOM
 		if (needsShadowDOM) {
 			if (slotsAreManaged) {
@@ -115,8 +118,18 @@ class UI5Element extends HTMLElement {
 				await Promise.resolve();
 			}
 
+			if (!this._inDOM) { // Component removed from DOM while _processChildren was running
+				console.warn("Component removed from DOM before first rendering (1)"); // eslint-disable-line
+				return;
+			}
+
 			RenderScheduler.register(this);
-			await RenderScheduler.renderImmediately(this);
+			try {
+				await RenderScheduler.renderImmediately(this);
+			} catch (err) {
+				console.warn("Component removed from DOM before first rendering (2)"); // eslint-disable-line
+				return;
+			}
 			this._domRefReadyPromise._deferredResolve();
 			if (typeof this.onEnterDOM === "function") {
 				this.onEnterDOM();
@@ -133,6 +146,8 @@ class UI5Element extends HTMLElement {
 		const needsStaticArea = this.constructor._needsStaticArea();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
+		this._inDOM = false;
+
 		if (needsShadowDOM) {
 			if (slotsAreManaged) {
 				this._stopObservingDOMChildren();
@@ -147,6 +162,7 @@ class UI5Element extends HTMLElement {
 		if (needsStaticArea) {
 			this.staticAreaItem._removeFragmentFromStaticArea();
 		}
+		RenderScheduler.cancelRender(this);
 	}
 
 	/**
@@ -473,7 +489,7 @@ class UI5Element extends HTMLElement {
 		if (this.getDomRef() && !this._suppressInvalidation) {
 			this._upToDate = false;
 			// console.log("INVAL", this, ...arguments);
-			RenderScheduler.renderDeferred(this);
+			RenderScheduler.renderDeferred(this).catch(() => {});
 		}
 	}
 
