@@ -13,6 +13,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
 	RATING_INDICATOR_TEXT,
+	RATING_INDICATOR_TOOLTIP_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import RatingIndicatorTemplate from "./generated/templates/RatingIndicatorTemplate.lit.js";
 
@@ -81,6 +82,30 @@ const metadata = {
 		 */
 		readonly: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the aria-label attribute for the rating indicator.
+		 * @type {String}
+		 * @defaultvalue: undefined
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabel: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Defines the tooltip for the rating indicator.
+		 * @type {String}
+		 * @defaultvalue: undefined
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		title: {
+			type: String,
+			defaultValue: undefined,
 		},
 
 		/**
@@ -175,6 +200,10 @@ class RatingIndicator extends UI5Element {
 		this.calcState();
 	}
 
+	onAfterRendering() {
+		this._title = this.getAttribute("title");
+	}
+
 	calcState() {
 		this._stars = [];
 
@@ -252,6 +281,14 @@ class RatingIndicator extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
+	}
+
+	get tooltip() {
+		return this.title || this.defaultTooltip;
+	}
+
+	get defaultTooltip() {
+		return this.i18nBundle.getText(RATING_INDICATOR_TOOLTIP_TEXT);
 	}
 
 	get _ariaRoleDescription() {
