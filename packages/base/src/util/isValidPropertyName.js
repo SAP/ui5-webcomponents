@@ -4,6 +4,7 @@ const whitelist = [
 	"disabled",
 	"ariaLabel",
 	"ariaExpanded",
+	"title",
 ];
 
 /**

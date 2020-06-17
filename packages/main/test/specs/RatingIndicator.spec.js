@@ -63,4 +63,16 @@ describe("Rating Indicator general interaction", () => {
 
 		assert.strictEqual(input.getProperty("value"), "12", "Input event is always fired")
 	});
+
+	it("Tests ACC attrs", () => {
+		const ratingIndicator = browser.$("#rating-indicator1").shadow$(".ui5-rating-indicator-root");
+		const TOOLTIP = "Rating";
+		const ARIA_LABEL = "Hello World";
+
+		assert.strictEqual(ratingIndicator.getAttribute("aria-label"), ARIA_LABEL,
+			"The aria-label is set");
+
+		assert.strictEqual(ratingIndicator.getAttribute("title"), TOOLTIP,
+			"The default tooltip is displayed");
+	});
 });
