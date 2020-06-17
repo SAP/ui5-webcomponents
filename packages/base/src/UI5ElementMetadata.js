@@ -42,11 +42,11 @@ class UI5ElementMetadata {
 	}
 
 	/**
-	 * Used to get the tags we need to register twice(the recently changed tags)
-	 * @private
+	 * Used to get the tag we need to register for backwards compatibility
+	 * @public
 	 */
-	static getTags() {
-		return ["ui5-date-picker", "ui5-time-picker"];
+	getAltTag() {
+		return this.metadata.altTag;
 	}
 
 	/**
