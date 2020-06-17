@@ -279,6 +279,10 @@ class DateRangePicker extends DatePicker {
 		return this.getFormat().parse(this.value);
 	}
 
+	get _placeholder() {
+		return this.placeholder !== undefined ? this.placeholder : this._displayFormat.concat(" ", this.delimiter, " ", this._displayFormat);
+	}
+
 	_handleInputChange() {
 		const nextValue = this._getInput().getInputValue(),
 			emptyValue = nextValue === "",
