@@ -1,10 +1,5 @@
-commit dd00fb3cbf80d2d70b5b42e2a88efb4c33d4fefa
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jun 17 16:17:15 2020 +0300
+commit 81d7403575a46db7d221e2be71c8d0448bc39e9b
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jun 17 16:56:26 2020 +0300
 
-    chore(ui5-rating-indicator): enable aria-label and tooltip (#1822)
-    
-    Add private aria-label and title props so the user can set them outside and ensure default tooltip ("Rating") is present when title is not provided, as elements with role="slider" needs aria-label, aria-labelledby or tooltip.
-    A default aria-label was not an option as the word "Rating" would have been read twice as aria-roledescription="Rating Indicator" is already set.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1819
+    chore: fix NotificationList tests (#1826)
