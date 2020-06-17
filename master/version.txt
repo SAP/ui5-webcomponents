@@ -1,7 +1,5 @@
-commit 01fcbe7f61a8b37103b8c8ae29cdb28fb7ff87ae
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jun 16 16:54:50 2020 +0300
+commit 2d5e84b20002e678de0550201e430a7128324192
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Jun 17 16:08:22 2020 +0300
 
-    chore(ui5-input): change event detail (#1820)
-    
-    In order to be more consistent with similar cases, when the user needs to open a popover from internal popover, as in the Shellbar, we provide the real DOM ref to an item (ui5-li) as "targetRef" param in the event detail and leave "item" param for the external ui5-suggestion-item the user set.
+    fix(ui5-togglebutton): vertically align icon in IE (#1824)
