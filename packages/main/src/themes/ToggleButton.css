@@ -101,6 +101,6 @@ ui5-togglebutton[design="Emphasized"][focused] .ui5-button-root::after {
 }
 
 ui5-togglebutton ui5-icon.ui5-button-icon {
-	height: 1rem;
+	height: var(--_ui5_button_icon_font_size); /* Center vertically all icons*/
 	top: 0;
 }
