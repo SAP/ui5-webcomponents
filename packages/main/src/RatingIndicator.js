@@ -200,10 +200,6 @@ class RatingIndicator extends UI5Element {
 		this.calcState();
 	}
 
-	onAfterRendering() {
-		this._title = this.getAttribute("title");
-	}
-
 	calcState() {
 		this._stars = [];
 
