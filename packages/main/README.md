@@ -49,7 +49,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Table Row                | `ui5-table-row`      | `import "@ui5/webcomponents/dist/TableRow.js";`            |
 | Table Cell               | `ui5-table-cell`     | `import "@ui5/webcomponents/dist/TableCell.js";`           |
 | Textarea                 | `ui5-textarea`       | `import "@ui5/webcomponents/dist/TextArea.js";`            |
-| TimePicker               | `ui5-timepicker`     | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
+| TimePicker               | `ui5-time-picker`     | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
 | Timeline                 | `ui5-timeline`       | `import "@ui5/webcomponents/dist/Timeline.js";`            |
 | Timeline Item            | `ui5-timeline-item`  | comes with ui5-timeline                                    |
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
