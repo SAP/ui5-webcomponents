@@ -17,11 +17,12 @@ describe("Lit HTML key function for #each", () => {
 
 		// Click on the first item
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-		const firstItem = popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+		const firstItem = popover.$$(".ui5-multi-combobox-all-items-list > ui5-li")[0];
 		firstItem.click();
 
 		// Open the popover with the arrow
 		const icon = browser.$("#mcb").shadow$("[input-icon]");
+		icon.click();
 
 		// The first item (<empty>) should not be selected
 		const newFirstItem = popover.$$(".ui5-multi-combobox-all-items-list > ui5-li")[0];
