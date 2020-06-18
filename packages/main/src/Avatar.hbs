@@ -1,6 +1,6 @@
 <div class="ui5-avatar-root">
 	{{#if image}}
-		<span class="ui5-avatar-img" style="background-image: url({{image}})" role="img" aria-label="{{accessibleNameText}}"></span>
+		<span class="ui5-avatar-img" style="{{styles.img}}" role="img" aria-label="{{accessibleNameText}}"></span>
 	{{else if icon}}
 		<ui5-icon class="ui5-avatar-icon" name="{{icon}}" accessible-name="{{accessibleNameText}}"></ui5-icon>
 	{{else if initials}}

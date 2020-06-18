@@ -235,6 +235,14 @@ class Avatar extends UI5Element {
 
 		return this.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
 	}
+
+	get styles() {
+		return {
+			img: {
+				"background-image": `url("${encodeURIComponent(this.image)}")`,
+			},
+		};
+	}
 }
 
 Avatar.define();
