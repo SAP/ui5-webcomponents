@@ -1874,45 +1874,45 @@
 
 <div class="component-package">@ui5/webcomponents</div>
 
-<div class="control-tag">&lt;ui5-timepicker&gt;</div>
+<div class="control-tag">&lt;ui5-time-picker&gt;</div>
 
 <section>
 	<h3>Basic TimePicker</h3>
 	<div class="snippet">
-			<ui5-timepicker id="timepicker1"></ui5-timepicker>
+			<ui5-time-picker id="timepicker1"></ui5-time-picker>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-timepicker</span> <span class="na">id=</span><span class="s">"timepicker1"</span><span class="nt">&gt;&lt;/ui5-timepicker&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-time-picker</span> <span class="na">id=</span><span class="s">"timepicker1"</span><span class="nt">&gt;&lt;/ui5-time-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
 <section>
 	<h3>TimePicker in twelve hours format</h3>
 	<div class="snippet">
-			<ui5-timepicker id="timepicker1" format-pattern="hh:mm:ss a"></ui5-timepicker>
+			<ui5-time-picker id="timepicker1" format-pattern="hh:mm:ss a"></ui5-time-picker>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-timepicker</span> <span class="na">id=</span><span class="s">"timepicker1"</span> <span class="na">format-pattern=</span><span class="s">"hh:mm:ss a"</span><span class="nt">&gt;&lt;/ui5-timepicker&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-time-picker</span> <span class="na">id=</span><span class="s">"timepicker1"</span> <span class="na">format-pattern=</span><span class="s">"hh:mm:ss a"</span><span class="nt">&gt;&lt;/ui5-time-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
 <section>
 	<h3>TimePicker with only minutes and seconds</h3>
 	<div class="snippet">
-			<ui5-timepicker id="timepicker1" format-pattern="mm:ss"></ui5-timepicker>
+			<ui5-time-picker id="timepicker1" format-pattern="mm:ss"></ui5-time-picker>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-timepicker</span> <span class="na">id=</span><span class="s">"timepicker2"</span> <span class="na">format-pattern=</span><span class="s">"mm:ss"</span><span class="nt">&gt;&lt;/ui5-timepicker&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-time-picker</span> <span class="na">id=</span><span class="s">"timepicker2"</span> <span class="na">format-pattern=</span><span class="s">"mm:ss"</span><span class="nt">&gt;&lt;/ui5-time-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
 <section>
 	<h3>TimePicker with value-state and valueStateMessage</h3>
 	<div class="snippet">
-		<ui5-timepicker id="timepicker3" format-pattern="mm:ss" value-state="Error">
+		<ui5-time-picker id="timepicker3" format-pattern="mm:ss" value-state="Error">
 			<div slot="valueStateMessage">Please provide valid value</div>
-		</ui5-timepicker>
+		</ui5-time-picker>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-timepicker</span> <span class="na">id=</span><span class="s">"timepicker3"</span> <span class="na">format-pattern=</span><span class="s">"mm:ss"</span> <span class="na">value-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-time-picker</span> <span class="na">id=</span><span class="s">"timepicker3"</span> <span class="na">format-pattern=</span><span class="s">"mm:ss"</span> <span class="na">value-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"valueStateMessage"</span><span class="nt">&gt;</span>Please provide valid value<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/ui5-timepicker&gt;</span>
+<span class="nt">&lt;/ui5-time-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -1920,9 +1920,9 @@
     <div class="page-container">
       <div class="api-container">
         <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3> The <code>ui5-timepicker</code> component provides an input field with assigned sliders which opens on user action. The <code>ui5-timepicker</code> allows users to select a localized time using touch, mouse, or keyboard input. It consists of two parts: the time input field and the sliders.
+          <h3 class="comment-api-title">Overview</h3> The <code>ui5-time-picker</code> component provides an input field with assigned sliders which opens on user action. The <code>ui5-time-picker</code> allows users to select a localized time using touch, mouse, or keyboard input. It consists of two parts: the time input field and the sliders.
 
-<h3>Usage</h3> The user can enter a time by: <ul> <li>Using the sliders that opens in a popup</li> <li>Typing it in directly in the input field</li> </ul> <br><br> When the user makes an entry and chooses the enter key, the sliders shows the corresponding time. When the user directly triggers the sliders display, the actual time is displayed. For the <code>ui5-timepicker</code>
+<h3>Usage</h3> The user can enter a time by: <ul> <li>Using the sliders that opens in a popup</li> <li>Typing it in directly in the input field</li> </ul> <br><br> When the user makes an entry and chooses the enter key, the sliders shows the corresponding time. When the user directly triggers the sliders display, the actual time is displayed. For the <code>ui5-time-picker</code>
 
 <h3>Formatting</h3>
 
@@ -1965,7 +1965,7 @@ If a time is entered by typing it into the input field, it must fit to the used 
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the <code>ui5-timepicker</code> is displayed as disabled.
+                            Determines whether the <code>ui5-time-picker</code> is displayed as disabled.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -1990,9 +1990,9 @@ If a time is entered by typing it into the input field, it must fit to the used 
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">undefined</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines a short hint, intended to aid the user with data entry when the <code>ui5-timepicker</code> has no value.
+                            Defines a short hint, intended to aid the user with data entry when the <code>ui5-time-picker</code> has no value.
             
-            <br><br> <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder. Passing an empty string as the value of this property will make the <code>ui5-timepicker</code> appear empty - without placeholder or format pattern.
+            <br><br> <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder. Passing an empty string as the value of this property will make the <code>ui5-time-picker</code> appear empty - without placeholder or format pattern.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -2003,7 +2003,7 @@ If a time is entered by typing it into the input field, it must fit to the used 
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the <code>ui5-timepicker</code> is displayed as readonly.
+                            Determines whether the <code>ui5-time-picker</code> is displayed as readonly.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
@@ -2026,7 +2026,7 @@ If a time is entered by typing it into the input field, it must fit to the used 
                         <div class="cell api-table-content-cell">ValueState</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the value state of the <code>ui5-timepicker</code>. <br><br> Available options are: <ul> <li><code>None</code></li> <li><code>Error</code></li> <li><code>Warning</code></li> <li><code>Success</code></li> <li><code>Information</code></li> </ul>
+                            Defines the value state of the <code>ui5-time-picker</code>. <br><br> Available options are: <ul> <li><code>None</code></li> <li><code>Error</code></li> <li><code>Warning</code></li> <li><code>Success</code></li> <li><code>Information</code></li> </ul>
                         </div>
                       </div>
             
@@ -2049,9 +2049,9 @@ If a time is entered by typing it into the input field, it must fit to the used 
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">valueStateMessage</div>
                       <div class="cell api-table-content-cell">HTMLElement</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the value state message that will be displayed as pop up under the <code>ui5-timepicker</code>. <br><br>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the value state message that will be displayed as pop up under the <code>ui5-time-picker</code>. <br><br>
             
-            <b>Note:</b> If not specified, a default text (in the respective language) will be displayed. <br> <b>Note:</b> The <code>valueStateMessage</code> would be displayed, when the <code>ui5-timepicker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.</div>
+            <b>Note:</b> If not specified, a default text (in the respective language) will be displayed. <br> <b>Note:</b> The <code>valueStateMessage</code> would be displayed, when the <code>ui5-time-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.</div>
                     </div>
             
                 </div>
@@ -2075,7 +2075,7 @@ If a time is entered by typing it into the input field, it must fit to the used 
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">input</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the value of the <code>ui5-timepicker</code> is changed at each key stroke.
+                        Fired when the value of the <code>ui5-time-picker</code> is changed at each key stroke.
                         </div>
                       </div>
             

@@ -1,5 +1,5 @@
-commit d972ec224e96ab52e510ff4ebd23d1e24f8f93af
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jun 18 09:06:35 2020 +0300
+commit 3acab5a12ff2aea82bd5985c329eb59c300d660c
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Jun 18 10:25:15 2020 +0300
 
-    chore(ui5-date-picker): rename component (#1801)
+    fix(ui5-avatar): image URL may now contain special characters (#1828)
