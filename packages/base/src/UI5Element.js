@@ -938,6 +938,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		const tag = this.getMetadata().getTag();
+		const altTag = this.getMetadata().getAltTag();
 
 		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);
@@ -948,6 +949,12 @@ class UI5Element extends HTMLElement {
 			this._generateAccessors();
 			registerTag(tag);
 			window.customElements.define(tag, this);
+
+			if (altTag && !customElements.get(altTag)) {
+				class oldClassName extends this {}
+				registerTag(altTag);
+				window.customElements.define(altTag, oldClassName);
+			}
 		}
 		return this;
 	}
