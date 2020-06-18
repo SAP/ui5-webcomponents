@@ -1,5 +1,5 @@
-commit 81d7403575a46db7d221e2be71c8d0448bc39e9b
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 17 16:56:26 2020 +0300
+commit d972ec224e96ab52e510ff4ebd23d1e24f8f93af
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Jun 18 09:06:35 2020 +0300
 
-    chore: fix NotificationList tests (#1826)
+    chore(ui5-date-picker): rename component (#1801)

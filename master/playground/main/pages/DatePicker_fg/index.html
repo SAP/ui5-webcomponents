@@ -54,7 +54,7 @@
 			flex-direction: column;
 			padding: 1rem;
 		}
-		.content > ui5-datepicker,
+		.content > ui5-date-picker,
 		.content > input {
 			width: 200px;
 			margin-bottom: 8px
@@ -71,23 +71,23 @@
 	<div class="content">
 		<input id="before"></input>
 
-		<ui5-datepicker id='ui5-datepicker--startDate'
+		<ui5-date-picker id='ui5-datepicker--startDate'
 			placeholder='Start Date...'
 			title='Start Date!'
 			value-state="Error">
-		</ui5-datepicker>
+		</ui5-date-picker>
 
-		<ui5-datepicker id='ui5-datepicker--endDate'
+		<ui5-date-picker id='ui5-datepicker--endDate'
 			placeholder='End Date...'
 			title='End Date!'
 			value-state="Error">
-		</ui5-datepicker>
+		</ui5-date-picker>
 
 		<input id="after">
 	</div>
 	<script>
 		$(function () {
-			var pickers = $('ui5-datepicker');
+			var pickers = $('ui5-date-picker');
 
 			pickers.on('input change', (function(e) {
 				this.setAttribute('value-state', e.detail.valid ? 'None' : 'Error');
@@ -123,7 +123,7 @@
 			});
 
 			function focusNextTabbable(startingElement, forward) {
-				var allTabbable = jQuery( "ui5-datepicker, :tabbable" ).toArray().filter(function(node) {
+				var allTabbable = jQuery( "ui5-date-picker, :tabbable" ).toArray().filter(function(node) {
 					return !isInShadow(node);
 				});
 				var offset = forward ? 1 : -1;

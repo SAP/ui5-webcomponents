@@ -1871,30 +1871,30 @@
 
 <div class="component-package">@ui5/webcomponents</div>
 
-<div class="control-tag">&lt;ui5-datepicker&gt;</div>
+<div class="control-tag">&lt;ui5-date-picker&gt;</div>
 
 <section>
 	<h3>Basic DatePicker</h3>
 	<div class="snippet">
 		<div class="datepicker-width">
-			<ui5-datepicker id="myDatepicker1"></ui5-datepicker>
+			<ui5-date-picker id="myDatepicker1"></ui5-date-picker>
 		</div>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">id=</span><span class="s">"myDatepicker1"</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span></code></pre></figure></pre>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">id=</span><span class="s">"myDatepicker1"</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span></code></pre></figure></pre>
 </section>
 
 <section>
 	<h3>DatePicker with Placeholder, Tooltip, Events, ValueState and valueStateMessage</h3>
 	<div class="snippet">
 		<div class="datepicker-width">
-			<ui5-datepicker id='myDatepicker2' placeholder='Delivery Date...' title='Delivery Date!'>
+			<ui5-date-picker id='myDatepicker2' placeholder='Delivery Date...' title='Delivery Date!'>
 				<div slot="valueStateMessage">The value is not valid. Please provide valid value</div>
-			</ui5-datepicker>
+			</ui5-date-picker>
 		</div>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">id=</span><span class="s">'myDatepicker2'</span> <span class="na">placeholder=</span><span class="s">'Delivery Date...'</span> <span class="na">title=</span><span class="s">'Delivery Date!'</span><span class="nt">&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">id=</span><span class="s">'myDatepicker2'</span> <span class="na">placeholder=</span><span class="s">'Delivery Date...'</span> <span class="na">title=</span><span class="s">'Delivery Date!'</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"valueStateMessage"</span><span class="nt">&gt;</span>The value is not valid. Please provide valid value<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/ui5-datepicker&gt;</span>
+<span class="nt">&lt;/ui5-date-picker&gt;</span>
 <span class="nt">&lt;script&gt;</span>
 	<span class="kd">const</span> <span class="nx">dp</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">myDatepicker2</span><span class="dl">'</span><span class="p">);</span>
 	<span class="nx">dp</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">change</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -1910,20 +1910,20 @@
 	<h3>DatePicker with Minimum and Maximum Date - 1/1/2020 - 4/5/2020 format-pattern="dd/MM/yyyy"</h3>
 	<div class="snippet">
 		<div class="datepicker-width">
-			<ui5-datepicker id="myDatepicker12" min-date="1/1/2020" max-date="4/5/2020" format-pattern="dd/MM/yyyy"></ui5-datepicker>
+			<ui5-date-picker id="myDatepicker12" min-date="1/1/2020" max-date="4/5/2020" format-pattern="dd/MM/yyyy"></ui5-date-picker>
 		</div>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">id=</span><span class="s">"myDatepicker12"</span> <span class="na">min-date=</span><span class="s">"1/1/2020"</span> <span class="na">max-date=</span><span class="s">"4/5/2020"</span> <span class="na">format-pattern=</span><span class="s">"dd/MM/yyyy"</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span></code></pre></figure></pre>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">id=</span><span class="s">"myDatepicker12"</span> <span class="na">min-date=</span><span class="s">"1/1/2020"</span> <span class="na">max-date=</span><span class="s">"4/5/2020"</span> <span class="na">format-pattern=</span><span class="s">"dd/MM/yyyy"</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span></code></pre></figure></pre>
 </section>
 
 	<section>
 		<h3>DatePicker with shortcuts: type "today" or "yesterday" and press "Enter"</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
-				<ui5-datepicker></ui5-datepicker>
+				<ui5-date-picker></ui5-date-picker>
 			</div>
 		</div>
-		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker&gt;&lt;/ui5-datepicker&gt;</span>
+		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 	</section>
 
@@ -1931,11 +1931,11 @@
 		<h3>DatePicker with format-pattern='short'</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
-				<ui5-datepicker format-pattern='short'></ui5-datepicker>
+				<ui5-date-picker format-pattern='short'></ui5-date-picker>
 			</div>
 		</div>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">format-pattern=</span><span class="s">'short'</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">format-pattern=</span><span class="s">'short'</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -1943,10 +1943,10 @@
 		<h3>DatePicker with format-pattern='long'</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
-				<ui5-datepicker format-pattern='long'></ui5-datepicker>
+				<ui5-date-picker format-pattern='long'></ui5-date-picker>
 			</div>
 		</div>
-		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">format-pattern=</span><span class="s">'long'</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span>
+		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">format-pattern=</span><span class="s">'long'</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -1954,10 +1954,10 @@
 	<h3>DatePicker with format-pattern='QQQ yyyy, MMM dd', value='Q4 2018, Feb 14'</h3>
 	<div class="snippet">
 		<div class="datepicker-width">
-			<ui5-datepicker format-pattern='QQQ yyyy, MMM dd' value='Q4 2018, Feb 14'></ui5-datepicker>
+			<ui5-date-picker format-pattern='QQQ yyyy, MMM dd' value='Q4 2018, Feb 14'></ui5-date-picker>
 		</div>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">format-pattern=</span><span class="s">'QQQ yyyy, MMM dd'</span> <span class="na">value=</span><span class="s">'Q4 2018, Feb 14'</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">format-pattern=</span><span class="s">'QQQ yyyy, MMM dd'</span> <span class="na">value=</span><span class="s">'Q4 2018, Feb 14'</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -1965,10 +1965,10 @@
 		<h3>DatePicker with format-pattern='EEE, M/d/yyyy'</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
-				<ui5-datepicker format-pattern='EEE, M/d/yyyy'></ui5-datepicker>
+				<ui5-date-picker format-pattern='EEE, M/d/yyyy'></ui5-date-picker>
 			</div>
 		</div>
-		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">format-pattern=</span><span class="s">'EEE, M/d/yyyy'</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span>
+		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">format-pattern=</span><span class="s">'EEE, M/d/yyyy'</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -1976,10 +1976,10 @@
 		<h3>Disabled DatePicker</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
-				<ui5-datepicker disabled></ui5-datepicker>
+				<ui5-date-picker disabled></ui5-date-picker>
 			</div>
 		</div>
-		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">disabled</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span>
+		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">disabled</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -1987,10 +1987,10 @@
 		<h3>readonly DatePicker</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
-				<ui5-datepicker readonly></ui5-datepicker>
+				<ui5-date-picker readonly></ui5-date-picker>
 			</div>
 		</div>
-		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">readonly</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span>
+		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">readonly</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -1998,10 +1998,10 @@
 		<h3>DatePicker with Japanese Calendar Type</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
-				<ui5-datepicker primary-calendar-type='Japanese'></ui5-datepicker>
+				<ui5-date-picker primary-calendar-type='Japanese'></ui5-date-picker>
 			</div>
 		</div>
-		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">primary-calendar-type=</span><span class="s">'Japanese'</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span>
+		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">primary-calendar-type=</span><span class="s">'Japanese'</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -2009,10 +2009,10 @@
 		<h3>DatePicker with Islamic Calendar Type</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
-				<ui5-datepicker primary-calendar-type='Islamic'></ui5-datepicker>
+				<ui5-date-picker primary-calendar-type='Islamic'></ui5-date-picker>
 			</div>
 		</div>
-			<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">primary-calendar-type=</span><span class="s">'Islamic'</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span>
+			<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">primary-calendar-type=</span><span class="s">'Islamic'</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -2020,10 +2020,10 @@
 		<h3>DatePicker with Buddhist Calendar Type</h3>
 		<div class="snippet">
 			<div class="datepicker-width">
-				<ui5-datepicker primary-calendar-type='Buddhist'></ui5-datepicker>
+				<ui5-date-picker primary-calendar-type='Buddhist'></ui5-date-picker>
 			</div>
 		</div>
-			<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">primary-calendar-type=</span><span class="s">'Buddhist'</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span>
+			<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">primary-calendar-type=</span><span class="s">'Buddhist'</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -2042,7 +2042,7 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3>
 
-The <code>ui5-datepicker</code> component provides an input field with assigned calendar which opens on user action. The <code>ui5-datepicker</code> allows users to select a localized date using touch, mouse, or keyboard input. It consists of two parts: the date input field and the date picker.
+The <code>ui5-date-picker</code> component provides an input field with assigned calendar which opens on user action. The <code>ui5-date-picker</code> allows users to select a localized date using touch, mouse, or keyboard input. It consists of two parts: the date input field and the date picker.
 
 <h3>Usage</h3>
 
@@ -2052,7 +2052,7 @@ The user can enter a date by: <ul> <li>Using the calendar that opens in a popup<
 
 If a date is entered by typing it into the input field, it must fit to the used date format. <br><br> Supported format options are pattern-based on Unicode LDML Date Format notation. For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>. <br><br> For example, if the <code>format-pattern</code> is "yyyy-MM-dd", a valid value string is "2015-07-30" and the same is displayed in the input.
 
-<h3>Keyboard Handling</h3> The <code>ui5-datepicker</code> provides advanced keyboard handling. If the <code>ui5-datepicker</code> is focused, you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys. Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>RIGHT</code> arrow keys to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can use TAB to reach the buttons for changing month and year. <br>
+<h3>Keyboard Handling</h3> The <code>ui5-date-picker</code> provides advanced keyboard handling. If the <code>ui5-date-picker</code> is focused, you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys. Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>RIGHT</code> arrow keys to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can use TAB to reach the buttons for changing month and year. <br>
 
 <h3>ES6 Module Import</h3>
 
@@ -2091,7 +2091,7 @@ If a date is entered by typing it into the input field, it must fit to the used 
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the <code>ui5-datepicker</code> is displayed as disabled.
+                            Determines whether the <code>ui5-date-picker</code> is displayed as disabled.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -2140,11 +2140,11 @@ If a date is entered by typing it into the input field, it must fit to the used 
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines the name with which the <code>ui5-datepicker</code> will be submitted in an HTML form.
+                            Determines the name with which the <code>ui5-date-picker</code> will be submitted in an HTML form.
             
             <br><br> <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project: <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
             
-            <br><br> <b>Note:</b> When set, a native <code>input</code> HTML element will be created inside the <code>ui5-datepicker</code> so that it can be submitted as part of an HTML form. Do not use this property unless you need to submit a form.
+            <br><br> <b>Note:</b> When set, a native <code>input</code> HTML element will be created inside the <code>ui5-date-picker</code> so that it can be submitted as part of an HTML form. Do not use this property unless you need to submit a form.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -2155,9 +2155,9 @@ If a date is entered by typing it into the input field, it must fit to the used 
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">undefined</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines a short hint, intended to aid the user with data entry when the <code>ui5-datepicker</code> has no value.
+                            Defines a short hint, intended to aid the user with data entry when the <code>ui5-date-picker</code> has no value.
             
-            <br><br> <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder. Passing an empty string as the value of this property will make the <code>ui5-datepicker</code> appear empty - without placeholder or format pattern.
+            <br><br> <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder. Passing an empty string as the value of this property will make the <code>ui5-date-picker</code> appear empty - without placeholder or format pattern.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
@@ -2180,7 +2180,7 @@ If a date is entered by typing it into the input field, it must fit to the used 
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the <code>ui5-datepicker</code> is displayed as read-only.
+                            Determines whether the <code>ui5-date-picker</code> is displayed as read-only.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
@@ -2203,7 +2203,7 @@ If a date is entered by typing it into the input field, it must fit to the used 
                         <div class="cell api-table-content-cell">ValueState</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the value state of the <code>ui5-datepicker</code>. <br><br> Available options are: <ul> <li><code>None</code></li> <li><code>Error</code></li> <li><code>Warning</code></li> <li><code>Success</code></li> <li><code>Information</code></li> </ul>
+                            Defines the value state of the <code>ui5-date-picker</code>. <br><br> Available options are: <ul> <li><code>None</code></li> <li><code>Error</code></li> <li><code>Warning</code></li> <li><code>Success</code></li> <li><code>Information</code></li> </ul>
                         </div>
                       </div>
             
@@ -2226,9 +2226,9 @@ If a date is entered by typing it into the input field, it must fit to the used 
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">valueStateMessage</div>
                       <div class="cell api-table-content-cell">HTMLElement</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the value state message that will be displayed as pop up under the <code>ui5-datepicker</code>. <br><br>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the value state message that will be displayed as pop up under the <code>ui5-date-picker</code>. <br><br>
             
-            <b>Note:</b> If not specified, a default text (in the respective language) will be displayed. <br> <b>Note:</b> The <code>valueStateMessage</code> would be displayed, when the <code>ui5-datepicker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.</div>
+            <b>Note:</b> If not specified, a default text (in the respective language) will be displayed. <br> <b>Note:</b> The <code>valueStateMessage</code> would be displayed, when the <code>ui5-date-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.</div>
                     </div>
             
                 </div>
@@ -2252,7 +2252,7 @@ If a date is entered by typing it into the input field, it must fit to the used 
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">input</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the value of the <code>ui5-datepicker</code> is changed at each key stroke.
+                        Fired when the value of the <code>ui5-date-picker</code> is changed at each key stroke.
                         </div>
                       </div>
             
