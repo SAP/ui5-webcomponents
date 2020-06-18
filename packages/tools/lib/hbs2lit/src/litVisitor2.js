@@ -135,7 +135,7 @@ function visitEachBlock(block) {
 	var bParamAdded = false;
 	visitSubExpression.call(this, block);
 
-	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", (item, index) => item._id || index, (item, index) => ";
+	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", (item, index) => item || index, (item, index) => ";
 	this.paths.push(normalizePath.call(this, block.params[0].original));
 	this.blockPath = "item";
 
