@@ -17,7 +17,12 @@ const registerIconBundle = async (collectionName, bundleData) => {
 
 const fillRegistry = bundleData => {
 	Object.keys(bundleData.data).forEach(iconName => {
-		registerIcon(iconName, { pathData: bundleData.data[iconName], accData: bundleData.accData[iconName], collection: bundleData.collection });
+		registerIcon(iconName, {
+			pathData: bundleData.data[iconName].path,
+			ltr: bundleData.data[iconName].ltr,
+			accData: bundleData.accData[iconName],
+			collection: bundleData.collection,
+		 });
 	});
 };
 

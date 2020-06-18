@@ -20,6 +20,11 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+	<style>
+		section {
+			border: dashed 2px red;
+		}
+	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
@@ -43,7 +48,7 @@
 	<div id="content"></div>
 	<ui5-icon name="appointment-2"></ui5-icon>
 	<ui5-icon name="appointment-2"></ui5-icon>
-		<!-- <ui5-icon name="appointment-2"></ui5-icon>
+	<ui5-icon name="appointment-2"></ui5-icon>
 	<ui5-icon name="appointment-2"></ui5-icon> -->
 
 	<br />
@@ -115,7 +120,7 @@
 			iconNames.forEach(iconName => {
 				var icon = document.createElement("ui5-icon");
 				icon.name = iconName;
-				document.body.appendChild(icon);
+				allIcons.appendChild(icon);
 			});
 		})();
 	</script>
@@ -125,10 +130,82 @@
 			iconNames.forEach(function(iconName) {
 				var icon = document.createElement("ui5-icon");
 				icon.name = iconName;
-				document.body.appendChild(icon);
+				allIcons.appendChild(icon);
 			});
 		});
 	</script>
 
+
+	<section id="allIcons">
+		<h3>All icons</h3>
+	</section>
+
+	<section class="sectionRTLNotMirrored" dir="ltr">
+		<h3>Icons in ltr</h3>
+		<ui5-icon name="accept"></ui5-icon>
+		<ui5-icon name="sales-document"></ui5-icon>
+		<ui5-icon name="sales-notification"></ui5-icon>
+		<ui5-icon name="search"></ui5-icon>
+		<ui5-icon name="simple-payment"></ui5-icon>
+		<ui5-icon name="sound-loud"></ui5-icon>
+		<ui5-icon name="sound-off"></ui5-icon>
+		<ui5-icon name="sound"></ui5-icon>
+		<ui5-icon name="sys-help"></ui5-icon>
+		<ui5-icon name="text-align-justified"></ui5-icon>
+		<ui5-icon name="text-align-center"></ui5-icon>
+		<ui5-icon name="text-align-left"></ui5-icon>
+		<ui5-icon name="text-align-right"></ui5-icon>
+		<ui5-icon name="text-formatting"></ui5-icon>
+		<ui5-icon name="line-chart-time-axis"></ui5-icon>
+		<br>
+		<ui5-checkbox checked></ui5-checkbox>
+	</section>
+
+	<section class="sectionRTLNotMirrored" dir="rtl">
+		<h3>Icons in RTL, but not mirrored</h3>
+		<ui5-icon name="accept"></ui5-icon>
+		<ui5-icon name="sales-document"></ui5-icon>
+		<ui5-icon name="sales-notification"></ui5-icon>
+		<ui5-icon name="search"></ui5-icon>
+		<ui5-icon name="simple-payment"></ui5-icon>
+		<ui5-icon name="sound-loud"></ui5-icon>
+		<ui5-icon name="sound-off"></ui5-icon>
+		<ui5-icon name="sound"></ui5-icon>
+		<ui5-icon name="sys-help"></ui5-icon>
+		<ui5-icon name="text-align-justified"></ui5-icon>
+		<ui5-icon name="text-align-center"></ui5-icon>
+		<ui5-icon name="text-align-left"></ui5-icon>
+		<ui5-icon name="text-align-right"></ui5-icon>
+		<ui5-icon name="text-formatting"></ui5-icon>
+		<ui5-icon name="line-chart-time-axis"></ui5-icon>
+		<br>
+		<ui5-checkbox checked></ui5-checkbox>
+	</section>
+
+	<section class="sectionLTR" dir="ltr">
+		<h3>Icons in LTR</h3>
+		<ui5-icon name="slim-arrow-left"></ui5-icon>
+		<ui5-icon name="slim-arrow-right"></ui5-icon>
+		<ui5-icon name="media-play"></ui5-icon>
+		<ui5-icon name="media-reverse"></ui5-icon>
+		<ui5-icon name="nav-back"></ui5-icon>
+		<ui5-icon name="trend-down"></ui5-icon>
+		<ui5-icon name="trend-up"></ui5-icon>
+		<ui5-icon name="undo"></ui5-icon>
+		<ui5-icon name="step"></ui5-icon>
+	</section>
+
+	<section class="sectionRTLMirror" dir="rtl">
+		<h3>Icons in RTL and mirrored</h3>
+		<ui5-icon name="slim-arrow-left"></ui5-icon>
+		<ui5-icon name="slim-arrow-right"></ui5-icon>
+		<ui5-icon name="media-play"></ui5-icon>
+		<ui5-icon name="media-reverse"></ui5-icon>
+		<ui5-icon name="nav-back"></ui5-icon>
+		<ui5-icon name="trend-down"></ui5-icon>
+		<ui5-icon name="trend-up"></ui5-icon>
+		<ui5-icon name="undo"></ui5-icon>
+		<ui5-icon name="step"></ui5-icon>
+	</section>
 </body>
 </html>
