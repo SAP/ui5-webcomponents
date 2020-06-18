@@ -1,5 +1,5 @@
-commit 3acab5a12ff2aea82bd5985c329eb59c300d660c
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jun 18 10:25:15 2020 +0300
+commit 99a21afda6b17237a07dfa6d806b1e2dce9877d9
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Jun 18 01:27:10 2020 -0700
 
-    fix(ui5-avatar): image URL may now contain special characters (#1828)
+    Translation Delivery (#1809)
