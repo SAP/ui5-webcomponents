@@ -1,5 +1,16 @@
-commit 42998c7e217f3de4cc77cc2c3e424925e971494a
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Jun 19 14:20:45 2020 +0300
+commit 08fc5f3a580c6d16427f921a04ac76d1f54074b0
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jun 19 17:33:01 2020 +0300
 
-    fix(ui5-tabcontainer): fix box-shadow (#1829)
+    feat(ui5-shellbar): add "logo" slot (#1842)
+    
+    Replace the existing property "logo" with a slot with the same name to enable users set an element of their choice and freedom to customize it.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1841
+    
+    BREAKING_CHANGE: property "logo" has been removed, use the "logo" slot instead as follows:
+    ```html
+    <ui5-shellbar>
+            <img slot="logo" src="../../../assets/images/sap-logo-svg.svg"/>
+    </ui5-shellbar>
+    ```
