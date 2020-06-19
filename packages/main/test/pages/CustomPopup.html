@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <title>Button</title>
+
+    <script data-ui5-config type="application/json">
+        {
+            "language": "EN",
+            "noConflict": {
+                "events": ["click"]
+            },
+            "calendarType": "Islamic"
+        }
+    </script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+    <script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		.root {
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			transform: translateX(-50%) translateY(-50%);
+		}
+		.header {
+			color: white;
+			text-align: center;
+		}
+		.container {
+			background: white;
+			border-radius: 4px;
+			margin: 1rem;
+			padding: 3rem;
+		}
+	</style>
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+<ui5-button id="openDialogButton">Open Popup</ui5-button>
+
+<ui5-custom-popup id="hello-dialog" modal>
+	<div class="root">
+		<h1 class="header">
+			Hello World
+			<ui5-button @click="${context.close}">Header Button</ui5-button>
+		</h1>
+		<div class="container">
+			Custom Popup here!
+			<ui5-button>content button 1</ui5-button>
+			<ui5-button>content button 2</ui5-button>
+		</div>
+	</div>
+</ui5-custom-popup>
+
+<script>
+	const openBtn = document.getElementById("openDialogButton");
+	const dialog = document.getElementById("hello-dialog");
+	openBtn.addEventListener("click", () => {
+		dialog.open();
+	});
+</script>
+
+</body>
+</html>
