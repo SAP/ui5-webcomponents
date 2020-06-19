@@ -78,7 +78,7 @@ slot[name="profile"] {
 	min-width: 0;
 }
 
-::slotted(ui5-avatar) {
+::slotted(ui5-avatar[slot="profile"]) {
 	min-width: 0;
 	width: 2.25rem;
 	height: 2.25rem;

@@ -24,6 +24,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  */
 const metadata = {
 	tag: "ui5-switch",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
 		/**

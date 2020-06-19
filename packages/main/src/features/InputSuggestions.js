@@ -30,6 +30,8 @@ class Suggestions {
 		// Press and Focus handlers
 		this.fnOnSuggestionItemPress = this.onItemPress.bind(this);
 		this.fnOnSuggestionItemFocus = this.onItemFocused.bind(this);
+		this.fnOnSuggestionItemMouseOver = this.onItemMouseOver.bind(this);
+		this.fnOnSuggestionItemMouseOut = this.onItemMouseOut.bind(this);
 
 		// An integer value to store the currently selected item position,
 		// that changes due to user interaction.
@@ -45,7 +47,7 @@ class Suggestions {
 		const inputSuggestionItems = this._getComponent().suggestionItems;
 
 		const suggestions = [];
-		inputSuggestionItems.map(suggestion => {
+		inputSuggestionItems.map((suggestion, idx) => {
 			return suggestions.push({
 				text: suggestion.text || suggestion.textContent, // keep textContent for compatibility
 				description: suggestion.description || undefined,
@@ -54,6 +56,7 @@ class Suggestions {
 				info: suggestion.info || undefined,
 				infoState: suggestion.infoState,
 				group: suggestion.group,
+				key: idx,
 			});
 		});
 
@@ -119,6 +122,14 @@ class Suggestions {
 		this._getComponent().onItemFocused();
 	}
 
+	onItemMouseOver(event) {
+		this._getComponent().onItemMouseOver(event);
+	}
+
+	onItemMouseOut(event) {
+		this._getComponent().onItemMouseOut(event);
+	}
+
 	onItemSelected(selectedItem, keyboardUsed) {
 		const item = selectedItem || this._getItems()[this.selectedItemIndex];
 
@@ -155,6 +166,10 @@ class Suggestions {
 		list.addEventListener("ui5-item-press", this.fnOnSuggestionItemPress);
 		list.removeEventListener("ui5-item-focused", this.fnOnSuggestionItemFocus);
 		list.addEventListener("ui5-item-focused", this.fnOnSuggestionItemFocus);
+		list.removeEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
+		list.addEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
+		list.removeEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
+		list.addEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
 	}
 
 	_attachPopupListeners() {

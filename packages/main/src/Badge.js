@@ -15,6 +15,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
  */
 const metadata = {
 	tag: "ui5-badge",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Badge.prototype */  {
 
 		/**

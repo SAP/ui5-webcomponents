@@ -57,6 +57,7 @@ import Select from "./dist/Select.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
 import MultiComboBox from "./dist/MultiComboBox.js";
+import RatingIndicator from "./dist/RatingIndicator.js";
 import TabContainer from "./dist/TabContainer.js";
 import Tab from "./dist/Tab.js";
 import TabSeparator from "./dist/TabSeparator.js";
@@ -89,19 +90,24 @@ window.isIE = isIE; // attached to the window object for testing purposes
 // Note: keep in sync with rollup.config value for IIFE
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
-import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js"
+import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
 		getTheme,
 		setTheme,
+		getLanguage,
+		setLanguage,
 		setNoConflict,
 		getRTL,
 		getFirstDayOfWeek,
 	},
 	getIconNames,
 	getLocaleData,
+	applyDirection,
 };

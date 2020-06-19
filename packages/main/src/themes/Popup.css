@@ -54,7 +54,7 @@
 	overflow: auto;
 
 	/* Consider how to make this top level */
-	padding: var(--_ui5_popover_content_padding);
+	padding: var(--_ui5_popup_content_padding);
 	box-sizing: border-box;
 }
 

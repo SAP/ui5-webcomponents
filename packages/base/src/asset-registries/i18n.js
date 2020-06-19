@@ -1,5 +1,6 @@
 import { getFeature } from "../FeaturesRegistry.js";
 import getLocale from "../locale/getLocale.js";
+import { attachLanguageChange } from "../locale/languageChange.js";
 import { fetchTextOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
@@ -63,6 +64,7 @@ const fetchI18nBundle = async packageName => {
 	}
 
 	if (!bundlesForPackage[localeId]) {
+		setI18nBundleData(packageName, null); // reset for the default language (if data was set for a previous language)
 		return;
 	}
 
@@ -89,6 +91,12 @@ const fetchI18nBundle = async packageName => {
 
 	setI18nBundleData(packageName, data);
 };
+
+// When the language changes dynamically (the user calls setLanguage), re-fetch all previously fetched bundles
+attachLanguageChange(() => {
+	const allPackages = [...bundleData.keys()];
+	return Promise.all(allPackages.map(fetchI18nBundle));
+});
 
 export {
 	fetchI18nBundle,

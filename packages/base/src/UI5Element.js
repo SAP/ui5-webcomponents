@@ -11,9 +11,11 @@ import getConstructableStyle from "./theming/getConstructableStyle.js";
 import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import Integer from "./types/Integer.js";
+import Float from "./types/Float.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
+import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 
 const metadata = {
 	events: {
@@ -113,6 +115,7 @@ class UI5Element extends HTMLElement {
 				await Promise.resolve();
 			}
 
+			RenderScheduler.register(this);
 			await RenderScheduler.renderImmediately(this);
 			this._domRefReadyPromise._deferredResolve();
 			if (typeof this.onEnterDOM === "function") {
@@ -135,6 +138,7 @@ class UI5Element extends HTMLElement {
 				this._stopObservingDOMChildren();
 			}
 
+			RenderScheduler.deregister(this);
 			if (typeof this.onExitDOM === "function") {
 				this.onExitDOM();
 			}
@@ -305,6 +309,9 @@ class UI5Element extends HTMLElement {
 			}
 			if (propertyTypeClass === Integer) {
 				newValue = parseInt(newValue);
+			}
+			if (propertyTypeClass === Float) {
+				newValue = parseFloat(newValue);
 			}
 			this[nameInCamelCase] = newValue;
 		}
@@ -671,6 +678,8 @@ class UI5Element extends HTMLElement {
 	 * @returns {String|undefined}
 	 */
 	get effectiveDir() {
+		markAsRtlAware(this.constructor); // if a UI5 Element calls this method, it's considered to be rtl-aware
+
 		const doc = window.document;
 		const dirValues = ["ltr", "rtl"]; // exclude "auto" and "" from all calculations
 		const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);
@@ -932,6 +941,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		const tag = this.getMetadata().getTag();
+		const altTag = this.getMetadata().getAltTag();
 
 		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);
@@ -942,6 +952,12 @@ class UI5Element extends HTMLElement {
 			this._generateAccessors();
 			registerTag(tag);
 			window.customElements.define(tag, this);
+
+			if (altTag && !customElements.get(altTag)) {
+				class oldClassName extends this {}
+				registerTag(altTag);
+				window.customElements.define(altTag, oldClassName);
+			}
 		}
 		return this;
 	}

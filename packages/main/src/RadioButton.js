@@ -29,6 +29,7 @@ import radioButtonCss from "./generated/themes/RadioButton.css.js";
  */
 const metadata = {
 	tag: "ui5-radiobutton",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */  {
 
 		/**

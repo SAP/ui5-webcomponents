@@ -42,6 +42,14 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Used to get the tag we need to register for backwards compatibility
+	 * @public
+	 */
+	getAltTag() {
+		return this.metadata.altTag;
+	}
+
+	/**
 	 * Determines whether a property should have an attribute counterpart
 	 * @public
 	 * @param propName
@@ -125,6 +133,14 @@ class UI5ElementMetadata {
 	 */
 	getEvents() {
 		return this.metadata.events || {};
+	}
+
+	/**
+	 * Determines whether this UI5 Element has any translatable texts (needs to be invalidated upon language change)
+	 * @returns {boolean}
+	 */
+	isLanguageAware() {
+		return !!this.metadata.languageAware;
 	}
 }
 

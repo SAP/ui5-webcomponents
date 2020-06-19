@@ -1,6 +1,7 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import { getNextZIndex } from "./popup-utils/PopupUtils.js";
@@ -139,20 +140,16 @@ const createBlockingStyle = () => {
 		return;
 	}
 
-	const styleTag = document.createElement("style");
-
-	styleTag.innerHTML = `
-		.ui5-dialog-scroll-blocker {
+	createStyleInHead(`
+		.ui5-popup-scroll-blocker {
 			width: 100%;
 			height: 100%;
 			position: fixed;
 			overflow: hidden;
 		}
-	`;
+	`, { "data-ui5-popup-scroll-blocker": "" });
 
 	customBlockingStyleInserted = true;
-
-	document.head.appendChild(styleTag);
 };
 
 createBlockingStyle();
@@ -160,7 +157,31 @@ createBlockingStyle();
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
- * Represents a base class for all popup Web Components.
+ * Base class for all popup Web Components.
+ *
+ * If you need to create your own popup-like custom UI5 Web Components, it is highly recommended that you extend
+ * at least Popup in order to have consistency with other popups in terms of modal behavior and z-index management.
+ *
+ * 1. The Popup class handles modality:
+ *  - The "isModal" getter can be overridden by derivatives to provide their own conditions when they are modal or not
+ *  - Derivatives may call the "blockBodyScrolling" and "unblockBodyScrolling" static methods to temporarily remove scrollbars on the body
+ *  - Derivatives may call the "open" and "close" methods which, for modal popups, manage the blocking layer
+ *
+ *  2. Provides blocking layer (relevant for modal popups only):
+ *   - It is in the static area
+ *   - Controlled by the "open" and "close" methods
+ *
+ * 3. The Popup class "traps" focus:
+ *  - Derivatives may call the "applyInitialFocus" method (usually when opening, to transfer focus inside the popup)
+ *
+ * 4. The Popup class automatically assigns "z-index"
+ *  - Each time a popup is opened, it gets a higher than the previously opened popup z-index
+ *
+ * 5. The template of this component exposes several inline partials you can override in derivatives:
+ *  - beforeHeader (useful for visual elements outside of the popup "box", such as for example an arrow pointing to the opener element)
+ *  - header (upper part of the box, useful for title/close button area)
+ *  - footer (lower part, useful for OK/Cancel button area)
+ *  - Implement the abstract "_displayHeader" and "_displayFooter" getters to control when header and footer are shown
  *
  * @constructor
  * @author SAP SE
@@ -193,17 +214,29 @@ class Popup extends UI5Element {
 		return staticAreaStyles;
 	}
 
+	/**
+	 * Temporarily removes scrollbars from the body
+	 * @protected
+	 */
 	static blockBodyScrolling() {
 		document.body.style.top = `-${window.pageYOffset}px`;
-		document.body.classList.add("ui5-dialog-scroll-blocker");
+		document.body.classList.add("ui5-popup-scroll-blocker");
 	}
 
+	/**
+	 * Restores scrollbars on the body, if needed
+	 * @protected
+	 */
 	static unblockBodyScrolling() {
-		document.body.classList.remove("ui5-dialog-scroll-blocker");
+		document.body.classList.remove("ui5-popup-scroll-blocker");
 		window.scrollTo(0, -parseFloat(document.body.style.top));
 		document.body.style.top = "";
 	}
 
+	/**
+	 * Focus trapping
+	 * @private
+	 */
 	forwardToFirst() {
 		const firstFocusable = getFirstFocusableElement(this);
 
@@ -212,6 +245,10 @@ class Popup extends UI5Element {
 		}
 	}
 
+	/**
+	 * Focus trapping
+	 * @private
+	 */
 	forwardToLast() {
 		const lastFocusable = getLastFocusableElement(this);
 
@@ -220,6 +257,10 @@ class Popup extends UI5Element {
 		}
 	}
 
+	/**
+	 * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
+	 * @protected
+	 */
 	applyInitialFocus() {
 		if (this._disableInitialFocus) {
 			return;
@@ -234,10 +275,19 @@ class Popup extends UI5Element {
 		}
 	}
 
+	/**
+	 * Override this method to provide custom logic for the popup's open/closed state. Maps to the "opened" property by default.
+	 * @protected
+	 * @returns {boolean}
+	 */
 	isOpen() {
 		return this.opened;
 	}
 
+	/**
+	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
+	 * @protected
+	 */
 	open() {
 		if (this.isModal) {
 			// create static area item ref for block layer
@@ -250,6 +300,10 @@ class Popup extends UI5Element {
 		this._blockLayerHidden = false;
 	}
 
+	/**
+	 * Hides the block layer (for modal popups only)
+	 * @protected
+	 */
 	close() {
 		if (this.isModal) {
 			this._blockLayerHidden = true;
@@ -258,7 +312,6 @@ class Popup extends UI5Element {
 
 	/**
 	 * Sets "inline-block" display to the popup
-	 *
 	 * @protected
 	 */
 	show() {
@@ -268,16 +321,34 @@ class Popup extends UI5Element {
 
 	/**
 	 * Sets "none" display to the popup
-	 *
 	 * @protected
 	 */
 	hide() {
 		this.style.display = "none";
 	}
 
-	get isModal() {
-		return false;
-	}
+	/**
+	 * Implement this getter with relevant logic regarding the modality of the popup (f.e. based on a public property)
+	 *
+	 * @protected
+	 * @abstract
+	 * @returns {boolean}
+	 */
+	get isModal() {} // eslint-disable-line
+
+	/**
+	 * Hook for descendants to hide header.
+	 * @abstract
+	 * @protected
+	 */
+	get _displayHeader() {} // eslint-disable-line
+
+	/**
+	 * Hook for descendants to hide footer.
+	 * @abstract
+	 * @protected
+	 */
+	get _displayFooter() {} // eslint-disable-line
 
 	get styles() {
 		return {

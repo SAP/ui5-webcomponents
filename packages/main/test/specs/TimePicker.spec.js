@@ -20,11 +20,11 @@ describe("TimePicker general interaction", () => {
 
 		// act
 		timepicker.setProperty("value", "11:12:13");
-		timepicker.shadow$("ui5-input").$(".ui5-timepicker-input-icon-button").click();
+		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
 
-		const hoursSliderValue = timepickerPopover.$(".ui5-timepicker-hours-wheelslider").getValue();
-		const minutesSliderValue = timepickerPopover.$(".ui5-timepicker-minutes-wheelslider").getValue();
-		const secondsSliderValue = timepickerPopover.$(".ui5-timepicker-seconds-wheelslider").getValue();
+		const hoursSliderValue = timepickerPopover.$(".ui5-time-picker-hours-wheelslider").getValue();
+		const minutesSliderValue = timepickerPopover.$(".ui5-time-picker-minutes-wheelslider").getValue();
+		const secondsSliderValue = timepickerPopover.$(".ui5-time-picker-seconds-wheelslider").getValue();
 
 		// assert
 		assert.strictEqual(hoursSliderValue, "11", "Hours are equal");
@@ -39,9 +39,9 @@ describe("TimePicker general interaction", () => {
 
 		// act
 		timepickerPopover.setProperty("opened", true);
-		timepickerPopover.$(".ui5-timepicker-hours-wheelslider").setProperty("value","14");
-		timepickerPopover.$(".ui5-timepicker-minutes-wheelslider").setProperty("value","15");
-		timepickerPopover.$(".ui5-timepicker-seconds-wheelslider").setProperty("value","16");
+		timepickerPopover.$(".ui5-time-picker-hours-wheelslider").setProperty("value","14");
+		timepickerPopover.$(".ui5-time-picker-minutes-wheelslider").setProperty("value","15");
+		timepickerPopover.$(".ui5-time-picker-seconds-wheelslider").setProperty("value","16");
 		timepickerPopover.$("#submit").click();
 
 		const textValue = timepicker.shadow$("ui5-input").getValue();
@@ -69,6 +69,44 @@ describe("TimePicker general interaction", () => {
 		const slot = inputStaticAreaItem.shadow$("ui5-popover").$("#customValueStateMessage");
 
 		assert.notOk(slot.error, "cValue State message slot is working");
+	});
+
+	it("tests change event", () => {
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#timepickerChange");
+		const timepicker = browser.$("#timepickerChange");
+		const icon = timepicker.shadow$("ui5-input").$("ui5-icon");
+		const changeResult = browser.$("#changeResult");
+
+		// act - submit the same time
+		icon.click();
+		const timepickerPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		timepickerPopover.$("#submit").click();
+
+		// assert
+		assert.strictEqual(changeResult.getProperty("value"), "0", "Change not fired as expected");
+
+		// act - submit value after changing time
+		icon.click();
+		timepickerPopover.$(".ui5-time-picker-hours-wheelslider").setProperty("value", "10");
+		timepickerPopover.$("#submit").click();
+
+		// assert
+		assert.strictEqual(changeResult.getProperty("value"), "1", "Change fired as expected");
+
+		// act - submit the same time
+		icon.click();
+		timepickerPopover.$("#submit").click();
+
+		// assert
+		assert.strictEqual(changeResult.getProperty("value"), "1", "Change not fired as expected");
+
+		// act - submit value after changing time
+		icon.click();
+		timepickerPopover.$(".ui5-time-picker-hours-wheelslider").setProperty("value", "11");
+		timepickerPopover.$("#submit").click();
+
+		// assert
+		assert.strictEqual(changeResult.getProperty("value"), "2", "Change fired as expected");
 	});
 
 	it("tests value state", () => {

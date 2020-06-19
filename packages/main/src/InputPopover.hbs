@@ -49,7 +49,6 @@
 		{{/if}}
 	{{/unless}}
 
-
 		<ui5-list separators="Inner">
 			{{#each suggestionsTexts}}
 				{{#if group}}
@@ -62,6 +61,7 @@
 						info="{{this.info}}"
 						info-state="{{this.infoState}}"
 						@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
+						data-ui5-key="{{key}}"
 					>{{ this.text }}</ui5-li>
 				{{/if}}
 			{{/each}}

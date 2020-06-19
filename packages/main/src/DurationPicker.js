@@ -31,6 +31,7 @@ import DurationPickerPopoverCss from "./generated/themes/DurationPickerPopover.c
  */
 const metadata = {
 	tag: "ui5-duration-picker",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.DurationPicker.prototype */ {
 		/**
 		 * Defines a formatted time value.

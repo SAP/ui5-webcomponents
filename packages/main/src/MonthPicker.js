@@ -129,7 +129,12 @@ class MonthPicker extends UI5Element {
 		this._oLocale = getLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
-		this._itemNav = new ItemNavigation(this, { rowSize: 3, behavior: ItemNavigationBehavior.Cyclic });
+		this._itemNav = new ItemNavigation(this, {
+			pageSize: 12,
+			rowSize: 3,
+			behavior: ItemNavigationBehavior.Paging,
+		});
+
 		this._itemNav.getItemsCallback = function getItemsCallback() {
 			const focusableMonths = [];
 

@@ -35,6 +35,7 @@ import CarouselCss from "./generated/themes/Carousel.css.js";
  */
 const metadata = {
 	tag: "ui5-carousel",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
 		 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.

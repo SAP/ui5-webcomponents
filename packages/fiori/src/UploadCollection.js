@@ -32,6 +32,7 @@ import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
  */
 const metadata = {
 	tag: "ui5-upload-collection",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		/**
 		 * Defines the mode of the <code>ui5-upload-collection</code>.
@@ -275,7 +276,7 @@ class UploadCollection extends UI5Element {
 		return {
 			content: {
 				"ui5-uc-content": true,
-				"ui5-uc-content-no-data": this._showNoData,
+				"ui5-uc-content-no-data": this.items.length === 0,
 			},
 			dndOverlay: {
 				"uc-dnd-overlay": true,

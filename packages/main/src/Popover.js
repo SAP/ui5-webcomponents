@@ -252,9 +252,10 @@ class Popover extends Popup {
 	/**
 	 * Opens the popover.
 	 * @param {HTMLElement} opener the element that the popover is opened by
+	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
 	 */
-	openBy(opener) {
+	openBy(opener, preventInitialFocus = false) {
 		if (!opener || this.opened) {
 			return;
 		}
@@ -270,7 +271,10 @@ class Popover extends Popup {
 
 		this.fireEvent("before-open", {});
 		this.reposition();
-		this.applyInitialFocus();
+
+		if (!preventInitialFocus) {
+			this.applyInitialFocus();
+		}
 
 		addOpenedPopover(this);
 
@@ -282,7 +286,7 @@ class Popover extends Popup {
 	 * Closes the popover.
 	 * @public
 	 */
-	close(escPressed = false, preventRegitryUpdate = false, preventFocusRestore = false) {
+	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
 		if (!this.opened) {
 			return;
 		}
@@ -300,7 +304,7 @@ class Popover extends Popup {
 
 		this.opened = false;
 
-		if (!preventRegitryUpdate) {
+		if (!preventRegistryUpdate) {
 			removeOpenedPopover(this);
 		}
 

@@ -16,6 +16,7 @@ import linkCss from "./generated/themes/Link.css.js";
  */
 const metadata = {
 	tag: "ui5-link",
+	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Link.prototype */  {
 
 		/**

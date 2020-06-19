@@ -129,6 +129,16 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputChangeResult.getValue(), "2", "change is called twice");
 	});
 
+	it("fires suggestion-item-preview", () => {
+		const inputItemPreview = $("#inputPreview").shadow$("input");
+		const inputItemPreviewRes = $("#inputItemPreviewRes");
+
+		inputItemPreview.click();
+		inputItemPreview.keys("ArrowDown");
+
+		assert.strictEqual(inputItemPreviewRes.getValue(), "Cozy", "First item has been previewed");
+	});
+
 	it("handles suggestions", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 
@@ -176,7 +186,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(suggestionsInput.getValue(), "Cozy", "First item has been selected");
 		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelected event called once");
 
-		suggestionsInput.keys("c"); // to open the suggestions pop up once again 
+		suggestionsInput.keys("c"); // to open the suggestions pop up once again
 		suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(suggestionsInput.getValue(), "Condensed", "First item has been selected");
@@ -220,11 +230,23 @@ describe("Input general interaction", () => {
 		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-responsive-popover-header");
 
 		inputShadowRef.click();
-		
+
 		assert.ok(popover.getProperty("opened"), "Popover with valueStateMessage should be opened.");
 
 		inputShadowRef.keys("a");
 
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
+	});
+
+	it("Checks if aria-label is reflected in the shadow DOM", () => {
+		const input = browser.$("#aria-label-input");
+		const innerInput = input.shadow$("input");
+		const NEW_TEXT = "New cool text";
+
+		assert.strictEqual(input.getAttribute("aria-label"), innerInput.getAttribute("aria-label"), "aria-label is reflected in the shadow DOM")
+
+		input.setAttribute("aria-label", NEW_TEXT);
+
+		assert.strictEqual(innerInput.getAttribute("aria-label"), NEW_TEXT, "aria-label is reflected in the shadow DOM")
 	});
 });

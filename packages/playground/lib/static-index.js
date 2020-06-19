@@ -9,7 +9,7 @@ tagNameMap = {
     "Button": "ui5-button",
     "Card": "ui5-card",
     "CheckBox": "ui5-checkbox",
-    "DatePicker": "ui5-datepicker",
+    "DatePicker": "ui5-date-picker",
     "Dialog": "ui5-dialog",
     "Icon": "ui5-icon",
     "Input": "ui5-input",

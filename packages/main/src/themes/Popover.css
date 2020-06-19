@@ -43,7 +43,7 @@
 :host([actual-placement-type="Top"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
 	height: 0.5625rem;
-	bottom: calc(-1 * (var(--_ui5_popover_content_padding) + 2px));
+	bottom: calc(-1 * (var(--_ui5_popup_content_padding) + 2px));
 }
 
 :host([actual-placement-type="Top"]) .ui5-popover-arrow:after {

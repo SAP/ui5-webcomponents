@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
 	<title>Icon</title>
@@ -48,37 +48,37 @@
 
 	<br />
 
-	<ui5-datepicker style="margin-top: 10px" placeholder="test" value="Value State None">
+	<ui5-date-picker style="margin-top: 10px" placeholder="test" value="Value State None">
 		<ui5-icon
 			slot="icon"
 			name="add-employee"
 			tabindex="-1"
 		></ui5-icon>
-	</ui5-datepicker>
+	</ui5-date-picker>
 
-	<ui5-datepicker style="margin-top: 10px" value-state="Success" value="Value State Success">
+	<ui5-date-picker style="margin-top: 10px" value-state="Success" value="Value State Success">
 		<ui5-icon
 			slot="icon"
 			name="add-employee"
 			tabindex="-1"
 		></ui5-icon>
-	</ui5-datepicker>
+	</ui5-date-picker>
 
-	<ui5-datepicker style="margin-top: 10px" value-state="Warning" value="Value State Warning">
+	<ui5-date-picker style="margin-top: 10px" value-state="Warning" value="Value State Warning">
 		<ui5-icon
 			slot="icon"
 			name="add-employee"
 			tabindex="-1"
 		></ui5-icon>
-	</ui5-datepicker>
+	</ui5-date-picker>
 
-	<ui5-datepicker style="margin-top: 10px" value-state="Error" value="Value State Error">
+	<ui5-date-picker style="margin-top: 10px" value-state="Error" value="Value State Error">
 		<ui5-icon
 			slot="icon"
 			name="add-employee"
 			tabindex="-1"
 		></ui5-icon>
-	</ui5-datepicker>
+	</ui5-date-picker>
 
 	<br/><br/>
 
@@ -88,6 +88,11 @@
 
 	<br/>
 	<br/>
+
+	<ui5-button icon="overflow"></ui5-button>
+	<ui5-icon name="overflow" style="border:1px solid red;"></ui5-icon>
+	<br>
+	<br>
 
 	<script>
 		var icon = document.getElementById("interactive-icon"),
@@ -104,7 +109,7 @@
 		});
 	</script>
 
-    <script type="module">
+	<script type="module">
 		(async () => {
 			var iconNames = await window["sap-ui-webcomponents-bundle"].getIconNames();
 			iconNames.forEach(iconName => {
@@ -113,9 +118,9 @@
 				document.body.appendChild(icon);
 			});
 		})();
-    </script>
+	</script>
 
-    <script nomodule>
+	<script nomodule>
 		window["sap-ui-webcomponents-bundle"].getIconNames().then(function(iconNames) {
 			iconNames.forEach(function(iconName) {
 				var icon = document.createElement("ui5-icon");
@@ -123,7 +128,7 @@
 				document.body.appendChild(icon);
 			});
 		});
-    </script>
+	</script>
 
 </body>
 </html>

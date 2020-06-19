@@ -21,6 +21,7 @@ import checkboxCss from "./generated/themes/CheckBox.css.js";
  */
 const metadata = {
 	tag: "ui5-checkbox",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
 
 		/**

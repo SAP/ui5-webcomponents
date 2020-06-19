@@ -21,6 +21,7 @@ let activeButton = null;
  */
 const metadata = {
 	tag: "ui5-button",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
@@ -150,6 +151,16 @@ const metadata = {
 		ariaLabelledby: {
 			type: String,
 			defaultValue: "",
+		},
+
+		/**
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		ariaExpanded: {
+			type: String,
 		},
 
 		/**
@@ -339,7 +350,7 @@ class Button extends UI5Element {
 
 	get accInfo() {
 		return {
-			"ariaExpanded": this._buttonAccInfo && this._buttonAccInfo.ariaExpanded,
+			"ariaExpanded": this.ariaExpanded || (this._buttonAccInfo && this._buttonAccInfo.ariaExpanded),
 			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
 			"ariaHaspopup": this._buttonAccInfo && this._buttonAccInfo.ariaHaspopup,
 			"title": this._buttonAccInfo && this._buttonAccInfo.title,
