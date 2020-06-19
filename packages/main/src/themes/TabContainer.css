@@ -20,8 +20,7 @@
 	align-items: center;
 	height: var(--_ui5_tc_header_height);
 	background-color: var(--sapObjectHeader_Background);
-	border-bottom: var(--_ui5_tc_header_border_bottom);
-	box-shadow: var(--_ui5_tc_header_box_shadow);
+	box-shadow: var(--sapContent_HeaderShadow);
 	box-sizing: border-box;
 }
 
