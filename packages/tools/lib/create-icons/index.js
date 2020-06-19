@@ -11,7 +11,7 @@ const template = (name, pathData, ltr) => `import { registerIcon } from "@ui5/we
 
 const name = "${name}";
 const pathData = "${pathData}";
-const ltr = "${ltr}";
+const ltr = ${ltr};
 
 registerIcon(name, { pathData, ltr});
 
