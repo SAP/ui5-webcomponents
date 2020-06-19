@@ -14,7 +14,7 @@ const calcKey = (name, collection) => {
 	return `${collection}:${name}`;
 };
 
-const registerIcon = (name, { pathData, ltr, accData, collection } = {}) => {
+const registerIcon = (name, { pathData, ltr, accData, collection } = {}) => { // eslint-disable-line
 	const key = calcKey(name, collection);
 	registry.set(key, { pathData, ltr, accData });
 };
