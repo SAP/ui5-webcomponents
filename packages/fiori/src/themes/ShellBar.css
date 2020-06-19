@@ -255,7 +255,7 @@ slot[name="profile"] {
 	cursor: pointer;
 }
 
-:host(:not([logo])) .ui5-shellbar-menu-button {
+:host(:not([with-logo])) .ui5-shellbar-menu-button {
 	margin-left: 0;
 }
 
@@ -377,6 +377,12 @@ ui5-icon[data-count]::before {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 
+:host ::slotted([slot="logo"]) {
+	height: 1.675rem;
+	max-width: 3rem;
+	pointer-events: none;
+}
+
 /**
 * IE styles
 */
@@ -391,7 +397,7 @@ ui5-input:not([value-state]):not([readonly]):hover {
 	border: 1px solid var(--sapShell_InteractiveBorderColor);
 }
 
-ui5-input[value-state]:not([value-stat="None"])[focused] {
+ui5-input[value-state]:not([value-state="None"])[focused] {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 /* IE styles end */
