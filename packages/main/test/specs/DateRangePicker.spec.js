@@ -60,7 +60,7 @@ describe("DateRangePicker general interaction", () => {
 			return {firstDateValue, lastDateValue};
 		});
 
-		assert.strictEqual(res.firstDateValue, "2019-09-08T21:00:00.000Z", "The first date is in JS Date format");
-		assert.strictEqual(res.lastDateValue, "2019-10-09T21:00:00.000Z", "The last date is JS Date format");
+		assert.strictEqual(res.firstDateValue, "2019-09-09T00:00:00.000Z", "The first date is in JS Date format");
+		assert.strictEqual(res.lastDateValue, "2019-10-10T00:00:00.000Z", "The last date is JS Date format");
 	});
 });

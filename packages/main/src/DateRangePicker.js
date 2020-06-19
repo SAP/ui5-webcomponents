@@ -165,15 +165,18 @@ class DateRangePicker extends DatePicker {
 			return this;
 		}
 
-		if (value) {
-			dates = this._splitValueByDelimiter(value);
-			if (!isValid) {
-				this.valueState = ValueState.Error;
-				console.warn("Value can not be converted to a valid dates", this); // eslint-disable-line
-			} else {
-				this.valueState = ValueState.None;
-			}
+		if (!value) {
+			this.value = "";
+			return;
 		}
+
+		dates = this._splitValueByDelimiter(value);
+		if (!isValid) {
+			this.valueState = ValueState.Error;
+			console.warn("Value can not be converted to a valid dates", this); // eslint-disable-line
+			return;
+		}
+		this.valueState = ValueState.None;
 
 		this._firstDateTimestamp = this.getFormat().parse(dates[0]).getTime() / 1000;
 		this._lastDateTimestamp = this.getFormat().parse(dates[1]).getTime() / 1000;
@@ -226,7 +229,8 @@ class DateRangePicker extends DatePicker {
 	 * @public
 	 */
 	get firstDateValue() {
-		return new Date(this._firstDateTimestamp * 1000);
+		const dateValue = new Date(this._firstDateTimestamp * 1000);
+		return new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate()));
 	}
 
 	/**
@@ -237,7 +241,8 @@ class DateRangePicker extends DatePicker {
 	 * @public
 	 */
 	get lastDateValue() {
-		return new Date(this._lastDateTimestamp * 1000);
+		const dateValue = new Date(this._lastDateTimestamp * 1000);
+		return new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate()));
 	}
 
 	get _placeholder() {
