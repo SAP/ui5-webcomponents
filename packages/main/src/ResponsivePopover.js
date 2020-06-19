@@ -33,33 +33,23 @@ const metadata = {
 			type: Boolean,
 		},
 
+		hideHeader: {
+			type: Boolean,
+		},
+
+		hideFooter: {
+			type: Boolean,
+		},
+
+		showCloseButton: {
+			type: Boolean,
+		},
+
 		/**
 		 * Defines if padding would be added around the content.
 		 * @private
 		 */
 		withPadding: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
-		 * By default both the header and footer would be displayed.
-		 * @private
-		 */
-		contentOnlyOnDesktop: {
-			type: Boolean,
-		},
-
-
-		showPopoverFooter: {
-			type: Boolean,
-		},
-
-		/**
-		 * Used internaly for controls which must not have header.
-		 * @private
-		 */
-		_hideHeader: {
 			type: Boolean,
 		},
 
@@ -97,7 +87,7 @@ class ResponsivePopover extends UI5Element {
 	}
 
 	static get styles() {
-		return [...Popover.styles, ResponsivePopoverCss];
+		return [ResponsivePopoverCss];
 	}
 
 	static get template() {
@@ -155,7 +145,6 @@ class ResponsivePopover extends UI5Element {
 
 	close() {
 		const popup = this.getPopup();
-
 		popup.close();
 	}
 
@@ -217,7 +206,7 @@ class ResponsivePopover extends UI5Element {
 			return true;
 		}
 
-		return this.footer.length && this.showPopoverFooter;
+		return this.footer.length && !this.contentOnlyOnDesktop;
 	}
 
 	get styles() {

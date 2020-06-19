@@ -319,7 +319,8 @@ class ComboBox extends UI5Element {
 	onBeforeRendering() {
 		const domValue = this._initialRendering ? this.value : this.filterValue;
 
-		this._filteredItems = this._filterItems(this._showAllitems ? "" : domValue);
+		// this._filteredItems = this._filterItems(this._showAllitems ? "" : domValue);
+		this._filteredItems = this._filterItems(domValue);
 
 		if (this._autocomplete && domValue !== "") {
 			this._autoCompleteValue(domValue);
@@ -539,6 +540,10 @@ class ComboBox extends UI5Element {
 			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
+	}
+
+	get hideHeaderAndFooter() {
+		return !isPhone();
 	}
 
 	static async onDefine() {

@@ -1,5 +1,12 @@
 const assert = require("chai").assert;
 
+const closePicker = id => {
+	const staticAreaItemClassName = browser.getStaticAreaItemClassName(id);
+	const cancelBtn = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("#close");
+
+	cancelBtn.click();
+}
+
 
 describe("Duration Picker general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/DurationPicker.html");
@@ -8,9 +15,8 @@ describe("Duration Picker general interaction", () => {
 		const durationPicker = browser.$("#duration-picker1")
 		const duratationPickerIcon = durationPicker.shadow$(".ui5-duration-picker-input-icon-button");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#duration-picker1");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").shadow$("ui5-popover");
 
-		
 		duratationPickerIcon.click();
 
 		assert.isOk(durationPicker.getProperty("_isPickerOpen"), "Popover is opened");
@@ -27,7 +33,6 @@ describe("Duration Picker general interaction", () => {
 		const durationPicker = browser.$("#duration-picker4")
 		const duratationPickerIcon = durationPicker.shadow$(".ui5-duration-picker-input-icon-button");
 
-		
 		duratationPickerIcon.click();
 
 		// The default slot
@@ -35,13 +40,15 @@ describe("Duration Picker general interaction", () => {
 		assert.strictEqual(durationPicker.getProperty("_maxValue")[0], "05", "max value is read correctly");
 		assert.strictEqual(durationPicker.getProperty("_maxValue")[1], "10", "max value is read correctly");
 		assert.strictEqual(durationPicker.getProperty("_maxValue")[2], "08", "max value is read correctly");
+
+		closePicker("#duration-picker4");
 	});
 
 	it("Tests seconds-step property", () => {
 		const durationPicker = browser.$("#duration-picker6");
 
 		assert.strictEqual(durationPicker.getProperty("value"), "05:10:00", "The initial value is taking in consideration the seconds-step property");
-		
+
 		durationPicker.click();
 		durationPicker.keys("Backspace");
 		durationPicker.keys("2");

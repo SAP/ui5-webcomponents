@@ -9,7 +9,8 @@ describe("ResponsivePopover general interaction", () => {
 
 		btnOpenPopover.click();
 		
-		const popover = browser.$("#respPopover");
+		const rpo = browser.$("#respPopover")
+		const popover = rpo.shadow$("ui5-popover");
 		const header = popover.shadow$(".ui5-popup-header-root");
 
 		assert.ok(popover.isDisplayedInViewport(), "ResponsivePopover is opened.");
@@ -21,11 +22,11 @@ describe("ResponsivePopover general interaction", () => {
 
 	it("header and footer are hidden on desktop", () => {
 		const btnOpenPopover = $("#btnOpen3");
-
 		btnOpenPopover.click();
 
-		const popover = browser.$("#respPopover3");
-		const header = popover.shadow$(".ui5-popup-header-root");
+		const rpo = browser.$("#respPopover3");
+		const popover = rpo.shadow$("ui5-popover");
+		const header = rpo.shadow$(`slot[name="header"]`);
 
 		assert.ok(popover.isDisplayedInViewport(), "ResponsivePopover is opened.");
 		assert.ok(!header.isExisting(), "Header is not displayed.");

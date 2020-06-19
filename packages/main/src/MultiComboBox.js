@@ -743,6 +743,10 @@ class MultiComboBox extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
+	get hideHeaderAndFooter() {
+		return !isPhone();
+	}
+
 	get _iconAccessibleNameText() {
 		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
 	}

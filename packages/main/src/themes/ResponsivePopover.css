@@ -1,4 +1,13 @@
 :host,
 .ui5-rpo-root {
-	display: contents;
+	display: inline; /* Change this to display: contents once IE is dropped */
+}
+
+.ui5-responsive-popover-header {
+	height: 3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 .25rem;
+	box-sizing: border-box;
 }

@@ -1,11 +1,12 @@
 <ui5-responsive-popover
 	no-arrow
-	content-only-on-desktop
+	?hide-header={{hideHeaderAndFooter}}
+	?hide-footer={{hideHeaderAndFooter}}
 	prevent-focus-restore
 	_disable-initial-focus
 	placement-type="Bottom"
 	horizontal-align="Left"
-	@ui5-before-оpen={{_beforeOpenPopover}}
+	@ui5-before-open={{_beforeOpenPopover}}
 	@ui5-after-open={{_afterOpenPopover}}
 	@ui5-after-close={{_afterClosePopover}}
 >

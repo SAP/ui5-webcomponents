@@ -7,19 +7,19 @@
 	no-arrow
 	with-padding
 	no-stretch
-	content-only-on-desktop
+	prevent-focus-restore
+	?hide-footer={{hideFooter}}
+	?hide-header={{hideHeader}}
+	?show-close-button={{hideHeaderAndFooter}}
 	@ui5-after-close="{{_respPopoverConfig.afterClose}}"
 	@ui5-after-open="{{_respPopoverConfig.afterOpen}}"
 >
-	{{#if showHeader}}
-		{{> header}}
-	{{/if}}
+
+	{{> header}}
 
 	{{> content}}
 
-	{{#if showFooter}}
-		{{> footer}}
-	{{/if}}
+	{{> footer}}
 </ui5-responsive-popover>
 
 {{#*inline "header"}}

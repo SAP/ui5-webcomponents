@@ -7,8 +7,8 @@ const openPickerById = (id, options) => {
 }
 
 const closePickerById = id => {
-	return browser.execute(id => {
-		return document.querySelector(`#${id}`).closePicker();
+	return browser.execute(async (id, done) => {
+		return (await document.querySelector(`#${id}`).closePicker())
 	}, id);
 }
 
@@ -45,16 +45,18 @@ describe("DateTimePicker general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/DateTimePicker.html");
 
 	it("tests picker opens/closes programmatically", () => {
+
 		// act
 		openPickerById("dt");
+		browser.setTimeout({ script: 1000 });
 
 		// assert
 		assert.ok(isPickerOpen("dt"), "The picker opens programmatically.");
 
 		// act
 		closePickerById("dt");
+		browser.setTimeout({ script: 1000 });
 
-		// assert
 		assert.ok(!isPickerOpen("dt"), "The picker closes programmatically.");
 	});
 
@@ -64,6 +66,7 @@ describe("DateTimePicker general interaction", () => {
 
 		// act
 		openPickerById("dtSeconds");
+		browser.setTimeout({ script: 1000 });
 
 		// assert
 		const currentValue = dtPicker.shadow$("ui5-input").getValue();
@@ -83,7 +86,8 @@ describe("DateTimePicker general interaction", () => {
 		picker.$(".ui5-dt-minutes-wheel").setProperty("value","02");
 		picker.$(".ui5-dt-seconds-wheel").setProperty("value","03");
 		picker.$("#ok").click();
-
+		browser.setTimeout({ script: 1000 });
+		
 		// assert
 		const newValue = dtPicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(newValue.toUpperCase(), "14/04/2020, 01:02:03 AM", "The new date/time is correctly selected.");

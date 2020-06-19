@@ -30,6 +30,7 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import datePickerCss from "./generated/themes/DatePicker.css.js";
 import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 /**
  * @public
@@ -191,7 +192,7 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		_respPopoverConfig: {
+		getPickerConfig: {
 			type: Object,
 		},
 
@@ -322,7 +323,8 @@ class DatePicker extends UI5Element {
 		this._respPopoverConfig = {
 			allowTargetOverlap: true,
 			stayOpenOnScroll: true,
-			afterClose: () => {
+			afterClose: async () => {
+				const picker = await this.getPicker();
 				this._isPickerOpen = false;
 
 				if (isPhone()) {
@@ -333,14 +335,16 @@ class DatePicker extends UI5Element {
 					this._focusInputAfterClose = false;
 				}
 
-				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+				const calendar = picker.querySelector(`#${this._id}-calendar`);
+
 				if (calendar) {
 					calendar._hideMonthPicker();
 					calendar._hideYearPicker();
 				}
 			},
-			afterOpen: () => {
-				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+			afterOpen: async () => {
+				const picker = await this.getPicker();
+				const calendar = picker.querySelector(`#${this._id}-calendar`);
 
 				if (!calendar) {
 					return;
@@ -471,9 +475,11 @@ class DatePicker extends UI5Element {
 		this.fireEvent("input", { value: nextValue, valid: isValid });
 	}
 
-	_click(event) {
+	async _click(event) {
+		const picker = await this.getPicker();
+
 		if (isPhone()) {
-			this.responsivePopover.open(this);
+			picker.open(this);
 			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -574,12 +580,12 @@ class DatePicker extends UI5Element {
 		return isPhone();
 	}
 
-	get showHeader() {
-		return this.phone;
+	get hideHeader() {
+		return !this.phone;
 	}
 
-	get showFooter() {
-		return this.phone;
+	get hideFooter() {
+		return !this.phone;
 	}
 
 	getFormat() {
@@ -639,9 +645,8 @@ class DatePicker extends UI5Element {
 		return getRTL() ? "rtl" : "ltr";
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+	async getPicker() {
+		return (await this.getStaticAreaItemDomRef()).querySelector("ui5-responsive-popover");
 	}
 
 	_canOpenPicker() {
@@ -707,8 +712,8 @@ class DatePicker extends UI5Element {
 	 * Closes the picker.
 	 * @public
 	 */
-	closePicker() {
-		this.responsivePopover.close();
+	async closePicker() {
+		(await this.getPicker()).close();
 	}
 
 	/**
@@ -719,15 +724,15 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	async openPicker(options) {
+		const picker = await this.getPicker();
 		this._isPickerOpen = true;
-		this.responsivePopover = await this._respPopover();
 		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;
 		}
 
-		this.responsivePopover.open(this);
+		picker.open(this);
 	}
 
 	togglePicker() {

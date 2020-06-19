@@ -28,6 +28,7 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import TabLayout from "./types/TabLayout.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 const SCROLL_STEP = 128;
 
@@ -473,6 +474,10 @@ class TabContainer extends UI5Element {
 
 	_getHeaderScrollContainer() {
 		return this.shadowRoot.querySelector(`#${this._id}-headerScrollContainer`);
+	}
+
+	get isDesktop() {
+		return !isPhone();
 	}
 
 	async _respPopover() {

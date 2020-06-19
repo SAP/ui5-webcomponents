@@ -21,6 +21,8 @@
 }
 
 .ui5-popup-root {
+	max-height: 94vh;
+	max-width: 90vw;
 	display: flex;
 	flex-direction: column;
 }

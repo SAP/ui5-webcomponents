@@ -109,7 +109,7 @@ describe("Select general interaction", () => {
 	it("opens upon space", () => {
 		const btn = $("#myBtn2");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");
@@ -121,7 +121,7 @@ describe("Select general interaction", () => {
 	it("toggles upon F4", () => {
 		const btn = $("#myBtn2");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");
@@ -136,7 +136,7 @@ describe("Select general interaction", () => {
 	it("toggles upon ALT + UP", () => {
 		const btn = $("#myBtn2");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");
@@ -151,7 +151,7 @@ describe("Select general interaction", () => {
 	it("toggles upon ALT + DOWN", () => {
 		const btn = $("#myBtn2");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");

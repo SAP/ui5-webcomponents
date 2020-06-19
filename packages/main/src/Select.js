@@ -9,6 +9,7 @@ import {
 	isShow,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -217,7 +218,6 @@ class Select extends UI5Element {
 		this._syncedOptions = [];
 		this._selectedIndex = -1;
 		this._selectedIndexBeforeOpen = -1;
-		this._escapePressed = false;
 		this._lastSelectedOption = null;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
@@ -371,11 +371,13 @@ class Select extends UI5Element {
 		li && li.focus();
 	}
 
-	_handlePickerKeydown(event) {
-		this._handleArrowNavigation(event, false);
+	async _handlePickerKeydown(event) {
+		const isOpen = await this.isOpen();
+
+		this._handleArrowNavigation(event, false, isOpen);
 	}
 
-	_handleArrowNavigation(event, shouldFireEvent) {
+	_handleArrowNavigation(event, shouldFireEvent, isOpen) {
 		let nextIndex = -1;
 		const isDownKey = isDown(event);
 		const isUpKey = isUp(event);
@@ -397,10 +399,6 @@ class Select extends UI5Element {
 			}
 		}
 
-		if (isEscape(event) && this._isPickerOpen) {
-			this._escapePressed = true;
-		}
-
 		if (isEnter(event) || isSpace(event)) {
 			this._shouldClosePopover = true;
 		}
@@ -419,12 +417,11 @@ class Select extends UI5Element {
 		this._lastSelectedOption = this.options[this._selectedIndex];
 	}
 
-	_afterClose() {
+	_beforeClose(event) {
 		this._iconPressed = false;
 
-		if (this._escapePressed) {
+		if (event.detail.escPressed) {
 			this._select(this._selectedIndexBeforeOpen);
-			this._escapePressed = false;
 		} else if (this._lastSelectedOption !== this.options[this._selectedIndex]) {
 			this._fireChangeEvent(this.options[this._selectedIndex]);
 			this._lastSelectedOption = this.options[this._selectedIndex];
@@ -480,6 +477,10 @@ class Select extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
+	}
+
+	get hideHeaderAndFooter() {
+		return !isPhone();
 	}
 
 	static async onDefine() {

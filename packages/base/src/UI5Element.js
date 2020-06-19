@@ -612,6 +612,9 @@ class UI5Element extends HTMLElement {
 	_fireEvent(name, data, cancelable) {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
 
+		// TODO: Check this
+		name = name.startsWith("ui5-") ? name.split("ui5-")[1] : name;
+
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
 			detail: data,
 			composed: false,

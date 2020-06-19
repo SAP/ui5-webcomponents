@@ -26,11 +26,14 @@
 {{/inline}}
 
 {{#*inline "header"}}
-	<header class="ui5-popup-header-root" id="ui5-popup-header">
 		{{#if header.length }}
-			<slot name="header"></slot>
+			<header class="ui5-popup-header-root" id="ui5-popup-header">
+				<slot name="header"></slot>
+			</header>
 		{{else}}
-			<h2 class="ui5-popup-header-text" id="ui5-popup-header">{{headerText}}</h2>
+			<header class="ui5-popup-header-root">
+				<h2 class="ui5-popup-header-text" id="ui5-popup-header">{{headerText}}</h2>
+			</header>
 		{{/if}}
 	</header>
 {{/inline}}

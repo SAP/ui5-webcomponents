@@ -27,7 +27,7 @@ describe("Dialog general interaction", () => {
 		select.click();
 
 		const dialogZIndex = parseInt(browser.$("#dialog").getCSSProperty('z-index').value);
-		const popoverZIndex = parseInt(browser.$(`.${select.getProperty("_id")}`).shadow$("ui5-responsive-popover").getCSSProperty('z-index').value);
+		const popoverZIndex = parseInt(browser.$(`.${select.getProperty("_id")}`).shadow$("ui5-responsive-popover").shadow$("ui5-popover").getCSSProperty('z-index').value);
 
 		assert.ok(popoverZIndex > dialogZIndex, "Popover is above dialog.");
 	});

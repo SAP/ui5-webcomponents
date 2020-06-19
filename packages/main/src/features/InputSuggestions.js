@@ -193,7 +193,7 @@ class Suggestions {
 	}
 
 	isOpened() {
-		return !!(this.responsivePopover && this.responsivePopover.opened);
+		return !!(this.responsivePopover && this.responsivePopover.isOpen());
 	}
 
 	_handleItemNavigation(forward) {

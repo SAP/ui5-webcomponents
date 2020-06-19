@@ -105,7 +105,7 @@
 
 			pickers.click(function(e) {
 				if (!this.isOpen() && this.getSemanticTargetInfo(e.originalEvent).isInput) {
-					this.setAttribute('value-state', 'None');
+					// this.setAttribute('value-state', 'None');
 					this.openPicker({ focusInput: true });
 				}
 			});

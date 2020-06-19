@@ -2,10 +2,10 @@
 	id="{{_id}}-overflowMenu"
 	horizontal-align="Right"
 	placement-type="Bottom"
-	content-only-on-desktop
+	hide-header
+	?hide-footer={{isDesktop}}
 	with-padding
 	no-arrow
-	_hide-header
 >
 	<ui5-list @ui5-item-press="{{_onOverflowListItemSelect}}">
 		{{#each items}}

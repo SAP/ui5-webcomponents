@@ -38,25 +38,28 @@
 </div>
 
 {{#*inline "footer"}}
-	{{#if showFooter}}
+	{{#unless hideFooter}}
 		<slot slot="footer" name="footer"></slot>
-	{{/if}}
+	{{/unless}}
 {{/inline}}
 
 {{#*inline "header"}}
-	{{#if showHeader}}
+	{{#unless hideHeader}}
 		{{#if header.length}}
 			<slot slot="header" name="header"></slot>
 		{{else}}
-			<header class="ui5-responsive-popover-header">
+			<header class="ui5-responsive-popover-header" slot="header">
 				<ui5-title level="H5" class="ui5-responsive-popover-header-text">{{headerText}}</ui5-title>
-				<ui5-button
-					icon="decline"
-					design="Transparent"
-					@click="{{close}}"
-				>
-				</ui5-button>
+
+				{{#if showCloseButton}}
+					<ui5-button
+						icon="decline"
+						design="Transparent"
+						@click="{{close}}"
+					>
+					</ui5-button>
+				{{/if}}
 			</header>
 		{{/if}}
-	{{/if}}
+	{{/unless}}
 {{/inline}}

@@ -344,8 +344,8 @@ class DateTimePicker extends DatePicker {
 		return this.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON);
 	}
 
-	get showFooter() {
-		return true;
+	get hideFooter() {
+		return false;
 	}
 
 	get showDateView() {

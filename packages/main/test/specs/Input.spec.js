@@ -59,7 +59,7 @@ describe("Input general interaction", () => {
 	it("Should open suggestions popover when focused", () => {
 		const input = $("#myInput2");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#myInput2");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").shadow$("ui5-popover");
 
 		// focus the input field which will display the suggestions
 		input.click();
@@ -136,7 +136,7 @@ describe("Input general interaction", () => {
 		const suggestionsInput = $("#myInput").shadow$("input");
 		const inputResult = $("#inputResult").shadow$("input");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#myInput")
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").shadow$("ui5-popover");
 
 		suggestionsInput.click();
 		suggestionsInput.keys("p");
