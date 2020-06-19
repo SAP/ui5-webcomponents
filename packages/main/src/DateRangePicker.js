@@ -1,7 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
 
@@ -99,51 +98,6 @@ class DateRangePicker extends DatePicker {
 		this.isFirstDatePick = true;
 	}
 
-	_handleInputLiveChange() {
-		const nextValue = this._getInput().getInputValue(),
-			emptyValue = nextValue === "",
-			isValid = emptyValue || (this.isValid(nextValue) && this.isInValidRange(nextValue));
-
-		this.value = nextValue;
-		this.fireEvent("input", { value: nextValue, valid: isValid });
-	}
-
-	onBeforeRendering() {
-		this._calendar.primaryCalendarType = this._primaryCalendarType;
-		this._calendar.formatPattern = this._formatPattern;
-
-
-		if (this.minDate && !super.isValid(this.minDate)) {
-			this.minDate = null;
-			console.warn(`In order for the "minDate" property to have effect, you should enter valid date format`); // eslint-disable-line
-		}
-
-		if (this.maxDate && !super.isValid(this.maxDate)) {
-			this.maxDate = null;
-			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
-		}
-		if (this.isValid(this.value) && this.isInValidRange(this.value)) {
-			this._changeCalendarSelection(this.timestamp);
-		} else {
-			this._calendar.selectedDates = [];
-		}
-
-		const FormSupport = getFeature("FormSupport");
-		if (FormSupport) {
-			FormSupport.syncNativeHiddenInput(this);
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-
-		if (this.minDate) {
-			this._calendar.minDate = this.minDate;
-		}
-
-		if (this.maxDate) {
-			this._calendar.maxDate = this.maxDate;
-		}
-	}
-
 	async onAfterRendering() {
 		this.responsivePopover = await this._respPopover();
 		const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
@@ -202,31 +156,37 @@ class DateRangePicker extends DatePicker {
 		return returnValue;
 	}
 
-	setValue(value) {
+	_setValue(value) {
 		const emptyValue = value === "",
-			isValid = emptyValue || this.isValid(value),
-			isInValidRange = this.isInValidRange(value);
+			isValid = emptyValue || this._checkValueValidity(value);
 		let dates = [undefined, undefined];
 
-		if (value === this.value) {
+		if (value === this._prevValue) {
 			return this;
 		}
 
 		if (value) {
 			dates = this._splitValueByDelimiter(value);
-			if (isValid && isInValidRange) {
-				this.valueState("Error");
+			if (!isValid) {
+				this.valueState = ValueState.Error;
 				console.warn("Value can not be converted to a valid dates", this); // eslint-disable-line
+			} else {
+				this.valueState = ValueState.None;
 			}
 		}
 
-		this._firstDateTimestamp = this._getTimeStampFromString(dates[0]);
-		this._lastDateTimestamp = this._getTimeStampFromString(dates[1]);
-		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp, this._lastDateTimestamp);
-		this.value = value;
-		this._getInput().setValue(value);
+		this._firstDateTimestamp = this.getFormat().parse(dates[0]).getTime() / 1000;
+		this._lastDateTimestamp = this.getFormat().parse(dates[1]).getTime() / 1000;
 
-		return this;
+		if (this._firstDateTimestamp > this._lastDateTimestamp) {
+			const temp = this._firstDateTimestamp;
+			this._firstDateTimestamp = this._lastDateTimestamp;
+			this._lastDateTimestamp = temp;
+		}
+
+		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp * 1000, this._lastDateTimestamp * 1000);
+		this.value = this._formatValue(this._firstDateTimestamp, this._lastDateTimestamp);
+		this._prevValue = this.value;
 	}
 
 	_changeCalendarSelection(focusTimestamp) {
@@ -241,14 +201,15 @@ class DateRangePicker extends DatePicker {
 
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
-		if (this.value) {
+		if (this.value && this._checkValueValidity(this.value)) {
 			this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._getTimeStampFromString(dates[0]), this._getTimeStampFromString(dates[1]));
 		}
 	}
 
 	get _calendarDate() {
 		const dates = this._splitValueByDelimiter(this.value),
-			millisecondsUTCFirstDate = dates[0] ? this.getFormat().parse(dates[0], true).getTime() : this.getFormat().parse(this.validValue, true).getTime(),
+			value = this._checkValueValidity(this.value) ? dates[0] : this.getFormat().format(new Date()),
+			millisecondsUTCFirstDate = value ? this.getFormat().parse(value, true).getTime() : this.getFormat().parse(this.validValue, true).getTime(),
 			oCalDateFirst = CalendarDate.fromTimestamp(
 				millisecondsUTCFirstDate - (millisecondsUTCFirstDate % (24 * 60 * 60 * 1000)),
 				this._primaryCalendarType
@@ -265,7 +226,7 @@ class DateRangePicker extends DatePicker {
 	 * @public
 	 */
 	get firstDateValue() {
-		return this.getFormat().parse(this.value);
+		return new Date(this._firstDateTimestamp * 1000);
 	}
 
 	/**
@@ -276,7 +237,7 @@ class DateRangePicker extends DatePicker {
 	 * @public
 	 */
 	get lastDateValue() {
-		return this.getFormat().parse(this.value);
+		return new Date(this._lastDateTimestamp * 1000);
 	}
 
 	get _placeholder() {
@@ -286,21 +247,22 @@ class DateRangePicker extends DatePicker {
 	_handleInputChange() {
 		const nextValue = this._getInput().getInputValue(),
 			emptyValue = nextValue === "",
-			isValid = emptyValue || this.isValid(nextValue),
-			isInValidRange = this.isInValidRange(nextValue);
+			isValid = emptyValue || this._checkValueValidity(nextValue);
 
-		if (isValid && isInValidRange) {
-			this.setValue(nextValue);
+		if (isValid) {
+			this._setValue(nextValue);
 			this.valueState = ValueState.None;
 		} else {
 			this.valueState = ValueState.Error;
 		}
 
-
-		this.value = nextValue;
 		this.fireEvent("change", { value: nextValue, valid: isValid });
 		// Angular two way data binding
 		this.fireEvent("value-changed", { value: nextValue, valid: isValid });
+	}
+
+	_checkValueValidity(value) {
+		return this.isValid(value) && this.isInValidRange(value);
 	}
 
 	isValid(value) {
@@ -408,20 +370,15 @@ class DateRangePicker extends DatePicker {
 	_updateValueCalendarSelectedDatesChange() {
 		// Collect both dates and merge them into one
 		this.value = this._formatValue(this._firstDateTimestamp, this._lastDateTimestamp);
+		this._prevValue = this.value;
 	}
 
 	_formatValue(firstDateValue, lastDateValue) {
 		let value = "";
 		const delimiter = this.delimiter,
 			format = this.getFormat(),
-			firstDateString = format.format(new Date(CalendarDate.fromTimestamp(
-				firstDateValue * 1000,
-				this._primaryCalendarType
-			).valueOf()), true),
-			lastDateString = format.format(new Date(CalendarDate.fromTimestamp(
-				lastDateValue * 1000,
-				this._primaryCalendarType
-			).valueOf()), true);
+			firstDateString = format.format(new Date(firstDateValue * 1000)),
+			lastDateString = format.format(new Date(lastDateValue * 1000));
 
 		if (firstDateValue) {
 			if (delimiter && delimiter !== "" && lastDateString && lastDateString !== firstDateString) {

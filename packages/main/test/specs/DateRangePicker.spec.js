@@ -43,4 +43,24 @@ describe("DateRangePicker general interaction", () => {
 
 		assert.strictEqual(dayPicker.getProperty("timestamp"), firstDateTimestamp, "The first date is selected");
 	});
+
+	it("firstDateValue and lastDateValue getter", () => {
+		const daterangepicker = browser.$("#daterange-picker4");
+
+		daterangepicker.click();
+		daterangepicker.keys("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+		daterangepicker.keys("09/09/2019 - 10/10/2019");
+		daterangepicker.keys("Enter");
+
+		const res = browser.execute(() => {
+			const myDRP = document.getElementById("daterange-picker4");
+			const firstDateValue = myDRP.firstDateValue;
+			const lastDateValue = myDRP.lastDateValue;
+
+			return {firstDateValue, lastDateValue};
+		});
+
+		assert.strictEqual(res.firstDateValue, "2019-09-08T21:00:00.000Z", "The first date is in JS Date format");
+		assert.strictEqual(res.lastDateValue, "2019-10-09T21:00:00.000Z", "The last date is JS Date format");
+	});
 });
