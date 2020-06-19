@@ -1,7 +1,5 @@
-commit 58f3f43315af698990a2e241e68d1dfeea518485
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jun 19 07:15:33 2020 +0300
+commit 42998c7e217f3de4cc77cc2c3e424925e971494a
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Jun 19 14:20:45 2020 +0300
 
-    chore: fix typo in isNodeHidden (#1835)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1834
+    fix(ui5-tabcontainer): fix box-shadow (#1829)
