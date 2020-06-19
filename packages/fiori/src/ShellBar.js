@@ -195,8 +195,8 @@ const metadata = {
 		},
 
 		/**
-		 * Dfines the logo of the ShellBar.
-		 * For example, uou can use <code>ui5-avatar</code> or <code>img</code> elements as logo.
+		 * Defines the logo of the <code>ui5-shellbar</code>.
+		 * For example, you can use <code>ui5-avatar</code> or <code>img</code> elements as logo.
 		 * @type {HTMLElement}
 		 * @slot
 		 * @since 1.0.0-rc.8

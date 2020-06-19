@@ -377,7 +377,7 @@ ui5-icon[data-count]::before {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 
-:host ::slotted([slot="logo"]) {
+::slotted([slot="logo"]) {
 	height: 1.675rem;
 	max-width: 3rem;
 	pointer-events: none;
