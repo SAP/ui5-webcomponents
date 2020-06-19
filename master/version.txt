@@ -1,5 +1,7 @@
-commit 99a21afda6b17237a07dfa6d806b1e2dce9877d9
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Jun 18 01:27:10 2020 -0700
+commit 58f3f43315af698990a2e241e68d1dfeea518485
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jun 19 07:15:33 2020 +0300
 
-    Translation Delivery (#1809)
+    chore: fix typo in isNodeHidden (#1835)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1834
