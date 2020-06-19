@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 
-    <title>Button</title>
+    <title>Custom Popup</title>
 
     <script data-ui5-config type="application/json">
         {
@@ -47,17 +47,9 @@
 <ui5-button id="openDialogButton">Open Popup</ui5-button>
 
 <ui5-custom-popup id="hello-dialog" modal>
-	<div class="root">
-		<h1 class="header">
-			Hello World
-			<ui5-button @click="${context.close}">Header Button</ui5-button>
-		</h1>
-		<div class="container">
-			Custom Popup here!
-			<ui5-button>content button 1</ui5-button>
-			<ui5-button>content button 2</ui5-button>
-		</div>
-	</div>
+	Custom Popup here!
+	<ui5-button>content button 1</ui5-button>
+	<ui5-button>content button 2</ui5-button>
 </ui5-custom-popup>
 
 <script>

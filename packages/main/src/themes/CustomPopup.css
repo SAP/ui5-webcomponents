@@ -1,3 +1,4 @@
+/*
 :host {
     width: 100vw;
     height: 100vh;
@@ -5,4 +6,26 @@
     position: fixed;
     top: 0;
     left: 0;
+}
+*/
+
+:host {
+    display: none;
+    position:relative;
+}
+.root {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.header {
+    color: white;
+    text-align: center;
+}
+.container {
+    background: white;
+    border-radius: 4px;
+    margin: 1rem;
+    padding: 3rem;
 }

@@ -48,7 +48,12 @@ class CustomPopup extends Popup {
 	}
 
 	get isModal() {
-		return this.modal;
+		return true;
+		// return this.modal;
+	}
+
+	show() {
+		this.style.display = "block";
 	}
 
 	/**

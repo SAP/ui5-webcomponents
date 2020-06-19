@@ -1,6 +1,10 @@
 import isNodeHidden from "./isNodeHidden.js";
 import isNodeClickable from "./isNodeClickable.js";
 
+const isFocusTrap = el => {
+	return el.classList.contains("first-fe") || el.classList.contains("last-fe");
+};
+
 const getFirstFocusableElement = container => {
 	if (!container || isNodeHidden(container)) {
 		return null;
@@ -19,7 +23,10 @@ const getLastFocusableElement = container => {
 
 const findFocusableElement = (container, forward) => {
 	let child;
-	if (container.assignedNodes && container.assignedNodes()) {
+
+	if (container.shadowRoot) {
+		child = forward ? container.shadowRoot.firstChild : container.shadowRoot.lastChild;
+	} else if (container.assignedNodes && container.assignedNodes()) {
 		const assignedElements = container.assignedNodes();
 		child = forward ? assignedElements[0] : assignedElements[assignedElements.length - 1];
 	} else {
@@ -36,7 +43,7 @@ const findFocusableElement = (container, forward) => {
 			return null;
 		}
 
-		if (child.nodeType === 1 && !isNodeHidden(child)) {
+		if (child.nodeType === 1 && !isNodeHidden(child) && !isFocusTrap(child)) {
 			if (isNodeClickable(child)) {
 				return (child && typeof child.focus === "function") ? child : null;
 			}

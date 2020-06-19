@@ -1,5 +1,12 @@
-<span class="first-fe" tabindex="0" @focusin={{forwardToLast}}></span>
+<section class="root" role="dialog">
+	<span class="first-fe" tabindex="0" @focusin={{forwardToLast}}></span>
 
-<slot></slot>
+	<h1 class="header">
+		Hello World
+		<ui5-button @click={{close}}>Header Button</ui5-button>
+	</h1>
 
-<span class="last-fe" tabindex="0" @focusin={{forwardToFirst}}></span>
+	<div class="container"><slot></slot></div>
+
+	<span class="last-fe" tabindex="0" @focusin={{forwardToFirst}}></span>
+</section>
