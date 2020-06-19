@@ -22,7 +22,7 @@ import { ${accData.key} } from "../generated/i18n/i18n-defaults.js";
 
 const name = "${name}";
 const pathData = "${pathData}";
-const ltr = "${ltr}";
+const ltr = ${ltr};
 const accData = ${accData.key};
 
 registerIcon(name, { pathData, ltr, accData });
@@ -32,17 +32,14 @@ export default { pathData, accData };`;
 
 const createIcons = (file) => {
 	const json = JSON.parse(fs.readFileSync(file));
-	for (let name in json.data) {
-		let content;
-		const pathData = json.data[name].path;
-		const ltr = !!json.data[name].ltr;
-		const accData = json.accData[name];
 
-		if (accData) {
-			content = accTemplate(name, pathData, ltr, accData);
-		} else {
-			content = template(name, pathData, ltr);
-		}
+	for (let name in json.data) {
+		const iconData = json.data[name];
+		const pathData = iconData.path;
+		const ltr = !!iconData.ltr;
+		const acc = iconData.acc;
+
+		const content = acc ? accTemplate(name, pathData, ltr, acc) : template(name, pathData, ltr);
 
 		fs.writeFileSync(path.join(destDir, `${name}.js`), content);
 	}

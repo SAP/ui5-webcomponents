@@ -261,7 +261,7 @@ class Icon extends UI5Element {
 
 		this.pathData = iconData.pathData;
 		this.accData = iconData.accData;
-		this.ltr = iconData.ltr === "true";
+		this.ltr = iconData.ltr;
 	}
 
 	get hasIconTooltip() {
