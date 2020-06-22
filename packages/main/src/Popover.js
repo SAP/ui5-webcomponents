@@ -324,7 +324,7 @@ class Popover extends Popup {
 		}
 
 		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
-			this.style.display = "block";
+			super.show();
 			this.style.width = this._width;
 			return;
 		}
@@ -340,7 +340,7 @@ class Popover extends Popup {
 
 		this.style.left = `${popoverOnLeftBorder ? Popover.MIN_OFFSET : this._left}px`;
 		this.style.top = `${popoverOnTopBorder ? Popover.MIN_OFFSET : this._top}px`;
-		this.style.display = "block";
+		super.show();
 
 		if (stretching && this._width) {
 			this.style.width = this._width;
