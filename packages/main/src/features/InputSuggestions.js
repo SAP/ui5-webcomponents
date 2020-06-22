@@ -280,12 +280,13 @@ class Suggestions {
 		const rectInput = this._getComponent().getDomRef().getBoundingClientRect();
 		const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
 
-		return (rectItem.top <= windowHeight) && (rectItem.top >= rectInput.top);
+		return (rectItem.top + Suggestions.SCROLL_STEP <= windowHeight) && (rectItem.top >= rectInput.top);
 	}
 
-	_scrollItemIntoView(item) {
-		const pos = item.getDomRef().offsetTop - Suggestions.SCROLL_STEP;
-		this._getScrollContainer().scrollTop = pos;
+	async _scrollItemIntoView(item) {
+		const pos = item.getDomRef().offsetTop;
+		const scrollContainer  = await this._getScrollContainer();
+		scrollContainer.scrollTop = pos;
 	}
 
 	async _getScrollContainer() {
@@ -338,7 +339,7 @@ class Suggestions {
 	}
 }
 
-Suggestions.SCROLL_STEP = 48;
+Suggestions.SCROLL_STEP = 60;
 
 // The List and Popover components would be rendered
 // by the issuer component`s template.
