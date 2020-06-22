@@ -19,34 +19,12 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
-		 * Defines the content of the Web Component.
+		 * Defines the content of the Popup.
 		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the header HTML Element.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		header: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the footer HTML Element.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		footer: {
 			type: HTMLElement,
 		},
 	},
@@ -59,19 +37,6 @@ const metadata = {
 		 * @public
 		 */
 		initialFocus: {
-			type: String,
-		},
-
-		/**
-		 * Defines the header text.
-		 * <br><br>
-		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		headerText: {
 			type: String,
 		},
 
@@ -403,26 +368,38 @@ class Popup extends UI5Element {
 	get isModal() {} // eslint-disable-line
 
 	/**
-	 * Hook for descendants to hide header.
-	 * @abstract
+	 * Return the ID of an element in the shadow DOM that is going to label this popup
+	 *
 	 * @protected
+	 * @abstract
+	 * @returns {String}
 	 */
-	get _displayHeader() {} // eslint-disable-line
+	get _ariaLabelledBy() {} // eslint-disable-line
 
 	/**
-	 * Hook for descendants to hide footer.
-	 * @abstract
+	 * Return the value for aria-modal for this popup
+	 *
 	 * @protected
+	 * @abstract
+	 * @returns {String}
 	 */
-	get _displayFooter() {} // eslint-disable-line
+	get _ariaModal() {} // eslint-disable-line
+
 
 	get styles() {
 		return {
-			content: {},
 			root: {},
+			content: {},
 			blockLayer: {
 				"zIndex": (this._zIndex - 1),
 			},
+		};
+	}
+
+	get classes() {
+		return {
+			root: {},
+			content: {},
 		};
 	}
 }

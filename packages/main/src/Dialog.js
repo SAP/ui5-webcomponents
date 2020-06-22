@@ -4,6 +4,7 @@ import Popup from "./Popup.js";
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 // Styles
+import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 
 /**
@@ -11,7 +12,43 @@ import dialogCSS from "./generated/themes/Dialog.css.js";
  */
 const metadata = {
 	tag: "ui5-dialog",
+	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+		/**
+		 * Defines the header HTML Element.
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		header: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * Defines the footer HTML Element.
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		footer: {
+			type: HTMLElement,
+		},
+	},
 	properties: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
+		/**
+		 * Defines the header text.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		headerText: {
+			type: String,
+		},
+
 		/**
 		 * Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen.
 		 * <br><br>
@@ -78,23 +115,34 @@ class Dialog extends Popup {
 	}
 
 	static get styles() {
-		return [Popup.styles, dialogCSS];
+		return [PopupsCommonCss, dialogCSS];
 	}
 
 	onBeforeRendering() {
 		this.onPhone = isPhone();
 	}
 
-	get isModal() {
+	get isModal() { // Required by Popup.js
 		return true;
 	}
 
-	get _displayFooter() {
+	get _ariaLabelledBy() { // Required by Popup.js
+		return "ui5-popup-header";
+	}
+
+	get _ariaModal() { // Required by Popup.js
 		return true;
 	}
 
-	get _displayHeader() {
-		return true;
+	get classes() {
+		return {
+			root: {
+				"ui5-popup-root": true,
+			},
+			content: {
+				"ui5-popup-content": true,
+			},
+		};
 	}
 }
 

@@ -1,14 +1,15 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 import Popup from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
 import { getClosedPopupParent } from "./popup-utils/PopupUtils.js";
 
+// Template
+import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 // Styles
+import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 
 const arrowSize = 8;
@@ -19,6 +20,19 @@ const arrowSize = 8;
 const metadata = {
 	tag: "ui5-popover",
 	properties: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
+		/**
+		 * Defines the header text.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		headerText: {
+			type: String,
+		},
+
 		/**
 		 * Determines on which side the <code>ui5-popover</code> is placed at.
 		 * <br><br>
@@ -152,16 +166,6 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 		/**
-		 * Defines the content of the Web Component.
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: HTMLElement,
-		},
-
-		/**
 		 * Defines the header HTML Element.
 		 *
 		 * @type {HTMLElement[]}
@@ -229,7 +233,7 @@ class Popover extends Popup {
 	}
 
 	static get styles() {
-		return [Popup.styles, PopoverCss];
+		return [PopupsCommonCss, PopoverCss];
 	}
 
 	static get template() {
@@ -590,8 +594,16 @@ class Popover extends Popup {
 		return top;
 	}
 
-	get isModal() {
+	get isModal() { // Required by Popup.js
 		return this.modal;
+	}
+
+	get _ariaLabelledBy() { // Required by Popup.js
+		return "ui5-popup-header";
+	}
+
+	get _ariaModal() { // Required by Popup.js
+		return true;
 	}
 
 	get styles() {
@@ -602,6 +614,17 @@ class Popover extends Popup {
 			},
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
+			},
+		};
+	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-popup-root": true,
+			},
+			content: {
+				"ui5-popup-content": true,
 			},
 		};
 	}
