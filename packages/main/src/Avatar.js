@@ -237,9 +237,10 @@ class Avatar extends UI5Element {
 	}
 
 	get styles() {
+		const image = this.image.replace(/%/g, "%25").replace(/#/g, "%23");
 		return {
 			img: {
-				"background-image": `url("${encodeURIComponent(this.image)}")`,
+				"background-image": `url("${image}")`,
 			},
 		};
 	}
