@@ -7,39 +7,39 @@ const destDir = `dist/icons/`;
 
 mkdirp.sync(destDir);
 
-const template = (name, pathData) => `import { registerIcon } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+const template = (name, pathData, ltr) => `import { registerIcon } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 
 const name = "${name}";
 const pathData = "${pathData}";
+const ltr = ${ltr};
 
-registerIcon(name, { pathData });
+registerIcon(name, { pathData, ltr});
 
 export default { pathData };`;
 
-const accTemplate = (name, pathData, accData) => `import { registerIcon } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+const accTemplate = (name, pathData, ltr, accData) => `import { registerIcon } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import { ${accData.key} } from "../generated/i18n/i18n-defaults.js";
 
 const name = "${name}";
 const pathData = "${pathData}";
+const ltr = ${ltr};
 const accData = ${accData.key};
 
-registerIcon(name, { pathData, accData });
+registerIcon(name, { pathData, ltr, accData });
 
 export default { pathData, accData };`;
 
 
 const createIcons = (file) => {
 	const json = JSON.parse(fs.readFileSync(file));
-	for (let name in json.data) {
-		let content;
-		const pathData = json.data[name];
-		const accData = json.accData[name];
 
-		if (accData) {
-			content = accTemplate(name, pathData, accData);
-		} else {
-			content = template(name, pathData);
-		}
+	for (let name in json.data) {
+		const iconData = json.data[name];
+		const pathData = iconData.path;
+		const ltr = !!iconData.ltr;
+		const acc = iconData.acc;
+
+		const content = acc ? accTemplate(name, pathData, ltr, acc) : template(name, pathData, ltr);
 
 		fs.writeFileSync(path.join(destDir, `${name}.js`), content);
 	}

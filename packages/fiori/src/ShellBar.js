@@ -42,16 +42,6 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 
 		/**
-		 * Defines the <code>logo</code> source URI.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		logo: {
-			type: String,
-		},
-
-		/**
 		 * Defines the <code>primaryTitle</code>.
 		 * <br><br>
 		 * <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
@@ -132,7 +122,17 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * @private
+		 */
 		coPilotActive: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 */
+		withLogo: {
 			type: Boolean,
 		},
 
@@ -191,6 +191,18 @@ const metadata = {
 		 * @public
 		 */
 		profile: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * Defines the logo of the <code>ui5-shellbar</code>.
+		 * For example, you can use <code>ui5-avatar</code> or <code>img</code> elements as logo.
+		 * @type {HTMLElement}
+		 * @slot
+		 * @since 1.0.0-rc.8
+		 * @public
+		 */
+		logo: {
 			type: HTMLElement,
 		},
 
@@ -509,6 +521,7 @@ class ShellBar extends UI5Element {
 		const animationsOn = getAnimationMode() === AnimationMode.Full;
 		const coPilotAnimation = getFeature("CoPilotAnimation");
 		this.coPilot = coPilotAnimation && animationsOn ? coPilotAnimation : { animated: false };
+		this.withLogo = this.hasLogo;
 
 		this._hiddenIcons = this._itemsInfo.filter(info => {
 			const isHidden = (info.classes.indexOf("ui5-shellbar-hidden-button") !== -1);
@@ -909,11 +922,15 @@ class ShellBar extends UI5Element {
 	}
 
 	get hasFocusableLogo() {
-		return this.logo && !this.nonFocusableLogo;
+		return this.hasLogo && !this.nonFocusableLogo;
 	}
 
 	get hasNonFocusableLogo() {
-		return this.logo && this.nonFocusableLogo;
+		return this.hasLogo && this.nonFocusableLogo;
+	}
+
+	get hasLogo() {
+		return !!this.logo.length;
 	}
 
 	get showArrowDown() {

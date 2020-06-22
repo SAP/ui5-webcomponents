@@ -83,7 +83,9 @@ class Dialog extends Popup {
 
 	constructor() {
 		super();
+	}
 
+	onBeforeRendering() {
 		this.onPhone = isPhone();
 	}
 

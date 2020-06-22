@@ -192,6 +192,18 @@ class Icon extends UI5Element {
 		}
 	}
 
+	get _dir() {
+		if (!this.effectiveDir) {
+			return;
+		}
+
+		if (this.ltr) {
+			return "ltr";
+		}
+
+		return this.effectiveDir;
+	}
+
 	get tabIndex() {
 		return this.interactive ? "0" : "-1";
 	}
@@ -249,6 +261,7 @@ class Icon extends UI5Element {
 
 		this.pathData = iconData.pathData;
 		this.accData = iconData.accData;
+		this.ltr = iconData.ltr;
 	}
 
 	get hasIconTooltip() {
