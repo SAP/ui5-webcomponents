@@ -1,16 +1,5 @@
-commit 08fc5f3a580c6d16427f921a04ac76d1f54074b0
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jun 19 17:33:01 2020 +0300
+commit a109558f44e3e93d5be2ddc169d95a210caa3de6
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jun 22 09:15:32 2020 +0300
 
-    feat(ui5-shellbar): add "logo" slot (#1842)
-    
-    Replace the existing property "logo" with a slot with the same name to enable users set an element of their choice and freedom to customize it.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1841
-    
-    BREAKING_CHANGE: property "logo" has been removed, use the "logo" slot instead as follows:
-    ```html
-    <ui5-shellbar>
-            <img slot="logo" src="../../../assets/images/sap-logo-svg.svg"/>
-    </ui5-shellbar>
-    ```
+    feat(ui5-popup): custom popups work with focusable elements in the shadow root (#1844)

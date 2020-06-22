@@ -41,6 +41,8 @@
 	<ui5-button id="modals-open">Open Multiple modals</ui5-button>
 	<br>
 	<br>
+	<ui5-button id="empty-open">Open empty dialog (no focusable element)</ui5-button>
+	<br><br>
 
 	<ui5-block-layer></ui5-block-layer>
 
@@ -202,6 +204,8 @@
 		</ui5-list>
 	</ui5-popover>
 
+	<ui5-dialog id="empty-dialog">Empty</ui5-dialog>
+
 	<script>
 
 		let preventClosing = true;
@@ -252,6 +256,8 @@
 		bigDanger.addEventListener('click', function (event) {
 			bigDangerPop.openBy(bigDanger);
 		});
+
+		window["empty-open"].addEventListener("click", function (event) { window["empty-dialog"].open(); });
 	</script>
 </body>
 
