@@ -311,11 +311,11 @@ class Popup extends UI5Element {
 	}
 
 	/**
-	 * Sets "inline-block" display to the popup
+	 * Sets "block" display to the popup
 	 * @protected
 	 */
 	show() {
-		this.style.display = "inline-block";
+		this.style.display = "block";
 	}
 
 
