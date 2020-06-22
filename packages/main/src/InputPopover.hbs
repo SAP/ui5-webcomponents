@@ -51,7 +51,7 @@
 		<ui5-list separators="Inner">
 			{{#each suggestionsTexts}}
 				{{#if group}}
-					<ui5-li-groupheader>{{ this.text }}</ui5-li-groupheader>
+					<ui5-li-groupheader data-ui5-key="{{key}}">{{ this.text }}</ui5-li-groupheader>
 				{{else}}
 					<ui5-li
 						image="{{this.image}}"
