@@ -285,7 +285,7 @@ class Suggestions {
 
 	async _scrollItemIntoView(item) {
 		const pos = item.getDomRef().offsetTop;
-		const scrollContainer  = await this._getScrollContainer();
+		const scrollContainer = await this._getScrollContainer();
 		scrollContainer.scrollTop = pos;
 	}
 
