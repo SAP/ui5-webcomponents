@@ -356,6 +356,10 @@ class Popup extends UI5Element {
 		removeOpenedPopup(this);
 	}
 
+	/**
+	 * Returns the focus to the previously focused element
+	 * @protected
+	 */
 	resetFocus() {
 		if (!this._focusedElementBeforeOpen) {
 			return;
@@ -380,6 +384,13 @@ class Popup extends UI5Element {
 	 */
 	hide() {
 		this.style.display = "none";
+	}
+
+	onExitDOM() {
+		if (this.isOpen()) {
+			Popup.unblockBodyScrolling();
+			this._removeOpenedPopup();
+		}
 	}
 
 	/**

@@ -26,6 +26,9 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * @private
+		 */
 		onPhone: {
 			type: Boolean,
 		},
@@ -78,18 +81,8 @@ class Dialog extends Popup {
 		return [Popup.styles, dialogCSS];
 	}
 
-	constructor() {
-		super();
-	}
-
 	onBeforeRendering() {
 		this.onPhone = isPhone();
-	}
-
-	onExitDOM() {
-		if (this.isOpen()) {
-			Dialog.unblockBodyScrolling();
-		}
 	}
 
 	get isModal() {
