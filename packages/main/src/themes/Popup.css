@@ -1,20 +1,5 @@
 :host {
+    min-width: 1px; /** So that it can always get focus **/
     display: none;
-    position:relative;
-}
-.root {
     position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
-}
-.header {
-    color: white;
-    text-align: center;
-}
-.container {
-    background: white;
-    border-radius: 4px;
-    margin: 1rem;
-    padding: 3rem;
 }
