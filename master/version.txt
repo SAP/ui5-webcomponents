@@ -1,9 +1,5 @@
-commit 29a991fd1d11c041c2c1bd2d5cfd4ed3ebb002e4
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 22 10:07:51 2020 +0300
+commit 7a48312260886ec3c2a1abd3cb75923a56330fd3
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jun 22 10:16:23 2020 +0300
 
-    feat(framework): make icons RTL aware (#1833)
-    
-    Currently all icons are mirrored in RTL, but some of the icons should not be mirrored in RTL. The best example is the "accept" icon (checkmark) which does not make sense when mirrored. Now we keep info as "ltr" field in the SAP-Icons.json, which means an icon should remain as it is in RTL, or in other words it is always LTR. We can call the field differently in the SVGRegistry if we want - suppressMirroring, noMirror. I named it "ltr" everywhere for now.
-    
-    FIXES: #1831
+    refactor(ui5-avatar): fix for the fix for special characters in image path (#1850)
