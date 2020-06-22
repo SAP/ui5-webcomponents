@@ -131,7 +131,7 @@ createBlockingStyle();
  * 1. The Popup class handles modality:
  *  - The "isModal" getter can be overridden by derivatives to provide their own conditions when they are modal or not
  *  - Derivatives may call the "blockBodyScrolling" and "unblockBodyScrolling" static methods to temporarily remove scrollbars on the body
- *  - Derivatives may call the "open" and "close" methods which, for modal popups, manage the blocking layer
+ *  - Derivatives may call the "open" and "close" methods which handle focus, manage the popup registry and for modal popups, manage the blocking layer
  *
  *  2. Provides blocking layer (relevant for modal popups only):
  *   - It is in the static area
@@ -143,11 +143,9 @@ createBlockingStyle();
  * 4. The Popup class automatically assigns "z-index"
  *  - Each time a popup is opened, it gets a higher than the previously opened popup z-index
  *
- * 5. The template of this component exposes several inline partials you can override in derivatives:
- *  - beforeHeader (useful for visual elements outside of the popup "box", such as for example an arrow pointing to the opener element)
- *  - header (upper part of the box, useful for title/close button area)
- *  - footer (lower part, useful for OK/Cancel button area)
- *  - Implement the abstract "_displayHeader" and "_displayFooter" getters to control when header and footer are shown
+ * 5. The template of this component exposes two inline partials you can override in derivatives:
+ *  - beforeContent (upper part of the box, useful for header/title/close button)
+ *  - afterContent (lower part, useful for footer/action buttons)
  *
  * @constructor
  * @author SAP SE
