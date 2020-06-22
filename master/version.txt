@@ -1,9 +1,9 @@
-commit 5438c66e7dc20964a3dc8d2249245faa751d1621
+commit 29a991fd1d11c041c2c1bd2d5cfd4ed3ebb002e4
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 22 09:34:22 2020 +0300
+Date:   Mon Jun 22 10:07:51 2020 +0300
 
-    fix(ui5-input): fix scrolling item into view (#1848)
+    feat(framework): make icons RTL aware (#1833)
     
-    The scroll container should be awaited before we use it. Additionally, we use the step constant in the "isIteminView" method to avoid half visible items, because previously the input used to scroll if the item is entirely out of view (60 is the maximum height of a standard list item).
+    Currently all icons are mirrored in RTL, but some of the icons should not be mirrored in RTL. The best example is the "accept" icon (checkmark) which does not make sense when mirrored. Now we keep info as "ltr" field in the SAP-Icons.json, which means an icon should remain as it is in RTL, or in other words it is always LTR. We can call the field differently in the SVGRegistry if we want - suppressMirroring, noMirror. I named it "ltr" everywhere for now.
     
-    FIXES: #1847
+    FIXES: #1831
