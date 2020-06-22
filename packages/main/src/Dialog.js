@@ -1,13 +1,10 @@
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
-
 import Popup from "./Popup.js";
+
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
-
 // Styles
 import dialogCSS from "./generated/themes/Dialog.css.js";
-import { getFocusedElement } from "./popup-utils/PopupUtils.js";
 
 /**
  * @public
@@ -87,50 +84,6 @@ class Dialog extends Popup {
 
 	onBeforeRendering() {
 		this.onPhone = isPhone();
-	}
-
-	/**
-	* Opens the <code>ui5-dialog</code>.
-	* @public
-	*/
-	open() {
-		super.open();
-
-		this._focusedElementBeforeOpen = getFocusedElement();
-		this.fireEvent("before-open", {});
-		this.show();
-		this.applyInitialFocus();
-
-		Dialog.blockBodyScrolling();
-
-		addOpenedPopup(this);
-		this.opened = true;
-		this.fireEvent("after-open", {});
-	}
-
-	/**
-	* Closes the <code>ui5-dialog</code>.
-	* @public
-	*/
-	close(escPressed) {
-		const prevented = !this.fireEvent("before-close", { escPressed }, true);
-
-		if (prevented || !this.opened) {
-			return;
-		}
-
-		super.close();
-		this.hide();
-		this.opened = false;
-
-		this.fireEvent("after-close", {});
-
-		removeOpenedPopup(this);
-		Dialog.unblockBodyScrolling();
-
-		if (this._focusedElementBeforeOpen && !this._disableInitialFocus) {
-			this._focusedElementBeforeOpen.focus();
-		}
 	}
 
 	onExitDOM() {

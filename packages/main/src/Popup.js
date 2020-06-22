@@ -4,7 +4,8 @@ import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcompo
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import { getNextZIndex } from "./popup-utils/PopupUtils.js";
+import { getNextZIndex, getFocusedElement } from "./popup-utils/PopupUtils.js";
+import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
@@ -262,10 +263,6 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	applyInitialFocus() {
-		if (this._disableInitialFocus) {
-			return;
-		}
-
 		const element = this.getRootNode().getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)
 			|| getFirstFocusableElement(this);
@@ -277,7 +274,7 @@ class Popup extends UI5Element {
 
 	/**
 	 * Override this method to provide custom logic for the popup's open/closed state. Maps to the "opened" property by default.
-	 * @protected
+	 * @public
 	 * @returns {boolean}
 	 */
 	isOpen() {
@@ -286,28 +283,86 @@ class Popup extends UI5Element {
 
 	/**
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
-	 * @protected
+	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
+	 * @public
 	 */
-	open() {
+	open(preventInitialFocus) {
 		if (this.isModal) {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
+			this._blockLayerHidden = false;
+			Popup.blockBodyScrolling();
 		}
 
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
 
-		this._blockLayerHidden = false;
+		this._focusedElementBeforeOpen = getFocusedElement();
+		this.fireEvent("before-open", {});
+		this.show();
+
+		if (!this._disableInitialFocus && !preventInitialFocus) {
+			this.applyInitialFocus();
+		}
+
+		this._addOpenedPopup();
+
+		this.opened = true;
+		this.fireEvent("after-open", {});
+	}
+
+	/**
+	 * Adds the popup to the "opened popups registry"
+	 * @protected
+	 */
+	_addOpenedPopup() {
+		addOpenedPopup(this);
 	}
 
 	/**
 	 * Hides the block layer (for modal popups only)
-	 * @protected
+	 * @public
 	 */
-	close() {
+	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
+		const prevented = !this.fireEvent("before-close", { escPressed }, true);
+		if (prevented || !this.opened) {
+			return;
+		}
+
 		if (this.isModal) {
 			this._blockLayerHidden = true;
+			Popup.unblockBodyScrolling();
 		}
+
+		this.hide();
+		this.opened = false;
+
+		if (!preventRegistryUpdate) {
+			this._removeOpenedPopup();
+		}
+
+		if (!preventFocusRestore) {
+			this.resetFocus();
+		}
+
+		this.fireEvent("after-close", {});
+	}
+
+	/**
+	 * Removes the popup from the "opened popups registry"
+	 * @protected
+	 */
+	_removeOpenedPopup() {
+		removeOpenedPopup(this);
+	}
+
+	resetFocus() {
+		if (!this._focusedElementBeforeOpen) {
+			return;
+		}
+
+		this._focusedElementBeforeOpen.focus();
+		this._focusedElementBeforeOpen = null;
 	}
 
 	/**

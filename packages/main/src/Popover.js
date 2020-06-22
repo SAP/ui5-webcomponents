@@ -6,7 +6,7 @@ import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
-import { getFocusedElement, getClosedPopupParent } from "./popup-utils/PopupUtils.js";
+import { getClosedPopupParent } from "./popup-utils/PopupUtils.js";
 
 // Styles
 import PopoverCss from "./generated/themes/Popover.css.js";
@@ -255,80 +255,25 @@ class Popover extends Popup {
 		if (!opener || this.opened) {
 			return;
 		}
-
-		super.open();
-
-		if (this.isModal) {
-			Popover.blockBodyScrolling();
-		}
-
 		this._opener = opener;
-		this._focusedElementBeforeOpen = getFocusedElement();
 
-		this.fireEvent("before-open", {});
-		this.reposition();
-
-		if (!preventInitialFocus) {
-			this.applyInitialFocus();
-		}
-
-		addOpenedPopover(this);
-
-		this.opened = true;
-		this.fireEvent("after-open", {});
+		super.open(preventInitialFocus);
 	}
 
 	/**
-	 * Closes the popover.
-	 * @public
+	 * Override for the _addOpenedPopup hook, which would otherwise just call addOpenedPopup(this)
+	 * @private
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
-		if (!this.opened) {
-			return;
-		}
-
-		super.close();
-
-		if (this.isModal) {
-			Popover.unblockBodyScrolling();
-		}
-
-		this.fireEvent("before-close", {
-			escPressed,
-		}, true);
-
-
-		this.opened = false;
-
-		if (!preventRegistryUpdate) {
-			removeOpenedPopover(this);
-		}
-
-		if (!preventFocusRestore) {
-			this.resetFocus();
-		}
-
-		this.hide();
-		this.fireEvent("after-close", {});
+	_addOpenedPopup() {
+		addOpenedPopover(this);
 	}
 
-	get focusedElement() {
-		let element = document.activeElement;
-
-		while (element.shadowRoot && element.shadowRoot.activeElement) {
-			element = element.shadowRoot.activeElement;
-		}
-
-		return (element && typeof element.focus === "function") ? element : null;
-	}
-
-	resetFocus() {
-		if (!this._focusedElementBeforeOpen) {
-			return;
-		}
-
-		this._focusedElementBeforeOpen.focus();
-		this._focusedElementBeforeOpen = null;
+	/**
+	 * Override for the _removeOpenedPopup hook, which would otherwise just call removeOpenedPopup(this)
+	 * @private
+	 */
+	_removeOpenedPopup() {
+		removeOpenedPopover(this);
 	}
 
 	shouldCloseDueToOverflow(placement, openerRect) {
@@ -361,6 +306,10 @@ class Popover extends Popup {
 	}
 
 	reposition() {
+		this.show();
+	}
+
+	show() {
 		const popoverSize = this.popoverSize;
 		const openerRect = this._opener.getBoundingClientRect();
 		const placement = this.calcPlacement(openerRect, popoverSize);
@@ -371,7 +320,7 @@ class Popover extends Popup {
 		}
 
 		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
-			this.show();
+			this.style.display = "block";
 			this.style.width = this._width;
 			return;
 		}
@@ -387,7 +336,7 @@ class Popover extends Popup {
 
 		this.style.left = `${popoverOnLeftBorder ? Popover.MIN_OFFSET : this._left}px`;
 		this.style.top = `${popoverOnTopBorder ? Popover.MIN_OFFSET : this._top}px`;
-		this.show();
+		this.style.display = "block";
 
 		if (stretching && this._width) {
 			this.style.width = this._width;
@@ -407,7 +356,7 @@ class Popover extends Popup {
 		}
 
 		this.style.visibility = "hidden";
-		this.show();
+		this.style.display = "block";
 
 		rect = this.getBoundingClientRect();
 
