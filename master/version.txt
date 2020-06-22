@@ -1,5 +1,9 @@
-commit a109558f44e3e93d5be2ddc169d95a210caa3de6
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jun 22 09:15:32 2020 +0300
+commit 5438c66e7dc20964a3dc8d2249245faa751d1621
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jun 22 09:34:22 2020 +0300
 
-    feat(ui5-popup): custom popups work with focusable elements in the shadow root (#1844)
+    fix(ui5-input): fix scrolling item into view (#1848)
+    
+    The scroll container should be awaited before we use it. Additionally, we use the step constant in the "isIteminView" method to avoid half visible items, because previously the input used to scroll if the item is entirely out of view (60 is the maximum height of a standard list item).
+    
+    FIXES: #1847
