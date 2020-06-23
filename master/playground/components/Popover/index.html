@@ -1988,6 +1988,18 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          headerText
+                            <br>
+                            <code>header-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the header text. <br><br> <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           horizontalAlign
                             <br>
                             <code>horizontal-align</code>
@@ -1998,7 +2010,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Determines the horizontal alignment of the <code>ui5-popover</code>. <br><br> Available options are: <ul> <li><code>Center</code></li> <li><code>Left</code></li> <li><code>Right</code></li> <li><code>Stretch</code></li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           modal
                             <br>
@@ -2009,7 +2021,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Defines whether the <code>ui5-popover</code> should close when clicking/tapping outside of the popover. If enabled, it blocks any interaction with the background.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           noArrow
                             <br>
@@ -2021,7 +2033,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Determines whether the <code>ui5-popover</code> arrow is hidden.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           placementType
                             <br>
@@ -2033,7 +2045,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Determines on which side the <code>ui5-popover</code> is placed at. <br><br> Available options are: <ul> <li><code>Left</code></li> <li><code>Right</code></li> <li><code>Top</code></li> <li><code>Bottom</code></li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           verticalAlign
                             <br>
@@ -2045,40 +2057,28 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Determines the vertical alignment of the <code>ui5-popover</code>. <br><br> Available options are: <ul> <li><code>Center</code></li> <li><code>Top</code></li> <li><code>Bottom</code></li> <li><code>Stretch</code></li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          _displayFooter
-                            <br>
-                            <code>_display-footer</code>
-                        </div>
-                        <div class="cell api-table-content-cell">undefined</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Hook for descendants to hide footer.
-                        </div>
-                      </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          _displayHeader
+                          _ariaLabelledBy
                             <br>
-                            <code>_display-header</code>
+                            <code>_aria-labelled-by</code>
                         </div>
                         <div class="cell api-table-content-cell">undefined</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Hook for descendants to hide header.
+                            Return the ID of an element in the shadow DOM that is going to label this popup
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          headerText
+                          _ariaModal
                             <br>
-                            <code>header-text</code>
+                            <code>_aria-modal</code>
                         </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the header text. <br><br> <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+                            Return the value for aria-modal for this popup
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
@@ -2123,31 +2123,26 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                   </div>
             
                     <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content of the Web Component.</div>
-                    </div>
-                    <div class="row api-table-roll-odd">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">footer</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the footer HTML Element.</div>
                     </div>
-                    <div class="row api-table-roll-even">
+                    <div class="row api-table-roll-odd">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">header</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the header HTML Element.</div>
                     </div>
-                    <div class="row api-table-roll-odd">
+                    <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
                       <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content of the Web Component.</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content of the Popup.</div>
                     </div>
-                    <div class="row api-table-roll-even">
+                    <div class="row api-table-roll-odd">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">footer</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the footer HTML Element.</div>
                     </div>
-                    <div class="row api-table-roll-odd">
+                    <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">header</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the header HTML Element.</div>
@@ -2210,11 +2205,6 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">close</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Closes the popover.</div>
-                      </div>
-            
-                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">openBy</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">Opens the popover.</div>
                       </div>

@@ -1,7 +1,5 @@
-commit 4027bb806d09075597c41bb6afb628041abedeb2
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 22 22:51:19 2020 +0300
+commit a5d3dd7bc279078969030e916d42dc3812d05c37
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Jun 23 11:38:02 2020 +0300
 
-    chore(ui5-input): set data-key to group item (#1849)
-    
-    There is data-key set on the standard suggestions, but it's missing on the group suggestion. It is used for the mouseover/out events. Curerntly, if the users hovers on a group item, error is thrown as the corresponding suggestion item cant be found without this data-key attribute. Other way would be to not fire the events for hovoring over group items, but at the end I think this is better.
+    refactor(ui5-popup): Move more common functionality to Popup.js (#1853)
