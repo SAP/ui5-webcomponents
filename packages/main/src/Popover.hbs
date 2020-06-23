@@ -1,5 +1,25 @@
 {{>include "./Popup.hbs"}}
 
-{{#*inline "beforeHeader"}}
+{{#*inline "beforeContent"}}
 	<span class="ui5-popover-arrow" style="{{styles.arrow}}"></span>
+
+	{{#if _displayHeader}}
+		<header class="ui5-popup-header-root" id="ui5-popup-header">
+			{{#if header.length }}
+				<slot name="header"></slot>
+			{{else}}
+				<h2 class="ui5-popup-header-text">{{headerText}}</h2>
+			{{/if}}
+		</header>
+	{{/if}}
+{{/inline}}
+
+{{#*inline "afterContent"}}
+	{{#if _displayFooter}}
+		{{#if footer.length }}
+			<footer class="ui5-popup-footer-root">
+				<slot name="footer"></slot>
+			</footer>
+		{{/if}}
+	{{/if}}
 {{/inline}}

@@ -1,14 +1,15 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 import Popup from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
-import { getFocusedElement, getClosedPopupParent } from "./popup-utils/PopupUtils.js";
+import { getClosedPopupParent } from "./popup-utils/PopupUtils.js";
 
+// Template
+import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 // Styles
+import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 
 const arrowSize = 8;
@@ -19,6 +20,19 @@ const arrowSize = 8;
 const metadata = {
 	tag: "ui5-popover",
 	properties: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
+		/**
+		 * Defines the header text.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		headerText: {
+			type: String,
+		},
+
 		/**
 		 * Determines on which side the <code>ui5-popover</code> is placed at.
 		 * <br><br>
@@ -152,16 +166,6 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 		/**
-		 * Defines the content of the Web Component.
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: HTMLElement,
-		},
-
-		/**
 		 * Defines the header HTML Element.
 		 *
 		 * @type {HTMLElement[]}
@@ -229,7 +233,7 @@ class Popover extends Popup {
 	}
 
 	static get styles() {
-		return [Popup.styles, PopoverCss];
+		return [PopupsCommonCss, PopoverCss];
 	}
 
 	static get template() {
@@ -255,80 +259,25 @@ class Popover extends Popup {
 		if (!opener || this.opened) {
 			return;
 		}
-
-		super.open();
-
-		if (this.isModal) {
-			Popover.blockBodyScrolling();
-		}
-
 		this._opener = opener;
-		this._focusedElementBeforeOpen = getFocusedElement();
 
-		this.fireEvent("before-open", {});
-		this.reposition();
-
-		if (!preventInitialFocus) {
-			this.applyInitialFocus();
-		}
-
-		addOpenedPopover(this);
-
-		this.opened = true;
-		this.fireEvent("after-open", {});
+		super.open(preventInitialFocus);
 	}
 
 	/**
-	 * Closes the popover.
-	 * @public
+	 * Override for the _addOpenedPopup hook, which would otherwise just call addOpenedPopup(this)
+	 * @private
 	 */
-	close(escPressed = false, preventRegitryUpdate = false, preventFocusRestore = false) {
-		if (!this.opened) {
-			return;
-		}
-
-		super.close();
-
-		if (this.isModal) {
-			Popover.unblockBodyScrolling();
-		}
-
-		this.fireEvent("before-close", {
-			escPressed,
-		}, true);
-
-
-		this.opened = false;
-
-		if (!preventRegitryUpdate) {
-			removeOpenedPopover(this);
-		}
-
-		if (!preventFocusRestore) {
-			this.resetFocus();
-		}
-
-		this.hide();
-		this.fireEvent("after-close", {});
+	_addOpenedPopup() {
+		addOpenedPopover(this);
 	}
 
-	get focusedElement() {
-		let element = document.activeElement;
-
-		while (element.shadowRoot && element.shadowRoot.activeElement) {
-			element = element.shadowRoot.activeElement;
-		}
-
-		return (element && typeof element.focus === "function") ? element : null;
-	}
-
-	resetFocus() {
-		if (!this._focusedElementBeforeOpen) {
-			return;
-		}
-
-		this._focusedElementBeforeOpen.focus();
-		this._focusedElementBeforeOpen = null;
+	/**
+	 * Override for the _removeOpenedPopup hook, which would otherwise just call removeOpenedPopup(this)
+	 * @private
+	 */
+	_removeOpenedPopup() {
+		removeOpenedPopover(this);
 	}
 
 	shouldCloseDueToOverflow(placement, openerRect) {
@@ -361,6 +310,10 @@ class Popover extends Popup {
 	}
 
 	reposition() {
+		this.show();
+	}
+
+	show() {
 		const popoverSize = this.popoverSize;
 		const openerRect = this._opener.getBoundingClientRect();
 		const placement = this.calcPlacement(openerRect, popoverSize);
@@ -371,7 +324,7 @@ class Popover extends Popup {
 		}
 
 		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
-			this.show();
+			super.show();
 			this.style.width = this._width;
 			return;
 		}
@@ -387,7 +340,7 @@ class Popover extends Popup {
 
 		this.style.left = `${popoverOnLeftBorder ? Popover.MIN_OFFSET : this._left}px`;
 		this.style.top = `${popoverOnTopBorder ? Popover.MIN_OFFSET : this._top}px`;
-		this.show();
+		super.show();
 
 		if (stretching && this._width) {
 			this.style.width = this._width;
@@ -407,7 +360,7 @@ class Popover extends Popup {
 		}
 
 		this.style.visibility = "hidden";
-		this.show();
+		this.style.display = "block";
 
 		rect = this.getBoundingClientRect();
 
@@ -641,8 +594,16 @@ class Popover extends Popup {
 		return top;
 	}
 
-	get isModal() {
+	get isModal() { // Required by Popup.js
 		return this.modal;
+	}
+
+	get _ariaLabelledBy() { // Required by Popup.js
+		return "ui5-popup-header";
+	}
+
+	get _ariaModal() { // Required by Popup.js
+		return true;
 	}
 
 	get styles() {
@@ -653,6 +614,17 @@ class Popover extends Popup {
 			},
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
+			},
+		};
+	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-popup-root": true,
+			},
+			content: {
+				"ui5-popup-content": true,
 			},
 		};
 	}
