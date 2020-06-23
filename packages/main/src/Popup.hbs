@@ -6,7 +6,7 @@
 
 	{{> header}}
 
-	<div class="ui5-popup-content" style="{{styles.content}}">
+	<div class="ui5-popup-content" style="{{styles.content}}" @scroll="{{_scroll}}">
 		<slot></slot>
 	</div>
 
