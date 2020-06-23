@@ -139,6 +139,27 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputItemPreviewRes.getValue(), "Cozy", "First item has been previewed");
 	});
 
+	it("fires suggestion-scroll event", () => {
+		const input = $("#scrollInput").shadow$("input");
+		const scrollResult = $("#scrollResult");
+
+		// act
+		// open suggestions
+		input.click();
+		input.keys("a");
+
+		// scroll with keyboard
+		input.keys("ArrowUp");
+		input.keys("ArrowUp");
+		input.keys("ArrowUp");
+
+		// assert
+		const scrollTop = scrollResult.getProperty("value");
+		assert.ok(scrollTop > 0, "The suggestion-scroll event fired");
+
+		input.keys("Enter"); // close suggestions
+	});
+
 	it("handles suggestions", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 

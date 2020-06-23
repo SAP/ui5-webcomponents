@@ -197,6 +197,13 @@ class Popup extends UI5Element {
 		document.body.style.top = "";
 	}
 
+	_scroll(e) {
+		this.fireEvent("scroll", {
+			scrollTop: e.target.scrollTop,
+			targetRef: e.target,
+		});
+	}
+
 	/**
 	 * Focus trapping
 	 * @private

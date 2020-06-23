@@ -368,11 +368,28 @@ const metadata = {
 		 * @param {HTMLElement} item The previewed suggestion item
 		 * @param {HTMLElement} targetRef The DOM ref of the suggestion item.
 		 * @public
+		 * @since 1.0.0-rc.8
 		 */
 		"suggestion-item-preview": {
 			detail: {
 				item: { type: HTMLElement },
 				targetRef: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired when the user scrolls the suggestion popover.
+		 *
+		 * @event sap.ui.webcomponents.main.Input#suggestion-scroll
+		 * @param {Integer} scrollTop The current scroll position
+		 * @param {HTMLElement} scrollContainer The scroll container
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		"suggestion-scroll": {
+			detail: {
+				scrollTop: { type: Integer },
+				scrollContainer: { type: HTMLElement },
 			},
 		},
 	},
@@ -610,6 +627,14 @@ class Input extends UI5Element {
 
 	_handleChange(event) {
 		this.fireEvent(this.EVENT_CHANGE);
+	}
+
+	_scroll(event) {
+		const detail = event.detail;
+		this.fireEvent("suggestion-scroll", {
+			scrollTop: detail.scrollTop,
+			scrollContainer: detail.targetRef,
+		});
 	}
 
 	async _handleInput(event) {
