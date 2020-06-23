@@ -4,7 +4,7 @@
 
 	{{> beforeContent}}
 
-	<div style="{{styles.content}}" class="{{classes.content}}">
+	<div style="{{styles.content}}" class="{{classes.content}}"  @scroll="{{_scroll}}">
 		<slot></slot>
 	</div>
 
