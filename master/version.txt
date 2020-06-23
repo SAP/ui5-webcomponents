@@ -1,9 +1,9 @@
-commit a33dd956fe7ad9774971031c436ef0b8214d3e2e
+commit 1d20ba8eff51ab5de0afaffebd770b7fddeac16b
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jun 23 17:58:33 2020 +0300
+Date:   Tue Jun 23 18:43:43 2020 +0300
 
-    fix(ui5-input): stop firing focusout on suggestion click (#1857)
+    feat(ui5-input): add suggestion-scroll event (#1856)
     
-    The "focusout" event used to be fired whenever the user interacts with the suggestion lists, misleading the ones that listens for the event, that the user has clicked somewhere outside. Now, it is not fired.
+    Add new event "suggestion-scroll", fired whenever the user scrolls the suggestion list in the popover either via the mouse, or via the keyboard keys.
     
     Fixes: #1846
