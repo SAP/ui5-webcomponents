@@ -582,6 +582,7 @@ class Input extends UI5Element {
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
 		if (focusedOutToSuggestions	|| focusedOutToValueStateMessage) {
+			event.stopImmediatePropagation();
 			return;
 		}
 
