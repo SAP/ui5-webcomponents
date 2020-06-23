@@ -1,44 +1,22 @@
-<section style="{{styles.root}}" class="ui5-popup-root" role="dialog" aria-modal="true" aria-labelledby="ui5-popup-header">
-
-	{{> beforeHeader}}
+<section style="{{styles.root}}" class="{{classes.root}}" role="dialog" aria-modal="{{_ariaModal}}" aria-labelledby="{{_ariaLabelledBy}}">
 
 	<span class="first-fe" data-ui5-focus-trap tabindex="0" @focusin={{forwardToLast}}></span>
 
-	{{> header}}
+	{{> beforeContent}}
 
-	<div class="ui5-popup-content" style="{{styles.content}}" @scroll="{{_scroll}}">
+	<div style="{{styles.content}}" class="{{classes.content}}"  @scroll="{{_scroll}}">
 		<slot></slot>
 	</div>
 
-	{{> footer}}
+	{{> afterContent}}
 
 	<span class="last-fe" data-ui5-focus-trap tabindex="0" @focusin={{forwardToFirst}}></span>
 
 </section>
 
 
-{{#*inline "footer"}}
-	{{#if _displayFooter}}
-		{{#if footer.length }}
-			<footer class="ui5-popup-footer-root">
-				<slot name="footer"></slot>
-			</footer>
-		{{/if}}
-	{{/if}}
-{{/inline}}
+{{#*inline "beforeContent"}}{{/inline}}
 
-{{#*inline "header"}}
-	{{#if _displayHeader}}
-		<header class="ui5-popup-header-root" id="ui5-popup-header">
-			{{#if header.length }}
-				<slot name="header"></slot>
-			{{else}}
-				<h2 class="ui5-popup-header-text">{{headerText}}</h2>
-			{{/if}}
-		</header>
-	{{/if}}
-{{/inline}}
+{{#*inline "afterContent"}}{{/inline}}
 
 
-{{#*inline "beforeHeader"}}
-{{/inline}}
