@@ -1,5 +1,9 @@
-commit 0153b320190267ec2c86f44def2f8b614c329944
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jun 23 12:06:27 2020 +0300
+commit a33dd956fe7ad9774971031c436ef0b8214d3e2e
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jun 23 17:58:33 2020 +0300
 
-    fix:(tools) fix whitespaces again (#1855)
+    fix(ui5-input): stop firing focusout on suggestion click (#1857)
+    
+    The "focusout" event used to be fired whenever the user interacts with the suggestion lists, misleading the ones that listens for the event, that the user has clicked somewhere outside. Now, it is not fired.
+    
+    Fixes: #1846
