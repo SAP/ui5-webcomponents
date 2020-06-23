@@ -1,5 +1,5 @@
-commit a5d3dd7bc279078969030e916d42dc3812d05c37
+commit 0153b320190267ec2c86f44def2f8b614c329944
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jun 23 11:38:02 2020 +0300
+Date:   Tue Jun 23 12:06:27 2020 +0300
 
-    refactor(ui5-popup): Move more common functionality to Popup.js (#1853)
+    fix:(tools) fix whitespaces again (#1855)
