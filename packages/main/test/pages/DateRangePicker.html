@@ -31,6 +31,9 @@
 </head>
 <body style="background-color: var(--sapBackgroundColor);">
 	<div style='width:500px;'>
+		<div>
+			<label id='labelChange'>0</label>
+		</div>
 		<ui5-daterange-picker id="daterange-picker1"></ui5-daterange-picker>
 		<h3>daterange-picker with delimiter @</h3>
 		<ui5-daterange-picker id="daterange-picker2" delimiter="@"></ui5-daterange-picker>
@@ -45,5 +48,10 @@
 			</div>
 		</section>
 	</div>
+	<script>
+		document.getElementById('daterange-picker1').addEventListener('ui5-change', function(e) {
+			document.getElementById("labelChange").innerHTML = Number(document.getElementById("labelChange").innerHTML) + 1;
+		});
+	</script>
 </body>
 </html>

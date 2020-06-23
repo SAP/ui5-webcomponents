@@ -323,6 +323,7 @@ class DateRangePicker extends DatePicker {
 			this._firstDateTimestamp = newValue;
 			this._lastDateTimestamp = newValue;
 			this._calendar.timestamp = newValue;
+			this._handleCalendarSelectedDatesChange();
 		} else {
 			this.closePicker();
 			this.isFirstDatePick = true;
@@ -332,14 +333,13 @@ class DateRangePicker extends DatePicker {
 			} else {
 				this._lastDateTimestamp = newValue;
 			}
-		}
+			const fireChange = this._handleCalendarSelectedDatesChange();
 
-		const fireChange = this._handleCalendarSelectedDatesChange();
-
-		if (fireChange) {
-			this.fireEvent("change", { value: this.value, valid: true });
-			// Angular two way data binding
-			this.fireEvent("value-changed", { value: this.value, valid: true });
+			if (fireChange) {
+				this.fireEvent("change", { value: this.value, valid: true });
+				// Angular two way data binding
+				this.fireEvent("value-changed", { value: this.value, valid: true });
+			}
 		}
 	}
 
