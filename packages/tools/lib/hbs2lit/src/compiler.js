@@ -6,11 +6,10 @@ const svgProcessor = require("./svgProcessor");
 
 const removeWhiteSpaces = (source) => {
 	return source
-		.replace(/\n+/g, "")
-		.replace(/\s*<\s*/g, "<")
-		.replace(/\s*>\s*/g, ">")
-		.replace(/}}\s+{{/g, "}}{{")
-		.replace(/\t+/g, " ");
+		.replace(/\s*\r*\n+\s*/g, " ") // Replace new lines and all whitespace between them with a space
+		.replace(/\s*<\s*/g, "<") // Strip whitespace round <
+		.replace(/\s*>\s*/g, ">") // Strip whitespace round >
+		.replace(/}}\s+{{/g, "}}{{"); // Remove whitespace between }} and {{
 };
 
 const compileString = async (sInput, config) => {
