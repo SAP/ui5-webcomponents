@@ -1,0 +1,34 @@
+:host(:not([hidden])) {
+	display: block;
+}
+
+.ui5-fcl-root {
+	display: flex;
+	flex-direction: row;
+}
+
+.ui5-fcl-column {
+	min-width: 20rem;
+	background: var(--sapShell_Background);
+	box-sizing: border-box;
+	transition: width 560ms cubic-bezier(0.1, 0, 0.05, 1), visibility 560ms ease-in;
+	will-change: width;
+}
+
+.ui5-fcl-column--hidden {
+	display: none;
+}
+
+.ui5-fcl-arrow-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--sapObjectHeader_Background);
+}
+
+.ui5-fcl-arrow {
+	width: 1.5rem;
+	height: 1.5rem;
+	min-width: 1.5rem;
+	will-change: transform;
+}

@@ -1,0 +1,33 @@
+<div class="ui5-fcl-root">
+	<div class="{{classes.columns.start}}" style="{{styles.columns.start}}">
+		<slot name="startColumn"></slot>
+	</div>
+
+	<div class="ui5-fcl-arrow-container" style="{{styles.arrowsContainer.start}}">
+		<ui5-button
+			class="ui5-fcl-arrow"
+			icon="slim-arrow-right"
+			design="Transparent"
+			@click="{{_startArrowClick}}"
+			style="{{styles.arrows.start}}"
+		></ui5-button>
+	</div>
+
+	<div class="{{classes.columns.middle}}" style="{{styles.columns.middle}}">
+		<slot name="midColumn"></slot>
+	</div>
+
+	<div class="ui5-fcl-arrow-container" style="{{styles.arrowsContainer.end}}">
+		<ui5-button
+			class="ui5-fcl-arrow"
+			style="{{styles.arrows.end}}"
+			icon="slim-arrow-left"
+			design="Transparent"
+			@click="{{_endArrowClick}}"
+		></ui5-button>
+	</div>
+
+	<div class="{{classes.columns.end}}" style="{{styles.columns.end}}">
+		<slot name="endColumn"></slot>
+	</div>
+</div>
