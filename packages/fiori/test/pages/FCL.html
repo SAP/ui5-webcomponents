@@ -18,11 +18,7 @@
 			margin: 0;
 		}
 
-		.sectionTitle {
-			padding-left: 1rem;
-		}
-
-		.testButton {
+		.sectionTitle, ui5-input, .testButton {
 			margin-left: 1rem;
 		}
 	</style>
@@ -32,7 +28,8 @@
 	<!-- ex1 -->
 	<br><br>
 	<ui5-title class="sectionTitle">Master-Detail: Master Expanded</ui5-title>
-	<ui5-button id="switchBtn1" class="testButton">toggle</ui5-button>
+	<ui5-button id="switchBtn1" class="testButton">toggle</ui5-button><br>
+	<ui5-input id="layoutChangeRes" style="width: 400px"></ui5-input>
 	<br><br>
 
 	<ui5-flexible-column-layout id="fcl1" layout="TwoColumnsStartExpanded">
@@ -329,6 +326,11 @@
 	</ui5-flexible-column-layout>
 
 	<script>
+		var counter = 0;
+		fcl1.addEventListener("layout-change", function(e) {
+			layoutChangeRes.value = e.detail.layout + ": " + (++counter);
+		});
+
 		switchBtn1.addEventListener("click", function() {
 			fcl1.layout = fcl1.layout === "TwoColumnsStartExpanded" ? "ThreeColumnsMidExpanded" : "TwoColumnsStartExpanded";
 		});

@@ -1,10 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
-
 import FCLLayout from "./types/FCLLayout.js";
+import {
+	getLayoutsByMedia,
+	getNextLayoutByStartArrow,
+	getNextLayoutByEndArrow,
+} from "./fcl-utils/FCLLayout.js";
 
 // Template
 import FlexibleColumnLayoutTemplate from "./generated/templates/FlexibleColumnLayoutTemplate.lit.js";
@@ -50,6 +56,28 @@ const metadata = {
 		*/
 		noArrows: {
 			type: Boolean,
+		},
+
+		/**
+		* Defines the width.
+		*
+		* @type {Float}
+		* @private
+		*/
+		_width: {
+			type: Float,
+			defaultValue: 0,
+		},
+
+		/**
+		* Defines the effective layout.
+		*
+		* @type {Object}
+		* @private
+		*/
+		_layout: {
+			type: Object,
+			defaultValue: undefined,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
@@ -131,6 +159,14 @@ const metadata = {
  * @since 1.0.0-rc.8
  */
 class FlexibleColumnLayout extends UI5Element {
+	constructor() {
+		super();
+
+		this._handleResize = () => {
+			this._width = this.getBoundingClientRect().width;
+		};
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -152,95 +188,30 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	static get BREAKPOINTS() {
-		return [
-			960,
-			1280,
-		];
-	}
-
-	static get COLUMN_WIDTHS() {
 		return {
-			"OneColumn": ["100%", 0, 0],
-			"TwoColumnsStartExpanded": ["67%", "33%", 0],
-			"TwoColumnsMidExpanded": ["33%", "67%", 0],
-			"ThreeColumnsStartExpanded": ["25%", "50%", "25%"],
-			"ThreeColumnsMidExpanded": ["25%", "50%", "25%"],
-			"ThreeColumnsEndExpanded": ["25%", "25%", "50%"],
-			"ThreeColumnsStartExpandedEndHidden": ["67%", "33%", 0],
-			"ThreeColumnsMidExpandedEndHidden": ["33%", "67%", 0],
+			"M": 960,
+			"L": 1280,
 		};
 	}
 
 	static get NEXT_LAYOUT_START_ARROW() {
-		return {
-			"TwoColumnsStartExpanded": "TwoColumnsMidExpanded",
-			"TwoColumnsMidExpanded": "TwoColumnsStartExpanded",
-			"ThreeColumnsMidExpanded": "ThreeColumnsStartExpandedEndHidden",
-			"ThreeColumnsEndExpanded": "ThreeColumnsStartExpandedEndHidden",
-			"ThreeColumnsStartExpandedEndHidden": "ThreeColumnsMidExpandedEndHidden",
-			"ThreeColumnsMidExpandedEndHidden": "ThreeColumnsStartExpandedEndHidden",
-		};
+		return getNextLayoutByStartArrow();
 	}
 
 	static get NEXT_LAYOUT_END_ARROW() {
-		return {
-			"ThreeColumnsMidExpanded": "ThreeColumnsEndExpanded",
-			"ThreeColumnsEndExpanded": "ThreeColumnsMidExpanded",
-			"ThreeColumnsStartExpandedEndHidden": "ThreeColumnsMidExpanded",
-			"ThreeColumnsMidExpandedEndHidden": "ThreeColumnsMidExpanded",
-		};
+		return getNextLayoutByEndArrow();
 	}
 
-	static get ARROWS() {
-		return {
-			"OneColumn": [
-				{ visible: false, dir: null },
-				{ visible: false, dir: null },
-			],
-			"TwoColumnsStartExpanded": [
-				{ visible: true, dir: "mirror" },
-				{ visible: false, dir: null },
-			],
-			"TwoColumnsMidExpanded": [
-				{ visible: true, dir: null },
-				{ visible: false, dir: null },
-			],
-
-			"ThreeColumnsMidExpanded": [
-				{ visible: true, dir: null },
-				{ visible: true, dir: null },
-			],
-			"ThreeColumnsEndExpanded": [
-				{ visible: true, dir: null },
-				{ visible: true, dir: "mirror" },
-			],
-			"ThreeColumnsStartExpandedEndHidden": [
-				{ visible: true, dir: "mirror" },
-				{ visible: true, dir: null },
-			],
-			"ThreeColumnsMidExpandedEndHidden": [
-				{ visible: true, dir: null },
-				{ visible: true, dir: null },
-			],
-		};
+	static get LAYOUT_BY_MEDIA() {
+		return getLayoutsByMedia();
 	}
 
-	_startArrowClick() {
-		const prevLayout = this.layout;
-		this.layout = this.nextLayout(this.layout, { start: true, end: false });
-
-		if (prevLayout !== this.layout) {
-			this.fireEvent("layout-change");
-		}
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResize);
 	}
 
-	_endArrowClick() {
-		const prevLayout = this.layout;
-		this.layout = this.nextLayout(this.layout, { start: false, end: true });
-
-		if (prevLayout !== this.layout) {
-			this.fireEvent("layout-change");
-		}
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResize);
 	}
 
 	nextLayout(layout, arrowsInfo = {}) {
@@ -248,19 +219,42 @@ class FlexibleColumnLayout extends UI5Element {
 			return FlexibleColumnLayout.NEXT_LAYOUT_START_ARROW[layout];
 		}
 
-		return FlexibleColumnLayout.NEXT_LAYOUT_END_ARROW[layout];
+		if (arrowsInfo.end) {
+			return FlexibleColumnLayout.NEXT_LAYOUT_END_ARROW[layout];
+		}
+	}
+
+	_startArrowClick() {
+		this._arrowClick({ start: true, end: false });
+	}
+
+	_endArrowClick() {
+		this._arrowClick({ start: false, end: true });
+	}
+
+	_arrowClick({ start, end }) {
+		this.layout = this.nextLayout(this.layout, { start, end });
+		this.fireEvent("layout-change", { layout: this.layout });
+	}
+
+	getEffectiveColumnLayout(layout) {
+		return FlexibleColumnLayout.LAYOUT_BY_MEDIA[this.getMedia()][layout].layout;
 	}
 
 	get startColumnWidth() {
-		return FlexibleColumnLayout.COLUMN_WIDTHS[this.layout][0];
+		return this.getEffectiveColumnLayout(this.layout)[0];
 	}
 
 	get midColumnWidth() {
-		return FlexibleColumnLayout.COLUMN_WIDTHS[this.layout][1];
+		return this.getEffectiveColumnLayout(this.layout)[1];
 	}
 
 	get endColumnWidth() {
-		return FlexibleColumnLayout.COLUMN_WIDTHS[this.layout][2];
+		return this.getEffectiveColumnLayout(this.layout)[2];
+	}
+
+	get effectiveArrowsInfo() {
+		return FlexibleColumnLayout.LAYOUT_BY_MEDIA[this.getMedia()][this.layout].arrows;
 	}
 
 	get showStartArrow() {
@@ -268,8 +262,7 @@ class FlexibleColumnLayout extends UI5Element {
 			return false;
 		}
 
-		const arrowInfo = FlexibleColumnLayout.ARROWS[this.layout][0];
-		return arrowInfo.visible;
+		return this.effectiveArrowsInfo[0].visible;
 	}
 
 	get showEndArrow() {
@@ -277,18 +270,27 @@ class FlexibleColumnLayout extends UI5Element {
 			return false;
 		}
 
-		const arrowInfo = FlexibleColumnLayout.ARROWS[this.layout][1];
-		return arrowInfo.visible;
+		return this.effectiveArrowsInfo[1].visible;
 	}
 
 	get startArrowDirection() {
-		const arrowInfo = FlexibleColumnLayout.ARROWS[this.layout][0];
-		return arrowInfo.dir;
+		return this.effectiveArrowsInfo[0].dir;
 	}
 
 	get endArrowDirection() {
-		const arrowInfo = FlexibleColumnLayout.ARROWS[this.layout][1];
-		return arrowInfo.dir;
+		return this.effectiveArrowsInfo[1].dir;
+	}
+
+	getMedia() {
+		if (this._width <= FlexibleColumnLayout.BREAKPOINTS.M) {
+			return "phone";
+		}
+
+		if (this._width <= FlexibleColumnLayout.BREAKPOINTS.L) {
+			return "tablet";
+		}
+
+		return "desktop";
 	}
 
 	get classes() {
