@@ -28,8 +28,9 @@
 	<!-- ex1 -->
 	<br><br>
 	<ui5-title class="sectionTitle">Master-Detail: Master Expanded</ui5-title>
-	<ui5-button id="switchBtn1" class="testButton">toggle</ui5-button><br>
-	<ui5-input id="layoutChangeRes" style="width: 400px"></ui5-input>
+	<ui5-togglebutton id="switchBtn1" class="testButton">Set to ThreeColumnsMidExpanded</ui5-togglebutton><br>
+	<ui5-input id="layoutChangeRes" placeholder="layout..." style="width: 400px"></ui5-input><br>
+	<ui5-input id="layoutChangeRes2" placeholder="change counter..." style="width: 400px"></ui5-input>
 	<br><br>
 
 	<ui5-flexible-column-layout id="fcl1" layout="TwoColumnsStartExpanded">
@@ -85,7 +86,7 @@
 	<!-- ex2 -->
 	<br><br>
 	<ui5-title class="sectionTitle">Master-Detail: Detail expanded + no-arrows</ui5-title>
-	<ui5-button id="switchBtn2" class="testButton">toggle</ui5-button>
+	<ui5-togglebutton id="switchBtn2" class="testButton">Set to TwoColumnsMidExpanded</ui5-togglebutton>
 	<br><br>
 
 	<ui5-flexible-column-layout id="fcl2" layout="TwoColumnsMidExpanded" no-arrows>
@@ -306,13 +307,13 @@
 	<ui5-title class="sectionTitle">Default OneColumn</ui5-title>
 	<br><br>
 
-	<ui5-flexible-column-layout>
+	<ui5-flexible-column-layout id="fcl6">
 		<!-- start column -->
 		<div style="box-sizing: border-box;" slot="startColumn">
 			<div style="padding: 1rem">
 				<ui5-title>Column 1</ui5-title>
 			</div>
-			<ui5-list>
+			<ui5-list id="list">
 				<ui5-li>Hello worild!</ui5-li>
 				<ui5-li>Hello worild!</ui5-li>
 				<ui5-li>Hello worild!</ui5-li>
@@ -323,20 +324,60 @@
 				<ui5-li>Hello worild!</ui5-li>
 			</ui5-list>
 		</div>
+
+		<div style="box-sizing: border-box;" slot="midColumn">
+			<div style="padding: 1rem">
+				<ui5-title>Column 2</ui5-title>
+			</div>
+			<ui5-list id="list2">
+				<ui5-li>Detail item</ui5-li>
+				<ui5-li>Detail item</ui5-li>
+				<ui5-li>Detail item</ui5-li>
+				<ui5-li>Detail item</ui5-li>
+				<ui5-li>Detail item</ui5-li>
+				<ui5-li>Detail item</ui5-li>
+				<ui5-li>Detail item</ui5-li>
+				<ui5-li>Detail item</ui5-li>
+			</ui5-list>
+		</div>
+
+		<div style="box-sizing: border-box;" slot="endColumn">
+			<div style="padding: 1rem">
+				<ui5-title>Column 3</ui5-title>
+			</div>
+			<ui5-list id="list3">
+				<ui5-li>Detail - Detail</ui5-li>
+				<ui5-li>Detail - Detail</ui5-li>
+				<ui5-li>Detail - Detail</ui5-li>
+				<ui5-li>Detail - Detail</ui5-li>
+				<ui5-li>Detail - Detail</ui5-li>
+				<ui5-li>Detail - Detail</ui5-li>
+				<ui5-li>Detail - Detail</ui5-li>
+			</ui5-list>
+		</div>
 	</ui5-flexible-column-layout>
 
 	<script>
 		var counter = 0;
 		fcl1.addEventListener("layout-change", function(e) {
-			layoutChangeRes.value = e.detail.layout + ": " + (++counter);
+			layoutChangeRes.value = "layout ::" + e.detail.layout;
+			layoutChangeRes2.value = "changeCount :: " + (++counter);
 		});
 
-		switchBtn1.addEventListener("click", function() {
-			fcl1.layout = fcl1.layout === "TwoColumnsStartExpanded" ? "ThreeColumnsMidExpanded" : "TwoColumnsStartExpanded";
+		switchBtn1.addEventListener("click", function(e) {
+			fcl1.layout = e.target.pressed ? "ThreeColumnsMidExpanded" : "TwoColumnsStartExpanded";
 		});
 	
-		switchBtn2.addEventListener("click", function() {
-			fcl2.layout = fcl2.layout === "TwoColumnsStartExpanded" ? "TwoColumnsMidExpanded" : "TwoColumnsStartExpanded";
+		switchBtn2.addEventListener("click", function(e) {
+			fcl2.layout = e.target.pressed ? "TwoColumnsMidExpanded" : "TwoColumnsStartExpanded";
+		});
+
+		list.addEventListener("item-click", function(e) {
+			fcl6.layout = "TwoColumnsMidExpanded";
+		});
+
+		list2.addEventListener("item-click", function(e) {
+			fcl6.layout = "ThreeColumnsEndExpanded";
 		});
 	</script>
 </body>

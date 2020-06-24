@@ -162,8 +162,25 @@ class FlexibleColumnLayout extends UI5Element {
 	constructor() {
 		super();
 
+		this.initialRendering = true;
+
 		this._handleResize = () => {
+			const prevLayoutHash = this._layout.join();
 			this._width = this.getBoundingClientRect().width;
+
+			if (this.initialRendering) {
+				return;
+			}
+
+			this._layout = this.getEffectiveColumnLayout(this.layout);
+
+			if (prevLayoutHash !== this._layout.join()) {
+				this.fireEvent("layout-change", {
+					layout: this._layout,
+					arrowUsed: false,
+					resize: true,
+				});
+			}
 		};
 	}
 
@@ -214,6 +231,15 @@ class FlexibleColumnLayout extends UI5Element {
 		ResizeHandler.deregister(this, this._handleResize);
 	}
 
+	onAfterRendering() {
+		if (this._layout === undefined) {
+			this._width = this.getBoundingClientRect().width;
+			this._layout = this.getEffectiveColumnLayout(this.layout);
+		}
+
+		this.initialRendering = false;
+	}
+
 	nextLayout(layout, arrowsInfo = {}) {
 		if (arrowsInfo.start) {
 			return FlexibleColumnLayout.NEXT_LAYOUT_START_ARROW[layout];
@@ -234,7 +260,13 @@ class FlexibleColumnLayout extends UI5Element {
 
 	_arrowClick({ start, end }) {
 		this.layout = this.nextLayout(this.layout, { start, end });
-		this.fireEvent("layout-change", { layout: this.layout });
+		this._layout = this.getEffectiveColumnLayout(this.layout);
+
+		this.fireEvent("layout-change", {
+			layout: this._layout,
+			arrowUsed: true,
+			resize: false,
+		});
 	}
 
 	getEffectiveColumnLayout(layout) {
