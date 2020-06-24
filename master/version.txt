@@ -1,5 +1,12 @@
-commit 6fa5847c4025fb8ff619a7f33e9061b11ac20832
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 24 08:55:28 2020 +0300
+commit 4338d56a9b7334a27a02d817c81d57b2cb746bc4
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jun 24 09:32:49 2020 +0300
 
-    feat(tools): Templates can be imported from node_modules/ (#1860)
+    feat(ui5-shellbar): enable tooltips of custom icons (#1863)
+    
+    Changes:
+    - enable tooltips for custom shellbar items
+    - set tooltips for the built-in icons: search, notifications, profile, products and oveflow
+    - fix count stopped displaying after replacing ui5-icon with ui5-button
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1854
