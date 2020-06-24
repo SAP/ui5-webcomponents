@@ -277,6 +277,7 @@ class TabContainer extends UI5Element {
 			item._mixedMode = this.mixedMode;
 			item._posinset = index + 1;
 			item._setsize = this.items.length;
+			item.stableDomRef = item.stableDomRef;
 			item._getTabContainerHeaderItemCallback = _ => {
 				return this.getDomRef().querySelector(`#${item._id}`);
 			};
