@@ -1,11 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import FlexibleColumnLayoutTemplate from "./generated/templates/FlexibleColumnLayoutTemplate.lit.js";
-
-import FCLLayout from "./types/FCLLayout.js"
 import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+
+import FCLLayout from "./types/FCLLayout.js";
+
+// Template
+import FlexibleColumnLayoutTemplate from "./generated/templates/FlexibleColumnLayoutTemplate.lit.js";
 
 // Styles
 import FlexibleColumnLayoutCss from "./generated/themes/FlexibleColumnLayout.css.js";
@@ -44,7 +46,7 @@ const metadata = {
 		*/
 		noArrows: {
 			type: Boolean,
-		}
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
@@ -77,7 +79,7 @@ const metadata = {
 
 		endColumn: {
 			type: HTMLElement,
-		}
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		"layout-change": {
@@ -90,7 +92,7 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * 
+ *
  * The FlexibleColumnLayout implements the master-detail-detail paradigm by displaying up to three pages in separate columns.
  * There are several possible layouts that can be changed either with the control's API, or by the user with the help of layout arrows.
  *
@@ -153,8 +155,8 @@ class FlexibleColumnLayout extends UI5Element {
 			"ThreeColumnsMidExpanded": ["25%", "50%", "25%"],
 			"ThreeColumnsEndExpanded": ["25%", "25%", "50%"],
 			"ThreeColumnsStartExpandedEndHidden": ["67%", "33%", 0],
-			"ThreeColumnsMidExpandedEndHidden": ["33%", "67%", 0]
-		}
+			"ThreeColumnsMidExpandedEndHidden": ["33%", "67%", 0],
+		};
 	}
 
 	static get NEXT_LAYOUT_START_ARROW() {
@@ -165,7 +167,7 @@ class FlexibleColumnLayout extends UI5Element {
 			"ThreeColumnsEndExpanded": "ThreeColumnsStartExpandedEndHidden",
 			"ThreeColumnsStartExpandedEndHidden": "ThreeColumnsMidExpandedEndHidden",
 			"ThreeColumnsMidExpandedEndHidden": "ThreeColumnsStartExpandedEndHidden",
-		}
+		};
 	}
 
 	static get NEXT_LAYOUT_END_ARROW() {
@@ -174,14 +176,14 @@ class FlexibleColumnLayout extends UI5Element {
 			"ThreeColumnsEndExpanded": "ThreeColumnsMidExpanded",
 			"ThreeColumnsStartExpandedEndHidden": "ThreeColumnsMidExpanded",
 			"ThreeColumnsMidExpandedEndHidden": "ThreeColumnsMidExpanded",
-		}
+		};
 	}
 
 	static get ARROWS() {
 		return {
 			"OneColumn": [
 				{ visible: false, dir: null },
-				{ visible: false, dir: null }
+				{ visible: false, dir: null },
 			],
 			"TwoColumnsStartExpanded": [
 				{ visible: true, dir: "mirror" },
@@ -196,7 +198,7 @@ class FlexibleColumnLayout extends UI5Element {
 				{ visible: true, dir: null },
 				{ visible: true, dir: null },
 			],
-			"ThreeColumnsEndExpanded":  [
+			"ThreeColumnsEndExpanded": [
 				{ visible: true, dir: null },
 				{ visible: true, dir: "mirror" },
 			],
@@ -208,24 +210,22 @@ class FlexibleColumnLayout extends UI5Element {
 				{ visible: true, dir: null },
 				{ visible: true, dir: null },
 			],
-		}
+		};
 	}
 
 	_startArrowClick() {
-		this.layout = this.nextLayout(this.layout, {start: true, end: false });
-		console.log({ layout: this.layout})
+		this.layout = this.nextLayout(this.layout, { start: true, end: false });
 	}
 
 	_endArrowClick() {
-		this.layout = this.nextLayout(this.layout, {start: false, end: true });
-		console.log({ layout: this.layout})
+		this.layout = this.nextLayout(this.layout, { start: false, end: true });
 	}
 
 	nextLayout(layout, arrowsInfo = {}) {
 		if (arrowsInfo.start) {
 			return FlexibleColumnLayout.NEXT_LAYOUT_START_ARROW[layout];
 		}
-	
+
 		return FlexibleColumnLayout.NEXT_LAYOUT_END_ARROW[layout];
 	}
 
@@ -287,7 +287,7 @@ class FlexibleColumnLayout extends UI5Element {
 					"ui5-fcl-column--end": true,
 					"ui5-fcl-column--hidden": this.endColumnWidth === 0,
 				},
-			}
+			},
 		};
 	}
 
@@ -319,7 +319,7 @@ class FlexibleColumnLayout extends UI5Element {
 				end: {
 					transform: this.endArrowDirection === "mirror" ? "rotate(180deg)" : "",
 				},
-			}
+			},
 		};
 	}
 }

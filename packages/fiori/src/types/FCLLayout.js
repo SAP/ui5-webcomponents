@@ -14,13 +14,13 @@ const FCLLayouts = {
 	OneColumn: "OneColumn",
 
 	/**
-	 * 
+	 *
 	 * Desktop: 67/33/-  Begin (expanded) and Mid columns are displayed
 	 * Tablet:  67/33/-  Begin (expanded) and Mid columns are displayed
 	 * Phone:   -/100/-  only the Mid column is displayed
 	 *
 	 * Use to display both a master and a detail page when the user should focus on the master page.
-	 * 
+	 *
 	 * @type {TwoColumnsStartExpanded}
 	 * @public
 	 */
