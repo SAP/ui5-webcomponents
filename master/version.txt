@@ -1,9 +1,5 @@
-commit 1d20ba8eff51ab5de0afaffebd770b7fddeac16b
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jun 23 18:43:43 2020 +0300
+commit 6fa5847c4025fb8ff619a7f33e9061b11ac20832
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jun 24 08:55:28 2020 +0300
 
-    feat(ui5-input): add suggestion-scroll event (#1856)
-    
-    Add new event "suggestion-scroll", fired whenever the user scrolls the suggestion list in the popover either via the mouse, or via the keyboard keys.
-    
-    Fixes: #1846
+    feat(tools): Templates can be imported from node_modules/ (#1860)
