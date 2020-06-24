@@ -92,6 +92,7 @@
 					data-ui5-notification-count="{{notificationCount}}"
 					@click={{_handleSearchIconPress}}
 					aria-label="{{_searchText}}"
+					title="{{_searchText}}"
 					._buttonAccInfo="{{accInfo.search}}"
 				></ui5-button>
 			{{/if}}
@@ -102,6 +103,7 @@
 					style="{{this.style}}"
 					class="{{this.classes}}"
 					icon="{{this.icon}}"
+					title="{{this.title}}"
 					data-count="{{this.count}}"
 					data-ui5-notification-count="{{../notificationCount}}"
 					data-ui5-external-action-item-id="{{this.refItemid}}"
@@ -119,6 +121,7 @@
 				data-ui5-notification-count="{{notificationCount}}"
 				@click={{_handleNotificationsPress}}
 				aria-label="{{_notificationsText}}"
+				title="{{_notificationsText}}"
 				._buttonAccInfo="{{accInfo.notifications}}"
 			></ui5-button>
 			{{/if}}
@@ -130,6 +133,7 @@
 				icon="sap-icon://overflow"
 				@click="{{_handleOverflowPress}}"
 				aria-label="{{_overflowText}}"
+				title="{{_overflowText}}"
 				._buttonAccInfo="{{accInfo.overflow}}"
 			></ui5-button>
 
@@ -140,6 +144,7 @@
 					@click={{_handleProfilePress}}
 					style="{{styles.items.profile}}"
 					aria-label="{{_profileText}}"
+					title="{{_profileText}}"
 					._buttonAccInfo="{{accInfo.profile}}"
 					class="ui5-shellbar-button ui5-shellbar-image-button">
 						<slot
@@ -157,6 +162,7 @@
 				data-ui5-text="Product Switch"
 				@click={{_handleProductSwitchPress}}
 				aria-label="{{_productsText}}"
+				title="{{_productsText}}"
 				._buttonAccInfo="{{accInfo.products}}"
 			></ui5-button>
 			{{/if}}
