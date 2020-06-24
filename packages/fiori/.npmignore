@@ -3,7 +3,6 @@ dist/resources
 dist/test-resources
 lib/
 node_modules/
-src/
 test/
 bundle.*.js
 .eslintrc.js

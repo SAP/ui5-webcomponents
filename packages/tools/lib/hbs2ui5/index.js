@@ -18,26 +18,18 @@ const args = getopts(process.argv.slice(2), {
 
 const onError = (place) => {
 	console.log(`A problem occoured when reading ${place}. Please recheck passed parameters.`);
-}
+};
+
 const isHandlebars = (fileName) => fileName.indexOf('.hbs') !== -1;
-const parseFile = (filePath, inputDir, outputDir) => {
-	fs.readFile(filePath, 'utf-8', (err, content) => {
 
-		if (err) {
-			onError('file');
-		}
+const processFile = (file, outputDir) => {
 
-		hbs2lit.compileString(content, {
-			templatesPath: inputDir,
-			compiledTemplatesPath: outputDir
-		}).then((litCode) => {
-			const componentNameMatcher = /(\w+)(\.hbs)/gim;
-			const componentName = componentNameMatcher.exec(filePath)[1];
+	const litCode = hbs2lit(file);
 
-			writeRenderers(outputDir, componentName, litRenderer.generateTemplate(componentName, litCode));
-		});
-	});
-}
+	const componentNameMatcher = /(\w+)(\.hbs)/gim;
+	const componentName = componentNameMatcher.exec(file)[1];
+	writeRenderers(outputDir, componentName, litRenderer.generateTemplate(componentName, litCode));
+};
 
 const wrapDirectory = (directory, outputDir) => {
 	directory = path.normalize(directory);
@@ -51,9 +43,7 @@ const wrapDirectory = (directory, outputDir) => {
 
 		files.forEach(fileName => {
 			if (isHandlebars(fileName)) {
-
-				// could be refactored a bit
-				parseFile(directory + fileName, directory, outputDir);
+				processFile(path.join(directory, fileName), outputDir);
 			}
 		});
 	})

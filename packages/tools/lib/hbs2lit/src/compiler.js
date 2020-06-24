@@ -12,10 +12,9 @@ const removeWhiteSpaces = (source) => {
 		.replace(/}}\s+{{/g, "}}{{"); // Remove whitespace between }} and {{
 };
 
-const compileString = async (sInput, config) => {
-	let sPreprocessed = sInput;
+const hbs2lit = (file) => {
+	let sPreprocessed = includesReplacer.replace(file);
 
-	sPreprocessed = includesReplacer.replace(sPreprocessed, config);
 	sPreprocessed = removeWhiteSpaces(sPreprocessed);
 
 	const ast = Handlebars.parse(sPreprocessed);
@@ -38,6 +37,4 @@ const compileString = async (sInput, config) => {
 	return result;
 };
 
-module.exports = {
-	compileString
-};
+module.exports = hbs2lit;
