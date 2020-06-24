@@ -24,8 +24,12 @@ const metadata = {
 		 * Available options are:
 		 * <ul>
 		 * <li><code>OneColumn</code></li>
-		 * <li><code>TwoColumn</code></li>
-		 * <li><code>ThreeColumn</code></li>
+		 * <li><code>TwoColumnsStartExpanded</code></li>
+		 * <li><code>TwoColumnsMidExpanded</code></li>
+		 * <li><code>ThreeColumnsMidExpanded</code></li>
+		 * <li><code>ThreeColumnsEndExpanded</code></li>
+		 * <li><code>ThreeColumnsStartExpandedEndHidden</code></li>
+		 * <li><code>ThreeColumnsMidExpandedEndHidden</code></li>
 		 * </ul>
 		 *
 		 * @type {FCLLayout}
