@@ -1,0 +1,193 @@
+<header class="component-heading">
+	<h2 class="control-header">FlexibleColumnLayout</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents-fiori</div>
+
+<div class="control-tag">&lt;ui5-fcl-column-layout&gt;</div>
+
+
+<!-- Basic FlexibleColumnLayout -->
+<section>
+	<h3>Basic FlexibleColumnLayout</h3>
+	<div class="snippet">
+		<ui5-flexible-column-layout id="fcl6" layout="ThreeColumnsStartExpandedEndHidden">
+			<!-- start column -->
+			<div style="box-sizing: border-box;" slot="startColumn">
+			
+				<ui5-shellbar primary-title="Dep. New York, USA">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+				</ui5-shellbar>
+
+				<br><br>
+				<ui5-list id="col1list" header-text="Employees">
+					<ui5-li
+						image="../../../assets/images/avatars/woman_avatar_3.png"
+						icon="navigation-right-arrow"
+						description="New York, USA" icon-end>Jennifer
+					</ui5-li>
+					<ui5-li
+						image="../../../assets/images/avatars/woman_avatar_4.png"
+						icon="navigation-right-arrow"
+						description="New York, USA" icon-end>Lora
+					</ui5-li>
+					<ui5-li
+						image="../../../assets/images/avatars/woman_avatar_5.png"
+						icon="navigation-right-arrow"
+						description="New York, USA" icon-end>Carlotta
+					</ui5-li>
+					<ui5-li
+						image="../../../assets/images/avatars/man_avatar_1.png" 
+						icon="navigation-right-arrow"
+						description="New York, USA" icon-end>Clark
+					</ui5-li>
+					<ui5-li
+						image="../../../assets/images/avatars/woman_avatar_1.png"
+						icon="navigation-right-arrow"
+						description="New York, USA" icon-end>Ellen
+					</ui5-li>
+					<ui5-li
+						image="../../../assets/images/avatars/man_avatar_2.png"
+						icon="navigation-right-arrow"
+						description="New York, USA" icon-end>Adam
+					</ui5-li>
+				</ui5-list>
+			</div>
+	
+			<!-- mid column -->
+			<div style="box-sizing: border-box;" slot="midColumn">
+				<div style="padding: 1rem; display: flex; justify-content: space-between; flex-wrap: wrap;">
+					<ui5-title>Employee name@peer-computing.com</ui5-title>
+					<ui5-button id="closeMidColumn" icon="decline" design="Transparent"></ui5-button>
+				</div>
+
+				<ui5-list id="col2list">
+					<ui5-li>
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</ui5-li>
+
+					<ui5-li>
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</ui5-li>
+
+					<ui5-li>
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</ui5-li>
+
+					<ui5-li>
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</ui5-li>
+
+					<ui5-li>
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</ui5-li>
+					<ui5-li>
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</ui5-li>
+					<ui5-li>
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</ui5-li>
+					<ui5-li>
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</ui5-li>
+					<ui5-li>
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</ui5-li>
+					<ui5-li>
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</ui5-li>
+				</ui5-list>
+			</div>
+	
+			<!-- end column -->
+			<div style="box-sizing: border-box;" slot="endColumn">
+				<div style="padding: 1rem; display: flex; justify-content: space-between; flex-wrap: wrap;">
+					<ui5-title>Detail-Deatail</ui5-title>
+					<ui5-button id="closeEndColumn" icon="decline" design="Transparent"></ui5-button>
+				</div>
+				<p>
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+				<p>
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+				<p>
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+		</ui5-flexible-column-layout>
+	</div>
+
+	<script>
+		col1list.addEventListener("item-click", function(e) {
+			fcl6.layout = "TwoColumnsMidExpanded";
+		});
+
+		col2list.addEventListener("item-click", function(e) {
+			fcl6.layout = "ThreeColumnsEndExpanded";
+		});
+
+		closeMidColumn.addEventListener("click", function(e) {
+			fcl6.layout = "OneColumn";
+		});
+
+		closeEndColumn.addEventListener("click", function(e) {
+			fcl6.layout = "TwoColumnsMidExpanded";
+		});
+	</script>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-flexible-column-layout id="fcl6" layout="ThreeColumnsStartExpandedEndHidden">
+	<div slot="startColumn">
+		<ui5-shellbar primary-title="Dep. New York, USA">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		</ui5-shellbar>
+
+		<ui5-list id="col1list" header-text="Employees">
+		</ui5-list>
+	</div>
+
+	<div slot="midColumn">
+		<div>
+			<ui5-title>Employee name@peer-computing.com</ui5-title>
+			<ui5-button id="closeMidColumn" icon="decline" design="Transparent"></ui5-button>
+		</div>
+		<ui5-list id="col2list" header-text="Employees">
+		</ui5-list>
+	</div>
+
+	<div slot="endColumn">
+		<div>
+			<ui5-title>Detail-Deatail</ui5-title>
+			<ui5-button id="closeEndColumn" icon="decline" design="Transparent"></ui5-button>
+		</div>
+
+		<p>
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod..."
+		</p>
+	</div>
+</ui5-flexible-column-layout>
+
+<script>
+col1list.addEventListener("item-click", function(e) {
+	fcl6.layout = "TwoColumnsMidExpanded";
+});
+
+col2list.addEventListener("item-click", function(e) {
+	fcl6.layout = "ThreeColumnsEndExpanded";
+});
+
+closeMidColumn.addEventListener("click", function(e) {
+	fcl6.layout = "OneColumn";
+});
+
+closeEndColumn.addEventListener("click", function(e) {
+	fcl6.layout = "TwoColumnsMidExpanded";
+});
+</script>
+	</xmp></pre>
+</section>
+
+<!-- JSDoc marker -->

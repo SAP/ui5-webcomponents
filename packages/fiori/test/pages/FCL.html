@@ -326,8 +326,9 @@
 		</div>
 
 		<div style="box-sizing: border-box;" slot="midColumn">
-			<div style="padding: 1rem">
+			<div style="padding: 1rem; display: flex; justify-content: space-between;">
 				<ui5-title>Column 2</ui5-title>
+				<ui5-button id="closeMidColumn" icon="decline" design="Transparent"></ui5-button>
 			</div>
 			<ui5-list id="list2">
 				<ui5-li>Detail item</ui5-li>
@@ -342,8 +343,9 @@
 		</div>
 
 		<div style="box-sizing: border-box;" slot="endColumn">
-			<div style="padding: 1rem">
+			<div style="padding: 1rem; display: flex; justify-content: space-between;">
 				<ui5-title>Column 3</ui5-title>
+				<ui5-button id="closeEndColumn" icon="decline" design="Transparent"></ui5-button>
 			</div>
 			<ui5-list id="list3">
 				<ui5-li>Detail - Detail</ui5-li>
@@ -378,6 +380,14 @@
 
 		list2.addEventListener("item-click", function(e) {
 			fcl6.layout = "ThreeColumnsEndExpanded";
+		});
+
+		closeMidColumn.addEventListener("click", function(e) {
+			fcl6.layout = "OneColumn";
+		});
+
+		closeEndColumn.addEventListener("click", function(e) {
+			fcl6.layout = "TwoColumnsMidExpanded";
 		});
 	</script>
 </body>
