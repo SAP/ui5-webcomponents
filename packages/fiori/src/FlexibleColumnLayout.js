@@ -82,6 +82,14 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
+		/**
+		 *
+		 * Fired when the layout is changed via user interaction by clicking the arrow keys,
+		 * or by changing the component size.
+		 *
+		 * @event sap.ui.webcomponents.fiori.FlexibleColumnLayout#layout-change
+		 * @public
+		 */
 		"layout-change": {
 
 		},
@@ -214,11 +222,21 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	_startArrowClick() {
+		const prevLayout = this.layout;
 		this.layout = this.nextLayout(this.layout, { start: true, end: false });
+
+		if (prevLayout !== this.layout) {
+			this.fireEvent("layout-change");
+		}
 	}
 
 	_endArrowClick() {
+		const prevLayout = this.layout;
 		this.layout = this.nextLayout(this.layout, { start: false, end: true });
+
+		if (prevLayout !== this.layout) {
+			this.fireEvent("layout-change");
+		}
 	}
 
 	nextLayout(layout, arrowsInfo = {}) {
