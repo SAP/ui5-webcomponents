@@ -25,8 +25,11 @@ const metadata = {
 	tag: "ui5-flexible-column-layout",
 	properties: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
-		 * Defines the number of columns.
-		 *
+		 * Defines the columns layout and their proportion - which one to be expanded.
+		 * <br><br>
+		 * <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 900px,
+		 * two columns between 900px and 1280px and three columns for sizes bigger than 1280px.
+		 * <br><br>
 		 * Available options are:
 		 * <ul>
 		 * <li><code>OneColumn</code></li>
@@ -37,7 +40,9 @@ const metadata = {
 		 * <li><code>ThreeColumnsStartExpandedEndHidden</code></li>
 		 * <li><code>ThreeColumnsMidExpandedEndHidden</code></li>
 		 * </ul>
-		 *
+		 * <br><br>
+		 * <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns
+		 * in 67%/33% proportion.
 		 * @type {FCLLayout}
 		 * @defaultvalue "OneColumn"
 		 * @public
@@ -64,7 +69,7 @@ const metadata = {
 		* @type {Float}
 		* @private
 		*/
-		_width: {
+		width: {
 			type: Float,
 			defaultValue: 0,
 		},
@@ -75,7 +80,7 @@ const metadata = {
 		* @type {Object}
 		* @private
 		*/
-		_layout: {
+		_columnLayout: {
 			type: Object,
 			defaultValue: undefined,
 		},
@@ -83,18 +88,17 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
 		 * Defines the content in the start column.
-		 * @type {HTMLElement[]}
+		 * @type {HTMLElement}
 		 * @slot
 		 * @public
 		 */
-
 		startColumn: {
 			type: HTMLElement,
 		},
 
 		/**
 		 * Defines the content in the middle column.
-		 * @type {HTMLElement[]}
+		 * @type {HTMLElement}
 		 * @slot
 		 * @public
 		 */
@@ -104,26 +108,33 @@ const metadata = {
 
 		/**
 		 * Defines the content in the end column.
-		 * @type {HTMLElement[]}
+		 * @type {HTMLElement}
 		 * @slot
 		 * @public
 		 */
-
 		endColumn: {
 			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
-		 *
-		 * Fired when the layout is changed via user interaction by clicking the arrow keys,
+		 * Fired when the layout changes via user interaction by clicking the arrows
 		 * or by changing the component size.
 		 *
+		 * @param {FCLLayout} layout the current layout set
+		 * @param {Array} columnLayout the effective column layout, f.e [67%, 33%, 0]
+		 * @param {boolean} arrowsUsed the layout is changed via the arrows
+		 * @param {boolean} resize the layout is changed via the arrows via resizing
 		 * @event sap.ui.webcomponents.fiori.FlexibleColumnLayout#layout-change
 		 * @public
 		 */
 		"layout-change": {
-
+			detail: {
+				layout: { type: FCLLayout },
+				columnLayout: { type: Array },
+				arrowsUsed: { type: Boolean },
+				resize: { type: Boolean },
+			},
 		},
 	},
 };
@@ -133,18 +144,19 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The FlexibleColumnLayout implements the master-detail-detail paradigm by displaying up to three pages in separate columns.
- * There are several possible layouts that can be changed either with the control's API, or by the user with the help of layout arrows.
+ * The <code>FlexibleColumnLayout</code> implements the master-detail-detail paradigm by displaying up to three pages in separate columns.
+ * There are several possible layouts that can be changed either with the component API, or by pressing the arrows, displayed between the columns.
  *
  * <h3>Usage</h3>
  *
  * Use this component for applications that need to display several logical levels of related information side by side (e.g. list of items, item, sub-item, etc.).
- * The Component is flexible in a sense that the application can focus the user's attention on one particular column by making it larger or even fullscreen.
+ * The Component is flexible in a sense that the application can focus the user's attention on one particular column.
  *
  * <h3>Responsive Behavior</h3>
  *
- * The component automatically displays the maximum possible number of columns based on the device size.
- * The app does not need to take into consideration the current device/screen size.
+ * The <code>FlexibleColumnLayout</code> automatically displays the maximum possible number of columns based on <code>layout</code> property and the window size.
+ * The component would display 1 column for window size smaller than 900px, up to two columns between 900px and 1280px,
+ * and 3 columns for sizes bigger than 1280px.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -163,25 +175,7 @@ class FlexibleColumnLayout extends UI5Element {
 		super();
 
 		this.initialRendering = true;
-
-		this._handleResize = () => {
-			const prevLayoutHash = this._layout.join();
-			this._width = this.getBoundingClientRect().width;
-
-			if (this.initialRendering) {
-				return;
-			}
-
-			this._layout = this.getEffectiveColumnLayout(this.layout);
-
-			if (prevLayoutHash !== this._layout.join()) {
-				this.fireEvent("layout-change", {
-					layout: this._layout,
-					arrowUsed: false,
-					resize: true,
-				});
-			}
-		};
+		this._handleResize = this.handleResize.bind(this);
 	}
 
 	static get metadata() {
@@ -211,6 +205,14 @@ class FlexibleColumnLayout extends UI5Element {
 		};
 	}
 
+	static get MEDIA() {
+		return {
+			PHONE: "phone",
+			TABLET: "tablet",
+			DESKTOP: "desktop",
+		};
+	}
+
 	static get NEXT_LAYOUT_START_ARROW() {
 		return getNextLayoutByStartArrow();
 	}
@@ -232,12 +234,47 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this._layout === undefined) {
-			this._width = this.getBoundingClientRect().width;
-			this._layout = this.getEffectiveColumnLayout(this.layout);
+		if (this.initialRendering) {
+			this.width = this.widthDOM;
+			this._columnLayout = this.getEffectiveColumnLayout(this.layout);
 		}
 
 		this.initialRendering = false;
+	}
+
+	handleResize() {
+		this.width = this.widthDOM;
+		const prevLayoutHash = this._columnLayout.join();
+		this._columnLayout = this.getEffectiveColumnLayout(this.layout);
+
+		if (prevLayoutHash !== this._columnLayout.join()) {
+			this.fireEvent("layout-change", {
+				layout: this.layout,
+				columnLayout: this._columnLayout,
+				arrowUsed: false,
+				resize: true,
+			});
+		}
+	}
+
+	startArrowClick() {
+		this.arrowClick({ start: true, end: false });
+	}
+
+	endArrowClick() {
+		this.arrowClick({ start: false, end: true });
+	}
+
+	arrowClick({ start, end }) {
+		this._layout = this.nextLayout(this._layout || this.layout, { start, end });
+		this._columnLayout = this.getEffectiveColumnLayout(this._layout);
+
+		this.fireEvent("layout-change", {
+			layout: this.layout,
+			columnLayout: this._columnLayout,
+			arrowUsed: true,
+			resize: false,
+		});
 	}
 
 	nextLayout(layout, arrowsInfo = {}) {
@@ -250,79 +287,20 @@ class FlexibleColumnLayout extends UI5Element {
 		}
 	}
 
-	_startArrowClick() {
-		this._arrowClick({ start: true, end: false });
-	}
-
-	_endArrowClick() {
-		this._arrowClick({ start: false, end: true });
-	}
-
-	_arrowClick({ start, end }) {
-		this.layout = this.nextLayout(this.layout, { start, end });
-		this._layout = this.getEffectiveColumnLayout(this.layout);
-
-		this.fireEvent("layout-change", {
-			layout: this._layout,
-			arrowUsed: true,
-			resize: false,
-		});
-	}
-
 	getEffectiveColumnLayout(layout) {
-		return FlexibleColumnLayout.LAYOUT_BY_MEDIA[this.getMedia()][layout].layout;
+		return FlexibleColumnLayout.LAYOUT_BY_MEDIA[this.media][layout].layout;
 	}
 
-	get startColumnWidth() {
-		return this.getEffectiveColumnLayout(this.layout)[0];
-	}
-
-	get midColumnWidth() {
-		return this.getEffectiveColumnLayout(this.layout)[1];
-	}
-
-	get endColumnWidth() {
-		return this.getEffectiveColumnLayout(this.layout)[2];
-	}
-
-	get effectiveArrowsInfo() {
-		return FlexibleColumnLayout.LAYOUT_BY_MEDIA[this.getMedia()][this.layout].arrows;
-	}
-
-	get showStartArrow() {
-		if (this.noArrows) {
-			return false;
-		}
-
-		return this.effectiveArrowsInfo[0].visible;
-	}
-
-	get showEndArrow() {
-		if (this.noArrows) {
-			return false;
-		}
-
-		return this.effectiveArrowsInfo[1].visible;
-	}
-
-	get startArrowDirection() {
-		return this.effectiveArrowsInfo[0].dir;
-	}
-
-	get endArrowDirection() {
-		return this.effectiveArrowsInfo[1].dir;
-	}
-
-	getMedia() {
-		if (this._width <= FlexibleColumnLayout.BREAKPOINTS.M) {
-			return "phone";
-		}
-
-		if (this._width <= FlexibleColumnLayout.BREAKPOINTS.L) {
-			return "tablet";
-		}
-
-		return "desktop";
+	/**
+	 * Current column layout, based on both the <code>layout</code> property and the screen size.
+	 * <b>For example:</b> ["67%", "33%", 0], ["100%", 0, 0], ["25%", "50%", "25%"], etc,
+	 * where the numbers represents the width to the start, middle and end columns.
+	 * @readonly
+	 * @type { Array }
+	 * @public
+	 */
+	get columnLayout() {
+		return this.getEffectiveColumnLayout(this.layout);
 	}
 
 	get classes() {
@@ -377,6 +355,62 @@ class FlexibleColumnLayout extends UI5Element {
 				},
 			},
 		};
+	}
+
+	get startColumnWidth() {
+		return this._columnLayout ? this._columnLayout[0] : "100%";
+	}
+
+	get midColumnWidth() {
+		return this._columnLayout ? this._columnLayout[1] : 0;
+	}
+
+	get endColumnWidth() {
+		return this._columnLayout ? this._columnLayout[2] : 0;
+	}
+
+	get showStartArrow() {
+		return this.noArrows ? false : this.startArrowVisibility;
+	}
+
+	get showEndArrow() {
+		return this.noArrows ? false : this.endArrowVisibility;
+	}
+
+	get startArrowVisibility() {
+		return this.effectiveArrowsInfo[0].visible;
+	}
+
+	get endArrowVisibility() {
+		return this.effectiveArrowsInfo[1].visible;
+	}
+
+	get startArrowDirection() {
+		return this.effectiveArrowsInfo[0].dir;
+	}
+
+	get endArrowDirection() {
+		return this.effectiveArrowsInfo[1].dir;
+	}
+
+	get effectiveArrowsInfo() {
+		return FlexibleColumnLayout.LAYOUT_BY_MEDIA[this.media][this._layout || this.layout].arrows;
+	}
+
+	get media() {
+		if (this.width <= FlexibleColumnLayout.BREAKPOINTS.M) {
+			return FlexibleColumnLayout.MEDIA.PHONE;
+		}
+
+		if (this.width <= FlexibleColumnLayout.BREAKPOINTS.L) {
+			return FlexibleColumnLayout.MEDIA.TABLET;
+		}
+
+		return FlexibleColumnLayout.MEDIA.DESKTOP;
+	}
+
+	get widthDOM() {
+		return this.getBoundingClientRect().width;
 	}
 }
 
