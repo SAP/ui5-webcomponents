@@ -1,12 +1,5 @@
-commit 4338d56a9b7334a27a02d817c81d57b2cb746bc4
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jun 24 09:32:49 2020 +0300
+commit 16b72becebec8f13ef5bef1decd9d9a313f3476c
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Jun 25 01:36:02 2020 -0700
 
-    feat(ui5-shellbar): enable tooltips of custom icons (#1863)
-    
-    Changes:
-    - enable tooltips for custom shellbar items
-    - set tooltips for the built-in icons: search, notifications, profile, products and oveflow
-    - fix count stopped displaying after replacing ui5-icon with ui5-button
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1854
+    chore: translation delivery (#1872)
