@@ -300,6 +300,12 @@
 	<br><br>
 	<ui5-input id="scrollResult"></ui5-input>
 
+	<h3>Test ariaLabel and ariaLabelledBy</h3>
+	<ui5-input aria-label="Very important input"></ui5-input>
+	<br>
+	<ui5-label id="enterNameLabel">Enter name: </ui5-label>
+	<ui5-input aria-labelledby="enterNameLabel"></ui5-input>
+
 	<script>
 		var sap_database_entries = [{ key: "A", text: "A" }, { key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "B", text: "B" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "C", text: "C" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "L", text: "L" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "P", text: "P" }, { key: "Prt", text: "Portugal" }, { key: "S", text: "S" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Sey", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
 
@@ -450,7 +456,7 @@
 				mouseoverResult.value = targetRef.textContent;
 				console.log("mouseover");
 			});
-			
+
 			el.addEventListener("mouseout", function (event) {
 				if (!focusQuickView) {
 					quickViewCard.close(false, false, true);

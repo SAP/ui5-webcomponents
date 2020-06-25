@@ -13,6 +13,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
@@ -278,6 +279,19 @@ const metadata = {
 		 */
 		ariaLabel: {
 			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the input
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
 		},
 
 		/**
@@ -955,7 +969,7 @@ class Input extends UI5Element {
 				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-				"ariaLabel": this.ariaLabel,
+				"ariaLabel": getEffectiveAriaLabelText(this),
 			},
 		};
 	}
