@@ -287,7 +287,7 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
-		 * @since 1.0.0-rc.7
+		 * @since 1.0.0-rc.8
 		 */
 		ariaLabelledby: {
 			type: String,
