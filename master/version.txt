@@ -1,5 +1,5 @@
-commit 16b72becebec8f13ef5bef1decd9d9a313f3476c
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Jun 25 01:36:02 2020 -0700
+commit 2356cd080ab384f3a665c12c35261bd9c0088004
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Jun 25 12:24:36 2020 +0300
 
-    chore: translation delivery (#1872)
+    feat(ui5-input): Support ariaLabelledBy (#1873)
