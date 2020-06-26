@@ -57,6 +57,20 @@ const getLayoutsByMedia = () => {
 					{ visible: true, dir: null },
 				],
 			},
+			"MidColumnFullScreen": {
+				layout: [0, "100%", 0],
+				arrows: [
+					{ visible: false, dir: null },
+					{ visible: false, dir: null },
+				],
+			},
+			"EndColumnFullScreen": {
+				layout: [0, 0, "100%"],
+				arrows: [
+					{ visible: false, dir: null },
+					{ visible: false, dir: null },
+				],
+			},
 		},
 		tablet: {
 			"OneColumn": {
@@ -115,6 +129,20 @@ const getLayoutsByMedia = () => {
 					{ visible: true, dir: null },
 				],
 			},
+			"MidColumnFullScreen": {
+				layout: [0, "100%", 0],
+				arrows: [
+					{ visible: false, dir: null },
+					{ visible: false, dir: null },
+				],
+			},
+			"EndColumnFullScreen": {
+				layout: [0, 0, "100%"],
+				arrows: [
+					{ visible: false, dir: null },
+					{ visible: false, dir: null },
+				],
+			},
 		},
 		phone: {
 			"OneColumn": {
@@ -168,6 +196,20 @@ const getLayoutsByMedia = () => {
 			},
 			"ThreeColumnsMidExpandedEndHidden": {
 				layout: [0, "100%", 0],
+				arrows: [
+					{ visible: false, dir: null },
+					{ visible: false, dir: null },
+				],
+			},
+			"MidColumnFullScreen": {
+				layout: [0, "100%", 0],
+				arrows: [
+					{ visible: false, dir: null },
+					{ visible: false, dir: null },
+				],
+			},
+			"EndColumnFullScreen": {
+				layout: [0, 0, "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },

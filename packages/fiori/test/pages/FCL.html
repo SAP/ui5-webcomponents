@@ -330,7 +330,11 @@
 		<div style="box-sizing: border-box;" slot="midColumn">
 			<div style="padding: 1rem; display: flex; justify-content: space-between;">
 				<ui5-title>Column 2</ui5-title>
-				<ui5-button id="closeMidColumn" icon="decline" design="Transparent"></ui5-button>
+
+				<div>
+					<ui5-togglebutton id="expandMidColumn" icon="full-screen" design="Transparent"></ui5-togglebutton>
+					<ui5-button id="closeMidColumn" icon="decline" design="Transparent"></ui5-button>
+				</div>
 			</div>
 			<ui5-list id="list2">
 				<ui5-li>Detail item</ui5-li>
@@ -347,7 +351,10 @@
 		<div style="box-sizing: border-box;" slot="endColumn">
 			<div style="padding: 1rem; display: flex; justify-content: space-between;">
 				<ui5-title>Column 3</ui5-title>
-				<ui5-button id="closeEndColumn" icon="decline" design="Transparent"></ui5-button>
+				<div>
+					<ui5-togglebutton id="expandEndColumn" icon="full-screen" design="Transparent"></ui5-togglebutton>
+					<ui5-button id="closeEndColumn" icon="decline" design="Transparent"></ui5-button>
+				</div>
 			</div>
 			<ui5-list id="list3">
 				<ui5-li>Detail - Detail</ui5-li>
@@ -394,8 +401,31 @@
 			fcl6.layout = "OneColumn";
 		});
 
+		expandMidColumn.addEventListener("click", function(e) {
+			const tb = e.target;
+			if (tb.pressed) {
+				tb.icon = "exit-full-screen";
+				fcl6.layout = "MidColumnFullScreen";
+			} else {
+				fcl6.layout = "TwoColumnsMidExpanded";
+				tb.icon = "full-screen";
+			}
+		});
+
 		closeEndColumn.addEventListener("click", function(e) {
 			fcl6.layout = "TwoColumnsMidExpanded";
+		});
+
+		expandEndColumn.addEventListener("click", function(e) {
+			const tb = e.target;
+
+			if (tb.pressed) {
+				tb.icon = "exit-full-screen";
+				fcl6.layout = "EndColumnFullScreen";
+			} else {
+				tb.icon = "full-screen";
+				fcl6.layout = "ThreeColumnsMidExpanded";
+			}
 		});
 	</script>
 </body>

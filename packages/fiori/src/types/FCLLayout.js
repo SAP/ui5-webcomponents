@@ -15,8 +15,8 @@ const FCLLayouts = {
 
 	/**
 	 *
-	 * Desktop: 67/33/-  Begin (expanded) and Mid columns are displayed
-	 * Tablet:  67/33/-  Begin (expanded) and Mid columns are displayed
+	 * Desktop: 67/33/-  Start (expanded) and Mid columns are displayed
+	 * Tablet:  67/33/-  Start (expanded) and Mid columns are displayed
 	 * Phone:   -/100/-  only the Mid column is displayed
 	 *
 	 * Use to display both a master and a detail page when the user should focus on the master page.
@@ -27,8 +27,8 @@ const FCLLayouts = {
 	TwoColumnsStartExpanded: "TwoColumnsStartExpanded",
 
 	/**
-	 * Desktop: 33/67/-  Begin and Mid (expanded) columns are displayed
-	 * Tablet:  33/67/-  Begin and Mid (expanded) columns are displayed
+	 * Desktop: 33/67/-  Start and Mid (expanded) columns are displayed
+	 * Tablet:  33/67/-  Start and Mid (expanded) columns are displayed
 	 * Phone:   -/100/-  only the Mid column is displayed
 	 *
 	 * Use to display both a master and a detail page when the user should focus on the detail page.
@@ -39,8 +39,8 @@ const FCLLayouts = {
 	TwoColumnsMidExpanded: "TwoColumnsMidExpanded",
 
 	/**
-	 * Desktop: 25/50/25 Begin, Mid (expanded) and End columns are displayed
-	 * Tablet:  0/67/33  Mid (expanded) and End columns are displayed, Begin is accessible by a layout arrow
+	 * Desktop: 25/50/25 Start, Mid (expanded) and End columns are displayed
+	 * Tablet:  0/67/33  Mid (expanded) and End columns are displayed, Start is accessible by a layout arrow
 	 * Phone:   -/-/100  only the End column is displayed
 	 *
 	 * Use to display all three pages (master, detail, detail-detail) when the user should focus on the detail.
@@ -51,8 +51,8 @@ const FCLLayouts = {
 	ThreeColumnsMidExpanded: "ThreeColumnsMidExpanded",
 
 	/**
-	 * Desktop: 25/25/50 Begin, Mid and End (expanded) columns are displayed
-	 * Tablet:  0/33/67  Mid and End (expanded) columns are displayed, Begin is accessible by layout arrows
+	 * Desktop: 25/25/50 Start, Mid and End (expanded) columns are displayed
+	 * Tablet:  0/33/67  Mid and End (expanded) columns are displayed, Start is accessible by layout arrows
 	 * Phone:   -/-/100  (only the End column is displayed)
 	 *
 	 * Use to display all three pages (master, detail, detail-detail) when the user should focus on the detail-detail.
@@ -63,8 +63,8 @@ const FCLLayouts = {
 	ThreeColumnsEndExpanded: "ThreeColumnsEndExpanded",
 
 	/**
-	 * Desktop: 67/33/0  Begin (expanded) and Mid columns are displayed, End is accessible by layout arrows
-	 * Tablet:  67/33/0  Begin (expanded) and Mid columns are displayed, End is accessible by layout arrows
+	 * Desktop: 67/33/0  Start (expanded) and Mid columns are displayed, End is accessible by layout arrows
+	 * Tablet:  67/33/0  Start (expanded) and Mid columns are displayed, End is accessible by layout arrows
 	 * Phone:   -/-/100  only the End column is displayed
 	 *
 	 * Use to display the master and detail pages when the user should focus on the master.
@@ -76,8 +76,8 @@ const FCLLayouts = {
 	ThreeColumnsStartExpandedEndHidden: "ThreeColumnsStartExpandedEndHidden",
 
 	/**
-	 * Desktop: 33/67/0  Begin and Mid (expanded) columns are displayed, End is accessible by a layout arrow
-	 * Tablet:  33/67/0  Begin and Mid (expanded) columns are displayed, End is accessible by a layout arrow
+	 * Desktop: 33/67/0  Start and Mid (expanded) columns are displayed, End is accessible by a layout arrow
+	 * Tablet:  33/67/0  Start and Mid (expanded) columns are displayed, End is accessible by a layout arrow
 	 * Phone:   -/-/100  only the End column is displayed
 	 *
 	 * Use to display the master and detail pages when the user should focus on the detail.
@@ -87,6 +87,30 @@ const FCLLayouts = {
 	 * @type ThreeColumnsMidExpandedEndHidden
 	 */
 	ThreeColumnsMidExpandedEndHidden: "ThreeColumnsMidExpandedEndHidden",
+
+	/**
+	 * Desktop: -/100/-  only the Mid column is displayed
+	 * Tablet:  -/100/-  only the Mid column is displayed
+	 * Phone:   -/100/-  only the Mid column is displayed
+	 *
+	 * Use to display a detail page only, when the user should focus entirely on it.
+	 *
+	 * @public
+	 * @type MidColumnFullScreen
+	 */
+	MidColumnFullScreen: "MidColumnFullScreen",
+
+	/**
+	 * Desktop: -/-/100  only the End column is displayed
+	 * Tablet:  -/-/100  only the End column is displayed
+	 * Phone:   -/-/100  only the End column is displayed
+	 *
+	 * Use to display a detail-detail page only, when the user should focus entirely on it.
+	 *
+	 * @public
+	 * @type EndColumnFullScreen
+	 */
+	EndColumnFullScreen: "EndColumnFullScreen"
 };
 
 /**

@@ -40,6 +40,8 @@ const metadata = {
 		 * <li><code>ThreeColumnsEndExpanded</code></li>
 		 * <li><code>ThreeColumnsStartExpandedEndHidden</code></li>
 		 * <li><code>ThreeColumnsMidExpandedEndHidden</code></li>
+		 * <li><code>MidColumnFullScreen</code></li>
+		 * <li><code>EndColumnFullScreen</code></li>
 		 * </ul>
 		 * <br><br>
 		 * <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns
