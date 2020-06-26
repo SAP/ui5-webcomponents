@@ -26,7 +26,7 @@ const metadata = {
 	tag: "ui5-flexible-column-layout",
 	properties: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
-		 * Defines the columns layout and their proportion - which one to be expanded.
+		 * Defines the columns layout and their proportion.
 		 * <br><br>
 		 * <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 900px,
 		 * two columns between 900px and 1280px and three columns for sizes bigger than 1280px.
@@ -100,7 +100,7 @@ const metadata = {
 		*/
 		_visibleColumns: {
 			type: Integer,
-			defaultValue: 1,
+			defaultValue: 0,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
@@ -137,15 +137,15 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
 		 * Fired when the layout changes via user interaction by clicking the arrows
-		 * or by changing the component size.
+		 * or by changing the component size due to resizing.
 		 *
-		 * @param {FCLLayout} layout the current layout set
+		 * @param {FCLLayout} layout the current layout
 		 * @param {Array} columnLayout the effective column layout, f.e [67%, 33%, 0]
 		 * @param {boolean} startColumnVisible indicates if the start column is currently visible
 		 * @param {boolean} midColumnVisible indicates if the middle column is currently visible
 		 * @param {boolean} endColumnVisible indicates if the end column is currently visible
-		 * @param {boolean} arrowsUsed the layout is changed via the arrows
-		 * @param {boolean} resize the layout is changed via resizing
+		 * @param {boolean} arrowsUsed indicates if the layout is changed via the arrows
+		 * @param {boolean} resize indicates if the layout is changed via resizing
 		 * @event sap.ui.webcomponents.fiori.FlexibleColumnLayout#layout-change
 		 * @public
 		 */
@@ -341,11 +341,13 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	/**
-	 * Current column layout, based on both the <code>layout</code> property and the screen size.
+	 * Returns the current column layout, based on both the <code>layout</code> property and the screen size.
+	 * <br><br>
 	 * <b>For example:</b> ["67%", "33%", 0], ["100%", 0, 0], ["25%", "50%", "25%"], etc,
-	 * where the numbers represents the width to the start, middle and end columns.
+	 * where the numbers represents the width of the start, middle and end columns.
 	 * @readonly
 	 * @type { Array }
+	 * @defaultvalue ["100%", 0, 0]
 	 * @public
 	 */
 	get columnLayout() {
@@ -355,6 +357,7 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	 * Returns if the <code>start</code> column is visible.
 	 * @readonly
+	 * @defaultvalue true
 	 * @type { boolean }
 	 * @public
 	 */
@@ -370,6 +373,7 @@ class FlexibleColumnLayout extends UI5Element {
 	 * Returns if the <code>middle</code> column is visible.
 	 * @readonly
 	 * @type { boolean }
+	 * @defaultvalue false
 	 * @public
 	 */
 	get midColumnVisible() {
@@ -384,6 +388,7 @@ class FlexibleColumnLayout extends UI5Element {
 	 * Returns if the <code>end</code> column is visible.
 	 * @readonly
 	 * @type { boolean }
+	 * @defaultvalue false
 	 * @public
 	 */
 	get endColumnVisible() {
@@ -398,6 +403,7 @@ class FlexibleColumnLayout extends UI5Element {
 	 * Returns the number of currently visible columns.
 	 * @readonly
 	 * @type { Integer }
+	 * @defaultvalue 1
 	 * @public
 	 */
 	get visibleColumns() {
@@ -439,6 +445,14 @@ class FlexibleColumnLayout extends UI5Element {
 					width: this.endColumnWidth,
 				},
 			},
+			arrowsContainer: {
+				start: {
+					display: this.showStartSeparator ? "flex" : "none",
+				},
+				end: {
+					display: this.showEndSeparator ? "flex" : "none",
+				},
+			},
 			arrows: {
 				start: {
 					display: this.showStartArrow ? "inline-block" : "none",
@@ -462,6 +476,14 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get endColumnWidth() {
 		return this._columnLayout ? this._columnLayout[2] : 0;
+	}
+
+	get showStartSeparator() {
+		return this.startArrowVisibility;
+	}
+
+	get showEndSeparator() {
+		return this.endArrowVisibility;
 	}
 
 	get showStartArrow() {
