@@ -104,14 +104,14 @@ const getLayoutsByMedia = () => {
 			"ThreeColumnsMidExpanded": {
 				layout: [0, "67%", "33%"],
 				arrows: [
-					{ visible: false, dir: "mirror" },
+					{ visible: true, dir: null },
 					{ visible: true, dir: null },
 				],
 			},
 			"ThreeColumnsEndExpanded": {
 				layout: [0, "33%", "67%"],
 				arrows: [
-					{ visible: false, dir: null },
+					{ visible: true, dir: null },
 					{ visible: true, dir: "mirror" },
 				],
 			},
