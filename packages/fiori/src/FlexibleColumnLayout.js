@@ -53,7 +53,8 @@ const metadata = {
 		},
 
 		/**
-		* Defines the visibility of the arrows.
+		* Defines the visibility of the arrows,
+		* used for expanding and shrinking the columns.
 		*
 		* @type {boolean}
 		* @defaultvalue false
@@ -64,9 +65,10 @@ const metadata = {
 		},
 
 		/**
-		* Defines the width.
+		* Defines the component width in px.
 		*
 		* @type {Float}
+		* @defaultvalue 0
 		* @private
 		*/
 		width: {
@@ -75,9 +77,12 @@ const metadata = {
 		},
 
 		/**
-		* Defines the effective layout.
+		* Defines the effective columns layout,
+		* based on both the <code>layout</code> property and the screen size.
+		* Example: [67%, "33%, 0"], [25%, 50%, 25%], etc.
 		*
 		* @type {Object}
+		* @defaultvalue undefined
 		* @private
 		*/
 		_columnLayout: {
@@ -123,8 +128,11 @@ const metadata = {
 		 *
 		 * @param {FCLLayout} layout the current layout set
 		 * @param {Array} columnLayout the effective column layout, f.e [67%, 33%, 0]
+		 * @param {boolean} startColumnVisible indicates if the start column is currently visible
+		 * @param {boolean} midColumnVisible indicates if the middle column is currently visible
+		 * @param {boolean} endColumnVisible indicates if the end column is currently visible
 		 * @param {boolean} arrowsUsed the layout is changed via the arrows
-		 * @param {boolean} resize the layout is changed via the arrows via resizing
+		 * @param {boolean} resize the layout is changed via resizing
 		 * @event sap.ui.webcomponents.fiori.FlexibleColumnLayout#layout-change
 		 * @public
 		 */
@@ -132,6 +140,9 @@ const metadata = {
 			detail: {
 				layout: { type: FCLLayout },
 				columnLayout: { type: Array },
+				startColumnVisible: { type: Boolean },
+				midColumnVisible: { type: Boolean },
+				endColumnVisible: { type: Boolean },
 				arrowsUsed: { type: Boolean },
 				resize: { type: Boolean },
 			},
@@ -213,18 +224,6 @@ class FlexibleColumnLayout extends UI5Element {
 		};
 	}
 
-	static get NEXT_LAYOUT_START_ARROW() {
-		return getNextLayoutByStartArrow();
-	}
-
-	static get NEXT_LAYOUT_END_ARROW() {
-		return getNextLayoutByEndArrow();
-	}
-
-	static get LAYOUT_BY_MEDIA() {
-		return getLayoutsByMedia();
-	}
-
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResize);
 	}
@@ -234,23 +233,35 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this.initialRendering) {
-			this.width = this.widthDOM;
-			this._columnLayout = this.getEffectiveColumnLayout(this.layout);
+		if (!this.initialRendering) {
+			return;
 		}
 
+		this.handleInitialRendering();
+	}
+
+	handleInitialRendering() {
+		this.width = this.widthDOM;
+		this._columnLayout = this.nextColumnLayout(this.layout);
 		this.initialRendering = false;
 	}
 
 	handleResize() {
+		if (this.initialRendering) {
+			return;
+		}
+
 		this.width = this.widthDOM;
 		const prevLayoutHash = this._columnLayout.join();
-		this._columnLayout = this.getEffectiveColumnLayout(this.layout);
+		this._columnLayout = this.nextColumnLayout(this.layout);
 
 		if (prevLayoutHash !== this._columnLayout.join()) {
 			this.fireEvent("layout-change", {
 				layout: this.layout,
 				columnLayout: this._columnLayout,
+				startColumnVisible: this.startColumnVisible,
+				midColumnVisible: this.midColumnVisible,
+				endColumnVisible: this.endColumnVisible,
 				arrowUsed: false,
 				resize: true,
 			});
@@ -266,12 +277,15 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	arrowClick({ start, end }) {
-		this._layout = this.nextLayout(this._layout || this.layout, { start, end });
-		this._columnLayout = this.getEffectiveColumnLayout(this._layout);
+		this.layout = this.nextLayout(this.layout, { start, end });
+		this._columnLayout = this.nextColumnLayout(this.layout);
 
 		this.fireEvent("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout,
+			startColumnVisible: this.startColumnVisible,
+			midColumnVisible: this.midColumnVisible,
+			endColumnVisible: this.endColumnVisible,
 			arrowUsed: true,
 			resize: false,
 		});
@@ -279,16 +293,16 @@ class FlexibleColumnLayout extends UI5Element {
 
 	nextLayout(layout, arrowsInfo = {}) {
 		if (arrowsInfo.start) {
-			return FlexibleColumnLayout.NEXT_LAYOUT_START_ARROW[layout];
+			return getNextLayoutByStartArrow()[layout];
 		}
 
 		if (arrowsInfo.end) {
-			return FlexibleColumnLayout.NEXT_LAYOUT_END_ARROW[layout];
+			return getNextLayoutByEndArrow()[layout];
 		}
 	}
 
-	getEffectiveColumnLayout(layout) {
-		return FlexibleColumnLayout.LAYOUT_BY_MEDIA[this.media][layout].layout;
+	nextColumnLayout(layout) {
+		return getLayoutsByMedia()[this.media][layout].layout;
 	}
 
 	/**
@@ -300,7 +314,49 @@ class FlexibleColumnLayout extends UI5Element {
 	 * @public
 	 */
 	get columnLayout() {
-		return this.getEffectiveColumnLayout(this.layout);
+		return this._columnLayout;
+	}
+
+	/**
+	 * Returns if the <code>start</code> column is visible.
+	 * @readonly
+	 * @type { boolean }
+	 * @public
+	 */
+	get startColumnVisible() {
+		if (this._columnLayout) {
+			return this._columnLayout[0] !== 0;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns if the <code>middle</code> column is visible.
+	 * @readonly
+	 * @type { boolean }
+	 * @public
+	 */
+	get midColumnVisible() {
+		if (this._columnLayout) {
+			return this._columnLayout[1] !== 0;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns if the <code>end</code> column is visible.
+	 * @readonly
+	 * @type { boolean }
+	 * @public
+	 */
+	get endColumnVisible() {
+		if (this._columnLayout) {
+			return this._columnLayout[2] !== 0;
+		}
+
+		return false;
 	}
 
 	get classes() {
@@ -394,7 +450,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get effectiveArrowsInfo() {
-		return FlexibleColumnLayout.LAYOUT_BY_MEDIA[this.media][this._layout || this.layout].arrows;
+		return getLayoutsByMedia()[this.media][this.layout].arrows;
 	}
 
 	get media() {

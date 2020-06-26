@@ -29,9 +29,10 @@
 	<br><br>
 	<ui5-title class="sectionTitle">Master-Detail: Master Expanded</ui5-title>
 	<ui5-togglebutton id="switchBtn1" class="testButton">Set to ThreeColumnsMidExpanded</ui5-togglebutton><br>
-	<ui5-input id="layoutChangeRes" placeholder="new layout..." style="width: 400px"></ui5-input><br>
-	<ui5-input id="layoutChangeRes3" placeholder="due to resize or arrow click" style="width: 400px"></ui5-input><br>
-	<ui5-input id="layoutChangeRes2" placeholder="change counter..." style="width: 400px"></ui5-input><br>
+	<ui5-input id="layoutChangeRes" placeholder="layout..." style="width: 600px"></ui5-input><br>
+	<ui5-input id="layoutChangeRes2" placeholder="columns visibility..." style="width: 600px"></ui5-input><br>
+	<ui5-input id="layoutChangeRes3" placeholder="resize or arrow click..." style="width: 600px"></ui5-input><br>
+	<ui5-input id="layoutChangeRes4" placeholder="change counter..." style="width: 600px"></ui5-input><br>
 	<br><br>
 
 	<ui5-flexible-column-layout id="fcl1" layout="TwoColumnsStartExpanded">
@@ -364,8 +365,13 @@
 		var counter = 0;
 		fcl1.addEventListener("layout-change", function(e) {
 			layoutChangeRes.value = "layout ::" + e.detail.layout + " columns ::" + e.detail.columnLayout;
-			layoutChangeRes2.value = "changeCount :: " + (++counter);
+			layoutChangeRes2.value =
+			"startColumnVisible :: " + e.detail.startColumnVisible
+			+ ", midColumnVisible :: " + e.detail.midColumnVisible
+			+ ", endColumnVisible :: " + e.detail.endColumnVisible;
 			layoutChangeRes3.value = "arrowsUsed :: " + e.detail.arrowUsed + ", resizing :: " + e.detail.resize;
+			layoutChangeRes4.value = "changeCount :: " + (++counter);
+
 		});
 
 		switchBtn1.addEventListener("click", function(e) {
