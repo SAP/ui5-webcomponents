@@ -110,7 +110,7 @@ const FCLLayouts = {
 	 * @public
 	 * @type EndColumnFullScreen
 	 */
-	EndColumnFullScreen: "EndColumnFullScreen"
+	EndColumnFullScreen: "EndColumnFullScreen",
 };
 
 /**
