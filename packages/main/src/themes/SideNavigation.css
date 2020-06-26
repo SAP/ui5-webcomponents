@@ -1,0 +1,10 @@
+:host(:not([hidden])) {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border: 1px solid red;
+}
+
+.ui5-sn-bottom-content {
+    border-top: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
+}

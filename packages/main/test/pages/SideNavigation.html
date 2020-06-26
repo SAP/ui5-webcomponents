@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>SideNavigation</title>
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+	<style>
+		ui5-side-navigation {
+			height: 100vh;
+			width: 250px;
+		}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-side-navigation>
+		<ui5-side-navigation-item text="Help" expandable icon="drop-down-list">
+			<ui5-side-navigation-item text="More Help"></ui5-side-navigation-item>
+			<ui5-side-navigation-item text="Even More Help"></ui5-side-navigation-item>
+		</ui5-side-navigation-item>
+		<ui5-side-navigation-item text="me"></ui5-side-navigation-item>
+		<ui5-side-navigation-item text="pls"></ui5-side-navigation-item>
+
+		<ui5-side-navigation-item slot="bottomItems" text="me"></ui5-side-navigation-item>
+		<ui5-side-navigation-item slot="bottomItems" text="pls"></ui5-side-navigation-item>
+	</ui5-side-navigation>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<div class="ui5-sn-root">
+    {{#if items.length}}
+        <div class="ui5-sn-content">
+            <ui5-list>
+                <slot></slot>
+            </ui5-list>
+        </div>
+    {{/if}}
+
+    {{#if bottomItems.length}}
+        <div class="ui5-sn-bottom-content">
+            <ui5-list>
+                <slot name="bottomItems"></slot>
+            </ui5-list>
+        </div>
+    {{/if}}
+</div>

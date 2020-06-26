@@ -1,0 +1,27 @@
+{{>include "./ListItem.hbs"}}
+
+{{#*inline "listItemContent"}}
+    <div class="{{aclas.content}}">
+        {{#if icon}}
+            <div class="ui5-sni-icon">
+                <ui5-icon name="{{icon}}"></ui5-icon>
+            </div>
+        {{/if}}
+
+        <ui5-title level="H4">{{text}}</ui5-title>
+
+        {{#if expandable}}
+            <div
+            class="ui5-sni-icon"
+            @click="{{toggleExpanded}}"
+            >
+                <ui5-icon name="{{getActiveIcon}}"></ui5-icon>
+            </div>
+        {{/if}}
+    </div>
+    {{!-- {{#if expanded}} --}}
+        <div class="{{classes.children}}">
+            <slot></slot>
+        </div>
+    {{!-- {{/if}} --}}
+{{/inline}}
