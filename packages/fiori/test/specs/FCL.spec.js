@@ -62,14 +62,38 @@ describe("FlexibleColumnLayout Behavior", () => {
 		arrow.click();
 
 		// assert (two times the event has been fired due resize already)
-		assert.strictEqual(layoutChangeCounter.getValue(), "3", "The event layout-change fired once.");
+		assert.strictEqual(layoutChangeCounter.getValue(), "4", "The event layout-change fired once.");
 		assert.strictEqual(fcl.getProperty("layout"), "TwoColumnsMidExpanded", "new layout set");
 
 		// act
 		arrow.click();
 
-		// assert
-		assert.strictEqual(layoutChangeCounter.getValue(), "4", "The event layout-change fired again.");
+		// // assert
+		assert.strictEqual(layoutChangeCounter.getValue(), "5", "The event layout-change fired again.");
 		assert.strictEqual(fcl.getProperty("layout"), "TwoColumnsStartExpanded", "new layout set");
 	});
+
+	it("tests change layout with API", () => {
+		const fcl = browser.$("#fcl1");
+		const btn = browser.$("#switchBtn1");
+
+		let visibleColumns = browser.execute(() => {
+			const fcl = document.getElementById("fcl1");
+			return fcl.getAttribute("_visible-columns");
+		});
+
+		assert.strictEqual(visibleColumns, "2", "2 columns are visible");
+		assert.strictEqual(fcl.getProperty("layout"), "TwoColumnsStartExpanded", "new layout set");
+
+		// act
+		btn.click(); // fcl1.layout =  "ThreeColumnsMidExpanded"
+
+		visibleColumns = browser.execute(() => {
+			const fcl = document.getElementById("fcl1");
+			return fcl.getAttribute("_visible-columns");
+		});
+
+		// assert
+		assert.strictEqual(visibleColumns, "3", "3 columns are visible");
+		assert.strictEqual(fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "new layout set");	});
 });
