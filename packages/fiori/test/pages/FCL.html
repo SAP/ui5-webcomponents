@@ -143,9 +143,10 @@
 	<!-- ex3 -->
 	<br><br>
 	<ui5-title class="sectionTitle">Master-Detail-Detail: Detail Expanded</ui5-title>
+	<ui5-input id="testLayoutChange" placeholder="change counter..." style="width: 600px"></ui5-input><br>
 	<br><br>
 
-	<ui5-flexible-column-layout layout="ThreeColumnsMidExpanded">
+	<ui5-flexible-column-layout id="fcl3" layout="ThreeColumnsMidExpanded">
 		<!-- start column -->
 		<div style="box-sizing: border-box;" slot="startColumn">
 			<div style="padding: 1rem">
@@ -370,15 +371,20 @@
 
 	<script>
 		var counter = 0;
-		fcl1.addEventListener("layout-change", function(e) {
+		var counter2 = 0;
+		fcl1.addEventListener("ui5-layout-change", function(e) {
 			layoutChangeRes.value = "layout ::" + e.detail.layout + " columns ::" + e.detail.columnLayout;
 			layoutChangeRes2.value =
 			"startColumnVisible :: " + e.detail.startColumnVisible
 			+ ", midColumnVisible :: " + e.detail.midColumnVisible
 			+ ", endColumnVisible :: " + e.detail.endColumnVisible;
 			layoutChangeRes3.value = "arrowsUsed :: " + e.detail.arrowUsed + ", resizing :: " + e.detail.resize;
-			layoutChangeRes4.value = "changeCount :: " + (++counter);
+			layoutChangeRes4.value = ++counter;
 
+		});
+	
+		fcl3.addEventListener("ui5-layout-change", function(e) {
+			testLayoutChange.value = ++counter2;
 		});
 
 		switchBtn1.addEventListener("click", function(e) {
@@ -389,16 +395,19 @@
 			fcl2.layout = e.target.pressed ? "TwoColumnsStartExpanded" : "TwoColumnsMidExpanded";
 		});
 
-		list.addEventListener("item-click", function(e) {
+		list.addEventListener("ui5-item-click", function(e) {
 			fcl6.layout = "TwoColumnsMidExpanded";
 		});
 
-		list2.addEventListener("item-click", function(e) {
+		list2.addEventListener("ui5-item-click", function(e) {
 			fcl6.layout = "ThreeColumnsMidExpanded";
 		});
 
 		closeMidColumn.addEventListener("click", function(e) {
 			fcl6.layout = "OneColumn";
+
+			expandMidColumn.pressed = false;
+			expandEndColumn.pressed = false;
 		});
 
 		expandMidColumn.addEventListener("click", function(e) {
@@ -414,6 +423,8 @@
 
 		closeEndColumn.addEventListener("click", function(e) {
 			fcl6.layout = "TwoColumnsMidExpanded";
+
+			expandEndColumn.pressed = false;
 		});
 
 		expandEndColumn.addEventListener("click", function(e) {
