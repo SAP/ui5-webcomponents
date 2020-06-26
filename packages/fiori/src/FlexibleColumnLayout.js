@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
@@ -71,7 +72,7 @@ const metadata = {
 		* @defaultvalue 0
 		* @private
 		*/
-		width: {
+		_width: {
 			type: Float,
 			defaultValue: 0,
 		},
@@ -88,6 +89,18 @@ const metadata = {
 		_columnLayout: {
 			type: Object,
 			defaultValue: undefined,
+		},
+
+		/**
+		* Defines the visible columns count - 1, 2 or 3.
+		*
+		* @type {Integer}
+		* @defaultvalue 1
+		* @private
+		*/
+		_visibleColumns: {
+			type: Integer,
+			defaultValue: 1,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
@@ -185,6 +198,7 @@ class FlexibleColumnLayout extends UI5Element {
 	constructor() {
 		super();
 
+		this._prevLayout = null;
 		this.initialRendering = true;
 		this._handleResize = this.handleResize.bind(this);
 	}
@@ -233,16 +247,17 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (!this.initialRendering) {
+		if (this.initialRendering) {
+			this.handleInitialRendering();
 			return;
 		}
 
-		this.handleInitialRendering();
+		this.syncLayout();
 	}
 
 	handleInitialRendering() {
-		this.width = this.widthDOM;
-		this._columnLayout = this.nextColumnLayout(this.layout);
+		this._prevLayout = this.layout;
+		this.updateLayout();
 		this.initialRendering = false;
 	}
 
@@ -251,20 +266,15 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 
-		this.width = this.widthDOM;
-		const prevLayoutHash = this._columnLayout.join();
-		this._columnLayout = this.nextColumnLayout(this.layout);
+		// store the previous layout
+		const prevLayoutHash = this.columnLayout.join();
 
-		if (prevLayoutHash !== this._columnLayout.join()) {
-			this.fireEvent("layout-change", {
-				layout: this.layout,
-				columnLayout: this._columnLayout,
-				startColumnVisible: this.startColumnVisible,
-				midColumnVisible: this.midColumnVisible,
-				endColumnVisible: this.endColumnVisible,
-				arrowUsed: false,
-				resize: true,
-			});
+		// update the column layout, based on the current width
+		this.updateLayout();
+
+		// fire layout-change if the column layout changed
+		if (prevLayoutHash !== this.columnLayout.join()) {
+			this.fireLayoutChange(false, true);
 		}
 	}
 
@@ -277,18 +287,27 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	arrowClick({ start, end }) {
+		// update public property
 		this.layout = this.nextLayout(this.layout, { start, end });
-		this._columnLayout = this.nextColumnLayout(this.layout);
 
-		this.fireEvent("layout-change", {
-			layout: this.layout,
-			columnLayout: this._columnLayout,
-			startColumnVisible: this.startColumnVisible,
-			midColumnVisible: this.midColumnVisible,
-			endColumnVisible: this.endColumnVisible,
-			arrowUsed: true,
-			resize: false,
-		});
+		// update layout
+		this.updateLayout();
+
+		// fire layout-change
+		this.fireLayoutChange(true, false);
+	}
+
+	updateLayout() {
+		this._width = this.widthDOM;
+		this._columnLayout = this.nextColumnLayout(this.layout);
+		this._visibleColumns = this.calcVisibleColumns(this._columnLayout);
+	}
+
+	syncLayout() {
+		if (this._prevLayout !== this.layout) {
+			this.updateLayout();
+			this._prevLayout = this.layout;
+		}
 	}
 
 	nextLayout(layout, arrowsInfo = {}) {
@@ -303,6 +322,22 @@ class FlexibleColumnLayout extends UI5Element {
 
 	nextColumnLayout(layout) {
 		return getLayoutsByMedia()[this.media][layout].layout;
+	}
+
+	calcVisibleColumns(colLayot) {
+		return colLayot.filter(col => col !== 0).length;
+	}
+
+	fireLayoutChange(arrowUsed, resize) {
+		this.fireEvent("layout-change", {
+			layout: this.layout,
+			columnLayout: this._columnLayout,
+			startColumnVisible: this.startColumnVisible,
+			midColumnVisible: this.midColumnVisible,
+			endColumnVisible: this.endColumnVisible,
+			arrowUsed,
+			resize,
+		});
 	}
 
 	/**
@@ -359,6 +394,16 @@ class FlexibleColumnLayout extends UI5Element {
 		return false;
 	}
 
+	/**
+	 * Returns the number of currently visible columns.
+	 * @readonly
+	 * @type { Integer }
+	 * @public
+	 */
+	get visibleColumns() {
+		return this._visibleColumns;
+	}
+
 	get classes() {
 		return {
 			columns: {
@@ -394,19 +439,13 @@ class FlexibleColumnLayout extends UI5Element {
 					width: this.endColumnWidth,
 				},
 			},
-			arrowsContainer: {
-				start: {
-					display: this.showStartArrow ? "flex" : "none",
-				},
-				end: {
-					display: this.showEndArrow ? "flex" : "none",
-				},
-			},
 			arrows: {
 				start: {
+					display: this.showStartArrow ? "inline-block" : "none",
 					transform: this.startArrowDirection === "mirror" ? "rotate(180deg)" : "",
 				},
 				end: {
+					display: this.showEndArrow ? "inline-block" : "none",
 					transform: this.endArrowDirection === "mirror" ? "rotate(180deg)" : "",
 				},
 			},
@@ -454,11 +493,11 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get media() {
-		if (this.width <= FlexibleColumnLayout.BREAKPOINTS.M) {
+		if (this._width <= FlexibleColumnLayout.BREAKPOINTS.M) {
 			return FlexibleColumnLayout.MEDIA.PHONE;
 		}
 
-		if (this.width <= FlexibleColumnLayout.BREAKPOINTS.L) {
+		if (this._width <= FlexibleColumnLayout.BREAKPOINTS.L) {
 			return FlexibleColumnLayout.MEDIA.TABLET;
 		}
 

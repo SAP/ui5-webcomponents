@@ -35,54 +35,54 @@
 	<ui5-input id="layoutChangeRes4" placeholder="change counter..." style="width: 600px"></ui5-input><br>
 	<br><br>
 
-	<ui5-flexible-column-layout id="fcl1" layout="TwoColumnsStartExpanded">
+	<ui5-flexible-column-layout id="fcl1" style="height: 500px" layout="TwoColumnsStartExpanded">
 
-			<!-- start column -->
-			<div style="box-sizing: border-box;" slot="startColumn">
-				<div style="padding: 1rem">
-					<ui5-title>Column 1</ui5-title>
-				</div>
-				<ui5-list>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-				</ui5-list>
+		<!-- start column -->
+		<div style="box-sizing: border-box;" slot="startColumn">
+			<div style="padding: 1rem">
+				<ui5-title>Column 1</ui5-title>
+			</div>
+			<ui5-list>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+			</ui5-list>
+		</div>
+
+		<!-- mid column -->
+		<div style="box-sizing: border-box;" slot="midColumn">
+			<div style="padding: 1rem">
+				<ui5-title>Column 2</ui5-title>
+			</div>
+			<ui5-list>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+			</ui5-list>
+		</div>
+
+		<!-- end column -->
+		<div style="box-sizing: border-box;" slot="endColumn">
+			<div style="padding: 1rem">
+				<ui5-title>Column 3</ui5-title>
 			</div>
 
-			<!-- mid column -->
-			<div style="box-sizing: border-box;" slot="midColumn">
-				<div style="padding: 1rem">
-					<ui5-title>Column 2</ui5-title>
-				</div>
-				<ui5-list>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-				</ui5-list>
-			</div>
-
-			<!-- end column -->
-			<div style="box-sizing: border-box;" slot="endColumn">
-				<div style="padding: 1rem">
-					<ui5-title>Column 3</ui5-title>
-				</div>
-
-				<ui5-list>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-					<ui5-li>Hello worild!</ui5-li>
-				</ui5-list>
-			</div>
+			<ui5-list>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+			</ui5-list>
+		</div>
 	</ui5-flexible-column-layout>
 
 	<!-- ex2 -->
@@ -379,7 +379,7 @@
 		});
 
 		switchBtn2.addEventListener("click", function(e) {
-			fcl2.layout = e.target.pressed ? "TwoColumnsMidExpanded" : "TwoColumnsStartExpanded";
+			fcl2.layout = e.target.pressed ? "TwoColumnsStartExpanded" : "TwoColumnsMidExpanded";
 		});
 
 		list.addEventListener("item-click", function(e) {
@@ -387,7 +387,7 @@
 		});
 
 		list2.addEventListener("item-click", function(e) {
-			fcl6.layout = "ThreeColumnsEndExpanded";
+			fcl6.layout = "ThreeColumnsMidExpanded";
 		});
 
 		closeMidColumn.addEventListener("click", function(e) {
