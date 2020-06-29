@@ -1,5 +1,5 @@
-commit c44d9aa3c071ba51e8292c53b8bf462e6e6fa5a4
+commit 41d14f6a6b0c9e6ff3227906e983a673f999c5e3
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jun 29 09:05:29 2020 +0300
+Date:   Mon Jun 29 14:15:10 2020 +0300
 
-    fix(ui5-sebmentedbutton): fix intermittent js error (#1874)
+    fix(ui5-tabcontainer): correct selected text color used for sap_belize (#1876)
