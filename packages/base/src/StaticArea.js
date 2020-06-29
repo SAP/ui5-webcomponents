@@ -1,16 +1,6 @@
-const getStaticAreaInstance = () => {
-	let staticArea = document.querySelector("ui5-static-area");
+import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 
-	if (staticArea) {
-		return staticArea;
-	}
-
-	// Create static area if it is not present
-	const bodyElement = document.body;
-	staticArea = document.createElement("ui5-static-area");
-
-	return bodyElement.insertBefore(staticArea, bodyElement.firstChild);
-};
+const getStaticAreaInstance = () => getSingletonElementInstance("ui5-static-area");
 
 const removeStaticArea = () => {
 	getStaticAreaInstance().destroy();

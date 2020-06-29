@@ -1,10 +1,10 @@
-const namespace = "sap.ui._UI5WebComponents";
+import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 
-const getFullPath = path => `${namespace}.${path}`;
+const getSharedResourcesInstance = () => getSingletonElementInstance("ui5-shared-resources");
 
 const getSharedResource = path => {
-	const parts = getFullPath(path).split(".");
-	let current = window;
+	const parts = path.split(".");
+	let current = getSharedResourcesInstance();
 
 	for (let i = 0; i < parts.length; i++) {
 		const part = parts[i];
@@ -18,8 +18,8 @@ const getSharedResource = path => {
 };
 
 const createSharedResource = (path, value) => {
-	const parts = getFullPath(path).split(".");
-	let current = window;
+	const parts = path.split(".");
+	let current = getSharedResourcesInstance();
 
 	for (let i = 0; i < parts.length; i++) {
 		const part = parts[i];
