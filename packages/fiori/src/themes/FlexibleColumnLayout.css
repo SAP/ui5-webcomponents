@@ -56,6 +56,7 @@
 	align-items: center;
 	justify-content: center;
 	width: 1rem;
+	background-color: var(--sapShell_Background);
 }
 
 .ui5-fcl-arrow {

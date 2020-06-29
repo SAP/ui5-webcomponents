@@ -39,7 +39,7 @@ const getLayoutsByMedia = () => {
 			"ThreeColumnsEndExpanded": {
 				layout: ["25%", "25%", "50%"],
 				arrows: [
-					{ visible: true, dir: null },
+					{ visible: false, dir: null },
 					{ visible: true, dir: "mirror" },
 				],
 			},
@@ -47,7 +47,7 @@ const getLayoutsByMedia = () => {
 				layout: ["67%", "33%", 0],
 				arrows: [
 					{ visible: true, dir: "mirror" },
-					{ visible: true, dir: null },
+					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpandedEndHidden": {
@@ -111,7 +111,7 @@ const getLayoutsByMedia = () => {
 			"ThreeColumnsEndExpanded": {
 				layout: [0, "33%", "67%"],
 				arrows: [
-					{ visible: true, dir: null },
+					{ visible: false, dir: null },
 					{ visible: true, dir: "mirror" },
 				],
 			},
@@ -119,7 +119,7 @@ const getLayoutsByMedia = () => {
 				layout: ["67%", "33%", 0],
 				arrows: [
 					{ visible: true, dir: "mirror" },
-					{ visible: true, dir: null },
+					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpandedEndHidden": {
@@ -223,7 +223,7 @@ const getNextLayoutByStartArrow = () => {
 	return {
 		"TwoColumnsStartExpanded": "TwoColumnsMidExpanded",
 		"TwoColumnsMidExpanded": "TwoColumnsStartExpanded",
-		"ThreeColumnsMidExpanded": "ThreeColumnsStartExpandedEndHidden",
+		"ThreeColumnsMidExpanded": "ThreeColumnsMidExpandedEndHidden",
 		"ThreeColumnsEndExpanded": "ThreeColumnsStartExpandedEndHidden",
 		"ThreeColumnsStartExpandedEndHidden": "ThreeColumnsMidExpandedEndHidden",
 		"ThreeColumnsMidExpandedEndHidden": "ThreeColumnsStartExpandedEndHidden",
