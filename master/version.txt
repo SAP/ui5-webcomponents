@@ -1,5 +1,5 @@
-commit 41d14f6a6b0c9e6ff3227906e983a673f999c5e3
+commit 27e53d7f972db2252459888d108fe2d5cc2a1333
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jun 29 14:15:10 2020 +0300
+Date:   Mon Jun 29 16:15:27 2020 +0300
 
-    fix(ui5-tabcontainer): correct selected text color used for sap_belize (#1876)
+    chore(ui5-tree): extract tree list item partial (#1877)
