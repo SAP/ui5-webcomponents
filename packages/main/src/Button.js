@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import findNodeOwner from "@ui5/webcomponents-base/dist/util/findNodeOwner.js";
+import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -358,28 +358,7 @@ class Button extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		if (!this.ariaLabelledby) {
-			if (this.ariaLabel) {
-				return this.ariaLabel;
-			}
-
-			return undefined;
-		}
-
-		const ids = this.ariaLabelledby.split(" ");
-		const owner = findNodeOwner(this);
-		let result = "";
-
-		ids.forEach((elementId, index) => {
-			const element = owner.querySelector(`[id='${elementId}']`);
-			result += `${element ? element.textContent : ""}`;
-
-			if (index < ids.length - 1) {
-				result += " ";
-			}
-		});
-
-		return result;
+		return getEffectiveAriaLabelText(this);
 	}
 
 	static typeTextMappings() {

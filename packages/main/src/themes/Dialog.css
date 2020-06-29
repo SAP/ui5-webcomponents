@@ -23,6 +23,7 @@
 .ui5-popup-root {
 	display: flex;
 	flex-direction: column;
+	max-width: 100vw;
 }
 
 .ui5-popup-content {
