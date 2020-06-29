@@ -23,7 +23,11 @@
             @ui5-step-in="{{../_onListItemStepIn}}"
             @ui5-step-out="{{../_onListItemStepOut}}"
         >
-            {{this.treeItem.text}}
+            {{> treeListItemContent}}
         </ui5-li-tree>
     {{/each}}
 </ui5-list>
+
+{{#*inline "treeListItemContent"}}
+	{{this.treeItem.text}}
+{{/inline}}
