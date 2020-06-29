@@ -1,0 +1,5 @@
+@import "../base/TabContainer-parameters.css";
+
+:root {
+	--_ui5_tc_headeritem_text_selected_color: #3B6F9A;
+}
