@@ -39,7 +39,7 @@ const getLayoutsByMedia = () => {
 			"ThreeColumnsEndExpanded": {
 				layout: ["25%", "25%", "50%"],
 				arrows: [
-					{ visible: false, dir: null },
+					{ visible: false, dir: null, separator: true },
 					{ visible: true, dir: "mirror" },
 				],
 			},

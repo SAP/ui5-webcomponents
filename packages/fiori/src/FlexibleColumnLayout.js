@@ -493,11 +493,11 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get showStartSeparator() {
-		return this.startArrowVisibility;
+		return this.effectiveArrowsInfo[0].separator || this.startArrowVisibility;
 	}
 
 	get showEndSeparator() {
-		return this.endArrowVisibility;
+		return this.effectiveArrowsInfo[1].separator || this.endArrowVisibility;
 	}
 
 	get showStartArrow() {
