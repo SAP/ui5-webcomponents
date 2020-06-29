@@ -2,20 +2,70 @@
     display: inline-block;
     width: 100%;
     height: 100%;
-    border: 1px solid blue;
+    background: var( --sapList_Background);
+    cursor: pointer;
+}
+
+:host(:hover) {
+    background: var(--sapList_Hover_Background);
+}
+
+:host([selected]) {
+    background: var( --sapList_SelectionBackgroundColor);
+}
+
+:host([selected]) .ui5-sni-content {
+    border-bottom: 1px solid var(--sapList_SelectionBorderColor);
+}
+
+:host([_mouse-down]) {
+    background: var(--sapList_Active_Background);
+    color: var(--sapList_Active_TextColor);
+}
+
+:host([_mouse-down]) .ui5-sni-icon > ui5-icon {
+    color: inherit;
+}
+
+:host([_focused]) .ui5-sni-content:after {
+    content: "";
+	border: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+}
+
+:host([_collapsed]) ui5-title,
+:host([_collapsed]) .ui5-sni-arrow {
+    display: none;
+}
+
+:host([_collapsed]) {
+    width: 2.5rem;
+}
+
+:host([_collapsed]) .ui5-sni-bottom-arrow::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 0.375rem solid transparent;
+    border-bottom: .375rem solid var(--sapContent_IconColor);
+    position: absolute;
+    right: 0.1875rem;
+    bottom: 0.125rem;
 }
 
 .ui5-sni-content {
     width: 100%;
     height: 2.5rem;
+    position: relative;
     box-sizing: border-box;
     display: flex;
     align-items: center;
-}
-
-.ui5-sni-content:hover {
-    background: var(--sapList_Hover_Background);
-    cursor: pointer;
+    outline: none;
 }
 
 .ui5-sni-padding {
@@ -23,7 +73,9 @@
 }
 
 ui5-title {
+    color: inherit;
     flex-grow: 1;
+    cursor: pointer;
 }
 
 .ui5-sni-icon {
@@ -32,6 +84,7 @@ ui5-title {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: inherit;
 }
 
 .ui5-sni-icon > ui5-icon {
@@ -39,13 +92,11 @@ ui5-title {
 }
 
 .ui5-sni-children {
-    height: 100%;
-    max-height: 0;
-    transition: max-height 0.25s ease-in;
-    overflow: hidden;
+    height: 0;
+    transition: all 0.25s ease-in;
 }
 
 .ui5-sni-children-shown {
-    max-height: 100%;
-    transition: max-height 0.25s ease-in;
+    height: auto;
+    transition: all 0.25s ease-in;
 }

@@ -1,27 +1,38 @@
-{{>include "./ListItem.hbs"}}
+<div
+    class="{{classessni.root}}"
+    tabindex="0"
+    @mousedown="{{_onmousedown}}"
+    @mouseup="{{_onmouseup}}"
+    @focusin="{{_onfocusin}}"
+    @focusout="{{_onfocusout}}"
+    @keydown="{{_onkeydown}}"
+>
+    {{#if icon}}
+        <div class="ui5-sni-icon">
+            <ui5-icon name="{{icon}}"></ui5-icon>
+        </div>
+    {{/if}}
 
-{{#*inline "listItemContent"}}
-    <div class="{{aclas.content}}">
-        {{#if icon}}
-            <div class="ui5-sni-icon">
-                <ui5-icon name="{{icon}}"></ui5-icon>
-            </div>
-        {{/if}}
+    {{#if hasOverflow}}
+        <span class="ui5-sni-bottom-arrow"></span>
+    {{/if}}
 
-        <ui5-title level="H4">{{text}}</ui5-title>
+    <ui5-title level="H5">{{text}}</ui5-title>
 
-        {{#if expandable}}
-            <div
-            class="ui5-sni-icon"
-            @click="{{toggleExpanded}}"
-            >
-                <ui5-icon name="{{getActiveIcon}}"></ui5-icon>
-            </div>
+    {{#if expandable}}
+        <div
+        class="ui5-sni-icon ui5-sni-arrow"
+        @click="{{toggleExpanded}}"
+        >
+            <ui5-icon name="{{activeIcon}}"></ui5-icon>
+        </div>
+    {{/if}}
+
+</div>
+{{#unless _collapsed}}
+    <div class="{{classessni.children}}">
+        {{#if expanded}}
+            <slot></slot>
         {{/if}}
     </div>
-    {{!-- {{#if expanded}} --}}
-        <div class="{{classes.children}}">
-            <slot></slot>
-        </div>
-    {{!-- {{/if}} --}}
-{{/inline}}
+{{/unless}}

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Shell Bar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-	<title>SideNavigation</title>
-	<script>
-		delete Document.prototype.adoptedStyleSheets
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
@@ -21,18 +23,22 @@
 		}
 
 		body {
-			display: flex;
-    		flex-direction: column;
-		}
-
-		ui5-side-navigation {
 			height: 100vh;
-			width: 250px;
+			display: flex;
+			flex-direction: column;
 		}
 	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
+	<ui5-shellbar 
+		primary-title="UI5 Web Components"
+		secondary-title="The Best Run SAP"
+		show-co-pilot
+	>
+		<ui5-button icon="menu" slot="startButton" id="startButton"></ui5-button>
+	</ui5-shellbar>
+
 	<ui5-side-navigation>
 		<ui5-side-navigation-item text="Home" icon="home"></ui5-side-navigation-item>
 		<ui5-side-navigation-item text="People" expandable icon="group">
@@ -40,7 +46,7 @@
 			<ui5-side-navigation-item text="From Other Teams"></ui5-side-navigation-item>
 		</ui5-side-navigation-item>
 		<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
-		<ui5-side-navigation-item text="Events" icon="calendar">
+		<ui5-side-navigation-item text="Events" expandable icon="calendar">
 			<ui5-side-navigation-item text="Local"></ui5-side-navigation-item>
 			<ui5-side-navigation-item text="Others"></ui5-side-navigation-item>
 		</ui5-side-navigation-item>
@@ -49,5 +55,11 @@
 		<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
 	</ui5-side-navigation>
 
+	<script>
+		var sideNavigation = document.querySelector("ui5-side-navigation");
+		document.querySelector("#startButton").addEventListener("click", function(event) {
+			sideNavigation.collapsed = !sideNavigation.collapsed;
+		});
+	</script>
 </body>
 </html>

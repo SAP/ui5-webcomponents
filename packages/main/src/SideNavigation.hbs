@@ -1,17 +1,30 @@
 <div class="ui5-sn-root">
     {{#if items.length}}
-        <div class="ui5-sn-content">
-            <ui5-list>
+        <div
+            class="ui5-sn-content"
+            @ui5-_click="{{handleItemClick}}"
+            @ui5-_forward-focus="{{_focusOtherList}}"
+            @ui5-_focus_next="{{focusNext}}"
+            @ui5-_focus_previous="{{focusPrevious}}"
+        >
+            <div class="ui5-sn-flex-wrapper">
                 <slot></slot>
-            </ui5-list>
+            </div>
+            <span class="ui5-sn-middle-focus-helper" tabindex="-1"></span>
         </div>
     {{/if}}
 
-    {{#if bottomItems.length}}
+    {{#if fixedItems.length}}
         <div class="ui5-sn-bottom-content">
-            <ui5-list>
-                <slot name="bottomItems"></slot>
-            </ui5-list>
+            <div
+                class="ui5-sn-flex-wrapper"
+                @ui5-_click="{{handleItemClick}}"
+                @ui5-_return_focus="{{_focusOtherList}}"
+                @ui5-_focus_next="{{focusNext}}"
+                @ui5-_focus_previous="{{focusPrevious}}"
+            >
+                <slot name="fixedItems"></slot>
+            </div>
         </div>
     {{/if}}
 </div>
