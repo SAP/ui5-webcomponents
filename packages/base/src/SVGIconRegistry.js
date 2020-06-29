@@ -1,7 +1,7 @@
-import { getOrCreateSharedResource } from "./SharedResources.js";
+import getSharedResource from "./getSharedResource.js";
 
-const registry = getOrCreateSharedResource("SVGIcons.registry", new Map());
-const iconCollectionPromises = getOrCreateSharedResource("SVGIcons.promises", new Map());
+const registry = getSharedResource("SVGIcons.registry", new Map());
+const iconCollectionPromises = getSharedResource("SVGIcons.promises", new Map());
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 const DEFAULT_COLLECTION = "SAP-icons";
