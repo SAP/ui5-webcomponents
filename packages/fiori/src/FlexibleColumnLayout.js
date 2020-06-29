@@ -315,6 +315,7 @@ class FlexibleColumnLayout extends UI5Element {
 		this._width = this.widthDOM;
 		this._columnLayout = this.nextColumnLayout(this.layout);
 		this._visibleColumns = this.calcVisibleColumns(this._columnLayout);
+		this.toggleColumns();
 	}
 
 	syncLayout() {
@@ -322,6 +323,17 @@ class FlexibleColumnLayout extends UI5Element {
 			this.updateLayout();
 			this._prevLayout = this.layout;
 		}
+	}
+
+	toggleColumns() {
+		const toggleStartColumn = this.startColumnWidth === 0 ? "add" : "remove";
+		this.startColumnDOM.classList[toggleStartColumn](".ui5-fcl-column--hidden");
+
+		const toggleMidColumn = this.startColumnWidth === 0 ? "add" : "remove";
+		this.midColumnDOM.classList[toggleMidColumn](".ui5-fcl-column--hidden");
+
+		const toggleEndColumn = this.startColumnWidth === 0 ? "add" : "remove";
+		this.endColumnDOM.classList[toggleEndColumn](".ui5-fcl-column--hidden");
 	}
 
 	nextLayout(layout, arrowsInfo = {}) {
@@ -430,17 +442,14 @@ class FlexibleColumnLayout extends UI5Element {
 				start: {
 					"ui5-fcl-column": true,
 					"ui5-fcl-column--start": true,
-					"ui5-fcl-column--hidden": this.startColumnWidth === 0,
 				},
 				middle: {
 					"ui5-fcl-column": true,
 					"ui5-fcl-column--middle": true,
-					"ui5-fcl-column--hidden": this.midColumnWidth === 0,
 				},
 				end: {
 					"ui5-fcl-column": true,
 					"ui5-fcl-column--end": true,
-					"ui5-fcl-column--hidden": this.endColumnWidth === 0,
 				},
 			},
 		};
@@ -542,6 +551,18 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get widthDOM() {
 		return this.getBoundingClientRect().width;
+	}
+
+	get startColumnDOM() {
+		return this.shadowRoot.querySelector(".ui5-fcl-column--start");
+	}
+
+	get midColumnDOM() {
+		return this.shadowRoot.querySelector(".ui5-fcl-column--middle");
+	}
+
+	get endColumnDOM() {
+		return this.shadowRoot.querySelector(".ui5-fcl-column--end");
 	}
 
 	get accStartColumnText() {

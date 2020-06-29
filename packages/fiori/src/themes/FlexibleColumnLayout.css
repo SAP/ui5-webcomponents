@@ -13,7 +13,6 @@
 
 /* columns */
 .ui5-fcl-column {
-	min-width: 20rem;
 	background: inherit;
 	box-sizing: border-box;
 	transition: width 560ms cubic-bezier(0.1, 0, 0.05, 1), visibility 560ms ease-in;
@@ -46,9 +45,11 @@
 }
 
 .ui5-fcl-column--hidden {
-	display: none;
+	height: 0;
+	width: 0;
+	position: absolute;
+	visibility: hidden;
 }
-
 
 /* arrow */
 .ui5-fcl-arrow-container {
