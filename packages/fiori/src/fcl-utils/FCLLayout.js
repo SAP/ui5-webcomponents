@@ -153,7 +153,7 @@ const getLayoutsByMedia = () => {
 				],
 			},
 			"TwoColumnsStartExpanded": {
-				layout: ["100%", 0, 0],
+				layout: [0, "100%", 0],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
@@ -167,14 +167,14 @@ const getLayoutsByMedia = () => {
 				],
 			},
 			"ThreeColumnsStartExpanded": {
-				layout: ["100%", 0, 0],
+				layout: [0, 0, "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpanded": {
-				layout: [0, "100%", 0],
+				layout: [0, 0, "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
@@ -188,14 +188,14 @@ const getLayoutsByMedia = () => {
 				],
 			},
 			"ThreeColumnsStartExpandedEndHidden": {
-				layout: ["100%", 0, 0],
+				layout: [0, 0, "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpandedEndHidden": {
-				layout: [0, "100%", 0],
+				layout: [0, 0, "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
