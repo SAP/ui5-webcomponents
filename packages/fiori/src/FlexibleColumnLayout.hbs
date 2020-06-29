@@ -1,5 +1,10 @@
 <div class="ui5-fcl-root">
-	<div class="{{classes.columns.start}}" style="{{styles.columns.start}}">
+	<div
+		role="region"
+		class="{{classes.columns.start}}"
+		style="{{styles.columns.start}}"
+		aria-labelledby="{{_id}}-startColumnText"
+	>
 		<slot name="startColumn"></slot>
 	</div>
 
@@ -13,11 +18,21 @@
 		></ui5-button>
 	</div>
 
-	<div class="{{classes.columns.middle}}" style="{{styles.columns.middle}}">
+	<div
+		role="region"
+		class="{{classes.columns.middle}}"
+		style="{{styles.columns.middle}}"
+		aria-labelledby="{{_id}}-midColumnText"
+	>
 		<slot name="midColumn"></slot>
 	</div>
 
-	<div class="ui5-fcl-arrow-container" style="{{styles.arrowsContainer.end}}">
+	<div 
+		role="region"
+		class="ui5-fcl-arrow-container"
+		style="{{styles.arrowsContainer.end}}"
+		aria-labelledby="{{_id}}-endColumnText"
+	>
 		<ui5-button
 			class="ui5-fcl-arrow ui5-fcl-arrow--end"
 			style="{{styles.arrows.end}}"
@@ -30,4 +45,8 @@
 	<div class="{{classes.columns.end}}" style="{{styles.columns.end}}">
 		<slot name="endColumn"></slot>
 	</div>
+
+	<span id="{{_id}}-startColumnText" class="ui5-hidden-text">{{accStartColumnText}}</span>
+	<span id="{{_id}}-midColumnText" class="ui5-hidden-text">{{accMiddleColumnText}}</span>
+	<span id="{{_id}}-endColumnText" class="ui5-hidden-text">{{accEndColumnText}}</span>
 </div>

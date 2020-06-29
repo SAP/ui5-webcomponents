@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
@@ -12,6 +13,13 @@ import {
 	getNextLayoutByStartArrow,
 	getNextLayoutByEndArrow,
 } from "./fcl-utils/FCLLayout.js";
+
+// Texts
+import {
+	FCL_START_COLUMN_TXT,
+	FCL_MIDDLE_COLUMN_TXT,
+	FCL_END_COLUMN_TXT,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import FlexibleColumnLayoutTemplate from "./generated/templates/FlexibleColumnLayoutTemplate.lit.js";
@@ -203,6 +211,7 @@ class FlexibleColumnLayout extends UI5Element {
 		this._prevLayout = null;
 		this.initialRendering = true;
 		this._handleResize = this.handleResize.bind(this);
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {
@@ -222,7 +231,10 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	static async onDefine() {
-		await Button.define();
+		await Promise.all([
+			Button.define(),
+			fetchI18nBundle("@ui5/webcomponents-fiori"),
+		]);
 	}
 
 	static get BREAKPOINTS() {
@@ -530,6 +542,18 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get widthDOM() {
 		return this.getBoundingClientRect().width;
+	}
+
+	get accStartColumnText() {
+		return this.i18nBundle.getText(FCL_START_COLUMN_TXT);
+	}
+
+	get accMiddleColumnText() {
+		return this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+	}
+
+	get accEndColumnText() {
+		return this.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 }
 
