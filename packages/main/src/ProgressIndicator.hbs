@@ -1,0 +1,18 @@
+<div class="ui5-progress-indicator-root {{classes.root}}">
+    <div class="ui5-progress-indicator-bar" style="{{styles.bar}}">
+        {{#unless showValueInRemainingBar}}
+           {{> valueLabel}}
+        {{/unless}}
+    </div>
+    <div class="ui5-progress-indicator-remaining-bar">
+        {{#if showValueInRemainingBar}}
+           {{> valueLabel}}
+        {{/if}}
+    </div>
+</div>
+
+{{#*inline "valueLabel"}}
+    {{#unless hideValue}}
+        <span class="ui5-progress-indicator-value">{{validatedValue}}%</span>
+    {{/unless}}
+{{/inline}}

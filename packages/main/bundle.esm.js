@@ -57,6 +57,7 @@ import Select from "./dist/Select.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
 import MultiComboBox from "./dist/MultiComboBox.js";
+import ProgressIndicator from "./dist/ProgressIndicator.js";
 import RatingIndicator from "./dist/RatingIndicator.js";
 import TabContainer from "./dist/TabContainer.js";
 import Tab from "./dist/Tab.js";

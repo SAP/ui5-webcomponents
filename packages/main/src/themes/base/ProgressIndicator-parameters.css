@@ -1,0 +1,11 @@
+:root {
+    --_ui5_progress-indicator_value_state_none: var(--sapNeutralElementColor);
+    --_ui5_progress-indicator_value_state_error: var(--sapNegativeElementColor);
+    --_ui5_progress-indicator_value_state_warning: var(--sapCriticalElementColor);
+    --_ui5_progress-indicator_value_state_success: var(--sapPositiveElementColor);
+    --_ui5_progress-indicator_value_state_information: var(--sapInformativeElementColor);
+    --_ui5_progress-indicator_color: var(--sapTextColor);
+    --_ui5_progress-indicator_bar_color: var(--sapContent_ContrastTextColor);
+    --_ui5_progress-indicator_border: 0.0625rem solid var(--sapField_BorderColor);
+    --_ui5_progress-indicator_bar_border_max: none;
+}
