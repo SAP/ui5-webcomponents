@@ -1,14 +1,13 @@
-const getSingletonElementInstance = tag => {
+const getSingletonElementInstance = (tag, parentElement = document.body) => {
 	let el = document.querySelector(tag);
 
 	if (el) {
 		return el;
 	}
 
-	const bodyElement = document.body;
 	el = document.createElement(tag);
 
-	return bodyElement.insertBefore(el, bodyElement.firstChild);
+	return parentElement.insertBefore(el, parentElement.firstChild);
 };
 
 export default getSingletonElementInstance;
