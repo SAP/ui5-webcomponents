@@ -26,6 +26,7 @@
 	background: var(--sapTile_Background);
 	border-bottom: 1px solid var(--_ui5_card_header_border_color);
 	padding: var(--_ui5_card_content_padding);
+	outline: none;
 }
 
 /* Card with no content */
