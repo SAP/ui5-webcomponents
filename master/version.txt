@@ -1,7 +1,5 @@
-commit 5bca823cd7c5b075410019106e3d382a3697d4fc
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jun 30 09:58:10 2020 +0300
+commit 77e8886ad08c26bc4c04b6b9c41d6a5f117f78e2
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Jun 30 15:42:50 2020 +0300
 
-    chore: improve pre-release script (#1882)
-    
-    The script currently auto generates and releases versions based on the last commit - 0.0.0-2dsdsdds, 0.0.0-a4d5sdsd, etc. Now ,it can also release a specific version and tag, passed as an argument - 0.21.6, 0.21.7, etc.
+    chore(ui5-dialog): Show how to build a semantic dialog (#1885)

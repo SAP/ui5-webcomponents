@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Title - UI5 Web Components</title>
+    <title>Flexible Column Layout - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Title | UI5 Web Components</title>
+<title>Flexible Column Layout | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Title" />
+<meta property="og:title" content="Flexible Column Layout" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/Title/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/Title/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/FlexibleColumnLayout/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/FlexibleColumnLayout/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/Title/","headline":"Title","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/FlexibleColumnLayout/","headline":"Flexible Column Layout","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -1373,9 +1373,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/FlexibleColumnLayout/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/FlexibleColumnLayout/" class="navigation-list-link active">
                         <div class="component-name">Flexible Column Layout</div>
                         
                           <span class="new-tag">NEW</span>
@@ -1656,9 +1656,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Title/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Title/" class="navigation-list-link">
                         <div class="component-name">Title</div>
                         
                       </a>
@@ -1920,37 +1920,438 @@
                 
                   <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Title</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Flexible Column Layout</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <header>
-	<h2 class="control-header">Title</h2>
+          <header class="component-heading">
+	<h2 class="control-header">FlexibleColumnLayout</h2>
+	<div class="component-heading-since">
+		<span>v1.0.0-rc.8</span>
+	</div>
 </header>
 
-<div class="component-package">@ui5/webcomponents</div>
+<div class="component-package">@ui5/webcomponents-fiori</div>
 
-<div class="control-tag">&lt;ui5-title&gt;</div>
+<div class="control-tag">&lt;ui5-fcl-column-layout&gt;</div>
+
+
+<!-- Basic FlexibleColumnLayout -->
+<style>
+	.col {
+		height: 100%;
+	}
+
+	.colHeader {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 2.75rem;
+		padding: 0.25rem 1rem 0.25rem 1rem;
+		background: var(--sapList_Background);
+		box-sizing: border-box;
+	}
+
+	.colSubHeader {
+		display: flex;
+		align-items: center;
+		box-sizing: border-box;
+	}
+
+	.productInfo {
+		display:flex;
+		flex-direction: row;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+</style>
 
 <section>
-	<h3>Title in All Available Levels</h3>
-	<div class="snippet flex-column">
-		<ui5-title level="H1">Title level 1</ui5-title>
-		<ui5-title level="H2">Title level 2</ui5-title>
-		<ui5-title level="H3">Title level 3</ui5-title>
-		<ui5-title level="H4">Title level 4</ui5-title>
-		<ui5-title level="H5">Title level 5</ui5-title>
-		<ui5-title level="H6">Title level 6</ui5-title>
+	<h3>FlexibleColumnLayout - One Initial Column</h3>
+	<div class="snippet">
+		<ui5-flexible-column-layout id="fcl" style="height: 600px;">
+
+			<!-- start column -->
+			<div class="col" slot="startColumn">
+				<ui5-shellbar
+					primary-title="Smart Store, New Yorks"
+					notification-count="4"
+					show-notifications
+					show-product-switch
+					show-co-pilot
+				>
+					<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo" />
+					<ui5-shellbar-item icon="disconnected" text="Disconnect"></ui5-shellbar-item>
+					<ui5-shellbar-item icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+				</ui5-shellbar>
+
+				<br><br>
+				<ui5-list id="col1list" header-text="Products (13)" mode="SingleSelect">
+					<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end info="47.00 EUR">10 inch Portable DVD</ui5-li>
+					<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end info="249.00 EUR">7 inch WidescreenPortable DVD Player w MP3</ui5-li>
+					<ui5-li description=HT-1251 icon='slim-arrow-right' icon-end info="947.00 EUR">Astro Laptop 1516</ui5-li>
+					<ui5-li description=HT-1251 icon='slim-arrow-right' icon-end info="647.00 EUR">Astro Phone 6</ui5-li>
+					<ui5-li description=HT-1252 icon='slim-arrow-right' icon-end info="27.99 EUR">Audio/Video Cable Kit - 4m</ui5-li>
+					<ui5-li description=HT-6001 icon='slim-arrow-right' icon-end info="447.90 EUR">Beam Breaker B-1</ui5-li>
+					<ui5-li description=HT-6001 icon='slim-arrow-right' icon-end info="647.50 EUR">Beam Breaker B-2</ui5-li>
+					<ui5-li description=HT-6001 icon='slim-arrow-right' icon-end info="847.80 EUR">Beam Breaker B-3</ui5-li>
+					<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end info="1,250.00 EUR">Beam Breaker B-4</ui5-li>
+					<ui5-li description=HT-8001 icon='slim-arrow-right' icon-end info="1,288.00 EUR">Camcorder View</ui5-li>
+					<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end info="996.00 EUR">Benda Laptop 1408</ui5-li>
+					<ui5-li description=HT-0003 icon='slim-arrow-right' icon-end info="147.00 EUR">Cepat Tablet 10.5</ui5-li>
+					<ui5-li description=HT-1001 icon='slim-arrow-right' icon-end info="87.90 EUR">Gladiator MX</ui5-li>
+				</ui5-list>
+			</div>
+
+			<!-- mid column -->
+			<div class="col" slot="midColumn">
+				<div class="colHeader">
+					<ui5-title id="col2title" level="H2" style="min-width: 1px;"></ui5-title>
+
+					<div class="colSubHeader">
+						<ui5-button design="Emphasized">Edit</ui5-button>
+						<ui5-button design="Transparent" icon="add"></ui5-button>
+						<ui5-button id="fullscreenMidColumn" design="Transparent" icon="full-screen"></ui5-button>
+						<ui5-button id="closeMidColumn" icon="decline" design="Transparent"></ui5-button>
+					</div>
+				</div>
+				<br>
+
+				<section style="padding: 1rem 1rem;">
+					<ui5-title level="H3">General Information</ui5-title>
+					<br>
+
+					<div style="display:flex; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap">
+						<div style="display:flex; flex-direction: row; align-items: center;">
+							<ui5-avatar id="avatar" icon="laptop" background-color="Accent5" size="XL" style="margin: 0 1rem; min-width: 7rem;">
+							</ui5-avatar>
+	
+							<div>
+								<div class="productInfo">
+									<ui5-title level="H5">Product:</ui5-title>
+									<ui5-title level="H5" id="lblName"></ui5-title>
+								</div>
+								<br>
+	
+								<div class="productInfo">
+									<ui5-title level="H5">Description:</ui5-title>
+									<ui5-title level="H5" id="lblDesc"></ui5-title>
+								</div>
+								<br>
+	
+								<div class="productInfo">
+									<ui5-title level="H5">Supplier:</ui5-title>
+									<ui5-title level="H5" id="lblSupplier"><b>Titanium</b></ui5-title>
+								</div>
+							</div>
+						</div>
+	
+						<div class="productInfo" style="align-self: start">
+							<ui5-title level="H5">Rating:</ui5-title>
+							<ui5-rating-indicator
+								id="productRating"
+								aria-label="Hello World"
+								value="3.5"
+							></ui5-rating-indicator>
+						</div>
+	
+						<span></span>
+					</div>
+
+					<br><br><br>
+	
+					<ui5-title level="H3">Suppliers</ui5-title>
+					<br>
+					<ui5-list id="col2list">
+						<ui5-li icon='slim-arrow-right' icon-end>Titanium</ui5-li>
+						<ui5-li icon='slim-arrow-right' icon-end>Technocom</ui5-li>
+						<ui5-li icon='slim-arrow-right' icon-end> Red Point Stores</ui5-li>
+						<ui5-li icon='slim-arrow-right' icon-end> Very Best Screens</ui5-li>
+						<ui5-li icon='slim-arrow-right' icon-end>Smartcards</ui5-li>
+						<ui5-li icon='slim-arrow-right' icon-end>Alpha Printers</ui5-li>
+						<ui5-li icon='slim-arrow-right' icon-end>Printer for All</ui5-li>
+						<ui5-li icon='slim-arrow-right' icon-end>Oxynum</ui5-li>
+						<ui5-li icon='slim-arrow-right' icon-end>Fasttech</ui5-li>
+						<ui5-li icon='slim-arrow-right' icon-end>Ultrasonic United</ui5-li>
+						<ui5-li icon='slim-arrow-right' icon-end>Speaker Experts</ui5-li>
+						<ui5-li icon='slim-arrow-right' icon-end>Brainsoft</ui5-li>
+					</ui5-list>
+				</section>
+			</div>
+
+			<!-- end column -->
+			<div class="col" slot="endColumn">
+				<div class="colHeader">
+					<ui5-title id="col3title" style="min-width: 1px;"></ui5-title>
+	
+					<div class="colSubHeader">
+						<ui5-button design="Emphasized">Edit</ui5-button>
+						<ui5-button design="Transparent" icon="add"></ui5-button>
+						<ui5-button id="fullscreenEndColumn" design="Transparent" icon="full-screen"></ui5-button>
+						<ui5-button id="closeEndColumn" icon="decline" design="Transparent"></ui5-button>
+					</div>
+				</div>
+				<br><br>
+
+				<ui5-tabcontainer id="tabContainer1" fixed collapsed show-overflow>
+					<ui5-tab text="Products" additional-text="125">
+					</ui5-tab>
+					<ui5-tab-separator></ui5-tab-separator>
+					<ui5-tab icon="sap-icon://menu2" text="Laptops" semantic-color="Positive" additional-text="25">
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://menu" text="Monitors" selected semantic-color="Critical" additional-text="45">
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://menu2" text="Keyboards" semantic-color="Negative" additional-text="15">
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://menu2" disabled text="Disabled"  semantic-color="Negative" additional-text="40">
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://menu2" text="Neutral" semantic-color="Neutral" additional-text="40">
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40">
+					</ui5-tab>
+				</ui5-tabcontainer>
+
+				<section style="padding: 1rem 1rem; background: var(--sapList_Background);">
+					<p>
+						<ui5-title level="H5" wrap>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+						aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+						culpa qui officia deserunt mollit anim id est laborum.
+						</ui5-title>
+					</p>
+					<p>
+						<ui5-title level="H5" wrap>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+						aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+						culpa qui officia deserunt mollit anim id est laborum.
+						</ui5-title>
+					</p>
+					<p>
+						<ui5-title level="H5" wrap>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+						aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+						culpa qui officia deserunt mollit anim id est laborum.
+						</ui5-title>
+					</p>
+				</section>
+			</div>
+		</ui5-flexible-column-layout>
+
+		<script>
+			var midFullScreen = false;
+			var endFullScreen = false;
+			var avatars = [
+				"camera",
+				"laptop",
+				"desktop-mobile",
+				"responsive",
+				"print",
+				"iphone",
+				"ipad",
+			];
+
+			var avatarsBG = [
+				"Accent1",
+				"Accent2",
+				"Accent3",
+				"Accent4",
+				"Accent5",
+				"Accent6",
+				"Accent7",
+				"Accent8",
+				"Accent9",
+				"Accent10",
+			];
+
+			var suppliers = [
+				"Titanium", "Technocom", " Red Point Stores", " Very Best Screens", "Smartcards", "Alpha Printers",
+				"Printer for All", "Oxynum", "Fasttech", "Ultrasonic United", "Speaker Experts", "Brainsoft"
+			];
+
+			function updateProductInfo(item) {
+				avatar.icon = avatars[getRandomInt(6)];
+				avatar.backgroundColor = avatarsBG[getRandomInt(9) + 1];
+				productRating.value = getRandomInt(4) + 1;
+				col2title.textContent = item.textContent;
+				lblName.innerHTML = "<b>" + item.textContent + "</b>";
+				lblDesc.innerHTML = "<b>" + item.description + "</b>";
+				lblSupplier.innerHTML = "<b>" + suppliers[getRandomInt(11)] + "</b>";
+			}
+
+			function updateDetailInfo(item) {
+				col3title.textContent = item.textContent;
+			}
+
+			function nextLayout(target) {
+				var layout = fcl.layout;
+	
+				if (target === "col1") {
+					exitFullScreen()
+					return "TwoColumnsMidExpanded";
+				}
+	
+				if (target === "col2") {
+					if (midFullScreen) {
+						enterFullScreen();
+						return "EndColumnFullScreen";
+					}
+					exitFullScreen();
+					return "ThreeColumnsMidExpanded";
+				}
+	
+				if (target === "col2close") {
+					if (midFullScreen) {
+						enterFullScreen();
+					} else {
+						exitFullScreen();
+					}
+
+					return "OneColumn";
+				}
+
+				if (target === "col3close") {
+					if (endFullScreen) {
+						enterFullScreen();
+						return "MidColumnFullScreen";
+					}
+					exitFullScreen()
+					return "ThreeColumnsMidExpandedEndHidden";
+				}
+
+				if (target === "col2fullscreen") {
+					if (!midFullScreen) {
+						enterFullScreen();
+						return "MidColumnFullScreen";
+					}
+	
+					exitFullScreen();
+					return "ThreeColumnsMidExpandedEndHidden";
+				}
+
+				if (target === "col3fullscreen") {
+					if (!endFullScreen) {
+						enterFullScreen();
+						return "EndColumnFullScreen";
+					}
+	
+					exitFullScreen();
+					return "ThreeColumnsEndExpanded";
+				}
+			}
+
+			function getRandomInt(max) {
+				return Math.floor(Math.random() * Math.floor(max));
+			}
+
+			function enterFullScreen() {
+				endFullScreen = true;
+				midFullScreen = true;
+				fullscreenMidColumn.icon = "exit-full-screen";
+				fullscreenEndColumn.icon = "exit-full-screen";
+			}
+
+			function exitFullScreen() {
+				endFullScreen = false;
+				midFullScreen = false;
+				fullscreenMidColumn.icon = "full-screen";
+				fullscreenEndColumn.icon = "full-screen";
+			}
+
+			// Event handlers
+			col1list.addEventListener("item-click", function (e) {
+				updateProductInfo(e.detail.item);
+				fcl.layout = nextLayout("col1");
+			});
+
+			col2list.addEventListener("item-click", function (e) {
+				updateDetailInfo(e.detail.item);
+				fcl.layout = nextLayout("col2");
+			});
+
+			closeMidColumn.addEventListener("click", function (e) {
+				fcl.layout = nextLayout("col2close");
+			});
+
+			closeEndColumn.addEventListener("click", function (e) {
+				fcl.layout = nextLayout("col3close");
+			});
+
+			fullscreenMidColumn.addEventListener("click", function (e) {
+				fcl.layout = nextLayout("col2fullscreen");
+			});
+
+			fullscreenEndColumn.addEventListener("click", function (e) {
+				fcl.layout = nextLayout("col3fullscreen");
+			});
+		</script>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H1"</span><span class="nt">&gt;</span>Title level 1<span class="nt">&lt;/ui5-title&gt;</span>
-<span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H2"</span><span class="nt">&gt;</span>Title level 2<span class="nt">&lt;/ui5-title&gt;</span>
-<span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H3"</span><span class="nt">&gt;</span>Title level 3<span class="nt">&lt;/ui5-title&gt;</span>
-<span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H4"</span><span class="nt">&gt;</span>Title level 4<span class="nt">&lt;/ui5-title&gt;</span>
-<span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H5"</span><span class="nt">&gt;</span>Title level 5<span class="nt">&lt;/ui5-title&gt;</span>
-<span class="nt">&lt;ui5-title</span> <span class="na">level=</span><span class="s">"H6"</span><span class="nt">&gt;</span>Title level 6<span class="nt">&lt;/ui5-title&gt;</span>
-	</code></pre></figure></pre>
+<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-flexible-column-layout</span> <span class="na">id=</span><span class="s">"fcl"</span><span class="nt">&gt;</span>
+	<span class="c">&lt;!-- start column --&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"startColumn"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-shellbar</span> <span class="na">primary-title=</span><span class="s">"Dep. New York, USA"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/ui5-shellbar&gt;</span>
+
+		<span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"col1list"</span> <span class="na">header-text=</span><span class="s">"Employees"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/ui5-list&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+
+	<span class="c">&lt;!-- middle column --&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"midColumn"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"colHeader"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-button</span> <span class="na">design=</span><span class="s">"Emphasized"</span><span class="nt">&gt;</span>Edit<span class="nt">&lt;/ui5-button&gt;</span>
+			<span class="nt">&lt;ui5-button</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">icon=</span><span class="s">"add"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+			<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"fullscreenMidColumn"</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">icon=</span><span class="s">"full-screen"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+			<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"closeMidColumn"</span> <span class="na">icon=</span><span class="s">"decline"</span> <span class="na">design=</span><span class="s">"Transparent"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+
+		<span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"col2list"</span> <span class="na">header-text=</span><span class="s">"Employees"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/ui5-list&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+
+	<span class="c">&lt;!-- end column --&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"endColumn"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"colHeader"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-button</span> <span class="na">design=</span><span class="s">"Emphasized"</span><span class="nt">&gt;</span>Edit<span class="nt">&lt;/ui5-button&gt;</span>
+			<span class="nt">&lt;ui5-button</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">icon=</span><span class="s">"add"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+			<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"fullscreenEndColumn"</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">icon=</span><span class="s">"full-screen"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+			<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"closeEndColumn"</span> <span class="na">icon=</span><span class="s">"decline"</span> <span class="na">design=</span><span class="s">"Transparent"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+
+		<span class="nt">&lt;p&gt;</span>
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod..."
+		<span class="nt">&lt;/p&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/ui5-flexible-column-layout&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+	<span class="nx">col1list</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">item-click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">fcl</span><span class="p">.</span><span class="nx">layout</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">TwoColumnsMidExpanded</span><span class="dl">"</span><span class="p">;</span>
+	<span class="p">});</span>
+
+	<span class="nx">col2list</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">item-click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">fcl</span><span class="p">.</span><span class="nx">layout</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">ThreeColumnsEndExpanded</span><span class="dl">"</span><span class="p">;</span>
+	<span class="p">});</span>
+
+	<span class="nx">closeMidColumn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">fcl</span><span class="p">.</span><span class="nx">layout</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">OneColumn</span><span class="dl">"</span><span class="p">;</span>
+	<span class="p">});</span>
+	<span class="nx">fullscreenMidColumn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">fcl</span><span class="p">.</span><span class="nx">layout</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">MidColumnFullscreen</span><span class="dl">"</span><span class="p">;</span>
+	<span class="p">});</span>
+
+	<span class="nx">fullscreenEndColumn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">fcl</span><span class="p">.</span><span class="nx">layout</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">EndColumnFullscreen</span><span class="dl">"</span><span class="p">;</span>
+	<span class="p">});</span>
+
+	<span class="nx">closeEndColumn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">fcl</span><span class="p">.</span><span class="nx">layout</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">TwoColumnsMidExpanded</span><span class="dl">"</span><span class="p">;</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></figure></pre>
 </section>
 
 
@@ -1959,11 +2360,19 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3>
 
-The <code>ui5-title</code> component is used to display titles inside a page. It is a simple, large-sized text with explicit header/title semantics.
+The <code>FlexibleColumnLayout</code> implements the master-detail-detail paradigm by displaying up to three pages in separate columns. There are several possible layouts that can be changed either with the component API, or by pressing the arrows, displayed between the columns.
+
+<h3>Usage</h3>
+
+Use this component for applications that need to display several logical levels of related information side by side (e.g. list of items, item, sub-item, etc.). The Component is flexible in a sense that the application can focus the user's attention on one particular column.
+
+<h3>Responsive Behavior</h3>
+
+The <code>FlexibleColumnLayout</code> automatically displays the maximum possible number of columns based on <code>layout</code> property and the window size. The component would display 1 column for window size smaller than 900px, up to two columns between 900px and 1280px, and 3 columns for sizes bigger than 1280px.
 
 <h3>ES6 Module Import</h3>
 
-<code>import "@ui5/webcomponents/dist/Title";</code>
+<code>import @ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";</code>
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -1979,24 +2388,90 @@ The <code>ui5-title</code> component is used to display titles inside a page. It
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          level
+                          columnLayout
+                            (readonly)
                             <br>
+                            <code>column-layout</code>
                         </div>
-                        <div class="cell api-table-content-cell">TitleLevel</div>
-                        <div class="cell api-table-content-cell">&quot;H2&quot;</div>
+                        <div class="cell api-table-content-cell">Array</div>
+                        <div class="cell api-table-content-cell">[&quot;100%&quot;, 0, 0]</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>ui5-title</code> level. Available options are: <code>"H6"</code> to <code>"H1"</code>.
+                            Returns the current column layout, based on both the <code>layout</code> property and the screen size. <br><br> <b>For example:</b> ["67%", "33%", 0], ["100%", 0, 0], ["25%", "50%", "25%"], etc, where the numbers represents the width of the start, middle and end columns.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          wrap
+                          endColumnVisible
+                            (readonly)
                             <br>
+                            <code>end-column-visible</code>
                         </div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the <code>ui5-title</code> would wrap.
+                            Returns if the <code>end</code> column is visible.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          layout
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">FCLLayout</div>
+                        <div class="cell api-table-content-cell">&quot;OneColumn&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the columns layout and their proportion. <br><br> <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 900px, two columns between 900px and 1280px and three columns for sizes bigger than 1280px. <br><br> Available options are: <ul> <li><code>OneColumn</code></li> <li><code>TwoColumnsStartExpanded</code></li> <li><code>TwoColumnsMidExpanded</code></li> <li><code>ThreeColumnsMidExpanded</code></li> <li><code>ThreeColumnsEndExpanded</code></li> <li><code>ThreeColumnsStartExpandedEndHidden</code></li> <li><code>ThreeColumnsMidExpandedEndHidden</code></li> <li><code>MidColumnFullScreen</code></li> <li><code>EndColumnFullScreen</code></li> </ul> <br><br> <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns in 67%/33% proportion.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          midColumnVisible
+                            (readonly)
+                            <br>
+                            <code>mid-column-visible</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Returns if the <code>middle</code> column is visible.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          noArrows
+                            <br>
+                            <code>no-arrows</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the visibility of the arrows, used for expanding and shrinking the columns.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          startColumnVisible
+                            (readonly)
+                            <br>
+                            <code>start-column-visible</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">true</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Returns if the <code>start</code> column is visible.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          visibleColumns
+                            (readonly)
+                            <br>
+                            <code>visible-columns</code>
+                        </div>
+                        <div class="cell api-table-content-cell">Integer</div>
+                        <div class="cell api-table-content-cell">1</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Returns the number of currently visible columns.
                         </div>
                       </div>
             
@@ -2017,13 +2492,82 @@ The <code>ui5-title</code> component is used to display titles inside a page. It
                   </div>
             
                     <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the <code>ui5-title</code>. <br><br> <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">endColumn</div>
+                      <div class="cell api-table-content-cell">HTMLElement</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content in the end column.</div>
+                    </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">midColumn</div>
+                      <div class="cell api-table-content-cell">HTMLElement</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content in the middle column.</div>
+                    </div>
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">startColumn</div>
+                      <div class="cell api-table-content-cell">HTMLElement</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content in the start column.</div>
                     </div>
             
                 </div>
             
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">layout-change</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the layout changes via user interaction by clicking the arrows or by changing the component size due to resizing.
+                        </div>
+                      </div>
+            
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">layout</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> FCLLayout <br/> <strong class="api-table-event-description bold">description:</strong> the current layout</div>
+                          </div>
+                        </tr>
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">columnLayout</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Array <br/> <strong class="api-table-event-description bold">description:</strong> the effective column layout, f.e [67%, 33%, 0]</div>
+                          </div>
+                        </tr>
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">startColumnVisible</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> boolean <br/> <strong class="api-table-event-description bold">description:</strong> indicates if the start column is currently visible</div>
+                          </div>
+                        </tr>
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">midColumnVisible</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> boolean <br/> <strong class="api-table-event-description bold">description:</strong> indicates if the middle column is currently visible</div>
+                          </div>
+                        </tr>
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">endColumnVisible</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> boolean <br/> <strong class="api-table-event-description bold">description:</strong> indicates if the end column is currently visible</div>
+                          </div>
+                        </tr>
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">arrowsUsed</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> boolean <br/> <strong class="api-table-event-description bold">description:</strong> indicates if the layout is changed via the arrows</div>
+                          </div>
+                        </tr>
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">resize</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> boolean <br/> <strong class="api-table-event-description bold">description:</strong> indicates if the layout is changed via resizing</div>
+                          </div>
+                        </tr>
+                  </div>
             
             
           </section>
@@ -2037,7 +2581,6 @@ The <code>ui5-title</code> component is used to display titles inside a page. It
       </div>
       <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
     </footer>
-
 
 <div class="settings" id="settings-button">
     <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"
