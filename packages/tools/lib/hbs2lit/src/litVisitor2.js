@@ -76,7 +76,11 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		} else if (skipIfDefined){
 			parsedCode = `\${${path}}`;
 		} else {
-			parsedCode = `\${ifDefined(${path})}`;
+			if (!mustache.escaped) {
+				parsedCode = `\${ifDefined(unsafeHTML(${path}))}`;
+			} else {
+				parsedCode = `\${ifDefined(${path})}`;
+			}
 		}
 
 		this.blocks[this.currentKey()] += parsedCode;
