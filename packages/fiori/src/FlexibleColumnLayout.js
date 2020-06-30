@@ -90,7 +90,7 @@ const metadata = {
 		/**
 		* Defines the effective columns layout,
 		* based on both the <code>layout</code> property and the screen size.
-		* Example: [67%, "33%, 0"], [25%, 50%, 25%], etc.
+		* Example: [67%, 33%, 0], [25%, 50%, 25%], etc.
 		*
 		* @type {Object}
 		* @defaultvalue undefined
@@ -252,6 +252,10 @@ class FlexibleColumnLayout extends UI5Element {
 		};
 	}
 
+	static get ANIMATION_DURATION() {
+		return 560;
+	}
+
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResize);
 	}
@@ -326,14 +330,46 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	toggleColumns() {
-		const toggleStartColumn = this.startColumnWidth === 0 ? "add" : "remove";
-		this.startColumnDOM.classList[toggleStartColumn](".ui5-fcl-column--hidden");
+		this.toggleColumn("start");
+		this.toggleColumn("mid");
+		this.toggleColumn("end");
+	}
 
-		const toggleMidColumn = this.startColumnWidth === 0 ? "add" : "remove";
-		this.midColumnDOM.classList[toggleMidColumn](".ui5-fcl-column--hidden");
+	toggleColumn(column) {
+		const columnWidth = this[`${column}ColumnWidth`];
+		const columnDOM = this[`${column}ColumnDOM`];
+		const currentlyHidden = columnWidth === 0;
+		const previouslyHidden = columnDOM.style.width === "0px";
 
-		const toggleEndColumn = this.startColumnWidth === 0 ? "add" : "remove";
-		this.endColumnDOM.classList[toggleEndColumn](".ui5-fcl-column--hidden");
+		// no change
+		if (currentlyHidden && previouslyHidden) {
+			return;
+		}
+
+		// column resizing: from 33% to 67%, from 25% to 50%, etc.
+		if (!currentlyHidden && !previouslyHidden) {
+			columnDOM.style.width = columnWidth;
+			return;
+		}
+
+		// hide column: 33% to 0, 25% to 0, etc .
+		if (currentlyHidden) {
+			// animate the width
+			columnDOM.style.width = columnWidth;
+
+			// hide column with delay to allow the animation runs entirely
+			setTimeout(() => {
+				columnDOM.classList.add("ui5-fcl-column--hidden");
+			}, FlexibleColumnLayout.ANIMATION_DURATION);
+
+			return;
+		}
+
+		// show column: from 0 to 33%, from 0 to 25%, etc.
+		if (previouslyHidden) {
+			columnDOM.classList.remove("ui5-fcl-column--hidden");
+			columnDOM.style.width = columnWidth;
+		}
 	}
 
 	nextLayout(layout, arrowsInfo = {}) {
@@ -457,17 +493,6 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get styles() {
 		return {
-			columns: {
-				start: {
-					width: this.startColumnWidth,
-				},
-				middle: {
-					width: this.midColumnWidth,
-				},
-				end: {
-					width: this.endColumnWidth,
-				},
-			},
 			arrowsContainer: {
 				start: {
 					display: this.showStartSeparator ? "flex" : "none",
