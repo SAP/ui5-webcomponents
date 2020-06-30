@@ -6,17 +6,15 @@ const svgProcessor = require("./svgProcessor");
 
 const removeWhiteSpaces = (source) => {
 	return source
-		.replace(/\n+/g, "")
-		.replace(/\s*<\s*/g, "<")
-		.replace(/\s*>\s*/g, ">")
-		.replace(/}}\s+{{/g, "}}{{")
-		.replace(/\t+/g, " ");
+		.replace(/\s*\r*\n+\s*/g, " ") // Replace new lines and all whitespace between them with a space
+		.replace(/\s*<\s*/g, "<") // Strip whitespace round <
+		.replace(/\s*>\s*/g, ">") // Strip whitespace round >
+		.replace(/}}\s+{{/g, "}}{{"); // Remove whitespace between }} and {{
 };
 
-const compileString = async (sInput, config) => {
-	let sPreprocessed = sInput;
+const hbs2lit = (file) => {
+	let sPreprocessed = includesReplacer.replace(file);
 
-	sPreprocessed = includesReplacer.replace(sPreprocessed, config);
 	sPreprocessed = removeWhiteSpaces(sPreprocessed);
 
 	const ast = Handlebars.parse(sPreprocessed);
@@ -39,6 +37,4 @@ const compileString = async (sInput, config) => {
 	return result;
 };
 
-module.exports = {
-	compileString
-};
+module.exports = hbs2lit;

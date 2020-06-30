@@ -1,5 +1,3 @@
-const compiler = require("./src/compiler");
+const hbs2lit = require("./src/compiler");
 
-module.exports = {
-	compileString: compiler.compileString
-};
+module.exports = hbs2lit;

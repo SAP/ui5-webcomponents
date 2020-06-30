@@ -190,6 +190,7 @@
   "--sapSelectedColor",
   "--sapShell_Active_Background",
   "--sapShell_Active_TextColor",
+  "--sapShell_Background",
   "--sapShell_Hover_Background",
   "--sapShell_InteractiveBorderColor",
   "--sapShell_InteractiveTextColor",

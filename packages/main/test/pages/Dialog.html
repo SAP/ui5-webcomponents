@@ -37,6 +37,12 @@
 	<ui5-button id="modals-open">Open Multiple modals</ui5-button>
 	<br>
 	<br>
+	<ui5-button id="empty-open">Open empty dialog (no focusable element)</ui5-button>
+	<br><br>
+	<ui5-button id="wide-open">Open wide dialog</ui5-button>
+	<br><br>
+	<ui5-button id="wide-open2">Open wide dialog 2</ui5-button>
+	<br><br>
 
 	<ui5-block-layer></ui5-block-layer>
 
@@ -139,6 +145,46 @@
 		</div>
 	</ui5-dialog>
 
+	<ui5-dialog id="wide-dialog" header-text="Wide dialog" style="width: 100%">
+		<p>That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+
+		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<ui5-button design="Emphasized">OK</ui5-button>
+		</div>
+	</ui5-dialog>
+
+	<ui5-dialog id="wide-dialog2" header-text="Wide dialog" stretch style="width: 100%">
+		<p>That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
+			That´s OpenUI5.</p>
+
+		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<ui5-button design="Emphasized">OK</ui5-button>
+		</div>
+	</ui5-dialog>
+
 	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
 		<!-- <div slot="header">
 			Hello World
@@ -168,7 +214,7 @@
 		<br>
 		<br>
 
-		<!-- <ui5-datepicker></ui5-datepicker> -->
+		<!-- <ui5-date-picker></ui5-date-picker> -->
 
 		<div slot="footer">
 			Hello World Footer
@@ -197,6 +243,8 @@
 			<ui5-li>Again</ui5-li>
 		</ui5-list>
 	</ui5-popover>
+
+	<ui5-dialog id="empty-dialog">Empty</ui5-dialog>
 
 	<script>
 
@@ -248,6 +296,10 @@
 		bigDanger.addEventListener('click', function (event) {
 			bigDangerPop.openBy(bigDanger);
 		});
+
+		window["empty-open"].addEventListener("click", function (event) { window["empty-dialog"].open(); });
+		window["wide-open"].addEventListener("click", function (event) { window["wide-dialog"].open(); });
+		window["wide-open2"].addEventListener("click", function (event) { window["wide-dialog2"].open(); });
 	</script>
 </body>
 

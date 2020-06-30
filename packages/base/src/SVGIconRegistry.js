@@ -1,5 +1,7 @@
-const registry = new Map();
-const iconCollectionPromises = new Map();
+import getSharedResource from "./getSharedResource.js";
+
+const registry = getSharedResource("SVGIcons.registry", new Map());
+const iconCollectionPromises = getSharedResource("SVGIcons.promises", new Map());
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 const DEFAULT_COLLECTION = "SAP-icons";
@@ -14,9 +16,9 @@ const calcKey = (name, collection) => {
 	return `${collection}:${name}`;
 };
 
-const registerIcon = (name, { pathData, accData, collection } = {}) => {
+const registerIcon = (name, { pathData, ltr, accData, collection } = {}) => { // eslint-disable-line
 	const key = calcKey(name, collection);
-	registry.set(key, { pathData, accData });
+	registry.set(key, { pathData, ltr, accData });
 };
 
 const getIconDataSync = (name, collection = DEFAULT_COLLECTION) => {

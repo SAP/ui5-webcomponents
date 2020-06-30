@@ -13,6 +13,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
@@ -281,6 +282,19 @@ const metadata = {
 		},
 
 		/**
+		 * Receives id(or many ids) of the elements that label the input
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
+
+		/**
 		 * @private
 		 */
 		focused: {
@@ -368,11 +382,28 @@ const metadata = {
 		 * @param {HTMLElement} item The previewed suggestion item
 		 * @param {HTMLElement} targetRef The DOM ref of the suggestion item.
 		 * @public
+		 * @since 1.0.0-rc.8
 		 */
 		"suggestion-item-preview": {
 			detail: {
 				item: { type: HTMLElement },
 				targetRef: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired when the user scrolls the suggestion popover.
+		 *
+		 * @event sap.ui.webcomponents.main.Input#suggestion-scroll
+		 * @param {Integer} scrollTop The current scroll position
+		 * @param {HTMLElement} scrollContainer The scroll container
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		"suggestion-scroll": {
+			detail: {
+				scrollTop: { type: Integer },
+				scrollContainer: { type: HTMLElement },
 			},
 		},
 	},
@@ -582,6 +613,7 @@ class Input extends UI5Element {
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
 		if (focusedOutToSuggestions	|| focusedOutToValueStateMessage) {
+			event.stopImmediatePropagation();
 			return;
 		}
 
@@ -609,6 +641,14 @@ class Input extends UI5Element {
 
 	_handleChange(event) {
 		this.fireEvent(this.EVENT_CHANGE);
+	}
+
+	_scroll(event) {
+		const detail = event.detail;
+		this.fireEvent("suggestion-scroll", {
+			scrollTop: detail.scrollTop,
+			scrollContainer: detail.targetRef,
+		});
 	}
 
 	async _handleInput(event) {
@@ -913,7 +953,7 @@ class Input extends UI5Element {
 				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-				"ariaLabel": this.ariaLabel,
+				"ariaLabel": getEffectiveAriaLabelText(this),
 			},
 		};
 	}

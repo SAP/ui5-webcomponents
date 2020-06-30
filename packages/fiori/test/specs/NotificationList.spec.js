@@ -26,7 +26,7 @@ describe("Notification List Item Tests", () => {
 		const firstItem = $("#nli1");
 		const btnListGroupItemClose = firstGroupItem.shadow$("[close-btn]");
 		const btnListItemClose = firstItem.shadow$("[close-btn]");
-	
+
 		// act
 		btnListGroupItemClose.click();
 
@@ -46,8 +46,8 @@ describe("Notification List Item Tests", () => {
 		const customActionInput = $("#customActionInput");
 		const secondItem = $("#nli2");
 		const customAction =  secondItem.shadow$(".ui5-nli-action");
-	
-		// act	
+
+		// act
 		customAction.click();
 
 		// assert
@@ -60,7 +60,7 @@ describe("Notification List Item Tests", () => {
 		const EXPECTED_RESULT = "Orders";
 		const firstGroupItem = $("#nlgi1");
 		const btnListGroupItemToggle = firstGroupItem.shadow$(".ui5-nli-group-toggle-btn");
-	
+
 		// act
 		btnListGroupItemToggle.click();
 
@@ -118,7 +118,7 @@ describe("Notification List Item Tests", () => {
 		const invisibleText = firstGroupItem.shadow$(".ui5-hidden-text");
 
 		// assert
-		assert.strictEqual(invisibleText.getText(), EXPECTED_RESULT,
+		assert.strictEqual(invisibleText.getText().toLowerCase(), EXPECTED_RESULT.toLowerCase(),
 			"The invisible text is correct.");
 	});
 
@@ -140,7 +140,7 @@ describe("Notification List Item Tests", () => {
 		const invisibleText = firstItem.shadow$(".ui5-hidden-text");
 
 		// assert
-		assert.strictEqual(invisibleText.getText(), EXPECTED_RESULT,
+		assert.strictEqual(invisibleText.getText().toLowerCase(), EXPECTED_RESULT.toLowerCase(),
 			"The invisible text is correct.");
 	});
 

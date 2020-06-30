@@ -2,21 +2,21 @@
 	display: inline-block;
 }
 
-:host .ui5-timepicker-input {
+:host .ui5-time-picker-input {
 	width: 100%;
 }
 
-.ui5-timepicker-input-icon-button:hover {
+.ui5-time-picker-input-icon-button:hover {
 	cursor: pointer;
 	background: var(--sapButton_Hover_Background);
 }
 
-.ui5-timepicker-input-icon-button:active {
+.ui5-time-picker-input-icon-button:active {
 	background-color: var(--sapButton_Active_Background);
 	color: var(--sapButton_Active_TextColor);
 }
 
-.ui5-timepicker-input-icon-button[pressed] {
+.ui5-time-picker-input-icon-button[pressed] {
 	background-color: var(--sapButton_Active_Background);
 	color: var(--sapButton_Active_TextColor);
 }

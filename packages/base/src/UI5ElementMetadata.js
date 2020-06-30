@@ -42,6 +42,14 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Used to get the tag we need to register for backwards compatibility
+	 * @public
+	 */
+	getAltTag() {
+		return this.metadata.altTag;
+	}
+
+	/**
 	 * Determines whether a property should have an attribute counterpart
 	 * @public
 	 * @param propName

@@ -255,7 +255,7 @@ slot[name="profile"] {
 	cursor: pointer;
 }
 
-:host(:not([logo])) .ui5-shellbar-menu-button {
+:host(:not([with-logo])) .ui5-shellbar-menu-button {
 	margin-left: 0;
 }
 
@@ -326,7 +326,7 @@ slot[name="profile"] {
 }
 
 :host([notification-count]) .ui5-shellbar-bell-button::before,
-ui5-icon[data-count]::before {
+.ui5-shellbar-button[data-count]::before {
 	position: absolute;
 	width: auto;
 	height: 1rem;
@@ -350,7 +350,7 @@ ui5-icon[data-count]::before {
 	content: attr(data-ui5-notification-count);
 }
 
-ui5-icon[data-count]::before {
+.ui5-shellbar-button[data-count]::before {
 	content: attr(data-count);
 }
 
@@ -377,6 +377,12 @@ ui5-icon[data-count]::before {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 
+::slotted([slot="logo"]) {
+	height: 1.675rem;
+	max-width: 3rem;
+	pointer-events: none;
+}
+
 /**
 * IE styles
 */
@@ -391,7 +397,7 @@ ui5-input:not([value-state]):not([readonly]):hover {
 	border: 1px solid var(--sapShell_InteractiveBorderColor);
 }
 
-ui5-input[value-state]:not([value-stat="None"])[focused] {
+ui5-input[value-state]:not([value-state="None"])[focused] {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 /* IE styles end */

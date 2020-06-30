@@ -264,8 +264,8 @@ class Tree extends UI5Element {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
 		if (treeItem.items.length > 0) {
-			const firstChildId = treeItem.items[0]._id;
-			const firstChildListItem = this.list.getSlottedNodes("items").find(item => item._id === firstChildId);
+			const firstChild = treeItem.items[0];
+			const firstChildListItem = this.list.getSlottedNodes("items").find(li => li.treeItem === firstChild);
 			firstChildListItem && this.list.focusItem(firstChildListItem);
 		}
 	}
@@ -274,8 +274,8 @@ class Tree extends UI5Element {
 		const listItem = event.detail.item;
 		const treeItem = listItem.treeItem;
 		if (treeItem.parentElement !== this) {
-			const parentId = treeItem.parentElement._id;
-			const parentListItem = this.list.getSlottedNodes("items").find(item => item._id === parentId);
+			const parent = treeItem.parentElement;
+			const parentListItem = this.list.getSlottedNodes("items").find(li => li.treeItem === parent);
 			parentListItem && this.list.focusItem(parentListItem);
 		}
 	}

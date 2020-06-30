@@ -1,18 +1,29 @@
 const path = require("path");
-const nativeFs = require("fs");
+const fs = require("fs");
 
-function replaceIncludes(hbs, config) {
-	const fs = config.fs || nativeFs;
-	const inclRegex = /{{>\s*include\s*["']([a-zA-Z.\/]+)["']}}/g;
+function replaceIncludes(file) {
+	const filePath = path.dirname(file);
+	let fileContent = fs.readFileSync(file, "utf-8");
+
+	const inclRegex = /{{>\s*include\s*["'](.+?)["']}}/g;
 	let match;
 
-	while((match = inclRegex.exec(hbs)) !== null) {
+	while((match = inclRegex.exec(fileContent)) !== null) {
 		inclRegex.lastIndex = 0;
-		const includeContent = fs.readFileSync(path.join(config.templatesPath, match[1]), "utf-8");
-		hbs = hbs.replace(match[0], includeContent);
+
+		let targetFile = match[1];
+		if (targetFile.startsWith(".")) {
+			// Relative path, f.e. {{>include "./Popup.hbs"}} or {{>include "../partials/Header.hbs"}}
+			targetFile = path.join(filePath, targetFile);
+		} else {
+			// Node module path, f.e. {{>include "@ui5/webcomponents/src/Popup.hbs"}}
+			targetFile = require.resolve(targetFile);
+		}
+
+		fileContent = fileContent.replace(match[0], replaceIncludes(targetFile));
 	}
 
-	return hbs;
+	return fileContent;
 }
 
 module.exports = {
