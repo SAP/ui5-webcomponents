@@ -1,5 +1,11 @@
-commit 4c1128657477a1ec4a8645abec9361dd33287882
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Tue Jun 30 15:46:56 2020 +0300
+commit 82280cf5cc0e0265b70edb43ec033e4e6847f272
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jun 30 16:19:17 2020 +0300
 
-    feat(ui5-daterange-picker): initial implementation (#1785)
+    chore(fcl): column animation + display:none (#1888)
+    
+    In the initial implementation we removed "display: none" and start hiding the columns with width="0px" and position="absolute" and thus not having any issues with the column animation. Because in general the width animation can not run from 33% to display:none, when "display:none" and the "width" are set in same browser reflow.
+    
+    But, not using "display:none" leads to other issues, mainly accessibility. The slotted content within hidden columns might be accessed by TAB even if we set tabindex="-1" in the shadowRoot it does not help, the user should do the same to the external content. Also, if the app needs to start with OneColumn and later open the other columns, having display:none set will reduce the browser work on initial rendering.
+    
+    With this change we have the same experience and having "display:none" to the hidden columns.
