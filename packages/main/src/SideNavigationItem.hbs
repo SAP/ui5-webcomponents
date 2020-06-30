@@ -29,10 +29,6 @@
     {{/if}}
 
 </div>
-{{#unless _collapsed}}
-    <div class="{{classessni.children}}">
-        {{#if expanded}}
-            <slot></slot>
-        {{/if}}
-    </div>
-{{/unless}}
+{{#if showChildren}}
+    <slot></slot>
+{{/if}}

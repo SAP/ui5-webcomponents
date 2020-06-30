@@ -1,3 +1,13 @@
 <ui5-responsive-popover>
-    <div>Hello popover</div>
+    <ui5-list
+    @ui5-item-click="{{fireSelectionChange}}">
+        {{#if popoverContent}}
+            {{#each popoverContent}}
+                <ui5-li
+                icon="{{this.icon}}"
+                .item="{{this.item}}"
+                >{{this.text}}</ui5-li>
+            {{/each}}
+        {{/if}}
+    </ui5-list>
 </ui5-responsive-popover>

@@ -129,6 +129,10 @@ class SideNavigationItem extends UI5Element {
 		]);
 	}
 
+	get showChildren() {
+		return this.expanded && !this._collapsed;
+	}
+
 	_onkeydown(event) {
 		if (isTabNext(event)) {
 			this.fireEvent("_forward-focus");
@@ -176,10 +180,6 @@ class SideNavigationItem extends UI5Element {
 				"ui5-sni-content": true,
 				"ui5-sni-padding": !this.icon,
 			},
-			children: {
-				"ui5-sni-children": true,
-				"ui5-sni-children-shown": this.expanded,
-			},
 		};
 	}
 
@@ -193,6 +193,16 @@ class SideNavigationItem extends UI5Element {
 
 	get hasOverflow() {
 		return this._collapsed && this.icon && this.items.length > 0;
+	}
+
+	_generatePopoverContent() {
+		return this.items.map(item => {
+			return {
+				icon: item.icon,
+				text: item.text,
+				item,
+			};
+		});
 	}
 }
 

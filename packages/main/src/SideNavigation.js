@@ -24,6 +24,11 @@ const metadata = {
 		collapsed: {
 			type: Boolean,
 		},
+
+		popoverContent: {
+			type: Object,
+			multiple: true,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.SideNavigation.prototype */ {
 		/**
@@ -123,7 +128,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	handleItemClick(event) {
-		const currentItems = this.fixedItems.concat(this.items);
+		const currentItems = Array.from(this.querySelectorAll("ui5-side-navigation-item"));
 
 		currentItems.map(item => {
 			item.selected = item === event.target;
@@ -131,13 +136,20 @@ class SideNavigation extends UI5Element {
 			return item;
 		});
 
-		this.fireEvent("selectionChange", {
-			selectedItem: event.target,
-		});
+		this.fireSelectionChange(event);
 
 		if (this.collapsed) {
 			this.openPicker(event.target);
+			this.popoverContent = event.target._generatePopoverContent();
 		}
+	}
+
+	fireSelectionChange(event) {
+		const item = (event.detail && event.detail.item && event.detail.item.item) || event.target;
+
+		this.fireEvent("selection-change", {
+			item,
+		});
 	}
 
 	getMiddleFocusHelper() {
@@ -192,6 +204,9 @@ class SideNavigation extends UI5Element {
 	}
 
 	async openPicker(opener) {
+		if (!opener.items.length) {
+			return;
+		}
 		const responsivePopover = await this.getPicker();
 
 		responsivePopover.open(opener);

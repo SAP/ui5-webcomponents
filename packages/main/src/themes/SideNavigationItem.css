@@ -6,19 +6,15 @@
     cursor: pointer;
 }
 
-:host(:hover) {
-    background: var(--sapList_Hover_Background);
-}
-
-:host([selected]) {
-    background: var( --sapList_SelectionBackgroundColor);
+:host([selected]) .ui5-sni-content {
+    background: var(--sapList_SelectionBackgroundColor);
 }
 
 :host([selected]) .ui5-sni-content {
     border-bottom: 1px solid var(--sapList_SelectionBorderColor);
 }
 
-:host([_mouse-down]) {
+:host([_mouse-down]) .ui5-sni-content {
     background: var(--sapList_Active_Background);
     color: var(--sapList_Active_TextColor);
 }
@@ -60,12 +56,17 @@
 
 .ui5-sni-content {
     width: 100%;
-    height: 2.5rem;
+    height: var(--ui5_side_navigation_item_height);
     position: relative;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     outline: none;
+    user-select: none;
+}
+
+.ui5-sni-content:hover {
+    background: var(--sapList_Hover_Background);
 }
 
 .ui5-sni-padding {
@@ -73,6 +74,7 @@
 }
 
 ui5-title {
+    text-shadow: none;
     color: inherit;
     flex-grow: 1;
     cursor: pointer;
@@ -89,14 +91,4 @@ ui5-title {
 
 .ui5-sni-icon > ui5-icon {
     color: var(--sapContent_IconColor);
-}
-
-.ui5-sni-children {
-    height: 0;
-    transition: all 0.25s ease-in;
-}
-
-.ui5-sni-children-shown {
-    height: auto;
-    transition: all 0.25s ease-in;
 }
