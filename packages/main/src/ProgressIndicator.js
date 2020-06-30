@@ -4,7 +4,14 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ProgressIndicatorTemplate from "./generated/templates/ProgressIndicatorTemplate.lit.js";
+import {
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
@@ -124,11 +131,24 @@ class ProgressIndicator extends UI5Element {
 
 		this._previousValue = 0;
 		this._transitionDuration = 0;
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
 		this._transitionDuration = Math.abs(this._previousValue - this.validatedValue) * 20;
 		this._previousValue = this.validatedValue;
+	}
+
+	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
+		};
 	}
 
 	get styles() {
@@ -167,6 +187,17 @@ class ProgressIndicator extends UI5Element {
 
 	get shouldAnimate() {
 		return getAnimationMode() !== AnimationMode.None;
+	}
+
+	get valueStateText() {
+		const percentValue = `${this.validatedValue}%`;
+		const valueText = this.valueStateTextMappings()[this.valueState];
+
+		return valueText ? `${percentValue} ${valueText}` : percentValue;
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 
