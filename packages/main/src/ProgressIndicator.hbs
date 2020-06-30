@@ -1,4 +1,12 @@
-<div class="ui5-progress-indicator-root {{classes.root}}" dir="{{effectiveDir}}">
+<div class="ui5-progress-indicator-root {{classes.root}}"
+     dir="{{effectiveDir}}"
+     role="progressbar"
+     aria-valuemin="0"
+     aria-valuenow="{{this.validatedValue}}"
+     aria-valuemax="100"
+     aria-valuetext="{{this.valueStateText}}"
+     ?aria-disabled="{{this.disabled}}"
+>
     <div class="ui5-progress-indicator-bar" style="{{styles.bar}}">
         {{#unless showValueInRemainingBar}}
            {{> valueLabel}}
