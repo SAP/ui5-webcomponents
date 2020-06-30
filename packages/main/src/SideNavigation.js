@@ -25,7 +25,7 @@ const metadata = {
 			type: Boolean,
 		},
 
-		popoverContent: {
+		_popoverContent: {
 			type: Object,
 			multiple: true,
 		},
@@ -74,6 +74,8 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
+ * <code>ui5-side-navigation</code> is used as a standard menu in applications. In order to add menu items use <code>ui5-side-navigation-items</code>.
+ *
  * For the <code>ui5-side-navigation</code>
  * <h3>ES6 Module Import</h3>
  *
@@ -84,6 +86,8 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.SideNavigation
  * @extends UI5Element
  * @tagname ui5-side-navigation
+ * @since 1.0.0-rc.8
+ * @appenddocs SideNavigationItem
  * @public
  */
 class SideNavigation extends UI5Element {
@@ -140,7 +144,7 @@ class SideNavigation extends UI5Element {
 
 		if (this.collapsed) {
 			this.openPicker(event.target);
-			this.popoverContent = event.target._generatePopoverContent();
+			this._popoverContent = event.target._generatePopoverContent();
 		}
 	}
 

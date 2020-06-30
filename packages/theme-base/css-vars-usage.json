@@ -155,6 +155,7 @@
   "--sapList_AlternatingBackground",
   "--sapList_Background",
   "--sapList_BorderColor",
+  "--sapList_BorderWidth",
   "--sapList_FooterBackground",
   "--sapList_FooterTextColor",
   "--sapList_GroupHeaderBackground",

@@ -24,24 +24,48 @@ const metadata = {
 	tag: "ui5-side-navigation-item",
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.SideNavigationItem.prototype */ {
+		/**
+		 * Defines the text of the item.
+		 *
+		 * @public
+		 * @type {String}
+		 */
 		text: {
 			type: String,
 		},
 
+		/**
+		 * Defines the icon of the item.
+		 *
+		 * @public
+		 * @type {string}
+		 */
 		icon: {
 			type: String,
 		},
 
+		/**
+		 * Defines whether the item is expandable. In order to use this property you need to pass another <code>ui5-side-navigation-item</code> as a default slot.
+		 * @public
+		 * @type {Boolean}
+		 */
 		expandable: {
 			type: Boolean,
 		},
 
+		/**
+		 * If <code>expandable</code> is set to <code>true</code>, you can control via this property whether the current item is expanded or not.
+		 *
+		 * @public
+		 * @type {Boolean}
+		 */
 		expanded: {
 			type: Boolean,
 		},
 
 		/**
-		 * Defines the current active item.
+		 * True only for the currently selected item.
+		 * @public
 		 */
 		selected: {
 			type: Boolean,
@@ -69,6 +93,13 @@ const metadata = {
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.SideNavigationItem.prototype */ {
+		/**
+		 * If you wish to nest menus, you can pass inner menu items to the default slot.
+		 *
+ 		 * @type {HTMLElement[]}
+		 * @public
+		 * @slot
+		 */
 		"default": {
 			propertyName: "items",
 			type: HTMLElement,
@@ -92,6 +123,7 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
+ * <code>ui5-side-navigation-item</code> is used within <code>ui5-side-navigation</code> only. Via the <code>ui5-side-navigation-item</code> you control the content of the side navigation.
  * For the <code>ui5-side-navigation-item</code>
  * <h3>ES6 Module Import</h3>
  *

@@ -1,8 +1,8 @@
 <ui5-responsive-popover>
     <ui5-list
     @ui5-item-click="{{fireSelectionChange}}">
-        {{#if popoverContent}}
-            {{#each popoverContent}}
+        {{#if _popoverContent}}
+            {{#each _popoverContent}}
                 <ui5-li
                 icon="{{this.icon}}"
                 .item="{{this.item}}"

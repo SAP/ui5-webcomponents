@@ -19,6 +19,7 @@ const newComponents = [
   "UploadCollection",
   "Tree",
   "RatingIndicator",
+  "SideNavigation",
 ];
 
 packages.forEach(package => {
