@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Date Time Picker - UI5 Web Components</title>
+    <title>Date Range Picker - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Date Time Picker | UI5 Web Components</title>
+<title>Date Range Picker | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Date Time Picker" />
+<meta property="og:title" content="Date Range Picker" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/DateTimePicker/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/DateTimePicker/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/DateRangePicker/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/DateRangePicker/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/DateTimePicker/","headline":"Date Time Picker","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/DateRangePicker/","headline":"Date Range Picker","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -1333,9 +1333,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/DateRangePicker/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/DateRangePicker/" class="navigation-list-link active">
                         <div class="component-name">Date Range Picker</div>
                         
                       </a>
@@ -1346,9 +1346,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/DateTimePicker/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/DateTimePicker/" class="navigation-list-link">
                         <div class="component-name">Date Time Picker</div>
                         
                           <span class="new-tag">NEW</span>
@@ -1947,161 +1947,87 @@
                 
                   <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Date Time Picker</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Date Range Picker</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <style>
-	ui5-datetime-picker,
-	ui5-input {
-		margin: 0.25rem;
-	}
-
-	ui5-label {
-		margin: 0 0.25rem;
-	}
-</style>
-
-<header class="component-heading">
-	<h2 class="control-header">DateTimePicker</h2>
+          <header>
+	<h2 class="control-header">DateRangePicker</h2>
 	<div class="component-heading-since">
-		<span>v1.0.0-rc.7</span>
+		<span>v1.0.0-rc.8</span>
 	</div>
 </header>
 
 <div class="component-package">@ui5/webcomponents</div>
 
-<div class="control-tag">&lt;ui5-datetime-picker&gt;</div>
+<div class="control-tag">&lt;ui5-daterange-picker&gt;</div>
 
 <section>
-	<h3>DateTimePicker</h3>
+	<h3>Basic DateRangePicker</h3>
 	<div class="snippet">
-		<ui5-datetime-picker style="width: 230px"></ui5-datetime-picker>
-	</div>
-
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datetime-picker&gt;&lt;/ui5-datetime-picker&gt;</span>
-	</code></pre></figure></pre>
-</section>
-
-<section>
-	<h3>DateTimePicker with format-pattern</h3>
-	<div class="snippet">
-
-		<div style="display: flex; flex-direction: column;">
-			<ui5-label>d/MM/yyyy, hh:mm aa</ui5-label>
-			<ui5-datetime-picker
-				style="width: 230px"
-				format-pattern="dd/MM/yyyy, hh:mm aa"
-				value="13/04/2020, 09:16 AM"
-			></ui5-datetime-picker>
-			<br>
-
-			<ui5-label>yyyy-MM-dd-hh:mm:ss aa</ui5-label>
-			<ui5-datetime-picker
-				style="width: 230px"
-				format-pattern="yyyy-MM-dd-hh:mm:ss aa"
-				value="2020-04-13-04:16:16 AM"
-			></ui5-datetime-picker>
-
-			<br>
-	
-			<ui5-label>d/MM/yyyy, hh:mm:ss aa</ui5-label>
-			<div style="display: flex; flex-direction: row;">
-				<ui5-datetime-picker
-					id="dt1"
-					style="width: 230px"
-					format-pattern="dd/MM/yyyy, hh:mm:ss aa"
-					value="13/04/2020, 03:16:16 AM"
-				></ui5-datetime-picker>
-				<ui5-input id="input1" style="width: 320px"></ui5-input>
-			</div>
+		<div class="daterange-picker-width">
+			<ui5-daterange-picker id="mydaterange-picker1"></ui5-daterange-picker>
 		</div>
-		<script>
-			var counter = 0;
-			input1.value = "{ value: 13/04/2020, 03:16:16 AM }";
-
-			dt1.addEventListener("change", function(event) {
-				input1.value = "{ value: " + dt1.value + " , valid: " + event.detail.valid + " }";
-			});
-		</script>
 	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-daterange-picker</span> <span class="na">id=</span><span class="s">"mydaterange-picker1"</span><span class="nt">&gt;&lt;/ui5-daterange-picker&gt;</span></code></pre></figure></pre>
+</section>
 
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datetime-picker</span>
-	<span class="na">format-pattern=</span><span class="s">"dd/MM/yyyy, hh:mm aa"</span>
-	<span class="na">value=</span><span class="s">"13/04/2020, 09:16 AM"</span>
-<span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+<section>
+	<h3>DateRangePicker with Minimum and Maximum Date - 1/1/2020 - 4/5/2020 format-pattern="dd/MM/yyyy"</h3>
+	<div class="snippet">
+		<div class="daterange-picker-width">
+			<ui5-daterange-picker id="mydaterange-picker12" min-date="1/1/2020" max-date="4/5/2020" format-pattern="dd/MM/yyyy"></ui5-daterange-picker>
+		</div>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-daterange-picker</span> <span class="na">id=</span><span class="s">"mydaterange-picker12"</span> <span class="na">min-date=</span><span class="s">"1/1/2020"</span> <span class="na">max-date=</span><span class="s">"4/5/2020"</span> <span class="na">format-pattern=</span><span class="s">"dd/MM/yyyy"</span><span class="nt">&gt;&lt;/ui5-daterange-picker&gt;</span></code></pre></figure></pre>
+</section>
 
-<span class="nt">&lt;ui5-datetime-picker</span>
-	<span class="na">format-pattern=</span><span class="s">"yyyy-MM-dd-hh:mm:ss aa"</span>
-	<span class="na">value=</span><span class="s">"2020-04-13-04:16:16 AM"</span>
-<span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+<section>
+	<h3>DateRangePicker with format-pattern='long'</h3>
+	<div class="snippet">
+		<div class="daterange-picker-width">
+			<ui5-daterange-picker format-pattern='long'></ui5-daterange-picker>
+		</div>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-daterange-picker</span> <span class="na">format-pattern=</span><span class="s">'long'</span><span class="nt">&gt;&lt;/ui5-daterange-picker&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
-<span class="nt">&lt;ui5-datetime-picker</span>
-	<span class="na">id=</span><span class="s">"myDateTimePicker"</span>
-	<span class="na">format-pattern=</span><span class="s">"dd/MM/yyyy, hh:mm:ss aa"</span>
-	<span class="na">value=</span><span class="s">"13/04/2020, 03:16:16 AM"</span>
-<span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
 
-<span class="nt">&lt;script&gt;</span>
-	<span class="nx">myDateTimePicker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{});</span>
-<span class="nt">&lt;/script&gt;</span>
+<section>
+	<h3>Disabled DateRangePicker</h3>
+	<div class="snippet">
+		<div class="daterange-picker-width">
+			<ui5-daterange-picker disabled></ui5-daterange-picker>
+		</div>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-daterange-picker</span> <span class="na">disabled</span><span class="nt">&gt;&lt;/ui5-daterange-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
 <section>
-	<h3>DateTimePicker in states</h3>
+	<h3>readonly DateRangePicker</h3>
 	<div class="snippet">
-		<ui5-datetime-picker value-state="Error"></ui5-datetime-picker>
-		<ui5-datetime-picker value-state="Warning"></ui5-datetime-picker>
-		<ui5-datetime-picker value-state="Information"></ui5-datetime-picker>
-		<ui5-datetime-picker value-state="Success"></ui5-datetime-picker>
-		<br><br>
-		<ui5-datetime-picker readonly></ui5-datetime-picker>
-		<ui5-datetime-picker disabled></ui5-datetime-picker>
+		<div class="daterange-picker-width">
+			<ui5-daterange-picker readonly></ui5-daterange-picker>
+		</div>
 	</div>
-
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Error"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
-<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Warning"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
-<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Information"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
-<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Success"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
-<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">readonly</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
-<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">disabled</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-daterange-picker</span> <span class="na">readonly</span><span class="nt">&gt;&lt;/ui5-daterange-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
+
 
 
     <div class="page-container">
       <div class="api-container">
         <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3> The <code>DateTimePicker</code> component alows users to select both date (day, month and year) and time (hours, minutes and seconds) and for the purpose it consists of input field and Date/Time picker.
+          <h3 class="comment-api-title">Overview</h3> The DateRangePicker enables the users to enter a localized date range using touch, mouse, keyboard input, or by selecting a date range in the calendar.
 
-<h3>Usage</h3>
+<h3>Usage</h3> The user can enter a date by: Using the calendar that opens in a popup or typing it in directly in the input field (not available for mobile devices). For the <code>ui5-date-range-picker</code> <h3>ES6 Module Import</h3>
 
-Use the <code>DateTimePicker</code> if you need a combined date and time input component. Don't use it if you want to use either date, or time value. In this case, use the <code>DatePicker</code> or the <code>TimePicker</code> components instead. <br><br> The user can set date/time by: <ul> <li>using the calendar and the time selectors</li> <li>typing in the input field</li> </ul>
-
-Programatically, to set date/time for the <code>DateTimePicker</code>, use the <code>value</code> property <br><br> As most of the input based components, the <code>DateTimePicker</code> supports properties, such as: <code>disabled</code>, <code>readonly</code>, <code>valueState</code> and <code>placeholder</code>.
-
-<h3>Formatting</h3>
-
-The value entered by typing into the input field must fit to the used date/time format. <br><br> Supported format options are pattern-based on Unicode LDML Date Format notation. For more information, see <ui5-link target="_blank" href="https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>. <br><br> <b>Example:</b> the following format <code>dd/MM/yyyy, hh:mm:ss aa</code> corresponds the <code>13/04/2020, 03:16:16 AM</code> value. <br> The small 'h' defines "12" hours format and the "aa" symbols - "AM/PM" time periods.
-
-<br><br> <b>Example:</b> the following format <code>dd/MM/yyyy, HH:mm:ss</code> corresponds the <code>13/04/2020, 15:16:16</code> value. <br> The capital 'H' indicates "24" hours format.
-
-<br><br> <b>Note:</b> If the <code>formatPattern</code> does NOT include time, the <code>DateTimePicker</code> will fallback to the default time format according to the locale.
-
-<br><br> <b>Note:</b> If no placeholder is set to the <code>DateTimePicker</code>, the current <code>formatPattern</code> is displayed as a placeholder. If another placeholder is needed, it must be set or in case no placeholder is needed - it can be set to an empty string.
-
-<br><br> <b>Note:</b> If the user input does NOT match the <code>formatPattern</code>, the <code>DateTimePicker</code> makes an attempt to parse it based on the locale settings.
-
-<h3>Responsive behavior</h3>
-
-The <code>DateTimePicker</code> is responsive and fully adapts to all devices. For larger screens, such as tablet or desktop, it is displayed as a popover, while on phone devices, it is displayed full screen.
-
-<h3>ES6 Module Import</h3>
-
-<code>import @ui5/webcomponents/dist/DateTimePicker.js";</code>
+<code>import @ui5/webcomponents/dist/DateRangePicker.js";</code>
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -2117,6 +2043,43 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          delimiter
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;-&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the symbol which separates the dates.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          firstDateValue
+                            (readonly)
+                            <br>
+                            <code>first-date-value</code>
+                        </div>
+                        <div class="cell api-table-content-cell">Date</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Currently selected first date represented as JavaScript Date instance.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          lastDateValue
+                            (readonly)
+                            <br>
+                            <code>last-date-value</code>
+                        </div>
+                        <div class="cell api-table-content-cell">Date</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Currently selected last date represented as JavaScript Date instance.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           dateValue
                             (readonly)
                             <br>
@@ -2128,7 +2091,7 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
                             Currently selected date represented as JavaScript Date instance.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           disabled
                             <br>
@@ -2139,7 +2102,7 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
                             Determines whether the <code>ui5-date-picker</code> is displayed as disabled.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           formatPattern
                             <br>
@@ -2151,7 +2114,7 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
                             Determines the format, displayed in the input field.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           maxDate
                             <br>
@@ -2164,7 +2127,7 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           minDate
                             <br>
@@ -2177,7 +2140,7 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           name
                             <br>
@@ -2192,7 +2155,7 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
             <br><br> <b>Note:</b> When set, a native <code>input</code> HTML element will be created inside the <code>ui5-date-picker</code> so that it can be submitted as part of an HTML form. Do not use this property unless you need to submit a form.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           placeholder
                             <br>
@@ -2205,7 +2168,7 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
             <br><br> <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder. Passing an empty string as the value of this property will make the <code>ui5-date-picker</code> appear empty - without placeholder or format pattern.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           primaryCalendarType
                             <br>
@@ -2217,7 +2180,7 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
                             Determines the calendar type. The input value is formated according to the calendar type and the picker shows the months and years from the specified calendar. <br><br> Available options are: <ul> <li><code>Gregorian</code></li> <li><code>Islamic</code></li> <li><code>Japanese</code></li> <li><code>Buddhist</code></li> <li><code>Persian</code></li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           readonly
                             <br>
@@ -2228,7 +2191,7 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
                             Determines whether the <code>ui5-date-picker</code> is displayed as read-only.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           value
                             <br>
@@ -2239,7 +2202,7 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
                             Defines a formatted date value.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           valueState
                             <br>
@@ -2303,35 +2266,6 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
             
                   </div>
             
-                  <h3 class="comment-api-title space-top">Methods</h3>
-                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">closePicker</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Closes the picker.</div>
-                      </div>
-            
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">isValid</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Checks if a value is valid against the current date/time format.</div>
-                      </div>
-            
-                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">value</div>
-                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> string <br/> <strong class="api-table-event-description bold">description:</strong> A value to be tested against the current date/time format</div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">openPicker</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Opens the picker.</div>
-                      </div>
-            
-                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">options</div>
-                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> object <br/> <strong class="api-table-event-description bold">description:</strong> A JSON object with additional configuration.<br> <code>{ focusInput: true }</code> By default, the focus goes in the picker after opening it. Specify this option to focus the input field.</div>
-                  </div>
             
           </section>
         </section>
@@ -2344,7 +2278,6 @@ The <code>DateTimePicker</code> is responsive and fully adapts to all devices. F
       </div>
       <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
     </footer>
-
 
 <div class="settings" id="settings-button">
     <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"

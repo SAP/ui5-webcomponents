@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>DateRangePicker test page</title>
+
+	<script>
+		delete Document.prototype.adoptedStyleSheets;
+	</script>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"rtl": false,
+			"formatSettings": {
+                "firstDayOfWeek": 0
+            }
+		}
+	</script>
+
+	<style>
+		.sapUiTheme-sap_fiori3 body {
+			background: #f7f7f7;
+		}
+	</style>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+	<div style='width:500px;'>
+		<div>
+			<label id='labelChange'>0</label>
+		</div>
+		<ui5-daterange-picker id="daterange-picker1"></ui5-daterange-picker>
+		<h3>daterange-picker with delimiter @</h3>
+		<ui5-daterange-picker id="daterange-picker2" delimiter="@"></ui5-daterange-picker>
+		<h3>daterange-picker with format pattern dd/MM/yyyy</h3>
+		<ui5-daterange-picker id="daterange-picker3" format-pattern="dd/MM/yyyy"></ui5-daterange-picker>
+		<h3>daterange-picker with minDate 01/09/2019 and maxDate 01/11/2019</h3>
+		<ui5-daterange-picker id="daterange-picker4" format-pattern="dd/MM/yyyy" min-date="01/09/2019" max-date="01/11/2019"></ui5-daterange-picker>
+		<section class="ui5-content-density-compact">
+			<h3>daterange-picker in Compact</h3>
+			<div>
+				<ui5-daterange-picker delimiter="@"></ui5-daterange-picker>
+			</div>
+		</section>
+	</div>
+	<script>
+		document.getElementById('daterange-picker1').addEventListener('ui5-change', function(e) {
+			document.getElementById("labelChange").innerHTML = Number(document.getElementById("labelChange").innerHTML) + 1;
+		});
+	</script>
+</body>
+</html>

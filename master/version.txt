@@ -1,5 +1,5 @@
-commit 77e8886ad08c26bc4c04b6b9c41d6a5f117f78e2
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jun 30 15:42:50 2020 +0300
+commit 4c1128657477a1ec4a8645abec9361dd33287882
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Tue Jun 30 15:46:56 2020 +0300
 
-    chore(ui5-dialog): Show how to build a semantic dialog (#1885)
+    feat(ui5-daterange-picker): initial implementation (#1785)
