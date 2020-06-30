@@ -45,10 +45,7 @@
 }
 
 .ui5-fcl-column--hidden {
-	height: 0;
-	width: 0;
-	position: absolute;
-	visibility: hidden;
+	display: none;
 }
 
 /* arrow */
