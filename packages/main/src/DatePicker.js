@@ -399,7 +399,7 @@ class DatePicker extends UI5Element {
 			this.maxDate = null;
 			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
-		if (this.isValid(this.value) && this.isInValidRange(this._getTimeStampFromString(this.value))) {
+		if (this._checkValueValidity(this.value)) {
 			this._changeCalendarSelection();
 		} else {
 			this._calendar.selectedDates = [];
@@ -445,10 +445,9 @@ class DatePicker extends UI5Element {
 	_handleInputChange() {
 		let nextValue = this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
-		const isValid = emptyValue || this.isValid(nextValue);
-		const isInValidRange = this.isInValidRange(this._getTimeStampFromString(nextValue));
+		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
-		if (isValid && isInValidRange) {
+		if (isValid) {
 			nextValue = this.normalizeValue(nextValue);
 			this.valueState = ValueState.None;
 		} else {
@@ -465,10 +464,14 @@ class DatePicker extends UI5Element {
 	_handleInputLiveChange() {
 		const nextValue = this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
-		const isValid = emptyValue || (this.isValid(nextValue) && this.isInValidRange(this._getTimeStampFromString(nextValue)));
+		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
 		this.value = nextValue;
 		this.fireEvent("input", { value: nextValue, valid: isValid });
+	}
+
+	_checkValueValidity(value) {
+		return this.isValid(value) && this.isInValidRange(this._getTimeStampFromString(value));
 	}
 
 	_click(event) {

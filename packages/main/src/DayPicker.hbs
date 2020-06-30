@@ -31,7 +31,7 @@
 		<div id="{{_id}}-days" class="ui5-dp-items-container" tabindex="-1">
 			{{#each _weeks}}
 				{{#if this.length}}
-					<div style="display: flex;">
+					<div style="display: flex;" @mouseover="{{../_onitemmouseover}}" @keydown="{{../_onitemkeydown}}">
 						{{#each this}}
 							<div
 								id="{{this.id}}"
