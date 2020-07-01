@@ -1,4 +1,11 @@
-const findNodeOwner = node => {
+/**
+ *  @param node - DOM Node
+ *  @param {Object} settings - Defines the following settings: isInLightDOM, startFromParent
+ */
+const findNodeOwner = (node, settings = {
+	isInLightDOM: false,
+	startFromParent: false,
+}) => {
 	if (!(node instanceof HTMLElement)) {
 		throw new Error("Argument node should be of type HTMLElement");
 	}
@@ -6,6 +13,10 @@ const findNodeOwner = node => {
 	const ownerTypes = [HTMLHtmlElement, HTMLIFrameElement];
 	let currentShadowRootFlag = true;
 	let currentCustomElementFlag = true;
+
+	if (settings.startFromParent) {
+		node = node.parentNode || node.host;
+	}
 
 	while (node) {
 		if (node.toString() === "[object ShadowRoot]") {
@@ -18,7 +29,7 @@ const findNodeOwner = node => {
 				return node;
 			}
 		} else if (node.tagName && node.tagName.indexOf("-") > -1) {
-			if (currentCustomElementFlag) {
+			if (currentCustomElementFlag && !settings.isInLightDOM) {
 				currentCustomElementFlag = false;
 			} else {
 				return node;

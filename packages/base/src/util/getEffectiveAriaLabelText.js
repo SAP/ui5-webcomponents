@@ -1,6 +1,10 @@
 import findNodeOwner from "./findNodeOwner.js";
 
-const getEffectiveAriaLabelText = el => {
+/**
+ *  @param element - DOM Node
+ *  @param {Object} settings - Defines the following settings: isInLightDOM, startFromParent
+ */
+const getEffectiveAriaLabelText = (el, settings) => {
 	if (!el.ariaLabelledby) {
 		if (el.ariaLabel) {
 			return el.ariaLabel;
@@ -10,7 +14,7 @@ const getEffectiveAriaLabelText = el => {
 	}
 
 	const ids = el.ariaLabelledby.split(" ");
-	const owner = findNodeOwner(el);
+	const owner = findNodeOwner(el, settings);
 	let result = "";
 
 	ids.forEach((elementId, index) => {
