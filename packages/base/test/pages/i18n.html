@@ -27,8 +27,9 @@
 			const bundle = getI18nBundle("myApp");
 
 			const pleaseWait = bundle.getText({key: "PLEASE_WAIT", defaultText: "Please wait (fallback)"});
-
+			const pleaseWait2 = bundle.getText("PLEASE_WAIT");
 			console.log("Please wait in the current language is: ", pleaseWait);
+			console.log("Please wait in the current language is: ", pleaseWait2);
 		};
 
 		demo();
