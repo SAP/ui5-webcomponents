@@ -176,7 +176,7 @@ class TreeListItem extends ListItem {
 	get _accInfo() {
 		return {
 			role: "treeitem",
-			ariaExpanded: this.expanded,
+			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
 		};
 	}
