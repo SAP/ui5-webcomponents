@@ -74,7 +74,7 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		let parsedCode = "";
 
 		if (isNodeValue && !mustache.escaped) {
-			parsedCode = `\${ifDefined(unsafeHTML(${path}))}`;
+			parsedCode = `\${unsafeHTML(${path})}`;
 		} else if (hasCalculatingClasses) {
 			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
