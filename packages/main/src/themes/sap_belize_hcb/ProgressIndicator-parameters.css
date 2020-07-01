@@ -7,4 +7,5 @@
     --_ui5_progress-indicator_value_state_success: var(--sapHighlightColor);
     --_ui5_progress-indicator_value_state_information: var(--sapHighlightColor);
     --_ui5_progress-indicator_bar_border_max: var(--_ui5_progress-indicator_border);
+    --_ui5_progress-indicator_icon_visibility: block;
 }

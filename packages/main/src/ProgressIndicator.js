@@ -33,7 +33,7 @@ const metadata = {
 			type: Boolean,
 		},
 		/**
-		 * Defines whether <code>ui5-progress-indicator</code> value to be shown.
+		 * Defines whether <code>ui5-progress-indicator</code> value is shown.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -151,6 +151,15 @@ class ProgressIndicator extends UI5Element {
 		};
 	}
 
+	valueStateIconMappings() {
+		return {
+			"Error": "status-negative",
+			"Warning": "status-critical",
+			"Success": "status-positive",
+			"Information": "hint",
+		};
+	}
+
 	get styles() {
 		return {
 			bar: {
@@ -194,6 +203,14 @@ class ProgressIndicator extends UI5Element {
 		const valueText = this.valueStateTextMappings()[this.valueState];
 
 		return valueText ? `${percentValue} ${valueText}` : percentValue;
+	}
+
+	get showIcon() {
+		return this.valueState !== ValueState.None
+	}
+
+	get valueStateIcon() {
+		return this.valueStateIconMappings()[this.valueState];
 	}
 
 	static async onDefine() {

@@ -8,4 +8,5 @@
     --_ui5_progress-indicator_bar_color: var(--sapContent_ContrastTextColor);
     --_ui5_progress-indicator_border: 0.0625rem solid var(--sapField_BorderColor);
     --_ui5_progress-indicator_bar_border_max: none;
+    --_ui5_progress-indicator_icon_visibility: none;
 }

@@ -1,13 +1,13 @@
 const assert = require("chai").assert;
 
-describe("Attributes propagation", () => {
+describe("Properties", () => {
 	browser.url("http://localhost:8080/test-resources/pages/ProgressIndicator.html");
 
-	it("Header text attribute is propagated", () => {
+	it("Value validation", () => {
 		const progressIndicator = $("#test-progress-indicator");
-		const negativeButton = $("sixthBtn");
+		const negativeButton = $("#sixthBtn");
 		const validButton = $("#thirdBtn");
-		const largerButton = $("seventhBtn");
+		const largerButton = $("#seventhBtn");
 
         validButton.click()
         assert.ok(progressIndicator.validateValue, 50, "Value visual representation is validate correctly.");
