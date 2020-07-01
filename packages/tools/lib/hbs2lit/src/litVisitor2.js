@@ -5,6 +5,9 @@ const Visitor = Handlebars.Visitor;
 // skip ifDefined for event handlers and boolean attrs
 let skipIfDefined = false;
 
+// when true => an HTML node value, when false => an attribute value
+let isNodeValue = false;
+
 // matches event handlers @click= and boolean attrs ?disabled=
 const dynamicAttributeRgx = /\s(\?|@)([a-zA-Z|-]+)="?\s*$/;
 
@@ -53,6 +56,7 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 
 	const contentStatement = content.original;
 	skipIfDefined = !!dynamicAttributeRgx.exec(contentStatement);
+	isNodeValue = contentStatement.endsWith(">");
 
 	this.blocks[this.currentKey()] += contentStatement;
 };
@@ -69,18 +73,16 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 
 		let parsedCode = "";
 
-		if (hasCalculatingClasses) {
+		if (isNodeValue && !mustache.escaped) {
+			parsedCode = `\${ifDefined(unsafeHTML(${path}))}`;
+		} else if (hasCalculatingClasses) {
 			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
 			parsedCode = `\${styleMap(${path})}`;
 		} else if (skipIfDefined){
 			parsedCode = `\${${path}}`;
 		} else {
-			if (!mustache.escaped) {
-				parsedCode = `\${ifDefined(unsafeHTML(${path}))}`;
-			} else {
-				parsedCode = `\${ifDefined(${path})}`;
-			}
+			parsedCode = `\${ifDefined(${path})}`;
 		}
 
 		this.blocks[this.currentKey()] += parsedCode;
