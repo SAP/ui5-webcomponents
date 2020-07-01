@@ -180,3 +180,18 @@ describe("Popover general interaction", () => {
 		assert.ok(ff.getProperty("focused"), "The first focusable element is focused.");
 	});
 });
+
+describe("Acc", () => {
+	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+
+	it("tests aria-labelledby and aria-label", () => {
+		const popover = browser.$("ui5-popover");
+		popover.removeAttribute("aria-label");
+		assert.ok(popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby").length, "Popover has aria-labelledby.");
+		assert.ok(!popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover does not have aria-label.");
+
+		popover.setAttribute("aria-label", "text");
+		assert.ok(!popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover does not have aria-labelledby.");
+		assert.ok(popover.shadow$(".ui5-popup-root").getAttribute("aria-label").length, "Popover has aria-label.");
+	});
+});
