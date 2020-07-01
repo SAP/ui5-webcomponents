@@ -3,18 +3,33 @@ import formatMessage from "./util/formatMessage.js";
 
 const I18nBundleInstances = new Map();
 
+/**
+ * @class
+ * @public
+ */
 class I18nBundle {
 	constructor(packageName) {
 		this.packageName = packageName;
 	}
 
+	/**
+	 * Returns a text in the currently loaded language
+	 *
+	 * @param {Object|String} textObj key/defaultText pair or just the key
+	 * @param params Values for the placeholders
+	 * @returns {*}
+	 */
 	getText(textObj, ...params) {
-		if (!textObj || !textObj.key || !textObj.defaultText) {
+		if (typeof textObj === "string") {
+			textObj = { key: textObj, defaultText: "MISSING TEXT" };
+		}
+
+		if (!textObj || !textObj.key) {
 			return "";
 		}
 
 		const bundle = getI18nBundleData(this.packageName);
-		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : textObj.defaultText;
+		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : (textObj.defaultText || "");
 
 		return formatMessage(messageText, params);
 	}
