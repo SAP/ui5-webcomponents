@@ -1,5 +1,5 @@
-commit 42a662794bb390fa2c62a706e1628e9c4223624d
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Tue Jun 30 23:31:32 2020 -0700
+commit 8f260f89dee561a08d6f06e218e8b914ed6c3108
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Jul 1 10:23:47 2020 +0300
 
-    chore: Translation Delivery (#1893)
+    fix(ui5-card): remove header outline (#1891)
