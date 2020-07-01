@@ -206,7 +206,7 @@ class ProgressIndicator extends UI5Element {
 	}
 
 	get showIcon() {
-		return this.valueState !== ValueState.None
+		return this.valueState !== ValueState.None;
 	}
 
 	get valueStateIcon() {
