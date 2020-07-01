@@ -65,8 +65,7 @@
 
 .ui5-button-icon {
 	font-size: var(--_ui5_button_icon_font_size);
-	height: 0;
-	top: -.5rem;
+	height: 100%;
 	position: relative;
 	color: inherit;
 	flex-shrink: 0;

@@ -150,9 +150,11 @@ class SideNavigation extends UI5Element {
 
 	fireSelectionChange(event) {
 		const item = (event.detail && event.detail.item && event.detail.item.item) || event.target;
+		const isArrowClicked = event.detail && event.detail.isIconClicked;
 
 		this.fireEvent("selection-change", {
 			item,
+			isArrowClicked,
 		});
 	}
 

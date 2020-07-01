@@ -8,9 +8,7 @@
     @keydown="{{_onkeydown}}"
 >
     {{#if icon}}
-        <div class="ui5-sni-icon">
-            <ui5-icon name="{{icon}}"></ui5-icon>
-        </div>
+        <ui5-icon name="{{icon}}"></ui5-icon>
     {{/if}}
 
     {{#if hasOverflow}}
@@ -20,12 +18,7 @@
     <ui5-title level="H5">{{text}}</ui5-title>
 
     {{#if expandable}}
-        <div
-        class="ui5-sni-icon ui5-sni-arrow"
-        @click="{{toggleExpanded}}"
-        >
-            <ui5-icon name="{{activeIcon}}"></ui5-icon>
-        </div>
+        <ui5-icon name="{{activeIcon}}" id="ui5-sni-expand-icon"></ui5-icon>
     {{/if}}
 
 </div>

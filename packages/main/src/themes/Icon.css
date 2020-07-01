@@ -28,8 +28,17 @@
 }
 
 .ui5-icon-root {
+    width: 1rem;
 	display:flex;
 	transform: scale(1, -1);
 	transform-origin: center;
 	outline: none;
+}
+
+.ui5-icon-svg-wrapper {
+	width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

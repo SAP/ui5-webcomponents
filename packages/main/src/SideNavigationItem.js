@@ -190,8 +190,16 @@ class SideNavigationItem extends UI5Element {
 	}
 
 	_onmouseup(event) {
+		const isIconClicked = event.target.id === "ui5-sni-expand-icon";
 		this._mouseDown = false;
-		this.fireEvent("_click");
+
+		if (isIconClicked) {
+			this.toggleExpanded();
+		}
+
+		this.fireEvent("_click", {
+			isIconClicked,
+		});
 	}
 
 	_onfocusin(event) {

@@ -19,7 +19,7 @@
     color: var(--sapList_Active_TextColor);
 }
 
-:host([_mouse-down]) .ui5-sni-icon > ui5-icon {
+:host([_mouse-down]) ui5-icon {
     color: inherit;
 }
 
@@ -80,15 +80,8 @@ ui5-title {
     cursor: pointer;
 }
 
-.ui5-sni-icon {
-    width: 2.5rem;
+ui5-icon {
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: inherit;
-}
-
-.ui5-sni-icon > ui5-icon {
+    padding: 0 1.5rem;
     color: var(--sapContent_IconColor);
 }
