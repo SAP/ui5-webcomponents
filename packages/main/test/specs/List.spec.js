@@ -234,10 +234,33 @@ describe("List Tests", () => {
 	it("detailPress event is fired", () => {
 		const detailCounterResult = $("#detailPressCounter");
 		const firstItem = $("#detailListItem");
-		const detailButton = firstItem.shadow$(".ui5-li-detailbtn")
+		const detailButton = firstItem.shadow$(".ui5-li-detailbtn");
 
 		detailButton.click();
 
 		assert.strictEqual(detailCounterResult.getProperty("innerHTML"), "1", "detailClick event has been fired once");
+	});
+
+	it("tests aria-labelledby", () => {
+		const listWithInternalHeader = $("#listWithInternalHeader");
+		const listWithCustomHeader = $("#listWithCustomHeader");
+		const ulInternalHeader = listWithInternalHeader.shadow$(".ui5-list-ul");
+		const ulCustomHeader = listWithCustomHeader.shadow$(".ui5-list-ul");
+		
+		// assert: List with internal header
+		const listWithInternalHeaderId = listWithInternalHeader.getProperty("_id");
+		assert.strictEqual(ulInternalHeader.getAttribute("aria-label"),
+			null, "aria-label is not present");
+
+		assert.strictEqual(ulInternalHeader.getAttribute("aria-labelledby"),
+			`${listWithInternalHeaderId}-header`, "aria-labelledby is correct");
+
+		// assert: List with custom header
+		const EXPECTED_ARIA_LABEL_TXT = "Test aria";
+
+		assert.strictEqual(ulCustomHeader.getAttribute("aria-label"),
+			EXPECTED_ARIA_LABEL_TXT, "aria-label is correct");
+		assert.strictEqual(ulCustomHeader.getAttribute("aria-labelledby"),
+			null, "aria-labelledby is not present");
 	});
 });
