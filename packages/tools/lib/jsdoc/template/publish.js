@@ -2651,8 +2651,8 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 
 	attrib("name", symbol.longname);
 	attrib("basename", symbol.name);
-	if (symbol.customtag) {
-		attrib("customTag", symbol.customtag);
+	if (symbol.tagname) {
+		attrib("tagname", symbol.tagname);
 	}
 	if (symbol.appenddocs) {
 		attrib("appenddocs", symbol.appenddocs);
