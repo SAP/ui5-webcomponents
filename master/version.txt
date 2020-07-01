@@ -1,5 +1,5 @@
-commit 8f260f89dee561a08d6f06e218e8b914ed6c3108
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Jul 1 10:23:47 2020 +0300
+commit 31f4b1ac82245d20474da7053be773f80bd66874
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jul 1 13:37:33 2020 +0300
 
-    fix(ui5-card): remove header outline (#1891)
+    chore: add tagname to api.json (#1895)
