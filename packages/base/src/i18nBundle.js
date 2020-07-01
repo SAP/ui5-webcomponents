@@ -1,4 +1,4 @@
-import { fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
+import { registerI18nBundle, fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
 import formatMessage from "./util/formatMessage.js";
 
 const I18nBundleInstances = new Map();
@@ -30,4 +30,8 @@ const getI18nBundle = packageName => {
 	return i18nBundle;
 };
 
-export { fetchI18nBundle, getI18nBundle };
+export {
+	registerI18nBundle,
+	fetchI18nBundle,
+	getI18nBundle,
+};

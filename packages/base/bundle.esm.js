@@ -24,6 +24,10 @@ window.isIE = isIE; // attached to the window object for testing purposes
 // used for tests - to register a custom theme
 window.registerThemeProperties = registerThemeProperties;
 
+// i18n
+import "./dist/features/PropertiesFormatSupport.js";
+import { registerI18nBundle, fetchI18nBundle, getI18nBundle } from "./dist/i18nBundle.js";
+
 // Note: keep in sync with rollup.config value for IIFE
 import { getAnimationMode } from "./dist/config/AnimationMode.js";
 import { getLanguage } from "./dist/config/Language.js";
@@ -46,4 +50,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		getFirstDayOfWeek,
 	},
 	getIconNames,
+	registerI18nBundle,
+	fetchI18nBundle,
+	getI18nBundle,
 };
