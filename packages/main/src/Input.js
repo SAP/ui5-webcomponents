@@ -272,6 +272,8 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the aria-label attribute for the input
+		 *
 		 * @type {String}
 		 * @since 1.0.0-rc.8
 		 * @private
