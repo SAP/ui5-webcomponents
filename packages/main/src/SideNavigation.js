@@ -1,6 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
+import List from "./List.js";
+import StandardListItem from "./StandardListItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
 
@@ -18,7 +20,7 @@ const metadata = {
 		 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
 		 *
 		 * @public
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 */
 		collapsed: {
@@ -35,6 +37,7 @@ const metadata = {
 		 * Defines the items in the <code>ui5-side-navigation</code>.
 		 *
 		 * @public
+		 * @slot
 		 */
 		"default": {
 			propertyName: "items",
@@ -45,6 +48,7 @@ const metadata = {
 		 * Defines the fixed items in the bottom of the <code>ui5-side-navigation</code>.
 		 *
 		 * @public
+		 * @slot
 		 */
 		fixedItems: {
 			type: HTMLElement,
@@ -114,30 +118,26 @@ class SideNavigation extends UI5Element {
 	static async onDefine() {
 		await Promise.all([
 			ResponsivePopover.define(),
+			List.define(),
+			StandardListItem.define(),
 		]);
 	}
 
 	onBeforeRendering() {
 		this.items.forEach(item => {
 			item._collapsed = this.collapsed;
-
-			return item;
 		});
 
 		this.fixedItems.forEach(item => {
 			item._collapsed = this.collapsed;
-
-			return item;
 		});
 	}
 
 	handleItemClick(event) {
 		const currentItems = Array.from(this.querySelectorAll("ui5-side-navigation-item"));
 
-		currentItems.map(item => {
+		currentItems.forEach(item => {
 			item.selected = item === event.target;
-
-			return item;
 		});
 
 		this.fireSelectionChange(event);

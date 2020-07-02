@@ -1,20 +1,28 @@
 :host(:not([hidden])) {
     display: inline-block;
-    width: 250px;
+    width: 15rem;
     height: 100%;
     border-right: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
+    transition: width .25s;
 }
 
 :host([collapsed]) {
-    width: 2.5rem;
+    width: 3rem;
 }
 
-::slotted(ui5-side-navigation-item:not([selected])) {
-    border-bottom: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
+.ui5-sn-bottom-content-border {
+    width: 100%;
+    padding: 0 0.5rem;
+    margin: 0.25rem 0;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
-.ui5-sn-bottom-content {
-    border-top: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
+.ui5-sn-bottom-content-border > span {
+    width: 90%;
+    height: .125rem;
+    background: var(--sapList_GroupHeaderBorderColor);
 }
 
 .ui5-sn-root {
@@ -22,9 +30,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background: var( --sapList_Background);
 }
 
 .ui5-sn-flex-wrapper {
+    width: 100%;
     display: flex;
     flex-direction: column;
 }

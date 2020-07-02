@@ -2,7 +2,7 @@
     display: inline-block;
     width: 100%;
     height: 100%;
-    background: var( --sapList_Background);
+    background: var(--sapList_Background);
     cursor: pointer;
 }
 
@@ -14,6 +14,10 @@
     border-bottom: 1px solid var(--sapList_SelectionBorderColor);
 }
 
+:host(:not([selected])) {
+    border-bottom: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
+}
+
 :host([_mouse-down]) .ui5-sni-content {
     background: var(--sapList_Active_Background);
     color: var(--sapList_Active_TextColor);
@@ -21,6 +25,19 @@
 
 :host([_mouse-down]) ui5-icon {
     color: inherit;
+}
+
+:host([_collapsed]) ui5-icon.ui5-sni-expand-icon {
+    display: none;
+}
+
+:host([_collapsed]) ui5-icon:not(.ui5-sni-expand-icon) {
+    width: 100%;
+    padding: 0;
+}
+
+:host([_collapsed]) {
+    border-bottom: none;
 }
 
 :host([_focused]) .ui5-sni-content:after {
@@ -40,7 +57,7 @@
 }
 
 :host([_collapsed]) {
-    width: 2.5rem;
+    width: 100%;
 }
 
 :host([_collapsed]) .ui5-sni-bottom-arrow::after {

@@ -28,7 +28,8 @@ const metadata = {
 		 * Defines the text of the item.
 		 *
 		 * @public
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 */
 		text: {
 			type: String,
@@ -39,25 +40,31 @@ const metadata = {
 		 *
 		 * @public
 		 * @type {string}
+		 * @defaultvalue false
 		 */
 		icon: {
 			type: String,
 		},
 
 		/**
+		 *
 		 * Defines whether the item is expandable. In order to use this property you need to pass another <code>ui5-side-navigation-item</code> as a default slot.
 		 * @public
-		 * @type {Boolean}
+		 * @type {boolean}
 		 */
 		expandable: {
 			type: Boolean,
 		},
 
 		/**
-		 * If <code>expandable</code> is set to <code>true</code>, you can control via this property whether the current item is expanded or not.
+		 * Defines if the item is expanded
+		 * <br><br>
+		 * <b>Note:</b>
+		 * If <code>expandable</code> property is set to <code>true</code>, you can control via this property whether the current item is expanded or not.
 		 *
 		 * @public
-		 * @type {Boolean}
+		 * @type {boolean}
+		 * @defaultvalue false
 		 */
 		expanded: {
 			type: Boolean,
@@ -66,6 +73,8 @@ const metadata = {
 		/**
 		 * True only for the currently selected item.
 		 * @public
+		 * @type {boolean}
+		 * @defaultvalue false
 		 */
 		selected: {
 			type: Boolean,
@@ -214,7 +223,7 @@ class SideNavigationItem extends UI5Element {
 		this.expanded = !this.expanded;
 	}
 
-	get classessni() {
+	get classes() {
 		return {
 			root: {
 				"ui5-sni-content": true,
