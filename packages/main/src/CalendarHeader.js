@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
 import Button from "./Button.js";
@@ -41,10 +40,10 @@ const metadata = {
 		},
 	},
 	events: {
-		pressPrevious: {},
-		pressNext: {},
-		btn1Press: {},
-		btn2Press: {},
+		"previous-press": {},
+		"next-press": {},
+		"show-month-press": {},
+		"show-year-press": {},
 	},
 };
 
@@ -96,19 +95,19 @@ class CalendarHeader extends UI5Element {
 	}
 
 	_handlePrevPress(event) {
-		this.fireEvent("pressPrevious", event);
+		this.fireEvent("previous-press", event);
 	}
 
 	_handleNextPress(event) {
-		this.fireEvent("pressNext", event);
+		this.fireEvent("next-press", event);
 	}
 
 	_showMonthPicker(event) {
-		this.fireEvent("btn1Press", event);
+		this.fireEvent("show-month-press", event);
 	}
 
 	_showYearPicker(event) {
-		this.fireEvent("btn2Press", event);
+		this.fireEvent("show-year-press", event);
 	}
 
 	_onkeydown(event) {
@@ -119,10 +118,6 @@ class CalendarHeader extends UI5Element {
 				this[`_show${showPickerButton}Picker`]();
 			}
 		}
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async onDefine() {

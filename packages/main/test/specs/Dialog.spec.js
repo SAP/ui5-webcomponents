@@ -9,7 +9,8 @@ describe("Dialog general interaction", () => {
 
 		btnOpenDialog.click();
 
-		const dialog = browser.$("ui5-dialog").shadow$(".ui5-dialog-root");
+		const dialog = browser.$("#dialog");
+
 		assert.ok(dialog.isDisplayedInViewport(), "Dialog is opened.");
 
 		btnCloseDialog.click();
@@ -25,10 +26,25 @@ describe("Dialog general interaction", () => {
 		btnOpenDialog.click();
 		select.click();
 
-		const dialogZIndex = parseInt(browser.$("ui5-dialog").shadow$(".ui5-dialog-root-parent").getCSSProperty('z-index').value);
-		const popoverZIndex = parseInt(popover.getCSSProperty('z-index').value);
+		const dialogZIndex = parseInt(browser.$("#dialog").getCSSProperty('z-index').value);
+		const popoverZIndex = parseInt(browser.$(`.${select.getProperty("_id")}`).shadow$("ui5-responsive-popover").getCSSProperty('z-index').value);
 
 		assert.ok(popoverZIndex > dialogZIndex, "Popover is above dialog.");
 	});
+});
 
+
+describe("Acc", () => {
+	browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+
+	it("tests aria-labelledby and aria-label", () => {
+		const dialog = browser.$("ui5-dialog");
+		dialog.removeAttribute("aria-label");
+		assert.ok(dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby").length, "dialog has aria-labelledby.");
+		assert.ok(!dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), "dialog does not have aria-label.");
+
+		dialog.setAttribute("aria-label", "text");
+		assert.ok(!dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "dialog does not have aria-labelledby.");
+		assert.ok(dialog.shadow$(".ui5-popup-root").getAttribute("aria-label").length, "dialog has aria-label.");
+	});
 });

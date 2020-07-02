@@ -1,20 +1,20 @@
 {{>include "./Popup.hbs"}}
 
-<span class="ui5-popup-frame" @focusin="{{_onfocusin}}">
-	<span id="{{_id}}-firstfe" tabindex="0"></span>
-	<div style="{{zindex}}" class="ui5-dialog-root-parent {{classes.dialogParent}}">
-		<section tabindex="-1" aria-labelledby="{{headerAriaLabelledBy}}" role="dialog" aria-modal="true" class="ui5-popup-root ui5-dialog-root {{classes.dialogParent}}">
-			{{> header}}
-			<section class="ui5-dialog-section">
-				<div class="ui5-popup-content">
-					<div class="ui5-popup-scroll">
-						<slot></slot>
-					</div>
-				</div>
-			</section>
-			{{> footer}}
-		</section>
-	</div>
-	<span id="{{_id}}-lastfe" tabindex="0"></span>
-	<div tabindex="0" id="{{_id}}-blocklayer" style="{{blockLayer}}" class="{{classes.blockLayer}}"></div>
-</span>
+{{#*inline "beforeContent"}}
+	<header class="ui5-popup-header-root" id="ui5-popup-header">
+		{{#if header.length }}
+			<slot name="header"></slot>
+		{{else}}
+			<h2 class="ui5-popup-header-text">{{headerText}}</h2>
+		{{/if}}
+	</header>
+{{/inline}}
+
+{{#*inline "afterContent"}}
+	{{#if footer.length }}
+		<footer class="ui5-popup-footer-root">
+			<slot name="footer"></slot>
+		</footer>
+	{{/if}}
+{{/inline}}
+

@@ -17,6 +17,9 @@
 	border: 1px solid var(--sapButton_BorderColor);
 	color: var(--sapButton_TextColor);
 	box-sizing: border-box;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 :host([disabled]) {
@@ -93,8 +96,13 @@
 	text-overflow: inherit;
 }
 
-:host([has-icon]) .ui5-button-text {
+:host([has-icon]:not([icon-end])) .ui5-button-text {
+	max-width: calc(100% - 1rem);
 	margin-left: var(--_ui5_button_base_icon_margin);
+}
+
+:host([has-icon][icon-end]) .ui5-button-text {
+	margin-left: 0;
 }
 
 :host([disabled]) {
@@ -279,6 +287,6 @@ ui5-button[design="Emphasized"][focused] .ui5-button-root::after {
 }
 
 ui5-button ui5-icon.ui5-button-icon {
-	height: 1rem;
+	height: var(--_ui5_button_icon_font_size); /* Center vertically all icons*/
 	top: 0;
 }

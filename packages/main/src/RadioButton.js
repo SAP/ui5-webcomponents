@@ -1,5 +1,4 @@
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -30,6 +29,7 @@ import radioButtonCss from "./generated/themes/RadioButton.css.js";
  */
 const metadata = {
 	tag: "ui5-radiobutton",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */  {
 
 		/**
@@ -402,10 +402,6 @@ class RadioButton extends UI5Element {
 
 	get strokeWidth() {
 		return this.valueState === "None" ? "1" : "2";
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 }
 

@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 	<title>ui5-list / ui5-li</title>
 
@@ -27,14 +28,25 @@
 	<input id="loadMoreResult" value="0"/>
 	<br/>
 	<ui5-list id="listEvents" mode="SingleSelectEnd">
-		<ui5-li id="country1" >Argentina</ui5-li>
+		<ui5-li id="country1">Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
-		<ui5-li id="country3" >China</ui5-li>
+		<ui5-li id="country3">China</ui5-li>
 		<ui5-li id="country4" type="Inactive">Portugal</ui5-li>
 	</ui5-list>
 	<ui5-input id="itemPressResultField" placeholder="itemPress result"></ui5-input>
+	<ui5-input id="itemPressSelectedResultField" placeholder="itemPress selected result"></ui5-input>
 	<ui5-input id="selectionChangeResultField" placeholder="selectionChange result"></ui5-input>
 	<ui5-input id="selectionChangeResultPreviousItemsParameter" placeholder="selectionChange previousSelection result"></ui5-input>
+
+	<ui5-list id="listEvents2" mode="MultiSelect">
+		<ui5-li id="country11">Argentina</ui5-li>
+		<ui5-li id="country22" selected >Bulgaria</ui5-li>
+		<ui5-li id="country33">China</ui5-li>
+		<ui5-li id="country44">Portugal</ui5-li>
+	</ui5-list>
+	<ui5-input id="itemPressResultField2" placeholder="itemPress result"></ui5-input>
+	<ui5-input id="itemPressSelectedResultField2" placeholder="itemPress selected result"></ui5-input>
+	<ui5-input id="selectionChangeResultField2" placeholder="selectionChange result"></ui5-input>
 
 	<ui5-list id="list1" header-text="API: GroupHeaderListItem">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
@@ -119,13 +131,31 @@
 		<ui5-li id="detailListItem" type="Detail">Detail item</ui5-li>
 		<ui5-li >Normal item</ui5-li>
 	</ui5-list>
+	<br/><br/>
+
+	<ui5-list id="listWithInternalHeader" header-text="Test aria">
+		<ui5-li>item</ui5-li>
+		<ui5-li >item</ui5-li>
+	</ui5-list>
+	<br/><br/>
+
+	<ui5-list id="listWithCustomHeader" aria-labelledby="testHeader">
+		<div slot="header" class="header">
+			<h2 id="testHeader">Test aria</h2>
+		</div>
+
+		<ui5-li>item</ui5-li>
+		<ui5-li >item</ui5-li>
+	</ui5-list>
 
 	<script>
 		'use strict';
 
 		var itemDeleteCounter = 0;
 		var itemPressCounter = 0;
+		var itemPressCounter2 = 0;
 		var selectionChangeCounter = 0;
+		var selectionChangeCounter2 = 0;
 
 		function deleteItemHandler(e) {
 			document.querySelector("#lblResult").innerHTML = e.detail.item.innerHTML + ": " + ++itemDeleteCounter;
@@ -136,6 +166,7 @@
 		listEvents.addEventListener("ui5-itemPress", function (event) {
 			itemPressCounter += 1;
 			itemPressResultField.value = itemPressCounter;
+			itemPressSelectedResultField.value = event.detail.item.selected;
 		});
 
 		listEvents.addEventListener("ui5-selectionChange", function (event) {
@@ -147,17 +178,29 @@
 			selectionChangeResultPreviousItemsParameter.value = event.detail.previouslySelectedItems[0].id;
 		})
 
+		listEvents2.addEventListener("ui5-itemPress", function (event) {
+			itemPressCounter2 += 1;
+			itemPressResultField2.value = itemPressCounter2;
+			itemPressSelectedResultField2.value = event.detail.item.selected;
+		});
+
+		listEvents2.addEventListener("ui5-selectionChange", function (event) {
+			selectionChangeCounter2 += 1;
+			selectionChangeResultField2.value = selectionChangeCounter2;
+		});
+
+
 		listMultiSel.addEventListener("ui5-selectionChange", function(event) {
 			fieldMultiSelResult.value = event.detail.selectionComponentPressed;
 		})
 
-		btnTrigger.addEventListener("click", (e) => {
-			const scrollableContiner = infiniteScrollEx.shadowRoot.querySelector(".ui5-list-root");
+		btnTrigger.addEventListener("click", function(e) {
+			var scrollableContiner = infiniteScrollEx.shadowRoot.querySelector(".ui5-list-root");
 			scrollableContiner.scroll(0, scrollableContiner.scrollHeight);
 		});
-		
+
 		var loadMoreCounter = 0;
-		infiniteScrollEx.addEventListener("ui5-loadMore", (e) => {
+		infiniteScrollEx.addEventListener("ui5-loadMore", function(e) {
 			for(var i = 0; i < 3; i++) {
 				var li = document.createElement("ui5-li");
 				li.textContent = "Title" + i;
@@ -166,7 +209,7 @@
 			loadMoreResult.value= ++loadMoreCounter;
 		});
 
-		detailListItem.addEventListener("ui5-detailClick", (e) => {
+		detailListItem.addEventListener("ui5-detailClick", function(e) {
 			detailPressCounter.innerHTML = parseInt(detailPressCounter.innerHTML) + 1;
 		});
 	</script>

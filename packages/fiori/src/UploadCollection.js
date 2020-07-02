@@ -32,6 +32,7 @@ import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
  */
 const metadata = {
 	tag: "ui5-upload-collection",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		/**
 		 * Defines the mode of the <code>ui5-upload-collection</code>.
@@ -129,11 +130,11 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.UploadCollection#file-deleted
 		 * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
 		 * @public
 		 */
-		fileDeleted: {
+		"file-deleted": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -143,11 +144,11 @@ const metadata = {
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.UploadCollection#selection-change
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @public
 		 */
-		selectionChange: {
+		"selection-change": {
 			detail: {
 				selectedItems: { type: Array },
 			},
@@ -264,15 +265,19 @@ class UploadCollection extends UI5Element {
 	}
 
 	_onItemDelete(event) {
-		this.fireEvent("fileDeleted", { item: event.detail.item });
+		this.fireEvent("file-deleted", { item: event.detail.item });
 	}
 
 	_onSelectionChange(event) {
-		this.fireEvent("selectionChange", { selectedItems: event.detail.selectedItems });
+		this.fireEvent("selection-change", { selectedItems: event.detail.selectedItems });
 	}
 
 	get classes() {
 		return {
+			content: {
+				"ui5-uc-content": true,
+				"ui5-uc-content-no-data": this.items.length === 0,
+			},
 			dndOverlay: {
 				"uc-dnd-overlay": true,
 				"uc-drag-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drag,

@@ -1,0 +1,31 @@
+<div class="ui5-rating-indicator-root"
+	role="slider"
+	aria-roledescription="{{_ariaRoleDescription}}"
+	aria-valuemin="0"
+	aria-valuenow="{{this.value}}"
+	aria-valuemax="{{this.maxValue}}"
+	aria-orientation="horizontal"
+	?aria-disabled="{{this.disabled}}"
+	?aria-readonly="{{this.readOnly}}"
+	tabindex="{{tabIndex}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+	@click="{{_onclick}}"
+	@keydown="{{_onkeydown}}"
+	title="{{tooltip}}"
+	aria-label="{{ariaLabel}}"
+>
+	<div
+		class="ui5-rating-indicator-stars-wrapper"
+	>
+		{{#each _stars}}
+			{{#if this.selected}}
+				<div class="ui5-rating-indicator-icon ui5-rating-indicator-active-icon" data-value="{{this.index}}">&#9733;</div>
+			{{else if this.halfStar}}
+				<div class="ui5-rating-indicator-icon ui5-rating-indicator-half-icon" data-value="{{this.index}}">&#9734;</div>
+			{{else}}
+				<div class="ui5-rating-indicator-icon" data-value="{{this.index}}">&#9734;</div>
+			{{/if}}
+		{{/each}}
+	</div>
+</div>

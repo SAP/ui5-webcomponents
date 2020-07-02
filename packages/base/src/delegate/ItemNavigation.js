@@ -9,7 +9,6 @@ import {
 } from "../Keys.js";
 
 import EventProvider from "../EventProvider.js";
-import UI5Element from "../UI5Element.js";
 import NavigationMode from "../types/NavigationMode.js";
 import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
 
@@ -27,6 +26,8 @@ class ItemNavigation extends EventProvider {
 		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
 		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
 		this.verticalNavigationOn = autoNavigation || navigationMode === NavigationMode.Vertical;
+
+		this.pageSize = options.pageSize;
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
@@ -193,7 +194,11 @@ class ItemNavigation extends EventProvider {
 
 		const currentItem = items[this.currentIndex];
 
-		if (currentItem instanceof UI5Element) {
+		if (!currentItem) {
+			return;
+		}
+
+		if (currentItem.isUI5Element) {
 			return currentItem.getFocusDomRef();
 		}
 
@@ -255,18 +260,17 @@ class ItemNavigation extends EventProvider {
 		if (!this.hasNextPage) {
 			this.currentIndex = items.length - 1;
 		} else {
-			this.currentIndex = 0;
+			this.currentIndex -= this.pageSize;
 		}
 	}
 
 	_handlePrevPage() {
 		this.fireEvent(ItemNavigation.PAGE_TOP);
-		const items = this._getItems();
 
 		if (!this.hasPrevPage) {
 			this.currentIndex = 0;
 		} else {
-			this.currentIndex = (this.pageSize || items.length) - 1;
+			this.currentIndex = this.pageSize + this.currentIndex;
 		}
 	}
 }

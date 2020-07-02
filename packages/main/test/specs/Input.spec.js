@@ -29,6 +29,7 @@ describe("Attributes propagation", () => {
 	it("Type attribute is propagated properly", () => {
 		const sExpectedType = "number";
 		assert.strictEqual(browser.$("#input-number").shadow$(".ui5-input-inner").getAttribute("type"), sExpectedType, "Type property was propagated");
+		assert.strictEqual(browser.$("#input-number").shadow$(".ui5-input-inner").getAttribute("step"), "any", "The step attr is set");
 	});
 
 	it("Value attribute is propagated properly", () => {
@@ -128,6 +129,37 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputChangeResult.getValue(), "2", "change is called twice");
 	});
 
+	it("fires suggestion-item-preview", () => {
+		const inputItemPreview = $("#inputPreview").shadow$("input");
+		const inputItemPreviewRes = $("#inputItemPreviewRes");
+
+		inputItemPreview.click();
+		inputItemPreview.keys("ArrowDown");
+
+		assert.strictEqual(inputItemPreviewRes.getValue(), "Cozy", "First item has been previewed");
+	});
+
+	it("fires suggestion-scroll event", () => {
+		const input = $("#scrollInput").shadow$("input");
+		const scrollResult = $("#scrollResult");
+
+		// act
+		// open suggestions
+		input.click();
+		input.keys("a");
+
+		// scroll with keyboard
+		input.keys("ArrowUp");
+		input.keys("ArrowUp");
+		input.keys("ArrowUp");
+
+		// assert
+		const scrollTop = scrollResult.getProperty("value");
+		assert.ok(scrollTop > 0, "The suggestion-scroll event fired");
+
+		input.keys("Enter"); // close suggestions
+	});
+
 	it("handles suggestions", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 
@@ -175,7 +207,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(suggestionsInput.getValue(), "Cozy", "First item has been selected");
 		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelected event called once");
 
-		suggestionsInput.keys("c"); // to open the suggestions pop up once again 
+		suggestionsInput.keys("c"); // to open the suggestions pop up once again
 		suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(suggestionsInput.getValue(), "Condensed", "First item has been selected");
@@ -219,11 +251,23 @@ describe("Input general interaction", () => {
 		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-responsive-popover-header");
 
 		inputShadowRef.click();
-		
+
 		assert.ok(popover.getProperty("opened"), "Popover with valueStateMessage should be opened.");
 
 		inputShadowRef.keys("a");
 
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
+	});
+
+	it("Checks if aria-label is reflected in the shadow DOM", () => {
+		const input = browser.$("#aria-label-input");
+		const innerInput = input.shadow$("input");
+		const NEW_TEXT = "New cool text";
+
+		assert.strictEqual(input.getAttribute("aria-label"), innerInput.getAttribute("aria-label"), "aria-label is reflected in the shadow DOM")
+
+		input.setAttribute("aria-label", NEW_TEXT);
+
+		assert.strictEqual(innerInput.getAttribute("aria-label"), NEW_TEXT, "aria-label is reflected in the shadow DOM")
 	});
 });

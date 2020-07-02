@@ -32,7 +32,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Checkbox                 | `ui5-checkbox`       | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
 | ComboBox                 | `ui5-combobox`       | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
 | ComboBox Item            | `ui5-cb-item`        | comes with `ui5-combobox`                                    |
-| Date Picker              | `ui5-datepicker`     | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
+| Date Picker              | `ui5-date-picker`     | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
 | Dialog                   | `ui5-dialog`         | `import "@ui5/webcomponents/dist/Dialog.js";`              |
 | File Uploader            | `ui5-file-uploader`  | `import "@ui5/webcomponents/dist/FileUploader.js";`        |
 | Icon                     | `ui5-icon`           | `import "@ui5/webcomponents/dist/Icon.js";`                |
@@ -63,12 +63,14 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Table Row                | `ui5-table-row`      | `import "@ui5/webcomponents/dist/TableRow.js";`            |
 | Table Cell               | `ui5-table-cell`     | `import "@ui5/webcomponents/dist/TableCell.js";`           |
 | Textarea                 | `ui5-textarea`       | `import "@ui5/webcomponents/dist/TextArea.js";`            |
-| TimePicker               | `ui5-timepicker`     | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
+| TimePicker               | `ui5-time-picker`     | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
 | Timeline                 | `ui5-timeline`       | `import "@ui5/webcomponents/dist/Timeline.js";`            |
 | Timeline Item            | `ui5-timeline-item`  | comes with `ui5-timeline`                                   |
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toast                    | `ui5-toast`          | `import "@ui5/webcomponents/dist/Toast.js";`               |
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
+| Tree                     | `ui5-tree`           | `import "@ui5/webcomponents/dist/Tree.js";`                |
+| Tree Item                | `ui5-tree-item`      | comes with `ui5-tree`                                      |
 
 ### 2. Assets
 
@@ -112,7 +114,7 @@ If you however need to submit forms, you can import the module above and it will
 - `ui5-textarea`
 - `ui5-checkbox`
 - `ui5-radiobutton`
-- `ui5-datepicker`
+- `ui5-date-picker`
 - `ui5-select`
 
 with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
@@ -136,6 +138,9 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Shell Bar Item           | `ui5-shellbar-item`  | `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`  |
 | Product Switch           | `ui5-product-switch`       | `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`      |
 | Product Switch Item      | `ui5-product-switch-item`  | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`  |
+| Notification List Item      | `ui5-li-notifcation`      | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`     |
+| Notification Group List Item|`ui5-li-notification-group`| `import "@ui5/webcomponents-fiori/dist/NotifcationListGroupItem.js";`|
+| Notification Overflow Action| `ui5-notification-overflow-action` | `import "@ui5/webcomponents-fiori/dist/NotificationOverflowAction.js";`|
 
 ### 2. Assets
 
@@ -326,7 +331,7 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 ```
 
-The `ui5-datepicker` web component supports Gregorian Calendar by default.
+The `ui5-date-picker` web component supports Gregorian Calendar by default.
 
 In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with this web component
 (by setting its `primaryCalendarType` property), you should import one or more of the modules above.
@@ -337,7 +342,6 @@ In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with
 ```js
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
@@ -357,7 +361,7 @@ from OpenUI5 configuration and resources.
 
 When you import the above module:
  1. OpenUI5 configuration takes precedence over UI5 Web Components configuration
- for all common entities (theme, language, RTL, etc...). In addition, changing the theme
+ for all common entities (theme, language, etc...). In addition, changing the theme
  in OpenUI5 will also change the theme in UI5 Web Components.
  2. Fonts will not be loaded twice (just once by OpenUI5, and reused).
  3. Locale Data assets will not be fetched twice (just once by OpenUI5, and reused).
@@ -368,3 +372,29 @@ it is highly recommended to enable OpenUI5 support and benefit from these optimi
 *Note:* In general the order in which OpenUI5 and UI5 Web Components are loaded does not matter.
 However, if your app needs to support Internet Explorer 11, either load OpenUI5 first, or load
 UI5 Web Components deferred.
+
+### 7. Support for registering `i18n` resources in `.properties` format
+
+```js
+import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
+```
+
+By default, all `i18n` resources are in `JSON` format. Registering such a resource does not require any additional code:
+
+```js
+import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+registerI18nBundle("@ui5/webcomponents", {
+	fr: "./lang/fr.json",
+});
+```
+
+However, in order to use `.properties` files for `i18n` registration, you must also import this feature.
+
+```js
+import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
+import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+registerI18nBundle("@ui5/webcomponents", {
+	bg: "./lang/messagebundle_bg.properties",
+});
+```
+

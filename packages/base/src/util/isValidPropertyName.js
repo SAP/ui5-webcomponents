@@ -1,6 +1,11 @@
 // Note: disabled is present in IE so we explicitly allow it here.
 // Others, such as ariaLabel, we explicitly override, so valid too
-const whitelist = ["disabled", "ariaLabel"];
+const whitelist = [
+	"disabled",
+	"ariaLabel",
+	"ariaExpanded",
+	"title",
+];
 
 /**
  * Checks whether a property name is valid (does not collide with existing DOM API properties)

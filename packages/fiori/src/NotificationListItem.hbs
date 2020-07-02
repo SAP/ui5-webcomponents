@@ -1,0 +1,98 @@
+<li
+	class="ui5-nli-root ui5-nli-focusable"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+	@keydown="{{_onkeydown}}"
+	@keyup="{{_onkeyup}}"
+	@click="{{_onclick}}"
+	role="option"
+	tabindex="{{_tabIndex}}"
+	dir="{{effectiveDir}}"
+	aria-labelledby="{{ariaLabelledBy}}"
+>
+	<div class="ui5-nli-actions">
+		{{#if showOverflow}}
+			<ui5-button
+				icon="overflow"
+				design="Transparent"
+				@click="{{_onBtnOverflowClick}}"
+				class="ui5-nli-overflow-btn"
+				title="{{overflowBtnTitle}}"
+			></ui5-button>
+		{{else}}
+			{{#each standardActions}}
+				<ui5-button
+					icon="{{this.icon}}"
+					class="ui5-nli-action"
+					@click="{{this.press}}"
+					?disabled="{{this.disabled}}"
+					design="{{this.design}}"
+					data-ui5-external-action-item-id="{{this.refItemid}}"
+				>
+					{{this.text}}
+				</ui5-button>
+			{{/each}}
+		{{/if}}
+
+		{{#if showClose}}
+			<ui5-button
+				icon="decline"
+				design="Transparent"
+				@click="{{_onBtnCloseClick}}"
+				title="{{closeBtnTitle}}"
+				close-btn
+			></ui5-button>
+		{{/if}}
+	</div>
+
+	<div class="ui5-nli-content {{classes.content}}">
+		<div class="ui5-nli-heading">
+			{{#if hasPriority}}
+				<ui5-icon
+					class="ui5-prio-icon ui5-prio-icon--{{priorityIcon}}"
+					name="{{priorityIcon}}">
+				</ui5-icon>
+			{{/if}}
+
+			<div id="{{_id}}-heading" class="ui5-nli-title" part="heading">
+				{{heading}}
+			</div>
+		</div>
+
+		{{#if hasDesc}}
+			<div id="{{_id}}-description" class="ui5-nli-description">
+				<slot></slot>
+			</div>
+		{{/if}}
+
+		<div id="{{_id}}-footer" class="ui5-nli-footer">
+			{{#each footerItems}}
+				<slot name="{{slotName}}"></slot>
+				{{#if showDivider}}
+					<div class="ui5-nli-footer-divider"></div>
+				{{/if}}
+			{{/each}}
+
+			<ui5-link
+				class="ui5-nli-footer-showMore"
+				?hidden="{{hideShowMore}}"
+				@click="{{_onShowMoreClick}}"
+				aria-hidden="true"
+				href="#" {{!--without href ENTER does not trigger click --}}
+				showMore-btn
+			>
+				{{showMoreText}}
+			</ui5-link>
+		</div>
+
+		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
+	</div>
+
+	<div class="ui5-nli-avatar">
+		<slot name="avatar"></slot>
+	</div>
+
+	{{#if busy}}
+		<ui5-busyindicator active size="Medium" class="ui5-nli-busy"></ui5-busyindicator>
+	{{/if}}
+</li>

@@ -1,6 +1,9 @@
-import UI5Element from "../UI5Element.js";
 import isNodeHidden from "./isNodeHidden.js";
 import isNodeClickable from "./isNodeClickable.js";
+
+const isFocusTrap = el => {
+	return el.hasAttribute("data-ui5-focus-trap");
+};
 
 const getFirstFocusableElement = container => {
 	if (!container || isNodeHidden(container)) {
@@ -20,7 +23,10 @@ const getLastFocusableElement = container => {
 
 const findFocusableElement = (container, forward) => {
 	let child;
-	if (container.assignedNodes && container.assignedNodes()) {
+
+	if (container.shadowRoot) {
+		child = forward ? container.shadowRoot.firstChild : container.shadowRoot.lastChild;
+	} else if (container.assignedNodes && container.assignedNodes()) {
 		const assignedElements = container.assignedNodes();
 		child = forward ? assignedElements[0] : assignedElements[assignedElements.length - 1];
 	} else {
@@ -32,12 +38,12 @@ const findFocusableElement = (container, forward) => {
 	while (child) {
 		const originalChild = child;
 
-		child = child instanceof UI5Element ? child.getFocusDomRef() : child;
+		child = child.isUI5Element ? child.getFocusDomRef() : child;
 		if (!child) {
 			return null;
 		}
 
-		if (child.nodeType === 1 && !isNodeHidden(child)) {
+		if (child.nodeType === 1 && !isNodeHidden(child) && !isFocusTrap(child)) {
 			if (isNodeClickable(child)) {
 				return (child && typeof child.focus === "function") ? child : null;
 			}

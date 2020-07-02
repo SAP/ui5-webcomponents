@@ -11,6 +11,7 @@
 td {
 	padding: .5rem .25rem;
 	box-sizing: border-box;
+	word-break: break-word;
 }
 
 :host([first-in-row]) td,

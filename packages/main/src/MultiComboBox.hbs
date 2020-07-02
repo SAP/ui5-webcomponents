@@ -12,8 +12,8 @@
 		show-more
 		class="ui5-multi-combobox-tokenizer"
 		?disabled="{{disabled}}"
-		@ui5-showMoreItemsPress="{{_showMorePopover}}"
-		@ui5-tokenDelete="{{_tokenDelete}}"
+		@ui5-show-more-items-press="{{_showMorePopover}}"
+		@ui5-token-delete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
 		@click={{_click}}
 		?expanded="{{expandedTokenizer}}"
@@ -60,9 +60,9 @@
 			input-icon
 			slot="icon"
 			tabindex="-1"
-			@click={{_showAllItemsPopover}}
+			@click={{togglePopover}}
 			?pressed="{{_iconPressed}}"
-			dir="{{dir}}"
+			dir="{{effectiveDir}}"
 			accessible-name="{{_iconAccessibleNameText}}"
 		></ui5-icon>
 	{{/unless}}

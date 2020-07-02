@@ -6,7 +6,7 @@
 	<meta charset="utf-8">
 
 	<title>Avatar</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
@@ -22,6 +22,12 @@
 		<h3>Avatar - Basic sample</h3>
 		<ui5-avatar image="./img/John_Miller.png"></ui5-avatar>
 	</section>
+
+    <section>
+        <h3>Avatar - special characters in image path</h3>
+        <ui5-avatar image="./img/John$$$ ' (_)Miller#1 100% &=.png" style="border: 1px dashed red;"></ui5-avatar>
+	    <ui5-avatar image="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" style="border: 1px dashed red;"></ui5-avatar>
+    </section>
 
 	<section>
 		<h3>Avatar - Square [ XS, S, M, L, XL ]</h3>

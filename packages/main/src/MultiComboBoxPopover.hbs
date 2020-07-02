@@ -1,72 +1,3 @@
-{{!-- Selected items popover --}}
-<ui5-responsive-popover
-	placement-type="Bottom"
-	horizontal-align="Left"
-	class="ui5-multi-combobox-selected-items-responsive-popover"
-	no-arrow
-	_disable-initial-focus
-	content-only-on-desktop
-	@ui5-afterClose={{_afterClosePopover}}
-	@ui5-afterOpen={{_setInitialFocusInResponsivePopover}}
->
-	<div slot="header" class="ui5-responsive-popover-header">
-		<div class="row">
-			<span>{{_headerTitleText}}</span>
-			<ui5-button
-				icon="decline"
-				design="Transparent"
-				@click="{{_closeMorePopover}}"
-			>
-			</ui5-button>
-		</div>
-		<div class="row">
-			<div
-				slot="header"
-				class="input-root-phone"
-				value-state="{{valueState}}"
-			>
-				<input
-					.value="{{value}}"
-					inner-input
-					placeholder="{{placeholder}}"
-					?required={{required}}
-					value-state="{{valueState}}"
-					@input="{{_inputLiveChange}}"
-					@change={{_inputChange}}
-					aria-autocomplete="both"
-					aria-labelledby="{{_id}}-hiddenText-nMore"
-					aria-describedby="{{_id}}-valueStateDesc"
-				/>
-			</div>
-			<ui5-togglebutton
-				slot="header"
-				class="ui5-multi-combobox-toggle-button"
-				icon="multiselect-all"
-				design="Transparent"
-				pressed
-				@click="{{_toggleButtonPress}}"
-			></ui5-togglebutton>
-		</div>
-	</div>
-
-	<ui5-list separators="None" mode="{{selectedItemsListMode}}"
-		@ui5-selectionChange={{_listSelectionChange}}>
-		{{#each items}}
-			{{#if this.selected}}
-				<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../editable}}">{{this.text}}</ui5-li>
-			{{/if}}
-		{{/each}}
-	</ui5-list>
-
-	<div slot="footer" class="ui5-responsive-popover-footer">
-		<ui5-button
-			design="Transparent"
-			@click="{{_closeMorePopover}}"
-		>OK</ui5-button>
-	</div>
-</ui5-responsive-popover>
-
-{{!-- All items popover --}}
 <ui5-responsive-popover
 	placement-type="Bottom"
 	horizontal-align="Left"
@@ -74,17 +5,18 @@
 	no-arrow
 	_disable-initial-focus
 	content-only-on-desktop
-	@ui5-selectionChange={{_listSelectionChange}}
-	@ui5-afterClose={{_toggleIcon}}
-	@ui5-afterOpen={{_onAllItemsPopoverAfterOpen}}
+	@ui5-selection-change={{_listSelectionChange}}
+	@ui5-after-close={{_toggleIcon}}
+	@ui5-after-open={{_toggleIcon}}
 >
 	<div slot="header" class="ui5-responsive-popover-header">
 		<div class="row">
 			<span>{{_headerTitleText}}</span>
 			<ui5-button
+				class="ui5-responsive-popover-close-btn"
 				icon="decline"
 				design="Transparent"
-				@click="{{_closeAllItemsPopover}}"
+				@click="{{togglePopover}}"
 			>
 			</ui5-button>
 		</div>
@@ -107,14 +39,14 @@
 						aria-describedby="{{_id}}-valueStateDesc"
 					/>
 				</div>
-				<ui5-button
+				<ui5-togglebutton
 					slot="header"
 					class="ui5-multi-combobox-toggle-button"
 					icon="multiselect-all"
 					design="Transparent"
-					@click="{{_toggleButtonPress}}"
-					show-selected
-				></ui5-button>
+					?pressed={{filterSelected}}
+					@click="{{filterSelectedItems}}"
+				></ui5-togglebutton>
 		</div>
 	</div>
 
@@ -127,7 +59,7 @@
 	<div slot="footer" class="ui5-responsive-popover-footer">
 		<ui5-button
 			design="Transparent"
-			@click="{{_closeAllItemsPopover}}"
+			@click="{{togglePopover}}"
 		>OK</ui5-button>
 	</div>
 </ui5-responsive-popover>

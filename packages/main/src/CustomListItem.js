@@ -1,9 +1,8 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
 
 // Styles
-import columnListItemCss from "./generated/themes/CustomListItem.css.js";
+import customListItemCss from "./generated/themes/CustomListItem.css.js";
 
 /**
  * @public
@@ -46,16 +45,12 @@ class CustomListItem extends ListItem {
 		return metadata;
 	}
 
-	static get render() {
-		return litRender;
-	}
-
 	static get template() {
 		return CustomListItemTemplate;
 	}
 
 	static get styles() {
-		return [ListItem.styles, columnListItemCss];
+		return [...ListItem.styles, customListItemCss];
 	}
 
 	get classes() {

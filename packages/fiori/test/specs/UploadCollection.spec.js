@@ -72,7 +72,7 @@ describe("UploadCollection", () => {
 			const deleteBtn = firstItem.shadow$(".ui5-li-deletebtn");
 			deleteBtn.click();
 
-			assert.strictEqual(uploadCollection.getProperty("items").length, 3, "item should be deleted when 'fileDeleted' event is fired");
+			assert.strictEqual(uploadCollection.getProperty("items").length, 4, "item should be deleted when 'fileDeleted' event is fired");
 		});
 
 		it("item should fire 'retry'", () => {
@@ -96,11 +96,11 @@ describe("UploadCollection", () => {
 		it("should preserve dots in the file name", () => {
 			const latestReportsPdf = browser.$("#latestReportsPdf");
 			const editButton = latestReportsPdf.shadow$(".ui5-li-detailbtn");
-	
+
 			editButton.click();
 			browser.keys("last.reports-edited");
 			browser.keys("Enter");
-	
+
 			assert.strictEqual(latestReportsPdf.getProperty("fileName"), "last.reports-edited.pdf", "file extension '.pdf' should be preserved");
 		});
 
@@ -108,11 +108,11 @@ describe("UploadCollection", () => {
 			const noFileExtensionItem = browser.$("#noFileExtension");
 			const editButton = noFileExtensionItem.shadow$(".ui5-li-detailbtn");
 			const newFileName = "newFileName.newExtension";
-	
+
 			editButton.click();
 			browser.keys(newFileName);
 			browser.keys("Enter");
-	
+
 			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName, "file name should be changed");
 
 			const newFileName2 = "newFileName2";
@@ -133,13 +133,29 @@ describe("UploadCollection", () => {
 			assert.notOk(secondItem.shadow$(".ui5-uci-file-extension").getText(), "no extension is calculated for .gitignore.");
 
 		});
+
+		it("tests cancelling of name change via keyboard", () => {
+			const secondItem = browser.$("#keyboardNavigation");
+			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
+
+			editButton.click();
+
+			browser.keys("new name");
+
+			browser.keys("Tab");
+			browser.keys("Tab");
+
+			browser.keys("Enter"); // Press cancel button
+
+			assert.strictEqual(secondItem.shadow$(".ui5-uci-file-name").getText(), "Graph.docx", "The name of the file is not changed");
+		});
 	});
 
 	describe("Drag and Drop", () => {
 		it("should NOT show drag and drop overlay when NOT dragging files", () => {
 			const uploadCollection = browser.$("#uploadCollection");
 			const draggableElement = browser.$("#draggableElement");
-		
+
 			draggableElement.scrollIntoView();
 			draggableElement.dragAndDrop(uploadCollection);
 

@@ -1,4 +1,5 @@
 @import "../base/sizes-parameters.css";
+@import "./Avatar-parameters.css";
 @import "../base/Badge-parameters.css";
 @import "./Button-parameters.css";
 @import "./CalendarHeader-parameters.css";
@@ -10,13 +11,13 @@
 @import "../base/GroupHeaderListItem-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
-@import "./Link-parameters.css";
+@import "../base/Link-parameters.css";
 @import "../base/List-parameters.css";
 @import "./ListItemBase-parameters.css";
 @import "./MonthPicker-parameters.css";
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
-@import "../base/Popover-parameters.css";
+@import "../base/PopupsCommon-parameters.css";
 @import "./RadioButton-parameters.css";
 @import "./Select-parameters.css";
 @import "./Switch-parameters.css";

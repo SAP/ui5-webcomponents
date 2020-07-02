@@ -2,9 +2,12 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
+import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
@@ -36,6 +39,7 @@ const staticAreaTabStyles = [];
  */
 const metadata = {
 	tag: "ui5-tabcontainer",
+	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
@@ -151,18 +155,28 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
+		_animationRunning: {
+			type: Boolean,
+			noAttribute: true,
+		},
+
+		_contentCollapsed: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 
 		/**
 		 * Fired when a tab is selected.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.TabContainer#tab-select
 		 * @param {HTMLElement} tab The selected <code>tab</code>.
 		 * @param {Number} tabIndex The selected <code>tab</code> index.
 		 * @public
 		 */
-		tabSelect: {
+		"tab-select": {
 			tab: { type: HTMLElement },
 			tabIndex: { type: Number },
 		},
@@ -212,7 +226,7 @@ class TabContainer extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [...staticAreaTabStyles, ResponsivePopoverCommonCss];
+		return [ResponsivePopoverCommonCss, ...staticAreaTabStyles];
 	}
 
 	static get render() {
@@ -268,6 +282,10 @@ class TabContainer extends UI5Element {
 			};
 			item._itemSelectCallback = this._onItemSelect.bind(this);
 		});
+
+		if (!this._animationRunning) {
+			this._contentCollapsed = this.collapsed;
+		}
 	}
 
 	onAfterRendering() {
@@ -353,21 +371,65 @@ class TabContainer extends UI5Element {
 			}
 		}, this);
 
-		// update collapsed state
-		if (!this.fixed) {
-			if (selectedTab === this._selectedTab) {
-				this.collapsed = !this.collapsed;
-			} else {
-				this.collapsed = false;
-			}
+		if (this.fixed) {
+			this.selectTab(selectedTab, selectedTabIndex);
+			return;
 		}
 
+		if (!this.animate) {
+			this.toggle(selectedTab);
+			this.selectTab(selectedTab, selectedTabIndex);
+			return;
+		}
+
+		this.toggleAnimated(selectedTab);
+		this.selectTab(selectedTab, selectedTabIndex);
+	}
+
+	async toggleAnimated(selectedTab) {
+		const content = this.shadowRoot.querySelector(".ui5-tc__content");
+		let animationPromise = null;
+
+		this._animationRunning = true;
+
+		if (selectedTab === this._selectedTab) {
+			// click on already selected tab - animate both directions
+			this.collapsed = !this.collapsed;
+			animationPromise = this.collapsed ? this.slideContentUp(content) : this.slideContentDown(content);
+		} else {
+			// click on new tab - animate if the content is currently collapsed
+			animationPromise = this.collapsed ? this.slideContentDown(content) : Promise.resolve();
+			this.collapsed = false;
+		}
+
+		await animationPromise;
+		this._contentCollapsed = this.collapsed;
+		this._animationRunning = false;
+	}
+
+	toggle(selectedTab) {
+		if (selectedTab === this._selectedTab) {
+			this.collapsed = !this.collapsed;
+		} else {
+			this.collapsed = false;
+		}
+	}
+
+	selectTab(selectedTab, selectedTabIndex) {
 		// select the tab
 		this._selectedTab = selectedTab;
-		this.fireEvent("tabSelect", {
+		this.fireEvent("tab-select", {
 			tab: selectedTab,
 			tabIndex: selectedTabIndex,
 		});
+	}
+
+	slideContentDown(element) {
+		return slideDown({ element }).promise();
+	}
+
+	slideContentUp(element) {
+		return slideUp({ element }).promise();
 	}
 
 	async _onOverflowButtonClick(event) {
@@ -454,7 +516,7 @@ class TabContainer extends UI5Element {
 			},
 			content: {
 				"ui5-tc__content": true,
-				"ui5-tc__content--collapsed": this.collapsed,
+				"ui5-tc__content--collapsed": this._contentCollapsed,
 			},
 		};
 	}
@@ -487,8 +549,8 @@ class TabContainer extends UI5Element {
 		return this.tabsAtTheBottom ? "slim-arrow-up" : "slim-arrow-down";
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+	get animate() {
+		return getAnimationMode() !== AnimationMode.None;
 	}
 
 	static async onDefine() {

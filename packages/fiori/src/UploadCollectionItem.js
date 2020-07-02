@@ -1,5 +1,5 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
@@ -7,9 +7,12 @@ import Link from "@ui5/webcomponents/dist/Link.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { isEnter, isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import UploadState from "./types/UploadState.js";
 import "@ui5/webcomponents-icons/dist/icons/refresh.js";
 import "@ui5/webcomponents-icons/dist/icons/stop.js";
+import "@ui5/webcomponents-icons/dist/icons/edit.js";
 import {
 	UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT,
@@ -31,6 +34,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  */
 const metadata = {
 	tag: "ui5-upload-collection-item",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
 		/**
 		 * Holds <code>File</code>, associated with this item.
@@ -56,7 +60,7 @@ const metadata = {
 		},
 
 		/**
-		 * If set to <code>true</code> the file name will be clickable and it will fire <code>fileNameClick</code> event upon click.
+		 * If set to <code>true</code> the file name will be clickable and it will fire <code>file-name-click</code> event upon click.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -169,10 +173,10 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> This event is only available when <code>fileNameClickable</code> property is <code>true</code>.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.UploadCollectionItem#file-name-click
 		 * @public
 		 */
-		fileNameClick: { },
+		"file-name-click": { },
 
 		/**
 		 * Fired when the <code>fileName</code> property gets changed.
@@ -203,6 +207,13 @@ const metadata = {
 		 * @public
 		 */
 		retry: {},
+
+		/**
+		 * @since 1.0.0-rc.8
+		 * @event
+		 * @private
+		 */
+		"_focus-requested": {},
 	},
 };
 
@@ -229,12 +240,8 @@ class UploadCollectionItem extends ListItem {
 		return metadata;
 	}
 
-	static get render() {
-		return litRender;
-	}
-
 	static get styles() {
-		return [ListItem.styles, UploadCollectionItemCss];
+		return [...ListItem.styles, UploadCollectionItemCss];
 	}
 
 	static get template() {
@@ -254,16 +261,16 @@ class UploadCollectionItem extends ListItem {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
-	}
 
-	onBeforeRendering() {
-		if (!this.focused) {
-			this._editing = false;
-		}
+		this._editPressed = false; // indicates if the edit btn has been pressed
+		this.doNotCloseInput = false; // Indicates whether the input should be closed when using keybord for navigation
+		this.isEnter = false;
 	}
 
 	onAfterRendering() {
-		if (this.focused && this._editing) {
+		if (this._editPressed) {
+			this._editing = true;
+			this._editPressed = false;
 			this.focusAndSelectText();
 		}
 	}
@@ -273,6 +280,7 @@ class UploadCollectionItem extends ListItem {
 
 		const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
 
+		await RenderScheduler.whenDOMUpdated();
 		if (inp.getFocusDomRef()) {
 			inp.getFocusDomRef().setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
@@ -286,22 +294,87 @@ class UploadCollectionItem extends ListItem {
 		this._editing = true;
 	}
 
+	/**
+	 * @override
+	 */
+	_onfocusout(event) {
+		super._onfocusout(event);
+
+		const path = event.path || (event.composedPath && event.composedPath());
+
+		this._editPressed = this.isDetailPressed(event);
+
+		if (!this._editPressed && path.indexOf(this) > -1) {
+			this._editing = false;
+		}
+	}
+
+	_onInputKeydown(event) {
+		this.isEnter = isEnter(event);
+		this.isEscape = isEscape(event);
+	}
+
+	_onInputKeyUp(event) {
+		this.doNotCloseInput = true;
+		this.tempValue = event.target.value + this._fileExtension;
+
+		if (this.isEscape) {
+			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
+			return this._onRenameCancel();
+		}
+	}
+
+	isDetailPressed(event) {
+		const path = event.path || (event.composedPath && event.composedPath());
+
+		return path.some(e => {
+			return e.classList && e.classList.contains("ui5-uci-edit");
+		});
+	}
+
 	_onInputChange(event) {
 		if (this.shadowRoot.getElementById("ui5-uci-edit-cancel").active) {
+			return;
+		}
+
+		if ((!this.isEnter && this.doNotCloseInput) || this.isEscape) {
+			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
+			this.isEscape = false;
 			return;
 		}
 
 		this._editing = false;
 		this.fileName = event.target.value + this._fileExtension;
 		this.fireEvent("rename");
+
+		if (this.isEnter) {
+			this._focus();
+		}
+	}
+
+	_onRename(event) {
+		this.doNotCloseInput = false;
+		this._editing = false;
+		this._focus();
 	}
 
 	_onRenameCancel(event) {
+		if (!this.isEscape) {
+			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
+		}
+
 		this._editing = false;
+		this.doNotCloseInput = false;
+
+		this._focus();
+	}
+
+	_focus() {
+		this.fireEvent("_focus-requested");
 	}
 
 	_onFileNameClick(event) {
-		this.fireEvent("fileNameClick");
+		this.fireEvent("file-name-click");
 	}
 
 	_onRetry(event) {
@@ -310,6 +383,10 @@ class UploadCollectionItem extends ListItem {
 
 	_onTerminate(event) {
 		this.fireEvent("terminate");
+	}
+
+	get list() {
+		return this.assignedSlot.parentElement;
 	}
 
 	/**
@@ -397,6 +474,17 @@ class UploadCollectionItem extends ListItem {
 
 	get _terminateButtonTooltip() {
 		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
+	}
+
+	/**
+	 * override
+	 */
+	get typeDetail() {
+		return false;
+	}
+
+	get showEditButton() {
+		return this.type === ListItemType.Detail;
 	}
 }
 

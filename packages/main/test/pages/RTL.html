@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>RTL and Language</title>
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		section {
+			border: 1px dashed red;
+			padding: 10px;
+			margin: 10px;
+		}
+	</style>
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+
+	<div style="display: flex; align-items: center;">
+		<ui5-segmentedbutton id="tb">
+			<ui5-togglebutton pressed>EN</ui5-togglebutton>
+			<ui5-togglebutton>DE</ui5-togglebutton>
+			<ui5-togglebutton>BG</ui5-togglebutton>
+			<ui5-togglebutton>ES</ui5-togglebutton>
+			<ui5-togglebutton>HE</ui5-togglebutton>
+			<ui5-togglebutton>AR</ui5-togglebutton>
+		</ui5-segmentedbutton>
+		<div style="flex: auto;"></div>
+		<ui5-label style="margin:0 5px;">Manually switch RTL:</ui5-label>
+		<ui5-switch id="sw"></ui5-switch>
+	</div>
+
+	<section>
+		<ui5-textarea maxlength="20" show-exceeded-text style="width: 500px;"></ui5-textarea>
+	</section>
+
+	<section>
+		<ui5-title>This section does not define dir</ui5-title>
+		<br>
+		<ui5-checkbox text="Click me"></ui5-checkbox>
+		<br>
+		<ui5-checkbox text="Click me"></ui5-checkbox>
+		<br>
+		<ui5-checkbox text="Click me"></ui5-checkbox>
+	</section>
+
+	<section dir="ltr">
+		<ui5-title>This section defines dir=LTR</ui5-title>
+		<br>
+		<ui5-checkbox text="Click me"></ui5-checkbox>
+		<br>
+		<ui5-checkbox text="Click me"></ui5-checkbox>
+		<br>
+		<ui5-checkbox text="This checkbox however defines dir=rtl" dir="rtl"></ui5-checkbox>
+	</section>
+
+	<section dir="rtl">
+		<ui5-title>This section defines dir=RTL</ui5-title>
+		<br>
+		<ui5-checkbox text="Click me"></ui5-checkbox>
+		<br>
+		<ui5-checkbox text="Click me"></ui5-checkbox>
+		<br>
+		<ui5-checkbox text="This checkbox however defines dir=ltr" dir="ltr"></ui5-checkbox>
+	</section>
+
+
+	<script>
+
+		// Utility function to change RTL and apply the changes
+		function setDir(dir) {
+			document.body.dir = dir;
+			window['sap-ui-webcomponents-bundle'].applyDirection();
+		}
+
+		document.getElementById("sw").addEventListener("click", function(e) {
+			if (e.target.checked) {
+				setDir("rtl");
+			} else {
+				setDir("ltr");
+			}
+		});
+
+		document.getElementById("tb").addEventListener("selection-change", function(e) {
+			var lang = e.detail.selectedButton.textContent.toLowerCase();
+			if (lang === "he" || lang === "ar") {
+				setDir("rtl");
+			} else {
+				setDir("ltr");
+			}
+			window['sap-ui-webcomponents-bundle'].configuration.setLanguage(lang);
+		});
+	</script>
+
+</body>
+</html>

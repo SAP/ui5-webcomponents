@@ -9,8 +9,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isShow, isF4 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
@@ -36,7 +35,9 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  * @public
  */
 const metadata = {
-	tag: "ui5-datepicker",
+	tag: "ui5-date-picker",
+	altTag: "ui5-datepicker",
+	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
@@ -51,7 +52,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-datepicker</code>.
+		 * Defines the value state of the <code>ui5-date-picker</code>.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -129,7 +130,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-datepicker</code> is displayed as disabled.
+		 * Determines whether the <code>ui5-date-picker</code> is displayed as disabled.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -140,7 +141,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-datepicker</code> is displayed as read-only.
+		 * Determines whether the <code>ui5-date-picker</code> is displayed as read-only.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -152,11 +153,11 @@ const metadata = {
 
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
-		 * <code>ui5-datepicker</code> has no value.
+		 * <code>ui5-date-picker</code> has no value.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
-		 * Passing an empty string as the value of this property will make the <code>ui5-datepicker</code> appear empty - without placeholder or format pattern.
+		 * Passing an empty string as the value of this property will make the <code>ui5-date-picker</code> appear empty - without placeholder or format pattern.
 		 *
 		 * @type {string}
 		 * @defaultvalue undefined
@@ -168,7 +169,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the name with which the <code>ui5-datepicker</code> will be submitted in an HTML form.
+		 * Determines the name with which the <code>ui5-date-picker</code> will be submitted in an HTML form.
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
@@ -176,7 +177,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the <code>ui5-datepicker</code> so that it can be submitted as
+		 * will be created inside the <code>ui5-date-picker</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
 		 * @type {string}
@@ -203,13 +204,13 @@ const metadata = {
 
 	slots: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-datepicker</code>.
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-date-picker</code>.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the <code>ui5-datepicker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * when the <code>ui5-date-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement}
 		 * @since 1.0.0-rc.7
 		 * @slot
@@ -231,7 +232,7 @@ const metadata = {
 		change: {},
 
 		/**
-		 * Fired when the value of the <code>ui5-datepicker</code> is changed at each key stroke.
+		 * Fired when the value of the <code>ui5-date-picker</code> is changed at each key stroke.
 		 *
 		 * @event
 		 * @public
@@ -245,8 +246,8 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-datepicker</code> component provides an input field with assigned calendar which opens on user action.
- * The <code>ui5-datepicker</code> allows users to select a localized date using touch,
+ * The <code>ui5-date-picker</code> component provides an input field with assigned calendar which opens on user action.
+ * The <code>ui5-date-picker</code> allows users to select a localized date using touch,
  * mouse, or keyboard input. It consists of two parts: the date input field and the
  * date picker.
  *
@@ -273,8 +274,8 @@ const metadata = {
  * a valid value string is "2015-07-30" and the same is displayed in the input.
  *
  * <h3>Keyboard Handling</h3>
- * The <code>ui5-datepicker</code> provides advanced keyboard handling.
- * If the <code>ui5-datepicker</code> is focused,
+ * The <code>ui5-date-picker</code> provides advanced keyboard handling.
+ * If the <code>ui5-date-picker</code> is focused,
  * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
  * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>RIGHT</code> arrow keys
  * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
@@ -289,7 +290,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DatePicker
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-datepicker
+ * @tagname ui5-date-picker
  * @public
  */
 class DatePicker extends UI5Element {
@@ -314,7 +315,7 @@ class DatePicker extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [datePickerPopoverCss, ResponsivePopoverCommonCss];
+		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
 	}
 
 	constructor() {
@@ -334,14 +335,14 @@ class DatePicker extends UI5Element {
 					this._focusInputAfterClose = false;
 				}
 
-				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.calendar;
 				if (calendar) {
 					calendar._hideMonthPicker();
 					calendar._hideYearPicker();
 				}
 			},
 			afterOpen: () => {
-				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.calendar;
 
 				if (!calendar) {
 					return;
@@ -400,7 +401,7 @@ class DatePicker extends UI5Element {
 			this.maxDate = null;
 			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
-		if (this.isValid(this.value) && this.isInValidRange(this._getTimeStampFromString(this.value))) {
+		if (this._checkValueValidity(this.value)) {
 			this._changeCalendarSelection();
 		} else {
 			this._calendar.selectedDates = [];
@@ -423,9 +424,10 @@ class DatePicker extends UI5Element {
 	}
 
 	_getTimeStampFromString(value) {
-		if (this.getFormat().parse(value)) {
-			const jsDate = new Date(this.getFormat().parse(value).getFullYear(), this.getFormat().parse(value).getMonth(), this.getFormat().parse(value).getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
+		const jsDate = this.getFormat().parse(value);
+		if (jsDate) {
+			const jsDateTimeNow = new Date(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDateTimeNow.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
 		}
 		return undefined;
@@ -433,9 +435,24 @@ class DatePicker extends UI5Element {
 
 	_onkeydown(event) {
 		if (isShow(event)) {
-			this.togglePicker();
-			this._getInput().focus();
+			event.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
+			if (this.isOpen()) {
+				if (isF4(event)) {
+					if (this.calendar._monthPicker._hidden) {
+						this.calendar._showYearPicker();
+					}
+				} else {
+					this._toggleAndFocusInput();
+				}
+			} else {
+				this._toggleAndFocusInput();
+			}
 		}
+	}
+
+	_toggleAndFocusInput() {
+		this.togglePicker();
+		this._getInput().focus();
 	}
 
 	_getInput() {
@@ -445,10 +462,9 @@ class DatePicker extends UI5Element {
 	_handleInputChange() {
 		let nextValue = this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
-		const isValid = emptyValue || this.isValid(nextValue);
-		const isInValidRange = this.isInValidRange(this._getTimeStampFromString(nextValue));
+		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
-		if (isValid && isInValidRange) {
+		if (isValid) {
 			nextValue = this.normalizeValue(nextValue);
 			this.valueState = ValueState.None;
 		} else {
@@ -465,10 +481,14 @@ class DatePicker extends UI5Element {
 	_handleInputLiveChange() {
 		const nextValue = this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
-		const isValid = emptyValue || (this.isValid(nextValue) && this.isInValidRange(this._getTimeStampFromString(nextValue)));
+		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
 		this.value = nextValue;
 		this.fireEvent("input", { value: nextValue, valid: isValid });
+	}
+
+	_checkValueValidity(value) {
+		return this.isValid(value) && this.isInValidRange(this._getTimeStampFromString(value));
 	}
 
 	_click(event) {
@@ -493,6 +513,10 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	isInValidRange(value = "") {
+		if (value === "") {
+			return true;
+		}
+
 		const pickedDate = new Date(value),
 			minDate = this._minDate && new Date(this._minDate),
 			maxDate = this._maxDate && new Date(this._maxDate);
@@ -531,6 +555,10 @@ class DatePicker extends UI5Element {
 			return this.value;
 		}
 		return this.getFormat().format(new Date());
+	}
+
+	get calendar() {
+		return this.responsivePopover.querySelector(`#${this._id}-calendar`);
 	}
 
 	get _calendarDate() {
@@ -631,10 +659,6 @@ class DatePicker extends UI5Element {
 		return this.i18nBundle.getText(DATEPICKER_DATE_ACC_TEXT);
 	}
 
-	get dir() {
-		return getRTL() ? "rtl" : "ltr";
-	}
-
 	/**
 	 * Defines whether the dialog on mobile should have header
 	 * @private
@@ -695,6 +719,16 @@ class DatePicker extends UI5Element {
 			).valueOf()),
 			true
 		);
+	}
+
+	/**
+	 * Formats a Java Script date object into a string representing a locale date
+	 * according to the <code>formatPattern</code> property of the DatePicker instance
+	 * @param {object} oDate A Java Script date object to be formatted as string
+	 * @public
+	 */
+	formatValue(oDate) {
+		return this.getFormat().format(oDate);
 	}
 
 	/**

@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "./ListItemBase.js";
 
@@ -15,6 +14,7 @@ import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.j
  */
 const metadata = {
 	tag: "ui5-li-groupheader",
+	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
@@ -47,10 +47,6 @@ const metadata = {
  * @public
  */
 class GroupHeaderListItem extends ListItemBase {
-	static get render() {
-		return litRender;
-	}
-
 	static get template() {
 		return GroupHeaderListItemTemplate;
 	}

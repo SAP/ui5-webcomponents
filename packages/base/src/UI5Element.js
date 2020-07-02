@@ -3,19 +3,23 @@ import boot from "./boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { registerTag, isTagRegistered } from "./CustomElementsRegistry.js";
+import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
+import { getRTL } from "./config/RTL.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import Integer from "./types/Integer.js";
+import Float from "./types/Float.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
+import isSlot from "./util/isSlot.js";
+import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 
 const metadata = {
 	events: {
-		_propertyChange: {},
+		"_property-change": {},
 	},
 };
 
@@ -24,6 +28,8 @@ let autoId = 0;
 const elementTimeouts = new Map();
 
 const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
+const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
+
 /**
  * Base class for all UI5 Web Components
  *
@@ -37,7 +43,6 @@ const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
 class UI5Element extends HTMLElement {
 	constructor() {
 		super();
-		this._generateId();
 		this._initializeState();
 		this._upgradeAllProperties();
 		this._initializeContainers();
@@ -54,10 +59,17 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * @private
+	 * Returns a unique ID for this UI5 Element
+	 *
+	 * @deprecated - This property is not guaranteed in future releases
+	 * @protected
 	 */
-	_generateId() {
-		this._id = `ui5wc_${++autoId}`;
+	get _id() {
+		if (!this.__id) {
+			this.__id = `ui5wc_${++autoId}`;
+		}
+
+		return this.__id;
 	}
 
 	/**
@@ -109,6 +121,7 @@ class UI5Element extends HTMLElement {
 				await Promise.resolve();
 			}
 
+			RenderScheduler.register(this);
 			await RenderScheduler.renderImmediately(this);
 			this._domRefReadyPromise._deferredResolve();
 			if (typeof this.onEnterDOM === "function") {
@@ -131,6 +144,7 @@ class UI5Element extends HTMLElement {
 				this._stopObservingDOMChildren();
 			}
 
+			RenderScheduler.deregister(this);
 			if (typeof this.onExitDOM === "function") {
 				this.onExitDOM();
 			}
@@ -237,6 +251,10 @@ class UI5Element extends HTMLElement {
 				this._attachChildPropertyUpdated(child, slotData.listenFor);
 			}
 
+			if (isSlot(child)) {
+				this._attachSlotChange(child);
+			}
+
 			const propertyName = slotData.propertyName || slotName;
 
 			if (slottedChildrenMap.has(propertyName)) {
@@ -272,6 +290,10 @@ class UI5Element extends HTMLElement {
 			if (child && child.isUI5Element) {
 				this._detachChildPropertyUpdated(child);
 			}
+
+			if (isSlot(child)) {
+				this._detachSlotChange(child);
+			}
 		});
 
 		this._state[propertyName] = [];
@@ -293,6 +315,9 @@ class UI5Element extends HTMLElement {
 			}
 			if (propertyTypeClass === Integer) {
 				newValue = parseInt(newValue);
+			}
+			if (propertyTypeClass === Float) {
+				newValue = parseFloat(newValue);
 			}
 			this[nameInCamelCase] = newValue;
 		}
@@ -372,7 +397,7 @@ class UI5Element extends HTMLElement {
 			this._monitoredChildProps.set(slotName, { observedProps, notObservedProps });
 		}
 
-		child.addEventListener("_propertyChange", this._invalidateParentOnPropertyUpdate);
+		child.addEventListener("_property-change", this._invalidateParentOnPropertyUpdate);
 		child._firePropertyChange = true;
 	}
 
@@ -380,7 +405,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_detachChildPropertyUpdated(child) {
-		child.removeEventListener("_propertyChange", this._invalidateParentOnPropertyUpdate);
+		child.removeEventListener("_property-change", this._invalidateParentOnPropertyUpdate);
 		child._firePropertyChange = false;
 	}
 
@@ -391,7 +416,7 @@ class UI5Element extends HTMLElement {
 		this._updateAttribute(name, value);
 
 		if (this._firePropertyChange) {
-			this.dispatchEvent(new CustomEvent("_propertyChange", {
+			this.dispatchEvent(new CustomEvent("_property-change", {
 				detail: { name, newValue: value },
 				composed: false,
 				bubbles: true,
@@ -420,6 +445,25 @@ class UI5Element extends HTMLElement {
 		if (observedProps.includes(prop.detail.name) && !notObservedProps.includes(prop.detail.name)) {
 			parentNode._invalidate("_parent_", this);
 		}
+	}
+
+	/**
+	 * @private
+	 */
+	_attachSlotChange(child) {
+		if (!this._invalidateOnSlotChange) {
+			this._invalidateOnSlotChange = () => {
+				this._invalidate("slotchange");
+			};
+		}
+		child.addEventListener("slotchange", this._invalidateOnSlotChange);
+	}
+
+	/**
+	 * @private
+	 */
+	_detachSlotChange(child) {
+		child.removeEventListener("slotchange", this._invalidateOnSlotChange);
 	}
 
 	/**
@@ -568,6 +612,17 @@ class UI5Element extends HTMLElement {
 	 * @returns {boolean} false, if the event was cancelled (preventDefault called), true otherwise
 	 */
 	fireEvent(name, data, cancelable) {
+		const eventResult = this._fireEvent(name, data, cancelable);
+		const camelCaseEventName = kebabToCamelCase(name);
+
+		if (camelCaseEventName !== name) {
+			return eventResult && this._fireEvent(camelCaseEventName, data, cancelable);
+		}
+
+		return eventResult;
+	}
+
+	_fireEvent(name, data, cancelable) {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
 
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
@@ -605,7 +660,7 @@ class UI5Element extends HTMLElement {
 	 */
 	getSlottedNodes(slotName) {
 		const reducer = (acc, curr) => {
-			if (curr.localName !== "slot") {
+			if (!isSlot(curr)) {
 				return acc.concat([curr]);
 			}
 			return acc.concat(curr.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement));
@@ -616,6 +671,38 @@ class UI5Element extends HTMLElement {
 
 	get isCompact() {
 		return getComputedStyle(this).getPropertyValue(GLOBAL_CONTENT_DENSITY_CSS_VAR) === "compact";
+	}
+
+	/**
+	 * Determines whether the component should be rendered in RTL mode or not.
+	 * Returns: "rtl", "ltr" or undefined
+	 *
+	 * @public
+	 * @returns {String|undefined}
+	 */
+	get effectiveDir() {
+		markAsRtlAware(this.constructor); // if a UI5 Element calls this method, it's considered to be rtl-aware
+
+		const doc = window.document;
+		const dirValues = ["ltr", "rtl"]; // exclude "auto" and "" from all calculations
+		const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);
+
+		// In that order, inspect the CSS Var (for modern browsers), the element itself, html and body (for IE fallback)
+		if (dirValues.includes(locallyAppliedDir)) {
+			return locallyAppliedDir;
+		}
+		if (dirValues.includes(this.dir)) {
+			return this.dir;
+		}
+		if (dirValues.includes(doc.documentElement.dir)) {
+			return doc.documentElement.dir;
+		}
+		if (dirValues.includes(doc.body.dir)) {
+			return doc.body.dir;
+		}
+
+		// Finally, check the configuration for explicitly set RTL or language-implied RTL
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	updateStaticAreaItemContentDensity() {
@@ -857,16 +944,23 @@ class UI5Element extends HTMLElement {
 		}
 
 		const tag = this.getMetadata().getTag();
+		const altTag = this.getMetadata().getAltTag();
 
 		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);
 
 		if (definedGlobally && !definedLocally) {
-			console.warn(`Skipping definition of tag ${tag}, because it was already defined by another instance of ui5-webcomponents.`); // eslint-disable-line
+			recordTagRegistrationFailure(tag);
 		} else if (!definedGlobally) {
 			this._generateAccessors();
 			registerTag(tag);
 			window.customElements.define(tag, this);
+
+			if (altTag && !customElements.get(altTag)) {
+				class oldClassName extends this {}
+				registerTag(altTag);
+				window.customElements.define(altTag, oldClassName);
+			}
 		}
 		return this;
 	}

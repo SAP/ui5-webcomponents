@@ -8,8 +8,9 @@
 	with-padding
 	no-stretch
 	?_hide-header={{_shouldHideHeader}}
-	@ui5-afterClose="{{_respPopoverConfig.afterClose}}"
-	@ui5-afterOpen="{{_respPopoverConfig.afterOpen}}"
+	@keydown="{{_onkeydown}}"
+	@ui5-after-close="{{_respPopoverConfig.afterClose}}"
+	@ui5-after-open="{{_respPopoverConfig.afterOpen}}"
 >
 	{{#if showHeader}}
 		{{> header}}
@@ -27,6 +28,7 @@
 		<div class="row">
 			<span>{{_headerTitleText}}</span>
 			<ui5-button
+				class="ui5-responsive-popover-close-btn"
 				icon="decline"
 				design="Transparent"
 				@click="{{closePicker}}"
@@ -45,7 +47,7 @@
 		.selectedDates="{{_calendar.selectedDates}}"
 		.minDate="{{_calendar.minDate}}"
 		.maxDate="{{_calendar.maxDate}}"
-		@ui5-selectedDatesChange="{{_calendar.onSelectedDatesChange}}"
+		@ui5-selected-dates-change="{{_calendar.onSelectedDatesChange}}"
 	></ui5-calendar>
 {{/inline}}
 

@@ -112,11 +112,11 @@ const metadata = {
 		/**
 		 * Fired when a row is clicked.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Table#row-click
 		 * @param {HTMLElement} row the clicked row.
 		 * @public
 		 */
-		rowClick: {
+		"row-click": {
 			detail: {
 				row: { type: HTMLElement },
 			},
@@ -125,12 +125,12 @@ const metadata = {
 		/**
 		 * Fired when the <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Table#popin-change
 		 * @param {Array} poppedColumns popped-in columns.
 		 * @since 1.0.0-rc.6
 		 * @public
 		 */
-		popinChange: {
+		"popin-change": {
 			detail: {
 				poppedColumns: {},
 			},
@@ -201,7 +201,6 @@ class Table extends UI5Element {
 		}.bind(this);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
-		this.fnOnRowClick = this.onRowClick.bind(this);
 
 		this._handleResize = this.popinContent.bind(this);
 	}
@@ -218,9 +217,6 @@ class Table extends UI5Element {
 
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
-
-			row.removeEventListener("ui5-_click", this.fnOnRowClick);
-			row.addEventListener("ui5-_click", this.fnOnRowClick);
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
@@ -242,10 +238,6 @@ class Table extends UI5Element {
 
 	onRowFocused(event) {
 		this._itemNavigation.update(event.target);
-	}
-
-	onRowClick(event) {
-		this.fireEvent("rowClick", { row: event.target });
 	}
 
 	_onColumnHeaderClick(event) {
@@ -285,7 +277,7 @@ class Table extends UI5Element {
 		if (this._hiddenColumns.length !== hiddenColumns.length) {
 			this._hiddenColumns = hiddenColumns;
 			if (hiddenColumns.length) {
-				this.fireEvent("popinChange", {
+				this.fireEvent("popin-change", {
 					poppedColumns: this._hiddenColumns,
 				});
 			}

@@ -1,42 +1,42 @@
 <button
-		type="button"
-		class="ui5-button-root"
-		?disabled="{{disabled}}"
-		data-sap-focus-ref
-		{{> ariaPressed}}
-		dir="{{rtl}}"
-		@focusout={{_onfocusout}}
-		@focusin={{_onfocusin}}
-		@click={{_onclick}}
-		@mousedown={{_onmousedown}}
-		@mouseup={{_onmouseup}}
-		@keydown={{_onkeydown}}
-		@keyup={{_onkeyup}}
-		tabindex={{tabIndexValue}}
-		aria-expanded="{{accInfo.ariaExpanded}}"
-		aria-controls="{{accInfo.ariaControls}}"
-		aria-haspopup="{{accInfo.ariaHaspopup}}"
-		aria-label="{{ariaLabelText}}"
-		title="{{accInfo.title}}"
-		part="button"
-	>
-		{{#if icon}}
-			<ui5-icon
-				class="ui5-button-icon"
-				name="{{icon}}"
-				show-tooltip={{iconOnly}}
-			></ui5-icon>
-		{{/if}}
+	type="button"
+	class="ui5-button-root"
+	?disabled="{{disabled}}"
+	data-sap-focus-ref
+	{{> ariaPressed}}
+	dir="{{effectiveDir}}"
+	@focusout={{_onfocusout}}
+	@focusin={{_onfocusin}}
+	@click={{_onclick}}
+	@mousedown={{_onmousedown}}
+	@mouseup={{_onmouseup}}
+	@keydown={{_onkeydown}}
+	@keyup={{_onkeyup}}
+	tabindex={{tabIndexValue}}
+	aria-expanded="{{accInfo.ariaExpanded}}"
+	aria-controls="{{accInfo.ariaControls}}"
+	aria-haspopup="{{accInfo.ariaHaspopup}}"
+	aria-label="{{ariaLabelText}}"
+	title="{{accInfo.title}}"
+	part="button"
+>
+	{{#if icon}}
+		<ui5-icon
+			class="ui5-button-icon"
+			name="{{icon}}"
+			show-tooltip={{iconOnly}}
+		></ui5-icon>
+	{{/if}}
 
-		<span id="{{_id}}-content" class="ui5-button-text">
-			<bdi>
-				<slot></slot>
-			</bdi>
-		</span>
+	<span id="{{_id}}-content" class="ui5-button-text">
+		<bdi>
+			<slot></slot>
+		</bdi>
+	</span>
 
-		{{#if hasButtonType}}
-			<span class="ui5-hidden-text">{{buttonTypeText}}</span>
-		{{/if}}
+	{{#if hasButtonType}}
+		<span class="ui5-hidden-text">{{buttonTypeText}}</span>
+	{{/if}}
 </button>
 
 {{#*inline "ariaPressed"}}{{/inline}}

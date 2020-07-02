@@ -29,7 +29,7 @@
  *
  *   appenddocs
  *
- *   customtag
+ *   tagname
  *
  * It furthermore listens to the following JSDoc3 events to implement additional functionality
  *
@@ -2073,10 +2073,10 @@ exports.defineTags = function(dictionary) {
 		}
 	});
 
-	dictionary.defineTag('customtag', {
+	dictionary.defineTag('tagname', {
 		mustHaveValue: true,
 		onTagged: function(doclet, tag) {
-			doclet.customtag = tag.value;
+			doclet.tagname = tag.value;
 		}
 	});
 };

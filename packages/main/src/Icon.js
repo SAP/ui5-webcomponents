@@ -1,9 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
@@ -16,7 +16,19 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
  */
 const metadata = {
 	tag: "ui5-icon",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
+		/**
+		 * Defines if the icon is interactive (focusable and pressable)
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		interactive: {
+			type: Boolean,
+		},
+
 		/**
 		 * Defines the unique identifier (icon name) of each <code>ui5-icon</code>.
 		 * <br><br>
@@ -78,6 +90,13 @@ const metadata = {
 		},
 
 		/**
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
+
+		/**
 		* @private
 		*/
 		invalid: {
@@ -85,6 +104,12 @@ const metadata = {
 		},
 	},
 	events: {
+		/**
+		 * Fired on mouseup, space and enter if icon is interactive
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		click: {},
 	},
 };
 
@@ -137,6 +162,60 @@ class Icon extends UI5Element {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
+	_onfocusin(event) {
+		if (this.interactive) {
+			this.focused = true;
+		}
+	}
+
+	_onfocusout(event) {
+		this.focused = false;
+	}
+
+	_onkeydown(event) {
+		if (this.interactive && isEnter(event)) {
+			this.fireEvent("click");
+		}
+	}
+
+	_onkeyup(event) {
+		if (this.interactive && isSpace(event)) {
+			this.fireEvent("click");
+		}
+	}
+
+	_onclick(event) {
+		if (this.interactive) {
+			event.preventDefault();
+			// Prevent the native event and fire custom event because otherwise the noConfict event won't be thrown
+			this.fireEvent("click");
+		}
+	}
+
+	get _dir() {
+		if (!this.effectiveDir) {
+			return;
+		}
+
+		if (this.ltr) {
+			return "ltr";
+		}
+
+		return this.effectiveDir;
+	}
+
+	get tabIndex() {
+		return this.interactive ? "0" : "-1";
+	}
+
+	get role() {
+		if (this.interactive) {
+			return "button";
+		}
+
+		return this.accessibleNameText ? "img" : "presentation";
+	}
+
 	static createGlobalStyle() {
 		if (!window.ShadyDOM) {
 			return;
@@ -182,6 +261,7 @@ class Icon extends UI5Element {
 
 		this.pathData = iconData.pathData;
 		this.accData = iconData.accData;
+		this.ltr = iconData.ltr;
 	}
 
 	get hasIconTooltip() {
@@ -194,10 +274,6 @@ class Icon extends UI5Element {
 		}
 
 		return this.i18nBundle.getText(this.accData) || undefined;
-	}
-
-	get dir() {
-		return getRTL() ? "rtl" : "ltr";
 	}
 
 	async onEnterDOM() {

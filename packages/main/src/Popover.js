@@ -1,16 +1,15 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
+import Popup from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
-import { getFocusedElement, getClosedPopupParent, getNextZIndex } from "./popup-utils/PopupUtils.js";
+import { getClosedPopupParent } from "./popup-utils/PopupUtils.js";
 
+// Template
+import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 // Styles
+import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 
 const arrowSize = 8;
@@ -21,17 +20,6 @@ const arrowSize = 8;
 const metadata = {
 	tag: "ui5-popover",
 	properties: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
-		/**
-		 * Defines the ID of the HTML Element, which will get the initial focus.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		initialFocus: {
-			type: String,
-		},
-
 		/**
 		 * Defines the header text.
 		 * <br><br>
@@ -173,34 +161,10 @@ const metadata = {
 			defaultValue: PopoverPlacementType.Right,
 		},
 
-		/**
-		 * Defines whether the <code>ui5-popover</code> is open
-		 *
-		 * @private
-		 */
-		opened: { type: Boolean },
-
 		_maxContentHeight: { type: Integer },
-
-		/**
-		 * @private
-		 */
-		_disableInitialFocus: {
-			type: Boolean,
-		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
-		/**
-		 * Defines the content of the Web Component.
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: HTMLElement,
-		},
-
 		/**
 		 * Defines the header HTML Element.
 		 *
@@ -224,40 +188,6 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
-		/**
-		 * Fired before the component is opened.
-		 *
-		 * @public
-		 * @event
-		 */
-		beforeOpen: {},
-
-		/**
-		 * Fired after the component is opened.
-		 *
-		 * @public
-		 * @event
-		 */
-		afterOpen: {},
-
-		/**
-		 * Fired before the component is closed.
-		 *
-		 * @public
-		 * @event
-		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
-		 */
-		beforeClose: {
-			escPressed: { type: Boolean },
-		},
-
-		/**
-		 * Fired after the component is closed.
-		 *
-		 * @public
-		 * @event
-		 */
-		afterClose: {},
 	},
 };
 
@@ -292,42 +222,26 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Popover
- * @extends UI5Element
+ * @extends Popup
  * @tagname ui5-popover
  * @since 1.0.0-rc.6
  * @public
  */
-class Popover extends UI5Element {
+class Popover extends Popup {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get render() {
-		return litRender;
-	}
-
 	static get styles() {
-		return PopoverCss;
+		return [PopupsCommonCss, PopoverCss];
 	}
 
 	static get template() {
 		return PopoverTemplate;
 	}
 
-	forwardToFirst() {
-		const firstFocusable = getFirstFocusableElement(this.contentDOM);
-
-		if (firstFocusable) {
-			firstFocusable.focus();
-		}
-	}
-
-	forwardToLast() {
-		const lastFocusable = getLastFocusableElement(this.contentDOM);
-
-		if (lastFocusable) {
-			lastFocusable.focus();
-		}
+	static get MIN_OFFSET() {
+		return 10; // px
 	}
 
 	isOpenerClicked(event) {
@@ -338,89 +252,36 @@ class Popover extends UI5Element {
 	/**
 	 * Opens the popover.
 	 * @param {HTMLElement} opener the element that the popover is opened by
+	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
 	 */
-	openBy(opener) {
+	openBy(opener, preventInitialFocus = false) {
 		if (!opener || this.opened) {
 			return;
 		}
-
 		this._opener = opener;
-		this._focusedElementBeforeOpen = getFocusedElement();
-		this.style.zIndex = getNextZIndex();
 
-		this.fireEvent("beforeOpen", {});
-		this.reposition();
-		this.applyInitialFocus();
-
-		addOpenedPopover(this);
-
-		this.opened = true;
-		this.fireEvent("afterOpen", {});
+		super.open(preventInitialFocus);
 	}
 
 	/**
-	 * Closes the popover.
-	 * @public
+	 * Override for the _addOpenedPopup hook, which would otherwise just call addOpenedPopup(this)
+	 * @private
 	 */
-	close(escPressed = false, preventRegitryUpdate = false, preventFocusRestore = false) {
-		if (!this.opened) {
-			return;
-		}
-
-		this.fireEvent("beforeClose", {
-			escPressed,
-		}, true);
-
-
-		this.opened = false;
-
-		if (!preventRegitryUpdate) {
-			removeOpenedPopover(this);
-		}
-
-		if (!preventFocusRestore) {
-			this.resetFocus();
-		}
-
-		this.hide();
-		this.fireEvent("afterClose", {});
+	_addOpenedPopup() {
+		addOpenedPopover(this);
 	}
 
-	get focusedElement() {
-		let element = document.activeElement;
-
-		while (element.shadowRoot && element.shadowRoot.activeElement) {
-			element = element.shadowRoot.activeElement;
-		}
-
-		return (element && typeof element.focus === "function") ? element : null;
+	/**
+	 * Override for the _removeOpenedPopup hook, which would otherwise just call removeOpenedPopup(this)
+	 * @private
+	 */
+	_removeOpenedPopup() {
+		removeOpenedPopover(this);
 	}
 
-	applyInitialFocus() {
-		if (this._disableInitialFocus) {
-			return;
-		}
-
-		const element = this.getRootNode().getElementById(this.initialFocus) || document.getElementById(this.initialFocus) || getFirstFocusableElement(this.contentDOM);
-
-		if (element) {
-			element.focus();
-		}
-	}
-
-	resetFocus() {
-		if (!this._focusedElementBeforeOpen) {
-			return;
-		}
-
-		this._focusedElementBeforeOpen.focus();
-		this._focusedElementBeforeOpen = null;
-	}
-
-	shouldCloseDueOverflow(placement, openerRect) {
+	shouldCloseDueToOverflow(placement, openerRect) {
 		const threshold = 32;
-
 		const limits = {
 			"Right": openerRect.right,
 			"Left": openerRect.left,
@@ -441,39 +302,49 @@ class Popover extends UI5Element {
 		return (limits[placement] < 0 || (limits[placement] + threshold > closedPopupParent.innerHeight)) || overflowsBottom || overflowsTop;
 	}
 
+	shouldCloseDueToNoOpener(openerRect) {
+		return openerRect.top === 0
+			&& openerRect.bottom === 0
+			&& openerRect.left === 0
+			&& openerRect.right === 0;
+	}
+
 	reposition() {
+		this.show();
+	}
+
+	show() {
 		const popoverSize = this.popoverSize;
 		const openerRect = this._opener.getBoundingClientRect();
 		const placement = this.calcPlacement(openerRect, popoverSize);
-		const streching = this.horizontalAlign === PopoverHorizontalAlign.Stretch;
+		const stretching = this.horizontalAlign === PopoverHorizontalAlign.Stretch;
 
 		if (this._preventRepositionAndClose) {
 			return this.close();
 		}
 
-		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && streching) {
-			this.style.display = "inline-block";
+		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
+			super.show();
 			this.style.width = this._width;
 			return;
 		}
 
 		this._oldPlacement = placement;
 
+		const popoverOnLeftBorder = this._left === 0;
+		const popoverOnTopBorder = this._top === 0;
+
 		this.actualPlacementType = placement.placementType;
-		this.arrowTranslateX = placement.arrowX;
-		this.arrowTranslateY = placement.arrowY;
+		this.arrowTranslateX = popoverOnLeftBorder ? placement.arrowX - Popover.MIN_OFFSET : placement.arrowX;
+		this.arrowTranslateY = popoverOnTopBorder ? placement.arrowY - Popover.MIN_OFFSET : placement.arrowY;
 
-		this.style.left = `${this._left}px`;
-		this.style.top = `${this._top}px`;
-		this.style.display = "inline-block";
+		this.style.left = `${popoverOnLeftBorder ? Popover.MIN_OFFSET : this._left}px`;
+		this.style.top = `${popoverOnTopBorder ? Popover.MIN_OFFSET : this._top}px`;
+		super.show();
 
-		if (streching && this._width) {
+		if (stretching && this._width) {
 			this.style.width = this._width;
 		}
-	}
-
-	hide() {
-		this.style.display = "none";
 	}
 
 	get popoverSize() {
@@ -489,25 +360,25 @@ class Popover extends UI5Element {
 		}
 
 		this.style.visibility = "hidden";
-		this.style.display = "inline-block";
+		this.style.display = "block";
 
 		rect = this.getBoundingClientRect();
 
 		width = rect.width;
 		height = rect.height;
 
-		this.style.display = "none";
+		this.hide();
 		this.style.visibility = "visible";
 
 		return { width, height };
 	}
 
 	get contentDOM() {
-		return this.shadowRoot.querySelector(".ui5-popover-content");
+		return this.shadowRoot.querySelector(".ui5-popup-content");
 	}
 
 	get arrowDOM() {
-		return this.shadowRoot.querySelector(".ui5-popover-arr");
+		return this.shadowRoot.querySelector(".ui5-popover-arrow");
 	}
 
 	calcPlacement(targetRect, popoverSize) {
@@ -525,7 +396,7 @@ class Popover extends UI5Element {
 
 		const placementType = this.getActualPlacementType(targetRect, popoverSize);
 
-		this._preventRepositionAndClose = this.shouldCloseDueOverflow(placementType, targetRect);
+		this._preventRepositionAndClose = this.shouldCloseDueToNoOpener(targetRect) || this.shouldCloseDueToOverflow(placementType, targetRect);
 
 		const isVertical = placementType === PopoverPlacementType.Top
 			|| placementType === PopoverPlacementType.Bottom;
@@ -598,7 +469,7 @@ class Popover extends UI5Element {
 		const hasHeader = this.header.length || this.headerText;
 
 		if (hasHeader) {
-			const headerDomRef = this.shadowRoot.querySelector(".ui5-popover-header-root")
+			const headerDomRef = this.shadowRoot.querySelector(".ui5-popup-header-root")
 				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
 
 			if (headerDomRef) {
@@ -723,15 +594,38 @@ class Popover extends UI5Element {
 		return top;
 	}
 
+	get isModal() { // Required by Popup.js
+		return this.modal;
+	}
+
+	get _ariaLabelledBy() { // Required by Popup.js
+		return this.ariaLabel ? undefined : "ui5-popup-header";
+	}
+
+	get _ariaModal() { // Required by Popup.js
+		return true;
+	}
+
 	get styles() {
 		return {
+			...super.styles,
 			content: {
 				"max-height": `${this._maxContentHeight}px`,
 			},
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
 			},
-			root: { },
+		};
+	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-popup-root": true,
+			},
+			content: {
+				"ui5-popup-content": true,
+			},
 		};
 	}
 

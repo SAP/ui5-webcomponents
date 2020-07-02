@@ -47,6 +47,7 @@
 
 .ui5-uci-content {
 	flex: 1 1 auto;
+	margin-right: .5rem;
 	min-width: 0; /* fixes chrome overflow issue */
 }
 
@@ -107,9 +108,28 @@ ui5-link.ui5-uci-file-name {
 	margin-right: 0.125rem;
 }
 
+/* Progress Box */
+.ui5-uci-progress-box {
+	width: 20%;
+	min-width: 4rem;
+}
+
 @media(max-width: 30rem) {
 	.ui5-uci-content-and-edit-container {
 		display: block;
+	}
+
+	.ui5-uci-content-and-progress {
+		flex-wrap: wrap;
+	}
+
+	.ui5-uci-progress-box {
+		width: 100%;
+		margin-top: .5rem;
+	}
+	
+	.ui5-uci-content {
+		width: 100%;
 	}
 
 	.ui5-uci-edit-buttons,
@@ -123,22 +143,15 @@ ui5-link.ui5-uci-file-name {
 	}
 }
 
-/* Progress Box */
-.ui5-uci-progress-box {
-	width: 20%;
-	margin-left: 0.5rem;
-	min-width: 4rem;
-}
-
 .ui5-uci-progress-indicator {
 	display: flex;
 	background: var(--sapField_Background);
 	height: 1.125rem;
 	min-height: 1rem;
 	width: 100%;
-	min-width: 4rem;
+	min-width: 3.375rem;
 	margin-bottom: 0.5rem;
-	padding: 5px;
+	padding: 5px 0;
 	box-sizing: border-box;
 }
 

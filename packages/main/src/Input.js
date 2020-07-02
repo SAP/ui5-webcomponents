@@ -13,6 +13,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
@@ -39,6 +40,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
  */
 const metadata = {
 	tag: "ui5-input",
+	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
@@ -270,6 +272,31 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the aria-label attribute for the input
+		 *
+		 * @type {String}
+		 * @since 1.0.0-rc.8
+		 * @private
+		 * @defaultvalue ""
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the input
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
+
+		/**
 		 * @private
 		 */
 		focused: {
@@ -339,13 +366,46 @@ const metadata = {
 		/**
 		 * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.Input#suggestion-item-select
 		 * @param {HTMLElement} item The selected item
 		 * @public
 		 */
-		suggestionItemSelect: {
+		"suggestion-item-select": {
 			detail: {
 				item: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired when the user navigates to a suggestion item via the ARROW keys,
+		 * as a preview, before the final selection.
+		 *
+		 * @event sap.ui.webcomponents.main.Input#suggestion-item-preview
+		 * @param {HTMLElement} item The previewed suggestion item
+		 * @param {HTMLElement} targetRef The DOM ref of the suggestion item.
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		"suggestion-item-preview": {
+			detail: {
+				item: { type: HTMLElement },
+				targetRef: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired when the user scrolls the suggestion popover.
+		 *
+		 * @event sap.ui.webcomponents.main.Input#suggestion-scroll
+		 * @param {Integer} scrollTop The current scroll position
+		 * @param {HTMLElement} scrollContainer The scroll container
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		"suggestion-scroll": {
+			detail: {
+				scrollTop: { type: Integer },
+				scrollContainer: { type: HTMLElement },
 			},
 		},
 	},
@@ -430,7 +490,7 @@ class Input extends UI5Element {
 		this.EVENT_SUBMIT = "submit";
 		this.EVENT_CHANGE = "change";
 		this.EVENT_INPUT = "input";
-		this.EVENT_SUGGESTION_ITEM_SELECT = "suggestionItemSelect";
+		this.EVENT_SUGGESTION_ITEM_SELECT = "suggestion-item-select";
 
 		// all user interactions
 		this.ACTION_ENTER = "enter";
@@ -479,7 +539,7 @@ class Input extends UI5Element {
 
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
-				this.inputDomRef.focus();
+				this.inputDomRef && this.inputDomRef.focus();
 			}
 		}
 
@@ -545,7 +605,7 @@ class Input extends UI5Element {
 		this.previousValue = this.value;
 
 		await this.getInputDOMRef();
-		this._inputIconFocused = event.target === this.querySelector("ui5-icon");
+		this._inputIconFocused = event.target && event.target === this.querySelector("ui5-icon");
 	}
 
 	_onfocusout(event) {
@@ -555,6 +615,13 @@ class Input extends UI5Element {
 		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
 		if (focusedOutToSuggestions	|| focusedOutToValueStateMessage) {
+			event.stopImmediatePropagation();
+			return;
+		}
+
+		const toBeFocused = event.relatedTarget;
+
+		if (toBeFocused && toBeFocused.classList.contains(this._id)) {
 			return;
 		}
 
@@ -576,6 +643,14 @@ class Input extends UI5Element {
 
 	_handleChange(event) {
 		this.fireEvent(this.EVENT_CHANGE);
+	}
+
+	_scroll(event) {
+		const detail = event.detail;
+		this.fireEvent("suggestion-scroll", {
+			scrollTop: detail.scrollTop,
+			scrollContainer: detail.targetRef,
+		});
 	}
 
 	async _handleInput(event) {
@@ -617,6 +692,8 @@ class Input extends UI5Element {
 	}
 
 	_afterClosePopover() {
+		this._announceSelectedItem();
+
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this.blur();
@@ -641,15 +718,17 @@ class Input extends UI5Element {
 	}
 
 	async openPopover() {
-		this._isPopoverOpen = true;
 		this.popover = await this._getPopover();
-		this.popover.openBy(this);
+		if (this.popover) {
+			this._isPopoverOpen = true;
+			this.popover.openBy(this);
+		}
 	}
 
 	closePopover() {
 		if (this.isOpen()) {
 			this._isPopoverOpen = false;
-			this.popover.close();
+			this.popover && this.popover.close();
 		}
 	}
 
@@ -701,6 +780,22 @@ class Input extends UI5Element {
 	previewSuggestion(item) {
 		this.valueBeforeItemSelection = this.value;
 		this.value = item.group ? "" : item.textContent;
+		this._announceSelectedItem();
+		this._previewItem = item;
+	}
+
+	/**
+	 * The suggestion item on preview.
+	 * @type { ui5-suggestion-item }
+	 * @readonly
+	 * @public
+	 */
+	get previewItem() {
+		if (!this._previewItem) {
+			return null;
+		}
+
+		return this.getSuggestionByListItem(this._previewItem);
 	}
 
 	async fireEventByAction(action) {
@@ -762,6 +857,11 @@ class Input extends UI5Element {
 		return this.getInputId();
 	}
 
+	getSuggestionByListItem(item) {
+		const key = parseInt(item.getAttribute("data-ui5-key"));
+		return this.suggestionItems[key];
+	}
+
 	getInputId() {
 		return `${this._id}-inner`;
 	}
@@ -769,12 +869,30 @@ class Input extends UI5Element {
 	/* Suggestions interface  */
 	onItemFocused() {}
 
+	onItemMouseOver(event) {
+		const item = event.target;
+		const suggestion = this.getSuggestionByListItem(item);
+		suggestion.fireEvent("mouseover", { targetRef: item });
+	}
+
+	onItemMouseOut(event) {
+		const item = event.target;
+		const suggestion = this.getSuggestionByListItem(item);
+		suggestion.fireEvent("mouseout", { targetRef: item });
+	}
+
 	onItemSelected(item, keyboardUsed) {
 		this.selectSuggestion(item, keyboardUsed);
 	}
 
 	onItemPreviewed(item) {
 		this.previewSuggestion(item);
+		const suggestionItem = this.getSuggestionByListItem(item);
+
+		this.fireEvent("suggestion-item-preview", {
+			item: suggestionItem,
+			targetRef: item,
+		});
 	}
 
 	onOpen() {}
@@ -790,6 +908,16 @@ class Input extends UI5Element {
 			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
+	}
+
+	_announceSelectedItem() {
+		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
+
+		if (this.Suggestions && this.Suggestions._isItemOnTarget()) {
+			invisibleText.textContent = this.itemSelectionAnnounce;
+		} else {
+			invisibleText.textContent = "";
+		}
 	}
 
 	get _readonly() {
@@ -827,8 +955,13 @@ class Input extends UI5Element {
 				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+				"ariaLabel": getEffectiveAriaLabelText(this),
 			},
 		};
+	}
+
+	get itemSelectionAnnounce() {
+		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : undefined;
 	}
 
 	get classes() {
@@ -857,19 +990,7 @@ class Input extends UI5Element {
 	}
 
 	get valueStateMessageText() {
-		const valueStateMessage = [];
-
-		this.valueStateMessage.forEach(el => {
-			if (el.localName === "slot") {
-				el.assignedNodes({ flatten: true }).forEach(assignedNode => {
-					valueStateMessage.push(assignedNode.cloneNode(true));
-				});
-			} else {
-				valueStateMessage.push(el.cloneNode(true));
-			}
-		});
-
-		return valueStateMessage;
+		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
@@ -896,6 +1017,10 @@ class Input extends UI5Element {
 
 	get suggestionsText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
+	}
+
+	get step() {
+		return this.type === InputType.Number ? "any" : undefined;
 	}
 
 	get _isPhone() {

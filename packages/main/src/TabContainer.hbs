@@ -1,6 +1,6 @@
 <div
 	class="{{classes.root}}"
-	dir="{{rtl}}"
+	dir="{{effectiveDir}}"
 >
 	{{#if tabsAtTheBottom}}
 		{{> contentArea}}
@@ -54,7 +54,13 @@
 	<div class="{{classes.content}}">
 		{{#each items}}
 			{{#unless this.isSeparator}}
-				<div class="ui5-tc__contentItem" id="ui5-tc-contentItem-{{this._position}}" ?hidden="{{this.effectiveHidden}}" role="tabpanel" aria-labelledby="{{this._id}}">
+				<div
+					class="ui5-tc__contentItem"
+					id="ui5-tc-contentItem-{{this._posinset}}"
+					?hidden="{{this.effectiveHidden}}"
+					role="tabpanel"
+					aria-labelledby="{{this._id}}"
+				>
 					<slot name="{{this._individualSlot}}"></slot>
 				</div>
 			{{/unless}}

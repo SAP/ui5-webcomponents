@@ -35,6 +35,7 @@ import {
 import DateTimePickerPopoverTemplate from "./generated/templates/DateTimePickerPopoverTemplate.lit.js";
 
 // Styles
+import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
@@ -44,6 +45,7 @@ const PHONE_MODE_BREAKPOINT = 640; // px
  */
 const metadata = {
 	tag: "ui5-datetime-picker",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.DateTimePicker.prototype */ {
 
 		/**
@@ -169,8 +171,12 @@ class DateTimePicker extends DatePicker {
 		return DateTimePickerPopoverTemplate;
 	}
 
+	static get styles() {
+		return [super.styles, DateTimePickerCss];
+	}
+
 	static get staticAreaStyles() {
-		return [DateTimePickerPopoverCss, ...super.staticAreaStyles];
+		return [...super.staticAreaStyles, DateTimePickerPopoverCss];
 	}
 
 	static async onDefine() {

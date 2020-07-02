@@ -1,10 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import findNodeOwner from "@ui5/webcomponents-base/dist/util/findNodeOwner.js";
+import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -22,6 +21,7 @@ let activeButton = null;
  */
 const metadata = {
 	tag: "ui5-button",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
@@ -151,6 +151,16 @@ const metadata = {
 		ariaLabelledby: {
 			type: String,
 			defaultValue: "",
+		},
+
+		/**
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		ariaExpanded: {
+			type: String,
 		},
 
 		/**
@@ -284,7 +294,7 @@ class Button extends UI5Element {
 			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 
-		this.iconOnly = !this.childNodes.length;
+		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
 	}
 
@@ -307,6 +317,8 @@ class Button extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		event.isMarked = "button";
+
 		if (isSpace(event) || isEnter(event)) {
 			this.active = true;
 		}
@@ -323,21 +335,22 @@ class Button extends UI5Element {
 		this.focused = false;
 	}
 
-	_onfocusin() {
+	_onfocusin(event) {
+		event.isMarked = "button";
 		this.focused = true;
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	get hasButtonType() {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
 
+	get isIconOnly() {
+		return !Array.from(this.childNodes).filter(node => node.nodeType !== Node.COMMENT_NODE).length;
+	}
+
 	get accInfo() {
 		return {
-			"ariaExpanded": this._buttonAccInfo && this._buttonAccInfo.ariaExpanded,
+			"ariaExpanded": this.ariaExpanded || (this._buttonAccInfo && this._buttonAccInfo.ariaExpanded),
 			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
 			"ariaHaspopup": this._buttonAccInfo && this._buttonAccInfo.ariaHaspopup,
 			"title": this._buttonAccInfo && this._buttonAccInfo.title,
@@ -345,28 +358,7 @@ class Button extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		if (!this.ariaLabelledby) {
-			if (this.ariaLabel) {
-				return this.ariaLabel;
-			}
-
-			return undefined;
-		}
-
-		const ids = this.ariaLabelledby.split(" ");
-		const owner = findNodeOwner(this);
-		let result = "";
-
-		ids.forEach((elementId, index) => {
-			const element = owner.querySelector(`[id='${elementId}']`);
-			result += `${element ? element.textContent : ""}`;
-
-			if (index < ids.length - 1) {
-				result += " ";
-			}
-		});
-
-		return result;
+		return getEffectiveAriaLabelText(this);
 	}
 
 	static typeTextMappings() {

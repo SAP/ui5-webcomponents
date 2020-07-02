@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>UploadCollection</title>
+    <script>
+		delete Document.prototype.adoptedStyleSheets
+    </script>
 
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
@@ -101,9 +105,17 @@
 		>
 			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
 		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="keyboardNavigation"
+			file-name="Graph.docx"
+			type="Detail"
+			upload-state="Complete"
+		>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+		</ui5-upload-collection-item>
 	</ui5-upload-collection>
 
-	<ui5-upload-collection id="uploadCollectionDnD" style="height: 30rem;">
+	<ui5-upload-collection id="uploadCollectionDnD">
 		<div class="header" slot="header">
 			<ui5-title>Attachments (0)</ui5-title>
 			<div class="spacer"></div>

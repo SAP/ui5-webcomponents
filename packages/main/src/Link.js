@@ -16,6 +16,7 @@ import linkCss from "./generated/themes/Link.css.js";
  */
 const metadata = {
 	tag: "ui5-link",
+	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Link.prototype */  {
 
 		/**
@@ -231,6 +232,22 @@ class Link extends UI5Element {
 
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
+	}
+
+	_onclick(event) {
+		event.isMarked = "link";
+	}
+
+	_onfocusin(event) {
+		event.isMarked = "link";
+	}
+
+	_onkeydown(event) {
+		event.isMarked = "link";
+	}
+
+	_onkeyup(event) {
+		event.isMarked = "link";
 	}
 }
 

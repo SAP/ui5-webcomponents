@@ -4,6 +4,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -26,7 +27,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-li</code> header.
+		 * Defines the <code>ui5-list</code> header.
 		 * <br><br>
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
@@ -93,8 +94,8 @@ const metadata = {
 		/**
 		 * Defines the mode of the <code>ui5-list</code>.
 		 * <br><br>
-		 * <b>Note:</b> Avalaible options are <code>None</code>, <code>SingleSelect</code>,
-		 * <code>MultiSelect</code>, and <code>Delete</code>.
+		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
+		 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
 		 * @type {ListMode}
 		 * @defaultvalue "None"
@@ -137,7 +138,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the component would fire the <code>loadMore</code> event
+		 * Defines if the component would fire the <code>load-more</code> event
 		 * when the user scrolls to the bottom of the list, and helps achieving an "infinite scroll" effect
 		 * by adding new items each time.
 		 *
@@ -162,6 +163,40 @@ const metadata = {
 		busy: {
 			type: Boolean,
 		},
+
+		/**
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the input
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
+
+		/**
+		 * Used to externally manipulate the role of the list
+		 *
+		 * @private
+		 */
+		_role: {
+			type: String,
+			defaultValue: "listbox",
+			noAttribute: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
@@ -169,11 +204,44 @@ const metadata = {
 		 * Fired when an item is activated, unless the item's <code>type</code> property
 		 * is set to <code>Inactive</code>.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.List#item-click
 		 * @param {HTMLElement} item the clicked item.
 		 * @public
 		 */
-		itemClick: {
+		"item-click": {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired when the <code>Close</code> button of any item is clicked
+		 * <br><br>
+		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification</code> items only,
+		 * not to be confused with <code>item-delete</code>.
+		 *
+		 * @event sap.ui.webcomponents.main.List#item-close
+		 * @param {HTMLElement} item the item about to be closed.
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		"item-close": {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired when the <code>Toggle</code> button of any item is clicked.
+		 * <br><br>
+		 * <b>Note:</b> This event is applicable to <code>ui5-li-notification-group</code> items only.
+		 *
+		 * @event sap.ui.webcomponents.main.List#item-toggle
+		 * @param {HTMLElement} item the toggled item.
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		"item-toggle": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -184,11 +252,12 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the <code>ui5-list</code> <code>mode</code> property is set to <code>Delete</code>.
-		 * @event
+		 *
+		 * @event sap.ui.webcomponents.main.List#item-delete
 		 * @param {HTMLElement} item the deleted item.
 		 * @public
 		 */
-		itemDelete: {
+		"item-delete": {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -196,14 +265,14 @@ const metadata = {
 
 		/**
 		 * Fired when selection is changed by user interaction
-		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+		 * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.List#selection-change
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @param {Array} previouslySelectedItems An array of the previously selected items.
 		 * @public
 		 */
-		selectionChange: {
+		"selection-change": {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
@@ -216,18 +285,18 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The event is fired when the <code>infiniteScroll</code> property is enabled.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.List#load-more
 		 * @public
 		 * @since 1.0.0-rc.6
 		 */
-		loadMore: {},
+		"load-more": {},
 	},
 };
 
 /**
  * @class
  *
- * <h3 class="comment-api-title"> Overview </h3>
+ * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-list</code> component allows displaying a list of items, advanced keyboard
  * handling support for navigating between items, and predefined modes to improve the development efficiency.
@@ -293,10 +362,13 @@ class List extends UI5Element {
 		this._previouslySelectedItem = null;
 
 		this.addEventListener("ui5-_press", this.onItemPress.bind(this));
+		this.addEventListener("ui5-close", this.onItemClose.bind(this));
+		this.addEventListener("ui5-toggle", this.onItemToggle.bind(this));
 		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
-		this.addEventListener("ui5-_forwardAfter", this.onForwardAfter.bind(this));
-		this.addEventListener("ui5-_forwardBefore", this.onForwardBefore.bind(this));
-		this.addEventListener("ui5-_selectionRequested", this.onSelectionRequested.bind(this));
+		this.addEventListener("ui5-_forward-after", this.onForwardAfter.bind(this));
+		this.addEventListener("ui5-_forward-before", this.onForwardBefore.bind(this));
+		this.addEventListener("ui5-_selection-requested", this.onSelectionRequested.bind(this));
+		this.addEventListener("ui5-_focus-requested", this.focusUploadCollectionItem.bind(this));
 	}
 
 	get shouldRenderH1() {
@@ -320,7 +392,15 @@ class List extends UI5Element {
 	}
 
 	get ariaLabelledBy() {
+		if (this.ariaLabelledby || this.ariaLabel) {
+			return undefined;
+		}
+
 		return this.shouldRenderH1 ? this.headerID : undefined;
+	}
+
+	get ariaLabelТxt() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	onBeforeRendering() {
@@ -363,7 +443,7 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", {
+			this.fireEvent("selection-change", {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: event.detail.selectionComponentPressed,
@@ -397,7 +477,7 @@ class List extends UI5Element {
 	}
 
 	handleDelete(item) {
-		this.fireEvent("itemDelete", { item });
+		this.fireEvent("item-delete", { item });
 	}
 
 	deselectSelectedItems() {
@@ -514,14 +594,11 @@ class List extends UI5Element {
 		const target = event.target;
 
 		this._itemNavigation.update(target);
-		this.fireEvent("itemFocused", { item: target });
+		this.fireEvent("item-focused", { item: target });
 	}
 
 	onItemPress(event) {
 		const pressedItem = event.detail.item;
-
-		this.fireEvent("itemPress", { item: pressedItem });
-		this.fireEvent("itemClick", { item: pressedItem });
 
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
 			this._selectionRequested = true;
@@ -535,7 +612,19 @@ class List extends UI5Element {
 			});
 		}
 
+		this.fireEvent("item-press", { item: pressedItem });
+		this.fireEvent("item-click", { item: pressedItem });
+
 		this._selectionRequested = false;
+	}
+
+	// This is applicable to NoficationListItem
+	onItemClose(event) {
+		this.fireEvent("item-close", { item: event.detail.item });
+	}
+
+	onItemToggle(event) {
+		this.fireEvent("item-toggle", { item: event.detail.item });
 	}
 
 	onForwardBefore(event) {
@@ -580,6 +669,18 @@ class List extends UI5Element {
 		if (firstSelectedItem) {
 			firstSelectedItem.focus();
 		}
+	}
+
+	focusItem(item) {
+		item.focus();
+	}
+
+
+	focusUploadCollectionItem(event) {
+		setTimeout(() => {
+			this.setPreviouslyFocusedItem(event.target);
+			this.focusPreviouslyFocusedItem();
+		}, 0);
 	}
 
 	setForwardingFocus(forwardingFocus) {
@@ -643,7 +744,7 @@ class List extends UI5Element {
 		this.previousScrollPosition = scrollTop;
 
 		if (scrollHeight - BUSYINDICATOR_HEIGHT <= height + scrollTop) {
-			this.fireEvent("loadMore");
+			this.fireEvent("load-more");
 		}
 	}
 

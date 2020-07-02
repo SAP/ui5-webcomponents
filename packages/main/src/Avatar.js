@@ -21,6 +21,7 @@ import AvatarBackgroundColor from "./types/AvatarBackgroundColor.js";
  */
 const metadata = {
 	tag: "ui5-avatar",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 
 		/**
@@ -233,6 +234,15 @@ class Avatar extends UI5Element {
 		}
 
 		return this.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
+	}
+
+	get styles() {
+		const image = this.image.replace(/%/g, "%25").replace(/#/g, "%23");
+		return {
+			img: {
+				"background-image": `url("${image}")`,
+			},
+		};
 	}
 }
 

@@ -4,6 +4,8 @@
 	@focusout="{{_onfocusout}}"
 >
 	<div class="ui5-input-content">
+		{{> preContent}}
+
 		<input id="{{_id}}-inner"
 			class="ui5-input-inner"
 			type="{{inputType}}"
@@ -21,6 +23,7 @@
 			aria-describedby="{{accInfo.input.ariaDescribedBy}}"
 			aria-autocomplete="{{accInfo.input.ariaAutoComplete}}"
 			aria-expanded="{{accInfo.input.ariaExpanded}}"
+			aria-label="{{accInfo.input.ariaLabel}}"
 			@input="{{_handleInput}}"
 			@change="{{_handleChange}}"
 			@keydown="{{_onkeydown}}"
@@ -28,6 +31,7 @@
 			@click={{_click}}
 			data-sap-no-tab-ref
 			data-sap-focus-ref
+			step="{{step}}"
 		/>
 		{{#if icon.length}}
 			<div class="ui5-input-icon-root">
@@ -37,6 +41,7 @@
 
 		{{#if showSuggestions}}
 			<span id="{{_id}}-suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
+			<span id="{{_id}}-selectionText" class="ui5-hidden-text" aria-live="polite" role="status"></span>
 		{{/if}}
 
 		{{#if accInfo.input.ariaDescription}}
@@ -50,3 +55,6 @@
 
 	<slot name="formSupport"></slot>
 </div>
+
+
+{{#*inline "preContent"}}{{/inline}}

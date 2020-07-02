@@ -8,7 +8,7 @@ import ListItemBase from "./ListItemBase.js";
 import "./RadioButton.js";
 import "./CheckBox.js";
 import "./Button.js";
-import { DELETE } from "./generated/i18n/i18n-defaults.js";
+import { DELETE, ARIA_LABEL_LIST_ITEM_CHECKBOX } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
@@ -17,6 +17,7 @@ import styles from "./generated/themes/ListItem.css.js";
  * @public
  */
 const metadata = {
+	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.ListItem.prototype */ {
 
 		/**
@@ -61,17 +62,17 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 		/**
 		 * Fired when the user clicks on the detail button when type is <code>Detail</code>.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.ListItem#detail-click
 		 * @public
 		 */
-		detailClick: {},
+		"detail-click": {},
 		_press: {},
 		_focused: {},
-		_focusForward: {},
+		"_selection-requested": {},
 	},
 };
 
@@ -92,11 +93,11 @@ class ListItem extends ListItemBase {
 	}
 
 	static get styles() {
-		return [styles, ListItemBase.styles];
+		return [ListItemBase.styles, styles];
 	}
 
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 
 		this.deactivateByKey = event => {
 			if (isEnter(event)) {
@@ -200,7 +201,7 @@ class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent("_selectionRequested", { item: this, selected: event.target.checked, selectionComponentPressed: true });
+		this.fireEvent("_selection-requested", { item: this, selected: event.target.checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(event) {
@@ -208,7 +209,7 @@ class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.selected, selectionComponentPressed: true });
+		this.fireEvent("_selection-requested", { item: this, selected: !event.target.selected, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -218,11 +219,11 @@ class ListItem extends ListItemBase {
 	}
 
 	onDelete(event) {
-		this.fireEvent("_selectionRequested", { item: this, selectionComponentPressed: false });
+		this.fireEvent("_selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
 	onDetailClick(event) {
-		this.fireEvent("detailClick", { item: this, selected: this.selected });
+		this.fireEvent("detail-click", { item: this, selected: this.selected });
 	}
 
 	fireItemPress(event) {
@@ -281,6 +282,15 @@ class ListItem extends ListItemBase {
 
 	get deleteText() {
 		return this.i18nBundle.getText(DELETE);
+	}
+
+	get _accInfo() {
+		return {
+			role: "option",
+			ariaExpanded: undefined,
+			ariaLevel: undefined,
+			ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
+		};
 	}
 
 	static async onDefine() {

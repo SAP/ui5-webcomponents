@@ -1,12 +1,12 @@
 <div
-		class="ui5-datepicker-root"
+		class="ui5-date-picker-root"
 		style="{{styles.main}}"
 		@keydown={{_onkeydown}}
 >
 	<!-- INPUT -->
 	<ui5-input
 			id="{{_id}}-inner"
-			class="ui5-datepicker-input"
+			class="ui5-date-picker-input"
 			placeholder="{{_placeholder}}"
 			type="{{type}}"
 			value="{{value}}"
@@ -33,7 +33,7 @@
 				@click="{{togglePicker}}"
 				input-icon
 				?pressed="{{_isPickerOpen}}"
-				dir="{{dir}}"
+				dir="{{effectiveDir}}"
 			></ui5-icon>
 		{{/unless}}
 	</ui5-input>

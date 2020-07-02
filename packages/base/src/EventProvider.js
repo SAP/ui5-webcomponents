@@ -34,16 +34,24 @@ class EventProvider {
 		}
 	}
 
+	/**
+	 * Fires an event and returns the results of all event listeners as an array.
+	 * Example: If listeners return promises, you can: await fireEvent("myEvent") to know when all listeners have finished.
+	 *
+	 * @param eventName the event to fire
+	 * @param data optional data to pass to each event listener
+	 * @returns {Array} an array with the results of all event listeners
+	 */
 	fireEvent(eventName, data) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry[eventName];
 
 		if (!eventListeners) {
-			return;
+			return [];
 		}
 
-		eventListeners.forEach(event => {
-			event["function"].call(this, data); // eslint-disable-line
+		return eventListeners.map(event => {
+			return event["function"].call(this, data); // eslint-disable-line
 		});
 	}
 

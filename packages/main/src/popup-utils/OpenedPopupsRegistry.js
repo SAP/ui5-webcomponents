@@ -1,36 +1,37 @@
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 
-let registry = [];
+let openedRegistry = [];
 
-const addOpenedPopup = instance => {
-	if (!registry.includes(instance)) {
-		registry.push(instance);
+const addOpenedPopup = (instance, parentPopovers = []) => {
+	if (!openedRegistry.includes(instance)) {
+		openedRegistry.push({
+			instance,
+			parentPopovers,
+		});
 	}
 
-	if (registry.length === 1) {
+	if (openedRegistry.length === 1) {
 		attachGlobalListener();
 	}
 };
 
 const removeOpenedPopup = instance => {
-	registry = registry.filter(el => {
-		return el !== instance;
+	openedRegistry = openedRegistry.filter(el => {
+		return el !== instance.instance;
 	});
 
-	if (!registry.length) {
+	if (!openedRegistry.length) {
 		detachGlobalListener();
 	}
 };
 
 const getOpenedPopups = () => {
-	return [...registry];
+	return [...openedRegistry];
 };
 
 const _keydownListener = event => {
 	if (isEscape(event)) {
-		const topPopup = registry[registry.length - 1];
-
-		topPopup && topPopup.close();
+		openedRegistry.pop().instance.close(true);
 	}
 };
 

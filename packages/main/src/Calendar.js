@@ -115,11 +115,11 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Fired when the selected dates changed.
-		 * @event
+		 * @event sap.ui.webcomponents.main.Calendar#selected-dates-change
 		 * @param {Array} dates The selected dates' timestamps
 		 * @public
 		 */
-		selectedDatesChange: { type: Array },
+		"selected-dates-change": { type: Array },
 	},
 };
 
@@ -127,7 +127,7 @@ const metadata = {
  * @class
  *
  * The <code>ui5-calendar</code> can be used standale to display the years, months, weeks and days,
- * but the main purpose of the <code>ui5-calendar</code> is to be used within a <code>ui5-datepicker</code>.
+ * but the main purpose of the <code>ui5-calendar</code> is to be used within a <code>ui5-date-picker</code>.
  *
  * @constructor
  * @author SAP SE
@@ -308,7 +308,7 @@ class Calendar extends UI5Element {
 	_handleSelectedDatesChange(event) {
 		this.selectedDates = [...event.detail.dates];
 
-		this.fireEvent("selectedDatesChange", { dates: event.detail.dates });
+		this.fireEvent("selected-dates-change", { dates: event.detail.dates });
 	}
 
 	_handleMonthNavigate(event) {

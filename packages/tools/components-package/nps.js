@@ -1,9 +1,9 @@
 const path = require("path");
 
 const LIB = path.join(__dirname, `../lib/`);
-const NODE_MODULES_PATH = path.join(__dirname, `../../../node_modules/`);
 const serveConfig = path.join(__dirname, `serve.json`);
-const polyfillPath = path.join(NODE_MODULES_PATH, `/@webcomponents/webcomponentsjs/**/*.*`);
+const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
+const polyfillPath = path.join(polyfillDir, "/**/*.*");
 
 const getScripts = (options) => {
 
@@ -40,14 +40,14 @@ const getScripts = (options) => {
 		},
 		copy: {
 			default: "nps copy.src copy.test copy.webcomponents-polyfill",
-			src: "copy-and-watch \"src/**/*.js\" dist/",
-			test: "copy-and-watch \"test/**/*.*\" dist/test-resources",
-			"webcomponents-polyfill": `copy-and-watch "${polyfillPath}" dist/webcomponentsjs/`,
+			src: `node "${LIB}/copy-and-watch/index.js" "src/**/*.js" dist/`,
+			test: `node "${LIB}/copy-and-watch/index.js" "test/**/*.*" dist/test-resources`,
+			"webcomponents-polyfill": `node "${LIB}/copy-and-watch/index.js" "${polyfillPath}" dist/webcomponentsjs/`,
 		},
 		watch: {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
-			src: 'nps "copy.src --watch --skip-initial-copy"',
-			test: 'nps "copy.test --watch --skip-initial-copy"',
+			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
+			test: 'nps "copy.test --watch --safe --skip-initial-copy"',
 			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV",
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
@@ -61,13 +61,14 @@ const getScripts = (options) => {
 		start: "nps prepare dev",
 		serve: {
 			default: "nps serve.prepare serve.run",
-			prepare: `copy-and-watch "${serveConfig}" dist/`,
+			prepare: `node "${LIB}/copy-and-watch/index.js" "${serveConfig}" dist/`,
 			run: `serve --no-clipboard -l ${port} dist`,
 		},
 		test: {
 			// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
 			default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
 			run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
+			spec: "wdio run config/wdio.conf.js",
 		},
 	};
 

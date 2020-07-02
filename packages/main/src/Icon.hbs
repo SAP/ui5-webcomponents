@@ -1,12 +1,18 @@
 <svg
 	class="ui5-icon-root"
-	dir="{{dir}}"
+	tabindex="{{tabIndex}}"
+	dir="{{_dir}}"
 	viewBox="0 0 512 512"
-	role="img"
+	role="{{role}}"
 	focusable="false"
 	preserveAspectRatio="xMidYMid meet"
 	aria-label="{{accessibleNameText}}"
 	xmlns="http://www.w3.org/2000/svg"
+	@focusin={{_onfocusin}}
+	@focusout={{_onfocusout}}
+	@keydown={{_onkeydown}}
+	@keyup={{_onkeyup}}
+	@click={{_onclick}}
 >
 	{{#if hasIconTooltip}}
 		<title id="{{_id}}-tooltip">{{accessibleNameText}}</title>

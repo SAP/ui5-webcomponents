@@ -4,14 +4,16 @@
 		_disable-initial-focus
 		placement-type="Bottom"
 		horizontal-align="Left"
-		@ui5-afterOpen="{{_afterOpenPopover}}"
-		@ui5-afterClose="{{_afterClosePopover}}"
+		@ui5-after-open="{{_afterOpenPopover}}"
+		@ui5-after-close="{{_afterClosePopover}}"
+		@scroll="{{_scroll}}"
 	>
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header">
 			<div class="row">
 				<span>{{_headerTitleText}}</span>
 				<ui5-button
+					class="ui5-responsive-popover-close-btn"
 					icon="decline"
 					design="Transparent"
 					@click="{{_closeRespPopover}}"
@@ -47,11 +49,10 @@
 		{{/if}}
 	{{/unless}}
 
-
 		<ui5-list separators="Inner">
 			{{#each suggestionsTexts}}
 				{{#if group}}
-					<ui5-li-groupheader>{{ this.text }}</ui5-li-groupheader>
+					<ui5-li-groupheader data-ui5-key="{{key}}">{{ this.text }}</ui5-li-groupheader>
 				{{else}}
 					<ui5-li
 						image="{{this.image}}"
@@ -59,7 +60,8 @@
 						description="{{this.description}}"
 						info="{{this.info}}"
 						info-state="{{this.infoState}}"
-						@ui5-_itemPress="{{ fnOnSuggestionItemPress }}"
+						@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
+						data-ui5-key="{{key}}"
 					>{{ this.text }}</ui5-li>
 				{{/if}}
 			{{/each}}
@@ -77,6 +79,7 @@
 {{#if hasValueStateMessage}}
 		<ui5-popover
 			skip-registry-update
+			_disable-initial-focus
 			no-padding
 			no-arrow
 			class="ui5-valuestatemessage-popover"

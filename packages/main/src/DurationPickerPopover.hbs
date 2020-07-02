@@ -1,43 +1,48 @@
 <ui5-responsive-popover
-    allow-target-overlap="{{_respPopover.allowTargetOverlap}}"
-    placement-type="{{_respPopover.placementType}}"
-    no-arrow
+	allow-target-overlap="{{_respPopover.allowTargetOverlap}}"
+	placement-type="{{_respPopover.placementType}}"
 	_hide-header
-    horizontal-align="{{_respPopover.horizontalAlign}}"
-    stay-open-on-scroll="{{_respPopover.stayOpenOnScroll}}"
-    @ui5-afterClose="{{_respPopover._onAfterClose}}"
-    @keydown="{{_handleKeysDown}}"
-
+	no-arrow
+	no-stretch
+	horizontal-align="{{_respPopover.horizontalAlign}}"
+	stay-open-on-scroll="{{_respPopover.stayOpenOnScroll}}"
+	@ui5-after-close="{{_respPopover._onAfterClose}}"
+	@keydown="{{_handleKeysDown}}"
 >
-    <div class="{{classes.container}}">
-        <ui5-wheelslider
-            cyclic="true"
-            ._items="{{hoursArray}}"
-            value="{{selectedHours}}"
-            class="ui5-duration-picker-wheelslider ui5-duration-picker-hours-wheelslider"
-            label = "{{hoursSliderTitle}}"
-        ></ui5-wheelslider>
-        <ui5-wheelslider
-            cyclic="true"
-            ._items="{{minutesArray}}"
-            value="{{selectedMinutes}}"
-            class="ui5-duration-picker-wheelslider ui5-duration-picker-minutes-wheelslider"
-            label = "{{minutesSliderTitle}}"
-        ></ui5-wheelslider>
-        {{#if showSeconds}}
-            <ui5-wheelslider
-                cyclic="true"
-                ._items="{{secondsArray}}"
-                value="{{selectedSeconds}}"
-                class="ui5-duration-picker-wheelslider ui5-duration-picker-seconds-wheelslider"
-                label = "{{secondsSliderTitle}}"
-            ></ui5-wheelslider>
-        {{/if}}
-    </div>
+	<div class="{{classes.container}}">
+		{{#unless hideHours}}
+			<ui5-wheelslider
+				cyclic="true"
+				._items="{{hoursArray}}"
+				value="{{selectedHours}}"
+				class="ui5-duration-picker-wheelslider ui5-duration-picker-hours-wheelslider"
+				label = "{{hoursSliderTitle}}"
+			></ui5-wheelslider>
+		{{/unless}}
 
-    <div slot="footer" class="ui5-duration-picker-footer" @keydown={{_onfooterkeydown}}>
-        <ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
-        <ui5-button id="close" design="Transparent" @click="{{togglePicker}}">{{cancelButtonLabel}}</ui5-button>
-    </div>
-    {{!-- <div>hi</div> --}}
+		{{#unless hideMinutes}}
+			<ui5-wheelslider
+				cyclic="true"
+				._items="{{minutesArray}}"
+				value="{{selectedMinutes}}"
+				class="ui5-duration-picker-wheelslider ui5-duration-picker-minutes-wheelslider"
+				label = "{{minutesSliderTitle}}"
+			></ui5-wheelslider>
+		{{/unless}}
+
+		{{#unless hideSeconds}}
+			<ui5-wheelslider
+				cyclic="true"
+				._items="{{secondsArray}}"
+				value="{{selectedSeconds}}"
+				class="ui5-duration-picker-wheelslider ui5-duration-picker-seconds-wheelslider"
+				label = "{{secondsSliderTitle}}"
+			></ui5-wheelslider>
+		{{/unless}}
+	</div>
+
+	<div slot="footer" class="ui5-duration-picker-footer" @keydown={{_onfooterkeydown}}>
+		<ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
+		<ui5-button id="close" design="Transparent" @click="{{togglePicker}}">{{cancelButtonLabel}}</ui5-button>
+	</div>
 </ui5-responsive-popover>

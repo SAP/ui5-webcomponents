@@ -1,6 +1,7 @@
 import DataType from "./types/DataType.js";
 import isDescendantOf from "./util/isDescendantOf.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
+import isSlot from "./util/isSlot.js";
 
 /**
  *
@@ -38,6 +39,14 @@ class UI5ElementMetadata {
 	 */
 	getTag() {
 		return this.metadata.tag;
+	}
+
+	/**
+	 * Used to get the tag we need to register for backwards compatibility
+	 * @public
+	 */
+	getAltTag() {
+		return this.metadata.altTag;
 	}
 
 	/**
@@ -125,6 +134,14 @@ class UI5ElementMetadata {
 	getEvents() {
 		return this.metadata.events || {};
 	}
+
+	/**
+	 * Determines whether this UI5 Element has any translatable texts (needs to be invalidated upon language change)
+	 * @returns {boolean}
+	 */
+	isLanguageAware() {
+		return !!this.metadata.languageAware;
+	}
 }
 
 const validateSingleProperty = (value, propData) => {
@@ -150,10 +167,7 @@ const validateSingleSlot = (value, slotData) => {
 	}
 
 	const getSlottedNodes = el => {
-		const isTag = el instanceof HTMLElement;
-		const isSlot = isTag && el.localName === "slot";
-
-		if (isSlot) {
+		if (isSlot(el)) {
 			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
 		}
 

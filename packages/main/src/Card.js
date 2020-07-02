@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
@@ -22,6 +21,7 @@ import cardCss from "./generated/themes/Card.css.js";
  */
 const metadata = {
 	tag: "ui5-card",
+	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -106,11 +106,11 @@ const metadata = {
 		 * by mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
-		 * @event
+		 * @event sap.ui.webcomponents.main.Card#header-click
 		 * @public
 		 * @since 0.10.0
 		 */
-		headerClick: {},
+		"header-click": {},
 	},
 };
 
@@ -197,10 +197,6 @@ class Card extends UI5Element {
 		return !!(this.heading || this.subheading || this.status || this.avatar);
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
-	}
-
 	get ariaCardRoleDescription() {
 		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
 	}
@@ -230,7 +226,7 @@ class Card extends UI5Element {
 
 	_headerClick() {
 		if (this.headerInteractive) {
-			this.fireEvent("headerClick");
+			this.fireEvent("header-click");
 		}
 	}
 
@@ -245,7 +241,7 @@ class Card extends UI5Element {
 		this._headerActive = enter || space;
 
 		if (enter) {
-			this.fireEvent("headerClick");
+			this.fireEvent("header-click");
 			return;
 		}
 
@@ -264,7 +260,7 @@ class Card extends UI5Element {
 		this._headerActive = false;
 
 		if (space) {
-			this.fireEvent("headerClick");
+			this.fireEvent("header-click");
 		}
 	}
 }

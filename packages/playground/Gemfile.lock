@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    UI5-Web-Components-Playground (1.0.0.pre.rc.6)
+    UI5-Web-Components-Playground (1.0.0.pre.rc.7)
       jekyll (~> 3.8.5)
       jekyll-seo-tag (~> 2.0)
       rake (~> 12.3.1)
@@ -17,7 +17,9 @@ GEM
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
     eventmachine (1.2.7)
+    eventmachine (1.2.7-x64-mingw32)
     ffi (1.11.1)
+    ffi (1.11.1-x64-mingw32)
     forwardable-extended (2.6.0)
     http_parser.rb (0.6.0)
     i18n (0.9.5)

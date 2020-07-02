@@ -49,7 +49,10 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  * @public
  */
 const metadata = {
-	tag: "ui5-timepicker",
+	tag: "ui5-time-picker",
+	altTag: "ui5-timepicker",
+	languageAware: true,
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
 		/**
 		 * Defines a formatted time value.
@@ -65,11 +68,11 @@ const metadata = {
 
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
-		 * <code>ui5-timepicker</code> has no value.
+		 * <code>ui5-time-picker</code> has no value.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
-		 * Passing an empty string as the value of this property will make the <code>ui5-timepicker</code> appear empty - without placeholder or format pattern.
+		 * Passing an empty string as the value of this property will make the <code>ui5-time-picker</code> appear empty - without placeholder or format pattern.
 		 *
 		 * @type {string}
 		 * @defaultvalue undefined
@@ -97,7 +100,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-timepicker</code>.
+		 * Defines the value state of the <code>ui5-time-picker</code>.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -118,7 +121,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-timepicker</code> is displayed as disabled.
+		 * Determines whether the <code>ui5-time-picker</code> is displayed as disabled.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -129,7 +132,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-timepicker</code> is displayed as readonly.
+		 * Determines whether the <code>ui5-time-picker</code> is displayed as readonly.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -161,7 +164,22 @@ const metadata = {
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
-		//
+		/**
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-time-picker</code>.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 * <br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+		 * when the <code>ui5-time-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * @type {HTMLElement}
+		 * @since 1.0.0-rc.8
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
 		/**
@@ -173,7 +191,7 @@ const metadata = {
 		*/
 		change: {},
 		/**
-		 * Fired when the value of the <code>ui5-timepicker</code> is changed at each key stroke.
+		 * Fired when the value of the <code>ui5-time-picker</code> is changed at each key stroke.
 		 *
 		 * @event
 		 * @public
@@ -186,8 +204,8 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-timepicker</code> component provides an input field with assigned sliders which opens on user action.
- * The <code>ui5-timepicker</code> allows users to select a localized time using touch,
+ * The <code>ui5-time-picker</code> component provides an input field with assigned sliders which opens on user action.
+ * The <code>ui5-time-picker</code> allows users to select a localized time using touch,
  * mouse, or keyboard input. It consists of two parts: the time input field and the
  * sliders.
  *
@@ -200,7 +218,7 @@ const metadata = {
  * <br><br>
  * When the user makes an entry and chooses the enter key, the sliders shows the corresponding time.
  * When the user directly triggers the sliders display, the actual time is displayed.
- * For the <code>ui5-timepicker</code>
+ * For the <code>ui5-time-picker</code>
  *
  * <h3>Formatting</h3>
  *
@@ -221,7 +239,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TimePicker
  * @extends UI5Element
- * @tagname ui5-timepicker
+ * @tagname ui5-time-picker
  * @public
  * @since 1.0.0-rc.6
  */
@@ -257,15 +275,14 @@ class TimePicker extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [TimePickerPopoverCss, ResponsivePopoverCommonCss];
+		return [ResponsivePopoverCommonCss, TimePickerPopoverCss];
 	}
 
 
 	constructor() {
 		super();
 
-		this.readonly = false;
-		this.disabled = false;
+		this.prevValue = null;
 		this._isPickerOpen = false;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
@@ -301,12 +318,12 @@ class TimePicker extends UI5Element {
 		this._initHoursFormatParameters();
 	}
 
-	_handleInputClick() {
+	async _handleInputClick() {
 		if (this._isPickerOpen) {
 			return;
 		}
 
-		const inputField = this._getInputField();
+		const inputField = await this._getInputField();
 
 		if (inputField) {
 			inputField.select();
@@ -472,19 +489,19 @@ class TimePicker extends UI5Element {
 	}
 
 	get secondsSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-timepicker-seconds-wheelslider");
+		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-time-picker-seconds-wheelslider");
 	}
 
 	get minutesSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-timepicker-minutes-wheelslider");
+		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-time-picker-minutes-wheelslider");
 	}
 
 	get hoursSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-timepicker-hours-wheelslider");
+		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-time-picker-hours-wheelslider");
 	}
 
 	get periodsSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-timepicker-period-wheelslider");
+		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-time-picker-period-wheelslider");
 	}
 
 	submitPickers() {
@@ -495,25 +512,32 @@ class TimePicker extends UI5Element {
 			periodsSlider = this.periodsSlider,
 			minutes = minutesSlider ? minutesSlider.getAttribute("value") : "0",
 			seconds = secondsSlider ? secondsSlider.getAttribute("value") : "0",
-			period = periodsSlider ? periodsSlider.getAttribute("value") : this.periodsArray[0];
+			period = periodsSlider ? periodsSlider.getAttribute("value") : this.periodsArray[0],
+			isTwelveHoursFormat = this._hoursParameters.isTwelveHoursFormat;
 
 		let hours = hoursSlider ? hoursSlider.getAttribute("value") : this._hoursParameters.minHour.toString();
 
-		if (period === this.periodsArray[0]) { // AM
-			hours = hours === "12" ? 0 : hours;
-		}
+		if (isTwelveHoursFormat) {
+			if (period === this.periodsArray[0]) { // AM
+				hours = hours === "12" ? 0 : hours;
+			}
 
-		if (period === this.periodsArray[1]) { // PM
-			hours = hours === "12" ? hours : hours * 1 + 12;
+			if (period === this.periodsArray[1]) { // PM
+				hours = hours === "12" ? hours : hours * 1 + 12;
+			}
 		}
 
 		selectedDate.setHours(hours);
 		selectedDate.setMinutes(minutes);
 		selectedDate.setSeconds(seconds);
 
+		this.setPrevValue(this.value);
 		this.setValue(this.getFormat().format(selectedDate));
 
-		this.fireEvent("change", { value: this.value, valid: true });
+		if (this.prevValue !== this.value) {
+			this.fireEvent("change", { value: this.value, valid: true });
+			this.previousValue = this.value;
+		}
 
 		this.closePicker();
 	}
@@ -617,11 +641,11 @@ class TimePicker extends UI5Element {
 		if (isTabNext(e) && e.target === this._slidersDomRefs[this._slidersDomRefs.length - 1]) {
 			const responsivePopover = await this._getPopover();
 			e.preventDefault();
-			responsivePopover.querySelector(".ui5-timepicker-footer").firstElementChild.focus();
+			responsivePopover.querySelector(".ui5-time-picker-footer").firstElementChild.focus();
 		} else if (isTabPrevious(e) && e.target === this._slidersDomRefs[0]) {
 			const responsivePopover = await this._getPopover();
 			e.preventDefault();
-			responsivePopover.querySelector(`.ui5-timepicker-footer`).lastElementChild.focus();
+			responsivePopover.querySelector(`.ui5-time-picker-footer`).lastElementChild.focus();
 		}
 	}
 
@@ -678,6 +702,22 @@ class TimePicker extends UI5Element {
 		} else {
 			this.valueState = ValueState.Error;
 		}
+	}
+
+	setPrevValue(value) {
+		if (this.isValid(value)) {
+			this.prevValue = this.normalizeValue(value);
+		}
+	}
+
+	/**
+	 * Formats a Java Script date object into a string representing a locale date and time
+	 * according to the <code>formatPattern</code> property of the TimePicker instance
+	 * @param {object} oDate A Java Script date object to be formatted as string
+	 * @public
+	 */
+	formatValue(oDate) {
+		return this.getFormat().format(oDate);
 	}
 
 	_getSlidersContained() {
@@ -748,7 +788,7 @@ class TimePicker extends UI5Element {
 	get classes() {
 		return {
 			container: {
-				"ui5-timepicker-sliders-container": true,
+				"ui5-time-picker-sliders-container": true,
 				"ui5-phone": isPhone(),
 			},
 		};

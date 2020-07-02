@@ -3,6 +3,8 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import ToggleButton from "./ToggleButton.js";
 
@@ -17,6 +19,7 @@ import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
  */
 const metadata = {
 	tag: "ui5-segmentedbutton",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */  {},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
@@ -41,11 +44,11 @@ const metadata = {
 		/**
 		 * Fired when the selected button changes.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.SegmentedButton#selection-change
 		 * @param {HTMLElement} selectedButton the pressed button.
 		 * @public
 		 */
-		selectionChange: {
+		"selection-change": {
 			detail: {
 				selectedButton: { type: HTMLElement },
 			},
@@ -125,8 +128,32 @@ class SegmentedButton extends UI5Element {
 	}
 
 	async onAfterRendering() {
-		await Promise.all(this.buttons.map(button => button._waitForDomRef));
-		this.widths = this.buttons.map(button => button.offsetWidth);
+		await this.measureButtonsWidth();
+	}
+
+	prepareToMeasureButtons() {
+		this.style.width = "";
+		this.buttons.forEach(button => {
+			button.style.width = "";
+		});
+	}
+
+	async measureButtonsWidth() {
+		await RenderScheduler.whenDOMUpdated();
+		this.prepareToMeasureButtons();
+
+		this.widths = this.buttons.map(button => {
+			// +1 is added because for width 100.44px the offsetWidth property returns 100px and not 101px
+			let width = button.offsetWidth + 1;
+
+			if (isIE()) {
+				// in IE we are adding 1 one px beacause the width of the border on a button in the middle is not calculated and if the
+				// longest button is in the middle, it truncates
+				width += 1;
+			}
+
+			return width;
+		});
 	}
 
 	initItemNavigation() {
@@ -156,7 +183,7 @@ class SegmentedButton extends UI5Element {
 				this._selectedButton.pressed = false;
 			}
 			this._selectedButton = event.target;
-			this.fireEvent("selectionChange", {
+			this.fireEvent("selection-change", {
 				selectedButton: this._selectedButton,
 			});
 		}
@@ -184,7 +211,12 @@ class SegmentedButton extends UI5Element {
 		}
 	}
 
-	_handleResize() {
+	async _handleResize() {
+		const buttonsHaveWidth = this.widths && this.widths.some(button => button.offsetWidth > 2); // 2 are the pixel's added for rounding & IE
+		if (!buttonsHaveWidth) {
+			await this.measureButtonsWidth();
+		}
+
 		const parentWidth = this.parentNode.offsetWidth;
 
 		if (!this.style.width || this.percentageWidthSet) {

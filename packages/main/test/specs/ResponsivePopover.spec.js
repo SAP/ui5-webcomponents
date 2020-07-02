@@ -10,7 +10,7 @@ describe("ResponsivePopover general interaction", () => {
 		btnOpenPopover.click();
 		
 		const popover = browser.$("#respPopover");
-		const header = popover.shadow$(".ui5-popover-header-root");
+		const header = popover.shadow$(".ui5-popup-header-root");
 
 		assert.ok(popover.isDisplayedInViewport(), "ResponsivePopover is opened.");
 		assert.ok(header.isExisting(), "Header is displayed.");
@@ -25,7 +25,7 @@ describe("ResponsivePopover general interaction", () => {
 		btnOpenPopover.click();
 
 		const popover = browser.$("#respPopover3");
-		const header = popover.shadow$(".ui5-popover-header-root");
+		const header = popover.shadow$(".ui5-popup-header-root");
 
 		assert.ok(popover.isDisplayedInViewport(), "ResponsivePopover is opened.");
 		assert.ok(!header.isExisting(), "Header is not displayed.");

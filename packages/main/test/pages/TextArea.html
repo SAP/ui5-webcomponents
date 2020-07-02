@@ -5,8 +5,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<title>Playground</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TextArea</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
@@ -28,13 +28,6 @@
 		html,
 		body {
 			margin: 0;
-		}
-
-		.header {
-			display: flex;
-			justify-content: center;
-			height: 3rem;
-			background: #3f5161;
 		}
 
 		.group {
@@ -65,10 +58,6 @@
 	</head>
 
 	<body style="background-color: var(--sapBackgroundColor);">
-
-	<header class="header">
-		<ui5-title class="header-title">Evoground</ui5-title>
-	</header>
 
 	<section class="group">
 		<ui5-title>Value State Message</ui5-title>
@@ -188,6 +177,26 @@
 			show-exceeded-text
 		>
 		</ui5-textarea>
+	</section>
+
+	<section class="group">
+		<ui5-title>Growing: growing-max-lines="1"</ui5-title>
+		<br>
+		<ui5-textarea growing growing-max-lines="1"></ui5-textarea>
+
+		<ui5-title>Growing: growing-max-lines="4"</ui5-title>
+		<br>
+		<ui5-textarea growing growing-max-lines="4"></ui5-textarea>
+	</section>
+
+	<section class="group sapUiSizeCompact">
+		<ui5-title>Growing: growing-max-lines="1" (compact)</ui5-title>
+		<br>
+		<ui5-textarea growing growing-max-lines="1"></ui5-textarea>
+
+		<ui5-title>Growing: growing-max-lines="4" (compact)</ui5-title>
+		<br>
+		<ui5-textarea growing growing-max-lines="4"></ui5-textarea>
 	</section>
 
 	<script>

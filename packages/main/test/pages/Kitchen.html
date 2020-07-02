@@ -3,7 +3,7 @@
 
 <head>
 	<title>ui5 webcomponents</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
@@ -54,7 +54,7 @@
 			<ui5-li id="arg1" icon="developer-settings">ui5-button</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-card</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-checkbox</ui5-li>
-			<ui5-li id="ch1" icon="developer-settings">ui5-datepicker</ui5-li>
+			<ui5-li id="ch1" icon="developer-settings">ui5-date-picker</ui5-li>
 			<ui5-li id="arg1" icon="developer-settings" selected>ui5-dialog</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-icon</ui5-li>
 			<ui5-li id="arg1" icon="developer-settings">ui5-label</ui5-li>
@@ -327,8 +327,18 @@
 		</section>
 
 		<section style="display: flex;flex-direction: row; justify-content: space-around">
-			<ui5-datepicker style="width:40%" id="myDatepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-datepicker>
-			<ui5-datepicker style="width:40%" id="myDatepicker"></ui5-datepicker>
+			<ui5-date-picker style="width:40%" id="myDatepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-date-picker>
+			<ui5-date-picker style="width:40%" id="myDatepicker1"></ui5-date-picker>
+		</section>
+
+		<section style="display: flex;flex-direction: row; justify-content: space-around">
+			<ui5-datetime-picker style="width:40%" id="myDateTimepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-datetime-picker>
+			<ui5-datetime-picker style="width:40%" id="myDateTimepicker1"></ui5-datetime-picker>
+		</section>
+
+		<section style="display: flex;flex-direction: row; justify-content: space-around">
+			<ui5-duration-picker value="05:10:02" seconds-step="5" id="duration-picker6"></ui5-duration-picker> 
+			<ui5-time-picker></ui5-time-picker>
 		</section>
 
 		<section class="row">
@@ -381,6 +391,51 @@
 						<ui5-button>Gravity</ui5-button>
 					</ui5-tab>
 				</ui5-tabcontainer>
+
+
+				<ui5-tree id="tree" no-data-text="No data" mode="MultiSelect" style="margin-top: 5rem;">
+					<div slot="header" style="margin: .25rem; display: flex; align-items: center; justify-content: space-around;">
+						<ui5-title>My tree</ui5-title>
+						<div class="spacer"></div>
+						<ui5-select id="modeSelect">
+							<ui5-option>None</ui5-option>
+							<ui5-option>SingleSelect</ui5-option>
+							<ui5-option>SingleSelectBegin</ui5-option>
+							<ui5-option>SingleSelectEnd</ui5-option>
+							<ui5-option selected>MultiSelect</ui5-option>
+			
+							<ui5-option>Delete</ui5-option>
+						</ui5-select>
+						<ui5-button id="expandLevel1" icon="expand">Expand Level 1</ui5-button>
+						<ui5-button id="expandLevel2" icon="expand">Expand Level 2</ui5-button>
+						<ui5-button id="expandAll" icon="expand-all">Expand All</ui5-button>
+						<ui5-button id="collapseAll" icon="collapse-all">Collapse All</ui5-button>
+					</div>
+			
+					<ui5-tree-item expanded text="Tree 1" icon="paste" selected>
+						<ui5-tree-item expanded text="Tree 1.1" selected>
+							<ui5-tree-item text="Tree 1.1.1"></ui5-tree-item>
+							<ui5-tree-item text="Tree 1.1.2"></ui5-tree-item>
+						</ui5-tree-item>
+					</ui5-tree-item>
+			
+					<ui5-tree-item text="Tree 2" icon="copy">
+						<ui5-tree-item text="Tree 2.1">
+							<ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
+							<ui5-tree-item text="Tree 2.1.2">
+								<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+								<ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+								<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+								<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+							</ui5-tree-item>
+						</ui5-tree-item>
+						<ui5-tree-item text="Tree 2.2"></ui5-tree-item>
+					</ui5-tree-item>
+			
+					<ui5-tree-item expanded text="Tree 3 (no icon)">
+					</ui5-tree-item>
+			
+				</ui5-tree>
 		</section>
 
 		<section class="row">

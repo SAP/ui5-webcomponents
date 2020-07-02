@@ -1,7 +1,7 @@
 <li
 	tabindex="{{_tabIndex}}"
 	class="{{classes.main}}"
-	dir="{{rtl}}"
+	dir="{{effectiveDir}}"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 	@keyup="{{_onkeyup}}"
@@ -12,8 +12,12 @@
 	@touchend="{{_ontouchend}}"
 	@click="{{_onclick}}"
 	aria-selected="{{ariaSelected}}"
-	role="option"
+	role="{{_accInfo.role}}"
+	aria-expanded="{{_accInfo.ariaExpanded}}"
+	aria-level="{{_accInfo.ariaLevel}}"
 >
+		{{> listItemPreContent}}
+
 		{{#if placeSelectionElementBefore}}
 			{{> selectionElement}}
 		{{/if}}
@@ -40,7 +44,7 @@
 		{{/if}}
 </li>
 
-
+{{#*inline "listItemPreContent"}}{{/inline}}
 {{#*inline "listItemContent"}}{{/inline}}
 {{#*inline "imageBegin"}}{{/inline}}
 {{#*inline "iconBegin"}}{{/inline}}
@@ -65,6 +69,7 @@
 				id="{{_id}}-multiSelectionElement"
 				class="ui5-li-multisel-cb"
 				?checked="{{selected}}"
+				aria-label="{{_accInfo.ariaLabel}}"
 				@click="{{onMultiSelectionComponentPress}}">
 		</ui5-checkbox>
 	{{/if}}

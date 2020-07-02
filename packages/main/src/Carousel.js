@@ -35,6 +35,7 @@ import CarouselCss from "./generated/themes/Carousel.css.js";
  */
 const metadata = {
 	tag: "ui5-carousel",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
 		 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
@@ -98,6 +99,18 @@ const metadata = {
 		selectedIndex: {
 			type: Integer,
 			defaultValue: 0,
+		},
+
+		/**
+		 * Defines when the <code>load-more</code> event is thrown. If not applied the event will not be thrown.
+		 * @type {Integer}
+		 * @defaultvalue 1
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		infiniteScrollOffset: {
+			type: Integer,
+			defaultValue: 1,
 		},
 
 		/**
@@ -168,6 +181,15 @@ const metadata = {
 				selectedIndex: { type: Integer },
 			},
 		},
+
+		/**
+		 * Fired for the last items of the <code>ui5-carousel</code> if it is scrolled and the direction of scrolling is to the end.
+		 * The number of items for which the event is thrown is controlled by the <code>infiniteScrollOffset</code> property.
+		 * @event sap.ui.webcomponents.main.Carousel#load-more
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		"load-more": {},
 	},
 };
 
@@ -332,6 +354,8 @@ class Carousel extends UI5Element {
 		if (this.selectedIndex + 1 > this.pagesCount - 1) {
 			if (this.cyclic) {
 				this.selectedIndex = 0;
+			} else {
+				return;
 			}
 		} else {
 			++this.selectedIndex;
@@ -339,6 +363,10 @@ class Carousel extends UI5Element {
 
 		if (peviousSelectedIndex !== this.selectedIndex) {
 			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		}
+
+		if (this.pagesCount - this.selectedIndex <= this.infiniteScrollOffset + 1) {
+			this.fireEvent("load-more");
 		}
 	}
 

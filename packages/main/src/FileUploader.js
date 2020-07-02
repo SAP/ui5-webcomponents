@@ -8,6 +8,7 @@ import {
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	FILEUPLOAD_BROWSE,
+	FILEUPLOADER_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 
@@ -22,6 +23,7 @@ import FileUploaderCss from "./generated/themes/FileUploader.css.js";
  */
 const metadata = {
 	tag: "ui5-file-uploader",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
 		 * Comma-separated list of file types that the <code>ui5-file-uploader</code> should accept.
@@ -246,6 +248,12 @@ class FileUploader extends UI5Element {
 		this._enableFormSupport();
 	}
 
+	onAfterRendering() {
+		if (!this.value) {
+			this.getDomRef().querySelector(`input[type="file"]`).value = "";
+		}
+	}
+
 	_enableFormSupport() {
 		const FormSupport = getFeature("FormSupport");
 
@@ -303,6 +311,10 @@ class FileUploader extends UI5Element {
 
 	get browseText() {
 		return this.i18nBundle.getText(FILEUPLOAD_BROWSE);
+	}
+
+	get titleText() {
+		return this.i18nBundle.getText(FILEUPLOADER_TITLE);
 	}
 
 	get _canUseNativeFormSupport() {

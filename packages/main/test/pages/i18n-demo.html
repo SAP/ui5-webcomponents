@@ -4,6 +4,7 @@
 <head>
 	<script>delete Document.prototype.adoptedStyleSheets;</script>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 	<title>i18n Demo</title>
 
@@ -35,9 +36,9 @@
 		<br>
 		<br>
 		<br>
-		<br>	
+		<br>
 
-		<ui5-datepicker></ui5-datepicker>
+		<ui5-date-picker></ui5-date-picker>
 
 		<br>
 		<br>
@@ -68,15 +69,15 @@
 
 		in 2 wochen, in 42 tagen
 		<br>
-		mañana, ayer, 
+		mañana, ayer,
 		<br>
-		今天, 明天, 
+		今天, 明天,
 
 	</div>
 
 	<script>
 
-		setTimeout(() => {
+		setTimeout(function() {
 			document.body.setAttribute("dir", window["sap-ui-webcomponents-bundle"].configuration.getRTL() ? "rtl" : "ltr");
 		}, 100);
 	</script>

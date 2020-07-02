@@ -7,9 +7,10 @@ import {
 	isEnter,
 	isEscape,
 	isShow,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -41,6 +42,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 const metadata = {
 	tag: "ui5-select",
+	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 
@@ -322,7 +324,14 @@ class Select extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		const isTab = (isTabNext(event) || isTabPrevious(event));
+
+		if (isTab && this.responsivePopover && this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		}
+
 		if (isShow(event)) {
+			event.preventDefault();
 			this._toggleRespPopover();
 		}
 
@@ -395,7 +404,7 @@ class Select extends UI5Element {
 			}
 		}
 
-		if (isEscape(event)) {
+		if (isEscape(event) && this._isPickerOpen) {
 			this._escapePressed = true;
 		}
 
@@ -477,11 +486,9 @@ class Select extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.disabled ? "-1" : "0";
-	}
-
-	get dir() {
-		return getRTL() ? "rtl" : "ltr";
+		return this.disabled
+		&& this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
+		&& this.responsivePopover.opened ? "-1" : "0";
 	}
 
 	static async onDefine() {

@@ -4,8 +4,8 @@
 	_disable-initial-focus
 	placement-type="Bottom"
 	horizontal-align="Left"
-	@ui5-afterOpen={{_afterOpenPopover}}
-	@ui5-afterClose={{_afterClosePopover}}
+	@ui5-after-open={{_afterOpenPopover}}
+	@ui5-after-close={{_afterClosePopover}}
 >
 	<ui5-busyindicator
 		?active={{loading}}
@@ -18,6 +18,7 @@
 		<div class="row">
 			<span>{{_headerTitleText}}</span>
 			<ui5-button
+				class="ui5-responsive-popover-close-btn"
 				icon="decline"
 				design="Transparent"
 				@click="{{_closeRespPopover}}"
@@ -47,7 +48,7 @@
 
 	<ui5-list
 		separators="None"
-		@ui5-itemClick={{_selectItem}}
+		@ui5-item-click={{_selectItem}}
 		mode="SingleSelect"
 	>
 		{{#each _filteredItems}}

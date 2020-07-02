@@ -7,7 +7,7 @@
 	no-arrow
 	_hide-header
 >
-	<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
+	<ui5-list @ui5-item-press="{{_onOverflowListItemSelect}}">
 		{{#each items}}
 			{{#unless this.isSeparator}}
 				{{this.overflowPresentation}}

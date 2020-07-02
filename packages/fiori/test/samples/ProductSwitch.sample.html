@@ -63,10 +63,11 @@
 			var shellBar = document.getElementById("shellbar");
 			var popover = document.getElementById("productswitch-popover");
 
-			shellbar.addEventListener("productSwitchClick", function(event) {
+			shellbar.addEventListener("product-switch-click", function(event) {
 				if (popover.opened) {
 					popover.close();
 				} else {
+					event.preventDefault();
 					popover.openBy(event.detail.targetRef);
 				}
 			});
@@ -104,7 +105,7 @@
 	var shellBar = document.getElementById("shellbar");
 	var popover = document.getElementById("productswitch-popover");
 
-	shellbar.addEventListener("productSwitchClick", function(event) {
+	shellbar.addEventListener("product-switch-click", function(event) {
 		if (popover.opened) {
 			popover.close();
 		} else {

@@ -74,6 +74,48 @@ describe("Select general interaction", () => {
 		assert.strictEqual(inputResult.getProperty("value"), "5", "Change event should have fired twice");
 	});
 
+	it("changes selection on Tab", () => {
+		const select = browser.$("#keyboardHandling");
+		const EXPECTED_SELECTION_TEXT = "Banana";
+
+		select.click(); // Open select
+		select.click(); // Close select. Focus is on the select now
+		select.keys("Space");
+
+		select.keys("ArrowUp");
+		select.keys("Tab");
+		const selectText = select.shadow$("ui5-label");
+
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Arrow Up should change selected item");
+		
+		const focusedElementId = browser.execute(() => {
+			return document.activeElement.id;
+		});
+
+		assert.strictEqual(focusedElementId, browser.$("#inputResult").getAttribute("id"), "Next focusable element is focused");
+	});
+
+	it("changes selection on Shift + Tab", () => {
+		const select = browser.$("#keyboardHandling");
+		const EXPECTED_SELECTION_TEXT = "Orange";
+
+		select.click(); // Open select
+		select.click(); // Close select. Focus is on the select now
+		select.keys("Space");
+
+		select.keys("ArrowDown");
+		browser.keys(["Shift", "Tab"]);
+		const selectText = select.shadow$("ui5-label");
+
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Arrow Down should change selected item");
+		
+		const focusedElementId = browser.execute(() => {
+			return document.activeElement.id;
+		});
+
+		assert.strictEqual(focusedElementId, browser.$("#mySelectEsc").getAttribute("id"), "Previous focusable element is focused");
+	});
+
 	it("tests selection does not cycle with ArrowDown", () => {
 		const select = $("#selectionNotCycling");
 		const EXPECTED_SELECTION_TEXT = "Opt3";
@@ -83,7 +125,7 @@ describe("Select general interaction", () => {
 		assert.ok(selectOptionText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text is " + EXPECTED_SELECTION_TEXT);
 
 		// The last item is already selected - pressing ArrowDown should not change the focus or the selection
-		select.keys("ArrowDown"); 
+		select.keys("ArrowDown");
 		assert.ok(selectOptionText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text remains " + EXPECTED_SELECTION_TEXT);
 
 		// Close the select not to cover other components that tests would try to click
@@ -99,7 +141,7 @@ describe("Select general interaction", () => {
 		assert.ok(selectOptionText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text is " + EXPECTED_SELECTION_TEXT);
 
 		// The last item is already selected - pressing ArrowUp should not change the focus or the selection
-		select.keys("ArrowUp"); 
+		select.keys("ArrowUp");
 		assert.ok(selectOptionText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text remains " + EXPECTED_SELECTION_TEXT);
 
 		// Close the select not to cover other components that tests would try to click
@@ -221,11 +263,34 @@ describe("Select general interaction", () => {
 		select.keys("Escape");
 
 		select.click();
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");		
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
 		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
 
 		firstItem.click();
 
 		assert.strictEqual(inputResult.getProperty("value"), "7", "Change event should be fired");
+	});
+
+	it("tests ESC on closed picker", () => {
+		const select = $("#mySelectEsc");
+		const selectText = browser.$("#mySelectEsc").shadow$("ui5-label");
+		const EXPECTED_SELECTION_TEXT = "Cozy";
+		const EXPECTED_SELECTION_TEXT2 = "Condensed";
+
+		select.click();
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelectEsc")
+		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li")[0];
+		const thirdItem = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li")[2];
+
+		firstItem.click();
+
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) !== -1, "Select label is correct.");
+
+		// verify that ESC does not interfere when the picker is closed
+		select.keys("Escape");
+		select.click();
+		thirdItem.click();
+
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
 	});
 });

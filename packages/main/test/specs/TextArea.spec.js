@@ -138,7 +138,14 @@ describe("when enabled", () => {
 			const textAreaInner = browser.$("#eight-rows-textarea").shadow$("textarea");
 
 			const initialSize = textArea.getSize();
-			textAreaInner.setValue(`1\n2\n3\n4\n5\n6\n7\n8`);
+			textAreaInner.setValue(`1\n`);
+			textAreaInner.setValue(`2\n`);
+			textAreaInner.setValue(`3\n`);
+			textAreaInner.setValue(`4\n`);
+			textAreaInner.setValue(`5\n`);
+			textAreaInner.setValue(`6\n`);
+			textAreaInner.setValue(`7\n`);
+			textAreaInner.setValue(`8`);
 
 			const sizeBeforeGrow = textArea.getSize();
 			assert.strictEqual(initialSize.height, sizeBeforeGrow.height, "TextArea should not grow before it reaches its 8th line");

@@ -14,6 +14,8 @@
 							id="ui5-uci-edit-input"
 							value="{{_fileNameWithoutExtension}}"
 							data-sap-focus-ref
+							@keyup="{{_onInputKeyUp}}"
+							@keydown="{{_onInputKeydown}}"
 							@ui5-change="{{_onInputChange}}"
 						></ui5-input>
 						<span class="ui5-uci-file-extension">{{_fileExtension}}</span>
@@ -36,7 +38,9 @@
 						<div class="ui5-uci-progress-bar-remaining" style="{{styles.progressBarRemaining}}"></div>
 					</div>
 					<div class="ui5-uci-progress-labels">
-						<ui5-label>{{_progressText}}</ui5-label>
+						<ui5-label
+							show-colon
+						>{{_progressText}}</ui5-label>
 						<ui5-label>{{progress}}%</ui5-label>
 					</div>
 				</div>
@@ -44,14 +48,14 @@
 		</div>
 		<div class="ui5-uci-edit-buttons">
 			{{#if _editing}}
-				<ui5-button design="Transparent" class="ui5-uci-edit-rename-btn">{{_renameBtnText}}</ui5-button>
+				<ui5-button design="Transparent" class="ui5-uci-edit-rename-btn" @click="{{_onRename}}">{{_renameBtnText}}</ui5-button>
 				<ui5-button design="Transparent" id="ui5-uci-edit-cancel" @click="{{_onRenameCancel}}">{{_cancelRenameBtnText}}</ui5-button>
 			{{else}}
 				{{#if _showRetry}}
 					<ui5-button
 						icon="refresh"
 						design="Transparent"
-						title="{{_retryButtonTooltip}}" 
+						title="{{_retryButtonTooltip}}"
 						@click="{{_onRetry}}"
 					></ui5-button>
 				{{/if}}
@@ -59,8 +63,19 @@
 					<ui5-button
 						icon="stop"
 						design="Transparent"
-						title="{{_terminateButtonTooltip}}" 
+						title="{{_terminateButtonTooltip}}"
 						@click="{{_onTerminate}}">
+					</ui5-button>
+				{{/if}}
+
+				{{#if showEditButton}}
+					<ui5-button
+						id="{{_id}}-editing-button"
+						design="Transparent"
+						icon="edit"
+						@click="{{onDetailClick}}"
+						class="ui5-li-detailbtn ui5-uci-edit"
+					>
 					</ui5-button>
 				{{/if}}
 			{{/if}}

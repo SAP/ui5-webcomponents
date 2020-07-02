@@ -1,0 +1,32 @@
+<ui5-list
+    .mode="{{mode}}"
+    .headerText="{{headerText}}"
+    .footerText="{{footerText}}"
+    .noDataText="{{noDataText}}"
+    ._role="{{_role}}"
+    @ui5-item-click="{{_onListItemClick}}"
+    @ui5-item-delete="{{_onListItemDelete}}"
+    @ui5-selection-change="{{_onListSelectionChange}}"
+>
+    <slot name="header" slot="header"></slot>
+    {{#each _listItems}}
+        <ui5-li-tree
+            type="Active"
+            level="{{this.level}}"
+            icon="{{this.treeItem.icon}}"
+            .treeItem="{{this.treeItem}}"
+            .expanded="{{this.treeItem.expanded}}"
+            .selected="{{this.treeItem.selected}}"
+            .showToggleButton="{{this.treeItem.requiresToggleButton}}"
+            @ui5-toggle="{{../_onListItemToggle}}"
+            @ui5-step-in="{{../_onListItemStepIn}}"
+            @ui5-step-out="{{../_onListItemStepOut}}"
+        >
+            {{> treeListItemContent}}
+        </ui5-li-tree>
+    {{/each}}
+</ui5-list>
+
+{{#*inline "treeListItemContent"}}
+	{{this.treeItem.text}}
+{{/inline}}

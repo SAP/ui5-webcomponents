@@ -1,5 +1,7 @@
+import { getFeature } from "../FeaturesRegistry.js";
 import getLocale from "../locale/getLocale.js";
-import { fetchJsonOnce } from "../util/FetchHelper.js";
+import { attachLanguageChange } from "../locale/languageChange.js";
+import { fetchTextOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
@@ -23,12 +25,17 @@ const getI18nBundleData = packageName => {
 
 /**
  * Registers a map of locale/url information, to be used by the <code>fetchI18nBundle</code> method.
+ * Note: In order to be able to register ".properties" files, you must import the following module:
+ * import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
+ *
  * @param {string} packageName package ID that the i18n bundle will be related to
- * @param {Object} bundle an object with string locales as keys and the URLs of where the corresponding locale can be fetched from, f.e {"en": "path/en.json", ...}
+ * @param {Object} bundle an object with string locales as keys and the URLs (in .json or .properties format - see the note above) where the corresponding locale can be fetched from, f.e {"en": "path/en.json", ...}
+ *
  * @public
  */
 const registerI18nBundle = (packageName, bundle) => {
-	bundleURLs.set(packageName, bundle);
+	const oldBundle = bundleURLs.get(packageName) || {};
+	bundleURLs.set(packageName, Object.assign({}, oldBundle, bundle));
 };
 
 /**
@@ -52,11 +59,12 @@ const fetchI18nBundle = async packageName => {
 	const language = getLocale().getLanguage();
 
 	let localeId = normalizeLocale(language);
-	while (!bundlesForPackage[localeId]) {
+	while (localeId !== DEFAULT_LANGUAGE && !bundlesForPackage[localeId]) {
 		localeId = nextFallbackLocale(localeId);
 	}
 
-	if (localeId === DEFAULT_LANGUAGE) {
+	if (!bundlesForPackage[localeId]) {
+		setI18nBundleData(packageName, null); // reset for the default language (if data was set for a previous language)
 		return;
 	}
 
@@ -67,9 +75,28 @@ const fetchI18nBundle = async packageName => {
 		return;
 	}
 
-	const data = await fetchJsonOnce(bundleURL);
+	const content = await fetchTextOnce(bundleURL);
+	let parser;
+	if (content.startsWith("{")) {
+		parser = JSON.parse;
+	} else {
+		const PropertiesFormatSupport = getFeature("PropertiesFormatSupport");
+		if (!PropertiesFormatSupport) {
+			throw new Error(`In order to support .properties files, please: import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";`);
+		}
+		parser = PropertiesFormatSupport.parser;
+	}
+
+	const data = parser(content);
+
 	setI18nBundleData(packageName, data);
 };
+
+// When the language changes dynamically (the user calls setLanguage), re-fetch all previously fetched bundles
+attachLanguageChange(() => {
+	const allPackages = [...bundleData.keys()];
+	return Promise.all(allPackages.map(fetchI18nBundle));
+});
 
 export {
 	fetchI18nBundle,

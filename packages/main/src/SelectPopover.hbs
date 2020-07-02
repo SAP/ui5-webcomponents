@@ -5,15 +5,16 @@
 		content-only-on-desktop
 		placement-type="Bottom"
 		horizontal-align="Left"
-		@ui5-afterOpen="{{_applyFocusAfterOpen}}"
-		@ui5-beforeOpen="{{_beforeOpen}}"
-		@ui5-afterClose="{{_afterClose}}"
+		@ui5-after-open="{{_applyFocusAfterOpen}}"
+		@ui5-before-open="{{_beforeOpen}}"
+		@ui5-after-close="{{_afterClose}}"
 		@keydown="{{_onkeydown}}"
 	>
 		<div slot="header" class="ui5-responsive-popover-header">
 			<div class="row">
 				<span>{{_headerTitleText}}</span>
 				<ui5-button
+					class="ui5-responsive-popover-close-btn"
 					icon="decline"
 					design="Transparent"
 					@click="{{_toggleRespPopover}}"
@@ -22,7 +23,7 @@
 			</div>
 		</div>
 
-		<ui5-list mode="SingleSelect" separators="None" @keydown="{{_handlePickerKeydown}}" @ui5-itemPress="{{_selectionChange}}">
+		<ui5-list mode="SingleSelect" separators="None" @keydown="{{_handlePickerKeydown}}" @ui5-item-press="{{_selectionChange}}">
 			{{#each _syncedOptions}}
 				<ui5-li ?selected="{{this.selected}}" icon="{{this.icon}}" id="{{this.id}}-li">
 					{{this.textContent}}

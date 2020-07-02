@@ -1,19 +1,54 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Popup from "./Popup.js";
+
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
-
 // Styles
-import dialogCss from "./generated/themes/Dialog.css.js";
+import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
+import dialogCSS from "./generated/themes/Dialog.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-dialog",
+	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+		/**
+		 * Defines the header HTML Element.
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		header: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * Defines the footer HTML Element.
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		footer: {
+			type: HTMLElement,
+		},
+	},
 	properties: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
+		/**
+		 * Defines the header text.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		headerText: {
+			type: String,
+		},
+
 		/**
 		 * Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen.
 		 * <br><br>
@@ -25,6 +60,13 @@ const metadata = {
 		 * @public
 		 */
 		stretch: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 */
+		onPhone: {
 			type: Boolean,
 		},
 	},
@@ -68,84 +110,39 @@ class Dialog extends Popup {
 		return metadata;
 	}
 
-	static get render() {
-		return litRender;
-	}
-
 	static get template() {
 		return DialogTemplate;
 	}
 
 	static get styles() {
-		return [Popup.styles, dialogCss];
+		return [PopupsCommonCss, dialogCSS];
 	}
 
-	/**
-	* Opens the <code>ui5-dialog</code>.
-	* @public
-	*/
-	open() {
-		if (this.opened) {
-			return;
-		}
-
-		const cancelled = super.open();
-		if (cancelled) {
-			return true;
-		}
-
-		this.storeCurrentFocus();
-
-		this.opened = true;
+	onBeforeRendering() {
+		this.onPhone = isPhone();
 	}
 
-	/**
-	* Closes the <code>ui5-dialog</code>.
-	* @public
-	*/
-	close() {
-		if (!this.opened) {
-			return;
-		}
+	get isModal() { // Required by Popup.js
+		return true;
+	}
 
-		const cancelled = super.close();
-		if (cancelled) {
-			return;
-		}
+	get _ariaLabelledBy() { // Required by Popup.js
+		return this.ariaLabel ? undefined : "ui5-popup-header";
+	}
 
-		this.opened = false;
-
-		this.resetFocus();
-
-		this.fireEvent("afterClose", { });
+	get _ariaModal() { // Required by Popup.js
+		return true;
 	}
 
 	get classes() {
 		return {
-			dialogParent: {
-				"ui5-phone": isPhone(),
+			root: {
+				"ui5-popup-root": true,
 			},
-			blockLayer: {
-				"ui5-popup-BLy": true,
-				"ui5-popup-blockLayer": true,
-				"ui5-popup-blockLayer--hidden": this._hideBlockLayer,
+			content: {
+				"ui5-popup-content": true,
 			},
 		};
-	}
-
-	get zindex() {
-		return `z-index: ${this._zIndex + 1};`;
-	}
-
-	get blockLayer() {
-		return `z-index: ${this._zIndex};`;
-	}
-
-	get headerAriaLabelledBy() {
-		if (this.headerText || this.header) {
-			return `${this._id}-popup-heading`;
-		}
-		return undefined;
 	}
 }
 
