@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>FAQ - UI5 Web Components</title>
+    <title>i18n - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>FAQ | UI5 Web Components</title>
+<title>i18n | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="FAQ" />
+<meta property="og:title" content="i18n" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/docs/faq/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/docs/faq/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/docs/i18n/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/docs/i18n/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/docs/faq/","headline":"FAQ","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/docs/i18n/","headline":"i18n","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -520,9 +520,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/faq/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/faq/" class="navigation-list-link">
                         <div class="component-name">FAQ</div>
                         
                       </a>
@@ -597,9 +597,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/i18n/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/i18n/" class="navigation-list-link active">
                         <div class="component-name">i18n</div>
                         
                       </a>
@@ -1966,82 +1966,195 @@
                 
                   <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/docs">Documentation</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>FAQ</span></li>
+                <li class="breadcrumb-nav-list-item"><span>i18n</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
+          <h1 id="ui5-web-components-i18n-for-apps-valid-since-100-rc8">UI5 Web Components i18n for apps (valid since 1.0.0-rc.8)</h1>
 
-<p><strong>Q: How can I play with UI5 Web Components easily?</strong></p>
+<p><em>Note:</em> For information on how to setup <code class="highlighter-rouge">i18n</code> for your custom components, please see <a href="./dev/Developing%20Web%20Components.md">Developing Web Components</a>.</p>
 
-<p><strong>A:</strong> Use this <a href="https://codesandbox.io/s/71r1x5o51q?fontsize=14&amp;module=%2Findex.html">CodeSandBox</a>.</p>
+<p>The <code class="highlighter-rouge">@ui5/webcomponents-base</code> package allows the usage of <code class="highlighter-rouge">i18n</code> functionality not just for third-party UI5 components,
+but for apps as well.</p>
 
-<p><strong>Q: Where is the documentation?</strong></p>
+<h2 id="step-by-step-tutorial">Step by step tutorial</h2>
 
-<p><strong>A:</strong> There are several resources:</p>
+<p>This tutorial will demonstrate how you can use the UI5 Web Components <code class="highlighter-rouge">i18n</code> functionality for the purpose of your apps.</p>
+
+<ol>
+  <li>
+    <p>Start by creating some <code class="highlighter-rouge">i18n</code> resources in a directory that can be served, for example:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code class="highlighter-rouge">assets/messagebundle_de.properties</code></td>
+          <td><code class="highlighter-rouge">PLEASE_WAIT=Bitte warten</code></td>
+        </tr>
+        <tr>
+          <td><code class="highlighter-rouge">assets/messagebundle_fr.properties</code></td>
+          <td><code class="highlighter-rouge">PLEASE_WAIT=Patientez.</code></td>
+        </tr>
+        <tr>
+          <td><code class="highlighter-rouge">assets/messagebundle_es.properties</code></td>
+          <td><code class="highlighter-rouge">PLEASE_WAIT=Espere</code></td>
+        </tr>
+        <tr>
+          <td><code class="highlighter-rouge">assets/messagebundle_en.properties</code></td>
+          <td><code class="highlighter-rouge">PLEASE_WAIT=Please wait</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Import the following <code class="highlighter-rouge">i18n</code>-related modules to your app:</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js</span><span class="dl">"</span><span class="p">;</span>
+ <span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nBundle</span><span class="p">,</span> <span class="nx">fetchI18nBundle</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div>    </div>
+
+    <p>The first one provides support for <code class="highlighter-rouge">.properties</code> files, as used in the example and the second one - the functions
+ that will allow you to take advantage of the <code class="highlighter-rouge">i18n</code> functionality.</p>
+  </li>
+  <li>
+    <p>Register your message bundles:</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">registerI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
+     <span class="na">de</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_de.properties</span><span class="dl">"</span><span class="p">,</span>
+     <span class="na">es</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_es.properties</span><span class="dl">"</span><span class="p">,</span>
+     <span class="na">fr</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_fr.properties</span><span class="dl">"</span><span class="p">,</span>
+     <span class="na">en</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_en.properties</span><span class="dl">"</span><span class="p">,</span>
+ <span class="p">});</span>
+</code></pre></div>    </div>
+
+    <p>The first argument is an ID that will be used to reference this message bundle and the second, an object,
+ providing the URLs where the <code class="highlighter-rouge">i18n</code> assets can be found.</p>
+
+    <p><em>Note:</em> This is just asset registration, no data will be fetched at that point.</p>
+  </li>
+  <li>
+    <p>Fetch the texts for the current language:</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">await</span> <span class="nx">fetchI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
+</code></pre></div>    </div>
+
+    <p>This will fetch the appropriate texts for the currently configured language.</p>
+  </li>
+  <li>
+    <p>Get and use the bundle</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">const</span> <span class="nx">bundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
+ <span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">,</span> <span class="na">defaultText</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Please wait (some fallback text)</span><span class="dl">"</span><span class="p">});</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait</span><span class="p">);</span>
+</code></pre></div>    </div>
+
+    <p>The <code class="highlighter-rouge">getText</code> method expects an object as the first argument, with 2 properties:</p>
+    <ul>
+      <li><code class="highlighter-rouge">key</code> - the key for the required text (must match a key in the assets file)</li>
+      <li><code class="highlighter-rouge">defaultText</code> - fallback text that will be used if you did not register a bundle for the default language (<code class="highlighter-rouge">en</code>).
+ This property is optional.</li>
+    </ul>
+
+    <p>Alternatively, the first parameter of <code class="highlighter-rouge">getText</code> can be the key only:</p>
+
+    <p><code class="highlighter-rouge">bundle.getText("PLEASE WAIT")</code>.</p>
+
+    <p>You can pass multiple additional values to <code class="highlighter-rouge">getText</code> for texts with placeholders, for example:</p>
+
+    <p>If your text looks like this:</p>
+
+    <p><code class="highlighter-rouge">CAROUSEL_DOT_TEXT=Item {0} of {1} displayed</code></p>
+
+    <p>you can call <code class="highlighter-rouge">getText</code> like this:</p>
+
+    <p><code class="highlighter-rouge">bundle.getText({key: "CAROUSEL_DOT_TEXT"}, 5, 20);</code></p>
+
+    <p>which will finally result in, for example:</p>
+
+    <p><code class="highlighter-rouge">Item 5 of 20 displayed</code>.</p>
+  </li>
+  <li>
+    <p>Test your page using different languages, f.e. set <code class="highlighter-rouge">?sap-ui-language=de</code> in the URL or change the configuration.</p>
+  </li>
+</ol>
+
+<h2 id="summary">Summary</h2>
+
+<p>The whole code would look like this:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nBundle</span><span class="p">,</span> <span class="nx">fetchI18nBundle</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="nx">registerI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
+	<span class="na">de</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_de.properties</span><span class="dl">"</span><span class="p">,</span>
+	<span class="na">es</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_es.properties</span><span class="dl">"</span><span class="p">,</span>
+	<span class="na">fr</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_fr.properties</span><span class="dl">"</span><span class="p">,</span>
+	<span class="na">en</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_en.properties</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="k">await</span> <span class="nx">fetchI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">,</span> <span class="na">defaultText</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Please wait (fallback)</span><span class="dl">"</span><span class="p">});</span>
+<span class="kd">const</span> <span class="nx">pleaseWait2</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">);</span>	
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>You register your assets for all supported languages, then you fetch the data for the currently active language,
+get a reference to the bundle and call the <code class="highlighter-rouge">getText</code> method to get texts for your app.</p>
+
+<h2 id="tips-and-tricks">Tips and tricks</h2>
+
 <ul>
-  <li><a href="https://sap.github.io/ui5-webcomponents/playground/">Web Components APIs</a></li>
-  <li><a href="https://blogs.sap.com/2019/04/01/the-fastest-way-to-get-started-with-ui5-web-components/">How to get started?</a></li>
-  <li><a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/public-module-imports/">List of all public module imports</a></li>
-  <li><a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/how-to-use/">How to use</a></li>
-  <li><a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/">How to configure</a></li>
+  <li>You can skip the <code class="highlighter-rouge">.properties</code> format support import</li>
 </ul>
 
-<p><strong>Q: Is there a CDN to load UI5 Web Components from?</strong></p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+<p>and provide the data directly in <code class="highlighter-rouge">.json</code> format, if you want to load a little bit less code in the runtime.</p>
 
-<p><strong>A:</strong> No. The best practice is to build your own bundle. See <a href="https://blogs.sap.com/2019/04/01/the-fastest-way-to-get-started-with-ui5-web-components/">this article</a> for details.</p>
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">assets/messagebundle_de.properties</code></td>
+      <td><code class="highlighter-rouge">{PLEASE_WAIT: "Bitte warten"}</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">assets/messagebundle_fr.properties</code></td>
+      <td><code class="highlighter-rouge">{PLEASE_WAIT: "Patientez."}</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">assets/messagebundle_es.properties</code></td>
+      <td><code class="highlighter-rouge">{PLEASE_WAIT: "Espere"}</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">assets/messagebundle_en.properties</code></td>
+      <td><code class="highlighter-rouge">{PLEASE_WAIT: "Please wait"}</code></td>
+    </tr>
+  </tbody>
+</table>
 
-<p><strong>Q: Are UI5 Web Components APIs stable?</strong></p>
-
-<p><strong>A:</strong> Mostly yes since the project is in Release Candidate state, but minor changes may still be expected until the official release.</p>
-
-<p><strong>Q: Can I create my own UI5 Web Components?</strong></p>
-
-<p><strong>A:</strong> Not yet, the framework-level APIs for creating web components are not public yet.</p>
-
-<p><strong>Q: How big is the runtime?</strong></p>
-
-<p><strong>A:</strong> Currently on master, a simple working Web Component (<code class="highlighter-rouge">ui5-label</code>) and its dependencies equals to around 12K gzipped. 
-Two simple web components (<code class="highlighter-rouge">ui5-label</code> and <code class="highlighter-rouge">ui5-icon</code>) and their dependencies equal to around 19K gzipped.</p>
-
-<p><em>Note:</em> The quoted numbers include only a <code class="highlighter-rouge">&lt;ui5-label&gt;</code> (respectively <code class="highlighter-rouge">ui5-label</code> and <code class="highlighter-rouge">ui5-icon</code>) working on Chrome/FF/Safari with the default settings (theme/language).
-Additional features, settings and old browser support will increase bundle size accordingly.</p>
-
-<p><strong>Q: What is the difference between UI5 Web Components and OpenUI5?</strong>
-<strong>A:</strong> See the project’s <a href="https://github.com/SAP/ui5-webcomponents">readme.md</a> for more on this.</p>
-
-<p><strong>Q: Can I use UI5 Web Components in a OpenUI5 application?</strong>
-<strong>A:</strong> This is not necessary as OpenUI5 already provides equivalents in the form of UI5 Controls.</p>
-
-<p><strong>Q: How can I hide not yet upgraded Web Components so that users don’t see them until styled?</strong>
-<strong>A:</strong> You can place a CSS rule such as:</p>
-
-<pre><code class="language-CSS">*:not(:defined) {
-	display: none;
-}
-</code></pre>
-
-<p>or:</p>
-
-<pre><code class="language-CSS">*:not(:defined) {
-	visibility: hidden;
-}
-</code></pre>
-
-<p>in your application, depending on your preference.</p>
-
-<p>The selector <code class="highlighter-rouge">*:not(:defined)</code> will match all web components that haven’t been defined yet.</p>
-
-<p>Alternatively, you could only apply this rule for selected web components:</p>
-
-<pre><code class="language-CSS">ui5-button:not(:defined), ui5-label:not(:defined) {
-	display: none;
-}
-</code></pre>
-
-<p>Please note that the <code class="highlighter-rouge">:defined</code> CSS pseudo-selector is not supported by the Edge and Internet Explorer 11 browsers.</p>
+<ul>
+  <li>If you don’t register a bundle for the default language (<code class="highlighter-rouge">en</code>), the fallback text (<code class="highlighter-rouge">defaultText</code>) for <code class="highlighter-rouge">getText</code> will be used instead.
+This way you can skip fetching the text bundle for the default language altogether, provided you pass the <code class="highlighter-rouge">defaultText</code>
+each time you call <code class="highlighter-rouge">getText</code>.</li>
+</ul>
 
 
 <footer class="footer-wrapper">
