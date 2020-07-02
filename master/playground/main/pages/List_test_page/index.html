@@ -135,6 +135,22 @@
 		<ui5-li id="detailListItem" type="Detail">Detail item</ui5-li>
 		<ui5-li >Normal item</ui5-li>
 	</ui5-list>
+	<br/><br/>
+
+	<ui5-list id="listWithInternalHeader" header-text="Test aria">
+		<ui5-li>item</ui5-li>
+		<ui5-li >item</ui5-li>
+	</ui5-list>
+	<br/><br/>
+
+	<ui5-list id="listWithCustomHeader" aria-labelledby="testHeader">
+		<div slot="header" class="header">
+			<h2 id="testHeader">Test aria</h2>
+		</div>
+
+		<ui5-li>item</ui5-li>
+		<ui5-li >item</ui5-li>
+	</ui5-list>
 
 	<script>
 		'use strict';

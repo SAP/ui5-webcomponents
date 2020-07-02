@@ -1,5 +1,7 @@
-commit fd9a5462db868b86e44e5631bf8e1254fbc8c1dd
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jul 2 09:16:14 2020 +0300
+commit fb2553260e3f74cea3b468997b42b96134fd2bce
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Jul 2 01:40:54 2020 -0700
 
-    docs: Document the usage of i18n for apps (#1900)
+    chore: translation delivery (#1903)
+    
+    Change-Id: Ie0bf5a69dafc234b1bbb13e390194a01228992f2
