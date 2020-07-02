@@ -1,7 +1,5 @@
-commit fb2553260e3f74cea3b468997b42b96134fd2bce
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Jul 2 01:40:54 2020 -0700
+commit b205f6d72a8a792c796d478f5dfb6961ce51e92c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jul 2 15:30:03 2020 +0300
 
-    chore: translation delivery (#1903)
-    
-    Change-Id: Ie0bf5a69dafc234b1bbb13e390194a01228992f2
+    chore(fcl): fix tag name in sample (#1904)
