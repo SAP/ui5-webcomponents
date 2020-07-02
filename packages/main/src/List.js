@@ -4,6 +4,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -161,6 +162,29 @@ const metadata = {
 		 */
 		busy: {
 			type: Boolean,
+		},
+
+		/**
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the input
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
 		},
 
 		/**
@@ -367,7 +391,15 @@ class List extends UI5Element {
 	}
 
 	get ariaLabelledBy() {
+		if (this.ariaLabelledby || this.ariaLabel) {
+			return undefined;
+		}
+
 		return this.shouldRenderH1 ? this.headerID : undefined;
+	}
+
+	get ariaLabelТxt() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	onBeforeRendering() {
