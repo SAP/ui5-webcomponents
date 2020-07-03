@@ -56,7 +56,7 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 
 	const contentStatement = content.original;
 	skipIfDefined = !!dynamicAttributeRgx.exec(contentStatement);
-	isNodeValue = contentStatement.endsWith(">");
+	isNodeValue = contentStatement.lastIndexOf(">") > contentStatement.lastIndexOf("<");
 
 	this.blocks[this.currentKey()] += contentStatement;
 };
