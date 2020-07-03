@@ -56,7 +56,12 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 
 	const contentStatement = content.original;
 	skipIfDefined = !!dynamicAttributeRgx.exec(contentStatement);
-	isNodeValue = contentStatement.lastIndexOf(">") > contentStatement.lastIndexOf("<");
+
+	const closingIndex = contentStatement.lastIndexOf(">");
+	const openingIndex = contentStatement.lastIndexOf("<");
+	if (closingIndex !== -1 || openingIndex !== -1) { // Only change isNodeValue whenever < or > is found in the content statement
+		isNodeValue = closingIndex > openingIndex;
+	}
 
 	this.blocks[this.currentKey()] += contentStatement;
 };
