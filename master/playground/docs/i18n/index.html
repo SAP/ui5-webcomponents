@@ -2052,20 +2052,9 @@ but for apps as well.</p>
     <p>Get and use the bundle</p>
 
     <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">const</span> <span class="nx">bundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
- <span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">,</span> <span class="na">defaultText</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Please wait (some fallback text)</span><span class="dl">"</span><span class="p">});</span>
+ <span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">);</span>
  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait</span><span class="p">);</span>
 </code></pre></div>    </div>
-
-    <p>The <code class="highlighter-rouge">getText</code> method expects an object as the first argument, with 2 properties:</p>
-    <ul>
-      <li><code class="highlighter-rouge">key</code> - the key for the required text (must match a key in the assets file)</li>
-      <li><code class="highlighter-rouge">defaultText</code> - fallback text that will be used if you did not register a bundle for the default language (<code class="highlighter-rouge">en</code>).
- This property is optional.</li>
-    </ul>
-
-    <p>Alternatively, the first parameter of <code class="highlighter-rouge">getText</code> can be the key only:</p>
-
-    <p><code class="highlighter-rouge">bundle.getText("PLEASE WAIT")</code>.</p>
 
     <p>You can pass multiple additional values to <code class="highlighter-rouge">getText</code> for texts with placeholders, for example:</p>
 
@@ -2075,7 +2064,7 @@ but for apps as well.</p>
 
     <p>you can call <code class="highlighter-rouge">getText</code> like this:</p>
 
-    <p><code class="highlighter-rouge">bundle.getText({key: "CAROUSEL_DOT_TEXT"}, 5, 20);</code></p>
+    <p><code class="highlighter-rouge">bundle.getText("CAROUSEL_DOT_TEXT", 5, 20);</code></p>
 
     <p>which will finally result in, for example:</p>
 
@@ -2104,10 +2093,8 @@ but for apps as well.</p>
 
 <span class="kd">const</span> <span class="nx">bundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">({</span><span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">,</span> <span class="na">defaultText</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Please wait (fallback)</span><span class="dl">"</span><span class="p">});</span>
-<span class="kd">const</span> <span class="nx">pleaseWait2</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">);</span>	
+<span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">);</span>	
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait2</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>You register your assets for all supported languages, then you fetch the data for the currently active language,
@@ -2132,29 +2119,23 @@ get a reference to the bundle and call the <code class="highlighter-rouge">getTe
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_de.properties</code></td>
-      <td><code class="highlighter-rouge">{PLEASE_WAIT: "Bitte warten"}</code></td>
+      <td><code class="highlighter-rouge">assets/messagebundle_de.json</code></td>
+      <td><code class="highlighter-rouge">{"PLEASE_WAIT": "Bitte warten"}</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_fr.properties</code></td>
-      <td><code class="highlighter-rouge">{PLEASE_WAIT: "Patientez."}</code></td>
+      <td><code class="highlighter-rouge">assets/messagebundle_fr.json</code></td>
+      <td><code class="highlighter-rouge">{"PLEASE_WAIT": "Patientez."}</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_es.properties</code></td>
-      <td><code class="highlighter-rouge">{PLEASE_WAIT: "Espere"}</code></td>
+      <td><code class="highlighter-rouge">assets/messagebundle_es.json</code></td>
+      <td><code class="highlighter-rouge">{"PLEASE_WAIT": "Espere"}</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_en.properties</code></td>
-      <td><code class="highlighter-rouge">{PLEASE_WAIT: "Please wait"}</code></td>
+      <td><code class="highlighter-rouge">assets/messagebundle_en.json</code></td>
+      <td><code class="highlighter-rouge">{"PLEASE_WAIT": "Please wait"}</code></td>
     </tr>
   </tbody>
 </table>
-
-<ul>
-  <li>If you don’t register a bundle for the default language (<code class="highlighter-rouge">en</code>), the fallback text (<code class="highlighter-rouge">defaultText</code>) for <code class="highlighter-rouge">getText</code> will be used instead.
-This way you can skip fetching the text bundle for the default language altogether, provided you pass the <code class="highlighter-rouge">defaultText</code>
-each time you call <code class="highlighter-rouge">getText</code>.</li>
-</ul>
 
 
 <footer class="footer-wrapper">

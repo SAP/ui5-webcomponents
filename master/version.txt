@@ -1,5 +1,5 @@
-commit b205f6d72a8a792c796d478f5dfb6961ce51e92c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 2 15:30:03 2020 +0300
+commit 09dca0551dbdabfbce7936d3cf27e52500180ddd
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jul 3 09:59:55 2020 +0300
 
-    chore(fcl): fix tag name in sample (#1904)
+    refactor(framework): getText uses the key as fallback, simplify docs (#1905)
