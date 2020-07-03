@@ -12,8 +12,7 @@ let renderTaskId;
 const invalidatedWebComponents = new RenderQueue();
 
 let renderTaskPromise,
-	renderTaskPromiseResolve,
-	taskResult;
+	renderTaskPromiseResolve;
 
 let mutationObserverTimer;
 
@@ -32,20 +31,22 @@ class RenderScheduler {
 	 */
 	static renderDeferred(webComponent) {
 		// Enqueue the web component
-		const res = invalidatedWebComponents.add(webComponent);
+		invalidatedWebComponents.add(webComponent);
 
 		// Schedule a rendering task
-		RenderScheduler.scheduleRenderTask();
-		return res;
+		return RenderScheduler.scheduleRenderTask();
 	}
 
 	static renderImmediately(webComponent) {
 		// Enqueue the web component
-		const res = invalidatedWebComponents.add(webComponent);
+		invalidatedWebComponents.add(webComponent);
 
 		// Immediately start a render task
-		RenderScheduler.runRenderTask();
-		return res;
+		return RenderScheduler.runRenderTask();
+	}
+
+	static cancelRender(webComponent) {
+		invalidatedWebComponents.remove(webComponent);
 	}
 
 	/**
@@ -57,6 +58,8 @@ class RenderScheduler {
 			// renderTaskId = Promise.resolve().then(RenderScheduler.renderWebComponents); // Micro task
 			renderTaskId = window.requestAnimationFrame(RenderScheduler.renderWebComponents); // AF
 		}
+
+		return RenderScheduler.whenDOMUpdated();
 	}
 
 	static runRenderTask() {
@@ -64,26 +67,22 @@ class RenderScheduler {
 			renderTaskId = 1; // prevent another rendering task from being scheduled, all web components should use this task
 			RenderScheduler.renderWebComponents();
 		}
+
+		return RenderScheduler.whenDOMUpdated();
 	}
 
 	static renderWebComponents() {
 		// console.log("------------- NEW RENDER TASK ---------------");
 
-		let webComponentInfo,
-			webComponent,
-			promise;
+		let webComponent;
 		const renderStats = new Map();
-		while (webComponentInfo = invalidatedWebComponents.shift()) { // eslint-disable-line
-			webComponent = webComponentInfo.webComponent;
-			promise = webComponentInfo.promise;
-
+		while (webComponent = invalidatedWebComponents.shift()) { // eslint-disable-line
 			const timesRerendered = renderStats.get(webComponent) || 0;
 			if (timesRerendered > MAX_RERENDER_COUNT) {
 				// console.warn("WARNING RERENDER", webComponent);
 				throw new Error(`Web component re-rendered too many times this task, max allowed is: ${MAX_RERENDER_COUNT}`);
 			}
 			webComponent._render();
-			promise._deferredResolve();
 			renderStats.set(webComponent, timesRerendered + 1);
 		}
 
@@ -91,7 +90,7 @@ class RenderScheduler {
 		if (!mutationObserverTimer) {
 			mutationObserverTimer = setTimeout(() => {
 				mutationObserverTimer = undefined;
-				if (invalidatedWebComponents.getList().length === 0) {
+				if (invalidatedWebComponents.isEmpty()) {
 					RenderScheduler._resolveTaskPromise();
 				}
 			}, 200);
@@ -111,7 +110,7 @@ class RenderScheduler {
 		renderTaskPromise = new Promise(resolve => {
 			renderTaskPromiseResolve = resolve;
 			window.requestAnimationFrame(() => {
-				if (invalidatedWebComponents.getList().length === 0) {
+				if (invalidatedWebComponents.isEmpty()) {
 					renderTaskPromise = undefined;
 					resolve();
 				}
@@ -132,13 +131,13 @@ class RenderScheduler {
 	}
 
 	static _resolveTaskPromise() {
-		if (invalidatedWebComponents.getList().length > 0) {
+		if (!invalidatedWebComponents.isEmpty()) {
 			// More updates are pending. Resolve will be called again
 			return;
 		}
 
 		if (renderTaskPromiseResolve) {
-			renderTaskPromiseResolve.call(this, taskResult);
+			renderTaskPromiseResolve.call(this);
 			renderTaskPromiseResolve = undefined;
 			renderTaskPromise = undefined;
 		}
