@@ -20,6 +20,7 @@ const newComponents = [
   "UploadCollection",
   "Tree",
   "RatingIndicator",
+  "ProgressIndicator",
 ];
 
 packages.forEach(package => {
