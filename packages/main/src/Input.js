@@ -864,16 +864,12 @@ class Input extends UI5Element {
 
 	/**
 	 * Returns if the suggestions popover is scrollable.
-	 * <br><br>
-	 * <b>Note:</b> the method is async
-	 * @returns {boolean} true if the popover is scrollable, false otherwise
+	 * The method is async and returns a Promise and resolves to true,
+	 * if the popup is scrollable and false otherwise.
+	 * @returns {Promise}
 	 */
 	async isSuggestionsScrollable() {
-		if (!this.Suggestions) {
-			return false;
-		}
-
-		return (await this.Suggestions._isScrollable());
+		return this.Suggestions && this.Suggestions._isScrollable();
 	}
 
 	getInputId() {

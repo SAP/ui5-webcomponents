@@ -159,8 +159,7 @@ describe("Input general interaction", () => {
 		// assert isSuggestionsScrollable
 		const suggestionsScrollable = browser.execute(async () => {
 			const input = document.getElementById("scrollInput");
-			await window.RenderScheduler.whenFinished();
-			return await input.isSuggestionsScrollable();
+			return (await input.isSuggestionsScrollable());
 		});
 		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrolalble");
 
