@@ -314,7 +314,7 @@
 
 		var suggestionSelectedCounterWithGrouping = 0;
 
-		var suggest = function (event) {
+		var suggest = async function (event) {
 			var input = event.target;
 			var value = input.value;
 			var suggestionItems = [];
@@ -342,6 +342,11 @@
 			});
 
 			labelLiveChange.innerHTML = "Event [input] :: " + value;
+
+			await window.RenderScheduler.whenFinished();
+			const scrollable = await input.isSuggestionsScrollable();
+
+			console.log("Suggestions are scrollable", scrollable);
 		};
 
 		input.addEventListener("ui5-input", suggest);
