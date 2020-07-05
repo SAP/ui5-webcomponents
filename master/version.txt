@@ -1,5 +1,7 @@
-commit 09dca0551dbdabfbce7936d3cf27e52500180ddd
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jul 3 09:59:55 2020 +0300
+commit e8009c978c7c3eee1f697f31c68438496285bfc3
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Sun Jul 5 12:03:44 2020 +0300
 
-    refactor(framework): getText uses the key as fallback, simplify docs (#1905)
+    feat(ui5-progress-indicator): initial implementation (#1887)
+    
+    Fixes: #1392
