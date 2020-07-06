@@ -343,7 +343,10 @@
 
 			labelLiveChange.innerHTML = "Event [input] :: " + value;
 
+			// wait the DOM update
 			await window.RenderScheduler.whenFinished();
+
+			// check if the suggestions popup is scrollable
 			const scrollable = await input.isSuggestionsScrollable();
 
 			console.log("Suggestions are scrollable", scrollable);
