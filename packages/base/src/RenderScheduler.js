@@ -70,8 +70,6 @@ class RenderScheduler {
 			// renderTaskId = Promise.resolve().then(RenderScheduler.renderWebComponents); // Micro task
 			renderTaskId = window.requestAnimationFrame(RenderScheduler.renderWebComponents); // AF
 		}
-
-		return RenderScheduler.whenDOMUpdated();
 	}
 
 	static runRenderTask() {
@@ -79,8 +77,6 @@ class RenderScheduler {
 			renderTaskId = 1; // prevent another rendering task from being scheduled, all web components should use this task
 			RenderScheduler.renderWebComponents();
 		}
-
-		return RenderScheduler.whenDOMUpdated();
 	}
 
 	static renderWebComponents() {
