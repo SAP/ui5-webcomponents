@@ -2,7 +2,6 @@ import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 import { isRtlAware } from "./locale/RTLAwareRegistry.js";
 
-const MAX_RERENDER_COUNT = 10;
 const registeredElements = new Set();
 
 // Tells whether a render task is currently scheduled
@@ -26,23 +25,36 @@ class RenderScheduler {
 	}
 
 	/**
-	 * Queues a web component for re-rendering
+	 * Schedules a render task (if not already scheduled) to render the component
+	 *
 	 * @param webComponent
+	 * @returns {Promise}
 	 */
 	static renderDeferred(webComponent) {
 		// Enqueue the web component
-		invalidatedWebComponents.add(webComponent);
+		const whenQueueProcessed = invalidatedWebComponents.add(webComponent);
 
 		// Schedule a rendering task
-		return RenderScheduler.scheduleRenderTask();
+		RenderScheduler.scheduleRenderTask();
+
+		return whenQueueProcessed;
 	}
 
+	/**
+	 * Immediately runs a render task (or uses an already running task) to render the component
+	 * Note: This method returns a promise because of the use case when the component is added to an already running render task
+	 *
+	 * @param webComponent
+	 * @returns {Promise}
+	 */
 	static renderImmediately(webComponent) {
 		// Enqueue the web component
-		invalidatedWebComponents.add(webComponent);
+		const whenQueueProcessed = invalidatedWebComponents.add(webComponent);
 
 		// Immediately start a render task
-		return RenderScheduler.runRenderTask();
+		RenderScheduler.runRenderTask();
+
+		return whenQueueProcessed;
 	}
 
 	static cancelRender(webComponent) {
@@ -74,17 +86,7 @@ class RenderScheduler {
 	static renderWebComponents() {
 		// console.log("------------- NEW RENDER TASK ---------------");
 
-		let webComponent;
-		const renderStats = new Map();
-		while (webComponent = invalidatedWebComponents.shift()) { // eslint-disable-line
-			const timesRerendered = renderStats.get(webComponent) || 0;
-			if (timesRerendered > MAX_RERENDER_COUNT) {
-				// console.warn("WARNING RERENDER", webComponent);
-				throw new Error(`Web component re-rendered too many times this task, max allowed is: ${MAX_RERENDER_COUNT}`);
-			}
-			webComponent._render();
-			renderStats.set(webComponent, timesRerendered + 1);
-		}
+		invalidatedWebComponents.process(component => component._render());
 
 		// wait for Mutation observer just in case
 		if (!mutationObserverTimer) {
