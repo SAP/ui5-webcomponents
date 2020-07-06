@@ -108,8 +108,10 @@ Task | Purpose
 clean | Deletes the `dist/` directory with the build output
 build | Production build to the `dist/` directory
 lint | Run a static code scan with `eslint`
-start | Build the project for development and run the dev server
-test | Run the test specs from the `test/specs/` directory
+start | Build the project for development, run the dev server and watch for changes
+watch | Watch for changes only
+serve | Run the dev server only
+test | Run the dev server and execute the specs from the `test/specs/` directory
 create-ui5-element | Create an empty web component with the given name
 
 ### Files in the main directory
