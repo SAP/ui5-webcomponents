@@ -13,6 +13,8 @@
 		role="{{accInfo.role}}"
 		aria-expanded="{{accInfo.ariaExpanded}}"
 		aria-controls="{{accInfo.ariaControls}}"
+		aria-label="{{accInfo.ariaLabel}}"
+		aria-labelledby="{{accInfo.ariaLabelledBy}}"
 	>
 		{{#unless fixed}}
 			<div class="ui5-panel-header-button-root">
@@ -22,7 +24,11 @@
 					icon="navigation-right-arrow"
 					?non-focusable="{{nonFocusableButton}}"
 					@click="{{_toggleButtonClick}}"
+					@keydown="{{_headerKeyDown}}"
+					@keyup="{{_headerKeyUp}}"
 					._buttonAccInfo="{{accInfo.button}}"
+					aria-label="{{accInfo.ariaLabel}}"
+					aria-labelledby="{{accInfo.ariaLabelledBy}}"
 				></ui5-button>
 			</div>
 		{{/unless}}
@@ -31,6 +37,7 @@
 			<slot name="header"></slot>
 		{{else}}
 			<div
+				id="{{_id}}-header-title"
 				role="heading"
 				aria-level="{{headerAriaLevel}}"
 				class="ui5-panel-header-title"

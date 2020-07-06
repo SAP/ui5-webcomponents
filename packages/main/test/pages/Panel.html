@@ -61,11 +61,11 @@
 	}
 </style>
 
-	<ui5-panel id="p1" collapsed accessible-role="Complementary">
+	<ui5-panel id="p1" collapsed accessible-role="Complementary" aria-labelledby="p1-title">
 
 		<!-- Panel header -->
 		<div slot="header" class="header">
-			<ui5-title>Expandable but not expanded</ui5-title>
+			<ui5-title id="p1-title">Expandable but not expanded</ui5-title>
 			<ui5-button id="b1">Add child </ui5-button>
 			<ui5-label id="l1">No new children added yet.</ui5-label>
 			<ui5-button design="Reject" icon="cancel">Cancel</ui5-button>
