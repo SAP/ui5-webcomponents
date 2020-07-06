@@ -1,7 +1,11 @@
-commit e8009c978c7c3eee1f697f31c68438496285bfc3
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Sun Jul 5 12:03:44 2020 +0300
+commit 4a84258bb4d8a0dd333bb3b73bcb4784010bce46
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jul 6 10:26:23 2020 +0300
 
-    feat(ui5-progress-indicator): initial implementation (#1887)
+    chore(ui5-input): add isSuggestionsScrollable method (#1907)
     
-    Fixes: #1392
+    Add a method that returns if the suggestions pop up is currently scrollable or not.
+    Note: the method is async.
+    Note: you need to call the method after the DOM is updated, othwewise you might get wrong result.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1902
