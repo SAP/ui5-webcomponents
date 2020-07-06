@@ -143,12 +143,11 @@ describe("Input general interaction", () => {
 		const input = $("#scrollInput").shadow$("input");
 		const scrollResult = $("#scrollResult");
 
-		// act
-		// open suggestions
+		// act - open suggestions
 		input.click();
 		input.keys("a");
 
-		// scroll with keyboard
+		// act - scroll with keyboard
 		input.keys("ArrowUp");
 		input.keys("ArrowUp");
 		input.keys("ArrowUp");
@@ -157,7 +156,15 @@ describe("Input general interaction", () => {
 		const scrollTop = scrollResult.getProperty("value");
 		assert.ok(scrollTop > 0, "The suggestion-scroll event fired");
 
-		input.keys("Enter"); // close suggestions
+		// assert isSuggestionsScrollable
+		const suggestionsScrollable = browser.execute(async () => {
+			const input = document.getElementById("scrollInput");
+			return (await input.isSuggestionsScrollable());
+		});
+		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrolalble");
+
+		// close suggestions
+		input.keys("Enter"); 
 	});
 
 	it("handles suggestions", () => {

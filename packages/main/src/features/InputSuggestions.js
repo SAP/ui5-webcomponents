@@ -102,6 +102,11 @@ class Suggestions {
 		}
 	}
 
+	async _isScrollable() {
+		const sc = await this._getScrollContainer();
+		return sc.offsetHeight < sc.scrollHeight;
+	}
+
 	async open() {
 		this.responsivePopover = await this._respPopover();
 		this._beforeOpen();
