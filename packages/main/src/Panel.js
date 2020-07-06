@@ -374,11 +374,11 @@ class Panel extends UI5Element {
 				"ariaControls": this._hasHeader ? `${this._id}-content` : undefined,
 				"title": this.toggleButtonTitle,
 			},
-			"ariaExpanded": this.notFixedInternalHeader ? this.expanded : undefined,
-			"ariaControls": this.notFixedInternalHeader ? `${this._id}-content` : undefined,
+			"ariaExpanded": this.hasUnfixedInternalHeader ? this.expanded : undefined,
+			"ariaControls": this.hasUnfixedInternalHeader ? `${this._id}-content` : undefined,
 			"ariaLabelledBy": this.ariaLabelledBy,
 			"ariaLabel": this.ariaLabelTxt,
-			"role": this.notFixedInternalHeader ? "button" : undefined,
+			"role": this.hasUnfixedInternalHeader ? "button" : undefined,
 		};
 	}
 
