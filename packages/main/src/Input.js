@@ -869,7 +869,11 @@ class Input extends UI5Element {
 	 * @returns {Promise}
 	 */
 	isSuggestionsScrollable() {
-		return this.Suggestions && this.Suggestions._isScrollable();
+		if (!this.Suggestions) {
+			return Promise.resolve(false);
+		}
+
+		return this.Suggestions._isScrollable();
 	}
 
 	getInputId() {
