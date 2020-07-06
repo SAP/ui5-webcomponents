@@ -846,6 +846,20 @@ class Input extends UI5Element {
 		return this.suggestionItems[key];
 	}
 
+	/**
+	 * Returns if the suggestions popover is scrollable.
+	 * The method returns <code>Promise</code> that resolves to true,
+	 * if the popup is scrollable and false otherwise.
+	 * @returns {Promise}
+	 */
+	isSuggestionsScrollable() {
+		if (!this.Suggestions) {
+			return Promise.resolve(false);
+		}
+
+		return this.Suggestions._isScrollable();
+	}
+
 	getInputId() {
 		return `${this._id}-inner`;
 	}
