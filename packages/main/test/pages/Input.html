@@ -65,7 +65,7 @@
 		<ui5-suggestion-item class="suggestionItem" text="IPad Air"></ui5-suggestion-item>
 	</ui5-input>
 
-	<ui5-popover id="quickViewCard" no-arrow id="pop" placement-type="Right" height="500px">
+	<ui5-popover id="quickViewCard" no-arrow placement-type="Right" height="500px">
 		<ui5-input id="searchInput" style="width: 300px">
 			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
 		</ui5-input>
@@ -422,8 +422,8 @@
 
 		inputPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
 			var item = event.detail.targetRef;
-			quickViewCard.close(false, false, true);
-			quickViewCard.openBy(item, true, false);
+			quickViewCard.close();
+			quickViewCard.openBy(item, true /* preventInitialFocus */, false /* closeWithOpener */);
 			
 			// log info
 			inputItemPreviewRes.value = item.textContent;
@@ -437,7 +437,7 @@
 			if (combination) {
 				focusQuickView = true;
 				await RenderScheduler.whenFinished();
-				quickViewCard.applyInitialFocus();
+				quickViewCard.applyFocus();
 				console.log("set focus to quickcard");
 			}
 
@@ -449,8 +449,8 @@
 		[].slice.call(document.querySelectorAll(".suggestionItem")).forEach(function(el) {
 			el.addEventListener("mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
-				quickViewCard.close(false, false, true);
-				quickViewCard.openBy(targetRef, true, false);
+				quickViewCard.close();
+				quickViewCard.openBy(item, true /* preventInitialFocus */, false /* closeWithOpener */);
 
 				// log info
 				mouseoverResult.value = targetRef.textContent;

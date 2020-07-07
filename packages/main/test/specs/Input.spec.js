@@ -136,7 +136,7 @@ describe("Input general interaction", () => {
 		inputItemPreview.click();
 		inputItemPreview.keys("ArrowDown");
 
-		assert.strictEqual(inputItemPreviewRes.getValue(), "Cozy", "First item has been previewed");
+		assert.strictEqual(inputItemPreviewRes.getValue(), "Laptop Lenovo", "First item has been previewed");
 	});
 
 	it("fires suggestion-scroll event", () => {
