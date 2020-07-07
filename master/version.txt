@@ -1,10 +1,5 @@
-commit 97c299ddff0e8dcb18484bedc3f0e68efa527561
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jul 7 15:34:42 2020 +0300
+commit cfd4fa36942cae0427692ea06b19491215c5f60d
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Jul 7 16:23:27 2020 +0300
 
-    feat(ui5-card): add 'action' slot (#1915)
-    
-    Provides a new slot, called "action", displayed in the right most part of the header
-    to enable users add a action, in most cases single button. When the action slot is used, the status text would not be displayed (if present).
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1913
+    feat(framework): implement stabledomref functionality (#1868)
