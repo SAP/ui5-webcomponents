@@ -92,13 +92,13 @@ class Suggestions {
 		return false;
 	}
 
-	toggle(bToggle) {
+	toggle(bToggle, { preventFocusRestore }) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
 
 		if (toggle) {
 			this.open();
 		} else {
-			this.close();
+			this.close(preventFocusRestore);
 		}
 	}
 
@@ -113,9 +113,9 @@ class Suggestions {
 		this.responsivePopover.open(this._getComponent());
 	}
 
-	async close() {
+	async close(preventFocusRestore = false) {
 		this.responsivePopover = await this._respPopover();
-		this.responsivePopover.close();
+		this.responsivePopover.close(false, false, preventFocusRestore);
 	}
 
 	updateSelectedItemPosition(pos) {

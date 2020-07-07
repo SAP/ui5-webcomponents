@@ -515,7 +515,9 @@ class Input extends UI5Element {
 			const shouldOpenSuggestions = this.shouldOpenSuggestions();
 
 			this.updateStaticAreaItemContentDensity();
-			this.Suggestions.toggle(shouldOpenSuggestions);
+			this.Suggestions.toggle(shouldOpenSuggestions, {
+				preventFocusRestore: !this.hasSuggestionItemSelected,
+			});
 
 			RenderScheduler.whenFinished().then(async () => {
 				this._listWidth = await this.Suggestions._getListWidth();
