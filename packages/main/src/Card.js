@@ -49,6 +49,20 @@ const metadata = {
 		avatar: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * Defines an action, displayed in the right most part of the header.
+		 * <br><br>
+		 * <b>Note:</b> If set, the <code>status</code> text will not be displayed,
+		 * you can either have <code>action</code>, or <code>status</code>.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		action: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -74,6 +88,9 @@ const metadata = {
 
 		/**
 		 * Defines the status displayed in the <code>ui5-card</code> header.
+		 * <br><br>
+		 * <b>Note:</b> If the <code>action</code> slot is set, the <code>status</code> will not be displayed,
+		 * you can either have <code>action</code>, or <code>status</code>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -120,10 +137,8 @@ const metadata = {
  * The <code>ui5-card</code> is a component that represents information in the form of a
  * tile with separate header and content areas.
  * The content area of a <code>ui5-card</code> can be arbitrary HTML content.
- * The header can be used through several properties, such as:
- * <code>heading</code>, <code>subheading</code>, <code>status</code>
- * and a slot:
- * <code>avatar</code>.
+ * The header can be used through several properties, such as: <code>heading</code>, <code>subheading</code>, <code>status</code>
+ * and two slots: <code>avatar</code> and <code>action</code>.
  *
  * <h3>Keyboard handling</h3>
  * In case you enable <code>headerInteractive</code> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
@@ -193,7 +208,7 @@ class Card extends UI5Element {
 	}
 
 	get hasHeader() {
-		return !!(this.heading || this.subheading || this.status || this.avatar);
+		return !!(this.heading || this.subheading || this.status || this.hasAction || this.avatar);
 	}
 
 	get ariaCardRoleDescription() {
@@ -214,6 +229,10 @@ class Card extends UI5Element {
 
 	get hasAvatar() {
 		return !!this.avatar.length;
+	}
+
+	get hasAction() {
+		return !!this.action.length;
 	}
 
 	static async onDefine() {
