@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents",
-  "version": "0.21.6",
+  "version": "0.21.7",
   "description": "UI5 Web Components: webcomponents.main",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -25,13 +25,13 @@
     "directory": "packages/main"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "0.21.6",
-    "@ui5/webcomponents-icons": "0.21.6",
-    "@ui5/webcomponents-localization": "0.21.6",
-    "@ui5/webcomponents-theme-base": "0.21.6"
+    "@ui5/webcomponents-base": "0.21.7",
+    "@ui5/webcomponents-icons": "0.21.7",
+    "@ui5/webcomponents-localization": "0.21.7",
+    "@ui5/webcomponents-theme-base": "0.21.7"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "0.21.6",
+    "@ui5/webcomponents-tools": "0.21.7",
     "chromedriver": "latest"
   }
 }
