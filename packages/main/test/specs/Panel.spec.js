@@ -134,9 +134,9 @@ describe("Panel general interaction", () => {
 		it("tests whether aria attributes are set correctly with fixed header", () => {
 			const header = browser.$("#panel-fixed").shadow$(".ui5-panel-header");
 
-			assert.ok(header.getAttribute("aria-expanded") === null, "aria-expanded shouldn't be set on the fixed header");
-			assert.ok(header.getAttribute("aria-controls") === null, "aria-controls shouldn't be set on the fixed header");
-			assert.ok(header.getAttribute("role") === null, "role shouldn't be set on the fixed header");
+			assert.ok(!header.getAttribute("aria-expanded"), "aria-expanded shouldn't be set on the fixed header");
+			assert.ok(!header.getAttribute("aria-controls"), "aria-controls shouldn't be set on the fixed header");
+			assert.ok(!header.getAttribute("role"), "role shouldn't be set on the fixed header");
 		});
 
 		it("tests whether aria attributes are set correctly in case of custom header", () => {
