@@ -246,6 +246,15 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	applyInitialFocus() {
+		this.applyFocus();
+	}
+
+	/**
+	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
+	 * or the first focusable element otherwise.
+	 * @public
+	 */
+	applyFocus() {
 		const element = this.getRootNode().getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)
 			|| getFirstFocusableElement(this);
