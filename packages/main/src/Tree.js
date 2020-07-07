@@ -16,6 +16,7 @@ import TreeCss from "./generated/themes/Tree.css.js";
  */
 const metadata = {
 	tag: "ui5-tree",
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
 		/**
 		 * Defines the mode of the <code>ui5-tree</code>. Since the tree uses a <code>ui5-list</code> to display its structure,
@@ -304,7 +305,7 @@ class Tree extends UI5Element {
 	_onListSelectionChange(event) {
 		const previouslySelectedItems = event.detail.previouslySelectedItems.map(item => item.treeItem);
 		const selectedItems = event.detail.selectedItems.map(item => item.treeItem);
-
+		debugger;
 		previouslySelectedItems.forEach(item => {
 			item.selected = false;
 		});
@@ -340,14 +341,16 @@ const walkTree = (el, level, callback) => {
 
 const buildTree = (el, level, result) => {
 	el.items.forEach(item => {
+		const currLevel = item.level || level;
+
 		const listItem = {
 			treeItem: item,
-			level,
+			level: currLevel,
 		};
 
 		result.push(listItem);
 		if (item.expanded && item.items.length > 0) {
-			buildTree(item, level + 1, result);
+			buildTree(item, currLevel + 1, result);
 		}
 	});
 };

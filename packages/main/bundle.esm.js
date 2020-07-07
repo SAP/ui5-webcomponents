@@ -56,6 +56,7 @@ import SegmentedButton from "./dist/SegmentedButton.js";
 import Select from "./dist/Select.js";
 import SideNavigation from "./dist/SideNavigation.js";
 import SideNavigationItem from "./dist/SideNavigationItem.js";
+import SideNavigationSubItem from "./dist/SideNavigationSubItem.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
 import MultiComboBox from "./dist/MultiComboBox.js";

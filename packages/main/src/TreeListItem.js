@@ -62,6 +62,38 @@ const metadata = {
 		expanded: {
 			type: Boolean,
 		},
+
+		/**
+		 * @private
+		 */
+		expandable: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		showToggleButtonEnd: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		_collapsed: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		_showSelectedOnSubItems: {
+			type: Boolean,
+		},
+
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 		/**
@@ -74,6 +106,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
+			propertyName: "items",
 			type: Node,
 		},
 	},
@@ -171,6 +204,18 @@ class TreeListItem extends ListItem {
 
 	get _toggleIconName() {
 		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
+	}
+
+	get _showToggleButtonBeginning() {
+		return this.showToggleButton && !this._collapsed && !this.showToggleButtonEnd ;
+	}
+
+	get _showToggleButtonEnd() {
+		return this.showToggleButton && !this._collapsed && this.showToggleButtonEnd ;
+	}
+
+	get showTitle() {
+		return this.textContent.length && !this._collapsed;
 	}
 
 	get _accInfo() {

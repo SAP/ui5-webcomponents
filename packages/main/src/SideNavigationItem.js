@@ -8,7 +8,7 @@ import {
 	isUp,
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Title from "./Title.js";
+import TreeListItem from "./TreeListItem.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-down-arrow.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-right-arrow.js";
@@ -166,7 +166,7 @@ class SideNavigationItem extends UI5Element {
 	static async onDefine() {
 		await Promise.all([
 			Icon.define(),
-			Title.define(),
+			TreeListItem.define(),
 		]);
 	}
 

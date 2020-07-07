@@ -2,12 +2,12 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
-import StandardListItem from "./StandardListItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
 
 // Styles
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
+import StandardListItem from "./StandardListItem.js";
 
 /**
  * @public
@@ -124,21 +124,49 @@ class SideNavigation extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.items.forEach(item => {
-			item._collapsed = this.collapsed;
+		this._currentItems = this.buildItems();
+		this._currentFixedItems = this.buildItems(true);
+	}
+
+	buildItems(isFixedItems = false) {
+		const currentItems = isFixedItems ? this.fixedItems : this.items;
+		const result = [];
+
+		currentItems.forEach((element, index) => {
+			const item = {
+				treeItem: element,
+				level: 1,
+				subItems: element.items,
+				collapsed: this.collapsed,
+				index,
+			};
+
+			result.push(item);
+
+			// if (element.items && element.items.length) {
+			// 	element.items.forEach(element => {
+			// 		const item = {
+			// 			treeItem: element,
+			// 			level: 2,
+			// 		};
+
+			// 		result.push(item)
+			// 	})
+			// }
 		});
 
-		this.fixedItems.forEach(item => {
-			item._collapsed = this.collapsed;
-		});
+		return result;
 	}
 
 	handleItemClick(event) {
-		const currentItems = Array.from(this.querySelectorAll("ui5-side-navigation-item"));
+		// if (event.target === this._itemsTree) {
+		// 	// this._resetSelectedItems(this.items);
+		// } else if (event.target === this._fixedItemsTree) {
+		// 	// this._resetSelectedItems(this.fixedItems);
+		// 	this._fixedItemsTree.fireEvent("")
+		// }
 
-		currentItems.forEach(item => {
-			item.selected = item === event.target;
-		});
+		event.detail.item.fireEvent("reset-selected");
 
 		this.fireSelectionChange(event);
 
@@ -158,6 +186,16 @@ class SideNavigation extends UI5Element {
 		});
 	}
 
+	_resetSelectedItems(items) {
+		items.forEach(item => {
+			item.selected = false;
+
+			if (item.subItems) {
+				this._resetSelectedItems(item.subItems);
+			}
+		});
+	}
+
 	getMiddleFocusHelper() {
 		return this.getDomRef().querySelector(".ui5-sn-middle-focus-helper");
 	}
@@ -166,44 +204,44 @@ class SideNavigation extends UI5Element {
 		this.getMiddleFocusHelper().focus();
 	}
 
-	focusNext(event) {
-		const eventTarget = event.target;
-		const isFixedItems = eventTarget.slot === "fixedItems";
-		let currentItems = Array.from(this.querySelectorAll(`ui5-side-navigation-item${isFixedItems ? "[slot='fixedItems']" : ":not([slot])"}`));
+	// focusNext(event) {
+	// 	const eventTarget = event.target;
+	// 	const isFixedItems = eventTarget.slot === "fixedItems";
+	// 	let currentItems = Array.from(this.querySelectorAll(`ui5-side-navigation-item${isFixedItems ? "[slot='fixedItems']" : ":not([slot])"}`));
 
-		if (eventTarget.expandable && eventTarget.expanded) {
-			eventTarget.items[0].focus();
-		} else if (currentItems.indexOf(eventTarget) > -1 && currentItems.indexOf(eventTarget) < currentItems.length - 1) {
-			if (currentItems[currentItems.indexOf(eventTarget) + 1].getClientRects().length === 0) {
-				currentItems = isFixedItems ? this.fixedItems : this.items;
-			}
-			const nextItem = currentItems[currentItems.indexOf(eventTarget) + 1];
+	// 	if (eventTarget.expandable && eventTarget.expanded) {
+	// 		eventTarget.items[0].focus();
+	// 	} else if (currentItems.indexOf(eventTarget) > -1 && currentItems.indexOf(eventTarget) < currentItems.length - 1) {
+	// 		if (currentItems[currentItems.indexOf(eventTarget) + 1].getClientRects().length === 0) {
+	// 			currentItems = isFixedItems ? this.fixedItems : this.items;
+	// 		}
+	// 		const nextItem = currentItems[currentItems.indexOf(eventTarget) + 1];
 
-			if (nextItem) {
-				nextItem.focus();
-			}
-		}
-	}
+	// 		if (nextItem) {
+	// 			nextItem.focus();
+	// 		}
+	// 	}
+	// }
 
-	focusPrevious(event) {
-		const eventTarget = event.target;
-		const isFixedItems = eventTarget.slot === "fixedItems";
-		let currentItems = Array.from(this.querySelectorAll(`ui5-side-navigation-item${isFixedItems ? "[slot='fixedItems']" : ":not([slot])"}`));
+	// focusPrevious(event) {
+	// 	const eventTarget = event.target;
+	// 	const isFixedItems = eventTarget.slot === "fixedItems";
+	// 	let currentItems = Array.from(this.querySelectorAll(`ui5-side-navigation-item${isFixedItems ? "[slot='fixedItems']" : ":not([slot])"}`));
 
-		if (eventTarget.expandable && eventTarget.expanded) {
-			const _prevItem = currentItems[currentItems.indexOf(eventTarget) - 1];
+	// 	if (eventTarget.expandable && eventTarget.expanded) {
+	// 		const _prevItem = currentItems[currentItems.indexOf(eventTarget) - 1];
 
-			if (_prevItem) {
-				_prevItem.focus();
-			}
-		} else if (currentItems.indexOf(eventTarget) > 0) {
-			if (currentItems[currentItems.indexOf(eventTarget) - 1].getClientRects().length === 0) {
-				currentItems = isFixedItems ? this.fixedItems : this.items;
-			}
+	// 		if (_prevItem) {
+	// 			_prevItem.focus();
+	// 		}
+	// 	} else if (currentItems.indexOf(eventTarget) > 0) {
+	// 		if (currentItems[currentItems.indexOf(eventTarget) - 1].getClientRects().length === 0) {
+	// 			currentItems = isFixedItems ? this.fixedItems : this.items;
+	// 		}
 
-			currentItems[currentItems.indexOf(eventTarget) - 1].focus();
-		}
-	}
+	// 		currentItems[currentItems.indexOf(eventTarget) - 1].focus();
+	// 	}
+	// }
 
 	async getPicker() {
 		return (await this.getStaticAreaItemDomRef()).querySelector("ui5-responsive-popover");
@@ -222,6 +260,18 @@ class SideNavigation extends UI5Element {
 		const responsivePopover = await this.getPicker();
 
 		responsivePopover.close();
+	}
+
+	get _itemsTree() {
+		return this.getDomRef().querySelector("#ui5-sn-items-tree");
+	}
+
+	get _fixedItemsTree() {
+		return this.getDomRef().querySelector("#ui5-sn-fixed-items-tree");
+	}
+
+	get _shoudlShowSubItems() {
+		return !this.collapsed;
 	}
 }
 

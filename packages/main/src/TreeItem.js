@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer";
 
 /**
  * @public
@@ -65,6 +66,38 @@ const metadata = {
 		 */
 		icon: {
 			type: String,
+		},
+
+		/**
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		showToggleButtonEnd: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		level: {
+			type: Integer,
+		},
+
+		/**
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		_collapsed: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		_showSelectedOnSubItems: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {

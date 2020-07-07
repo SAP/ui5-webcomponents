@@ -1,33 +1,72 @@
 <div class="ui5-sn-root">
     {{#if items.length}}
-        <div
-            class="ui5-sn-content"
-            @ui5-_click="{{handleItemClick}}"
-            @ui5-_forward-focus="{{_focusOtherList}}"
-            @ui5-_focus_next="{{focusNext}}"
-            @ui5-_focus_previous="{{focusPrevious}}"
+        <ui5-tree
+            id="ui5-sn-items-tree"
+            mode="SingleSelect"
+            ?_show-selected-on-sub-items="true"
+            @ui5-item-click="{{handleItemClick}}"
         >
-            <div class="ui5-sn-flex-wrapper">
-                <slot></slot>
-            </div>
-            <span class="ui5-sn-middle-focus-helper" tabindex="-1"></span>
-        </div>
+            {{#each _currentItems}}
+                <ui5-tree-item
+                    icon="{{this.treeItem.icon}}"
+                    level="{{this.level}}"
+                    .treeItem="{{this.treeItem}}"
+                    show-toggle-button-end="true"
+                    text="{{this.treeItem.text}}"
+                    index="{{this.index}}"
+                    ?has-children="{{this.treeItem.expandable}}"
+                    ?expanded="{{this.treeItem.expanded}}"
+                    ?_collapsed="{{this.collapsed}}"
+                    ?selected="{{this.treeItem.selected}}"
+                >
+                    {{#if ../_shoudlShowSubItems}}
+                        {{#if subItems}}
+                            {{#each subItems}}
+                                <ui5-tree-item
+                                    level="{{this.level}}"
+                                    .treeItem="{{this}}"
+                                    show-toggle-button-end="true"
+                                    text="{{this.text}}"
+                                    index="{{this.index}}"
+                                    ?has-children="{{this.expandable}}"
+                                    ?selected="{{this.selected}}"
+                                >
+                                </ui5-tree-item>
+                            {{/each}}
+                        {{/if}}
+                    {{/if}}
+                </ui5-tree-item>
+            {{/each}}
+        </ui5-tree>
     {{/if}}
 
-    {{#if fixedItems.length}}
-        <div class="ui5-sn-bottom-content">
+    {{#if _currentFixedItems.length}}
+       <div>
             <div class="ui5-sn-bottom-content-border">
                 <span></span>
             </div>
-            <div
-                class="ui5-sn-flex-wrapper"
-                @ui5-_click="{{handleItemClick}}"
-                @ui5-_return_focus="{{_focusOtherList}}"
-                @ui5-_focus_next="{{focusNext}}"
-                @ui5-_focus_previous="{{focusPrevious}}"
+            <ui5-tree
+                id="ui5-sn-fixed-items-tree"
+                mode="SingleSelect"
+                ?_show-selected-on-sub-items="true"
+                @ui5-item-click="{{handleItemClick}}"
             >
-                <slot name="fixedItems"></slot>
-            </div>
-        </div>
+                {{#each _currentFixedItems}}
+                        <ui5-tree-item
+                        icon="{{this.treeItem.icon}}"
+                        level="{{this.level}}"
+                        .treeItem="{{this.treeItem}}"
+                        show-toggle-button-end="true"
+                        text="{{this.treeItem.text}}"
+                        index="{{this.index}}"
+                        ?has-children="{{this.treeItem.expandable}}"
+                        ?expanded="{{this.treeItem.expanded}}"
+                        ?_collapsed="{{this.collapsed}}"
+                        ?selected="{{this.treeItem.selected}}"
+                    >
+                    </ui5-tree-item>
+                {{/each}}
+            </ui5-tree>
+       </div>
     {{/if}}
 </div>

@@ -4,6 +4,8 @@
     height: 100%;
     border-right: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
     transition: width .25s;
+    --_ui5-tree-toggle-box-width: 1rem;
+    --_ui5_tree_sub_item_background: var(--sapList_Background);
 }
 
 :host([collapsed]) {
