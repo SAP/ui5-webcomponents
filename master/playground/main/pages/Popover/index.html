@@ -191,6 +191,11 @@
 
 	<br>
 	<br>
+	<ui5-title>Test open popup and hide opener</ui5-title>
+	<ui5-button id="btnQuickViewCardOpener">Open popup and hide myself</ui5-button>
+	<ui5-button id="btnMoveFocus">focusable element</ui5-button>
+	<br>
+	<br>
 	<ui5-title>placement-type="Right", but no space on the right</ui5-title>
 	<p>No space on the Right, try Left, Bottom, Top</p>
 	<ui5-button id="btnFullWidth" style="width: 100%">Click me !</ui5-button>
@@ -296,6 +301,23 @@
 		</ui5-list>
 	</ui5-popover>
 
+
+	<ui5-popover id="quickViewCard" placement-type="Right" height="500px">
+		<ui5-input id="searchInput" style="width: 300px">
+			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
+		</ui5-input>
+		<ui5-list style="height: 400px">
+			<ui5-li-groupheader>Actions</ui5-li-groupheader>
+			<ui5-li>Delete Product</ui5-li>
+			<ui5-li>Audit Log Settings</ui5-li>
+			<ui5-li>OData API Audit</ui5-li>
+			<ui5-li-groupheader>Products</ui5-li-groupheader>
+			<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+			<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.openBy(btn);
@@ -356,6 +378,12 @@
 		btnFullWidthBottom.addEventListener("click", function (event) {
 			popFullWidthBottom.openBy(btnFullWidthBottom);
 		});
+
+		btnQuickViewCardOpener.addEventListener("click", function (event) {
+			quickViewCard.openBy(btnQuickViewCardOpener, true, false);
+
+			btnQuickViewCardOpener.setAttribute("hidden", true);
+		})
 	</script>
 </body>
 

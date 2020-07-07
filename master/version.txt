@@ -1,5 +1,15 @@
-commit b0551b35f4ca54629cc6bac0bcb4d8e54d5aa72f
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jul 6 16:58:46 2020 +0300
+commit e7c2518c3774c3d46e4aa8a88b21aecf861ae4e6
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jul 7 14:27:45 2020 +0300
 
-    feat(tools): Add more commands to package.json (#1908)
+    feat(ui5-popover): prevent closing when no opener (#1911)
+    
+    The change is related to the Quick View topic and affects the Input, InputSuggestions and Popover, and enables the following behaviour: (1) open an additional Popover from a suggestion on mouseover and suggestion-item-preview events, (2) to move the focus in that Popover, (3) to keep it open without a visible opener, and (4) the ability to get back via ESC.
+    Add parameter to the openBy method to prevent the popover from closing when its opener is not visible anymore
+    and use the old placement when the opener is gone (by default the popover would go to the top-left most corner).
+    Add public method Popup.prototype.applyFocus (the logic has been extracted from applyInitialFocus) that focuses the first focusable element inside the Popup
+    Change the focus retaining logic in Input/InputSuggestions as follows: returns the focus to the input field only when a suggestion is selected by the user, in other cases - does not, because otherwise focusing another popover would not be possible as the Input keeps getting focus again and again.
+    Previously it was not possible to use the "close" params with the ResponsivePopover, now it forwards them to the Popover.
+    Create a test page to show the entire flow
+    
+    Related to: #1768
