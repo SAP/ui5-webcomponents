@@ -2439,7 +2439,7 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3>
 
-The <code>ui5-card</code> is a component that represents information in the form of a tile with separate header and content areas. The content area of a <code>ui5-card</code> can be arbitrary HTML content. The header can be used through several properties, such as: <code>heading</code>, <code>subheading</code>, <code>status</code> and a slot: <code>avatar</code>.
+The <code>ui5-card</code> is a component that represents information in the form of a tile with separate header and content areas. The content area of a <code>ui5-card</code> can be arbitrary HTML content. The header can be used through several properties, such as: <code>heading</code>, <code>subheading</code>, <code>status</code> and two slots: <code>avatar</code> and <code>action</code>.
 
 <h3>Keyboard handling</h3> In case you enable <code>headerInteractive</code> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
 
@@ -2490,7 +2490,7 @@ The <code>ui5-card</code> is a component that represents information in the form
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the status displayed in the <code>ui5-card</code> header.
+                            Defines the status displayed in the <code>ui5-card</code> header. <br><br> <b>Note:</b> If the <code>action</code> slot is set, the <code>status</code> will not be displayed, you can either have <code>action</code>, or <code>status</code>.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
@@ -2522,11 +2522,16 @@ The <code>ui5-card</code> is a component that represents information in the form
                   </div>
             
                     <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">action</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines an action, displayed in the right most part of the header. <br><br> <b>Note:</b> If set, the <code>status</code> text will not be displayed, you can either have <code>action</code>, or <code>status</code>.</div>
+                    </div>
+                    <div class="row api-table-roll-odd">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">avatar</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the visual representation in the header of the card. Supports images and icons. <br><br> <b>Note:</b> SAP-icons font provides numerous options. To find all the available icons, see the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.</div>
                     </div>
-                    <div class="row api-table-roll-odd">
+                    <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content of the <code>ui5-card</code>.</div>
