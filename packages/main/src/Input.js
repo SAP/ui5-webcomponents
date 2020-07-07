@@ -40,6 +40,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
  */
 const metadata = {
 	tag: "ui5-input",
+	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
@@ -275,7 +276,8 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @since 1.0.0-rc.8
-		 * @public
+		 * @private
+		 * @defaultvalue ""
 		 */
 		ariaLabel: {
 			type: String,

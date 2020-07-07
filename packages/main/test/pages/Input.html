@@ -450,7 +450,7 @@
 			el.addEventListener("mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
 				quickViewCard.close();
-				quickViewCard.openBy(item, true /* preventInitialFocus */, false /* closeWithOpener */);
+				quickViewCard.openBy(targetRef, true /* preventInitialFocus */, false /* closeWithOpener */);
 
 				// log info
 				mouseoverResult.value = targetRef.textContent;
@@ -458,15 +458,15 @@
 			});
 
 			el.addEventListener("mouseout", function (event) {
-				if (!focusQuickView) {
-					quickViewCard.close(false, false, true);
-				}
+				// if (!focusQuickView) {
+				// 	quickViewCard.close(false, false, true);
+				// }
 
-				focusQuickView = false;
+				// focusQuickView = false;
 
-				// log info
-				mouseoutResult.value = event.detail.targetRef.textContent;
-				console.log("mouseout");
+				// // log info
+				// mouseoutResult.value = event.detail.targetRef.textContent;
+				// console.log("mouseout");
 			});
 		});
 
