@@ -30,6 +30,6 @@ describe("Card general interaction", () => {
 		cardHeader2.keys("Space");
 		cardHeader2.keys("Enter");
 
-		assert.strictEqual(field.getProperty("value"), "3", "Tehe events count should remain 3 as the header is not interactive.");
+		assert.strictEqual(field.getProperty("value"), "3", "The events count should remain 3 as the header is not interactive.");
 	});
 });
