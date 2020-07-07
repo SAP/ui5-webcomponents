@@ -59,6 +59,7 @@ const metadata = {
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
+		 * @since 1.0.0-rc.8
 		 */
 		action: {
 			type: HTMLElement,
