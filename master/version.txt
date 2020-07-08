@@ -1,5 +1,5 @@
-commit 99a0e81391fcfd58ce09a90da59f35b07beb7f4a
+commit af0b912a8109984497ad5acafb60ee4171a9914b
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jul 8 10:30:47 2020 +0300
+Date:   Wed Jul 8 10:50:00 2020 +0300
 
-    fix(ui5-combobox): support aria-label/arial-labelledby and fix aria-expanded (#1916)
+    feature(tools): Support unsafeHTML in HBS compiler (#1890)
