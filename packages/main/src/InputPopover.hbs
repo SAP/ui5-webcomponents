@@ -49,24 +49,8 @@
 		{{/if}}
 	{{/unless}}
 
-		<ui5-list separators="{{suggestionSeparators}}">
-			{{#each suggestionsTexts}}
-				{{#if group}}
-					<ui5-li-groupheader data-ui5-key="{{key}}">{{ this.text }}</ui5-li-groupheader>
-				{{else}}
-					<ui5-li
-						image="{{this.image}}"
-						icon="{{this.icon}}"
-						description="{{this.description}}"
-						info="{{this.info}}"
-						type="{{this.type}}"
-						info-state="{{this.infoState}}"
-						@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
-						data-ui5-key="{{key}}"
-					>{{ this.text }}</ui5-li>
-				{{/if}}
-			{{/each}}
-		</ui5-list>
+		{{> suggestionsList}}
+
 		{{#if _isPhone}}
 			<div slot="footer" class="ui5-responsive-popover-footer">
 				<ui5-button
@@ -100,4 +84,25 @@
 			{{this}}
 		{{/each}}
 	{{/if}}
+{{/inline}}
+
+{{#*inline "suggestionsList"}}
+	<ui5-list separators="{{suggestionSeparators}}">
+		{{#each suggestionsTexts}}
+			{{#if group}}
+				<ui5-li-groupheader data-ui5-key="{{key}}">{{ this.text }}</ui5-li-groupheader>
+			{{else}}
+				<ui5-li
+					image="{{this.image}}"
+					icon="{{this.icon}}"
+					description="{{this.description}}"
+					info="{{this.info}}"
+					type="{{this.type}}"
+					info-state="{{this.infoState}}"
+					@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
+					data-ui5-key="{{key}}"
+				>{{ this.text }}</ui5-li>
+			{{/if}}
+		{{/each}}
+	</ui5-list>
 {{/inline}}
