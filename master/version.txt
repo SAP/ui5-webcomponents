@@ -1,5 +1,9 @@
-commit cd2f9bf44c80aecb3f31c60200eb5f7d397bfe78
+commit dcac133a86952e3191952faef654ee292adfc5b8
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jul 8 12:15:30 2020 +0300
+Date:   Wed Jul 8 13:59:27 2020 +0300
 
-    chore(ui5-duration-picker): Add default for max-value (#1924)
+    fix(ui5-combo-box): Close picker when no match (#1926)
+    
+    When the user types and there is no match, the picker remains open and empty, now it closes.
+    
+    FIXES: #1920
