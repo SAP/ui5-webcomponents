@@ -411,7 +411,13 @@ class ComboBox extends UI5Element {
 		this.filterValue = value;
 		this.fireEvent("input");
 
-		this._openRespPopover();
+		this._filteredItems = this._filterItems(value);
+
+		if (!this._filteredItems.length) {
+			this._closeRespPopover();
+		} else {
+			this._openRespPopover();
+		}
 	}
 
 	_startsWithMatchingItems(str) {
