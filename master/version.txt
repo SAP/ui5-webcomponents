@@ -1,5 +1,5 @@
-commit af0b912a8109984497ad5acafb60ee4171a9914b
+commit 0a2ff88530a181a88036d6897b32705416631dc0
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jul 8 10:50:00 2020 +0300
+Date:   Wed Jul 8 11:06:36 2020 +0300
 
-    feature(tools): Support unsafeHTML in HBS compiler (#1890)
+    fix(framework): Remove ES6 code in IE polyfill (#1923)
