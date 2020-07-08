@@ -1,5 +1,5 @@
-commit 25ed25fb725cfe44bae59deb8fb616dc5f6335d8
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jul 8 12:01:25 2020 +0300
+commit cd2f9bf44c80aecb3f31c60200eb5f7d397bfe78
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jul 8 12:15:30 2020 +0300
 
-    fix(ui5-textarea): Add missing dependency, extract .hbs partial (#1909)
+    chore(ui5-duration-picker): Add default for max-value (#1924)
