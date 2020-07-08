@@ -92,9 +92,8 @@
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
+		<ui5-li type="Inactive">Inactive Compact</ui5-li>
+		<ui5-li type="Inactive">Inactive Condensed</ui5-li>
 	</ui5-input>
 	<br/>
 	<br/>
@@ -105,8 +104,8 @@
 		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
 		<ui5-suggestion-item group text="Themes"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Quartz"></ui5-suggestion-item>
-		<ui5-suggestion-item text="HCB"></ui5-suggestion-item>
+		<ui5-suggestion-item type="Inactive" text="Inactive Quartz"></ui5-suggestion-item>
+		<ui5-suggestion-item type="Inactive" text="Inactive HCB"></ui5-suggestion-item>
 	</ui5-input>
 
 	<h3> Input disabled</h3>
@@ -454,7 +453,7 @@
 			el.addEventListener("mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
 				quickViewCard.close();
-				quickViewCard.openBy(item, true /* preventInitialFocus */, false /* closeWithOpener */);
+				quickViewCard.openBy(targetRef, true /* preventInitialFocus */, false /* closeWithOpener */);
 
 				// log info
 				mouseoverResult.value = targetRef.textContent;
@@ -462,15 +461,15 @@
 			});
 
 			el.addEventListener("mouseout", function (event) {
-				if (!focusQuickView) {
-					quickViewCard.close(false, false, true);
-				}
+				// if (!focusQuickView) {
+				// 	quickViewCard.close(false, false, true);
+				// }
 
-				focusQuickView = false;
+				// focusQuickView = false;
 
-				// log info
-				mouseoutResult.value = event.detail.targetRef.textContent;
-				console.log("mouseout");
+				// // log info
+				// mouseoutResult.value = event.detail.targetRef.textContent;
+				// console.log("mouseout");
 			});
 		});
 
