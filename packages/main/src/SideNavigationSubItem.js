@@ -1,11 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TreeListItem from "./TreeListItem.js";
-
-import SideNavigationSubItemTemplate from "./generated/templates/SideNavigationSubItemTemplate.lit.js";
-
-// Styles
-import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.css.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 /**
  * @public
@@ -13,7 +8,24 @@ import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.c
 const metadata = {
 	tag: "ui5-side-navigation-sub-item",
 	properties: /** @lends sap.ui.webcomponents.main.SideNavigationSubItem.prototype */ {
-		//
+		/**
+		 * Defines the text of the item.
+		 *
+		 * @public
+		 * @type {string}
+		 * @defaultvalue ""
+		 */
+		text: {
+			type: String,
+		},
+
+		/**
+		 * @private
+		 */
+		level: {
+			type: Integer,
+			defaultValue: 2,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.SideNavigationSubItem.prototype */ {
 		//
@@ -31,6 +43,8 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
+ * The <code>ui5-side-navigation-sub-item</code> is intended to be used inside a <code>ui5-side-navigation-item</code> only.
+ *
  * For the <code>ui5-side-navigation-sub-item</code>
  * <h3>ES6 Module Import</h3>
  *
@@ -42,32 +56,15 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-side-navigation-sub-item
  * @public
+ * @since 1.0.0-rc.8
  */
-class SideNavigationSubItem extends TreeListItem {
+class SideNavigationSubItem extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get render() {
 		return litRender;
-	}
-
-	static get styles() {
-		return SideNavigationSubItemCss;
-	}
-
-	static get template() {
-		// return SideNavigationSubItemTemplate;
-	}
-
-	static async onDefine() {
-
-	}
-
-	constructor() {
-		super();
-
-		this.level = 2;
 	}
 }
 

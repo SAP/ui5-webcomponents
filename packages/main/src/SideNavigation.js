@@ -27,6 +27,9 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * @private
+		 */
 		_popoverContent: {
 			type: Object,
 			multiple: true,
@@ -132,58 +135,38 @@ class SideNavigation extends UI5Element {
 		const currentItems = isFixedItems ? this.fixedItems : this.items;
 		const result = [];
 
-		currentItems.forEach((element, index) => {
+		currentItems.forEach(element => {
 			const item = {
 				treeItem: element,
-				level: 1,
 				subItems: element.items,
 				collapsed: this.collapsed,
-				index,
 			};
 
 			result.push(item);
-
-			// if (element.items && element.items.length) {
-			// 	element.items.forEach(element => {
-			// 		const item = {
-			// 			treeItem: element,
-			// 			level: 2,
-			// 		};
-
-			// 		result.push(item)
-			// 	})
-			// }
 		});
 
 		return result;
 	}
 
 	handleItemClick(event) {
-		// if (event.target === this._itemsTree) {
-		// 	// this._resetSelectedItems(this.items);
-		// } else if (event.target === this._fixedItemsTree) {
-		// 	// this._resetSelectedItems(this.fixedItems);
-		// 	this._fixedItemsTree.fireEvent("")
-		// }
-
-		event.detail.item.fireEvent("reset-selected");
+		const item = event.detail.item;
+		const currentTree = this._itemsTree === event.target ? this._itemsTree : this._fixedItemsTree; // Gets the tree which must not have selected items
+		const otherTree = this._fixedItemsTree === event.target ? this._itemsTree : this._fixedItemsTree; // Gets the tree which must not have selected items
+		otherTree._clearSelectedItems();
 
 		this.fireSelectionChange(event);
 
-		if (this.collapsed) {
-			this.openPicker(event.target);
-			this._popoverContent = event.target._generatePopoverContent();
+		if (this.collapsed && item.treeItem.items.length) {
+			this._popoverContent = this._generatePopoverContent(event.detail.item);
+			this.openPicker(currentTree._getRealItemDomRef(item), item);
 		}
 	}
 
 	fireSelectionChange(event) {
-		const item = (event.detail && event.detail.item && event.detail.item.item) || event.target;
-		const isArrowClicked = event.detail && event.detail.isIconClicked;
+		const item = event.detail.item.treeItem // if event is fired when not collapsed
+		|| event.detail.item.item; // if event is fired from the list in the popover
 
-		this.fireEvent("selection-change", {
-			item,
-			isArrowClicked,
-		});
+		this.fireEvent("selection-change", { item });
 	}
 
 	_resetSelectedItems(items) {
@@ -196,6 +179,20 @@ class SideNavigation extends UI5Element {
 		});
 	}
 
+	_generatePopoverContent(item) {
+		const result = [{
+			text: item.treeItem.text,
+			item: item.treeItem,
+		}];
+
+		item.treeItem.items.forEach(element => result.push({
+			text: element.text,
+			item: element,
+		}));
+
+		return result;
+	}
+
 	getMiddleFocusHelper() {
 		return this.getDomRef().querySelector(".ui5-sn-middle-focus-helper");
 	}
@@ -204,62 +201,14 @@ class SideNavigation extends UI5Element {
 		this.getMiddleFocusHelper().focus();
 	}
 
-	// focusNext(event) {
-	// 	const eventTarget = event.target;
-	// 	const isFixedItems = eventTarget.slot === "fixedItems";
-	// 	let currentItems = Array.from(this.querySelectorAll(`ui5-side-navigation-item${isFixedItems ? "[slot='fixedItems']" : ":not([slot])"}`));
-
-	// 	if (eventTarget.expandable && eventTarget.expanded) {
-	// 		eventTarget.items[0].focus();
-	// 	} else if (currentItems.indexOf(eventTarget) > -1 && currentItems.indexOf(eventTarget) < currentItems.length - 1) {
-	// 		if (currentItems[currentItems.indexOf(eventTarget) + 1].getClientRects().length === 0) {
-	// 			currentItems = isFixedItems ? this.fixedItems : this.items;
-	// 		}
-	// 		const nextItem = currentItems[currentItems.indexOf(eventTarget) + 1];
-
-	// 		if (nextItem) {
-	// 			nextItem.focus();
-	// 		}
-	// 	}
-	// }
-
-	// focusPrevious(event) {
-	// 	const eventTarget = event.target;
-	// 	const isFixedItems = eventTarget.slot === "fixedItems";
-	// 	let currentItems = Array.from(this.querySelectorAll(`ui5-side-navigation-item${isFixedItems ? "[slot='fixedItems']" : ":not([slot])"}`));
-
-	// 	if (eventTarget.expandable && eventTarget.expanded) {
-	// 		const _prevItem = currentItems[currentItems.indexOf(eventTarget) - 1];
-
-	// 		if (_prevItem) {
-	// 			_prevItem.focus();
-	// 		}
-	// 	} else if (currentItems.indexOf(eventTarget) > 0) {
-	// 		if (currentItems[currentItems.indexOf(eventTarget) - 1].getClientRects().length === 0) {
-	// 			currentItems = isFixedItems ? this.fixedItems : this.items;
-	// 		}
-
-	// 		currentItems[currentItems.indexOf(eventTarget) - 1].focus();
-	// 	}
-	// }
-
 	async getPicker() {
 		return (await this.getStaticAreaItemDomRef()).querySelector("ui5-responsive-popover");
 	}
 
 	async openPicker(opener) {
-		if (!opener.items.length) {
-			return;
-		}
 		const responsivePopover = await this.getPicker();
 
 		responsivePopover.open(opener);
-	}
-
-	async closePicker() {
-		const responsivePopover = await this.getPicker();
-
-		responsivePopover.close();
 	}
 
 	get _itemsTree() {

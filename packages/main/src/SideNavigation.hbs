@@ -9,11 +9,10 @@
             {{#each _currentItems}}
                 <ui5-tree-item
                     icon="{{this.treeItem.icon}}"
-                    level="{{this.level}}"
+                    level="{{this.treeItem.level}}"
                     .treeItem="{{this.treeItem}}"
                     show-toggle-button-end="true"
                     text="{{this.treeItem.text}}"
-                    index="{{this.index}}"
                     ?has-children="{{this.treeItem.expandable}}"
                     ?expanded="{{this.treeItem.expanded}}"
                     ?_collapsed="{{this.collapsed}}"
@@ -54,7 +53,7 @@
                 {{#each _currentFixedItems}}
                         <ui5-tree-item
                         icon="{{this.treeItem.icon}}"
-                        level="{{this.level}}"
+                        level="{{this.treeItem.level}}"
                         .treeItem="{{this.treeItem}}"
                         show-toggle-button-end="true"
                         text="{{this.treeItem.text}}"

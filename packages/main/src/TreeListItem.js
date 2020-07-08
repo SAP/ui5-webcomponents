@@ -207,11 +207,11 @@ class TreeListItem extends ListItem {
 	}
 
 	get _showToggleButtonBeginning() {
-		return this.showToggleButton && !this._collapsed && !this.showToggleButtonEnd ;
+		return this.showToggleButton && !this._collapsed && !this.showToggleButtonEnd;
 	}
 
 	get _showToggleButtonEnd() {
-		return this.showToggleButton && !this._collapsed && this.showToggleButtonEnd ;
+		return this.showToggleButton && !this._collapsed && this.showToggleButtonEnd;
 	}
 
 	get showTitle() {

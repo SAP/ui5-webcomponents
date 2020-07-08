@@ -36,8 +36,12 @@
     padding-left: 0;
 }
 
-:host(:not([level="1"][_show-selected-on-sub-items])) {
-    border-bottom: none !important;
+:host([selected][has-border]:not([level="1"])) {
+    border-bottom: none;
+}
+
+:host([show-toggle-button-end][selected]:not([level="1"])) {
+	border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
 :host(:not([level="1"][_show-selected-on-sub-items])) .ui5-li-root-tree {

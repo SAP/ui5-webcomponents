@@ -79,7 +79,6 @@ const metadata = {
 			multiple: true,
 		},
 	},
-	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
 
 		/**
@@ -305,7 +304,7 @@ class Tree extends UI5Element {
 	_onListSelectionChange(event) {
 		const previouslySelectedItems = event.detail.previouslySelectedItems.map(item => item.treeItem);
 		const selectedItems = event.detail.selectedItems.map(item => item.treeItem);
-		debugger;
+
 		previouslySelectedItems.forEach(item => {
 			item.selected = false;
 		});
@@ -317,6 +316,16 @@ class Tree extends UI5Element {
 			previouslySelectedItems,
 			selectedItems,
 		});
+	}
+
+	_clearSelectedItems() {
+		return this.list.deselectSelectedItems();
+	}
+
+	_getRealItemDomRef(item) {
+		const position = this.items.indexOf(item);
+
+		return this.getDomRef().querySelectorAll("ui5-li-tree")[position];
 	}
 
 	/**

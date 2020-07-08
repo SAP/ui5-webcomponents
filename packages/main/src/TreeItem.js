@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 /**
  * @public
