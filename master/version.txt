@@ -1,11 +1,5 @@
-commit 5cffa7429df438e69246f807c196cb0433ee1540
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jul 8 11:08:44 2020 +0300
+commit f236e0df315f7bb93d0cb389586b3ce33b0acefd
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jul 8 11:14:09 2020 +0300
 
-    chore(ui5-input): Enable separators customization (#1922)
-    
-    Enable suggestion list separators customization
-    - add suggestionSeparators getter that can overwritten in order to have different separators type
-    - change the default separators type of the suggestion list to "None" as in classic UI5
-    
-    Related to: #1919
+    fix(ui5-upload-collection): The component does not get stuck when dropping on the body (#1897)
