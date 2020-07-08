@@ -1,5 +1,15 @@
-commit 2b76fe75dd4da2e70bc2a9d08ed783f597051a16
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Jul 8 14:18:00 2020 +0300
+commit 78035f8e77915ef121ad7971eca5356a7a296669
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jul 8 15:48:45 2020 +0300
 
-    refactor(ui5-upload-collection-item): integrated ui5-progress-indicator (#1927)
+    refactor(ui5-input): Add tempalte hook for the suggestions (#1928)
+    
+    Add template hook for the suggestions list, so the third party components can entirely replace our list with another and to fully control the appearance of the suggestion items.
+    
+    // CustomInputPopoverTemplate.hbs
+    {{>include "InputPopoverTemplate"}}
+    
+    {{#*inline "suggestionsList"}}
+            <ui5-my-list>
+            </ui5-my-list>
+    {{/inline}}
