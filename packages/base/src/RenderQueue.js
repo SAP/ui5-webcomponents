@@ -4,26 +4,15 @@ class RenderQueue {
 	constructor() {
 		this.list = []; // Used to store the web components in order
 		this.lookup = new Set(); // Used for faster search
-
-		this.promise = null; // Will be resolved when the queue is processed
-		this.resolve = null; // Deferred resolve for the promise
 	}
 
 	add(webComponent) {
 		if (this.lookup.has(webComponent)) {
-			return this.promise;
+			return;
 		}
 
 		this.list.push(webComponent);
 		this.lookup.add(webComponent);
-
-		if (!this.promise) {
-			this.promise = new Promise(resolve => {
-				this.resolve = resolve;
-			});
-		}
-
-		return this.promise;
 	}
 
 	remove(webComponent) {
@@ -70,12 +59,6 @@ class RenderQueue {
 			callback(webComponent);
 			stats.set(webComponent, timesProcessed + 1);
 			webComponent = this.shift();
-		}
-
-		if (this.resolve) {
-			this.resolve();
-			this.resolve = null;
-			this.promise = null;
 		}
 	}
 }
