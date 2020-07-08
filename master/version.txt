@@ -1,5 +1,5 @@
-commit f236e0df315f7bb93d0cb389586b3ce33b0acefd
+commit 25ed25fb725cfe44bae59deb8fb616dc5f6335d8
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jul 8 11:14:09 2020 +0300
+Date:   Wed Jul 8 12:01:25 2020 +0300
 
-    fix(ui5-upload-collection): The component does not get stuck when dropping on the body (#1897)
+    fix(ui5-textarea): Add missing dependency, extract .hbs partial (#1909)
