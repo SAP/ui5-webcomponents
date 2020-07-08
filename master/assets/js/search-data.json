@@ -135,7 +135,7 @@
   "20": {
     "id": "20",
     "title": "Combo Box",
-    "content": "&lt;!DOCTYPE html&gt; ComboBox test page Lazy Loading - example does not work on IE11 Change event testing Changed value: Change call count: 0 Contains filter StartsWith filter ComboBox in Compact",
+    "content": "&lt;!DOCTYPE html&gt; ComboBox test page Select country: Lazy Loading - example does not work on IE11 Change event testing Changed value: Change call count: 0 Contains filter StartsWith filter ComboBox in Compact",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/ComboBox/",
     "relUrl": "/playground/main/pages/ComboBox/"
   },

@@ -1,5 +1,5 @@
-commit cfd4fa36942cae0427692ea06b19491215c5f60d
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Jul 7 16:23:27 2020 +0300
+commit 99a0e81391fcfd58ce09a90da59f35b07beb7f4a
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jul 8 10:30:47 2020 +0300
 
-    feat(framework): implement stabledomref functionality (#1868)
+    fix(ui5-combobox): support aria-label/arial-labelledby and fix aria-expanded (#1916)

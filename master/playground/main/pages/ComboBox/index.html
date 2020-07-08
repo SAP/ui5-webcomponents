@@ -44,7 +44,8 @@
 	</style>
 
 	<div class="demo-section">
-		<ui5-combobox id="combo" style="width: 360px;" value="Bulgaria">
+		<ui5-label id="countryLabel">Select country: </ui5-label>
+		<ui5-combobox id="combo" style="width: 360px;" value="Bulgaria" aria-labelledby="countryLabel">
 			<ui5-cb-item text="Algeria"></ui5-cb-item>
 			<ui5-cb-item text="Argentina"></ui5-cb-item>
 			<ui5-cb-item text="Australia"></ui5-cb-item>
@@ -58,7 +59,7 @@
 			<ui5-cb-item text="Chile"></ui5-cb-item>
 		</ui5-combobox>
 
-		<ui5-combobox id="combo2" style="width: 360px;">
+		<ui5-combobox id="combo2" style="width: 360px;" aria-label="Select destination:">
 			<ui5-cb-item text="Algeria"></ui5-cb-item>
 			<ui5-cb-item text="Argentina"></ui5-cb-item>
 			<ui5-cb-item text="Australia"></ui5-cb-item>
