@@ -217,11 +217,12 @@ describe("Input general interaction", () => {
 		suggestionsInput.keys("c"); // to open the suggestions pop up once again
 		suggestionsInput.keys("ArrowUp");
 
-		assert.strictEqual(suggestionsInput.getValue(), "Condensed", "First item has been selected");
+		assert.strictEqual(suggestionsInput.getValue(), "",
+			"The Last item 'Inactive Condensed' has been selected, producing empty string as 'Inactive'");
 
 		inputResult.click();
 
-		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelect is fired once");
+		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelect is not fired as item is 'Inactive'");
 	});
 
 	it("handles group suggestion item via keyboard", () => {
