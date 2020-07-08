@@ -53,6 +53,7 @@ class Suggestions {
 				description: suggestion.description || undefined,
 				image: suggestion.image || undefined,
 				icon: suggestion.icon || undefined,
+				type: suggestion.type || undefined,
 				info: suggestion.info || undefined,
 				infoState: suggestion.infoState,
 				group: suggestion.group,
@@ -145,6 +146,12 @@ class Suggestions {
 			listSize: this._getItems().length,
 			itemText: item.textContent,
 		};
+
+		// If the item is "Inactive", prevent selection with SPACE or ENTER
+		// to have consistency with the way "Inactive" items behave in the ui5-list
+		if (item.type === "Inactive") {
+			return;
+		}
 
 		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
 		item.selected = false;

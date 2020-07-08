@@ -781,7 +781,13 @@ class Input extends UI5Element {
 
 	previewSuggestion(item) {
 		this.valueBeforeItemSelection = this.value;
-		this.value = item.group ? "" : item.textContent;
+
+		if (item.type === "Inactive" || item.group) {
+			this.value = "";
+		} else {
+			this.value = item.textContent;
+		}
+
 		this._announceSelectedItem();
 		this._previewItem = item;
 	}
@@ -903,10 +909,8 @@ class Input extends UI5Element {
 
 	onItemPreviewed(item) {
 		this.previewSuggestion(item);
-		const suggestionItem = this.getSuggestionByListItem(item);
-
 		this.fireEvent("suggestion-item-preview", {
-			item: suggestionItem,
+			item: this.getSuggestionByListItem(item),
 			targetRef: item,
 		});
 	}
