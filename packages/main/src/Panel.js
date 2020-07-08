@@ -374,15 +374,17 @@ class Panel extends UI5Element {
 				"ariaControls": this._hasHeader ? `${this._id}-content` : undefined,
 				"title": this.toggleButtonTitle,
 			},
-			"ariaExpanded": this.hasUnfixedInternalHeader ? this.expanded : undefined,
-			"ariaControls": this.hasUnfixedInternalHeader ? `${this._id}-content` : undefined,
-			"ariaLabelledBy": this.ariaLabelledBy,
-			"ariaLabel": this.ariaLabelTxt,
-			"role": this.hasUnfixedInternalHeader ? "button" : undefined,
+			"ariaExpanded": this.nonFixedInternalHeader ? this.expanded : undefined,
+			"ariaControls": this.nonFixedInternalHeader ? `${this._id}-content` : undefined,
+			"ariaLabelledby": this.nonFocusableButton ? this.ariaLabelledbyReference : undefined,
+			"ariaLabel": this.nonFocusableButton ? this.ariaLabelTxt : undefined,
+			"ariaLabelledbyButton": this.nonFocusableButton ? undefined : this.ariaLabelledbyReference,
+			"ariaLabelButton": this.nonFocusableButton ? undefined : this.ariaLabelTxt,
+			"role": this.nonFixedInternalHeader ? "button" : undefined,
 		};
 	}
 
-	get ariaLabelledBy() {
+	get ariaLabelledbyReference() {
 		if (this.ariaLabelledby || this.ariaLabel) {
 			return undefined;
 		}
@@ -402,7 +404,7 @@ class Panel extends UI5Element {
 		return (this.header.length || this.fixed) ? "-1" : "0";
 	}
 
-	get hasUnfixedInternalHeader() {
+	get nonFixedInternalHeader() {
 		return !this._hasHeader && !this.fixed;
 	}
 

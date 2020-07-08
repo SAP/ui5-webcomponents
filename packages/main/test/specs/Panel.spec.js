@@ -116,15 +116,15 @@ describe("Panel general interaction", () => {
 
 		it("tests aria-label and aria-labelledby attributes", () => {
 			const panelWithNativeHeader = $("#panel-expandable");
-			const nativeHeader = panelWithNativeHeader.shadow$("ui5-panel-header");
+			const nativeHeader = panelWithNativeHeader.shadow$(".ui5-panel-header");
 			const panelWithNativeHeaderId = panelWithNativeHeader.getProperty("_id");
 
 			assert.strictEqual(nativeHeader.getAttribute("aria-label"), null, "aria-label is not present");
 			assert.strictEqual(nativeHeader.getAttribute("aria-labelledby"),
 				`${panelWithNativeHeaderId}-header-title`, "aria-labelledby is correct");
 
-			const panelWithCustomHeader = $("p1");
-			const headerButton = panelWithCustomHeader.shadow$("ui5-panel-header-button");
+			const panelWithCustomHeader = $("#p1");
+			const headerButton = panelWithCustomHeader.shadow$(".ui5-panel-header-button");
 			const expectedText = "Expandable but not expanded";
 
 			assert.strictEqual(headerButton.getAttribute("aria-label"), expectedText,
