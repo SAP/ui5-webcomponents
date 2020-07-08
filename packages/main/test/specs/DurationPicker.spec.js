@@ -18,7 +18,7 @@ describe("Duration Picker general interaction", () => {
 		duratationPickerIcon.click();
 
 		assert.isNotOk(durationPicker.getProperty("_isPickerOpen"), "Popover is closed");
-		assert.isNotOk(popover.getProperty("opened"), "Popover is opeclosedned.");
+		assert.isNotOk(popover.getProperty("opened"), "Popover is closed.");
 	});
 
 	it("Tests max-value", () => {
