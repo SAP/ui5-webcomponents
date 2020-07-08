@@ -1009,6 +1009,10 @@ class Input extends UI5Element {
 		};
 	}
 
+	get suggestionSeparators() {
+		return "None";
+	}
+
 	get valueStateMessageText() {
 		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}

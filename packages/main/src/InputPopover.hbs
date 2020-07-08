@@ -49,7 +49,7 @@
 		{{/if}}
 	{{/unless}}
 
-		<ui5-list separators="Inner">
+		<ui5-list separators="{{suggestionSeparators}}">
 			{{#each suggestionsTexts}}
 				{{#if group}}
 					<ui5-li-groupheader data-ui5-key="{{key}}">{{ this.text }}</ui5-li-groupheader>
