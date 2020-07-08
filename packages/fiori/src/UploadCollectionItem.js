@@ -4,6 +4,7 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
+import ProgressIndicator from "@ui5/webcomponents/dist/ProgressIndicator.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
@@ -254,6 +255,7 @@ class UploadCollectionItem extends ListItem {
 			Input.define(),
 			Link.define(),
 			Label.define(),
+			ProgressIndicator.define(),
 			fetchI18nBundle("@ui5/webcomponents-fiori"),
 		]);
 	}
@@ -402,22 +404,6 @@ class UploadCollectionItem extends ListItem {
 				"ui5-uci-root-editing": this._editing,
 				"ui5-uci-root-uploading": this.uploadState === UploadState.Uploading,
 			},
-			progressIndicator: {
-				"ui5-uci-progress-indicator": true,
-				"error": this.uploadState === UploadState.Error,
-			},
-		};
-	}
-
-	get styles() {
-		return {
-			progressBar: {
-				"flex-basis": `${this.progress}%`,
-			},
-			progressBarRemaining: {
-				"border-left": this.progress !== 0 ? "none" : "",
-				"border-radius": this.progress === 0 ? "0.5rem" : "0 0.5rem 0.5rem 0",
-			},
 		};
 	}
 
@@ -474,6 +460,18 @@ class UploadCollectionItem extends ListItem {
 
 	get _terminateButtonTooltip() {
 		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
+	}
+
+	get valueStateName() {
+		if (this.uploadState === UploadState.Error) {
+			return "Error";
+		}
+
+		if (this.uploadState === UploadState.Ready || this.uploadState === UploadState.Uploading) {
+			return "Information";
+		}
+
+		return undefined;
 	}
 
 	/**
