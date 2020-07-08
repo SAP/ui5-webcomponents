@@ -1,9 +1,5 @@
-commit dcac133a86952e3191952faef654ee292adfc5b8
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jul 8 13:59:27 2020 +0300
+commit 2b76fe75dd4da2e70bc2a9d08ed783f597051a16
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Jul 8 14:18:00 2020 +0300
 
-    fix(ui5-combo-box): Close picker when no match (#1926)
-    
-    When the user types and there is no match, the picker remains open and empty, now it closes.
-    
-    FIXES: #1920
+    refactor(ui5-upload-collection-item): integrated ui5-progress-indicator (#1927)
