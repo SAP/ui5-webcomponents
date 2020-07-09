@@ -253,16 +253,14 @@ class Popover extends Popup {
 	 * Opens the popover.
 	 * @param {HTMLElement} opener the element that the popover is opened by
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
-	 * @param {boolean} closeWithOpener defines if the popover would closes when its opener is no longer visible (true by default)
 	 * @public
 	 */
-	openBy(opener, preventInitialFocus = false, closeWithOpener = true) {
+	openBy(opener, preventInitialFocus = false) {
 		if (!opener || this.opened) {
 			return;
 		}
 
 		this._opener = opener;
-		this._closeWithOpener = closeWithOpener;
 
 		super.open(preventInitialFocus);
 	}
