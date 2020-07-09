@@ -74,8 +74,8 @@ const cssVariablesLoaded = () => {
 	if (!link) {
 		return;
 	}
-
-	return !!link.href.match(/\/css-variables\.css/);
+debugger;
+	return !!link.href.match(/\/css(-|_)variables\.css/);
 };
 
 const OpenUI5Support = {
