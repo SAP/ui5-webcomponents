@@ -74,7 +74,7 @@ const cssVariablesLoaded = () => {
 	if (!link) {
 		return;
 	}
-debugger;
+
 	return !!link.href.match(/\/css(-|_)variables\.css/);
 };
 
