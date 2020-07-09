@@ -4,7 +4,7 @@ import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcompo
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import { getNextZIndex, getFocusedElement } from "./popup-utils/PopupUtils.js";
+import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "./popup-utils/PopupUtils.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
@@ -41,8 +41,21 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if focus should be returned to the opener
+		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.8
+		*/
+		preventFocusRestore: {
+			type: Boolean,
+		},
+
+		/**
 		 * Indicates if the elements is open
 		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
 		 */
 		opened: {
 			type: Boolean,
@@ -273,6 +286,10 @@ class Popup extends UI5Element {
 		return this.opened;
 	}
 
+	isFocusWithin() {
+		return isFocusedElementWithinNode(this.shadowRoot.querySelector(".ui5-popup-root"));
+	}
+
 	/**
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
@@ -333,7 +350,7 @@ class Popup extends UI5Element {
 			this._removeOpenedPopup();
 		}
 
-		if (!preventFocusRestore) {
+		if (!this.preventFocusRestore && !preventFocusRestore) {
 			this.resetFocus();
 		}
 

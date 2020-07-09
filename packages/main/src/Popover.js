@@ -321,8 +321,9 @@ class Popover extends Popup {
 		const popoverSize = this.popoverSize;
 		const openerRect = this._opener.getBoundingClientRect();
 
-		if (!this._closeWithOpener && this.shouldCloseDueToNoOpener(openerRect)) {
-			// use the old placement when the opener is gone
+		if (this.shouldCloseDueToNoOpener(openerRect) && this.isFocusWithin()) {
+			// reuse the old placement as the opener is not available,
+			// but keep the popover open as the focus is within
 			placement = this._oldPlacement;
 		} else {
 			placement = this.calcPlacement(openerRect, popoverSize);
@@ -407,11 +408,7 @@ class Popover extends Popup {
 
 		const placementType = this.getActualPlacementType(targetRect, popoverSize);
 
-		if (!this._closeWithOpener) {
-			this._preventRepositionAndClose = this.shouldCloseDueToNoOpener(targetRect) || this.shouldCloseDueToOverflow(placementType, targetRect);
-		} else {
-			this._preventRepositionAndClose = false;
-		}
+		this._preventRepositionAndClose = this.shouldCloseDueToNoOpener(targetRect) || this.shouldCloseDueToOverflow(placementType, targetRect);
 
 		const isVertical = placementType === PopoverPlacementType.Top
 			|| placementType === PopoverPlacementType.Bottom;
