@@ -1,5 +1,10 @@
-commit 8cb7c4870b77b500a62efe2418fdd63ac58c278e
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Jul 9 09:52:07 2020 +0300
+commit bb5b724e869bde73193582dc5bf8147586817097
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jul 9 10:44:13 2020 +0300
 
-    feat(ui5-panel): support aria-label and aria-labelledby (#1910)
+    fix(framework): Fix openui5 css varaibles detection (#1933)
+    
+    Change the regex to detect the openui5 CSS variables properly as from 1.79 the CSS Variables filename has changed to css_variables.css (previously css-varaibles.css with dash).
+    But, the script will match the old name with "-" dash as well, if we need to support it, otherwise we can leave "_" only to support the latest name.
+    
+    FIXES: #1932
