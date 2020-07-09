@@ -894,13 +894,13 @@ class Input extends UI5Element {
 	onItemMouseOver(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion.fireEvent("mouseover", { targetRef: item });
+		suggestion && suggestion.fireEvent("mouseover", { targetRef: item });
 	}
 
 	onItemMouseOut(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion.fireEvent("mouseout", { targetRef: item });
+		suggestion && suggestion.fireEvent("mouseout", { targetRef: item });
 	}
 
 	onItemSelected(item, keyboardUsed) {
