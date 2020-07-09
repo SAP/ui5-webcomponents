@@ -66,8 +66,8 @@ class RenderScheduler {
 					invalidatedWebComponents.process(component => component._render());
 
 					// Resolve the promise so that callers of renderDeferred can continue
-					resolve();
 					queuePromise = null;
+					resolve();
 
 					// Wait for Mutation observer before the render task is considered finished
 					if (!mutationObserverTimer) {
