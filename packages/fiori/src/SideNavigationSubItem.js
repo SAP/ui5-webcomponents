@@ -7,7 +7,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
  */
 const metadata = {
 	tag: "ui5-side-navigation-sub-item",
-	properties: /** @lends sap.ui.webcomponents.main.SideNavigationSubItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
 		/**
 		 * Defines the text of the item.
 		 *
@@ -27,10 +27,10 @@ const metadata = {
 			defaultValue: 2,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.SideNavigationSubItem.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
 		//
 	},
-	events: /** @lends sap.ui.webcomponents.main.SideNavigationSubItem.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
 		//
 	},
 };
@@ -52,7 +52,7 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.SideNavigationSubItem
+ * @alias sap.ui.webcomponents.fiori.SideNavigationSubItem
  * @extends UI5Element
  * @tagname ui5-side-navigation-sub-item
  * @public

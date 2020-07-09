@@ -109,14 +109,14 @@ class UI5Element extends HTMLElement {
 		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
+		if (slotsAreManaged) {
+			// always register the observer before yielding control to the main thread (await)
+			this._startObservingDOMChildren();
+			await this._processChildren();
+		}
+
 		// Render the Shadow DOM
 		if (needsShadowDOM) {
-			if (slotsAreManaged) {
-				// always register the observer before yielding control to the main thread (await)
-				this._startObservingDOMChildren();
-				await this._processChildren();
-			}
-
 			if (!this.shadowRoot) { // Workaround for Firefox74 bug
 				await Promise.resolve();
 			}
@@ -139,11 +139,11 @@ class UI5Element extends HTMLElement {
 		const needsStaticArea = this.constructor._needsStaticArea();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
-		if (needsShadowDOM) {
-			if (slotsAreManaged) {
-				this._stopObservingDOMChildren();
-			}
+		if (slotsAreManaged) {
+			this._stopObservingDOMChildren();
+		}
 
+		if (needsShadowDOM) {
 			RenderScheduler.deregister(this);
 			if (typeof this.onExitDOM === "function") {
 				this.onExitDOM();

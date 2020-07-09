@@ -1,13 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import List from "./List.js";
+import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import Tree from "@ui5/webcomponents/dist/Tree.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
 
 // Styles
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
-import StandardListItem from "./StandardListItem.js";
 
 /**
  * @public
@@ -15,7 +14,7 @@ import StandardListItem from "./StandardListItem.js";
 const metadata = {
 	tag: "ui5-side-navigation",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.SideNavigation.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
 		/**
 		 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
 		 *
@@ -35,7 +34,7 @@ const metadata = {
 			multiple: true,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.SideNavigation.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
 		/**
 		 * Defines the items in the <code>ui5-side-navigation</code>.
 		 *
@@ -57,11 +56,11 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.SideNavigation.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
 		/**
 		 * Fired when the selection has changed via user interaction
 		 *
-		 * @event sap.ui.webcomponents.main.SideNavigation#selection-change
+		 * @event sap.ui.webcomponents.fiori.SideNavigation#selection-change
 		 * @param {HTMLElement} item the clicked item.
 		 * @public
 		 */
@@ -90,7 +89,7 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.SideNavigation
+ * @alias sap.ui.webcomponents.fiori.SideNavigation
  * @extends UI5Element
  * @tagname ui5-side-navigation
  * @since 1.0.0-rc.8
@@ -120,9 +119,8 @@ class SideNavigation extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
+			Tree.define(),
 			ResponsivePopover.define(),
-			List.define(),
-			StandardListItem.define(),
 		]);
 	}
 
@@ -154,11 +152,12 @@ class SideNavigation extends UI5Element {
 		const otherTree = this._fixedItemsTree === event.target ? this._itemsTree : this._fixedItemsTree; // Gets the tree which must not have selected items
 		otherTree._clearSelectedItems();
 
-		this.fireSelectionChange(event);
 
 		if (this.collapsed && item.treeItem.items.length) {
 			this._popoverContent = this._generatePopoverContent(event.detail.item);
 			this.openPicker(currentTree._getRealItemDomRef(item), item);
+		} else {
+			this.fireSelectionChange(event);
 		}
 	}
 

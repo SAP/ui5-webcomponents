@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
@@ -8,7 +7,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 const metadata = {
 	tag: "ui5-side-navigation-item",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.SideNavigationItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
 		/**
 		 * Defines the text of the item.
 		 *
@@ -73,7 +72,7 @@ const metadata = {
 			defaultValue: 1,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.SideNavigationItem.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
 		/**
 		 * If you wish to nest menus, you can pass inner menu items to the default slot.
 		 *
@@ -86,7 +85,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.SideNavigationItem.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
 		//
 	},
 };
@@ -107,7 +106,7 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.SideNavigationItem
+ * @alias sap.ui.webcomponents.fiori.SideNavigationItem
  * @extends UI5Element
  * @tagname ui5-side-navigation-item
  * @public
@@ -116,10 +115,6 @@ const metadata = {
 class SideNavigationItem extends UI5Element {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 }
 
