@@ -1,7 +1,5 @@
-commit 7da7a5411026c9f85f6cc92d3e2299d19f8d6aae
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 9 09:44:35 2020 +0300
+commit 8cb7c4870b77b500a62efe2418fdd63ac58c278e
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Jul 9 09:52:07 2020 +0300
 
-    fix(ui5-input): Fix js error on mouseover/out (#1931)
-    
-    FIXES: #1930
+    feat(ui5-panel): support aria-label and aria-labelledby (#1910)
