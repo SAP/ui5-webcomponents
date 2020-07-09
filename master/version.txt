@@ -1,10 +1,7 @@
-commit bb5b724e869bde73193582dc5bf8147586817097
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 9 10:44:13 2020 +0300
+commit d55515fff85ffebbf2f5ff1102754dca97a7dd2f
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Jul 9 01:24:44 2020 -0700
 
-    fix(framework): Fix openui5 css varaibles detection (#1933)
+    chore: translation delivery (#1934)
     
-    Change the regex to detect the openui5 CSS variables properly as from 1.79 the CSS Variables filename has changed to css_variables.css (previously css-varaibles.css with dash).
-    But, the script will match the old name with "-" dash as well, if we need to support it, otherwise we can leave "_" only to support the latest name.
-    
-    FIXES: #1932
+    Change-Id: I477ba9672de82f666fae7c67b79c9aff01876b32
