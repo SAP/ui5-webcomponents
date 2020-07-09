@@ -114,6 +114,31 @@ describe("Panel general interaction", () => {
 			assert.strictEqual(title.getAttribute("aria-level"), "3", "title aria-level is set to 3 correctly");
 		});
 
+		it("tests aria-label and aria-labelledby attributes", () => {
+			const panelWithNativeHeader = $("#panel-expandable");
+			const nativeHeader = panelWithNativeHeader.shadow$(".ui5-panel-header");
+			const panelWithNativeHeaderId = panelWithNativeHeader.getProperty("_id");
+
+			assert.strictEqual(nativeHeader.getAttribute("aria-label"), null, "aria-label is not present");
+			assert.strictEqual(nativeHeader.getAttribute("aria-labelledby"),
+				`${panelWithNativeHeaderId}-header-title`, "aria-labelledby is correct");
+
+			const panelWithCustomHeader = $("#p1");
+			const headerButton = panelWithCustomHeader.shadow$(".ui5-panel-header-button");
+			const expectedText = "Expandable but not expanded";
+
+			assert.strictEqual(headerButton.getAttribute("aria-label"), expectedText,
+				"aria-labelledby is propagated correctly to the expand/collapse button");
+		});
+
+		it("tests whether aria attributes are set correctly with fixed header", () => {
+			const header = browser.$("#panel-fixed").shadow$(".ui5-panel-header");
+
+			assert.ok(!header.getAttribute("aria-expanded"), "aria-expanded shouldn't be set on the fixed header");
+			assert.ok(!header.getAttribute("aria-controls"), "aria-controls shouldn't be set on the fixed header");
+			assert.ok(!header.getAttribute("role"), "role shouldn't be set on the fixed header");
+		});
+
 		it("tests whether aria attributes are set correctly in case of custom header", () => {
 			const button = browser.$("#panel2").shadow$(".ui5-panel-header-button").shadow$(".ui5-button-root");
 			const header = browser.$("#panel2").shadow$(".ui5-panel-header");

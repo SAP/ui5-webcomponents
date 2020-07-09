@@ -53,6 +53,7 @@ class Suggestions {
 				description: suggestion.description || undefined,
 				image: suggestion.image || undefined,
 				icon: suggestion.icon || undefined,
+				type: suggestion.type || undefined,
 				info: suggestion.info || undefined,
 				infoState: suggestion.infoState,
 				group: suggestion.group,
@@ -92,14 +93,19 @@ class Suggestions {
 		return false;
 	}
 
-	toggle(bToggle) {
+	toggle(bToggle, { preventFocusRestore }) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
 
 		if (toggle) {
 			this.open();
 		} else {
-			this.close();
+			this.close(preventFocusRestore);
 		}
+	}
+
+	async _isScrollable() {
+		const sc = await this._getScrollContainer();
+		return sc.offsetHeight < sc.scrollHeight;
 	}
 
 	async open() {
@@ -108,9 +114,9 @@ class Suggestions {
 		this.responsivePopover.open(this._getComponent());
 	}
 
-	async close() {
+	async close(preventFocusRestore = false) {
 		this.responsivePopover = await this._respPopover();
-		this.responsivePopover.close();
+		this.responsivePopover.close(false, false, preventFocusRestore);
 	}
 
 	updateSelectedItemPosition(pos) {
@@ -140,6 +146,12 @@ class Suggestions {
 			listSize: this._getItems().length,
 			itemText: item.textContent,
 		};
+
+		// If the item is "Inactive", prevent selection with SPACE or ENTER
+		// to have consistency with the way "Inactive" items behave in the ui5-list
+		if (item.type === "Inactive") {
+			return;
+		}
 
 		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
 		item.selected = false;

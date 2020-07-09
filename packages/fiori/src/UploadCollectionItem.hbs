@@ -33,10 +33,12 @@
 			</div>
 			{{#if _showProgressIndicator}}
 				<div class="ui5-uci-progress-box">
-					<div class="{{classes.progressIndicator}}">
-						<div class="ui5-uci-progress-bar" style="{{styles.progressBar}}"></div>
-						<div class="ui5-uci-progress-bar-remaining" style="{{styles.progressBarRemaining}}"></div>
-					</div>
+					<ui5-progress-indicator
+						class="ui5-uci-progress-indicator"
+						hide-value
+						value="{{progress}}"
+						value-state="{{valueStateName}}"
+					></ui5-progress-indicator>
 					<div class="ui5-uci-progress-labels">
 						<ui5-label
 							show-colon

@@ -40,6 +40,15 @@ const metadata = {
 		count: {
 			type: String,
 		},
+
+		/**
+		 * Defines the stable selector that you can use via getStableDomRef method.
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		stableDomRef: {
+			type: String,
+		},
 	},
 
 	events: /** @lends sap.ui.webcomponents.fiori.ShellBarItem.prototype */ {

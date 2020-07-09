@@ -103,6 +103,15 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the stable selector that you can use via getStableDomRef method.
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		stableDomRef: {
+			type: String,
+		},
+
+		/**
 		 * Specifies if the <code>ui5-tab</code> is selected.
 		 *
 		 * @type {boolean}

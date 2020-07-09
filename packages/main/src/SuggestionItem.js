@@ -3,6 +3,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import StandardListItem from "./StandardListItem.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
+import ListItemType from "./types/ListItemType.js";
 
 /**
  * @public
@@ -19,6 +20,23 @@ const metadata = {
 		 */
 		text: {
 			type: String,
+		},
+
+		/**
+		 * Defines the visual indication and behavior of the item.
+		 * Available options are <code>Active</code> (by default), <code>Inactive</code> and <code>Detail</code>.
+		 * <br><br>
+		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
+		 * while when <code>Inactive</code> or <code>Detail</code> - will not.
+		 *
+		 * @type {ListItemType}
+		 * @defaultvalue "Active"
+		 * @public
+		 * @since 1.0.0-rc.8
+		*/
+		type: {
+			type: ListItemType,
+			defaultValue: ListItemType.Active,
 		},
 
 		/**
