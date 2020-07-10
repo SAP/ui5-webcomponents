@@ -327,10 +327,13 @@ class ComboBox extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const domValue = this._initialRendering ? this.value : this.filterValue;
+		let domValue;
 
 		if (this._initialRendering) {
+			domValue = this.value;
 			this._filteredItems = this.items;
+		} else {
+			domValue = this.filterValue;
 		}
 
 		if (this._autocomplete && domValue !== "") {
