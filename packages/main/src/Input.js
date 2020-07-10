@@ -627,9 +627,15 @@ class Input extends UI5Element {
 			return;
 		}
 
-		if (this.popover) {
-			this.popover.close(false, false, true);
-		}
+		const closePopover = async () => {
+			const popover = await this._getPopover();
+
+			if (popover) {
+				popover.close(false, false, true);
+			}
+		};
+
+		closePopover();
 
 		this.previousValue = "";
 		this.focused = false; // invalidating property
@@ -720,23 +726,23 @@ class Input extends UI5Element {
 	}
 
 	async openPopover() {
-		this.popover = await this._getPopover();
-		if (this.popover) {
+		const popover = await this._getPopover();
+
+		if (popover) {
 			this._isPopoverOpen = true;
-			this.popover.openBy(this);
+			popover.openBy(this);
 		}
 	}
 
-	closePopover() {
-		if (this.isOpen()) {
-			this._isPopoverOpen = false;
-			this.popover && this.popover.close();
-		}
+	async closePopover() {
+		const popover = await this._getPopover();
+
+		popover && popover.close();
 	}
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-popover");
+		return staticAreaItem.querySelector("ui5-responsive-popover");
 	}
 
 	enableSuggestions() {
@@ -755,6 +761,7 @@ class Input extends UI5Element {
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
 			&& this.focused
+			&& this.value !== ""
 			&& this.showSuggestions
 			&& !this.hasSuggestionItemSelected);
 	}
@@ -769,7 +776,6 @@ class Input extends UI5Element {
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 
 		this.hasSuggestionItemSelected = true;
-		this.fireEvent(this.EVENT_SUGGESTION_ITEM_SELECT, { item });
 
 		if (fireInput) {
 			this.value = itemText;
@@ -777,6 +783,8 @@ class Input extends UI5Element {
 			this.fireEvent(this.EVENT_INPUT);
 			this.fireEvent(this.EVENT_CHANGE);
 		}
+
+		this.fireEvent(this.EVENT_SUGGESTION_ITEM_SELECT, { item });
 	}
 
 	previewSuggestion(item) {

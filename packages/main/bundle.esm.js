@@ -47,6 +47,7 @@ import Dialog from "./dist/Dialog.js";
 import FileUploader from "./dist/FileUploader.js";
 import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
+import MultiInput from "./dist/MultiInput.js";
 import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";
 import Popover from "./dist/Popover.js";

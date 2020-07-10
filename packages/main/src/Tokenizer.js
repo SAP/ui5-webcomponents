@@ -3,8 +3,10 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
+import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
 import { MULTIINPUT_SHOW_MORE_TOKENS, TOKENIZER_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -26,6 +28,7 @@ const metadata = {
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		showMore: { type: Boolean },
+
 		disabled: { type: Boolean },
 
 		/**
@@ -34,7 +37,14 @@ const metadata = {
 		 * @private
 		 */
 		expanded: { type: Boolean },
+
+		morePopoverOpener: { type: Object },
+
 		_nMoreText: { type: String },
+
+		popoverMinWidth: {
+			type: Integer,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		"token-delete": {
@@ -83,6 +93,10 @@ class Tokenizer extends UI5Element {
 		return styles;
 	}
 
+	static get staticAreaTemplate() {
+		return TokenizerPopoverTemplate;
+	}
+
 	_handleResize() {
 		/*
 		 * Overflow happens with a pure CSS, but we
@@ -112,7 +126,12 @@ class Tokenizer extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	onBeforeRendering() {
+	async onBeforeRendering() {
+		if (this.showPopover && !this._getTokens().length) {
+			const popover = await this.getPopover();
+			popover.close();
+		}
+
 		setTimeout(() => {
 			// wait for the layouting and update the text
 			this._nMoreText = this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this.overflownTokens.length]);
@@ -128,12 +147,26 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._resizeHandler);
 	}
 
-	_openOverflowPopover() {
+	async _openOverflowPopover() {
+		if (this.showPopover) {
+			const popover = await this.getPopover();
+
+			popover.open(this.morePopoverOpener || this);
+		}
+
 		this.fireEvent("show-more-items-press");
 	}
 
 	_getTokens() {
-		return this.tokens;
+		return this.getSlottedNodes("tokens");
+	}
+
+	get _tokens() {
+		return this.getSlottedNodes("tokens");
+	}
+
+	get showPopover() {
+		return Object.keys(this.morePopoverOpener).length;
 	}
 
 	onAfterRendering() {
@@ -141,9 +174,9 @@ class Tokenizer extends UI5Element {
 			We schedule an invalidation as we have the tokens count
 			changed and we need them rendered for the nmore count
 		*/
-		if (this._tokensCount !== this.tokens.length) {
+		if (this._tokensCount !== this._getTokens().length) {
 			this._invalidate();
-			this._tokensCount = this.tokens.length;
+			this._tokensCount = this._getTokens().length;
 		}
 
 		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
@@ -156,6 +189,12 @@ class Tokenizer extends UI5Element {
 
 		this._updateAndFocus();
 		this.fireEvent("token-delete", { ref: event.target });
+	}
+
+	itemDelete(event) {
+		const token = event.detail.item.tokenRef;
+
+		this.fireEvent("token-delete", { ref: token });
 	}
 
 	/* Keyboard handling */
@@ -180,6 +219,12 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
+	async closeMorePopover() {
+		const popover = await this.getPopover();
+
+		popover.close();
+	}
+
 	get showNMore() {
 		return !this.expanded && this.showMore && this.overflownTokens.length;
 	}
@@ -197,7 +242,7 @@ class Tokenizer extends UI5Element {
 			return [];
 		}
 
-		return this.tokens.filter(token => {
+		return this._getTokens().filter(token => {
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
 			const tokenLeft = tokenRect.left + tokenRect.width;
@@ -214,7 +259,7 @@ class Tokenizer extends UI5Element {
 			wrapper: {
 				"ui5-tokenizer-root": true,
 				"ui5-tokenizer-nmore--wrapper": this.showMore,
-				"ui5-tokenizer-no-padding": !this.tokens.length,
+				"ui5-tokenizer-no-padding": !this._getTokens().length,
 			},
 			content: {
 				"ui5-tokenizer--content": true,
@@ -223,8 +268,20 @@ class Tokenizer extends UI5Element {
 		};
 	}
 
+	get styles() {
+		return {
+			popover: {
+				"min-width": `${this.popoverMinWidth}px`,
+			},
+		};
+	}
+
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
+	}
+
+	async getPopover() {
+		return (await this.getStaticAreaItemDomRef()).querySelector("ui5-responsive-popover");
 	}
 }
 

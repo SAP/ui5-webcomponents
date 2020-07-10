@@ -29,6 +29,7 @@
 			@keydown="{{_onkeydown}}"
 			@keyup="{{_onkeyup}}"
 			@click={{_click}}
+			@focusin={{innerFocusIn}}
 			data-sap-no-tab-ref
 			data-sap-focus-ref
 			step="{{step}}"
@@ -38,6 +39,8 @@
 				<slot name="icon"></slot>
 			</div>
 		{{/if}}
+
+		{{> endContent}}
 
 		{{#if showSuggestions}}
 			<span id="{{_id}}-suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
@@ -58,3 +61,4 @@
 
 
 {{#*inline "preContent"}}{{/inline}}
+{{#*inline "endContent"}}{{/inline}}
