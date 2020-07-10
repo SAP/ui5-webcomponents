@@ -41,10 +41,11 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if focus should be returned to the opener
-		 * @private
+		 * Defines if the focus should be returned to the previously focused element,
+		 * whenever the popup closes.
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @private
 		 * @since 1.0.0-rc.8
 		*/
 		preventFocusRestore: {
