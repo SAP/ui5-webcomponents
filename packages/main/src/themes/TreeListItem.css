@@ -53,6 +53,10 @@
     background: var(--sapList_AlternatingBackground);
 }
 
+:host([show-toggle-button-end]:not([level="1"])) .ui5-li-root-tree {
+    background: var(--ui5-listitem-background-color);
+}
+
 :host([show-toggle-button-end][selected]:not([level="1"])) .ui5-li-root-tree {
     background: var(--sapList_SelectionBackgroundColor);
 }
