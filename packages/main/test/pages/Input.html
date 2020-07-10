@@ -26,7 +26,8 @@
 		<ui5-input id="myInput"
 			style="width: 500px"
 			show-suggestions
-			placeholder="Search for a country ...">
+			placeholder="Search for a country ..."
+			highlight>
 		</ui5-input>
 	</div>
 
@@ -102,6 +103,14 @@
 		<ui5-suggestion-item group text="Themes"></ui5-suggestion-item>
 		<ui5-suggestion-item type="Inactive" text="Inactive Quartz"></ui5-suggestion-item>
 		<ui5-suggestion-item type="Inactive" text="Inactive HCB"></ui5-suggestion-item>
+	</ui5-input>
+
+	<h3>Input suggestions with highlighing</h3>
+	<ui5-input id="myInputGrouping"show-suggestions style="width: 100%" highlight>
+		<ui5-suggestion-item text="Adam D" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Aanya Sing" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Allen K" description="Technical Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Alex" description="Technical Support"></ui5-suggestion-item>
 	</ui5-input>
 
 	<h3> Input disabled</h3>
@@ -340,15 +349,15 @@
 			}
 
 			suggestionItems.forEach(function(item, idx) {
-				var li = document.createElement("ui5-suggestion-item");
-				li.id = item.key;
-				li.icon = "world";
-				li.info = "explore";
-				li.group = item.text.length === 1;
-				li.infoState = "Success";
-				li.description = "travel the world";
-				li.text = item.text;
-				input.appendChild(li);
+				var suggestion = document.createElement("ui5-suggestion-item");
+				suggestion.id = item.key;
+				suggestion.icon = "world";
+				suggestion.info = "explore";
+				suggestion.group = item.text.length === 1;
+				suggestion.infoState = "Success";
+				suggestion.description = "travel the world";
+				suggestion.text = item.text
+				input.appendChild(suggestion);
 			});
 
 			labelLiveChange.innerHTML = "Event [input] :: " + value;

@@ -135,6 +135,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if characters within the suggestions to be highlighted
+		 * in case the input value matches parts of the suggestions text.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @sicne 1.0.0-rc.8
+		 */
+		highlight: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines a short hint intended to aid the user with data entry when the
 		 * <code>ui5-input</code> has no value.
 		 * @type {string}
@@ -515,7 +528,7 @@ class Input extends UI5Element {
 	onBeforeRendering() {
 		if (this.showSuggestions) {
 			this.enableSuggestions();
-			this.suggestionsTexts = this.Suggestions.defaultSlotProperties();
+			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.value);
 		}
 
 		const FormSupport = getFeature("FormSupport");
@@ -741,12 +754,13 @@ class Input extends UI5Element {
 
 	enableSuggestions() {
 		if (this.Suggestions) {
+			this.Suggestions.highlight = this.highlight;
 			return;
 		}
 
 		const Suggestions = getFeature("InputSuggestions");
 		if (Suggestions) {
-			this.Suggestions = new Suggestions(this, "suggestionItems");
+			this.Suggestions = new Suggestions(this, "suggestionItems", true);
 		} else {
 			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
 		}

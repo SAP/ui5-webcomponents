@@ -17,7 +17,7 @@ import {
  * @author SAP SE
  */
 class Suggestions {
-	constructor(component, slotName, handleFocus) {
+	constructor(component, slotName, highlight, handleFocus) {
 		// The component, that the suggestion would plug into.
 		this.component = component;
 
@@ -26,6 +26,9 @@ class Suggestions {
 
 		// Defines, if the focus will be moved via the arrow keys.
 		this.handleFocus = handleFocus;
+
+		// Defines, if the suggestions should highlight.
+		this.highlight = highlight;
 
 		// Press and Focus handlers
 		this.fnOnSuggestionItemPress = this.onItemPress.bind(this);
@@ -43,14 +46,15 @@ class Suggestions {
 	}
 
 	/* Public methods */
-	defaultSlotProperties() {
+	defaultSlotProperties(inputValue) {
 		const inputSuggestionItems = this._getComponent().suggestionItems;
-
+		const highlight = this.highlight && !!inputValue;
 		const suggestions = [];
+
 		inputSuggestionItems.map((suggestion, idx) => {
 			return suggestions.push({
-				text: suggestion.text || suggestion.textContent, // keep textContent for compatibility
-				description: suggestion.description || undefined,
+				text: highlight ? this.getHighlightedText(suggestion, inputValue) : this.getItemText(suggestion),
+				description: highlight ? this.getHighlightedDesc(suggestion, inputValue) : suggestion.description || undefined,
 				image: suggestion.image || undefined,
 				icon: suggestion.icon || undefined,
 				type: suggestion.type || undefined,
@@ -348,6 +352,29 @@ class Suggestions {
 			itemSelectionText = i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;
+	}
+
+	getItemText(suggestion) {
+		return suggestion.text || suggestion.textContent;
+	}
+
+	getHighlightedText(suggestion, input) {
+		const text = suggestion.text || suggestion.textContent;
+		return this.hightlightInput(text, input);
+	}
+
+	getHighlightedDesc(suggestion, input) {
+		const text = suggestion.description;
+		return this.hightlightInput(text, input);
+	}
+
+	hightlightInput(text, input) {
+		if (!text) {
+			return text;
+		}
+
+		const regEx = new RegExp(input, "ig");
+		return text.replace(regEx, match => `<b>${match}</b>`);
 	}
 }
 
