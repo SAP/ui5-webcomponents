@@ -80,8 +80,8 @@ slot[name="profile"] {
 
 ::slotted(ui5-avatar[slot="profile"]) {
 	min-width: 0;
-	width: 2.25rem;
-	height: 2.25rem;
+	width: 2rem;
+	height: 2rem;
 	padding: .25rem;
 	pointer-events: none;
 }
