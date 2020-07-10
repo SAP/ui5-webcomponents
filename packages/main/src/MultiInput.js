@@ -1,5 +1,4 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
@@ -9,20 +8,43 @@ import Icon from "./Icon.js";
 
 const metadata = {
 	tag: "ui5-multi-input",
-	properties: {
+	properties: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
+		/**
+		 * Determines whether a value help icon will be should in the end of the input.
+		 * Pressing the icon will fire <code>value-help-icon-press</code> event.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
 		showValueHelpIcon: {
 			type: Boolean,
 		},
-		expandedTokenizer: {
-			type: Boolean,
-		},
 
-		morePopoverOpen: {
+		/**
+		 * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
+		 * @private
+		 */
+		expandedTokenizer: {
 			type: Boolean,
 		},
 	},
 
 	slots: {
+		/**
+		 * Defines the <code>ui5-multi-input</code> tokens.
+		 * <br><br>
+		 * Example: <br>
+		 * &lt;ui5-multi-input><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-token slot="tokens" text="Token 1">&lt;/ui5-token><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-token slot="tokens" text="Token 2">&lt;/ui5-token><br>
+		 * &lt;/ui5-multi-input>
+		 * <br> <br>
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
 		tokens: {
 			type: Token,
 			multiple: true,
@@ -30,10 +52,40 @@ const metadata = {
 	},
 
 	events: {
+		/**
+		 * Fired when value state icon is pressed.
+		 *
+		 * @event
+		 * @public
+		 */
 		"value-help-icon-press": {},
 	},
 };
 
+/**
+ * @class
+ * <h3>Overview</h3>
+ * A <code>ui5-multi-input<code> field allows the user to enter multiple values, which are displayed as <code>ui5-token</code>.
+ *
+ * User can choose interaction for creating tokens.
+ * Fiori Guidelines say that user should create tokens when:
+ * <ul>
+ * <li>Type a value in the input and press enter or focus out the input field (<code>change</code> event is fired)
+ * <li>Select a value from the suggestion list</li> (<code>suggestion-item-select</code> event is fired)
+ * </ul>
+ *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/MultiInput";</code>
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.main.MultiInput
+ * @extends Input
+ * @tagname ui5-multi-input
+ * @public
+ * @appenddocs Token
+ */
 class MultiInput extends Input {
 	static get metadata() {
 		return metadata;

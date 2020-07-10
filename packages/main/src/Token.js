@@ -45,8 +45,11 @@ const metadata = {
 		 */
 		readonly: { type: Boolean },
 
-		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
-
+		/**
+		 * Set by the tokenizer when a token is in the "more" area (overflowing)
+		 * @type {boolean}
+		 * @private
+		 */
 		overflows: { type: Boolean },
 	},
 
@@ -84,10 +87,13 @@ const metadata = {
  *
  * Tokens are small items of information (similar to tags) that mainly serve to visualize previously selected items.
  *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/Token.js";</code>
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Token
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-token
  * @private
  */

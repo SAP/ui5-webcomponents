@@ -1,4 +1,4 @@
-@import "./inputIcon.css";
+@import "./InputIcon.css";
 
 .ui5-multi-input-tokenizer {
 	max-width: calc(100% - 3rem - var(--_ui5_input_icon_min_width));
