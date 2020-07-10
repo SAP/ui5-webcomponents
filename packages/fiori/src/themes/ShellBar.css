@@ -83,7 +83,6 @@ slot[name="profile"] {
 	width: 2.25rem;
 	height: 2.25rem;
 	padding: .25rem;
-	background-color: transparent;
 	pointer-events: none;
 }
 
