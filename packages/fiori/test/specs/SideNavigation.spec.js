@@ -20,7 +20,7 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(input.getProperty("value"), "3", "Event is fired");
 
-			sideNavigation.setProperty("collapsed", "true");
+			sideNavigation.setAttribute("collapsed", "true");
 			items = sideNavigation.shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
 
 			items[0].click();
@@ -29,7 +29,7 @@ describe("Component Behavior", () => {
 
 			items[1].click();
 
-			assert.strictEqual(input.getProperty("value"), "5", "Event is fired");
+			assert.strictEqual(input.getProperty("value"), "4", "Event is not fired");
 
 			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#sn1");
 			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
@@ -38,7 +38,7 @@ describe("Component Behavior", () => {
 			items[0].click();
 			items[1].click();
 
-			assert.strictEqual(input.getProperty("value"), "7", "Event is fired");
+			assert.strictEqual(input.getProperty("value"), "6", "Event is fired");
 		})
 	});
 });

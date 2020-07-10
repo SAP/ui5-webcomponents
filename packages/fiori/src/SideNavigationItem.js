@@ -35,6 +35,7 @@ const metadata = {
 		 * Defines whether the item is expandable. In order to use this property you need to pass another <code>ui5-side-navigation-item</code> as a default slot.
 		 * @public
 		 * @type {boolean}
+		 * @defaultvalue false
 		 */
 		expandable: {
 			type: Boolean,

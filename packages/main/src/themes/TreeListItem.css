@@ -2,7 +2,6 @@
 	display: block;
     cursor: pointer;
     position: relative;
-    --_ui5_tree_sub_item_background: var(--sapList_AlternatingBackground);
 }
 
 :host([_collapsed]:not([hidden])) {
@@ -36,16 +35,26 @@
     padding-left: 0;
 }
 
-:host([selected][has-border]:not([level="1"])) {
+:host([selected][has-border]:not([level="1"])),
+:host(:not([level="1"])) {
     border-bottom: none;
 }
 
-:host([show-toggle-button-end][selected]:not([level="1"])) {
-	border-bottom: var(--ui5-listitem-selected-border-bottom);
+:host([show-toggle-button-end][selected]:not([level="1"])){
+    border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
-:host(:not([level="1"][_show-selected-on-sub-items])) .ui5-li-root-tree {
-    background: var(--_ui5_tree_sub_item_background);
+:host([show-toggle-button-end]:not([selected])) .ui5-li-root-tree:hover {
+    background: var(--sapList_Hover_Background);
+    cursor: pointer;
+}
+
+:host(:not([level="1"])) .ui5-li-root-tree {
+    background: var(--sapList_AlternatingBackground);
+}
+
+:host([show-toggle-button-end][selected]:not([level="1"])) .ui5-li-root-tree {
+    background: var(--sapList_SelectionBackgroundColor);
 }
 
 .ui5-li-tree-toggle-box {

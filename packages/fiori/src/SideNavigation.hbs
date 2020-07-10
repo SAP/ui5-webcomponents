@@ -3,7 +3,6 @@
         <ui5-tree
             id="ui5-sn-items-tree"
             mode="SingleSelect"
-            _show-selected-on-sub-items
             @ui5-item-click="{{handleItemClick}}"
         >
             {{#each _currentItems}}
@@ -47,7 +46,6 @@
             <ui5-tree
                 id="ui5-sn-fixed-items-tree"
                 mode="SingleSelect"
-                _show-selected-on-sub-items
                 @ui5-item-click="{{handleItemClick}}"
             >
                 {{#each _currentFixedItems}}

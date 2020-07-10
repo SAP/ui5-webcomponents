@@ -86,14 +86,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		/**
-		 * @private
-		 * @since 1.0.0-rc.8
-		 */
-		_showSelectedOnSubItems: {
-			type: Boolean,
-		},
-
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 		/**
