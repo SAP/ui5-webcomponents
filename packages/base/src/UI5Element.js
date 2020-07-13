@@ -47,6 +47,8 @@ class UI5Element extends HTMLElement {
 		this._upgradeAllProperties();
 		this._initializeContainers();
 		this._upToDate = false;
+		this._inDOM = false;
+		this._fullyConnected = false;
 
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
@@ -109,6 +111,8 @@ class UI5Element extends HTMLElement {
 		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
+		this._inDOM = true;
+
 		// Render the Shadow DOM
 		if (needsShadowDOM) {
 			if (slotsAreManaged) {
@@ -121,9 +125,14 @@ class UI5Element extends HTMLElement {
 				await Promise.resolve();
 			}
 
+			if (!this._inDOM) { // Component removed from DOM while _processChildren was running
+				return;
+			}
+
 			RenderScheduler.register(this);
 			await RenderScheduler.renderImmediately(this);
 			this._domRefReadyPromise._deferredResolve();
+			this._fullyConnected = true;
 			if (typeof this.onEnterDOM === "function") {
 				this.onEnterDOM();
 			}
@@ -139,20 +148,27 @@ class UI5Element extends HTMLElement {
 		const needsStaticArea = this.constructor._needsStaticArea();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
+		this._inDOM = false;
+
 		if (needsShadowDOM) {
 			if (slotsAreManaged) {
 				this._stopObservingDOMChildren();
 			}
 
 			RenderScheduler.deregister(this);
-			if (typeof this.onExitDOM === "function") {
-				this.onExitDOM();
+			if (this._fullyConnected) {
+				if (typeof this.onExitDOM === "function") {
+					this.onExitDOM();
+				}
+				this._fullyConnected = false;
 			}
 		}
 
 		if (needsStaticArea) {
 			this.staticAreaItem._removeFragmentFromStaticArea();
 		}
+
+		RenderScheduler.cancelRender(this);
 	}
 
 	/**
