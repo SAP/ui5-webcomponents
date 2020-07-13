@@ -135,8 +135,10 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if characters within the suggestions to be highlighted
+		 * Defines if characters within the suggestions are to be highlighted
 		 * in case the input value matches parts of the suggestions text.
+		 * <br><br>
+		 * <b>Note:</b> takes effect when <code>showSuggestions</code> is set to <code>true</code>
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -760,7 +762,7 @@ class Input extends UI5Element {
 
 		const Suggestions = getFeature("InputSuggestions");
 		if (Suggestions) {
-			this.Suggestions = new Suggestions(this, "suggestionItems", true);
+			this.Suggestions = new Suggestions(this, "suggestionItems", this.highlight);
 		} else {
 			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
