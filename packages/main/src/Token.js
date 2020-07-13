@@ -95,7 +95,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Token
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-token
- * @private
+ * @public
  */
 class Token extends UI5Element {
 	static get metadata() {

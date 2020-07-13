@@ -6,6 +6,9 @@ import Token from "./Token.js";
 import Tokenizer from "./Tokenizer.js";
 import Icon from "./Icon.js";
 
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-multi-input",
 	properties: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
@@ -29,8 +32,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-
-	slots: {
+	slots: /** @lends  sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
 		 * Defines the <code>ui5-multi-input</code> tokens.
 		 * <br><br>
@@ -50,8 +52,7 @@ const metadata = {
 			multiple: true,
 		},
 	},
-
-	events: {
+	events: /** @lends  sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
 		 * Fired when value state icon is pressed.
 		 *
@@ -83,8 +84,8 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.MultiInput
  * @extends Input
  * @tagname ui5-multi-input
- * @public
  * @appenddocs Token
+ * @public
  */
 class MultiInput extends Input {
 	static get metadata() {
@@ -128,8 +129,10 @@ class MultiInput extends Input {
 		event.target.focus();
 	}
 
-	_tokenizerFocusOut() {
-		this.tokenizer.contentDom.scrollLeft = 0;
+	_tokenizerFocusOut(event) {
+		if (!this.contains(event.relatedTarget)) {
+			this.tokenizer.contentDom.scrollLeft = 0;
+		}
 	}
 
 	valueHelpMouseUp(event) {
@@ -145,8 +148,10 @@ class MultiInput extends Input {
 	_onfocusout(event) {
 		super._onfocusout(event);
 		const relatedTarget = event.relatedTarget;
+		const insideDOM = this.contains(relatedTarget);
+		const insideShadowDom = this.shadowRoot.contains(relatedTarget);
 
-		if (!relatedTarget) {
+		if (!insideDOM && !insideShadowDom) {
 			this.expandedTokenizer = false;
 		}
 	}

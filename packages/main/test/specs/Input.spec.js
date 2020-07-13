@@ -56,7 +56,7 @@ describe("Attributes propagation", () => {
 describe("Input general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Input.html");
 
-	it("Should open suggestions popover when focused", () => {
+	it("Should not open suggestions popover when focused", () => {
 		const input = $("#myInput2");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#myInput2");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
@@ -64,7 +64,7 @@ describe("Input general interaction", () => {
 		// focus the input field which will display the suggestions
 		input.click();
 
-		assert.ok(popover.isDisplayedInViewport(), "The popover is visible");
+		assert.ok(!popover.isDisplayedInViewport(), "The popover is visible");
 	});
 
 	it("fires change", () => {
@@ -134,6 +134,7 @@ describe("Input general interaction", () => {
 		const inputItemPreviewRes = $("#inputItemPreviewRes");
 
 		inputItemPreview.click();
+		inputItemPreview.keys("А");
 		inputItemPreview.keys("ArrowDown");
 
 		assert.strictEqual(inputItemPreviewRes.getValue(), "Laptop Lenovo", "First item has been previewed");
@@ -256,7 +257,7 @@ describe("Input general interaction", () => {
 		const inputShadowRef = browser.$("#inputError").shadow$("input");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputError");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
-		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-responsive-popover-header");
+		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-header");
 
 		inputShadowRef.click();
 

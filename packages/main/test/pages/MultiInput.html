@@ -30,75 +30,183 @@
 		.footer ui5-button:not(:last-child) {
 			margin-right: 1rem;
 		}
+
+		.sample-container {
+			width: 100%;
+			padding: 2rem;
+			box-sizing: border-box;
+		}
+
+		.sample-container-title {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+			font-size: 1rem;
+			margin-bottom: 1rem;
+		}
 	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);" class="ui5-content-density-compact">
-	<ui5-multi-input>
 
-	</ui5-multi-input>
+	<div class="sample-container">
 
-	<br>
-	<br>
+		<h1>Basic API</h1>
 
-	<ui5-multi-input show-value-help-icon id="vh">
+		<h1 class="sample-container-title">Empty Multi Input</h1>
+		<ui5-multi-input></ui5-multi-input>
 
-	</ui5-multi-input>
+		<br>
+		<br>
 
-	<br>
-	<br>
+		<h1 class="sample-container-title">Multi Input with Value Help Icon</h1>
+		<ui5-multi-input show-value-help-icon id="vh"></ui5-multi-input>
 
-	<ui5-multi-input show-value-help-icon>
-		<ui5-icon slot="icon" name="decline"></ui5-icon>
-	</ui5-multi-input>
+		<br>
+		<br>
 
-	<br>
-	<br>
+		<h1 class="sample-container-title">Multi Input with Value Help Icon and a custom icon</h1>
+		<ui5-multi-input show-value-help-icon>
+			<ui5-icon slot="icon" name="decline"></ui5-icon>
+		</ui5-multi-input>
 
-	<ui5-button id="add-btn">
-		Add token
-	</ui5-button>
+		<br>
+		<br>
 
-	<br>
-	<br>
+		<h1 class="sample-container-title">Multi Input with 1 token</h1>
+		<ui5-multi-input>
+			<ui5-token slot="tokens" text="Amet"></ui5-token>
+		</ui5-multi-input>
 
-	<h3>With suggeestions</h3>
+		<br>
+		<br>
 
-	<br>
-	<br>
+		<h1 class="sample-container-title">Multi Input with 11 tokens (overflowing)</h1>
+		<ui5-multi-input id="basic-overflow">
+			<ui5-token slot="tokens" text="Amet"></ui5-token>
 
-	<ui5-multi-input show-suggestions show-value-help-icon id="suggestion-token">
-		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
-	</ui5-multi-input>
+			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
+			<ui5-token slot="tokens" text="laboris"></ui5-token>
+			<ui5-token slot="tokens" text="ea"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="ipsum"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+			<ui5-token slot="tokens" text="esse"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="amet"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+		</ui5-multi-input>
 
-	<ui5-dialog id="dialog" header-text="Add Competency">
+		<br>
+		<br>
 
-		<ui5-list id="tokens-list">
+		<h1 class="sample-container-title">Multi Input with 11 tokens (overflowing) and value help icon</h1>
+		<ui5-multi-input show-value-help-icon id="basic-overflow-and-icon">
+			<ui5-token slot="tokens" text="Amet"></ui5-token>
 
-		</ui5-list>
+			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
+			<ui5-token slot="tokens" text="laboris"></ui5-token>
+			<ui5-token slot="tokens" text="ea"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="ipsum"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+			<ui5-token slot="tokens" text="esse"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="amet"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+		</ui5-multi-input>
 
-		<div slot="footer" class="footer">
-			<ui5-button design="Emphasized">Save</ui5-button>
-			<ui5-button>Cancel</ui5-button>
-		</div>
-	</ui5-dialog>
+		<br>
+		<br>
+	</div>
+
+	<div class="sample-container">
+		<h1>Tokens</h1>
+
+		<h1 class="sample-container-title">Multi Input with 1 token</h1>
+		<ui5-multi-input id="single-token">
+			<ui5-token slot="tokens" text="Amet"></ui5-token>
+		</ui5-multi-input>
+		<br>
+		<br>
+
+		<ui5-button id="add-to-single">Add more tokens</ui5-button>
+
+		<br>
+		<br>
+
+		<h1 class="sample-container-title">Multi Input with 5 tokens</h1>
+		<ui5-multi-input id="multiple-token">
+			<ui5-token slot="tokens" text="ea"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
+			<ui5-token slot="tokens" text="laboris"></ui5-token>
+			<ui5-token slot="tokens" text="ipsum"></ui5-token>
+		</ui5-multi-input>
+
+		<br>
+		<br>
+
+
+		<ui5-button id="add-to-multiple">Add more tokens</ui5-button>
+	</div>
+
+	<div class="sample-container">
+		<h1>Tokens + Suggestions</h1>
+
+		<ui5-multi-input show-suggestions show-value-help-icon id="suggestion-token">
+			<ui5-suggestion-item text="Aute"></ui5-suggestion-item>
+			<ui5-suggestion-item text="ad"></ui5-suggestion-item>
+			<ui5-suggestion-item text="exercitation"></ui5-suggestion-item>
+			<ui5-suggestion-item text="esse"></ui5-suggestion-item>
+			<ui5-suggestion-item text="labore"></ui5-suggestion-item>
+			<ui5-suggestion-item text="amet"></ui5-suggestion-item>
+			<ui5-suggestion-item text="aute"></ui5-suggestion-item>
+			<ui5-suggestion-item text="excepteur"></ui5-suggestion-item>
+		</ui5-multi-input>
+
+		<ui5-dialog id="dialog" header-text="Add Competency">
+
+			<ui5-list id="tokens-list">
+
+			</ui5-list>
+
+			<div slot="footer" class="footer">
+				<ui5-button design="Emphasized">Save</ui5-button>
+				<ui5-button>Cancel</ui5-button>
+			</div>
+		</ui5-dialog>
+	</div>
 
 
 	<script>
-		document.querySelector("#add-btn").addEventListener("click", event => {
-			[].forEach.call(document.querySelectorAll("ui5-multi-input"), (el) => {
-				const token = document.createElement("ui5-token");
-				token.setAttribute("text", "Test");
-				token.setAttribute("slot", "tokens");
 
-				el.appendChild(token);
-			});
+		var createTokenFromText = function (text) {
+			var token = document.createElement("ui5-token");
+
+			token.setAttribute("text", text);
+			token.setAttribute("slot", "tokens");
+
+			return token;
+		}
+
+		var createTokenFromLI = function (li) {
+			return createTokenFromText(li.text);
+		};
+
+		var addTokenToMI = function (token, id) {
+			document.getElementById(id).appendChild(token);
+		}
+
+		document.getElementById("add-to-single").addEventListener("click", function(event) {
+			addTokenToMI(createTokenFromText("test"), "single-token");
 		});
+
+		document.getElementById("add-to-multiple").addEventListener("click", function(event) {
+			addTokenToMI(createTokenFromText("test"), "multiple-token");
+		});
+
+		/* ----------------- */
 
 		document.getElementById("vh").addEventListener("ui5-value-help-icon-press", function (event) {
 			alert("test");
@@ -109,17 +217,17 @@
 
 			list.innerHTML = "";
 
-			event.target.tokens.forEach(function(token) {
+			event.target.tokens.forEach(function (token) {
 				var li = document.createElement("ui5-li");
 				li.innerHTML = token.text;
 
 				list.appendChild(li);
 			});
-			
+
 			document.getElementById("dialog").open();
 		});
 
-		document.getElementById("suggestion-token").addEventListener("ui5-suggestion-item-select", function(event) {
+		document.getElementById("suggestion-token").addEventListener("ui5-suggestion-item-select", function (event) {
 			var item = event.detail.item;
 			var mi = event.target
 			var token = document.createElement("ui5-token");
@@ -131,8 +239,8 @@
 			// discuss ?!
 			event.target.value = "";
 		});
-	
-		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", function(event) {
+
+		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", function (event) {
 			var mi = event.target;
 
 			mi.removeChild(event.detail.token);
