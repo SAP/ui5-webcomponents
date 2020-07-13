@@ -1,7 +1,5 @@
-commit d55515fff85ffebbf2f5ff1102754dca97a7dd2f
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Jul 9 01:24:44 2020 -0700
+commit 9141300556a9b4e5a7968aa1343862df14f8a181
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jul 13 08:55:10 2020 +0300
 
-    chore: translation delivery (#1934)
-    
-    Change-Id: I477ba9672de82f666fae7c67b79c9aff01876b32
+    fix(framework): make renderImmediately sync, fix lifecycle issues (#1929)
