@@ -13,10 +13,7 @@
 	--_ui5_switch_track_no_label_height: 1.25rem;
 	--_ui5_switch_track_compact_no_label_height: 1rem;
 
-<<<<<<< HEAD
 	--_ui5_switch_track_hover_border_color: var(--_ui5_switch_track_checked_border_color);
-=======
->>>>>>> 501edd916c5c74b3fecb6e0a1f0691a64a6a08ca
 	--_ui5_switch_track_hover_background_color: var(--sapButton_Track_Background);
 	--_ui5_switch_track_hover_checked_background_color: var(--sapButton_Track_Selected_Background);
 	--_ui5_switch_track_border_radius: 0.75rem;
