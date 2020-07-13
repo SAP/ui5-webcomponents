@@ -118,6 +118,8 @@
 
 		<br>
 		<br>
+
+		<span id="basic-event-listener"></span>
 	</div>
 
 	<div class="sample-container">
@@ -240,6 +242,9 @@
 			event.target.value = "";
 		});
 
+		document.getElementById("basic-overflow-and-icon").addEventListener("value-help-icon-press", function (event) {
+			document.getElementById("basic-event-listener").innerHTML = "value help icon press";
+		});
 		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", function (event) {
 			var mi = event.target;
 
