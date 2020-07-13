@@ -278,4 +278,19 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(innerInput.getAttribute("aria-label"), NEW_TEXT, "aria-label is reflected in the shadow DOM")
 	});
+
+	it("Tests suggestions highlighting", () => {
+		const input = browser.$("#myInputHighlighted").shadow$("input");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#myInputHighlighted");
+		const EXPTECTED_TEXT = "<b>Ad</b>am";
+
+		input.click();
+		input.keys("ad");
+
+		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const firstListItem = respPopover.$("ui5-list").$("ui5-li");
+
+		assert.ok(respPopover.isDisplayedInViewport(), "The popover is visible");
+		assert.ok(firstListItem.getHTML().indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.")
+	});
 });
