@@ -87,7 +87,7 @@
 	align-items: center;
 	width: var(--_ui5_messagestrip_close_button_size);
 	height: var(--_ui5_messagestrip_close_button_size);
-	border-radius: 0.2rem;
+	border-radius: 0.25rem;
 	background: transparent;
 	color: var(--sapTextColor);
 	cursor: pointer;
@@ -95,7 +95,7 @@
 	right: 0.125rem;
 	top: 0.125rem;
 	outline: none;
-	border: none;
+	border: var(--_ui5_messagestrip_close_button_border);
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
@@ -121,7 +121,7 @@
 }
 
 .ui5-messagestrip-close-icon-wrapper:focus {
-	outline-offset: -2px;
+	outline-offset: var(--_ui5_messagestrip_focus_offset);
 	outline: var(--_ui5_messagestrip_focus_width) dotted var(--sapContent_FocusColor);
 }
 
