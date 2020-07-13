@@ -18,8 +18,8 @@
 }
 
 :host(:not([disabled])) .ui5-link-root:hover {
-	text-decoration: underline;
 	color: var(--sapLinkColor);
+	text-decoration: var(--_ui5_link_hover_text_decoration);
 }
 
 :host([disabled]) .ui5-link-root {
@@ -57,6 +57,7 @@
 	word-wrap: normal;
 	text-decoration: none;
 	outline: none;
+	text-decoration: var(--_ui5_link_text_decoration);
 }
 
 .ui5-link-root,

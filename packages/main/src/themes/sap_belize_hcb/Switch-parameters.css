@@ -5,7 +5,7 @@
 	--_ui5_switch_outline: 0.125rem;
 
 	/* Switch Track */
-	--_ui5_switch_track_hover_border_color: var(--sapTextColor);
+	--_ui5_switch_track_hover_border_color: var(--sapButton_Background);
 	--_ui5_switch_track_border_color: var(--sapButton_Background);
 
 	--_ui5_switch_track_disabled_checked_bg: var(--sapHC_ReducedBackground);

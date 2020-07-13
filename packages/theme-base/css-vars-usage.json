@@ -79,8 +79,8 @@
   "--sapContent_Selected_Background",
   "--sapContent_Selected_TextColor",
   "--sapContent_Shadow0",
-  "--sapContent_Shadow1",
   "--sapContent_Shadow2",
+  "--sapContent_Shadow3",
   "--sapContent_TextShadow",
   "--sapContent_UnratedColor",
   "--sapCriticalColor",
@@ -90,6 +90,7 @@
   "--sapErrorBorderColor",
   "--sapField_Background",
   "--sapField_BorderColor",
+  "--sapField_BorderWidth",
   "--sapField_Hover_Background",
   "--sapField_Hover_BorderColor",
   "--sapField_InformationBackground",
@@ -205,6 +206,7 @@
   "--sapTile_TextColor",
   "--sapTile_TitleTextColor",
   "--sapUiBaseColor",
+  "--sapUiContentShadow1",
   "--sapWarningBackground",
   "--sapWarningBorderColor"
 ]

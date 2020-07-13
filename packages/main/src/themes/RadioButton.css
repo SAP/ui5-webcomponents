@@ -90,7 +90,8 @@
 }
 
 :host([value-state="Error"]) .ui5-radio-root,
-:host([value-state="Warning"]) .ui5-radio-root {
+:host([value-state="Warning"]) .ui5-radio-root,
+:host([value-state="Information"]) .ui5-radio-root {
 	stroke-dasharray: var(--_ui5_radiobutton_warning_error_border_dash);
 }
 
