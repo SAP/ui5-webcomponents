@@ -1,10 +1,9 @@
-commit a3207e5b6e46e4e26e9242ec2df92067cc8e6f56
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jul 13 11:16:22 2020 +0300
+commit 23fb8b780baa40e5aab6a3b5be142d83aa62b23f
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Jul 13 14:59:57 2020 +0300
 
-    fix(ui5-shellbar): Fix profile bg-color (#1945)
+    fix(ui5-combobox): corrected display of items in popover
     
-    We used to force background-color: transparent to the ui5-avatar, when used as profile. But, it turns out that this is not needed, in classic UI5, the Avatar is displayed with its default AccentBGColor6 and we align to this with the change.
-    Moreover, in Fiori3 Dark, the transparent Avatar leads to missing color contrast as shown in the issue.
+    Now, all items are shown inside ui5-popover when it is opened and items are filtered only on user input.
     
-    FIXES: #1944
+    Fixes: #1925
