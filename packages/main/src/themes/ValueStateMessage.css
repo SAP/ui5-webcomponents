@@ -13,6 +13,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	min-width: 6.25rem;
+	border: var(--_ui5_value_state_message_border);
 }
 
 .ui5-valuestatemessage--success {
