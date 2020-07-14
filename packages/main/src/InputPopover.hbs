@@ -92,7 +92,7 @@
 			{{#if group}}
 				<ui5-li-groupheader data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-groupheader>
 			{{else}}
-				<ui5-li
+				<ui5-li-suggestion-item
 					image="{{this.image}}"
 					icon="{{this.icon}}"
 					description="{{this.description}}"
@@ -101,7 +101,7 @@
 					info-state="{{this.infoState}}"
 					@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
 					data-ui5-key="{{key}}"
-				>{{{ this.text }}}</ui5-li>
+				>{{{ this.text }}}</ui5-li-suggestion-item>
 			{{/if}}
 		{{/each}}
 	</ui5-list>

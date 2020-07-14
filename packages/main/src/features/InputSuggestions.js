@@ -46,15 +46,18 @@ class Suggestions {
 	}
 
 	/* Public methods */
-	defaultSlotProperties(inputValue) {
+	defaultSlotProperties(hightlightValue) {
 		const inputSuggestionItems = this._getComponent().suggestionItems;
-		const highlight = this.highlight && !!inputValue;
+		const highlight = this.highlight && !!hightlightValue;
 		const suggestions = [];
 
 		inputSuggestionItems.map((suggestion, idx) => {
+			const text = highlight ? this.getHighlightedText(suggestion, hightlightValue) : this.getRowText(suggestion);
+			const description = highlight ? this.getHighlightedDesc(suggestion, hightlightValue) : this.getRowDesc(suggestion);
+
 			return suggestions.push({
-				text: highlight ? this.getHighlightedText(suggestion, inputValue) : this.getItemText(suggestion),
-				description: highlight ? this.getHighlightedDesc(suggestion, inputValue) : suggestion.description || undefined,
+				text,
+				description,
 				image: suggestion.image || undefined,
 				icon: suggestion.icon || undefined,
 				type: suggestion.type || undefined,
@@ -315,7 +318,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li, ui5-li-groupheader"));
+		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li, ui5-li-groupheader, ui5-li-suggestion-item"));
 	}
 
 	_getComponent() {
@@ -354,17 +357,27 @@ class Suggestions {
 		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;
 	}
 
-	getItemText(suggestion) {
-		return suggestion.text || suggestion.textContent;
+	getRowText(suggestion) {
+		return this.sanitizeText(suggestion.text || suggestion.textContent);
+	}
+
+	getRowDesc(suggestion) {
+		if (suggestion.description) {
+			return this.sanitizeText(suggestion.description);
+		}
 	}
 
 	getHighlightedText(suggestion, input) {
-		const text = suggestion.text || suggestion.textContent;
+		let text = suggestion.text || suggestion.textContent;
+		text = this.sanitizeText(text);
+
 		return this.hightlightInput(text, input);
 	}
 
 	getHighlightedDesc(suggestion, input) {
-		const text = suggestion.description;
+		let text = suggestion.description;
+		text = this.sanitizeText(text);
+
 		return this.hightlightInput(text, input);
 	}
 
@@ -375,6 +388,10 @@ class Suggestions {
 
 		const regEx = new RegExp(input, "ig");
 		return text.replace(regEx, match => `<b>${match}</b>`);
+	}
+
+	sanitizeText(text) {
+		return text && text.replace("<", "&lt");
 	}
 }
 
