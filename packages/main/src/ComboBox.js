@@ -489,6 +489,8 @@ class ComboBox extends UI5Element {
 			this.fireEvent("change");
 			this.inner.setSelectionRange(this.value.length, this.value.length);
 		}
+
+		this._closeRespPopover();
 	}
 
 	_selectItem(event) {
@@ -504,7 +506,6 @@ class ComboBox extends UI5Element {
 		});
 
 		this._inputChange();
-		this._closeRespPopover();
 	}
 
 	get _headerTitleText() {

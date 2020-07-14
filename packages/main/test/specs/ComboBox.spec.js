@@ -112,6 +112,37 @@ describe("General interaction", () => {
 		assert.notOk(popover.getProperty("opened"), "Popover should close");
 	});
 
+	it ("Should close popover on item click / change event", () => {
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+
+		const combo = $("#combo2");
+		const arrow = combo.shadow$("[input-icon]");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo2");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = popover.$("ui5-list").$$("ui5-li");
+
+		// act
+		input.click();
+		input.keys("b");
+
+		// assert
+		assert.ok(popover.getProperty("opened"), "Popover should be opened");
+
+		// act
+		input.keys("Enter");
+
+		// assert
+		assert.notOk(popover.getProperty("opened"), "Popover should be closed");
+
+		// act
+		arrow.click();
+		listItems[0].click();
+
+		// assert
+		assert.notOk(popover.getProperty("opened"), "Popover should be closed");
+	});
+
 	it ("Tests change event", () => {
 		const dummyTarget = $("#combo");
 		const placeholder = $("#change-placeholder");
