@@ -501,8 +501,8 @@ class Input extends UI5Element {
 		// Indicates, if the component is rendering for first time.
 		this.firstRendering = true;
 
-		// Indicates, if the component is previewing an item.
-		this._preview = true;
+		// The value that should be highlited.
+		this.highlightValue = "";
 
 		// all sementic events
 		this.EVENT_SUBMIT = "submit";
@@ -533,7 +533,7 @@ class Input extends UI5Element {
 	onBeforeRendering() {
 		if (this.showSuggestions) {
 			this.enableSuggestions();
-			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this._preview ? "" : this.value);
+			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
 		}
 
 		const FormSupport = getFeature("FormSupport");
@@ -542,8 +542,6 @@ class Input extends UI5Element {
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
-
-		this._preview = false;
 	}
 
 	onAfterRendering() {
@@ -840,6 +838,7 @@ class Input extends UI5Element {
 		const isUserInput = action === this.ACTION_USER_INPUT;
 
 		this.value = inputValue;
+		this.highlightValue = inputValue;
 
 		if (isUserInput) { // input
 			this.fireEvent(this.EVENT_INPUT);
