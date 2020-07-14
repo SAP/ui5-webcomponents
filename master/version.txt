@@ -1,9 +1,9 @@
-commit 23fb8b780baa40e5aab6a3b5be142d83aa62b23f
+commit f0e2bace9d4a0352d7c9b9048afa842525b6b021
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Jul 13 14:59:57 2020 +0300
+Date:   Tue Jul 14 13:46:06 2020 +0300
 
-    fix(ui5-combobox): corrected display of items in popover
+    fix(ui5-combobox): close popover on "Enter" key press
     
-    Now, all items are shown inside ui5-popover when it is opened and items are filtered only on user input.
+    Now, popover is closed when "Enter" key is pressed.
     
-    Fixes: #1925
+    Fixes: #1940
