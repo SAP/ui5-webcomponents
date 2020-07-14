@@ -29,7 +29,12 @@
 					<div id="{{_id}}-subheading" class="ui5-card-subheading" part="subheading">{{subheading}}</div>
 				{{/if}}
 			</div>
-			<span id="{{_id}}-status" part="status" class="ui5-card-status">{{status}}</span>
+
+			{{#if hasAction}}
+				<slot name="action"></slot>
+			{{else}}
+				<span id="{{_id}}-status" part="status" class="ui5-card-status">{{status}}</span>
+			{{/if}}
 		</div>
 	{{/if}}
 

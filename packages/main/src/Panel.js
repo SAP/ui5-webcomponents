@@ -4,6 +4,7 @@ import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-right-arrow.js";
@@ -117,7 +118,27 @@ const metadata = {
 			type: TitleLevel,
 			defaultValue: TitleLevel.H2,
 		},
-
+		/**
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabel: {
+			type: String,
+		},
+		/**
+		 * Receives id(or many ids) of the elements that label the panel
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
 		/**
 		 * @private
 		 */
@@ -342,10 +363,6 @@ class Panel extends UI5Element {
 		return !this.collapsed;
 	}
 
-	get ariaLabelledBy() {
-		return this.header.length ? "" : `${this._id}-header`;
-	}
-
 	get accRole() {
 		return this.accessibleRole.toLowerCase();
 	}
@@ -357,10 +374,26 @@ class Panel extends UI5Element {
 				"ariaControls": this._hasHeader ? `${this._id}-content` : undefined,
 				"title": this.toggleButtonTitle,
 			},
-			"ariaExpanded": !this._hasHeader ? this.expanded : undefined,
-			"ariaControls": !this._hasHeader ? `${this._id}-content` : undefined,
-			"role": !this._hasHeader ? "button" : undefined,
+			"ariaExpanded": this.nonFixedInternalHeader ? this.expanded : undefined,
+			"ariaControls": this.nonFixedInternalHeader ? `${this._id}-content` : undefined,
+			"ariaLabelledby": this.nonFocusableButton ? this.ariaLabelledbyReference : undefined,
+			"ariaLabel": this.nonFocusableButton ? this.ariaLabelTxt : undefined,
+			"ariaLabelledbyButton": this.nonFocusableButton ? undefined : this.ariaLabelledbyReference,
+			"ariaLabelButton": this.nonFocusableButton ? undefined : this.ariaLabelTxt,
+			"role": this.nonFixedInternalHeader ? "button" : undefined,
 		};
+	}
+
+	get ariaLabelledbyReference() {
+		if (this.ariaLabelledby || this.ariaLabel) {
+			return undefined;
+		}
+
+		return (this.nonFocusableButton && this.headerText) ? `${this._id}-header-title` : undefined;
+	}
+
+	get ariaLabelTxt() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get headerAriaLevel() {
@@ -369,6 +402,10 @@ class Panel extends UI5Element {
 
 	get headerTabIndex() {
 		return (this.header.length || this.fixed) ? "-1" : "0";
+	}
+
+	get nonFixedInternalHeader() {
+		return !this._hasHeader && !this.fixed;
 	}
 
 	get nonFocusableButton() {

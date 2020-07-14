@@ -18,6 +18,7 @@
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
+@import "./ProgressIndicator-parameters.css";
 @import "./RadioButton-parameters.css";
 @import "./Select-parameters.css";
 @import "./Switch-parameters.css";

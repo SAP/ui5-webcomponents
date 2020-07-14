@@ -136,19 +136,18 @@ describe("Input general interaction", () => {
 		inputItemPreview.click();
 		inputItemPreview.keys("ArrowDown");
 
-		assert.strictEqual(inputItemPreviewRes.getValue(), "Cozy", "First item has been previewed");
+		assert.strictEqual(inputItemPreviewRes.getValue(), "Laptop Lenovo", "First item has been previewed");
 	});
 
 	it("fires suggestion-scroll event", () => {
 		const input = $("#scrollInput").shadow$("input");
 		const scrollResult = $("#scrollResult");
 
-		// act
-		// open suggestions
+		// act - open suggestions
 		input.click();
 		input.keys("a");
 
-		// scroll with keyboard
+		// act - scroll with keyboard
 		input.keys("ArrowUp");
 		input.keys("ArrowUp");
 		input.keys("ArrowUp");
@@ -157,7 +156,15 @@ describe("Input general interaction", () => {
 		const scrollTop = scrollResult.getProperty("value");
 		assert.ok(scrollTop > 0, "The suggestion-scroll event fired");
 
-		input.keys("Enter"); // close suggestions
+		// assert isSuggestionsScrollable
+		const suggestionsScrollable = browser.execute(async () => {
+			const input = document.getElementById("scrollInput");
+			return (await input.isSuggestionsScrollable());
+		});
+		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrolalble");
+
+		// close suggestions
+		input.keys("Enter"); 
 	});
 
 	it("handles suggestions", () => {
@@ -210,11 +217,12 @@ describe("Input general interaction", () => {
 		suggestionsInput.keys("c"); // to open the suggestions pop up once again
 		suggestionsInput.keys("ArrowUp");
 
-		assert.strictEqual(suggestionsInput.getValue(), "Condensed", "First item has been selected");
+		assert.strictEqual(suggestionsInput.getValue(), "",
+			"The Last item 'Inactive Condensed' has been selected, producing empty string as 'Inactive'");
 
 		inputResult.click();
 
-		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelect is fired once");
+		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelect is not fired as item is 'Inactive'");
 	});
 
 	it("handles group suggestion item via keyboard", () => {

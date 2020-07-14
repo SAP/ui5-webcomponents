@@ -5,6 +5,9 @@ const Visitor = Handlebars.Visitor;
 // skip ifDefined for event handlers and boolean attrs
 let skipIfDefined = false;
 
+// when true => an HTML node value, when false => an attribute value
+let isNodeValue = false;
+
 // matches event handlers @click= and boolean attrs ?disabled=
 const dynamicAttributeRgx = /\s(\?|@)([a-zA-Z|-]+)="?\s*$/;
 
@@ -54,6 +57,12 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	const contentStatement = content.original;
 	skipIfDefined = !!dynamicAttributeRgx.exec(contentStatement);
 
+	const closingIndex = contentStatement.lastIndexOf(">");
+	const openingIndex = contentStatement.lastIndexOf("<");
+	if (closingIndex !== -1 || openingIndex !== -1) { // Only change isNodeValue whenever < or > is found in the content statement
+		isNodeValue = closingIndex > openingIndex;
+	}
+
 	this.blocks[this.currentKey()] += contentStatement;
 };
 
@@ -69,7 +78,9 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 
 		let parsedCode = "";
 
-		if (hasCalculatingClasses) {
+		if (isNodeValue && !mustache.escaped) {
+			parsedCode = `\${unsafeHTML(${path})}`;
+		} else if (hasCalculatingClasses) {
 			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
 			parsedCode = `\${styleMap(${path})}`;

@@ -1,0 +1,64 @@
+<header class="component-heading">
+	<h2 class="control-header">Progress Indicator</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+
+<style>
+	.snippet > ui5-rating-indicator {
+		margin: 0 1rem;
+	}
+</style>
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-progress-indicator&gt;</div>
+
+<section>
+	<h3>Basic Progress Indicator</h3>
+	<div class="snippet">
+        <ui5-progress-indicator value="0"></ui5-progress-indicator>
+        <ui5-progress-indicator value="25"></ui5-progress-indicator>
+        <ui5-progress-indicator value="75" disabled></ui5-progress-indicator>
+        <ui5-progress-indicator value="100"></ui5-progress-indicator>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-progress-indicator value="0"></ui5-progress-indicator>
+<ui5-progress-indicator value="25"></ui5-progress-indicator>
+<ui5-progress-indicator value="75" disabled></ui5-progress-indicator>
+<ui5-progress-indicator value="100"></ui5-progress-indicator>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Progress Indicator With Value State</h3>
+	<div class="snippet">
+        <ui5-progress-indicator value-state="None" value="25"></ui5-progress-indicator>
+        <ui5-progress-indicator value-state="Error" value="50"></ui5-progress-indicator>
+        <ui5-progress-indicator value-state="Warning" value="75"></ui5-progress-indicator>
+        <ui5-progress-indicator value-state="Success" value="90"></ui5-progress-indicator>
+        <ui5-progress-indicator value-state="Information" value="100"></ui5-progress-indicator>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-progress-indicator value-state="None" value="25"></ui5-progress-indicator>
+<ui5-progress-indicator value-state="Error" value="50"></ui5-progress-indicator>
+<ui5-progress-indicator value-state="Warning" value="75"></ui5-progress-indicator>
+<ui5-progress-indicator value-state="Success" value="90"></ui5-progress-indicator>
+<ui5-progress-indicator value-state="Information" value="100"></ui5-progress-indicator>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Progress Indicator With Custom Sizes</h3>
+	<div class="snippet">
+        <ui5-progress-indicator value="25" style="height: 50px; width: 200px;"></ui5-progress-indicator>
+        <ui5-progress-indicator value="75" style="height: 50px; width: 200px;"></ui5-progress-indicator>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-progress-indicator value="25" style="height: 50px; width: 200px;"></ui5-progress-indicator>
+<ui5-progress-indicator value="75" style="height: 50px; width: 200px;"></ui5-progress-indicator>
+	</xmp></pre>
+</section>
+
+<!-- JSDoc marker -->
+	

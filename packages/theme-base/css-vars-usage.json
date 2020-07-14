@@ -175,6 +175,7 @@
   "--sapNegativeElementColor",
   "--sapNegativeTextColor",
   "--sapNeutralColor",
+  "--sapNeutralElementColor",
   "--sapNeutralTextColor",
   "--sapObjectHeader_Background",
   "--sapObjectHeader_BorderColor",

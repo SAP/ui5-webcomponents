@@ -1,7 +1,7 @@
 if (!Map.prototype.keys) {
 	Map.prototype.keys = function() {
-		const keys = [];
-		this.forEach((value, key) => {
+		var keys = [];
+		this.forEach(function(value, key) {
 			keys.push(key);
 		});
 		return keys;
