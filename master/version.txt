@@ -1,5 +1,9 @@
-commit 4a1be70192c2f2a3a9d4cbd715bb9ad803505da8
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jul 15 09:08:48 2020 +0300
+commit 30c357a55b7d3ea8ab66f19f05b3c15df76d5461
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jul 15 09:55:55 2020 +0300
 
-    fix(framework): managedSlots: true always has effect (#1952)
+    fix(ui5-input): Fix selection color and bg (#1954)
+    
+    The selection color and bg-color variables used to be wrong. In Chrome and Safari these values fallback to their defaults and the bug is more difficult to be seen, but in FF the color and bg color become unset, and you cant see any selection with ctr+a or cmd+a.
+    
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1951
