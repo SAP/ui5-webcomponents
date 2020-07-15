@@ -6,8 +6,17 @@
 	width: 100%;
 }
 
+.ui5-time-picker-input-icon-button {
+	border-left: 0.0625rem solid transparent;
+}
+
+.ui5-time-picker-input-icon-button {
+	border-left: 0.0625rem solid transparent;
+}
+
 .ui5-time-picker-input-icon-button:hover {
 	cursor: pointer;
+	border-left: var(--_ui5_time_picker_border);
 	background: var(--sapButton_Hover_Background);
 }
 

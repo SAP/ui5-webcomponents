@@ -151,7 +151,8 @@
 }
 
 :host([value-state="Error"]:not([readonly]):not([disabled])),
-:host([value-state="Warning"]:not([readonly]):not([disabled])) {
+:host([value-state="Warning"]:not([readonly]):not([disabled])),
+:host([value-state="Information"]:not([readonly]):not([disabled])) {
 	border-style: var(--_ui5_input_error_warning_border_style);
 }
 
@@ -169,6 +170,7 @@
 :host([value-state="Information"]:not([readonly])) {
 	background-color: var(--sapField_InformationBackground);
 	border-color: var(--sapField_InformationColor);
+	border-width: var(--_ui5-input-information_border_width);
 }
 
 /* Remove IE's defaut clear button */
@@ -188,7 +190,7 @@
 }
 
 /* TODO: Remove this after parser is fixed
-	-	this statement is transformed to "ui5-multi-combobox ui5-icon" which 
+	-	this statement is transformed to "ui5-multi-combobox ui5-icon" which
 	affects all icons in the combobox incuding these in the list items
 */
 ::slotted(ui5-icon[slot="icon"]) {
