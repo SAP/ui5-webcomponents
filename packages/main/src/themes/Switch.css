@@ -138,22 +138,18 @@
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled .ui5-switch-track {
 	background: var(--_ui5_switch_track_disabled_semantic_checked_bg);
-	border-color: var(--_ui5_switch_track_disabled_semantic_checked_border_color);
 }
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled .ui5-switch-handle {
 	background: var(--_ui5_switch_handle_disabled_semantic_checked_bg);
-	border-color: var(--_ui5_switch_handle_disabled_semantic_checked_border_color);
 }
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled:not(.ui5-switch--checked) .ui5-switch-track {
 	background: var(--_ui5_switch_track_disabled_semantic_bg);
-	border-color: var(--_ui5_switch_track_disabled_semantic_border_color);
 }
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled:not(.ui5-switch--checked) .ui5-switch-handle {
 	background: var(--sapButton_Background);
-	border-color: var(--_ui5_switch_handle_disabled_semantic_border_color);
 }
 
 /* switch checked */
