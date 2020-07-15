@@ -52,7 +52,7 @@ describe("Date Picker Tests", () => {
 
 	it("Can focus the input after open", () => {
 		datepicker.id = "#dp1";
-		datepicker.openPicker({ focuwsInput: true });
+		datepicker.openPicker({ focusInput: true });
 		const a = datepicker.innerInput.isFocusedDeep();
 
 		console.log(datepicker.innerInput.isFocusedDeep());
