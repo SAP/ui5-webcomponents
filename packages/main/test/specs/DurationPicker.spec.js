@@ -10,7 +10,6 @@ describe("Duration Picker general interaction", () => {
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#duration-picker1");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
-		
 		duratationPickerIcon.click();
 
 		assert.isOk(durationPicker.getProperty("_isPickerOpen"), "Popover is opened");
@@ -18,20 +17,20 @@ describe("Duration Picker general interaction", () => {
 
 		duratationPickerIcon.click();
 
-		assert.isNotOk(durationPicker.getProperty("_isPickerOpen"), "Popover is opened");
-		assert.isNotOk(popover.getProperty("opened"), "Popover is opened.");
-
+		assert.isNotOk(durationPicker.getProperty("_isPickerOpen"), "Popover is closed");
+		assert.isNotOk(popover.getProperty("opened"), "Popover is closed.");
 	});
 
-	it("Tests max value property", () => {
+	it("Tests max-value", () => {
 		const durationPicker = browser.$("#duration-picker4")
 		const duratationPickerIcon = durationPicker.shadow$(".ui5-duration-picker-input-icon-button");
 
-		
+		// act
 		duratationPickerIcon.click();
 
-		// The default slot
-		assert.strictEqual(durationPicker.getProperty("value"),durationPicker.getProperty("maxValue") , "Popover is opened");
+		// assert - the custom max-value
+		assert.strictEqual(durationPicker.getProperty("value"), durationPicker.getProperty("maxValue") ,
+			"The value and the max-vaoue are equal.");
 		assert.strictEqual(durationPicker.getProperty("_maxValue")[0], "05", "max value is read correctly");
 		assert.strictEqual(durationPicker.getProperty("_maxValue")[1], "10", "max value is read correctly");
 		assert.strictEqual(durationPicker.getProperty("_maxValue")[2], "08", "max value is read correctly");
@@ -81,4 +80,19 @@ describe("Duration Picker general interaction", () => {
 		assert.strictEqual(durationPicker.getProperty("value"), "20:10", "Minutes and seconds are considered");
 	});
 
+	it("Tests default max-value", () => {
+		const durationPicker = browser.$("#duration-default")
+		const duratationPickerIcon = durationPicker.shadow$(".ui5-duration-picker-input-icon-button");
+
+		// act
+		duratationPickerIcon.click();
+
+		// assert - the default max-value
+		assert.strictEqual(durationPicker.getProperty("_maxValue")[0], "23", "max value is read correctly");
+		assert.strictEqual(durationPicker.getProperty("_maxValue")[1], "59", "max value is read correctly");
+		assert.strictEqual(durationPicker.getProperty("_maxValue")[2], "59", "max value is read correctly");
+
+		// close picker
+		duratationPickerIcon.click();
+	});
 });

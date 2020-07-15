@@ -58,16 +58,27 @@
 	<br><br>
 
 	<ui5-input id="inputPreview" show-suggestions style="width: 200px">
-		<ui5-suggestion-item class="suggestionItem" text="Cozy"></ui5-suggestion-item>
-		<ui5-suggestion-item class="suggestionItem" text="Compact"></ui5-suggestion-item>
-		<ui5-suggestion-item class="suggestionItem" text="Condensed"></ui5-suggestion-item>
-		<ui5-suggestion-item class="suggestionItem" text="Cozy"></ui5-suggestion-item>
-		<ui5-suggestion-item class="suggestionItem" text="Compact"></ui5-suggestion-item>
-		<ui5-suggestion-item class="suggestionItem" text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item class="suggestionItem" text="Laptop Lenovo"></ui5-suggestion-item>
+		<ui5-suggestion-item class="suggestionItem" text="HP Monitor 24"></ui5-suggestion-item>
+		<ui5-suggestion-item class="suggestionItem" text="IPhone 6s"></ui5-suggestion-item>
+		<ui5-suggestion-item class="suggestionItem" text="Dell"></ui5-suggestion-item>
+		<ui5-suggestion-item class="suggestionItem" text="IPad Air"></ui5-suggestion-item>
 	</ui5-input>
 
-	<ui5-popover id="quickViewCard" header-text="My Heading" id="pop" placement-type="Right">
-		<ui5-button>Click me</ui5-button>
+	<ui5-popover id="quickViewCard" no-arrow placement-type="Right" height="500px">
+		<ui5-input id="searchInput" style="width: 300px">
+			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
+		</ui5-input>
+		<ui5-list style="height: 400px">
+			<ui5-li-groupheader>Actions</ui5-li-groupheader>
+			<ui5-li>Delete Product</ui5-li>
+			<ui5-li>Audit Log Settings</ui5-li>
+			<ui5-li>OData API Audit</ui5-li>
+			<ui5-li-groupheader>Products</ui5-li-groupheader>
+			<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+			<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
+		</ui5-list>
 	</ui5-popover>
 
 	<br/>
@@ -77,9 +88,8 @@
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
+		<ui5-li type="Inactive">Inactive Compact</ui5-li>
+		<ui5-li type="Inactive">Inactive Condensed</ui5-li>
 	</ui5-input>
 	<br/>
 	<br/>
@@ -90,8 +100,8 @@
 		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
 		<ui5-suggestion-item group text="Themes"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Quartz"></ui5-suggestion-item>
-		<ui5-suggestion-item text="HCB"></ui5-suggestion-item>
+		<ui5-suggestion-item type="Inactive" text="Inactive Quartz"></ui5-suggestion-item>
+		<ui5-suggestion-item type="Inactive" text="Inactive HCB"></ui5-suggestion-item>
 	</ui5-input>
 
 	<h3> Input disabled</h3>
@@ -314,7 +324,7 @@
 
 		var suggestionSelectedCounterWithGrouping = 0;
 
-		var suggest = function (event) {
+		var suggest = async function (event) {
 			var input = event.target;
 			var value = input.value;
 			var suggestionItems = [];
@@ -342,6 +352,14 @@
 			});
 
 			labelLiveChange.innerHTML = "Event [input] :: " + value;
+
+			// wait the DOM update
+			await window.RenderScheduler.whenFinished();
+
+			// check if the suggestions popup is scrollable
+			const scrollable = await input.isSuggestionsScrollable();
+
+			console.log("Suggestions are scrollable", scrollable);
 		};
 
 		input.addEventListener("ui5-input", suggest);
@@ -398,40 +416,65 @@
 			inputChangeResult.value = ++inputChangeResultCounter;
 		});
 
-		// Preview suggestion item events
+		// Quick View Card sample
+		var focusQuickView = false;
+
 		inputPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
 			var item = event.detail.targetRef;
+			quickViewCard.close();
+			quickViewCard.openBy(item, true /* preventInitialFocus */, false /* closeWithOpener */);
+			
+			// log info
 			inputItemPreviewRes.value = item.textContent;
-
-			quickViewCard.close(false, true, true);
-			quickViewCard.openBy(item, true);
+			console.log("suggestion-item-preview", item);
 		});
 
-		inputPreview.addEventListener("keyup", function (event) {
+		inputPreview.addEventListener("keyup", async function (event) {
 			const item = event.target.previewItem;
-			const combination = event.key === "1" && event.shiftKey && event.ctrlKey;
+			const combination = event.key === "1";
 
-			keyupResult.value = combination ? "[ctr+shift+1] on item: " + (item && item.text) : event.key;
+			if (combination) {
+				focusQuickView = true;
+				await RenderScheduler.whenFinished();
+				quickViewCard.applyFocus();
+				console.log("set focus to quickcard");
+			}
+
+			// log info
+			keyupResult.value = event.key + " on item: " + (item && item.text);
+			console.log("keyup", event.key);
 		});
 
 		[].slice.call(document.querySelectorAll(".suggestionItem")).forEach(function(el) {
 			el.addEventListener("mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
+				quickViewCard.close();
+				quickViewCard.openBy(targetRef, true /* preventInitialFocus */, false /* closeWithOpener */);
 
+				// log info
 				mouseoverResult.value = targetRef.textContent;
-				quickViewCard.openBy(targetRef, true);
+				console.log("mouseover");
 			});
 
 			el.addEventListener("mouseout", function (event) {
-				const targetRef = event.detail.targetRef;
+				// if (!focusQuickView) {
+				// 	quickViewCard.close(false, false, true);
+				// }
 
-				mouseoutResult.value = targetRef.textContent;
-				quickViewCard.close(false, true, true);
+				// focusQuickView = false;
+
+				// // log info
+				// mouseoutResult.value = event.detail.targetRef.textContent;
+				// console.log("mouseout");
 			});
 		});
 
 		inputPreview.addEventListener("ui5-suggestion-scroll", function (event) {
 			console.log("scroll", { scrolltop: event.detail.scrollTop });
+		});
+
+		inputPreview.addEventListener("focusin", function (event) {
+			console.log("focusin");
 		});
 
 		inputPreview.addEventListener("focusout", function (event) {

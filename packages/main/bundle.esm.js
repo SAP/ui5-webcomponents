@@ -40,6 +40,7 @@ import Carousel from "./dist/Carousel.js";
 import CheckBox from "./dist/CheckBox.js";
 import ComboBox from "./dist/ComboBox.js";
 import DatePicker from "./dist/DatePicker.js";
+import DateRangePicker from "./dist/DateRangePicker.js";
 import DateTimePicker from "./dist/DateTimePicker.js";
 import DurationPicker from "./dist/DurationPicker.js";
 import Dialog from "./dist/Dialog.js";
@@ -57,6 +58,7 @@ import Select from "./dist/Select.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
 import MultiComboBox from "./dist/MultiComboBox.js";
+import ProgressIndicator from "./dist/ProgressIndicator.js";
 import RatingIndicator from "./dist/RatingIndicator.js";
 import TabContainer from "./dist/TabContainer.js";
 import Tab from "./dist/Tab.js";
@@ -94,6 +96,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
@@ -108,4 +111,5 @@ window["sap-ui-webcomponents-bundle"] = {
 	getIconNames,
 	getLocaleData,
 	applyDirection,
+	ResizeHandler,
 };

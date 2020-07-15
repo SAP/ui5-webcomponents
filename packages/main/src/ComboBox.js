@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -173,6 +174,30 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the aria-label attribute for the combo box
+		 * @type {String}
+		 * @defaultvalue: ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabel: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the combo box
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
+
 		_iconPressed: {
 			type: Boolean,
 			noAttribute: true,
@@ -302,9 +327,14 @@ class ComboBox extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const domValue = this._initialRendering ? this.value : this.filterValue;
+		let domValue;
 
-		this._filteredItems = this._filterItems(domValue);
+		if (this._initialRendering) {
+			domValue = this.value;
+			this._filteredItems = this.items;
+		} else {
+			domValue = this.filterValue;
+		}
 
 		if (this._autocomplete && domValue !== "") {
 			this._autoCompleteValue(domValue);
@@ -386,7 +416,13 @@ class ComboBox extends UI5Element {
 		this.filterValue = value;
 		this.fireEvent("input");
 
-		this._openRespPopover();
+		this._filteredItems = this._filterItems(value);
+
+		if (!this._filteredItems.length) {
+			this._closeRespPopover();
+		} else {
+			this._openRespPopover();
+		}
 	}
 
 	_startsWithMatchingItems(str) {
@@ -453,6 +489,8 @@ class ComboBox extends UI5Element {
 			this.fireEvent("change");
 			this.inner.setSelectionRange(this.value.length, this.value.length);
 		}
+
+		this._closeRespPopover();
 	}
 
 	_selectItem(event) {
@@ -468,13 +506,6 @@ class ComboBox extends UI5Element {
 		});
 
 		this._inputChange();
-		this._closeRespPopover();
-	}
-
-	get _filteredItems() {
-		return !this.items.length ? [] : this.items.filter(item => {
-			return item.text.toLowerCase().startsWith(this.value.toLowerCase());
-		});
 	}
 
 	get _headerTitleText() {
@@ -517,6 +548,14 @@ class ComboBox extends UI5Element {
 			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
+	}
+
+	get open() {
+		return this.responsivePopover ? this.responsivePopover.opened : false;
+	}
+
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	static async onDefine() {

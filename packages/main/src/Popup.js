@@ -49,6 +49,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the aria-label attribute for the popup
+		 *
+		 * @type {String}
+		 * @defaultvalue: ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabel: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
 		 * @private
 		 */
 		_disableInitialFocus: {
@@ -233,6 +246,15 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	applyInitialFocus() {
+		this.applyFocus();
+	}
+
+	/**
+	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
+	 * or the first focusable element otherwise.
+	 * @public
+	 */
+	applyFocus() {
 		const element = this.getRootNode().getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)
 			|| getFirstFocusableElement(this);
@@ -390,6 +412,14 @@ class Popup extends UI5Element {
 	 */
 	get _ariaModal() {} // eslint-disable-line
 
+	/**
+	 * Ensures ariaLabel is never null or empty string
+	 * @returns {String|undefined}
+	 * @protected
+	 */
+	get _ariaLabel() {
+		return this.ariaLabel || undefined;
+	}
 
 	get styles() {
 		return {

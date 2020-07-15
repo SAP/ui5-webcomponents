@@ -7,6 +7,7 @@ import "./dist/Assets.js";
 import "./dist/features/CoPilotAnimation.js";
 
 // FIORI components
+import FlexibleColumnLayout from "./dist/FlexibleColumnLayout.js";
 import ProductSwitch from "./dist/ProductSwitch.js";
 import ProductSwitchItem from "./dist/ProductSwitchItem.js";
 import SideNavigation from "./dist/SideNavigation.js";

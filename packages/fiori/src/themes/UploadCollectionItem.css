@@ -127,7 +127,7 @@ ui5-link.ui5-uci-file-name {
 		width: 100%;
 		margin-top: .5rem;
 	}
-	
+
 	.ui5-uci-content {
 		width: 100%;
 	}
@@ -144,32 +144,10 @@ ui5-link.ui5-uci-file-name {
 }
 
 .ui5-uci-progress-indicator {
-	display: flex;
-	background: var(--sapField_Background);
 	height: 1.125rem;
-	min-height: 1rem;
-	width: 100%;
-	min-width: 3.375rem;
 	margin-bottom: 0.5rem;
 	padding: 5px 0;
 	box-sizing: border-box;
-}
-
-
-.ui5-uci-progress-indicator.error .ui5-uci-progress-bar {
-	background: var(--ui5_upload_collection_progress_indicator_error_background);
-}
-
-.ui5-uci-progress-bar {
-	border-radius: 0.5rem 0 0 0.5rem;
-	flex-basis: 30%;
-	background: var(--ui5_upload_collection_progress_indicator_background);
-}
-
-.ui5-uci-progress-bar-remaining {
-	border: 0.0625rem solid var(--sapField_BorderColor);
-	box-sizing: border-box;
-	flex: 1 1 auto;
 }
 
 .ui5-uci-progress-labels {

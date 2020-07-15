@@ -73,11 +73,12 @@ const metadata = {
 		 * Defines a formatted maximal time that the user will be able to adjust.
 		 *
 		 * @type {string}
-		 * @defaultvalue "00:00:00"
+		 * @defaultvalue "23:59:59"
 		 * @public
 		 */
 		maxValue: {
 			type: String,
+			defaultValue: "23:59:59",
 		},
 
 		/**

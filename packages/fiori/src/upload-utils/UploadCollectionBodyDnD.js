@@ -36,16 +36,22 @@ const ondrop = event => {
 	eventProvider.fireEvent(EVENT, { mode: UploadCollectionDnDOverlayMode.None });
 };
 
+const ondragover = event => {
+	event.preventDefault();
+};
+
 const attachGlobalHandlers = () => {
 	document.body.addEventListener("dragenter", ondragenter);
 	document.body.addEventListener("dragleave", ondragleave);
 	document.body.addEventListener("drop", ondrop);
+	document.body.addEventListener("dragover", ondragover);
 };
 
 const detachGlobalHandlers = () => {
 	document.body.removeEventListener("dragenter", ondragenter);
 	document.body.removeEventListener("dragleave", ondragleave);
 	document.body.removeEventListener("drop", ondrop);
+	document.body.removeEventListener("dragover", ondragover);
 	globalHandlersAttached = false;
 };
 

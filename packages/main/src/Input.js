@@ -272,6 +272,8 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the aria-label attribute for the input
+		 *
 		 * @type {String}
 		 * @since 1.0.0-rc.8
 		 * @private
@@ -529,7 +531,9 @@ class Input extends UI5Element {
 			const shouldOpenSuggestions = this.shouldOpenSuggestions();
 
 			this.updateStaticAreaItemContentDensity();
-			this.Suggestions.toggle(shouldOpenSuggestions);
+			this.Suggestions.toggle(shouldOpenSuggestions, {
+				preventFocusRestore: !this.hasSuggestionItemSelected,
+			});
 
 			RenderScheduler.whenFinished().then(async () => {
 				this._listWidth = await this.Suggestions._getListWidth();
@@ -777,7 +781,13 @@ class Input extends UI5Element {
 
 	previewSuggestion(item) {
 		this.valueBeforeItemSelection = this.value;
-		this.value = item.group ? "" : item.textContent;
+
+		if (item.type === "Inactive" || item.group) {
+			this.value = "";
+		} else {
+			this.value = item.textContent;
+		}
+
 		this._announceSelectedItem();
 		this._previewItem = item;
 	}
@@ -860,6 +870,20 @@ class Input extends UI5Element {
 		return this.suggestionItems[key];
 	}
 
+	/**
+	 * Returns if the suggestions popover is scrollable.
+	 * The method returns <code>Promise</code> that resolves to true,
+	 * if the popup is scrollable and false otherwise.
+	 * @returns {Promise}
+	 */
+	isSuggestionsScrollable() {
+		if (!this.Suggestions) {
+			return Promise.resolve(false);
+		}
+
+		return this.Suggestions._isScrollable();
+	}
+
 	getInputId() {
 		return `${this._id}-inner`;
 	}
@@ -870,13 +894,13 @@ class Input extends UI5Element {
 	onItemMouseOver(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion.fireEvent("mouseover", { targetRef: item });
+		suggestion && suggestion.fireEvent("mouseover", { targetRef: item });
 	}
 
 	onItemMouseOut(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion.fireEvent("mouseout", { targetRef: item });
+		suggestion && suggestion.fireEvent("mouseout", { targetRef: item });
 	}
 
 	onItemSelected(item, keyboardUsed) {
@@ -885,10 +909,8 @@ class Input extends UI5Element {
 
 	onItemPreviewed(item) {
 		this.previewSuggestion(item);
-		const suggestionItem = this.getSuggestionByListItem(item);
-
 		this.fireEvent("suggestion-item-preview", {
-			item: suggestionItem,
+			item: this.getSuggestionByListItem(item),
 			targetRef: item,
 		});
 	}
@@ -985,6 +1007,10 @@ class Input extends UI5Element {
 				"padding": "0.5625rem 1rem",
 			},
 		};
+	}
+
+	get suggestionSeparators() {
+		return "None";
 	}
 
 	get valueStateMessageText() {

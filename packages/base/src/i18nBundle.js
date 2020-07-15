@@ -1,20 +1,35 @@
-import { fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
+import { registerI18nBundle, fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
 import formatMessage from "./util/formatMessage.js";
 
 const I18nBundleInstances = new Map();
 
+/**
+ * @class
+ * @public
+ */
 class I18nBundle {
 	constructor(packageName) {
 		this.packageName = packageName;
 	}
 
+	/**
+	 * Returns a text in the currently loaded language
+	 *
+	 * @param {Object|String} textObj key/defaultText pair or just the key
+	 * @param params Values for the placeholders
+	 * @returns {*}
+	 */
 	getText(textObj, ...params) {
-		if (!textObj || !textObj.key || !textObj.defaultText) {
+		if (typeof textObj === "string") {
+			textObj = { key: textObj, defaultText: textObj };
+		}
+
+		if (!textObj || !textObj.key) {
 			return "";
 		}
 
 		const bundle = getI18nBundleData(this.packageName);
-		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : textObj.defaultText;
+		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : (textObj.defaultText || textObj.key);
 
 		return formatMessage(messageText, params);
 	}
@@ -30,4 +45,8 @@ const getI18nBundle = packageName => {
 	return i18nBundle;
 };
 
-export { fetchI18nBundle, getI18nBundle };
+export {
+	registerI18nBundle,
+	fetchI18nBundle,
+	getI18nBundle,
+};

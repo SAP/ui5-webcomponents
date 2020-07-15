@@ -44,6 +44,28 @@ describe("Popover general interaction", () => {
 		assert.ok(!popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
+	it("tests popover does not close with opener", () => {
+		const popover = browser.$("#quickViewCard");
+		const btnOpenPopover = $("#btnQuickViewCardOpener");
+		const btnMoveFocus = $("#btnMoveFocus");
+
+		// assert - the opener is visible
+		assert.strictEqual(btnOpenPopover.isDisplayedInViewport(), true,
+			"Opener is available.");
+
+		// act - open popover and hide opener
+		btnOpenPopover.click();
+
+		// assert - the popover remains open, although opener is not visible
+		assert.strictEqual(popover.getAttribute("open"), "true",
+			"Popover remains open.");
+		assert.strictEqual(btnOpenPopover.isDisplayedInViewport(), false,
+			"Opener is not available.");
+
+		// close the popover
+		btnMoveFocus.click();
+	});
+
 	it("tests clicking inside the popover does not close it", () => {
 		const btnOpenPopover = $("#btn");
 		const btnInPopover = $("#popbtn");
@@ -178,5 +200,20 @@ describe("Popover general interaction", () => {
 		browser.keys(["Shift", "Tab"]);
 
 		assert.ok(ff.getProperty("focused"), "The first focusable element is focused.");
+	});
+});
+
+describe("Acc", () => {
+	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+
+	it("tests aria-labelledby and aria-label", () => {
+		const popover = browser.$("ui5-popover");
+		popover.removeAttribute("aria-label");
+		assert.ok(popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby").length, "Popover has aria-labelledby.");
+		assert.ok(!popover.shadow$(".ui5-popup-root").getAttribute("aria-label"), "Popover does not have aria-label.");
+
+		popover.setAttribute("aria-label", "text");
+		assert.ok(!popover.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover does not have aria-labelledby.");
+		assert.ok(popover.shadow$(".ui5-popup-root").getAttribute("aria-label").length, "Popover has aria-label.");
 	});
 });

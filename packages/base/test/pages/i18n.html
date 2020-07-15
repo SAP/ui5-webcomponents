@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>i18n</title>
+
+	<script src="../../resources/bundle.esm.js" ></script>
+
+</head>
+
+<body>
+
+	<script>
+
+		const demo = async () => {
+			registerI18nBundle("myApp", {
+				de: "./assets/messagebundle_de.properties",
+				es: "./assets/messagebundle_es.properties",
+				fr: "./assets/messagebundle_fr.properties",
+				en: "./assets/messagebundle_en.properties",
+			});
+
+			await fetchI18nBundle("myApp");
+
+			const bundle = getI18nBundle("myApp");
+
+			const pleaseWait = bundle.getText("PLEASE_WAIT");
+			console.log("Please wait in the current language is: ", pleaseWait);
+		};
+
+		demo();
+
+
+	</script>
+
+
+</body>
+</html>

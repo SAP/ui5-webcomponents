@@ -154,6 +154,26 @@
 	outline: none;
 }
 
+.ui5-dp-item.ui5-dp-item--selected-between .ui5-dp-daytext,
+.ui5-dp-item[hovered] .ui5-dp-daytext{
+	background-color: var(--sapList_SelectionBackgroundColor);
+	color: var(--sapTextColor);
+}
+
+.ui5-dp-item.ui5-dp-item--selected-between,
+.ui5-dp-item[hovered] {
+	border: 1px solid var(--sapContent_Selected_Background);
+	border-radius: 5%;
+}
+
+.ui5-dp-item.ui5-dp-item--now {
+	border: 0.125rem solid var(--sapLegend_CurrentDateTime);
+}
+
+.ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--selected-between:focus::after {
+	border-color: var(--sapContent_FocusColor);
+}
+
 .ui5-dp-items-container > :first-child {
 	justify-content: flex-end;
 }

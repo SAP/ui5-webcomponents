@@ -71,12 +71,30 @@ describe("Tree has screen reader support", () => {
 	it("List item acc attributes correct", () => {
 		const tree = browser.$("#tree");
 		const listItems = tree.shadow$$("ui5-li-tree");
-		listItems.forEach(item => {
+
+		listItems.forEach((item, idx) => {
 			const li = item.shadow$("li");
+			const itemExpandable = item.getProperty("showToggleButton");
+			const itemExpanded = item.getProperty("expanded");
+			const liAriaExpanded = li.getAttribute("aria-expanded");
+
+			const ariaExpandedValues = {
+				// (1) expandable: aria-expanded can be 'true' or 'false'
+				"true": {
+					"true" : "true",
+					"false": "false",
+				},
+				// (2) not expandable: aria-expanded is null - not present
+				"false": {
+					"true" : null,
+					"false": null,
+				}
+			};
 
 			assert.ok(li.getAttribute("role") === "treeitem", "List item role is correct");
 			assert.ok(li.getAttribute("aria-level") === item.getAttribute("level"), "aria level is correct");
-			assert.ok(li.getAttribute("aria-expanded") === item.getAttribute("expanded"), "aria expanded is correct");
+			assert.equal(liAriaExpanded, ariaExpandedValues[itemExpandable][itemExpanded],
+				"aria-expanded is correct.");
 		});
 
 	});
