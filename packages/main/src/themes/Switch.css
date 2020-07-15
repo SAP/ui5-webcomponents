@@ -168,7 +168,7 @@
 	transform	: var(--_ui5_switch_slide_transform);
 }
 
-.ui5-switch-root.ui5-switch--checked .ui5-switch-text--on,
+.ui5-switch-desktop.ui5-switch-root.ui5-switch--checked:not(.ui5-switch--disabled) .ui5-switch-text--on,
 .ui5-switch-root.ui5-switch--checked .ui5-switch-text--off {
 	color: var(--sapButton_Track_Selected_TextColor);
 }
