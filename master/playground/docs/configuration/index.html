@@ -2035,7 +2035,7 @@
   <tbody>
     <tr>
       <td><a href="#theme">theme</a></td>
-      <td>sap_fiori_3, sap_fiori_3_dark, sap_belize, sap_belize_hcb, sap_belize_hcw</td>
+      <td>sap_fiori_3, sap_fiori_3_dark, sap_fiori_3_hcb, sap_fiori_3_hcw, sap_belize, sap_belize_hcb, sap_belize_hcw</td>
       <td>sap_fiori_3</td>
       <td>Visual theme</td>
     </tr>
@@ -2088,6 +2088,8 @@
 <ul>
   <li>The <code class="highlighter-rouge">sap_fiori_3</code> is known as <code class="highlighter-rouge">Quartz Light</code> and it`s the default theme.</li>
   <li>The <code class="highlighter-rouge">sap_fiori_3_dark</code> is known as <code class="highlighter-rouge">Quartz Dark</code>.</li>
+  <li>The <code class="highlighter-rouge">sap_fiori_3_hcb</code> is known as <code class="highlighter-rouge">Quartz High Contrast Black</code>.</li>
+  <li>The <code class="highlighter-rouge">sap_fiori_3_hcw</code> is known as <code class="highlighter-rouge">Quartz High Contrast White</code>.</li>
   <li>The <code class="highlighter-rouge">sap_belize</code> is known as <code class="highlighter-rouge">Belize</code>.</li>
   <li>The <code class="highlighter-rouge">sap_belize_hcb</code> is known as <code class="highlighter-rouge">High Contrast Black</code>.</li>
   <li>The <code class="highlighter-rouge">sap_belize_hcw</code> is known as <code class="highlighter-rouge">High Contrast White</code>.</li>
@@ -2132,10 +2134,10 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
 <p>The <code class="highlighter-rouge">noConflict</code> configuration setting allows certain control over this behavior:</p>
 <ul>
   <li>When <code class="highlighter-rouge">false</code> (default value) all custom events are fired with and without the <code class="highlighter-rouge">ui5-</code> prefix.</li>
-  <li>When <code class="highlighter-rouge">true</code> all custom events are fired with the <code class="highlighter-rouge">ui5-</code> prefix <strong>only</strong>. 
+  <li>When <code class="highlighter-rouge">true</code> all custom events are fired with the <code class="highlighter-rouge">ui5-</code> prefix <strong>only</strong>.
  This is handy for example, if the name of an event happens to collide with the name of an event provided by a third-party library.</li>
   <li>When an object is supplied, just the specified events will be fired with the <code class="highlighter-rouge">ui5-</code> prefix <strong>only</strong>.
- All other events will be fired normally - once with the prefix, and once without it. 
+ All other events will be fired normally - once with the prefix, and once without it.
  The format of this object is as follows:
     <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="p">{</span><span class="w">
   </span><span class="nl">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"selection-change"</span><span class="p">,</span><span class="w"> </span><span class="s2">"header-click"</span><span class="p">]</span><span class="w">
@@ -2145,7 +2147,7 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
   </li>
 </ul>
 
-<p>In the above example, only the <code class="highlighter-rouge">selection-change</code> and <code class="highlighter-rouge">header-click</code> events will be fired with a prefix. 
+<p>In the above example, only the <code class="highlighter-rouge">selection-change</code> and <code class="highlighter-rouge">header-click</code> events will be fired with a prefix.
  You can still use them by listening to <code class="highlighter-rouge">ui5-selection-change</code> and <code class="highlighter-rouge">ui5-header-click</code>, but the names <code class="highlighter-rouge">selection-change</code> and <code class="highlighter-rouge">header-click</code> will be
  free for use by other UI components and libraries without name collision.</p>
 

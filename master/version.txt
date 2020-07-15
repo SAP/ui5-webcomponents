@@ -1,10 +1,5 @@
-commit d11c97321fb82ffee6dbe3a147e5871985101e93
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jul 15 13:58:11 2020 +0300
+commit 81afb570e84c47569c2485e5071bdf17754e4afa
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Wed Jul 15 16:55:43 2020 +0300
 
-    feat(ui5-datepicker): Add property to hide week numbers (#1955)
-    
-    Add new property to DatePicker, Calendar and DayPicker, called "hideWeekNumbers' to optionally hide the weeks numbers column. (In classic UI5 there is property "showWeekNumbers, default: true" in the Calendar, but not in the DatePicker).
-    Note: For calendars other than Gregorian, the week numbers are not displayed regardless of what is set.
-    
-    Fixes: #1949
+    feat: Introduce sap_fiori_3_hcb and sap_fiori_3_hcw themes (#1947)
