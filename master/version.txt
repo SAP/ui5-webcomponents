@@ -1,9 +1,10 @@
-commit 30c357a55b7d3ea8ab66f19f05b3c15df76d5461
+commit d11c97321fb82ffee6dbe3a147e5871985101e93
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jul 15 09:55:55 2020 +0300
+Date:   Wed Jul 15 13:58:11 2020 +0300
 
-    fix(ui5-input): Fix selection color and bg (#1954)
+    feat(ui5-datepicker): Add property to hide week numbers (#1955)
     
-    The selection color and bg-color variables used to be wrong. In Chrome and Safari these values fallback to their defaults and the bug is more difficult to be seen, but in FF the color and bg color become unset, and you cant see any selection with ctr+a or cmd+a.
+    Add new property to DatePicker, Calendar and DayPicker, called "hideWeekNumbers' to optionally hide the weeks numbers column. (In classic UI5 there is property "showWeekNumbers, default: true" in the Calendar, but not in the DatePicker).
+    Note: For calendars other than Gregorian, the week numbers are not displayed regardless of what is set.
     
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1951
+    Fixes: #1949
