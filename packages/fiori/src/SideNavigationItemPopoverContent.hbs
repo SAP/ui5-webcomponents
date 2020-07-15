@@ -1,13 +1,15 @@
 <ui5-responsive-popover
-vertical-align="Top">
+	vertical-align="Top"
+>
     <ui5-list
-    @ui5-item-click="{{fireSelectionChange}}">
-        {{#if _popoverContent}}
-            {{#each _popoverContent}}
-                <ui5-li
-                .item="{{this.item}}"
-                >{{this.text}}</ui5-li>
-            {{/each}}
-        {{/if}}
+        @ui5-item-click="{{handleListItemClick}}"
+    >
+        {{#each _popoverContent}}
+            <ui5-li
+                .assiciatedItem="{{this}}"
+            >
+	            {{this.text}}
+            </ui5-li>
+        {{/each}}
     </ui5-list>
 </ui5-responsive-popover>

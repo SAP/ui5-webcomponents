@@ -124,47 +124,30 @@ class SideNavigation extends UI5Element {
 		]);
 	}
 
-	onBeforeRendering() {
-		this._currentItems = this.buildItems();
-		this._currentFixedItems = this.buildItems(true);
-	}
+	handleTreeItemClick(event) {
+		const treeItem = event.detail.item;
+		const item = treeItem.associatedItem;
 
-	buildItems(isFixedItems = false) {
-		const currentItems = isFixedItems ? this.fixedItems : this.items;
-		const result = [];
-
-		currentItems.forEach(element => {
-			const item = {
-				treeItem: element,
-				subItems: element.items,
-				collapsed: this.collapsed,
-			};
-
-			result.push(item);
-		});
-
-		return result;
-	}
-
-	handleItemClick(event) {
-		const item = event.detail.item;
 		const currentTree = this._itemsTree === event.target ? this._itemsTree : this._fixedItemsTree; // Gets the tree which must not have selected items
 		const otherTree = this._fixedItemsTree === event.target ? this._itemsTree : this._fixedItemsTree; // Gets the tree which must not have selected items
 		otherTree._clearSelectedItems();
 
-
-		if (this.collapsed && item.treeItem.items.length) {
-			this._popoverContent = this._generatePopoverContent(event.detail.item);
-			this.openPicker(currentTree._getRealItemDomRef(item), item);
+		if (this.collapsed && item.items.length) {
+			this._popoverContent = [item, ...item.items];
+			this.openPicker(currentTree._getRealItemDomRef(treeItem), treeItem);
 		} else {
-			this.fireSelectionChange(event);
+			this.fireSelectionChange(item);
 		}
 	}
 
-	fireSelectionChange(event) {
-		const item = event.detail.item.treeItem // if event is fired when not collapsed
-		|| event.detail.item.item; // if event is fired from the list in the popover
+	handleListItemClick(event) {
+		const listItem = event.detail.item;
+		const item = listItem.associatedItem;
 
+		this.fireSelectionChange(item);
+	}
+
+	fireSelectionChange(item) {
 		this.fireEvent("selection-change", { item });
 	}
 
@@ -176,20 +159,6 @@ class SideNavigation extends UI5Element {
 				this._resetSelectedItems(item.subItems);
 			}
 		});
-	}
-
-	_generatePopoverContent(item) {
-		const result = [{
-			text: item.treeItem.text,
-			item: item.treeItem,
-		}];
-
-		item.treeItem.items.forEach(element => result.push({
-			text: element.text,
-			item: element,
-		}));
-
-		return result;
 	}
 
 	getMiddleFocusHelper() {
@@ -216,10 +185,6 @@ class SideNavigation extends UI5Element {
 
 	get _fixedItemsTree() {
 		return this.getDomRef().querySelector("#ui5-sn-fixed-items-tree");
-	}
-
-	get _shoudlShowSubItems() {
-		return !this.collapsed;
 	}
 }
 
