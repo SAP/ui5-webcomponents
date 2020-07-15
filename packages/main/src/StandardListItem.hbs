@@ -6,7 +6,7 @@
 			<span part="title" class="ui5-li-title"><slot></slot></span>
 		{{/if}}
 		{{#if description}}
-			{{> desc}}
+			<span part="description" class="ui5-li-desc">{{description}}</span>
 		{{/if}}
 		{{#unless typeActive}}
 			<span class="ui5-hidden-text">{{type}}</span>
@@ -33,8 +33,4 @@
 	{{#if displayIconEnd}}
 		<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon"></ui5-icon>
 	{{/if}}
-{{/inline}}
-
-{{#*inline "desc"}}
-	<span part="description" class="ui5-li-desc">{{description}}</span>
 {{/inline}}
