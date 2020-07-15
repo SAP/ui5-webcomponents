@@ -113,14 +113,14 @@ class UI5Element extends HTMLElement {
 
 		this._inDOM = true;
 
+		if (slotsAreManaged) {
+			// always register the observer before yielding control to the main thread (await)
+			this._startObservingDOMChildren();
+			await this._processChildren();
+		}
+
 		// Render the Shadow DOM
 		if (needsShadowDOM) {
-			if (slotsAreManaged) {
-				// always register the observer before yielding control to the main thread (await)
-				this._startObservingDOMChildren();
-				await this._processChildren();
-			}
-
 			if (!this.shadowRoot) { // Workaround for Firefox74 bug
 				await Promise.resolve();
 			}
@@ -130,7 +130,7 @@ class UI5Element extends HTMLElement {
 			}
 
 			RenderScheduler.register(this);
-			await RenderScheduler.renderImmediately(this);
+			RenderScheduler.renderImmediately(this);
 			this._domRefReadyPromise._deferredResolve();
 			this._fullyConnected = true;
 			if (typeof this.onEnterDOM === "function") {
@@ -150,11 +150,11 @@ class UI5Element extends HTMLElement {
 
 		this._inDOM = false;
 
-		if (needsShadowDOM) {
-			if (slotsAreManaged) {
-				this._stopObservingDOMChildren();
-			}
+		if (slotsAreManaged) {
+			this._stopObservingDOMChildren();
+		}
 
+		if (needsShadowDOM) {
 			RenderScheduler.deregister(this);
 			if (this._fullyConnected) {
 				if (typeof this.onExitDOM === "function") {
