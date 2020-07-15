@@ -7,6 +7,9 @@
 	/* Switch Track */
 	--_ui5_switch_track_hover_border_color: var(--sapTextColor);
 	--_ui5_switch_track_border_color: var(--sapButton_Background);
+	--_ui5_switch_track_hover_background_color: var(--sapButton_Background);
+	--_ui5_switch_track_hover_checked_background_color: var(--sapButton_Background);
+
 
 	--_ui5_switch_track_disabled_checked_bg: var(--sapHC_ReducedBackground);
 	--_ui5_switch_track_disabled_border_color: var(--sapHC_ReducedForeground);
