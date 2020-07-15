@@ -1,4 +1,4 @@
-{{>include "./ListItem.hbs"}}
+{{>include "./StandardListItem.hbs"}}
 
 {{#*inline "listItemContent"}}
 	<div class="ui5-li-title-wrapper">
@@ -14,23 +14,5 @@
 	</div>
 	{{#if info}}
 		<span part="info" class="ui5-li-info">{{info}}</span>
-	{{/if}}
-{{/inline}}
-
-{{#*inline "imageBegin"}}
-	{{#if displayImage}}
-		<img part="img" src="{{image}}" class="ui5-li-img">
-	{{/if}}
-{{/inline}}
-
-{{#*inline "iconBegin"}}
-	{{#if displayIconBegin}}
-		<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon"></ui5-icon>
-	{{/if}}
-{{/inline}}
-
-{{#*inline "iconEnd"}}
-	{{#if displayIconEnd}}
-		<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon"></ui5-icon>
 	{{/if}}
 {{/inline}}

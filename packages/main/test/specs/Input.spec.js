@@ -288,7 +288,7 @@ describe("Input general interaction", () => {
 		input.keys("ad");
 
 		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const firstListItem = respPopover.$("ui5-list").$("ui5-li");
+		const firstListItem = respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 
 		assert.ok(respPopover.isDisplayedInViewport(), "The popover is visible");
 		assert.ok(firstListItem.getHTML().indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.")
