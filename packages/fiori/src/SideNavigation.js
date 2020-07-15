@@ -134,7 +134,7 @@ class SideNavigation extends UI5Element {
 
 		if (this.collapsed && item.items.length) {
 			this._popoverContent = [item, ...item.items];
-			this.openPicker(currentTree._getRealItemDomRef(treeItem), treeItem);
+			this.openPicker(currentTree._getRealItemDomRef(treeItem));
 		} else {
 			this.fireSelectionChange(item);
 		}
@@ -149,24 +149,6 @@ class SideNavigation extends UI5Element {
 
 	fireSelectionChange(item) {
 		this.fireEvent("selection-change", { item });
-	}
-
-	_resetSelectedItems(items) {
-		items.forEach(item => {
-			item.selected = false;
-
-			if (item.subItems) {
-				this._resetSelectedItems(item.subItems);
-			}
-		});
-	}
-
-	getMiddleFocusHelper() {
-		return this.getDomRef().querySelector(".ui5-sn-middle-focus-helper");
-	}
-
-	_focusOtherList() {
-		this.getMiddleFocusHelper().focus();
 	}
 
 	async getPicker() {
