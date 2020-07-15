@@ -6,7 +6,7 @@
 	@mouseup={{_onmouseup}}
 >
 
-	{{#if showWeekNumbers}}
+	{{#unless _hideWeekNumbers}}
 		<div class="ui5-dp-weeknumber-container">
 			{{#each _weekNumbers}}
 				<div class="ui5-dp-weekname-container">
@@ -14,7 +14,7 @@
 				</div>
 			{{/each}}
 		</div>
-	{{/if}}
+	{{/unless}}
 
 	<div id="{{_id}}-content" class="ui5-dp-content">
 		<div role="row" class="ui5-dp-days-names-container">
