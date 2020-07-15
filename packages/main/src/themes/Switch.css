@@ -123,9 +123,6 @@
 	cursor: default;
 }
 
-.ui5-switch-root.ui5-switch--disabled .ui5-switch-track {
-	border-color: var(--_ui5_switch_track_disabled_border_color);
-}
 
 .ui5-switch-root.ui5-switch--disabled.ui5-switch--checked .ui5-switch-track {
 	background: var(--_ui5_switch_track_disabled_checked_bg);
@@ -137,7 +134,6 @@
 
 .ui5-switch-root.ui5-switch--disabled .ui5-switch-handle {
 	background: var(--_ui5_switch_handle_disabled_bg);
-	border-color: var(--_ui5_switch_handle_disabled_border_color);
 }
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled .ui5-switch-track {
@@ -159,11 +155,6 @@
 	background: var(--sapButton_Background);
 	border-color: var(--_ui5_switch_handle_disabled_semantic_border_color);
 }
-
-.ui5-switch-root.ui5-switch--disabled.ui5-switch--checked .ui5-switch-text {
-	color: var(--_ui5_switch_text_disabled_color);
-}
-
 
 /* switch checked */
 .ui5-switch-root.ui5-switch--checked .ui5-switch-handle {

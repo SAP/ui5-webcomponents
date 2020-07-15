@@ -159,7 +159,7 @@
 }
 
 .ui5-tab-strip-item--positive .ui5-tab-strip-item-icon {
-    color: var(--sapPositiveColor);
+    color: var(--_ui5_tc_headerItem_positive_color);
 }
 
 .ui5-tab-strip-item--positive.ui5-tab-strip-item--selected .ui5-tab-strip-item-icon-outer {
@@ -173,7 +173,7 @@
 
 .ui5-tab-strip-item.ui5-tab-strip-item--positive .ui5-tab-strip-itemContent::after,
 .ui5-tab-strip-item--positive .ui5-tab-strip-item-icon-outer::after {
-    border-color: var(--sapPositiveColor);
+    border-color: var(--_ui5_tc_headerItem_positive_border_color);
 }
 
 .ui5-tab-strip-item--negative.ui5-tab-strip-item--textOnly,
@@ -184,7 +184,7 @@
 }
 
 .ui5-tab-strip-item--negative .ui5-tab-strip-item-icon {
-    color: var(--sapNegativeColor);
+    color: var(--_ui5_tc_headerItem_negative_color);
 }
 
 .ui5-tab-strip-item--negative.ui5-tab-strip-item--selected .ui5-tab-strip-item-icon-outer {
@@ -197,7 +197,7 @@
 
 .ui5-tab-strip-item.ui5-tab-strip-item--negative .ui5-tab-strip-itemContent::after,
 .ui5-tab-strip-item--negative .ui5-tab-strip-item-icon-outer::after {
-    border-color: var(--sapNegativeColor);
+    border-color: var(--_ui5_tc_headerItem_negative_border_color);
 }
 
 .ui5-tab-strip-item--critical.ui5-tab-strip-item--textOnly,
@@ -208,7 +208,7 @@
 }
 
 .ui5-tab-strip-item--critical .ui5-tab-strip-item-icon {
-    color: var(--sapCriticalColor);
+    color: var(--_ui5_tc_headerItem_critical_color);
 }
 
 .ui5-tab-strip-item--critical.ui5-tab-strip-item--selected .ui5-tab-strip-item-icon-outer {
@@ -221,7 +221,7 @@
 
 .ui5-tab-strip-item.ui5-tab-strip-item--critical .ui5-tab-strip-itemContent::after,
 .ui5-tab-strip-item--critical .ui5-tab-strip-item-icon-outer::after {
-    border-color: var(--sapCriticalColor);
+    border-color: var(--_ui5_tc_headerItem_critical_border_color);
 }
 
 .ui5-tab-strip-item--nutral.ui5-tab-strip-item--textOnly,
@@ -231,7 +231,7 @@
 }
 
 .ui5-tab-strip-item--neutral .ui5-tab-strip-item-icon {
-    color: var(--sapNeutralColor);
+    color: var(--_ui5_tc_headerItem_neutral_color);
 }
 
 .ui5-tab-strip-item--neutral.ui5-tab-strip-item--selected .ui5-tab-strip-item-icon-outer {
@@ -244,7 +244,7 @@
 
 .ui5-tab-strip-items.ui5-tab-strip-item--neutral .ui5-tab-strip-itemContent::after,
 .ui5-tab-strip-item--neutral .ui5-tab-strip-item-icon::after {
-    border-color: var(--sapNeutralColor);
+    border-color: var(--_ui5_tc_headerItem_neutral_border_color);
 }
 
 /*** RTL ***/

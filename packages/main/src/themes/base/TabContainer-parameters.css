@@ -9,14 +9,29 @@
 
 	/* Header Item */
 	--_ui5_tc_headerItem_color: var(--sapGroup_TitleTextColor);
-	--_ui5_tc_headeritem_text_selected_color: var(--sapSelectedColor); 
-	--_ui5_tc_headerItem_positive_selected_border_color: var(--sapPositiveColor);
-	--_ui5_tc_headerItem_negative_selected_border_color: var(--sapNegativeColor);
-	--_ui5_tc_headerItem_critical_selected_border_color: var(--sapCriticalColor);
-	--_ui5_tc_headerItem_neutral_selected_border_color: var(--sapNeutralColor);
+	--_ui5_tc_headeritem_text_selected_color: var(--sapSelectedColor);
+	--_ui5_tc_headerItem_neutral_color: var(--sapNeutralColor);
+	--_ui5_tc_headerItem_positive_color: var(--sapPositiveColor);
+	--_ui5_tc_headerItem_negative_color: var(--sapNegativeColor);
+	--_ui5_tc_headerItem_critical_color: var(--sapCriticalColor);
+	--_ui5_tc_headerItem_neutral_border_color: var(--_ui5_tc_headerItem_neutral_color);
+	--_ui5_tc_headerItem_positive_border_color: var(--_ui5_tc_headerItem_positive_color);
+	--_ui5_tc_headerItem_negative_border_color: var(--_ui5_tc_headerItem_negative_color);
+	--_ui5_tc_headerItem_critical_border_color: var(--_ui5_tc_headerItem_critical_color);
+	--_ui5_tc_headerItem_neutral_selected_border_color: var(--_ui5_tc_headerItem_neutral_color);
+	--_ui5_tc_headerItem_positive_selected_border_color: var(--_ui5_tc_headerItem_positive_color);
+	--_ui5_tc_headerItem_negative_selected_border_color: var(--_ui5_tc_headerItem_negative_color);
+	--_ui5_tc_headerItem_critical_selected_border_color: var(--_ui5_tc_headerItem_critical_color);
 	--_ui5_tc_headerItemContent_border_bottom: 0.125rem solid var(--sapSelectedColor);
 	--_ui5_tc_headerItem_focus_border: 1px dotted var(--sapContent_FocusColor);
 	--_ui5_tc_headerItemSemanticIcon_display: none;
+
+	/* Overflow Item */
+
+	--_ui5_tc_overflowItem_neutral_color: var(--sapNeutralColor);
+	--_ui5_tc_overflowItem_positive_color: var(--sapPositiveColor);
+	--_ui5_tc_overflowItem_negative_color: var(--sapNegativeColor);
+	--_ui5_tc_overflowItem_critical_color: var(--sapCriticalColor);
 
 	/* Header Item icons */
 	--_ui5_tc_headerItemIcon_border: 1px solid var(--sapHighlightColor);
@@ -30,5 +45,6 @@
 	--_ui5_tc_headerItemIcon_semantic_selected_color: var(--sapGroup_ContentBackground);
 
 	--_ui5_tc_overflowItem_default_color: var(--sapHighlightColor);
+	--_ui5_tc_overflowItem_current_color: CurrentColor;
 	--_ui5_tc_content_border_bottom: 0.125rem solid var(--sapObjectHeader_BorderColor);
 }
