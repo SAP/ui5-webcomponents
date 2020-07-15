@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 /**
  * @public
@@ -63,14 +62,6 @@ const metadata = {
 		 */
 		selected: {
 			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		level: {
-			type: Integer,
-			defaultValue: 1,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {

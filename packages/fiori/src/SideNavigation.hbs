@@ -8,7 +8,6 @@
             {{#each items}}
                 <ui5-tree-item
                     icon="{{this.icon}}"
-                    level="{{this.level}}"
                     .associatedItem="{{this}}"
                     show-toggle-button-end
                     text="{{this.text}}"
@@ -20,7 +19,6 @@
                     {{#unless ../collapsed}}
                         {{#each this.items}}
                             <ui5-tree-item
-                                level="{{this.level}}"
                                 .associatedItem="{{this}}"
                                 show-toggle-button-end
                                 text="{{this.text}}"
@@ -49,7 +47,6 @@
                 {{#each fixedItems}}
                     <ui5-tree-item
                         icon="{{this.icon}}"
-                        level="{{this.level}}"
                         .associatedItem="{{this}}"
                         show-toggle-button-end
                         text="{{this.text}}"

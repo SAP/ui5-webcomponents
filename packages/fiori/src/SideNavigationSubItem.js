@@ -1,6 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 /**
  * @public
@@ -17,14 +15,6 @@ const metadata = {
 		 */
 		text: {
 			type: String,
-		},
-
-		/**
-		 * @private
-		 */
-		level: {
-			type: Integer,
-			defaultValue: 2,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
@@ -61,10 +51,6 @@ const metadata = {
 class SideNavigationSubItem extends UI5Element {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 }
 

@@ -350,16 +350,14 @@ const walkTree = (el, level, callback) => {
 
 const buildTree = (el, level, result) => {
 	el.items.forEach(item => {
-		const currLevel = item.level || level;
-
 		const listItem = {
 			treeItem: item,
-			level: currLevel,
+			level,
 		};
 
 		result.push(listItem);
 		if (item.expanded && item.items.length > 0) {
-			buildTree(item, currLevel + 1, result);
+			buildTree(item, level + 1, result);
 		}
 	});
 };
