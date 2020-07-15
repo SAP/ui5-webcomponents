@@ -48,7 +48,7 @@ const metadata = {
 		 * @public
 		 */
 		tokens: {
-			type: Token,
+			type: HTMLElement,
 			multiple: true,
 		},
 	},
@@ -101,7 +101,7 @@ class MultiInput extends Input {
 	}
 
 	static get styles() {
-		return [styles, Input.styles];
+		return [Input.styles, styles];
 	}
 
 	valueHelpPress(event) {
