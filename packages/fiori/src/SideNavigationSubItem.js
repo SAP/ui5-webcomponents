@@ -17,12 +17,6 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
-		//
-	},
-	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
-		//
-	},
 };
 
 /**

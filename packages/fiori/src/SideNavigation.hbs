@@ -11,7 +11,7 @@
                     .associatedItem="{{this}}"
                     show-toggle-button-end
                     text="{{this.text}}"
-                    ?has-children="{{this.expandable}}"
+                    ?has-children="{{this.items.length}}"
                     ?expanded="{{this.expanded}}"
                     ?_collapsed="{{../collapsed}}"
                     ?selected="{{this.selected}}"
@@ -23,7 +23,6 @@
                                 show-toggle-button-end
                                 text="{{this.text}}"
                                 index="{{this.index}}"
-                                ?has-children="{{this.expandable}}"
                                 ?selected="{{this.selected}}"
                             >
                             </ui5-tree-item>
@@ -51,7 +50,6 @@
                         show-toggle-button-end
                         text="{{this.text}}"
                         index="{{this.index}}"
-                        ?has-children="{{this.expandable}}"
                         ?expanded="{{this.expanded}}"
                         ?_collapsed="{{../collapsed}}"
                         ?selected="{{this.selected}}"
