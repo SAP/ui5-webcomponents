@@ -88,19 +88,6 @@ const metadata = {
 			type: String,
 		},
 
-		_weeks: {
-			type: Object,
-			multiple: true,
-		},
-
-		_weekNumbers: {
-			type: Object,
-			multiple: true,
-		},
-		_hidden: {
-			type: Boolean,
-			noAttribute: true,
-		},
 		/**
 		 * Determines the format, displayed in the input field.
 		 *
@@ -126,6 +113,43 @@ const metadata = {
 		 */
 		hideWeekNumbers: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the effective weeks numbers visibility,
+		 * based on the <code>primaryCalendarType</code> and <code>hideWeekNumbers</code> property.
+		 * @type {boolean}
+		 * @private
+		 */
+		_hideWeekNumbers: {
+			type: Boolean,
+		},
+
+		/**
+		 * @type {Object}
+		 * @private
+		 */
+		_weeks: {
+			type: Object,
+			multiple: true,
+		},
+
+		/**
+		 * @type {Object}
+		 * @private
+		 */
+		_weekNumbers: {
+			type: Object,
+			multiple: true,
+		},
+
+		/**
+		 * @type {boolean}
+		 * @private
+		 */
+		_hidden: {
+			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
@@ -330,6 +354,7 @@ class DayPicker extends UI5Element {
 		}
 
 		this._dayNames[0].classes += " ui5-dp-firstday";
+		this._hideWeekNumbers = this.shouldHideWeekNumbers;
 	}
 
 	onAfterRendering() {
@@ -416,12 +441,12 @@ class DayPicker extends UI5Element {
 		}
 	}
 
-	get showWeekNumbers() {
-		if (this.primaryCalendarType !== CalendarType.Gregorian) {
-			return false;
+	get shouldHideWeekNumbers() {
+		if (this._primaryCalendarType !== CalendarType.Gregorian) {
+			return true;
 		}
 
-		return !this.hideWeekNumbers;
+		return this.hideWeekNumbers;
 	}
 
 	get _timestamp() {
