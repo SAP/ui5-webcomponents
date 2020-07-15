@@ -52,7 +52,7 @@ describe("Date Picker Tests", () => {
 
 	it("Can focus the input after open", () => {
 		datepicker.id = "#dp1";
-		datepicker.openPicker({ focusInput: true });
+		datepicker.openPicker({ focuwsInput: true });
 		const a = datepicker.innerInput.isFocusedDeep();
 
 		console.log(datepicker.innerInput.isFocusedDeep());
@@ -690,5 +690,31 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp34";
 		datepicker.openPicker({ focusInput: false });
 		assert.ok(datepicker.getDisplayedDay(14).isFocusedDeep(), "Days out of range are disabled");
+	});
+
+	it("Tests week numbers column visibility", () => {
+		// act
+		datepicker.id = "#dp18";
+		datepicker.valueHelpIcon.click()
+
+		// assert
+		const weekNumbersCol1 = datepicker.dayPicker.shadow$(".ui5-dp-weeknumber-container");
+		assert.equal(weekNumbersCol1.isExisting(), true, "The week numbers column is visible.");
+
+		// close date picker
+		datepicker.innerInput.click();
+		browser.keys(["Alt", "ArrowUp", "NULL"]);
+
+		// act
+		datepicker.id = "#dp19";
+		datepicker.valueHelpIcon.click()
+
+		// assert
+		const weekNumbersCol2 = datepicker.dayPicker.shadow$(".ui5-dp-weeknumber-container");
+		assert.equal(weekNumbersCol2.isExisting(), false, "The week numbers column is hidden.");
+
+		// close date picker
+		datepicker.innerInput.click();
+		browser.keys(["Alt", "ArrowUp", "NULL"]);
 	});
 });
