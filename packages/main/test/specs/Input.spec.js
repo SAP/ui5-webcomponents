@@ -132,11 +132,28 @@ describe("Input general interaction", () => {
 	it("fires suggestion-item-preview", () => {
 		const inputItemPreview = $("#inputPreview").shadow$("input");
 		const inputItemPreviewRes = $("#inputItemPreviewRes");
+		const EXPECTED_PREVIEW_ITEM_TEXT = "Laptop Lenovo";
 
+		// act
 		inputItemPreview.click();
 		inputItemPreview.keys("ArrowDown");
+		
+		// assert
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputPreview");
+		const inputPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const helpPopover = browser.$("#quickViewCard");
 
-		assert.strictEqual(inputItemPreviewRes.getValue(), "Laptop Lenovo", "First item has been previewed");
+		assert.strictEqual(inputItemPreviewRes.getValue(), EXPECTED_PREVIEW_ITEM_TEXT, "First item has been previewed");
+		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover is open.");
+		assert.ok(inputPopover.isDisplayedInViewport(), "The input popover is open.");
+
+		// act
+		const inputInHelpPopover = browser.$("#searchInput").shadow$("input");
+		inputInHelpPopover.click();
+
+		// assert
+		assert.notOk(inputPopover.isDisplayedInViewport(), "The inpuit popover is closed as it lost the focus.");
+		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
 	});
 
 	it("fires suggestion-scroll event", () => {
