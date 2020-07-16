@@ -627,15 +627,7 @@ class Input extends UI5Element {
 			return;
 		}
 
-		const closePopover = async () => {
-			const popover = await this._getPopover();
-
-			if (popover) {
-				popover.close(false, false, true);
-			}
-		};
-
-		closePopover();
+		this.closePopover();
 
 		this.previousValue = "";
 		this.focused = false; // invalidating property

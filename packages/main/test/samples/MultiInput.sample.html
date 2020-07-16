@@ -1,0 +1,222 @@
+<style>
+	.fiori--dark .inputIcon,
+	.hcb .inputIcon {
+		color: #fafafa;
+		background: transparent;
+	}
+	.hcb .inputIcon:hover{
+		background: #7a5100;
+	}
+
+	.inputIcon {
+		background: #fafafa;
+		color: #0a6ed1;
+		cursor: pointer;
+	}
+	.inputIcon:hover{
+		background: rgba(224,224,224,0.5)
+	}
+</style>
+
+<header>
+	<h2 class="control-header">Multi Input</h2>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-multi-input&gt;</div>
+
+<section>
+	<h3>Basic Multi Input</h3>
+	<div class="snippet">
+		<ui5-multi-input class="samples-margin samples-responsive-margin-bottom" value="basic input"></ui5-multi-input>
+		<ui5-multi-input class="samples-margin samples-responsive-margin-bottom" show-value-help-icon value="value help icon"></ui5-multi-input>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-multi-input value="basic input"></ui5-multi-input>
+<ui5-multi-input show-value-help-icon value="value help icon"></ui5-multi-input>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Multi Input with tokens</h3>
+	<div class="snippet">
+		<ui5-multi-input style="width: 30%">
+			<ui5-token slot="tokens" text="Bulgaria"></ui5-token>
+		</ui5-multi-input>
+		
+		<ui5-multi-input style="width: 30%">
+			<ui5-token slot="tokens" text="Argentina"></ui5-token>
+			<ui5-token slot="tokens" text="Bulgaria"></ui5-token>
+			<ui5-token slot="tokens" text="England"></ui5-token>
+			<ui5-token slot="tokens" text="Finland"></ui5-token>
+			<ui5-token slot="tokens" text="Germany"></ui5-token>
+			<ui5-token slot="tokens" text="Hungary"></ui5-token>
+			<ui5-token slot="tokens" text="Italy"></ui5-token>
+			<ui5-token slot="tokens" text="Luxembourg"></ui5-token>
+			<ui5-token slot="tokens" text="Mexico"></ui5-token>
+			<ui5-token slot="tokens" text="Philippines"></ui5-token>
+			<ui5-token slot="tokens" text="Sweden"></ui5-token>
+			<ui5-token slot="tokens" text="USA"></ui5-token>
+		</ui5-multi-input>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-multi-input>
+	<ui5-token slot="tokens" text="Bulgaria"></ui5-token>
+</ui5-multi-input>
+
+<ui5-multi-input>
+	<ui5-token slot="tokens" text="Argentina"></ui5-token>
+	<ui5-token slot="tokens" text="Bulgaria"></ui5-token>
+	<ui5-token slot="tokens" text="England"></ui5-token>
+	<ui5-token slot="tokens" text="Finland"></ui5-token>
+	<ui5-token slot="tokens" text="Germany"></ui5-token>
+	<ui5-token slot="tokens" text="Hungary"></ui5-token>
+	<ui5-token slot="tokens" text="Italy"></ui5-token>
+	<ui5-token slot="tokens" text="Luxembourg"></ui5-token>
+	<ui5-token slot="tokens" text="Mexico"></ui5-token>
+	<ui5-token slot="tokens" text="Philippines"></ui5-token>
+	<ui5-token slot="tokens" text="Sweden"></ui5-token>
+	<ui5-token slot="tokens" text="USA"></ui5-token>
+</ui5-multi-input>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Input with Value State</h3>
+	<div class="snippet">
+		<ui5-input class="samples-margin samples-responsive-margin-bottom" value="Success" value-state="Success"></ui5-input>
+		<ui5-input class="samples-margin samples-responsive-margin-bottom" value="Warning" value-state="Warning"></ui5-input>
+		<ui5-input class="samples-margin samples-responsive-margin-bottom" value="Error" value-state="Error"></ui5-input>
+		<ui5-input class="samples-margin samples-responsive-margin-bottom" value="Information" value-state="Information"></ui5-input>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-input value="Success" value-state="Success"></ui5-input>
+<ui5-input value="Warning" value-state="Warning"></ui5-input>
+<ui5-input value="Error" value-state="Error"></ui5-input>
+<ui5-input value="Information" value-state="Information"></ui5-input>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Input with Suggestions and Value State message</h3>
+	<div class="snippet">
+		<ui5-input class="samples-margin samples-responsive-margin-bottom" id="value-state-suggestions" class="samples-responsive-padding-bottom" placeholder="Start typing country name" show-suggestions value-state="Warning">
+		</ui5-input>
+
+		<ui5-input class="samples-margin samples-responsive-margin-bottom" placeholder="Choose content density" show-suggestions value-state="Error">
+			<div slot="valueStateMessage">This is an error message. Extra long text used as an error message.</div>
+			<ui5-li>Cozy</ui5-li>
+			<ui5-li>Compact</ui5-li>
+			<ui5-li>Condensed</ui5-li>
+		</ui5-input>
+
+		<script>
+			var ui5_database_entries =  ["Argentina", "Albania", "Algeria", "Angola", "Austria",  "Australia", "Bulgaria", "Canada", "Columbia", "Croatia", "Denmark",
+"England", "Finland", "France", "Germany", "Hungary", "Ireland", "Italy", "Kuwait", "Luxembourg", "Mexico", "Morocco", "Norway", "Paraguay", "Philippines", "Portugal", "Spain", "Sweden", "Sri Lanka", "Senegal", "United Kingdom", "USA" ];
+
+			var oInput = document.getElementById("value-state-suggestions");
+
+			oInput.addEventListener("input", function(event) {
+				var value = event.target.value;
+				var suggestionItems = [];
+
+				if (value) {
+					suggestionItems = ui5_database_entries.filter(function (item) {
+						return item.toUpperCase().indexOf(value.toUpperCase()) === 0;
+					});
+				}
+
+				[].slice.call(oInput.children).forEach(function(child) {
+					oInput.removeChild(child);
+				});
+
+				suggestionItems.forEach(function(item) {
+					var li = document.createElement("ui5-suggestion-item");
+					li.icon = "world";
+					li.id = item;
+					li.text = item;
+					oInput.appendChild(li);
+				});
+			});
+		</script>
+	</div>
+
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-input id="value-state-suggestions" class="samples-responsive-padding-bottom" placeholder="Start typing country name" show-suggestions value-state="Warning">
+</ui5-input>
+
+<ui5-input placeholder="Choose content density" show-suggestions value-state="Error">
+	<div slot="valueStateMessage">This is an error message. Extra long text used as an error message.</div>
+	<ui5-li>Cozy</ui5-li>
+	<ui5-li>Compact</ui5-li>
+	<ui5-li>Condensed</ui5-li>
+</ui5-input>
+	</xmp></pre>
+
+<section>
+	<h3>Input as Search Field</h3>
+	<div class="snippet">
+		<div class="flex-column samples-margin">
+			<ui5-input id="searchInput" placeholder="Enter search criteria ..." style="width: 100%">
+				<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
+			</ui5-input>
+		</div>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<style>
+	.inputIcon {
+		background: #fafafa;
+		color: #0a6ed1;
+		cursor: pointer;
+	}
+	.inputIcon:hover{
+		background: rgba(224,224,224,0.5)
+	}
+</style>
+
+<ui5-input id="searchInput" placeholder="Enter search criteria ..." style="width: 100%">
+	<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
+</ui5-input>
+
+<script>
+	var searchCriteria = "PASTA";
+	searchIcon.addEventListener("click", function(){
+		alert("Look for: " + searchCriteria);
+	});
+	searchInput.addEventListener("change", function(e){
+		searchCriteria = e.target.value;
+	});
+</script>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Input with Label</h3>
+	<div class="snippet">
+		<div class="flex-column samples-margin">
+			<ui5-label class="samples-big-margin-right" for="myInput" required>Name</ui5-label>
+			<ui5-input id="myInput" placeholder="Enter your Name" required></ui5-input>
+		</div>
+		<div class="flex-column">
+			<ui5-label class="samples-big-margin-right" for="myPassword" required>Secret Code</ui5-label>
+			<ui5-input id="myPassword" type="Password" value-state="Error" placeholder="Enter your Secret Code" required></ui5-input>
+		</div>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-label class="samples-big-margin-right" for="myInput" required>Name</ui5-label>
+<ui5-input id="myInput" placeholder="Enter your Name" required></ui5-input>
+	</xmp></pre>
+</section>
+
+<script>
+	var searchCriteria = "PASTA";
+	searchIcon.addEventListener("click", function(){
+		alert("Look for: " + searchCriteria);
+	});
+	searchInput.addEventListener("input", function(e){
+		searchCriteria = e.target.value;
+	});
+</script>
+
+<!-- JSDoc marker -->
