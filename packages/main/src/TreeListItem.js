@@ -65,13 +65,6 @@ const metadata = {
 
 		/**
 		 * @private
-		 */
-		expandable: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
 		 * @since 1.0.0-rc.8
 		 */
 		showToggleButtonEnd: {

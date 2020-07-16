@@ -20,7 +20,7 @@
     padding: 0;
 }
 
-:host([_collapsed][expandable])::after {
+:host([_collapsed][show-toggle-button])::after {
     content: "";
     width: 0;
     height: 0;

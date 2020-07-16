@@ -31,9 +31,6 @@ const metadata = {
 
 		/**
 		 * Defines if the item is expanded
-		 * <br><br>
-		 * <b>Note:</b>
-		 * If <code>expandable</code> property is set to <code>true</code>, you can control via this property whether the current item is expanded or not.
 		 *
 		 * @public
 		 * @type {boolean}
