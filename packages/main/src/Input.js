@@ -628,7 +628,7 @@ class Input extends UI5Element {
 		}
 
 		if (this.popover) {
-			this.popover.close(false, false, true);
+			this.popover.close();
 		}
 
 		this.previousValue = "";
