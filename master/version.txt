@@ -1,5 +1,9 @@
-commit 81afb570e84c47569c2485e5071bdf17754e4afa
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Wed Jul 15 16:55:43 2020 +0300
+commit 0934f0c937e1d26ea1f4aec2b1451cd4cbb9cdba
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jul 16 10:17:00 2020 +0300
 
-    feat: Introduce sap_fiori_3_hcb and sap_fiori_3_hcw themes (#1947)
+    refactor(ui5-input): Add hook for value update on preview (#1956)
+    
+    Added extension point to allow extending components control the behaviour on suggestion preview. The default behaviour of the Input with suggestions is to replace the current value with the value of the previewed suggestion, when the user navigates with UP/DOWN arrows. But, there are use cases as in the attached issue, that instead of replacing the entire text, just part of it has to be replaced, changed or added to.
+    
+    FIXES: #1878
