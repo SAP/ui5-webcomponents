@@ -64,6 +64,8 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the toggle button is shown at the end, rather than at the beginning of the item
+		 *
 		 * @protected
 		 * @since 1.0.0-rc.8
 		 */
@@ -72,6 +74,8 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the item shows minimal details - only icon (no text or toggle button)
+		 *
 		 * @protected
 		 * @since 1.0.0-rc.8
 		 */
@@ -198,7 +202,7 @@ class TreeListItem extends ListItem {
 		return this.showToggleButton && !this._minimal && this._toggleButtonEnd;
 	}
 
-	get showTitle() {
+	get _showTitle() {
 		return this.textContent.length && !this._minimal;
 	}
 

@@ -4,6 +4,9 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Side Navigation</title>
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 	<script data-ui5-config type="application/json">
@@ -35,7 +38,7 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
-	<ui5-shellbar 
+	<ui5-shellbar
 		primary-title="UI5 Web Components"
 		secondary-title="The Best Run SAP"
 		show-co-pilot
@@ -55,16 +58,16 @@
 				<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
-	
+
 			<ui5-side-navigation-item slot="fixedItems" text="Usefull Links" icon="chain-link"></ui5-side-navigation-item>
 			<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
 		</ui5-side-navigation>
 
 		<ui5-input id="counter" value="0"></ui5-input>
 	</div>
-	
 
-	
+
+
 
 	<script>
 		var sideNavigation = document.querySelector("ui5-side-navigation"),

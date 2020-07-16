@@ -4,8 +4,8 @@
     position: relative;
 }
 
-:host([_minimal]:not([hidden])) {
-    --_ui5-tree-toggle-box-width: 0rem;
+:host([_minimal]) .ui5-li-tree-toggle-box {
+    width: 0;
 }
 
 :host([_minimal]) .ui5-li-icon {

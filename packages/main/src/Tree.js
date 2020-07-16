@@ -79,7 +79,7 @@ const metadata = {
 		},
 
 		/**
-		 * Shows the toggle button at the end, rather than at the beginning of the item
+		 * Shows the toggle button at the end, rather than at the beginning of the items
 		 *
 		 * @protected
 		 * @since 1.0.0-rc.8
@@ -89,8 +89,7 @@ const metadata = {
 		},
 
 		/**
-		 * Represents the tree in a very minimal state - only top level nodes are shown (and just the icons),
-		 * in addition nodes with children have a small arrow
+		 * Represents the tree in a very minimal state - icons only with no text and no toggle buttons
 		 *
 		 * @protected
 		 * @since 1.0.0-rc.8
