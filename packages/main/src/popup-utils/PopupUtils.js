@@ -24,14 +24,14 @@ const isNodeContainedWithin = (parent, child) => {
 	let currentNode = parent;
 
 	if (currentNode.shadowRoot) {
-		currentNode = Array.from(currentNode.shadowRoot.children).find(n => n.tagName !== "STYLE");
+		currentNode = Array.from(currentNode.shadowRoot.children).find(n => n.localName !== "style");
 	}
 
 	if (currentNode === child) {
 		return true;
 	}
 
-	const childNodes = currentNode.tagName === "SLOT" ? currentNode.assignedNodes() : currentNode.children;
+	const childNodes = currentNode.localName === "slot" ? currentNode.assignedNodes() : currentNode.children;
 
 	if (childNodes) {
 		return Array.from(childNodes).some(n => isNodeContainedWithin(n, child));
