@@ -32,7 +32,7 @@ const metadata = {
  * For the <code>ui5-side-navigation-sub-item</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/SideNavigationSubItem.js";</code>
+ * <code>import @ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code>
  *
  * @constructor
  * @author SAP SE

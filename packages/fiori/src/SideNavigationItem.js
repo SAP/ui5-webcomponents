@@ -23,7 +23,7 @@ const metadata = {
 		 *
 		 * @public
 		 * @type {string}
-		 * @defaultvalue false
+		 * @defaultvalue ""
 		 */
 		icon: {
 			type: String,
@@ -80,7 +80,7 @@ const metadata = {
  * For the <code>ui5-side-navigation-item</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/SideNavigationItem.js";</code>
+ * <code>import @ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code>
  *
  * @constructor
  * @author SAP SE

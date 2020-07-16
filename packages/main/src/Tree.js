@@ -16,7 +16,6 @@ import TreeCss from "./generated/themes/Tree.css.js";
  */
 const metadata = {
 	tag: "ui5-tree",
-	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
 		/**
 		 * Defines the mode of the <code>ui5-tree</code>. Since the tree uses a <code>ui5-list</code> to display its structure,
@@ -79,6 +78,7 @@ const metadata = {
 			multiple: true,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
 
 		/**
@@ -318,14 +318,14 @@ class Tree extends UI5Element {
 		});
 	}
 
-	_clearSelectedItems() {
-		return this.list.deselectSelectedItems();
-	}
-
-	_getRealItemDomRef(item) {
-		const position = this.items.indexOf(item);
-
-		return this.getDomRef().querySelectorAll("ui5-li-tree")[position];
+	/**
+	 * Returns the corresponding list item for a given tree item
+	 *
+	 * @param item The tree item
+	 * @protected
+	 */
+	_getListItemForTreeItem(item) {
+		return this.list.items.find(listItem => listItem.treeItem === item);
 	}
 
 	/**

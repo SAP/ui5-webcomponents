@@ -130,11 +130,13 @@ class SideNavigation extends UI5Element {
 
 		const currentTree = this._itemsTree === event.target ? this._itemsTree : this._fixedItemsTree; // Gets the tree which must not have selected items
 		const otherTree = this._fixedItemsTree === event.target ? this._itemsTree : this._fixedItemsTree; // Gets the tree which must not have selected items
-		otherTree._clearSelectedItems();
+		otherTree.walk(current => {
+			current.selected = false;
+		});
 
 		if (this.collapsed && item.items.length) {
 			this._popoverContent = [item, ...item.items];
-			this.openPicker(currentTree._getRealItemDomRef(treeItem));
+			this.openPicker(currentTree._getListItemForTreeItem(treeItem));
 		} else {
 			this.fireSelectionChange(item);
 		}
@@ -157,7 +159,6 @@ class SideNavigation extends UI5Element {
 
 	async openPicker(opener) {
 		const responsivePopover = await this.getPicker();
-
 		responsivePopover.open(opener);
 	}
 
