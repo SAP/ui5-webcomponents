@@ -64,18 +64,18 @@ const metadata = {
 		},
 
 		/**
-		 * @private
+		 * @protected
 		 * @since 1.0.0-rc.8
 		 */
-		showToggleButtonEnd: {
+		_toggleButtonEnd: {
 			type: Boolean,
 		},
 
 		/**
-		 * @private
+		 * @protected
 		 * @since 1.0.0-rc.8
 		 */
-		_collapsed: {
+		_minimal: {
 			type: Boolean,
 		},
 
@@ -91,7 +91,6 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			propertyName: "items",
 			type: Node,
 		},
 	},
@@ -192,15 +191,15 @@ class TreeListItem extends ListItem {
 	}
 
 	get _showToggleButtonBeginning() {
-		return this.showToggleButton && !this._collapsed && !this.showToggleButtonEnd;
+		return this.showToggleButton && !this._minimal && !this._toggleButtonEnd;
 	}
 
 	get _showToggleButtonEnd() {
-		return this.showToggleButton && !this._collapsed && this.showToggleButtonEnd;
+		return this.showToggleButton && !this._minimal && this._toggleButtonEnd;
 	}
 
 	get showTitle() {
-		return this.textContent.length && !this._collapsed;
+		return this.textContent.length && !this._minimal;
 	}
 
 	get _accInfo() {

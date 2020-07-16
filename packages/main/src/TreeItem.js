@@ -66,22 +66,6 @@ const metadata = {
 		icon: {
 			type: String,
 		},
-
-		/**
-		 * @private
-		 * @since 1.0.0-rc.8
-		 */
-		showToggleButtonEnd: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 * @since 1.0.0-rc.8
-		 */
-		_collapsed: {
-			type: Boolean,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
 

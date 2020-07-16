@@ -4,23 +4,23 @@
     position: relative;
 }
 
-:host([_collapsed]:not([hidden])) {
+:host([_minimal]:not([hidden])) {
     --_ui5-tree-toggle-box-width: 0rem;
 }
 
-:host([_collapsed]) .ui5-li-icon {
+:host([_minimal]) .ui5-li-icon {
     padding: 0;
 }
 
-:host([_collapsed]) .ui5-li-content {
+:host([_minimal]) .ui5-li-content {
     justify-content: center;
 }
 
-:host([_collapsed]) .ui5-li-root-tree {
+:host([_minimal]) .ui5-li-root-tree {
     padding: 0;
 }
 
-:host([_collapsed][show-toggle-button])::after {
+:host([_minimal][show-toggle-button])::after {
     content: "";
     width: 0;
     height: 0;
@@ -40,11 +40,11 @@
     border-bottom: none;
 }
 
-:host([show-toggle-button-end][selected]:not([level="1"])){
+:host([_toggle-button-end][selected]:not([level="1"])){
     border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
-:host([show-toggle-button-end]:not([selected])) .ui5-li-root-tree:hover {
+:host([_toggle-button-end]:not([selected])) .ui5-li-root-tree:hover {
     background: var(--sapList_Hover_Background);
     cursor: pointer;
 }
@@ -53,11 +53,11 @@
     background: var(--sapList_AlternatingBackground);
 }
 
-:host([show-toggle-button-end]:not([level="1"])) .ui5-li-root-tree {
+:host([_toggle-button-end]:not([level="1"])) .ui5-li-root-tree {
     background: var(--ui5-listitem-background-color);
 }
 
-:host([show-toggle-button-end][selected]:not([level="1"])) .ui5-li-root-tree {
+:host([_toggle-button-end][selected]:not([level="1"])) .ui5-li-root-tree {
     background: var(--sapList_SelectionBackgroundColor);
 }
 

@@ -3,24 +3,23 @@
         <ui5-tree
             id="ui5-sn-items-tree"
             mode="SingleSelect"
+            ?_minimal="{{collapsed}}"
+            _toggle-button-end
             @ui5-item-click="{{handleTreeItemClick}}"
         >
             {{#each items}}
                 <ui5-tree-item
                     icon="{{this.icon}}"
                     .associatedItem="{{this}}"
-                    show-toggle-button-end
                     text="{{this.text}}"
                     ?has-children="{{this.items.length}}"
                     ?expanded="{{this.expanded}}"
-                    ?_collapsed="{{../collapsed}}"
                     ?selected="{{this.selected}}"
                 >
                     {{#unless ../collapsed}}
                         {{#each this.items}}
                             <ui5-tree-item
                                 .associatedItem="{{this}}"
-                                show-toggle-button-end
                                 text="{{this.text}}"
                                 index="{{this.index}}"
                                 ?selected="{{this.selected}}"
@@ -41,17 +40,17 @@
             <ui5-tree
                 id="ui5-sn-fixed-items-tree"
                 mode="SingleSelect"
+                ?_minimal="{{collapsed}}"
+                _toggle-button-end
                 @ui5-item-click="{{handleTreeItemClick}}"
             >
                 {{#each fixedItems}}
                     <ui5-tree-item
                         icon="{{this.icon}}"
                         .associatedItem="{{this}}"
-                        show-toggle-button-end
                         text="{{this.text}}"
                         index="{{this.index}}"
                         ?expanded="{{this.expanded}}"
-                        ?_collapsed="{{../collapsed}}"
                         ?selected="{{this.selected}}"
                     ></ui5-tree-item>
                 {{/each}}

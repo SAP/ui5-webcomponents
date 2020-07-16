@@ -77,6 +77,27 @@ const metadata = {
 			type: Object,
 			multiple: true,
 		},
+
+		/**
+		 * Shows the toggle button at the end, rather than at the beginning of the item
+		 *
+		 * @protected
+		 * @since 1.0.0-rc.8
+		 */
+		_toggleButtonEnd: {
+			type: Boolean,
+		},
+
+		/**
+		 * Represents the tree in a very minimal state - only top level nodes are shown (and just the icons),
+		 * in addition nodes with children have a small arrow
+		 *
+		 * @protected
+		 * @since 1.0.0-rc.8
+		 */
+		_minimal: {
+			type: Boolean,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
