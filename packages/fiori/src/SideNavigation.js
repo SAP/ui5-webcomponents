@@ -31,7 +31,11 @@ const metadata = {
 		 */
 		_popoverContent: {
 			type: Object,
-			multiple: true,
+		},
+
+		_selectedItem: {
+			type: Object,
+			defaultValue: null,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
@@ -124,21 +128,78 @@ class SideNavigation extends UI5Element {
 		]);
 	}
 
+	onBeforeRendering() {
+		if (!this._selectedItem) {
+			this._autoSelectItem();
+		}
+		const item = this._selectedItem;
+
+		if (this.collapsed) {
+			this.items.forEach(current => {
+				current.selected = (current === item) || current.items.includes(item);
+
+				current.items.forEach(currentSubitem => {
+					currentSubitem.selected = currentSubitem === item;
+				});
+			});
+		} else {
+			this.items.forEach(current => {
+				current.selected = current === item;
+
+				current.items.forEach(currentSubitem => {
+					currentSubitem.selected = currentSubitem === item;
+				});
+			});
+		}
+
+		this.fixedItems.forEach(current => {
+			current.selected = current === item;
+		});
+	}
+
+	_autoSelectItem() {
+		this.items.forEach(current => {
+			if (current.selected) {
+				this._selectedItem = current;
+			}
+
+			current.items.forEach(currentSubitem => {
+				if (currentSubitem.selected) {
+					this._selectedItem = currentSubitem;
+				}
+			});
+		});
+
+		this.fixedItems.forEach(current => {
+			if (current.selected) {
+				this._selectedItem = current;
+			}
+		});
+	}
+
+	_setSelectedItem(item) {
+		this._selectedItem = item; // set the current item as the selected item for the side navigation
+		this.fireEvent("selection-change", { item });
+	}
+
+	_buildPopoverContent(item) {
+		this._popoverContent = {
+			mainItem: item,
+			mainItemSelected: item.selected && !item.items.some(subItem => subItem.selected),
+			subItems: item.items,
+		};
+	}
+
 	handleTreeItemClick(event) {
 		const treeItem = event.detail.item;
 		const item = treeItem.associatedItem;
 
-		const currentTree = this._itemsTree === event.target ? this._itemsTree : this._fixedItemsTree; // Gets the tree which must not have selected items
-		const otherTree = this._fixedItemsTree === event.target ? this._itemsTree : this._fixedItemsTree; // Gets the tree which must not have selected items
-		otherTree.walk(current => {
-			current.selected = false;
-		});
-
 		if (this.collapsed && item.items.length) {
-			this._popoverContent = [item, ...item.items];
+			this._buildPopoverContent(item);
+			const currentTree = this._itemsTree === event.target ? this._itemsTree : this._fixedItemsTree;
 			this.openPicker(currentTree._getListItemForTreeItem(treeItem));
 		} else {
-			this.fireSelectionChange(item);
+			this._setSelectedItem(item);
 		}
 	}
 
@@ -146,11 +207,8 @@ class SideNavigation extends UI5Element {
 		const listItem = event.detail.item;
 		const item = listItem.associatedItem;
 
-		this.fireSelectionChange(item);
-	}
-
-	fireSelectionChange(item) {
-		this.fireEvent("selection-change", { item });
+		this._setSelectedItem(item);
+		this.closePicker();
 	}
 
 	async getPicker() {
@@ -161,6 +219,12 @@ class SideNavigation extends UI5Element {
 		const responsivePopover = await this.getPicker();
 		responsivePopover.open(opener);
 	}
+
+	async closePicker(opener) {
+		const responsivePopover = await this.getPicker();
+		responsivePopover.close();
+	}
+
 
 	get _itemsTree() {
 		return this.getDomRef().querySelector("#ui5-sn-items-tree");

@@ -16,6 +16,17 @@ const metadata = {
 		text: {
 			type: String,
 		},
+
+		/**
+		 * Defines whether the subitem is selected
+		 *
+		 * @public
+		 * @type {boolean}
+		 * @defaultvalue false
+		 */
+		selected: {
+			type: Boolean,
+		},
 	},
 };
 

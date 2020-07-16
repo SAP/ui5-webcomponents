@@ -41,7 +41,8 @@ const metadata = {
 		},
 
 		/**
-		 * True only for the currently selected item.
+		 * Defines whether the subitem is selected
+		 *
 		 * @public
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -54,7 +55,7 @@ const metadata = {
 		/**
 		 * If you wish to nest menus, you can pass inner menu items to the default slot.
 		 *
- 		 * @type {HTMLElement[]}
+		 * @type {HTMLElement[]}
 		 * @public
 		 * @slot
 		 */
