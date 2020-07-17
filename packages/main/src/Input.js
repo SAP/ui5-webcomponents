@@ -628,7 +628,7 @@ class Input extends UI5Element {
 		}
 
 		if (this.popover) {
-			this.popover.close(false, false, true);
+			this.popover.close();
 		}
 
 		this.previousValue = "";
@@ -898,13 +898,19 @@ class Input extends UI5Element {
 	onItemMouseOver(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion && suggestion.fireEvent("mouseover", { targetRef: item });
+		suggestion && suggestion.fireEvent("mouseover", {
+			item: suggestion,
+			targetRef: item,
+		});
 	}
 
 	onItemMouseOut(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion && suggestion.fireEvent("mouseout", { targetRef: item });
+		suggestion && suggestion.fireEvent("mouseout", {
+			item: suggestion,
+			targetRef: item,
+		});
 	}
 
 	onItemSelected(item, keyboardUsed) {

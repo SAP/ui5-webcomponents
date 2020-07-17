@@ -10,6 +10,34 @@ const getFocusedElement = () => {
 	return (element && typeof element.focus === "function") ? element : null;
 };
 
+const isFocusedElementWithinNode = node => {
+	const fe = getFocusedElement();
+
+	if (fe) {
+		return isNodeContainedWithin(node, fe);
+	}
+
+	return false;
+};
+
+const isNodeContainedWithin = (parent, child) => {
+	let currentNode = parent;
+
+	if (currentNode.shadowRoot) {
+		currentNode = Array.from(currentNode.shadowRoot.children).find(n => n.localName !== "style");
+	}
+
+	if (currentNode === child) {
+		return true;
+	}
+
+	const childNodes = currentNode.localName === "slot" ? currentNode.assignedNodes() : currentNode.children;
+
+	if (childNodes) {
+		return Array.from(childNodes).some(n => isNodeContainedWithin(n, child));
+	}
+};
+
 const isPointInRect = (x, y, rect) => {
 	return x >= rect.left && x <= rect.right
 		&& y >= rect.top && y <= rect.bottom;
@@ -52,4 +80,5 @@ export {
 	isClickInRect,
 	getClosedPopupParent,
 	getNextZIndex,
+	isFocusedElementWithinNode,
 };
