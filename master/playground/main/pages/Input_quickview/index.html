@@ -22,7 +22,14 @@
 		<li>navigate via the arrows to see quick view</li>
 		<li>press [ctrl + shift + 1] to enter the quick view</li>
 	</ul>
-	<ui5-input id="inputPreview" show-suggestions style="width: 200px; margin-top: 50px">
+
+	<div style="display: flex; align-items: center">
+		<ui5-label>focusable element: </ui5-label><ui5-button>before</ui5-button>
+	</div>
+	<br>
+	<br>
+
+	<ui5-input id="inputPreview" show-suggestions style="width: 200px;">
 		<ui5-suggestion-item class="suggestionItem" text="Laptop Lenovo"></ui5-suggestion-item>
 		<ui5-suggestion-item class="suggestionItem" text="HP Monitor 24"></ui5-suggestion-item>
 		<ui5-suggestion-item class="suggestionItem" text="IPhone 6s"></ui5-suggestion-item>
@@ -30,7 +37,8 @@
 		<ui5-suggestion-item class="suggestionItem" text="IPad Air"></ui5-suggestion-item>
 	</ui5-input>
 
-	<ui5-popover id="quickViewCard" no-arrow placement-type="Right" height="500px">
+	<ui5-popover id="quickViewCard" no-arrow placement-type="Right" height="500px" prevent-focus-restore>
+		<button>hello</button>
 		<ui5-input id="searchInput" style="width: 300px">
 			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
 		</ui5-input>
@@ -46,23 +54,43 @@
 		</ui5-list>
 	</ui5-popover>
 
+	<br>
+	<br>
+	<div style="display: flex; align-items: center">
+		<ui5-label>focusable element: </ui5-label><ui5-button>after</ui5-button>
+	</div>
 	<script>
 		var focusQuickView = false;
 
 		/* 
-		 * Open quick view on suggestion-item-preview
+		 * Open quickviewCard on suggestion-item-preview
 		 */
 		inputPreview.addEventListener("suggestion-item-preview", function (event) {
 			const targetRef = event.detail.targetRef;
 
 			quickViewCard.close();
-			quickViewCard.openBy(targetRef, true /* preventInitialFocus */, false /* closeWithOpener */); 
+			quickViewCard.openBy(targetRef, true /* preventInitialFocus */); 
 		});
 
 		/* 
-		 * Focus quick view on [ctrl + shift + 1]
+		 * Toggle quickviewCard on mouseover/mouseout
 		 */
-		inputPreview.addEventListener("keyup", async function (event) {
+		 [].slice.call(document.querySelectorAll(".suggestionItem")).forEach(function(el) {
+			el.addEventListener("mouseover", function (event) {
+				const targetRef = event.detail.targetRef;
+
+				quickViewCard.close();
+				quickViewCard.openBy(targetRef, true /* preventInitialFocus */);
+			});
+
+			el.addEventListener("mouseout", function (event) {
+			});
+		});
+
+		/* 
+		 * Focus quickviewCard on [ctrl + shift + 1]
+		 */
+		inputPreview.addEventListener("keyup", async event => {
 			const combination = event.key === "1" && event.ctrlKey && event.shiftKey;
 
 			if (combination) {
@@ -73,23 +101,15 @@
 		});
 
 		/* 
-		 * Toggle quick view on mouseover/mouseout
+		 * Restore the focus to the input on ESC
 		 */
-		[].slice.call(document.querySelectorAll(".suggestionItem")).forEach(function(el) {
-			el.addEventListener("mouseover", function (event) {
-				const targetRef = event.detail.targetRef;
+		quickViewCard.addEventListener("before-close", async event => {
+			const esc = event.detail.escPressed;
 
-				quickViewCard.close();
-				quickViewCard.openBy(targetRef, true /* preventInitialFocus */, false /* closeWithOpener */);
-			});
-
-			el.addEventListener("mouseout", function (event) {
-				// if (!focusQuickView) {
-				// 	quickViewCard.close(false, false, true);
-				// }
-
-				// focusQuickView = false;
-			});
+			if (esc) {
+				await RenderScheduler.whenFinished();
+				inputPreview.focus();
+			}
 		});
 	</script>
 </body>

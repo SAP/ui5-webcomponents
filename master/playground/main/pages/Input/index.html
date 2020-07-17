@@ -426,7 +426,7 @@
 		inputPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
 			var item = event.detail.targetRef;
 			quickViewCard.close();
-			quickViewCard.openBy(item, true /* preventInitialFocus */, false /* closeWithOpener */);
+			quickViewCard.openBy(item, true /* preventInitialFocus */);
 			
 			// log info
 			inputItemPreviewRes.value = item.textContent;
@@ -453,7 +453,7 @@
 			el.addEventListener("mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
 				quickViewCard.close();
-				quickViewCard.openBy(targetRef, true /* preventInitialFocus */, false /* closeWithOpener */);
+				quickViewCard.openBy(targetRef, true /* preventInitialFocus */);
 
 				// log info
 				mouseoverResult.value = targetRef.textContent;
@@ -461,15 +461,6 @@
 			});
 
 			el.addEventListener("mouseout", function (event) {
-				// if (!focusQuickView) {
-				// 	quickViewCard.close(false, false, true);
-				// }
-
-				// focusQuickView = false;
-
-				// // log info
-				// mouseoutResult.value = event.detail.targetRef.textContent;
-				// console.log("mouseout");
 			});
 		});
 
@@ -477,12 +468,13 @@
 			console.log("scroll", { scrolltop: event.detail.scrollTop });
 		});
 
-		inputPreview.addEventListener("focusin", function (event) {
-			console.log("focusin");
-		});
+		quickViewCard.addEventListener("ui5-before-close", async event => {
+			const esc = event.detail.escPressed;
 
-		inputPreview.addEventListener("focusout", function (event) {
-			console.log("focusout");
+			if (esc) {
+				await RenderScheduler.whenFinished();
+				inputPreview.focus();
+			}
 		});
 
 		scrollInput.addEventListener("ui5-suggestion-scroll", function (event) {
