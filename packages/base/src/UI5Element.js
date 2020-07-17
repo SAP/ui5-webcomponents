@@ -58,6 +58,7 @@ class UI5Element extends HTMLElement {
 
 		this._monitoredChildProps = new Map();
 		this._firePropertyChange = false;
+		this.shouldInvalidateParent = false;
 	}
 
 	/**
@@ -265,6 +266,10 @@ class UI5Element extends HTMLElement {
 
 			if (child.isUI5Element && slotData.listenFor) {
 				this._attachChildPropertyUpdated(child, slotData.listenFor);
+			}
+
+			if (child.isUI5Element && slotData.invalidateParent) {
+				child.shouldInvalidateParent = slotData.invalidateParent;
 			}
 
 			if (isSlot(child)) {
@@ -496,6 +501,10 @@ class UI5Element extends HTMLElement {
 			this._upToDate = false;
 			// console.log("INVAL", this, ...arguments);
 			RenderScheduler.renderDeferred(this);
+		}
+
+		if (this.shouldInvalidateParent) {
+			this.parentNode._invalidate();
 		}
 	}
 
