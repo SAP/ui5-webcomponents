@@ -58,7 +58,7 @@ class UI5Element extends HTMLElement {
 
 		this._monitoredChildProps = new Map();
 		this._firePropertyChange = false;
-		this.shouldInvalidateParent = false;
+		this._shouldInvalidateParent = false;
 	}
 
 	/**
@@ -269,7 +269,7 @@ class UI5Element extends HTMLElement {
 			}
 
 			if (child.isUI5Element && slotData.invalidateParent) {
-				child.shouldInvalidateParent = slotData.invalidateParent;
+				child._shouldInvalidateParent = true;
 			}
 
 			if (isSlot(child)) {
@@ -310,6 +310,10 @@ class UI5Element extends HTMLElement {
 		children.forEach(child => {
 			if (child && child.isUI5Element) {
 				this._detachChildPropertyUpdated(child);
+			}
+
+			if (child.isUI5Element && slotData.invalidateParent) {
+				child._shouldInvalidateParent = false;
 			}
 
 			if (isSlot(child)) {
@@ -501,10 +505,10 @@ class UI5Element extends HTMLElement {
 			this._upToDate = false;
 			// console.log("INVAL", this, ...arguments);
 			RenderScheduler.renderDeferred(this);
-		}
 
-		if (this.shouldInvalidateParent) {
-			this.parentNode._invalidate();
+			if (this._shouldInvalidateParent) {
+				this.parentNode._invalidate();
+			}
 		}
 	}
 

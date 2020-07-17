@@ -113,7 +113,7 @@ Setting | Type | Default | Description
 `individualSlots` | `Boolean` | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
 `propertyName` | `String` | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
 `listenFor` | `Object` | N/A | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
-`invalidateParent` | `Boolean` | false | **Experimental, do not use.** Defines whether every invalidation of a slot should trigger invalidation of the parent control.
+`invalidateParent` | `Boolean` | false | **Experimental, do not use.** Defines whether every invalidation of a UI5 Web Component in this slot should trigger an invalidation of the parent UI5 Web Component.
 The `type` setting is required.
 
 Notes:
