@@ -6,6 +6,21 @@ import SuggestionListItemTemplate from "./generated/templates/SuggestionListItem
  */
 const metadata = {
 	tag: "ui5-li-suggestion-item",
+	managedSlots: true,
+	slots: {
+		/**
+		 * Defines a description that can contain HTML.
+		 * <b>Note:</b> If not specified, the <code>description</code> property will be used.
+		 * <br>
+		 * @type {HTMLElement}
+		 * @since 1.0.0-rc.8
+		 * @slot
+		 * @public
+		 */
+		richDescription: {
+			type: HTMLElement,
+		},
+	},
 };
 
 /**
@@ -25,6 +40,10 @@ class SuggestionListItem extends StandardListItem {
 
 	static get template() {
 		return SuggestionListItemTemplate;
+	}
+
+	get hasDescription() {
+		return this.richDescription.length || this.description;
 	}
 }
 

@@ -391,7 +391,8 @@ class Suggestions {
 	}
 
 	sanitizeText(text) {
-		return text && text.replace("<", "&lt");
+		const textEscaped = text && text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+		return textEscaped && textEscaped.replace("<", "&lt");
 	}
 }
 

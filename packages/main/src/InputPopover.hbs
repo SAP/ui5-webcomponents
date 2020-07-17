@@ -95,13 +95,12 @@
 				<ui5-li-suggestion-item
 					image="{{this.image}}"
 					icon="{{this.icon}}"
-					description="{{this.description}}"
 					info="{{this.info}}"
 					type="{{this.type}}"
 					info-state="{{this.infoState}}"
 					@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
 					data-ui5-key="{{key}}"
-				>{{{ this.text }}}</ui5-li-suggestion-item>
+				>{{{ this.text }}}<span slot="richDescription">{{{ this.description }}}</span></ui5-li-suggestion-item>
 			{{/if}}
 		{{/each}}
 	</ui5-list>
