@@ -26,7 +26,8 @@
 		<ui5-input id="myInput"
 			style="width: 500px"
 			show-suggestions
-			placeholder="Search for a country ...">
+			placeholder="Search for a country ..."
+			highlight>
 		</ui5-input>
 	</div>
 
@@ -102,6 +103,14 @@
 		<ui5-suggestion-item group text="Themes"></ui5-suggestion-item>
 		<ui5-suggestion-item type="Inactive" text="Inactive Quartz"></ui5-suggestion-item>
 		<ui5-suggestion-item type="Inactive" text="Inactive HCB"></ui5-suggestion-item>
+	</ui5-input>
+
+	<h3>Input suggestions with highlighing</h3>
+	<ui5-input id="myInputHighlighted" highlight show-suggestions style="width: 100%">
+		<ui5-suggestion-item text="Adam D" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Aanya Sing" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Allen K" description="Technical Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Alex" description="Technical Support"></ui5-suggestion-item>
 	</ui5-input>
 
 	<h3> Input disabled</h3>
@@ -305,6 +314,13 @@
 	<ui5-label id="enterNameLabel">Enter name: </ui5-label>
 	<ui5-input aria-labelledby="enterNameLabel"></ui5-input>
 
+	<h3>Input suggestions with highlighing and XSS test</h3>
+	<ui5-input highlight show-suggestions style="width: 100%">
+		<ui5-suggestion-item text="<script>alert('XSS')</script>" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Aanya Sing" description="<b onmouseover=alert('XSS')></b>">
+		</ui5-suggestion-item>
+	</ui5-input>
+
 	<script>
 		var sap_database_entries = [{ key: "A", text: "A" }, { key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "B", text: "B" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "C", text: "C" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "L", text: "L" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "P", text: "P" }, { key: "Prt", text: "Portugal" }, { key: "S", text: "S" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Sey", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
 
@@ -340,15 +356,15 @@
 			}
 
 			suggestionItems.forEach(function(item, idx) {
-				var li = document.createElement("ui5-suggestion-item");
-				li.id = item.key;
-				li.icon = "world";
-				li.info = "explore";
-				li.group = item.text.length === 1;
-				li.infoState = "Success";
-				li.description = "travel the world";
-				li.text = item.text;
-				input.appendChild(li);
+				var suggestion = document.createElement("ui5-suggestion-item");
+				suggestion.id = item.key;
+				suggestion.icon = "world";
+				suggestion.info = "explore";
+				suggestion.group = item.text.length === 1;
+				suggestion.infoState = "Success";
+				suggestion.description = "travel the world";
+				suggestion.text = item.text
+				input.appendChild(suggestion);
 			});
 
 			labelLiveChange.innerHTML = "Event [input] :: " + value;

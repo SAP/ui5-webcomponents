@@ -1,0 +1,25 @@
+{{>include "./StandardListItem.hbs"}}
+
+{{#*inline "listItemContent"}}
+	<div class="ui5-li-title-wrapper">
+		{{#if hasTitle}}
+			<span part="title" class="ui5-li-title"><slot></slot></span>
+		{{/if}}
+		{{#if hasDescription}}
+			<span part="description" class="ui5-li-desc">
+				{{#if richDescription.length}}
+					<slot name="richDescription"></slot>
+				{{else}}
+					{{description}}
+				{{/if}}
+			</span>
+		{{/if}}
+		{{#unless typeActive}}
+			<span class="ui5-hidden-text">{{type}}</span>
+		{{/unless}}
+	</div>
+	{{#if info}}
+		<span part="info" class="ui5-li-info">{{info}}</span>
+	{{/if}}
+{{/inline}}
+

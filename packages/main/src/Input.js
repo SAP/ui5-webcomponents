@@ -135,6 +135,21 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if characters within the suggestions are to be highlighted
+		 * in case the input value matches parts of the suggestions text.
+		 * <br><br>
+		 * <b>Note:</b> takes effect when <code>showSuggestions</code> is set to <code>true</code>
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @sicne 1.0.0-rc.8
+		 */
+		highlight: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines a short hint intended to aid the user with data entry when the
 		 * <code>ui5-input</code> has no value.
 		 * @type {string}
@@ -486,6 +501,9 @@ class Input extends UI5Element {
 		// Indicates, if the component is rendering for first time.
 		this.firstRendering = true;
 
+		// The value that should be highlited.
+		this.highlightValue = "";
+
 		// all sementic events
 		this.EVENT_SUBMIT = "submit";
 		this.EVENT_CHANGE = "change";
@@ -515,7 +533,7 @@ class Input extends UI5Element {
 	onBeforeRendering() {
 		if (this.showSuggestions) {
 			this.enableSuggestions();
-			this.suggestionsTexts = this.Suggestions.defaultSlotProperties();
+			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
 		}
 
 		const FormSupport = getFeature("FormSupport");
@@ -741,12 +759,13 @@ class Input extends UI5Element {
 
 	enableSuggestions() {
 		if (this.Suggestions) {
+			this.Suggestions.highlight = this.highlight;
 			return;
 		}
 
 		const Suggestions = getFeature("InputSuggestions");
 		if (Suggestions) {
-			this.Suggestions = new Suggestions(this, "suggestionItems");
+			this.Suggestions = new Suggestions(this, "suggestionItems", this.highlight);
 		} else {
 			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
@@ -781,9 +800,8 @@ class Input extends UI5Element {
 
 	previewSuggestion(item) {
 		const emptyValue = item.type === "Inactive" || item.group;
-
 		this.valueBeforeItemSelection = this.value;
-		this.updateValueOnPreview(emptyValue ? "" : item.textContent);
+		this.updateValueOnPreview(emptyValue ? "" : item.effectiveTitle);
 		this.announceSelectedItem();
 		this._previewItem = item;
 	}
@@ -822,6 +840,7 @@ class Input extends UI5Element {
 		const isUserInput = action === this.ACTION_USER_INPUT;
 
 		this.value = inputValue;
+		this.highlightValue = inputValue;
 
 		if (isUserInput) { // input
 			this.fireEvent(this.EVENT_INPUT);
