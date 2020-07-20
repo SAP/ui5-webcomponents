@@ -1,21 +1,5 @@
-commit 45cdcc2be96ca2a16beacd1f6ac0811fb747fbbc
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jul 17 16:18:24 2020 +0300
+commit 104abcc3e18fa408f29fc151ff0870a07ea83989
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Jul 20 10:12:42 2020 +0300
 
-    refactor(ui5-popover): Keep popup open if focus is inside (#1937)
-    
-    Another PR to address the "QuickCardView" topic. The change keeps the Popover open, without an opener, if the focus is inside that popover.
-    
-    add prevent-focus-restore protected property in addition to the preventFocusRestore param of Popup.prototype.close method, because the quickCardView might close due to user interaction - click, TAB, ESC.
-    remove the recently added _closeWithOpener param, as now the popover without an opener would remain open if the focus is inside it and will be closed otherwise.
-    QuickCardView Interaction (test it on http://localhost:8080/test-resources/pages/Input_quickview.html)
-    
-    Once opened, both Suggestions Popover and QuickCardView will close if:
-    neither the SearchField nor the QuickCardView has the focus, because the user clicks somewhere outside or
-    the user uses the TAB | SHIFT + TAB and the focus is somewhere else
-    
-    Once opened, the QuickCardView remains open and Suggestions Popover closes if:
-    the focus moves to the QuickCardView, because the Popover.prototype.applyFocus method is called,
-    the user clicks inside the QuickCardView or the user uses the TAB | SHIFT + TAB key and the focus is goes inside the QuickCardView
-    
-    Closes: #1768
+    feat(framework): implement invalidateParent (#1964)
