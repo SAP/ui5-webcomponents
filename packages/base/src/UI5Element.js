@@ -310,9 +310,8 @@ class UI5Element extends HTMLElement {
 		children.forEach(child => {
 			if (child && child.isUI5Element) {
 				this._detachChildPropertyUpdated(child);
+				child._shouldInvalidateParent = false;
 			}
-
-			child._shouldInvalidateParent = false;
 
 			if (isSlot(child)) {
 				this._detachSlotChange(child);
