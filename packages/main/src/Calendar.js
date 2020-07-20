@@ -82,6 +82,22 @@ const metadata = {
 			type: String,
 		},
 
+		/**
+		 * Defines the visibility of the week numbers column.
+		 * <br><br>
+		 *
+		 * <b>Note:<b> For calendars other than Gregorian,
+		 * the week numbers are not displayed regardless of what is set.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		hideWeekNumbers: {
+			type: Boolean,
+		},
+
 		_header: {
 			type: Object,
 		},

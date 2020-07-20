@@ -628,7 +628,7 @@ class Input extends UI5Element {
 		}
 
 		if (this.popover) {
-			this.popover.close(false, false, true);
+			this.popover.close();
 		}
 
 		this.previousValue = "";
@@ -694,7 +694,7 @@ class Input extends UI5Element {
 	}
 
 	_afterClosePopover() {
-		this._announceSelectedItem();
+		this.announceSelectedItem();
 
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
@@ -780,16 +780,20 @@ class Input extends UI5Element {
 	}
 
 	previewSuggestion(item) {
+		const emptyValue = item.type === "Inactive" || item.group;
+
 		this.valueBeforeItemSelection = this.value;
-
-		if (item.type === "Inactive" || item.group) {
-			this.value = "";
-		} else {
-			this.value = item.textContent;
-		}
-
-		this._announceSelectedItem();
+		this.updateValueOnPreview(emptyValue ? "" : item.textContent);
+		this.announceSelectedItem();
 		this._previewItem = item;
+	}
+
+	/**
+	 * Updates the input value on item preview.
+	 * @param {itemValue} itemValue The value of the item that is on preview
+	 */
+	updateValueOnPreview(itemValue) {
+		this.value = itemValue;
 	}
 
 	/**
@@ -894,13 +898,19 @@ class Input extends UI5Element {
 	onItemMouseOver(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion && suggestion.fireEvent("mouseover", { targetRef: item });
+		suggestion && suggestion.fireEvent("mouseover", {
+			item: suggestion,
+			targetRef: item,
+		});
 	}
 
 	onItemMouseOut(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion && suggestion.fireEvent("mouseout", { targetRef: item });
+		suggestion && suggestion.fireEvent("mouseout", {
+			item: suggestion,
+			targetRef: item,
+		});
 	}
 
 	onItemSelected(item, keyboardUsed) {
@@ -930,7 +940,7 @@ class Input extends UI5Element {
 		};
 	}
 
-	_announceSelectedItem() {
+	announceSelectedItem() {
 		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
 
 		if (this.Suggestions && this.Suggestions._isItemOnTarget()) {
