@@ -20,6 +20,9 @@ const metadata = {
 		richDescription: {
 			type: HTMLElement,
 		},
+		"default": {
+			propertyName: "title",
+		},
 	},
 };
 
@@ -40,6 +43,15 @@ class SuggestionListItem extends StandardListItem {
 
 	static get template() {
 		return SuggestionListItemTemplate;
+	}
+
+	onBeforeRendering(...params) {
+		super.onBeforeRendering(...params);
+		this.hasTitle = this.title.length;
+	}
+
+	get effectiveTitle() {
+		return this.title.map(el => el.textContent).join("");
 	}
 
 	get hasDescription() {

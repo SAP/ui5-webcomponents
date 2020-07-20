@@ -100,7 +100,12 @@
 					info-state="{{this.infoState}}"
 					@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
 					data-ui5-key="{{key}}"
-				>{{{ this.text }}}<span slot="richDescription">{{{ this.description }}}</span></ui5-li-suggestion-item>
+				>
+					{{{ this.text }}}
+					{{#if this.description}}
+						<span slot="richDescription">{{{ this.description }}}</span>
+					{{/if}}
+				</ui5-li-suggestion-item>
 			{{/if}}
 		{{/each}}
 	</ui5-list>

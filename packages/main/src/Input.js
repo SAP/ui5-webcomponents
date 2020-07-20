@@ -804,7 +804,7 @@ class Input extends UI5Element {
 		if (item.type === "Inactive" || item.group) {
 			this.value = "";
 		} else {
-			this.value = item.textContent;
+			this.value = item.effectiveTitle;
 		}
 
 		this._announceSelectedItem();
