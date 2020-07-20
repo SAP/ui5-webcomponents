@@ -1,5 +1,5 @@
-commit 104abcc3e18fa408f29fc151ff0870a07ea83989
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Jul 20 10:12:42 2020 +0300
+commit 8b66a95c76eef270527818f3313cf4b30edad807
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jul 20 16:24:55 2020 +0300
 
-    feat(framework): implement invalidateParent (#1964)
+    chore(framework): Allow the hidden property for custom elements (#1966)
