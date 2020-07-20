@@ -386,13 +386,13 @@ class Suggestions {
 			return text;
 		}
 
-		const regEx = new RegExp(input, "ig");
+		const inputEscaped = input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+		const regEx = new RegExp(inputEscaped, "ig");
 		return text.replace(regEx, match => `<b>${match}</b>`);
 	}
 
 	sanitizeText(text) {
-		const textEscaped = text && text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-		return textEscaped && textEscaped.replace("<", "&lt");
+		return text && text.replace("<", "&lt");
 	}
 }
 
