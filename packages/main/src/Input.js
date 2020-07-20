@@ -799,19 +799,11 @@ class Input extends UI5Element {
 	}
 
 	previewSuggestion(item) {
-		this.valueBeforeItemSelection = this.value;
-
-		if (item.type === "Inactive" || item.group) {
-			this.value = "";
-		} else {
-			this.value = item.effectiveTitle;
-		}
-
 		const emptyValue = item.type === "Inactive" || item.group;
+		this.valueBeforeItemSelection = this.value;
 		this.updateValueOnPreview(emptyValue ? "" : item.effectiveTitle);
 		this.announceSelectedItem();
 		this._previewItem = item;
-		this._preview = true;
 	}
 
 	/**
