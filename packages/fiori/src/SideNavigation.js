@@ -32,11 +32,6 @@ const metadata = {
 		_popoverContent: {
 			type: Object,
 		},
-
-		_selectedItem: {
-			type: Object,
-			defaultValue: null,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
 		/**
@@ -130,30 +125,12 @@ class SideNavigation extends UI5Element {
 		]);
 	}
 
-	onBeforeRendering() {
-		console.log('onbefore')
-		this._calculateSelectedItem();
-	}
-
-	_clearSelectedItem() {
-		this.walk(item => {
-			item.selected = false;
-		});
-	}
-
-	_calculateSelectedItem() {
-		this._selectedItem = null;
-		this.walk(item => {
-			if (item.selected) {
-				this._selectedItem = item;
-			}
-		});
-	}
-
 	_setSelectedItem(item) {
-		this._clearSelectedItem();
+		this._walk(current => {
+			current.selected = false;
+		});
 		item.selected = true;
-		this._selectedItem = item; // set the current item as the selected item for the side navigation
+
 		this.fireEvent("selection-change", { item });
 	}
 
@@ -168,6 +145,9 @@ class SideNavigation extends UI5Element {
 	handleTreeItemClick(event) {
 		const treeItem = event.detail.item;
 		const item = treeItem.associatedItem;
+		if (item.selected) {
+			return;
+		}
 
 		if (this.collapsed && item.items.length) {
 			this._buildPopoverContent(item);
@@ -181,6 +161,9 @@ class SideNavigation extends UI5Element {
 	handleListItemClick(event) {
 		const listItem = event.detail.item;
 		const item = listItem.associatedItem;
+		if (item.selected) {
+			return;
+		}
 
 		this._setSelectedItem(item);
 		this.closePicker();
@@ -208,7 +191,7 @@ class SideNavigation extends UI5Element {
 		return this.getDomRef().querySelector("#ui5-sn-fixed-items-tree");
 	}
 
-	walk(callback) {
+	_walk(callback) {
 		this.items.forEach(current => {
 			callback(current);
 
