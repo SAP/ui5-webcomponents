@@ -2,7 +2,7 @@
 
 {{#*inline "listItemContent"}}
 	<div class="ui5-li-title-wrapper">
-		{{#if textContent.length}}
+		{{#if hasTitle}}
 			<span part="title" class="ui5-li-title"><slot></slot></span>
 		{{/if}}
 		{{#if hasDescription}}
