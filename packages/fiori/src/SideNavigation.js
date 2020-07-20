@@ -59,6 +59,7 @@ const metadata = {
 		 */
 		fixedItems: {
 			type: HTMLElement,
+			invalidateParent: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
@@ -130,59 +131,30 @@ class SideNavigation extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (!this._selectedItem) {
-			this._autoSelectItem();
-		}
-		const item = this._selectedItem;
+		console.log('onbefore')
+		this._calculateSelectedItem();
+	}
 
-		if (this.collapsed) {
-			this.items.forEach(current => {
-				current.selected = (current === item) || current.items.includes(item);
-
-				current.items.forEach(currentSubitem => {
-					currentSubitem.selected = currentSubitem === item;
-				});
-			});
-		} else {
-			this.items.forEach(current => {
-				current.selected = current === item;
-
-				current.items.forEach(currentSubitem => {
-					currentSubitem.selected = currentSubitem === item;
-				});
-			});
-		}
-
-		this.fixedItems.forEach(current => {
-			current.selected = current === item;
+	_clearSelectedItem() {
+		this.walk(item => {
+			item.selected = false;
 		});
 	}
 
-	_autoSelectItem() {
-		this.items.forEach(current => {
-			if (current.selected) {
-				this._selectedItem = current;
-			}
-
-			current.items.forEach(currentSubitem => {
-				if (currentSubitem.selected) {
-					this._selectedItem = currentSubitem;
-				}
-			});
-		});
-
-		this.fixedItems.forEach(current => {
-			if (current.selected) {
-				this._selectedItem = current;
+	_calculateSelectedItem() {
+		this._selectedItem = null;
+		this.walk(item => {
+			if (item.selected) {
+				this._selectedItem = item;
 			}
 		});
 	}
 
 	_setSelectedItem(item) {
-		if (item !== this._selectedItem) {
-			this._selectedItem = item; // set the current item as the selected item for the side navigation
-			this.fireEvent("selection-change", { item });
-		}
+		this._clearSelectedItem();
+		item.selected = true;
+		this._selectedItem = item; // set the current item as the selected item for the side navigation
+		this.fireEvent("selection-change", { item });
 	}
 
 	_buildPopoverContent(item) {
@@ -228,13 +200,26 @@ class SideNavigation extends UI5Element {
 		responsivePopover.close();
 	}
 
-
 	get _itemsTree() {
 		return this.getDomRef().querySelector("#ui5-sn-items-tree");
 	}
 
 	get _fixedItemsTree() {
 		return this.getDomRef().querySelector("#ui5-sn-fixed-items-tree");
+	}
+
+	walk(callback) {
+		this.items.forEach(current => {
+			callback(current);
+
+			current.items.forEach(currentSubitem => {
+				callback(currentSubitem);
+			});
+		});
+
+		this.fixedItems.forEach(current => {
+			callback(current);
+		});
 	}
 }
 
