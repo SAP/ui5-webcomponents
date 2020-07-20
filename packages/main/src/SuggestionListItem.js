@@ -47,7 +47,7 @@ class SuggestionListItem extends StandardListItem {
 
 	onBeforeRendering(...params) {
 		super.onBeforeRendering(...params);
-		this.hasTitle = this.title.length;
+		this.hasTitle = !!this.title.length;
 	}
 
 	get effectiveTitle() {
