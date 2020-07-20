@@ -691,4 +691,30 @@ describe("Date Picker Tests", () => {
 		datepicker.openPicker({ focusInput: false });
 		assert.ok(datepicker.getDisplayedDay(14).isFocusedDeep(), "Days out of range are disabled");
 	});
+
+	it("Tests week numbers column visibility", () => {
+		// act
+		datepicker.id = "#dp18";
+		datepicker.valueHelpIcon.click()
+
+		// assert
+		const weekNumbersCol1 = datepicker.dayPicker.shadow$(".ui5-dp-weeknumber-container");
+		assert.equal(weekNumbersCol1.isExisting(), true, "The week numbers column is visible.");
+
+		// close date picker
+		datepicker.innerInput.click();
+		browser.keys(["Alt", "ArrowUp", "NULL"]);
+
+		// act
+		datepicker.id = "#dp19";
+		datepicker.valueHelpIcon.click()
+
+		// assert
+		const weekNumbersCol2 = datepicker.dayPicker.shadow$(".ui5-dp-weeknumber-container");
+		assert.equal(weekNumbersCol2.isExisting(), false, "The week numbers column is hidden.");
+
+		// close date picker
+		datepicker.innerInput.click();
+		browser.keys(["Alt", "ArrowUp", "NULL"]);
+	});
 });

@@ -327,9 +327,14 @@ class ComboBox extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const domValue = this._initialRendering ? this.value : this.filterValue;
+		let domValue;
 
-		this._filteredItems = this._filterItems(domValue);
+		if (this._initialRendering) {
+			domValue = this.value;
+			this._filteredItems = this.items;
+		} else {
+			domValue = this.filterValue;
+		}
 
 		if (this._autocomplete && domValue !== "") {
 			this._autoCompleteValue(domValue);
@@ -484,6 +489,8 @@ class ComboBox extends UI5Element {
 			this.fireEvent("change");
 			this.inner.setSelectionRange(this.value.length, this.value.length);
 		}
+
+		this._closeRespPopover();
 	}
 
 	_selectItem(event) {
@@ -499,13 +506,6 @@ class ComboBox extends UI5Element {
 		});
 
 		this._inputChange();
-		this._closeRespPopover();
-	}
-
-	get _filteredItems() {
-		return !this.items.length ? [] : this.items.filter(item => {
-			return item.text.toLowerCase().startsWith(this.value.toLowerCase());
-		});
 	}
 
 	get _headerTitleText() {

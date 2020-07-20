@@ -7,7 +7,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 
   Setting    |                     Values                      | Default value |                          Description
 ------------ | ----------------------------------------------- | ------------- | -------------------------------------------------------------
-[theme](#theme)        | sap_fiori_3, sap_fiori_3_dark, sap_belize, sap_belize_hcb, sap_belize_hcw | sap_fiori_3   | Visual theme
+[theme](#theme)        | sap_fiori_3, sap_fiori_3_dark, sap_fiori_3_hcb, sap_fiori_3_hcw, sap_belize, sap_belize_hcb, sap_belize_hcw | sap_fiori_3   | Visual theme
 language     | en, de, es, etc...                              | en            | Language to be used for translatable texts
 [RTL](#rtl) (**deprecated since 1.0.0-rc.8**)    | true, false                                     | false         | When true, sets global text direction to right-to-left
 [animationMode](#animationMode)  | full, basic, minimal, none  | full          | Defines different animation scenarios or levels
@@ -24,6 +24,8 @@ UI5 Web Components contain different content densities for certain controls that
 The `theme` setting values above are the technical names of our themes.
 - The `sap_fiori_3` is known as `Quartz Light` and it`s the default theme.
 - The `sap_fiori_3_dark` is known as `Quartz Dark`.
+- The `sap_fiori_3_hcb` is known as `Quartz High Contrast Black`.
+- The `sap_fiori_3_hcw` is known as `Quartz High Contrast White`.
 - The `sap_belize` is known as `Belize`.
 - The `sap_belize_hcb` is known as `High Contrast Black`.
 - The `sap_belize_hcw` is known as `High Contrast White`.
@@ -66,10 +68,10 @@ For example, when the `ui5-switch` is toggled, it fires a `change` event, but al
 
 The `noConflict` configuration setting allows certain control over this behavior:
  - When `false` (default value) all custom events are fired with and without the `ui5-` prefix.
- - When `true` all custom events are fired with the `ui5-` prefix **only**. 
+ - When `true` all custom events are fired with the `ui5-` prefix **only**.
  This is handy for example, if the name of an event happens to collide with the name of an event provided by a third-party library.
  - When an object is supplied, just the specified events will be fired with the `ui5-` prefix **only**.
- All other events will be fired normally - once with the prefix, and once without it. 
+ All other events will be fired normally - once with the prefix, and once without it.
  The format of this object is as follows:
  ```json
  {
@@ -77,8 +79,8 @@ The `noConflict` configuration setting allows certain control over this behavior
  }
  ```
  *Please note that other keys may be added to this object in the future for the purpose of name conflict resolution.*
- 
- In the above example, only the `selection-change` and `header-click` events will be fired with a prefix. 
+
+ In the above example, only the `selection-change` and `header-click` events will be fired with a prefix.
  You can still use them by listening to `ui5-selection-change` and `ui5-header-click`, but the names `selection-change` and `header-click` will be
  free for use by other UI components and libraries without name collision.
 

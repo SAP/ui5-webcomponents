@@ -59,6 +59,13 @@
 	color: var(--sapField_WarningColor);
 }
 
+:host([value-state="Information"]) .ui5-checkbox-inner,
+:host([value-state="Information"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: var(--sapField_InformationBackground);
+	border: var(--_ui5_checkbox_inner_information_border);
+	color: var(--sapField_InformationColor);
+}
+
 :host([value-state="Warning"]) .ui5-checkbox-icon {
 	color: var(--_ui5_checkbox_checkmark_warning_color);
 }

@@ -646,7 +646,7 @@ class Input extends UI5Element {
 		}
 
 		if (this.popover) {
-			this.popover.close(false, false, true);
+			this.popover.close();
 		}
 
 		this.previousValue = "";
@@ -712,7 +712,7 @@ class Input extends UI5Element {
 	}
 
 	_afterClosePopover() {
-		this._announceSelectedItem();
+		this.announceSelectedItem();
 
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
@@ -783,7 +783,7 @@ class Input extends UI5Element {
 			return;
 		}
 
-		const itemText = item.text || item.textContent; // keep textContent for compatibility
+		const itemText = item.text || item.effectiveTitle; // keep text for compatibility
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 
@@ -807,9 +807,19 @@ class Input extends UI5Element {
 			this.value = item.effectiveTitle;
 		}
 
-		this._announceSelectedItem();
+		const emptyValue = item.type === "Inactive" || item.group;
+		this.updateValueOnPreview(emptyValue ? "" : item.effectiveTitle);
+		this.announceSelectedItem();
 		this._previewItem = item;
 		this._preview = true;
+	}
+
+	/**
+	 * Updates the input value on item preview.
+	 * @param {itemValue} itemValue The value of the item that is on preview
+	 */
+	updateValueOnPreview(itemValue) {
+		this.value = itemValue;
 	}
 
 	/**
@@ -915,13 +925,19 @@ class Input extends UI5Element {
 	onItemMouseOver(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion && suggestion.fireEvent("mouseover", { targetRef: item });
+		suggestion && suggestion.fireEvent("mouseover", {
+			item: suggestion,
+			targetRef: item,
+		});
 	}
 
 	onItemMouseOut(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion && suggestion.fireEvent("mouseout", { targetRef: item });
+		suggestion && suggestion.fireEvent("mouseout", {
+			item: suggestion,
+			targetRef: item,
+		});
 	}
 
 	onItemSelected(item, keyboardUsed) {
@@ -951,7 +967,7 @@ class Input extends UI5Element {
 		};
 	}
 
-	_announceSelectedItem() {
+	announceSelectedItem() {
 		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
 
 		if (this.Suggestions && this.Suggestions._isItemOnTarget()) {

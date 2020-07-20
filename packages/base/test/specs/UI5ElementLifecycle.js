@@ -79,6 +79,9 @@ describe("Lifecycle works", () => {
 			});
 
 			document.body.appendChild(el);
+
+			await window.RenderScheduler.whenFinished(); // Must wait, otherwise onExitDOM won't be called
+
 			document.body.removeChild(el);
 
 			await window.RenderScheduler.whenFinished();
