@@ -783,7 +783,7 @@ class Input extends UI5Element {
 			return;
 		}
 
-		const itemText = item.textContent || item.text; // keep textContent for compatibility
+		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 
