@@ -6,6 +6,7 @@
 	height: var(--_ui5_list_item_base_height);
 	background: var(--ui5-listitem-background-color);
 	box-sizing: border-box;
+	border-bottom: 1px solid transparent;
 }
 
 /* selected */
