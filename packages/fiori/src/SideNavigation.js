@@ -47,6 +47,7 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
+			invalidateParent: true,
 			type: HTMLElement,
 		},
 
@@ -178,8 +179,10 @@ class SideNavigation extends UI5Element {
 	}
 
 	_setSelectedItem(item) {
-		this._selectedItem = item; // set the current item as the selected item for the side navigation
-		this.fireEvent("selection-change", { item });
+		if (item !== this._selectedItem) {
+			this._selectedItem = item; // set the current item as the selected item for the side navigation
+			this.fireEvent("selection-change", { item });
+		}
 	}
 
 	_buildPopoverContent(item) {

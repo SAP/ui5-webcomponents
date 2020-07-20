@@ -61,6 +61,7 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
+			invalidateParent: true,
 			type: HTMLElement,
 		},
 	},

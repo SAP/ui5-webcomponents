@@ -35,10 +35,9 @@ describe("Component Behavior", () => {
 			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 			items = popover.$("ui5-list").$$("ui5-li");
 
-			items[0].click();
 			items[1].click();
 
-			assert.strictEqual(input.getProperty("value"), "6", "Event is fired");
+			assert.strictEqual(input.getProperty("value"), "5", "Event is fired");
 		})
 	});
 });
