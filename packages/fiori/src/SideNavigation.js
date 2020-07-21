@@ -125,6 +125,20 @@ class SideNavigation extends UI5Element {
 		]);
 	}
 
+	onBeforeRendering() {
+		if (this.collapsed) {
+			this._walk(current => {
+				if (current.items) {
+					current.items.forEach(currentSubItem => {
+						if (currentSubItem.selected) {
+							current.selected = true;
+						}
+					});
+				}
+			});
+		}
+	}
+
 	_setSelectedItem(item) {
 		this._walk(current => {
 			current.selected = false;
@@ -145,7 +159,7 @@ class SideNavigation extends UI5Element {
 	handleTreeItemClick(event) {
 		const treeItem = event.detail.item;
 		const item = treeItem.associatedItem;
-		if (item.selected) {
+		if (item.selected && !this.collapsed) {
 			return;
 		}
 
@@ -161,8 +175,18 @@ class SideNavigation extends UI5Element {
 	handleListItemClick(event) {
 		const listItem = event.detail.item;
 		const item = listItem.associatedItem;
+
 		if (item.selected) {
-			return;
+			if (this.collapsed) {
+				const mainItemInPopover = item === this._popoverContent.mainItem && this._popoverContent.mainItemSelected; // Selecting the main item in the popover
+				const subItemsInPopover = item !== this._popoverContent.mainItem && !this._popoverContent.mainItemSelected; // selecting the sub items in the popover
+
+				if (mainItemInPopover || subItemsInPopover) {
+					return;
+				}
+			} else {
+				return;
+			}
 		}
 
 		this._setSelectedItem(item);
@@ -202,6 +226,10 @@ class SideNavigation extends UI5Element {
 
 		this.fixedItems.forEach(current => {
 			callback(current);
+
+			current.items.forEach(currentSubitem => {
+				callback(currentSubitem);
+			});
 		});
 	}
 }

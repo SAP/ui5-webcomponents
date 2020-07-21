@@ -50,9 +50,22 @@
                         .associatedItem="{{this}}"
                         text="{{this.text}}"
                         index="{{this.index}}"
+                        ?has-children="{{this.items.length}}"
                         ?expanded="{{this.expanded}}"
                         ?selected="{{this.selected}}"
-                    ></ui5-tree-item>
+                    >
+                        {{#unless ../collapsed}}
+                            {{#each this.items}}
+                                <ui5-tree-item
+                                    .associatedItem="{{this}}"
+                                    text="{{this.text}}"
+                                    index="{{this.index}}"
+                                    ?selected="{{this.selected}}"
+                                >
+                                </ui5-tree-item>
+                            {{/each}}
+                        {{/unless}}
+                    </ui5-tree-item>
                 {{/each}}
             </ui5-tree>
        </div>
