@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.9](https://github.com/SAP/ui5-webcomponents/compare/v0.20.8...v0.20.9) (2020-07-21)
+
+
+### Features
+* **ui5-input:**: Add highlighting ([#1943](https://github.com/SAP/ui5-webcomponents/issues/1943)) ([673ed8d](https://github.com/SAP/ui5-webcomponents/commit/673ed8d))
+
+
+### Code Refactoring
+* **ui5-input:**: Add hook for value update on preview ([#1956](https://github.com/SAP/ui5-webcomponents/issues/1956))
+([0934f0c](https://github.com/SAP/ui5-webcomponents/commit/0934f0c))
+
+* **ui5-popover:**: Keep popup open if focus is inside ([#1937](https://github.com/SAP/ui5-webcomponents/issues/1937))
+([45cdcc2](https://github.com/SAP/ui5-webcomponents/commit/45cdcc2))
+
+
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # [1.0.0-rc.7](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.6...v1.0.0-rc.7) (2020-04-30)
 
 ### New Components
