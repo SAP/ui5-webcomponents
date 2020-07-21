@@ -7,21 +7,20 @@
             _toggle-button-end
             @ui5-item-click="{{handleTreeItemClick}}"
         >
-            {{#each items}}
+            {{#each _items}}
                 <ui5-tree-item
-                    icon="{{this.icon}}"
-                    .associatedItem="{{this}}"
-                    text="{{this.text}}"
-                    ?has-children="{{this.items.length}}"
-                    ?expanded="{{this.expanded}}"
+                    icon="{{this.item.icon}}"
+                    .associatedItem="{{this.item}}"
+                    text="{{this.item.text}}"
+                    ?has-children="{{this.item.items.length}}"
+                    ?expanded="{{this.item.expanded}}"
                     ?selected="{{this.selected}}"
                 >
                     {{#unless ../collapsed}}
-                        {{#each this.items}}
+                        {{#each this.item.items}}
                             <ui5-tree-item
                                 .associatedItem="{{this}}"
                                 text="{{this.text}}"
-                                index="{{this.index}}"
                                 ?selected="{{this.selected}}"
                             >
                             </ui5-tree-item>
@@ -44,22 +43,20 @@
                 _toggle-button-end
                 @ui5-item-click="{{handleTreeItemClick}}"
             >
-                {{#each fixedItems}}
+                {{#each _fixedItems}}
                     <ui5-tree-item
-                        icon="{{this.icon}}"
-                        .associatedItem="{{this}}"
-                        text="{{this.text}}"
-                        index="{{this.index}}"
-                        ?has-children="{{this.items.length}}"
-                        ?expanded="{{this.expanded}}"
+                        icon="{{this.item.icon}}"
+                        .associatedItem="{{this.item}}"
+                        text="{{this.item.text}}"
+                        ?has-children="{{this.item.items.length}}"
+                        ?expanded="{{this.item.expanded}}"
                         ?selected="{{this.selected}}"
                     >
                         {{#unless ../collapsed}}
-                            {{#each this.items}}
+                            {{#each this.item.items}}
                                 <ui5-tree-item
-                                    .associatedItem="{{this}}"
+                                    .associatedItem="{{this.item}}"
                                     text="{{this.text}}"
-                                    index="{{this.index}}"
                                     ?selected="{{this.selected}}"
                                 >
                                 </ui5-tree-item>

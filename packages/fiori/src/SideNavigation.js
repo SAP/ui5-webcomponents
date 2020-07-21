@@ -126,17 +126,19 @@ class SideNavigation extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.collapsed) {
-			this._walk(current => {
-				if (current.items) {
-					current.items.forEach(currentSubItem => {
-						if (currentSubItem.selected) {
-							current.selected = true;
-						}
-					});
-				}
-			});
-		}
+		this._items = this.items.map(item => {
+			return {
+				item,
+				selected: ((item.items.some(subItem => subItem.selected) && this.collapsed) || item.selected),
+			};
+		});
+
+		this._fixedItems = this.fixedItems.map(item => {
+			return {
+				item,
+				selected: ((item.items.some(subItem => subItem.selected) && this.collapsed) || item.selected),
+			};
+		});
 	}
 
 	_setSelectedItem(item) {
@@ -159,6 +161,7 @@ class SideNavigation extends UI5Element {
 	handleTreeItemClick(event) {
 		const treeItem = event.detail.item;
 		const item = treeItem.associatedItem;
+
 		if (item.selected && !this.collapsed) {
 			return;
 		}
@@ -177,16 +180,7 @@ class SideNavigation extends UI5Element {
 		const item = listItem.associatedItem;
 
 		if (item.selected) {
-			if (this.collapsed) {
-				const mainItemInPopover = item === this._popoverContent.mainItem && this._popoverContent.mainItemSelected; // Selecting the main item in the popover
-				const subItemsInPopover = item !== this._popoverContent.mainItem && !this._popoverContent.mainItemSelected; // selecting the sub items in the popover
-
-				if (mainItemInPopover || subItemsInPopover) {
-					return;
-				}
-			} else {
-				return;
-			}
+			return;
 		}
 
 		this._setSelectedItem(item);
