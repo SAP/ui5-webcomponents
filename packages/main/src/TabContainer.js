@@ -265,12 +265,6 @@ class TabContainer extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		// Set selected
-		const hasSelected = this.items.some(item => item.selected);
-		if (this.items.length && !hasSelected) {
-			this.items[0].selected = true;
-		}
-
 		// Set external properties to items
 		this.items.forEach((item, index) => {
 			item._isInline = this.tabLayout === TabLayout.Inline;
