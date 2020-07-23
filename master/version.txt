@@ -1,5 +1,5 @@
-commit 0e8b5eaa7598217a9457321bb0134449de7e3dce
+commit a7488cdb7337d2d86207c7ec46da774ebe4a5038
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jul 23 11:56:08 2020 +0300
+Date:   Thu Jul 23 14:35:51 2020 +0300
 
-    fix(ui5-tabcontainer): prevent the tabcontainer from setting the selected property on ui5-tab internally (#1974)
+    fix(ui5-tabcontainer): fix accessibility of overflow button (#1978)
