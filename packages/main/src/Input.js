@@ -802,18 +802,19 @@ class Input extends UI5Element {
 	}
 
 	previewSuggestion(item) {
-		const emptyValue = item.type === "Inactive" || item.group;
 		this.valueBeforeItemSelection = this.value;
-		this.updateValueOnPreview(emptyValue ? "" : item.effectiveTitle);
+		this.updateValueOnPreview(item);
 		this.announceSelectedItem();
 		this._previewItem = item;
 	}
 
 	/**
 	 * Updates the input value on item preview.
-	 * @param {itemValue} itemValue The value of the item that is on preview
+	 * @param {Object} item The item that is on preview
 	 */
-	updateValueOnPreview(itemValue) {
+	updateValueOnPreview(item) {
+		const noPreview = item.type === "Inactive" || item.group;
+		const itemValue = noPreview ? "" : (item.effectiveTitle || item.textContent);
 		this.value = itemValue;
 	}
 
