@@ -112,6 +112,30 @@ const metadata = {
 			type: Integer,
 			defaultValue: 0,
 		},
+
+		/**
+		 * Defines how much of the total width in % the smaller column will take on two-column layouts
+		 * For example 33 means 33/67 and 67/33, 20 means 20/80 and 80/20, etc...
+		 *
+		 * @type {Integer}
+		 * @private
+		 */
+		_smallerColumnSizeTwoColumns: {
+			type: Integer,
+			defaultValue: 33,
+		},
+
+		/**
+		 * Defines how much of the total width in % each of the smaller columns will take on three-column layouts
+		 * For example, 25 means 25/50/25 and 25/25/50, 20 means 20/60/20 and 20/20/60, etc...
+		 *
+		 * @type {Integer}
+		 * @private
+		 */
+		_smallerColumnSizeThreeColumns: {
+			type: Integer,
+			defaultValue: 25,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
@@ -383,7 +407,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	nextColumnLayout(layout) {
-		return getLayoutsByMedia()[this.media][layout].layout;
+		return getLayoutsByMedia(this._smallerColumnSizeTwoColumns, this._smallerColumnSizeThreeColumns)[this.media][layout].layout;
 	}
 
 	calcVisibleColumns(colLayot) {
@@ -559,7 +583,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get effectiveArrowsInfo() {
-		return getLayoutsByMedia()[this.media][this.layout].arrows;
+		return getLayoutsByMedia(this._smallerColumnSizeTwoColumns, this._smallerColumnSizeThreeColumns)[this.media][this.layout].arrows;
 	}
 
 	get media() {

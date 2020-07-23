@@ -1,4 +1,7 @@
-const getLayoutsByMedia = () => {
+const getLayoutsByMedia = (smallTwo = 33, smallThree = 25) => {
+	const bigTwo = 100 - smallTwo; // 67% by spec
+	const bigThree = 100 - 2 * smallThree; // 50% by spec
+
 	return {
 		desktop: {
 			"OneColumn": {
@@ -9,49 +12,49 @@ const getLayoutsByMedia = () => {
 				],
 			},
 			"TwoColumnsStartExpanded": {
-				layout: ["67%", "33%", 0],
+				layout: [`${bigTwo}%`, `${smallTwo}%`, 0],
 				arrows: [
 					{ visible: true, dir: "mirror" },
 					{ visible: false, dir: null },
 				],
 			},
 			"TwoColumnsMidExpanded": {
-				layout: ["33%", "67%", 0],
+				layout: [`${smallTwo}%`, `${bigTwo}%`, 0],
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsStartExpanded": {
-				layout: ["25%", "50%", "25%"],
+				layout: [`${smallThree}%`, `${bigThree}%`, `${smallThree}%`],
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: true, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpanded": {
-				layout: ["25%", "50%", "25%"],
+				layout: [`${smallThree}%`, `${bigThree}%`, `${smallThree}%`],
 				arrows:	[
 					{ visible: true, dir: null },
 					{ visible: true, dir: null },
 				],
 			},
 			"ThreeColumnsEndExpanded": {
-				layout: ["25%", "25%", "50%"],
+				layout: [`${smallThree}%`, `${smallThree}%`, `${bigThree}%`],
 				arrows: [
 					{ visible: false, dir: null, separator: true },
 					{ visible: true, dir: "mirror" },
 				],
 			},
 			"ThreeColumnsStartExpandedEndHidden": {
-				layout: ["67%", "33%", 0],
+				layout: [`${bigTwo}%`, `${smallTwo}%`, 0],
 				arrows: [
 					{ visible: true, dir: "mirror" },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpandedEndHidden": {
-				layout: ["33%", "67%", 0],
+				layout: [`${smallTwo}%`, `${bigTwo}%`, 0],
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: true, dir: null },
@@ -81,49 +84,49 @@ const getLayoutsByMedia = () => {
 				],
 			},
 			"TwoColumnsStartExpanded": {
-				layout: ["67%", "33%", 0],
+				layout: [`${bigTwo}%`, `${smallTwo}%`, 0],
 				arrows: [
 					{ visible: true, dir: "mirror" },
 					{ visible: false, dir: null },
 				],
 			},
 			"TwoColumnsMidExpanded": {
-				layout: ["33%", "67%", 0],
+				layout: [`${smallTwo}%`, `${bigTwo}%`, 0],
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsStartExpanded": {
-				layout: ["67%", "33%", 0],
+				layout: [`${bigTwo}%`, `${smallTwo}%`, 0],
 				arrows: [
 					{ visible: true, dir: "mirror" },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpanded": {
-				layout: [0, "67%", "33%"],
+				layout: [0, `${bigTwo}%`, `${smallTwo}%`],
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: true, dir: null },
 				],
 			},
 			"ThreeColumnsEndExpanded": {
-				layout: [0, "33%", "67%"],
+				layout: [0, `${smallTwo}%`, `${bigTwo}%`],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: true, dir: "mirror" },
 				],
 			},
 			"ThreeColumnsStartExpandedEndHidden": {
-				layout: ["67%", "33%", 0],
+				layout: [`${bigTwo}%`, `${smallTwo}%`, 0],
 				arrows: [
 					{ visible: true, dir: "mirror" },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpandedEndHidden": {
-				layout: ["33%", "67%", 0],
+				layout: [`${smallTwo}%`, `${bigTwo}%`, 0],
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: true, dir: null },

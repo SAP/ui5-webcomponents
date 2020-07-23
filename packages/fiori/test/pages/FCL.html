@@ -573,6 +573,55 @@
 		</div>
 	</ui5-flexible-column-layout>
 
+	<ui5-flexible-column-layout id="fcl_custom" layout="ThreeColumnsMidExpanded" _smaller-column-size-two-columns="10" _smaller-column-size-three-columns="10">
+		<!-- start column -->
+		<div style="box-sizing: border-box;" slot="startColumn">
+			<div style="padding: 1rem">
+				<ui5-title>Column 1</ui5-title>
+			</div>
+			<ui5-list>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+			</ui5-list>
+		</div>
+
+		<!-- mid column -->
+		<div style="box-sizing: border-box;" slot="midColumn">
+			<div style="padding: 1rem">
+				<ui5-title>Column 2</ui5-title>
+			</div>
+			<ui5-list>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+			</ui5-list>
+		</div>
+
+		<!-- end column -->
+		<div style="box-sizing: border-box;" slot="endColumn">
+			<div style="padding: 1rem">
+				<ui5-title>Column 3</ui5-title>
+			</div>
+
+			<ui5-list>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+				<ui5-li>Hello worild!</ui5-li>
+			</ui5-list>
+		</div>
+	</ui5-flexible-column-layout>
+
 	<script>
 		var counter = 0;
 		var counter2 = 0;
@@ -586,7 +635,7 @@
 			layoutChangeRes4.value = ++counter;
 
 		});
-	
+
 		fcl3.addEventListener("ui5-layout-change", function(e) {
 			testLayoutChange.value = ++counter2;
 		});
