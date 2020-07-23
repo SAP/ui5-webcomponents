@@ -1,5 +1,5 @@
-commit a7d216cc198000727aec78d4a2156050660b124b
+commit 0e8b5eaa7598217a9457321bb0134449de7e3dce
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jul 23 10:56:59 2020 +0300
+Date:   Thu Jul 23 11:56:08 2020 +0300
 
-    feat(ui5-input): announce suggestions count (#1975)
+    fix(ui5-tabcontainer): prevent the tabcontainer from setting the selected property on ui5-tab internally (#1974)
