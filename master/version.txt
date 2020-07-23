@@ -1,5 +1,5 @@
-commit aa6fde4116cadbc5b380112342ba38d07063a927
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jul 23 10:55:19 2020 +0300
+commit a7d216cc198000727aec78d4a2156050660b124b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Jul 23 10:56:59 2020 +0300
 
-    fix(ui5-input): Suggestions can now be arbitrary list items (#1969)
+    feat(ui5-input): announce suggestions count (#1975)
