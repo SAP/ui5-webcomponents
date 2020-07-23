@@ -28,6 +28,9 @@ import {
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS,
 	INPUT_SUGGESTIONS_TITLE,
+	INPUT_SUGGESTIONS_ONE_HIT,
+	INPUT_SUGGESTIONS_MORE_HITS,
+	INPUT_SUGGESTIONS_NO_HIT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -993,11 +996,13 @@ class Input extends UI5Element {
 	get accInfo() {
 		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
+		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._id}-suggestionsCount ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId} ${this._id}-suggestionsCount`.trim();
+
 		return {
 			"wrapper": {
 			},
 			"input": {
-				"ariaDescribedBy": this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim(),
+				"ariaDescribedBy": ariaDescribedBy,
 				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
 				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
 				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
@@ -1071,6 +1076,23 @@ class Input extends UI5Element {
 
 	get suggestionsText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
+	}
+
+	get availableSuggestionsCount() {
+		if (this.showSuggestions) {
+			switch (this.suggestionsTexts.length) {
+			case 0:
+				return this.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
+
+			case 1:
+				return this.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
+
+			default:
+				return this.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
+			}
+		}
+
+		return undefined;
 	}
 
 	get step() {
