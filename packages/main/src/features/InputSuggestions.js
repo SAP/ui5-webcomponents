@@ -119,6 +119,7 @@ class Suggestions {
 		this.responsivePopover = await this._respPopover();
 		this._beforeOpen();
 		this.responsivePopover.open(this._getComponent());
+		this.responsivePopover.style.maxWidth = this._getComponent().style.width;
 	}
 
 	async close(preventFocusRestore = false) {
