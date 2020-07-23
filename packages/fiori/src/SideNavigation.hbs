@@ -55,7 +55,7 @@
                         {{#unless ../collapsed}}
                             {{#each this.item.items}}
                                 <ui5-tree-item
-                                    .associatedItem="{{this.item}}"
+                                    .associatedItem="{{this}}"
                                     text="{{this.text}}"
                                     ?selected="{{this.selected}}"
                                 >
