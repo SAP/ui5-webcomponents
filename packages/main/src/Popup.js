@@ -89,35 +89,34 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
-		 * Fired before the component is opened.
+		 * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. This event does not bubble.
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-open
 		 */
-
 		"before-open": {},
+
 		/**
-		 * Fired after the component is opened.
+		 * Fired after the component is opened. This event does not bubble.
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#after-open
 		 */
-
 		"after-open": {},
+
 		/**
-		 * Fired before the component is closed.
+		 * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. This event does not bubble.
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-close
 		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
-
 		"before-close": {
 			escPressed: { type: Boolean },
 		},
 
 		/**
-		 * Fired after the component is closed.
+		 * Fired after the component is closed. This event does not bubble.
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#after-close
@@ -297,6 +296,11 @@ class Popup extends UI5Element {
 	 * @public
 	 */
 	open(preventInitialFocus) {
+		const prevented = !this.fireEvent("before-open", {}, true, false);
+		if (prevented) {
+			return;
+		}
+
 		if (this.isModal) {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
@@ -306,9 +310,7 @@ class Popup extends UI5Element {
 
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
-
 		this._focusedElementBeforeOpen = getFocusedElement();
-		this.fireEvent("before-open", {});
 		this.show();
 
 		if (!this._disableInitialFocus && !preventInitialFocus) {
@@ -318,7 +320,7 @@ class Popup extends UI5Element {
 		this._addOpenedPopup();
 
 		this.opened = true;
-		this.fireEvent("after-open", {});
+		this.fireEvent("after-open", {}, false, false);
 	}
 
 	/**
@@ -334,8 +336,12 @@ class Popup extends UI5Element {
 	 * @public
 	 */
 	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
-		const prevented = !this.fireEvent("before-close", { escPressed }, true);
-		if (prevented || !this.opened) {
+		if (!this.opened) {
+			return;
+		}
+
+		const prevented = !this.fireEvent("before-close", { escPressed }, true, false);
+		if (prevented) {
 			return;
 		}
 
@@ -355,7 +361,7 @@ class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this.fireEvent("after-close", {});
+		this.fireEvent("after-close", {}, false, false);
 	}
 
 	/**
