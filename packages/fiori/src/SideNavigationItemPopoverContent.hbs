@@ -1,0 +1,20 @@
+<ui5-responsive-popover
+	vertical-align="Top"
+>
+    <ui5-list
+	    mode="None"
+        @ui5-item-click="{{handleListItemClick}}"
+    >
+	    <ui5-li
+		    ?selected="{{_popoverContent.mainItemSelected}}"
+		    .associatedItem="{{_popoverContent.mainItem}}"
+	    >{{_popoverContent.mainItem.text}}</ui5-li>
+
+        {{#each _popoverContent.subItems}}
+            <ui5-li
+	            ?selected="{{this.selected}}"
+                .associatedItem="{{this}}"
+            >{{this.text}}</ui5-li>
+        {{/each}}
+    </ui5-list>
+</ui5-responsive-popover>

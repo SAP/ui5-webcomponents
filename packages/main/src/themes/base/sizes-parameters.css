@@ -61,6 +61,9 @@
 	/* Responsive Popover */
 	--_ui5-responnsive_popover_header_height: 2.75rem;
 
+	/* Side Navigation */
+	--ui5_side_navigation_item_height: 2.75rem;
+
 	/* Tree */
 	--_ui5-tree-indent-step: 1.5rem;
 	--_ui5-tree-toggle-box-width: 2.75rem;
@@ -182,6 +185,9 @@
 
 	/* Responsive Popover */
 	--_ui5-responnsive_popover_header_height: 2.5rem;
+
+	/* Side Navigation */
+	--ui5_side_navigation_item_height: 2rem;
 
 	/* Tree */
 	--_ui5-tree-indent-step: 0.5rem;

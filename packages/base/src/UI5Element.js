@@ -493,6 +493,10 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_invalidate() {
+		if (this._shouldInvalidateParent) {
+			this.parentNode._invalidate();
+		}
+
 		if (!this._upToDate) {
 			// console.log("already invalidated", this, ...arguments);
 			return;
@@ -502,10 +506,6 @@ class UI5Element extends HTMLElement {
 			this._upToDate = false;
 			// console.log("INVAL", this, ...arguments);
 			RenderScheduler.renderDeferred(this);
-
-			if (this._shouldInvalidateParent) {
-				this.parentNode._invalidate();
-			}
 		}
 	}
 
