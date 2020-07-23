@@ -35,4 +35,5 @@
 
 .ui5-sn-spacer {
     flex: auto;
+    min-height: 3rem;
 }
