@@ -1,5 +1,5 @@
-commit 8b66a95c76eef270527818f3313cf4b30edad807
+commit aa6fde4116cadbc5b380112342ba38d07063a927
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jul 20 16:24:55 2020 +0300
+Date:   Thu Jul 23 10:55:19 2020 +0300
 
-    chore(framework): Allow the hidden property for custom elements (#1966)
+    fix(ui5-input): Suggestions can now be arbitrary list items (#1969)
