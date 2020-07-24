@@ -6,7 +6,7 @@ import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffe
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isBackSpace, isDelete, isShow } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isBackSpace, isDelete, isShow, isUp, isDown, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import * as Filters from "./ComboBoxFilters.js";
 
 import {
@@ -324,6 +324,7 @@ class ComboBox extends UI5Element {
 		this._filteredItems = [];
 		this._initialRendering = true;
 		this._itemFocused = false;
+		this._tempFilterValue = "";
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -348,7 +349,15 @@ class ComboBox extends UI5Element {
 		}
 
 		this._selectMatchingItem();
+
+		if (this._isKeyNavigation && this.responsivePopover && this.responsivePopover.opened) {
+			this.focused = false;
+		} else {
+			this.focused = this === document.activeElement;
+		}
+
 		this._initialRendering = false;
+		this._isKeyNavigation = false;
 	}
 
 	async onAfterRendering() {
@@ -381,14 +390,21 @@ class ComboBox extends UI5Element {
 
 	_focusout() {
 		this.focused = false;
+
+		if (this.value !== this._tempValue) {
+			this.value = this._tempValue;
+		}
 	}
 
 	_afterOpenPopover() {
 		this._iconPressed = true;
+		this._clearFocus();
 	}
 
 	_afterClosePopover() {
 		this._iconPressed = false;
+		this._filteredItems = this.items;
+		this._tempFilterValue = "";
 
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
@@ -424,6 +440,8 @@ class ComboBox extends UI5Element {
 			event.stopImmediatePropagation();
 		}
 
+		this._clearFocus();
+		this._tempFilterValue = value;
 		this.filterValue = value;
 		this.fireEvent("input");
 
@@ -440,8 +458,51 @@ class ComboBox extends UI5Element {
 		return Filters.StartsWith(str, this._filteredItems);
 	}
 
+	_clearFocus() {
+		this._filteredItems.map(item => {
+			item.focused = false;
+			return;
+		});
+	}
+
+	handleArrowKeyPress(event) {
+		if (this.readonly || !this._filteredItems.length) {
+			return;
+		}
+
+		const isArrowDown = isDown(event);
+		const isArrowUp = isUp(event);
+		const currentItem = this._filteredItems.find(item => this.responsivePopover.opened ? item.focused : item.selected);
+		let indexOfItem = this._filteredItems.indexOf(currentItem);
+
+		event.preventDefault();
+
+		if (indexOfItem === 0 && isArrowUp || this._filteredItems.length - 1 === indexOfItem && isArrowDown) {
+			return;
+		}
+
+		this._clearFocus();
+
+		indexOfItem += isArrowDown ? 1 : -1;
+		indexOfItem = indexOfItem < 0 ? 0 : indexOfItem;
+
+		this._filteredItems[indexOfItem].focused = true;
+		this.filterValue = this._filteredItems[indexOfItem].text;
+		this._isKeyNavigation = true;
+		this.fireEvent("input");
+	}
+
 	_keydown(event) {
+		const isArrowKey = isDown(event) || isUp(event);
 		this._autocomplete = !(isBackSpace(event) || isDelete(event));
+
+		if (isArrowKey) {
+			this.handleArrowKeyPress(event);
+		}
+
+		if (isEnter(event)) {
+			this._inputChange();
+		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
@@ -472,6 +533,7 @@ class ComboBox extends UI5Element {
 	_autoCompleteValue(current) {
 		const currentValue = current;
 		const matchingItems = this._startsWithMatchingItems(currentValue);
+		const selectionValue = this._tempFilterValue ? this._tempFilterValue : currentValue;
 
 		if (matchingItems.length) {
 			this._tempValue = matchingItems[0] ? matchingItems[0].text : current;
@@ -479,9 +541,13 @@ class ComboBox extends UI5Element {
 			this._tempValue = current;
 		}
 
-		if (matchingItems.length && (currentValue !== this._tempValue)) {
+		if (matchingItems.length && (selectionValue !== this._tempValue)) {
 			setTimeout(() => {
-				this.inner.setSelectionRange(currentValue.length, this._tempValue.length);
+				this.inner.setSelectionRange(selectionValue.length, this._tempValue.length);
+			}, 0);
+		} else if (this._isKeyNavigation) {
+			setTimeout(() => {
+				this.inner.setSelectionRange(0, this._tempValue.length);
 			}, 0);
 		}
 	}
