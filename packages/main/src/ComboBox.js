@@ -459,10 +459,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_clearFocus() {
-		this._filteredItems.map(item => {
-			item.focused = false;
-			return;
-		});
+		this._filteredItems.forEach(item => item.focused = false);
 	}
 
 	handleArrowKeyPress(event) {
