@@ -239,7 +239,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 	static get BREAKPOINTS() {
 		return {
-			"PHONE": 599, 
+			"PHONE": 599,
 			"TABLET": 1023,
 		};
 	}
