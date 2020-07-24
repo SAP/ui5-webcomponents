@@ -20,9 +20,9 @@ describe("FlexibleColumnLayout Behavior", () => {
 		assert.strictEqual(layoutChangeCounter.getValue(), "1", "The event layout-change is not fired.");
 	});
 
-	it("tests Tablet Size 1200px", () => {
+	it("tests Tablet Size 1000px", () => {
 		// act
-		browser.setWindowSize(1200, 1080);
+		browser.setWindowSize(1000, 1080);
 
 		const layoutChangeCounter = browser.$("#testLayoutChange");
 		const visibleColumns = browser.execute(() => {
@@ -35,9 +35,9 @@ describe("FlexibleColumnLayout Behavior", () => {
 		assert.strictEqual(layoutChangeCounter.getValue(), "2", "The event layout-change after resizing.");
 	});
 
-	it("tests Phone size 870px", () => {
+	it("tests Phone size 500px", () => {
 		// act
-		browser.setWindowSize(870, 1080);
+		browser.setWindowSize(500, 1080);
 
 		const layoutChangeCounter = browser.$("#testLayoutChange");
 		const visibleColumns = browser.execute(() => {
@@ -57,19 +57,20 @@ describe("FlexibleColumnLayout Behavior", () => {
 		const fcl = browser.$("#fcl1");
 		const layoutChangeCounter = browser.$("#layoutChangeRes4");
 		const arrow = fcl.shadow$(".ui5-fcl-arrow--start");
+		let counter = parseInt(layoutChangeCounter.getValue()) || 0;
 
 		// act
 		arrow.click();
 
-		// assert (two times the event has been fired due resize already)
-		assert.strictEqual(layoutChangeCounter.getValue(), "4", "The event layout-change fired once.");
+		// assert
+		assert.strictEqual(layoutChangeCounter.getValue(), `${++counter}`, "The event layout-change fired once.");
 		assert.strictEqual(fcl.getProperty("layout"), "TwoColumnsMidExpanded", "new layout set");
 
 		// act
 		arrow.click();
 
-		// // assert
-		assert.strictEqual(layoutChangeCounter.getValue(), "5", "The event layout-change fired again.");
+		// assert
+		assert.strictEqual(layoutChangeCounter.getValue(), `${++counter}`, "The event layout-change fired again.");
 		assert.strictEqual(fcl.getProperty("layout"), "TwoColumnsStartExpanded", "new layout set");
 	});
 

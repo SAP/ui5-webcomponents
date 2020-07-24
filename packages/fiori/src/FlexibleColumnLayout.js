@@ -239,8 +239,8 @@ class FlexibleColumnLayout extends UI5Element {
 
 	static get BREAKPOINTS() {
 		return {
-			"M": 960,
-			"L": 1280,
+			"PHONE": 599, 
+			"TABLET": 1023,
 		};
 	}
 
@@ -563,11 +563,11 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get media() {
-		if (this._width <= FlexibleColumnLayout.BREAKPOINTS.M) {
+		if (this._width <= FlexibleColumnLayout.BREAKPOINTS.PHONE) {
 			return FlexibleColumnLayout.MEDIA.PHONE;
 		}
 
-		if (this._width <= FlexibleColumnLayout.BREAKPOINTS.L) {
+		if (this._width <= FlexibleColumnLayout.BREAKPOINTS.TABLET) {
 			return FlexibleColumnLayout.MEDIA.TABLET;
 		}
 
