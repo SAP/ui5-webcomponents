@@ -1040,6 +1040,9 @@ class Input extends UI5Element {
 				"width": `${this._listWidth}px`,
 				"padding": "0.5625rem 1rem",
 			},
+			suggestionsPopover: {
+				"max-width": `${this._inputWidth}px`,
+			},
 		};
 	}
 

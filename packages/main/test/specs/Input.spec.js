@@ -254,6 +254,17 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
+	it("checks if the suggestions popover width is the same as the input width when there is a long suggestion", () => {
+		const input = $("#suggestionsPopoverWidth");
+		const nativeInput = $("#suggestionsPopoverWidth").shadow$("input");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#suggestionsPopoverWidth");
+		const listItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+
+		nativeInput.click();
+
+		assert.strictEqual(input.getSize('width'), listItem.getSize('width'));
+	})
+
 	it("Input's maxlength property is set correctly", () => {
 		const input5 = $("#input-tel");
 		const inputShadowRef = $("#input-tel").shadow$("input");
