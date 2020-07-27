@@ -156,7 +156,7 @@ const metadata = {
 		/**
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @public
+		 * @private
 		 * @since 1.0.0-rc.8
 		 */
 		ariaExpanded: {

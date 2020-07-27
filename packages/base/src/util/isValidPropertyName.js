@@ -1,9 +1,7 @@
 // Note: disabled is present in IE so we explicitly allow it here.
-// Others, such as ariaLabel, we explicitly override, so valid too
+// Others, such as title/hidden, we explicitly override, so valid too
 const whitelist = [
 	"disabled",
-	"ariaLabel",
-	"ariaExpanded",
 	"title",
 	"hidden",
 ];
@@ -15,7 +13,7 @@ const whitelist = [
  * @returns {boolean}
  */
 const isValidPropertyName = name => {
-	if (whitelist.includes(name)) {
+	if (whitelist.includes(name) || name.startsWith("aria")) {
 		return true;
 	}
 	const classes = [
