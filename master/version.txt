@@ -1,8 +1,5 @@
-commit 93808b2f4dc7ff2fd1f9f83049e5d090ff1a5204
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jul 27 14:01:53 2020 +0300
+commit 07aebfaf318f34fec2f934041c577b1ee8093f24
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jul 27 14:41:54 2020 +0300
 
-    chore: fix Popover test (#1990)
-    
-    - openBy has no third parameter anymore
-    - add some delay, because even if the popover closes the test would not fail, because it is checked immediately.
+    fix(tools): Building third-party packages no longer fails (#1994)
