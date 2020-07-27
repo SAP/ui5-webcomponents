@@ -1,5 +1,8 @@
-commit 7a9e9a3b9ecb0edfa88628e1e4f26dc1372ddc7b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Jul 27 10:37:02 2020 +0300
+commit 93808b2f4dc7ff2fd1f9f83049e5d090ff1a5204
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jul 27 14:01:53 2020 +0300
 
-    fix(ui5-input): fix inpur cursor movement in Safari (#1983)
+    chore: fix Popover test (#1990)
+    
+    - openBy has no third parameter anymore
+    - add some delay, because even if the popover closes the test would not fail, because it is checked immediately.
