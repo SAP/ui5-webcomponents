@@ -49,6 +49,7 @@
 	<ui5-list
 		separators="None"
 		@ui5-item-click={{_selectItem}}
+		@ui5-item-focused={{_onItemFocus}}
 		mode="SingleSelect"
 	>
 		{{#each _filteredItems}}
