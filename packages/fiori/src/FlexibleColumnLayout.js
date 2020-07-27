@@ -112,6 +112,17 @@ const metadata = {
 			type: Integer,
 			defaultValue: 0,
 		},
+
+		/**
+		 * Allows the user to replace the whole layouts configuration
+		 *
+		 * @type {Object}
+		 * @protected
+		 */
+		_layoutsConfiguration: {
+			type: Object,
+			defaultValue: undefined,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
 		/**
@@ -383,7 +394,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	nextColumnLayout(layout) {
-		return getLayoutsByMedia()[this.media][layout].layout;
+		return this._effectiveLayoutsByMedia[this.media][layout].layout;
 	}
 
 	calcVisibleColumns(colLayot) {
@@ -559,7 +570,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get effectiveArrowsInfo() {
-		return getLayoutsByMedia()[this.media][this.layout].arrows;
+		return this._effectiveLayoutsByMedia[this.media][this.layout].arrows;
 	}
 
 	get media() {
@@ -600,6 +611,10 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get accEndColumnText() {
 		return this.i18nBundle.getText(FCL_END_COLUMN_TXT);
+	}
+
+	get _effectiveLayoutsByMedia() {
+		return this._layoutsConfiguration || getLayoutsByMedia();
 	}
 }
 
