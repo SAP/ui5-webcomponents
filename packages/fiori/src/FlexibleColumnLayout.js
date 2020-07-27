@@ -117,7 +117,8 @@ const metadata = {
 		 * Allows the user to replace the whole layouts configuration
 		 *
 		 * @type {Object}
-		 * @protected
+		 * @private
+		 * @sap-restricted
 		 */
 		_layoutsConfiguration: {
 			type: Object,
