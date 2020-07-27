@@ -160,12 +160,12 @@ class BusyIndicator extends UI5Element {
 		return this.i18nBundle.getText(BUSY_INDICATOR_TITLE);
 	}
 
-	get classes () {
+	get classes() {
 		return {
 			root: {
 				"ui5-busyindicator-root": true,
 				"ui5-busyindicator-root--ie": isIE(),
-			}
+			},
 		};
 	}
 
