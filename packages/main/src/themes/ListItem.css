@@ -52,6 +52,10 @@
 	color: var(--sapNegativeTextColor);
 }
 
+:host([info-state="Information"]) .ui5-li-info {
+	color: var(--sapInformativeTextColor);
+}
+
 /* ui5-li: item with title and description */
 :host([has-title][description]) {
 	height: 5rem;
