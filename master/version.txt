@@ -1,9 +1,5 @@
-commit f17cba3db4cc7ee692483f5f0d359e1c280b4b90
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jul 27 09:56:42 2020 +0300
+commit 7a9e9a3b9ecb0edfa88628e1e4f26dc1372ddc7b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Jul 27 10:37:02 2020 +0300
 
-    fix(ui5-flexible-column-layout): Fix media breakpoints (#1984)
-    
-    The media breakpoints are now aligned with the Fiori 3 specs.
-    
-    Related to: #1972
+    fix(ui5-input): fix inpur cursor movement in Safari (#1983)
