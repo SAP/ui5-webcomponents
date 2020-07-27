@@ -1,5 +1,9 @@
-commit ad30db8c4b44660d6081be9f39975466a6f3a9fd
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jul 27 16:03:57 2020 +0300
+commit 2c95be453475472480483abcae7faaa24fbe6c5b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jul 27 17:58:57 2020 +0300
 
-    chore(ui5-button): fix docs (#2002)
+    fix(ui5-combobox): Close popup on focusout (#2013)
+    
+    Now the popup closes on focusout, except the case when the focusout is due to focusin of the items
+    
+    FIXES: #2009
