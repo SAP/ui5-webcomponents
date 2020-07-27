@@ -57,8 +57,9 @@ const fetchI18nBundle = async packageName => {
 	}
 
 	const language = getLocale().getLanguage();
+	const region = getLocale().getRegion();
 
-	let localeId = normalizeLocale(language);
+	let localeId = normalizeLocale(language + (region ? `-${region}` : ``));
 	while (localeId !== DEFAULT_LANGUAGE && !bundlesForPackage[localeId]) {
 		localeId = nextFallbackLocale(localeId);
 	}
