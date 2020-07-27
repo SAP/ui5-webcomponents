@@ -1,5 +1,9 @@
-commit 0ffca823f0681d6db82cc4d946b21f97ce7f4177
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jul 27 08:31:10 2020 +0300
+commit f17cba3db4cc7ee692483f5f0d359e1c280b4b90
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jul 27 09:56:42 2020 +0300
 
-    refactor(ui5-popup): Events do not bubble (#1981)
+    fix(ui5-flexible-column-layout): Fix media breakpoints (#1984)
+    
+    The media breakpoints are now aligned with the Fiori 3 specs.
+    
+    Related to: #1972
