@@ -1,5 +1,5 @@
-commit 401b499551dfcb298cfb2934c65d08e58b5db64c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jul 27 15:07:26 2020 +0300
+commit ad30db8c4b44660d6081be9f39975466a6f3a9fd
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jul 27 16:03:57 2020 +0300
 
-    feat(ui5-li): Support 'Information' infoState (#1997)
+    chore(ui5-button): fix docs (#2002)
