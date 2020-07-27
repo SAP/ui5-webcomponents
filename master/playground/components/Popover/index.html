@@ -2360,21 +2360,21 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">after-close</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired after the component is closed.
+                        Fired after the component is closed. This event does not bubble.
                         </div>
                       </div>
             
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">after-open</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired after the component is opened.
+                        Fired after the component is opened. This event does not bubble.
                         </div>
                       </div>
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">before-close</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired before the component is closed.
+                        Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. This event does not bubble.
                         </div>
                       </div>
             
@@ -2387,7 +2387,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">before-open</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired before the component is opened.
+                        Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. This event does not bubble.
                         </div>
                       </div>
             

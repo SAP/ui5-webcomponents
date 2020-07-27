@@ -1,5 +1,5 @@
-commit 47b38cce1426e08886eea8cd6d20c51e4206675f
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jul 23 14:52:51 2020 +0300
+commit 0ffca823f0681d6db82cc4d946b21f97ce7f4177
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jul 27 08:31:10 2020 +0300
 
-    feat(ui5-side-navigation): initial implementation (#1889)
+    refactor(ui5-popup): Events do not bubble (#1981)
