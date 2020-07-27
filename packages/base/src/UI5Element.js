@@ -644,10 +644,11 @@ class UI5Element extends HTMLElement {
 	 * @param name - name of the event
 	 * @param data - additional data for the event
 	 * @param cancelable - true, if the user can call preventDefault on the event object
+	 * @param bubbles - true, if the event bubbles
 	 * @returns {boolean} false, if the event was cancelled (preventDefault called), true otherwise
 	 */
-	fireEvent(name, data, cancelable) {
-		const eventResult = this._fireEvent(name, data, cancelable);
+	fireEvent(name, data, cancelable = false, bubbles = true) {
+		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
 		const camelCaseEventName = kebabToCamelCase(name);
 
 		if (camelCaseEventName !== name) {
@@ -657,13 +658,13 @@ class UI5Element extends HTMLElement {
 		return eventResult;
 	}
 
-	_fireEvent(name, data, cancelable) {
+	_fireEvent(name, data, cancelable = false, bubbles = true) {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
 
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
 			detail: data,
 			composed: false,
-			bubbles: true,
+			bubbles,
 			cancelable,
 		});
 
@@ -677,7 +678,7 @@ class UI5Element extends HTMLElement {
 		const customEvent = new CustomEvent(name, {
 			detail: data,
 			composed: false,
-			bubbles: true,
+			bubbles,
 			cancelable,
 		});
 
