@@ -36,6 +36,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ComboBoxItem
  * @extends UI5Element
+ * @tagname ui5-cb-item
  * @public
  */
 class ComboBoxItem extends UI5Element {
