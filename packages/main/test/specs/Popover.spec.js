@@ -56,8 +56,12 @@ describe("Popover general interaction", () => {
 		// act - open popover and hide opener
 		btnOpenPopover.click();
 
+		browser.pause(500);
+
 		// assert - the popover remains open, although opener is not visible
 		assert.strictEqual(popover.getAttribute("open"), "true",
+			"Popover remains open.");
+		assert.strictEqual(popover.isDisplayedInViewport(), true,
 			"Popover remains open.");
 		assert.strictEqual(btnOpenPopover.isDisplayedInViewport(), false,
 			"Opener is not available.");
