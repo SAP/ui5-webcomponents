@@ -1,5 +1,5 @@
-commit 07aebfaf318f34fec2f934041c577b1ee8093f24
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jul 27 14:41:54 2020 +0300
+commit 401b499551dfcb298cfb2934c65d08e58b5db64c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jul 27 15:07:26 2020 +0300
 
-    fix(tools): Building third-party packages no longer fails (#1994)
+    feat(ui5-li): Support 'Information' infoState (#1997)
