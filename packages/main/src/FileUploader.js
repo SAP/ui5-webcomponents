@@ -250,7 +250,7 @@ class FileUploader extends UI5Element {
 
 	onAfterRendering() {
 		if (!this.value) {
-			this.getDomRef().querySelector(`input[type="file"]`).value = "";
+			this._input.value = "";
 		}
 	}
 
