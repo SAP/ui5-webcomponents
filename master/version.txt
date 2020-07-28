@@ -1,9 +1,7 @@
-commit 2c95be453475472480483abcae7faaa24fbe6c5b
+commit ab3f92fef09e45dea274b4eac42be7237503450d
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jul 27 17:58:57 2020 +0300
+Date:   Tue Jul 28 10:00:21 2020 +0300
 
-    fix(ui5-combobox): Close popup on focusout (#2013)
+    fix(ui5-busyindicator): Set bigger opacity for IE (#2010)
     
-    Now the popup closes on focusout, except the case when the focusout is due to focusin of the items
-    
-    FIXES: #2009
+    Fixes: #2005
