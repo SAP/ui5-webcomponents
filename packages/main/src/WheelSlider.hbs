@@ -1,4 +1,4 @@
-<div 
+<div
 	id="{{this._id}}"
 	?disabled= "{{disabled}}"
 	value = "{{value}}"
@@ -25,12 +25,12 @@
 			{{#if _expanded}}
 				<ul id="{{this._id}}--items-list">
 					{{#each _itemsToShow}}
-						<li class="ui5-wheelslider-item" data-item-index="{{@index}}">{{this}}</li>
+						<li class="ui5-wheelslider-item" data-item-index="{{@index}}" style="list-style-type: none;">{{this}}</li>
 					{{/each}}
 				</ul>
 			{{else}}
 				<ul id="{{this._id}}--items-list">
-					<li class="ui5-wheelslider-item">{{value}}</li>
+					<li class="ui5-wheelslider-item" style="list-style-type: none;">{{value}}</li>
 				</ul>
 			{{/if}}
 		</div>

@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import Label from "./Label.js";
@@ -157,6 +158,15 @@ class BusyIndicator extends UI5Element {
 
 	get ariaTitle() {
 		return this.i18nBundle.getText(BUSY_INDICATOR_TITLE);
+	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-busyindicator-root": true,
+				"ui5-busyindicator-root--ie": isIE(),
+			},
+		};
 	}
 
 	_preventEvent(event) {

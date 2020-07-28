@@ -81,6 +81,11 @@
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
+    pointer-events: none;
+}
+
+.ui5-carousel-navigation-arrows > ui5-button {
+    pointer-events: all;
 }
 
 .ui5-carousel-navigation-wrapper {
