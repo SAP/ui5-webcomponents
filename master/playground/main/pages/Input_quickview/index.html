@@ -59,7 +59,49 @@
 	<div style="display: flex; align-items: center">
 		<ui5-label>focusable element: </ui5-label><ui5-button>after</ui5-button>
 	</div>
+
+	<h1> Test Quick View sample</h1>
+	
+	<ui5-input id="inputPreview2" show-suggestions style="width: 200px">
+		<ui5-suggestion-item class="suggestionItem" text="Laptop Lenovo"></ui5-suggestion-item>
+		<ui5-suggestion-item class="suggestionItem" text="HP Monitor 24"></ui5-suggestion-item>
+		<ui5-suggestion-item class="suggestionItem" text="IPhone 6s"></ui5-suggestion-item>
+		<ui5-suggestion-item class="suggestionItem" text="Dell"></ui5-suggestion-item>
+		<ui5-suggestion-item class="suggestionItem" text="IPad Air"></ui5-suggestion-item>
+	</ui5-input>
+	<br><br>
+
+	<div style="width: 200px">Test keyup</div>
+	<ui5-input id="keyupResult" style="width: 100%"></ui5-input>
+	<br><br>
+
+	<div style="width: 200px">Test suggestion-item-preview</div>
+	<ui5-input id="suggestionItemPreviewRes" style="width:100%"></ui5-input>
+	<br><br>
+
+	<div style="width: 200px">Test mouseover on item</div>
+	<ui5-input id="mouseoverResult" style="width: 100%"></ui5-input>
+
+	<ui5-popover id="quickViewCard2" no-arrow placement-type="Right" height="500px">
+		<ui5-input id="searchInput2" style="width: 300px">
+			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
+		</ui5-input>
+		<ui5-list style="height: 400px">
+			<ui5-li-groupheader>Actions</ui5-li-groupheader>
+			<ui5-li>Delete Product</ui5-li>
+			<ui5-li>Audit Log Settings</ui5-li>
+			<ui5-li>OData API Audit</ui5-li>
+			<ui5-li-groupheader>Products</ui5-li-groupheader>
+			<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+			<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
 	<script>
+		/* 
+		 * QuickviewCard Sample #1
+		 */
 		var focusQuickView = false;
 
 		/* 
@@ -75,7 +117,7 @@
 		/* 
 		 * Toggle quickviewCard on mouseover/mouseout
 		 */
-		 [].slice.call(document.querySelectorAll(".suggestionItem")).forEach(function(el) {
+		 [].slice.call(document.querySelectorAll("#inputPreview .suggestionItem")).forEach(function(el) {
 			el.addEventListener("mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
 
@@ -109,6 +151,54 @@
 			if (esc) {
 				await RenderScheduler.whenFinished();
 				inputPreview.focus();
+			}
+		});
+
+		/* 
+		 * QuickviewCard Test markup
+		 */
+		var focusQuickView2 = false;
+
+		inputPreview2.addEventListener("ui5-suggestion-item-preview", function (event) {
+			var item = event.detail.targetRef;
+			quickViewCard2.close();
+			quickViewCard2.openBy(item, true /* preventInitialFocus */);
+
+			// log info
+			suggestionItemPreviewRes.value = item.textContent;
+		});
+
+		inputPreview2.addEventListener("keyup", async function (event) {
+			const item = event.target.previewItem;
+			const combination = event.key === "1";
+
+			if (combination) {
+				focusQuickView2 = true;
+				await RenderScheduler.whenFinished();
+				quickViewCard2.applyFocus();
+			}
+
+			// log info
+			keyupResult.value = event.key + " on item: " + (item && item.text);
+		});
+
+		[].slice.call(document.querySelectorAll("#inputPreview2 .suggestionItem")).forEach(function(el) {
+			el.addEventListener("mouseover", function (event) {
+				const targetRef = event.detail.targetRef;
+				quickViewCard2.close();
+				quickViewCard2.openBy(targetRef, true /* preventInitialFocus */);
+
+				// log info
+				mouseoverResult.value = targetRef.textContent;
+			});
+		});
+
+		quickViewCard2.addEventListener("ui5-before-close", async event => {
+			const esc = event.detail.escPressed;
+
+			if (esc) {
+				await RenderScheduler.whenFinished();
+				inputPreview2.focus();
 			}
 		});
 	</script>
