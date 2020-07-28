@@ -6,8 +6,8 @@
 	_disable-initial-focus
 	content-only-on-desktop
 	@ui5-selection-change={{_listSelectionChange}}
-	@ui5-after-close={{_toggleIcon}}
-	@ui5-after-open={{_toggleIcon}}
+	@ui5-after-close={{_onAfterClose}}
+	@ui5-after-open={{_onAfterOpen}}
 >
 	<div slot="header" class="ui5-responsive-popover-header">
 		<div class="row">

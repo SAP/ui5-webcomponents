@@ -35,6 +35,9 @@ const metadata = {
 		 */
 		expanded: { type: Boolean },
 		_nMoreText: { type: String },
+		_hideNMoreText: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		"token-delete": {
@@ -130,6 +133,7 @@ class Tokenizer extends UI5Element {
 
 	_openOverflowPopover() {
 		this.fireEvent("show-more-items-press");
+		this.expanded = true;
 	}
 
 	_getTokens() {
@@ -181,7 +185,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get showNMore() {
-		return !this.expanded && this.showMore && this.overflownTokens.length;
+		return !this.expanded && this.showMore && this.overflownTokens.length && !this._hideNMoreText;
 	}
 
 	get contentDom() {

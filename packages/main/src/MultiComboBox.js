@@ -420,6 +420,19 @@ class MultiComboBox extends UI5Element {
 		this.fireSelectionChange();
 	}
 
+	_onAfterClose() {
+		this._tokenizer.expanded = false;
+		this._tokenizer._hideNMoreText = false;
+		this._toggleIcon();
+		this._tokenizer._invalidate();
+	}
+
+	_onAfterOpen() {
+		this._tokenizer._hideNMoreText = true;
+		this._toggleIcon();
+		this._inputDom.focus();
+	}
+
 	_tokenizerFocusOut() {
 		const tokenizer = this.shadowRoot.querySelector("ui5-tokenizer");
 		const tokensCount = tokenizer.tokens.length - 1;
@@ -427,6 +440,7 @@ class MultiComboBox extends UI5Element {
 		tokenizer.tokens.forEach(token => { token.selected = false; });
 
 		this._tokenizer.contentDom.scrollLeft = 0;
+		this._tokenizer.expanded = false;
 
 		if (tokensCount === 0 && this._deleting) {
 			setTimeout(() => {
