@@ -1,7 +1,5 @@
-commit ab3f92fef09e45dea274b4eac42be7237503450d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jul 28 10:00:21 2020 +0300
+commit 8123288518bd383e2b19fa1773d9d0d0bbf39bcc
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Jul 28 10:24:25 2020 +0300
 
-    fix(ui5-busyindicator): Set bigger opacity for IE (#2010)
-    
-    Fixes: #2005
+    fix(ui5-carousel): make content under the navigation arrows accessible (#2014)
