@@ -319,7 +319,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [...this.responsivePopover.querySelectorAll("ui5-li-suggestion-item, ui5-li-groupheader")];
+		return [...this.responsivePopover.querySelector("ui5-list").children];
 	}
 
 	_getComponent() {
