@@ -138,6 +138,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.SuggestionItem
  * @extends UI5Element
+ * @tagname ui5-suggestion-item
  * @public
  */
 class SuggestionItem extends UI5Element {
