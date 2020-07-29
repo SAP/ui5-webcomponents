@@ -1,5 +1,5 @@
-commit 03d439b627706f7585e57514cf088b6b3503ea8c
+commit 88ceb8357b14d6db7ab46c44361587a43641cf1d
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jul 29 10:54:01 2020 +0300
+Date:   Wed Jul 29 15:28:14 2020 +0300
 
-    feat(ui5-flexible-column-layout): animations can be disabled (#2027)
+    fix(ui5-select): Selection now changes instantly (#2031)
