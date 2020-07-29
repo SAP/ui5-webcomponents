@@ -1,9 +1,7 @@
-commit 1d2a2769842c23301667d4c71a1a75c9c5670eae
+commit 45de0f2d0f618740c1836c60fa29ee5c88edbad4
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jul 28 18:44:55 2020 +0300
+Date:   Wed Jul 29 10:18:58 2020 +0300
 
-     fix(ui5-input): Fix JS error thrown in IE (#2022)
+    fix(ui5-upload-collection-item): Activate editing with SPACE (#2024)
     
-    For some reason the statement "this.responsivePopover.querySelectorAll("ui5-list>*") always returns an empty array in IE, later leading to a JS error, when element from that array had to be accessed, so I had to tweak it a little bit.
-    
-    FIXES: #2019
+    FIXES: #2003
