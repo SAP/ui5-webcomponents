@@ -19,48 +19,48 @@
 }
 
 .ui5-messagestrip-root-no-icon {
-    padding: var(--_ui5_messagestrip_padding_no_icon);
+	padding: var(--_ui5_messagestrip_padding_no_icon);
 }
 
 .ui5-messagestrip-root-no-close-button {
-    padding-right: 1rem;
+	padding-right: 1rem;
 }
 
 .ui5-messagestrip-root--info {
-    background-color: var(--sapInformationBackground);
-    border-color: var(--sapInformationBorderColor);
-    color: var(--sapTextColor);
+	background-color: var(--sapInformationBackground);
+	border-color: var(--sapInformationBorderColor);
+	color: var(--sapTextColor);
 }
 
 .ui5-messagestrip-root--info .ui5-messagestrip-icon {
-    color: var(--sapInformativeElementColor);
+	color: var(--sapInformativeElementColor);
 }
 
 .ui5-messagestrip-root--positive {
-    background-color: var(--sapSuccessBackground);
-    border-color: var(--sapSuccessBorderColor);
+	background-color: var(--sapSuccessBackground);
+	border-color: var(--sapSuccessBorderColor);
 }
 
 .ui5-messagestrip-root--positive .ui5-messagestrip-icon {
-    color: var(--sapPositiveElementColor);
+	color: var(--sapPositiveElementColor);
 }
 
 .ui5-messagestrip-root--negative {
-    background-color: var(--sapErrorBackground);
-    border-color: var(--sapErrorBorderColor);
+	background-color: var(--sapErrorBackground);
+	border-color: var(--sapErrorBorderColor);
 }
 
 .ui5-messagestrip-root--negative .ui5-messagestrip-icon {
-    color: var(--sapNegativeElementColor);
+	color: var(--sapNegativeElementColor);
 }
 
 .ui5-messagestrip-root--warning {
-    background-color: var(--sapWarningBackground);
-    border-color: var(--sapWarningBorderColor);
+	background-color: var(--sapWarningBackground);
+	border-color: var(--sapWarningBorderColor);
 }
 
 .ui5-messagestrip-root--warning .ui5-messagestrip-icon {
-    color: var(--sapCriticalElementColor);
+	color: var(--sapCriticalElementColor);
 }
 
 /** Icon wrapper **/
@@ -76,17 +76,17 @@
 	width: 100%;
 	color: var(--sapTextColor);
 	line-height: 1.2;
-    font-family: var(--sapFontFamily);
-    font-size: var(--sapFontSize);
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontSize);
 }
 
 /** Close button **/
 .ui5-messagestrip-close-button {
-    width: var(--_ui5_messagestrip_close_button_size);
-    height: var(--_ui5_messagestrip_close_button_size);
-    position: absolute;
-    right: 0.125rem;
-    top: 0.125rem;
+	width: var(--_ui5_messagestrip_close_button_size);
+	height: var(--_ui5_messagestrip_close_button_size);
+	position: absolute;
+	right: 0.125rem;
+	top: 0.125rem;
 }
 
 /* RTL */
@@ -96,13 +96,13 @@
 }
 
 [dir="rtl"] .ui5-messagestrip-root-no-icon {
-    padding-right: 1rem;
-    padding-left: 2rem;
+	padding-right: 1rem;
+	padding-left: 2rem;
 }
 
 [dir="rtl"] .ui5-messagestrip-root-no-close-button {
-    padding-left: 1rem;
-    padding-right: 0;
+	padding-left: 1rem;
+	padding-right: 0;
 }
 
 [dir="rtl"] .ui5-messagestrip-icon-wrapper {
@@ -111,6 +111,6 @@
 }
 
 [dir="rtl"] .ui5-messagestrip-close-button {
-    left: 0.125rem;
-    right: auto;
+	left: 0.125rem;
+	right: auto;
 }
