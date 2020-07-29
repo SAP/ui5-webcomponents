@@ -23,7 +23,7 @@
 			</div>
 		</div>
 
-		<ui5-list mode="SingleSelect" separators="None" @keydown="{{_handlePickerKeydown}}" @ui5-item-press="{{_selectionChange}}">
+		<ui5-list mode="SingleSelectAuto" separators="None" @keydown="{{_handlePickerKeydown}}" @ui5-selection-change="{{_handleSelectionChange}}" @ui5-item-press="{{_handleItemPress}}">
 			{{#each _syncedOptions}}
 				<ui5-li ?selected="{{this.selected}}" icon="{{this.icon}}" id="{{this.id}}-li">
 					{{this.textContent}}
