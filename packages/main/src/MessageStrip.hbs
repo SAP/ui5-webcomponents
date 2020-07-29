@@ -1,4 +1,4 @@
-<div class="{{classes.main}}"
+<div class="{{classes.root}}"
 	id="{{_id}}"
 	role="alert"
 	dir="{{effectiveDir}}"
@@ -16,19 +16,15 @@
 	{{/unless}}
 
 	<span class="ui5-hidden-text">{{hiddenText}}</span>
-	<span class="{{classes.label}}"><slot></slot></span>
+	<span class="ui5-messagestrip-text"><slot></slot></span>
 
 	{{#unless noCloseButton}}
-		<button
-			class="ui5-messagestrip-close-icon-wrapper"
-			title="{{_closeButtonText}}"
-			@click={{_closeClick}}
-		>
-			<ui5-icon
-				class="ui5-messagestrip-close-icon"
-				name="decline"
-			>
-			</ui5-icon>
-		</button>
+		<ui5-button
+				icon="decline"
+				design="Transparent"
+				class="ui5-messagestrip-close-button"
+				title="{{_closeButtonText}}"
+				@click={{_closeClick}}
+		></ui5-button>
 	{{/unless}}
 </div>
