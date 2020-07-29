@@ -3,7 +3,7 @@ const assert = require("chai").assert;
 
 
 describe("FlexibleColumnLayout Behavior", () => {
-	browser.url("http://localhost:8081/test-resources/pages/FCL.html");
+	browser.url("http://localhost:8081/test-resources/pages/FCL.html?sap-ui-animationMode=none");
 
 	it("tests Desktop size 1400px", () => {
 		// act
