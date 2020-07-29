@@ -365,8 +365,10 @@ class Select extends UI5Element {
 	 * @private
 	 */
 	_handleItemPress(event) {
-		const selectedItemIndex = this._getSelectedItemIndex(event.detail.item);
+		const item = event.detail.item;
+		const selectedItemIndex = this._getSelectedItemIndex(item);
 		this._select(selectedItemIndex);
+
 		this._toggleRespPopover();
 	}
 
