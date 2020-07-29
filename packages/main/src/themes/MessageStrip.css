@@ -83,10 +83,16 @@
 /** Close button **/
 .ui5-messagestrip-close-button {
 	width: var(--_ui5_messagestrip_close_button_size);
+	min-width: var(--_ui5_messagestrip_close_button_size);
 	height: var(--_ui5_messagestrip_close_button_size);
+	min-height: var(--_ui5_messagestrip_close_button_size);
 	position: absolute;
 	right: 0.125rem;
 	top: 0.125rem;
+	color: var(--sapTextColor);
+}
+.ui5-messagestrip-close-button[active] {
+	color: var(--sapButton_Active_TextColor);
 }
 
 /* RTL */

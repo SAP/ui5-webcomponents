@@ -83,6 +83,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the size of the icon inside the <code>ui5-button</code>.
+		 *
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		iconSize: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
 		 * When set to <code>true</code>, the <code>ui5-button</code> will
 		 * automatically submit the nearest form element upon <code>press</code>.
 		 * <br><br>
@@ -381,6 +394,15 @@ class Button extends UI5Element {
 		}
 
 		return this.nonFocusable ? "-1" : this._tabIndex;
+	}
+
+	get styles() {
+		return {
+			icon: {
+				width: this.iconSize,
+				height: this.iconSize,
+			},
+		};
 	}
 
 	static async onDefine() {
