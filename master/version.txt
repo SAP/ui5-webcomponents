@@ -1,7 +1,5 @@
-commit 45de0f2d0f618740c1836c60fa29ee5c88edbad4
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jul 29 10:18:58 2020 +0300
+commit 03d439b627706f7585e57514cf088b6b3503ea8c
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jul 29 10:54:01 2020 +0300
 
-    fix(ui5-upload-collection-item): Activate editing with SPACE (#2024)
-    
-    FIXES: #2003
+    feat(ui5-flexible-column-layout): animations can be disabled (#2027)
