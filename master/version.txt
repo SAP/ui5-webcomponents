@@ -1,5 +1,5 @@
-commit 88ceb8357b14d6db7ab46c44361587a43641cf1d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jul 29 15:28:14 2020 +0300
+commit 7ffb04edf28d16b6c5b9b4cb8239642c85bb800f
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Wed Jul 29 17:21:50 2020 +0200
 
-    fix(ui5-select): Selection now changes instantly (#2031)
+    docs(ui5-suggestion-item): add missing tagname (#2034)
