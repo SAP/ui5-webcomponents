@@ -1,9 +1,50 @@
+
 # Change Log
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.20.9](https://github.com/SAP/ui5-webcomponents/compare/v0.20.8...v0.20.9) (2020-07-21)
+# [0.20.10](https://github.com/SAP/ui5-webcomponents/compare/v0.21.9...v0.21.10) (2020-07-29)
+
+
+### Fixes
+
+* **ui5-input:** Fix JS error thrown in IE ([#2022](https://github.com/SAP/ui5-webcomponents/issues/2022))
+([48dfd340](https://github.com/SAP/ui5-webcomponents/commit/48dfd340))
+
+* **ui5-input:** Suggestions can now be arbitrary list items ([#1969](https://github.com/SAP/ui5-webcomponents/issues/1969))
+([f3b05674](https://github.com/SAP/ui5-webcomponents/commit/f3b05674))
+
+* **ui5-input:** Sync width of suggestions popover and input ([#1979](https://github.com/SAP/ui5-webcomponents/issues/1979))
+([adf0d7f4](https://github.com/SAP/ui5-webcomponents/commit/adf0d7f4))
+
+* **ui5-tabcontainer:** Fix accessibility of overflow button ([#1978](https://github.com/SAP/ui5-webcomponents/issues/1978))
+([7b980ef8](https://github.com/SAP/ui5-webcomponents/commit/7b980ef8))
+
+* **ui5-tabcontainer:** Prevent setting the selected property on ui5-tab internally ([#1974](https://github.com/SAP/ui5-webcomponents/issues/1974))
+([b45c0587](https://github.com/SAP/ui5-webcomponents/commit/b45c0587))
+
+* **framework:** Take region into account for i18n assets ([#1985](https://github.com/SAP/ui5-webcomponents/issues/1985))
+([a75c96d3](https://github.com/SAP/ui5-webcomponents/commit/a75c96d3))
+
+* **tools:** Building third-party packages no longer fails ([#1994](https://github.com/SAP/ui5-webcomponents/issues/1994))
+([afdd5064](https://github.com/SAP/ui5-webcomponents/commit/afdd5064))
+
+### Code Refactoring
+* **ui5-flexlible-column-layout:** Add custom layouts configuration ([#1987](https://github.com/SAP/ui5-webcomponents/issues/1987))
+([bbd5f114](https://github.com/SAP/ui5-webcomponents/commit/bbd5f114))
+
+
+### Features
+* **ui5-input:** Announce suggestions count ([#1975](https://github.com/SAP/ui5-webcomponents/issues/1975))
+([8dfa088](https://github.com/SAP/ui5-webcomponents/commit/8dfa088))
+
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [0.21.9](https://github.com/SAP/ui5-webcomponents/compare/v0.21.8...v0.21.9) (2020-07-21)
 
 
 ### Features
