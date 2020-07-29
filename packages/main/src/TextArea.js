@@ -6,6 +6,7 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import Popover from "./Popover.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
@@ -448,7 +449,7 @@ class TextArea extends UI5Element {
 
 	async closePopover() {
 		this.popover = await this._getPopover();
-		this.popover && this.popover.close(false, false, true);
+		this.popover && this.popover.close();
 	}
 
 	async _getPopover() {
@@ -585,7 +586,10 @@ class TextArea extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		await Promise.all([
+			Popover.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 	}
 }
 

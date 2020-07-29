@@ -22,11 +22,15 @@
 .ui5-card-header {
 	position: relative;
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	background: var(--sapTile_Background);
 	border-bottom: 1px solid var(--_ui5_card_header_border_color);
 	padding: var(--_ui5_card_content_padding);
 	outline: none;
+}
+
+:host([subheading]) .ui5-card-header {
+	align-items: flex-start;
 }
 
 /* Card with no content */

@@ -17,7 +17,7 @@ import {
  * @author SAP SE
  */
 class Suggestions {
-	constructor(component, slotName, handleFocus) {
+	constructor(component, slotName, highlight, handleFocus) {
 		// The component, that the suggestion would plug into.
 		this.component = component;
 
@@ -26,6 +26,9 @@ class Suggestions {
 
 		// Defines, if the focus will be moved via the arrow keys.
 		this.handleFocus = handleFocus;
+
+		// Defines, if the suggestions should highlight.
+		this.highlight = highlight;
 
 		// Press and Focus handlers
 		this.fnOnSuggestionItemPress = this.onItemPress.bind(this);
@@ -43,16 +46,21 @@ class Suggestions {
 	}
 
 	/* Public methods */
-	defaultSlotProperties() {
+	defaultSlotProperties(hightlightValue) {
 		const inputSuggestionItems = this._getComponent().suggestionItems;
-
+		const highlight = this.highlight && !!hightlightValue;
 		const suggestions = [];
+
 		inputSuggestionItems.map((suggestion, idx) => {
+			const text = highlight ? this.getHighlightedText(suggestion, hightlightValue) : this.getRowText(suggestion);
+			const description = highlight ? this.getHighlightedDesc(suggestion, hightlightValue) : this.getRowDesc(suggestion);
+
 			return suggestions.push({
-				text: suggestion.text || suggestion.textContent, // keep textContent for compatibility
-				description: suggestion.description || undefined,
+				text,
+				description,
 				image: suggestion.image || undefined,
 				icon: suggestion.icon || undefined,
+				type: suggestion.type || undefined,
 				info: suggestion.info || undefined,
 				infoState: suggestion.infoState,
 				group: suggestion.group,
@@ -92,14 +100,19 @@ class Suggestions {
 		return false;
 	}
 
-	toggle(bToggle) {
+	toggle(bToggle, { preventFocusRestore }) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
 
 		if (toggle) {
 			this.open();
 		} else {
-			this.close();
+			this.close(preventFocusRestore);
 		}
+	}
+
+	async _isScrollable() {
+		const sc = await this._getScrollContainer();
+		return sc.offsetHeight < sc.scrollHeight;
 	}
 
 	async open() {
@@ -108,9 +121,9 @@ class Suggestions {
 		this.responsivePopover.open(this._getComponent());
 	}
 
-	async close() {
+	async close(preventFocusRestore = false) {
 		this.responsivePopover = await this._respPopover();
-		this.responsivePopover.close();
+		this.responsivePopover.close(false, false, preventFocusRestore);
 	}
 
 	updateSelectedItemPosition(pos) {
@@ -131,15 +144,22 @@ class Suggestions {
 	}
 
 	onItemSelected(selectedItem, keyboardUsed) {
-		const item = selectedItem || this._getItems()[this.selectedItemIndex];
+		const allItems = this._getItems();
+		const item = selectedItem || allItems[this.selectedItemIndex];
 
-		this.selectedItemIndex = this._getItems().indexOf(item);
+		this.selectedItemIndex = allItems.indexOf(item);
 
 		this.accInfo = {
 			currentPos: this.selectedItemIndex + 1,
-			listSize: this._getItems().length,
+			listSize: allItems.length,
 			itemText: item.textContent,
 		};
+
+		// If the item is "Inactive", prevent selection with SPACE or ENTER
+		// to have consistency with the way "Inactive" items behave in the ui5-list
+		if (item.type === "Inactive") {
+			return;
+		}
 
 		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
 		item.selected = false;
@@ -299,7 +319,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li, ui5-li-groupheader"));
+		return [...this.responsivePopover.querySelector("ui5-list").children];
 	}
 
 	_getComponent() {
@@ -336,6 +356,44 @@ class Suggestions {
 			itemSelectionText = i18nBundle.getText(LIST_ITEM_SELECTED);
 
 		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;
+	}
+
+	getRowText(suggestion) {
+		return this.sanitizeText(suggestion.text || suggestion.textContent);
+	}
+
+	getRowDesc(suggestion) {
+		if (suggestion.description) {
+			return this.sanitizeText(suggestion.description);
+		}
+	}
+
+	getHighlightedText(suggestion, input) {
+		let text = suggestion.text || suggestion.textContent;
+		text = this.sanitizeText(text);
+
+		return this.hightlightInput(text, input);
+	}
+
+	getHighlightedDesc(suggestion, input) {
+		let text = suggestion.description;
+		text = this.sanitizeText(text);
+
+		return this.hightlightInput(text, input);
+	}
+
+	hightlightInput(text, input) {
+		if (!text) {
+			return text;
+		}
+
+		const inputEscaped = input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+		const regEx = new RegExp(inputEscaped, "ig");
+		return text.replace(regEx, match => `<b>${match}</b>`);
+	}
+
+	sanitizeText(text) {
+		return text && text.replace("<", "&lt");
 	}
 }
 

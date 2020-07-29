@@ -14,6 +14,8 @@
             type="Active"
             level="{{this.level}}"
             icon="{{this.treeItem.icon}}"
+            ?_toggle-button-end="{{../_toggleButtonEnd}}"
+            ?_minimal="{{../_minimal}}"
             .treeItem="{{this.treeItem}}"
             .expanded="{{this.treeItem.expanded}}"
             .selected="{{this.treeItem.selected}}"

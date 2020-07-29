@@ -3,12 +3,17 @@
 const child_process = require("child_process");
 
 let command = process.argv[2];
+const argument = process.argv[3];
 
-// Support for running the test task with a spec parameter
-if (command === "test") {
-	const spec = process.argv[3];
-	if (spec) {
-		command = `test.spec --spec ${spec}`;
+if (command === "watch") {
+	if (["src", "test", "bundles", "styles", "templates", "samples"].includes(argument)) {
+		command = `watch.${argument}`;
+	}
+} else if (command === "test") {
+	if (argument === "--no-server") { // yarn test --no-server
+		command = `test.run`;
+	} else if (argument) { // yarn test test/specs/Button.spec.js
+		command = `test.spec --spec ${argument}`;
 	}
 }
 

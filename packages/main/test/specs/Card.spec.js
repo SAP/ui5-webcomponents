@@ -6,10 +6,16 @@ describe("Card general interaction", () => {
 	it("tests initial rendering", () => {
 		const card = browser.$("#card");
 
-		assert.ok(card, "Has shadow root");
+		assert.ok(card.isExisting(), "The component has shadow root.");
 	});
 
-	it("fires headerPress upon click, Enter and Space", () => {
+	it("tests status not rendered, when action is set", () => {
+		const status = browser.$("#actionCard").shadow$(".ui5-card-status");
+
+		assert.notOk(status.isExisting(), "The status DOM is not rendered.");
+	});
+
+	it("tests headerPress upon click, Enter and Space", () => {
 		const cardHeader = browser.$("#card").shadow$(".ui5-card-header");
 		const cardHeader2 = browser.$("#card2").shadow$(".ui5-card-header");
 		const field = browser.$("#field");
@@ -18,13 +24,12 @@ describe("Card general interaction", () => {
 		cardHeader.keys("Space");
 		cardHeader.keys("Enter");
 
-		assert.strictEqual(field.getProperty("value"), "3", "headerPress should be called 3 times");
-
+		assert.strictEqual(field.getProperty("value"), "3", "The headerPress event should be called 3 times.");
 
 		cardHeader2.click();
 		cardHeader2.keys("Space");
 		cardHeader2.keys("Enter");
 
-		assert.strictEqual(field.getProperty("value"), "3", "events count should remain 3 as the header is not interactive.");
+		assert.strictEqual(field.getProperty("value"), "3", "The events count should remain 3 as the header is not interactive.");
 	});
 });

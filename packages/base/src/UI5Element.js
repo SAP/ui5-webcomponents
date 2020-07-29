@@ -47,6 +47,8 @@ class UI5Element extends HTMLElement {
 		this._upgradeAllProperties();
 		this._initializeContainers();
 		this._upToDate = false;
+		this._inDOM = false;
+		this._fullyConnected = false;
 
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
@@ -56,6 +58,7 @@ class UI5Element extends HTMLElement {
 
 		this._monitoredChildProps = new Map();
 		this._firePropertyChange = false;
+		this._shouldInvalidateParent = false;
 	}
 
 	/**
@@ -109,21 +112,28 @@ class UI5Element extends HTMLElement {
 		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
+		this._inDOM = true;
+
+		if (slotsAreManaged) {
+			// always register the observer before yielding control to the main thread (await)
+			this._startObservingDOMChildren();
+			await this._processChildren();
+		}
+
 		// Render the Shadow DOM
 		if (needsShadowDOM) {
-			if (slotsAreManaged) {
-				// always register the observer before yielding control to the main thread (await)
-				this._startObservingDOMChildren();
-				await this._processChildren();
-			}
-
 			if (!this.shadowRoot) { // Workaround for Firefox74 bug
 				await Promise.resolve();
 			}
 
+			if (!this._inDOM) { // Component removed from DOM while _processChildren was running
+				return;
+			}
+
 			RenderScheduler.register(this);
-			await RenderScheduler.renderImmediately(this);
+			RenderScheduler.renderImmediately(this);
 			this._domRefReadyPromise._deferredResolve();
+			this._fullyConnected = true;
 			if (typeof this.onEnterDOM === "function") {
 				this.onEnterDOM();
 			}
@@ -139,20 +149,27 @@ class UI5Element extends HTMLElement {
 		const needsStaticArea = this.constructor._needsStaticArea();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
-		if (needsShadowDOM) {
-			if (slotsAreManaged) {
-				this._stopObservingDOMChildren();
-			}
+		this._inDOM = false;
 
+		if (slotsAreManaged) {
+			this._stopObservingDOMChildren();
+		}
+
+		if (needsShadowDOM) {
 			RenderScheduler.deregister(this);
-			if (typeof this.onExitDOM === "function") {
-				this.onExitDOM();
+			if (this._fullyConnected) {
+				if (typeof this.onExitDOM === "function") {
+					this.onExitDOM();
+				}
+				this._fullyConnected = false;
 			}
 		}
 
 		if (needsStaticArea) {
 			this.staticAreaItem._removeFragmentFromStaticArea();
 		}
+
+		RenderScheduler.cancelRender(this);
 	}
 
 	/**
@@ -251,6 +268,10 @@ class UI5Element extends HTMLElement {
 				this._attachChildPropertyUpdated(child, slotData.listenFor);
 			}
 
+			if (child.isUI5Element && slotData.invalidateParent) {
+				child._shouldInvalidateParent = true;
+			}
+
 			if (isSlot(child)) {
 				this._attachSlotChange(child);
 			}
@@ -289,6 +310,7 @@ class UI5Element extends HTMLElement {
 		children.forEach(child => {
 			if (child && child.isUI5Element) {
 				this._detachChildPropertyUpdated(child);
+				child._shouldInvalidateParent = false;
 			}
 
 			if (isSlot(child)) {
@@ -471,6 +493,10 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_invalidate() {
+		if (this._shouldInvalidateParent) {
+			this.parentNode._invalidate();
+		}
+
 		if (!this._upToDate) {
 			// console.log("already invalidated", this, ...arguments);
 			return;
@@ -590,6 +616,15 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * Use this method in order to get a reference to element in the shadow root of a web component
+	 * @public
+	 * @param {String} refName Defines the name of the stable DOM ref
+	 */
+	getStableDomRef(refName) {
+		return this.getDomRef().querySelector(`[data-ui5-stable=${refName}]`);
+	}
+
+	/**
 	 * Set the focus to the element, returned by "getFocusDomRef()" (marked by "data-sap-focus-ref")
 	 * @public
 	 */
@@ -609,10 +644,11 @@ class UI5Element extends HTMLElement {
 	 * @param name - name of the event
 	 * @param data - additional data for the event
 	 * @param cancelable - true, if the user can call preventDefault on the event object
+	 * @param bubbles - true, if the event bubbles
 	 * @returns {boolean} false, if the event was cancelled (preventDefault called), true otherwise
 	 */
-	fireEvent(name, data, cancelable) {
-		const eventResult = this._fireEvent(name, data, cancelable);
+	fireEvent(name, data, cancelable = false, bubbles = true) {
+		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
 		const camelCaseEventName = kebabToCamelCase(name);
 
 		if (camelCaseEventName !== name) {
@@ -622,13 +658,13 @@ class UI5Element extends HTMLElement {
 		return eventResult;
 	}
 
-	_fireEvent(name, data, cancelable) {
+	_fireEvent(name, data, cancelable = false, bubbles = true) {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
 
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
 			detail: data,
 			composed: false,
-			bubbles: true,
+			bubbles,
 			cancelable,
 		});
 
@@ -642,7 +678,7 @@ class UI5Element extends HTMLElement {
 		const customEvent = new CustomEvent(name, {
 			detail: data,
 			composed: false,
-			bubbles: true,
+			bubbles,
 			cancelable,
 		});
 

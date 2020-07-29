@@ -26,7 +26,8 @@
 		<ui5-input id="myInput"
 			style="width: 500px"
 			show-suggestions
-			placeholder="Search for a country ...">
+			placeholder="Search for a country ..."
+			highlight>
 		</ui5-input>
 	</div>
 
@@ -39,37 +40,6 @@
 		</ui5-input>
 	</div>
 
-	<h3> Input suggestions with ui5-suggestion-item</h3>
-
-	<div style="width: 200px">Test keyup</div>
-	<ui5-input id="keyupResult" style="width: 100%"></ui5-input>
-	<br><br>
-
-	<div style="width: 200px">Test suggestion-item-preview</div>
-	<ui5-input id="inputItemPreviewRes" style="width:100%"></ui5-input>
-	<br><br>
-
-	<div style="width: 200px">Test mouseover on item</div>
-	<ui5-input id="mouseoverResult" style="width: 100%"></ui5-input>
-	<br><br>
-
-	<div style="width: 200px">Test mouseout on item</div>
-	<ui5-input id="mouseoutResult" style="width:100%"></ui5-input>
-	<br><br>
-
-	<ui5-input id="inputPreview" show-suggestions style="width: 200px">
-		<ui5-suggestion-item class="suggestionItem" text="Cozy"></ui5-suggestion-item>
-		<ui5-suggestion-item class="suggestionItem" text="Compact"></ui5-suggestion-item>
-		<ui5-suggestion-item class="suggestionItem" text="Condensed"></ui5-suggestion-item>
-		<ui5-suggestion-item class="suggestionItem" text="Cozy"></ui5-suggestion-item>
-		<ui5-suggestion-item class="suggestionItem" text="Compact"></ui5-suggestion-item>
-		<ui5-suggestion-item class="suggestionItem" text="Condensed"></ui5-suggestion-item>
-	</ui5-input>
-
-	<ui5-popover id="quickViewCard" header-text="My Heading" id="pop" placement-type="Right">
-		<ui5-button>Click me</ui5-button>
-	</ui5-popover>
-
 	<br/>
 	<br/>
 	<h3>Input suggestions with ui5-li</h3>
@@ -77,9 +47,8 @@
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
+		<ui5-li type="Inactive">Inactive Compact</ui5-li>
+		<ui5-li type="Inactive">Inactive Condensed</ui5-li>
 	</ui5-input>
 	<br/>
 	<br/>
@@ -90,8 +59,16 @@
 		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
 		<ui5-suggestion-item group text="Themes"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Quartz"></ui5-suggestion-item>
-		<ui5-suggestion-item text="HCB"></ui5-suggestion-item>
+		<ui5-suggestion-item type="Inactive" text="Inactive Quartz"></ui5-suggestion-item>
+		<ui5-suggestion-item type="Inactive" text="Inactive HCB"></ui5-suggestion-item>
+	</ui5-input>
+
+	<h3>Input suggestions with highlighing</h3>
+	<ui5-input id="myInputHighlighted" highlight show-suggestions style="width: 100%">
+		<ui5-suggestion-item text="Adam D" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Aanya Sing" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Allen K" description="Technical Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Alex" description="Technical Support"></ui5-suggestion-item>
 	</ui5-input>
 
 	<h3> Input disabled</h3>
@@ -295,6 +272,18 @@
 	<ui5-label id="enterNameLabel">Enter name: </ui5-label>
 	<ui5-input aria-labelledby="enterNameLabel"></ui5-input>
 
+	<h3>Input suggestions with highlighing and XSS test</h3>
+	<ui5-input highlight show-suggestions style="width: 100%">
+		<ui5-suggestion-item text="<script>alert('XSS')</script>" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Aanya Sing" description="<b onmouseover=alert('XSS')></b>">
+		</ui5-suggestion-item>
+	</ui5-input>
+
+	<h3>Test width of suggestions popover</h3>
+	<ui5-input id="suggestionsPopoverWidth" show-suggestions style="width: 350px !important;">
+		<ui5-li>Argentinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</ui5-li>
+	</ui5-input>
+
 	<script>
 		var sap_database_entries = [{ key: "A", text: "A" }, { key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "B", text: "B" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "C", text: "C" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "L", text: "L" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "P", text: "P" }, { key: "Prt", text: "Portugal" }, { key: "S", text: "S" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Sey", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
 
@@ -330,15 +319,15 @@
 			}
 
 			suggestionItems.forEach(function(item, idx) {
-				var li = document.createElement("ui5-suggestion-item");
-				li.id = item.key;
-				li.icon = "world";
-				li.info = "explore";
-				li.group = item.text.length === 1;
-				li.infoState = "Success";
-				li.description = "travel the world";
-				li.text = item.text;
-				input.appendChild(li);
+				var suggestion = document.createElement("ui5-suggestion-item");
+				suggestion.id = item.key;
+				suggestion.icon = "world";
+				suggestion.info = "explore";
+				suggestion.group = item.text.length === 1;
+				suggestion.infoState = "Success";
+				suggestion.description = "travel the world";
+				suggestion.text = item.text
+				input.appendChild(suggestion);
 			});
 
 			labelLiveChange.innerHTML = "Event [input] :: " + value;
@@ -396,46 +385,6 @@
 		});
 		inputChange.addEventListener("ui5-change", function (event) {
 			inputChangeResult.value = ++inputChangeResultCounter;
-		});
-
-		// Preview suggestion item events
-		inputPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
-			var item = event.detail.targetRef;
-			inputItemPreviewRes.value = item.textContent;
-
-			quickViewCard.close(false, true, true);
-			quickViewCard.openBy(item, true);
-		});
-
-		inputPreview.addEventListener("keyup", function (event) {
-			const item = event.target.previewItem;
-			const combination = event.key === "1" && event.shiftKey && event.ctrlKey;
-
-			keyupResult.value = combination ? "[ctr+shift+1] on item: " + (item && item.text) : event.key;
-		});
-
-		[].slice.call(document.querySelectorAll(".suggestionItem")).forEach(function(el) {
-			el.addEventListener("mouseover", function (event) {
-				const targetRef = event.detail.targetRef;
-
-				mouseoverResult.value = targetRef.textContent;
-				quickViewCard.openBy(targetRef, true);
-			});
-
-			el.addEventListener("mouseout", function (event) {
-				const targetRef = event.detail.targetRef;
-
-				mouseoutResult.value = targetRef.textContent;
-				quickViewCard.close(false, true, true);
-			});
-		});
-
-		inputPreview.addEventListener("ui5-suggestion-scroll", function (event) {
-			console.log("scroll", { scrolltop: event.detail.scrollTop });
-		});
-
-		inputPreview.addEventListener("focusout", function (event) {
-			console.log("focusout");
 		});
 
 		scrollInput.addEventListener("ui5-suggestion-scroll", function (event) {

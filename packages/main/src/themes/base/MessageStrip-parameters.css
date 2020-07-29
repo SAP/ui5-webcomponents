@@ -12,4 +12,5 @@
 	--_ui5_messagestrip_close_button_size: 1.625rem;
 	--_ui5_messagestrip_icon_top: 0.4375rem;
 	--_ui5_messagestrip_focus_width: 1px;
+	--_ui5_messagestrip_focus_offset: -2px;
 }

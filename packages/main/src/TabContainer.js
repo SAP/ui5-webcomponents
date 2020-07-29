@@ -265,12 +265,6 @@ class TabContainer extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		// Set selected
-		const hasSelected = this.items.some(item => item.selected);
-		if (this.items.length && !hasSelected) {
-			this.items[0].selected = true;
-		}
-
 		// Set external properties to items
 		this.items.forEach((item, index) => {
 			item._isInline = this.tabLayout === TabLayout.Inline;
@@ -452,7 +446,8 @@ class TabContainer extends UI5Element {
 		this._updateScrolling();
 	}
 
-	_closeRespPopover() {
+	async _closeRespPopover() {
+		this.responsivePopover = await this._respPopover();
 		this.responsivePopover.close();
 	}
 
@@ -462,6 +457,10 @@ class TabContainer extends UI5Element {
 		this._scrollable = headerScrollContainer.offsetWidth < headerScrollContainer.scrollWidth;
 		this._scrollableBack = headerScrollContainer.scrollLeft > 0;
 		this._scrollableForward = Math.ceil(headerScrollContainer.scrollLeft) < headerScrollContainer.scrollWidth - headerScrollContainer.offsetWidth;
+
+		if (!this._scrollable) {
+			this._closeRespPopover();
+		}
 	}
 
 	_getHeader() {

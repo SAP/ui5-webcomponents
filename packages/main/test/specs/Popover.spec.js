@@ -44,6 +44,32 @@ describe("Popover general interaction", () => {
 		assert.ok(!popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
+	it("tests popover does not close with opener", () => {
+		const popover = browser.$("#quickViewCard");
+		const btnOpenPopover = $("#btnQuickViewCardOpener");
+		const btnMoveFocus = $("#btnMoveFocus");
+
+		// assert - the opener is visible
+		assert.strictEqual(btnOpenPopover.isDisplayedInViewport(), true,
+			"Opener is available.");
+
+		// act - open popover and hide opener
+		btnOpenPopover.click();
+
+		browser.pause(500);
+
+		// assert - the popover remains open, although opener is not visible
+		assert.strictEqual(popover.getAttribute("open"), "true",
+			"Popover remains open.");
+		assert.strictEqual(popover.isDisplayedInViewport(), true,
+			"Popover remains open.");
+		assert.strictEqual(btnOpenPopover.isDisplayedInViewport(), false,
+			"Opener is not available.");
+
+		// close the popover
+		btnMoveFocus.click();
+	});
+
 	it("tests clicking inside the popover does not close it", () => {
 		const btnOpenPopover = $("#btn");
 		const btnInPopover = $("#popbtn");

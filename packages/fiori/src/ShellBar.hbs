@@ -19,6 +19,7 @@
 				@keydown="{{_logoKeydown}}"
 				@keyup="{{_logoKeyup}}"
 				tabindex="0"
+				data-ui5-stable="logo"
 			>
 				<slot name="logo"></slot>
 			</span>
@@ -62,7 +63,9 @@
 				title="{{_copilotText}}"
 				@keydown="{{_coPilotKeydown}}"
 				@keyup="{{_coPilotKeyup}}"
-				?active="{{coPilotActive}}">
+				?active="{{coPilotActive}}"
+				data-ui5-stable="copilot"
+			>
 				{{> coPilot}}
 			</div>
 		{{else}}
@@ -107,6 +110,7 @@
 					data-count="{{this.count}}"
 					data-ui5-notification-count="{{../notificationCount}}"
 					data-ui5-external-action-item-id="{{this.refItemid}}"
+					data-ui5-stable="{{stableDomRef}}"
 					@click={{this.press}}
 				></ui5-button>
 			{{/each}}
@@ -123,6 +127,7 @@
 				aria-label="{{_notificationsText}}"
 				title="{{_notificationsText}}"
 				._buttonAccInfo="{{accInfo.notifications}}"
+				data-ui5-stable="notifications"
 			></ui5-button>
 			{{/if}}
 
@@ -135,6 +140,7 @@
 				aria-label="{{_overflowText}}"
 				title="{{_overflowText}}"
 				._buttonAccInfo="{{accInfo.overflow}}"
+				data-ui5-stable="overflow"
 			></ui5-button>
 
 			{{#if hasProfile}}
@@ -146,10 +152,12 @@
 					aria-label="{{_profileText}}"
 					title="{{_profileText}}"
 					._buttonAccInfo="{{accInfo.profile}}"
-					class="ui5-shellbar-button ui5-shellbar-image-button">
-						<slot
-							name="profile"
-						></slot>
+					class="ui5-shellbar-button ui5-shellbar-image-button"
+					data-ui5-stable="profile"
+				>
+					<slot
+						name="profile"
+					></slot>
 				</ui5-button>
 			{{/if}}
 
@@ -164,6 +172,7 @@
 				aria-label="{{_productsText}}"
 				title="{{_productsText}}"
 				._buttonAccInfo="{{accInfo.products}}"
+				data-ui5-stable="product-switch"
 			></ui5-button>
 			{{/if}}
 		</div>

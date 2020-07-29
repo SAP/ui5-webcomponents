@@ -761,6 +761,7 @@ class ShellBar extends UI5Element {
 					press: this._handleCustomActionPress.bind(this),
 					custom: true,
 					title: item.title,
+					stableDomRef: item.stableDomRef,
 				};
 			}),
 			{

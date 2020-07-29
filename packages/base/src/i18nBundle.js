@@ -21,7 +21,7 @@ class I18nBundle {
 	 */
 	getText(textObj, ...params) {
 		if (typeof textObj === "string") {
-			textObj = { key: textObj, defaultText: "MISSING TEXT" };
+			textObj = { key: textObj, defaultText: textObj };
 		}
 
 		if (!textObj || !textObj.key) {
@@ -29,7 +29,7 @@ class I18nBundle {
 		}
 
 		const bundle = getI18nBundleData(this.packageName);
-		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : (textObj.defaultText || "");
+		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : (textObj.defaultText || textObj.key);
 
 		return formatMessage(messageText, params);
 	}

@@ -4,6 +4,7 @@
 		_disable-initial-focus
 		placement-type="Bottom"
 		horizontal-align="Left"
+		style="{{styles.suggestionsPopover}}"
 		@ui5-after-open="{{_afterOpenPopover}}"
 		@ui5-after-close="{{_afterClosePopover}}"
 		@scroll="{{_scroll}}"
@@ -49,23 +50,8 @@
 		{{/if}}
 	{{/unless}}
 
-		<ui5-list separators="Inner">
-			{{#each suggestionsTexts}}
-				{{#if group}}
-					<ui5-li-groupheader data-ui5-key="{{key}}">{{ this.text }}</ui5-li-groupheader>
-				{{else}}
-					<ui5-li
-						image="{{this.image}}"
-						icon="{{this.icon}}"
-						description="{{this.description}}"
-						info="{{this.info}}"
-						info-state="{{this.infoState}}"
-						@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
-						data-ui5-key="{{key}}"
-					>{{ this.text }}</ui5-li>
-				{{/if}}
-			{{/each}}
-		</ui5-list>
+		{{> suggestionsList}}
+
 		{{#if _isPhone}}
 			<div slot="footer" class="ui5-responsive-popover-footer">
 				<ui5-button
@@ -80,6 +66,7 @@
 		<ui5-popover
 			skip-registry-update
 			_disable-initial-focus
+			prevent-focus-restore
 			no-padding
 			no-arrow
 			class="ui5-valuestatemessage-popover"
@@ -99,4 +86,29 @@
 			{{this}}
 		{{/each}}
 	{{/if}}
+{{/inline}}
+
+{{#*inline "suggestionsList"}}
+	<ui5-list separators="{{suggestionSeparators}}">
+		{{#each suggestionsTexts}}
+			{{#if group}}
+				<ui5-li-groupheader data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-groupheader>
+			{{else}}
+				<ui5-li-suggestion-item
+					image="{{this.image}}"
+					icon="{{this.icon}}"
+					info="{{this.info}}"
+					type="{{this.type}}"
+					info-state="{{this.infoState}}"
+					@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
+					data-ui5-key="{{key}}"
+				>
+					{{{ this.text }}}
+					{{#if this.description}}
+						<span slot="richDescription">{{{ this.description }}}</span>
+					{{/if}}
+				</ui5-li-suggestion-item>
+			{{/if}}
+		{{/each}}
+	</ui5-list>
 {{/inline}}

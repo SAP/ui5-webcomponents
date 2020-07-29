@@ -7,6 +7,7 @@
 --_ui5_checkbox_inner_border_radius: 0;
 --_ui5_checkbox_inner_error_border: 0.125rem solid var(--sapField_InvalidColor);
 --_ui5_checkbox_inner_warning_border: 0.125rem solid var(--sapField_WarningColor);
+--_ui5_checkbox_inner_information_border: 0.125rem solid var(--sapField_InformationColor);
 --_ui5_checkbox_inner_readonly_border: 0.125rem solid var(--sapField_ReadOnly_BorderColor);
 --_ui5_checkbox_checkmark_warning_color: var(--sapField_TextColor);
 --_ui5_checkbox_checkmark_color: var(--sapSelectedColor);

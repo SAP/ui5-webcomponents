@@ -259,6 +259,7 @@ class Popover extends Popup {
 		if (!opener || this.opened) {
 			return;
 		}
+
 		this._opener = opener;
 
 		super.open(preventInitialFocus);
@@ -314,9 +315,18 @@ class Popover extends Popup {
 	}
 
 	show() {
+		let placement;
 		const popoverSize = this.popoverSize;
 		const openerRect = this._opener.getBoundingClientRect();
-		const placement = this.calcPlacement(openerRect, popoverSize);
+
+		if (this.shouldCloseDueToNoOpener(openerRect) && this.isFocusWithin()) {
+			// reuse the old placement as the opener is not available,
+			// but keep the popover open as the focus is within
+			placement = this._oldPlacement;
+		} else {
+			placement = this.calcPlacement(openerRect, popoverSize);
+		}
+
 		const stretching = this.horizontalAlign === PopoverHorizontalAlign.Stretch;
 
 		if (this._preventRepositionAndClose) {

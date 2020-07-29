@@ -11,18 +11,10 @@
 	height: 3rem;
 	width: 3rem;
 	border-radius: 50%;
+    border: var(--ui5-avatar-initials-border);
 	outline: none;
 	color: var(--ui5-avatar-initials-color);
 }
-
-:host([initials]) {
-    border: var(--ui5-avatar-initials-border);
-}
-
-:host([icon]) {
-    border: var(--ui5-avatar-initials-border);
-}
-
 
 /* Shapes */
 :host([shape="Square"]) {

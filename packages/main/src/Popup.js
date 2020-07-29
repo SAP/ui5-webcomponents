@@ -4,7 +4,7 @@ import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcompo
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import { getNextZIndex, getFocusedElement } from "./popup-utils/PopupUtils.js";
+import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "./popup-utils/PopupUtils.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
@@ -41,8 +41,22 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the focus should be returned to the previously focused element,
+		 * when the popup closes.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.8
+		*/
+		preventFocusRestore: {
+			type: Boolean,
+		},
+
+		/**
 		 * Indicates if the elements is open
 		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
 		 */
 		opened: {
 			type: Boolean,
@@ -75,35 +89,34 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
-		 * Fired before the component is opened.
+		 * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. This event does not bubble.
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-open
 		 */
-
 		"before-open": {},
+
 		/**
-		 * Fired after the component is opened.
+		 * Fired after the component is opened. This event does not bubble.
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#after-open
 		 */
-
 		"after-open": {},
+
 		/**
-		 * Fired before the component is closed.
+		 * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. This event does not bubble.
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-close
 		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
-
 		"before-close": {
 			escPressed: { type: Boolean },
 		},
 
 		/**
-		 * Fired after the component is closed.
+		 * Fired after the component is closed. This event does not bubble.
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#after-close
@@ -246,6 +259,15 @@ class Popup extends UI5Element {
 	 * @protected
 	 */
 	applyInitialFocus() {
+		this.applyFocus();
+	}
+
+	/**
+	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
+	 * or the first focusable element otherwise.
+	 * @public
+	 */
+	applyFocus() {
 		const element = this.getRootNode().getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)
 			|| getFirstFocusableElement(this);
@@ -264,12 +286,21 @@ class Popup extends UI5Element {
 		return this.opened;
 	}
 
+	isFocusWithin() {
+		return isFocusedElementWithinNode(this.shadowRoot.querySelector(".ui5-popup-root"));
+	}
+
 	/**
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
 	 * @public
 	 */
 	open(preventInitialFocus) {
+		const prevented = !this.fireEvent("before-open", {}, true, false);
+		if (prevented) {
+			return;
+		}
+
 		if (this.isModal) {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
@@ -279,9 +310,7 @@ class Popup extends UI5Element {
 
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
-
 		this._focusedElementBeforeOpen = getFocusedElement();
-		this.fireEvent("before-open", {});
 		this.show();
 
 		if (!this._disableInitialFocus && !preventInitialFocus) {
@@ -291,7 +320,7 @@ class Popup extends UI5Element {
 		this._addOpenedPopup();
 
 		this.opened = true;
-		this.fireEvent("after-open", {});
+		this.fireEvent("after-open", {}, false, false);
 	}
 
 	/**
@@ -307,8 +336,12 @@ class Popup extends UI5Element {
 	 * @public
 	 */
 	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
-		const prevented = !this.fireEvent("before-close", { escPressed }, true);
-		if (prevented || !this.opened) {
+		if (!this.opened) {
+			return;
+		}
+
+		const prevented = !this.fireEvent("before-close", { escPressed }, true, false);
+		if (prevented) {
 			return;
 		}
 
@@ -324,11 +357,11 @@ class Popup extends UI5Element {
 			this._removeOpenedPopup();
 		}
 
-		if (!preventFocusRestore) {
+		if (!this.preventFocusRestore && !preventFocusRestore) {
 			this.resetFocus();
 		}
 
-		this.fireEvent("after-close", {});
+		this.fireEvent("after-close", {}, false, false);
 	}
 
 	/**

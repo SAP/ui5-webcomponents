@@ -67,6 +67,24 @@ describe("TabContainer general interaction", () => {
 
 		assert.ok(!arrowLeft.isDisplayed(), "'Left Arrow' should be hidden after 'Left arrow' click");
 		assert.ok(arrowRight.isDisplayed(), "'Right Arrow' should be visible  after 'Left arrow' click");
+
+		// act: open overflow
+		const overflowBtn = browser.$("#tabContainerTextOnly").shadow$(".ui-tc__overflowButton");
+		overflowBtn.click();
+
+		// assert: the overflow popover is open.
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#tabContainerTextOnly")
+		const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		assert.strictEqual(overflowPopover.isDisplayedInViewport(), true,
+			"Popover is open.");
+
+		// act: resize, so the overflow button is not visible
+		browser.setWindowSize(1400, 1080);
+		browser.pause(500);
+
+		// assert: the overflow popover is closed.
+		assert.strictEqual(overflowPopover.isDisplayedInViewport(), false,
+			"Popover is closed.");
 	});
 
 	it("tests if content is scrollable when tabcontainer takes limited height by its parent", () => {

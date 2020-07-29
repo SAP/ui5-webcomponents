@@ -3,6 +3,7 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	min-width: 20rem;
+	box-shadow: var(--sapContent_Shadow3);
 }
 
 :host([stretch]) {

@@ -18,6 +18,7 @@
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
+@import "./ProgressIndicator-parameters.css";
 @import "./RadioButton-parameters.css";
 @import "./Select-parameters.css";
 @import "./Switch-parameters.css";
@@ -32,4 +33,5 @@
 @import "./WheelSlider-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./Token-parameters.css";
+@import "./ValueStateMessage-parameters.css";
 @import "../base/MultiComboBox-parameters.css";

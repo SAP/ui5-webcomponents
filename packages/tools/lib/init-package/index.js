@@ -38,8 +38,8 @@ try {
 
 // Ensure correct tag
 const tag = options.tag || DEFAULT_TAG;
-if (!tag.match(/^ui5-/)) {
-	console.log("tag name should start with ui5-");
+if (!tag.includes("-")) {
+	console.log("tag name should contain at least one dash");
 	process.exit(1);
 }
 const className = capitalizeFirst(kebabToCamelCase(tag.substr(4)));
@@ -94,6 +94,8 @@ const updatePackageFile = () => {
 		"clean": "wc-dev clean",
 		"lint": "wc-dev lint",
 		"start": "wc-dev start",
+		"watch": "wc-dev watch",
+		"serve": "wc-dev serve",
 		"build": "wc-dev build",
 		"test": "wc-dev test",
 		"create-ui5-element": "wc-create-ui5-element",
