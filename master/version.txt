@@ -1,5 +1,5 @@
-commit 854df10f3d540f4de20af814f94c1eb57906274a
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Jul 30 01:42:12 2020 -0700
+commit 5c260c4084aa686a32767b512117b2570638ce36
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Jul 30 15:06:51 2020 +0300
 
-    chore: translation delivery (#2038)
+    fix(playground): adapt to framework rtl changes (#2041)
