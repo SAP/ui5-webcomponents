@@ -1,5 +1,5 @@
-commit 5c260c4084aa686a32767b512117b2570638ce36
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jul 30 15:06:51 2020 +0300
+commit 820f1c6456d6e2d037818243d9907c20497e9208
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jul 30 15:36:18 2020 +0300
 
-    fix(playground): adapt to framework rtl changes (#2041)
+    chore(release): publish v1.0.0-rc.8 (#2042)
