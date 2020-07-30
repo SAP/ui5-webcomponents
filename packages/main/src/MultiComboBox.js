@@ -424,7 +424,6 @@ class MultiComboBox extends UI5Element {
 		this._tokenizer.expanded = false;
 		this._tokenizer._hideNMoreText = false;
 		this._toggleIcon();
-		this._tokenizer._invalidate();
 	}
 
 	_onAfterOpen() {
