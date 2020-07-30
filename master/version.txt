@@ -1,9 +1,5 @@
-commit 262f2af83199a95f41cbfb052146f910e55ad411
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 30 09:38:00 2020 +0300
+commit 854df10f3d540f4de20af814f94c1eb57906274a
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Jul 30 01:42:12 2020 -0700
 
-    chore(ui5-side-navigation): subitems may have icons, appenddocs fixed (#2037)
-    
-    Now we support icon on the subitem, but strongly recommend not to to be used as suggested by the Fiori 3 guidelines. The icons on the second level are removed from the sample. The JSDOC has been improved.
-    
-    FIXES: #2033
+    chore: translation delivery (#2038)
