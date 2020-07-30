@@ -144,13 +144,14 @@ class Suggestions {
 	}
 
 	onItemSelected(selectedItem, keyboardUsed) {
-		const item = selectedItem || this._getItems()[this.selectedItemIndex];
+		const allItems = this._getItems();
+		const item = selectedItem || allItems[this.selectedItemIndex];
 
-		this.selectedItemIndex = this._getItems().indexOf(item);
+		this.selectedItemIndex = allItems.indexOf(item);
 
 		this.accInfo = {
 			currentPos: this.selectedItemIndex + 1,
-			listSize: this._getItems().length,
+			listSize: allItems.length,
 			itemText: item.textContent,
 		};
 
@@ -318,7 +319,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [...this.responsivePopover.querySelectorAll("ui5-list>*")];
+		return [...this.responsivePopover.querySelector("ui5-list").children];
 	}
 
 	_getComponent() {

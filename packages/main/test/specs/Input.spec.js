@@ -129,33 +129,6 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputChangeResult.getValue(), "2", "change is called twice");
 	});
 
-	it("fires suggestion-item-preview", () => {
-		const inputItemPreview = $("#inputPreview").shadow$("input");
-		const inputItemPreviewRes = $("#inputItemPreviewRes");
-		const EXPECTED_PREVIEW_ITEM_TEXT = "Laptop Lenovo";
-
-		// act
-		inputItemPreview.click();
-		inputItemPreview.keys("ArrowDown");
-		
-		// assert
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputPreview");
-		const inputPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const helpPopover = browser.$("#quickViewCard");
-
-		assert.strictEqual(inputItemPreviewRes.getValue(), EXPECTED_PREVIEW_ITEM_TEXT, "First item has been previewed");
-		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover is open.");
-		assert.ok(inputPopover.isDisplayedInViewport(), "The input popover is open.");
-
-		// act
-		const inputInHelpPopover = browser.$("#searchInput").shadow$("input");
-		inputInHelpPopover.click();
-
-		// assert
-		assert.notOk(inputPopover.isDisplayedInViewport(), "The inpuit popover is closed as it lost the focus.");
-		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
-	});
-
 	it("fires suggestion-scroll event", () => {
 		const input = $("#scrollInput").shadow$("input");
 		const scrollResult = $("#scrollResult");
@@ -320,5 +293,34 @@ describe("Input general interaction", () => {
 
 		assert.ok(respPopover.isDisplayedInViewport(), "The popover is visible");
 		assert.ok(firstListItem.getHTML().indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.")
+	});
+
+	it("fires suggestion-item-preview", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Input_quickview.html");
+
+		const inputItemPreview = $("#inputPreview2").shadow$("input");
+		const suggestionItemPreviewRes = $("#suggestionItemPreviewRes");
+		const EXPECTED_PREVIEW_ITEM_TEXT = "Laptop Lenovo";
+
+		// act
+		inputItemPreview.click();
+		inputItemPreview.keys("ArrowDown");
+		
+		// assert
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputPreview2");
+		const inputPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const helpPopover = browser.$("#quickViewCard2");
+
+		assert.strictEqual(suggestionItemPreviewRes.getValue(), EXPECTED_PREVIEW_ITEM_TEXT, "First item has been previewed");
+		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover is open.");
+		assert.ok(inputPopover.isDisplayedInViewport(), "The input popover is open.");
+
+		// act
+		const inputInHelpPopover = browser.$("#searchInput2").shadow$("input");
+		inputInHelpPopover.click();
+
+		// assert
+		assert.notOk(inputPopover.isDisplayedInViewport(), "The inpuit popover is closed as it lost the focus.");
+		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
 	});
 });

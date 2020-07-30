@@ -18,7 +18,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the subitem is selected
+		 * Defines whether the subitem is selected.
 		 *
 		 * @public
 		 * @type {boolean}
@@ -26,6 +26,21 @@ const metadata = {
 		 */
 		selected: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the icon of the item.
+		 * <br><br>
+		 *
+		 * The SAP-icons font provides numerous options.
+		 * <br>
+		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * @public
+		 * @type {string}
+		 * @defaultvalue ""
+		 */
+		icon: {
+			type: String,
 		},
 	},
 };
@@ -35,12 +50,8 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- *
- * <h3>Usage</h3>
- *
  * The <code>ui5-side-navigation-sub-item</code> is intended to be used inside a <code>ui5-side-navigation-item</code> only.
  *
- * For the <code>ui5-side-navigation-sub-item</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code>
