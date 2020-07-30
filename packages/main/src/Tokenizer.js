@@ -4,6 +4,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import { MULTIINPUT_SHOW_MORE_TOKENS, TOKENIZER_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 
@@ -34,7 +35,7 @@ const metadata = {
 		 * @private
 		 */
 		expanded: { type: Boolean },
-		_nMoreText: { type: String },
+		_nMoreCount: { type: Integer },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		"token-delete": {
@@ -84,41 +85,18 @@ class Tokenizer extends UI5Element {
 	}
 
 	_handleResize() {
-		/*
-		 * Overflow happens with a pure CSS, but we
-		 * have to update the "n more" label when tokenizer is resized
-		 */
-		this._invalidate();
+		this._nMoreCount = this.overflownTokens.length;
 	}
 
 	constructor() {
 		super();
 
-		this._tokensCount = 0;
 		this._resizeHandler = this._handleResize.bind(this);
 		this._itemNav = new ItemNavigation(this);
+		this._itemNav.getItemsCallback = this._getVisibleTokens.bind(this);
 		this._scrollEnablement = new ScrollEnablement(this);
-
-		this._itemNav.getItemsCallback = () => {
-			if (this.disabled) {
-				return [];
-			}
-
-			return this._getTokens().filter((token, index) => {
-				return index < (this._getTokens().length - this.overflownTokens.length);
-			});
-		};
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
-
-	onBeforeRendering() {
-		setTimeout(() => {
-			// wait for the layouting and update the text
-			this._nMoreText = this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this.overflownTokens.length]);
-		}, 0);
-	}
-
 
 	onEnterDOM() {
 		ResizeHandler.register(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._resizeHandler);
@@ -128,24 +106,22 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._resizeHandler);
 	}
 
+	_getVisibleTokens() {
+		if (this.disabled) {
+			return [];
+		}
+
+		return this.tokens.filter((token, index) => {
+			return index < (this.tokens.length - this._nMoreCount);
+		});
+	}
+
 	_openOverflowPopover() {
 		this.fireEvent("show-more-items-press");
 	}
 
-	_getTokens() {
-		return this.tokens;
-	}
-
 	onAfterRendering() {
-		/*
-			We schedule an invalidation as we have the tokens count
-			changed and we need them rendered for the nmore count
-		*/
-		if (this._tokensCount !== this.tokens.length) {
-			this._invalidate();
-			this._tokensCount = this.tokens.length;
-		}
-
+		this._nMoreCount = this.overflownTokens.length;
 		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
 	}
 
@@ -161,7 +137,7 @@ class Tokenizer extends UI5Element {
 	/* Keyboard handling */
 
 	_updateAndFocus() {
-		if (this._getTokens().length) {
+		if (this.tokens.length) {
 			this._itemNav.update();
 
 			setTimeout(() => {
@@ -182,6 +158,10 @@ class Tokenizer extends UI5Element {
 
 	get showNMore() {
 		return !this.expanded && this.showMore && this.overflownTokens.length;
+	}
+
+	get _nMoreText() {
+		return this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._nMoreCount]);
 	}
 
 	get contentDom() {
