@@ -104,8 +104,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-side-navigation
  * @since 1.0.0-rc.8
- * @appenddocs SideNavigationItem
- * @appenddocs SideNavigationSubItem
+ * @appenddocs SideNavigationItem SideNavigationSubItem
  * @public
  */
 class SideNavigation extends UI5Element {
