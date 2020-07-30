@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.8](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.7...v1.0.0-rc.8) (2020-07-30)
+
+
+### Bug Fixes
+
+* **framework:** Allow for empty theme files ([#1639](https://github.com/SAP/ui5-webcomponents/issues/1639)) ([0cef140](https://github.com/SAP/ui5-webcomponents/commit/0cef140))
+* **framework:** Allow users to override default language translations ([#1716](https://github.com/SAP/ui5-webcomponents/issues/1716)) ([4b10f4f](https://github.com/SAP/ui5-webcomponents/commit/4b10f4f))
+* **framework:** Slotted children now invalidate parent upon slotchange ([#1649](https://github.com/SAP/ui5-webcomponents/issues/1649)) ([3ca4ae1](https://github.com/SAP/ui5-webcomponents/commit/3ca4ae1))
+* **framework:** Fix openui5 css varaibles detection ([#1933](https://github.com/SAP/ui5-webcomponents/issues/1933)) ([bb5b724](https://github.com/SAP/ui5-webcomponents/commit/bb5b724)), closes [#1932](https://github.com/SAP/ui5-webcomponents/issues/1932)
+* **framework:** Make renderImmediately sync ([#1929](https://github.com/SAP/ui5-webcomponents/issues/1929)) ([9141300](https://github.com/SAP/ui5-webcomponents/commit/9141300))
+* **framework:** Update managedSlots effect ([#1952](https://github.com/SAP/ui5-webcomponents/issues/1952)) ([4a1be70](https://github.com/SAP/ui5-webcomponents/commit/4a1be70))
+* **framework:** Remove ES6 code in IE polyfill ([#1923](https://github.com/SAP/ui5-webcomponents/issues/1923)) ([0a2ff88](https://github.com/SAP/ui5-webcomponents/commit/0a2ff88))
+* **framework:** Take region into account for i18n assets ([#1985](https://github.com/SAP/ui5-webcomponents/issues/1985)) ([3b614ad](https://github.com/SAP/ui5-webcomponents/commit/3b614ad))
+* **ui5-button:** Apply aria-expanded to inner button tag ([#1781](https://github.com/SAP/ui5-webcomponents/issues/1781)) ([df9e4e9](https://github.com/SAP/ui5-webcomponents/commit/df9e4e9))
+
+
+### Features
+
+* **framework:** Add dynamic language change and on-demand rerendering ([#1746](https://github.com/SAP/ui5-webcomponents/issues/1746)) ([1b568f2](https://github.com/SAP/ui5-webcomponents/commit/1b568f2))
+* **framework:** CLDR location can now be specified ([#1687](https://github.com/SAP/ui5-webcomponents/issues/1687)) ([168e505](https://github.com/SAP/ui5-webcomponents/commit/168e505))
+* **framework:** Create a global shared resources repo, share SVG Icons ([#1869](https://github.com/SAP/ui5-webcomponents/issues/1869)) ([7f5a198](https://github.com/SAP/ui5-webcomponents/commit/7f5a198))
+* **framework:** Implement invalidateParent ([#1964](https://github.com/SAP/ui5-webcomponents/issues/1964)) ([104abcc](https://github.com/SAP/ui5-webcomponents/commit/104abcc))
+* **framework:** Implement stable DOM Ref functionality ([#1868](https://github.com/SAP/ui5-webcomponents/issues/1868)) ([cfd4fa3](https://github.com/SAP/ui5-webcomponents/commit/cfd4fa3))
+* **framework:** Make icons RTL aware ([#1833](https://github.com/SAP/ui5-webcomponents/issues/1833)) ([29a991f](https://github.com/SAP/ui5-webcomponents/commit/29a991f)), closes [#1831](https://github.com/SAP/ui5-webcomponents/issues/1831)
+* **framework:** Support properties message bundles for i18n ([#1728](https://github.com/SAP/ui5-webcomponents/issues/1728)) ([d78d136](https://github.com/SAP/ui5-webcomponents/commit/d78d136))
+* **framework:** Support several runtimes simultaneously ([#1691](https://github.com/SAP/ui5-webcomponents/issues/1691)) ([7a3261c](https://github.com/SAP/ui5-webcomponents/commit/7a3261c))
+
+
 # [0.20.0](https://github.com/SAP/ui5-webcomponents/compare/v0.19.0...v0.20.0) (2020-04-30)
 
 
