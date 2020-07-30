@@ -1,5 +1,9 @@
-commit 7ffb04edf28d16b6c5b9b4cb8239642c85bb800f
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Wed Jul 29 17:21:50 2020 +0200
+commit 262f2af83199a95f41cbfb052146f910e55ad411
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jul 30 09:38:00 2020 +0300
 
-    docs(ui5-suggestion-item): add missing tagname (#2034)
+    chore(ui5-side-navigation): subitems may have icons, appenddocs fixed (#2037)
+    
+    Now we support icon on the subitem, but strongly recommend not to to be used as suggested by the Fiori 3 guidelines. The icons on the second level are removed from the sample. The JSDOC has been improved.
+    
+    FIXES: #2033
