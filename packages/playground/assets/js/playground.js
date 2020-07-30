@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     toggleSettings();
     setTheme();
+    setRTL();
     scrollSelectedMenuItemIntoView();
     createMetaTags();
 
@@ -51,7 +52,7 @@ function toggleSettings() {
         }
       });
 
-       // Set selected option of themeSwitch
+       // Set selected option of RTL
        Array.prototype.slice.call(textDirectionSwitch.querySelectorAll("ui5-option")).forEach(function(option) {
         if (urlParameters["sap-ui-rtl"] === "true") {
           option.selected = option.textContent === "RTL";
@@ -101,6 +102,17 @@ function setTheme() {
       document.body.classList.remove(css_class_name);
     }
   });
+}
+
+function setRTL() {
+  var rtlIsEnabled = getParams(window.location.href)["sap-ui-rtl"] === "true",
+    body = document.body;
+
+  if (rtlIsEnabled) {
+    body.setAttribute("dir", "rtl");
+  } else {
+    body.removeAttribute("dir");
+  }
 }
 
 function getParams(url) {
