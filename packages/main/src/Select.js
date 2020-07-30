@@ -249,13 +249,26 @@ class Select extends UI5Element {
 	}
 
 	/**
-	 * Currently selected option.
-	 * @readonly
+	 * Returns the currently selected option.
+	 *
 	 * @type { ui5-option }
 	 * @public
 	 */
 	get selectedOption() {
 		return this.options.find(option => option.selected);
+	}
+
+	/**
+	 * Selects the given option and deselects all others.
+	 *
+	 * @param option The option to set
+	 * @public
+	 * @since 1.0.0-rc.8
+	 */
+	set selectedOption(option) {
+		this.options.forEach(opt => {
+			opt.selected = opt === option;
+		});
 	}
 
 	async _toggleRespPopover() {
