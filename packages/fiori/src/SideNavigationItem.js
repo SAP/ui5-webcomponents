@@ -20,7 +20,11 @@ const metadata = {
 
 		/**
 		 * Defines the icon of the item.
+		 * <br><br>
 		 *
+		 * The SAP-icons font provides numerous options.
+		 * <br>
+		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 * @public
 		 * @type {string}
 		 * @defaultvalue ""
@@ -72,11 +76,9 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The <code>ui5-side-navigation-item</code> is used within <code>ui5-side-navigation</code> only.
+ * Via the <code>ui5-side-navigation-item</code> you control the content of the <code>SideNavigation</code>.
  *
- * <h3>Usage</h3>
- *
- * <code>ui5-side-navigation-item</code> is used within <code>ui5-side-navigation</code> only. Via the <code>ui5-side-navigation-item</code> you control the content of the side navigation.
- * For the <code>ui5-side-navigation-item</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code>

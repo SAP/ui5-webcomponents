@@ -83,12 +83,17 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- *
+ * The <code>SideNavigation</code> is used as a standard menu in applications.
+ * It consists of two containers: the main navigation section (top-aligned) and the secondary section (bottom-aligned).
+ * Usually the main navigation section is related to the user’s current work context,
+ * whereas the secondary section is mostly used to link additional information that may be of interest (legal information, developer communities, external help, contact information and so on).
+
  * <h3>Usage</h3>
+ * 
+ * Use the available <code>ui5-side-navigation-item</code> and <code>ui5-side-navigation-sub-item</code> components to build your menu.
+ * The items can consist of text only or an icon with text. The use or non-use of icons must be consistent for all items on one level.
+ * You must not combine entries with and without icons on the same level. We strongly recommend that you do not use icons on the second level.
  *
- * <code>ui5-side-navigation</code> is used as a standard menu in applications. In order to add menu items use <code>ui5-side-navigation-items</code>.
- *
- * For the <code>ui5-side-navigation</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/SideNavigation.js";</code>
@@ -100,6 +105,7 @@ const metadata = {
  * @tagname ui5-side-navigation
  * @since 1.0.0-rc.8
  * @appenddocs SideNavigationItem
+ * @appenddocs SideNavigationSubItem
  * @public
  */
 class SideNavigation extends UI5Element {
