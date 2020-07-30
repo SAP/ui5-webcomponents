@@ -89,7 +89,7 @@ const metadata = {
  * whereas the secondary section is mostly used to link additional information that may be of interest (legal information, developer communities, external help, contact information and so on).
 
  * <h3>Usage</h3>
- * 
+ *
  * Use the available <code>ui5-side-navigation-item</code> and <code>ui5-side-navigation-sub-item</code> components to build your menu.
  * The items can consist of text only or an icon with text. The use or non-use of icons must be consistent for all items on one level.
  * You must not combine entries with and without icons on the same level. We strongly recommend that you do not use icons on the second level.
