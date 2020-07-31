@@ -31,6 +31,16 @@ describe("Component Behavior", () => {
 			const icon = shellbar.shadow$("ui5-button[data-count]");
 
 			assert.strictEqual(icon.getAttribute("data-count"), '42', "Count property propagates to ui5-button");
+		});
+
+		it("tests if shellbar item invalidates the shellbar", () => {
+			const shellbar = browser.$("#test-invalidation");
+			const item = browser.$("#test-invalidation-item");
+
+			item.setProperty("count", "3");
+
+			assert.strictEqual(shellbar.shadow$(".ui5-shellbar-custom-item").getAttribute("data-count"), "3");
+
 		})
 	});
 
