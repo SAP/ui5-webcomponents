@@ -1,6 +1,6 @@
-commit 9eb5348c4df1917b5d8aec6117b4e561b1da22e9
-Merge: 5f62bdb 5eda61b
+commit 7c342369ff96790a8813b0b01758c5d24f13b756
+Merge: 9eb5348 6374120
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon May 18 15:14:33 2020 +0300
+Date:   Fri Jul 31 10:12:19 2020 +0300
 
-    Update playground to 1.0.0-rc.7
+    release rc8

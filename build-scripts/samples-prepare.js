@@ -12,9 +12,14 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-  "DateTimePicker",
-  "DurationPicker",
-  "UploadCollection"
+  "FlexibleColumnLayout",
+  "NotificationListItem",
+  "NotificationListGroupItem",
+  "UploadCollection",
+  "Tree",
+  "RatingIndicator",
+  "SideNavigation",
+  "ProgressIndicator",
 ];
 
 packages.forEach(package => {

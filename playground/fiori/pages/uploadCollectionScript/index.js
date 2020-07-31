@@ -62,6 +62,7 @@
 		for (var i = 0; i < files.length; i++) {
 			uploadCollection.appendChild(createUCI(files[i]));
 		}
+		document.getElementById("fileUploader").value = "";
 	});
 
 	uploadCollection.addEventListener("ui5-selectionChange", function (event) {
@@ -86,7 +87,7 @@
 		uploadCollection.items.forEach(function (item) {
 			if (item.uploadState === "Ready" && item.file) {
 				var oXHR = new XMLHttpRequest();
-				
+
 				oXHR.open("POST", "/upload", true);
 				oXHR.onreadystatechange  = function () {
 					if (this.status !== 200) {

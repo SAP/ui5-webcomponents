@@ -182,4 +182,59 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			input.appendChild(li);
 		});
 	});
+
+
+	// Tree
+	document.getElementById("tree").addEventListener("itemClick", function(event) {
+		console.log("Item clicked: ", event.detail.item);
+	});
+
+	document.getElementById("tree").addEventListener("itemToggle", function(event) {
+		console.log("Item toggled: ", event.detail.item);
+	});
+
+	document.getElementById("tree").addEventListener("itemDelete", function(event) {
+		console.log("Item delete button pressed: ", event.detail.item);
+		var node = event.detail.item;
+		node.parentElement.removeChild(node);
+	});
+
+	document.getElementById("tree").addEventListener("selectionChange", function(event) {
+		console.log("Selection changed from: ", event.detail.previouslySelectedItems, "to: ", event.detail.selectedItems);
+	});
+
+	document.getElementById("modeSelect").addEventListener("change", function(event) {
+		var newMode = event.detail.selectedOption.textContent;
+		var tree = document.getElementById("tree");
+		tree.mode = newMode;
+	});
+
+	document.getElementById("expandAll").addEventListener("click", function(event) {
+		var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
+		var tree = document.getElementById("tree");
+		tree.walk(function(node) {
+			node.expanded = true;
+		});
+	});
+
+	document.getElementById("collapseAll").addEventListener("click", function(event) {
+		var tree = document.getElementById("tree");
+		tree.walk(function(node) {
+			node.expanded = false;
+		});
+	});
+
+	document.getElementById("expandLevel1").addEventListener("click", function(event) {
+		var tree = document.getElementById("tree");
+		tree.walk(function(node, level) {
+			node.expanded = (level === 1);
+		});
+	});
+
+	document.getElementById("expandLevel2").addEventListener("click", function(event) {
+		var tree = document.getElementById("tree");
+		tree.walk(function(node, level) {
+			node.expanded = (level <= 2);
+		});
+	});
 });

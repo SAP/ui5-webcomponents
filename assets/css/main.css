@@ -434,7 +434,7 @@ figure:not(.style-scope) {
 li:not(.style-scope) {
   margin: 0.25em 0; }
 
-img:not(.style-scope) {
+img:not(.style-scope):not([slot]) {
   max-width: 100%;
   height: auto; }
 
@@ -526,7 +526,7 @@ hr:not(.style-scope) {
   justify-content: space-between;
   align-items: center;
   background-color: #000;
-  z-index: 100; }
+  z-index: 10; }
   .page-header .main-content, .page-header .main-content-header {
     padding-top: 0; }
     @media (min-width: 46.25rem) {

@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 	<title>ui5-list / ui5-li</title>
 
@@ -24,7 +25,7 @@
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
 		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
 		<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
+		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Information">IPhone 3</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
 		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
@@ -249,7 +250,7 @@
 		var getItems = function getItems(items) {
 			return items.map(function (item) {
 				return '<ui5-li  id="' + item.id + '">' + item.textContent + '</ui5-li>';
-			}).join();
+			}).join("");
 		};
 
 		var cleanList = function cleanList() {
@@ -296,7 +297,7 @@
 		singleSelectList.addEventListener("ui5-selectionChange", function (event) {
 			var selectedItems = event.detail.selectedItems;
 
-			alert("Selection changed: " + selectedItems.map(item => item.id).join("/"));
+			alert("Selection changed: " + selectedItems.map(function(item) { return item.id}).join("/"));
 		});
 
 		singleSelectEndList.addEventListener("ui5-itemPress", function (event) {
@@ -309,7 +310,7 @@
 
 		singleSelectEndList.addEventListener("ui5-selectionChange", function (event) {
 			var selectedItems = event.detail.selectedItems;
-			lblSelectionChange.innerHTML = "|Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
+			lblSelectionChange.innerHTML = "|Event] selectionChange :: " + selectedItems.map(function(item) { return item.id}).join("/");
 		});
 
 		multiSelectList.addEventListener("ui5-itemPress", function (event) {
@@ -319,7 +320,7 @@
 
 		multiSelectList.addEventListener("ui5-selectionChange", function (event) {
 			var selectedItems = event.detail.selectedItems;
-			lblSelectionChange2.innerHTML = "Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
+			lblSelectionChange2.innerHTML = "Event] selectionChange :: " + selectedItems.map(function(item) { return item.id}).join("/");
 		});
 
 		function template(i) {
@@ -339,11 +340,11 @@
 		var itemsLoadedTotal = 0;
 		var itemsToLoad = 5;
 		var loadedCount = 0;
-		infiniteScrollEx.addEventListener("loadMore", (e) => {
+		infiniteScrollEx.addEventListener("loadMore", function(e) {
 			var el = infiniteScrollEx;
 			el.busy = true;
 
-			setTimeout(() => {
+			setTimeout(function() {
 				insertItems(el, 3);
 				el.busy = false;
 				result.textContent = (++loadedCount) + " times " + (itemsLoadedTotal += itemsToLoad);

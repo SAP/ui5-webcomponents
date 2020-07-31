@@ -7,7 +7,11 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>DateTimePicker Test Page</title>
 
-	
+    <script>
+		delete Document.prototype.adoptedStyleSheets;
+    </script>
+
+    
 	
 	
 <script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
@@ -21,7 +25,6 @@
 		}
 
 		ui5-datetime-picker {
-			width: 300px;
 			margin-bottom: 0.25rem;
 		}
 	</style>
@@ -35,6 +38,16 @@
 
 	<section>
 		<ui5-title wrap>DateTimePicker format pattern</ui5-title>
+
+		<br><ui5-label>Default format pattern</ui5-label><br>
+		<ui5-datetime-picker
+			id="defaultPattern"
+			value="13/04/2020, 03:16:16 AM"
+		></ui5-datetime-picker>
+		<ui5-button id="setButton" design="Default">Set date</ui5-button>
+
+		<br>
+
 		<br><ui5-label>d/MM/yyyy, hh:mm aa</ui5-label><br>
 		<ui5-datetime-picker
 			id="dtMinutes"
@@ -94,7 +107,7 @@
 			id="input1"
 			style="width: 300px">
 		</ui5-input>
-	
+
 		<br><ui5-label>Changed value</ui5-label><br>
 		<ui5-input
 			id="input2"
@@ -164,6 +177,12 @@
 			input3.value = ++counter2;
 			input4.value = "{ value: " + dt2.value + " , valid: " + event.detail.valid + " }";
 		});
+
+		var dtp = document.getElementById('defaultPattern');
+		document.getElementById('setButton').addEventListener("click", function(e) {
+			dtp.setAttribute("value", dtp.formatValue(new Date(2020, 3, 13, 3, 16, 16)));
+		});
+
 	</script>
 </body>
 </html>

@@ -44,7 +44,8 @@
 	</style>
 
 	<div class="demo-section">
-		<ui5-combobox id="combo" style="width: 360px;" value="Bulgaria">
+		<ui5-label id="countryLabel">Select country: </ui5-label>
+		<ui5-combobox id="combo" style="width: 360px;" value="Bulgaria" aria-labelledby="countryLabel">
 			<ui5-cb-item text="Algeria"></ui5-cb-item>
 			<ui5-cb-item text="Argentina"></ui5-cb-item>
 			<ui5-cb-item text="Australia"></ui5-cb-item>
@@ -58,7 +59,7 @@
 			<ui5-cb-item text="Chile"></ui5-cb-item>
 		</ui5-combobox>
 
-		<ui5-combobox id="combo2" style="width: 360px;">
+		<ui5-combobox id="combo2" style="width: 360px;" aria-label="Select destination:">
 			<ui5-cb-item text="Algeria"></ui5-cb-item>
 			<ui5-cb-item text="Argentina"></ui5-cb-item>
 			<ui5-cb-item text="Australia"></ui5-cb-item>
@@ -86,7 +87,7 @@
 	</div>
 
 	<div class="demo-section">
-		<span>Lazy Loading</span>
+		<span>Lazy Loading - example does not work on IE11</span>
 
 		<br />
 		<br />
@@ -127,7 +128,7 @@
 
 	<div class="demo-section">
 			<span>StartsWith filter</span>
-	
+
 			<ui5-combobox style="width: 360px;" filter="StartsWith" id="startswith-cb">
 				<ui5-cb-item text="Argentina"></ui5-cb-item>
 				<ui5-cb-item text="United States of America"></ui5-cb-item>
@@ -148,11 +149,7 @@
 		</div>
 	</section>
 
-	<script>
-		document.getElementById("combo").addEventListener("ui5-change", event => {
-			document.getElementById("change-event-result").innerHTML = event.target.value;
-		});
-
+    <script type="module">
 		document.getElementById("lazy").addEventListener("ui5-input", async event => {
 			const { filterValue } = event.target;
 
@@ -178,8 +175,14 @@
 			// remove busy state
 			event.target.loading = false;
 		});
+    </script>
 
-		document.getElementById("change-cb").addEventListener("ui5-change", event => {
+	<script>
+		document.getElementById("combo").addEventListener("ui5-change", function(event) {
+			document.getElementById("change-event-result").innerHTML = event.target.value;
+		});
+
+		document.getElementById("change-cb").addEventListener("ui5-change", function(event) {
 			document.getElementById("change-placeholder").innerHTML = event.target.value;
 			document.getElementById("change-count").innerHTML = parseInt(document.getElementById("change-count").innerHTML) + 1;
 		});

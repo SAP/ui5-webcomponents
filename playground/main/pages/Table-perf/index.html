@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Web components Table</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<script data-ui5-config type="application/json">
 		{
 			"language": "EN"
@@ -51,28 +51,27 @@
 
 
 	<script>
-		const tbl = document.getElementById("tbl");
+		var tbl = document.getElementById("tbl");
 
+		for (var i=1; i<=1000; i++) {
+			var row = document.createElement("ui5-table-row");
 
-		[...Array(1000)].map(item => {
-			const row = document.createElement("ui5-table-row");
-
-			[1,2,3,4,5].map(_ => {
-				const cell = document.createElement("ui5-table-cell");
-				const span = document.createElement("span");
-				if (_ !== 1) {
+			for (var j=1; j<=5; j++) {
+				var cell = document.createElement("ui5-table-cell");
+				var span = document.createElement("span");
+				if (j !== 1) {
 					span.innerText = "Hello World!";
 				} else {
-					const datepicker = document.createElement("ui5-datepicker");
+					var datepicker = document.createElement("ui5-date-picker");
 					span.appendChild(datepicker);
 				}
 
 				cell.appendChild(span);
 				row.appendChild(cell);
-			});
+			}
 
 			tbl.appendChild(row);
-		})
+		}
 	</script>
 </body>
 

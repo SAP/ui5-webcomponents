@@ -64,6 +64,18 @@
 		<ui5-option>Opt3</ui5-option>
 	</ui5-select>
 
+	<ui5-select id="mySelectEsc">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+
+	<ui5-select id="keyboardHandling">
+		<ui5-option>Banana</ui5-option>
+		<ui5-option selected>Orange</ui5-option>
+		<ui5-option>Watermelon</ui5-option>
+	</ui5-select>
+
 	<h2> Change event counter holder</h2>
 	<ui5-input id="inputResult"></ui5-input>
 
@@ -135,9 +147,9 @@
 
 	// HCB button
 	btn.addEventListener("click", function(event) {
-		const hcb = event.target.pressed;
-		const styles = hcb ? "background:#333;color:palegoldenrod;" : "background:#fff;color:#333;";
-		const theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
+		var hcb = event.target.pressed;
+		var styles = hcb ? "background:#333;color:palegoldenrod;" : "background:#fff;color:#333;";
+		var theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
 
 		document.body.setAttribute("style", styles);
 		var Conf = window["sap-ui-webcomponents-bundle"].configuration;

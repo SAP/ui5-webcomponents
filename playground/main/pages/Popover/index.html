@@ -23,7 +23,7 @@
                     
 
 	<style>
-		ui5-datepicker,
+		ui5-date-picker,
 		ui5-select,
 		ui5-input,
 		ui5-multi-combobox {
@@ -64,7 +64,7 @@
 
 	<ui5-button id="btn">Click me !</ui5-button>
 
-	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
+	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top" aria-label="This popover is important">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -78,9 +78,9 @@
 		<br>
 		<br>
 
-		<ui5-button id='popbtn'>Open Popover</ui5-button>
+		<ui5-button id="popbtn">Open Popover</ui5-button>
 
-		<ui5-popover placement-type="Bottom" no-arrow id='danger'>
+		<ui5-popover placement-type="Bottom" no-arrow id="danger">
 
 
 			<ui5-list>
@@ -92,9 +92,9 @@
 			<br>
 			<br>
 
-			<ui5-button id='bigDanger'>Super Danger !</ui5-button>
+			<ui5-button id="bigDanger">Super Danger !</ui5-button>
 
-			<ui5-popover id='bigDangerPop'>
+			<ui5-popover id="bigDangerPop">
 				<ui5-list>
 					<ui5-li>Hello</ui5-li>
 					<ui5-li>World</ui5-li>
@@ -114,7 +114,7 @@
 		<br>
 		<br>
 
-		<!-- <ui5-datepicker></ui5-datepicker> -->
+		<!-- <ui5-date-picker></ui5-date-picker> -->
 
 		<div slot="footer">
 			<ui5-button>I am in the footer</ui5-button>
@@ -134,7 +134,7 @@
 	<br>
 	<br>
 
-	<ui5-datepicker id="field"></ui5-datepicker>
+	<ui5-date-picker id="field"></ui5-date-picker>
 
 	<br>
 	<br>
@@ -189,6 +189,11 @@
 		</div>
 	</ui5-popover>
 
+	<br>
+	<br>
+	<ui5-title>Test open popup and hide opener</ui5-title>
+	<ui5-button id="btnQuickViewCardOpener">Open popup and hide myself</ui5-button>
+	<ui5-button id="btnMoveFocus">focusable element</ui5-button>
 	<br>
 	<br>
 	<ui5-title>placement-type="Right", but no space on the right</ui5-title>
@@ -296,28 +301,45 @@
 		</ui5-list>
 	</ui5-popover>
 
+
+	<ui5-popover id="quickViewCard" placement-type="Right" height="500px">
+		<ui5-input id="searchInput" style="width: 300px">
+			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
+		</ui5-input>
+		<ui5-list style="height: 400px">
+			<ui5-li-groupheader>Actions</ui5-li-groupheader>
+			<ui5-li>Delete Product</ui5-li>
+			<ui5-li>Audit Log Settings</ui5-li>
+			<ui5-li>OData API Audit</ui5-li>
+			<ui5-li-groupheader>Products</ui5-li-groupheader>
+			<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+			<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
 	<script>
-		btn.addEventListener('click', function (event) {
+		btn.addEventListener("click", function (event) {
 			pop.openBy(btn);
 		});
 
-		popbtn.addEventListener('click', function (event) {
+		popbtn.addEventListener("click", function (event) {
 			danger.openBy(popbtn);
 		});
 
-		bigDanger.addEventListener('click', function (event) {
+		bigDanger.addEventListener("click", function (event) {
 			bigDangerPop.openBy(bigDanger);
 		});
 
-		btnPopModal.addEventListener('click', function (event) {
+		btnPopModal.addEventListener("click", function (event) {
 			modalPopover.openBy(btnPopModal);
 		});
 
-		modalPopoverClose.addEventListener('click', function (event) {
+		modalPopoverClose.addEventListener("click", function (event) {
 			modalPopover.close();
 		});
 
-		btnPopFocus.addEventListener('click', function (event) {
+		btnPopFocus.addEventListener("click", function (event) {
 			popFocus.openBy(btnPopFocus);
 		});
 
@@ -333,29 +355,35 @@
 			document.getElementById("big-popover").openBy(event.target);
 		});
 
-		btnFullWidth.addEventListener('click', function (event) {
+		btnFullWidth.addEventListener("click", function (event) {
 			popFullWidth.openBy(btnFullWidth);
 		});
 
-		btnFullWidthTargetOverlap.addEventListener('click', function (event) {
+		btnFullWidthTargetOverlap.addEventListener("click", function (event) {
 			popFullWidthTargetOverlap.openBy(btnFullWidthTargetOverlap);
 		});
 
-		btnFullWidthLeft.addEventListener('click', function (event) {
+		btnFullWidthLeft.addEventListener("click", function (event) {
 			popFullWidthLeft.openBy(btnFullWidthLeft);
 		});
 
-		btnFullWidthLeftTargetOverlap.addEventListener('click', function (event) {
+		btnFullWidthLeftTargetOverlap.addEventListener("click", function (event) {
 			popFullWidthLeftTargetOverlap.openBy(btnFullWidthLeftTargetOverlap);
 		});
 
-		btnFullWidthTop.addEventListener('click', function (event) {
+		btnFullWidthTop.addEventListener("click", function (event) {
 			popFullWidthTop.openBy(btnFullWidthTop);
 		});
 
-		btnFullWidthBottom.addEventListener('click', function (event) {
+		btnFullWidthBottom.addEventListener("click", function (event) {
 			popFullWidthBottom.openBy(btnFullWidthBottom);
 		});
+
+		btnQuickViewCardOpener.addEventListener("click", function (event) {
+			quickViewCard.openBy(btnQuickViewCardOpener);
+
+			btnQuickViewCardOpener.setAttribute("hidden", true);
+		})
 	</script>
 </body>
 
