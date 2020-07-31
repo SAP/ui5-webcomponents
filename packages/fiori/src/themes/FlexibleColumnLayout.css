@@ -15,9 +15,12 @@
 .ui5-fcl-column {
 	background: inherit;
 	box-sizing: border-box;
-	transition: width 560ms cubic-bezier(0.1, 0, 0.05, 1), visibility 560ms ease-in;
 	will-change: width;
 	overflow-y: auto;
+}
+
+.ui5-fcl-column-animation {
+    transition: width 560ms cubic-bezier(0.1, 0, 0.05, 1), visibility 560ms ease-in;
 }
 
 :host([_visible-columns="2"]) .ui5-fcl-column--start {

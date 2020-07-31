@@ -126,6 +126,7 @@
   "--sapInformationBackground",
   "--sapInformationBorderColor",
   "--sapInformativeElementColor",
+  "--sapInformativeTextColor",
   "--sapLegend_CurrentDateTime",
   "--sapLegend_NonWorkingBackground",
   "--sapLegend_WorkingBackground",

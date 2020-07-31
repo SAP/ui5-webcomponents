@@ -360,11 +360,26 @@ class Select extends UI5Element {
 		this.options[index].selected = true;
 	}
 
-	_selectionChange(event) {
-		const selectedItemIndex = this._getSelectedItemIndex(event.detail.item);
-
+	/**
+	 * The user clicked on an item from the list
+	 * @private
+	 */
+	_handleItemPress(event) {
+		const item = event.detail.item;
+		const selectedItemIndex = this._getSelectedItemIndex(item);
 		this._select(selectedItemIndex);
+
 		this._toggleRespPopover();
+	}
+
+	/**
+	 * The user used arrow up/down on the list
+	 * @private
+	 */
+	_handleSelectionChange(event) {
+		const item = event.detail.selectedItems[0];
+		const selectedItemIndex = this._getSelectedItemIndex(item);
+		this._select(selectedItemIndex);
 	}
 
 	_applyFocusAfterOpen() {
@@ -379,7 +394,13 @@ class Select extends UI5Element {
 	}
 
 	_handlePickerKeydown(event) {
-		this._handleArrowNavigation(event, false);
+		if (isEscape(event) && this._isPickerOpen) {
+			this._escapePressed = true;
+		}
+
+		if (isEnter(event) || isSpace(event)) {
+			this._shouldClosePopover = true;
+		}
 	}
 
 	_handleArrowNavigation(event, shouldFireEvent) {
@@ -402,14 +423,6 @@ class Select extends UI5Element {
 			if (shouldFireEvent) {
 				this._fireChangeEvent(this.options[nextIndex]);
 			}
-		}
-
-		if (isEscape(event) && this._isPickerOpen) {
-			this._escapePressed = true;
-		}
-
-		if (isEnter(event) || isSpace(event)) {
-			this._shouldClosePopover = true;
 		}
 	}
 

@@ -4,6 +4,8 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
@@ -111,6 +113,18 @@ const metadata = {
 		_visibleColumns: {
 			type: Integer,
 			defaultValue: 0,
+		},
+
+		/**
+		 * Allows the user to replace the whole layouts configuration
+		 *
+		 * @type {Object}
+		 * @private
+		 * @sap-restricted
+		 */
+		_layoutsConfiguration: {
+			type: Object,
+			defaultValue: undefined,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
@@ -253,7 +267,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	static get ANIMATION_DURATION() {
-		return 560;
+		return getAnimationMode() !== AnimationMode.None ? 560 : 0;
 	}
 
 	onEnterDOM() {
@@ -383,7 +397,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	nextColumnLayout(layout) {
-		return getLayoutsByMedia()[this.media][layout].layout;
+		return this._effectiveLayoutsByMedia[this.media][layout].layout;
 	}
 
 	calcVisibleColumns(colLayot) {
@@ -473,18 +487,23 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get classes() {
+		const hasAnimation = getAnimationMode() !== AnimationMode.None;
+
 		return {
 			columns: {
 				start: {
 					"ui5-fcl-column": true,
+					"ui5-fcl-column-animation": hasAnimation,
 					"ui5-fcl-column--start": true,
 				},
 				middle: {
 					"ui5-fcl-column": true,
+					"ui5-fcl-column-animation": hasAnimation,
 					"ui5-fcl-column--middle": true,
 				},
 				end: {
 					"ui5-fcl-column": true,
+					"ui5-fcl-column-animation": hasAnimation,
 					"ui5-fcl-column--end": true,
 				},
 			},
@@ -559,7 +578,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get effectiveArrowsInfo() {
-		return getLayoutsByMedia()[this.media][this.layout].arrows;
+		return this._effectiveLayoutsByMedia[this.media][this.layout].arrows;
 	}
 
 	get media() {
@@ -600,6 +619,10 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get accEndColumnText() {
 		return this.i18nBundle.getText(FCL_END_COLUMN_TXT);
+	}
+
+	get _effectiveLayoutsByMedia() {
+		return this._layoutsConfiguration || getLayoutsByMedia();
 	}
 }
 

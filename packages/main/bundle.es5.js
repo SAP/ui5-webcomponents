@@ -3,7 +3,7 @@ import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";
 
 import "./bundle.esm.js";
 
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
@@ -14,6 +14,7 @@ import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.j
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 const configuration = {
 	getAnimationMode,
+	setAnimationMode,
 	getTheme,
 	setTheme,
 	getLanguage,

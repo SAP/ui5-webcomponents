@@ -471,6 +471,10 @@ class List extends UI5Element {
 		return this.handleSingleSelect(item);
 	}
 
+	handleSingleSelectAuto(item) {
+		return this.handleSingleSelect(item);
+	}
+
 	handleMultiSelect(item, selected) {
 		item.selected = selected;
 		return true;
@@ -595,6 +599,17 @@ class List extends UI5Element {
 
 		this._itemNavigation.update(target);
 		this.fireEvent("item-focused", { item: target });
+
+		if (this.mode === ListMode.SingleSelectAuto) {
+			this.onSelectionRequested({
+				detail: {
+					item: target,
+					selectionComponentPressed: false,
+					selected: true,
+					key: event.detail.key,
+				},
+			});
+		}
 	}
 
 	onItemPress(event) {
