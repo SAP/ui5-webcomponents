@@ -266,11 +266,11 @@ class TabContainer extends UI5Element {
 
 	onBeforeRendering() {
 		// Set external properties to items
-		this.items.forEach((item, index) => {
+		this.items.filter(item => !item.isSeparator).forEach((item, index, arr) => {
 			item._isInline = this.tabLayout === TabLayout.Inline;
 			item._mixedMode = this.mixedMode;
 			item._posinset = index + 1;
-			item._setsize = this.items.length;
+			item._setsize = arr.length;
 			item._getTabContainerHeaderItemCallback = _ => {
 				return this.getDomRef().querySelector(`#${item._id}`);
 			};
