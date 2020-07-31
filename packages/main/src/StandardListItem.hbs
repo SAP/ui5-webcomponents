@@ -19,7 +19,7 @@
 
 {{#*inline "imageBegin"}}
 	{{#if displayImage}}
-		<img part="img" src="{{image}}" class="ui5-li-img">
+		<div class="ui5-li-img"><slot name="image"></slot></div>
 	{{/if}}
 {{/inline}}
 

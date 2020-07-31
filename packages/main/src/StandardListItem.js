@@ -8,6 +8,7 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  */
 const metadata = {
 	tag: "ui5-li",
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 
 		/**
@@ -46,18 +47,6 @@ const metadata = {
 		 */
 		iconEnd: {
 			type: Boolean,
-		},
-
-		/**
-		 * Defines the <code>image</code> source URI.
-		 * <br><br>
-		 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.
-		 *
-		 * @type {string}
-		 * @public
-		 */
-		image: {
-			type: String,
 		},
 
 		/**
@@ -106,6 +95,20 @@ const metadata = {
 		"default": {
 			type: Node,
 		},
+
+		/**
+		 * Defines the image of the <code>ui5-li</code>.
+		 * <br><br>
+		 * <b>Note:</b> The element would be restricted in height and width, because of UX reasons.
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 * @since 1.0.0-rc.9
+		 */
+		image: {
+			type: HTMLElement,
+		},
 	},
 };
 
@@ -139,7 +142,7 @@ class StandardListItem extends ListItem {
 	}
 
 	get displayImage() {
-		return !!this.image;
+		return !!this.image.length;
 	}
 
 	get displayIconBegin() {

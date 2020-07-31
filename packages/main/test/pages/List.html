@@ -19,19 +19,46 @@
 	<label style="font-size:2rem;">new items loaded:</label><label id="result" style="font-size:2rem;"> 0 times: 0</label>
 	<ui5-list id="infiniteScrollEx" style="height: 300px" infinite-scroll>
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Information">IPhone 3</ui5-li>
+		<ui5-li icon="navigation-right-arrow" info="Available">
+			<ui5-avatar shape="Square" image="./img/HT-1000.jpg" slot="image"></ui5-avatar>
+			Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.
+		</ui5-li>
+		<ui5-li icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">
+			<img src="./img/HT-1000.jpg" slot="image" />
+			Laptop Lenovo
+		</ui5-li>
+		<ui5-li icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Information">
+			<ui5-avatar shape="Square" image="./img/HT-1022.jpg" slot="image"></ui5-avatar>
+			IPhone 3
+		</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Available" info-state="Success">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" info="Reuqired" info-state="Warning">DVD set</ui5-li>
+		<ui5-li icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">
+			<ui5-avatar shape="Square" image="./img/HT-1030.jpg" slot="image"></ui5-avatar>
+			HP Monitor 24
+		</ui5-li>
+		<ui5-li icon-end icon="navigation-right-arrow" description="#12331232131"  info="Available" info-state="Success">
+			<ui5-avatar shape="Square" image="./img/HT-2026.jpg" slot="image"></ui5-avatar>
+			Audio cabel
+		</ui5-li>
+		<ui5-li icon-end icon="navigation-right-arrow" info="Reuqired" info-state="Warning">
+			<ui5-avatar shape="Square" image="./img/HT-2002.jpg" slot="image"></ui5-avatar>
+			DVD set
+		</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		<ui5-li icon="navigation-right-arrow">
+			<ui5-avatar shape="Square" image="./img/HT-1030.jpg" slot="image"></ui5-avatar>
+			HP Monitor 24
+		</ui5-li>
+		<ui5-li icon="navigation-right-arrow">
+			<ui5-avatar shape="Square" image="./img/HT-2026.jpg" slot="image"></ui5-avatar>
+			Audio cabel
+		</ui5-li>
+		<ui5-li icon="navigation-right-arrow">
+			<ui5-avatar shape="Square" image="./img/HT-2002.jpg" slot="image"></ui5-avatar>
+			DVD set
+		</ui5-li>
 	</ui5-list>
 
 
@@ -39,45 +66,80 @@
 
 	<ui5-list header-text="API: GroupHeaderListItem" mode="MultiSelect">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
+		<ui5-li icon="navigation-right-arrow" info="Available">
+			<ui5-avatar shape="Square" image="./img/HT-1010.jpg" slot="image"></ui5-avatar>
+			Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+		<ui5-li icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">
+			<ui5-avatar shape="Square" image="./img/HT-1010.jpg" slot="image"></ui5-avatar>
+			Laptop Lenovo
+		</ui5-li>
+		<ui5-li icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">
+			<ui5-avatar shape="Square" image="./img/HT-1022.jpg" slot="image"></ui5-avatar>
+			IPhone 3
+		</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Available" info-state="Success">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" info="Reuqired" info-state="Warning">DVD set</ui5-li>
+		<ui5-li  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">
+			<ui5-avatar shape="Square" image="./img/HT-1030.jpg" slot="image"></ui5-avatar>
+			HP Monitor 24
+		</ui5-li>
+		<ui5-li icon-end icon="navigation-right-arrow" description="#12331232131"  info="Available" info-state="Success">
+			<ui5-avatar shape="Square" image="./img/HT-2026.jpg" slot="image"></ui5-avatar>
+			Audio cabel
+		</ui5-li>
+		<ui5-li  icon-end icon="navigation-right-arrow" info="Reuqired" info-state="Warning">
+			<ui5-avatar shape="Square" image="./img/HT-2002.jpg" slot="image"></ui5-avatar>
+			DVD set
+		</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		<ui5-li  icon-end icon="navigation-right-arrow">
+			<ui5-avatar shape="Square" image="./img/HT-1030.jpg" slot="image"></ui5-avatar>
+			HP Monitor 24
+		</ui5-li>
+		<ui5-li icon-end icon="navigation-right-arrow" >
+			<ui5-avatar shape="Square" image="./img/HT-2026.jpg" slot="image"></ui5-avatar>
+			Audio cabel
+		</ui5-li>
+		<ui5-li  icon-end icon="navigation-right-arrow">
+			<ui5-avatar shape="Square" image="./img/HT-2002.jpg" slot="image"></ui5-avatar>
+			DVD set
+		</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 
 	<ui5-list header-text="API: icon">
-		<ui5-li  icon="navigation-right-arrow">Option 1</ui5-li>
-		<ui5-li  icon="navigation-right-arrow">Option 2</ui5-li>
-		<ui5-li  icon="navigation-right-arrow">Option 3</ui5-li>
-		<ui5-li  icon-end icon="navigation-right-arrow">Option 1</ui5-li>
-		<ui5-li  icon-end icon="navigation-right-arrow">Option 2</ui5-li>
-		<ui5-li  icon-end icon="navigation-right-arrow">Option 3</ui5-li>
+		<ui5-li icon="navigation-right-arrow">Option 1</ui5-li>
+		<ui5-li icon="navigation-right-arrow">Option 2</ui5-li>
+		<ui5-li icon="navigation-right-arrow">Option 3</ui5-li>
+		<ui5-li icon-end icon="navigation-right-arrow">Option 1</ui5-li>
+		<ui5-li icon-end icon="navigation-right-arrow">Option 2</ui5-li>
+		<ui5-li icon-end icon="navigation-right-arrow">Option 3</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 
 	<ui5-list header-text="API: image">
-		<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" >laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+		<ui5-li>
+			<ui5-avatar shape="Square" image="./img/HT-1000.jpg" slot="image"></ui5-avatar>
+			Laptop HP
+		</ui5-li>
+		<ui5-li>
+			<ui5-avatar shape="Square" image="./img/HT-1010.jpg" slot="image"></ui5-avatar>
+			laptop Lenovо
+		</ui5-li>
+		<ui5-li>
+			<ui5-avatar shape="Square" image="./img/HT-1022.jpg" slot="image"></ui5-avatar>
+			IPhone 3
+		</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 
 	<ui5-list header-text="API: ListItem type='Active/Inactive/Detail'" mode="SingleSelect">
-		<ui5-li >Active item - press</ui5-li>
-		<ui5-li >Active item - press</ui5-li>
+		<ui5-li>Active item - press</ui5-li>
+		<ui5-li>Active item - press</ui5-li>
 		<ui5-li selected type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Detail">Detail item</ui5-li>
@@ -155,9 +217,18 @@
 	<br/><br/>
 
 	<ui5-list header-text="API: ListItem selected">
-		<ui5-li selected="selected" image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" >laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+		<ui5-li selected>
+			<ui5-avatar shape="Square" image="./img/HT-1000.jpg" slot="image"></ui5-avatar>
+			Laptop HP
+		</ui5-li>
+		<ui5-li>
+			<ui5-avatar shape="Square" image="./img/HT-1010.jpg" slot="image"></ui5-avatar>
+			laptop Lenovо
+		</ui5-li>
+		<ui5-li>
+			<ui5-avatar shape="Square" image="./img/HT-1022.jpg" slot="image"></ui5-avatar>
+			IPhone 3
+		</ui5-li>
 	</ui5-list>
 
 	<br/><br/>

@@ -101,11 +101,12 @@
 }
 
 .ui5-li-img {
-	width: var(--_ui5_list_item_img_size);
-	min-width: var(--_ui5_list_item_img_size);
-	height: var(--_ui5_list_item_img_size);
-	min-height: var(--_ui5_list_item_img_size);
 	margin: var(--_ui5_list_item_img_margin);
+}
+
+::slotted([slot="image"]) {
+	max-height: var(--_ui5_list_item_img_size);
+	max-width: var(--_ui5_list_item_img_size);
 }
 
 .ui5-li-icon {
