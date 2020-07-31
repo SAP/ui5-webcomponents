@@ -4,6 +4,9 @@
 	type="{{this.overflowState}}"
 	?selected="{{this.effectiveSelected}}"
 	?disabled="{{this.effectiveDisabled}}"
+	?aria-disabled="{{this.effectiveDisabled}}"
+	aria-selected="{{this.effectiveSelected}}"
+	aria-labelledby="{{this.ariaLabelledBy}}"
 >
 	<div class="ui5-tab-overflow-itemContent">
 		{{#if this.icon}}
