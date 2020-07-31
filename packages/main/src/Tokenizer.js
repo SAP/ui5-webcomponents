@@ -35,9 +35,6 @@ const metadata = {
 		 */
 		expanded: { type: Boolean },
 		_nMoreText: { type: String },
-		_hideNMoreText: {
-			type: Boolean,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		"token-delete": {
@@ -185,7 +182,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get showNMore() {
-		return !this.expanded && this.showMore && this.overflownTokens.length && !this._hideNMoreText;
+		return !this.expanded && this.showMore && this.overflownTokens.length;
 	}
 
 	get contentDom() {

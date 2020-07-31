@@ -421,13 +421,14 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_onAfterClose() {
-		this._tokenizer.expanded = false;
-		this._tokenizer._hideNMoreText = false;
 		this._toggleIcon();
+		setTimeout(() => {
+			this.expandedTokenizer = false;
+		}, 0);
 	}
 
 	_onAfterOpen() {
-		this._tokenizer._hideNMoreText = true;
+		this.expandedTokenizer = true;
 		this._toggleIcon();
 		this._inputDom.focus();
 	}
@@ -510,7 +511,7 @@ class MultiComboBox extends UI5Element {
 		return this.selectedValues;
 	}
 
-	_listSelectionChange(event) {
+	async _listSelectionChange(event) {
 		event.target.items.forEach(item => {
 			this.items.forEach(mcbItem => {
 				if (mcbItem._id === item.getAttribute("data-ui5-token-id")) {
@@ -526,6 +527,8 @@ class MultiComboBox extends UI5Element {
 			this.value = "";
 			this.fireEvent("input");
 		}
+
+		this.expandedTokenizer = this.allItemsPopover.opened;
 	}
 
 	fireSelectionChange() {
