@@ -172,7 +172,7 @@ class DateTimePicker extends DatePicker {
 	}
 
 	static get styles() {
-		return [super.styles, DateTimePickerCss];
+		return [...DatePicker.styles, DateTimePickerCss];
 	}
 
 	static get staticAreaStyles() {
