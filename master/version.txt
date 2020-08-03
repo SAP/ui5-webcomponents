@@ -1,7 +1,7 @@
-commit 57be7c2545f4de3b26dc1d73a48b94d991217c98
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Aug 3 10:08:17 2020 +0300
+commit 2499c56b1214707974cd244e6fb7b4c974c6d32b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Aug 3 10:51:54 2020 +0300
 
-    fix(ui5-flexible-column-layout): Fix arrow misplacement in IE (#2032)
+    fix(ui5-shellbar-item): Update count properly (#2049)
     
-    Fixes: #1998
+    Fixes #2048
