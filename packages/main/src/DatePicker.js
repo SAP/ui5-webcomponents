@@ -327,7 +327,7 @@ class DatePicker extends UI5Element {
 	}
 
 	static get styles() {
-		return datePickerCss;
+		return [datePickerCss];
 	}
 
 	static get staticAreaStyles() {
@@ -763,7 +763,6 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	async openPicker(options) {
-		this._isPickerOpen = true;
 		this.responsivePopover = await this._respPopover();
 		this._changeCalendarSelection();
 
