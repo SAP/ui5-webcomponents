@@ -1,7 +1,5 @@
-commit 00760e62bf7fc49922a2a9085f60e7d93197356c
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Aug 3 10:55:34 2020 +0300
+commit bb87e65625314db97f57656217837e76c1ff72a5
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Aug 3 15:55:21 2020 +0300
 
-    fix(ui5-card):  Apply focus to header properly in IE (#2050)
-    
-    FIXES: #2007
+    feat(framework): styles and staticAreaStyles may now be nested arrays (#2058)
