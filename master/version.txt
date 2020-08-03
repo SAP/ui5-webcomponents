@@ -1,5 +1,5 @@
-commit 63741203a0c2f1f714b9e69056871867933c1305
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Jul 31 10:10:43 2020 +0300
+commit 7f99be527decef525530db351462d62128a77c8b
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Aug 3 09:10:52 2020 +0300
 
-    chore(playground): update version (#2043)
+    fix(ui5-messagestrip): Close button now has the correct design (#2029)
