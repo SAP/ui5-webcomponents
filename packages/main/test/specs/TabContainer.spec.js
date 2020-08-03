@@ -91,4 +91,15 @@ describe("TabContainer general interaction", () => {
 		assert.ok(tabHeight < tabScrollHeight, "Tab Content is scrollable");
 		assert.ok(tcHeight >= tcScrollHeight, "TabContainer is not scrollable scrollable");
 	});
+
+	it("tests aria attrs", () => {
+		const tabContainer = browser.$("#tabContainer1");
+		const tab4 = tabContainer.shadow$(".ui5-tab-strip-item:nth-child(4)");
+
+		// assert: The TabContainer has 8 children, 7 tabs and 1 separator (at position 2)
+		// and the separator should be skipped in terms of aria-posinset and aria-setsize,
+		// so for child number 4 ("Monitors") we expect the following attributes aria-posinset="3" and aria-setsize="7".
+		assert.strictEqual(tab4.getAttribute("aria-posinset"), "3", "The aria-posinset is correct.");
+		assert.strictEqual(tab4.getAttribute("aria-setsize"), "7", "The aria-setsize is correct.");
+	});
 });
