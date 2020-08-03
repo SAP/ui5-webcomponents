@@ -5,7 +5,7 @@ describe("MessageStrip general interaction", () => {
 
 	it("tests close event", () => {
 
-		const closeButton = browser.$("#messageStrip").shadow$(".ui5-messagestrip-close-icon-wrapper");
+		const closeButton = browser.$("#messageStrip").shadow$(".ui5-messagestrip-close-button");
 		const input = browser.$("#inputField");
 
 		closeButton.click();

@@ -5,6 +5,7 @@
 	width: 100%;
 }
 
+/** Root classes **/
 .ui5-messagestrip-root {
 	width: 100%;
 	height: 100%;
@@ -14,124 +15,84 @@
 	border-width: var(--_ui5_messagestrip_border_width);
 	border-style: solid;
 	box-sizing: border-box;
-	padding: 0.4375rem 2rem 0.4375rem 2.5rem;
 	position: relative;
 }
 
-.ui5-messagestrip-root .ui5-messagestrip-icon-wrapper {
+.ui5-messagestrip-root-no-icon {
+	padding: var(--_ui5_messagestrip_padding_no_icon);
+}
+
+.ui5-messagestrip-root-no-close-button {
+	padding-right: 1rem;
+}
+
+.ui5-messagestrip-root--info {
+	background-color: var(--sapInformationBackground);
+	border-color: var(--sapInformationBorderColor);
+	color: var(--sapTextColor);
+}
+
+.ui5-messagestrip-root--info .ui5-messagestrip-icon {
+	color: var(--sapInformativeElementColor);
+}
+
+.ui5-messagestrip-root--positive {
+	background-color: var(--sapSuccessBackground);
+	border-color: var(--sapSuccessBorderColor);
+}
+
+.ui5-messagestrip-root--positive .ui5-messagestrip-icon {
+	color: var(--sapPositiveElementColor);
+}
+
+.ui5-messagestrip-root--negative {
+	background-color: var(--sapErrorBackground);
+	border-color: var(--sapErrorBorderColor);
+}
+
+.ui5-messagestrip-root--negative .ui5-messagestrip-icon {
+	color: var(--sapNegativeElementColor);
+}
+
+.ui5-messagestrip-root--warning {
+	background-color: var(--sapWarningBackground);
+	border-color: var(--sapWarningBorderColor);
+}
+
+.ui5-messagestrip-root--warning .ui5-messagestrip-icon {
+	color: var(--sapCriticalElementColor);
+}
+
+/** Icon wrapper **/
+.ui5-messagestrip-icon-wrapper {
 	position: absolute;
 	top: var(--_ui5_messagestrip_icon_top);
 	left: 0.75rem;
 	box-sizing: border-box;
 }
 
-.ui5-messagestrip-root .ui5-messagestrip-text {
+/** Text **/
+.ui5-messagestrip-text {
 	width: 100%;
 	color: var(--sapTextColor);
 	line-height: 1.2;
-}
-
-.ui5-messagestrip-icon--hidden {
-	padding: 0.4375rem 2rem 0.4375rem 1rem;
-}
-
-.ui5-messagestrip-close-icon--hidden {
-	padding-right: 1rem;
-}
-
-.ui5-messagestrip-text {
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 }
 
-.ui5-messagestrip--info {
-	background-color: var(--sapInformationBackground);
-	border-color: var(--sapInformationBorderColor);
-	color: var(--sapTextColor);
-}
-
-.ui5-messagestrip--info .ui5-messagestrip-icon {
-	color: var(--sapInformativeElementColor);
-}
-
-.ui5-messagestrip--positive {
-	background-color: var(--sapSuccessBackground);
-	border-color: var(--sapSuccessBorderColor);
-}
-
-.ui5-messagestrip--positive .ui5-messagestrip-icon {
-	color: var(--sapPositiveElementColor);
-}
-
-.ui5-messagestrip--negative {
-	background-color: var(--sapErrorBackground);
-	border-color: var(--sapErrorBorderColor);
-}
-
-.ui5-messagestrip--negative .ui5-messagestrip-icon {
-	color: var(--sapNegativeElementColor);
-}
-
-.ui5-messagestrip--warning {
-	background-color: var(--sapWarningBackground);
-	border-color: var(--sapWarningBorderColor);
-}
-
-.ui5-messagestrip--warning .ui5-messagestrip-icon {
-	color: var(--sapCriticalElementColor);
-}
-
-.ui5-messagestrip-close-icon-wrapper {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+/** Close button **/
+.ui5-messagestrip-close-button {
 	width: var(--_ui5_messagestrip_close_button_size);
+	min-width: var(--_ui5_messagestrip_close_button_size);
 	height: var(--_ui5_messagestrip_close_button_size);
-	border-radius: 0.25rem;
-	background: transparent;
-	color: var(--sapTextColor);
-	cursor: pointer;
+	min-height: var(--_ui5_messagestrip_close_button_size);
 	position: absolute;
 	right: 0.125rem;
 	top: 0.125rem;
-	outline: none;
-	border: var(--_ui5_messagestrip_close_button_border);
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+	color: var(--sapTextColor);
 }
-
-.ui5-messagestrip-close-icon-wrapper:hover {
-	background-color: var(--sapButton_Lite_Hover_Background);
-}
-
-.ui5-messagestrip-close-icon-wrapper:active {
-	background-color: var(--sapButton_Active_Background);
+.ui5-messagestrip-close-button[active] {
 	color: var(--sapButton_Active_TextColor);
-}
-
-.ui5-messagestrip-close-icon {
-	width: 0.75rem;
-	height: 0.75rem;
-	pointer-events: none;
-}
-
-.ui5-messagestrip-close-icon-wrapper:active .ui5-messagestrip-close-icon {
-	color: currentColor;
-}
-
-.ui5-messagestrip-close-icon-wrapper:focus {
-	outline-offset: var(--_ui5_messagestrip_focus_offset);
-	outline: var(--_ui5_messagestrip_focus_width) dotted var(--sapContent_FocusColor);
-}
-
-.ui5-messagestrip-close-icon-wrapper:active:focus {
-	outline: var(--_ui5_messagestrip_focus_width) dotted var(--sapContent_ContrastFocusColor);
-}
-
-/* FF renders outine around element content, causing double outline - around the button and the icon */
-.ui5-messagestrip-close-icon-wrapper::-moz-focus-inner {
-	border: none;
 }
 
 /* RTL */
@@ -140,22 +101,22 @@
 	padding-left: 2rem;
 }
 
+[dir="rtl"] .ui5-messagestrip-root-no-icon {
+	padding-right: 1rem;
+	padding-left: 2rem;
+}
+
+[dir="rtl"] .ui5-messagestrip-root-no-close-button {
+	padding-left: 1rem;
+	padding-right: 0;
+}
+
 [dir="rtl"] .ui5-messagestrip-icon-wrapper {
 	right: 0.75rem;
 	left: 0;
 }
 
-[dir="rtl"] .ui5-messagestrip-icon--hidden {
-	padding-right: 1rem;
-	padding-left: 2rem;
-}
-
-[dir="rtl"] .ui5-messagestrip-close-icon--hidden {
-	padding-left: 1rem;
-	padding-right: 0;
-}
-
-[dir="rtl"] .ui5-messagestrip-close-icon-wrapper {
+[dir="rtl"] .ui5-messagestrip-close-button {
 	left: 0.125rem;
 	right: auto;
 }
