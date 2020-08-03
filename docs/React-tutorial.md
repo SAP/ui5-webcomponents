@@ -2,6 +2,8 @@
 
 In this tutorial you will learn how to add UI5 Web Components to your application. The UI5 Web Components can be added both to new React applications, as well as already existing ones.
 
+In order to have a better development expierence, we would also recommend to take a look at our dedicated wrapper for UI5 Web Components in React, [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) and check out [their tutorial](https://developers.sap.com/mission.react-spa.html) as well.
+
 ## Step 1. Start New Application. For Example with create-react-app
 
 ```bash
