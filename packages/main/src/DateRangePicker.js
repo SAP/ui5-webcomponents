@@ -82,7 +82,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	static get styles() {
-		return [...DatePicker.styles, DateRangePickerCss];
+		return [super.styles, DateRangePickerCss];
 	}
 
 	static get template() {
