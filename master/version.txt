@@ -1,7 +1,7 @@
-commit 2499c56b1214707974cd244e6fb7b4c974c6d32b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Aug 3 10:51:54 2020 +0300
+commit 00760e62bf7fc49922a2a9085f60e7d93197356c
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Aug 3 10:55:34 2020 +0300
 
-    fix(ui5-shellbar-item): Update count properly (#2049)
+    fix(ui5-card):  Apply focus to header properly in IE (#2050)
     
-    Fixes #2048
+    FIXES: #2007
