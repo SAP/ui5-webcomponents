@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/src/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import "@ui5/webcomponents-icons/dist/icons/message-information.js";
 import "@ui5/webcomponents-icons/dist/icons/message-success.js";
@@ -10,6 +9,7 @@ import "@ui5/webcomponents-icons/dist/icons/message-warning.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 import { MESSAGE_STRIP_CLOSE_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -153,7 +153,6 @@ class MessageStrip extends UI5Element {
 
 	constructor() {
 		super();
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -161,34 +160,20 @@ class MessageStrip extends UI5Element {
 		this.fireEvent("close", {});
 	}
 
-	_closeKeyDown(event) {
-		if (isEnter(event)) {
-			this.fireEvent("close");
-		}
-
-		if (isSpace(event)) {
-			event.preventDefault();
-		}
-	}
-
-	_closeKeyUp(event) {
-		if (isSpace(event)) {
-			this.fireEvent("close");
-		}
-	}
-
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
-
-		await Icon.define();
+		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
+			Icon.define(),
+			Button.define(),
+		]);
 	}
 
 	static typeClassesMappings() {
 		return {
-			"Information": "ui5-messagestrip--info",
-			"Positive": "ui5-messagestrip--positive",
-			"Negative": "ui5-messagestrip--negative",
-			"Warning": "ui5-messagestrip--warning",
+			"Information": "ui5-messagestrip-root--info",
+			"Positive": "ui5-messagestrip-root--positive",
+			"Negative": "ui5-messagestrip-root--negative",
+			"Warning": "ui5-messagestrip-root--warning",
 		};
 	}
 
@@ -211,14 +196,10 @@ class MessageStrip extends UI5Element {
 
 	get classes() {
 		return {
-			label: {
-				"ui5-messagestrip-text": true,
-				"ui5-messagestripNoCloseButton": this.noCloseButton,
-			},
-			main: {
+			root: {
 				"ui5-messagestrip-root": true,
-				"ui5-messagestrip-icon--hidden": this.noIcon,
-				"ui5-messagestrip-close-icon--hidden": this.noCloseButton,
+				"ui5-messagestrip-root-no-icon": this.noIcon,
+				"ui5-messagestrip-root-no-close-button": this.noCloseButton,
 				[this.typeClasses]: true,
 			},
 		};
