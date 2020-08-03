@@ -222,11 +222,11 @@ class TabContainer extends UI5Element {
 	}
 
 	static get styles() {
-		return [...tabStyles, tabContainerCss];
+		return [tabStyles, tabContainerCss];
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ...staticAreaTabStyles];
+		return [ResponsivePopoverCommonCss, staticAreaTabStyles];
 	}
 
 	static get render() {
