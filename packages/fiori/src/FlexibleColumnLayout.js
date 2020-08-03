@@ -6,6 +6,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
@@ -490,6 +491,10 @@ class FlexibleColumnLayout extends UI5Element {
 		const hasAnimation = getAnimationMode() !== AnimationMode.None;
 
 		return {
+			root: {
+				"ui5-fcl-root": true,
+				"ui5-fcl--ie": isIE(),
+			},
 			columns: {
 				start: {
 					"ui5-fcl-column": true,
