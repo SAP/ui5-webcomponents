@@ -1,15 +1,12 @@
 import { getCustomCSS } from "./CustomStyle.js";
+import getStylesString from "./getStylesString.js";
 
 const getEffectiveStyle = ElementClass => {
 	const tag = ElementClass.getMetadata().getTag();
 	const customStyle = getCustomCSS(tag) || "";
-	let componentStyles = ElementClass.styles;
 
-	if (Array.isArray(componentStyles)) {
-		componentStyles = componentStyles.join(" ");
-	}
-	return `${componentStyles} ${customStyle}`;
+	const builtInStyles = getStylesString(ElementClass.styles);
+	return `${builtInStyles} ${customStyle}`;
 };
-
 
 export default getEffectiveStyle;

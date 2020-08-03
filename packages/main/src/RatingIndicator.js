@@ -290,6 +290,10 @@ class RatingIndicator extends UI5Element {
 	get _ariaRoleDescription() {
 		return this.i18nBundle.getText(RATING_INDICATOR_TEXT);
 	}
+
+	get _ariaDisabled() {
+		return this.disabled || undefined;
+	}
 }
 
 RatingIndicator.define();

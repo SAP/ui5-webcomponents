@@ -1,5 +1,6 @@
 import { getStaticAreaInstance, removeStaticArea } from "./StaticArea.js";
 import RenderScheduler from "./RenderScheduler.js";
+import getStylesString from "./theming/getStylesString.js";
 
 /**
  * @class
@@ -22,7 +23,7 @@ class StaticAreaItem {
 	 */
 	_updateFragment() {
 		const renderResult = this.ui5ElementContext.constructor.staticAreaTemplate(this.ui5ElementContext),
-			stylesToAdd = window.ShadyDOM ? false : this.ui5ElementContext.constructor.staticAreaStyles;
+			stylesToAdd = window.ShadyDOM ? false : getStylesString(this.ui5ElementContext.constructor.staticAreaStyles);
 
 		if (!this.staticAreaItemDomRef) {
 			// Initial rendering of fragment
