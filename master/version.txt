@@ -1,5 +1,7 @@
-commit 7f99be527decef525530db351462d62128a77c8b
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Aug 3 09:10:52 2020 +0300
+commit 57be7c2545f4de3b26dc1d73a48b94d991217c98
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Aug 3 10:08:17 2020 +0300
 
-    fix(ui5-messagestrip): Close button now has the correct design (#2029)
+    fix(ui5-flexible-column-layout): Fix arrow misplacement in IE (#2032)
+    
+    Fixes: #1998
