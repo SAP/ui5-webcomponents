@@ -242,7 +242,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	static get styles() {
-		return [...ListItem.styles, UploadCollectionItemCss];
+		return [ListItem.styles, UploadCollectionItemCss];
 	}
 
 	static get template() {
