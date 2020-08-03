@@ -160,14 +160,18 @@
 
 		document.getElementById("token-unique").addEventListener("change", function (event) {
 			if (!event.target.value) {
-
+				return;
 			};
 
-			if (event.target.tokens.some(token => token.text === event.target.value)) {
+			var isDuplicate = event.target.tokens.some(function(token) {
+				return token.text === event.target.value;
+			});
+
+			if (isDuplicate) {
 				event.target.valueState = "Error";
 
-				setTimeout(() => {
-					event.target.valueState = "Normal";
+				setTimeout(function () {
+					event.target.valueState = "None";
 				}, 2000);
 
 				return;
@@ -176,6 +180,10 @@
 			event.target.appendChild(createTokenFromText(event.target.value));
 
 			event.target.value = "";
+		});
+
+		document.getElementById("token-unique").addEventListener("ui5-token-delete", function (event) {
+			event.target.removeChild(event.detail.token);
 		});
 	</script>
 </body>

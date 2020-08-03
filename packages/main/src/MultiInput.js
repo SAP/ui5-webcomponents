@@ -56,7 +56,7 @@ const metadata = {
 		/**
 		 * Fired when value state icon is pressed.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.main.MultiInput#value-help-icon-press
 		 * @public
 		 */
 		"value-help-icon-press": {},

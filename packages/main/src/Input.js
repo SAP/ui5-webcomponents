@@ -526,7 +526,7 @@ class Input extends UI5Element {
 		}
 	}
 
-	onAfterRendering() {
+	async onAfterRendering() {
 		if (!this.firstRendering && !isPhone() && this.Suggestions) {
 			const shouldOpenSuggestions = this.shouldOpenSuggestions();
 
@@ -541,7 +541,8 @@ class Input extends UI5Element {
 
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
-				this.inputDomRef && this.inputDomRef.focus();
+
+				(await this.getInputDOMRef()).focus();
 			}
 		}
 
@@ -655,7 +656,10 @@ class Input extends UI5Element {
 
 	async _handleInput(event) {
 		await this.getInputDOMRef();
-		if (event.target === this.inputDomRef) {
+
+		const inputDomRef = await this.getInputDOMRef();
+
+		if (event.target === inputDomRef) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
 		}
@@ -664,7 +668,7 @@ class Input extends UI5Element {
 			- value of the host and the internal input should be differnt in case of actual input
 			- input is called when a key is pressed => keyup should not be called yet
 		*/
-		const skipFiring = (this.inputDomRef.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
+		const skipFiring = (inputDomRef.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
 
 		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
 
@@ -686,8 +690,7 @@ class Input extends UI5Element {
 	async _afterOpenPopover() {
 		// Set initial focus to the native input
 		if (isPhone()) {
-			await this.getInputDOMRef();
-			this.inputDomRef.focus();
+			(await this.getInputDOMRef()).focus();
 		}
 	}
 
@@ -813,7 +816,7 @@ class Input extends UI5Element {
 			return;
 		}
 
-		const inputValue = this.getInputValue();
+		const inputValue = await this.getInputValue();
 		const isSubmit = action === this.ACTION_ENTER;
 		const isUserInput = action === this.ACTION_USER_INPUT;
 
@@ -837,28 +840,21 @@ class Input extends UI5Element {
 		}
 	}
 
-	getInputValue() {
+	async getInputValue() {
 		const inputDOM = this.getDomRef();
 		if (inputDOM) {
-			return this.inputDomRef.value;
+			return (await this.getInputDOMRef()).value;
 		}
 		return "";
 	}
 
 	async getInputDOMRef() {
-		let inputDomRef;
-
-		if (isPhone() && this.Suggestions) {
+		if (isPhone() && this.Suggestions && this.suggestionItems.length) {
 			await this.Suggestions._respPopover();
-			inputDomRef = this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
+			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
-		if (!inputDomRef) {
-			inputDomRef = this.getDomRef().querySelector(`#${this.getInputId()}`);
-		}
-
-		this.inputDomRef = inputDomRef;
-		return this.inputDomRef;
+		return this.getDomRef().querySelector(`input`);
 	}
 
 	getLabelableElementId() {
