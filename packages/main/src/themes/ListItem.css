@@ -106,6 +106,7 @@
 	height: var(--_ui5_list_item_img_size);
 	min-height: var(--_ui5_list_item_img_size);
 	margin: var(--_ui5_list_item_img_margin);
+	border-radius: 0;
 }
 
 .ui5-li-icon {

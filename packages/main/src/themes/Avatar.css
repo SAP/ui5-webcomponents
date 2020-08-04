@@ -11,7 +11,7 @@
 	height: 3rem;
 	width: 3rem;
 	border-radius: 50%;
-    border: var(--ui5-avatar-initials-border);
+	border: var(--ui5-avatar-initials-border);
 	outline: none;
 	color: var(--ui5-avatar-initials-color);
 }
@@ -22,11 +22,11 @@
 }
 
 :host([shape="Square"]) .ui5-avatar-root {
-	border-radius: .25rem;
+	border-radius: inherit;
 }
 
 :host([shape="Square"]) .ui5-avatar-img {
-	border-radius: .25rem;
+	border-radius: inherit;
 }
 
 /* Sizes */
