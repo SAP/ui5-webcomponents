@@ -25,15 +25,6 @@
 	cursor: pointer;
 }
 
-.ui5-select-value-state-padding {
-	padding: 0.5625rem 1rem;
-}
-
-.ui5-select-dialog-header {
-	display: inline-block;
-	height: auto;
-}
-
 :host [dir="rtl"].ui5-select-root .ui5-select-label-root {
 	padding-left: 0;
 	padding-right: 0.5rem;

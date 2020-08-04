@@ -40,6 +40,7 @@ import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.l
 import selectCss from "./generated/themes/Select.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 
 /**
  * @public
@@ -238,7 +239,7 @@ class Select extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SelectPopoverCss];
 	}
 
 	constructor() {
