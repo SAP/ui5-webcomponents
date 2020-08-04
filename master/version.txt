@@ -1,5 +1,9 @@
-commit bb87e65625314db97f57656217837e76c1ff72a5
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Aug 3 15:55:21 2020 +0300
+commit 3aadc0e0c0334e5ab2ff22d41f208d54ac73fe24
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Aug 4 09:31:58 2020 +0300
 
-    feat(framework): styles and staticAreaStyles may now be nested arrays (#2058)
+    fix(ui5-li): Scale image properly (#2059)
+    
+    Use ui5-avatar internally to scale the user image within the list item properly
+    
+    FIXES https://github.com/SAP/ui5-webcomponents/issues/2045
