@@ -16,7 +16,7 @@
 		@ui5-token-delete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
 		@click={{_click}}
-		?expanded="{{expandedTokenizer}}"
+		?expanded="{{_tokenizerExpanded}}"
 	>
 		{{#each items}}
 			{{#if this.selected}}
@@ -44,8 +44,6 @@
 		@change={{_inputChange}}
 		@keydown="{{_onkeydown}}"
 		@keyup="{{_onkeyup}}"
-		@focusin="{{_focusin}}"
-		@focusout="{{_focusout}}"
 		@click={{_click}}
 		role="combobox"
 		aria-haspopup="listbox"
@@ -61,7 +59,7 @@
 			slot="icon"
 			tabindex="-1"
 			@click={{togglePopover}}
-			?pressed="{{_iconPressed}}"
+			?pressed="{{open}}"
 			dir="{{effectiveDir}}"
 			accessible-name="{{_iconAccessibleNameText}}"
 		></ui5-icon>

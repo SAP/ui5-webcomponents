@@ -174,32 +174,16 @@ const metadata = {
 			type: Boolean,
 		},
 
-		/**
-		 * Indicates whether the input is focssed
-		 * @private
-		 */
-		focused: {
-			type: Boolean,
-		},
-
 		_filteredItems: {
 			type: Object,
 		},
 
-		_iconPressed: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		/**
-		 * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
-		 * @private
-		 */
-		expandedTokenizer: {
-			type: Boolean,
-		},
 
 		filterSelected: {
+			type: Boolean,
+		},
+
+		_rootFocused: {
 			type: Boolean,
 		},
 	},
@@ -480,13 +464,11 @@ class MultiComboBox extends UI5Element {
 		});
 	}
 
-	_toggleIcon() {
-		this._iconPressed = !this._iconPressed;
-		this.open = this._iconPressed;
-
+	_toggle() {
+		this.open = !this.open;
 		this.fireEvent("open-change");
 
-		if (!this._iconPressed) {
+		if (!this.open) {
 			this._afterClosePopover();
 		}
 	}
@@ -534,14 +516,6 @@ class MultiComboBox extends UI5Element {
 	_toggleRespPopover() {
 		this.updateStaticAreaItemContentDensity();
 		this.allItemsPopover.toggle(this);
-	}
-
-	_focusin() {
-		this.focused = true;
-	}
-
-	_focusout() {
-		this.focused = false;
 	}
 
 	_click(event) {
@@ -606,13 +580,13 @@ class MultiComboBox extends UI5Element {
 
 	rootFocusIn() {
 		if (!isPhone()) {
-			this.expandedTokenizer = true;
+			this._rootFocused = true;
 		}
 	}
 
 	rootFocusOut(event) {
 		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
-			this.expandedTokenizer = false;
+			this._rootFocused = false;
 		}
 	}
 
@@ -652,6 +626,10 @@ class MultiComboBox extends UI5Element {
 
 	get _iconAccessibleNameText() {
 		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
+	}
+
+	get _tokenizerExpanded() {
+		return this._rootFocused || this.open;
 	}
 
 	static async onDefine() {
