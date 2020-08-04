@@ -560,12 +560,6 @@ class Select extends UI5Element {
 			responsivePopoverHeader: {
 				"display": this.options.length && this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this.options.length ? this._listWidth : this.offsetWidth}px`,
-				"padding": "0.5625rem 1rem",
-			},
-			dialogHeader: {
-				"display": "inline-block",
-				"padding": "0.5625rem 1rem",
-				"height": "auto",
 			},
 		};
 	}
