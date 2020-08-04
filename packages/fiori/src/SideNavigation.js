@@ -96,7 +96,11 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/SideNavigation.js";</code>
+ * <code>import @ui5/webcomponents-fiori/dist/SideNavigation.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code> (for <code>ui5-side-navigation-item</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code> (for <code>ui5-side-navigation-sub-item</code>)
  *
  * @constructor
  * @author SAP SE
