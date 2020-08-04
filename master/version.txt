@@ -1,9 +1,13 @@
-commit 3aadc0e0c0334e5ab2ff22d41f208d54ac73fe24
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Aug 4 09:31:58 2020 +0300
+commit d87570ea2439fc71b8bb7087e688e72307f2ba13
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Tue Aug 4 11:25:10 2020 +0300
 
-    fix(ui5-li): Scale image properly (#2059)
+    chore(deps): bump lodash from 4.17.15 to 4.17.19 in /packages/playground (#1965)
     
-    Use ui5-avatar internally to scale the user image within the list item properly
+    Bumps [lodash](https://github.com/lodash/lodash) from 4.17.15 to 4.17.19.
+    - [Release notes](https://github.com/lodash/lodash/releases)
+    - [Commits](https://github.com/lodash/lodash/compare/4.17.15...4.17.19)
     
-    FIXES https://github.com/SAP/ui5-webcomponents/issues/2045
+    Signed-off-by: dependabot[bot] <support@github.com>
+    
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
