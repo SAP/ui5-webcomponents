@@ -3,6 +3,7 @@ const getopts = require('getopts');
 const hbs2lit = require('../hbs2lit');
 const path = require('path');
 const litRenderer = require('./RenderTemplates/LitRenderer');
+const recursiveReadDir = require("recursive-readdir");
 
 const args = getopts(process.argv.slice(2), {
 	alias: {
@@ -23,7 +24,6 @@ const onError = (place) => {
 const isHandlebars = (fileName) => fileName.indexOf('.hbs') !== -1;
 
 const processFile = (file, outputDir) => {
-
 	const litCode = hbs2lit(file);
 
 	const componentNameMatcher = /(\w+)(\.hbs)/gim;
@@ -35,7 +35,7 @@ const wrapDirectory = (directory, outputDir) => {
 	directory = path.normalize(directory);
 	outputDir = path.normalize(outputDir);
 
-	fs.readdir(directory, (err, files) => {
+	recursiveReadDir(directory, (err, files) => {
 
 		if (err) {
 			onError('directory');
@@ -43,7 +43,7 @@ const wrapDirectory = (directory, outputDir) => {
 
 		files.forEach(fileName => {
 			if (isHandlebars(fileName)) {
-				processFile(path.join(directory, fileName), outputDir);
+				processFile(fileName, outputDir);
 			}
 		});
 	})
