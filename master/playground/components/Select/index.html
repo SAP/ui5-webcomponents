@@ -2103,7 +2103,7 @@
 </section>
 
 <section>
-	<h3>Select with Value State</h3>
+	<h3>Select with Value State and Value State Message</h3>
 	<div class="snippet">
 		<ui5-select value-state="Success" class="select">
 				<ui5-option icon="meal" selected>Apple</ui5-option>
@@ -2114,16 +2114,22 @@
 				<ui5-option icon="meal">Orange</ui5-option>
 				<ui5-option icon="meal" selected>Pumpkin</ui5-option>
 				<ui5-option icon="meal">Carrot</ui5-option>
+				<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+				<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 		</ui5-select>
 		<ui5-select value-state="Error" class="select">
 				<ui5-option icon="meal">Strawberry</ui5-option>
 				<ui5-option icon="meal">Tomato</ui5-option>
 				<ui5-option icon="meal" selected>Red Chili Pepper</ui5-option>
+				<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+				<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 		</ui5-select>
 		<ui5-select value-state="Information" class="select">
 			<ui5-option icon="meal">Blueberry</ui5-option>
 			<ui5-option icon="meal">Grape</ui5-option>
 			<ui5-option icon="meal" selected>Plum</ui5-option>
+			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+			<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 		</ui5-select>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-select</span> <span class="na">value-state=</span><span class="s">"Success"</span> <span class="na">class=</span><span class="s">"select"</span><span class="nt">&gt;</span>
@@ -2135,16 +2141,22 @@
 	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Orange<span class="nt">&lt;/ui5-option&gt;</span>
 	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span> <span class="na">selected</span><span class="nt">&gt;</span>Pumpkin<span class="nt">&lt;/ui5-option&gt;</span>
 	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Carrot<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"valueStateMessage"</span><span class="nt">&gt;</span>Information message. This is a <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"valueStateMessage"</span><span class="nt">&gt;</span>Information message 2. This is a <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.<span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;/ui5-select&gt;</span>
 <span class="nt">&lt;ui5-select</span> <span class="na">value-state=</span><span class="s">"Error"</span> <span class="na">class=</span><span class="s">"select"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Strawberry<span class="nt">&lt;/ui5-option&gt;</span>
 	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Tomato<span class="nt">&lt;/ui5-option&gt;</span>
 	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span> <span class="na">selected</span><span class="nt">&gt;</span>Red Chili Pepper<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"valueStateMessage"</span><span class="nt">&gt;</span>Information message. This is a <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"valueStateMessage"</span><span class="nt">&gt;</span>Information message 2. This is a <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.<span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;/ui5-select&gt;</span>
 <span class="nt">&lt;ui5-select</span> <span class="na">value-state=</span><span class="s">"Information"</span> <span class="na">class=</span><span class="s">"select"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Blueberry<span class="nt">&lt;/ui5-option&gt;</span>
 	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Grape<span class="nt">&lt;/ui5-option&gt;</span>
 	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span> <span class="na">selected</span><span class="nt">&gt;</span>Plum<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"valueStateMessage"</span><span class="nt">&gt;</span>Information message. This is a <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"valueStateMessage"</span><span class="nt">&gt;</span>Information message 2. This is a <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.<span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;/ui5-select&gt;</span>
 	</code></pre></figure></pre>
 </section>
@@ -2245,6 +2257,13 @@
             <br><br> <b>Note:</b> Only one selected option is allowed. If more than one option is defined as selected, the last one would be considered as the selected one.
             
             <br><br> <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.</div>
+                    </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">valueStateMessage</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the value state message that will be displayed as pop up under the <code>ui5-select</code>. <br><br>
+            
+            <b>Note:</b> If not specified, a default text (in the respective language) will be displayed. <br> <b>Note:</b> The <code>valueStateMessage</code> would be displayed, when the <code>ui5-select</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.</div>
                     </div>
             
                 </div>

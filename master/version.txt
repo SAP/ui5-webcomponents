@@ -1,5 +1,9 @@
-commit a640f841f7dd2ba3401f6e78b5a70036c6828754
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Aug 5 10:07:39 2020 +0300
+commit 4133a4249327d7ee1e06eb460b6989efa7daf434
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Aug 5 12:18:22 2020 +0300
 
-    docs: Add fiori package import info (#2064)
+    feat(ui5-select): Implеment value state message
+    
+    Now, ValueStateMessages are supported in ui5-select when ValueState is set to "Warning", Error or "Information"
+    
+    #1086
