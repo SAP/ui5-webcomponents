@@ -1,5 +1,5 @@
-commit 3fe5cac7b7463706bbbc2b3d215abbcd9d9be390
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Aug 5 10:02:08 2020 +0300
+commit a640f841f7dd2ba3401f6e78b5a70036c6828754
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Aug 5 10:07:39 2020 +0300
 
-    feat(tools): ES5 build supports dynamic imports (inlined) (#2063)
+    docs: Add fiori package import info (#2064)
