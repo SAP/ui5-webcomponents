@@ -1,5 +1,5 @@
-commit 73242eb8f51365fde012490daf3ce1956077f49e
+commit 3fe5cac7b7463706bbbc2b3d215abbcd9d9be390
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Aug 4 14:06:45 2020 +0300
+Date:   Wed Aug 5 10:02:08 2020 +0300
 
-    refactor(ui5-multicombobox): simplify state (#2062)
+    feat(tools): ES5 build supports dynamic imports (inlined) (#2063)
