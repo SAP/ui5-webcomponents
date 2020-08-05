@@ -47,7 +47,8 @@ const metadata = {
  * <br><br>
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";</code>
- *
+ * <br>
+ * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code> (for <code>ui5-product-switch-item</code>)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.ProductSwitch
