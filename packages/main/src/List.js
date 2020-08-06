@@ -188,6 +188,14 @@ const metadata = {
 		},
 
 		/**
+		 * @type {Boolean}
+		 * @private
+		 */
+		stopItemNavigation: {
+			type: Boolean,
+		},
+
+		/**
 		 * Used to externally manipulate the role of the list
 		 *
 		 * @private
@@ -351,7 +359,8 @@ class List extends UI5Element {
 
 	constructor() {
 		super();
-		this.initItemNavigation();
+
+		this._itemNavigationInitialized = false;
 
 		// Stores the last focused item within the internal ul element.
 		this._previouslyFocusedItem = null;
@@ -364,11 +373,8 @@ class List extends UI5Element {
 		this.addEventListener("ui5-_press", this.onItemPress.bind(this));
 		this.addEventListener("ui5-close", this.onItemClose.bind(this));
 		this.addEventListener("ui5-toggle", this.onItemToggle.bind(this));
-		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
 		this.addEventListener("ui5-_forward-after", this.onForwardAfter.bind(this));
 		this.addEventListener("ui5-_forward-before", this.onForwardBefore.bind(this));
-		this.addEventListener("ui5-_selection-requested", this.onSelectionRequested.bind(this));
-		this.addEventListener("ui5-_focus-requested", this.focusUploadCollectionItem.bind(this));
 	}
 
 	get shouldRenderH1() {
@@ -404,6 +410,14 @@ class List extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		if (!this._itemNavigationInitialized && !this.stopItemNavigation) {
+			this.initItemNavigation();
+
+			this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
+			this.addEventListener("ui5-_selection-requested", this.onSelectionRequested.bind(this));
+			this.addEventListener("ui5-_focus-requested", this.focusUploadCollectionItem.bind(this));
+		}
+
 		this.prepareListItems();
 	}
 
