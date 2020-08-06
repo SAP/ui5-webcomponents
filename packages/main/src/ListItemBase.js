@@ -30,16 +30,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		/**
-		 * Defines if the list item should be focusable.
-		 *
-		 * @type {Boolean}
-		 * @private
-		*/
-		nonFocusable: {
-			type: Boolean,
-		},
-
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
@@ -147,10 +137,6 @@ class ListItemBase extends UI5Element {
 	*/
 	shouldForwardTabBefore(target) {
 		return this.getDomRef() === target;
-	}
-
-	get tabIndex() {
-		return this.nonFocusable ? null : this._tabIndex;
 	}
 
 	get classes() {

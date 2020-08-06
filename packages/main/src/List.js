@@ -188,10 +188,15 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the item navigation should be active.
+		 * <br><br>
+		 * <b>Note:</b>The property takes effect initially only.
+		 *
 		 * @type {Boolean}
 		 * @private
+		 * @since 1.0.0-rc.9
 		 */
-		stopItemNavigation: {
+		preventItemNavigation: {
 			type: Boolean,
 		},
 
@@ -412,7 +417,7 @@ class List extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (!this._itemNavigationInitialized && !this.stopItemNavigation) {
+		if (!this._itemNavigationInitialized && !this.preventItemNavigation) {
 			this.initItemNavigation();
 
 			this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
