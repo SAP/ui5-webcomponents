@@ -732,7 +732,7 @@ class Input extends UI5Element {
 	}
 
 	/**
-	 * Checks if the popover is open.
+	 * Checks if the value state popover is open.
 	 * @returns {Boolean} true if the popover is open, false otherwise
 	 * @public
 	 */
@@ -1034,6 +1034,7 @@ class Input extends UI5Element {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
+				"ui5-responsive-popover-header": !this.isOpen(),
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,

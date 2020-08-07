@@ -123,7 +123,7 @@
 .ui5-responsive-popover-header .row {
 	box-sizing: border-box;
 	padding: 0.25rem 1rem;
-	height: 2.5rem;
+	min-height: 2.5rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
