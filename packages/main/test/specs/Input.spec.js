@@ -129,17 +129,6 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputChangeResult.getValue(), "2", "change is called twice");
 	});
 
-	it("fires suggestion-item-preview", () => {
-		const inputItemPreview = $("#inputPreview").shadow$("input");
-		const inputItemPreviewRes = $("#inputItemPreviewRes");
-
-		inputItemPreview.click();
-		inputItemPreview.keys("А");
-		inputItemPreview.keys("ArrowDown");
-
-		assert.strictEqual(inputItemPreviewRes.getValue(), "Laptop Lenovo", "First item has been previewed");
-	});
-
 	it("fires suggestion-scroll event", () => {
 		const input = $("#scrollInput").shadow$("input");
 		const scrollResult = $("#scrollResult");
@@ -245,6 +234,7 @@ describe("Input general interaction", () => {
 		const listItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
 
 		nativeInput.click();
+		nativeInput.keys("a");
 
 		assert.strictEqual(input.getSize('width'), listItem.getSize('width'));
 	})
@@ -315,6 +305,8 @@ describe("Input general interaction", () => {
 
 		// act
 		inputItemPreview.click();
+		inputItemPreview.keys("c");
+
 		inputItemPreview.keys("ArrowDown");
 		
 		// assert

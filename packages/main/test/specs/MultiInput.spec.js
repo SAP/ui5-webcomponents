@@ -96,7 +96,7 @@ describe("MultiInput general interaction", () => {
 		assert.ok(popover.getProperty("opened"), "Suggestion Popovoer is open");
 		assert.strictEqual(mi.$$("ui5-token").length, 0, "0 tokens");
 
-		popover.$("ui5-li").click();
+		popover.$("ui5-li-suggestion-item").click();
 
 		assert.ok(!popover.getProperty("opened"), "Suggestion Popovoer is closed");
 		assert.strictEqual(mi.$$("ui5-token").length, 1, "a token is added after selection");

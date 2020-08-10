@@ -879,8 +879,9 @@ class Input extends UI5Element {
 	}
 
 	async getInputValue() {
-		const inputDOM = this.getDomRef();
-		if (inputDOM) {
+		const domRef = this.getDomRef();
+
+		if (domRef) {
 			return (await this.getInputDOMRef()).value;
 		}
 		return "";
