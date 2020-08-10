@@ -4,7 +4,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.20.10](https://github.com/SAP/ui5-webcomponents/compare/v0.21.9...v0.21.10) (2020-07-29)
+# [0.21.11](https://github.com/SAP/ui5-webcomponents/compare/v0.21.10...v0.21.11) (2020-08-10)
+
+
+### Fixes
+
+* **ui5-li:** scale image properly ([#2059](https://github.com/SAP/ui5-webcomponents/pull/2059))
+([3aadc0e](https://github.com/SAP/ui5-webcomponents/commit/3aadc0e))
+
+* **ui5-tabcontainer:** fix ARIA posinset and setsize values ([#2046](https://github.com/SAP/ui5-webcomponents/issues/2046))
+([c6fcf69](https://github.com/SAP/ui5-webcomponents/commit/c6fcf69))
+
+* **ui5-tabcontainer:** implement ACC for overflowed items ([#2047](https://github.com/SAP/ui5-webcomponents/issues/2047))
+([efe03bc](https://github.com/SAP/ui5-webcomponents/commit/efe03bc))
+
+### Features
+* **tools:** process HBS files in nested directories ([#2067](https://github.com/SAP/ui5-webcomponents/issues/2067))
+([13f1d2a](https://github.com/SAP/ui5-webcomponents/commit/13f1d2a))
+
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [0.21.10](https://github.com/SAP/ui5-webcomponents/compare/v0.21.9...v0.21.10) (2020-07-29)
 
 
 ### Fixes
