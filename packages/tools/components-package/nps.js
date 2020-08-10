@@ -14,7 +14,7 @@ const getScripts = (options) => {
 		lint: "eslint . --config config/.eslintrc.js",
 		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
 		build: {
-			default: "nps lint prepare build.bundle",
+			default: "nps lint prepare build.bundle scope",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
 			styles: {
 				default: "nps build.styles.themes build.styles.components",
@@ -37,6 +37,12 @@ const getScripts = (options) => {
 				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
 				docs: `node "${LIB}/documentation/index.js" dist/api.json`,
 			}
+		},
+		scope: {
+			default: "nps scope.clean scope.copy scope.replace",
+			clean: "rimraf dist/scoped",
+			copy: `node "${LIB}/copy-and-watch/index.js" "dist/**/*" dist/scoped`,
+			replace: `node "${LIB}/scoping/index.js" dist/scoped`,
 		},
 		copy: {
 			default: "nps copy.src copy.test copy.webcomponents-polyfill",
