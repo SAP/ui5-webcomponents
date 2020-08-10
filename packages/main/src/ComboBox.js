@@ -323,13 +323,19 @@ class ComboBox extends UI5Element {
 
 		this._filteredItems = [];
 		this._initialRendering = true;
+		this._itemFocused = false;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
-		const domValue = this._initialRendering ? this.value : this.filterValue;
+		let domValue;
 
-		this._filteredItems = this._filterItems(domValue);
+		if (this._initialRendering) {
+			domValue = this.value;
+			this._filteredItems = this.items;
+		} else {
+			domValue = this.filterValue;
+		}
 
 		if (this._autocomplete && domValue !== "") {
 			this._autoCompleteValue(domValue);
@@ -351,6 +357,16 @@ class ComboBox extends UI5Element {
 			// Set initial focus to the native input
 			this.inner.focus();
 		}
+
+		if (this.shouldClosePopover()) {
+			this.responsivePopover.close(false, false, true);
+		}
+
+		this._itemFocused = false;
+	}
+
+	shouldClosePopover() {
+		return this.responsivePopover.opened && !this.focused && !this._itemFocused;
 	}
 
 	_focusin(event) {
@@ -484,6 +500,8 @@ class ComboBox extends UI5Element {
 			this.fireEvent("change");
 			this.inner.setSelectionRange(this.value.length, this.value.length);
 		}
+
+		this._closeRespPopover();
 	}
 
 	_selectItem(event) {
@@ -499,13 +517,10 @@ class ComboBox extends UI5Element {
 		});
 
 		this._inputChange();
-		this._closeRespPopover();
 	}
 
-	get _filteredItems() {
-		return !this.items.length ? [] : this.items.filter(item => {
-			return item.text.toLowerCase().startsWith(this.value.toLowerCase());
-		});
+	_onItemFocus(event) {
+		this._itemFocused = true;
 	}
 
 	get _headerTitleText() {

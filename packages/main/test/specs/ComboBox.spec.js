@@ -17,6 +17,32 @@ describe("General interaction", () => {
 		assert.ok(popover.getProperty("opened"), "Popover should be displayed")
 	});
 
+	it ("Items filtration", () => {
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+
+		const combo = $("#combo");
+		const arrow = combo.shadow$("[input-icon]");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = popover.$("ui5-list").$$("ui5-li");
+
+		// act
+		arrow.click();
+
+		// assert
+		assert.strictEqual(listItems.length, 11, "All items are shown with selected item");
+
+		// act
+		input.click();
+		browser.keys("Backspace");
+
+		// assert
+		listItems = popover.$("ui5-list").$$("ui5-li");
+		assert.strictEqual(listItems.length, 1, "Items are filtered on input value change");
+
+	});
+
 	it ("Should open the popover when typing a value", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
 
@@ -84,6 +110,37 @@ describe("General interaction", () => {
 		// assert
 		assert.strictEqual(listItems.length, 0, "Items should be 0");
 		assert.notOk(popover.getProperty("opened"), "Popover should close");
+	});
+
+	it ("Should close popover on item click / change event", () => {
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+
+		const combo = $("#combo2");
+		const arrow = combo.shadow$("[input-icon]");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo2");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = popover.$("ui5-list").$$("ui5-li");
+
+		// act
+		input.click();
+		input.keys("b");
+
+		// assert
+		assert.ok(popover.getProperty("opened"), "Popover should be opened");
+
+		// act
+		input.keys("Enter");
+
+		// assert
+		assert.notOk(popover.getProperty("opened"), "Popover should be closed");
+
+		// act
+		arrow.click();
+		listItems[0].click();
+
+		// assert
+		assert.notOk(popover.getProperty("opened"), "Popover should be closed");
 	});
 
 	it ("Tests change event", () => {

@@ -69,6 +69,10 @@ class DatePickerTestPage {
 		return browser.$(`.${this.staticAreaItemClassName}`).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-show-picker="Month"]`);
 	}
 
+	get dayPicker() {
+		return browser.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
+	}
+
 	getPickerDate(timestamp) {
 		return browser.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
 	}

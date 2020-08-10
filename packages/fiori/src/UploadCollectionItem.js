@@ -9,7 +9,7 @@ import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
-import { isEnter, isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isEnter, isEscape, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import UploadState from "./types/UploadState.js";
 import "@ui5/webcomponents-icons/dist/icons/refresh.js";
 import "@ui5/webcomponents-icons/dist/icons/stop.js";
@@ -242,7 +242,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	static get styles() {
-		return [...ListItem.styles, UploadCollectionItemCss];
+		return [ListItem.styles, UploadCollectionItemCss];
 	}
 
 	static get template() {
@@ -294,6 +294,12 @@ class UploadCollectionItem extends ListItem {
 	onDetailClick(event) {
 		super.onDetailClick(event);
 		this._editing = true;
+	}
+
+	_onDetailKeyup(event) {
+		if (isSpace(event)) {
+			this.onDetailClick(event);
+		}
 	}
 
 	/**

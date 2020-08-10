@@ -10,9 +10,11 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import {
@@ -25,6 +27,7 @@ import {
 import Option from "./Option.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
+import Popover from "./Popover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
@@ -36,6 +39,8 @@ import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.l
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 
 /**
  * @public
@@ -63,6 +68,23 @@ const metadata = {
 			propertyName: "options",
 			type: HTMLElement,
 			listenFor: { include: ["*"] },
+		},
+
+		/**
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-select</code>.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 * <br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+		 * when the <code>ui5-select</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * @type {HTMLElement[]}
+		 * @since 1.0.0-rc.9
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Select.prototype */  {
@@ -139,6 +161,12 @@ const metadata = {
 			type: Boolean,
 		},
 
+		_listWidth: {
+			type: Integer,
+			defaultValue: 0,
+			noAttribute: true,
+		},
+
 		/**
 		 * @private
 		 */
@@ -211,7 +239,7 @@ class Select extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return ResponsivePopoverCommonCss;
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SelectPopoverCss];
 	}
 
 	constructor() {
@@ -228,6 +256,14 @@ class Select extends UI5Element {
 	onBeforeRendering() {
 		this._syncSelection();
 		this._enableFormSupport();
+	}
+
+	onAfterRendering() {
+		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
+
+		if (this._isPickerOpen && !this._listWidth) {
+			this._listWidth = this.responsivePopover.offsetWidth;
+		}
 	}
 
 	_onfocusin() {
@@ -360,11 +396,26 @@ class Select extends UI5Element {
 		this.options[index].selected = true;
 	}
 
-	_selectionChange(event) {
-		const selectedItemIndex = this._getSelectedItemIndex(event.detail.item);
-
+	/**
+	 * The user clicked on an item from the list
+	 * @private
+	 */
+	_handleItemPress(event) {
+		const item = event.detail.item;
+		const selectedItemIndex = this._getSelectedItemIndex(item);
 		this._select(selectedItemIndex);
+
 		this._toggleRespPopover();
+	}
+
+	/**
+	 * The user used arrow up/down on the list
+	 * @private
+	 */
+	_handleSelectionChange(event) {
+		const item = event.detail.selectedItems[0];
+		const selectedItemIndex = this._getSelectedItemIndex(item);
+		this._select(selectedItemIndex);
 	}
 
 	_applyFocusAfterOpen() {
@@ -379,7 +430,13 @@ class Select extends UI5Element {
 	}
 
 	_handlePickerKeydown(event) {
-		this._handleArrowNavigation(event, false);
+		if (isEscape(event) && this._isPickerOpen) {
+			this._escapePressed = true;
+		}
+
+		if (isEnter(event) || isSpace(event)) {
+			this._shouldClosePopover = true;
+		}
 	}
 
 	_handleArrowNavigation(event, shouldFireEvent) {
@@ -403,14 +460,6 @@ class Select extends UI5Element {
 				this._fireChangeEvent(this.options[nextIndex]);
 			}
 		}
-
-		if (isEscape(event) && this._isPickerOpen) {
-			this._escapePressed = true;
-		}
-
-		if (isEnter(event) || isSpace(event)) {
-			this._shouldClosePopover = true;
-		}
 	}
 
 	_getNextOptionIndex() {
@@ -428,6 +477,7 @@ class Select extends UI5Element {
 
 	_afterClose() {
 		this._iconPressed = false;
+		this._listWidth = 0;
 
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
@@ -491,11 +541,81 @@ class Select extends UI5Element {
 		&& this.responsivePopover.opened ? "-1" : "0";
 	}
 
+	get classes() {
+		return {
+			popoverValueState: {
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			popoverHeader: {
+				"width": `${this.offsetWidth}px`,
+			},
+			responsivePopoverHeader: {
+				"display": this.options.length && this._listWidth === 0 ? "none" : "inline-block",
+				"width": `${this.options.length ? this._listWidth : this.offsetWidth}px`,
+			},
+		};
+	}
+
+	get valueStateMessageText() {
+		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
+	}
+
+	get shouldDisplayDefaultValueStateMessage() {
+		return !this.valueStateMessage.length && this.hasValueStateText;
+	}
+
+	get hasValueStateText() {
+		return this.hasValueState && this.valueState !== ValueState.Success;
+	}
+
+	get shouldOpenValueStateMessagePopover() {
+		return this.focused && this.hasValueStateText && !this._iconPressed
+			&& !this._isPickerOpen && !this._isPhone;
+	}
+
+	get _isPhone() {
+		return isPhone();
+	}
+
+	async openValueStatePopover() {
+		this.popover = await this._getPopover();
+		if (this.popover) {
+			this.popover.openBy(this);
+		}
+	}
+
+	closeValueStatePopover() {
+		this.popover && this.popover.close();
+	}
+
+	toggleValueStatePopover(open) {
+		if (open) {
+			this.openValueStatePopover();
+		} else {
+			this.closeValueStatePopover();
+		}
+	}
+
+	async _getPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("ui5-popover");
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			Option.define(),
 			Label.define(),
 			ResponsivePopover.define(),
+			Popover.define(),
 			List.define(),
 			StandardListItem.define(),
 			Icon.define(),

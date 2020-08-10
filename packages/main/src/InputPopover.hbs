@@ -5,6 +5,7 @@
 		prevent-focus-restore
 		placement-type="Bottom"
 		horizontal-align="Left"
+		style="{{styles.suggestionsPopover}}"
 		@ui5-after-open="{{_afterOpenPopover}}"
 		@ui5-after-close="{{_afterClosePopover}}"
 		@scroll="{{_scroll}}"
@@ -66,6 +67,7 @@
 		<ui5-popover
 			skip-registry-update
 			_disable-initial-focus
+			prevent-focus-restore
 			no-padding
 			no-arrow
 			class="ui5-valuestatemessage-popover"
@@ -91,18 +93,22 @@
 	<ui5-list separators="{{suggestionSeparators}}">
 		{{#each suggestionsTexts}}
 			{{#if group}}
-				<ui5-li-groupheader data-ui5-key="{{key}}">{{ this.text }}</ui5-li-groupheader>
+				<ui5-li-groupheader data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-groupheader>
 			{{else}}
-				<ui5-li
+				<ui5-li-suggestion-item
 					image="{{this.image}}"
 					icon="{{this.icon}}"
-					description="{{this.description}}"
 					info="{{this.info}}"
 					type="{{this.type}}"
 					info-state="{{this.infoState}}"
 					@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
 					data-ui5-key="{{key}}"
-				>{{ this.text }}</ui5-li>
+				>
+					{{{ this.text }}}
+					{{#if this.description}}
+						<span slot="richDescription">{{{ this.description }}}</span>
+					{{/if}}
+				</ui5-li-suggestion-item>
 			{{/if}}
 		{{/each}}
 	</ui5-list>

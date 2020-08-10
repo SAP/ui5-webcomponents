@@ -40,11 +40,11 @@ const metadata = {
 
 		morePopoverOpener: { type: Object },
 
-		_nMoreText: { type: String },
-
 		popoverMinWidth: {
 			type: Integer,
 		},
+
+		_nMoreCount: { type: Integer },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		"token-delete": {
@@ -98,31 +98,16 @@ class Tokenizer extends UI5Element {
 	}
 
 	_handleResize() {
-		/*
-		 * Overflow happens with a pure CSS, but we
-		 * have to update the "n more" label when tokenizer is resized
-		 */
-		this._invalidate();
+		this._nMoreCount = this.overflownTokens.length;
 	}
 
 	constructor() {
 		super();
 
-		this._tokensCount = 0;
 		this._resizeHandler = this._handleResize.bind(this);
 		this._itemNav = new ItemNavigation(this);
+		this._itemNav.getItemsCallback = this._getVisibleTokens.bind(this);
 		this._scrollEnablement = new ScrollEnablement(this);
-
-		this._itemNav.getItemsCallback = () => {
-			if (this.disabled) {
-				return [];
-			}
-
-			return this._getTokens().filter((token, index) => {
-				return index < (this._getTokens().length - this.overflownTokens.length);
-			});
-		};
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -131,13 +116,7 @@ class Tokenizer extends UI5Element {
 			const popover = await this.getPopover();
 			popover.close();
 		}
-
-		setTimeout(() => {
-			// wait for the layouting and update the text
-			this._nMoreText = this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this.overflownTokens.length]);
-		}, 0);
 	}
-
 
 	onEnterDOM() {
 		ResizeHandler.register(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._resizeHandler);
@@ -169,6 +148,16 @@ class Tokenizer extends UI5Element {
 		return Object.keys(this.morePopoverOpener).length;
 	}
 
+	_getVisibleTokens() {
+		if (this.disabled) {
+			return [];
+		}
+
+		return this._tokens.filter((token, index) => {
+			return index < (this._tokens.length - this._nMoreCount);
+		});
+	}
+
 	onAfterRendering() {
 		/*
 			We schedule an invalidation as we have the tokens count
@@ -179,6 +168,7 @@ class Tokenizer extends UI5Element {
 			this._tokensCount = this._getTokens().length;
 		}
 
+		this._nMoreCount = this.overflownTokens.length;
 		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
 	}
 
@@ -200,7 +190,7 @@ class Tokenizer extends UI5Element {
 	/* Keyboard handling */
 
 	_updateAndFocus() {
-		if (this._getTokens().length) {
+		if (this._tokens.length) {
 			this._itemNav.update();
 
 			setTimeout(() => {
@@ -223,6 +213,10 @@ class Tokenizer extends UI5Element {
 		const popover = await this.getPopover();
 
 		popover.close();
+	}
+
+	get _nMoreText() {
+		return this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._nMoreCount]);
 	}
 
 	get showNMore() {

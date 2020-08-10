@@ -27,7 +27,7 @@ module.exports = {
 				...buildThemesCommands
 			},
 			postcss: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
-			jsonImports: `node "${jsonImportsScript}" dist/generated/json-imports`,
+			jsonImports: `node "${jsonImportsScript}" dist/generated/assets/themes dist/generated/json-imports`,
 		},
 		generateReport: `node "${generateReportScript}"`,
 	},

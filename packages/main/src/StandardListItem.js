@@ -1,6 +1,7 @@
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
+import Avatar from "./Avatar.js";
 import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
 
 /**
@@ -73,9 +74,9 @@ const metadata = {
 		/**
 		 * Defines the state of the <code>info</code>.
 		 * <br>
-		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
 		 * @type {ValueState}
-         * @defaultvalue "None"
+		 * @defaultvalue "None"
 		 * @public
 		 * @since 0.13.0
 		 */
@@ -151,7 +152,10 @@ class StandardListItem extends ListItem {
 	}
 
 	static async onDefine() {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			Avatar.define(),
+		]);
 	}
 }
 

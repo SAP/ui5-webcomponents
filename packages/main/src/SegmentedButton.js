@@ -111,7 +111,7 @@ class SegmentedButton extends UI5Element {
 		this.percentageWidthSet = false; //  set to true whenever we set 100% width to the component
 		this.hasPreviouslyFocusedItem = false;
 
-		this._handleResizeBound = this._handleResize.bind(this);
+		this._handleResizeBound = this._doLayout.bind(this);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -128,7 +128,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	async onAfterRendering() {
-		await this.measureButtonsWidth();
+		await this._doLayout();
 	}
 
 	prepareToMeasureButtons() {
@@ -211,7 +211,7 @@ class SegmentedButton extends UI5Element {
 		}
 	}
 
-	async _handleResize() {
+	async _doLayout() {
 		const buttonsHaveWidth = this.widths && this.widths.some(button => button.offsetWidth > 2); // 2 are the pixel's added for rounding & IE
 		if (!buttonsHaveWidth) {
 			await this.measureButtonsWidth();

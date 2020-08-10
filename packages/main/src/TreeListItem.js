@@ -62,6 +62,27 @@ const metadata = {
 		expanded: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines whether the toggle button is shown at the end, rather than at the beginning of the item
+		 *
+		 * @protected
+		 * @since 1.0.0-rc.8
+		 */
+		_toggleButtonEnd: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the item shows minimal details - only icon (no text or toggle button)
+		 *
+		 * @protected
+		 * @since 1.0.0-rc.8
+		 */
+		_minimal: {
+			type: Boolean,
+		},
+
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 		/**
@@ -140,7 +161,7 @@ class TreeListItem extends ListItem {
 	}
 
 	static get styles() {
-		return [...ListItem.styles, treeListItemCss];
+		return [ListItem.styles, treeListItemCss];
 	}
 
 	static get metadata() {
@@ -171,6 +192,18 @@ class TreeListItem extends ListItem {
 
 	get _toggleIconName() {
 		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
+	}
+
+	get _showToggleButtonBeginning() {
+		return this.showToggleButton && !this._minimal && !this._toggleButtonEnd;
+	}
+
+	get _showToggleButtonEnd() {
+		return this.showToggleButton && !this._minimal && this._toggleButtonEnd;
+	}
+
+	get _showTitle() {
+		return this.textContent.length && !this._minimal;
 	}
 
 	get _accInfo() {

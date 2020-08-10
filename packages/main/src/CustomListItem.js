@@ -50,7 +50,7 @@ class CustomListItem extends ListItem {
 	}
 
 	static get styles() {
-		return [...ListItem.styles, customListItemCss];
+		return [ListItem.styles, customListItemCss];
 	}
 
 	get classes() {

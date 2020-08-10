@@ -1,4 +1,5 @@
 import { getAnimationMode as getConfiguredAnimationMode } from "../InitialConfiguration.js";
+import AnimationMode from "../types/AnimationMode.js";
 
 let animationMode;
 
@@ -10,4 +11,13 @@ const getAnimationMode = () => {
 	return animationMode;
 };
 
-export { getAnimationMode }; // eslint-disable-line
+const setAnimationMode = newAnimationMode => {
+	if (Object.values(AnimationMode).includes(newAnimationMode)) {
+		animationMode = newAnimationMode;
+	}
+};
+
+export {
+	getAnimationMode,
+	setAnimationMode,
+};

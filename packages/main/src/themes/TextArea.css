@@ -136,7 +136,7 @@
 
 :host([value-state]:not([value-state="None"])) .ui5-textarea-inner,
 :host([exceeding]) .ui5-textarea-inner {
-	border-width: var(--_ui5_input_state_border_width);
+	border-width: var(--_ui5_textarea_error_warning_border_width);
 }
 
 :host([value-state="Error"]) .ui5-textarea-inner,
@@ -157,7 +157,8 @@
 }
 
 :host([value-state="Error"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
-:host([value-state="Warning"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
+:host([value-state="Warning"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
+:host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
 	border-style: var(--_ui5_input_error_warning_border_style);
 }
 
@@ -186,6 +187,7 @@
 
 :host([value-state="Information"]:not([readonly]):not([exceeding])) .ui5-textarea-inner {
 	background-color: var(--sapField_InformationBackground);
+	border-width: var(--_ui5_textarea_information_border_width);
 }
 
 .ui5-textarea-exceeded-text {

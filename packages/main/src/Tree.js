@@ -77,6 +77,26 @@ const metadata = {
 			type: Object,
 			multiple: true,
 		},
+
+		/**
+		 * Shows the toggle button at the end, rather than at the beginning of the items
+		 *
+		 * @protected
+		 * @since 1.0.0-rc.8
+		 */
+		_toggleButtonEnd: {
+			type: Boolean,
+		},
+
+		/**
+		 * Represents the tree in a very minimal state - icons only with no text and no toggle buttons
+		 *
+		 * @protected
+		 * @since 1.0.0-rc.8
+		 */
+		_minimal: {
+			type: Boolean,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
@@ -316,6 +336,16 @@ class Tree extends UI5Element {
 			previouslySelectedItems,
 			selectedItems,
 		});
+	}
+
+	/**
+	 * Returns the corresponding list item for a given tree item
+	 *
+	 * @param item The tree item
+	 * @protected
+	 */
+	_getListItemForTreeItem(item) {
+		return this.list.items.find(listItem => listItem.treeItem === item);
 	}
 
 	/**

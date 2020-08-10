@@ -64,10 +64,6 @@
 }
 
 .ui5-button-icon {
-	font-size: var(--_ui5_button_icon_font_size);
-	height: 0;
-	top: -.5rem;
-	position: relative;
 	color: inherit;
 	flex-shrink: 0;
 }
@@ -82,6 +78,7 @@
 
 :host([icon-only]) .ui5-button-root {
 	min-width: auto;
+	padding: 0;
 }
 
 :host([icon-only]) .ui5-button-text {

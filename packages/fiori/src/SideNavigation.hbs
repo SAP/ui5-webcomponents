@@ -1,0 +1,81 @@
+<div class="ui5-sn-root">
+	{{> header }}
+
+	{{#if items.length}}
+		<ui5-tree
+			id="ui5-sn-items-tree"
+			mode="None"
+			?_minimal="{{collapsed}}"
+			_toggle-button-end
+			@ui5-item-click="{{handleTreeItemClick}}"
+		>
+			{{#each _items}}
+				<ui5-tree-item
+					icon="{{this.item.icon}}"
+					.associatedItem="{{this.item}}"
+					text="{{this.item.text}}"
+					?has-children="{{this.item.items.length}}"
+					?expanded="{{this.item.expanded}}"
+					?selected="{{this.selected}}"
+				>
+					{{#unless ../collapsed}}
+						{{#each this.item.items}}
+							<ui5-tree-item
+								.associatedItem="{{this}}"
+								text="{{this.text}}"
+								icon="{{this.icon}}"
+								?selected="{{this.selected}}"
+							>
+							</ui5-tree-item>
+						{{/each}}
+					{{/unless}}
+				</ui5-tree-item>
+			{{/each}}
+		</ui5-tree>
+	{{/if}}
+
+	<div class="ui5-sn-spacer"></div>
+
+	{{#if fixedItems.length}}
+	   <div>
+			<div class="ui5-sn-bottom-content-border">
+				<span></span>
+			</div>
+			<ui5-tree
+				id="ui5-sn-fixed-items-tree"
+				mode="None"
+				?_minimal="{{collapsed}}"
+				_toggle-button-end
+				@ui5-item-click="{{handleTreeItemClick}}"
+			>
+				{{#each _fixedItems}}
+					<ui5-tree-item
+						icon="{{this.item.icon}}"
+						.associatedItem="{{this.item}}"
+						text="{{this.item.text}}"
+						?has-children="{{this.item.items.length}}"
+						?expanded="{{this.item.expanded}}"
+						?selected="{{this.selected}}"
+					>
+						{{#unless ../collapsed}}
+							{{#each this.item.items}}
+								<ui5-tree-item
+									.associatedItem="{{this}}"
+									text="{{this.text}}"
+									?selected="{{this.selected}}"
+								>
+								</ui5-tree-item>
+							{{/each}}
+						{{/unless}}
+					</ui5-tree-item>
+				{{/each}}
+			</ui5-tree>
+	   </div>
+	{{/if}}
+
+	{{> footer }}
+</div>
+
+{{#*inline header}}{{/inline}}
+
+{{#*inline footer}}{{/inline}}

@@ -2,7 +2,7 @@
 
 {{#*inline "listItemPreContent"}}
 	<div class="ui5-li-tree-toggle-box" style="padding-left: {{effectiveLevel}}rem; padding-left: calc(var(--_ui5-tree-indent-step) * {{effectiveLevel}});">
-		{{#if showToggleButton}}
+		{{#if _showToggleButtonBeginning}}
 			<ui5-icon
 				class="ui5-li-tree-toggle-icon"
 				name="{{_toggleIconName}}"
@@ -13,7 +13,7 @@
 {{/inline}}
 
 {{#*inline "listItemContent"}}
-	{{#if textContent.length}}
+	{{#if _showTitle}}
 		<div part="title" class="ui5-li-title"><slot></slot></div>
 	{{/if}}
 {{/inline}}
@@ -26,4 +26,12 @@
 	{{/if}}
 {{/inline}}
 
-{{#*inline "iconEnd"}}{{/inline}}
+{{#*inline "iconEnd"}}
+	{{#if _showToggleButtonEnd}}
+		<ui5-icon
+			class="ui5-li-tree-toggle-icon"
+			name="{{_toggleIconName}}"
+			@click="{{_toggleClick}}"
+		></ui5-icon>
+	{{/if}}
+{{/inline}}

@@ -39,7 +39,7 @@
 }
 
 :host([selected]) .ui5-token--wrapper:focus {
-	outline: 1px dotted var(--sapContent_ContrastFocusColor);
+	outline: var(--_ui5_token_focus_outline_width) dotted var(--sapContent_ContrastFocusColor);
 }
 
 .ui5-token--wrapper {
@@ -59,7 +59,7 @@
 
 .ui5-token--wrapper:focus {
 	outline-offset: -2px;
-	outline: 1px dotted var(--sapContent_FocusColor);
+	outline: var(--_ui5_token_focus_outline_width) dotted var(--sapContent_FocusColor);
 }
 
 .ui5-token--text {

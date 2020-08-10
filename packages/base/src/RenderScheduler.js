@@ -2,20 +2,17 @@ import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 import { isRtlAware } from "./locale/RTLAwareRegistry.js";
 
-const MAX_RERENDER_COUNT = 10;
 const registeredElements = new Set();
-
-// Tells whether a render task is currently scheduled
-let renderTaskId;
 
 // Queue for invalidated web components
 const invalidatedWebComponents = new RenderQueue();
 
 let renderTaskPromise,
-	renderTaskPromiseResolve,
-	taskResult;
+	renderTaskPromiseResolve;
 
 let mutationObserverTimer;
+
+let queuePromise;
 
 /**
  * Class that manages the rendering/re-rendering of web components
@@ -27,77 +24,65 @@ class RenderScheduler {
 	}
 
 	/**
-	 * Queues a web component for re-rendering
+	 * Schedules a render task (if not already scheduled) to render the component
+	 *
 	 * @param webComponent
+	 * @returns {Promise}
 	 */
-	static renderDeferred(webComponent) {
+	static async renderDeferred(webComponent) {
 		// Enqueue the web component
-		const res = invalidatedWebComponents.add(webComponent);
+		invalidatedWebComponents.add(webComponent);
 
 		// Schedule a rendering task
-		RenderScheduler.scheduleRenderTask();
-		return res;
+		await RenderScheduler.scheduleRenderTask();
 	}
 
+	/**
+	 * Renders a component synchronously
+	 *
+	 * @param webComponent
+	 */
 	static renderImmediately(webComponent) {
-		// Enqueue the web component
-		const res = invalidatedWebComponents.add(webComponent);
+		webComponent._render();
+	}
 
-		// Immediately start a render task
-		RenderScheduler.runRenderTask();
-		return res;
+	/**
+	 * Cancels the rendering of a component, added to the queue with renderDeferred
+	 *
+	 * @param webComponent
+	 */
+	static cancelRender(webComponent) {
+		invalidatedWebComponents.remove(webComponent);
 	}
 
 	/**
 	 * Schedules a rendering task, if not scheduled already
 	 */
-	static scheduleRenderTask() {
-		if (!renderTaskId) {
-			// renderTaskId = window.setTimeout(RenderScheduler.renderWebComponents, 3000); // Task
-			// renderTaskId = Promise.resolve().then(RenderScheduler.renderWebComponents); // Micro task
-			renderTaskId = window.requestAnimationFrame(RenderScheduler.renderWebComponents); // AF
-		}
-	}
+	static async scheduleRenderTask() {
+		if (!queuePromise) {
+			queuePromise = new Promise(resolve => {
+				window.requestAnimationFrame(() => {
+					// Render all components in the queue
+					invalidatedWebComponents.process(component => component._render());
 
-	static runRenderTask() {
-		if (!renderTaskId) {
-			renderTaskId = 1; // prevent another rendering task from being scheduled, all web components should use this task
-			RenderScheduler.renderWebComponents();
-		}
-	}
+					// Resolve the promise so that callers of renderDeferred can continue
+					queuePromise = null;
+					resolve();
 
-	static renderWebComponents() {
-		// console.log("------------- NEW RENDER TASK ---------------");
-
-		let webComponentInfo,
-			webComponent,
-			promise;
-		const renderStats = new Map();
-		while (webComponentInfo = invalidatedWebComponents.shift()) { // eslint-disable-line
-			webComponent = webComponentInfo.webComponent;
-			promise = webComponentInfo.promise;
-
-			const timesRerendered = renderStats.get(webComponent) || 0;
-			if (timesRerendered > MAX_RERENDER_COUNT) {
-				// console.warn("WARNING RERENDER", webComponent);
-				throw new Error(`Web component re-rendered too many times this task, max allowed is: ${MAX_RERENDER_COUNT}`);
-			}
-			webComponent._render();
-			promise._deferredResolve();
-			renderStats.set(webComponent, timesRerendered + 1);
+					// Wait for Mutation observer before the render task is considered finished
+					if (!mutationObserverTimer) {
+						mutationObserverTimer = setTimeout(() => {
+							mutationObserverTimer = undefined;
+							if (invalidatedWebComponents.isEmpty()) {
+								RenderScheduler._resolveTaskPromise();
+							}
+						}, 200);
+					}
+				});
+			});
 		}
 
-		// wait for Mutation observer just in case
-		if (!mutationObserverTimer) {
-			mutationObserverTimer = setTimeout(() => {
-				mutationObserverTimer = undefined;
-				if (invalidatedWebComponents.getList().length === 0) {
-					RenderScheduler._resolveTaskPromise();
-				}
-			}, 200);
-		}
-
-		renderTaskId = undefined;
+		await queuePromise;
 	}
 
 	/**
@@ -111,7 +96,7 @@ class RenderScheduler {
 		renderTaskPromise = new Promise(resolve => {
 			renderTaskPromiseResolve = resolve;
 			window.requestAnimationFrame(() => {
-				if (invalidatedWebComponents.getList().length === 0) {
+				if (invalidatedWebComponents.isEmpty()) {
 					renderTaskPromise = undefined;
 					resolve();
 				}
@@ -132,13 +117,13 @@ class RenderScheduler {
 	}
 
 	static _resolveTaskPromise() {
-		if (invalidatedWebComponents.getList().length > 0) {
+		if (!invalidatedWebComponents.isEmpty()) {
 			// More updates are pending. Resolve will be called again
 			return;
 		}
 
 		if (renderTaskPromiseResolve) {
-			renderTaskPromiseResolve.call(this, taskResult);
+			renderTaskPromiseResolve.call(this);
 			renderTaskPromiseResolve = undefined;
 			renderTaskPromise = undefined;
 		}

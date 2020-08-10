@@ -52,6 +52,10 @@
 	color: var(--sapNegativeTextColor);
 }
 
+:host([info-state="Information"]) .ui5-li-info {
+	color: var(--sapInformativeTextColor);
+}
+
 /* ui5-li: item with title and description */
 :host([has-title][description]) {
 	height: 5rem;
@@ -102,6 +106,7 @@
 	height: var(--_ui5_list_item_img_size);
 	min-height: var(--_ui5_list_item_img_size);
 	margin: var(--_ui5_list_item_img_margin);
+	border-radius: 0;
 }
 
 .ui5-li-icon {

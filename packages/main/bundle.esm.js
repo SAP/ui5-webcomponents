@@ -89,7 +89,7 @@ window.isIE = isIE; // attached to the window object for testing purposes
 
 
 // Note: keep in sync with rollup.config value for IIFE
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
@@ -101,6 +101,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
+		setAnimationMode,
 		getTheme,
 		setTheme,
 		getLanguage,

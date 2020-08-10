@@ -238,6 +238,17 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
+	it("checks if the suggestions popover width is the same as the input width when there is a long suggestion", () => {
+		const input = $("#suggestionsPopoverWidth");
+		const nativeInput = $("#suggestionsPopoverWidth").shadow$("input");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#suggestionsPopoverWidth");
+		const listItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+
+		nativeInput.click();
+
+		assert.strictEqual(input.getSize('width'), listItem.getSize('width'));
+	})
+
 	it("Input's maxlength property is set correctly", () => {
 		const input5 = $("#input-tel");
 		const inputShadowRef = $("#input-tel").shadow$("input");
@@ -278,5 +289,49 @@ describe("Input general interaction", () => {
 		input.setAttribute("aria-label", NEW_TEXT);
 
 		assert.strictEqual(innerInput.getAttribute("aria-label"), NEW_TEXT, "aria-label is reflected in the shadow DOM")
+	});
+
+	it("Tests suggestions highlighting", () => {
+		const input = browser.$("#myInputHighlighted").shadow$("input");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#myInputHighlighted");
+		const EXPTECTED_TEXT = "<b>Ad</b>am";
+
+		input.click();
+		input.keys("ad");
+
+		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const firstListItem = respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+
+		assert.ok(respPopover.isDisplayedInViewport(), "The popover is visible");
+		assert.ok(firstListItem.getHTML().indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.")
+	});
+
+	it("fires suggestion-item-preview", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Input_quickview.html");
+
+		const inputItemPreview = $("#inputPreview2").shadow$("input");
+		const suggestionItemPreviewRes = $("#suggestionItemPreviewRes");
+		const EXPECTED_PREVIEW_ITEM_TEXT = "Laptop Lenovo";
+
+		// act
+		inputItemPreview.click();
+		inputItemPreview.keys("ArrowDown");
+		
+		// assert
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputPreview2");
+		const inputPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const helpPopover = browser.$("#quickViewCard2");
+
+		assert.strictEqual(suggestionItemPreviewRes.getValue(), EXPECTED_PREVIEW_ITEM_TEXT, "First item has been previewed");
+		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover is open.");
+		assert.ok(inputPopover.isDisplayedInViewport(), "The input popover is open.");
+
+		// act
+		const inputInHelpPopover = browser.$("#searchInput2").shadow$("input");
+		inputInHelpPopover.click();
+
+		// assert
+		assert.notOk(inputPopover.isDisplayedInViewport(), "The inpuit popover is closed as it lost the focus.");
+		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
 	});
 });

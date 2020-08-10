@@ -213,6 +213,10 @@ class ProgressIndicator extends UI5Element {
 		return this.valueStateIconMappings()[this.valueState];
 	}
 
+	get _ariaDisabled() {
+		return this.disabled || undefined;
+	}
+
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}

@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import StandardListItem from "./StandardListItem.js";
+import SuggestionListItem from "./SuggestionListItem.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
 import ListItemType from "./types/ListItemType.js";
 
@@ -138,6 +138,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.SuggestionItem
  * @extends UI5Element
+ * @tagname ui5-suggestion-item
  * @public
  */
 class SuggestionItem extends UI5Element {
@@ -147,7 +148,7 @@ class SuggestionItem extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
-			StandardListItem.define(),
+			SuggestionListItem.define(),
 			GroupHeaderListItem.define(),
 		]);
 	}

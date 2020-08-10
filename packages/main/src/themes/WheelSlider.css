@@ -74,7 +74,8 @@
 }
 
 .ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-item:hover {
-	background: var(--_ui5_wheelslider_selected_item_hover_background_color);
+	background: var(--_ui_wheelslider_item_hover_color);
+	border-color: var(--_ui5_wheelslider_item_hovered_border_color);
 }
 
 .ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-item:focus {
@@ -162,7 +163,8 @@
 }
 
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item:hover {
-	background: var(--_ui_wheelslider_item_hover_color);
+	background: var(--sapList_Hover_Background);
+	border-color: var(--_ui5_wheelslider_item_hovered_border_color);
 }
 
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item:active {
@@ -189,10 +191,10 @@
 }
 
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-selection-frame:hover + ul > li.ui5-wheelslider-item.ui5-wheelslider-itemSelected {
-	background: var(--_ui5_wheelslider_selected_item_background_color);
+	background: var(--_ui_wheelslider_item_hover_color);
 }
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-selection-frame:active + ul > li.ui5-wheelslider-item.ui5-wheelslider-itemSelected {
-	background: var(--_ui5_wheelslider_selected_item_background_color); 
+	background: var(--_ui5_wheelslider_selected_item_background_color);
 	color: lightgray;
 }
 .ui5-wheelslider-root:focus {

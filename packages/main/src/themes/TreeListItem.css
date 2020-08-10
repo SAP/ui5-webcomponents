@@ -1,18 +1,64 @@
 :host(:not([hidden])) {
 	display: block;
-	cursor: pointer;
+    cursor: pointer;
+    position: relative;
+}
+
+:host([_minimal]) .ui5-li-tree-toggle-box {
+    width: 0;
+}
+
+:host([_minimal]) .ui5-li-icon {
+    padding: 0;
+}
+
+:host([_minimal]) .ui5-li-content {
+    justify-content: center;
+}
+
+:host([_minimal]) .ui5-li-root-tree {
+    padding: 0;
+}
+
+:host([_minimal][show-toggle-button])::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 0.375rem solid transparent;
+    border-bottom: .375rem solid var(--sapContent_IconColor);
+    position: absolute;
+    right: 0.1875rem;
+    bottom: 0.125rem;
 }
 
 .ui5-li-root-tree {
     padding-left: 0;
 }
 
+:host([selected][has-border]:not([level="1"])),
 :host(:not([level="1"])) {
-    border-bottom: none !important;
+    border-bottom: none;
+}
+
+:host([_toggle-button-end][selected]:not([level="1"])){
+    border-bottom: var(--ui5-listitem-selected-border-bottom);
+}
+
+:host([_toggle-button-end]:not([selected])) .ui5-li-root-tree:hover {
+    background: var(--sapList_Hover_Background);
+    cursor: pointer;
 }
 
 :host(:not([level="1"])) .ui5-li-root-tree {
     background: var(--sapList_AlternatingBackground);
+}
+
+:host([_toggle-button-end]:not([level="1"])) .ui5-li-root-tree {
+    background: var(--ui5-listitem-background-color);
+}
+
+:host([_toggle-button-end][selected]:not([level="1"])) .ui5-li-root-tree {
+    background: var(--sapList_SelectionBackgroundColor);
 }
 
 .ui5-li-tree-toggle-box {

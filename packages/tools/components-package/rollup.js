@@ -52,7 +52,7 @@ const getPlugins = ({ transpile }) => {
 	if (transpile) {
 		plugins.push(babel({
 			presets: ["@babel/preset-env"],
-			exclude: "node_modules/**",
+			exclude: /node_modules\/(?!(lit-html|@ui5\/webcomponents))/, //exclude all node_modules/ except lit-html and all starting with @ui5/webcomponents
 			sourcemap: true,
 		}));
 	}
@@ -108,6 +108,7 @@ const getES5Config = () => {
 		output: {
 			dir: "dist/resources",
 			format: "iife",
+			inlineDynamicImports: true,
 			name: "sap-ui-webcomponents-bundle",
 			extend: "true",	// Whether or not to extend the global variable defined by the name option in umd or iife formats.
 			sourcemap: true
