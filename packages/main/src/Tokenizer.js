@@ -7,7 +7,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
-import { MULTIINPUT_SHOW_MORE_TOKENS, TOKENIZER_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
+import { MULTIINPUT_SHOW_MORE_TOKENS, TOKENIZER_ARIA_LABEL, TOKENIZER_POPOVER_REMOVE } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/Tokenizer.css.js";
@@ -229,6 +229,10 @@ class Tokenizer extends UI5Element {
 
 	get tokenizerLabel() {
 		return this.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
+	}
+
+	get morePopoverTitle() {
+		return this.i18nBundle.getText(TOKENIZER_POPOVER_REMOVE);
 	}
 
 	get overflownTokens() {
