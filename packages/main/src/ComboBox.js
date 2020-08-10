@@ -6,7 +6,14 @@ import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffe
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isBackSpace, isDelete, isShow, isUp, isDown, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isBackSpace,
+	isDelete,
+	isShow,
+	isUp,
+	isDown,
+	isEnter,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import * as Filters from "./ComboBoxFilters.js";
 
 import {
@@ -457,7 +464,11 @@ class ComboBox extends UI5Element {
 	}
 
 	_clearFocus() {
-		this._filteredItems.forEach(item => item.focused = false);
+		this._filteredItems.map(item => {
+			item.focused = false;
+
+			return item;
+		});
 	}
 
 	handleArrowKeyPress(event) {
@@ -467,12 +478,14 @@ class ComboBox extends UI5Element {
 
 		const isArrowDown = isDown(event);
 		const isArrowUp = isUp(event);
-		const currentItem = this._filteredItems.find(item => this.responsivePopover.opened ? item.focused : item.selected);
+		const currentItem = this._filteredItems.find(item => {
+			return this.responsivePopover.opened ? item.focused : item.selected;
+		});
 		let indexOfItem = this._filteredItems.indexOf(currentItem);
 
 		event.preventDefault();
 
-		if (indexOfItem === 0 && isArrowUp || this._filteredItems.length - 1 === indexOfItem && isArrowDown) {
+		if ((indexOfItem === 0 && isArrowUp) || (this._filteredItems.length - 1 === indexOfItem && isArrowDown)) {
 			return;
 		}
 
@@ -635,8 +648,8 @@ class ComboBox extends UI5Element {
 		return this.responsivePopover ? this.responsivePopover.opened : false;
 	}
 
-	get itemTabIndex () {
-		return  undefined;
+	get itemTabIndex() {
+		return undefined;
 	}
 
 	get ariaLabelText() {
