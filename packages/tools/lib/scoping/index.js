@@ -1,51 +1,57 @@
 const fs = require("fs");
 const path = require("path");
 const glob = require("glob");
+const acorn = require("acorn");
+const walk = require("acorn-walk");
 const getAllComponents = require("./get-all-components.js");
 
 const root = process.argv[2];
+const version = process.argv[3];
 
 const components = getAllComponents(process.cwd());
+
 const packages = components.map(item => item.packageName).filter((item, index, arr) => arr.indexOf(item) === index);
 const srcFiles = components.map(item => item.file);
 const tags = components.flatMap(item => item.altTag ? [item.tag, item.altTag] : item.tag);
 
-console.log(packages);
-console.log(srcFiles);
-console.log(tags);
-process.exit();
-
 const processSourceFile = (file) => {
-	// console.log("FILE", file)
-	const content = String(fs.readFileSync(file)); //.replace(/\n/g, " ");
-	// console.log(content);
+	let content = String(fs.readFileSync(file));
 
-	process.exit();
+	// Replace imports
+	walk.simple(acorn.parse(content, {sourceType: "module"}), {
+		ImportDeclaration(node) {
+			const source = node.source.value;
 
-	const imports = content.match(/import.*?\".*?";/g);
-	if (imports) {
-		imports.forEach(imp => {
-			let resolvedPath;
-			const matches = imp.match(/import.*?\"(.*?)";/);
-			const impPath = matches[1];
+			packages.forEach(packageName => {
+				if (source.startsWith(`${packageName}/dist/`)) {
+					const newSource = source.replace("/dist/", "/dist/scoped/");
+					content = content.replace(source, newSource);
+				}
+			});
+		}
+	});
 
-			if (impPath.startsWith(".")) {
-				resolvedPath = path.join(require.resolve(path.dirname(file)), impPath);
-			} else {
-				resolvedPath = require.resolve(impPath);
-			}
+	// Replace tags
+	tags.forEach(tag => {
+		content = content.replace(new RegExp(`(${tag})([^\-A-Za-z0-9])`, "g"), `$1-${version}$2`);
+	});
 
-		});
-	}
-	process.exit();
+	fs.writeFileSync(file, content);
 };
 
 const processTemplate = (file) => {
-	console.log("Processing template", file, components);
+	let content = String(fs.readFileSync(file));
+
+	// Replace tags
+	tags.forEach(tag => {
+		content = content.replace(new RegExp(`(<\/?)(${tag})([> ])`, "g"), `$1$2-${version}$3`);
+	});
+
+	fs.writeFileSync(file, content);
 };
 
 const processCSS = (file) => {
-	console.log("Processing CSS", file, components);
+	// console.log("Processing CSS", file, components);
 };
 
 // Replace imports for components in other packages, replace tags

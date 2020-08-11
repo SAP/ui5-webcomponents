@@ -3,8 +3,8 @@ target
 dist
 lib
 test
-bundle.esm.js
-bundle.es5.js
+bundle.*.js
+bundle.*.js
 rollup.config*.js
 wdio.conf.js
 postcss.config.js

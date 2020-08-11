@@ -1,9 +1,11 @@
 const path = require("path");
+const fs = require("fs");
 
 const LIB = path.join(__dirname, `../lib/`);
 const serveConfig = path.join(__dirname, `serve.json`);
 const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
 const polyfillPath = path.join(polyfillDir, "/**/*.*");
+const version = JSON.parse(fs.readFileSync("package.json")).version;
 
 const getScripts = (options) => {
 
@@ -14,7 +16,7 @@ const getScripts = (options) => {
 		lint: "eslint . --config config/.eslintrc.js",
 		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
 		build: {
-			default: "nps lint prepare build.bundle scope",
+			default: "nps lint prepare scope build.bundle",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
 			styles: {
 				default: "nps build.styles.themes build.styles.components",
@@ -42,7 +44,7 @@ const getScripts = (options) => {
 			default: "nps scope.clean scope.copy scope.replace",
 			clean: "rimraf dist/scoped",
 			copy: `node "${LIB}/copy-and-watch/index.js" "dist/**/*" dist/scoped`,
-			replace: `node "${LIB}/scoping/index.js" dist/scoped`,
+			replace: `node "${LIB}/scoping/index.js" dist/scoped ${version}`,
 		},
 		copy: {
 			default: "nps copy.src copy.test copy.webcomponents-polyfill",
@@ -64,7 +66,7 @@ const getScripts = (options) => {
 			samples: "chokidar \"test/**/*.sample.html\" -c \"nps build.samples\"",
 		},
 		dev: 'concurrently "nps serve" "nps watch"',
-		start: "nps prepare dev",
+		start: "nps prepare scope dev",
 		serve: {
 			default: "nps serve.prepare serve.run",
 			prepare: `node "${LIB}/copy-and-watch/index.js" "${serveConfig}" dist/`,

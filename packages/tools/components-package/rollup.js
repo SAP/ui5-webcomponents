@@ -99,6 +99,24 @@ const getES6Config = () => {
 			clearScreen: false
 		},
 		plugins: getPlugins({transpile: false}),
+	},
+	{
+		input: "bundle.scoped.esm.js",
+		output: {
+			dir: "dist/scoped/resources",
+			format: "esm",
+			sourcemap: true
+		},
+		moduleContext: (id) => {
+			if (id.includes("url-search-params-polyfill")) {
+				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
+				return "window";
+			}
+		},
+		watch: {
+			clearScreen: false
+		},
+		plugins: getPlugins({transpile: false}),
 	}];
 };
 
@@ -107,6 +125,27 @@ const getES5Config = () => {
 		input: "bundle.es5.js",
 		output: {
 			dir: "dist/resources",
+			format: "iife",
+			inlineDynamicImports: true,
+			name: "sap-ui-webcomponents-bundle",
+			extend: "true",	// Whether or not to extend the global variable defined by the name option in umd or iife formats.
+			sourcemap: true
+		},
+		moduleContext: (id) => {
+			if (id.includes("url-search-params-polyfill")) {
+				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
+				return "window";
+			}
+		},
+		watch: {
+			clearScreen: false
+		},
+		plugins: getPlugins({transpile: true}),
+	},
+	{
+		input: "bundle.scoped.es5.js",
+		output: {
+			dir: "dist/scoped/resources",
 			format: "iife",
 			inlineDynamicImports: true,
 			name: "sap-ui-webcomponents-bundle",
