@@ -6,7 +6,7 @@ const walk = require("acorn-walk");
 const getAllComponents = require("./get-all-components.js");
 
 const root = process.argv[2];
-const version = process.argv[3];
+const version = process.argv[3].replace(/[\.\-]+/g, "");
 
 const components = getAllComponents(process.cwd());
 

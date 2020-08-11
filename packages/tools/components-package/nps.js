@@ -14,9 +14,9 @@ const getScripts = (options) => {
 	const scripts = {
 		clean: "rimraf dist",
 		lint: "eslint . --config config/.eslintrc.js",
-		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
+		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples scope",
 		build: {
-			default: "nps lint prepare scope build.bundle",
+			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
 			styles: {
 				default: "nps build.styles.themes build.styles.components",
@@ -66,7 +66,7 @@ const getScripts = (options) => {
 			samples: "chokidar \"test/**/*.sample.html\" -c \"nps build.samples\"",
 		},
 		dev: 'concurrently "nps serve" "nps watch"',
-		start: "nps prepare scope dev",
+		start: "nps prepare dev",
 		serve: {
 			default: "nps serve.prepare serve.run",
 			prepare: `node "${LIB}/copy-and-watch/index.js" "${serveConfig}" dist/`,

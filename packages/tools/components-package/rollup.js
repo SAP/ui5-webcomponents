@@ -81,29 +81,11 @@ const getPlugins = ({ transpile }) => {
 	return plugins;
 };
 
-const getES6Config = () => {
+const getES6Config = (scoped) => {
 	return [{
-		input: "bundle.esm.js",
+		input: scoped ? "bundle.scoped.esm.js" : "bundle.esm.js",
 		output: {
-			dir: "dist/resources",
-			format: "esm",
-			sourcemap: true
-		},
-		moduleContext: (id) => {
-			if (id.includes("url-search-params-polyfill")) {
-				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
-				return "window";
-			}
-		},
-		watch: {
-			clearScreen: false
-		},
-		plugins: getPlugins({transpile: false}),
-	},
-	{
-		input: "bundle.scoped.esm.js",
-		output: {
-			dir: "dist/scoped/resources",
+			dir: scoped ? "dist/scoped/resources" : "dist/resources",
 			format: "esm",
 			sourcemap: true
 		},
@@ -120,32 +102,11 @@ const getES6Config = () => {
 	}];
 };
 
-const getES5Config = () => {
+const getES5Config = (scoped) => {
 	return [ {
-		input: "bundle.es5.js",
+		input: scoped ? "bundle.scoped.es5.js" : "bundle.es5.js",
 		output: {
-			dir: "dist/resources",
-			format: "iife",
-			inlineDynamicImports: true,
-			name: "sap-ui-webcomponents-bundle",
-			extend: "true",	// Whether or not to extend the global variable defined by the name option in umd or iife formats.
-			sourcemap: true
-		},
-		moduleContext: (id) => {
-			if (id.includes("url-search-params-polyfill")) {
-				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
-				return "window";
-			}
-		},
-		watch: {
-			clearScreen: false
-		},
-		plugins: getPlugins({transpile: true}),
-	},
-	{
-		input: "bundle.scoped.es5.js",
-		output: {
-			dir: "dist/scoped/resources",
+			dir: scoped ? "dist/scoped/resources" : "dist/resources",
 			format: "iife",
 			inlineDynamicImports: true,
 			name: "sap-ui-webcomponents-bundle",
@@ -169,6 +130,14 @@ let config = getES6Config();
 
 if (process.env.ES5_BUILD) {
 	config = config.concat(getES5Config());
+}
+
+if (fs.existsSync("bundle.scoped.esm.js")) {
+	config = config.concat(getES6Config(true));
+
+	if (fs.existsSync("bundle.scoped.es5.js") && process.env.ES5_BUILD) {
+		config = config.concat(getES5Config());
+	}
 }
 
 module.exports = config;
