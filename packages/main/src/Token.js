@@ -30,6 +30,7 @@ const metadata = {
 		 * Defines the text of the token.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		text: { type: String },
@@ -70,12 +71,9 @@ const metadata = {
 			},
 		},
 
-		// /**
-		//  * Fired when the a token is selected by user interaction with mouse, clicking space or enter
-		//  *
-		//  * @event
-		//  * @public
-		//  */
+		// TODO: implement
+		// Fired when the a token is selected by user interaction with mouse, clicking space or enter
+		//
 		// select: {},
 	},
 };
@@ -95,6 +93,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Token
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-token
+ * @since 1.0.0-rc.9
  * @public
  */
 class Token extends UI5Element {

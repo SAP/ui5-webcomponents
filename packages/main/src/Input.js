@@ -676,8 +676,6 @@ class Input extends UI5Element {
 	}
 
 	async _handleInput(event) {
-		await this.getInputDOMRef();
-
 		const inputDomRef = await this.getInputDOMRef();
 
 		if (event.target === inputDomRef) {

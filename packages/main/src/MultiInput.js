@@ -85,6 +85,7 @@ const metadata = {
  * @extends Input
  * @tagname ui5-multi-input
  * @appenddocs Token
+ * @since 1.0.0-rc.9
  * @public
  */
 class MultiInput extends Input {
@@ -131,7 +132,7 @@ class MultiInput extends Input {
 
 	_tokenizerFocusOut(event) {
 		if (!this.contains(event.relatedTarget)) {
-			this.tokenizer.contentDom.scrollLeft = 0;
+			this.tokenizer.scrollToStart();
 		}
 	}
 
