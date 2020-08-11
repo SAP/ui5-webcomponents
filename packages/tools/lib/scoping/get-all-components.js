@@ -14,11 +14,16 @@ const getAltTag = file => {
 	return matches ? matches[1] : undefined;
 };
 
-const getComponents = (srcDir) => {
+const getComponents = (packageDir) => {
+	const srcDir = path.join(packageDir, "src/");
+	const packageFile = path.join(packageDir, "package.json");
+	const packageFileContent = JSON.parse(fs.readFileSync(packageFile));
+	const packageName = packageFileContent.name;
+
 	return glob.sync(path.join(srcDir, "/**/*.js")).map(file => {
 		const tag = getTag(file);
 		const altTag = getAltTag(file);
-		return tag ? {file, tag, altTag} : undefined;
+		return tag ? {packageName, file, tag, altTag} : undefined;
 	}).filter(item => !!item);
 };
 
@@ -28,21 +33,14 @@ const getComponents = (srcDir) => {
  * @param packageFile
  * @returns {string[]}
  */
-const getDepComponentPackages = packageFile => {
+const getDepComponentPackages = packageDir => {
+	const packageFile = path.join(packageDir, "package.json");
 	const packageFileContent = JSON.parse(fs.readFileSync(packageFile));
 	if (!packageFileContent.ui5WebComponentsPackage) {
 		return [];
 	}
 
-	return Object.keys(packageFileContent.dependencies || []).map(dep => {
-		let file;
-		try {
-			file = require.resolve(path.join(dep, "package.json"));
-		} catch (e) {
-			file = undefined;
-		}
-		return file;
-	}).filter(file => !!file);
+	return Object.keys(packageFileContent.dependencies || {}).map(dep => path.dirname(require.resolve(path.join(dep, "package.json"))));
 };
 
 /**
@@ -53,11 +51,7 @@ const getDepComponentPackages = packageFile => {
  * @returns {*}
  */
 const getAllComponents = (packageDir) => {
-	packageDir = packageDir ? path.dirname(packageDir) : process.cwd();
-
-	const srcDir = path.join(packageDir, "src/");
-	const packageFile = path.join(packageDir, "package.json");
-	return getComponents(srcDir).concat(getDepComponentPackages(packageFile).flatMap(getAllComponents));
+	return getComponents(packageDir).concat(getDepComponentPackages(packageDir).flatMap(getAllComponents));
 };
 
 module.exports = getAllComponents;

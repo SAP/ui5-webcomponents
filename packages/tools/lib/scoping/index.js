@@ -5,38 +5,61 @@ const getAllComponents = require("./get-all-components.js");
 
 const root = process.argv[2];
 
-const components = getAllComponents();
+const components = getAllComponents(process.cwd());
+const packages = components.map(item => item.packageName).filter((item, index, arr) => arr.indexOf(item) === index);
+const srcFiles = components.map(item => item.file);
+const tags = components.flatMap(item => item.altTag ? [item.tag, item.altTag] : item.tag);
 
-const processSourceFile = (file, component) => {
-	console.log("Processing source file", file, component);
+console.log(packages);
+console.log(srcFiles);
+console.log(tags);
+process.exit();
+
+const processSourceFile = (file) => {
+	// console.log("FILE", file)
+	const content = String(fs.readFileSync(file)); //.replace(/\n/g, " ");
+	// console.log(content);
+
+	process.exit();
+
+	const imports = content.match(/import.*?\".*?";/g);
+	if (imports) {
+		imports.forEach(imp => {
+			let resolvedPath;
+			const matches = imp.match(/import.*?\"(.*?)";/);
+			const impPath = matches[1];
+
+			if (impPath.startsWith(".")) {
+				resolvedPath = path.join(require.resolve(path.dirname(file)), impPath);
+			} else {
+				resolvedPath = require.resolve(impPath);
+			}
+
+		});
+	}
+	process.exit();
 };
 
-const processTemplate = (file, component) => {
-	console.log("Processing template", file, component);
+const processTemplate = (file) => {
+	console.log("Processing template", file, components);
 };
 
-const processCSS = (file, component) => {
-	console.log("Processing CSS", file, component);
+const processCSS = (file) => {
+	console.log("Processing CSS", file, components);
 };
 
 // Replace imports for components in other packages, replace tags
 glob.sync(path.join(root, "/*.js")).forEach(file => {
-	components.forEach(component => {
-		processSourceFile(file, component);
-	});
+	processSourceFile(file);
 });
 
 // Replace tags in templates
 glob.sync(path.join(root, "/generated/templates/**/*.js")).forEach(file => {
-	components.forEach(component => {
-		processTemplate(file, component);
-	});
+	processTemplate(file);
 });
 
 // Replace tags in CSS
 glob.sync(path.join(root, "/generated/themes/*.css.js")).forEach(file => {
-	components.forEach(component => {
-		processCSS(file, component);
-	});
+	processCSS(file);
 });
 
