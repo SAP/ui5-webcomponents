@@ -12,6 +12,8 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/dist/Theming";
+
 const configuration = {
 	getAnimationMode,
 	setAnimationMode,
@@ -28,4 +30,5 @@ export {
 	getIconNames,
 	applyDirection,
 	ResizeHandler,
+	addCustomCSS,
 };

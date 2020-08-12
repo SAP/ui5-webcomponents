@@ -558,8 +558,7 @@ class UI5Element extends HTMLElement {
 
 		// Chrome
 		if (document.adoptedStyleSheets) {
-			const constructableStyle = getConstructableStyle(this.constructor);
-			this.shadowRoot.adoptedStyleSheets = constructableStyle;
+			this.shadowRoot.adoptedStyleSheets = getConstructableStyle(this.constructor);
 		}
 
 		// FF, Safari

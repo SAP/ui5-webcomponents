@@ -39,10 +39,8 @@
 	<br />
 
 	<script>
-		const applyCustomCSSAndRerender = () => {
+		const applyCustomCSSAndRerender = function() {
 			window["sap-ui-webcomponents-bundle"].addCustomCSS("ui5-select", ".ui5-select-root { background-color: red; } ");
-			// document.getElementById("select")._invalidate();
-			// document.getElementById("select")._updateShadowRoot();
 		};
 
 		document
