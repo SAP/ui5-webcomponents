@@ -70,10 +70,6 @@ const metadata = {
 				"delete": { type: Boolean },
 			},
 		},
-
-		// Fired when the a token is selected by user interaction with mouse, clicking space or enter
-		//
-		// select: {},
 	},
 };
 

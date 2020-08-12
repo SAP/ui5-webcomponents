@@ -60,6 +60,19 @@ const metadata = {
 		 * @public
 		 */
 		"value-help-icon-press": {},
+
+		/**
+		 * Fired when a token is about to be deleted.
+		 *
+		 * @event sap.ui.webcomponents.main.MultiInput#token-delete
+		 * @param {HTMLElement} token deleted token.
+		 * @public
+		 */
+		"token-delete": {
+			detail: {
+				token: { type: HTMLElement },
+			},
+		},
 	},
 };
 
