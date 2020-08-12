@@ -1,5 +1,14 @@
-commit bf1976747b0135b9644558c2e150952f20eba894
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Aug 5 13:03:45 2020 +0300
+commit 974401b384e822c9543c86bd46ff4e881e8cc360
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Aug 12 11:18:16 2020 +0300
 
-    @vladitasev fix(tools): UI5 Web Components are now correctly transpiled (#2068)
+    feat(ui5-combobox): enable handling of arrow down/up keys
+    
+    Now, selected item can be changed with arrow down / arrow up keys.
+    
+    Fixes: #1939
+    
+    In addition some issues are resolved:
+    
+    Change event could be fired on Enter key press.
+    Change event could be fired on focusout.
