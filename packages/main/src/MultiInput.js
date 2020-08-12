@@ -159,10 +159,10 @@ class MultiInput extends Input {
 
 	shouldOpenSuggestions() {
 		const parent = super.shouldOpenSuggestions();
-
 		const valueHelpPressed = this._valueHelpIconPressed;
+		const nonEmptyValue = this.value !== "";
 
-		return parent && !valueHelpPressed;
+		return parent && nonEmptyValue && !valueHelpPressed;
 	}
 
 	lastItemDeleted() {

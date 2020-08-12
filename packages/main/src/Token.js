@@ -71,7 +71,6 @@ const metadata = {
 			},
 		},
 
-		// TODO: implement
 		// Fired when the a token is selected by user interaction with mouse, clicking space or enter
 		//
 		// select: {},

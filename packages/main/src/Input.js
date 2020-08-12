@@ -776,7 +776,6 @@ class Input extends UI5Element {
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
 			&& this.focused
-			&& this.value !== ""
 			&& this.showSuggestions
 			&& !this.hasSuggestionItemSelected);
 	}
