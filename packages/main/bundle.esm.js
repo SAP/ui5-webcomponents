@@ -110,7 +110,6 @@ window["sap-ui-webcomponents-bundle"] = {
 		getRTL,
 		getFirstDayOfWeek,
 	},
-	getIconNames,
 	getLocaleData,
 	applyDirection,
 	ResizeHandler,
