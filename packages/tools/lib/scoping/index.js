@@ -51,7 +51,13 @@ const processTemplate = (file) => {
 };
 
 const processCSS = (file) => {
-	// console.log("Processing CSS", file, components);
+	let content = String(fs.readFileSync(file));
+
+	tags.forEach(tag => {
+		content = content.replace(new RegExp(`([^\.\-_])(${tag})([^\-A-Za-z0-9])`, "g"), `$1$2-${version}$3`);
+	});
+
+	fs.writeFileSync(file, content);
 };
 
 // Replace imports for components in other packages, replace tags
