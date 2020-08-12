@@ -85,17 +85,6 @@ class UI5Element extends HTMLElement {
 		// Init Shadow Root
 		if (needsShadowDOM) {
 			this.attachShadow({ mode: "open" });
-
-			// IE11, Edge
-			if (window.ShadyDOM) {
-				createComponentStyleTag(this.constructor);
-			}
-
-			// Chrome
-			if (document.adoptedStyleSheets) {
-				const style = getConstructableStyle(this.constructor);
-				this.shadowRoot.adoptedStyleSheets = [style];
-			}
 		}
 
 		// Init StaticAreaItem only if needed
@@ -562,9 +551,22 @@ class UI5Element extends HTMLElement {
 		let styleToPrepend;
 		const renderResult = this.constructor.template(this);
 
+		// IE11, Edge
+		if (window.ShadyDOM) {
+			createComponentStyleTag(this.constructor);
+		}
+
+		// Chrome
+		if (document.adoptedStyleSheets) {
+			const constructableStyle = getConstructableStyle(this.constructor);
+			this.shadowRoot.adoptedStyleSheets = constructableStyle;
+		}
+
+		// FF, Safari
 		if (!document.adoptedStyleSheets && !window.ShadyDOM) {
 			styleToPrepend = getEffectiveStyle(this.constructor);
 		}
+
 		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, { eventContext: this });
 	}
 
