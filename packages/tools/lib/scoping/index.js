@@ -6,25 +6,37 @@ const walk = require("acorn-walk");
 const getAllComponents = require("./get-all-components.js");
 
 const root = process.argv[2];
-const version = process.argv[3].replace(/[\.\-]+/g, "");
+
+const normalizeVersion = version => version.replace(/[\.\-]+/g, "");
 
 const components = getAllComponents(process.cwd());
 
 const packages = components.map(item => item.packageName).filter((item, index, arr) => arr.indexOf(item) === index);
-const srcFiles = components.map(item => item.file);
 const tags = components.flatMap(item => item.altTag ? [item.tag, item.altTag] : item.tag);
+
+// Build a map to easily get the version for each tag
+const versionsMap = new Map();
+components.forEach(item => {
+	versionsMap.set(item.tag, normalizeVersion(item.version));
+	if (item.altTag) {
+		versionsMap.set(item.altTag, normalizeVersion(item.version));
+	}
+});
 
 // Replaces tags in HTML content, f.e. <ui5-button> with <ui5-button-ver> or </ui5-button> with </ui5-button-ver>
 const replaceTagsHTML = content => {
 	tags.forEach(tag => {
+		const version = versionsMap.get(tag);
 		content = content.replace(new RegExp(`(<\/?)(${tag})(\/?[> \t\n])`, "g"), `$1$2-${version}$3`);
 	});
 
 	return content;
 };
 
+// Replace tags in any content
 const replaceTagsAny = content => {
 	tags.forEach(tag => {
+		const version = versionsMap.get(tag);
 		content = content.replace(new RegExp(`(^|[^\-_A-Za-z0-9])(${tag})([^\-_A-Za-z0-9]|$)`, "g"), `$1$2-${version}$3`);
 	});
 	return content;

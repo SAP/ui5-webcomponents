@@ -5,7 +5,6 @@ const LIB = path.join(__dirname, `../lib/`);
 const serveConfig = path.join(__dirname, `serve.json`);
 const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
 const polyfillPath = path.join(polyfillDir, "/**/*.*");
-const version = JSON.parse(fs.readFileSync("package.json")).version;
 
 const getScripts = (options) => {
 
@@ -44,7 +43,7 @@ const getScripts = (options) => {
 			default: "nps scope.clean scope.copy scope.replace",
 			clean: "rimraf dist/scoped",
 			copy: `node "${LIB}/copy-and-watch/index.js" "dist/**/*" dist/scoped`,
-			replace: `node "${LIB}/scoping/index.js" dist/scoped ${version}`,
+			replace: `node "${LIB}/scoping/index.js" dist/scoped`,
 		},
 		copy: {
 			default: "nps copy.src copy.test copy.webcomponents-polyfill",

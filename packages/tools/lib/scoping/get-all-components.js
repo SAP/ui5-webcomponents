@@ -19,11 +19,12 @@ const getComponents = (packageDir) => {
 	const packageFile = path.join(packageDir, "package.json");
 	const packageFileContent = JSON.parse(fs.readFileSync(packageFile));
 	const packageName = packageFileContent.name;
+	const version = packageFileContent.version;
 
 	return glob.sync(path.join(srcDir, "/**/*.js")).map(file => {
 		const tag = getTag(file);
 		const altTag = getAltTag(file);
-		return tag ? {packageName, file, tag, altTag} : undefined;
+		return tag ? {packageName, version, file, tag, altTag} : undefined;
 	}).filter(item => !!item);
 };
 
