@@ -7,3 +7,8 @@
 	min-width: 0px;
 	height: 100%;
 }
+
+/* Workaround for IE */
+ui5-multi-input ui5-tokenizer {
+	flex: 3;
+}
