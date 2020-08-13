@@ -142,18 +142,21 @@ class RenderScheduler {
 	 *
 	 * Usage:
 	 * reRenderAllUI5Elements() -> rerenders all components
+	 * reRenderAllUI5Elements({tag: "ui5-button"}) -> re-renders only instances of ui5-button
 	 * reRenderAllUI5Elements({rtlAware: true}) -> re-renders only rtlAware components
 	 * reRenderAllUI5Elements({languageAware: true}) -> re-renders only languageAware components
 	 * reRenderAllUI5Elements({rtlAware: true, languageAware: true}) -> re-renders components that are rtlAware or languageAware
+	 * etc...
 	 *
 	 * @public
 	 * @param {Object|undefined} filters - Object with keys that can be "rtlAware" or "languageAware"
 	 */
 	static reRenderAllUI5Elements(filters) {
 		registeredElements.forEach(element => {
+			const tag = element.constructor.getMetadata().getTag();
 			const rtlAware = isRtlAware(element.constructor);
 			const languageAware = element.constructor.getMetadata().isLanguageAware();
-			if (!filters || (filters.rtlAware && rtlAware) || (filters.languageAware && languageAware)) {
+			if (!filters || (filters.tag === tag) || (filters.rtlAware && rtlAware) || (filters.languageAware && languageAware)) {
 				RenderScheduler.renderDeferred(element);
 			}
 		});

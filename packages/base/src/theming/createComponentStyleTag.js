@@ -2,8 +2,13 @@ import createStyleInHead from "../util/createStyleInHead.js";
 import getEffectiveStyle from "./getEffectiveStyle.js";
 import adaptCSSForIE from "./adaptCSSForIE.js";
 import { ponyfillNeeded, schedulePonyfill } from "./CSSVarsPonyfill.js";
+import { attachCustomCSSChange } from "./CustomStyle.js";
 
 const IEStyleSet = new Set();
+
+attachCustomCSSChange(tag => {
+	IEStyleSet.delete(tag);
+});
 
 const getStaticStyle = ElementClass => {
 	let componentStaticStyles = ElementClass.staticAreaStyles;
