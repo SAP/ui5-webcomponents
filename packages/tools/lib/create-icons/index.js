@@ -51,6 +51,11 @@ const createIcons = (file) => {
 };
 
 fs.readdirSync(srcDir).forEach(collectionFile => {
+
+	if (path.extname(collectionFile) === ".license") {
+		return;
+	}
+
 	createIcons(path.join(srcDir, collectionFile));
 });
 
