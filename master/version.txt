@@ -1,9 +1,5 @@
-commit 230cd7fd2036897cede2601772b9ab57f79d1e50
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Aug 13 12:22:10 2020 +0300
+commit f69ffa56ec571d91a6ee5aed259a95c2bcf4ea01
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Aug 13 15:21:12 2020 +0300
 
-    fix(ui5-shellbar): remove width limitation of logo
-    
-    By specification logo should have only 2rem height limitation.
-    
-    Fixes #2066
+    feat(ui5-carousel): implement rtl support (#2086)
