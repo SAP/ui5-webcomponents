@@ -23,7 +23,8 @@ const newComponents = [
   "Tree",
   "RatingIndicator",
   "SideNavigation",
-  "ProgressIndicator",
+	"ProgressIndicator",
+	"MultiInput"
 ];
 
 packages.forEach(package => {

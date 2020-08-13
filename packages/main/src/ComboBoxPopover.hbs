@@ -56,13 +56,16 @@ SPDX-License-Identifier: Apache-2.0
 		separators="None"
 		@ui5-item-click={{_selectItem}}
 		@ui5-item-focused={{_onItemFocus}}
+		@mousedown={{_itemMousedown}}
 		mode="SingleSelect"
 	>
 		{{#each _filteredItems}}
 			<ui5-li
 				type="Active"
+				._tabIndex={{itemTabIndex}}
 				.mappedItem={{this}}
 				?selected={{this.selected}}
+				?focused={{this.focused}}
 			>
 				{{this.text}}
 			</ui5-li>

@@ -195,6 +195,36 @@ describe("General interaction", () => {
 		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
 	});
 
+	it ("Tests input event", () => {
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+
+		const counter = $("#input-count");
+		const combo = $("#input-cb");
+		const placeholder = $("#input-placeholder");
+		const input = combo.shadow$("#ui5-combobox-input");
+
+		input.click();
+		input.keys("ArrowDown");
+
+		assert.strictEqual(placeholder.getText(), "Argentina", "First items is selected");
+		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+
+		input.keys("ArrowUp");
+
+		assert.strictEqual(placeholder.getText(), "Argentina", "Selection not changed");
+		assert.strictEqual(counter.getText(), "1", "Input event is not fired when first item is selected and navigating with arrow up");
+
+		input.keys("ArrowDown");
+
+		assert.strictEqual(placeholder.getText(), "Germany", "Last item is selected");
+		assert.strictEqual(counter.getText(), "2", "Call count should be 2");
+
+		input.keys("ArrowDown");
+
+		assert.strictEqual(placeholder.getText(), "Germany", "Selection not changed");
+		assert.strictEqual(counter.getText(), "2", "Input event is not fired when last item is selected and navigating with arrow down");
+	});
+
 	it ("Tests Combo with contains filter", () => {
 		const combo = $("#contains-cb");
 		const input = combo.shadow$("#ui5-combobox-input");
@@ -244,6 +274,6 @@ describe("General interaction", () => {
 
 		input.keys("a");
 		listItems = popover.$("ui5-list").$$("ui5-li");
-		assert.strictEqual(listItems.length, 0, "Items should be 0");
+		assert.notOk(popover.opened, "Popover should be closed when no match");
 	});
 });

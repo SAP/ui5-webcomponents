@@ -202,7 +202,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-logo {
 	cursor: pointer;
-	height: 1.675rem;
+	max-height: 2rem;
 }
 
 .ui5-shellbar-logo:focus {
@@ -383,8 +383,7 @@ slot[name="profile"] {
 }
 
 ::slotted([slot="logo"]) {
-	height: 1.675rem;
-	max-width: 3rem;
+	max-height: 2rem;
 	pointer-events: none;
 }
 

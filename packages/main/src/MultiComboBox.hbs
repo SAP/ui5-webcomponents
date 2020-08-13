@@ -27,12 +27,12 @@ SPDX-License-Identifier: Apache-2.0
 		{{#each items}}
 			{{#if this.selected}}
 				<ui5-token
-				?readonly="{{../readonly}}"
-				class="ui5-multi-combobox-token"
-				data-ui5-id="{{this._id}}"
-				part="token-{{@index}}"
+					?readonly="{{../readonly}}"
+					class="ui5-multi-combobox-token"
+					data-ui5-id="{{this._id}}"
+					part="token-{{@index}}"
+					text="{{this.text}}"
 				>
-					{{this.text}}
 				</ui5-token>
 			{{/if}}
 		{{/each}}

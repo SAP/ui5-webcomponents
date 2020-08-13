@@ -122,7 +122,10 @@ class Suggestions {
 	async open() {
 		this.responsivePopover = await this._respPopover();
 		this._beforeOpen();
-		this.responsivePopover.open(this._getComponent());
+
+		if (this._getItems().length) {
+			this.responsivePopover.open(this._getComponent());
+		}
 	}
 
 	async close(preventFocusRestore = false) {

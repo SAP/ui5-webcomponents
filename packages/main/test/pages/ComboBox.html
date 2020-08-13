@@ -113,6 +113,20 @@ SPDX-License-Identifier: Apache-2.0
 		Change call count: <span id="change-count">0</span><br>
 	</div>
 
+	<div class="demo-section">
+		<span>Input event testing</span>
+
+		<ui5-combobox id="input-cb" style="width: 360px;">
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="Germany"></ui5-cb-item>
+		</ui5-combobox>
+
+		<br>
+
+		Input value: <span id="input-placeholder"></span><br>
+		Input call count: <span id="input-count">0</span><br>
+	</div>
+
 
 	<br>
 	<br>
@@ -187,6 +201,11 @@ SPDX-License-Identifier: Apache-2.0
 		document.getElementById("change-cb").addEventListener("ui5-change", function(event) {
 			document.getElementById("change-placeholder").innerHTML = event.target.value;
 			document.getElementById("change-count").innerHTML = parseInt(document.getElementById("change-count").innerHTML) + 1;
+		});
+
+		document.getElementById("input-cb").addEventListener("ui5-input", function(event) {
+			document.getElementById("input-placeholder").innerHTML = event.target.filterValue;
+			document.getElementById("input-count").innerHTML = parseInt(document.getElementById("input-count").innerHTML) + 1;
 		});
 	</script>
 

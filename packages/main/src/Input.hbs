@@ -35,6 +35,7 @@ SPDX-License-Identifier: Apache-2.0
 			@keydown="{{_onkeydown}}"
 			@keyup="{{_onkeyup}}"
 			@click={{_click}}
+			@focusin={{innerFocusIn}}
 			data-sap-no-tab-ref
 			data-sap-focus-ref
 			step="{{step}}"
@@ -44,6 +45,8 @@ SPDX-License-Identifier: Apache-2.0
 				<slot name="icon"></slot>
 			</div>
 		{{/if}}
+
+		{{> postContent }}
 
 		{{#if showSuggestions}}
 			<span id="{{_id}}-suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
@@ -65,3 +68,4 @@ SPDX-License-Identifier: Apache-2.0
 
 
 {{#*inline "preContent"}}{{/inline}}
+{{#*inline "postContent"}}{{/inline}}

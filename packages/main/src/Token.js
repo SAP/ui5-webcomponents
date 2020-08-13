@@ -28,29 +28,16 @@ import styles from "./generated/themes/Token.css.js";
 const metadata = {
 	tag: "ui5-token",
 	languageAware: true,
-	slots: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
-		/**
-		 * Defines the text of the <code>ui5-token</code>.
-		 * <br><br>
-		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-		 *
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: Node,
-		},
-	},
 	properties: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
 
 		/**
-		 * Defines whether the <code>ui5-token</code> is selected or not.
+		 * Defines the text of the token.
 		 *
-		 * @type {boolean}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
-		selected: { type: Boolean },
+		text: { type: String },
 
 		/**
 		 * Defines whether the <code>ui5-token</code> is read-only.
@@ -63,8 +50,11 @@ const metadata = {
 		 */
 		readonly: { type: Boolean },
 
-		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
-
+		/**
+		 * Set by the tokenizer when a token is in the "more" area (overflowing)
+		 * @type {boolean}
+		 * @private
+		 */
 		overflows: { type: Boolean },
 	},
 
@@ -76,7 +66,7 @@ const metadata = {
 		 * @event
 		 * @param {boolean} backSpace indicates whether token is deleted by backspace key
 		 * @param {boolean} delete indicates whether token is deleted by delete key
-		 * @public
+		 * @private
 		 */
 		"delete": {
 			detail: {
@@ -84,14 +74,6 @@ const metadata = {
 				"delete": { type: Boolean },
 			},
 		},
-
-		/**
-		 * Fired when the a token is selected by user interaction with mouse, clicking space or enter
-		 *
-		 * @event
-		 * @public
-		 */
-		select: {},
 	},
 };
 
@@ -102,13 +84,16 @@ const metadata = {
  *
  * Tokens are small items of information (similar to tags) that mainly serve to visualize previously selected items.
  *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/Token.js";</code>
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Token
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-token
- * @usestextcontent
- * @private
+ * @since 1.0.0-rc.9
+ * @public
  */
 class Token extends UI5Element {
 	static get metadata() {
