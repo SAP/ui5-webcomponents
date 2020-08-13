@@ -330,18 +330,18 @@ class TimePicker extends UI5Element {
 		}
 	}
 
-	_handleInputChange() {
-		const nextValue = this._getInput().getInputValue(),
-			isValid = this.isValid(nextValue);
+	async _handleInputChange() {
+		const nextValue = await this._getInput().getInputValue();
+		const isValid = this.isValid(nextValue);
 
 		this.setValue(nextValue);
 		this.fireEvent("change", { value: nextValue, valid: isValid });
 		this.fireEvent("value-changed", { value: nextValue, valid: isValid });
 	}
 
-	_handleInputLiveChange() {
-		const nextValue = this._getInput().getInputValue(),
-			isValid = this.isValid(nextValue);
+	async _handleInputLiveChange() {
+		const nextValue = await this._getInput().getInputValue();
+		const isValid = this.isValid(nextValue);
 
 		this.value = nextValue;
 		this.setSlidersValue();
