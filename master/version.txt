@@ -1,5 +1,5 @@
-commit f69ffa56ec571d91a6ee5aed259a95c2bcf4ea01
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Aug 13 15:21:12 2020 +0300
+commit 5d7e7df3a3178218974f6e6c85ca58afa3d6144b
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu Aug 13 15:26:55 2020 +0300
 
-    feat(ui5-carousel): implement rtl support (#2086)
+    feat(ui5-multi-input): initial implementation (#1942)
