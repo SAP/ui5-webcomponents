@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 const HTMLLitVisitor = require("./litVisitor2");
 const PartialsVisitor = require("./partialsVisitor");
 const Handlebars = require("handlebars/dist/handlebars.min.js");

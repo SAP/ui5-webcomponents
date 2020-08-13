@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 // ESM bundle targets Edge + browsers with native support
 import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 

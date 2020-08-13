@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 const cssVariables = {};
 const template = require('./templates/template').template;
 const sinceTemplate = require('./templates/api-component-since').template;

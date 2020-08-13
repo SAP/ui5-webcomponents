@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { isClickInRect } from "./PopupUtils.js";
 import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./OpenedPopupsRegistry.js";
 

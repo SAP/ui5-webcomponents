@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 // Note: disabled is present in IE so we explicitly allow it here.
 // Others, such as title/hidden, we explicitly override, so valid too
 const whitelist = [

@@ -1,3 +1,9 @@
+{{!--
+SPDX-FileCopyrightText: SAP SE <https://sap.com>
+
+SPDX-License-Identifier: Apache-2.0
+--}}
+
 <li id="{{this._id}}"
 	class="{{this.headerClasses}}"
 	tabindex="{{this._tabIndex}}"
@@ -40,7 +46,7 @@
 
 </li>
 
-<!-- Additional text -->
+{{!-- Additional text --}}
 {{#*inline additionalText}}
 	{{#if this.additionalText}}
 		<span class="ui5-tab-strip-itemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>

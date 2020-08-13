@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { fetchJsonOnce, fetchTextOnce } from "../util/FetchHelper.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 import getFileExtension from "../util/getFileExtension.js";

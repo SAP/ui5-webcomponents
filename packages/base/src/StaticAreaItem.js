@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { getStaticAreaInstance, removeStaticArea } from "./StaticArea.js";
 import RenderScheduler from "./RenderScheduler.js";
 import getStylesString from "./theming/getStylesString.js";

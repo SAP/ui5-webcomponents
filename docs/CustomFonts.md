@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: SAP SE <https://sap.com>
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Customizing fonts
 
 ## The `data-ui5-font-face` font-face `style` tag

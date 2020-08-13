@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: SAP SE <https://sap.com>
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 .ui5-tab-strip-item {
     color: var(--_ui5_tc_headerItem_color);
     cursor: pointer;

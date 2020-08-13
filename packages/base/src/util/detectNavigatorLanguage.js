@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 
 export default () => {

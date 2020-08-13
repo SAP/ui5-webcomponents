@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 const getSingletonElementInstance = (tag, parentElement = document.body) => {
 	let el = document.querySelector(tag);
 

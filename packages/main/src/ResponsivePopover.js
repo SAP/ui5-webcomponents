@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";

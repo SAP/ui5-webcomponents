@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 // ES5 bundle targets IE11 only
 import "./dist/features/browsersupport/IE11.js";
 

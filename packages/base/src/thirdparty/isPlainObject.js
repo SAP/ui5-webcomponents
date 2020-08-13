@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 var class2type = {};
 var hasOwn = class2type.hasOwnProperty;
 var toString = class2type.toString;

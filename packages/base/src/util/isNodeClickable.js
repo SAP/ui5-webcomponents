@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 const rClickable = /^(?:a|area)$/i;
 const rFocusable = /^(?:input|select|textarea|button)$/i;
 

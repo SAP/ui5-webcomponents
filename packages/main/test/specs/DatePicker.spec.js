@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 const datepicker = require("../pageobjects/DatePickerTestPage");
 const assert = require("chai").assert;
 

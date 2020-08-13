@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { registerI18nBundle, fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
 import formatMessage from "./util/formatMessage.js";
 

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: SAP SE <https://sap.com>
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Get Started with UI5 Web Components & VueJS
 
 In this tutorial you will learn how to add UI5 Web Components to your application. The UI5 Web Components can be added both to new VueJS applications, as well as already existing ones.

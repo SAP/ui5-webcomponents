@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: SAP SE <https://sap.com>
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # How to use UI5 Web Components
 
 UI5 Web Components are just HTML. Therefore, their usage is identical

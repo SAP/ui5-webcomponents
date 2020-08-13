@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";

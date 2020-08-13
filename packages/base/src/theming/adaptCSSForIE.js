@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 const findClosingParenthesisPos = (str, openingParenthesisPos) => {
 	let opened = 1;
 	for (let pos = openingParenthesisPos + 1; pos < str.length; pos++) {

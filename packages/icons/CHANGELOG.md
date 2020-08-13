@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: SAP SE <https://sap.com>
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Change Log
 
 All notable changes to this project will be documented in this file.

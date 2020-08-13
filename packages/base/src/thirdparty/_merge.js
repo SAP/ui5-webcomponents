@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import isPlainObject from './isPlainObject.js';
 var oToken = Object.create(null);
 var fnMerge = function () {

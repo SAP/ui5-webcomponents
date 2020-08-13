@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2020 SAP SE <https://sap.com>
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 ---
 layout: default
 title: Components

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: SAP SE <https://sap.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
 namespace :search do
   desc 'Generate the files needed for search functionality'
   task :init do

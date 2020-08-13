@@ -1,10 +1,16 @@
+{{!--
+SPDX-FileCopyrightText: SAP SE <https://sap.com>
+
+SPDX-License-Identifier: Apache-2.0
+--}}
+
 <div
 	class="ui5-list-root"
 	@focusin="{{_onfocusin}}"
 	@keydown="{{_onkeydown}}"
 	@scroll="{{_onScroll}}"
 >
-	<!-- header -->
+	{{!-- header --}}
 	{{#if header.length}}
 		<slot name="header" />
 	{{/if}}

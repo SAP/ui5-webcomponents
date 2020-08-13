@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 const getThemeMetadata = () => {
 	// Check if the class was already applied, most commonly to the link/style tag with the CSS Variables
 	let el = document.querySelector(".sapThemeMetaData-Base-baseLib");

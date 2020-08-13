@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 const fs = require('fs');
 const getopts = require('getopts');
 const hbs2lit = require('../hbs2lit');

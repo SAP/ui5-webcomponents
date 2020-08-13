@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 // CSS Custom Properties
 import cssVars from "css-vars-ponyfill/dist/css-vars-ponyfill.esm.js";
 

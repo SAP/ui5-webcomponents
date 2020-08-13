@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: SAP SE <https://sap.com>
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Get started with UI5 Web Components & React
 
 In this tutorial you will learn how to add UI5 Web Components to your application. The UI5 Web Components can be added both to new React applications, as well as already existing ones.

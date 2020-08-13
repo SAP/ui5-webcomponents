@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { getRTL as getConfiguredRTL } from "../InitialConfiguration.js";
 import { getLanguage } from "./Language.js";
 import getDesigntimePropertyAsArray from "../util/getDesigntimePropertyAsArray.js";

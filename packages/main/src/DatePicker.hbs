@@ -1,9 +1,15 @@
+{{!--
+SPDX-FileCopyrightText: SAP SE <https://sap.com>
+
+SPDX-License-Identifier: Apache-2.0
+--}}
+
 <div
 		class="ui5-date-picker-root"
 		style="{{styles.main}}"
 		@keydown={{_onkeydown}}
 >
-	<!-- INPUT -->
+	{{!-- INPUT --}}
 	<ui5-input
 			id="{{_id}}-inner"
 			class="ui5-date-picker-input"

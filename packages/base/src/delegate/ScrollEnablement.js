@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import { isPhone } from "../Device.js";
 import EventProvider from "../EventProvider.js";
 import scroll from "../animations/scroll.js";

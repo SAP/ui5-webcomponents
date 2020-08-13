@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 if (!Element.prototype.closest) {
 	Element.prototype.closest = function(s) {
 		var el = this;

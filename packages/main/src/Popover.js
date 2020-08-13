@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Popup from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";

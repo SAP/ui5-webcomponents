@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 const combineSelectors = require('postcss-combine-duplicated-selectors');
 const postcssImport = require('postcss-import');
 const cssnano = require('cssnano');

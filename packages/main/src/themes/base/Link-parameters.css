@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: SAP SE <https://sap.com>
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 :root {
 	--_ui5_link_opacity: 0.5;
 	--_ui5_link_text_decoration: none;

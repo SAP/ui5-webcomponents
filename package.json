@@ -64,5 +64,8 @@
     "packages/icons",
     "packages/tools",
     "packages/playground"
-  ]
+  ],
+  "dependencies": {
+    "readline": "^1.3.0"
+  }
 }

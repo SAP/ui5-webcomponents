@@ -1,9 +1,15 @@
+{{!--
+SPDX-FileCopyrightText: SAP SE <https://sap.com>
+
+SPDX-License-Identifier: Apache-2.0
+--}}
+
 <div
 	data-sap-ui-fastnavgroup="true"
 	class="ui5-panel-root"
 	role="{{accRole}}"
 >
-	<!-- header: either header or h1 with header text -->
+	{{!-- header: either header or h1 with header text --}}
 	<div
 		@click="{{_headerClick}}"
 		@keydown="{{_headerKeyDown}}"
@@ -45,7 +51,7 @@
 		{{/if}}
 	</div>
 
-	<!-- content area -->
+	{{!-- content area --}}
 	<div class="ui5-panel-content" id="{{_id}}-content" tabindex="-1" style="{{styles.content}}">
 		<slot></slot>
 	</div>

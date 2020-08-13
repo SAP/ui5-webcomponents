@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
 
 /**
  * Handles drag and drop event listeners on document.body.

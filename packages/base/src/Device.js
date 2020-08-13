@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /**
  * Device and Feature Detection API: Provides information about the used browser / device and cross platform support for certain events
  * like media queries, orientation change or resizing.
@@ -363,21 +367,9 @@ const BROWSER = {
 	"ANDROID": "an",
 };
 
-/*!
-* Taken from jQuery JavaScript Library v1.7.1
-* http://jquery.com/
-*
-* Copyright 2011, John Resig
-* Dual licensed under the MIT or GPL Version 2 licenses.
-* http://jquery.org/license
-*
-* Includes Sizzle.js
-* http://sizzlejs.com/
-* Copyright 2011, The Dojo Foundation
-* Released under the MIT, BSD, and GPL Licenses.
-*
-* Date: Mon Nov 21 21:11:03 2011 -0500
-*/
+// Copyright 2011, John Resig
+// Copyright 2011, The Dojo Foundation
+
 const _calcBrowser = () => {
 	const sUserAgent = navigator.userAgent.toLowerCase();
 

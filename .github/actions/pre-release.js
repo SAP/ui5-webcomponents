@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 const fs = require("fs");
 const { promisify } = require("util");
 const readFileAsync = promisify(fs.readFile);

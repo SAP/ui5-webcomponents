@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: SAP SE <https://sap.com>
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Metadata
 
 Metadata is a JavaScript object, containing information about the public interface of a UI5 Web Component (tag name, properties, etc...)

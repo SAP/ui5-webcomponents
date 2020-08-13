@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 //collects the partials defined with the inline mustache syntax
 //also cleans the handlebars template from the partials definitions
 function collectPartials(hbs) {

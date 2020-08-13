@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import merge from "./thirdparty/merge.js";
 import boot from "./boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";

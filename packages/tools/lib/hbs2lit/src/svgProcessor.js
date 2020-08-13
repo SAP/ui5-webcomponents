@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: SAP SE <https://sap.com>
+//
+// SPDX-License-Identifier: Apache-2.0
 
 const svgrx = new RegExp(/<svg[\s\S]*?>([\s\S]*?)<\/svg>/, 'g');
 const blockrx = /block[0-9]+/g;
