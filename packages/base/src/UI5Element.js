@@ -46,7 +46,6 @@ class UI5Element extends HTMLElement {
 		super();
 		this._initializeState();
 		this._upgradeAllProperties();
-		this.setAttribute("ui5-tag", this.constructor.getMetadata().getPureTag());
 		this._initializeContainers();
 		this._upToDate = false;
 		this._inDOM = false;
@@ -111,6 +110,8 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
+		this.setAttribute("ui5-tag", this.constructor.getMetadata().getPureTag());
+
 		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
