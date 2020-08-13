@@ -1,5 +1,9 @@
-commit 7b54b9b4b87e4d41df96003c1acd173f18d67783
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Aug 13 10:33:52 2020 +0300
+commit 230cd7fd2036897cede2601772b9ab57f79d1e50
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Aug 13 12:22:10 2020 +0300
 
-    feat(framework): Make addCustomCSS dynamic (#2083)
+    fix(ui5-shellbar): remove width limitation of logo
+    
+    By specification logo should have only 2rem height limitation.
+    
+    Fixes #2066
