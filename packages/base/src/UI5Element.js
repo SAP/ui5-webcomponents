@@ -4,6 +4,7 @@ import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
+import { getScope } from "./Scope.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import { getRTL } from "./config/RTL.js";
@@ -45,6 +46,7 @@ class UI5Element extends HTMLElement {
 		super();
 		this._initializeState();
 		this._upgradeAllProperties();
+		this.setAttribute("ui5-tag", this.constructor.getMetadata().getPureTag());
 		this._initializeContainers();
 		this._upToDate = false;
 		this._inDOM = false;
@@ -560,7 +562,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		let styleToPrepend;
-		const renderResult = this.constructor.template(this);
+		const renderResult = this.constructor.template(this, ["ui5-icon"], getScope());
 
 		if (!document.adoptedStyleSheets && !window.ShadyDOM) {
 			styleToPrepend = getEffectiveStyle(this.constructor);

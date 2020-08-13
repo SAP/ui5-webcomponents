@@ -2,6 +2,7 @@ import DataType from "./types/DataType.js";
 import isDescendantOf from "./util/isDescendantOf.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
 import isSlot from "./util/isSlot.js";
+import { getScope } from "./Scope.js";
 
 /**
  *
@@ -33,12 +34,18 @@ class UI5ElementMetadata {
 		return validateSingleSlot(value, slotData);
 	}
 
+	getPureTag() {
+		return this.metadata.tag;
+	}
+
 	/**
 	 * Returns the tag of the UI5 Element
 	 * @public
 	 */
 	getTag() {
-		return this.metadata.tag;
+		const scope = getScope();
+		const suffix = scope ? `-${scope}` : ``;
+		return `${this.metadata.tag}${suffix}`;
 	}
 
 	/**
@@ -46,7 +53,13 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	getAltTag() {
-		return this.metadata.altTag;
+		if (!this.metadata.altTag) {
+			return;
+		}
+
+		const scope = getScope();
+		const suffix = scope ? `-${scope}` : ``;
+		return `${this.metadata.altTag}${suffix}`;
 	}
 
 	/**
