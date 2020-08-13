@@ -159,15 +159,6 @@ class Tokenizer extends UI5Element {
 	}
 
 	onAfterRendering() {
-		/*
-			We schedule an invalidation as we have the tokens count
-			changed and we need them rendered for the nmore count
-		*/
-		if (this._tokensCount !== this._getTokens().length) {
-			this._invalidate();
-			this._tokensCount = this._getTokens().length;
-		}
-
 		this._nMoreCount = this.overflownTokens.length;
 		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
 	}
