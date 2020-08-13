@@ -303,6 +303,19 @@ class MultiComboBox extends UI5Element {
 		return ResponsivePopoverCommonCss;
 	}
 
+	static get dependencies() {
+		return [
+			MultiComboBoxItem,
+			Tokenizer,
+			Token,
+			Icon,
+			ResponsivePopover,
+			List,
+			StandardListItem,
+			ToggleButton,
+		];
+	}
+
 	constructor() {
 		super();
 
@@ -634,14 +647,7 @@ class MultiComboBox extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
-			MultiComboBoxItem.define(),
-			Tokenizer.define(),
-			Token.define(),
-			Icon.define(),
-			ResponsivePopover.define(),
-			List.define(),
-			StandardListItem.define(),
-			ToggleButton,
+			this.whenDependenciesDefined(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}

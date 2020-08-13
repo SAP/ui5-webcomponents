@@ -562,7 +562,8 @@ class UI5Element extends HTMLElement {
 		}
 
 		let styleToPrepend;
-		const renderResult = this.constructor.template(this, ["ui5-icon"], getScope());
+		const tagsToReplace = this.constructor.dependencies.map(dep => dep.getMetadata().getPureTag());
+		const renderResult = this.constructor.template(this, tagsToReplace, getScope());
 
 		if (!document.adoptedStyleSheets && !window.ShadyDOM) {
 			styleToPrepend = getEffectiveStyle(this.constructor);
@@ -967,6 +968,18 @@ class UI5Element extends HTMLElement {
 	 */
 	static get staticAreaStyles() {
 		return "";
+	}
+
+	static get dependencies() {
+		return [];
+	}
+
+	static whenDependenciesDefined() {
+		return Promise.all(this.dependencies.map(dep => dep.define()));
+	}
+
+	static async onDefine() {
+		await this.whenDependenciesDefined();
 	}
 
 	/**

@@ -283,6 +283,10 @@ class Button extends UI5Element {
 		return ButtonTemplate;
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	constructor() {
 		super();
 
@@ -407,7 +411,7 @@ class Button extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
-			Icon.define(),
+			this.whenDependenciesDefined(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}
