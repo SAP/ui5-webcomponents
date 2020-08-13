@@ -17,6 +17,8 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
+import * as Filters from "./ComboBoxFilters.js";
+
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
@@ -160,6 +162,19 @@ const metadata = {
 		 */
 		required: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the filter type of the <code>ui5-multi-combobox</code>.
+		 * Available options are: <code>StartsWithPerTerm</code>, <code>None</code>.
+		 *
+		 * @type {string}
+		 * @defaultvalue "StartsWithPerTerm"
+		 * @public
+		 */
+		filter: {
+			type: String,
+			defaultValue: "StartsWithPerTerm",
 		},
 
 		/**
@@ -456,12 +471,8 @@ class MultiComboBox extends UI5Element {
 		this._keyDown = true;
 	}
 
-	_filterItems(value) {
-		return this.items.filter(item => {
-			return item.text
-				&& item.text.toLowerCase().startsWith(value.toLowerCase())
-				&& (this.filterSelected ? item.selected : true);
-		});
+	_filterItems(str) {
+		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
 	}
 
 	_toggle() {
