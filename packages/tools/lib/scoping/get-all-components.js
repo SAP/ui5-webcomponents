@@ -37,7 +37,7 @@ const getComponents = (packageDir) => {
 const getDepComponentPackages = packageDir => {
 	const packageFile = path.join(packageDir, "package.json");
 	const packageFileContent = JSON.parse(fs.readFileSync(packageFile));
-	if (!packageFileContent.ui5WebComponentsPackage) {
+	if (!packageFileContent.ui5WebComponents || !packageFileContent.ui5WebComponents.scoping) {
 		return [];
 	}
 

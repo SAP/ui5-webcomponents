@@ -2,7 +2,9 @@
   "name": "@ui5/webcomponents-fiori",
   "version": "1.0.0-rc.8",
   "description": "UI5 Web Components: webcomponents.fiori",
-  "ui5WebComponentsPackage": true,
+  "ui5WebComponents": {
+    "scoping": true
+  },
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "private": false,
