@@ -2,7 +2,8 @@ import { html, svg, render } from "lit-html/lit-html.js";
 import scopeHTML from "./scopeHTML.js";
 
 let tags;
-let suffix;
+let	suffix;
+
 const setTags = t => {
 	tags = t;
 };

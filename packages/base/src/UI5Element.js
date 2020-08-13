@@ -563,8 +563,9 @@ class UI5Element extends HTMLElement {
 		}
 
 		let styleToPrepend;
-		const tagsToReplace = this.constructor.dependencies.map(dep => dep.getMetadata().getPureTag());
-		const renderResult = this.constructor.template(this, tagsToReplace, getScope());
+		const tagsToScope = this.constructor.dependencies.map(dep => dep.getMetadata().getPureTag());
+		const scope = getScope();
+		const renderResult = this.constructor.template(this, tagsToScope, scope);
 
 		if (!document.adoptedStyleSheets && !window.ShadyDOM) {
 			styleToPrepend = getEffectiveStyle(this.constructor);
