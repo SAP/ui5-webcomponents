@@ -9,6 +9,6 @@
 }
 
 /* Workaround for IE */
-ui5-multi-input ui5-tokenizer {
+[ui5-tag="ui5-multi-input"] [ui5-tag="ui5-tokenizer"] {
 	flex: 3;
 }
