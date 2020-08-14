@@ -1,8 +1,8 @@
+import { setScope } from "@ui5/webcomponents-base/dist/Scope.js";
+setScope("scp");
+
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
-
-import { setScope } from "@ui5/webcomponents-base/dist/Scope.js";
-setScope("sfsf");
 
 // Calendars
 import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";

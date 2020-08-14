@@ -70,6 +70,12 @@ const getScripts = (options) => {
 			run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
 			spec: "wdio run config/wdio.conf.js",
 		},
+		scope: {
+			default: "nps scope.clean scope.copy scope.replace",
+			clean: "rimraf dist/test-resources/pages/scoped",
+			copy: `node "${LIB}/copy-and-watch/index.js" "dist/test-resources/pages/**/*" dist/test-resources/scoped`,
+			replace: `node "${LIB}/scoping/index.js" dist/test-resources/scoped scp`,
+		},
 	};
 
 	return scripts;

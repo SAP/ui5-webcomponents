@@ -1,10 +1,10 @@
 import merge from "./thirdparty/merge.js";
 import boot from "./boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
+import executeTemplate from "./renderer/executeTemplate.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
-import { getScope } from "./Scope.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import { getRTL } from "./config/RTL.js";
@@ -563,9 +563,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		let styleToPrepend;
-		const tagsToScope = this.constructor.dependencies.map(dep => dep.getMetadata().getPureTag());
-		const scope = getScope();
-		const renderResult = this.constructor.template(this, tagsToScope, scope);
+		const renderResult = executeTemplate(this.constructor.template, this);
 
 		if (!document.adoptedStyleSheets && !window.ShadyDOM) {
 			styleToPrepend = getEffectiveStyle(this.constructor);

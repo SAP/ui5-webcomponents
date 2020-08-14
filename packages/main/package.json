@@ -18,6 +18,7 @@
     "serve": "wc-dev serve",
     "build": "wc-dev build",
     "test": "wc-dev test",
+    "scope": "wc-dev scope",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "npm run build"
   },
