@@ -50,6 +50,7 @@ import Dialog from "./dist/Dialog.js";
 import FileUploader from "./dist/FileUploader.js";
 import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
+import MultiInput from "./dist/MultiInput.js";
 import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";
 import Popover from "./dist/Popover.js";
@@ -100,6 +101,7 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/dist/Theming";
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
@@ -112,8 +114,8 @@ window["sap-ui-webcomponents-bundle"] = {
 		getRTL,
 		getFirstDayOfWeek,
 	},
-	getIconNames,
 	getLocaleData,
 	applyDirection,
 	ResizeHandler,
+	addCustomCSS,
 };

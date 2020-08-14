@@ -1,0 +1,29 @@
+{{>include "./Input.hbs"}}
+
+{{#*inline "preContent"}}
+	<ui5-tokenizer
+		class="ui5-multi-input-tokenizer"
+		.morePopoverOpener={{this}}
+		.popoverMinWidth={{_inputWidth}}
+		?expanded="{{expandedTokenizer}}"
+		show-more
+		@show-more-items-press={{showMorePress}}
+		@token-delete={{tokenDelete}}
+		@focusout="{{_tokenizerFocusOut}}"
+	>
+		<slot name="tokens"></slot>
+	</ui5-tokenizer>
+{{/inline}}
+
+
+{{#*inline "postContent"}}
+	{{#if showValueHelpIcon}}
+		<ui5-icon
+			@click={{valueHelpPress}}
+			@mousedown={{valueHelpMouseDown}}
+			@mouseup={{valueHelpMouseUp}}
+			input-icon
+			name="value-help"
+		></ui5-icon>
+	{{/if}}
+{{/inline}}

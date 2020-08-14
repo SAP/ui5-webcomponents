@@ -245,10 +245,10 @@ class DateRangePicker extends DatePicker {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat.concat(" ", this.delimiter, " ", this._displayFormat);
 	}
 
-	_handleInputChange() {
-		const nextValue = this._getInput().getInputValue(),
-			emptyValue = nextValue === "",
-			isValid = emptyValue || this._checkValueValidity(nextValue);
+	async _handleInputChange() {
+		const nextValue = await this._getInput().getInputValue();
+		const emptyValue = nextValue === "";
+		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
 		if (isValid) {
 			this._setValue(nextValue);

@@ -412,7 +412,7 @@ class Carousel extends UI5Element {
 	get styles() {
 		return {
 			content: {
-				transform: `translateX(-${this.selectedIndex * this._itemWidth}px`,
+				transform: `translateX(${this._isRTL ? "" : "-"}${this.selectedIndex * this._itemWidth}px`,
 			},
 		};
 	}
@@ -485,8 +485,12 @@ class Carousel extends UI5Element {
 		return this._resizing || getAnimationMode() === AnimationMode.None;
 	}
 
+	get _isRTL() {
+		return this.effectiveDir === "rtl";
+	}
+
 	get selectedIndexToShow() {
-		return this.selectedIndex + 1;
+		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedIndex) + 1 : this.selectedIndex + 1;
 	}
 
 	get showNavigationArrows() {

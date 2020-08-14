@@ -476,8 +476,8 @@ class DatePicker extends UI5Element {
 		return this.shadowRoot.querySelector(`[ui5-tag="ui5-input"]`);
 	}
 
-	_handleInputChange() {
-		let nextValue = this._getInput().getInputValue();
+	async _handleInputChange() {
+		let nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
@@ -495,8 +495,8 @@ class DatePicker extends UI5Element {
 		this.fireEvent("value-changed", { value: nextValue, valid: isValid });
 	}
 
-	_handleInputLiveChange() {
-		const nextValue = this._getInput().getInputValue();
+	async _handleInputLiveChange() {
+		const nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
 

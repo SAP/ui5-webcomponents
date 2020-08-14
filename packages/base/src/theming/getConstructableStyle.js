@@ -1,6 +1,11 @@
 import getEffectiveStyle from "./getEffectiveStyle.js";
+import { attachCustomCSSChange } from "./CustomStyle.js";
 
 const constructableStyleMap = new Map();
+
+attachCustomCSSChange(tag => {
+	constructableStyleMap.delete(tag);
+});
 
 /**
  * Returns (and caches) a constructable style sheet for a web component class
@@ -9,17 +14,16 @@ const constructableStyleMap = new Map();
  * @returns {*}
  */
 const getConstructableStyle = ElementClass => {
-	const tagName = ElementClass.getMetadata().getTag();
-	const styleContent = getEffectiveStyle(ElementClass);
-	if (constructableStyleMap.has(tagName)) {
-		return constructableStyleMap.get(tagName);
+	const tag = ElementClass.getMetadata().getTag();
+
+	if (!constructableStyleMap.has(tag)) {
+		const styleContent = getEffectiveStyle(ElementClass);
+		const style = new CSSStyleSheet();
+		style.replaceSync(styleContent);
+		constructableStyleMap.set(tag, [style]);
 	}
 
-	const style = new CSSStyleSheet();
-	style.replaceSync(styleContent);
-
-	constructableStyleMap.set(tagName, style);
-	return style;
+	return constructableStyleMap.get(tag);
 };
 
 export default getConstructableStyle;
