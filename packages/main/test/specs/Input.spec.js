@@ -234,6 +234,7 @@ describe("Input general interaction", () => {
 		const listItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
 
 		nativeInput.click();
+		nativeInput.keys("a");
 
 		assert.strictEqual(input.getSize('width'), listItem.getSize('width'));
 	})
@@ -257,7 +258,7 @@ describe("Input general interaction", () => {
 		const inputShadowRef = browser.$("#inputError").shadow$("input");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputError");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
-		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-responsive-popover-header");
+		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-header");
 
 		inputShadowRef.click();
 
@@ -304,6 +305,8 @@ describe("Input general interaction", () => {
 
 		// act
 		inputItemPreview.click();
+		inputItemPreview.keys("c");
+
 		inputItemPreview.keys("ArrowDown");
 		
 		// assert

@@ -1,0 +1,21 @@
+<ui5-responsive-popover
+	tokenizer-popover="true"
+	style={{styles.popover}}
+	header-text={{morePopoverTitle}}
+	content-only-on-desktop
+	no-arrow
+	placement-type="Bottom"
+	horizontal-align="Left"
+>
+	<ui5-list
+		class="ui5-tokenizer-list"
+		mode="Delete"
+		@ui5-item-delete={{itemDelete}}
+	>
+		{{#each _tokens}}
+			<ui5-li .tokenRef={{this}}>
+				{{this.text}}
+			</ui5-li>
+		{{/each}}
+	</ui5-list>
+</ui5-responsive-popover>
