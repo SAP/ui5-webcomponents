@@ -149,10 +149,14 @@ class BusyIndicator extends UI5Element {
 		return BusyIndicatorTemplate;
 	}
 
+	static get dependencies() {
+		return [Label];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
-			Label.define(),
+			this.whenDependenciesDefined(),
 		]);
 	}
 

@@ -264,13 +264,19 @@ class TimePicker extends UI5Element {
 		return TimePickerTemplate;
 	}
 
+	static get dependencies() {
+		return [
+			ResponsivePopover,
+			WheelSlider,
+			Input,
+		];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			ResponsivePopover.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
-			WheelSlider.define(),
-			Input.define(),
+			this.whenDependenciesDefined(),
 		]);
 	}
 

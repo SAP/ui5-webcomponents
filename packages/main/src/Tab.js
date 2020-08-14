@@ -170,11 +170,11 @@ class Tab extends UI5Element {
 		return css;
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			CustomListItem.define(),
-		]);
+	static get dependencies() {
+		return [
+			Icon,
+			CustomListItem,
+		];
 	}
 
 	get isSeparator() {

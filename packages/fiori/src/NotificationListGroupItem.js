@@ -143,13 +143,19 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		});
 	}
 
+	static get dependencies() {
+		return [
+			List,
+			Button,
+			Icon,
+			BusyIndicator,
+			Popover,
+		];
+	}
+
 	static async onDefine() {
 		await Promise.all([
-			List.define(),
-			Button.define(),
-			Icon.define(),
-			BusyIndicator.define(),
-			Popover.define(),
+			this.whenDependenciesDefined(),
 			fetchI18nBundle("@ui5/webcomponents-fiori"),
 		]);
 	}

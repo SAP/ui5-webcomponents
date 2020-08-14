@@ -1117,9 +1117,13 @@ class Input extends UI5Element {
 		return isPhone();
 	}
 
+	static get dependencies() {
+		return [Popover];
+	}
+
 	static async onDefine() {
 		await Promise.all([
-			Popover.define(),
+			this.whenDependenciesDefined(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}

@@ -610,16 +610,16 @@ class Select extends UI5Element {
 		return staticAreaItem.querySelector("ui5-popover");
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			Option.define(),
-			Label.define(),
-			ResponsivePopover.define(),
-			Popover.define(),
-			List.define(),
-			StandardListItem.define(),
-			Icon.define(),
-		]);
+	static get dependencies() {
+		return [
+			Option,
+			Label,
+			ResponsivePopover,
+			Popover,
+			List,
+			StandardListItem,
+			Icon,
+		];
 	}
 }
 

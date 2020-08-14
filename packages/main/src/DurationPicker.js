@@ -564,12 +564,18 @@ class DurationPicker extends UI5Element {
 		};
 	}
 
+	static get dependencies() {
+		return [
+			WheelSlider,
+			ResponsivePopover,
+			Input,
+		];
+	}
+
 	static async onDefine(...params) {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
-			WheelSlider.define(),
-			ResponsivePopover.define(),
-			Input.define(),
+			this.whenDependenciesDefined(),
 		]);
 	}
 }

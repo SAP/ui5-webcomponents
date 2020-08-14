@@ -424,10 +424,14 @@ class Panel extends UI5Element {
 		};
 	}
 
+	static get dependencies() {
+		return [Button];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
-			Button.define(),
+			this.whenDependenciesDefined(),
 		]);
 	}
 }

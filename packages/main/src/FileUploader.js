@@ -338,9 +338,13 @@ class FileUploader extends UI5Element {
 		return "file";
 	}
 
+	static get dependencies() {
+		return [Input];
+	}
+
 	static async onDefine() {
 		await Promise.all([
-			Input.define(),
+			this.whenDependenciesDefined(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}

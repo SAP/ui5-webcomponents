@@ -573,16 +573,16 @@ class ComboBox extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			ComboBoxItem.define(),
-			Icon.define(),
-			ResponsivePopover.define(),
-			List.define(),
-			BusyIndicator.define(),
-			Button.define(),
-			StandardListItem.define(),
-		]);
+	static get dependencies() {
+		return [
+			ComboBoxItem,
+			Icon,
+			ResponsivePopover,
+			List,
+			BusyIndicator,
+			Button,
+			StandardListItem,
+		];
 	}
 }
 

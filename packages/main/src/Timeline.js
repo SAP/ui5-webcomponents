@@ -76,9 +76,13 @@ class Timeline extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
+	static get dependencies() {
+		return [TimelineItem];
+	}
+
 	static async onDefine() {
 		await Promise.all([
-			TimelineItem.define(),
+			this.whenDependenciesDefined(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}

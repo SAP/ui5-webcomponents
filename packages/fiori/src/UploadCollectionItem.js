@@ -249,13 +249,19 @@ class UploadCollectionItem extends ListItem {
 		return UploadCollectionItemTemplate;
 	}
 
+	static get dependencies() {
+		return [
+			Button,
+			Input,
+			Link,
+			Label,
+			ProgressIndicator,
+		];
+	}
+
 	static async onDefine() {
 		await Promise.all([
-			Button.define(),
-			Input.define(),
-			Link.define(),
-			Label.define(),
-			ProgressIndicator.define(),
+			this.whenDependenciesDefined(),
 			fetchI18nBundle("@ui5/webcomponents-fiori"),
 		]);
 	}

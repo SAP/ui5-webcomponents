@@ -87,12 +87,12 @@ class ResponsivePopover extends Popover {
 		return ResponsivePopoverTemplate;
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			Button.define(),
-			Dialog.define(),
-			Title.define(),
-		]);
+	static get dependencies() {
+		return [
+			Button,
+			Dialog,
+			Title,
+		];
 	}
 
 	/**

@@ -211,10 +211,14 @@ class Avatar extends UI5Element {
 		return AvatarTemplate;
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
-			Icon.define(),
+			this.whenDependenciesDefined(),
 		]);
 	}
 

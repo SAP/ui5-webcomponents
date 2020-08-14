@@ -132,11 +132,11 @@ class SideNavigation extends UI5Element {
 		return SideNavigationItemPopoverContentTemplate;
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			Tree.define(),
-			ResponsivePopover.define(),
-		]);
+	static get dependencies() {
+		return [
+			Tree,
+			ResponsivePopover,
+		];
 	}
 
 	onBeforeRendering() {

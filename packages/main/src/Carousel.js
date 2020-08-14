@@ -500,10 +500,14 @@ class Carousel extends UI5Element {
 		return this.content.length ? `${this._id}-carousel-item-${this.selectedIndex + 1}` : undefined;
 	}
 
+	static get dependencies() {
+		return [Button];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
-			Button.define(),
+			this.whenDependenciesDefined(),
 		]);
 	}
 }

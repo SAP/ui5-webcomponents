@@ -847,13 +847,19 @@ class DatePicker extends UI5Element {
 		return InputType.Text;
 	}
 
+	static get dependencies() {
+		return [
+			Icon,
+			ResponsivePopover,
+			Calendar,
+			Input,
+		];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			Icon.define(),
-			ResponsivePopover.define(),
-			Calendar.define(),
-			Input.define(),
+			this.whenDependenciesDefined(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}

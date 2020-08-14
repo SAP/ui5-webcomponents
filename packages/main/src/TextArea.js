@@ -585,9 +585,13 @@ class TextArea extends UI5Element {
 		};
 	}
 
+	static get dependencies() {
+		return [Popover];
+	}
+
 	static async onDefine() {
 		await Promise.all([
-			Popover.define(),
+			this.whenDependenciesDefined(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}

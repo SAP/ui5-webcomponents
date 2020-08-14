@@ -245,9 +245,13 @@ class FlexibleColumnLayout extends UI5Element {
 		return FlexibleColumnLayoutTemplate;
 	}
 
+	static get dependencies() {
+		return [Button];
+	}
+
 	static async onDefine() {
 		await Promise.all([
-			Button.define(),
+			this.whenDependenciesDefined(),
 			fetchI18nBundle("@ui5/webcomponents-fiori"),
 		]);
 	}

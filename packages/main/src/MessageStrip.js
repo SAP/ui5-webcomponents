@@ -160,11 +160,17 @@ class MessageStrip extends UI5Element {
 		this.fireEvent("close", {});
 	}
 
+	static get dependencies() {
+		return [
+			Icon,
+			Button,
+		];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
-			Icon.define(),
-			Button.define(),
+			this.whenDependenciesDefined(),
 		]);
 	}
 

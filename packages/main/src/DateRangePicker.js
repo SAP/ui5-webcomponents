@@ -89,8 +89,8 @@ class DateRangePicker extends DatePicker {
 		return DateRangePickerTemplate;
 	}
 
-	static async onDefine() {
-		await DatePicker.define();
+	static get dependencies() {
+		return [DatePicker];
 	}
 
 	constructor() {
