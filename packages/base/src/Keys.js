@@ -184,5 +184,5 @@ export {
 	isPageUpShift,
 	isPageDownShift,
 	isPageUpShiftCtrl,
-	isPageDownShiftCtrl
+	isPageDownShiftCtrl,
 };
