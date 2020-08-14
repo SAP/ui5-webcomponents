@@ -1,8 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const glob = require("glob");
-const acorn = require("acorn");
-const walk = require("acorn-walk");
 
 const root = process.argv[2];
 const suffix = process.argv[3];

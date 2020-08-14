@@ -34,6 +34,10 @@ class UI5ElementMetadata {
 		return validateSingleSlot(value, slotData);
 	}
 
+	/**
+	 * Returns the tag of the UI5 Element without the scope
+	 * @public
+	 */
 	getPureTag() {
 		return this.metadata.tag;
 	}

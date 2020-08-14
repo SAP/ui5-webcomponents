@@ -1,7 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import List from "@ui5/webcomponents/dist/List.js";
+import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Tree from "@ui5/webcomponents/dist/Tree.js";
+import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
 
@@ -134,7 +137,10 @@ class SideNavigation extends UI5Element {
 
 	static get dependencies() {
 		return [
+			List,
+			StandardListItem,
 			Tree,
+			TreeItem,
 			ResponsivePopover,
 		];
 	}
