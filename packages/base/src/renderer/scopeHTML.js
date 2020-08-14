@@ -11,14 +11,14 @@ const scopeHTML = (strings, tags, suffix) => {
 			const allTags = [...string.matchAll(/<(ui5-.*?)[> ]/g)].map(x => x[1]);
 			allTags.forEach(t => {
 				if (!tags.includes(t)) {
-					console.log(t, " in ", string);
+					throw new Error(`${t} not found in ${string}`);
+					// console.log(t, " in ", string);
 				}
 			});
 			*/
 
 			let result = string;
 			tags.forEach(tag => {
-				// console.log("replacing", string, tag);
 				result = result.replace(new RegExp(`(</?)(${tag})(/?[> \t\n])`, "g"), `$1$2-${suffix}$3`);
 			});
 			cache.set(string, result);
