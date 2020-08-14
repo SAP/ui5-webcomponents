@@ -2,7 +2,15 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
+import { 
+	isShow,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import DurationPickerTemplate from "./generated/templates/DurationPickerTemplate.lit.js";
@@ -408,7 +416,45 @@ class DurationPicker extends UI5Element {
 		if (isShow(event)) {
 			this.togglePicker();
 		}
+
+		if (isPageUpShiftCtrl(event)) {
+			event.preventDefault();
+			this._incrementValue(true, false, false, true);
+		} else if (isPageUpShift(event)) {
+			event.preventDefault();
+			this._incrementValue(true, false, true, false);
+		} else if (isPageUp(event)) {
+			event.preventDefault();
+			this._incrementValue(true, true, false, false);
+		}
+
+		if (isPageDownShiftCtrl(event)) {
+			event.preventDefault();
+			this._incrementValue(false, false, false, true);
+		} else if (isPageDownShift(event)) {
+			event.preventDefault();
+			this._incrementValue(false, false, true, false);
+		} else if (isPageDown(event)) {
+			event.preventDefault();
+			this._incrementValue(false, true, false, false);
+		}
 	}
+
+	_incrementValue(increment, hours, minutes, seconds) {
+		const values = this.readFormattedValue(this.value);
+		const incrementStep = increment ? 1 : -1;
+
+		if (hours) {
+			date.setHours(date.getHours() + incrementStep);
+		} else if (minutes) {
+			date.setMinutes(date.getMinutes() + incrementStep);
+		} else if (seconds) {
+			date.setSeconds(date.getSeconds() + incrementStep);
+		}
+
+		this.setValue(this.formatValue(date));
+	}
+
 
 	generateTimeItemsArray(arrayLength, step = 1) {
 		const resultArray = [];
