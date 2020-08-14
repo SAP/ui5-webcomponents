@@ -23,6 +23,6 @@
 }
 
 /* Workaround for IE */
-[ui5-tag="ui5-multi-combobox"] [ui5-tag="ui5-tokenizer"] {
+[ui5-tag="ui5-multi-combobox"] ui5-tokenizer {
 	flex: 3;
 }

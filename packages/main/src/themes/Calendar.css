@@ -12,8 +12,8 @@
 	background: var(--sapList_Background);
 }
 
-.ui5-cal-root ui5-daypicker,
-.ui5-cal-root ui5-month-picker,
-.ui5-cal-root ui5-yearpicker {
+.ui5-cal-root [ui5-tag="ui5-daypicker"],
+.ui5-cal-root [ui5-tag="ui5-month-picker"],
+.ui5-cal-root [ui5-tag="ui5-yearpicker"] {
 	vertical-align: top;
 }

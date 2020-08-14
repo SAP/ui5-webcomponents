@@ -20,13 +20,13 @@
 	padding: 0 0.3125em;
 }
 
-::slotted(ui5-icon) {
+::slotted([ui5-tag="ui5-icon"]) {
 	width: .75em;
 	height: .75em;
 }
 
 /* IE 11 specific selector */
-ui5-badge ui5-icon[slot="icon"] {
+[ui5-tag="ui5-badge"] ui5-icon[slot="icon"] {
 	display: flex;
 }
 

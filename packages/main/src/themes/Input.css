@@ -190,7 +190,7 @@
 }
 
 /* TODO: Remove this after parser is fixed
-	-	this statement is transformed to "ui5-multi-combobox ui5-icon" which
+	-	this statement is transformed to "[ui5-tag="ui5-multi-combobox"] ui5-icon" which
 	affects all icons in the combobox incuding these in the list items
 */
 ::slotted([ui5-tag="ui5-icon"][slot="icon"]) {

@@ -283,7 +283,7 @@ bdi {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
-[ui5-tag="ui5-button"] [ui5-tag="ui5-icon"].ui5-button-icon {
+[ui5-tag="ui5-button"] ui5-icon.ui5-button-icon {
 	height: var(--_ui5_button_icon_font_size); /* Center vertically all icons*/
 	top: 0;
 }

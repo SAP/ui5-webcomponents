@@ -10,7 +10,7 @@
 	box-sizing: border-box;
 }
 
-.ui5-calheader-root ui5-button {
+.ui5-calheader-root [ui5-tag="ui5-button"] {
 	height: 100%;
 }
 

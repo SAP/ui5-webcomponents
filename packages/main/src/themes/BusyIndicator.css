@@ -12,14 +12,14 @@
 }
 
 
-:host([active]) :not(.ui5-busyindicator-root--ie) ::slotted(:not([class^="ui5-busyindicator-"])) {
+:host([active]) :not(.ui5-busyindicator-root--ie) ::slotted(:not([class^="[ui5-tag="ui5-busyindicator-"]"])) {
 	opacity: 0.6;
 }
 
 /**
  * IE fix: 0.6 makes the content almost invisible, so we set it to 0.95 in IE
  */
-:host([active]) .ui5-busyindicator-root--ie ::slotted(:not([class^="ui5-busyindicator-"])) {
+:host([active]) .ui5-busyindicator-root--ie ::slotted(:not([class^="[ui5-tag="ui5-busyindicator-"]"])) {
 	opacity: 0.95;
 }
 

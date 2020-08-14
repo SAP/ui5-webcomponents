@@ -39,7 +39,7 @@
     pointer-events: none;
 }
 
-.ui5-tab-overflow-item ui5-icon {
+.ui5-tab-overflow-item [ui5-tag="ui5-icon"] {
     width: 1.375rem;
     height: 1.375rem;
     padding-right: 1rem;

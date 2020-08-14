@@ -19,7 +19,7 @@
 .ui5-shellbar-menu-button,
 .ui5-shellbar-button,
 .ui5-shellbar-image-button,
-::slotted(ui5-button[slot="startButton"]) {
+::slotted([ui5-tag="ui5-button"][slot="startButton"]) {
 	height: 2.25rem;
 	padding: 0;
 	margin-left: 0.5rem;
@@ -40,18 +40,18 @@
 
 .ui5-shellbar-menu-button,
 .ui5-shellbar-button,
-::slotted(ui5-button[slot="startButton"]) {
+::slotted([ui5-tag="ui5-button"][slot="startButton"]) {
 	outline: none;
 }
 
-::slotted(ui5-button[slot="startButton"]:hover),
+::slotted([ui5-tag="ui5-button"][slot="startButton"]:hover),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
 .ui5-shellbar-button:hover,
 .ui5-shellbar-image-button:hover {
 	background: var(--sapShell_Hover_Background);
 }
 
-::slotted(ui5-button[slot="startButton"][active]),
+::slotted([ui5-tag="ui5-button"][slot="startButton"][active]),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
 .ui5-shellbar-button[active],
 .ui5-shellbar-image-button:active {
@@ -59,7 +59,7 @@
 	color: var(--sapShell_Active_TextColor);
 }
 
-::slotted(ui5-button[slot="startButton"][focused])::after,
+::slotted([ui5-tag="ui5-button"][slot="startButton"][focused])::after,
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus::after,
 .ui5-shellbar-button[focused]::after,
 .ui5-shellbar-image-button:focus::after {
@@ -78,7 +78,7 @@ slot[name="profile"] {
 	min-width: 0;
 }
 
-::slotted(ui5-avatar[slot="profile"]) {
+::slotted([ui5-tag="ui5-avatar"][slot="profile"]) {
 	min-width: 0;
 	width: 2rem;
 	height: 2rem;
@@ -170,7 +170,7 @@ slot[name="profile"] {
 	padding: 0.25rem 1rem;
 }
 
-:host([breakpoint-size="S"]) ::slotted(ui5-button[slot="startButton"]) {
+:host([breakpoint-size="S"]) ::slotted([ui5-tag="ui5-button"][slot="startButton"]) {
 	margin-right: 0;
 }
 
@@ -365,14 +365,14 @@ slot[name="profile"] {
 	height: 2.25rem;
 }
 
-::slotted(ui5-input) {
+::slotted([ui5-tag="ui5-input"]) {
 	background-color: var(--sapShellColor);
 	border: 1px solid var(--sapShell_InteractiveBorderColor);
 	color: var(--sapShell_TextColor);
 	height: 100%;
 }
 
-::slotted(ui5-input[focused]) {
+::slotted([ui5-tag="ui5-input"][focused]) {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 
@@ -385,18 +385,18 @@ slot[name="profile"] {
 /**
 * IE styles
 */
-ui5-input[value-state]:not([readonly]) {
+[ui5-tag="ui5-input"][value-state]:not([readonly]) {
 	background: var(--sapShellColor);
 	border: 1px solid var(--sapShell_InteractiveBorderColor);
 }
 
-ui5-input[value-state]:not([readonly]):hover,
-ui5-input:not([value-state]):not([readonly]):hover {
+[ui5-tag="ui5-input"][value-state]:not([readonly]):hover,
+[ui5-tag="ui5-input"]:not([value-state]):not([readonly]):hover {
 	background: var(--sapShell_Hover_Background);
 	border: 1px solid var(--sapShell_InteractiveBorderColor);
 }
 
-ui5-input[value-state]:not([value-state="None"])[focused] {
+[ui5-tag="ui5-input"][value-state]:not([value-state="None"])[focused] {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 /* IE styles end */
@@ -437,7 +437,7 @@ ui5-input[value-state]:not([value-state="None"])[focused] {
 	fill: var(--sapShellColor);
 }
 
-:host [dir="rtl"] ::slotted(ui5-button[slot="startButton"]) {
+:host [dir="rtl"] ::slotted([ui5-tag="ui5-button"][slot="startButton"]) {
 	margin-left: 0.5rem;
 	margin-right: 0;
 }
@@ -465,13 +465,13 @@ ui5-input[value-state]:not([value-state="None"])[focused] {
 	margin-right: 0;
 }
 
-::slotted(ui5-button[slot="startButton"]) {
+::slotted([ui5-tag="ui5-button"][slot="startButton"]) {
 	margin-right: 0.5rem;
 	margin-left: 0;
 	justify-content: center;
 	align-items: center;
 }
 
-::slotted(ui5-button[profile-btn]) {
+::slotted([ui5-tag="ui5-button"][profile-btn]) {
 	width: auto;
 }

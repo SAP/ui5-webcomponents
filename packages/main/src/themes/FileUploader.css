@@ -23,16 +23,16 @@
 	display: flex;
 }
 
-.ui5-file-uploader-mask ui5-input {
+.ui5-file-uploader-mask [ui5-tag="ui5-input"] {
 	margin-right: 0.25rem;
 }
 
-:host(:not([value-state]):not([disabled]):hover) ui5-input {
+:host(:not([value-state]):not([disabled]):hover) [ui5-tag="ui5-input"] {
 	background-color: var(--sapField_Hover_Background);
 	border: 1px solid var(--sapField_Hover_BorderColor);
 }
 
-:host(:not([disabled]):active) ui5-button {
+:host(:not([disabled]):active) [ui5-tag="ui5-button"] {
 	background-color: var(--sapButton_Active_Background);
 	border-color: var(--_ui5_button_active_border_color);
 	color: var(--sapButton_Active_TextColor);

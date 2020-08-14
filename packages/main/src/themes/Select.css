@@ -21,7 +21,7 @@
 	padding-left: 0.5rem;
 }
 
-.ui5-select-label-root ui5-label {
+.ui5-select-label-root [ui5-tag="ui5-label"] {
 	cursor: pointer;
 }
 

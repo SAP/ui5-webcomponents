@@ -32,14 +32,14 @@
 	color: var(--sapList_Active_TextColor);
 }
 
-/* ui5-li: title, description, info state */
+/* [ui5-tag="ui5-li"]: title, description, info state */
 :host([active][actionable]) .ui5-li-title,
 :host([active][actionable]) .ui5-li-desc,
 :host([active][actionable]) .ui5-li-info {
 	color: var(--sapList_Active_TextColor);
 }
 
-/* ui5-li: infoState */
+/* [ui5-tag="ui5-li"]: infoState */
 :host([info-state="Warning"]) .ui5-li-info {
 	color: var(--sapCriticalTextColor);
 }
@@ -56,7 +56,7 @@
 	color: var(--sapInformativeTextColor);
 }
 
-/* ui5-li: item with title and description */
+/* [ui5-tag="ui5-li"]: item with title and description */
 :host([has-title][description]) {
 	height: 5rem;
 }
@@ -136,7 +136,7 @@
 	flex-shrink: 0;
 }
 
-:host ui5-checkbox.ui5-li-singlesel-radiobtn {
+:host [ui5-tag="ui5-checkbox"].ui5-li-singlesel-radiobtn {
 	margin-right: var(--_ui5_list_item_cb_margin_right);
 }
 
