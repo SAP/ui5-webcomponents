@@ -2,7 +2,7 @@ import DataType from "./types/DataType.js";
 import isDescendantOf from "./util/isDescendantOf.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
 import isSlot from "./util/isSlot.js";
-import { getScope } from "./Scope.js";
+import { getCustomElementsScopingSuffix } from "./CustomElementsScope.js";
 
 /**
  *
@@ -47,7 +47,7 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	getTag() {
-		const scope = getScope();
+		const scope = getCustomElementsScopingSuffix();
 		const suffix = scope ? `-${scope}` : ``;
 		return `${this.metadata.tag}${suffix}`;
 	}
@@ -61,7 +61,7 @@ class UI5ElementMetadata {
 			return;
 		}
 
-		const scope = getScope();
+		const scope = getCustomElementsScopingSuffix();
 		const suffix = scope ? `-${scope}` : ``;
 		return `${this.metadata.altTag}${suffix}`;
 	}

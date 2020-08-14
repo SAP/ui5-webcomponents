@@ -1,5 +1,5 @@
-// import { setScope } from "@ui5/webcomponents-base/dist/Scope.js";
-// setScope("demo");
+// import { setCustomElementsScopingSuffix } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+// setCustomElementsScopingSuffix("demo");
 
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
