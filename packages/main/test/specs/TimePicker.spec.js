@@ -158,6 +158,7 @@ describe("TimePicker general interaction", () => {
 		// act
 		timepicker.click();
 		timepicker.keys(['Shift', 'Control', 'PageUp']);
+		timepicker.keys('Shift');
 		timepicker.keys('Control');
 
 		// assert
