@@ -708,15 +708,18 @@ class TimePicker extends UI5Element {
 		const date = this.dateValue;
 		const incrementStep = increment ? 1 : -1;
 
-		if (hours) {
+		if (hours && this.shouldBuildHoursSlider) {
 			date.setHours(date.getHours() + incrementStep);
-		} else if (minutes) {
+		} else if (minutes && this.shouldBuildMinutesSlider) {
 			date.setMinutes(date.getMinutes() + incrementStep);
-		} else if (seconds) {
+		} else if (seconds && this.shouldBuildSecondsSlider) {
 			date.setSeconds(date.getSeconds() + incrementStep);
+		} else {
+			return;
 		}
 
 		this.setValue(this.formatValue(date));
+		this.fireEvent("change", { value: this.value, valid: true });
 	}
 
 	_handleWheel(e) {
