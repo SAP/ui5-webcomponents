@@ -123,4 +123,52 @@ describe("TimePicker general interaction", () => {
 		// assert
 		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is None");
 	});
+
+	it("tests input keyboard handling", () => {
+		const timepicker = browser.$("#timepicker5");
+
+		// act
+		timepicker.click();
+		timepicker.keys(['Shift', 'PageUp']);
+		timepicker.keys('Shift');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:01:01", "The value of minutes is +1");
+		// act
+		timepicker.click();
+		timepicker.keys(['Shift', 'PageDown']);
+		timepicker.keys('Shift');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:01", "The value of minutes is -1");
+
+		// act
+		timepicker.click();
+		timepicker.keys('PageUp');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "01:00:01", "The value of hours is +1");
+		// act
+		timepicker.click();
+		timepicker.keys('PageDown');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:01", "The value of hours is -1");
+
+		// act
+		timepicker.click();
+		timepicker.keys(['Shift', 'Control', 'PageUp']);
+		timepicker.keys('Control');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:02", "The value of seconds is +1");
+		// act
+		timepicker.click();
+		timepicker.keys(['Shift', 'Control', 'PageDown']);
+		timepicker.keys('Shift');
+		timepicker.keys('Control');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:01", "The value of seconds is -1");
+	});
 });
