@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { 
+import {
 	isShow,
 	isPageUp,
 	isPageDown,
@@ -444,15 +444,18 @@ class DurationPicker extends UI5Element {
 		const values = this.readFormattedValue(this.value);
 		const incrementStep = increment ? 1 : -1;
 
-		if (hours) {
-			date.setHours(date.getHours() + incrementStep);
-		} else if (minutes) {
-			date.setMinutes(date.getMinutes() + incrementStep);
-		} else if (seconds) {
-			date.setSeconds(date.getSeconds() + incrementStep);
+		if (hours && !this.hideHours) {
+			values[0] = Number(values[0]) + incrementStep;
+		} else if (minutes && !this.hideMinutes) {
+			values[1] = Number(values[1]) + incrementStep;
+		} else if (seconds && !this.hideSeconds) {
+			values[2] = Number(values[2]) + incrementStep;
+		} else {
+			return;
 		}
 
-		this.setValue(this.formatValue(date));
+		this.value = `${!this.hideHours ? values[0] : ""}${!this.hideHours && !this.hideMinutes ? ":" : ""}${!this.hideMinutes ? values[1] : ""}${!this.hideSeconds ? `:${values[2]}` : ""}`;
+		this.fireEvent("change", { value: this.value });
 	}
 
 
