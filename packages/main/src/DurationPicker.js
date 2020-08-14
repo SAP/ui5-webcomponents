@@ -11,6 +11,8 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import WheelSlider from "./WheelSlider.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Input from "./Input.js";
+import Icon from "./Icon.js";
+import Button from "./Button.js";
 import "@ui5/webcomponents-icons/dist/icons/fob-watch.js";
 import DurationPickerPopoverTemplate from "./generated/templates/DurationPickerPopoverTemplate.lit.js";
 import {
@@ -566,9 +568,11 @@ class DurationPicker extends UI5Element {
 
 	static get dependencies() {
 		return [
+			Icon,
 			WheelSlider,
 			ResponsivePopover,
 			Input,
+			Button,
 		];
 	}
 

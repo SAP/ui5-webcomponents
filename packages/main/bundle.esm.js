@@ -1,5 +1,5 @@
-// import { setScope } from "@ui5/webcomponents-base/dist/Scope.js";
-// setScope("demo");
+import { setScope } from "@ui5/webcomponents-base/dist/Scope.js";
+setScope("demo");
 
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";

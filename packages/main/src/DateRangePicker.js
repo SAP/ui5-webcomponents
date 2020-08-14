@@ -89,10 +89,6 @@ class DateRangePicker extends DatePicker {
 		return DateRangePickerTemplate;
 	}
 
-	static get dependencies() {
-		return [DatePicker];
-	}
-
 	constructor() {
 		super();
 		this.isFirstDatePick = true;

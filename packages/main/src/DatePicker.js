@@ -16,6 +16,7 @@ import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
 import Input from "./Input.js";
@@ -853,6 +854,7 @@ class DatePicker extends UI5Element {
 			ResponsivePopover,
 			Calendar,
 			Input,
+			Button,
 		];
 	}
 

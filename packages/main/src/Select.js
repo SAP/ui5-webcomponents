@@ -31,6 +31,7 @@ import Popover from "./Popover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
@@ -619,6 +620,7 @@ class Select extends UI5Element {
 			List,
 			StandardListItem,
 			Icon,
+			Button,
 		];
 	}
 }

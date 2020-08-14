@@ -17,6 +17,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
+import Button from "./Button.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
@@ -313,6 +314,7 @@ class MultiComboBox extends UI5Element {
 			List,
 			StandardListItem,
 			ToggleButton,
+			Button,
 		];
 	}
 

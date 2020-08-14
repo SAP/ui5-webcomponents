@@ -16,12 +16,14 @@ import {
 	isShow,
 } from "@ui5/webcomponents-base/src/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/time-entry-request.js";
+import Icon from "./Icon.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
 import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
 import Input from "./Input.js";
+import Button from "./Button.js";
 import WheelSlider from "./WheelSlider.js";
 import {
 	getHours,
@@ -266,9 +268,11 @@ class TimePicker extends UI5Element {
 
 	static get dependencies() {
 		return [
+			Icon,
 			ResponsivePopover,
 			WheelSlider,
 			Input,
+			Button,
 		];
 	}
 

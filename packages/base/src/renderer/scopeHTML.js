@@ -7,6 +7,15 @@ const scopeHTML = (strings, tags, suffix) => {
 				return cache.get(string);
 			}
 
+			/*
+			const allTags = [...string.matchAll(/<(ui5-.*?)[> ]/g)].map(x => x[1]);
+			allTags.forEach(t => {
+				if (!tags.includes(t)) {
+					console.log(t, " in ", string);
+				}
+			});
+			*/
+
 			let result = string;
 			tags.forEach(tag => {
 				// console.log("replacing", string, tag);

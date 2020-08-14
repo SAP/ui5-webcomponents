@@ -26,6 +26,7 @@ import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
 
 import Button from "./Button.js";
+import Label from "./Label.js";
 
 // Styles
 import CarouselCss from "./generated/themes/Carousel.css.js";
@@ -501,7 +502,10 @@ class Carousel extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [Button];
+		return [
+			Button,
+			Label,
+		];
 	}
 
 	static async onDefine() {
