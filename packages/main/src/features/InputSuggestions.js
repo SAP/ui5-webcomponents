@@ -319,7 +319,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [...this.responsivePopover.querySelector("ui5-list").children];
+		return [...this.responsivePopover.querySelector(`[ui5-tag="ui5-list"]`).children];
 	}
 
 	_getComponent() {
@@ -328,7 +328,7 @@ class Suggestions {
 
 	async _getList() {
 		this.responsivePopover = await this._respPopover();
-		return this.responsivePopover.querySelector("ui5-list");
+		return this.responsivePopover.querySelector(`[ui5-tag="ui5-list"]`);
 	}
 
 	async _getListWidth() {
@@ -346,7 +346,7 @@ class Suggestions {
 		}
 
 		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		this.responsivePopover = staticAreaItem.querySelector(`[ui5-tag="ui5-responsive-popover"]`);
 		return this.responsivePopover;
 	}
 

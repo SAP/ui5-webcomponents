@@ -472,7 +472,7 @@ class DatePicker extends UI5Element {
 	}
 
 	_getInput() {
-		return this.shadowRoot.querySelector("ui5-input");
+		return this.shadowRoot.querySelector(`[ui5-tag="ui5-input"]`);
 	}
 
 	_handleInputChange() {
@@ -685,7 +685,7 @@ class DatePicker extends UI5Element {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+		return staticAreaItem.querySelector(`[ui5-tag="ui5-responsive-popover"]`);
 	}
 
 	_canOpenPicker() {

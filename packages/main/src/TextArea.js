@@ -454,7 +454,7 @@ class TextArea extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-popover");
+		return staticAreaItem.querySelector(`[ui5-tag="ui5-popover"]`);
 	}
 
 	_tokenizeText(value) {

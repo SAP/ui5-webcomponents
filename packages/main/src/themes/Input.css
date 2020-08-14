@@ -193,6 +193,6 @@
 	-	this statement is transformed to "ui5-multi-combobox ui5-icon" which
 	affects all icons in the combobox incuding these in the list items
 */
-::slotted(ui5-icon[slot="icon"]) {
+::slotted([ui5-tag="ui5-icon"][slot="icon"]) {
 	padding: var(--_ui5_input_icon_padding);
 }

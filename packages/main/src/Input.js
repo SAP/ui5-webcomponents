@@ -628,7 +628,7 @@ class Input extends UI5Element {
 		this.previousValue = this.value;
 
 		await this.getInputDOMRef();
-		this._inputIconFocused = event.target && event.target === this.querySelector("ui5-icon");
+		this._inputIconFocused = event.target && event.target === this.querySelector(`[ui5-tag="ui5-icon"]`);
 	}
 
 	_onfocusout(event) {
@@ -757,7 +757,7 @@ class Input extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-popover");
+		return staticAreaItem.querySelector(`[ui5-tag="ui5-popover"]`);
 	}
 
 	enableSuggestions() {

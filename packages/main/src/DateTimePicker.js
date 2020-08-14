@@ -557,7 +557,7 @@ class DateTimePicker extends DatePicker {
 
 	async getPicker() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+		return staticAreaItem.querySelector(`[ui5-tag="ui5-responsive-popover"]`);
 	}
 
 	async getCurrentDateTime() {
