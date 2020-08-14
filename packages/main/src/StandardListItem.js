@@ -153,6 +153,7 @@ class StandardListItem extends ListItem {
 
 	static get dependencies() {
 		return [
+			...ListItem.dependencies,
 			Icon,
 			Avatar,
 		];

@@ -169,7 +169,10 @@ class TreeListItem extends ListItem {
 	}
 
 	static get dependencies() {
-		return [Icon];
+		return [
+			...ListItem.dependencies,
+			Icon,
+		];
 	}
 
 	onBeforeRendering() {
