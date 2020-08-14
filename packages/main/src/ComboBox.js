@@ -362,7 +362,7 @@ class ComboBox extends UI5Element {
 		if (this._autocomplete && domValue !== "") {
 			const item = this._autoCompleteValue(domValue);
 
-			if (!this._selectionChanged && !item.selected) {
+			if (!this._selectionChanged && (item && !item.selected)) {
 				this.fireEvent("selection-change", {
 					item,
 				});
