@@ -1118,7 +1118,9 @@ class Input extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [Popover];
+		const Suggestions = getFeature("InputSuggestions");
+
+		return [Popover].concat(Suggestions ? Suggestions.dependencies : []);
 	}
 
 	static async onDefine() {

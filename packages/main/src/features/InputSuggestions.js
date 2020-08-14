@@ -3,7 +3,10 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
-import "../SuggestionItem.js";
+import SuggestionItem from "../SuggestionItem.js";
+import Button from "../Button.js";
+import GroupHeaderListItem from "../GroupHeaderListItem.js";
+import SuggestionListItem from "../SuggestionListItem.js";
 
 import {
 	LIST_ITEM_POSITION,
@@ -395,14 +398,20 @@ class Suggestions {
 	sanitizeText(text) {
 		return text && text.replace("<", "&lt");
 	}
+
+	static get dependencies() {
+		return [
+			SuggestionItem,
+			ResponsivePopover,
+			List,
+			SuggestionListItem,
+			GroupHeaderListItem,
+			Button,
+		];
+	}
 }
 
 Suggestions.SCROLL_STEP = 60;
-
-// The List and Popover components would be rendered
-// by the issuer component`s template.
-List.define();
-ResponsivePopover.define();
 
 // Add suggestions support to the global features registry so that Input.js can use it
 registerFeature("InputSuggestions", Suggestions);
