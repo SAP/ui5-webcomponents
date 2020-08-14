@@ -9,7 +9,7 @@ import { getCustomElementsScopingSuffix } from "../CustomElementsScope.js";
  * @returns {*}
  */
 const executeTemplate = (template, component) => {
-	const tagsToScope = component.constructor.dependencies.map(dep => dep.getMetadata().getPureTag());
+	const tagsToScope = component.constructor.getUniqueDependencies().map(dep => dep.getMetadata().getPureTag());
 	const scope = getCustomElementsScopingSuffix();
 	return template(component, tagsToScope, scope);
 };

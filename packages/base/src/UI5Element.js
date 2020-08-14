@@ -971,14 +971,37 @@ class UI5Element extends HTMLElement {
 		return "";
 	}
 
+	/**
+	 * Returns an array with the dependencies for this UI5 Web Component, that is components that may appear in its shadow root or static area item
+	 * @protected
+	 */
 	static get dependencies() {
 		return [];
 	}
 
-	static whenDependenciesDefined() {
-		return Promise.all(this.dependencies.map(dep => dep.define()));
+	/**
+	 * Returns a list of unique dependencies
+	 *
+	 * @public
+	 */
+	static getUniqueDependencies() {
+		return this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
 	}
 
+	/**
+	 * Returns a promise that resolves whenever all dependencies for this UI5 Web Component have resolved
+	 *
+	 * @returns {Promise<any[]>}
+	 */
+	static whenDependenciesDefined() {
+		return Promise.all(this.getUniqueDependencies().map(dep => dep.define()));
+	}
+
+	/**
+	 * Default implementation for the onDefined hook - wait for all dependencies
+	 *
+	 * @protected
+	 */
 	static async onDefine() {
 		await this.whenDependenciesDefined();
 	}
