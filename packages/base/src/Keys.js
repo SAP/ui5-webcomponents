@@ -129,6 +129,18 @@ const isBackSpace = event => (event.key ? event.key === "Backspace" : event.keyC
 
 const isDelete = event => (event.key ? event.key === "Delete" : event.keyCode === KeyCodes.DELETE) && !hasModifierKeys(event);
 
+const isPageUp = event => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && !hasModifierKeys(event);
+
+const isPageDown = event => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && !hasModifierKeys(event);
+
+const isPageUpShift = event => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, false, false, true);
+
+const isPageDownShift = event => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, false, false, true);
+
+const isPageUpShiftCtrl = event => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, true, false, true);
+
+const isPageDownShiftCtrl = event => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, true, false, true);
+
 const isShow = event => {
 	if (event.key) {
 		return isF4(event) || isShowByArrows(event);
@@ -167,4 +179,10 @@ export {
 	isDelete,
 	isShow,
 	isF4,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl
 };

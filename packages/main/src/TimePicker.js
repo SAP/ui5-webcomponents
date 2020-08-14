@@ -14,6 +14,12 @@ import {
 	isTabNext,
 	isTabPrevious,
 	isShow,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl
 } from "@ui5/webcomponents-base/src/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/time-entry-request.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -674,6 +680,43 @@ class TimePicker extends UI5Element {
 			e.preventDefault();
 			this.togglePicker();
 		}
+
+		if (isPageUpShiftCtrl(e)) {
+			e.preventDefault();
+			this._incrementValue(true, false, false, true);
+		} else if (isPageUpShift(e)) {
+			e.preventDefault();
+			this._incrementValue(true, false, true, false);
+		} else if (isPageUp(e)) {
+			e.preventDefault();
+			this._incrementValue(true, true, false, false);
+		}
+
+		if (isPageDownShiftCtrl(e)) {
+			e.preventDefault();
+			this._incrementValue(false, false, false, true);
+		} else if (isPageDownShift(e)) {
+			e.preventDefault();
+			this._incrementValue(false, false, true, false);
+		} else if (isPageDown(e)) {
+			e.preventDefault();
+			this._incrementValue(false, true, false, false);
+		}
+	}
+
+	_incrementValue(increment, hours, minutes, seconds) {
+		const date = this.dateValue;
+		const incrementStep = increment ? 1 : -1;
+
+		if (hours) {
+			date.setHours(date.getHours() + incrementStep);
+		} else if (minutes) {
+			date.setMinutes(date.getMinutes() + incrementStep);
+		} else if (seconds) {
+			date.setSeconds(date.getSeconds() + incrementStep);
+		}
+
+		this.setValue(this.formatValue(date));
 	}
 
 	_handleWheel(e) {
