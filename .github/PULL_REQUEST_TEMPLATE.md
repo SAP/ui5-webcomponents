@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: SAP SE <https://sap.com>
-
-SPDX-License-Identifier: Apache-2.0
--->
-
 **Thank you for your contribution!** 👏
 
 To get it merged faster, kindly review the checklist below:
