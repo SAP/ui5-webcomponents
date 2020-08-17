@@ -1,5 +1,13 @@
-commit 5d7e7df3a3178218974f6e6c85ca58afa3d6144b
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Aug 13 15:26:55 2020 +0300
+commit 9454ab77228bbfdf8fad45ab6062ef2f64d59eed
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Aug 17 11:06:51 2020 +0300
 
-    feat(ui5-multi-input): initial implementation (#1942)
+    fix(components): fix setting contentDensity styles (#2094)
+    
+    Fixes
+    TimePicker was never considering contentDensity and did not update the styles of its popover so far.
+    DatePicker and DateTimePicker used to call updateStaticAreaItemContentDensity before the staticAreaItem DOM is available.
+    Solution:
+    Handle setting the contentDensity on framework level when possible and remove updateStaticAreaItemContentDensity calls from ShellBar, ComboBox, Select, Input, MultiCombobox. The updateStaticAreaItemContentDensity method exists and used in the TabContainer only, because the component does not invalidate on overflow popover open/close and needs to force the contentDensity update.
+    
+    FIXES #2093
