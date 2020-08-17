@@ -1,4 +1,4 @@
-import { getCustomElementsScopingSuffix } from "../CustomElementsScope.js";
+import { getCustomElementsScopingSuffix, shouldScopeCustomElement } from "../CustomElementsScope.js";
 
 /**
  * Runs a component's template with the component's current state, while also scoping HTML
@@ -9,7 +9,7 @@ import { getCustomElementsScopingSuffix } from "../CustomElementsScope.js";
  * @returns {*}
  */
 const executeTemplate = (template, component) => {
-	const tagsToScope = component.constructor.getUniqueDependencies().map(dep => dep.getMetadata().getPureTag());
+	const tagsToScope = component.constructor.getUniqueDependencies().map(dep => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
 	const scope = getCustomElementsScopingSuffix();
 	return template(component, tagsToScope, scope);
 };
