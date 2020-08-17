@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: SAP SE <https://sap.com>
-
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Assets and JSON module imports
 
 UI5 Web Components aim to be feature rich and with a minimal code footprint at the same time. In order to achieve this, 

@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: SAP SE <https://sap.com>
-
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Development Conventions and Guidelines
 ## JavaScript Coding Guidelines
 We enforce code style rules using [ESLint](https://eslint.org). Execute `npm run lint` to check your code for style issues.  

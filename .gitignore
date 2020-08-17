@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2020 SAP SE <https://sap.com>
-#
-# SPDX-License-Identifier: Apache-2.0
-
 # Ignore .gitignore, target, dist and tmp folders
 .gitignore
 tmp

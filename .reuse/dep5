@@ -3,6 +3,6 @@ Upstream-Name: UI5 Web Components
 Upstream-Contact: UI5 Web Components Team <DL_5ABB3E66ECB211B86700045E@global.corp.sap>
 Source: https://github.com/SAP/ui5-webcomponents
 
-Files: packages/*
+Files: *
 Copyright: 2020 SAP SE <sap.com>
 License: Apache-2.0

@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: SAP SE <https://sap.com>
-
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Frequently Asked Questions
 
 **Q: How can I play with UI5 Web Components easily?**

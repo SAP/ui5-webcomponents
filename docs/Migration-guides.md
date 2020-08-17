@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: SAP SE <https://sap.com>
-
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Migration guides
 
 ## Migrating from `1.0.0-rc.4` to `1.0.0-rc.5`

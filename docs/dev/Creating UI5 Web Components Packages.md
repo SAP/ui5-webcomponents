@@ -1,8 +1,3 @@
-<!--
-SPDX-FileCopyrightText: SAP SE <https://sap.com>
-
-SPDX-License-Identifier: Apache-2.0
--->
 # Creating a custom UI5 Web Components package
 
 This tutorial explains how to:

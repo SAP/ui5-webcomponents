@@ -1,8 +1,3 @@
-<!--
-SPDX-FileCopyrightText: SAP SE <https://sap.com>
-
-SPDX-License-Identifier: Apache-2.0
--->
 # Public module imports
 
 This is a comprehensive list of public module imports by package, intended for *App development*, i.e. consumption

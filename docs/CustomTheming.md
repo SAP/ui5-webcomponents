@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: SAP SE <https://sap.com>
-
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Custom Theming with `SAP Theme Designer`
 
 UI5 Web Components are fully compatible with `SAP Theme Designer`. You can create your own theme and effortlessly 

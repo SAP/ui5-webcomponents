@@ -1,10 +1,6 @@
 #!/bin/bash
 
 # Copyright 2018 Domenic Denicola
-# SPDX-FileCopyrightText: SAP SE <https://sap.com>
-#
-# SPDX-License-Identifier: Apache-2.0
-
 #!/bin/bash
 
 set -e # Exit with nonzero exit code if anything fails
