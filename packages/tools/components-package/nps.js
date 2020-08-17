@@ -74,8 +74,9 @@ const getScripts = (options) => {
 			default: "nps scopeTestPages.clean scopeTestPages.copy scopeTestPages.replace",
 			clean: "rimraf dist/test-resources/pages/scoped",
 			copy: `node "${LIB}/copy-and-watch/index.js" "dist/test-resources/pages/**/*" dist/test-resources/scoped`,
-			replace: `node "${LIB}/scope-test-pages/index.js" dist/test-resources/scoped demo`,
+			replace: `node "${LIB}/scoping/scope-test-pages.js" dist/test-resources/scoped demo`,
 		},
+		scopeLint: `node "${LIB}/scoping/lint-src.js"`,
 	};
 
 	return scripts;

@@ -45,7 +45,8 @@
     "link-all": "wsrun link",
     "unlink-all": "wsrun unlink",
     "prerelease": "node ./.github/actions/pre-release.js",
-    "scope-test-pages": "wsrun --exclude-missing scope-test-pages"
+    "scope-test-pages": "wsrun --exclude-missing scope-test-pages",
+    "scope-lint": "wsrun --exclude-missing scope-lint"
   },
   "devDependencies": {
     "command-line-args": "^5.1.1",

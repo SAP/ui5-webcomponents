@@ -26,7 +26,7 @@
 }
 
 /* IE 11 specific selector */
-[ui5-tag="ui5-badge"] ui5-icon[slot="icon"] {
+[ui5-tag="ui5-badge"] [ui5-tag="ui5-icon"][slot="icon"] {
 	display: flex;
 }
 
