@@ -408,6 +408,7 @@ class DurationPicker extends UI5Element {
 
 	_onkeydown(event) {
 		if (isShow(event)) {
+			event.preventDefault();
 			this.togglePicker();
 		}
 	}
@@ -439,7 +440,7 @@ class DurationPicker extends UI5Element {
 
 	_handleInputChange(event) {
 		const prevValue = this.value;
-		this.value = event.target.value;
+		this.value = event.target.value.replace(/[^\d:]/g, "");
 		this.checkValue();
 
 		if (prevValue !== this.value) {

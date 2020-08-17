@@ -531,7 +531,6 @@ class ComboBox extends UI5Element {
 	}
 
 	_openRespPopover() {
-		this.updateStaticAreaItemContentDensity();
 		this.responsivePopover.open(this);
 	}
 

@@ -401,7 +401,6 @@ class MultiComboBox extends UI5Element {
 			if (filteredItems.length === 0) {
 				this.allItemsPopover.close();
 			} else {
-				this.updateStaticAreaItemContentDensity();
 				this.allItemsPopover.open(this);
 			}
 		}
@@ -529,13 +528,11 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_toggleRespPopover() {
-		this.updateStaticAreaItemContentDensity();
 		this.allItemsPopover.toggle(this);
 	}
 
 	_click(event) {
 		if (isPhone() && !this.readonly && !this._showMorePressed) {
-			this.updateStaticAreaItemContentDensity();
 			this.allItemsPopover.open(this);
 		}
 

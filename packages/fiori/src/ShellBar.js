@@ -423,7 +423,6 @@ class ShellBar extends UI5Element {
 				this._updateClonedMenuItems();
 
 				if (this.hasMenuItems) {
-					this.updateStaticAreaItemContentDensity();
 					const menuPopover = await this._getMenuPopover();
 					menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
 				}
@@ -635,7 +634,6 @@ class ShellBar extends UI5Element {
 
 	_toggleActionPopover() {
 		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
-		this.updateStaticAreaItemContentDensity();
 		this.overflowPopover.openBy(overflowButton);
 	}
 
