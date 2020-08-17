@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";

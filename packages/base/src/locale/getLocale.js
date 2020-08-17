@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import detectNavigatorLanguage from "../util/detectNavigatorLanguage.js";
 import { getLanguage as getConfigLanguage } from "../config/Language.js";
 import Locale from "./Locale.js";

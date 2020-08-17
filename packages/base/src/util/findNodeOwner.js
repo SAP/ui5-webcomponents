@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 const findNodeOwner = node => {
 	if (!(node instanceof HTMLElement)) {
 		throw new Error("Argument node should be of type HTMLElement");

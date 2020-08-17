@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "./ListItemBase.js";
 

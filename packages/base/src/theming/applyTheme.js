@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
 import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";

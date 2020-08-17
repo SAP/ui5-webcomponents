@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import AnimationQueue from "./AnimationQueue.js";
 import animationConfig from "./config.js";
 

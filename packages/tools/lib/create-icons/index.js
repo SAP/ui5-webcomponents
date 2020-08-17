@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp");
@@ -51,11 +47,6 @@ const createIcons = (file) => {
 };
 
 fs.readdirSync(srcDir).forEach(collectionFile => {
-
-	if (path.extname(collectionFile) === ".license") {
-		return;
-	}
-
 	createIcons(path.join(srcDir, collectionFile));
 });
 

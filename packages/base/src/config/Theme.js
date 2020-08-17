@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import { getTheme as getConfiguredTheme } from "../InitialConfiguration.js";
 import applyTheme from "../theming/applyTheme.js";
 

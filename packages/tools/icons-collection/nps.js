@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 const path = require("path");
 
 const LIB = path.join(__dirname, `../lib/`);

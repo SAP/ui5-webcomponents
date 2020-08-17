@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 const generateTimeItemsArray = x => {
 	const array = [];
 	for (let i = 0; i < x; i++) {

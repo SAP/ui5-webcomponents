@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 
 const getSharedResourcesInstance = () => getSingletonElementInstance("ui5-shared-resources", document.head);

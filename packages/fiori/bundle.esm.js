@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import "@ui5/webcomponents/bundle.esm.js";
 
 // FIORI assets

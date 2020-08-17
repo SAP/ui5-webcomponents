@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 const postcssImport = require('postcss-import');
 const postcssCSStoESM = require('../lib/postcss-css-to-esm/index.js');
 const cssnano = require('cssnano');

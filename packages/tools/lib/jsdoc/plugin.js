@@ -1,7 +1,9 @@
-// Copyright 2009-2018 SAP SE or an SAP affiliate company.
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
+/*
+ * JSDoc3 plugin for UI5 documentation generation.
+ *
+ * (c) Copyright 2009-2018 SAP SE or an SAP affiliate company.
+ * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
+ */
 
 /* global require, exports, env */
 /* eslint strict: [2, "global"]*/

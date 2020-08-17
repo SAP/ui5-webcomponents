@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 document.addEventListener("DOMContentLoaded", function(event) {
 	var menuBtn = document.getElementById("menu-btn");
 	var mutated = false;

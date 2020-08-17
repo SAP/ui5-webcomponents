@@ -1,10 +1,4 @@
-/*
- * SPDX-FileCopyrightText: SAP SE <https://sap.com>
- *
- * SPDX-License-Identifier: Apache-2.0
- */
- 
- @import "./InputIcon.css";
+@import "./InputIcon.css";
 
 .ui5-multi-input-tokenizer {
 	max-width: calc(100% - 3rem - var(--_ui5_input_icon_min_width));

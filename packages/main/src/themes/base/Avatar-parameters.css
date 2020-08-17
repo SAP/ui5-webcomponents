@@ -1,9 +1,3 @@
-/*
- * SPDX-FileCopyrightText: SAP SE <https://sap.com>
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 :root {
 	--ui5-avatar-initials-color: var(--sapContent_ImagePlaceholderForegroundColor);
     --ui5-avatar-initials-border: none;

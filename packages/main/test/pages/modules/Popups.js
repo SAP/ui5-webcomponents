@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 function onload() {
 	// web component dialog
 	var wcBtnOpenDialog = document.querySelector('.wcBtnOpenDialog');

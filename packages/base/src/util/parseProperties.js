@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 const flatstr = typeof chrome === "object" || typeof v8 === "object" ? (s, iConcatOps) => {
 	if (iConcatOps > 2 && 40 * iConcatOps > s.length) {
 		Number(s);

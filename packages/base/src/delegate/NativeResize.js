@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 class NativeResize {
 	static initialize() {
 		NativeResize.resizeObserver = new window.ResizeObserver(entries => {

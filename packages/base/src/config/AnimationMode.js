@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import { getAnimationMode as getConfiguredAnimationMode } from "../InitialConfiguration.js";
 import AnimationMode from "../types/AnimationMode.js";
 

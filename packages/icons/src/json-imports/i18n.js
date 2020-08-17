@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 
 import ar from "../generated/assets/i18n/messagebundle_ar.json";

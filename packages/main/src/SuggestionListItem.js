@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import StandardListItem from "./StandardListItem.js";
 import SuggestionListItemTemplate from "./generated/templates/SuggestionListItemTemplate.lit.js";
 

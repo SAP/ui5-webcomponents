@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 const assert = require("chai").assert;
 
 const getTokenizerPopoverId = (inputId) => {

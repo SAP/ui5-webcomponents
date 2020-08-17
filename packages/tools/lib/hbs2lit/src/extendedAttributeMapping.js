@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 function replaceEqualities(hbs) {
 	// converts the boolean attributes to lit like boolean attributes
 	return hbs.replace(/(\s+)(disabled|hidden|checked|readonly)\s*=\s*/g, " ?$2 = ")

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 const scripts = {
 	clean: "rimraf dist",
 	lint: "eslint . --config config/.eslintrc.js",

@@ -1,9 +1,5 @@
 #!/usr/bin/env node
 
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 const child_process = require("child_process");
 
 let command = process.argv[2];

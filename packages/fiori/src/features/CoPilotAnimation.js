@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 
 const CoPilotAnimation = {

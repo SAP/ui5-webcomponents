@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import LocaleData from "../sap/ui/core/LocaleData.js";

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 const babel = require("rollup-plugin-babel");
 const process = require("process");
 const resolve = require("rollup-plugin-node-resolve");

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 const postcssImport = require('postcss-import');
 const combineSelectors = require('postcss-combine-duplicated-selectors');
 const postcssCSStoJSON = require('../lib/postcss-css-to-json/index.js');

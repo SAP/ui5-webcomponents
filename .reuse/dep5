@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: UI5 Web Components
+Upstream-Contact: UI5 Web Components Team <DL_5ABB3E66ECB211B86700045E@global.corp.sap>
+Source: https://github.com/SAP/ui5-webcomponents
+
+Files: packages/*
+Copyright: 2020 SAP SE <sap.com>
+License: Apache-2.0

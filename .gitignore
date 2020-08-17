@@ -31,9 +31,6 @@ web.config
 .vscode/
 .idea/
 
-# Ignore reuse tool files
-.reuse
-
 # Ignore yarn files
 yarn-error.log*
 yarn-debug.log*

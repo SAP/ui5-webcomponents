@@ -1,9 +1,3 @@
-/*
- * SPDX-FileCopyrightText: SAP SE <https://sap.com>
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 :host {
 	display: contents;
 	font-family: var(--sapFontFamily);

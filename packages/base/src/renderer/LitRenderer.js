@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import { html, render } from "lit-html/lit-html.js";
 
 const litRender = (templateResult, domNode, styles, { eventContext } = {}) => {

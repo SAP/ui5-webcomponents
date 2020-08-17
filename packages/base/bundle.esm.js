@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import { registerThemeProperties } from "./dist/AssetRegistry.js";
 
 // ESM bundle targets Edge + browsers with native support

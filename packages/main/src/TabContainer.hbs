@@ -1,9 +1,3 @@
-{{!--
-SPDX-FileCopyrightText: SAP SE <https://sap.com>
-
-SPDX-License-Identifier: Apache-2.0
---}}
-
 <div
 	class="{{classes.root}}"
 	dir="{{effectiveDir}}"
@@ -15,7 +9,7 @@ SPDX-License-Identifier: Apache-2.0
 	<div class="{{classes.header}}" id="{{_id}}-header">
 		<ui5-icon @click="{{_onHeaderBackArrowClick}}" class="{{classes.headerBackArrow}}" name="slim-arrow-left" tabindex="-1" accessible-name="{{previousIconACCName}}" show-tooltip></ui5-icon>
 
-		{{!-- tab items --}}
+		<!-- tab items -->
 		<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
 			<ul
 				role="tablist"
@@ -37,7 +31,7 @@ SPDX-License-Identifier: Apache-2.0
 
 		<ui5-icon @click="{{_onHeaderForwardArrowClick}}" class="{{classes.headerForwardArrow}}" name="slim-arrow-right" tabindex="-1" accessible-name="{{nextIconACCName}}" show-tooltip></ui5-icon>
 
-		{{!-- overflow button --}}
+		<!-- overflow button -->
 		{{#if showOverflow}}
 			<ui5-button
 				@click="{{_onOverflowButtonClick}}"

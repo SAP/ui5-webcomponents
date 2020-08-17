@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 import { registerThemeProperties } from "../../asset-registries/Themes.js";
 
 const fiori3 = `:root{ --var1: red; }`;

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 class DatePickerTestPage {
 	constructor() {
 		this.page = 'http://localhost:8080/test-resources/pages/DatePicker_test_page.html';

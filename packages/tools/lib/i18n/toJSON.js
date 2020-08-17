@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: SAP SE <https://sap.com>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
  * The script converts all messebindle_*.properties files to messagebundle_*.json files.
  *

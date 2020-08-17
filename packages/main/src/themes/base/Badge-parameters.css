@@ -1,9 +1,3 @@
-/*
- * SPDX-FileCopyrightText: SAP SE <https://sap.com>
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 :root {
 	--ui5-badge-font-size: 0.75em; /* origin from --sapFontSmallSize (0.75rem) */
 }
