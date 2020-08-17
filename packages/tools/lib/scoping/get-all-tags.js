@@ -24,8 +24,7 @@ const getPackageTags = (packageDir) => {
 };
 
 const isComponentsPackage = (packageFileContent) => {
-	const name = packageFileContent.name;
-	return ["@ui5/webcomponents", "@ui5/webcomponents-fiori"].includes(name);
+	return packageFileContent.ui5 && packageFileContent.ui5.webComponentsPackage;
 };
 
 const getDepComponentPackages = packageDir => {

@@ -102,6 +102,10 @@ const updatePackageFile = () => {
 		"prepublishOnly": "npm run build"
 	};
 
+	packageContent.ui5 = {
+		webComponentsPackage: true
+	};
+
 	fs.writeFileSync("package.json", beautify(packageContent, null, 2, 100));
 };
 
