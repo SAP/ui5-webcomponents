@@ -38,6 +38,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
+import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -765,6 +766,7 @@ class ComboBox extends UI5Element {
 		await Promise.all([
 			ComboBoxItem.define(),
 			Icon.define(),
+			Popover.define(),
 			ResponsivePopover.define(),
 			List.define(),
 			BusyIndicator.define(),
