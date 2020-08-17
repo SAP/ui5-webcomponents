@@ -282,7 +282,7 @@ class Select extends UI5Element {
 	async _respPopover() {
 		this._iconPressed = true;
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector(`[ui5-tag="ui5-responsive-popover"]`);
+		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
 	/**
@@ -606,7 +606,7 @@ class Select extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector(`[ui5-tag="ui5-popover"]`);
+		return staticAreaItem.querySelector("[ui5-popover]");
 	}
 
 	static get dependencies() {

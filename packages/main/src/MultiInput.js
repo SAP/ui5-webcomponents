@@ -185,7 +185,7 @@ class MultiInput extends Input {
 	}
 
 	get tokenizer() {
-		return this.shadowRoot.querySelector(`[ui5-tag="ui5-tokenizer"]`);
+		return this.shadowRoot.querySelector("[ui5-tokenizer]");
 	}
 
 	static get dependencies() {

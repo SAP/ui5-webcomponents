@@ -134,12 +134,12 @@
 	}
 }
 
-[ui5-tag="ui5-product-switch-item"][focused] {
+[ui5-product-switch-item][focused] {
 	outline: none;
 	position: relative;
 }
 
-[ui5-tag="ui5-product-switch-item"][focused] .ui5-product-switch-item-root::after {
+[ui5-product-switch-item][focused] .ui5-product-switch-item-root::after {
 	content: "";
 	position: absolute;
 	border-color: var(--_ui5_product_switch_item_outline_color);
@@ -151,6 +151,6 @@
 	right:  var(--_ui5_product_switch_item_outline_offset_positive);
 }
 
-[ui5-tag="ui5-product-switch-item"][active][focused] .ui5-product-switch-item-root::after {
+[ui5-product-switch-item][active][focused] .ui5-product-switch-item-root::after {
 	border-color: var(--_ui5_product_switch_item_active_outline_color);
 }

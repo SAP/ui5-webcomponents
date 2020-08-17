@@ -56,15 +56,15 @@
 
 /* IE Specific CSS, duplicate it for ToggleButton */
 
-[ui5-tag="ui5-togglebutton"][focused] {
+[ui5-togglebutton][focused] {
 	outline: none;
 }
 
-[ui5-tag="ui5-togglebutton"][focused] .ui5-button-root {
+[ui5-togglebutton][focused] .ui5-button-root {
 	position: relative;
 }
 
-[ui5-tag="ui5-togglebutton"][focused] .ui5-button-root::after {
+[ui5-togglebutton][focused] .ui5-button-root::after {
 	content: "";
 	position: absolute;
 	border-width: 1px;
@@ -76,31 +76,31 @@
 	right: var(--_ui5_button_focus_offset);
 }
 
-[ui5-tag="ui5-togglebutton"][active] .ui5-button-root::after {
+[ui5-togglebutton][active] .ui5-button-root::after {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
-[ui5-tag="ui5-togglebutton"][design="Positive"][focused] .ui5-button-root::after {
+[ui5-togglebutton][design="Positive"][focused] .ui5-button-root::after {
 	border-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
-[ui5-tag="ui5-togglebutton"][design="Positive"][active][focused] .ui5-button-root::after {
+[ui5-togglebutton][design="Positive"][active][focused] .ui5-button-root::after {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
-[ui5-tag="ui5-togglebutton"][design="Negative"][focused] .ui5-button-root::after {
+[ui5-togglebutton][design="Negative"][focused] .ui5-button-root::after {
 	border-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
-[ui5-tag="ui5-togglebutton"][design="Negative"][active][focused] .ui5-button-root::after {
+[ui5-togglebutton][design="Negative"][active][focused] .ui5-button-root::after {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
-[ui5-tag="ui5-togglebutton"][design="Emphasized"][focused] .ui5-button-root::after {
+[ui5-togglebutton][design="Emphasized"][focused] .ui5-button-root::after {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
-[ui5-tag="ui5-togglebutton"] [ui5-tag="ui5-icon"].ui5-button-icon {
+[ui5-togglebutton] [ui5-icon].ui5-button-icon {
 	height: var(--_ui5_button_icon_font_size); /* Center vertically all icons*/
 	top: 0;
 }

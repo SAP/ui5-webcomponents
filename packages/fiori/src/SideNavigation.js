@@ -208,7 +208,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	async getPicker() {
-		return (await this.getStaticAreaItemDomRef()).querySelector(`[ui5-tag="ui5-responsive-popover"]`);
+		return (await this.getStaticAreaItemDomRef()).querySelector("[ui5-responsive-popover]");
 	}
 
 	async openPicker(opener) {

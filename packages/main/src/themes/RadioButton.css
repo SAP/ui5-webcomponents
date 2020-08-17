@@ -132,7 +132,7 @@
 }
 
 /* Label */
-[ui5-tag="ui5-label"].ui5-radio-label {
+[ui5-label].ui5-radio-label {
 	display: flex;
 	align-items: center;
 	width: var(--_ui5_rb_label_width);
@@ -149,7 +149,7 @@
 	height: auto;
 }
 
-:host([wrap][text]) [ui5-tag="ui5-label"].ui5-radio-label {
+:host([wrap][text]) [ui5-label].ui5-radio-label {
 	padding: var(--_ui5_rb_label_side_padding) 0;
 	word-break: break-all;
 }

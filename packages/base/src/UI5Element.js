@@ -99,7 +99,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
-		this.setAttribute("ui5-tag", this.constructor.getMetadata().getPureTag());
+		this.setAttribute(this.constructor.getMetadata().getPureTag(), "");
 
 		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();

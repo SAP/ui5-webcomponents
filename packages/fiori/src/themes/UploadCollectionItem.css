@@ -17,7 +17,7 @@
 	margin-right: 0.75rem;
 }
 
-::slotted([ui5-tag="ui5-icon"][slot="thumbnail"]) {
+::slotted([ui5-icon][slot="thumbnail"]) {
 	width: 3rem;
 	height: 3rem;
 	font-size: 2.5rem;
@@ -28,7 +28,7 @@
 	height: 3rem;
 }
 
-:host([actionable]) ::slotted([ui5-tag="ui5-icon"][slot="thumbnail"])  {
+:host([actionable]) ::slotted([ui5-icon][slot="thumbnail"])  {
 	color: var(--sapContent_IconColor);
 }
 
@@ -60,7 +60,7 @@
 	white-space: pre-wrap;
 }
 
-[ui5-tag="ui5-link"].ui5-uci-file-name {
+[ui5-link].ui5-uci-file-name {
 	pointer-events: all;
 }
 
@@ -73,7 +73,7 @@
 }
 
 /* Edit mode */
-.ui5-uci-edit-container [ui5-tag="ui5-input"] {
+.ui5-uci-edit-container [ui5-input] {
 	width: 60%;
 	pointer-events: all;
 	min-width: auto;

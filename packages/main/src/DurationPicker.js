@@ -481,7 +481,7 @@ class DurationPicker extends UI5Element {
 		}
 
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector(`[ui5-tag="ui5-responsive-popover"]`);
+		this.responsivePopover = staticAreaItem.querySelector("[ui5-responsive-popover]");
 		return this.responsivePopover;
 	}
 

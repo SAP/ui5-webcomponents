@@ -24,7 +24,7 @@
 	padding-right: 0.25rem;
 }
 
-.ui5-time-picker-footer > [ui5-tag="ui5-button"] {
+.ui5-time-picker-footer > [ui5-button] {
 	margin: 1%;
 	min-width: 20%;
 }

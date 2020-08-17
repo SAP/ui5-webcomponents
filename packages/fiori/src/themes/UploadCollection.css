@@ -37,7 +37,7 @@
 	height: 8rem;
 }
 
-.uc-no-files .icon-container [ui5-tag="ui5-icon"] {
+.uc-no-files .icon-container [ui5-icon] {
 	font-size: 6rem;
 	width: 6rem;
 	height: 6rem;
@@ -45,7 +45,7 @@
 	opacity: 0.5;
 }
 
-.uc-no-files [ui5-tag="ui5-title"] {
+.uc-no-files [ui5-title] {
 	font-size: var(--ui5_upload_collection_level_2Size);
 	color: var(--sapGroup_TitleTextColor);
 	margin: 1rem 0;
@@ -102,7 +102,7 @@
 	opacity: 0.05;
 }
 
-.uc-dnd-overlay [ui5-tag="ui5-icon"] {
+.uc-dnd-overlay [ui5-icon] {
 	width: 4rem;
 	height: 4rem;
 	margin-bottom: 1rem;
@@ -115,13 +115,13 @@
 	color: var(--sapContent_NonInteractiveIconColor);
 }
 
-.uc-dnd-overlay [ui5-tag="ui5-icon"],
+.uc-dnd-overlay [ui5-icon],
 .uc-dnd-overlay .dnd-overlay-text {
 	z-index: 1;
 	pointer-events: none;
 }
 
-.uc-drop-overlay [ui5-tag="ui5-icon"],
+.uc-drop-overlay [ui5-icon],
 .uc-drop-overlay .dnd-overlay-text {
 	color: var(--sapContent_DragAndDropActiveColor);
 }

@@ -84,7 +84,7 @@
     pointer-events: none;
 }
 
-.ui5-carousel-navigation-arrows > [ui5-tag="ui5-button"] {
+.ui5-carousel-navigation-arrows > [ui5-button] {
     pointer-events: all;
 }
 

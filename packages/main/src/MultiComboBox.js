@@ -419,7 +419,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_tokenizerFocusOut() {
-		const tokenizer = this.shadowRoot.querySelector(`[ui5-tag="ui5-tokenizer"]`);
+		const tokenizer = this.shadowRoot.querySelector("[ui5-tokenizer]");
 		const tokensCount = tokenizer.tokens.length - 1;
 
 		tokenizer.tokens.forEach(token => { token.selected = false; });
@@ -573,7 +573,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizer() {
-		return this.shadowRoot.querySelector(`[ui5-tag="ui5-tokenizer"]`);
+		return this.shadowRoot.querySelector("[ui5-tokenizer]");
 	}
 
 	get nMoreCountText() {

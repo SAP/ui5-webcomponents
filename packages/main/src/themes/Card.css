@@ -79,7 +79,7 @@
 	pointer-events: none;
 }
 
-::slotted([ui5-tag="ui5-icon"]) {
+::slotted([ui5-icon]) {
 	width: 1.5rem;
 	height: 1.5rem;
 	color: var(--sapTile_IconColor);
