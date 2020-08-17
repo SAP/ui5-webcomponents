@@ -335,7 +335,20 @@ class MultiComboBox extends UI5Element {
 	}
 
 	filterSelectedItems(event) {
+		if (this.allItemsSelected) {
+			this.filterSelected = true;
+			return;
+		}
+
 		this.filterSelected = event.target.pressed;
+	}
+
+	get _showAllItemsButtonPressed() {
+		return this.filterSelected || this.allItemsSelected;
+	}
+
+	get allItemsSelected() {
+		return this.items.length === this.selectedValues.length;
 	}
 
 	get _inputDom() {
