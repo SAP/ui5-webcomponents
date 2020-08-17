@@ -225,6 +225,19 @@ const metadata = {
 		},
 
 		/**
+		 *
+		 * Defines whether the value is shown in the input.
+		 *
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.9
+		 * @private
+		 */
+		_hideValue: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the value state of the <code>ui5-input</code>.
 		 * <br><br>
 		 * Available options are:
@@ -1110,6 +1123,10 @@ class Input extends UI5Element {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	get _getValue() {
+		return this._hideValue ? "" : this.value;
 	}
 
 	static async onDefine() {

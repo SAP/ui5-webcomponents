@@ -221,6 +221,10 @@ class DateRangePicker extends DatePicker {
 		return oCalDateFirst;
 	}
 
+	get _shoudHideValueInInput() {
+		return this._firstDateTimestamp === this._lastDateTimestamp;
+	}
+
 	/**
 	 * Currently selected first date represented as JavaScript Date instance.
 	 *
