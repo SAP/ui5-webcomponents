@@ -661,7 +661,7 @@ class TimePicker extends UI5Element {
 		}
 	}
 
-	_selectLimitCell (e, isMax) {
+	_selectLimitCell(e, isMax) {
 		e.preventDefault();
 		if (e.target === this.hoursSlider) {
 			const hoursArray = this.hoursArray;
@@ -672,8 +672,6 @@ class TimePicker extends UI5Element {
 		} else if (e.target === this.secondsSlider) {
 			const secondsArray = this.secondsArray;
 			e.target.value = isMax ? secondsArray[secondsArray.length - 1] : secondsArray[0];
-		} else {
-			return;
 		}
 	}
 
