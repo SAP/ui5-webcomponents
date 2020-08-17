@@ -222,7 +222,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	get _shoudHideValueInInput() {
-		return this._firstDateTimestamp === this._lastDateTimestamp;
+		return this._firstDateTimestamp === this._lastDateTimestamp && this._firstDateTimestamp;
 	}
 
 	/**
