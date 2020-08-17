@@ -36,6 +36,7 @@ class StaticAreaItem {
 			this._rendered = true;
 		}
 
+		this._updateContentDensity(this.ui5ElementContext.isCompact);
 		this.ui5ElementContext.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
 	}
 
