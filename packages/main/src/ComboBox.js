@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
@@ -20,6 +21,7 @@ import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	VALUE_STATE_INFORMATION,
 	INPUT_SUGGESTIONS_TITLE,
 	ICON_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
@@ -32,9 +34,11 @@ import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTempla
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
 import ComboBoxPopoverCss from "./generated/themes/ComboBoxPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
+import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -218,6 +222,12 @@ const metadata = {
 		_filteredItems: {
 			type: Object,
 		},
+
+		_listWidth: {
+			type: Integer,
+			defaultValue: 0,
+			noAttribute: true,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
@@ -239,6 +249,23 @@ const metadata = {
 			propertyName: "items",
 			type: HTMLElement,
 			listenFor: { include: ["*"] },
+		},
+
+		/**
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-combobox</code>.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 * <br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+		 * when the <code>ui5-select</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * @type {HTMLElement[]}
+		 * @since 1.0.0-rc.9
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
+			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
@@ -314,7 +341,7 @@ class ComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ComboBoxPopoverCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss, ComboBoxPopoverCss];
 	}
 
 	static get template() {
@@ -379,6 +406,9 @@ class ComboBox extends UI5Element {
 		}
 
 		this._itemFocused = false;
+
+		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
+		this.storeResponsivePopoverWidth();
 	}
 
 	shouldClosePopover() {
@@ -423,6 +453,35 @@ class ComboBox extends UI5Element {
 		} else {
 			this._openRespPopover();
 		}
+	}
+
+	storeResponsivePopoverWidth() {
+		if (this.open && !this._listWidth) {
+			this._listWidth = this.responsivePopover.offsetWidth;
+		}
+	}
+
+	toggleValueStatePopover(open) {
+		if (open) {
+			this.openValueStatePopover();
+		} else {
+			this.closeValueStatePopover();
+		}
+	}
+
+	async openValueStatePopover() {
+		this.popover = await this._getPopover();
+		this.popover && this.popover.openBy(this);
+	}
+
+	async closeValueStatePopover() {
+		this.popover = await this._getPopover();
+		this.popover && this.popover.close();
+	}
+
+	async _getPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector(".ui5-valuestatemessage-popover");
 	}
 
 	_resetFilter() {
@@ -627,8 +686,16 @@ class ComboBox extends UI5Element {
 		return this.valueState !== ValueState.None;
 	}
 
+	get hasValueStateText() {
+		return this.hasValueState && this.valueState !== ValueState.Success;
+	}
+
 	get valueStateText() {
 		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get valueStateMessageText() {
+		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
 	get valueStateTextId() {
@@ -640,11 +707,25 @@ class ComboBox extends UI5Element {
 			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Information": this.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
+	}
+
+	get shouldOpenValueStateMessagePopover() {
+		return this.focused && this.hasValueStateText && !this._iconPressed
+			&& !this.open && !this._isPhone;
+	}
+
+	get shouldDisplayDefaultValueStateMessage() {
+		return !this.valueStateMessage.length && this.hasValueStateText;
 	}
 
 	get open() {
 		return this.responsivePopover ? this.responsivePopover.opened : false;
+	}
+
+	get _isPhone() {
+		return isPhone();
 	}
 
 	get itemTabIndex() {
@@ -655,10 +736,36 @@ class ComboBox extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
+	get styles() {
+		return {
+			popoverHeader: {
+				"width": `${this.offsetWidth}px`,
+			},
+			suggestionPopoverHeader: {
+				"display": this._listWidth === 0 ? "none" : "inline-block",
+				"width": `${this._listWidth}px`,
+				"padding": "0.5625rem 1rem",
+			},
+		};
+	}
+
+	get classes() {
+		return {
+			popoverValueState: {
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
+		};
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			ComboBoxItem.define(),
 			Icon.define(),
+			Popover.define(),
 			ResponsivePopover.define(),
 			List.define(),
 			BusyIndicator.define(),
