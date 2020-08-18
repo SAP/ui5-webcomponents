@@ -27,6 +27,7 @@ const metadata = {
 let autoId = 0;
 
 const elementTimeouts = new Map();
+const uniqueDependenciesCache = new Map();
 
 const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
 const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
@@ -972,7 +973,10 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Returns an array with the dependencies for this UI5 Web Component, that is components that may appear in its shadow root or static area item
+	 * Returns an array with the dependencies for this UI5 Web Component, which could be:
+	 *  - composed components (used in its shadow root or static area item)
+	 *  - slotted components that the component may need to communicate with
+	 *
 	 * @protected
 	 */
 	static get dependencies() {
@@ -980,12 +984,17 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Returns a list of unique dependencies
+	 * Returns a list of the unique dependencies for this UI5 Web Component
 	 *
 	 * @public
 	 */
 	static getUniqueDependencies() {
-		return this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
+		if (!uniqueDependenciesCache.has(this)) {
+			const filtered = this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
+			uniqueDependenciesCache.set(this, filtered);
+		}
+
+		return uniqueDependenciesCache.get(this);
 	}
 
 	/**
