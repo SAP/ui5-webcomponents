@@ -24,9 +24,10 @@ const replaceTagsAny = content => {
 	return content;
 };
 
-// Replace HTML in test pages
+// Replace bundle names and HTML tag names in test pages
 glob.sync(path.join(root, "/**/*.html")).forEach(file => {
 	let content = String(fs.readFileSync(file));
+	content = content.replace(/bundle\.(.*?)\.js/g, `bundle.scoped.$1.js`);
 	content = replaceTagsHTML(content);
 	fs.writeFileSync(file, content);
 });

@@ -22,9 +22,7 @@
     "build": "wc-dev build",
     "test": "wc-dev test",
     "create-ui5-element": "wc-create-ui5-element",
-    "prepublishOnly": "npm run build",
-    "scope-test-pages": "wc-dev scopeTestPages",
-    "scope-lint": "wc-dev scopeLint"
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",

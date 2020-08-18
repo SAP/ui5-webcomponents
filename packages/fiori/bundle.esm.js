@@ -1,4 +1,4 @@
-import "@ui5/webcomponents/bundle.esm.js";
+import testAssets from "@ui5/webcomponents/bundle.esm.js";
 
 // FIORI assets
 import "./dist/Assets.js";
@@ -20,3 +20,5 @@ import UploadCollectionItem from "./dist/UploadCollectionItem.js";
 import NotificationListItem from "./dist/NotificationListItem.js"
 import NotificationListGroupItem from "./dist/NotificationListGroupItem.js";
 import NotificationOverflowAction from "./dist/NotificationOverflowAction.js";
+
+export default testAssets;

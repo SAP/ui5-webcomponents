@@ -70,13 +70,20 @@ const getScripts = (options) => {
 			run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
 			spec: "wdio run config/wdio.conf.js",
 		},
-		scopeTestPages: {
-			default: "nps scopeTestPages.clean scopeTestPages.copy scopeTestPages.replace",
-			clean: "rimraf dist/test-resources/pages/scoped",
-			copy: `node "${LIB}/copy-and-watch/index.js" "dist/test-resources/pages/**/*" dist/test-resources/scoped`,
-			replace: `node "${LIB}/scoping/scope-test-pages.js" dist/test-resources/scoped demo`,
-		},
-		scopeLint: `node "${LIB}/scoping/lint-src.js"`,
+		startWithScope: "nps scope.prepare scope.dev",
+		scope: {
+			prepare: "nps scope.lint prepare scope.testPages",
+			lint: `node "${LIB}/scoping/lint-src.js"`,
+			testPages: {
+				default: "nps scope.testPages.clean scope.testPages.copy scope.testPages.replace",
+				clean: "rimraf dist/test-resources/pages/scoped",
+				copy: `node "${LIB}/copy-and-watch/index.js" "dist/test-resources/pages/**/*" dist/test-resources/scoped`,
+				replace: `node "${LIB}/scoping/scope-test-pages.js" dist/test-resources/scoped demo`,
+			},
+			dev: 'concurrently "nps serve" "nps scope.watch"',
+			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps scope.bundle" "nps watch.styles"',
+			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,SCOPE"
+		}
 	};
 
 	return scripts;

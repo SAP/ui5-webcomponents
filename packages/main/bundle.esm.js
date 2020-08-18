@@ -1,7 +1,3 @@
-// import { setCustomElementsScopingSuffix, setCustomElementsScopingRules } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-// setCustomElementsScopingSuffix("demo");
-// setCustomElementsScopingRules({include: [/^ui5-/], exclude: [/^ui5-button/, /ui5-icon/]});
-
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
 
@@ -103,7 +99,8 @@ import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dis
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { addCustomCSS } from "@ui5/webcomponents-base/dist/Theming";
-window["sap-ui-webcomponents-bundle"] = {
+
+const testAssets = {
 	configuration : {
 		getAnimationMode,
 		setAnimationMode,
@@ -119,4 +116,9 @@ window["sap-ui-webcomponents-bundle"] = {
 	applyDirection,
 	ResizeHandler,
 	addCustomCSS,
+	getIconNames,
 };
+
+window["sap-ui-webcomponents-bundle"] = testAssets;
+
+export default testAssets;
