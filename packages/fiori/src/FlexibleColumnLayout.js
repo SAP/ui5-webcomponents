@@ -250,10 +250,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	static async onDefine() {
-		await Promise.all([
-			super.onDefine(),
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get BREAKPOINTS() {

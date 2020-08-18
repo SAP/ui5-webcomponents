@@ -998,15 +998,6 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Default implementation for the onDefined hook - wait for all dependencies
-	 *
-	 * @protected
-	 */
-	static async onDefine() {
-		await this.whenDependenciesDefined();
-	}
-
-	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
 	 * @returns {Promise<UI5Element>}
@@ -1014,7 +1005,10 @@ class UI5Element extends HTMLElement {
 	static async define() {
 		await boot();
 
-		await this.onDefine();
+		await Promise.all([
+			this.whenDependenciesDefined(),
+			this.onDefine ? this.onDefine() : Promise.resolve(),
+		]);
 
 		const tag = this.getMetadata().getTag();
 		const altTag = this.getMetadata().getAltTag();

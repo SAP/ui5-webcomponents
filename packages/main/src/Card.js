@@ -241,10 +241,7 @@ class Card extends UI5Element {
 	}
 
 	static async onDefine() {
-		await Promise.all([
-			super.onDefine(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	_headerClick() {
