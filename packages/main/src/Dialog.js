@@ -97,6 +97,8 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Dialog";</code>
+ * 
+ * <b>Note:</b> We don't recommend nesting popover/dialog inside dialog.
  *
  * @constructor
  * @author SAP SE
