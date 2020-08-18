@@ -300,8 +300,6 @@ class Select extends UI5Element {
 			return;
 		}
 
-		this.updateStaticAreaItemContentDensity();
-
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
 		} else {

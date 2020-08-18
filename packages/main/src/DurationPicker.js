@@ -40,6 +40,7 @@ import DurationPickerPopoverCss from "./generated/themes/DurationPickerPopover.c
 const metadata = {
 	tag: "ui5-duration-picker",
 	languageAware: true,
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.DurationPicker.prototype */ {
 		/**
 		 * Defines a formatted time value.
@@ -181,7 +182,22 @@ const metadata = {
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.DurationPicker.prototype */ {
-		//
+		/**
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-duration-picker</code>.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 * <br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+		 * when the <code>ui5-duration-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * @type {HTMLElement}
+		 * @since 1.0.0-rc.9
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.DurationPicker.prototype */ {
 		/**
@@ -414,6 +430,7 @@ class DurationPicker extends UI5Element {
 
 	_onkeydown(event) {
 		if (isShow(event)) {
+			event.preventDefault();
 			this.togglePicker();
 		}
 
@@ -486,7 +503,7 @@ class DurationPicker extends UI5Element {
 
 	_handleInputChange(event) {
 		const prevValue = this.value;
-		this.value = event.target.value;
+		this.value = event.target.value.replace(/[^\d:]/g, "");
 		this.checkValue();
 
 		if (prevValue !== this.value) {

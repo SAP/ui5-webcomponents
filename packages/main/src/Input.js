@@ -551,7 +551,6 @@ class Input extends UI5Element {
 		if (!this.firstRendering && !isPhone() && this.Suggestions) {
 			const shouldOpenSuggestions = this.shouldOpenSuggestions();
 
-			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.toggle(shouldOpenSuggestions, {
 				preventFocusRestore: !this.hasSuggestionItemSelected,
 			});
@@ -657,7 +656,6 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
-			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.open(this);
 			this.isRespPopoverOpen = true;
 		}

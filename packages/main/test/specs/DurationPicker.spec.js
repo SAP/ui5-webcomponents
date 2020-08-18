@@ -144,4 +144,16 @@ describe("Duration Picker general interaction", () => {
 		// assert
 		assert.strictEqual(durationPicker.shadow$("ui5-input").getProperty("value"), "00:00:00", "The value of seconds is +1");
 	});
+
+	it("tests valueStateMessage slot", () => {
+		const picker = browser.$("#pickerValueStateMessage");
+
+		picker.click();
+
+		const inputId = picker.shadow$("ui5-input").getProperty("_id");
+		const inputStaticAreaItem = browser.$(`.${inputId}`);
+		const slot = inputStaticAreaItem.shadow$("ui5-popover").$("#customValueStateMessage");
+
+		assert.ok(slot, "The value state message is set.");
+	});
 });
