@@ -1,5 +1,5 @@
-commit 4bcd797706c9edd52cef51160e19fd9a683a5ff9
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Aug 17 11:56:06 2020 +0300
+commit 1fe4afb9d924461fd392fd48d6aff55ead556371
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Aug 18 09:22:33 2020 +0300
 
-    fix(ui5-duration-picker): fix incorrect data support (#2097)
+    chore(tools): Update Init Package Script (#2101)
