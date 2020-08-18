@@ -68,7 +68,7 @@ describe("TimePicker general interaction", () => {
 		const inputStaticAreaItem = browser.$(`.${inputId}`);
 		const slot = inputStaticAreaItem.shadow$("ui5-popover").$("#customValueStateMessage");
 
-		assert.notOk(slot.error, "cValue State message slot is working");
+		assert.notOk(slot.error, "Value State message slot is working");
 	});
 
 	it("tests change event", () => {
