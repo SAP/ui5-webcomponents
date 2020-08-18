@@ -181,7 +181,7 @@ class DateTimePicker extends DatePicker {
 
 	static get dependencies() {
 		return [
-			DatePicker,
+			...DatePicker.dependencies,
 			Calendar,
 			Button,
 			ToggleButton,
