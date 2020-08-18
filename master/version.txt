@@ -1,10 +1,5 @@
-commit 20c55edaf188ef6344d9fe22cc7e604aa318db87
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Tue Aug 18 09:45:02 2020 +0300
+commit 84362e050acb19b3023e0de684d0df53d7d5ba9a
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Aug 18 11:27:17 2020 +0300
 
-    feat(ui5-time-picker): improve keyboard handling support (#2092)
-    
-    PageUp: Hours + 1, PageDown: Hours - 1, PageUp + Shift : Minutes + 1
-    PageDown + Shift: Minutes - 1, PageUp + Shift + Ctrl: Seconds + 1, PageDown + Shift + Ctrl: Seconds - 1
-    
-    Related to: #1534
+    fix(ui5-multi-combobox): fix behavior of show all selected button (#2100)
