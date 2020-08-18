@@ -1,5 +1,10 @@
-commit 1fe4afb9d924461fd392fd48d6aff55ead556371
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Aug 18 09:22:33 2020 +0300
+commit 20c55edaf188ef6344d9fe22cc7e604aa318db87
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Tue Aug 18 09:45:02 2020 +0300
 
-    chore(tools): Update Init Package Script (#2101)
+    feat(ui5-time-picker): improve keyboard handling support (#2092)
+    
+    PageUp: Hours + 1, PageDown: Hours - 1, PageUp + Shift : Minutes + 1
+    PageDown + Shift: Minutes - 1, PageUp + Shift + Ctrl: Seconds + 1, PageDown + Shift + Ctrl: Seconds - 1
+    
+    Related to: #1534
