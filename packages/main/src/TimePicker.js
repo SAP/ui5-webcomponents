@@ -278,9 +278,9 @@ class TimePicker extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
+			super.onDefine(),
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			fetchI18nBundle("@ui5/webcomponents"),
-			this.whenDependenciesDefined(),
 		]);
 	}
 

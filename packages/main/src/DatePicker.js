@@ -859,8 +859,8 @@ class DatePicker extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
+			super.onDefine(),
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			this.whenDependenciesDefined(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}

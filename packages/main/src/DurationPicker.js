@@ -579,8 +579,8 @@ class DurationPicker extends UI5Element {
 
 	static async onDefine(...params) {
 		await Promise.all([
+			super.onDefine(),
 			fetchI18nBundle("@ui5/webcomponents"),
-			this.whenDependenciesDefined(),
 		]);
 	}
 }

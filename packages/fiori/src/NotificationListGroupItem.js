@@ -155,7 +155,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	static async onDefine() {
 		await Promise.all([
-			this.whenDependenciesDefined(),
+			super.onDefine(),
 			fetchI18nBundle("@ui5/webcomponents-fiori"),
 		]);
 	}
