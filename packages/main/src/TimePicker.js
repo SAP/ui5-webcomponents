@@ -236,14 +236,14 @@ const metadata = {
  * <br><br>
  * For example, if the <code>format-pattern</code> is "HH:mm:ss",
  * a valid value string is "11:42:35" and the same is displayed in the input.
- * 
+ *
  * <h3>Keyboard handling</h3>
  * [F4], [ALT]+[UP], [ALT]+[DOWN] Open/Close picker dialog and move focus to it.
  * When closed:
  * [PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
  * [PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
  * [SHIFT]+[PAGEUP] Increments minutes by 1.
- * [SHIFT]+ [PAGEDOWN] Decrements minutes by 1. 
+ * [SHIFT]+ [PAGEDOWN] Decrements minutes by 1.
  * [SHIFT]+[CTRL]+[PAGEUP] Increments seconds by 1.
  * [SHIFT]+[CTRL]+ [PAGEDOWN] Decrements seconds by 1.
  * When opened:
