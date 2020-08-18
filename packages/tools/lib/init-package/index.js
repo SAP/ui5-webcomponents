@@ -17,7 +17,7 @@ const capitalizeFirst = str => str.substr(0,1).toUpperCase() + str.substr(1);
 let packageContent;
 
 const DEFAULT_PORT = 8080;
-const DEFAULT_TAG = 'ui5-demo';
+const DEFAULT_TAG = 'my-first-component';
 
 // from where all the files will be copied
 const RESOURCES_DIR = path.join(`${__dirname}`, `resources/`);
@@ -42,7 +42,12 @@ if (!tag.includes("-")) {
 	console.log("tag name should contain at least one dash");
 	process.exit(1);
 }
-const className = capitalizeFirst(kebabToCamelCase(tag.substr(4)));
+if (tag.startsWith("ui5-")) {
+	console.log("The ui5- prefix is reserved for the standard UI5 Web Components due to future possible name clashes.");
+	process.exit(1);
+}
+
+const className = capitalizeFirst(kebabToCamelCase(tag));
 
 // All variables that will be replaced in the content of the resources/
 const vars = {
@@ -62,7 +67,7 @@ const replaceVarsInFileContent = content => {
 };
 
 const replaceVarsInFileName = fileName => {
-	return fileName.replace(/Demo/, vars.INIT_PACKAGE_VAR_CLASS_NAME)	;
+	return fileName.replace(/MyFirstComponent/, vars.INIT_PACKAGE_VAR_CLASS_NAME)	;
 };
 
 const copyFile = (sourcePath, destPath) => {
