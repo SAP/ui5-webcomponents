@@ -1007,6 +1007,16 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * Hook that will be called upon custom element definition
+	 *
+	 * @protected
+	 * @returns {Promise<void>}
+	 */
+	static async onDefine() {
+		return Promise.resolve();
+	}
+
+	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
 	 * @returns {Promise<UI5Element>}
@@ -1016,7 +1026,7 @@ class UI5Element extends HTMLElement {
 
 		await Promise.all([
 			this.whenDependenciesDefined(),
-			this.onDefine ? this.onDefine() : Promise.resolve(),
+			this.onDefine(),
 		]);
 
 		const tag = this.getMetadata().getTag();

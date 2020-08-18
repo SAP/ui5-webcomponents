@@ -70,7 +70,7 @@ const getCustomElementsScopingRules = () => {
 
 /**
  * Determines whether custom elements with the given tag should be scoped or not.
- * The tag is first matched against the "include" rules and then against the "exdlude" rules and the
+ * The tag is first matched against the "include" rules and then against the "exclude" rules and the
  * result is cached until new rules are set.
  *
  * @public
