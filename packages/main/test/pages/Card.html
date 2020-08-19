@@ -102,6 +102,12 @@
 	<ui5-button icon="overflow" slot="action" design="Transparent"></ui5-button>
 </ui5-card>
 
+<h3>Test ariaLabel and ariaLabelledBy</h3>
+<ui5-card id="textAreaAriaLabel" aria-label="Hello World"></ui5-card>
+<br>
+<ui5-label id="infoText">info text</ui5-label>
+<ui5-card id="textAreaAriaLabelledBy" aria-labelledby="infoText"></ui5-card>
+
 <script>
 	card.addEventListener("ui5-headerClick", function (event) {
 		console.log(event);
