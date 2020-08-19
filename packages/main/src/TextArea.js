@@ -543,6 +543,22 @@ class TextArea extends UI5Element {
 		return this.showExceededText ? `${this._id}-exceededText` : undefined;
 	}
 
+	get ariaDescribedBy() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
+	get ariaValueStateHiddenText() {
+		if (!this.hasValueState) {
+			return;
+		}
+
+		if (this.hasCustomValueState) {
+			return this.valueStateMessageText.map(el => el.textContent).join(" ");
+		}
+
+		return this.valueStateText;
+	}
+
 	get ariaInvalid() {
 		return this.valueState === "Error" ? "true" : undefined;
 	}
