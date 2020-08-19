@@ -1,5 +1,9 @@
-commit 84362e050acb19b3023e0de684d0df53d7d5ba9a
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Aug 18 11:27:17 2020 +0300
+commit 9128264581c41b7cbc94e0e38d21ed8de751daae
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Aug 19 10:04:27 2020 +0300
 
-    fix(ui5-multi-combobox): fix behavior of show all selected button (#2100)
+    chore: switch to DCO (#2089)
+    
+    Provide the necessary License and copyright data to be compliant with Free Software Foundation Europe recommendations and to switch from CLA to Developer Certificate of Origin.
+    
+    FIXES: #2071
