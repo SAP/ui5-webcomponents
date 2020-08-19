@@ -1,9 +1,11 @@
-import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ToastTemplate from "./generated/templates/ToastTemplate.lit.js";
 import ToastPlacement from "./types/ToastPlacement.js";
+import { getNextZIndex } from "./popup-utils/PopupUtils.js";
+
+// Template
+import ToastTemplate from "./generated/templates/ToastTemplate.lit.js";
 
 // Styles
 import ToastCss from "./generated/themes/Toast.css.js";
