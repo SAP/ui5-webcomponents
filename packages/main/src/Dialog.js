@@ -97,8 +97,9 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Dialog";</code>
- * 
- * <b>Note:</b> We don't recommend nesting popover/dialog inside dialog.
+ *
+ * <b>Note:</b> We don't recommend nesting popup-like components (<code>ui5-dialog</code>, <code>ui5-popover</code>) inside <code>ui5-dialog</code>.
+ * Ideally you should create all popups on the same level inside your HTML page and just open them from one another, rather than nesting them.
  *
  * @constructor
  * @author SAP SE
