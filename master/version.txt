@@ -1,5 +1,5 @@
-commit b73ce4d2a524f537d76e4f68068c79de55302b32
+commit 4f35c92f44b419a6aa320856c9ead646a8e1448c
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Aug 19 13:15:51 2020 +0300
+Date:   Wed Aug 19 13:35:01 2020 +0300
 
-    chore(framework): adapt create-new-component script to framework changes (#2121)
+    fix(ui5-textarea): add aria-required (#2113)
