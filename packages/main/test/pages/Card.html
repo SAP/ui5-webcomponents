@@ -103,10 +103,23 @@
 </ui5-card>
 
 <h3>Test ariaLabel and ariaLabelledBy</h3>
-<ui5-card id="textAreaAriaLabel" aria-label="Hello World"></ui5-card>
-<br>
-<ui5-label id="infoText">info text</ui5-label>
-<ui5-card id="textAreaAriaLabelledBy" aria-labelledby="infoText"></ui5-card>
+	<ui5-card
+		id="textAreaAriaLabel"
+		heading="Linked activities (5)"
+		subheading="quick links"
+		aria-label="Hello World"
+		class="myCard">
+	</ui5-card>
+
+	<br>
+	<ui5-label id="infoText">info text</ui5-label>
+
+	<ui5-card
+		id="textAreaAriaLabelledBy"
+		aria-labelledby="infoText"
+		heading="New jobs (5)"
+		subheading="find one">
+	</ui5-card>
 
 <script>
 	card.addEventListener("ui5-headerClick", function (event) {
