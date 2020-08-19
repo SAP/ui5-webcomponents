@@ -205,6 +205,13 @@ class Popup extends UI5Element {
 	}
 
 	/**
+	 * Prevents the user from interacting with the content under the block layer
+	 */
+	_onBlockLayerKeyDown(event) {
+		event.preventDefault();
+	}
+
+	/**
 	 * Temporarily removes scrollbars from the body
 	 * @protected
 	 */
