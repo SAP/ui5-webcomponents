@@ -236,11 +236,12 @@ class Card extends UI5Element {
 		return !!this.action.length;
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	_headerClick() {

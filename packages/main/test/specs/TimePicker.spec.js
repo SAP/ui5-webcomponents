@@ -68,7 +68,7 @@ describe("TimePicker general interaction", () => {
 		const inputStaticAreaItem = browser.$(`.${inputId}`);
 		const slot = inputStaticAreaItem.shadow$("ui5-popover").$("#customValueStateMessage");
 
-		assert.notOk(slot.error, "cValue State message slot is working");
+		assert.notOk(slot.error, "Value State message slot is working");
 	});
 
 	it("tests change event", () => {
@@ -122,5 +122,54 @@ describe("TimePicker general interaction", () => {
 
 		// assert
 		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is None");
+	});
+
+	it("tests input keyboard handling", () => {
+		const timepicker = browser.$("#timepicker5");
+
+		// act
+		timepicker.click();
+		timepicker.keys(['Shift', 'PageUp']);
+		timepicker.keys('Shift');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:01:01", "The value of minutes is +1");
+		// act
+		timepicker.click();
+		timepicker.keys(['Shift', 'PageDown']);
+		timepicker.keys('Shift');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:01", "The value of minutes is -1");
+
+		// act
+		timepicker.click();
+		timepicker.keys('PageUp');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "01:00:01", "The value of hours is +1");
+		// act
+		timepicker.click();
+		timepicker.keys('PageDown');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:01", "The value of hours is -1");
+
+		// act
+		timepicker.click();
+		timepicker.keys(['Shift', 'Control', 'PageUp']);
+		timepicker.keys('Shift');
+		timepicker.keys('Control');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:02", "The value of seconds is +1");
+		// act
+		timepicker.click();
+		timepicker.keys(['Shift', 'Control', 'PageDown']);
+		timepicker.keys('Shift');
+		timepicker.keys('Control');
+
+		// assert
+		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:01", "The value of seconds is -1");
 	});
 });

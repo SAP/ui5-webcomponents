@@ -13,7 +13,7 @@
 	@keydown="{{_ontimepickerpopoverkeydown}}"
 	@wheel="{{_handleWheel}}"
 >
-	<div class="{{classes.container}}" @keydown={{_oncontainerkeydown}} tabindex="0" @focusin="{{_onfocuscontainerin}}">
+	<div class="{{classes.container}}" @keydown={{_oncontainerkeydown}} tabindex="-1" @focusin="{{_onfocuscontainerin}}">
 		{{#if shouldBuildHoursSlider}}
 			<ui5-wheelslider 
 				label = "{{hoursSliderTitle}}"

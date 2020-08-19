@@ -16,6 +16,7 @@ import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
 import Input from "./Input.js";
@@ -472,7 +473,7 @@ class DatePicker extends UI5Element {
 	}
 
 	_getInput() {
-		return this.shadowRoot.querySelector("ui5-input");
+		return this.shadowRoot.querySelector("[ui5-input]");
 	}
 
 	async _handleInputChange() {
@@ -685,7 +686,7 @@ class DatePicker extends UI5Element {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
 	_canOpenPicker() {
@@ -778,7 +779,6 @@ class DatePicker extends UI5Element {
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {
-			this.updateStaticAreaItemContentDensity();
 			this.openPicker();
 		}
 	}
@@ -847,13 +847,19 @@ class DatePicker extends UI5Element {
 		return InputType.Text;
 	}
 
+	static get dependencies() {
+		return [
+			Icon,
+			ResponsivePopover,
+			Calendar,
+			Input,
+			Button,
+		];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			Icon.define(),
-			ResponsivePopover.define(),
-			Calendar.define(),
-			Input.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}
