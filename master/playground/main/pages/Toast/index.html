@@ -78,6 +78,19 @@
 	<ui5-button id="wcBtnShowToastBE">Show BottomEnd Toast</ui5-button>
 	<ui5-toast id="wcToastBE" placement="BottomEnd">BottomEnd</ui5-toast>
 
+
+	<!--Toast and Dialog-->
+	<ui5-dialog id="dialog">
+		<div>Hello World</div>
+		<ui5-button id="btnDialog2">Close Dialog</ui5-button>
+
+		<ui5-button id="btnToastInDialog">Open Toast</ui5-button>
+		<ui5-toast id="toastInDialog" placement="BottomEnd">Toast</ui5-toast>
+	</ui5-dialog>
+
+	<h3>Test Dialog and Toast</h3>
+	<ui5-button id="btnDialog">Open Dialog</ui5-button>
+
 	<script>
 
 		// Attaching click listeners to the buttons which show the toasts
@@ -85,6 +98,18 @@
 			button.addEventListener('click', function () {
 				document.querySelector("#" + button.id.replace("BtnShow", "")).show();
 			});
+		});
+
+		btnDialog.addEventListener('click', function () {
+			dialog.open();
+		});
+
+		btnDialog2.addEventListener('click', function () {
+			dialog.close();
+		});
+
+		btnToastInDialog.addEventListener('click', function () {
+			toastInDialog.show();
 		});
 
 	</script>

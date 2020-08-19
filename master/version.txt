@@ -1,5 +1,7 @@
-commit 4f35c92f44b419a6aa320856c9ead646a8e1448c
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Aug 19 13:35:01 2020 +0300
+commit 4d270654d7f3185987ba887cdc290f76996e1ccd
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Aug 19 14:33:14 2020 +0300
 
-    fix(ui5-textarea): add aria-required (#2113)
+    fix(ui5-textarea): announce custom valueStateMessage (#2122)
+    
+    FIXES https://github.com/SAP/ui5-webcomponents/issues/2106
