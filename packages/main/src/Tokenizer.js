@@ -5,6 +5,9 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import List from "./List.js";
+import StandardListItem from "./StandardListItem.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
 import { MULTIINPUT_SHOW_MORE_TOKENS, TOKENIZER_ARIA_LABEL, TOKENIZER_POPOVER_REMOVE } from "./generated/i18n/i18n-defaults.js";
@@ -274,12 +277,20 @@ class Tokenizer extends UI5Element {
 		};
 	}
 
+	static get dependencies() {
+		return [
+			ResponsivePopover,
+			List,
+			StandardListItem,
+		];
+	}
+
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	async getPopover() {
-		return (await this.getStaticAreaItemDomRef()).querySelector("ui5-responsive-popover");
+		return (await this.getStaticAreaItemDomRef()).querySelector("[ui5-responsive-popover]");
 	}
 }
 
