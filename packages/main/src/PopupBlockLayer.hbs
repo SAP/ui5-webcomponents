@@ -1,1 +1,6 @@
-<div class="ui5-block-layer" ?hidden={{_blockLayerHidden}} style="{{styles.blockLayer}}"></div>
+<div class="ui5-block-layer"
+    ?hidden={{_blockLayerHidden}}
+    tabindex="1"
+    style="{{styles.blockLayer}}"
+	@keydown="{{_onBlockLayerKeyDown}}">
+</div>
