@@ -130,6 +130,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the <code>ui5-datepicker</code> is required.
+		 *
+		 * @since 1.0.0-rc.9
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
 		 * Determines whether the <code>ui5-date-picker</code> is displayed as disabled.
 		 *
 		 * @type {boolean}
@@ -646,6 +658,7 @@ class DatePicker extends UI5Element {
 			"ariaOwns": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
+			"ariaRequired": this.required,
 		};
 	}
 
