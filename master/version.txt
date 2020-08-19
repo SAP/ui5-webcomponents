@@ -1,7 +1,5 @@
-commit 4d270654d7f3185987ba887cdc290f76996e1ccd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Aug 19 14:33:14 2020 +0300
+commit af0785c7fe949fe57485f8baad7792b5f22b9872
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Aug 19 16:36:48 2020 +0300
 
-    fix(ui5-textarea): announce custom valueStateMessage (#2122)
-    
-    FIXES https://github.com/SAP/ui5-webcomponents/issues/2106
+    fix(ui5-multi-combobox): fix width in IE (#2104)
