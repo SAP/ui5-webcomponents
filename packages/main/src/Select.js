@@ -145,6 +145,18 @@ const metadata = {
 			defaultValue: ValueState.None,
 		},
 
+		/**
+		 * Defines whether the <code>ui5-select</code> is required.
+		 *
+		 * @since 1.0.0-rc.9
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		required: {
+			type: Boolean,
+		},
+
 		_text: {
 			type: String,
 			noAttribute: true,
