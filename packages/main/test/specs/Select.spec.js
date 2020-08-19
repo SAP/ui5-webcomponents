@@ -299,7 +299,7 @@ describe("Select general interaction", () => {
 		const select1 = browser.$("#textAreaAriaLabel").shadow$(".ui5-select-root");
 		const select2 = browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-select-root");
 		const EXPECTED_ARIA_LABEL1 = "Hello World";
-		const EXPECTED_ARIA_LABEL2 = "info text 20 characters remaining";
+		const EXPECTED_ARIA_LABEL2 = "info text";
 
 		assert.strictEqual(select1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
 			"The aria-label is correctly set internally.");
