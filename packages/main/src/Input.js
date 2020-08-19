@@ -1018,6 +1018,18 @@ class Input extends UI5Element {
 		};
 	}
 
+	get ariaValueStateHiddenText() {
+		if (!this.hasValueStateMessage) {
+			return;
+		}
+
+		if (this.shouldDisplayDefaultValueStateMessage) {
+			return this.valueStateText;
+		}
+
+		return this.valueStateMessageText.map(el => el.textContent).join(" ");
+	}
+
 	get itemSelectionAnnounce() {
 		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : undefined;
 	}
