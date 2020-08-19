@@ -1,9 +1,5 @@
-commit 9128264581c41b7cbc94e0e38d21ed8de751daae
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Aug 19 10:04:27 2020 +0300
+commit 3588542a9e766df55fe585cea7ddf25079b343bc
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Aug 19 12:10:30 2020 +0300
 
-    chore: switch to DCO (#2089)
-    
-    Provide the necessary License and copyright data to be compliant with Free Software Foundation Europe recommendations and to switch from CLA to Developer Certificate of Origin.
-    
-    FIXES: #2071
+    feat(framework): dynamic custom elements scoping (#2091)
