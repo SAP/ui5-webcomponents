@@ -9,6 +9,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import { isShow, isF4 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -215,6 +216,31 @@ const metadata = {
 		 */
 		hideWeekNumbers: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the aria-label attribute for the <code>ui5-datepicker</code>.
+		 *
+		 * @type {String}
+		 * @since 1.0.0-rc.9
+		 * @private
+		 * @defaultvalue ""
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the <code>ui5-datepicker</code>.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
 		},
 
 		_isPickerOpen: {
@@ -660,6 +686,7 @@ class DatePicker extends UI5Element {
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
 			"ariaRequired": this.required,
+			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
 	}
 

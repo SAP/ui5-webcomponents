@@ -717,4 +717,19 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.click();
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
 	});
+
+	it("Tests if aria-label and aria-labelledby", () => {
+		const datepicker1 = browser.$("#dpAriaLabel");
+		const datepicker2 = browser.$("#adpAriaLabelledBy");
+		const innerInput1 = datepicker1.shadow$("input");
+		const innerInput2 = datepicker2.shadow$("input");
+
+		const EXPECTED_ARIA_LABEL1 = "Hello World";
+		const EXPECTED_ARIA_LABEL2 = "info text";
+
+		assert.strictEqual(innerInput1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
+			"The aria-label is correct.")
+		assert.strictEqual(innerInput2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
+			"The aria-label is correct.")
+	});
 });
