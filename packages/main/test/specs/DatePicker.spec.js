@@ -718,18 +718,21 @@ describe("Date Picker Tests", () => {
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
 	});
 
-	it("Tests if aria-label and aria-labelledby", () => {
-		const datepicker1 = browser.$("#dpAriaLabel");
-		const datepicker2 = browser.$("#dpAriaLabelledBy");
-		const innerInput1 = datepicker1.shadow$("input");
-		const innerInput2 = datepicker2.shadow$("input");
+	it("Tests aria-label", () => {
+		const EXPECTED_ARIA_LABEL = "Hello World";
 
-		const EXPECTED_ARIA_LABEL1 = "Hello World";
-		const EXPECTED_ARIA_LABEL2 = "info text";
-
-		assert.strictEqual(innerInput1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
+		datepicker.id = "#dpAriaLabel";
+		
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
 			"The aria-label is correct.")
-		assert.strictEqual(innerInput2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
+	});
+
+	it("Tests aria-labelledby", () => {
+		const EXPECTED_ARIA_LABEL = "info text";
+
+		datepicker.id = "#dpAriaLabelledBy";
+
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
 			"The aria-label is correct.")
 	});
 });
