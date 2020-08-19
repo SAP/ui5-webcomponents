@@ -54,11 +54,11 @@ describe("Toast general interaction", () => {
 	it("tests shadow content div inline styles with default duration", () => {
 		const button = browser.$("#wcBtnShowToastBE");
 		const toastShadowContent = browser.$("#wcToastBE").shadow$(".ui5-toast-root");
+		const EXPECTED_STYLES = "transition-duration: 1000ms; transition-delay: 2000ms; opacity: 0;";
 
 		button.click();
 
-		assert.strictEqual(toastShadowContent.getAttribute("style"),
-			"transition-duration: 1000ms; transition-delay: 2000ms; opacity: 0;",
+		assert.ok(toastShadowContent.getAttribute("style").indexOf(EXPECTED_STYLES) !== -1,
 			"The correct default inline styles are applied to the shadow ui5-toast-root");
 	});
 
@@ -74,8 +74,9 @@ describe("Toast general interaction", () => {
 
 		calculatedDelay = `${durationProperty - maximumAllowedTransition}ms`;
 
-		assert.strictEqual(toastShadowContent.getAttribute("style"),
-				`transition-duration: ${maximumAllowedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`,
+		const EXPECTED_STYLES = `transition-duration: ${maximumAllowedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`;
+
+		assert.ok(toastShadowContent.getAttribute("style").indexOf(EXPECTED_STYLES) !== -1,
 				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is longer than default. Transition is not longer than allowed (1000ms).");
 	});
@@ -92,8 +93,9 @@ describe("Toast general interaction", () => {
 		calculatedTransition = durationProperty / 3;
 		calculatedDelay = `${durationProperty - calculatedTransition}ms`;
 
-		assert.strictEqual(toastShadowContent.getAttribute("style"),
-				`transition-duration: ${calculatedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`,
+		const EXPECTED_STYLES = `transition-duration: ${calculatedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`;
+
+		assert.ok(toastShadowContent.getAttribute("style").indexOf(EXPECTED_STYLES) !== -1,
 				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is shorter than default. Transition is a third of the duration.");
 	});
