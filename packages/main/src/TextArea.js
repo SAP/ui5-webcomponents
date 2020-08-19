@@ -454,7 +454,7 @@ class TextArea extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-popover");
+		return staticAreaItem.querySelector("[ui5-popover]");
 	}
 
 	_tokenizeText(value) {
@@ -543,6 +543,22 @@ class TextArea extends UI5Element {
 		return this.showExceededText ? `${this._id}-exceededText` : undefined;
 	}
 
+	get ariaDescribedBy() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
+	get ariaValueStateHiddenText() {
+		if (!this.hasValueState) {
+			return;
+		}
+
+		if (this.hasCustomValueState) {
+			return this.valueStateMessageText.map(el => el.textContent).join(" ");
+		}
+
+		return this.valueStateText;
+	}
+
 	get ariaInvalid() {
 		return this.valueState === "Error" ? "true" : undefined;
 	}
@@ -585,11 +601,12 @@ class TextArea extends UI5Element {
 		};
 	}
 
+	static get dependencies() {
+		return [Popover];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Popover.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

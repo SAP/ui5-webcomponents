@@ -674,7 +674,7 @@ class ComboBox extends UI5Element {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		this.responsivePopover = staticAreaItem.querySelector("[ui5-responsive-popover]");
 		return this.responsivePopover;
 	}
 
@@ -736,6 +736,19 @@ class ComboBox extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
+	static get dependencies() {
+		return [
+			ComboBoxItem,
+			Icon,
+			ResponsivePopover,
+			List,
+			BusyIndicator,
+			Button,
+			StandardListItem,
+			Popover,
+		];
+	}
+
 	get styles() {
 		return {
 			popoverHeader: {
@@ -759,19 +772,6 @@ class ComboBox extends UI5Element {
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
-	}
-
-	static async onDefine() {
-		await Promise.all([
-			ComboBoxItem.define(),
-			Icon.define(),
-			Popover.define(),
-			ResponsivePopover.define(),
-			List.define(),
-			BusyIndicator.define(),
-			Button.define(),
-			StandardListItem.define(),
-		]);
 	}
 }
 

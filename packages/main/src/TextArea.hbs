@@ -23,8 +23,10 @@
 		?disabled="{{disabled}}"
 		?readonly="{{readonly}}"
 		?required="{{required}}"
-		maxlength="{{_exceededTextProps.calcedMaxLength}}"
+		aria-required="{{required}}"
 		aria-labelledby={{ariaLabelledBy}}
+		aria-describedby={{ariaDescribedBy}}
+		maxlength="{{_exceededTextProps.calcedMaxLength}}"
 		.value="{{value}}"
 		@input="{{_oninput}}"
 		@change="{{_onchange}}"
@@ -38,6 +40,10 @@
 
 	{{#if showExceededText}}
 		<span id="{{_id}}-exceededText" class="ui5-textarea-exceeded-text">{{_exceededTextProps.exceededText}}</span>
+	{{/if}}
+
+	{{#if hasValueState}}
+		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{ariaValueStateHiddenText}}</span>
 	{{/if}}
 
 	<slot name="formSupport"></slot>

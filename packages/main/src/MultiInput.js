@@ -185,15 +185,16 @@ class MultiInput extends Input {
 	}
 
 	get tokenizer() {
-		return this.shadowRoot.querySelector("ui5-tokenizer");
+		return this.shadowRoot.querySelector("[ui5-tokenizer]");
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			Tokenizer.define(),
-			Token.define(),
-			Icon.define(),
-		]);
+	static get dependencies() {
+		return [
+			...Input.dependencies,
+			Tokenizer,
+			Token,
+			Icon,
+		];
 	}
 }
 

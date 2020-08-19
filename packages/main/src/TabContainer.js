@@ -552,14 +552,17 @@ class TabContainer extends UI5Element {
 		return getAnimationMode() !== AnimationMode.None;
 	}
 
+	static get dependencies() {
+		return [
+			Button,
+			Icon,
+			List,
+			ResponsivePopover,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Button.define(),
-			Icon.define(),
-			List.define(),
-			ResponsivePopover.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

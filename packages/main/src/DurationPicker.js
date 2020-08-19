@@ -21,6 +21,8 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import WheelSlider from "./WheelSlider.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Input from "./Input.js";
+import Icon from "./Icon.js";
+import Button from "./Button.js";
 import "@ui5/webcomponents-icons/dist/icons/fob-watch.js";
 import DurationPickerPopoverTemplate from "./generated/templates/DurationPickerPopoverTemplate.lit.js";
 import {
@@ -616,8 +618,7 @@ class DurationPicker extends UI5Element {
 		}
 
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
-
+		this.responsivePopover = staticAreaItem.querySelector("[ui5-responsive-popover]");
 		return this.responsivePopover;
 	}
 
@@ -708,13 +709,18 @@ class DurationPicker extends UI5Element {
 		};
 	}
 
-	static async onDefine(...params) {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-			WheelSlider.define(),
-			ResponsivePopover.define(),
-			Input.define(),
-		]);
+	static get dependencies() {
+		return [
+			Icon,
+			WheelSlider,
+			ResponsivePopover,
+			Input,
+			Button,
+		];
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

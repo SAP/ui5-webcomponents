@@ -146,11 +146,11 @@ class SuggestionItem extends UI5Element {
 		return metadata;
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			SuggestionListItem.define(),
-			GroupHeaderListItem.define(),
-		]);
+	static get dependencies() {
+		return [
+			SuggestionListItem,
+			GroupHeaderListItem,
+		];
 	}
 }
 
