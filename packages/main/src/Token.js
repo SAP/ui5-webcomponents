@@ -150,11 +150,12 @@ class Token extends UI5Element {
 		return getTheme() === "sap_fiori_3" ? "decline" : "sys-cancel";
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

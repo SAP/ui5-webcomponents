@@ -338,11 +338,12 @@ class FileUploader extends UI5Element {
 		return "file";
 	}
 
+	static get dependencies() {
+		return [Input];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Input.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

@@ -17,6 +17,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
+import Button from "./Button.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
@@ -303,6 +304,20 @@ class MultiComboBox extends UI5Element {
 		return ResponsivePopoverCommonCss;
 	}
 
+	static get dependencies() {
+		return [
+			MultiComboBoxItem,
+			Tokenizer,
+			Token,
+			Icon,
+			ResponsivePopover,
+			List,
+			StandardListItem,
+			ToggleButton,
+			Button,
+		];
+	}
+
 	constructor() {
 		super();
 
@@ -417,7 +432,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_tokenizerFocusOut() {
-		const tokenizer = this.shadowRoot.querySelector("ui5-tokenizer");
+		const tokenizer = this.shadowRoot.querySelector("[ui5-tokenizer]");
 		const tokensCount = tokenizer.tokens.length - 1;
 
 		tokenizer.tokens.forEach(token => { token.selected = false; });
@@ -571,7 +586,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizer() {
-		return this.shadowRoot.querySelector("ui5-tokenizer");
+		return this.shadowRoot.querySelector("[ui5-tokenizer]");
 	}
 
 	get nMoreCountText() {
@@ -643,17 +658,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static async onDefine() {
-		await Promise.all([
-			MultiComboBoxItem.define(),
-			Tokenizer.define(),
-			Token.define(),
-			Icon.define(),
-			ResponsivePopover.define(),
-			List.define(),
-			StandardListItem.define(),
-			ToggleButton,
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

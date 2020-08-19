@@ -22,12 +22,14 @@ import {
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/src/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/time-entry-request.js";
+import Icon from "./Icon.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
 import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
 import Input from "./Input.js";
+import Button from "./Button.js";
 import WheelSlider from "./WheelSlider.js";
 import {
 	getHours,
@@ -286,13 +288,20 @@ class TimePicker extends UI5Element {
 		return TimePickerTemplate;
 	}
 
+	static get dependencies() {
+		return [
+			Icon,
+			ResponsivePopover,
+			WheelSlider,
+			Input,
+			Button,
+		];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			ResponsivePopover.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
-			WheelSlider.define(),
-			Input.define(),
 		]);
 	}
 
@@ -476,7 +485,7 @@ class TimePicker extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		this.responsivePopover = staticAreaItem.querySelector("[ui5-responsive-popover]");
 		return this.responsivePopover;
 	}
 
@@ -502,7 +511,7 @@ class TimePicker extends UI5Element {
 	}
 
 	_getInput() {
-		return this.shadowRoot.querySelector("ui5-input");
+		return this.shadowRoot.querySelector("[ui5-input]");
 	}
 
 	_getInputField() {

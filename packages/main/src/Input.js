@@ -628,7 +628,7 @@ class Input extends UI5Element {
 		this.previousValue = this.value;
 
 		await this.getInputDOMRef();
-		this._inputIconFocused = event.target && event.target === this.querySelector("ui5-icon");
+		this._inputIconFocused = event.target && event.target === this.querySelector("[ui5-icon]");
 	}
 
 	_onfocusout(event) {
@@ -754,7 +754,7 @@ class Input extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-popover");
+		return staticAreaItem.querySelector("[ui5-popover]");
 	}
 
 	enableSuggestions() {
@@ -1018,6 +1018,18 @@ class Input extends UI5Element {
 		};
 	}
 
+	get ariaValueStateHiddenText() {
+		if (!this.hasValueStateMessage) {
+			return;
+		}
+
+		if (this.shouldDisplayDefaultValueStateMessage) {
+			return this.valueStateText;
+		}
+
+		return this.valueStateMessageText.map(el => el.textContent).join(" ");
+	}
+
 	get itemSelectionAnnounce() {
 		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : undefined;
 	}
@@ -1110,11 +1122,14 @@ class Input extends UI5Element {
 		return isPhone();
 	}
 
+	static get dependencies() {
+		const Suggestions = getFeature("InputSuggestions");
+
+		return [Popover].concat(Suggestions ? Suggestions.dependencies : []);
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Popover.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

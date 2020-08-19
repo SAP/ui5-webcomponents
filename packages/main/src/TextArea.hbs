@@ -23,9 +23,10 @@
 		?disabled="{{disabled}}"
 		?readonly="{{readonly}}"
 		?required="{{required}}"
-		maxlength="{{_exceededTextProps.calcedMaxLength}}"
+		aria-required="{{required}}"
 		aria-labelledby={{ariaLabelledBy}}
 		aria-describedby={{ariaDescribedBy}}
+		maxlength="{{_exceededTextProps.calcedMaxLength}}"
 		.value="{{value}}"
 		@input="{{_oninput}}"
 		@change="{{_onchange}}"

@@ -1021,14 +1021,17 @@ class ShellBar extends UI5Element {
 		};
 	}
 
+	static get dependencies() {
+		return [
+			Button,
+			List,
+			Popover,
+			StandardListItem,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-			Button.define(),
-			List.define(),
-			Popover.define(),
-			StandardListItem.define(),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 
