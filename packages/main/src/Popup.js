@@ -207,7 +207,7 @@ class Popup extends UI5Element {
 	/**
 	 * Prevents the user from interacting with the content under the block layer
 	 */
-	_onBlockLayerKeyDown(event) {
+	_preventBlockLayerFocus(event) {
 		event.preventDefault();
 	}
 
