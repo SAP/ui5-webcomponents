@@ -61,6 +61,10 @@ class ${componentName} extends UI5Element {
 		return ${componentName}Template;
 	}
 
+	static get dependencies() {
+		return [];
+	}
+
 	static async onDefine() {
 
 	}

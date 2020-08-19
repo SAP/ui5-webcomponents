@@ -143,11 +143,11 @@ class TimelineItem extends UI5Element {
 		this.fireEvent("item-name-click", {});
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			Link.define(),
-		]);
+	static get dependencies() {
+		return [
+			Icon,
+			Link,
+		];
 	}
 }
 

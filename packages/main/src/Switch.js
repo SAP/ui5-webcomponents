@@ -227,11 +227,12 @@ class Switch extends UI5Element {
 		return this.checked ? this.accessibilityOnText : this.accessibilityOffText;
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

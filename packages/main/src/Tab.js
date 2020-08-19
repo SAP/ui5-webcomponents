@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import SemanticColor from "./types/SemanticColor.js";
 import TabLayout from "./types/TabLayout.js";
 import TabContainer from "./TabContainer.js";
@@ -170,11 +171,11 @@ class Tab extends UI5Element {
 		return css;
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			CustomListItem.define(),
-		]);
+	static get dependencies() {
+		return [
+			Icon,
+			CustomListItem,
+		];
 	}
 
 	get isSeparator() {
@@ -182,11 +183,11 @@ class Tab extends UI5Element {
 	}
 
 	get stripPresentation() {
-		return this.constructor.stripTemplate(this);
+		return executeTemplate(this.constructor.stripTemplate, this);
 	}
 
 	get overflowPresentation() {
-		return this.constructor.overflowTemplate(this);
+		return executeTemplate(this.constructor.overflowTemplate, this);
 	}
 
 	getFocusDomRef() {

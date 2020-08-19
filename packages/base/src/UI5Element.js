@@ -1,6 +1,7 @@
 import merge from "./thirdparty/merge.js";
 import boot from "./boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
+import executeTemplate from "./renderer/executeTemplate.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
@@ -26,6 +27,7 @@ const metadata = {
 let autoId = 0;
 
 const elementTimeouts = new Map();
+const uniqueDependenciesCache = new Map();
 
 const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
 const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
@@ -98,6 +100,8 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
+		this.setAttribute(this.constructor.getMetadata().getPureTag(), "");
+
 		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
@@ -549,7 +553,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		let styleToPrepend;
-		const renderResult = this.constructor.template(this);
+		const renderResult = executeTemplate(this.constructor.template, this);
 
 		// IE11, Edge
 		if (window.ShadyDOM) {
@@ -969,6 +973,50 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * Returns an array with the dependencies for this UI5 Web Component, which could be:
+	 *  - composed components (used in its shadow root or static area item)
+	 *  - slotted components that the component may need to communicate with
+	 *
+	 * @protected
+	 */
+	static get dependencies() {
+		return [];
+	}
+
+	/**
+	 * Returns a list of the unique dependencies for this UI5 Web Component
+	 *
+	 * @public
+	 */
+	static getUniqueDependencies() {
+		if (!uniqueDependenciesCache.has(this)) {
+			const filtered = this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
+			uniqueDependenciesCache.set(this, filtered);
+		}
+
+		return uniqueDependenciesCache.get(this);
+	}
+
+	/**
+	 * Returns a promise that resolves whenever all dependencies for this UI5 Web Component have resolved
+	 *
+	 * @returns {Promise<any[]>}
+	 */
+	static whenDependenciesDefined() {
+		return Promise.all(this.getUniqueDependencies().map(dep => dep.define()));
+	}
+
+	/**
+	 * Hook that will be called upon custom element definition
+	 *
+	 * @protected
+	 * @returns {Promise<void>}
+	 */
+	static async onDefine() {
+		return Promise.resolve();
+	}
+
+	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
 	 * @returns {Promise<UI5Element>}
@@ -976,9 +1024,10 @@ class UI5Element extends HTMLElement {
 	static async define() {
 		await boot();
 
-		if (this.onDefine) {
-			await this.onDefine();
-		}
+		await Promise.all([
+			this.whenDependenciesDefined(),
+			this.onDefine(),
+		]);
 
 		const tag = this.getMetadata().getTag();
 		const altTag = this.getMetadata().getAltTag();

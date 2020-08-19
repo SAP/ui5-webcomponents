@@ -318,12 +318,15 @@ class CheckBox extends UI5Element {
 		return this.disabled ? undefined : tabindex || "0";
 	}
 
+	static get dependencies() {
+		return [
+			Label,
+			Icon,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Label.define(),
-			Icon.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

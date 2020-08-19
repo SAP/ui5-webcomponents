@@ -64,6 +64,10 @@ class CalendarHeader extends UI5Element {
 		return styles;
 	}
 
+	static get dependencies() {
+		return [Button, Icon];
+	}
+
 	constructor() {
 		super();
 		this._btnPrev = {};
@@ -118,13 +122,6 @@ class CalendarHeader extends UI5Element {
 				this[`_show${showPickerButton}Picker`]();
 			}
 		}
-	}
-
-	static async onDefine() {
-		await Promise.all([
-			await Button.define(),
-			await Icon.define(),
-		]);
 	}
 }
 

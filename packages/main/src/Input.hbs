@@ -24,6 +24,7 @@
 			aria-autocomplete="{{accInfo.input.ariaAutoComplete}}"
 			aria-expanded="{{accInfo.input.ariaExpanded}}"
 			aria-label="{{accInfo.input.ariaLabel}}"
+			aria-required="{{accInfo.input.ariaRequired}}"
 			@input="{{_handleInput}}"
 			@change="{{_handleChange}}"
 			@keydown="{{_onkeydown}}"
@@ -53,7 +54,7 @@
 		{{/if}}
 
 		{{#if hasValueState}}
-			<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
+			<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{ariaValueStateHiddenText}}</span>
 		{{/if}}
 	</div>
 

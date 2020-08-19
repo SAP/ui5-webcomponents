@@ -179,15 +179,15 @@ class DateTimePicker extends DatePicker {
 		return [super.staticAreaStyles, DateTimePickerPopoverCss];
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			DatePicker.define(),
-			Calendar.define(),
-			Button.define(),
-			ToggleButton.define(),
-			SegmentedButton.define(),
-			WheelSlider.define(),
-		]);
+	static get dependencies() {
+		return [
+			...DatePicker.dependencies,
+			Calendar,
+			Button,
+			ToggleButton,
+			SegmentedButton,
+			WheelSlider,
+		];
 	}
 
 	constructor() {
@@ -557,7 +557,7 @@ class DateTimePicker extends DatePicker {
 
 	async getPicker() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
 	async getCurrentDateTime() {
