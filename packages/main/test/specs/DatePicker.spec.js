@@ -720,7 +720,7 @@ describe("Date Picker Tests", () => {
 
 	it("Tests if aria-label and aria-labelledby", () => {
 		const datepicker1 = browser.$("#dpAriaLabel");
-		const datepicker2 = browser.$("#adpAriaLabelledBy");
+		const datepicker2 = browser.$("#dpAriaLabelledBy");
 		const innerInput1 = datepicker1.shadow$("input");
 		const innerInput2 = datepicker2.shadow$("input");
 

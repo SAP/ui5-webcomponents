@@ -219,7 +219,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the <code>ui5-datepicker</code>.
+		 * Defines the aria-label attribute for the <code>ui5-date-picker</code>.
 		 *
 		 * @type {String}
 		 * @since 1.0.0-rc.9
@@ -231,7 +231,7 @@ const metadata = {
 		},
 
 		/**
-		 * Receives id(or many ids) of the elements that label the <code>ui5-datepicker</code>.
+		 * Receives id(or many ids) of the elements that label the <code>ui5-date-picker</code>.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
