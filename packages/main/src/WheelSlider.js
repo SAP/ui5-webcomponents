@@ -174,8 +174,8 @@ class WheelSlider extends UI5Element {
 		this._updateItemCellHeight();
 	}
 
-	static async onDefine() {
-		await Button.define();
+	static get dependencies() {
+		return [Button];
 	}
 
 	onAfterRendering() {

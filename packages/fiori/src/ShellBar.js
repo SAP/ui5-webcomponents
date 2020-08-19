@@ -423,7 +423,6 @@ class ShellBar extends UI5Element {
 				this._updateClonedMenuItems();
 
 				if (this.hasMenuItems) {
-					this.updateStaticAreaItemContentDensity();
 					const menuPopover = await this._getMenuPopover();
 					menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
 				}
@@ -635,7 +634,6 @@ class ShellBar extends UI5Element {
 
 	_toggleActionPopover() {
 		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
-		this.updateStaticAreaItemContentDensity();
 		this.overflowPopover.openBy(overflowButton);
 	}
 
@@ -1023,14 +1021,17 @@ class ShellBar extends UI5Element {
 		};
 	}
 
+	static get dependencies() {
+		return [
+			Button,
+			List,
+			Popover,
+			StandardListItem,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-			Button.define(),
-			List.define(),
-			Popover.define(),
-			StandardListItem.define(),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 

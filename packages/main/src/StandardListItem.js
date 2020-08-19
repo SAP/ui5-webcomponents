@@ -151,11 +151,12 @@ class StandardListItem extends ListItem {
 		return (this.icon && this.iconEnd);
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			Avatar.define(),
-		]);
+	static get dependencies() {
+		return [
+			...ListItem.dependencies,
+			Icon,
+			Avatar,
+		];
 	}
 }
 

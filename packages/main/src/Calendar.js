@@ -350,7 +350,7 @@ class Calendar extends UI5Element {
 		let fistDayOfMonthIndex = -1;
 
 		// focus first day of the month
-		const dayPicker = this.shadowRoot.querySelector("ui5-daypicker");
+		const dayPicker = this.shadowRoot.querySelector("[ui5-daypicker]");
 
 		dayPicker._getVisibleDays(targetDate).forEach((date, index) => {
 			if (date.getDate() === 1 && (fistDayOfMonthIndex === -1)) {
@@ -431,7 +431,7 @@ class Calendar extends UI5Element {
 			iNewYear = this._calendarDate.getYear();
 
 		// focus first day of the month
-		const dayPicker = this.shadowRoot.querySelector("ui5-daypicker");
+		const dayPicker = this.shadowRoot.querySelector("[ui5-daypicker]");
 		const currentMonthDate = dayPicker._calendarDate.setMonth(dayPicker._calendarDate.getMonth());
 		const lastMonthDate = dayPicker._calendarDate.setMonth(dayPicker._calendarDate.getMonth() - 1);
 
@@ -693,14 +693,17 @@ class Calendar extends UI5Element {
 		};
 	}
 
+	static get dependencies() {
+		return [
+			CalendarHeader,
+			DayPicker,
+			MonthPicker,
+			YearPicker,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			CalendarHeader.define(),
-			DayPicker.define(),
-			MonthPicker.define(),
-			YearPicker.define(),
-		]);
+		await fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript());
 	}
 }
 

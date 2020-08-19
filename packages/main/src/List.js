@@ -771,8 +771,8 @@ class List extends UI5Element {
 		}, delay);
 	}
 
-	static async onDefine() {
-		await BusyIndicator.define();
+	static get dependencies() {
+		return [BusyIndicator];
 	}
 }
 

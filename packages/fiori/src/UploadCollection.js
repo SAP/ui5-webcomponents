@@ -194,14 +194,17 @@ class UploadCollection extends UI5Element {
 		return UploadCollectionTemplate;
 	}
 
+	static get dependencies() {
+		return [
+			Icon,
+			Label,
+			List,
+			Title,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			Label.define(),
-			List.define(),
-			Title.define(),
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	constructor() {

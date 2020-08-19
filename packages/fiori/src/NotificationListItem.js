@@ -197,15 +197,18 @@ class NotificationListItem extends NotificationListItemBase {
 		return NotificationListItemTemplate;
 	}
 
+	static get dependencies() {
+		return [
+			Button,
+			Icon,
+			BusyIndicator,
+			Link,
+			Popover,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Button.define(),
-			Icon.define(),
-			BusyIndicator.define(),
-			Link.define(),
-			Popover.define(),
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	onEnterDOM() {

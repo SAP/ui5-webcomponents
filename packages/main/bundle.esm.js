@@ -87,8 +87,6 @@ window.RenderScheduler = RenderScheduler;
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
 
-
-// Note: keep in sync with rollup.config value for IIFE
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
@@ -99,7 +97,8 @@ import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dis
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { addCustomCSS } from "@ui5/webcomponents-base/dist/Theming";
-window["sap-ui-webcomponents-bundle"] = {
+
+const testAssets = {
 	configuration : {
 		getAnimationMode,
 		setAnimationMode,
@@ -115,4 +114,9 @@ window["sap-ui-webcomponents-bundle"] = {
 	applyDirection,
 	ResizeHandler,
 	addCustomCSS,
+	getIconNames,
 };
+
+window["sap-ui-webcomponents-bundle"] = testAssets;
+
+export default testAssets;

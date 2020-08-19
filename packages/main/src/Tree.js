@@ -238,12 +238,12 @@ class Tree extends UI5Element {
 		return TreeTemplate;
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			List.define(),
-			TreeListItem.define(),
-			TreeItem.define(),
-		]);
+	static get dependencies() {
+		return [
+			List,
+			TreeListItem,
+			TreeItem,
+		];
 	}
 
 	constructor() {

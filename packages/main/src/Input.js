@@ -564,7 +564,6 @@ class Input extends UI5Element {
 		if (!this.firstRendering && !isPhone() && this.Suggestions) {
 			const shouldOpenSuggestions = this.shouldOpenSuggestions();
 
-			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.toggle(shouldOpenSuggestions, {
 				preventFocusRestore: !this.hasSuggestionItemSelected,
 			});
@@ -642,7 +641,7 @@ class Input extends UI5Element {
 		this.previousValue = this.value;
 
 		await this.getInputDOMRef();
-		this._inputIconFocused = event.target && event.target === this.querySelector("ui5-icon");
+		this._inputIconFocused = event.target && event.target === this.querySelector("[ui5-icon]");
 	}
 
 	_onfocusout(event) {
@@ -670,7 +669,6 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
-			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.open(this);
 			this.isRespPopoverOpen = true;
 		}
@@ -769,7 +767,7 @@ class Input extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-popover");
+		return staticAreaItem.querySelector("[ui5-popover]");
 	}
 
 	enableSuggestions() {
@@ -1029,8 +1027,21 @@ class Input extends UI5Element {
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
 				"ariaLabel": getEffectiveAriaLabelText(this),
+				"ariaRequired": (this._inputAccInfo && this._inputAccInfo.ariaRequired) || this.required,
 			},
 		};
+	}
+
+	get ariaValueStateHiddenText() {
+		if (!this.hasValueStateMessage) {
+			return;
+		}
+
+		if (this.shouldDisplayDefaultValueStateMessage) {
+			return this.valueStateText;
+		}
+
+		return this.valueStateMessageText.map(el => el.textContent).join(" ");
 	}
 
 	get itemSelectionAnnounce() {
@@ -1127,13 +1138,16 @@ class Input extends UI5Element {
 
 	get _getValue() {
 		return this._hideValue ? "" : this.value;
+  }
+
+	static get dependencies() {
+		const Suggestions = getFeature("InputSuggestions");
+
+		return [Popover].concat(Suggestions ? Suggestions.dependencies : []);
 	}
 
 	static async onDefine() {
-		await Promise.all([
-			Popover.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

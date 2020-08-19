@@ -168,8 +168,11 @@ class TreeListItem extends ListItem {
 		return metadata;
 	}
 
-	static async onDefine() {
-		await Icon.define();
+	static get dependencies() {
+		return [
+			...ListItem.dependencies,
+			Icon,
+		];
 	}
 
 	onBeforeRendering() {

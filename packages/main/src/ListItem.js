@@ -5,9 +5,9 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
-import "./RadioButton.js";
-import "./CheckBox.js";
-import "./Button.js";
+import RadioButton from "./RadioButton.js";
+import CheckBox from "./CheckBox.js";
+import Button from "./Button.js";
 import { DELETE, ARIA_LABEL_LIST_ITEM_CHECKBOX } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -94,6 +94,14 @@ class ListItem extends ListItemBase {
 
 	static get styles() {
 		return [ListItemBase.styles, styles];
+	}
+
+	static get dependencies() {
+		return [
+			Button,
+			RadioButton,
+			CheckBox,
+		];
 	}
 
 	constructor() {

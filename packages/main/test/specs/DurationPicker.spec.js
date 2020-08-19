@@ -95,4 +95,16 @@ describe("Duration Picker general interaction", () => {
 		// close picker
 		duratationPickerIcon.click();
 	});
+
+	it("tests valueStateMessage slot", () => {
+		const picker = browser.$("#pickerValueStateMessage");
+
+		picker.click();
+
+		const inputId = picker.shadow$("ui5-input").getProperty("_id");
+		const inputStaticAreaItem = browser.$(`.${inputId}`);
+		const slot = inputStaticAreaItem.shadow$("ui5-popover").$("#customValueStateMessage");
+
+		assert.ok(slot, "The value state message is set.");
+	});
 });
