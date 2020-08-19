@@ -1,3 +1,4 @@
+import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -196,6 +197,8 @@ class Toast extends UI5Element {
 
 				// We alter the opacity property, in order to trigger transition
 				"opacity": this.open && !this.hover ? "0" : "",
+
+				"z-index": getNextZIndex(),
 			},
 		};
 	}
