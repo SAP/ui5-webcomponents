@@ -1,9 +1,5 @@
-commit 8f8a0d44efaccc5f7dd0820647297594c6ce0edd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Aug 19 13:05:05 2020 +0300
+commit b73ce4d2a524f537d76e4f68068c79de55302b32
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Aug 19 13:15:51 2020 +0300
 
-    fix(ui5-input): announce custom valueStateMessage (#2120)
-    
-    Previously just the buil-in text of a certain value state has been set to the hidden element that is being read out. Now the custom value state msg is also taken into account.
-    
-    Related to: https://github.com/SAP/ui5-webcomponents/issues/2106
+    chore(framework): adapt create-new-component script to framework changes (#2121)
