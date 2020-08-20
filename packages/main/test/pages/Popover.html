@@ -58,13 +58,13 @@
 
 	<ui5-input id="field"></ui5-input> -->
 
-	<div id="targetBug" style="height: 3rem; background: red;"></div>
+	<div id="targetOpener" style="height: 3rem; background: red;"></div>
 
-	<ui5-button id="btnNew">Open Popup Left aligned</ui5-button>
+	<ui5-button id="btnOpenXLeft">Open Popup Left aligned</ui5-button>
 
 	<ui5-popover
 		header-text="My Heading"
-		id="popNew" horizontal-align="Left"
+		id="popXLeft" horizontal-align="Left"
 		style="width: 300px">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
@@ -79,13 +79,13 @@
 
 	<br>
 	<br>
-	<div id="targetBug2" style="height: 3rem; background: yellow;"></div>
+	<div id="targetOpener2" style="height: 3rem; background: yellow;"></div>
 
-	<ui5-button id="btnNew2">Open Popup Right aligned</ui5-button>
+	<ui5-button id="btnOpenXRight">Open Popup Right aligned</ui5-button>
 
 	<ui5-popover
 		header-text="My Heading"
-		id="popNew2" horizontal-align="Right"
+		id="popXRight" horizontal-align="Right"
 		style="width: 300px">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
@@ -422,11 +422,11 @@
 
 			btnQuickViewCardOpener.setAttribute("hidden", true);
 		})
-		btnNew.addEventListener("click", function (event) {
-			popNew.openBy(targetBug);
+		btnOpenXLeft.addEventListener("click", function (event) {
+			popXLeft.openBy(targetOpener);
 		});
-		btnNew2.addEventListener("click", function (event) {
-			popNew2.openBy(targetBug2);
+		btnOpenXRight.addEventListener("click", function (event) {
+			popXRight.openBy(targetOpener2);
 		});
 	</script>
 </body>
