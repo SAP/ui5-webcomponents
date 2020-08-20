@@ -1,5 +1,5 @@
-commit c079722f89b0e51ebf5201fae34fb1ec2f90d353
+commit c9ee25ec0611889550469cdfc4baa79745ef1d87
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Aug 20 10:10:13 2020 +0300
+Date:   Thu Aug 20 11:06:20 2020 +0300
 
-    fix(ui5-popup): restore focus when block layer is clicked (#2123)
+    chore(ui5-dialog): update docs about nesting (#2103)
