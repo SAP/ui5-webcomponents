@@ -10,6 +10,7 @@ import {
 	isDown,
 	isSpace,
 	isEnter,
+	isBackSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -675,6 +676,11 @@ class Input extends UI5Element {
 
 	async _handleInput(event) {
 		const inputDomRef = await this.getInputDOMRef();
+
+		if (this.value && this.type === InputType.Number && !isBackSpace(event) && !inputDomRef.value) {
+			// For input with type="Number", if the delimiter is entered second time, the inner input is firing event with empty value
+			return;
+		}
 
 		if (event.target === inputDomRef) {
 			// stop the native event, as the semantic "input" would be fired.

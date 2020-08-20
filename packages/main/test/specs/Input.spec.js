@@ -154,7 +154,7 @@ describe("Input general interaction", () => {
 		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrolalble");
 
 		// close suggestions
-		input.keys("Enter"); 
+		input.keys("Enter");
 	});
 
 	it("handles suggestions", () => {
@@ -308,7 +308,7 @@ describe("Input general interaction", () => {
 		inputItemPreview.keys("c");
 
 		inputItemPreview.keys("ArrowDown");
-		
+
 		// assert
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputPreview2");
 		const inputPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
@@ -325,5 +325,16 @@ describe("Input general interaction", () => {
 		// assert
 		assert.notOk(inputPopover.isDisplayedInViewport(), "The inpuit popover is closed as it lost the focus.");
 		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
+	});
+
+	it("Doesn't remove value on number type input even if you enter a seconda delimiter", () => {
+		const input = browser.$("#input-number");
+
+		input.click();
+		input.keys("1,22,33,44");
+
+		browser.pause(1500);
+
+		assert.strictEqual(input.getProperty("value"), "1,22", "Value is not lost");
 	});
 });
