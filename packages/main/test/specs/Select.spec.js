@@ -293,4 +293,17 @@ describe("Select general interaction", () => {
 
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
 	});
+
+
+	it("Tests aria-label and aria-labelledby", () => {
+		const select1 = browser.$("#textAreaAriaLabel").shadow$(".ui5-select-root");
+		const select2 = browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-select-root");
+		const EXPECTED_ARIA_LABEL1 = "Hello World";
+		const EXPECTED_ARIA_LABEL2 = "info text";
+
+		assert.strictEqual(select1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
+			"The aria-label is correctly set internally.");
+		assert.strictEqual(select2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
+			"The aria-label is correctly set internally.");
+	});
 });
