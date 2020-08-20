@@ -24,8 +24,8 @@
 		?readonly="{{readonly}}"
 		?required="{{required}}"
 		aria-required="{{required}}"
-		aria-labelledby={{ariaLabelledBy}}
-		aria-describedby={{ariaDescribedBy}}
+		aria-label="{{ariaLabelText}}"
+		aria-describedby="{{ariaDescribedBy}}"
 		maxlength="{{_exceededTextProps.calcedMaxLength}}"
 		.value="{{value}}"
 		@input="{{_oninput}}"
@@ -39,7 +39,7 @@
 	{{> afterTextarea}}
 
 	{{#if showExceededText}}
-		<span id="{{_id}}-exceededText" class="ui5-textarea-exceeded-text">{{_exceededTextProps.exceededText}}</span>
+		<span class="ui5-textarea-exceeded-text">{{_exceededTextProps.exceededText}}</span>
 	{{/if}}
 
 	{{#if hasValueState}}

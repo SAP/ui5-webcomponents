@@ -35,6 +35,18 @@ describe("Attributes propagation", () => {
 
 		assert.strictEqual(browser.$("#basic-textarea").shadow$("textarea").getValue(), sExpectedValue, "Value property was set correctly");
 	});
+
+	it("Tests aria-label and aria-labelledby", () => {
+		const textArea1 = browser.$("#textAreaAriaLabel").shadow$("textarea");
+		const textArea2 = browser.$("#textAreaAriaLabelledBy").shadow$("textarea");
+		const EXPECTED_ARIA_LABEL1 = "Hello World";
+		const EXPECTED_ARIA_LABEL2 = "info text 20 characters remaining";
+
+		assert.strictEqual(textArea1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
+			"The aria-label is correctly set internally.");
+		assert.strictEqual(textArea2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
+			"The aria-label is correctly set internally.");
+	});
 });
 
 describe("disabled and readonly textarea", () => {
