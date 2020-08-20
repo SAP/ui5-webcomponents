@@ -358,7 +358,7 @@ class FileUploader extends UI5Element {
 
 	async openValueStatePopover() {
 		const popover = await this._getPopover();
-		
+
 		if (popover) {
 			popover.openBy(this);
 		}
