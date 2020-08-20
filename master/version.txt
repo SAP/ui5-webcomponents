@@ -1,5 +1,5 @@
-commit af0785c7fe949fe57485f8baad7792b5f22b9872
+commit c079722f89b0e51ebf5201fae34fb1ec2f90d353
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Aug 19 16:36:48 2020 +0300
+Date:   Thu Aug 20 10:10:13 2020 +0300
 
-    fix(ui5-multi-combobox): fix width in IE (#2104)
+    fix(ui5-popup): restore focus when block layer is clicked (#2123)
