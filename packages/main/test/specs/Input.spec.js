@@ -327,14 +327,25 @@ describe("Input general interaction", () => {
 		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
 	});
 
-	it("Doesn't remove value on number type input even if you enter a seconda delimiter", () => {
+	it("Doesn't remove value on number type input even if you enter a second delimiter", () => {
 		const input = browser.$("#input-number");
 
 		input.click();
 		input.keys("1,22,33,44");
+		input.keys("Enter");
 
-		browser.pause(1500);
+		assert.strictEqual(input.getProperty("value"), "1.22", "Value is not lost");
+	});
 
-		assert.strictEqual(input.getProperty("value"), "1,22", "Value is not lost");
+	it("Doesn't remove value on number type input even if locale specific delimiter", () => {
+		const input = browser.$("#input-number");
+
+		input.setProperty("value", "");
+
+		input.click();
+		input.keys("1.22.33.44");
+		input.keys("Enter");
+
+		assert.strictEqual(input.getProperty("value"), "1.22", "Value is not lost");
 	});
 });
