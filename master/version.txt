@@ -1,5 +1,7 @@
-commit c9ee25ec0611889550469cdfc4baa79745ef1d87
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Aug 20 11:06:20 2020 +0300
+commit e0f93fa0b9abe5828e08a6a4b357df90fbc00ad4
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Aug 20 12:41:48 2020 +0300
 
-    chore(ui5-dialog): update docs about nesting (#2103)
+    feat(ui5-date-picker): add ariaLabel and ariaLabelledby properties (#2126)
+    
+    FIXES https://github.com/SAP/ui5-webcomponents/issues/2107

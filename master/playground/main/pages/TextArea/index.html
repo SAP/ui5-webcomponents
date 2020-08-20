@@ -203,6 +203,12 @@
 		<ui5-textarea growing growing-max-lines="4"></ui5-textarea>
 	</section>
 
+	<section class="aria-label and aria-labelledby">
+		<span id="infoText">info text</span>
+		<ui5-textarea id="textAreaAriaLabel" aria-label="Hello World"></ui5-textarea>
+		<ui5-textarea id="textAreaAriaLabelledBy" maxlength="20" show-exceeded-text aria-labelledby="infoText" class="fixed-width fixed-height"></ui5-textarea>
+	</section>
+
 	<script>
 		var changeCounter = 0;
 		var inputCounter = 0;

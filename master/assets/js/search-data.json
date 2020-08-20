@@ -191,7 +191,7 @@
   "28": {
     "id": "28",
     "title": "Date Picker",
-    "content": "&lt;!DOCTYPE html&gt; DatePicker test page Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. Information message 2. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. placeholder + title + events change: N/A input: N/A format-pattern - &#39;short&#39; format-pattern - &#39;long&#39; format-pattern - &#39;QQQ yyyy, MMM dd&#39; format-pattern - &#39;EEE, M/d/yyyy&#39; &lt;ui5-date-picker id=&#39;dp9&#39;format-pattern=&#39;EEE, M/d/yyyy&#39;&gt;&lt;/ui5-date-picker&gt; Try the value - &#39;today&#39; Value is set using Java Script Date object Set date disabled readonly islamic calendar type buddhist calendar type japanese calendar type explicitly set empty placeholder Date picker with min and max date 9/1/2019 - 11/1/2019 Date picker with only min date 1/1/2000 Date picker with only max date date 1/1/2100 1 months range 2 months range 3 months range 1 year range DatePicker in Compact",
+    "content": "&lt;!DOCTYPE html&gt; DatePicker test page Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. Information message 2. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. placeholder + title + events change: N/A input: N/A format-pattern - &#39;short&#39; format-pattern - &#39;long&#39; format-pattern - &#39;QQQ yyyy, MMM dd&#39; format-pattern - &#39;EEE, M/d/yyyy&#39; &lt;ui5-date-picker id=&#39;dp9&#39;format-pattern=&#39;EEE, M/d/yyyy&#39;&gt;&lt;/ui5-date-picker&gt; Try the value - &#39;today&#39; Value is set using Java Script Date object Set date disabled readonly islamic calendar type buddhist calendar type japanese calendar type explicitly set empty placeholder Date picker with min and max date 9/1/2019 - 11/1/2019 Date picker with only min date 1/1/2000 Date picker with only max date date 1/1/2100 1 months range 2 months range 3 months range 1 year range Test ariaLabel and ariaLabelledBy info text DatePicker in Compact",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/DatePicker/",
     "relUrl": "/playground/main/pages/DatePicker/"
   },
@@ -212,7 +212,7 @@
   "31": {
     "id": "31",
     "title": "Date Picker_test_page",
-    "content": "&lt;!DOCTYPE html&gt; Set date 0 Timezone: Apply Restore 0 Minimum and Maximum Date Minimum and Maximum Date In Smaller Range Test placeholder DatePicker with valueStateMessage This date is wrong DatePicker with hide-week-numbers=true/false",
+    "content": "&lt;!DOCTYPE html&gt; Set date 0 Timezone: Apply Restore 0 Minimum and Maximum Date Minimum and Maximum Date In Smaller Range Test placeholder DatePicker with valueStateMessage This date is wrong DatePicker with hide-week-numbers=true/false Test ariaLabel and ariaLabelledBy info text",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/DatePicker_test_page/",
     "relUrl": "/playground/main/pages/DatePicker_test_page/"
   },
@@ -765,7 +765,7 @@
   "110": {
     "id": "110",
     "title": "Select",
-    "content": "&lt;!DOCTYPE html&gt; ui5-select turn lights Add new Items Restore Items click Content size Cozy Compact Condensed Error Select Cozy Compact Condensed Warning Select Disabled Select Input with suggestions Selection not cycling Opt1 Opt2 Opt3 Opt1 Opt2 Opt3 Cozy Compact Condensed Banana Orange Watermelon Change event counter holder Select in Compact Cozy Compact Condensed &lt;/body&gt;",
+    "content": "&lt;!DOCTYPE html&gt; ui5-select turn lights Add new Items Restore Items click Content size Cozy Compact Condensed Error Select Cozy Compact Condensed Warning Select Disabled Select Input with suggestions Selection not cycling Opt1 Opt2 Opt3 Opt1 Opt2 Opt3 Cozy Compact Condensed Banana Orange Watermelon Change event counter holder Select aria-label and aria-labelledby info text First Second Third One Two Three Select in Compact Cozy Compact Condensed &lt;/body&gt;",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Select/",
     "relUrl": "/playground/main/pages/Select/"
   },
@@ -891,7 +891,7 @@
   "128": {
     "id": "128",
     "title": "Text Area",
-    "content": "&lt;!DOCTYPE html&gt; TextArea Value State Message Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. Simple TextArea This msg will not be displayed as no value-state is set. TextArea with value Disabled TextArea Readonly TextArea Required TextArea Text Area: Growing Text Area: Growing with 8 initial rows Text Area: Growing up to 4 Text Area: Growing with initial rows 4 and growing up to 12 Text Area: growing with max length 20 characters Text Area: max length 20 characters Text Area: showExceededText with maxlength Text Area: change event Text Area: input event Growing: growing-max-lines=&quot;1&quot; Growing: growing-max-lines=&quot;4&quot; Growing: growing-max-lines=&quot;1&quot; (compact) Growing: growing-max-lines=&quot;4&quot; (compact)",
+    "content": "&lt;!DOCTYPE html&gt; TextArea Value State Message Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. Simple TextArea This msg will not be displayed as no value-state is set. TextArea with value Disabled TextArea Readonly TextArea Required TextArea Text Area: Growing Text Area: Growing with 8 initial rows Text Area: Growing up to 4 Text Area: Growing with initial rows 4 and growing up to 12 Text Area: growing with max length 20 characters Text Area: max length 20 characters Text Area: showExceededText with maxlength Text Area: change event Text Area: input event Growing: growing-max-lines=&quot;1&quot; Growing: growing-max-lines=&quot;4&quot; Growing: growing-max-lines=&quot;1&quot; (compact) Growing: growing-max-lines=&quot;4&quot; (compact) info text",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/TextArea/",
     "relUrl": "/playground/main/pages/TextArea/"
   },
