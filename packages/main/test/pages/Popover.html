@@ -58,6 +58,48 @@
 
 	<ui5-input id="field"></ui5-input> -->
 
+	<div id="targetBug" style="height: 3rem; background: red;"></div>
+
+	<ui5-button id="btnNew">Open Popup Left aligned</ui5-button>
+
+	<ui5-popover
+		header-text="My Heading"
+		id="popNew" horizontal-align="Left"
+		style="width: 300px">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<br>
+	<br>
+	<div id="targetBug2" style="height: 3rem; background: yellow;"></div>
+
+	<ui5-button id="btnNew2">Open Popup Right aligned</ui5-button>
+
+	<ui5-popover
+		header-text="My Heading"
+		id="popNew2" horizontal-align="Right"
+		style="width: 300px">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<br>
+	<br>
 	<ui5-button id="btn">Click me !</ui5-button>
 
 	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top" aria-label="This popover is important">
@@ -380,6 +422,12 @@
 
 			btnQuickViewCardOpener.setAttribute("hidden", true);
 		})
+		btnNew.addEventListener("click", function (event) {
+			popNew.openBy(targetBug);
+		});
+		btnNew2.addEventListener("click", function (event) {
+			popNew2.openBy(targetBug2);
+		});
 	</script>
 </body>
 
