@@ -241,20 +241,26 @@ const metadata = {
  *
  * <h3>Keyboard handling</h3>
  * [F4], [ALT]+[UP], [ALT]+[DOWN] Open/Close picker dialog and move focus to it.
+ * <br>
  * When closed:
- * [PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
- * [PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
- * [SHIFT]+[PAGEUP] Increments minutes by 1.
- * [SHIFT]+ [PAGEDOWN] Decrements minutes by 1.
- * [SHIFT]+[CTRL]+[PAGEUP] Increments seconds by 1.
- * [SHIFT]+[CTRL]+ [PAGEDOWN] Decrements seconds by 1.
+ * <ul>
+ * <li>[PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.</li>
+ * <li>[PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.</li>
+ * <li>[SHIFT]+[PAGEUP] Increments minutes by 1.</li>
+ * <li>[SHIFT]+ [PAGEDOWN] Decrements minutes by 1.</li>
+ * <li>[SHIFT]+[CTRL]+[PAGEUP] Increments seconds by 1.</li>
+ * <li>[SHIFT]+[CTRL]+ [PAGEDOWN] Decrements seconds by 1.</li>
+ * </ul>
  * When opened:
- * [UP] If focus is on one of the selection lists: Select the value which is above the current value. If the first value is selected, select the last value in the list. Exception: AM/ PM List: stay on the first item.
- * [DOWN] If focus is on one of the selection lists: Select the value which is below the current value. If the last value is selected, select the first value in the list. Exception: AM/ PM List: stay on the last item.
- * [LEFT] If focus is on one of the selection lists: Move focus to the selection list which is left of the current selection list. If focus is at the first selection list, move focus to the last selection list.
- * [RIGHT] If focus is on one of the selection lists: Move focus to the selection list which is right of the current selection list. When focus is at the last selection list, move focus to the first selection list.
- * [PAGEUP] If focus is on one of the selection lists: Move focus to the first entry of this list.
- * [PAGEDOWN] If focus is on one of the selection lists: Move focus to the last entry of this list.
+ * <ul>
+ * <li>[UP] If focus is on one of the selection lists: Select the value which is above the current value. If the first value is selected, select the last value in the list. Exception: AM/ PM List: stay on the first item.</li>
+ * <li>[DOWN] If focus is on one of the selection lists: Select the value which is below the current value. If the last value is selected, select the first value in the list. Exception: AM/ PM List: stay on the last item.</li>
+ * <li>[LEFT] If focus is on one of the selection lists: Move focus to the selection list which is left of the current selection list. If focus is at the first selection list, move focus to the last selection list.</li>
+ * <li>[RIGHT] If focus is on one of the selection lists: Move focus to the selection list which is right of the current selection list. When focus is at the last selection list, move focus to the first selection list.</li>
+ * <li>[PAGEUP] If focus is on one of the selection lists: Move focus to the first entry of this list.</li>
+ * <li>[PAGEDOWN] If focus is on one of the selection lists: Move focus to the last entry of this list.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/TimePicker.js";</code>
