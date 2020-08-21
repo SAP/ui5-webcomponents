@@ -1,9 +1,5 @@
-commit 7a1c3eb61a3ad0f8203d32a6767936fae65f1675
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Aug 21 10:36:30 2020 +0300
+commit db56542eb69500a808a7ca0bb795319d1d959fb7
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Aug 21 17:00:16 2020 +0300
 
-    fix(ui5-popover): fix arrow horizontal position (#2129)
-    
-    Fix Popover's arrow horizontal position, when horizontalPlacement is either "Left", or "Right".
-    
-    FIXES #2111
+    chore(ui5-time-picker, ui5-duration-picker): update docs about keyboard handling
