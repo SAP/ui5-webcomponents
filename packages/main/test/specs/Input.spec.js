@@ -338,12 +338,10 @@ describe("Input general interaction", () => {
 	});
 
 	it("Doesn't remove value on number type input even if locale specific delimiter", () => {
-		const input = browser.$("#input-number");
-
-		input.setProperty("value", "");
+		const input = browser.$("#input-number2");
 
 		input.click();
-		input.keys("1.22.33.44");
+		input.keys("1.22");
 		input.keys("Enter");
 
 		assert.strictEqual(input.getProperty("value"), "1.22", "Value is not lost");
