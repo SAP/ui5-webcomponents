@@ -318,6 +318,49 @@
 		</ui5-list>
 	</ui5-popover>
 
+	<br>
+	<br>
+	<div id="targetOpener" style="height: 3rem; background: red;"></div>
+
+	<ui5-button id="btnOpenXLeft">Open Popup Left aligned</ui5-button>
+
+	<ui5-popover
+		header-text="My Heading"
+		id="popXLeft" horizontal-align="Left"
+		style="width: 300px">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<div id="targetOpener2" style="height: 3rem; background: yellow;"></div>
+
+	<ui5-button id="btnOpenXRight">Open Popup Right aligned</ui5-button>
+
+	<ui5-popover
+		header-text="My Heading"
+		id="popXRight" horizontal-align="Right"
+		style="width: 300px">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<br>
+	<br>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.openBy(btn);
@@ -384,6 +427,12 @@
 
 			btnQuickViewCardOpener.setAttribute("hidden", true);
 		})
+		btnOpenXLeft.addEventListener("click", function (event) {
+			popXLeft.openBy(targetOpener);
+		});
+		btnOpenXRight.addEventListener("click", function (event) {
+			popXRight.openBy(targetOpener2);
+		});
 	</script>
 </body>
 

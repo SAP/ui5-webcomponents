@@ -1,5 +1,9 @@
-commit 7007f8e167ce954338ae0ba32e2e185c2e8a6bbc
+commit 7a1c3eb61a3ad0f8203d32a6767936fae65f1675
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Aug 20 14:08:29 2020 +0300
+Date:   Fri Aug 21 10:36:30 2020 +0300
 
-    feat(ui5-card): add ariaLabel and ariaLabelledby properties (#2127)
+    fix(ui5-popover): fix arrow horizontal position (#2129)
+    
+    Fix Popover's arrow horizontal position, when horizontalPlacement is either "Left", or "Right".
+    
+    FIXES #2111
