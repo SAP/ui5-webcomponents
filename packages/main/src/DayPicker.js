@@ -446,27 +446,27 @@ class DayPicker extends UI5Element {
 		}
 		
 		if (isHomeCtrl(event)) {
-			this._handleHomeEndWithCtrlModifier(event, true);
+			this._navToStartEndDayOfTheMonth(event, true);
 		}
 
 		if (isEndCtrl(event)) {
-			this._handleHomeEndWithCtrlModifier(event, false);
+			this._navToStartEndDayOfTheMonth(event, false);
 		}
 
 		if (isPageUpShift(event)) {
-			this._handlePageUpWithShiftModifier(event);
+			this._incrementYears(event, false, 1);
 		}
 
 		if (isPageUpShiftCtrl(event)) {
-			this._handlePageUpWithShiftCtrlModifiers(event);
+			this._incrementYears(event, false, 10);
 		}
 
 		if (isPageDownShift(event)) {
-			this._handlePageDownWithShiftModifier(event);
+			this._incrementYears(event, true, 1);
 		}
 
 		if (isPageDownShiftCtrl(event)) {
-			this._handlePageDownWithShiftCtrlModifiers(event);
+			this._incrementYears(event, true, 10);
 		}
 	}
 
@@ -486,7 +486,7 @@ class DayPicker extends UI5Element {
 		}
 	}
 
-	_handleHomeEndWithCtrlModifier(event, isHome) {
+	_navToStartEndDayOfTheMonth(event, start) {
 		event.preventDefault();
 
 		const currentItem = this._itemNav._getCurrentItem();
@@ -503,7 +503,7 @@ class DayPicker extends UI5Element {
 
 		oCalDate.setDate(1)
 
-		if (!isHome) {
+		if (!start) {
 			// set the day to be the last day of the current month
 			oCalDate.setMonth(oCalDate.getMonth() + 1, 0);
 		}
@@ -515,64 +515,39 @@ class DayPicker extends UI5Element {
 		this._itemNav.focusCurrent();
 	}
 
-	_handlePageUpWithShiftModifier(event) {
-		// let oFocusedDate = new CalendarDate(this._getDate(), this.getPrimaryCalendarType());
-		// var iYear = oFocusedDate.getYear();
+	_incrementYears(event, forward, step) {
+		const currentItem = this._itemNav._getCurrentItem();
+		let currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
+		let currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+		let newDate = new CalendarDate(currentDate, this._primaryCalendarType);
 
-		// if (oEvent.metaKey || oEvent.ctrlKey) {
-		// 	oFocusedDate.setYear(iYear - 10);
-		// } else {
-		// 	oFocusedDate.setYear(iYear - 1);
-		// }
+		if (forward) {
+			newDate.setYear(newDate.getYear() + step);
+		} else {
+			newDate.setYear(newDate.getYear() - step);
+		}
+		
+		if (currentDate.getMonth() != newDate.getMonth()) {
+			newDate.setDate(0);
+		}
 
-		// this.fireFocus({date: oFocusedDate.toLocalJSDate(), otherMonth: true});
+		const oNewCalDate = this._calendarDate;
+		oNewCalDate.setDate(newDate.getDate());
+		oNewCalDate.setYear(newDate.getYear());
+		oNewCalDate.setMonth(newDate.getMonth());
+		currentTimestamp = (oNewCalDate.valueOf() / 1000);
 
-		oEvent.preventDefault();
-	}
+		if (oNewCalDate.getYear() < DEFAULT_MIN_YEAR || oNewCalDate.getYear() > DEFAULT_MAX_YEAR) {
+			return;
+		}
 
-	_handlePageUpWithShiftCtrlModifiers(event) {
-		// let oFocusedDate = new CalendarDate(this._getDate(), this.getPrimaryCalendarType());
-		// var iYear = oFocusedDate.getYear();
+		if (this._isOutOfSelectableRange(oNewCalDate._oUDate.oDate)) {
+			return;
+		}
 
-		// if (oEvent.metaKey || oEvent.ctrlKey) {
-		// 	oFocusedDate.setYear(iYear - 10);
-		// } else {
-		// 	oFocusedDate.setYear(iYear - 1);
-		// }
+		this._navigateAndWaitRerender(currentTimestamp);
 
-		// this.fireFocus({date: oFocusedDate.toLocalJSDate(), otherMonth: true});
-
-		oEvent.preventDefault();
-	}
-
-	_handlePageDownWithShiftModifier(event) {
-		// let oFocusedDate = new CalendarDate(this._getDate(), this.getPrimaryCalendarType());
-		// var iYear = oFocusedDate.getYear();
-
-		// if (oEvent.metaKey || oEvent.ctrlKey) {
-		// 	oFocusedDate.setYear(iYear + 10);
-		// } else {
-		// 	oFocusedDate.setYear(iYear + 1);
-		// }
-
-		// this.fireFocus({date: oFocusedDate.toLocalJSDate(), otherMonth: true});
-
-		oEvent.preventDefault();
-	}
-
-	_handlePageDownWithShiftCtrlModifiers(event) {
-		// let oFocusedDate = new CalendarDate(this._getDate(), this.getPrimaryCalendarType());
-		// var iYear = oFocusedDate.getYear();
-
-		// if (oEvent.metaKey || oEvent.ctrlKey) {
-		// 	oFocusedDate.setYear(iYear + 10);
-		// } else {
-		// 	oFocusedDate.setYear(iYear + 1);
-		// }
-
-		// this.fireFocus({date: oFocusedDate.toLocalJSDate(), otherMonth: true});
-
-		oEvent.preventDefault();
+		event.preventDefault();
 	}
 
 	get shouldHideWeekNumbers() {
@@ -713,13 +688,9 @@ class DayPicker extends UI5Element {
 		return true;
 	}
 
-	async _handleItemNavigationBorderReach(event) {
-		const currentMonth = this._month,
-			currentYear = this._year,
-			currentItem = this._itemNav._getCurrentItem();
-		let newMonth,
-			newYear,
-			newDate,
+	_handleItemNavigationBorderReach(event) {
+		const currentItem = this._itemNav._getCurrentItem();
+		let newDate,
 			currentDate,
 			currentTimestamp;
 
@@ -769,28 +740,26 @@ class DayPicker extends UI5Element {
 			return;
 		}
 
-		this.fireEvent("navigate", { timestamp: currentTimestamp });
-		await RenderScheduler.whenFinished();
-
-		let newItem = this._itemNav._getItems().find( item => item.timestamp == currentTimestamp );
-		this._itemNav.currentIndex = parseInt(newItem._index);
-
-		this._itemNav.focusCurrent();
+		this._navigateAndWaitRerender(currentTimestamp);
 	}
 
-	async _handleItemNavigationAfterFocus() {
+	_handleItemNavigationAfterFocus() {
 		const currentItem = this._itemNav._getCurrentItem();
 		const currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp"));
 
 		if (currentItem.classList.contains("ui5-dp-item--othermonth")) {
-			this.fireEvent("navigate", { timestamp: currentTimestamp });
-			await RenderScheduler.whenFinished();
-
-			let newItem = this._itemNav._getItems().find( item => item.timestamp == currentTimestamp );
-			this._itemNav.currentIndex = parseInt(newItem._index);
-
-			this._itemNav.focusCurrent();
+			this._navigateAndWaitRerender(currentTimestamp);
 		}
+	}
+
+	async _navigateAndWaitRerender(timestamp) {
+		this.fireEvent("navigate", { timestamp: timestamp });
+		await RenderScheduler.whenFinished();
+
+		let newItem = this._itemNav._getItems().find( item => parseInt(item.timestamp) == timestamp );
+		this._itemNav.currentIndex = parseInt(newItem._index);
+
+		this._itemNav.focusCurrent();
 	}
 
 	_isWeekend(oDate) {

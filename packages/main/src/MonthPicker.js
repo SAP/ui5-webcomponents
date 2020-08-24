@@ -5,7 +5,16 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isUp,
+	isLeft,
+	isDown,
+	isRight,
+	isSpace,
+	isEnter,
+	isPageUp,
+	isPageDown,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -90,8 +99,17 @@ const metadata = {
 		 * @event
 		 */
 		change: {},
+		/**
+		 * Fired when month, year has changed due to item navigation.
+		 * @public
+		 * @event
+		 */
+		navigate: {},
 	},
 };
+
+const DEFAULT_MAX_YEAR = 9999;
+const DEFAULT_MIN_YEAR = 1;
 
 /**
  * Month picker component.
@@ -145,9 +163,15 @@ class MonthPicker extends UI5Element {
 
 			return [].concat(...focusableMonths);
 		}.bind(this);
+
 		this._itemNav.setItemsCallback = function setItemsCallback(items) {
 			this._quarters = items;
 		}.bind(this);
+
+		this._itemNav.attachEvent(
+			ItemNavigation.BORDER_REACH,
+			this._handleItemNavigationBorderReach.bind(this)
+		);
 	}
 
 	onBeforeRendering() {
@@ -239,6 +263,10 @@ class MonthPicker extends UI5Element {
 		}
 	}
 
+	_handleItemNavigationBorderReach(event) {
+		this.fireEvent("navigate", event);
+	}
+
 	_isOutOfSelectableRange(monthIndex) {
 		const currentDateYear = this._localDate.getFullYear(),
 			minDate = new Date(this._minDate),
@@ -251,7 +279,8 @@ class MonthPicker extends UI5Element {
 
 	get _maxDate() {
 		if (this.maxDate) {
-			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(), this.getFormat().parse(this.maxDate).getMonth(), this.getFormat().parse(this.maxDate).getDate());
+			const jsMaxDate = this.getFormat().parse(this.maxDate);
+			const jsDate = new Date(jsMaxDate.getFullYear(), jsMaxDate.getMonth(), jsMaxDate.getDate());
 			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
 		}
@@ -260,13 +289,13 @@ class MonthPicker extends UI5Element {
 
 	get _minDate() {
 		if (this.minDate) {
-			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(), this.getFormat().parse(this.minDate).getMonth(), this.getFormat().parse(this.minDate).getDate());
+			const jsMinDate = this.getFormat().parse(this.minDate);
+			const jsDate = new Date(jsMinDate.getFullYear(), jsMinDate.getMonth(), jsMinDate.getDate());
 			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
 		}
 		return this.minDate;
 	}
-
 
 	getFormat() {
 		if (this._isPattern) {

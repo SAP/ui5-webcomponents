@@ -39,6 +39,7 @@
 			.maxDate="{{_oMonth.maxDate}}"
 			timestamp="{{_monthPicker.timestamp}}"
 			@ui5-change="{{_monthPicker.onSelectedMonthChange}}"
+			@ui5-navigate="{{_monthPicker.onNavigate}}"
 		></ui5-monthpicker>
 
 		<ui5-yearpicker
@@ -52,6 +53,7 @@
 			timestamp="{{_yearPicker.timestamp}}"
 			._selectedYear="{{_yearPicker._selectedYear}}"
 			@ui5-change="{{_yearPicker.onSelectedYearChange}}"
+			@ui5-navigate="{{_yearPicker.onNavigate}}"
 		></ui5-yearpicker>
 	</div>
 </div>

@@ -97,6 +97,12 @@ const metadata = {
 		 * @event
 		 */
 		change: {},
+		/**
+		 * Fired when month, year has changed due to item navigation.
+		 * @public
+		 * @event
+		 */
+		navigate: {},
 	},
 };
 
@@ -319,6 +325,8 @@ class YearPicker extends UI5Element {
 		}
 
 		this.timestamp = oCalDate.valueOf() / 1000;
+
+		this.fireEvent("navigate", event);
 	}
 
 	get _formatPattern() {

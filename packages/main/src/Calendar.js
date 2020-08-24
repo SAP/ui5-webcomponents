@@ -186,10 +186,12 @@ class Calendar extends UI5Element {
 		this._monthPicker = {};
 		this._monthPicker._hidden = true;
 		this._monthPicker.onSelectedMonthChange = this._handleSelectedMonthChange.bind(this);
+		this._monthPicker.onNavigate = this._handleYearNavigate.bind(this);
 
 		this._yearPicker = {};
 		this._yearPicker._hidden = true;
 		this._yearPicker.onSelectedYearChange = this._handleSelectedYearChange.bind(this);
+		this._yearPicker.onNavigate = this._handleYearNavigate.bind(this);
 
 		this._isShiftingYears = false;
 	}
@@ -329,6 +331,16 @@ class Calendar extends UI5Element {
 
 	_handleMonthNavigate(event) {
 		this.timestamp = event.detail.timestamp;
+	}
+
+	_handleYearNavigate(event) {
+		if (event.detail.start) {
+			this._handlePrevious();
+		}
+
+		if (event.detail.end) {
+			this._handleNext();
+		}
 	}
 
 	_handleSelectedMonthChange(event) {
@@ -536,6 +548,8 @@ class Calendar extends UI5Element {
 			timestamp: this._yearPicker.timestamp + (31536000 * YearPicker._ITEMS_COUNT),
 		});
 
+		this.timestamp = this._yearPicker.timestamp;
+
 		this._isShiftingYears = true;
 	}
 
@@ -564,6 +578,8 @@ class Calendar extends UI5Element {
 		this._yearPicker = Object.assign({}, this._yearPicker, {
 			timestamp: this._yearPicker.timestamp - (31536000 * YearPicker._ITEMS_COUNT),
 		});
+
+		this.timestamp = this._yearPicker.timestamp;
 
 		this._isShiftingYears = true;
 	}
