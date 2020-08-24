@@ -293,7 +293,27 @@ describe("Input general interaction", () => {
 		const firstListItem = respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 
 		assert.ok(respPopover.isDisplayedInViewport(), "The popover is visible");
-		assert.ok(firstListItem.getHTML().indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.")
+		assert.ok(firstListItem.getHTML().indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.");
+	});
+
+	it("Doesn't remove value on number type input even if you enter a second delimiter", () => {
+		const input = browser.$("#input-number");
+
+		input.click();
+		input.keys("1,22,3");
+		input.keys("Enter");
+
+		assert.strictEqual(input.getProperty("value"), "1.22", "Value is not lost");
+	});
+
+	it("Doesn't remove value on number type input even if locale specific delimiter", () => {
+		const input = browser.$("#input-number2");
+
+		input.click();
+		input.keys("1.22");
+		input.keys("Enter");
+
+		assert.strictEqual(input.getProperty("value"), "1.22", "Value is not lost");
 	});
 
 	it("fires suggestion-item-preview", () => {
@@ -325,25 +345,5 @@ describe("Input general interaction", () => {
 		// assert
 		assert.notOk(inputPopover.isDisplayedInViewport(), "The inpuit popover is closed as it lost the focus.");
 		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
-	});
-
-	it("Doesn't remove value on number type input even if you enter a second delimiter", () => {
-		const input = browser.$("#input-number");
-
-		input.click();
-		input.keys("1,22,33,44");
-		input.keys("Enter");
-
-		assert.strictEqual(input.getProperty("value"), "1.22", "Value is not lost");
-	});
-
-	it("Doesn't remove value on number type input even if locale specific delimiter", () => {
-		const input = browser.$("#input-number2");
-
-		input.click();
-		input.keys("1.22");
-		input.keys("Enter");
-
-		assert.strictEqual(input.getProperty("value"), "1.22", "Value is not lost");
 	});
 });
