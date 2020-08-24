@@ -9,6 +9,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
 import { isShow, isF4 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -16,6 +17,7 @@ import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
 import Input from "./Input.js";
@@ -130,6 +132,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the <code>ui5-datepicker</code> is required.
+		 *
+		 * @since 1.0.0-rc.9
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
 		 * Determines whether the <code>ui5-date-picker</code> is displayed as disabled.
 		 *
 		 * @type {boolean}
@@ -202,6 +216,31 @@ const metadata = {
 		 */
 		hideWeekNumbers: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the aria-label attribute for the <code>ui5-date-picker</code>.
+		 *
+		 * @type {String}
+		 * @since 1.0.0-rc.9
+		 * @private
+		 * @defaultvalue ""
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the <code>ui5-date-picker</code>.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
 		},
 
 		_isPickerOpen: {
@@ -472,7 +511,7 @@ class DatePicker extends UI5Element {
 	}
 
 	_getInput() {
-		return this.shadowRoot.querySelector("ui5-input");
+		return this.shadowRoot.querySelector("[ui5-input]");
 	}
 
 	async _handleInputChange() {
@@ -646,6 +685,8 @@ class DatePicker extends UI5Element {
 			"ariaOwns": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
+			"ariaRequired": this.required,
+			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
 	}
 
@@ -685,7 +726,7 @@ class DatePicker extends UI5Element {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
 	_canOpenPicker() {
@@ -778,7 +819,6 @@ class DatePicker extends UI5Element {
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {
-			this.updateStaticAreaItemContentDensity();
 			this.openPicker();
 		}
 	}
@@ -847,13 +887,19 @@ class DatePicker extends UI5Element {
 		return InputType.Text;
 	}
 
+	static get dependencies() {
+		return [
+			Icon,
+			ResponsivePopover,
+			Calendar,
+			Input,
+			Button,
+		];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			Icon.define(),
-			ResponsivePopover.define(),
-			Calendar.define(),
-			Input.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}

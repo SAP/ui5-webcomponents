@@ -14,14 +14,22 @@ import {
 	isTabNext,
 	isTabPrevious,
 	isShow,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/src/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/time-entry-request.js";
+import Icon from "./Icon.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
 import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
 import Input from "./Input.js";
+import Button from "./Button.js";
 import WheelSlider from "./WheelSlider.js";
 import {
 	getHours,
@@ -231,6 +239,28 @@ const metadata = {
  * For example, if the <code>format-pattern</code> is "HH:mm:ss",
  * a valid value string is "11:42:35" and the same is displayed in the input.
  *
+ * <h3>Keyboard handling</h3>
+ * [F4], [ALT]+[UP], [ALT]+[DOWN] Open/Close picker dialog and move focus to it.
+ * <br>
+ * When closed:
+ * <ul>
+ * <li>[PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.</li>
+ * <li>[PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.</li>
+ * <li>[SHIFT]+[PAGEUP] Increments minutes by 1.</li>
+ * <li>[SHIFT]+ [PAGEDOWN] Decrements minutes by 1.</li>
+ * <li>[SHIFT]+[CTRL]+[PAGEUP] Increments seconds by 1.</li>
+ * <li>[SHIFT]+[CTRL]+ [PAGEDOWN] Decrements seconds by 1.</li>
+ * </ul>
+ * When opened:
+ * <ul>
+ * <li>[UP] If focus is on one of the selection lists: Select the value which is above the current value. If the first value is selected, select the last value in the list. Exception: AM/ PM List: stay on the first item.</li>
+ * <li>[DOWN] If focus is on one of the selection lists: Select the value which is below the current value. If the last value is selected, select the first value in the list. Exception: AM/ PM List: stay on the last item.</li>
+ * <li>[LEFT] If focus is on one of the selection lists: Move focus to the selection list which is left of the current selection list. If focus is at the first selection list, move focus to the last selection list.</li>
+ * <li>[RIGHT] If focus is on one of the selection lists: Move focus to the selection list which is right of the current selection list. When focus is at the last selection list, move focus to the first selection list.</li>
+ * <li>[PAGEUP] If focus is on one of the selection lists: Move focus to the first entry of this list.</li>
+ * <li>[PAGEDOWN] If focus is on one of the selection lists: Move focus to the last entry of this list.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/TimePicker.js";</code>
@@ -264,13 +294,20 @@ class TimePicker extends UI5Element {
 		return TimePickerTemplate;
 	}
 
+	static get dependencies() {
+		return [
+			Icon,
+			ResponsivePopover,
+			WheelSlider,
+			Input,
+			Button,
+		];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			ResponsivePopover.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
-			WheelSlider.define(),
-			Input.define(),
 		]);
 	}
 
@@ -454,7 +491,7 @@ class TimePicker extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		this.responsivePopover = staticAreaItem.querySelector("[ui5-responsive-popover]");
 		return this.responsivePopover;
 	}
 
@@ -480,7 +517,7 @@ class TimePicker extends UI5Element {
 	}
 
 	_getInput() {
-		return this.shadowRoot.querySelector("ui5-input");
+		return this.shadowRoot.querySelector("[ui5-input]");
 	}
 
 	_getInputField() {
@@ -647,6 +684,26 @@ class TimePicker extends UI5Element {
 			e.preventDefault();
 			responsivePopover.querySelector(`.ui5-time-picker-footer`).lastElementChild.focus();
 		}
+
+		if (isPageDown(e)) {
+			this._selectLimitCell(e, false);
+		} else if (isPageUp(e)) {
+			this._selectLimitCell(e, true);
+		}
+	}
+
+	_selectLimitCell(e, isMax) {
+		e.preventDefault();
+		if (e.target === this.hoursSlider) {
+			const hoursArray = this.hoursArray;
+			e.target.value = isMax ? hoursArray[hoursArray.length - 1] : hoursArray[0];
+		} else if (e.target === this.minutesSlider) {
+			const minutesArray = this.minutesArray;
+			e.target.value = isMax ? minutesArray[minutesArray.length - 1] : minutesArray[0];
+		} else if (e.target === this.secondsSlider) {
+			const secondsArray = this.secondsArray;
+			e.target.value = isMax ? secondsArray[secondsArray.length - 1] : secondsArray[0];
+		}
 	}
 
 	_onfooterkeydown(e) {
@@ -674,6 +731,50 @@ class TimePicker extends UI5Element {
 			e.preventDefault();
 			this.togglePicker();
 		}
+
+		if (this.isOpen()) {
+			return;
+		}
+
+		if (isPageUpShiftCtrl(e)) {
+			e.preventDefault();
+			this._incrementValue(true, false, false, true);
+		} else if (isPageUpShift(e)) {
+			e.preventDefault();
+			this._incrementValue(true, false, true, false);
+		} else if (isPageUp(e)) {
+			e.preventDefault();
+			this._incrementValue(true, true, false, false);
+		}
+
+		if (isPageDownShiftCtrl(e)) {
+			e.preventDefault();
+			this._incrementValue(false, false, false, true);
+		} else if (isPageDownShift(e)) {
+			e.preventDefault();
+			this._incrementValue(false, false, true, false);
+		} else if (isPageDown(e)) {
+			e.preventDefault();
+			this._incrementValue(false, true, false, false);
+		}
+	}
+
+	_incrementValue(increment, hours, minutes, seconds) {
+		const date = this.dateValue;
+		const incrementStep = increment ? 1 : -1;
+
+		if (hours && this.shouldBuildHoursSlider) {
+			date.setHours(date.getHours() + incrementStep);
+		} else if (minutes && this.shouldBuildMinutesSlider) {
+			date.setMinutes(date.getMinutes() + incrementStep);
+		} else if (seconds && this.shouldBuildSecondsSlider) {
+			date.setSeconds(date.getSeconds() + incrementStep);
+		} else {
+			return;
+		}
+
+		this.setValue(this.formatValue(date));
+		this.fireEvent("change", { value: this.value, valid: true });
 	}
 
 	_handleWheel(e) {

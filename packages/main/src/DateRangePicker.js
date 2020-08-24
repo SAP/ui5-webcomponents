@@ -89,10 +89,6 @@ class DateRangePicker extends DatePicker {
 		return DateRangePickerTemplate;
 	}
 
-	static async onDefine() {
-		await DatePicker.define();
-	}
-
 	constructor() {
 		super();
 		this.isFirstDatePick = true;

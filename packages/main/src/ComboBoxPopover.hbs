@@ -25,9 +25,9 @@
 			>
 			</ui5-button>
 		</div>
+
 		<div class="row">
 			<div
-				slot="header"
 				class="input-root-phone"
 				value-state="{{valueState}}"
 			>
@@ -44,7 +44,21 @@
 				/>
 			</div>
 		</div>
+
+		{{#if hasValueStateText}}
+			<div class="row {{classes.popoverValueState}}">
+				{{> valueStateMessage}}
+			</div>
+		{{/if}}
 	</div>
+
+	{{#unless _isPhone}}
+		{{#if hasValueStateText}}
+			<div class="ui5-responsive-popover-header {{classes.popoverValueState}}" style="{{styles.suggestionPopoverHeader}}">
+				{{> valueStateMessage}}
+			</div>
+		{{/if}}
+	{{/unless}}
 
 	<ui5-list
 		separators="None"
@@ -73,3 +87,29 @@
 		>OK</ui5-button>
 	</div>
 </ui5-responsive-popover>
+
+{{#if shouldOpenValueStateMessagePopover}}
+	<ui5-popover
+		skip-registry-update
+		_disable-initial-focus
+		prevent-focus-restore
+		no-padding
+		no-arrow
+		class="ui5-valuestatemessage-popover"
+		placement-type="Bottom"
+	>
+		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
+			{{> valueStateMessage}}
+		</div>
+	</ui5-popover>
+{{/if}}
+
+{{#*inline "valueStateMessage"}}
+	{{#if shouldDisplayDefaultValueStateMessage}}
+		{{valueStateText}}
+	{{else}}
+		{{#each valueStateMessageText}}
+			{{this}}
+		{{/each}}
+	{{/if}}
+{{/inline}}
