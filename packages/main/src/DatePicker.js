@@ -10,7 +10,15 @@ import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
-import { isShow, isF4 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { 
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl,
+	isShow,
+	isF4 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
@@ -336,6 +344,16 @@ const metadata = {
  * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
  * use TAB to reach the buttons for changing month and year.
  * <br>
+ * 
+ * If the <code>ui5-date-picker</code> is focused and the picker dialog is not opened the user can
+ * increment or decrement the corresponding field of the JS date object referenced by <code>dateValue</code> propery
+ * by using the following shortcuts:
+ * [PAGEDOWN] - Decrements the corresponding day of the month by one
+ * [SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one
+ * [SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one
+ * [PAGEUP] - Increments the corresponding day of the month by one
+ * [SHIFT] + [PAGEUP] - Increments the corresponding month by one
+ * [SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -503,6 +521,76 @@ class DatePicker extends UI5Element {
 				this._toggleAndFocusInput();
 			}
 		}
+
+		if (this.isOpen()) {
+			return;
+		}
+
+		if (isPageUpShiftCtrl(event)) {
+			event.preventDefault();
+			this._incrementValue(true, true, false, false, 1);
+		} else if (isPageUpShift(event)) {
+			event.preventDefault();
+			this._incrementValue(true, false, true, false, 1);
+		} else if (isPageUp(event)) {
+			event.preventDefault();
+			this._incrementValue(true, false, false, true, 1);
+		}
+
+		if (isPageDownShiftCtrl(event)) {
+			event.preventDefault();
+			this._incrementValue(false, true, false, false, 1);
+		} else if (isPageDownShift(event)) {
+			event.preventDefault();
+			this._incrementValue(false, false, true, false, 1);
+		} else if (isPageDown(event)) {
+			event.preventDefault();
+			this._incrementValue(false, false, false, true, 1);
+		}
+	}
+
+	_incrementValue(increment, years, months, days, step) {
+		const date = this.dateValue;
+		const oldDate = new Date(this.dateValue.getTime());
+		const incrementStep = increment ? step : -step;
+
+		if (!oldDate) {
+			return;
+		}
+
+		if (days) {
+			date.setDate(date.getDate() + incrementStep);
+		} else if (months) {
+			date.setMonth(date.getMonth() + incrementStep);
+			let iMonth = (oldDate.getMonth() + incrementStep) % 12;
+
+			if (iMonth < 0) {
+				iMonth = 12 + iMonth;
+			}
+
+			while (date.getMonth() != iMonth) {
+				// day don't exist in this month (e.g. 31th)
+				date.setDate(date.getDate() - 1);
+			}
+		} else if (years) {
+			date.setFullYear(date.getFullYear() + incrementStep);
+
+			while (date.getMonth() != oldDate.getMonth()) {
+				// day don't exist in this month (February 29th)
+				date.setDate(date.getDate() - 1);
+			}
+		} else {
+			return;
+		}
+
+		if (this._minDate && oDate.getTime() < this._minDate.getTime()) {
+			oDate = new Date(this._minDate.getTime());
+		} else if (this._maxDate && oDate.getTime() > this._maxDate.getTime()){
+			oDate = new Date(this._maxDate.getTime());
+		}
+
+		this.value = this.formatValue(date);
+		this.fireEvent("change", { value: this.value, valid: true });
 	}
 
 	_toggleAndFocusInput() {

@@ -64,11 +64,31 @@ class CalendarDate {
 		return this._oUDate.getUTCMonth();
 	}
 
-	setMonth(month) {
+	/**
+	 * Sets the given month as ordinal month of the year.
+	 * @param {int} month An integer between 0 and 11, representing the months January through December( or their
+	 * equivalent month names for the given calendar).
+	 * If the specified value is is outside of the expected range, this method attempts to update the date information
+	 * accordingly. For example, if 12 is given as a month, the year will be incremented by 1, and 1 will be used for month.
+	 * @param {int} [date] An integer between 1 and 31, representing the day of the month, but other values are allowed.
+	 * 0 will result in the previous month's last day.
+	 * -1 will result in the day before the previous month's last day.
+	 * 32 will result in:
+	 * - first day of the next month if the current month has 31 days.
+	 * - second day of the next month if the current month has 30 days.
+	 * Other value will result in adding or subtracting days according to the given value.
+	 * @returns {sap.ui.unified.calendar.CalendarDate} <code>this</code> for method chaining.
+	 */
+	setMonth(month, date) {
 		checkNumericLike(month, `Invalid month: ${month}`);
-		this._oUDate.setUTCMonth(month);
+		if (date !== undefined && date !== null) {
+			checkNumericLike(date, `Invalid date: ${date}`);
+			this._oUDate.setUTCMonth(month, date);
+		} else {
+			this._oUDate.setUTCMonth(month);
+		}
 		return this;
-	}
+	};
 
 	getDate() {
 		return this._oUDate.getUTCDate();

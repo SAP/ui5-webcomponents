@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import RenderScheduler from "../../base/src/RenderScheduler.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
@@ -7,7 +8,22 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+	isUp,
+	isDown,
+	isLeft,
+	isRight,
+	isHomeCtrl,
+	isEndCtrl,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageUpShiftCtrl,
+	isPageDownShift,
+	isPageDownShiftCtrl,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
@@ -221,6 +237,11 @@ class DayPicker extends UI5Element {
 		);
 
 		this._itemNav.attachEvent(
+			ItemNavigation.AFTER_FOCUS,
+			this._handleItemNavigationAfterFocus.bind(this)
+		);
+
+		this._itemNav.attachEvent(
 			"PageBottom",
 			this._handleMonthBottomOverflow.bind(this)
 		);
@@ -423,6 +444,30 @@ class DayPicker extends UI5Element {
 		if (isSpace(event)) {
 			return this._handleSpace(event);
 		}
+		
+		if (isHomeCtrl(event)) {
+			this._handleHomeEndWithCtrlModifier(event, true);
+		}
+
+		if (isEndCtrl(event)) {
+			this._handleHomeEndWithCtrlModifier(event, false);
+		}
+
+		if (isPageUpShift(event)) {
+			this._handlePageUpWithShiftModifier(event);
+		}
+
+		if (isPageUpShiftCtrl(event)) {
+			this._handlePageUpWithShiftCtrlModifiers(event);
+		}
+
+		if (isPageDownShift(event)) {
+			this._handlePageDownWithShiftModifier(event);
+		}
+
+		if (isPageDownShiftCtrl(event)) {
+			this._handlePageDownWithShiftCtrlModifiers(event);
+		}
 	}
 
 	_handleEnter(event) {
@@ -439,6 +484,95 @@ class DayPicker extends UI5Element {
 			const targetDate = parseInt(event.target.getAttribute("data-sap-timestamp"));
 			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
 		}
+	}
+
+	_handleHomeEndWithCtrlModifier(event, isHome) {
+		event.preventDefault();
+
+		const currentItem = this._itemNav._getCurrentItem();
+		let currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp")) * 1000;
+		let oCalDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+
+		if (currentItem.classList.contains("ui5-dp-item--othermonth")) {
+			return;
+		}
+
+		if (this._isOutOfSelectableRange(oCalDate.toLocalJSDate())) {
+			return;
+		}
+
+		oCalDate.setDate(1)
+
+		if (!isHome) {
+			// set the day to be the last day of the current month
+			oCalDate.setMonth(oCalDate.getMonth() + 1, 0);
+		}
+		
+		currentTimestamp = oCalDate.valueOf() / 1000;
+		let newItem = this._itemNav._getItems().find( item => item.timestamp == currentTimestamp );
+
+		this._itemNav.currentIndex = newItem._index;
+		this._itemNav.focusCurrent();
+	}
+
+	_handlePageUpWithShiftModifier(event) {
+		// let oFocusedDate = new CalendarDate(this._getDate(), this.getPrimaryCalendarType());
+		// var iYear = oFocusedDate.getYear();
+
+		// if (oEvent.metaKey || oEvent.ctrlKey) {
+		// 	oFocusedDate.setYear(iYear - 10);
+		// } else {
+		// 	oFocusedDate.setYear(iYear - 1);
+		// }
+
+		// this.fireFocus({date: oFocusedDate.toLocalJSDate(), otherMonth: true});
+
+		oEvent.preventDefault();
+	}
+
+	_handlePageUpWithShiftCtrlModifiers(event) {
+		// let oFocusedDate = new CalendarDate(this._getDate(), this.getPrimaryCalendarType());
+		// var iYear = oFocusedDate.getYear();
+
+		// if (oEvent.metaKey || oEvent.ctrlKey) {
+		// 	oFocusedDate.setYear(iYear - 10);
+		// } else {
+		// 	oFocusedDate.setYear(iYear - 1);
+		// }
+
+		// this.fireFocus({date: oFocusedDate.toLocalJSDate(), otherMonth: true});
+
+		oEvent.preventDefault();
+	}
+
+	_handlePageDownWithShiftModifier(event) {
+		// let oFocusedDate = new CalendarDate(this._getDate(), this.getPrimaryCalendarType());
+		// var iYear = oFocusedDate.getYear();
+
+		// if (oEvent.metaKey || oEvent.ctrlKey) {
+		// 	oFocusedDate.setYear(iYear + 10);
+		// } else {
+		// 	oFocusedDate.setYear(iYear + 1);
+		// }
+
+		// this.fireFocus({date: oFocusedDate.toLocalJSDate(), otherMonth: true});
+
+		oEvent.preventDefault();
+	}
+
+	_handlePageDownWithShiftCtrlModifiers(event) {
+		// let oFocusedDate = new CalendarDate(this._getDate(), this.getPrimaryCalendarType());
+		// var iYear = oFocusedDate.getYear();
+
+		// if (oEvent.metaKey || oEvent.ctrlKey) {
+		// 	oFocusedDate.setYear(iYear + 10);
+		// } else {
+		// 	oFocusedDate.setYear(iYear + 1);
+		// }
+
+		// this.fireFocus({date: oFocusedDate.toLocalJSDate(), otherMonth: true});
+
+		oEvent.preventDefault();
 	}
 
 	get shouldHideWeekNumbers() {
@@ -579,40 +713,84 @@ class DayPicker extends UI5Element {
 		return true;
 	}
 
-	_handleItemNavigationBorderReach(event) {
+	async _handleItemNavigationBorderReach(event) {
 		const currentMonth = this._month,
-			currentYear = this._year;
+			currentYear = this._year,
+			currentItem = this._itemNav._getCurrentItem();
 		let newMonth,
 			newYear,
 			newDate,
-			currentDate;
+			currentDate,
+			currentTimestamp;
 
-		if (event.end) {
-			currentDate = new Date(this._weeks[this._weeks.length - 1][event.offset].timestamp * 1000);
-			newMonth = currentMonth < 11 ? currentMonth + 1 : 0;
-			newYear = currentMonth < 11 ? currentYear : currentYear + 1;
-			newDate = currentDate.getMonth() === newMonth ? currentDate.getDate() : currentDate.getDate() + 7;
-		} else if (event.start) {
-			currentDate = new Date(this._weeks[0][event.offset].timestamp * 1000);
-			newMonth = currentMonth > 0 ? currentMonth - 1 : 11;
-			newYear = currentMonth > 0 ? currentYear : currentYear - 1;
-			newDate = currentDate.getMonth() === newMonth ? currentDate.getDate() : currentDate.getDate() - 7;
+		if (isUp(event.originalEvent) || isLeft(event.originalEvent)) {
+			currentTimestamp = this._weeks[0][event.offset].timestamp * 1000;
+			newDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+			newDate.setDate(newDate.getDate() - 7);
 		}
 
-		const oNewDate = this._calendarDate;
-		oNewDate.setDate(newDate);
-		oNewDate.setYear(newYear);
-		oNewDate.setMonth(newMonth);
+		if (isDown(event.originalEvent) || isRight(event.originalEvent)) {
+			currentTimestamp = this._weeks[this._weeks.length - 1][event.offset].timestamp * 1000;
+			newDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+			newDate.setDate(newDate.getDate() + 7);
+		}
 
-		if (oNewDate.getYear() < DEFAULT_MIN_YEAR || oNewDate.getYear() > DEFAULT_MAX_YEAR) {
+		if (isPageUp(event.originalEvent)) {
+			currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
+			currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+			newDate = new CalendarDate(currentDate, this._primaryCalendarType);
+			newDate.setMonth(newDate.getMonth() - 1);
+			if (currentDate.getMonth() == newDate.getMonth()) {
+				newDate.setDate(0);
+			}
+		}
+
+		if (isPageDown(event.originalEvent)) {
+			currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
+			currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+			newDate = new CalendarDate(currentDate, this._primaryCalendarType);
+			newDate.setMonth(newDate.getMonth() + 1);
+			if (newDate.getMonth() - currentDate.getMonth() > 1) {
+				newDate.setDate(0);
+			}
+		}
+
+		const oNewCalDate = this._calendarDate;
+		oNewCalDate.setDate(newDate.getDate());
+		oNewCalDate.setYear(newDate.getYear());
+		oNewCalDate.setMonth(newDate.getMonth());
+		currentTimestamp = (oNewCalDate.valueOf() / 1000);
+
+		if (oNewCalDate.getYear() < DEFAULT_MIN_YEAR || oNewCalDate.getYear() > DEFAULT_MAX_YEAR) {
 			return;
 		}
 
-		if (this._isOutOfSelectableRange(oNewDate._oUDate.oDate)) {
+		if (this._isOutOfSelectableRange(oNewCalDate._oUDate.oDate)) {
 			return;
 		}
 
-		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000) });
+		this.fireEvent("navigate", { timestamp: currentTimestamp });
+		await RenderScheduler.whenFinished();
+
+		let newItem = this._itemNav._getItems().find( item => item.timestamp == currentTimestamp );
+		this._itemNav.currentIndex = parseInt(newItem._index);
+
+		this._itemNav.focusCurrent();
+	}
+
+	async _handleItemNavigationAfterFocus() {
+		const currentItem = this._itemNav._getCurrentItem();
+		const currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp"));
+
+		if (currentItem.classList.contains("ui5-dp-item--othermonth")) {
+			this.fireEvent("navigate", { timestamp: currentTimestamp });
+			await RenderScheduler.whenFinished();
+
+			let newItem = this._itemNav._getItems().find( item => item.timestamp == currentTimestamp );
+			this._itemNav.currentIndex = parseInt(newItem._index);
+
+			this._itemNav.focusCurrent();
+		}
 	}
 
 	_isWeekend(oDate) {
@@ -637,7 +815,8 @@ class DayPicker extends UI5Element {
 
 	get _maxDate() {
 		if (this.maxDate) {
-			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(), this.getFormat().parse(this.maxDate).getMonth(), this.getFormat().parse(this.maxDate).getDate());
+			const jsMaxDate = this.getFormat().parse(this.maxDate);
+			const jsDate = new Date(jsMaxDate.getFullYear(), jsMaxDate.getMonth(), jsMaxDate.getDate());
 			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
 		}
@@ -646,7 +825,8 @@ class DayPicker extends UI5Element {
 
 	get _minDate() {
 		if (this.minDate) {
-			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(), this.getFormat().parse(this.minDate).getMonth(), this.getFormat().parse(this.minDate).getDate());
+			const jsMinDate = this.getFormat().parse(this.minDate);
+			const jsDate = new Date(jsMinDate.getFullYear(), jsMinDate.getMonth(), jsMinDate.getDate());
 			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
 		}
