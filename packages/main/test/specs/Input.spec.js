@@ -301,7 +301,9 @@ describe("Input general interaction", () => {
 
 		input.click();
 		input.keys("1,22,3");
-		input.keys("Enter");
+		input.keys("Tab");
+
+		browser.pause(500);
 
 		assert.strictEqual(input.getProperty("value"), "1.22", "Value is not lost");
 	});
@@ -311,7 +313,9 @@ describe("Input general interaction", () => {
 
 		input.click();
 		input.keys("1.22");
-		input.keys("Enter");
+		input.keys("Tab");
+
+		browser.pause(500);
 
 		assert.strictEqual(input.getProperty("value"), "1.22", "Value is not lost");
 	});
