@@ -1,5 +1,5 @@
-commit db56542eb69500a808a7ca0bb795319d1d959fb7
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Aug 21 17:00:16 2020 +0300
+commit ad1fbd7c7c9c26b923e872e704323af2a87f1649
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Aug 24 12:27:20 2020 +0300
 
-    chore(ui5-time-picker, ui5-duration-picker): update docs about keyboard handling
+    fix(ui5-multi-combobox): fix jumping parent div (#2136)
