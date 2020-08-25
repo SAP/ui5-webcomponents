@@ -684,7 +684,6 @@ class TimePicker extends UI5Element {
 			e.preventDefault();
 			responsivePopover.querySelector(`.ui5-time-picker-footer`).lastElementChild.focus();
 		}
-
 	}
 
 	_onfooterkeydown(e) {
