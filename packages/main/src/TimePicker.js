@@ -685,25 +685,6 @@ class TimePicker extends UI5Element {
 			responsivePopover.querySelector(`.ui5-time-picker-footer`).lastElementChild.focus();
 		}
 
-		if (isPageDown(e)) {
-			this._selectLimitCell(e, false);
-		} else if (isPageUp(e)) {
-			this._selectLimitCell(e, true);
-		}
-	}
-
-	_selectLimitCell(e, isMax) {
-		e.preventDefault();
-		if (e.target === this.hoursSlider) {
-			const hoursArray = this.hoursArray;
-			e.target.value = isMax ? hoursArray[hoursArray.length - 1] : hoursArray[0];
-		} else if (e.target === this.minutesSlider) {
-			const minutesArray = this.minutesArray;
-			e.target.value = isMax ? minutesArray[minutesArray.length - 1] : minutesArray[0];
-		} else if (e.target === this.secondsSlider) {
-			const secondsArray = this.secondsArray;
-			e.target.value = isMax ? secondsArray[secondsArray.length - 1] : secondsArray[0];
-		}
 	}
 
 	_onfooterkeydown(e) {
