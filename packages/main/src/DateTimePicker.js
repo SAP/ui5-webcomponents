@@ -3,16 +3,16 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/icons/date-time.js";
+import {
+	isLeft,
+	isRight,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
 import SegmentedButton from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
 import WheelSlider from "./WheelSlider.js";
-import {
-	isLeft,
-	isRight,
-} from "@ui5/webcomponents-base/dist/Keys.js";
 
 // time functions
 import {
@@ -272,7 +272,7 @@ class DateTimePicker extends DatePicker {
 
 	async slidersDomRefs() {
 		await this.getPicker();
-		return this.responsivePopover.getElementsByClassName('ui5-dt-wheel');
+		return this.responsivePopover.getElementsByClassName("ui5-dt-wheel");
 	}
 
 	/**
