@@ -53,6 +53,10 @@
 		aria-describedby="{{valueStateTextId}}"
 	/>
 
+	{{#if icon}}
+		<slot name="icon"></slot>
+	{{/if}}
+
 	{{#unless readonly}}
 		<ui5-icon name="slim-arrow-down"
 			input-icon
