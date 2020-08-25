@@ -9,6 +9,10 @@ import SegmentedButton from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
 import WheelSlider from "./WheelSlider.js";
+import {
+	isLeft,
+	isRight,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 
 // time functions
 import {
@@ -245,6 +249,7 @@ class DateTimePicker extends DatePicker {
 		await this.setSlidersValue();
 		this.expandHoursSlider();
 		this.storePreviousValue();
+		this._slidersDomRefs = await this.slidersDomRefs();
 	}
 
 	/**
@@ -263,6 +268,11 @@ class DateTimePicker extends DatePicker {
 	 */
 	isValid(value = "") {
 		return super.isValid(value); // in order to be displayed in the DateTimePicker API reference
+	}
+
+	async slidersDomRefs() {
+		await this.getPicker();
+		return this.responsivePopover.getElementsByClassName('ui5-dt-wheel');
 	}
 
 	/**
@@ -676,6 +686,35 @@ class DateTimePicker extends DatePicker {
 				periodsSlider.value = hours >= config.maxHour ? this.periodsArray[1] : this.periodsArray[0];
 			} else {
 				periodsSlider.value = (hours > config.maxHour || hours === config.minHour) ? this.periodsArray[1] : this.periodsArray[0];
+			}
+		}
+	}
+
+	async _ontimekeydown(event) {
+		if (isLeft(event)) {
+			let expandedSliderIndex = 0;
+			for (let i = 0; i < this._slidersDomRefs.length; i++) {
+				if (this._slidersDomRefs[i]._expanded) {
+					expandedSliderIndex = i;
+				}
+			}
+			if (this._slidersDomRefs[expandedSliderIndex - 1]) {
+				this._slidersDomRefs[expandedSliderIndex - 1].focus();
+			} else {
+				this._slidersDomRefs[this._slidersDomRefs.length - 1].focus();
+			}
+		} else if (isRight(event)) {
+			let expandedSliderIndex = 0;
+
+			for (let i = 0; i < this._slidersDomRefs.length; i++) {
+				if (this._slidersDomRefs[i]._expanded) {
+					expandedSliderIndex = i;
+				}
+			}
+			if (this._slidersDomRefs[expandedSliderIndex + 1]) {
+				this._slidersDomRefs[expandedSliderIndex + 1].focus();
+			} else {
+				this._slidersDomRefs[0].focus();
 			}
 		}
 	}
