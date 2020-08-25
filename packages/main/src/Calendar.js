@@ -8,6 +8,7 @@ import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import {isF4, isF4Shift} from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
@@ -306,7 +307,8 @@ class Calendar extends UI5Element {
 
 	get _maxDate() {
 		if (this.maxDate) {
-			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(), this.getFormat().parse(this.maxDate).getMonth(), this.getFormat().parse(this.maxDate).getDate());
+			const maxDate = this.getFormat().parse(this.maxDate);
+			const jsDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
 			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
 		}
@@ -316,11 +318,22 @@ class Calendar extends UI5Element {
 
 	get _minDate() {
 		if (this.minDate) {
-			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(), this.getFormat().parse(this.minDate).getMonth(), this.getFormat().parse(this.minDate).getDate());
+			const minDate = this.getFormat().parse(this.minDate);
+			const jsDate = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
 			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
 		}
 		return this.minDate;
+	}
+
+	_onkeydown(event) {
+		if (isF4(event) && this._monthPicker._hidden) {
+			this._showMonthPicker();
+		}
+
+		if(isF4Shift(event) && this._monthPicker._hidden && this._yearPicker._hidden) {
+			this._showYearPicker();
+		}
 	}
 
 	_handleSelectedDatesChange(event) {
