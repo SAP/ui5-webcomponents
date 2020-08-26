@@ -484,26 +484,6 @@ class DurationPicker extends UI5Element {
 				this._slidersDomRefs[0].focus();
 			}
 		}
-
-		if (isPageDown(event)) {
-			this._selectLimitCell(event, false);
-		} else if (isPageUp(event)) {
-			this._selectLimitCell(event, true);
-		}
-	}
-
-	_selectLimitCell(event, isMax) {
-		event.preventDefault();
-		if (event.target === this.hoursSlider) {
-			const hoursArray = this.hoursArray;
-			event.target.value = isMax ? hoursArray[hoursArray.length - 1] : hoursArray[0];
-		} else if (event.target === this.minutesSlider) {
-			const minutesArray = this.minutesArray;
-			event.target.value = isMax ? minutesArray[minutesArray.length - 1] : minutesArray[0];
-		} else if (event.target === this.secondsSlider) {
-			const secondsArray = this.secondsArray;
-			event.target.value = isMax ? secondsArray[secondsArray.length - 1] : secondsArray[0];
-		}
 	}
 
 	_onkeydown(event) {
