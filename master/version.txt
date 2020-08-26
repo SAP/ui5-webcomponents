@@ -1,11 +1,5 @@
-commit 8c473c316c5439e9eb48c04a5189a22615544646
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Aug 26 14:13:55 2020 +0300
+commit ef525fb887af20538c525abce3eff47803db87ee
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Aug 26 17:01:19 2020 +0300
 
-    feat(ui5-multi-input): fire value-help-trigger with F4, ALT/OPTION + ARROW_UP/DOWN (#2145)
-    
-    Fire the value-help-trigger when F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
-    
-    FIXES #2143
-    
-    BREAKING CHANGE value-help-icon-press is renamed to value-help-trigger
+    chore(framework): update handlebars version (#2150)
