@@ -580,8 +580,9 @@ class DatePicker extends UI5Element {
 			date.setDate(date.getDate() + incrementStep);
 		} else if (months) {
 			date.setMonth(date.getMonth() + incrementStep);
+			let monthDiff = (date.getFullYear() - oldDate.getFullYear()) * 12 + (date.getMonth() - oldDate.getMonth());
 
-			if (date.getMonth() === oldDate.getMonth() || (date.getMonth() - oldDate.getMonth() > incrementStep)) {
+			if (date.getMonth() === oldDate.getMonth() || monthDiff !== incrementStep) {
 				// first condition example: 31th of March increment month with -1 results in 2th of March
 				// second condition example: 31th of January increment month with +1 results in 2th of March
 				date.setDate(0);
