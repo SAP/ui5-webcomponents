@@ -66,7 +66,7 @@ const metadata = {
 		},
 
 		/**
-		* Defines the icon to be displayed in the <code>ui5-input</code>.
+		* Defines the icon to be displayed in the <code>ui5-multi-combobox</code>.
 		*
 		* @type {HTMLElement[]}
 		* @slot
