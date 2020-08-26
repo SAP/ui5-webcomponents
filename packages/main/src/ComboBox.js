@@ -267,6 +267,18 @@ const metadata = {
 		valueStateMessage: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * Defines the icon to be displayed in the input field.
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 * @since 1.0.0-rc.9
+		 */
+		icon: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
