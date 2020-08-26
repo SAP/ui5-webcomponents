@@ -1,9 +1,7 @@
-commit 0ada41aa38d1cb92345fb10dd1f028d458355cf4
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Tue Aug 25 11:04:36 2020 +0300
+commit 242c7a3a9599982489ae972652d0c340e19a3604
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Aug 26 11:28:26 2020 +0300
 
-    feat(ui5-datetime-picker): improve keyboard handling support (#2137)
+    chore: update chromedriver (#2147)
     
-    Now you can navigate with arrows between the sliders.
-    
-    Related to #1534
+    Update chromedriver version from 83.0.0 to 84.0.1, that supports Chrome 84 and 85, as all new PRs started failing with "This version of ChromeDriver only supports Chrome version 83"
