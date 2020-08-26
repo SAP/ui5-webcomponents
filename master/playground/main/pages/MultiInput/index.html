@@ -183,6 +183,13 @@
 		</ui5-dialog>
 	</div>
 
+	<div class="sample-container">
+		<h1>Test value-help-trigger with F4 and Alt + ArrowUp/Down</h1>
+
+		<ui5-multi-input id="multi-with-value-help-icon" show-value-help-icon>
+		</ui5-multi-input>
+		<ui5-input id="value-help-trigger-counter" placeholder="event count.."></ui5-input>
+	</div>
 
 	<script>
 
@@ -213,11 +220,11 @@
 
 		/* ----------------- */
 
-		document.getElementById("vh").addEventListener("ui5-value-help-icon-press", function (event) {
+		document.getElementById("vh").addEventListener("ui5-value-help-trigger", function (event) {
 			alert("test");
 		});
 
-		document.getElementById("suggestion-token").addEventListener("ui5-value-help-icon-press", function (event) {
+		document.getElementById("suggestion-token").addEventListener("ui5-value-help-trigger", function (event) {
 			var list = document.getElementById("tokens-list");
 
 			list.innerHTML = "";
@@ -245,9 +252,15 @@
 			event.target.value = "";
 		});
 
-		document.getElementById("basic-overflow-and-icon").addEventListener("value-help-icon-press", function (event) {
+		document.getElementById("basic-overflow-and-icon").addEventListener("ui5-value-help-trigger", function (event) {
 			document.getElementById("basic-event-listener").innerHTML = "value help icon press";
 		});
+
+		let valueHelpTriggerCounter = 0;
+		document.getElementById("multi-with-value-help-icon").addEventListener("ui5-value-help-trigger", function (event) {
+			document.getElementById("value-help-trigger-counter").value = ++valueHelpTriggerCounter;
+		});
+
 		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", function (event) {
 			var mi = event.target;
 
