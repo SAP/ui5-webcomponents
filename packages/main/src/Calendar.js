@@ -146,29 +146,35 @@ const metadata = {
  * <h3>Keyboard Handling</h3>
 * The <code>ui5-calendar</code> provides advanced keyboard handling.
 * If the <code>ui5-calendar</code> is focused the user can
-* choose a picker by using the following shortcuts:
-* [F4] - Shows month picker
-* [SHIFT] + [F4] - Shows year picker
-*
+* choose a picker by using the following shortcuts: <br>
+* <ul>
+* <li>[F4] - Shows month picker</li>
+* <li>[SHIFT] + [F4] - Shows year picker</li>
+* <br>
 * When a picker is showed and focused the user can use the following keyboard
 * shortcuts in order to perform a navigation:
-*
-* - Day picker
-* [PAGEUP] - Navigate to the previous month
-* [PAGEDOWN] - Navigate to the next month
-* [SHIFT] + [PAGEUP] - Navigate to the previous year
-* [SHIFT] + [PAGEDOWN] - Navigate to the next year
-* [CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards
-* [CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards
-*
-* - Month picker
-* [PAGEUP] - Navigate to the previous month
-* [PAGEDOWN] - Navigate to the next month
-*
-* - Year picker
-* [PAGEUP] - Navigate to the previous year range
-* [PAGEDOWN] - Navigate the next year range
-*
+* <br>
+* - Day picker: <br>
+* <ul>
+* <li>[PAGEUP] - Navigate to the previous month</li>
+* <li>[PAGEDOWN] - Navigate to the next month</li>
+* <li>[SHIFT] + [PAGEUP] - Navigate to the previous year</li>
+* <li>[SHIFT] + [PAGEDOWN] - Navigate to the next year</li>
+* <li>[CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards</li>
+* <li>[CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards</li>
+* </ul>
+* <br>
+* - Month picker: <br>
+* <ul>
+* <li>[PAGEUP] - Navigate to the previous month</li>
+* <li>[PAGEDOWN] - Navigate to the next month</li>
+* </ul>
+* <br>
+* - Year picker: <br>
+* <ul>
+* <li>[PAGEUP] - Navigate to the previous year range</li>
+* <li>[PAGEDOWN] - Navigate the next year range</li>
+* </ul>
 */
 
 /**

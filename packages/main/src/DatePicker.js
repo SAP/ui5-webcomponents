@@ -349,12 +349,15 @@ const metadata = {
  * If the <code>ui5-date-picker</code> is focused and the picker dialog is not opened the user can
  * increment or decrement the corresponding field of the JS date object referenced by <code>dateValue</code> propery
  * by using the following shortcuts:
- * [PAGEDOWN] - Decrements the corresponding day of the month by one
- * [SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one
- * [SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one
- * [PAGEUP] - Increments the corresponding day of the month by one
- * [SHIFT] + [PAGEUP] - Increments the corresponding month by one
- * [SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one
+ * <br>
+ * <ul>
+ * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
+ * <li>[SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one</li>
+ * <li>[SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one</li>
+ * <li>[PAGEUP] - Increments the corresponding day of the month by one</li>
+ * <li>[SHIFT] + [PAGEUP] - Increments the corresponding month by one</li>
+ * <li>[SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -529,38 +532,47 @@ class DatePicker extends UI5Element {
 
 		if (isPageUpShiftCtrl(event)) {
 			event.preventDefault();
-			this._incrementValue(true, true, false, false, 1);
+			this._changeDateValue(true, true, false, false);
 		} else if (isPageUpShift(event)) {
 			event.preventDefault();
-			this._incrementValue(true, false, true, false, 1);
+			this._changeDateValue(true, false, true, false);
 		} else if (isPageUp(event)) {
 			event.preventDefault();
-			this._incrementValue(true, false, false, true, 1);
+			this._changeDateValue(true, false, false, true);
 		}
 
 		if (isPageDownShiftCtrl(event)) {
 			event.preventDefault();
-			this._incrementValue(false, true, false, false, 1);
+			this._changeDateValue(false, true, false, false);
 		} else if (isPageDownShift(event)) {
 			event.preventDefault();
-			this._incrementValue(false, false, true, false, 1);
+			this._changeDateValue(false, false, true, false);
 		} else if (isPageDown(event)) {
 			event.preventDefault();
-			this._incrementValue(false, false, false, true, 1);
+			this._changeDateValue(false, false, false, true);
 		}
 	}
 
-	_incrementValue(increment, years, months, days, step) {
+	/**
+	 * Adds or extracts a given number of measuring units from the "dateValue" property value
+	 *
+	 * @param {boolean} years indicates that the measuring unit is in years
+	 * @param {boolean} months indicates that the measuring unit is in months
+	 * @param {boolean} days indicates that the measuring unit is in days
+	 * @param {boolean} forward if true indicates addition
+	 * @param {int} step number of measuring units to substract or add defaults ot 1
+	 */
+	_changeDateValue(forward, years, months, days, step = 1) {
 		let date = this.dateValue;
 
 		if (!date) {
 			return;
 		}
 
-		const oldDate = new Date(this.dateValue.getTime());
-		const incrementStep = increment ? step : -step;
+		const oldDate = new Date(date.getTime());
+		const incrementStep = forward ? step : -step;
 
-		if (!oldDate) {
+		if (incrementStep === 0) {
 			return;
 		}
 
@@ -568,22 +580,18 @@ class DatePicker extends UI5Element {
 			date.setDate(date.getDate() + incrementStep);
 		} else if (months) {
 			date.setMonth(date.getMonth() + incrementStep);
-			let iMonth = (oldDate.getMonth() + incrementStep) % 12;
 
-			if (iMonth < 0) {
-				iMonth = 12 + iMonth;
-			}
-
-			while (date.getMonth() !== iMonth) {
-				// day don't exist in this month (e.g. 31th)
-				date.setDate(date.getDate() - 1);
+			if (date.getMonth() === oldDate.getMonth() || (date.getMonth() - oldDate.getMonth() > incrementStep)) {
+				// first condition example: 31th of March increment month with -1 results in 2th of March
+				// second condition example: 31th of January increment month with +1 results in 2th of March
+				date.setDate(0);
 			}
 		} else if (years) {
 			date.setFullYear(date.getFullYear() + incrementStep);
 
-			while (date.getMonth() !== oldDate.getMonth()) {
-				// day don't exist in this month (February 29th)
-				date.setDate(date.getDate() - 1);
+			if (date.getMonth() !== oldDate.getMonth()) {
+				// day doesn't exist in this month (February 29th)
+				date.setDate(0);
 			}
 		} else {
 			return;

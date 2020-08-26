@@ -92,6 +92,7 @@ const metadata = {
 		change: {},
 		/**
 		 * Fired when month, year has changed due to item navigation.
+		 * @since 1.0.0-rc.9
 		 * @public
 		 * @event
 		 */

@@ -754,16 +754,16 @@ describe("Date Picker Tests", () => {
 		browser.keys('PageDown');
 
 		let date = new Date(datepicker.innerInput.getValue());
-		assert.equal(date.getDate(), 31, "Correct day value");
-		assert.equal(date.getMonth(), 11, "Correct month value");
-		assert.equal(date.getFullYear(), 1999, "Correct year value");
+		assert.strictEqual(date.getDate(), 31, "Correct day value");
+		assert.strictEqual(date.getMonth(), 11, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
 
 		browser.keys('PageUp');
 
 		date = new Date(datepicker.innerInput.getValue());
-		assert.equal(date.getDate(), 1, "Correct day value");
-		assert.equal(date.getMonth(), 0, "Correct month value");
-		assert.equal(date.getFullYear(), 2000, "Correct year value");
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 
 	it("Shift + Page up/down increments/decrements the month value", () => {
@@ -774,16 +774,16 @@ describe("Date Picker Tests", () => {
 		browser.keys(['Shift', 'PageDown']);
 
 		let date = new Date(datepicker.innerInput.getValue());
-		assert.equal(date.getDate(), 1, "Correct day value");
-		assert.equal(date.getMonth(), 11, "Correct month value");
-		assert.equal(date.getFullYear(), 1999, "Correct year value");
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 11, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
 
 		browser.keys(['Shift', 'PageUp']);
 
 		date = new Date(datepicker.innerInput.getValue());
-		assert.equal(date.getDate(), 1, "Correct day value");
-		assert.equal(date.getMonth(), 0, "Correct month value");
-		assert.equal(date.getFullYear(), 2000, "Correct year value");
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 
 	it("Ctrl + Shift + Page up/down increments/decrements the year value", () => {
@@ -794,15 +794,15 @@ describe("Date Picker Tests", () => {
 		browser.keys(['Control', 'Shift', 'PageDown']);
 
 		let date = new Date(datepicker.innerInput.getValue());
-		assert.equal(date.getDate(), 1, "Correct day value");
-		assert.equal(date.getMonth(), 0, "Correct month value");
-		assert.equal(date.getFullYear(), 1999, "Correct year value");
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
 
 		browser.keys(['Control', 'Shift', 'PageUp']);
 
 		date = new Date(datepicker.innerInput.getValue());
-		assert.equal(date.getDate(), 1, "Correct day value");
-		assert.equal(date.getMonth(), 0, "Correct month value");
-		assert.equal(date.getFullYear(), 2000, "Correct year value");
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 });

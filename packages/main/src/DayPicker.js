@@ -454,19 +454,19 @@ class DayPicker extends UI5Element {
 		}
 
 		if (isPageUpShift(event)) {
-			this._incrementYears(event, false, 1);
+			this._changeYears(event, false, 1);
 		}
 
 		if (isPageUpShiftCtrl(event)) {
-			this._incrementYears(event, false, 10);
+			this._changeYears(event, false, 10);
 		}
 
 		if (isPageDownShift(event)) {
-			this._incrementYears(event, true, 1);
+			this._changeYears(event, true, 1);
 		}
 
 		if (isPageDownShiftCtrl(event)) {
-			this._incrementYears(event, true, 10);
+			this._changeYears(event, true, 10);
 		}
 	}
 
@@ -491,31 +491,39 @@ class DayPicker extends UI5Element {
 
 		const currentItem = this._itemNav._getCurrentItem();
 		let currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp")) * 1000;
-		const oCalDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+		const calDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
 
 		if (currentItem.classList.contains("ui5-dp-item--othermonth")) {
 			return;
 		}
 
-		if (this._isOutOfSelectableRange(oCalDate.toLocalJSDate())) {
+		if (this._isOutOfSelectableRange(calDate.toLocalJSDate())) {
 			return;
 		}
 
-		oCalDate.setDate(1);
+		calDate.setDate(1);
 
 		if (!start) {
 			// set the day to be the last day of the current month
-			oCalDate.setMonth(oCalDate.getMonth() + 1, 0);
+			calDate.setMonth(calDate.getMonth() + 1, 0);
 		}
 
-		currentTimestamp = oCalDate.valueOf() / 1000;
+		currentTimestamp = calDate.valueOf() / 1000;
 		const newItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === currentTimestamp);
 
 		this._itemNav.currentIndex = newItem._index;
 		this._itemNav.focusCurrent();
 	}
 
-	_incrementYears(event, forward, step) {
+	/**
+	 * Converts "timestamp" property value into a Java Script Date object and
+	 * adds or extracts a given number of years from it
+	 *
+	 * @param {object} event used to prevent the default browser behavior
+	 * @param {boolean} forward if true indicates addition
+	 * @param {int} step for year number to substract or add
+	 */
+	_changeYears(event, forward, step) {
 		const currentItem = this._itemNav._getCurrentItem();
 		let currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
 		const currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
@@ -690,9 +698,9 @@ class DayPicker extends UI5Element {
 
 	_handleItemNavigationBorderReach(event) {
 		const currentItem = this._itemNav._getCurrentItem();
-		let newDate,
-			currentDate,
-			currentTimestamp;
+		let newDate;
+		let currentDate;
+		let currentTimestamp;
 
 		if (isUp(event.originalEvent) || isLeft(event.originalEvent)) {
 			currentTimestamp = this._weeks[0][event.offset].timestamp * 1000;
