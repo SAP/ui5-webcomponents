@@ -70,5 +70,77 @@ describe("Calendar general interaction", () => {
 		}, YEAR);
 
 		assert.strictEqual(yearPicker.getProperty("_selectedYear"), YEAR, "Year is set");
-	})
+	});
+
+	it("Page up/down increments/decrements the month value", () => {
+		const calendar = browser.$("#calendar1");
+		calendar.setProperty("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
+
+		browser.execute(() => document.getElementById("calendar1")._hideYearPicker());
+
+		calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-days-names-container").click();
+		browser.keys('PageUp');
+
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 8, 1, 0, 0, 0)));
+
+		browser.keys('PageDown');
+
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+	});
+
+	it("Shift + Page up/down increments/decrements the year value by one", () => {
+		const calendar = browser.$("#calendar1");
+		calendar.setProperty("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
+
+		calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-days-names-container").click();
+		browser.keys(['Shift', 'PageUp']);
+
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1999, 9, 1, 0, 0, 0)));
+
+		browser.keys(['Shift', 'PageDown']);
+
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+	});
+
+	it("Ctrl + Shift + Page up/down increments/decrements the year value by ten", () => {
+		const calendar = browser.$("#calendar1");
+		calendar.setProperty("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
+
+		calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-days-names-container").click();
+		browser.keys(['Control', 'Shift', 'PageUp']);
+
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1990, 9, 1, 0, 0, 0)));
+
+		browser.keys(['Control', 'Shift', 'PageDown']);
+
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+	});
+
+	it("Page up/down increments/decrements the year value in the month picker", () => {
+		const calendar = browser.$("#calendar1");
+		calendar.setProperty("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
+
+		browser.keys(["F4"]);
+		browser.keys('PageUp');
+
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1999, 9, 1, 0, 0, 0)));
+
+		browser.keys('PageDown');
+
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+	});
+
+	it("Page up/down increments/decrements the year range in the year picker", () => {
+		const calendar = browser.$("#calendar1");
+		calendar.setProperty("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
+
+		browser.keys(['Shift', 'F4']);
+		browser.keys('PageUp');
+
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1980, 9, 6, 0, 0, 0)));
+
+		browser.keys('PageDown');
+
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+	});
 });

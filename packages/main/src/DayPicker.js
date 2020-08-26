@@ -382,7 +382,6 @@ class DayPicker extends UI5Element {
 		if (this.selectedDates.length === 1) {
 			this.fireEvent("daypickerrendered", { focusedItemIndex: this._itemNav.currentIndex });
 		}
-		this._itemNav.focusCurrent();
 	}
 
 	_onmousedown(event) {
@@ -536,7 +535,7 @@ class DayPicker extends UI5Element {
 		oNewCalDate.setDate(newDate.getDate());
 		oNewCalDate.setYear(newDate.getYear());
 		oNewCalDate.setMonth(newDate.getMonth());
-		currentTimestamp = (oNewCalDate.valueOf() / 1000);
+		currentTimestamp = (newDate.valueOf() / 1000);
 
 		if (oNewCalDate.getYear() < DEFAULT_MIN_YEAR || oNewCalDate.getYear() > DEFAULT_MAX_YEAR) {
 			return;
@@ -731,7 +730,7 @@ class DayPicker extends UI5Element {
 		oNewCalDate.setDate(newDate.getDate());
 		oNewCalDate.setYear(newDate.getYear());
 		oNewCalDate.setMonth(newDate.getMonth());
-		currentTimestamp = (oNewCalDate.valueOf() / 1000);
+		currentTimestamp = (newDate.valueOf() / 1000);
 
 		if (oNewCalDate.getYear() < DEFAULT_MIN_YEAR || oNewCalDate.getYear() > DEFAULT_MAX_YEAR) {
 			return;

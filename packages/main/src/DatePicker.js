@@ -551,6 +551,11 @@ class DatePicker extends UI5Element {
 
 	_incrementValue(increment, years, months, days, step) {
 		const date = this.dateValue;
+
+		if (!date) {
+			return;
+		}
+
 		const oldDate = new Date(this.dateValue.getTime());
 		const incrementStep = increment ? step : -step;
 

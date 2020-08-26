@@ -143,6 +143,37 @@ const metadata = {
 /**
  * @class
  *
+ * <h3>Keyboard Handling</h3>
+* The <code>ui5-calendar</code> provides advanced keyboard handling.
+* If the <code>ui5-calendar</code> is focused the user can
+* choose a picker by using the following shortcuts:
+* [F4] - Shows month picker
+* [SHIFT] + [F4] - Shows year picker
+*
+* When a picker is showed and focused the user can use the following keyboard
+* shortcuts in order to perform a navigation:
+*
+* - Day picker
+* [PAGEUP] - Navigate to the previous month
+* [PAGEDOWN] - Navigate to the next month
+* [SHIFT] + [PAGEUP] - Navigate to the previous year
+* [SHIFT] + [PAGEDOWN] - Navigate to the next year
+* [CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards
+* [CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards
+*
+* - Month picker
+* [PAGEUP] - Navigate to the previous month
+* [PAGEDOWN] - Navigate to the next month
+*
+* - Year picker
+* [PAGEUP] - Navigate to the previous year range
+* [PAGEDOWN] - Navigate the next year range
+*
+*/
+
+/**
+ * @class
+ *
  * The <code>ui5-calendar</code> can be used standale to display the years, months, weeks and days,
  * but the main purpose of the <code>ui5-calendar</code> is to be used within a <code>ui5-date-picker</code>.
  *
@@ -329,10 +360,16 @@ class Calendar extends UI5Element {
 	_onkeydown(event) {
 		if (isF4(event) && this._monthPicker._hidden) {
 			this._showMonthPicker();
+			if (!this._yearPicker._hidden) {
+				this._hideYearPicker();
+			}
 		}
 
-		if(isF4Shift(event) && this._monthPicker._hidden && this._yearPicker._hidden) {
+		if(isF4Shift(event) && this._yearPicker._hidden) {
 			this._showYearPicker();
+			if (!this._monthPicker._hidden) {
+				this._hideMonthPicker();
+			}
 		}
 	}
 
@@ -630,16 +667,20 @@ class Calendar extends UI5Element {
 		this._monthPicker = Object.assign({}, this._monthPicker);
 		this._oMonth = Object.assign({}, this._oMonth);
 
+		if (this._yearPicker._hidden) {
+			this._oMonth._hidden = false;
+		}
 		this._monthPicker._hidden = true;
-		this._oMonth._hidden = false;
 	}
 
 	_hideYearPicker() {
 		this._yearPicker = Object.assign({}, this._yearPicker);
 		this._oMonth = Object.assign({}, this._oMonth);
 
+		if (this._monthPicker._hidden) {
+			this._oMonth._hidden = false;
+		}
 		this._yearPicker._hidden = true;
-		this._oMonth._hidden = false;
 	}
 
 	_isYearInRange(timestamp, yearsoffset, min, max) {
