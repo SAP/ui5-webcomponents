@@ -247,12 +247,20 @@ class YearPicker extends UI5Element {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
-	_onclick(event) {
+	_onmousedown(event) {
+		if (event.target.className.indexOf("ui5-yp-item") > -1) {
+			const targetTimestamp = this.getTimestampFromDom(event.target);
+			const focusedItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === targetTimestamp);
+			this._itemNav.currentIndex = this._itemNav._getItems().indexOf(focusedItem);
+			this._itemNav.focusCurrent();
+		}
+	}
+
+	_onmouseup(event) {
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
 			const timestamp = this.getTimestampFromDom(event.target);
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
-			this._itemNav.current = YearPicker._MIDDLE_ITEM_INDEX;
 			this.fireEvent("change", { timestamp });
 		}
 	}
@@ -311,11 +319,6 @@ class YearPicker extends UI5Element {
 		}
 
 		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX > YearPicker._MAX_YEAR) {
-			return;
-		}
-
-		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX)
-		&& this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)) {
 			return;
 		}
 

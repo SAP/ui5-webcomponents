@@ -10,7 +10,7 @@ import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
-import { 
+import {
 	isPageUp,
 	isPageDown,
 	isPageUpShift,
@@ -18,7 +18,8 @@ import {
 	isPageUpShiftCtrl,
 	isPageDownShiftCtrl,
 	isShow,
-	isF4 } from "@ui5/webcomponents-base/dist/Keys.js";
+	isF4,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
@@ -344,7 +345,7 @@ const metadata = {
  * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
  * use TAB to reach the buttons for changing month and year.
  * <br>
- * 
+ *
  * If the <code>ui5-date-picker</code> is focused and the picker dialog is not opened the user can
  * increment or decrement the corresponding field of the JS date object referenced by <code>dateValue</code> propery
  * by using the following shortcuts:
@@ -550,7 +551,7 @@ class DatePicker extends UI5Element {
 	}
 
 	_incrementValue(increment, years, months, days, step) {
-		const date = this.dateValue;
+		let date = this.dateValue;
 
 		if (!date) {
 			return;
@@ -573,14 +574,14 @@ class DatePicker extends UI5Element {
 				iMonth = 12 + iMonth;
 			}
 
-			while (date.getMonth() != iMonth) {
+			while (date.getMonth() !== iMonth) {
 				// day don't exist in this month (e.g. 31th)
 				date.setDate(date.getDate() - 1);
 			}
 		} else if (years) {
 			date.setFullYear(date.getFullYear() + incrementStep);
 
-			while (date.getMonth() != oldDate.getMonth()) {
+			while (date.getMonth() !== oldDate.getMonth()) {
 				// day don't exist in this month (February 29th)
 				date.setDate(date.getDate() - 1);
 			}
@@ -588,10 +589,10 @@ class DatePicker extends UI5Element {
 			return;
 		}
 
-		if (this._minDate && oDate.getTime() < this._minDate.getTime()) {
-			oDate = new Date(this._minDate.getTime());
-		} else if (this._maxDate && oDate.getTime() > this._maxDate.getTime()){
-			oDate = new Date(this._maxDate.getTime());
+		if (this._minDate && date.getTime() < this._minDate.getTime()) {
+			date = new Date(this._minDate.getTime());
+		} else if (this._maxDate && date.getTime() > this._maxDate.getTime()) {
+			date = new Date(this._maxDate.getTime());
 		}
 
 		this.value = this.formatValue(date);

@@ -8,7 +8,7 @@ import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import {isF4, isF4Shift} from "@ui5/webcomponents-base/dist/Keys.js";
+import { isF4, isF4Shift } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
@@ -365,7 +365,7 @@ class Calendar extends UI5Element {
 			}
 		}
 
-		if(isF4Shift(event) && this._yearPicker._hidden) {
+		if (isF4Shift(event) && this._yearPicker._hidden) {
 			this._showYearPicker();
 			if (!this._monthPicker._hidden) {
 				this._hideMonthPicker();

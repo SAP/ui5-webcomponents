@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import RenderScheduler from "../../base/src/RenderScheduler.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
@@ -29,6 +28,7 @@ import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDat
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
+import RenderScheduler from "../../base/src/RenderScheduler.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 // Styles
@@ -444,7 +444,7 @@ class DayPicker extends UI5Element {
 		if (isSpace(event)) {
 			return this._handleSpace(event);
 		}
-		
+
 		if (isHomeCtrl(event)) {
 			this._navToStartEndDayOfTheMonth(event, true);
 		}
@@ -491,7 +491,7 @@ class DayPicker extends UI5Element {
 
 		const currentItem = this._itemNav._getCurrentItem();
 		let currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp")) * 1000;
-		let oCalDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+		const oCalDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
 
 		if (currentItem.classList.contains("ui5-dp-item--othermonth")) {
 			return;
@@ -501,15 +501,15 @@ class DayPicker extends UI5Element {
 			return;
 		}
 
-		oCalDate.setDate(1)
+		oCalDate.setDate(1);
 
 		if (!start) {
 			// set the day to be the last day of the current month
 			oCalDate.setMonth(oCalDate.getMonth() + 1, 0);
 		}
-		
+
 		currentTimestamp = oCalDate.valueOf() / 1000;
-		let newItem = this._itemNav._getItems().find( item => item.timestamp == currentTimestamp );
+		const newItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === currentTimestamp);
 
 		this._itemNav.currentIndex = newItem._index;
 		this._itemNav.focusCurrent();
@@ -518,16 +518,16 @@ class DayPicker extends UI5Element {
 	_incrementYears(event, forward, step) {
 		const currentItem = this._itemNav._getCurrentItem();
 		let currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
-		let currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
-		let newDate = new CalendarDate(currentDate, this._primaryCalendarType);
+		const currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+		const newDate = new CalendarDate(currentDate, this._primaryCalendarType);
 
 		if (forward) {
 			newDate.setYear(newDate.getYear() + step);
 		} else {
 			newDate.setYear(newDate.getYear() - step);
 		}
-		
-		if (currentDate.getMonth() != newDate.getMonth()) {
+
+		if (currentDate.getMonth() !== newDate.getMonth()) {
 			newDate.setDate(0);
 		}
 
@@ -711,7 +711,7 @@ class DayPicker extends UI5Element {
 			currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
 			newDate = new CalendarDate(currentDate, this._primaryCalendarType);
 			newDate.setMonth(newDate.getMonth() - 1);
-			if (currentDate.getMonth() == newDate.getMonth()) {
+			if (currentDate.getMonth() === newDate.getMonth()) {
 				newDate.setDate(0);
 			}
 		}
@@ -753,10 +753,10 @@ class DayPicker extends UI5Element {
 	}
 
 	async _navigateAndWaitRerender(timestamp) {
-		this.fireEvent("navigate", { timestamp: timestamp });
+		this.fireEvent("navigate", { timestamp });
 		await RenderScheduler.whenFinished();
 
-		let newItem = this._itemNav._getItems().find( item => parseInt(item.timestamp) == timestamp );
+		const newItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === timestamp);
 		this._itemNav.currentIndex = parseInt(newItem._index);
 
 		this._itemNav.focusCurrent();

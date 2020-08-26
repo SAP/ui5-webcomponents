@@ -5,16 +5,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import {
-	isUp,
-	isLeft,
-	isDown,
-	isRight,
-	isSpace,
-	isEnter,
-	isPageUp,
-	isPageDown,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -107,9 +98,6 @@ const metadata = {
 		navigate: {},
 	},
 };
-
-const DEFAULT_MAX_YEAR = 9999;
-const DEFAULT_MIN_YEAR = 1;
 
 /**
  * Month picker component.
@@ -239,11 +227,19 @@ class MonthPicker extends UI5Element {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
-	_onclick(event) {
+	_onmousedown(event) {
+		if (event.target.className.indexOf("ui5-mp-item") > -1) {
+			const targetTimestamp = this.getTimestampFromDOM(event.target);
+			const focusedItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === targetTimestamp);
+			this._itemNav.currentIndex = this._itemNav._getItems().indexOf(focusedItem);
+			this._itemNav.focusCurrent();
+		}
+	}
+
+	_onmouseup(event) {
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this.getTimestampFromDOM(event.target);
 			this.timestamp = timestamp;
-			this._itemNav.current = this._month;
 			this.fireEvent("change", { timestamp });
 		}
 	}
@@ -264,6 +260,8 @@ class MonthPicker extends UI5Element {
 	}
 
 	_handleItemNavigationBorderReach(event) {
+		// Min/max date check has to be added as currently _isOutOfSelectableRange function
+		// works only for the months in the current year
 		this.fireEvent("navigate", event);
 	}
 
