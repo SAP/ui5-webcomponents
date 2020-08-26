@@ -107,7 +107,7 @@
 }
 
 .ui5-tc__contentItem {
-	height: 100%;
+	max-height: 100%;
 	overflow: auto;
 }
 
