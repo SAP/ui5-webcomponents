@@ -88,7 +88,7 @@ class CalendarDate {
 			this._oUDate.setUTCMonth(month);
 		}
 		return this;
-	};
+	}
 
 	getDate() {
 		return this._oUDate.getUTCDate();
