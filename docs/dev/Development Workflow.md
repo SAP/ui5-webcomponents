@@ -1,9 +1,9 @@
 # General development workflow
 This document aims to explain the steps component developers would have to perform
-on daily basis from forking the project to merging a change, emphasizing on the Github workflow.
+on daily basis from forking the project to merging a change, emphasising on the Github workflow.
 
 
-## 1. Fork the UI5 Web Components repostory
+## 1. Fork the UI5 Web Components repository
 See how to fork a repo [here](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo).
 
 
@@ -31,7 +31,7 @@ Once the project is served, you can explore the components
 on http://localhost:8080/test-resources/pages/ for the `main` package
 and http://localhost:8081/test-resources/pages/ for the `fiori` package.
 
-*Note: The server will reload the pages, whenver you make changes in the code.*
+*Note: The server will reload the pages, whenever you make changes in the code.*
 
 
 ## 4. Develop 
@@ -45,20 +45,20 @@ and http://localhost:8081/test-resources/pages/ for the `fiori` package.
 
 *4.2.* Create a local branch within your fork and work with it as usual.
 
-*4.3.* Before comitting, run the linter to check if your code is written according to the project eslint configuration.
+*4.3.* Before committing, run the linter to check if your code is written according to the project eslint configuration.
 
 ```sh
 $ yarn lint
 ```
 
-*4.4.* Before comitting, run the test of the component you are working on (see the article for testing above) to catch issues as soon as possible.
+*4.4.* Before committing, run the test of the component you are working on (see the article for testing above) to catch issues as soon as possible.
 
 ```sh
 $ cd packages/main
 $ yarn test test/specs/Button.spec.js
 ```
 
-## 5. Open Pull equest (PR) from fork
+## 5. Open Pull Request (PR) from fork
 
 You can open a pull request to the upstream repository from any branch or commit in your fork.
 We recommend that you make changes in a topic branch (not in your local master), so that you can push followup commits if you receive feedback on your pull request. 
@@ -92,7 +92,7 @@ and the changes will be reflected in the pull request.
 
 *Note: We recommend syncing your fork, before pushing commits to resolve merge conflicts beforehand.*
 
-*Note: The full guide to updare PR can be found [here](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/committing-changes-to-a-pull-request-branch-created-from-a-fork).*
+*Note: The full guide to update PR can be found [here](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/committing-changes-to-a-pull-request-branch-created-from-a-fork).*
 
 ## 7. Sync the fork
 
