@@ -305,7 +305,7 @@ describe("Input general interaction", () => {
 
 		browser.pause(500);
 
-		assert.strictEqual(input.getProperty("value"), "1.22", "Value is not lost");
+		assert.strictEqual(parseFloat(input.getProperty("value")), 1.22, "Value is not lost");
 	});
 
 	it("Doesn't remove value on number type input even if locale specific delimiter", () => {
@@ -317,7 +317,7 @@ describe("Input general interaction", () => {
 
 		browser.pause(500);
 
-		assert.strictEqual(input.getProperty("value"), "1.22", "Value is not lost");
+		assert.strictEqual(parseFloat(input.getProperty("value")), 1.22, "Value is not lost");
 	});
 
 	it("fires suggestion-item-preview", () => {
