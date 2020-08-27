@@ -65,22 +65,22 @@ We recommend that you make changes in a topic branch (not in your local master),
 
 You can open a pull request from the Github UI. 
 
-*4.1.* Find the "Pull requests" tab and then press the "New pull request" button.
+*5.1.* Find the "Pull requests" tab and then press the "New pull request" button.
 
-*4.2.* Compare the master branch of the upstream with a branch from your fork.
+*5.2.* Compare the master branch of the upstream with a branch from your fork.
 
 *Note: The full guide to open PR from fork can be found [here](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).*
 
-*4.3.* Once the PR is created you would to accept CLA agreement.
+*5.3.* Once the PR is created you would to accept CLA agreement.
 Just follow the link posted in the PR by the CLA assistant.
 
 *Note: This is required only for you first PR.*
 
-*4.4.* Immediately after the PR is created a central build process starts to verify the change,
+*5.4.* Immediately after the PR is created a central build process starts to verify the change,
 building the project and running all tests.
 In case you are interested in the build output, you can follow the link at the bottom of the PR page, called "continuous-integration/travis-ci/pr"
 
-*4.5.* Wait for our code review and approval. 
+*5.5.* Wait for our code review and approval. 
 After the PR is approved, the UI5 Web Components team will merge the change into the master.
 
 
@@ -99,26 +99,26 @@ and the changes will be reflected in the pull request.
 With the time your fork will be out of sync with the original repository
 and you would need to update it.
 
-*1.* Specify a new remote upstream repository that will be synced with the fork.
+*7.1.* Specify a new remote upstream repository that will be synced with the fork.
 
 ```sh
 $ git remote add upstream https://github.com/SAP/ui5-webcomponents.git
 ```
 
-*2.* Fetch the branches and their respective commits from the upstream repository.
+*7.2.* Fetch the branches and their respective commits from the upstream repository.
 Commits to master will be stored in a local branch, upstream/master.
 
 ```sh
 $ git fetch upstream
 ```
 
-*3.*. Check out your fork's local master branch.
+*7.3.*. Check out your fork's local master branch.
 
 ```sh
 $ git checkout master
 ```
 
-*4.*. Merge the changes from upstream/master into your local master branch.
+*7.4.*. Merge the changes from upstream/master into your local master branch.
 This brings your fork's master branch into sync with the upstream repository, without losing your local changes.
 
 ```sh
