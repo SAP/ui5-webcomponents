@@ -296,23 +296,11 @@ describe("Input general interaction", () => {
 		assert.ok(firstListItem.getHTML().indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.");
 	});
 
-	it("Doesn't remove value on number type input even if you enter a second delimiter", () => {
-		const input = browser.$("#input-number");
-
-		input.click();
-		input.keys("1,22,3");
-		input.keys("Tab");
-
-		browser.pause(500);
-
-		assert.strictEqual(parseFloat(input.getProperty("value")), 1.22, "Value is not lost");
-	});
-
-	it("Doesn't remove value on number type input even if locale specific delimiter", () => {
+	it("Doesn't remove value on number type input even if locale specific delimiter/multiple delimiters", () => {
 		const input = browser.$("#input-number2");
 
 		input.click();
-		input.keys("1.22");
+		input.keys("1.22.33");
 		input.keys("Tab");
 
 		browser.pause(500);
