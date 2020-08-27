@@ -1,4 +1,5 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
@@ -14,7 +15,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
 		 * Determines whether a value help icon will be should in the end of the input.
-		 * Pressing the icon will fire <code>value-help-icon-press</code> event.
+		 * Pressing the icon will fire <code>value-help-trigger</code> event.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -54,12 +55,13 @@ const metadata = {
 	},
 	events: /** @lends  sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
-		 * Fired when value state icon is pressed.
+		 * Fired when the value help icon is pressed
+		 * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
 		 *
-		 * @event sap.ui.webcomponents.main.MultiInput#value-help-icon-press
+		 * @event sap.ui.webcomponents.main.MultiInput#value-help-trigger
 		 * @public
 		 */
-		"value-help-icon-press": {},
+		"value-help-trigger": {},
 
 		/**
 		 * Fired when a token is about to be deleted.
@@ -120,7 +122,7 @@ class MultiInput extends Input {
 
 	valueHelpPress(event) {
 		this.closePopover();
-		this.fireEvent("value-help-icon-press", {});
+		this.fireEvent("value-help-trigger", {});
 	}
 
 	showMorePress(event) {
@@ -157,6 +159,14 @@ class MultiInput extends Input {
 
 	innerFocusIn() {
 		this.expandedTokenizer = true;
+	}
+
+	_onkeydown(event) {
+		super._onkeydown(event);
+
+		if (isShow(event)) {
+			this.valueHelpPress();
+		}
 	}
 
 	_onfocusout(event) {
