@@ -243,17 +243,6 @@ const metadata = {
 			defaultValue: "",
 		},
 
-		/**
-		 * Defines whether content is scrollable.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		disableScrolling: {
-			type: Boolean,
-		},
-
 		_isPickerOpen: {
 			type: Boolean,
 			noAttribute: true,
