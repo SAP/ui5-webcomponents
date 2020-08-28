@@ -717,4 +717,22 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.click();
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
 	});
+
+	it("Tests aria-label", () => {
+		const EXPECTED_ARIA_LABEL = "Hello World";
+
+		datepicker.id = "#dpAriaLabel";
+		
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
+			"The aria-label is correct.")
+	});
+
+	it("Tests aria-labelledby", () => {
+		const EXPECTED_ARIA_LABEL = "info text";
+
+		datepicker.id = "#dpAriaLabelledBy";
+
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
+			"The aria-label is correct.")
+	});
 });

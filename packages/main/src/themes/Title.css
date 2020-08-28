@@ -6,6 +6,7 @@
 :host {
 	max-width: 100%;
 	color: var(--sapGroup_TitleTextColor);
+	font-size: var(--ui5_title_level_2Size);
 	font-family: var(--sapFontFamily);
 	text-shadow: var(--sapContent_TextShadow);
 }
@@ -14,6 +15,7 @@
 	display: inline-block;
 	position: relative;
 	font-weight: normal;
+	font-size: inherit;
 	box-sizing: border-box;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -31,37 +33,33 @@
 :host([wrap]) .ui5-title-root {
 	white-space: pre-line;
 }
-/* Auto */
-:host .ui5-title-root {
-	font-size: var(--ui5_title_level_2Size);
-}
 
 /* Level H1 */
-:host([level="H1"]) .ui5-title-root {
+:host([level="H1"]) {
 	font-size: var(--ui5_title_level_1Size);
 }
 
 /* Level H2 */
-:host([level="H2"]) .ui5-title-root {
+:host([level="H2"]) {
 	font-size: var(--ui5_title_level_2Size);
 }
 
 /* Level H3 */
-:host([level="H3"]) .ui5-title-root {
+:host([level="H3"]) {
 	font-size: var(--ui5_title_level_3Size);
 }
 
 /* Level H4 */
-:host([level="H4"]) .ui5-title-root {
+:host([level="H4"]) {
 	font-size: var(--ui5_title_level_4Size);
 }
 
 /* Level H5 */
-:host([level="H5"]) .ui5-title-root {
+:host([level="H5"]) {
 	font-size: var(--ui5_title_level_5Size);
 }
 
 /* Level H6 */
-:host([level="H6"]) .ui5-title-root {
+:host([level="H6"]) {
 	font-size: var(--ui5_title_level_6Size);
 }

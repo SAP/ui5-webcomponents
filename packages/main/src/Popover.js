@@ -489,7 +489,8 @@ class Popover extends Popup {
 
 		this._maxContentHeight = maxContentHeight;
 
-		const arrowTranslateX = isVertical ? targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2 : 0;
+		const arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
+		const arrowTranslateX = isVertical && arrowXCentered ? targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2 : 0;
 		const arrowTranslateY = !isVertical ? targetRect.top + targetRect.height / 2 - top - popoverSize.height / 2 : 0;
 
 		if (this._left === undefined || Math.abs(this._left - left) > 1.5) {

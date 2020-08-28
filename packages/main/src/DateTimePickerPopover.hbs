@@ -31,7 +31,7 @@
 			<span class="ui5-dt-picker-separator"></span>
 		{{/unless}}
 
-		<div class="ui5-dt-time {{classes.dateTimeView}}">
+		<div class="ui5-dt-time {{classes.dateTimeView}}" @keydown="{{_ontimekeydown}}">
 			{{#if shouldBuildHoursSlider}}
 			<ui5-wheelslider
 				label = "{{hoursLabel}}"
