@@ -252,7 +252,7 @@ class DateTimePicker extends DatePicker {
 		this.storePreviousValue();
 		this._slidersDomRefs = await this.slidersDomRefs();
 		if (isIE()) {
-			(await this.getPicker()).shadowRoot.querySelector(".ui5-popup-content").style.overflow="hidden";
+			(await this.getPicker()).shadowRoot.querySelector(".ui5-popup-content").style.overflow = "hidden";
 		}
 	}
 
