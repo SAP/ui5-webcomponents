@@ -598,10 +598,10 @@ class DatePicker extends UI5Element {
 			return;
 		}
 
-		if (this._minDate && date.getTime() < this._minDate.getTime()) {
-			date = new Date(this._minDate.getTime());
-		} else if (this._maxDate && date.getTime() > this._maxDate.getTime()) {
-			date = new Date(this._maxDate.getTime());
+		if (date.valueOf() < this._minDate) {
+			date = new Date(this._minDate);
+		} else if (date.valueOf() > this._maxDate) {
+			date = new Date(this._maxDate);
 		}
 
 		this.value = this.formatValue(date);
@@ -676,8 +676,8 @@ class DatePicker extends UI5Element {
 		}
 
 		const pickedDate = new Date(value),
-			minDate = this._minDate && new Date(this._minDate),
-			maxDate = this._maxDate && new Date(this._maxDate);
+			minDate = new Date(this._minDate),
+			maxDate = new Date(this._maxDate);
 
 		if (minDate && maxDate) {
 			if (minDate <= pickedDate && maxDate >= pickedDate) {
@@ -797,14 +797,19 @@ class DatePicker extends UI5Element {
 		if (this.maxDate) {
 			return this._getTimeStampFromString(this.maxDate);
 		}
-		return this.maxDate;
+
+		const maxDate = new Date(9999, 11, 31, 23, 59, 59, 999);
+		return CalendarDate.fromTimestamp(maxDate.valueOf(), this._primaryCalendarType).valueOf();
 	}
 
 	get _minDate() {
 		if (this.minDate) {
 			return this._getTimeStampFromString(this.minDate);
 		}
-		return this.minDate;
+
+		const minDate = new Date(1, 0, 1);
+		minDate.setFullYear(1); // otherwise year 1 will be converted to year 1901
+		return CalendarDate.fromTimestamp(minDate.getTime(), this._primaryCalendarType).valueOf();
 	}
 
 	get openIconTitle() {
