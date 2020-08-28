@@ -798,8 +798,14 @@ class DatePicker extends UI5Element {
 			return this._getTimeStampFromString(this.maxDate);
 		}
 
-		const maxDate = new Date(9999, 11, 31, 23, 59, 59, 999);
-		return CalendarDate.fromTimestamp(maxDate.valueOf(), this._primaryCalendarType).valueOf();
+		const maxDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		maxDate.setYear(9999);
+		maxDate.setMonth(11);
+		const tempDate = new CalendarDate(maxDate, this._primaryCalendarType);
+		tempDate.setDate(1);
+		tempDate.setMonth(tempDate.getMonth() + 1, 0);
+		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
+		return maxDate.valueOf();
 	}
 
 	get _minDate() {
@@ -807,9 +813,11 @@ class DatePicker extends UI5Element {
 			return this._getTimeStampFromString(this.minDate);
 		}
 
-		const minDate = new Date(1, 0, 1);
-		minDate.setFullYear(1); // otherwise year 1 will be converted to year 1901
-		return CalendarDate.fromTimestamp(minDate.getTime(), this._primaryCalendarType).valueOf();
+		const minDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		minDate.setYear(1);
+		minDate.setMonth(0);
+		minDate.setDate(1);
+		return minDate.valueOf();
 	}
 
 	get openIconTitle() {
