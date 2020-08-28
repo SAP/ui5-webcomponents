@@ -1,5 +1,8 @@
-commit 0fde5735467bef4908422075432183de215a0282
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Aug 28 10:06:30 2020 +0300
+commit 13c1ac5d3cc6f694413eda8f51007f0b9dee1591
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Aug 28 11:49:37 2020 +0300
 
-    feat(ui5-multi-combobox): implement icon slot (#2140)
+    docs: add developers workflow guide (#2152)
+    
+    Adds a document, that aims to explain the steps component developers would have to perform
+    on daily basis from forking the project to merging a change, emphasising on the Github workflow.
