@@ -1,8 +1,5 @@
-commit 13c1ac5d3cc6f694413eda8f51007f0b9dee1591
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Aug 28 11:49:37 2020 +0300
+commit 11af57eba423e1ec137569fee0629787d98c6b75
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Aug 28 13:04:48 2020 +0300
 
-    docs: add developers workflow guide (#2152)
-    
-    Adds a document, that aims to explain the steps component developers would have to perform
-    on daily basis from forking the project to merging a change, emphasising on the Github workflow.
+    fix(ui5-tabcontainer): remove scroll from empty tabs (#2148)
