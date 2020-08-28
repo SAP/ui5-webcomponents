@@ -81,7 +81,7 @@ class CalendarDate {
 	 */
 	setMonth(month, date) {
 		checkNumericLike(month, `Invalid month: ${month}`);
-		if (date|| date === 0) {
+		if (date || date === 0) {
 			checkNumericLike(date, `Invalid date: ${date}`);
 			this._oUDate.setUTCMonth(month, date);
 		} else {
