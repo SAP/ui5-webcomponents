@@ -7,6 +7,7 @@ import {
 	isLeft,
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
 import SegmentedButton from "./SegmentedButton.js";
@@ -250,6 +251,9 @@ class DateTimePicker extends DatePicker {
 		this.expandHoursSlider();
 		this.storePreviousValue();
 		this._slidersDomRefs = await this.slidersDomRefs();
+		if (isIE()) {
+			(await this.getPicker()).shadowRoot.querySelector(".ui5-popup-content").style.overflow="hidden";
+		}
 	}
 
 	/**
