@@ -1,5 +1,5 @@
-commit ef525fb887af20538c525abce3eff47803db87ee
+commit 0fde5735467bef4908422075432183de215a0282
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Aug 26 17:01:19 2020 +0300
+Date:   Fri Aug 28 10:06:30 2020 +0300
 
-    chore(framework): update handlebars version (#2150)
+    feat(ui5-multi-combobox): implement icon slot (#2140)
