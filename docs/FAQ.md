@@ -27,13 +27,13 @@
 
 **Q: Can I create my own UI5 Web Components?**
 
-**A:** Not yet, the framework-level APIs for creating web components are not public yet.
+**A:** Yes, for more information click [here](./dev/Creating%20UI5%20Web%20Components%20Packages.md)
 
 
 **Q: How big is the runtime?**
 
-**A:** Currently on master, a simple working Web Component (```ui5-label```) and its dependencies equals to around 12K gzipped. 
-Two simple web components (```ui5-label``` and ```ui5-icon```) and their dependencies equal to around 19K gzipped.
+**A:** Currently on master, a simple working Web Component (```ui5-label```) and its dependencies equals to around 22K gzipped. 
+Two simple web components (```ui5-label``` and ```ui5-icon```) and their dependencies equal to around 25K gzipped.
 
 *Note:* The quoted numbers include only a ```<ui5-label>``` (respectively ```ui5-label``` and ```ui5-icon```) working on Chrome/FF/Safari with the default settings (theme/language).
 Additional features, settings and old browser support will increase bundle size accordingly.

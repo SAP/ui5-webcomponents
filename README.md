@@ -6,7 +6,7 @@
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/ui5-webcomponents)](https://api.reuse.software/info/github.com/SAP/ui5-webcomponents)
 
-## What are UI5 Web Components?
+## What are [UI5 Web Components](https://sap.github.io/ui5-webcomponents)?
 
  - A rich set of **enterprise-grade reusable UI elements** driven by a **lightweight framework** (~20K gzipped).
  - Suitable for building anything from **static web sites** to **complex web applications**.
@@ -16,15 +16,21 @@
 
 ## Why use web components?
 
- - **Future proof**: entirely based on *web standards*, making them compatible with any version of any web development framework.
+ - **Future-proof**: entirely based on *web standards*, making them compatible with any version of any web development framework.
  - **Encapsulated**: the HTML/CSS in the *shadow DOM* are protected from interference by the web page and vice versa, making them stable in any environment and suitable not only for apps, but also for *libraries and micro-frontends*.  
  - **Elegant**: being *custom HTML elements*, they hide implementation complexity behind a single HTML tag, making them easily usable with the standard DOM APIs. 
 
-
 ## Where can I see them in action?
-- [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
 - [Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
 
+## More resources
+- [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
+- [All public module imports](./docs/Public%20Module%20Imports.md)
+- [Configuring UI5 Web Components](./docs/Configuration.md)
+- [Creating a custom theme](./docs/CustomTheming.md)
+- [Building custom UI5 Web Components](./docs/dev/Developing%20Web%20Components.md)
+- [Creating custom UI5 Web Components NPM packages](./docs/dev/Creating%20UI5%20Web%20Components%20Packages.md)
+- [F.A.Q.](./docs/FAQ.md)
 
 ## Related Projects
 
@@ -34,7 +40,7 @@
 
 [OpenUI5](https://openui5.org/) is a JS framework that lets you build enterprise-ready web applications, responsive to all devices, running on almost any browser of your choice. It's based on JavaScript, using jQuery as its foundation and follows web standards. It eases your development with a client-side HTML5 rendering library including a rich set of controls and supports data binding to different data models (JSON, XML and OData).
 
-#### 2. Where do UI5 Web Components fit in UI5?
+#### 2. How do UI5 Web Components compare to OpenUI5?
 
 UI5 Web Components…
 * …are **not built on top** of UI5, but rather lightweight and independent UI elements
@@ -48,7 +54,6 @@ UI5 Web Components are good for…
 UI5 remains what it is: the best choice for…
 * …building complete **enterprise-ready and responsive web applications**
 
-
 ### UI5 Web Components for React
 
 [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) is a wrapper implementation around 
@@ -58,7 +63,7 @@ shortcomings when it comes to handling Custom Elements, namly the binding of `bo
 
 ## How to use
 
-1. Install the NPM module(s) that ship the desired UI5 Web Component(s), for example:
+1. Install the NPM module(s) that ship the desired UI5 Web Component(s), for example if you need `ui5-button`:
 
 	```sh
 	npm install @ui5/webcomponents
@@ -67,7 +72,7 @@ shortcomings when it comes to handling Custom Elements, namly the binding of `bo
 2. Import the desired UI5 Web Component(s) to your app:
 
 	```js
-	import "@ui5/webcomponents/dist/Button.js"; // loads ui5-button
+	import "@ui5/webcomponents/dist/Button.js"; // loads and defines ui5-button
 	```
 
 3. Use the UI5 Web Component(s) as you would use any HTML element
@@ -75,12 +80,19 @@ shortcomings when it comes to handling Custom Elements, namly the binding of `bo
 	```html
 	<ui5-button>Hello world!</ui5-button>
 	```
+	
+	For more on using UI5 Web Components, click [here](./docs/How%20To%20Use.md).
 
 *Note*: For a full list of the UI5 Web Components (and the respective NPM modules that ship them), click [here](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md). 
 
+### Is there a CDN I can use?
+
+No, you are expected to import only the components (or other public APIs) that you are going to use and bundle them along with the rest
+of your application.
+
 ## Browser support
 
-UI5 Web Components are supported by all modern browsers.
+UI5 Web Components are supported by all major modern browsers.
 
 Browser | Support
 --------|--------
@@ -100,23 +112,21 @@ This section might be of interest to you mainly if you need to run or build the 
 - [Node.js](https://nodejs.org/) (**version 12 or higher**)
 - [Yarn](https://yarnpkg.com/en)
 
-**Note:** UI5 Web Components is set up with the [Yarn](https://yarnpkg.com/) node package manager. 
+**Note:** The UI5 Web Components project is set up with the [Yarn](https://yarnpkg.com/) node package manager. 
 This is because it offers functionality that the otherwise preferred [npm](https://www.npmjs.com/) package manager is currently lacking. Namely, the [workspace](https://yarnpkg.com/lang/en/docs/workspaces/) setting which is currently used in the [UI5 Web Components (mono-)repository](https://github.com/SAP/ui5-webcomponents). Note that npm [might add](https://github.com/npm/npm/pull/15900#issuecomment-315335381) this feature in the future.
 
 ### Structure
 
-UI5 Web Components publishes the following NPM packages
+UI5 Web Components contains several projects (NPM packages):
 
 Project | NPM Package | Description
 -----------|-----------|------------
-`main` | [UI5 Web Components](https://www.npmjs.com/package/@ui5/webcomponents) | Bread-and-butter components (buttons, inputs, pickers, tables, etc...)
-`fiori` | [UI5 Web Components Fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori) | Components, specific to the Fiori UX (shell bar, side navigation, etc...)
+`main` | [UI5 Web Components](https://www.npmjs.com/package/@ui5/webcomponents) | Bread-and-butter components (buttons, inputs, popups, pickers, tables, etc...) that are generally found in web apps.
+`fiori` | [UI5 Web Components Fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori) | More semantic components, specific to the Fiori UX (shell bar, side navigation, etc...) that are commonly found in SAP apps.
 `icons` | [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons) | A rich icons collection (`SAP-icons`), suitable for enterprise-grade apps
 `base` | [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base) | The UI5 Web Components framework itself
 `theme-base` | [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base) | Theming assets (for example accessibility themes)
 `localization` | [UI5 Web Components Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization) | `i18n` functionality and `CLDR` assets
-
-
 
 ### How to run the project locally:
 
