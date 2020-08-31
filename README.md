@@ -25,10 +25,10 @@
 
 ## More resources
 - [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
-- [All public module imports](./docs/Public%20Module%20Imports.md)
+- [List of all components and other public APIs](./docs/Public%20Module%20Imports.md)
 - [Configuring UI5 Web Components](./docs/Configuration.md)
 - [Creating a custom theme](./docs/CustomTheming.md)
-- [Building custom UI5 Web Components](./docs/dev/Developing%20Web%20Components.md)
+- [Creating custom UI5 Web Components](./docs/dev/Developing%20Web%20Components.md)
 - [Creating custom UI5 Web Components NPM packages](./docs/dev/Creating%20UI5%20Web%20Components%20Packages.md)
 - [F.A.Q.](./docs/FAQ.md)
 
@@ -92,7 +92,7 @@ of your application.
 
 ## Browser support
 
-UI5 Web Components are supported by all major modern browsers.
+UI5 Web Components are supported by all major modern browsers and can also run on IE11 with a [polyfill](https://www.webcomponents.org/polyfills).
 
 Browser | Support
 --------|--------
@@ -125,7 +125,7 @@ Project | NPM Package | Description
 `fiori` | [UI5 Web Components Fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori) | More semantic components, specific to the Fiori UX (shell bar, side navigation, etc...) that are commonly found in SAP apps.
 `icons` | [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons) | A rich icons collection (`SAP-icons`), suitable for enterprise-grade apps
 `base` | [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base) | The UI5 Web Components framework itself
-`theme-base` | [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base) | Theming assets (for example accessibility themes)
+`theme-base` | [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base) | Theming assets (the default theme and additional accessibility themes)
 `localization` | [UI5 Web Components Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization) | `i18n` functionality and `CLDR` assets
 
 ### How to run the project locally:
