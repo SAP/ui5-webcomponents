@@ -98,15 +98,21 @@ class DateRangePicker extends DatePicker {
 		this.responsivePopover = await this._respPopover();
 		const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
 		const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
-		dayPicker.addEventListener("item-mouseover", this._itemMouseoverHandler);
+		dayPicker.addEventListener("item-mouseover", event => {
+			this._itemMouseoverHandler(event, this);
+		});
 		dayPicker.addEventListener("daypickerrendered", this._keyboardNavigationHandler);
 
 		this._cleanHoveredAttributeFromVisibleItems(dayPicker);
 	}
 
-	_itemMouseoverHandler(event) {
+	_itemMouseoverHandler(event, dateRangePickerContext) {
+		if (dateRangePickerContext._oneTimeStampSelected) {
+			return;
+		}
+
 		const dayItems = event.target.shadowRoot.querySelectorAll(".ui5-dp-item");
-		const firstDateTimestamp = this._selectedDates[0];
+		const firstDateTimestamp = event.target._selectedDates[0];
 		const lastDateTimestamp = event.detail.target.parentElement.dataset.sapTimestamp;
 
 		for (let i = 0; i < dayItems.length; i++) {
@@ -307,13 +313,8 @@ class DateRangePicker extends DatePicker {
 
 	_handleCalendarChange(event) {
 		const newValue = event.detail.dates && event.detail.dates[0];
-		const calendarSelectedDates = this._calendar.selectedDates;
 
-		if (calendarSelectedDates[0] === newValue || calendarSelectedDates[calendarSelectedDates.length - 1] === newValue) {
-			this.closePicker();
-			return false;
-		}
-
+		this._oneTimeStampSelected = false;
 		if (this.isFirstDatePick) {
 			this.isFirstDatePick = false;
 			this._firstDateTimestamp = newValue;
@@ -327,6 +328,7 @@ class DateRangePicker extends DatePicker {
 				this._lastDateTimestamp = this._firstDateTimestamp;
 				this._firstDateTimestamp = newValue;
 			} else {
+				this._oneTimeStampSelected = newValue === this._firstDateTimestamp;
 				this._lastDateTimestamp = newValue;
 			}
 			const fireChange = this._handleCalendarSelectedDatesChange();
@@ -382,7 +384,7 @@ class DateRangePicker extends DatePicker {
 			lastDateString = format.format(new Date(lastDateValue * 1000));
 
 		if (firstDateValue) {
-			if (delimiter && delimiter !== "" && lastDateString && lastDateString !== firstDateString) {
+			if (delimiter && delimiter !== "" && lastDateString) {
 				value = firstDateString.concat(" ", delimiter, " ", lastDateString);
 			} else {
 				value = firstDateString;
