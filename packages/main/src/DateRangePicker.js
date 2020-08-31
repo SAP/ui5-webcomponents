@@ -94,24 +94,25 @@ class DateRangePicker extends DatePicker {
 		this.isFirstDatePick = true;
 		this._initialRendering = true;
 		this._oneTimeStampSelected = false; // Used to determine whether the first & last date is the same
+		this._dayPickerMouseoverHandler = this._itemMouseoverHandler.bind(this);
 	}
 
 	async onAfterRendering() {
-		this.daypicker = this.getDaypicker();
-		this._cleanHoveredAttributeFromVisibleItems(this.daypicker);
+		const daypicker = this.getDayPicker();
+		this._cleanHoveredAttributeFromVisibleItems(daypicker);
 		this._initialRendering = false;
 	}
 
 	async onEnterDOM() {
-		this.daypicker = await this.getDaypicker();
-		this.daypicker.addEventListener("item-mouseover", this._itemMouseoverHandler.bind(this));
-		this.daypicker.addEventListener("daypickerrendered", this._keyboardNavigationHandler);
+		const daypicker = await this.getDayPicker();
+		daypicker.addEventListener("item-mouseover", this._dayPickerMouseoverHandler);
+		daypicker.addEventListener("daypickerrendered", this._keyboardNavigationHandler);
 	}
 
 	async onExitDOM() {
-		this.daypicker = await this.getDaypicker();
-		this.daypicker.removeEventListener("item-mouseover", this.handleDayPickerHover);
-		this.daypicker.removeEventListener("daypickerrendered", this._keyboardNavigationHandler);
+		const daypicker = await this.getDayPicker();
+		daypicker.removeEventListener("item-mouseover", this._dayPickerMouseoverHandler);
+		daypicker.removeEventListener("daypickerrendered", this._keyboardNavigationHandler);
 	}
 
 	_itemMouseoverHandler(event) {
@@ -264,7 +265,7 @@ class DateRangePicker extends DatePicker {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat.concat(" ", this.delimiter, " ", this._displayFormat);
 	}
 
-	async getDaypicker() {
+	async getDayPicker() {
 		this.responsivePopover = await this._respPopover();
 		const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
 		return calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
@@ -387,8 +388,8 @@ class DateRangePicker extends DatePicker {
 			return;
 		}
 
-		this.daypicker = await this.getDaypicker();
-		const dayItems = this.daypicker.shadowRoot.querySelectorAll(".ui5-dp-item");
+		const daypicker = await this.getDayPicker();
+		const dayItems = daypicker.shadowRoot.querySelectorAll(".ui5-dp-item");
 
 		for (let i = 0; i < dayItems.length; i++) {
 			dayItems[i].removeAttribute("hovered");
