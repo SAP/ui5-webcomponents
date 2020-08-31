@@ -1,5 +1,5 @@
-commit 11af57eba423e1ec137569fee0629787d98c6b75
+commit cfd38e8f999fa948386a52612a65314111b4e6e3
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Aug 28 13:04:48 2020 +0300
+Date:   Mon Aug 31 15:41:47 2020 +0300
 
-    fix(ui5-tabcontainer): remove scroll from empty tabs (#2148)
+    chore(ui5-button): propagate more css properties to host element (#2161)
