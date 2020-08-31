@@ -92,6 +92,7 @@ class DateRangePicker extends DatePicker {
 	constructor() {
 		super();
 		this.isFirstDatePick = true;
+		this._initialRendering = true;
 	}
 
 	async onAfterRendering() {
@@ -104,6 +105,7 @@ class DateRangePicker extends DatePicker {
 		dayPicker.addEventListener("daypickerrendered", this._keyboardNavigationHandler);
 
 		this._cleanHoveredAttributeFromVisibleItems(dayPicker);
+		this._initialRendering = false;
 	}
 
 	_itemMouseoverHandler(event, dateRangePickerContext) {
@@ -204,6 +206,11 @@ class DateRangePicker extends DatePicker {
 			timestamp = focusTimestamp || oCalDate.valueOf() / 1000,
 			dates = this._splitValueByDelimiter(this.value);
 
+		if (this._initialRendering) {
+			this._oneTimeStampSelected = dates[0].trim() === dates[1].trim();
+			this._setValue(this.value);
+		}
+
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
 		if (this.value && this._checkValueValidity(this.value)) {
@@ -255,6 +262,11 @@ class DateRangePicker extends DatePicker {
 		const nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
+		const dates = this._splitValueByDelimiter(nextValue);
+
+		if (dates.length === 2) {
+			this._oneTimeStampSelected = dates[0].trim() === dates[1].trim();
+		}
 
 		if (isValid) {
 			this._setValue(nextValue);
