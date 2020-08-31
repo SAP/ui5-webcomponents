@@ -38,7 +38,7 @@ and http://localhost:8081/test-resources/pages/ for the `fiori` package.
 
 *4.1.* Read the dedicated tutorials for component developers
 
-- [Development Conventions and Guidelines](./Guidelines.md)
+- [Development Conventions and Guidelines](../Guidelines.md)
 - [Developing UI5 Web Components](./Developing&#32;Web&#32;Components.md)
 - [Testing UI5 Web Components](./Testing&#32;Web&#32;Components.md)
 - [What is Metadata?](./Metadata.md)
