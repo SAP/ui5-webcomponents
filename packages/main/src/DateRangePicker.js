@@ -93,23 +93,29 @@ class DateRangePicker extends DatePicker {
 		super();
 		this.isFirstDatePick = true;
 		this._initialRendering = true;
+		this._oneTimeStampSelected = false; // Used to determine whether the first & last date is the same
 	}
 
 	async onAfterRendering() {
-		this.responsivePopover = await this._respPopover();
-		const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
-		const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
-		dayPicker.addEventListener("item-mouseover", event => {
-			this._itemMouseoverHandler(event, this);
-		});
-		dayPicker.addEventListener("daypickerrendered", this._keyboardNavigationHandler);
-
-		this._cleanHoveredAttributeFromVisibleItems(dayPicker);
+		this.daypicker = this.getDaypicker();
+		this._cleanHoveredAttributeFromVisibleItems(this.daypicker);
 		this._initialRendering = false;
 	}
 
-	_itemMouseoverHandler(event, dateRangePickerContext) {
-		if (dateRangePickerContext._oneTimeStampSelected) {
+	async onEnterDOM() {
+		this.daypicker = await this.getDaypicker();
+		this.daypicker.addEventListener("item-mouseover", this._itemMouseoverHandler.bind(this));
+		this.daypicker.addEventListener("daypickerrendered", this._keyboardNavigationHandler);
+	}
+
+	async onExitDOM() {
+		this.daypicker = await this.getDaypicker();
+		this.daypicker.removeEventListener("item-mouseover", this.handleDayPickerHover);
+		this.daypicker.removeEventListener("daypickerrendered", this._keyboardNavigationHandler);
+	}
+
+	_itemMouseoverHandler(event) {
+		if (this._oneTimeStampSelected) {
 			return;
 		}
 
@@ -258,6 +264,12 @@ class DateRangePicker extends DatePicker {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat.concat(" ", this.delimiter, " ", this._displayFormat);
 	}
 
+	async getDaypicker() {
+		this.responsivePopover = await this._respPopover();
+		const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+		return calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
+	}
+
 	async _handleInputChange() {
 		const nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
@@ -370,12 +382,13 @@ class DateRangePicker extends DatePicker {
 		return true;
 	}
 
-	_cleanHoveredAttributeFromVisibleItems(dayPicker) {
+	async _cleanHoveredAttributeFromVisibleItems(dayPicker) {
 		if (!dayPicker) {
 			return;
 		}
 
-		const dayItems = dayPicker.shadowRoot.querySelectorAll(".ui5-dp-item");
+		this.daypicker = await this.getDaypicker();
+		const dayItems = this.daypicker.shadowRoot.querySelectorAll(".ui5-dp-item");
 
 		for (let i = 0; i < dayItems.length; i++) {
 			dayItems[i].removeAttribute("hovered");
