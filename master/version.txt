@@ -1,5 +1,9 @@
-commit 66722b2527763c5a939f17d30c2324e50b8c9f6e
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Sep 1 09:29:26 2020 +0300
+commit 09863d86fee8f8cf6320a2fc2abc5aed529c5fe7
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Sep 1 10:46:27 2020 +0300
 
-    fix(ui5-daterange-picker): enable selection of single day (#2157)
+    fix(ui5-table-row): announce entire row and columns (#2164)
+    
+    Upon accessing the row, all cells and the respective columns they are within, should be announced in the following order: column - cell, column - cell, etc.
+    
+    FIXES: #2160
