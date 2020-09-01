@@ -1,5 +1,10 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isShow,
+	isBackSpace,
+	isLeft,
+	isRight,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
@@ -146,6 +151,8 @@ class MultiInput extends Input {
 	}
 
 	_tokenizerFocusOut(event) {
+		this.tokenizer._tokens.forEach(token => { token.selected = false; });
+
 		if (!this.contains(event.relatedTarget)) {
 			this.tokenizer.scrollToStart();
 		}
@@ -164,8 +171,56 @@ class MultiInput extends Input {
 	_onkeydown(event) {
 		super._onkeydown(event);
 
+		if (isLeft(event)) {
+			this._skipOpenSuggestions = true;
+
+			return this._handleLeft(event);
+		}
+
+		this._skipOpenSuggestions = false;
+
+		if (isBackSpace(event) && event.target.value === "") {
+			event.preventDefault();
+
+			const lastTokenIndex = this.tokenizer._tokens.length - 1;
+
+			if (lastTokenIndex < 0) {
+				return;
+			}
+
+			this.tokenizer._tokens[lastTokenIndex].focus();
+			this.tokenizer._itemNav.currentIndex = lastTokenIndex;
+		}
+
 		if (isShow(event)) {
 			this.valueHelpPress();
+		}
+	}
+
+	_onTokenizerKeydown(event) {
+		if (isRight(event)) {
+			const lastTokenIndex = this.tokenizer._tokens.length - 1;
+
+			if (this.tokenizer._tokens[lastTokenIndex] === document.activeElement) {
+				setTimeout(() => {
+					this.focus();
+				}, 0);
+			}
+		}
+	}
+
+	_handleLeft(event) {
+		const input = this.getDomRef().querySelector(`input`);
+		const cursorPosition = input.selectionStart;
+		const lastTokenIndex = this.tokenizer._tokens.length - 1;
+
+		if (cursorPosition === 0) {
+			if (lastTokenIndex < 0) {
+				return;
+			}
+
+			this.tokenizer._tokens[lastTokenIndex].focus();
+			this.tokenizer._itemNav.currentIndex = lastTokenIndex;
 		}
 	}
 
@@ -185,7 +240,7 @@ class MultiInput extends Input {
 		const valueHelpPressed = this._valueHelpIconPressed;
 		const nonEmptyValue = this.value !== "";
 
-		return parent && nonEmptyValue && !valueHelpPressed;
+		return parent && nonEmptyValue && !valueHelpPressed && !this._skipOpenSuggestions;
 	}
 
 	lastItemDeleted() {

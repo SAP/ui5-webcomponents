@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import {
 	isBackSpace,
-	isEnter,
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -52,6 +51,20 @@ const metadata = {
 		 * @private
 		 */
 		overflows: { type: Boolean },
+
+		/** Defines whether the <code>ui5-token</code> is selected or not.
+		 *
+		 * @type {boolean}
+		 * @public
+		 */
+		selected: { type: Boolean },
+
+		/**
+		 * Defines the tabIndex of the component.
+		 * @type {string}
+		 * @private
+		 */
+		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
 	},
 
 	events: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
@@ -70,6 +83,14 @@ const metadata = {
 				"delete": { type: Boolean },
 			},
 		},
+
+		/**
+		 * Fired when the a <code>ui5-token</code> is selected by user interaction with mouse or clicking space.
+		 *
+		 * @event
+		 * @public
+		 */
+		select: {},
 	},
 };
 
@@ -114,6 +135,14 @@ class Token extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
+	_handleSelect() {
+		if (!this.selected) {
+			this._select();
+		} else {
+			this.selected = false;
+		}
+	}
+
 	_select() {
 		this.fireEvent("select");
 		this.selected = true;
@@ -136,9 +165,10 @@ class Token extends UI5Element {
 			});
 		}
 
-		if (isEnter(event) || isSpace(event)) {
-			this.fireEvent("select", {});
-			this.selected = true;
+		if (isSpace(event)) {
+			event.preventDefault();
+
+			this._handleSelect();
 		}
 	}
 

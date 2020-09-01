@@ -7,6 +7,7 @@
 		.popoverMinWidth={{_inputWidth}}
 		?expanded="{{expandedTokenizer}}"
 		show-more
+		@keydown="{{_onTokenizerKeydown}}"
 		@show-more-items-press={{showMorePress}}
 		@token-delete={{tokenDelete}}
 		@focusout="{{_tokenizerFocusOut}}"
