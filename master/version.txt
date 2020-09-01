@@ -1,9 +1,5 @@
-commit 09863d86fee8f8cf6320a2fc2abc5aed529c5fe7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Sep 1 10:46:27 2020 +0300
+commit 3d4cc0c428a7f4beff22ed34433fa3e71e4223be
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Sep 1 14:42:29 2020 +0300
 
-    fix(ui5-table-row): announce entire row and columns (#2164)
-    
-    Upon accessing the row, all cells and the respective columns they are within, should be announced in the following order: column - cell, column - cell, etc.
-    
-    FIXES: #2160
+    chore: Update README.md and add Scoping.md (#2158)

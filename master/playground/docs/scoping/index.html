@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Tab Container - UI5 Web Components</title>
+    <title>Scoping - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Tab Container | UI5 Web Components</title>
+<title>Scoping | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Tab Container" />
+<meta property="og:title" content="Scoping" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/TabContainer/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/TabContainer/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/docs/scoping/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/docs/scoping/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/TabContainer/","headline":"Tab Container","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/docs/scoping/","headline":"Scoping","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -286,7 +286,7 @@
     
       
         
-          <li class="navigation-list-item">
+          <li class="navigation-list-item active">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs" class="navigation-list-link">Documentation</a>
             
@@ -621,9 +621,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/scoping/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/scoping/" class="navigation-list-link active">
                         <div class="component-name">Scoping</div>
                         
                       </a>
@@ -1106,7 +1106,7 @@
     
       
         
-          <li class="navigation-list-item active">
+          <li class="navigation-list-item">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/components" class="navigation-list-link">Components</a>
             
@@ -1765,9 +1765,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/TabContainer/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/TabContainer/" class="navigation-list-link">
                         <div class="component-name">Tab Container</div>
                         
                       </a>
@@ -2106,528 +2106,149 @@
             <nav class="breadcrumb-nav">
               <ol class="breadcrumb-nav-list">
                 
-                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/docs">Documentation</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Tab Container</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Scoping</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <header>
-	<h2 class="control-header">TabContainer</h2>
-</header>
+          <h1 id="micro-frontends-and-custom-elements-scoping">Micro-frontends and Custom elements scoping</h1>
 
-<div class="component-package">@ui5/webcomponents</div>
+<h2 id="what-does-scoping-mean">What does <code class="highlighter-rouge">scoping</code> mean?</h2>
 
-<div class="control-tag">&lt;ui5-tabcontainer&gt;</div>
+<p>The <code class="highlighter-rouge">scoping</code> feature lets you add an arbitrary suffix to the names of all UI5 Web Components’ custom elements:</p>
 
-<section>
-	<h3>Basic TabContainer</h3>
-	<div class="snippet">
-		<ui5-tabcontainer class="full-width" show-overflow>
-			<ui5-tab icon="menu" text="Tab 1">
-				<ui5-label>Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum.</ui5-label>
-			</ui5-tab>
-			<ui5-tab icon="activities" text="Tab 2" selected>
-				<ui5-label>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga magni facere error dicta beatae optio repudiandae vero, quidem voluptatibus perferendis eum maiores rem tempore voluptates aperiam eos enim delectus unde.</ui5-label>
-			</ui5-tab>
-			<ui5-tab icon="add" text="Tab 3">
-				<ui5-label>Dignissimos debitis architecto temporibus doloribus reiciendis libero rem nemo, nobis quidem dolor praesentium, beatae voluptatum iste eveniet, nam voluptatem obcaecati ducimus dolore.</ui5-label>
-			</ui5-tab>
-			<ui5-tab icon="calendar" text="Tab 4">
-				<ui5-label>Possimus ipsa eos impedit aut nisi repellendus recusandae, temporibus ducimus, necessitatibus tenetur facere, minima vero fugit rem reiciendis natus ratione quia numquam?</ui5-label>
-			</ui5-tab>
-			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab icon="action-settings" text="Tab 5">
-				<ui5-label>Explicabo laboriosam ab consequuntur, qui dignissimos inventore sapiente ullam quaerat ratione libero vero, beatae laudantium! Aperiam numquam tempore, laudantium perferendis recusandae autem.</ui5-label>
-			</ui5-tab>
-		</ui5-tabcontainer>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">class=</span><span class="s">"full-width"</span> <span class="na">show-overflow</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 1"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;ui5-label&gt;</span>Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum.<span class="nt">&lt;/ui5-label&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"activities"</span> <span class="na">text=</span><span class="s">"Tab 2"</span> <span class="na">selected</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;ui5-label&gt;</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga magni facere error dicta beatae optio repudiandae vero, quidem voluptatibus perferendis eum maiores rem tempore voluptates aperiam eos enim delectus unde.<span class="nt">&lt;/ui5-label&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"add"</span> <span class="na">text=</span><span class="s">"Tab 3"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;ui5-label&gt;</span>Dignissimos debitis architecto temporibus doloribus reiciendis libero rem nemo, nobis quidem dolor praesentium, beatae voluptatum iste eveniet, nam voluptatem obcaecati ducimus dolore.<span class="nt">&lt;/ui5-label&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"calendar"</span> <span class="na">text=</span><span class="s">"Tab 4"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;ui5-label&gt;</span>Possimus ipsa eos impedit aut nisi repellendus recusandae, temporibus ducimus, necessitatibus tenetur facere, minima vero fugit rem reiciendis natus ratione quia numquam?<span class="nt">&lt;/ui5-label&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab-separator&gt;&lt;/ui5-tab-separator&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"action-settings"</span> <span class="na">text=</span><span class="s">"Tab 5"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;ui5-label&gt;</span>Explicabo laboriosam ab consequuntur, qui dignissimos inventore sapiente ullam quaerat ratione libero vero, beatae laudantium! Aperiam numquam tempore, laudantium perferendis recusandae autem.<span class="nt">&lt;/ui5-label&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<p>Example:</p>
 
-<!-- text only -->
-<section>
-	<h3>TabContainer with text only tabs</h3>
-	<div class="snippet">
-		<ui5-tabcontainer class="full-width" collapsed fixed show-overflow>
-			<ui5-tab text="Home"></ui5-tab>
-			<ui5-tab text="What's new" selected></ui5-tab>
-			<ui5-tab text="Who are we"></ui5-tab>
-			<ui5-tab text="About"></ui5-tab>
-			<ui5-tab text="Contacts"></ui5-tab>
-		</ui5-tabcontainer>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">class=</span><span class="s">"full-width"</span> <span class="na">collapsed</span> <span class="na">fixed</span> <span class="na">show-overflow</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Home"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"What's new"</span> <span class="na">selected</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Who are we"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"About"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
-<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Contacts"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
-<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import { setCustomElementsScopingSuffix } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+setCustomElementsScopingSuffix("demo");
+</code></pre></div></div>
 
-<!-- text and additional-text -->
-<section>
-	<h3>TabContainer with text and additional-text</h3>
-	<div class="snippet">
-		<ui5-tabcontainer show-overflow="true" collapsed fixed>
-			<ui5-tab text="Info" additional-text="3">
-			</ui5-tab>
-			<ui5-tab text="Attachments" additional-text="24" selected>
-			</ui5-tab>
-			<ui5-tab text="Notes" additional-text="16">
-			</ui5-tab>
-			<ui5-tab text="People" additional-text="34">
-			</ui5-tab>
-		</ui5-tabcontainer>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">show-overflow=</span><span class="s">"true"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Info"</span> <span class="na">additional-text=</span><span class="s">"3"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Attachments"</span> <span class="na">additional-text=</span><span class="s">"24"</span> <span class="na">selected</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Notes"</span> <span class="na">additional-text=</span><span class="s">"16"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"People"</span> <span class="na">additional-text=</span><span class="s">"34"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<p>and then all names can only be used with the supplied suffix:</p>
 
-<!-- Inline tabs -->
-<section>
-	<h3>TabContainer with tabLayout="Inline"</h3>
-	<div class="snippet">
-		<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
-			<ui5-tab text="Monitors" additional-text="(10)">
-			</ui5-tab>
-			<ui5-tab text="Cameras" additional-text="(2)" selected>
-			</ui5-tab>
-			<ui5-tab text="Rooms" additional-text="(16)">
-			</ui5-tab>
-		</ui5-tabcontainer>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-card-demo&gt;</span>
+	<span class="nt">&lt;ui5-title-demo&gt;</span>This card is scoped<span class="nt">&lt;/ui5-title-demo&gt;</span>
+	<span class="nt">&lt;ui5-button-demo&gt;</span>Click me<span class="nt">&lt;/ui5-button-demo&gt;</span>
+<span class="nt">&lt;/ui5-card-demo&gt;</span>
+</code></pre></div></div>
 
-		<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
-			<ui5-tab icon="laptop" ext="Monitors" additional-text="(10)">
-			</ui5-tab>
-			<ui5-tab icon="video" text="Cameras" additional-text="(2)" selected>
-			</ui5-tab>
-			<ui5-tab icon="home" text="Rooms" additional-text="(16)">
-			</ui5-tab>
-		</ui5-tabcontainer>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">tab-layout=</span><span class="s">"Inline"</span> <span class="na">show-overflow=</span><span class="s">"true"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Monitors"</span> <span class="na">additional-text=</span><span class="s">"(10)"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Cameras"</span> <span class="na">additional-text=</span><span class="s">"(2)"</span> <span class="na">selected</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Rooms"</span> <span class="na">additional-text=</span><span class="s">"(16)"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
+<p>Trying to use them with the standard names will not work (the custom elements won’t be upgraded), so for example the following:</p>
 
-<span class="nt">&lt;ui5-tabcontainer</span> <span class="na">tab-layout=</span><span class="s">"Inline"</span> <span class="na">show-overflow=</span><span class="s">"true"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"laptop"</span> <span class="na">ext=</span><span class="s">"Monitors"</span> <span class="na">additional-text=</span><span class="s">"(10)"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"video"</span> <span class="na">text=</span><span class="s">"Cameras"</span> <span class="na">additional-text=</span><span class="s">"(2)"</span> <span class="na">selected</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"home"</span> <span class="na">text=</span><span class="s">"Rooms"</span> <span class="na">additional-text=</span><span class="s">"(16)"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;/ui5-tab&gt;</span>
-<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-button&gt;</span>Click me<span class="nt">&lt;/ui5-button&gt;</span>
+</code></pre></div></div>
+
+<p>will not have any effect.</p>
+
+<h2 id="when-do-i-need-to-use-the-scoping-feature">When do I need to use the <code class="highlighter-rouge">scoping</code> feature?</h2>
+
+<p>The <code class="highlighter-rouge">Scoping</code> feature is completely optional. It is not needed for application development, but it is strongly recommended when building <strong>libraries</strong> and <strong>micro-frontends</strong>!</p>
+
+<p>It ensures that the custom elements that your code uses have not been already upgraded by another library or an older version of UI5 Web Components.</p>
+
+<p>If your code may be loaded on demand by unknown applications as a third-party service for example, there is always the risk that the app,
+or another third-party library, loaded by the app, may use an older version of UI5 Web Components which means that all custom elements will be
+upgraded with this version, while your code may rely on newer features.</p>
+
+<p>Imagine the following integration scenario of an app, using several third-party libraries, loaded on demand (and not bundled with the app):</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nt">&lt;body&gt;</span>
+ 
+ 	<span class="c">&lt;!-- Application code, using version 1.0.1 --&gt;</span>
+ 	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"application-container"</span><span class="nt">&gt;</span>
+ 		<span class="nt">&lt;ui5-title&gt;</span>This is the new app with many third-party extensions!<span class="nt">&lt;/ui5-title&gt;</span>
+ 		<span class="nt">&lt;ui5-card&gt;</span>
+ 			<span class="nt">&lt;ui5-button&gt;</span>Hello<span class="nt">&lt;/ui5-button&gt;</span>
+ 			<span class="nt">&lt;ui5-input&gt;&lt;/ui5-input&gt;</span>
+ 		<span class="nt">&lt;/ui5-card&gt;</span>
+ 	<span class="nt">&lt;/div&gt;</span>
+ 
+ 	<span class="c">&lt;!-- Code inserted by "common help" library, using version 1.2.0 --&gt;</span>
+ 	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"common-help-container"</span><span class="nt">&gt;</span>
+ 		<span class="nt">&lt;ui5-button-chlp</span> <span class="na">new-button-prop=</span><span class="s">"1"</span><span class="nt">&gt;</span>Help Menu<span class="nt">&lt;/ui5-button-chlp&gt;</span>
+ 		<span class="nt">&lt;ui5-input-chlp</span> <span class="na">value=</span><span class="s">"Type your question"</span><span class="nt">&gt;&lt;/ui5-input-chlp&gt;</span>
+ 	<span class="nt">&lt;/div&gt;</span>
+ 
+ 	<span class="c">&lt;!-- Code inserted by "global footer" library, using version 1.3.0 --&gt;</span>
+ 	<span class="nt">&lt;footer</span> <span class="na">id=</span><span class="s">"global-footer-container"</span><span class="nt">&gt;</span>
+ 		<span class="nt">&lt;global-footer-main&gt;</span>
+ 			<span class="nt">&lt;ui5-button-glob-foot</span> <span class="na">new-button-prop=</span><span class="s">"2"</span> <span class="na">even-newer-button-prop=</span><span class="s">"3"</span><span class="nt">&gt;</span>Profile<span class="nt">&lt;/ui5-button-glob-foot&gt;</span>
+ 			<span class="nt">&lt;ui5-link-glob-foot&gt;</span>Contacts<span class="nt">&lt;/ui5-link-glob-foot&gt;</span>
+ 		<span class="nt">&lt;/global-footer-main&gt;</span>
+ 	<span class="nt">&lt;/footer&gt;</span>
+ 
+ <span class="nt">&lt;/body&gt;</span>
+</code></pre></div></div>
+
+<p>In the example above:</p>
+<ul>
+  <li>The app itself is using an old version (<code class="highlighter-rouge">1.0.1</code>) of UI5 Web Components (which has already upgraded the <code class="highlighter-rouge">ui5-card</code>, <code class="highlighter-rouge">ui5-button</code> and <code class="highlighter-rouge">ui5-input</code> tags)</li>
+  <li>The imaginary “common help” library, based on a newer version (<code class="highlighter-rouge">1.2.0</code>), uses the scoping suffix <code class="highlighter-rouge">chlp</code></li>
+  <li>The imaginary “global footer” library, based on an even newer version (<code class="highlighter-rouge">1.3.0</code>), uses the scoping suffix <code class="highlighter-rouge">glob-foot</code></li>
+</ul>
+
+<p>This allows the libraries to use new <code class="highlighter-rouge">ui5-button</code> properties, such as <code class="highlighter-rouge">newButtonProp</code> and <code class="highlighter-rouge">evenNewerButtonProp</code>, that are not found in older versions.</p>
+
+<h2 id="fine-tuning-scoping">Fine-tuning scoping</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">setCustomElementsScopingSuffix</span><span class="p">,</span> <span class="nx">setCustomElementsScopingRules</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/CustomElementsScope.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">setCustomElementsScopingSuffix</span><span class="p">(</span><span class="dl">"</span><span class="s2">demo</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">setCustomElementsScopingRules</span><span class="p">({</span><span class="na">include</span><span class="p">:</span> <span class="p">[</span><span class="sr">/^ui5-/</span><span class="p">],</span> <span class="na">exclude</span><span class="p">:</span> <span class="p">[</span><span class="sr">/^ui5-my-/</span><span class="p">,</span> <span class="sr">/-test-/</span><span class="p">]});</span>
+</code></pre></div></div>
+
+<p>By default all UI5 Web Components, starting with <code class="highlighter-rouge">ui5-</code> are scoped when you call <code class="highlighter-rouge">setCustomElementsScopingSuffix</code>. 
+However, you have full control over which tags are scoped and which not. In the example above, tags starting with <code class="highlighter-rouge">ui5-my-</code> and tags
+having the word <code class="highlighter-rouge">-test-</code> in their name are not scoped.</p>
+
+<p>Setting scoping rules is handy for example if your library uses both standard and custom UI5 Web Components, and you don’t want
+to scope the custom ones (as no disambiguation will be necessary for them).</p>
 
 
-    <div class="page-container">
-      <div class="api-container">
-        <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3>
-
-The <code>ui5-tabcontainer</code> represents a collection of tabs with associated content. Navigation through the tabs changes the content display of the currently active content area. A tab can be labeled with text only, or icons with text.
-
-<h3>Structure</h3>
-
-The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code>ui5-tab</code> - contains all the information on an item (text and icon)</li> <li><code>ui5-tab-separator</code> - used to separate tabs with a vertical line</li> </ul>
-
-<h3>ES6 import</h3>
-
-<code>import "@ui5/webcomponents/dist/TabContainer";</code> <br> <code>import "@ui5/webcomponents/dist/Tab";</code> (for <code>ui5-tab</code>) <br> <code>import "@ui5/webcomponents/dist/TabSeparator";</code> (for <code>ui5-tab-separator</code>)
-          <section class="component-api space-top">
-            
-                  <h3 class="comment-api-title" >Properties/Attributes</h3>
-                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Type</div>
-                      <div class="cell api-table-header-cell">Default Value</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          collapsed
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the tab content is collapsed.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          fixed
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the tabs are in a fixed state that is not expandable/collapsible by user interaction.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          showOverflow
-                            <br>
-                            <code>show-overflow</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the overflow select list is displayed. <br><br> The overflow select list represents a list, where all tab filters are displayed so that it's easier for the user to select a specific tab filter.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          tabLayout
-                            <br>
-                            <code>tab-layout</code>
-                        </div>
-                        <div class="cell api-table-content-cell">TabLayout</div>
-                        <div class="cell api-table-content-cell">&quot;Standard&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab.
-            
-            <br><br> <b>Note:</b> The <code>main text</code> and the <code>additionalText</code> would be displayed vertically by defualt, but when set to <code>Inline</code>, they would be displayed horizontally.
-            
-            <br><br> Available options are: <ul> <li><code>Standard</code></li> <li><code>Inline</code></li> <ul>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          tabsPlacement
-                            <br>
-                            <code>tabs-placement</code>
-                        </div>
-                        <div class="cell api-table-content-cell">TabContainerTabsPlacement</div>
-                        <div class="cell api-table-content-cell">&quot;Top&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the placement of the tab strip (tab buttons area) relative to the actual tabs' content. <br><br> <b>Note:</b> By default the tab strip is displayed above the tabs' content area and this is the recommended layout for most scenarios. Set to <code>Bottom</code> only when the <code>ui5-tabcontainer</code> is at the bottom of the page and you want the tab strip to act as a menu.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.7</div>
-                        </div>
-                      </div>
-            
-                  </div>
-            
-                <h3 class="comment-api-title space-top" >Slots</h3>
-            	<p class="small-space-top" >
-            	  This Element provides slot(s). This means it can display its child nodes.<br>
-            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
-            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
-            	</p>
-            
-                <div class="small-space-top api-table">
-                  <div class="head api-table-header-roll">
-                    <div class="cell api-table-header-cell">Slot</div>
-                    <div class="cell api-table-header-cell">Type</div>
-                    <div class="cell api-table-header-cell">Description</div>
-                  </div>
-            
-                    <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the tabs. <br><br> <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.</div>
-                    </div>
-            
-                </div>
-            
-                  <h3 class="comment-api-title space-top">Events</h3>
-                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">tab-select</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when a tab is selected.
-                        </div>
-                      </div>
-            
-                        <tr class="api-table-event-param">
-                          <div class="api-table-content-event-params-wrapper">
-                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">tab</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> The selected <code>tab</code>.</div>
-                          </div>
-                        </tr>
-                        <tr class="api-table-event-param">
-                          <div class="api-table-content-event-params-wrapper">
-                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">tabIndex</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Number <br/> <strong class="api-table-event-description bold">description:</strong> The selected <code>tab</code> index.</div>
-                          </div>
-                        </tr>
-                  </div>
-            
-            
-          </section>
-        </section>
-      </div>
-    </div>
-      <div class="api-container appended-doc">
-        <h1>Tab</h1>
-        <section class="component-description">
-          The <code>ui5-tab</code> represents a selectable item inside a <code>ui5-tabcontainer</code>. It defines both the item in the tab strip (top part of the <code>ui5-tabcontainer</code>) and the content that is presented to the user once the tab is selected.
-          <section class="component-api space-top">
-            
-                  <h3 class="comment-api-title" >Properties/Attributes</h3>
-                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Type</div>
-                      <div class="cell api-table-header-cell">Default Value</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          additionalText
-                            <br>
-                            <code>additional-text</code>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Represents the "additionalText" text, which is displayed in the tab filter.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          disabled
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Enabled items can be selected.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          icon
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the icon source URI to be displayed as graphical element within the <code>ui5-tab</code>. The SAP-icons font provides numerous built-in icons. See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          selected
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Specifies if the <code>ui5-tab</code> is selected.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          semanticColor
-                            <br>
-                            <code>semantic-color</code>
-                        </div>
-                        <div class="cell api-table-content-cell">SemanticColor</div>
-                        <div class="cell api-table-content-cell">&quot;Default&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>ui5-tab</code> semantic color. <br><br> The color is applied to: <ul> <li>the <code>ui5-tab</code> icon</li> <li>the <code>text</code> when <code>ui5-tab</code> overflows</li> <li>the tab selection line</li> </ul>
-            
-            <br><br> Available semantic colors are: <code>"Default"</code>, <code>"Neutral"</code>, <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
-            
-            <br><br> <b>Note:</b> The color value depends on the current theme.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          stableDomRef
-                            <br>
-                            <code>stable-dom-ref</code>
-                        </div>
-                        <div class="cell api-table-content-cell">undefined</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the stable selector that you can use via getStableDomRef method.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          text
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            The text to be displayed for the item.
-                        </div>
-                      </div>
-            
-                  </div>
-            
-                <h3 class="comment-api-title space-top" >Slots</h3>
-            	<p class="small-space-top" >
-            	  This Element provides slot(s). This means it can display its child nodes.<br>
-            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
-            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
-            	</p>
-            
-                <div class="small-space-top api-table">
-                  <div class="head api-table-header-roll">
-                    <div class="cell api-table-header-cell">Slot</div>
-                    <div class="cell api-table-header-cell">Type</div>
-                    <div class="cell api-table-header-cell">Description</div>
-                  </div>
-            
-                    <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the tab content.</div>
-                    </div>
-            
-                </div>
-            
-            
-          </section>
-        </section>
-      </div>
-      <div class="api-container appended-doc">
-        <h1>TabSeparator</h1>
-        <section class="component-description">
-          The <code>ui5-tab-separator</code> represents a vertical line to separate tabs inside a <code>ui5-tabcontainer</code>.
-          <section class="component-api space-top">
-            
-            
-            
-            
-          </section>
-        </section>
-      </div>
-    <footer class="footer-wrapper">
-      <div class="footer-links">
+<footer class="footer-wrapper">
+    <div class="footer-links">
         <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
         <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
-      </div>
-      <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
-    </footer>
-
-
-<div class="settings" id="settings-button">
-    <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"
-    width="340.274px" height="340.274px" viewBox="0 0 340.274 340.274" style="enable-background:new 0 0 340.274 340.274;"
-    xml:space="preserve">
-        <path d="M293.629,127.806l-5.795-13.739c19.846-44.856,18.53-46.189,14.676-50.08l-25.353-24.77l-2.516-2.12h-2.937
-        c-1.549,0-6.173,0-44.712,17.48l-14.184-5.719c-18.332-45.444-20.212-45.444-25.58-45.444h-35.765
-        c-5.362,0-7.446-0.006-24.448,45.606l-14.123,5.734C86.848,43.757,71.574,38.19,67.452,38.19l-3.381,0.105L36.801,65.032
-        c-4.138,3.891-5.582,5.263,15.402,49.425l-5.774,13.691C0,146.097,0,147.838,0,153.33v35.068c0,5.501,0,7.44,46.585,24.127
-        l5.773,13.667c-19.843,44.832-18.51,46.178-14.655,50.032l25.353,24.8l2.522,2.168h2.951c1.525,0,6.092,0,44.685-17.516
-        l14.159,5.758c18.335,45.438,20.218,45.427,25.598,45.427h35.771c5.47,0,7.41,0,24.463-45.589l14.195-5.74
-        c26.014,11,41.253,16.585,45.349,16.585l3.404-0.096l27.479-26.901c3.909-3.945,5.278-5.309-15.589-49.288l5.734-13.702
-        c46.496-17.967,46.496-19.853,46.496-25.221v-35.029C340.268,146.361,340.268,144.434,293.629,127.806z M170.128,228.474
-        c-32.798,0-59.504-26.187-59.504-58.364c0-32.153,26.707-58.315,59.504-58.315c32.78,0,59.43,26.168,59.43,58.315
-        C229.552,202.287,202.902,228.474,170.128,228.474z"></path>
-    </svg>
-</div>
-<ui5-dialog id="settings-dialog" header-text="Settings">
-    <section class="settings-form">
-        <div class="settings-content">
-            <div class="setting">
-                <ui5-label for="themeSwitch">Theme:</ui5-label>
-                <ui5-select id="themeSwitch">
-                    <ui5-option value="sap_fiori_3">Quartz Light</ui5-option>
-                    <ui5-option value="sap_fiori_3_dark">Quartz Dark</ui5-option>
-                    <ui5-option value="sap_fiori_3_hcb">Quartz High Contrast Black</ui5-option>
-                    <ui5-option value="sap_fiori_3_hcw">Quartz High Contrast White</ui5-option>
-                    <ui5-option value="sap_belize">Belize</ui5-option>
-                    <ui5-option value="sap_belize_hcb">High Contrast Black</ui5-option>
-                    <ui5-option value="sap_belize_hcw">High Contrast White</ui5-option>
-                </ui5-select>
-            </div>
-            <div class="setting">
-                <ui5-label for="contentDensitySwitch">Content Density:</ui5-label>
-                <ui5-select id="contentDensitySwitch">
-                    <ui5-option>Cozy</ui5-option>
-                    <ui5-option>Compact</ui5-option>
-                </ui5-select>
-            </div>
-            <div class="setting">
-                <ui5-label for="textDirectionSwitch">Text Direction:</ui5-label>
-                <ui5-select id="textDirectionSwitch">
-                    <ui5-option>LTR</ui5-option>
-                    <ui5-option>RTL</ui5-option>
-                </ui5-select>
-            </div>
-        </div>
-    </section>
-    <div slot="footer" class="closing-buttons">
-        <ui5-button id="applyButton" design="Emphasized" class="padding-end">Apply</ui5-button>
-        <ui5-button id="cancelButton">Cancel</ui5-button>
     </div>
-</ui5-dialog>
-
-<!-- UI5 Web Components Assests -->
-<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
-<script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
-<script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
-
-<link rel="stylesheet" href="https://sap.github.io/ui5-webcomponents/master/assets/css/api.css">
+    <img src="https://sap.github.io/ui5-webcomponents/master/ui5-webcomponents/assets/images/sap-logo-svg.svg" alt="SAP Logo" />
+</footer>
 
 <style>
-    pre {
-        margin-bottom: 0;
+    .footer-wrapper {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border-top: 1px solid #D8D8D8;
+        font-family: "72-Regular";
     }
-    pre.highlight {
-        padding: 1.5rem;
-        padding-bottom: 0;
-        border: 0.0625rem solid #C1C1C1;
+
+    .footer-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        font-family: "72-Regular";
+    }
+
+    .footer-links > a {
+        color: #333333;
+        text-decoration: none;
+    }
+
+    .footer-links > a:hover {
+        text-decoration: underline;
+    }
+
+    .separator::after {
+        content: "|";
+        padding: 0 1rem;
+        color: #D8D8D8;
+        text-decoration: none;
     }
 </style>
 
