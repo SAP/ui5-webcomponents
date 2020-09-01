@@ -20,7 +20,7 @@ import {
 	isShow,
 	isF4,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
@@ -762,6 +762,10 @@ class DatePicker extends UI5Element {
 
 	get showFooter() {
 		return this.phone;
+	}
+
+	get _isIE() {
+		return isIE();
 	}
 
 	getFormat() {

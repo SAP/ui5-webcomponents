@@ -56,6 +56,9 @@
 	white-space: inherit;
 	overflow: inherit;
 	text-overflow: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+	line-height: inherit;
 }
 
 :host(:not([active]):hover),
