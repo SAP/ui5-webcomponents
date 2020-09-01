@@ -1,5 +1,5 @@
-commit cfd38e8f999fa948386a52612a65314111b4e6e3
+commit 66722b2527763c5a939f17d30c2324e50b8c9f6e
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Aug 31 15:41:47 2020 +0300
+Date:   Tue Sep 1 09:29:26 2020 +0300
 
-    chore(ui5-button): propagate more css properties to host element (#2161)
+    fix(ui5-daterange-picker): enable selection of single day (#2157)
