@@ -502,16 +502,15 @@ class DayPicker extends UI5Element {
 		}
 
 		calDate.setDate(1);
-
 		if (!start) {
 			// set the day to be the last day of the current month
 			calDate.setMonth(calDate.getMonth() + 1, 0);
 		}
 
 		currentTimestamp = calDate.valueOf() / 1000;
-		const newItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === currentTimestamp);
+		const newItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === currentTimestamp);
 
-		this._itemNav.currentIndex = newItem._index;
+		this._itemNav.currentIndex = newItemIndex;
 		this._itemNav.focusCurrent();
 	}
 
@@ -544,10 +543,6 @@ class DayPicker extends UI5Element {
 		newCalDate.setYear(newDate.getYear());
 		newCalDate.setMonth(newDate.getMonth());
 		currentTimestamp = (newDate.valueOf() / 1000);
-
-		if (newCalDate.getYear() < DEFAULT_MIN_YEAR || newCalDate.getYear() > DEFAULT_MAX_YEAR) {
-			return;
-		}
 
 		if (this._isOutOfSelectableRange(newCalDate._oUDate.oDate)) {
 			return;
@@ -740,10 +735,6 @@ class DayPicker extends UI5Element {
 		newCalDate.setMonth(newDate.getMonth());
 		currentTimestamp = (newDate.valueOf() / 1000);
 
-		if (newCalDate.getYear() < DEFAULT_MIN_YEAR || newCalDate.getYear() > DEFAULT_MAX_YEAR) {
-			return;
-		}
-
 		if (this._isOutOfSelectableRange(newCalDate._oUDate.oDate)) {
 			return;
 		}
@@ -764,8 +755,8 @@ class DayPicker extends UI5Element {
 		this.fireEvent("navigate", { timestamp });
 		await RenderScheduler.whenFinished();
 
-		const newItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === timestamp);
-		this._itemNav.currentIndex = parseInt(newItem._index);
+		const newItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === timestamp);
+		this._itemNav.currentIndex = newItemIndex;
 
 		this._itemNav.focusCurrent();
 	}
