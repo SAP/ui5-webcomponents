@@ -11,7 +11,7 @@
  - A rich set of **enterprise-grade reusable UI elements** driven by a **lightweight framework** (~20K gzipped).
  - Suitable for building anything from **static web sites** to **complex web applications**.
  - Usable with any current or future **web development framework** (React, Angular, Vue, etc...).
- - Implement the [Fiori design](https://experience.sap.com/fiori-design/) and follow the [SAP Fiori Design Guidelines](https://experience.sap.com/fiori-design-web/) for a consistent UX.
+ - Implement the [SAP Fiori design](https://experience.sap.com/fiori-design/) and follow the [SAP Fiori Design Guidelines](https://experience.sap.com/fiori-design-web/) for a consistent UX.
  - Created and maintained by [SAP](https://sap.com) as part of the [UI5](https://openui5.org/) product family.   
 
 ## Why use web components?
@@ -75,7 +75,7 @@ shortcomings when it comes to handling Custom Elements, namly the binding of `bo
 	import "@ui5/webcomponents/dist/Button.js"; // loads and defines ui5-button
 	```
 
-3. Use the UI5 Web Component(s) as you would use any HTML element
+3. Use the UI5 Web Component(s) as you would use any HTML element:
 
 	```html
 	<ui5-button>Hello world!</ui5-button>
@@ -83,7 +83,7 @@ shortcomings when it comes to handling Custom Elements, namly the binding of `bo
 	
 	For more on using UI5 Web Components, click [here](./docs/How%20To%20Use.md).
 
-*Note*: For a full list of the UI5 Web Components (and the respective NPM modules that ship them), click [here](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md). 
+*Note*: For a full list of the UI5 Web Components (and the respective NPM modules that ship them), see [Public module imports](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md).
 
 ### Is there a CDN I can use?
 
@@ -102,7 +102,7 @@ Safari | Native
 Edge | Native
 IE 11 | With Polyfill
 
-If your app needs to support **IE11** or **legacy Edge**, please follow the instructions [here](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md#1-old-browser-support-edge-ie11).
+If your app needs to support **IE11** or **legacy Edge**, please follow the [instructions](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md#1-old-browser-support-edge-ie11).
 
 ## Project structure, development and build
 
@@ -136,7 +136,7 @@ yarn # to install all dependencies
 yarn start # to serve the project
 ```
 
-You can then explore components test pages on:
+You can then explore component test pages on:
  - http://localhost:8080/test-resources/pages/ for the `main` package
  - http://localhost:8081/test-resources/pages/ for the `fiori` package.
 
@@ -154,7 +154,7 @@ yarn start:playground
 ```
 
 ### Production Build
-To build the UI5 Web Components project just run the following commands:
+To build the UI5 Web Components project, run the following commands:
 
 ```sh
 yarn # to install all dependecies
