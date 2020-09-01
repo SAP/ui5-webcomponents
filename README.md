@@ -30,6 +30,7 @@
 - [Creating a custom theme](./docs/CustomTheming.md)
 - [Creating custom UI5 Web Components](./docs/dev/Developing%20Web%20Components.md)
 - [Creating custom UI5 Web Components NPM packages](./docs/dev/Creating%20UI5%20Web%20Components%20Packages.md)
+- [Micro-frontends and Custom elements scoping](./docs/Scoping.md)
 - [F.A.Q.](./docs/FAQ.md)
 
 ## Related Projects
@@ -58,7 +59,7 @@ UI5 remains what it is: the best choice for…
 
 [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) is a wrapper implementation around 
 UI5 Web Components which makes using them in React even more comfortable. The current version of React (`react 16`) has some
-shortcomings when it comes to handling Custom Elements, namly the binding of `boolean` attributes as well as adding event listeners to custom event names like `selection-change`. With the help of UI5 Web Components for React, you can use the UI5 Web Components in React as if they were native React components. In addition to that, this library is also offering TypeScript definitions for all components, some complex layout components built on top of UI5 Web Components as well as Charting Components.
+shortcomings when it comes to handling Custom Elements, namely the binding of `boolean` attributes as well as adding event listeners to custom event names like `selection-change`. With the help of UI5 Web Components for React, you can use the UI5 Web Components in React as if they were native React components. In addition to that, this library is also offering TypeScript definitions for all components, some complex layout components built on top of UI5 Web Components as well as Charting Components.
 
 
 ## How to use
