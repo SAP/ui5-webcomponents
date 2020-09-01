@@ -25,9 +25,9 @@ describe("MultiInput general interaction", () => {
 	
 	it ("tests opening of tokenizer Popover", () => {
 		const tokenizer = $("#basic-overflow").shadow$("ui5-tokenizer");
-		const nMoreLable = tokenizer.shadow$(".ui5-tokenizer-more-text");
+		const nMoreLabel = tokenizer.shadow$(".ui5-tokenizer-more-text");
 		
-		nMoreLable.click();
+		nMoreLabel.click();
 
 		const rpoClassName = getTokenizerPopoverId("basic-overflow");
 		const rpo = $(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
@@ -35,15 +35,37 @@ describe("MultiInput general interaction", () => {
 		assert.ok(rpo.getProperty("opened"), "More Popover should be open");
 	});
 	
-	it ("fires value help icon press", () => {
-		const lable = $("#basic-event-listener");
+	it ("fires value-help-trigger on icon press", () => {
+		const label = $("#basic-event-listener");
 		const icon = $("#basic-overflow-and-icon").shadow$("ui5-icon");
+		const EXPECTED_TEXT = "value help icon press"
 
-		assert.strictEqual(lable.getText(), "", "event is not fired");
+		assert.strictEqual(label.getText(), "", "event is not fired");
 
+		// act
 		icon.click();
 
-		assert.strictEqual(lable.getText(), "value help icon press", "value help press event is fired");		
+		// assert
+		assert.strictEqual(label.getText(), EXPECTED_TEXT, "value help press event is fired");
+		
+	});
+
+	it ("fires value-help-trigger with F4 and Alt/Option + ArrowUp/Down", () => {
+		const eventCounter = $("#value-help-trigger-counter");
+		const multiInputInner = $("#multi-with-value-help-icon").shadow$(".ui5-input-inner");
+
+		// act
+		multiInputInner.click();
+		browser.keys(["Alt", "ArrowUp", "NULL"]);
+
+		// assert
+		assert.strictEqual(eventCounter.getProperty("value"), "1", "value help press event is fired");
+
+		// act
+		browser.keys("F4");
+
+		// assert
+		assert.strictEqual(eventCounter.getProperty("value"), "2", "value help press event is fired");
 	});
 
 	it ("adds a token to multi input", () => {

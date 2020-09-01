@@ -64,6 +64,19 @@ const metadata = {
 			type: HTMLElement,
 			listenFor: { include: ["*"] },
 		},
+
+		/**
+		* Defines the icon to be displayed in the <code>ui5-multi-combobox</code>.
+		*
+		* @type {HTMLElement[]}
+		* @slot
+		* @public
+		* @since 1.0.0-rc.9
+		*/
+	   icon: {
+		   type: HTMLElement,
+	   },
+
 	},
 	properties: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
