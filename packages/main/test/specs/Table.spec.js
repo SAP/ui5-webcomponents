@@ -56,4 +56,13 @@ describe("Table general interaction", () => {
 		cellInRow2.click();
 		assert.ok(lbl.getHTML().indexOf(row2Data), "Event rowClick fired and intercepted.");
 	});
+
+	it("tests row aria-label value", () => {
+		const row = browser.$("#roll-0").shadow$(".ui5-table-row-root");
+
+		const EXPECTED_TEXT = "Product Notebook Basic 15HT-1000 Supplier Very Best Screens Dimensions 30 x 18 x 3 cm Weight 4.2 KG Price 956 EUR";
+
+		assert.strictEqual(row.getAttribute("aria-label"), EXPECTED_TEXT, 
+			"The aria-label value is correct.");
+	});
 });
