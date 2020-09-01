@@ -130,6 +130,17 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the content is scrollable.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+		 */
+		disableScrolling: {
+			type: Boolean,
+		},
+
+		/**
 		 * Sets the X translation of the arrow
 		 *
 		 * @private
