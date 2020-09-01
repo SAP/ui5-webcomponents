@@ -16,7 +16,7 @@
 
 ## Why use web components?
 
- - **Future-proof**: entirely based on *web standards*, making them compatible with any version of any web development framework.
+ - **Future-proof**: being *web standards*, they are compatible with any version of any web development framework.
  - **Encapsulated**: the HTML/CSS in the *shadow DOM* are protected from interference by the web page and vice versa, making them stable in any environment and suitable not only for apps, but also for *libraries and micro-frontends*.  
  - **Elegant**: being *custom HTML elements*, they hide implementation complexity behind a single HTML tag, making them easily usable with the standard DOM APIs. 
 
@@ -38,9 +38,9 @@
 
 #### 1. What is UI5/OpenUI5?
 
-[OpenUI5](https://openui5.org/) is a JS framework that lets you build enterprise-ready web applications, responsive to all devices, running on almost any browser of your choice. It's based on JavaScript, using jQuery as its foundation and follows web standards. It eases your development with a client-side HTML5 rendering library including a rich set of controls and supports data binding to different data models (JSON, XML and OData).
+[OpenUI5](https://openui5.org/) is an open source JS framework that lets you build enterprise-ready web applications, responsive to all devices, running on almost any browser of your choice. It's based on JavaScript, using jQuery as its foundation and follows web standards. It eases your development with a client-side HTML5 rendering library including a rich set of controls and supports data binding to different data models (JSON, XML and OData).
 
-#### 2. How do UI5 Web Components compare to OpenUI5?
+#### 2. How do UI5 Web Components relate to OpenUI5?
 
 UI5 Web Components…
 * …are **not built on top** of UI5, but rather lightweight and independent UI elements
@@ -127,6 +127,7 @@ Project | NPM Package | Description
 `base` | [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base) | The UI5 Web Components framework itself
 `theme-base` | [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base) | Theming assets (the default theme and additional accessibility themes)
 `localization` | [UI5 Web Components Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization) | `i18n` functionality and `CLDR` assets
+`playground` | N/A | The playground application
 
 ### How to run the project locally:
 
