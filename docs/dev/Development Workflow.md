@@ -15,7 +15,7 @@ See how to clone a repo [here](https://docs.github.com/en/github/creating-clonin
 
 *3.0.* Make sure you have the following prerequisites installed
 - [Yarn](https://yarnpkg.com/en)
-- [Node.js](https://nodejs.org/) (**version 8.5 or higher**)
+- [Node.js](https://nodejs.org/) (**version 12 or higher**)
 
 
 *3.1.* Install all dependencies
