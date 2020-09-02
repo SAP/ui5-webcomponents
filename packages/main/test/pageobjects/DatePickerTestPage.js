@@ -99,8 +99,28 @@ class DatePickerTestPage {
 
 	getDisplayedDay(index) {
 		return browser
-			.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$(".ui5-dp-items-container")
-			.$$(".ui5-dp-item")[index];
+			.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$(".ui5-dp-item")[index];
+	}
+
+	getDayPickerContent() {
+	return browser
+		.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$$(".ui5-dp-content > div");
+	}
+
+	getDayPickerDayNames() {
+		const dayNames = Array.from(this.getDayPickerContent());
+		return dayNames[0].$$("div");
+	}
+	
+	getDayPickerDatesRow(index) {
+		const data = Array.from(this.getDayPickerContent());
+		return data[index].$$("div");
+	}
+
+	getDayPickerNumbers() {
+		const dayNames = Array.from(this.getDayPickerContent());
+
+		return dayNames;
 	}
 
 	isValid(value) {

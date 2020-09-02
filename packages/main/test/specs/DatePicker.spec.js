@@ -400,7 +400,7 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnPrev.click();
-
+		// browser.debug()
 		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
 
 		datepicker.btnPrev.click();
@@ -696,7 +696,7 @@ describe("Date Picker Tests", () => {
 		// act
 		datepicker.id = "#dp18";
 		datepicker.valueHelpIcon.click()
-
+		
 		// assert
 		const weekNumbersCol1 = datepicker.dayPicker.shadow$(".ui5-dp-weeknumber-container");
 		assert.equal(weekNumbersCol1.isExisting(), true, "The week numbers column is visible.");
@@ -716,6 +716,77 @@ describe("Date Picker Tests", () => {
 		// close date picker
 		datepicker.innerInput.click();
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
+	});
+
+	it("Calendar root have correct attribute", () => {
+
+		datepicker.id = "#dp18";
+		datepicker.valueHelpIcon.click()
+		const monthpickerContent = datepicker.dayPicker.shadow$(".ui5-dp-content");
+
+		assert.equal(monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
+		assert.equal(monthpickerContent.getAttribute("aria-roledescription"), "Calendar", "Calendar root have correct roledescription")
+		
+	});
+
+	it("DayPicker content wrapped", ()=>{
+		datepicker.id = "#dp19";
+		datepicker.open();
+		let arr = datepicker.getDayPickerContent();
+		
+		arr.forEach(function(el){
+			assert.equal(el.getAttribute("role"), "row", "Content wrapper has correct role");
+		})
+	});
+
+	it("DayPicker day name attribute", ()=>{
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
+		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+		datepicker.id = "#dp13";
+		datepicker.openPicker({ focusInput: true })
+		datepicker.root.keys("May 3, 2100");
+		datepicker.root.keys("Enter");
+		
+		const content = Array.from(datepicker.getDayPickerDayNames());
+		const dayName = ["Week number", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+		content.forEach((element,index) => {
+			assert.equal(element.getAttribute("role"), "columnheader", "Each day have column header role");
+			assert.equal(element.getAttribute("aria-label"), dayName[index], "Aria-label is correct");
+		})
+
+	});
+
+	it("DayPiker day number attribute", ()=>{
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
+		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+		datepicker.id = "#dp13";
+		datepicker.openPicker({ focusInput: true });
+		datepicker.root.keys("May 3, 2100");
+		datepicker.root.keys("Enter");
+
+		const content = Array.from(datepicker.getDayPickerNumbers());
+		for(let i = 1; i < content.length; i++){
+			let row = Array.from(content[i].$$("div"));
+			assert.equal(row[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
+			for(let j = 1; j < row.length; j++){
+				assert.equal(row[j].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+			}
+		}
+	});
+
+	it("DatePcker dates and week number", ()=>{
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
+		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+		datepicker.id = "#dp13";
+		datepicker.openPicker({ focusInput: true });
+		datepicker.root.keys("May 3, 2100");
+		datepicker.root.keys("Enter");
+
+		const data = Array.from(datepicker.getDayPickerDatesRow(2));
+		assert.equal(data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");
+		assert.equal(data[1].getAttribute("aria-label"), "May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.equal(data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.equal(data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
 	});
 
 	it("Tests aria-label", () => {
