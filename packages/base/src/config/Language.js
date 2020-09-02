@@ -1,5 +1,7 @@
-import { getLanguage as getConfiguredLanguage } from "../InitialConfiguration.js";
-import { getUseDefaultLanguage as getConfiguredUseDefaultLanguage} from "../InitialConfiguration.js";
+import {
+	getLanguage as getConfiguredLanguage,
+	getUseDefaultLanguage as getConfiguredUseDefaultLanguage,
+} from "../InitialConfiguration.js";
 import { fireLanguageChange } from "../locale/languageChange.js";
 import RenderScheduler from "../RenderScheduler.js";
 
