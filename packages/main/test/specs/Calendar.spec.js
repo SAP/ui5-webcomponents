@@ -70,5 +70,5 @@ describe("Calendar general interaction", () => {
 		}, YEAR);
 
 		assert.strictEqual(yearPicker.getProperty("_selectedYear"), YEAR, "Year is set");
-	})
+	});
 });

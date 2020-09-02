@@ -342,7 +342,7 @@ class DayPicker extends UI5Element {
 		this._dayNames = [];
 		this._dayNames.push({
 			classes: "sapUiCalDummy ui5-dp-dayname",
-			name: DAY_PICKER_WEEK_NUMBER_TEXT
+			name: this._dayPickerWeekNumberText
 		});
 		for (let i = 0; i < 7; i++) {
 			weekday = i + this._getFirstDayOfWeek();
@@ -500,6 +500,10 @@ class DayPicker extends UI5Element {
 		}
 
 		return [].concat(...focusableDays);
+	}
+
+	get _dayPickerWeekNumberText() {
+		return this.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT);
 	}
 
 	_modifySelectionAndNotifySubscribers(sNewDate, bAdd) {
@@ -743,6 +747,7 @@ class DayPicker extends UI5Element {
 	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}
 }

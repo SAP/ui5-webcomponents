@@ -98,7 +98,6 @@ class CalendarHeader extends UI5Element {
 
 	onBeforeRendering() {
 		this._btn1.text = this.monthText;
-		debugger
 		this._btn2.text = this.yearText;
 		this._btnPrev.classes = "ui5-calheader-arrowbtn";
 		this._btnNext.classes = "ui5-calheader-arrowbtn";
