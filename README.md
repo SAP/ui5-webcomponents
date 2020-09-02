@@ -149,10 +149,13 @@ cd packages/playground
 yarn install:dependencies
 
 # start the playground from the project root
+cd ../..
 yarn start:playground
 
 # open http://localhost:4000/
 ```
+
+*Note: If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial]((/docs/dev/Playground.md))*
 
 ### Production Build
 To build the UI5 Web Components project, run the following commands:
