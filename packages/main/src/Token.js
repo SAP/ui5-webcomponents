@@ -136,17 +136,9 @@ class Token extends UI5Element {
 	}
 
 	_handleSelect() {
-		if (!this.selected) {
-			this._select();
-		} else {
-			this.selected = false;
-		}
-	}
-
-	_select() {
+		this.selected = !this.selected;
 		this.fireEvent("select");
-		this.selected = true;
-	 }
+	}
 
 	 _delete() {
 		this.fireEvent("delete");

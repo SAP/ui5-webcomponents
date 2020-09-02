@@ -108,7 +108,7 @@ class Tokenizer extends UI5Element {
 		super();
 
 		this._resizeHandler = this._handleResize.bind(this);
-		this._itemNav = new ItemNavigation(this);
+		this._itemNav = new ItemNavigation(this, { currentIndex: "-1" });
 		this._itemNav.getItemsCallback = this._getVisibleTokens.bind(this);
 		this._scrollEnablement = new ScrollEnablement(this);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
@@ -179,6 +179,12 @@ class Tokenizer extends UI5Element {
 		const token = event.detail.item.tokenRef;
 
 		this.fireEvent("token-delete", { ref: token });
+	}
+
+	_click(event) {
+		if (event.target.localName === "ui5-token") {
+			this._itemNav.update(event.target);
+		}
 	}
 
 	/* Keyboard handling */

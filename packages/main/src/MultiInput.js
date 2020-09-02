@@ -154,6 +154,7 @@ class MultiInput extends Input {
 		this.tokenizer._tokens.forEach(token => { token.selected = false; });
 
 		if (!this.contains(event.relatedTarget)) {
+			this.tokenizer._itemNav.currentIndex = "-1";
 			this.tokenizer.scrollToStart();
 		}
 	}
