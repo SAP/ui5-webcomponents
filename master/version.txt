@@ -1,5 +1,5 @@
-commit 3d4cc0c428a7f4beff22ed34433fa3e71e4223be
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Sep 1 14:42:29 2020 +0300
+commit 2c6139dc58207580fb7ff6900de9d15a3745fcc9
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Sep 2 11:01:17 2020 +0300
 
-    chore: Update README.md and add Scoping.md (#2158)
+    fix(ui5-input): number input doesn't lose value (#2130)
