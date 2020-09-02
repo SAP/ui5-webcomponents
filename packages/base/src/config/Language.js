@@ -1,8 +1,10 @@
 import { getLanguage as getConfiguredLanguage } from "../InitialConfiguration.js";
+import { getUseDefaultLanguage as getConfiguredUseDefaultLanguage} from "../InitialConfiguration.js";
 import { fireLanguageChange } from "../locale/languageChange.js";
 import RenderScheduler from "../RenderScheduler.js";
 
 let language;
+let useDefaultLanguage;
 
 /**
  * Returns the currently configured language, or the browser language as a fallback
@@ -35,7 +37,32 @@ const setLanguage = async newLanguage => {
 	return RenderScheduler.whenFinished();
 };
 
+/**
+ * Defines if the default language, that is inlined, should be used,
+ * instead of fetching the language over the network.
+ * <b>Note:</b> By default the language will be fetched.
+ *
+ * @param {Boolean} useDefaultLanguage
+ */
+const setUseDefaultLanguage = useDefaultLang => {
+	useDefaultLanguage = useDefaultLang;
+};
+
+/**
+ * Returns if the default language, that is inlined, should be used.
+ * @returns {Boolean}
+ */
+const getUseDefaultLanguage = () => {
+	if (useDefaultLanguage === undefined) {
+		setUseDefaultLanguage(getConfiguredUseDefaultLanguage());
+	}
+
+	return useDefaultLanguage;
+};
+
 export {
 	getLanguage,
 	setLanguage,
+	setUseDefaultLanguage,
+	getUseDefaultLanguage,
 };
