@@ -560,7 +560,7 @@ class DatePicker extends UI5Element {
 	 * @param {boolean} months indicates that the measuring unit is in months
 	 * @param {boolean} days indicates that the measuring unit is in days
 	 * @param {boolean} forward if true indicates addition
-	 * @param {int} step number of measuring units to substract or add defaults ot 1
+	 * @param {int} step number of measuring units to substract or add defaults to 1
 	 */
 	_changeDateValue(forward, years, months, days, step = 1) {
 		let date = this.dateValue;

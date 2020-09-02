@@ -365,6 +365,30 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
 
+	it("[F4] shows month picker after year picker is open", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click()
+		browser.keys(['Shift', 'F4']);
+		browser.keys('F4');
+
+		assert.notOk(datepicker.calendar.getProperty("_monthPicker")._hidden, "Year picker is open");
+		datepicker.valueHelpIcon.click(); // close the datepicker
+	});
+
+
+	it("[SHIFT] + [F4] shows year picker after month picker is open", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click()
+		browser.keys('F4');
+		browser.keys(['Shift', 'F4']);
+
+		assert.notOk(datepicker.calendar.getProperty("_yearPicker")._hidden, "Year picker is open");
+		datepicker.valueHelpIcon.click(); // close the datepicker
+	});
+
+
 	it("[F4] on year picker doesn't close the date picker", () => {
 		datepicker.id = "#dp11";
 
