@@ -13,11 +13,11 @@ import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDat
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
-import {fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import {
-	DAY_PICKER_WEEK_NUMBER_TEXT
+	DAY_PICKER_WEEK_NUMBER_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -241,7 +241,7 @@ class DayPicker extends UI5Element {
 		let week = [];
 		this._weekNumbers = [];
 		let weekday;
-		const _aMonthsNameWide = this._oLocaleData.getMonths("wide",this._calendarDate._oUDate.sCalendarType);
+		const _aMonthsNameWide = this._oLocaleData.getMonths("wide", this._calendarDate._oUDate.sCalendarType);
 
 		if (this.minDate) {
 			this._minDateObject = new Date(this._minDate);
@@ -271,7 +271,7 @@ class DayPicker extends UI5Element {
 				iDay: oCalDate.getDate(),
 				_index: i.toString(),
 				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
-				ariaLabel: `${_aMonthsNameWide[oCalDate.getMonth()]} ${oCalDate.getDate()}, ${oCalDate.getYear()}`
+				ariaLabel: `${_aMonthsNameWide[oCalDate.getMonth()]} ${oCalDate.getDate()}, ${oCalDate.getYear()}`,
 			};
 
 			const isToday = oCalDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
@@ -314,7 +314,7 @@ class DayPicker extends UI5Element {
 
 			if (day.classes.indexOf("ui5-dp-wday6") !== -1
 				|| _aVisibleDays.length - 1 === i) {
-					const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);	
+				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
 				if (lastWeekNumber !== weekNumber) {
 					week.unshift(weekNumber);
 
@@ -342,7 +342,7 @@ class DayPicker extends UI5Element {
 		this._dayNames = [];
 		this._dayNames.push({
 			classes: "sapUiCalDummy ui5-dp-dayname",
-			name: this._dayPickerWeekNumberText
+			name: this._dayPickerWeekNumberText,
 		});
 		for (let i = 0; i < 7; i++) {
 			weekday = i + this._getFirstDayOfWeek();

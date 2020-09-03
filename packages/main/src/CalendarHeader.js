@@ -1,19 +1,18 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import CalendarHeaderTemplate from "./generated/templates/CalendarHeaderTemplate.lit.js";
-import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
-import {fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import {
 	CALENDAR_HEADER_NEXT_BUTTON,
-	CALENDAR_HEADER_PREVIOUS_BUTTON
+	CALENDAR_HEADER_PREVIOUS_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -92,7 +91,6 @@ class CalendarHeader extends UI5Element {
 
 		this._oLocale = getLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
-		const oCalDate = CalendarDate.fromTimestamp(new Date().getTime(), this._primaryCalendarType);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -150,9 +148,8 @@ class CalendarHeader extends UI5Element {
 	}
 
 	get _fullMonthName() {
-		return this._oLocaleData
+		return this._oLocaleData;
 	}
-
 }
 
 CalendarHeader.define();

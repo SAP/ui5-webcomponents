@@ -458,7 +458,7 @@ class Calendar extends UI5Element {
 
 		if (lastDayOfMonthIndex !== -1) {
 			// find the DOM for the last day index
-			const lastDay = dayPicker.shadowRoot.querySelector(".ui5-dp-content").children[parseInt(lastDayOfMonthIndex / weekDaysCount)+1].children[(lastDayOfMonthIndex % weekDaysCount)];
+			const lastDay = dayPicker.shadowRoot.querySelector(".ui5-dp-content").children[parseInt(lastDayOfMonthIndex / weekDaysCount) + 1].children[(lastDayOfMonthIndex % weekDaysCount)];
 
 			// update current item in ItemNavigation
 			dayPicker._itemNav.current = lastDayOfMonthIndex;
