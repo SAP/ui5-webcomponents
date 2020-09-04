@@ -5,6 +5,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
@@ -108,7 +109,7 @@ class Tokenizer extends UI5Element {
 		super();
 
 		this._resizeHandler = this._handleResize.bind(this);
-		this._itemNav = new ItemNavigation(this);
+		this._itemNav = new ItemNavigation(this, { currentIndex: "-1" });
 		this._itemNav.getItemsCallback = this._getVisibleTokens.bind(this);
 		this._scrollEnablement = new ScrollEnablement(this);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
@@ -179,6 +180,32 @@ class Tokenizer extends UI5Element {
 		const token = event.detail.item.tokenRef;
 
 		this.fireEvent("token-delete", { ref: token });
+	}
+
+	_onkeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+
+			this._handleTokenSelection(event);
+		}
+	}
+
+	_click(event) {
+		this._handleTokenSelection(event);
+	}
+
+	_onmousedown(event) {
+		this._itemNav.update(event.target);
+	}
+
+	_handleTokenSelection(event) {
+		if (event.target.localName === "ui5-token") {
+			this._tokens.forEach(token => {
+				if (token !== event.target) {
+					token.selected = false;
+				}
+			});
+		}
 	}
 
 	/* Keyboard handling */
