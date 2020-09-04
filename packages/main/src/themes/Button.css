@@ -97,7 +97,6 @@
 }
 
 :host([has-icon]:not([icon-end])) .ui5-button-text {
-	max-width: calc(100% - 1rem);
 	margin-left: var(--_ui5_button_base_icon_margin);
 }
 
