@@ -3,7 +3,7 @@ let currentZIndex = 100;
 const getFocusedElement = () => {
 	let element = document.activeElement;
 
-	while (element.shadowRoot && element.shadowRoot.activeElement) {
+	while (element && element.shadowRoot && element.shadowRoot.activeElement) {
 		element = element.shadowRoot.activeElement;
 	}
 
@@ -62,7 +62,7 @@ const isClickInRect = (event, rect) => {
 const getClosedPopupParent = el => {
 	const parent = el.parentElement || (el.getRootNode && el.getRootNode().host);
 
-	if ((parent.openBy && parent.isUI5Element) || (parent.open && parent.isUI5Element) || parent === document.documentElement) {
+	if (parent && ((parent.openBy && parent.isUI5Element) || (parent.open && parent.isUI5Element) || parent === document.documentElement)) {
 		return parent;
 	}
 
