@@ -16,6 +16,7 @@
 		@ui5-token-delete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
 		@click={{_click}}
+		@keydown="{{_onTokenizerKeydown}}"
 		?expanded="{{_tokenizerExpanded}}"
 	>
 		{{#each items}}
