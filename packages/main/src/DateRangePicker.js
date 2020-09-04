@@ -64,6 +64,25 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/DateRangePicker.js";</code>
+ * 
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-daterange-picker</code> provides advanced keyboard handling.
+ * <br>
+ *
+ * When the <code>ui5-daterange-picker</code> input field is focused the user can
+ * increment or decrement the corresponding field of the JS date object referenced by <code>_firstDateTimestamp</code> propery
+ * if the caret symbol is before the delimiter character or <code>_lastDateTimestamp</code> property if the caret symbol is
+ * after the delimiter character.
+ * The following shortcuts are enabled:
+ * <br>
+ * <ul>
+ * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
+ * <li>[SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one</li>
+ * <li>[SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one</li>
+ * <li>[PAGEUP] - Increments the corresponding day of the month by one</li>
+ * <li>[SHIFT] + [PAGEUP] - Increments the corresponding month by one</li>
+ * <li>[SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one</li>
+ * </ul>
  *
  * @constructor
  * @author SAP SE
