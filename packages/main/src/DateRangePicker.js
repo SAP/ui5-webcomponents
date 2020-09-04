@@ -3,6 +3,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
+import RenderScheduler from "../../base/src/RenderScheduler.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
@@ -363,6 +364,95 @@ class DateRangePicker extends DatePicker {
 				// Angular two way data binding
 				this.fireEvent("value-changed", { value: this.value, valid: true });
 			}
+		}
+	}
+
+	/**
+	 * Adds or extracts a given number of measuring units from the "dateValue" property value
+	 *
+	 * @param {boolean} years indicates that the measuring unit is in years
+	 * @param {boolean} months indicates that the measuring unit is in months
+	 * @param {boolean} days indicates that the measuring unit is in days
+	 * @param {boolean} forward if true indicates addition
+	 * @param {int} step number of measuring units to substract or add defaults ot 1
+	 */
+	async _changeDateValueWrapper(forward, years, months, days, step = 1) {
+		const emptyValue = this.value === "";
+		const isValid = emptyValue || this._checkValueValidity(this.value);
+
+		if (!isValid) {
+			return;
+		}
+
+		const dates = this._splitValueByDelimiter(this.value);
+		const innerInput = this.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+		const caretPos = this._getCaretPosition(innerInput);
+		const first = dates[0] && caretPos <= dates[0].trim().length + 1;
+		const last = dates[1] && (caretPos >= this.value.length - dates[1].trim().length - 1 && caretPos <= this.value.length);
+		let firstDate = this.getFormat().parse(dates[0]);
+		let lastDate = this.getFormat().parse(dates[1]);
+
+		if (first && firstDate) {
+			firstDate = this._changeDateValue(firstDate, forward, years, months, days, step);
+		} else if (last && lastDate) {
+			lastDate = this._changeDateValue(lastDate, forward, years, months, days, step);
+		}
+
+		if (firstDate > lastDate) {
+			const temp = firstDate;
+			firstDate = lastDate;
+			lastDate = temp;
+		}
+
+		const newValue = this._formatValue(firstDate.valueOf() / 1000, lastDate.valueOf() / 1000);
+
+		this._setValue(newValue);
+		await RenderScheduler.whenFinished();
+
+		// Return the carent on the previous position after rendering
+		this._setCaretPosition(innerInput, caretPos);
+
+		this.fireEvent("change", { value: newValue, valid: isValid });
+	}
+
+	/**
+	* Returns the caret (cursor) position of the specified text field (field).
+	* Return value range is 0-field.value.length.
+	*/
+	_getCaretPosition(field) {
+		// Initialize
+		let caretPos = 0;
+
+		// IE Support
+		if (document.selection) {
+			// Set focus on the element
+			field.focus();
+
+			// To get cursor position, get empty selection range
+			const selection = document.selection.createRange();
+
+			// Move selection start to 0 position
+			selection.moveStart("character", -field.value.length);
+
+			// The caret position is selection length
+			caretPos = selection.text.length;
+		} else if (field.selectionStart || field.selectionStart === "0") { // Firefox support
+			caretPos = field.selectionDirection === "backward" ? field.selectionStart : field.selectionEnd;
+		}
+
+		return caretPos;
+	}
+
+	_setCaretPosition(field, caretPos) {
+		if (field.createTextRange) {
+			const range = field.createTextRange();
+			range.move("character", caretPos);
+			range.select();
+		} else if (field.selectionStart) {
+			field.focus();
+			field.setSelectionRange(caretPos, caretPos);
+		} else {
+			field.focus();
 		}
 	}
 

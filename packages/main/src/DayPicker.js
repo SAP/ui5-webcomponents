@@ -358,9 +358,7 @@ class DayPicker extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this.selectedDates.length === 1) {
-			this.fireEvent("daypickerrendered", { focusedItemIndex: this._itemNav.currentIndex });
-		}
+		this._fireDayPickerRendered();
 	}
 
 	_onmousedown(event) {
@@ -613,6 +611,18 @@ class DayPicker extends UI5Element {
 		}
 
 		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000) });
+		const newItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === timestamp);
+		this._itemNav.currentIndex = newItemIndex;
+
+		this._itemNav.focusCurrent();
+
+		this._fireDayPickerRendered();
+	}
+
+	_fireDayPickerRendered() {
+		if (this.selectedDates.length === 1) {
+			this.fireEvent("daypickerrendered", { focusedItemIndex: this._itemNav.currentIndex });
+		}
 	}
 
 	_isWeekend(oDate) {

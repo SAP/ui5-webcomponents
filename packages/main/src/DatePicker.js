@@ -503,6 +503,102 @@ class DatePicker extends UI5Element {
 				this._toggleAndFocusInput();
 			}
 		}
+
+		if (this.isOpen()) {
+			return;
+		}
+
+		if (isPageUpShiftCtrl(event)) {
+			event.preventDefault();
+			this._changeDateValueWrapper(true, true, false, false);
+		} else if (isPageUpShift(event)) {
+			event.preventDefault();
+			this._changeDateValueWrapper(true, false, true, false);
+		} else if (isPageUp(event)) {
+			event.preventDefault();
+			this._changeDateValueWrapper(true, false, false, true);
+		}
+
+		if (isPageDownShiftCtrl(event)) {
+			event.preventDefault();
+			this._changeDateValueWrapper(false, true, false, false);
+		} else if (isPageDownShift(event)) {
+			event.preventDefault();
+			this._changeDateValueWrapper(false, false, true, false);
+		} else if (isPageDown(event)) {
+			event.preventDefault();
+			this._changeDateValueWrapper(false, false, false, true);
+		}
+	}
+
+	/**
+	 * Adds or extracts a given number of measuring units from the "dateValue" property value
+	 *
+	 * @param {boolean} years indicates that the measuring unit is in years
+	 * @param {boolean} months indicates that the measuring unit is in months
+	 * @param {boolean} days indicates that the measuring unit is in days
+	 * @param {boolean} forward if true indicates addition
+	 * @param {int} step number of measuring units to substract or add defaults to 1
+	 */
+	_changeDateValueWrapper(forward, years, months, days, step = 1) {
+		let date = this.dateValue;
+		date = this._changeDateValue(date, forward, years, months, days, step);
+		this.value = this.formatValue(date);
+		this.fireEvent("change", { value: this.value, valid: true });
+	}
+
+	/**
+	 * Adds or extracts a given number of measuring units from the "dateValue" property value
+	 *
+	 * @param {boolean} date js date object to be changed
+	 * @param {boolean} years indicates that the measuring unit is in years
+	 * @param {boolean} months indicates that the measuring unit is in months
+	 * @param {boolean} days indicates that the measuring unit is in days
+	 * @param {boolean} forward if true indicates addition
+	 * @param {int} step number of measuring units to substract or add defaults ot 1
+	 * @returns {Object} JS date object
+	 */
+	_changeDateValue(date, forward, years, months, days, step = 1) {
+		if (!date) {
+			return;
+		}
+
+		const oldDate = new Date(date.getTime());
+		const incrementStep = forward ? step : -step;
+
+		if (incrementStep === 0) {
+			return;
+		}
+
+		if (days) {
+			date.setDate(date.getDate() + incrementStep);
+		} else if (months) {
+			date.setMonth(date.getMonth() + incrementStep);
+			const monthDiff = (date.getFullYear() - oldDate.getFullYear()) * 12 + (date.getMonth() - oldDate.getMonth());
+
+			if (date.getMonth() === oldDate.getMonth() || monthDiff !== incrementStep) {
+				// first condition example: 31th of March increment month with -1 results in 2th of March
+				// second condition example: 31th of January increment month with +1 results in 2th of March
+				date.setDate(0);
+			}
+		} else if (years) {
+			date.setFullYear(date.getFullYear() + incrementStep);
+
+			if (date.getMonth() !== oldDate.getMonth()) {
+				// day doesn't exist in this month (February 29th)
+				date.setDate(0);
+			}
+		} else {
+			return;
+		}
+
+		if (date.valueOf() < this._minDate) {
+			date = new Date(this._minDate);
+		} else if (date.valueOf() > this._maxDate) {
+			date = new Date(this._maxDate);
+		}
+
+		return date;
 	}
 
 	_toggleAndFocusInput() {
