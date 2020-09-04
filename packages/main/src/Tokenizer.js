@@ -5,6 +5,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
@@ -181,9 +182,26 @@ class Tokenizer extends UI5Element {
 		this.fireEvent("token-delete", { ref: token });
 	}
 
+	_onkeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+
+			this._handleTokenSelection(event);
+		}
+	}
+
 	_click(event) {
+		this._handleTokenSelection(event);
+	}
+
+	_handleTokenSelection(event) {
 		if (event.target.localName === "ui5-token") {
 			this._itemNav.update(event.target);
+			this._tokens.forEach(token => {
+				if (token !== event.target) {
+					token.selected = false;
+				}
+			});
 		}
 	}
 

@@ -125,6 +125,13 @@ class MultiInput extends Input {
 		return [Input.styles, styles];
 	}
 
+	constructor() {
+		super();
+
+		// Prevent suggestions' opening.
+		this._skipOpenSuggestions = false;
+	}
+
 	valueHelpPress(event) {
 		this.closePopover();
 		this.fireEvent("value-help-trigger", {});
@@ -151,10 +158,8 @@ class MultiInput extends Input {
 	}
 
 	_tokenizerFocusOut(event) {
-		this.tokenizer._tokens.forEach(token => { token.selected = false; });
-
 		if (!this.contains(event.relatedTarget)) {
-			this.tokenizer._itemNav.currentIndex = "-1";
+			this.tokenizer._tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
 		}
 	}
@@ -173,24 +178,16 @@ class MultiInput extends Input {
 		super._onkeydown(event);
 
 		if (isLeft(event)) {
-			this._skipOpenSuggestions = true;
+			this._skipOpenSuggestions = true; // Prevent input focus when navigating through the tokens.
 
 			return this._handleLeft(event);
 		}
 
 		this._skipOpenSuggestions = false;
-
 		if (isBackSpace(event) && event.target.value === "") {
 			event.preventDefault();
 
-			const lastTokenIndex = this.tokenizer._tokens.length - 1;
-
-			if (lastTokenIndex < 0) {
-				return;
-			}
-
-			this.tokenizer._tokens[lastTokenIndex].focus();
-			this.tokenizer._itemNav.currentIndex = lastTokenIndex;
+			this._focusLastToken();
 		}
 
 		if (isShow(event)) {
@@ -210,19 +207,23 @@ class MultiInput extends Input {
 		}
 	}
 
-	_handleLeft(event) {
-		const input = this.getDomRef().querySelector(`input`);
-		const cursorPosition = input.selectionStart;
-		const lastTokenIndex = this.tokenizer._tokens.length - 1;
+	_handleLeft() {
+		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
 
 		if (cursorPosition === 0) {
-			if (lastTokenIndex < 0) {
-				return;
-			}
-
-			this.tokenizer._tokens[lastTokenIndex].focus();
-			this.tokenizer._itemNav.currentIndex = lastTokenIndex;
+			this._focusLastToken();
 		}
+	}
+
+	_focusLastToken() {
+		const lastTokenIndex = this.tokenizer._tokens.length - 1;
+
+		if (lastTokenIndex < 0) {
+			return;
+		}
+
+		this.tokenizer._itemNav.currentIndex = lastTokenIndex;
+		this.tokenizer._tokens[lastTokenIndex].focus();
 	}
 
 	_onfocusout(event) {

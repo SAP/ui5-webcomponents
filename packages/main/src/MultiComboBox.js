@@ -449,29 +449,33 @@ class MultiComboBox extends UI5Element {
 		this.fireSelectionChange();
 	}
 
-	_handleLeft(event) {
-		const input = this.getDomRef().querySelector(`input`);
-		const cursorPosition = input.selectionStart;
+	_handleLeft() {
+		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
 
 		if (cursorPosition === 0) {
-			const lastTokenIndex = this._tokenizer.tokens.length - 1;
-
-			if (lastTokenIndex < 0) {
-				return;
-			}
-
-			this._tokenizer.tokens[lastTokenIndex].focus();
-			this._tokenizer._itemNav.currentIndex = lastTokenIndex;
+			this._focusLastToken();
 		}
 	}
 
-	_tokenizerFocusOut() {
+	_focusLastToken() {
+		const lastTokenIndex = this._tokenizer.tokens.length - 1;
+
+		if (lastTokenIndex < 0) {
+			return;
+		}
+
+		this._tokenizer.tokens[lastTokenIndex].focus();
+		this._tokenizer._itemNav.currentIndex = lastTokenIndex;
+	}
+
+	_tokenizerFocusOut(event) {
 		const tokenizer = this.shadowRoot.querySelector("[ui5-tokenizer]");
 		const tokensCount = tokenizer.tokens.length - 1;
 
-		tokenizer.tokens.forEach(token => { token.selected = false; });
-
-		this._tokenizer.scrollToStart();
+		if (!event.relatedTarget || event.relatedTarget.localName !== "ui5-token") {
+			this._tokenizer.tokens.forEach(token => { token.selected = false; });
+			this._tokenizer.scrollToStart();
+		}
 
 		if (tokensCount === 0 && this._deleting) {
 			setTimeout(() => {
@@ -490,7 +494,7 @@ class MultiComboBox extends UI5Element {
 
 	async _onkeydown(event) {
 		if (isLeft(event)) {
-			return this._handleLeft(event);
+			this._handleLeft(event);
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
@@ -508,14 +512,7 @@ class MultiComboBox extends UI5Element {
 		if (isBackSpace(event) && event.target.value === "") {
 			event.preventDefault();
 
-			const lastTokenIndex = this._tokenizer.tokens.length - 1;
-
-			if (lastTokenIndex < 0) {
-				return;
-			}
-
-			this._tokenizer.tokens[lastTokenIndex].focus();
-			this._tokenizer._itemNav.currentIndex = lastTokenIndex;
+			this._focusLastToken();
 		}
 
 		this._keyDown = true;
