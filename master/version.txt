@@ -1,5 +1,7 @@
-commit 904da0eadc791a33d5b6e4226e0f7c79f8d5a056
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Sep 4 11:44:31 2020 +0300
+commit dc2ae6da2335b8f2e276ac2bb2d0dd06a846e95e
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Fri Sep 4 18:50:14 2020 +0300
 
-    fix(ui5-popover): fix js errors if parent is removed from DOM (#2178)
+    feat(ui5-multiinput, ui5-multi-combobox): implement keyboard handling (#2166)
+    
+    Navigation between the tokens is now possible with the Arrow keys both in MultiComboBox and MultiInput components.
