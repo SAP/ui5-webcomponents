@@ -1,5 +1,5 @@
-commit 5193cbeda9aa9bbf8112bbeb5533552ab5cbe22f
+commit 904da0eadc791a33d5b6e4226e0f7c79f8d5a056
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Sep 3 10:07:21 2020 +0300
+Date:   Fri Sep 4 11:44:31 2020 +0300
 
-    chore(playground): add tutorial for local start of the playground (#2173)
+    fix(ui5-popover): fix js errors if parent is removed from DOM (#2178)
