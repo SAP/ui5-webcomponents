@@ -238,7 +238,7 @@ class Calendar extends UI5Element {
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType });
 		const minDateParsed = this.minDate && this.getFormat().parse(this.minDate);
 		const maxDateParsed = this.maxDate && this.getFormat().parse(this.maxDate);
-		const firstDayOfCalendarTimeStamp = -62135596800000;
+		const firstDayOfCalendarTimeStamp = this._getMinCalendarDate();
 		let currentMonth = 0;
 		let currentYear = 1;
 
@@ -343,24 +343,40 @@ class Calendar extends UI5Element {
 	}
 
 	get _maxDate() {
-		if (this.maxDate) {
-			const maxDate = this.getFormat().parse(this.maxDate);
-			const jsDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
-			return oCalDate.valueOf();
-		}
-
-		return this.maxDate;
+		return this.maxDate ? this._getTimeStampFromString(this.maxDate) : this._getMaxCalendarDate();
 	}
 
 	get _minDate() {
-		if (this.minDate) {
-			const minDate = this.getFormat().parse(this.minDate);
-			const jsDate = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
+		return this.minDate ? this._getTimeStampFromString(this.minDate) : this._getMinCalendarDate();
+	}
+
+	_getTimeStampFromString(value) {
+		const jsDate = this.getFormat().parse(value);
+		if (jsDate) {
+			const jsDateTimeNow = new Date(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDateTimeNow.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
 		}
-		return this.minDate;
+		return undefined;
+	}
+
+	_getMinCalendarDate() {
+		const minDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		minDate.setYear(1);
+		minDate.setMonth(0);
+		minDate.setDate(1);
+		return minDate.valueOf();
+	}
+
+	_getMaxCalendarDate() {
+		const maxDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		maxDate.setYear(9999);
+		maxDate.setMonth(11);
+		const tempDate = new CalendarDate(maxDate, this._primaryCalendarType);
+		tempDate.setDate(1);
+		tempDate.setMonth(tempDate.getMonth() + 1, 0);
+		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
+		return maxDate.valueOf();
 	}
 
 	_onkeydown(event) {
@@ -479,10 +495,11 @@ class Calendar extends UI5Element {
 
 	_showNextMonth() {
 		const nextMonth = this._calendarDate;
+		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
 		nextMonth.setDate(1);
 		nextMonth.setMonth(nextMonth.getMonth() + 1);
 
-		if (nextMonth.getYear() > YearPicker._MAX_YEAR) {
+		if (nextMonth.getYear() > maxCalendarDateYear) {
 			return;
 		}
 
@@ -497,6 +514,8 @@ class Calendar extends UI5Element {
 	_showPrevMonth() {
 		let iNewMonth = this._month - 1,
 			iNewYear = this._calendarDate.getYear();
+
+		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
 
 		// focus first day of the month
 		const dayPicker = this.shadowRoot.querySelector("[ui5-daypicker]");
@@ -550,25 +569,27 @@ class Calendar extends UI5Element {
 		oNewDate.setMonth(iNewMonth);
 
 
-		if (oNewDate.getYear() < YearPicker._MIN_YEAR) {
+		if (oNewDate.getYear() < minCalendarDateYear) {
 			return;
 		}
 		this.timestamp = oNewDate.valueOf() / 1000;
 	}
 
 	_showNextYear() {
-		if (this._calendarDate.getYear() === YearPicker._MAX_YEAR) {
+		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
+		if (this._calendarDate.getYear() === maxCalendarDateYear) {
 			return;
 		}
 
-		const oNewDate = this._calendarDate;
-		oNewDate.setYear(this._calendarDate.getYear() + 1);
+		const newDate = this._calendarDate;
+		newDate.setYear(this._calendarDate.getYear() + 1);
 
-		this.timestamp = oNewDate.valueOf() / 1000;
+		this.timestamp = newDate.valueOf() / 1000;
 	}
 
 	_showPrevYear() {
-		if (this._calendarDate.getYear() === YearPicker._MIN_YEAR) {
+		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
+		if (this._calendarDate.getYear() === minCalendarDateYear) {
 			return;
 		}
 
@@ -581,27 +602,16 @@ class Calendar extends UI5Element {
 	_showNextPageYears() {
 		if (!this._isYearInRange(this._yearPicker.timestamp,
 			YearPicker._ITEMS_COUNT - YearPicker._MIDDLE_ITEM_INDEX,
-			YearPicker._MIN_YEAR,
-			YearPicker._MAX_YEAR)) {
+			CalendarDate.fromTimestamp(this._minDate, this._primaryCalendarType).getYear(),
+			CalendarDate.fromTimestamp(this._maxDate, this._primaryCalendarType).getYear())) {
 			return;
 		}
 
-		if (this.minDate && !this._isYearInRange(this._yearPicker.timestamp,
-			YearPicker._ITEMS_COUNT - YearPicker._MIDDLE_ITEM_INDEX,
-			this.getFormat().parse(this.minDate).getFullYear(),
-			YearPicker._MAX_YEAR)) {
-			return;
-		}
-
-		if (this.maxDate && !this._isYearInRange(this._yearPicker.timestamp,
-			YearPicker._ITEMS_COUNT - YearPicker._MIDDLE_ITEM_INDEX,
-			YearPicker._MIN_YEAR,
-			this.getFormat().parse(this.maxDate).getFullYear())) {
-			return;
-		}
+		const newDate = CalendarDate.fromTimestamp(this._yearPicker.timestamp * 1000, this._primaryCalendarType);
+		newDate.setYear(newDate.getYear() + YearPicker._ITEMS_COUNT);
 
 		this._yearPicker = Object.assign({}, this._yearPicker, {
-			timestamp: this._yearPicker.timestamp + (31536000 * YearPicker._ITEMS_COUNT),
+			timestamp: newDate.valueOf() / 1000,
 		});
 
 		this.timestamp = this._yearPicker.timestamp;
@@ -612,27 +622,16 @@ class Calendar extends UI5Element {
 	_showPrevPageYears() {
 		if (!this._isYearInRange(this._yearPicker.timestamp,
 			-YearPicker._MIDDLE_ITEM_INDEX - 1,
-			YearPicker._MIN_YEAR,
-			YearPicker._MAX_YEAR)) {
+			CalendarDate.fromTimestamp(this._minDate, this._primaryCalendarType).getYear(),
+			CalendarDate.fromTimestamp(this._maxDate, this._primaryCalendarType).getYear())) {
 			return;
 		}
 
-		if (this.minDate && !this._isYearInRange(this._yearPicker.timestamp,
-			-YearPicker._MIDDLE_ITEM_INDEX - 1,
-			this.getFormat().parse(this.minDate).getFullYear(),
-			YearPicker._MAX_YEAR)) {
-			return;
-		}
-
-		if (this.maxDate && !this._isYearInRange(this._yearPicker.timestamp,
-			-YearPicker._MIDDLE_ITEM_INDEX - 1,
-			YearPicker._MIN_YEAR,
-			this.getFormat().parse(this.maxDate).getFullYear())) {
-			return;
-		}
+		const newDate = CalendarDate.fromTimestamp(this._yearPicker.timestamp * 1000, this._primaryCalendarType);
+		newDate.setYear(newDate.getYear() - YearPicker._ITEMS_COUNT);
 
 		this._yearPicker = Object.assign({}, this._yearPicker, {
-			timestamp: this._yearPicker.timestamp - (31536000 * YearPicker._ITEMS_COUNT),
+			timestamp: newDate.valueOf() / 1000,
 		});
 
 		this.timestamp = this._yearPicker.timestamp;
@@ -689,13 +688,13 @@ class Calendar extends UI5Element {
 		this._yearPicker._hidden = true;
 	}
 
-	_isYearInRange(timestamp, yearsoffset, min, max) {
+	_isYearInRange(timestamp, yearsoffset, minYear, maxYear) {
 		if (timestamp) {
 			const oCalDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
 			oCalDate.setMonth(0);
 			oCalDate.setDate(1);
 			oCalDate.setYear(oCalDate.getYear() + yearsoffset);
-			return oCalDate.getYear() >= min && oCalDate.getYear() <= max;
+			return oCalDate.getYear() >= minYear && oCalDate.getYear() <= maxYear;
 		}
 	}
 
