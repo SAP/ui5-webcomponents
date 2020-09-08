@@ -323,7 +323,7 @@ class DayPicker extends UI5Element {
 				if (lastWeekNumber !== weekNumber) {
 					const weekNum = {
 						weekNum: weekNumber,
-						visibility: this._hideWeekNumbers,
+						isHidden: this._hideWeekNumbers,
 					};
 					week.unshift(weekNum);
 					lastWeekNumber = weekNumber;

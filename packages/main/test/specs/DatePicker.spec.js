@@ -698,7 +698,7 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click()
 		
 		// assert
-		const weekNumbersCol1 = datepicker.dayPicker.shadow$(".ui5-dp-weeknumber-container");
+		const weekNumbersCol1 = datepicker.dayPicker.shadow$(".ui5-dp-weekname-container");
 		assert.equal(weekNumbersCol1.isExisting(), true, "The week numbers column is visible.");
 
 		// close date picker
@@ -710,7 +710,7 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click()
 
 		// assert
-		const weekNumbersCol2 = datepicker.dayPicker.shadow$(".ui5-dp-weeknumber-container");
+		const weekNumbersCol2 = datepicker.dayPicker.shadow$(".ui5-dp-weekname-container");
 		assert.equal(weekNumbersCol2.isExisting(), false, "The week numbers column is hidden.");
 
 		// close date picker
