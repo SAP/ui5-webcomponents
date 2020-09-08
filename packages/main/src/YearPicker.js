@@ -311,7 +311,7 @@ class YearPicker extends UI5Element {
 	_handleItemNavigationBorderReach(event) {
 		const oCalDate = this._calendarDate;
 		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
-		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear()
+		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
 		oCalDate.setMonth(0);
 		oCalDate.setDate(1);
 
