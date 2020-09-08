@@ -241,7 +241,7 @@ class DayPicker extends UI5Element {
 		let week = [];
 		this._weekNumbers = [];
 		let weekday;
-		const _aMonthsNameWide = this._oLocaleData.getMonths("wide", this._calendarDate._oUDate.sCalendarType);
+		const _monthsNameWide = this._oLocaleData.getMonths("wide", this._calendarDate._oUDate.sCalendarType);
 
 		if (this.minDate) {
 			this._minDateObject = new Date(this._minDate);
@@ -274,7 +274,7 @@ class DayPicker extends UI5Element {
 				iDay: oCalDate.getDate(),
 				_index: i.toString(),
 				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
-				ariaLabel: `${nonWorkingAriaLabel}${_aMonthsNameWide[oCalDate.getMonth()]} ${oCalDate.getDate()}, ${oCalDate.getYear()}`,
+				ariaLabel: `${nonWorkingAriaLabel}${_monthsNameWide[oCalDate.getMonth()]} ${oCalDate.getDate()}, ${oCalDate.getYear()}`,
 			};
 
 			const isToday = oCalDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
