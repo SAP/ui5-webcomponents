@@ -115,6 +115,8 @@ class DateRangePicker extends DatePicker {
 		this._initialRendering = true;
 		this._oneTimeStampSelected = false; // Used to determine whether the first & last date is the same
 		this._dayPickerMouseoverHandler = this._itemMouseoverHandler.bind(this);
+		this._respPopoverConfig.beforeOpen = this.handleBeforeOpen;
+		this._respPopoverConfig.beforeClose = this.handleBeforeClose;
 	}
 
 	async onAfterRendering() {
@@ -123,13 +125,13 @@ class DateRangePicker extends DatePicker {
 		this._initialRendering = false;
 	}
 
-	async onEnterDOM() {
+	async handleBeforeOpen() {
 		const daypicker = await this.getDayPicker();
 		daypicker.addEventListener("item-mouseover", this._dayPickerMouseoverHandler);
 		daypicker.addEventListener("daypickerrendered", this._keyboardNavigationHandler);
 	}
 
-	async onExitDOM() {
+	async handleBeforeClose() {
 		const daypicker = await this.getDayPicker();
 		daypicker.removeEventListener("item-mouseover", this._dayPickerMouseoverHandler);
 		daypicker.removeEventListener("daypickerrendered", this._keyboardNavigationHandler);
