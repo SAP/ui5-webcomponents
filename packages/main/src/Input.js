@@ -625,10 +625,15 @@ class Input extends UI5Element {
 	}
 
 	async _onfocusin(event) {
+		const inputDomRef = await this.getInputDOMRef();
+
+		if (event.target !== inputDomRef) {
+			return;
+		}
+
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 
-		await this.getInputDOMRef();
 		this._inputIconFocused = event.target && event.target === this.querySelector("[ui5-icon]");
 	}
 
