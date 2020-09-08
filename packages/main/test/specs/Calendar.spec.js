@@ -137,7 +137,7 @@ describe("Calendar general interaction", () => {
 		browser.keys(['Shift', 'F4']);
 		browser.keys('PageUp');
 
-		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1980, 9, 6, 0, 0, 0)));
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1980, 9, 1, 0, 0, 0)));
 
 		browser.keys('PageDown');
 
