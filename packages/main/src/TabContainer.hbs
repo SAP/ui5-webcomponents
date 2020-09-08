@@ -33,14 +33,21 @@
 
 		<!-- overflow button -->
 		{{#if showOverflow}}
-			<ui5-button
+			<div
 				@click="{{_onOverflowButtonClick}}"
-				class="{{classes.overflowButton}}"
-				icon="{{overflowMenuIcon}}"
-				design="Transparent"
-				aria-label="{{overflowMenuTitle}}"
-				aria-haspopup="true"
-			></ui5-button>
+			>
+				{{#if overflowButton.length}}
+					<slot name="overflowButton"></slot>
+				{{else}}
+					<ui5-button
+						class="{{classes.overflowButton}}"
+						icon="{{overflowMenuIcon}}"
+						design="Transparent"
+						aria-label="{{overflowMenuTitle}}"
+						aria-haspopup="true"
+					></ui5-button>
+				{{/if}}
+			</div>
 		{{/if}}
 	</div>
 

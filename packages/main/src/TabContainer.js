@@ -57,6 +57,19 @@ const metadata = {
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},
+
+		/**
+		 * Defines the buttons which is shown when there are overflowed items. If nothing is provided to this slot, the default button will be used.
+		 *
+		 * @type {HTMLElement[]}
+		 * @public
+		 * @slot
+		 * @since 1.0.0-rc.9
+		 */
+		overflowButton: {
+			type: HTMLElement,
+			invalidateParent: true,
+		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
@@ -427,9 +440,14 @@ class TabContainer extends UI5Element {
 	}
 
 	async _onOverflowButtonClick(event) {
+		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui-tc__overflowButton");
 		this.responsivePopover = await this._respPopover();
 		this.updateStaticAreaItemContentDensity();
-		this.responsivePopover.open(this.getDomRef().querySelector(".ui-tc__overflowButton"));
+		if (this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		} else {
+			this.responsivePopover.open(button);
+		}
 	}
 
 	_onHeaderBackArrowClick() {
