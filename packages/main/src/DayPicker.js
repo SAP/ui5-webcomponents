@@ -260,6 +260,9 @@ class DayPicker extends UI5Element {
 			if (weekday < 0) {
 				weekday += 7;
 			}
+
+			const nonWorkingAriaLabel = this._isWeekend(oCalDate) ? "Non-Working Day " : "";
+
 			day = {
 				timestamp: timestamp.toString(),
 				selected: this._selectedDates.some(d => {
@@ -271,7 +274,7 @@ class DayPicker extends UI5Element {
 				iDay: oCalDate.getDate(),
 				_index: i.toString(),
 				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
-				ariaLabel: `${_aMonthsNameWide[oCalDate.getMonth()]} ${oCalDate.getDate()}, ${oCalDate.getYear()}`,
+				ariaLabel: `${nonWorkingAriaLabel}${_aMonthsNameWide[oCalDate.getMonth()]} ${oCalDate.getDate()}, ${oCalDate.getYear()}`,
 			};
 
 			const isToday = oCalDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
@@ -312,12 +315,17 @@ class DayPicker extends UI5Element {
 				day.disabled = true;
 			}
 
+			this._hideWeekNumbers = this.shouldHideWeekNumbers;
+
 			if (day.classes.indexOf("ui5-dp-wday6") !== -1
 				|| _aVisibleDays.length - 1 === i) {
 				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
 				if (lastWeekNumber !== weekNumber) {
-					week.unshift(weekNumber);
-
+					const weekNum = {
+						weekNum: weekNumber,
+						visibility: this._hideWeekNumbers,
+					};
+					week.unshift(weekNum);
 					lastWeekNumber = weekNumber;
 				}
 
@@ -341,7 +349,7 @@ class DayPicker extends UI5Element {
 
 		this._dayNames = [];
 		this._dayNames.push({
-			classes: "sapUiCalDummy ui5-dp-dayname",
+			classes: "ui5-dp-dayname",
 			name: this._dayPickerWeekNumberText,
 		});
 		for (let i = 0; i < 7; i++) {
@@ -360,7 +368,6 @@ class DayPicker extends UI5Element {
 		}
 
 		this._dayNames[1].classes += " ui5-dp-firstday";
-		this._hideWeekNumbers = this.shouldHideWeekNumbers;
 	}
 
 	onAfterRendering() {

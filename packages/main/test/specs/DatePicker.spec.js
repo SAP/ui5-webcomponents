@@ -400,7 +400,7 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnPrev.click();
-		// browser.debug()
+
 		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
 
 		datepicker.btnPrev.click();
@@ -724,8 +724,8 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click()
 		const monthpickerContent = datepicker.dayPicker.shadow$(".ui5-dp-content");
 
-		assert.equal(monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
-		assert.equal(monthpickerContent.getAttribute("aria-roledescription"), "Calendar", "Calendar root have correct roledescription")
+		assert.strictEqual(monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
+		assert.strictEqual(monthpickerContent.getAttribute("aria-roledescription"), "Calendar", "Calendar root have correct roledescription")
 		
 	});
 
@@ -735,8 +735,8 @@ describe("Date Picker Tests", () => {
 		let arr = datepicker.getDayPickerContent();
 		
 		arr.forEach(function(el){
-			assert.equal(el.getAttribute("role"), "row", "Content wrapper has correct role");
-		})
+			assert.strictEqual(el.getAttribute("role"), "row", "Content wrapper has correct role");
+		});
 	});
 
 	it("DayPicker day name attribute", ()=>{
@@ -750,9 +750,9 @@ describe("Date Picker Tests", () => {
 		const content = Array.from(datepicker.getDayPickerDayNames());
 		const dayName = ["Week number", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		content.forEach((element,index) => {
-			assert.equal(element.getAttribute("role"), "columnheader", "Each day have column header role");
-			assert.equal(element.getAttribute("aria-label"), dayName[index], "Aria-label is correct");
-		})
+			assert.strictEqual(element.getAttribute("role"), "columnheader", "Each day have column header role");
+			assert.strictEqual(element.getAttribute("aria-label"), dayName[index], "Aria-label is correct");
+		});
 
 	});
 
@@ -764,14 +764,17 @@ describe("Date Picker Tests", () => {
 		datepicker.root.keys("May 3, 2100");
 		datepicker.root.keys("Enter");
 
-		const content = Array.from(datepicker.getDayPickerNumbers());
-		for(let i = 1; i < content.length; i++){
-			let row = Array.from(content[i].$$("div"));
-			assert.equal(row[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
-			for(let j = 1; j < row.length; j++){
-				assert.equal(row[j].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
-			}
-		}
+		const rows = Array.from(datepicker.getDayPickerNumbers());
+		const firstColumn = Array.from(rows[1].$$("div"));
+		const lastColumn = Array.from(rows[rows.length - 1].$$("div"));
+
+		assert.strictEqual(firstColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
+		assert.strictEqual(firstColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+		assert.strictEqual(firstColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+
+		assert.strictEqual(lastColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
+		assert.strictEqual(lastColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+		assert.strictEqual(lastColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
 	});
 
 	it("DatePcker dates and week number", ()=>{
@@ -783,10 +786,10 @@ describe("Date Picker Tests", () => {
 		datepicker.root.keys("Enter");
 
 		const data = Array.from(datepicker.getDayPickerDatesRow(2));
-		assert.equal(data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");
-		assert.equal(data[1].getAttribute("aria-label"), "May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-		assert.equal(data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
-		assert.equal(data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");
+		assert.strictEqual(data[1].getAttribute("aria-label"), "Non-Working Day May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
 	});
 
 	it("Tests aria-label", () => {

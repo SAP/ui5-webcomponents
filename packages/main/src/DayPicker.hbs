@@ -5,8 +5,9 @@
 	@mousedown={{_onmousedown}}
 	@mouseup={{_onmouseup}}
 >
-
+	
 	<div id="{{_id}}-content" class="ui5-dp-content" role="grid" aria-roledescription="Calendar">
+		{{!-- <p style="color: red">{{../this._hideWeekNumbers}}</p> --}}
 		<div role="row" class="ui5-dp-days-names-container">
 			{{#each _dayNames}}
 				<div
@@ -41,11 +42,12 @@
 									</span>
 							</div>
 						{{else}}
-							{{#unless _hideWeekNumbers}}
+							{{#unless this.visibility}}
+									
 									<div class="ui5-dp-weekname-container"
 										role="rowheader"
-										aria-label="Calendar Week {{this}}">
-											<span class="ui5-dp-weekname">{{this}}</span>
+										aria-label="Calendar Week {{this.weekNum}}">
+											<span class="ui5-dp-weekname">{{this.weekNum}}</span>
 									</div>
 							{{/unless}}
 						{{/if}}

@@ -118,9 +118,7 @@ class DatePickerTestPage {
 	}
 
 	getDayPickerNumbers() {
-		const dayNames = Array.from(this.getDayPickerContent());
-
-		return dayNames;
+		return Array.from(this.getDayPickerContent());
 	}
 
 	isValid(value) {
