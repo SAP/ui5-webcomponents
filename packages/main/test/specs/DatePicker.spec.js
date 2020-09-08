@@ -695,7 +695,7 @@ describe("Date Picker Tests", () => {
 	it("Tests week numbers column visibility", () => {
 		// act
 		datepicker.id = "#dp18";
-		datepicker.valueHelpIcon.click()
+		datepicker.valueHelpIcon.click();
 
 		// assert
 		const weekNumbersCol1 = datepicker.dayPicker.shadow$(".ui5-dp-weekname-container");
@@ -707,7 +707,7 @@ describe("Date Picker Tests", () => {
 
 		// act
 		datepicker.id = "#dp19";
-		datepicker.valueHelpIcon.click()
+		datepicker.valueHelpIcon.click();
 
 		// assert
 		const weekNumbersCol2 = datepicker.dayPicker.shadow$(".ui5-dp-weekname-container");
@@ -721,7 +721,7 @@ describe("Date Picker Tests", () => {
 	it("Calendar root have correct attribute", () => {
 
 		datepicker.id = "#dp18";
-		datepicker.valueHelpIcon.click()
+		datepicker.valueHelpIcon.click();
 		const monthpickerContent = datepicker.dayPicker.shadow$(".ui5-dp-content");
 
 		assert.strictEqual(monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
@@ -743,7 +743,7 @@ describe("Date Picker Tests", () => {
 		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
-		datepicker.openPicker({ focusInput: true })
+		datepicker.openPicker({ focusInput: true });
 		datepicker.root.keys("May 3, 2100");
 		datepicker.root.keys("Enter");
 		
