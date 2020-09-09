@@ -24,6 +24,7 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
+	SELECT_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
@@ -313,6 +314,10 @@ class Select extends UI5Element {
 		this.focused = false;
 	}
 
+	get list() {
+		return this.staticAreaItem.getDomRef()
+	}
+
 	get _isPickerOpen() {
 		return this.responsivePopover && this.responsivePopover.opened;
 	}
@@ -361,6 +366,7 @@ class Select extends UI5Element {
 				value: opt.value,
 				textContent: opt.textContent,
 				id: opt._id,
+				index: index + 1,
 			};
 		});
 
@@ -558,6 +564,10 @@ class Select extends UI5Element {
 
 	get isDisabled() {
 		return this.disabled || undefined;
+	}
+
+	get selectRoleDescription() {
+		return this.i18nBundle.getText(SELECT_ROLE_DESCRIPTION);
 	}
 
 	get _headerTitleText() {

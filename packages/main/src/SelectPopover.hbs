@@ -38,9 +38,24 @@
 			{{/if}}
 		{{/unless}}
 
-		<ui5-list mode="SingleSelectAuto" separators="None" @keydown="{{_handlePickerKeydown}}" @ui5-selection-change="{{_handleSelectionChange}}" @ui5-item-press="{{_handleItemPress}}">
+		<ui5-list
+			id="{{_id}}-select-list"
+			mode="SingleSelectAuto"
+			separators="None"
+			@keydown="{{_handlePickerKeydown}}"
+			@ui5-selection-change="{{_handleSelectionChange}}"
+			@ui5-item-press="{{_handleItemPress}}"
+		>
 			{{#each _syncedOptions}}
-				<ui5-li ?selected="{{this.selected}}" icon="{{this.icon}}" id="{{this.id}}-li">
+				<ui5-li
+					id="{{this.id}}-li"
+					icon="{{this.icon}}"
+					?selected="{{this.selected}}"
+					?aria-selected="{{this.selected}}"
+					aria-setsize="{{../_syncedOptions.length}}"
+					aria-posinset="{{this.index}}"
+					
+				>
 					{{this.textContent}}
 				</ui5-li>
 			{{/each}}
