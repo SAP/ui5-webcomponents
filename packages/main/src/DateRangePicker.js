@@ -7,7 +7,6 @@ import DateRangePickerTemplate from "./generated/templates/DateRangePickerTempla
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
-import Calendar from "./Calendar.js";
 
 /**
  * @public
