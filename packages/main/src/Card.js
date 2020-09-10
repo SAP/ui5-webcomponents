@@ -238,7 +238,7 @@ class Card extends UI5Element {
 		return !!(this.heading || this.subheading || this.status || this.hasAction || this.avatar);
 	}
 
-	get ariaLebelText() {
+	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
 	}
 
