@@ -1,5 +1,11 @@
-commit f746f0d8dc28ce31e16ef40e2dd1dd82e64312f2
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Sep 10 11:08:04 2020 +0300
+commit 2bca6f14b020cc9fcef4f3ba3c4744afdd7ac4fa
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Thu Sep 10 12:20:34 2020 +0300
 
-    docs: make playground set rtl properly (#2195)
+    fix(ui5-daterange-picker): date selection is now correct in all timez… (#2203)
+    
+    * fix(ui5-daterange-picker): date selection is now correct in all timezones
+    
+    * removed unused reference
+    
+    * lint fix
