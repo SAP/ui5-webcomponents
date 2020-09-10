@@ -12,6 +12,8 @@
 	aria-required="{{required}}"
 	aria-expanded="{{_isPickerOpen}}"
 	aria-roledescription="{{selectRoleDescription}}"
+	aria-controls="{{_id}}-select-list"
+	aria-activedescendant="{{selectedListItem}}-li"
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
 	@focusin="{{_onfocusin}}"

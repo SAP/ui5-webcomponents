@@ -314,10 +314,6 @@ class Select extends UI5Element {
 		this.focused = false;
 	}
 
-	get list() {
-		return this.staticAreaItem.getDomRef()
-	}
-
 	get _isPickerOpen() {
 		return this.responsivePopover && this.responsivePopover.opened;
 	}
@@ -537,6 +533,11 @@ class Select extends UI5Element {
 		//  Angular two way data binding
 		this.selectedItem = selectedOption;
 		this.fireEvent("selected-item-changed");
+	}
+
+	get selectedListItem() {
+		const selectedItem = this._syncedOptions.find(item => item.selected);
+		return selectedItem && selectedItem.id;
 	}
 
 	get valueStateTextMappings() {
