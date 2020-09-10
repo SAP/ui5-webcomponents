@@ -192,7 +192,7 @@ class DateRangePicker extends DatePicker {
 		this.valueState = ValueState.None;
 
 		const firstDate = this.getFormat().parse(dates[0]);
-		const secondDate =this.getFormat().parse(dates[1]);
+		const secondDate = this.getFormat().parse(dates[1]);
 
 		this._firstDateTimestamp = Date.UTC(firstDate.getFullYear(), firstDate.getMonth(), firstDate.getDate(), firstDate.getHours()) / 1000;
 		this._lastDateTimestamp = Date.UTC(secondDate.getFullYear(), secondDate.getMonth(), secondDate.getDate(), secondDate.getHours()) / 1000;
@@ -342,7 +342,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	_handleCalendarChange(event) {
-		let newValue = event.detail.dates && event.detail.dates[0];
+		const newValue = event.detail.dates && event.detail.dates[0];
 		this._oneTimeStampSelected = false;
 		if (this.isFirstDatePick) {
 			this.isFirstDatePick = false;
