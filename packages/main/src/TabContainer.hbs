@@ -32,15 +32,15 @@
 		<ui5-icon @click="{{_onHeaderForwardArrowClick}}" class="{{classes.headerForwardArrow}}" name="slim-arrow-right" tabindex="-1" accessible-name="{{nextIconACCName}}" show-tooltip></ui5-icon>
 
 		<!-- overflow button -->
-		{{#if showOverflow}}
+		{{#if shouldShowOverflow}}
 			<div
+				class="ui-tc__overflowButton"
 				@click="{{_onOverflowButtonClick}}"
 			>
 				{{#if overflowButton.length}}
 					<slot name="overflowButton"></slot>
 				{{else}}
 					<ui5-button
-						class="{{classes.overflowButton}}"
 						icon="{{overflowMenuIcon}}"
 						design="Transparent"
 						aria-label="{{overflowMenuTitle}}"

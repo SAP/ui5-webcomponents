@@ -59,7 +59,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the buttons which is shown when there are overflowed items. If nothing is provided to this slot, the default button will be used.
+		 * Defines the button which will open the overflow menu. If nothing is provided to this slot, the default button will be used.
 		 *
 		 * @type {HTMLElement[]}
 		 * @public
@@ -68,7 +68,6 @@ const metadata = {
 		 */
 		overflowButton: {
 			type: HTMLElement,
-			invalidateParent: true,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
@@ -440,7 +439,12 @@ class TabContainer extends UI5Element {
 	}
 
 	async _onOverflowButtonClick(event) {
-		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui-tc__overflowButton");
+		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui-tc__overflowButton > ui5-button");
+
+		if (event.target !== button) {
+			return;
+		}
+
 		this.responsivePopover = await this._respPopover();
 		this.updateStaticAreaItemContentDensity();
 		if (this.responsivePopover.opened) {
@@ -498,6 +502,10 @@ class TabContainer extends UI5Element {
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 
+	get shouldShowOverflow() {
+		return this.showOverflow && this._scrollable;
+	}
+
 	get classes() {
 		return {
 			root: {
@@ -526,10 +534,6 @@ class TabContainer extends UI5Element {
 				"ui5-tc__headerArrow": true,
 				"ui5-tc__headerArrowRight": true,
 				"ui5-tc__headerArrow--visible": this._scrollableForward,
-			},
-			overflowButton: {
-				"ui-tc__overflowButton": true,
-				"ui-tc__overflowButton--visible": this._scrollable,
 			},
 			content: {
 				"ui5-tc__content": true,
