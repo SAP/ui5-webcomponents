@@ -1,7 +1,5 @@
-commit dc2ae6da2335b8f2e276ac2bb2d0dd06a846e95e
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Fri Sep 4 18:50:14 2020 +0300
+commit f746f0d8dc28ce31e16ef40e2dd1dd82e64312f2
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Sep 10 11:08:04 2020 +0300
 
-    feat(ui5-multiinput, ui5-multi-combobox): implement keyboard handling (#2166)
-    
-    Navigation between the tokens is now possible with the Arrow keys both in MultiComboBox and MultiInput components.
+    docs: make playground set rtl properly (#2195)
