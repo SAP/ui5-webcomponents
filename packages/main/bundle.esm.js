@@ -1,3 +1,5 @@
+import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/config/AssetsPath.js";
+
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
 
@@ -109,6 +111,8 @@ const testAssets = {
 		setNoConflict,
 		getRTL,
 		getFirstDayOfWeek,
+		getAssetsPath,
+		setAssetsPath
 	},
 	getLocaleData,
 	applyDirection,

@@ -12,6 +12,7 @@ let initialConfig = {
 	calendarType: null,
 	noConflict: false, // no URL
 	formatSettings: {},
+	assetsPath: "/resources/",
 };
 
 /* General settings */
@@ -48,6 +49,11 @@ const getCalendarType = () => {
 const getFormatSettings = () => {
 	initConfiguration();
 	return initialConfig.formatSettings;
+};
+
+const getAssetsPath = () => {
+	initConfiguration();
+	return initialConfig.assetsPath;
 };
 
 const booleanMapping = new Map();
@@ -128,4 +134,5 @@ export {
 	getNoConflict,
 	getCalendarType,
 	getFormatSettings,
+	getAssetsPath,
 };
