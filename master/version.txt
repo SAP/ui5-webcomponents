@@ -1,11 +1,5 @@
-commit 2bca6f14b020cc9fcef4f3ba3c4744afdd7ac4fa
+commit 3427f3513d2514a78e4d5581b30fec3069f6f772
 Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Thu Sep 10 12:20:34 2020 +0300
+Date:   Fri Sep 11 16:49:48 2020 +0300
 
-    fix(ui5-daterange-picker): date selection is now correct in all timez… (#2203)
-    
-    * fix(ui5-daterange-picker): date selection is now correct in all timezones
-    
-    * removed unused reference
-    
-    * lint fix
+    fix(ui5-calendar): Year text is now right in all timezones (#2209)
