@@ -23,6 +23,7 @@ import styles from "./generated/themes/Token.css.js";
 const metadata = {
 	tag: "ui5-token",
 	languageAware: true,
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
 
 		/**
@@ -65,6 +66,22 @@ const metadata = {
 		 * @private
 		 */
 		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
+	},
+
+	slots: /** @lends  sap.ui.webcomponents.main.Token.prototype */ {
+
+		/**
+		 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
+		 * Accepts <code>ui5-icon</code>
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 * @since 1.0.0-rc.9
+		 */
+		closeIcon: {
+			type: HTMLElement,
+		},
 	},
 
 	events: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
