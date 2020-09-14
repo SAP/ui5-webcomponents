@@ -14,6 +14,7 @@ language     | en, de, es, etc...                              | en            |
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
 [noConflict](#noConflict)  | true, false | false                            | When set to true, all events will be fired with a "ui5-" prefix only
 [formatSettings](#formatSettings)| See the [Format settings](#formatSettings) section below		| Empty object | Allows to override locale-specific configuration
+[assetsPath](#assetsPath)| See the [Assets path](#assetsPath) section below		| `/resources/` | Allows to set the assets path at runtime
 
 ### Content Density
 
@@ -100,6 +101,26 @@ For example, to force the first day of week to Sunday, no matter the locale:
   Setting    |                     Values                      | Default value |                          Description
 ------------ | ----------------------------------------------- | ------------- | -------------------------------------------------------------
 firstDayOfWeek | 0 (Sunday) through 6 (Saturday) | *Depends on locale*     | When set, overrides the locale's default value
+
+<a name="assetsPath"></a>
+### Assets path
+
+<b>Note:</b> This configuration setting only has effect for bundles, created with the UI5 Web Components tools (`@ui5/webcomponents-tools`).
+
+The `assetsPath` setting allows to override the path where asset files (most commonly `.json` ) are located. UI5 Web Components `tools` use `rollup`
+with the `rollup-plugin-url` plugin and `/resources/` is set as the default directory for all non-bundled assets.
+
+For some scenarios the same bundle will be reused from different directories, or the directory structure is unknown in advance. Therefore it's
+necessary to be able to pass the right directory at runtime, most commonly inside the configuration script directly:
+
+Example:
+```html
+<script data-ui5-config type="application/json">
+{
+	"assetsPath": "/my/custom/assets/path"
+}
+</script>
+```
 
 
 ## Configuration script
