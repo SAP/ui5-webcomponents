@@ -154,7 +154,7 @@ const metadata = {
 		 * @private
 		 * @since 1.0.0-rc.9
 		 */
-		headerAriaLabelledBy: {
+		headerAriaLabelledby: {
 			type: String,
 		},
 
@@ -432,10 +432,10 @@ class Panel extends UI5Element {
 	}
 
 	get headerAriaLabelledByText() {
-		if (!this.headerAriaLabelledBy) {
+		if (!this.headerAriaLabelledby) {
 			return;
 		}
-		return getAriaLabelledByTexts(this.header, findNodeOwner(this), this.headerAriaLabelledBy);
+		return getAriaLabelledByTexts(this.header, findNodeOwner(this), this.headerAriaLabelledby);
 	}
 
 	get nonFixedInternalHeader() {
