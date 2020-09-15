@@ -33,7 +33,8 @@
     "@ui5/webcomponents": "1.0.0-rc.8",
     "@ui5/webcomponents-base": "0.22.0",
     "@ui5/webcomponents-icons": "1.0.0-rc.8",
-    "@ui5/webcomponents-theme-base": "1.0.0-rc.8"
+    "@ui5/webcomponents-theme-base": "1.0.0-rc.8",
+    "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.8",
