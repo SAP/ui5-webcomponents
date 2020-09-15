@@ -1,7 +1,5 @@
-// OpenUI5 integration
-import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+import "./bundle-base.js";
 
-// asset helpers (needs correct json as url in rollup.config.js)
-import "../dist/Assets.js";
+import Tab from "../dist/Tab.js";
 
-import "../dist/Tab.js";
+export default Tab;

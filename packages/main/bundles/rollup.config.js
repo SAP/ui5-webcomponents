@@ -42,19 +42,18 @@ const getPlugins = ({ transpile }) => {
 
 const getES6Config = () => {
 
-	const inputs = glob.sync("*.js").filter(file => file !== "rollup.config.js");
+	const inputs = glob.sync("*.js").filter(file => !["rollup.config.js", "bundle-base.js"].includes(file));
 
+	// TODO: do not use terser to minimize, leave to OpenUI5
 	return [{
 		input: inputs,
 		output: [
 			{
-				dir: "../dist/resources/bundles/module",
-				format: "esm",
-				sourcemap: true
-			},
-			{
-				dir: "../dist/resources/bundles/nomodule",
+				dir: "/SAPDevelop/openui5/src/sap.ui.webcomponents/src/sap/ui/webcomponents/thirdparty/ui5-wc-bundles",
 				format: "amd",
+				amd: {
+					define: "sap.ui.define"
+				},
 				sourcemap: true
 			}
 		],
@@ -64,7 +63,7 @@ const getES6Config = () => {
 				return "window";
 			}
 		},
-		plugins: getPlugins({transpile: false}),
+		plugins: getPlugins({transpile: true}),
 	}];
 };
 
