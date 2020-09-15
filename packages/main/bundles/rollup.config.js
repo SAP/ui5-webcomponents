@@ -5,12 +5,12 @@ const url = require("rollup-plugin-url");
 const { terser } = require("rollup-plugin-terser");
 const glob = require("glob");
 const path = require("path");
+const rimraf = require("rimraf");
 
-const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
+rimraf.sync("/SAPDevelop/openui5/src/sap.ui.webcomponents/src/sap/ui/webcomponents/thirdparty/ui5-wc-bundles");
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
-	let publicPath = DEPLOY_PUBLIC_PATH || "/resources/";
 
 	plugins.push(url({
 		limit: 0,
@@ -19,7 +19,7 @@ const getPlugins = ({ transpile }) => {
 		],
 		emitFiles: true,
 		fileName: "[name].[hash][extname]",
-		publicPath,
+		publicPath: "/resources/sap/ui/webcomponents/thirdparty/ui5-wc-bundles/",
 	}));
 
 
