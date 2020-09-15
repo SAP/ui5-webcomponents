@@ -74,7 +74,7 @@ class UI5Element extends HTMLElement {
 		if (type === "_property-change") {
 			this._propertyChangeListeners.delete(listener);
 		}
-		return super.addEventListener(type, listener, options);
+		return super.removeEventListener(type, listener, options);
 	}
 
 	_hasPropertyChangeListeners() {
