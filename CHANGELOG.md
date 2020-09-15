@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.2](https://github.com/SAP/ui5-webcomponents/compare/v0.23.1...v0.23.2) (2020-09-15)
+
+
+### Bug Fixes
+
+* **ui5-button:** prevent button with icons truncate in ie ([#2181](https://github.com/SAP/ui5-webcomponents/issues/2181)) ([bbb41f6](https://github.com/SAP/ui5-webcomponents/commit/bbb41f6))
+* **ui5-daterange-picker:** date selection is now correct in all timezones ([1b7c4f9](https://github.com/SAP/ui5-webcomponents/commit/1b7c4f9))
+* **ui5-li-custom:** fix pointer-events inheritance ([#2196](https://github.com/SAP/ui5-webcomponents/issues/2196)) ([bc41157](https://github.com/SAP/ui5-webcomponents/commit/bc41157))
+* **playground:** set RTL properly ([#2195](https://github.com/SAP/ui5-webcomponents/issues/2195))
+
+### Refactoring
+* **framework:** fetch default language ([#2175](https://github.com/SAP/ui5-webcomponents/issues/2175))
+
+### Features
+
+* **ui5-tab-container:** implement overflow-button slot ([#2192](https://github.com/SAP/ui5-webcomponents/issues/2192)) ([647ae84](https://github.com/SAP/ui5-webcomponents/commit/647ae84))
+* **ui5-token:** provide closeIcon slot ([#2193](https://github.com/SAP/ui5-webcomponents/issues/2193)) ([11ba79f](https://github.com/SAP/ui5-webcomponents/commit/11ba79f))
+
+
+
+
+
 # [0.23.1](https://github.com/SAP/ui5-webcomponents/compare/v0.23.0...v0.23.1) (2020-08-24)
 
 ### Features
