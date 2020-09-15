@@ -66,6 +66,10 @@
 	font-family: inherit;
 }
 
+[inner-input][inner-input-with-icon] {
+	padding: var(--_ui5_input_inner_padding_with_icon);
+}
+
 [inner-input]::selection {
 	background: var(--sapSelectedColor);
 	color: var(--sapContent_ContrastTextColor);
