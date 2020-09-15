@@ -26,7 +26,7 @@ function ui5DevImportCheckerPlugin() {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
-	let publicPath = DEPLOY_PUBLIC_PATH || "/UI5_RESOURCES_PATH/";
+	let publicPath = DEPLOY_PUBLIC_PATH;
 
 	if (!process.env.DEV) {
 		plugins.push(filesize({

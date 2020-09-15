@@ -13,7 +13,7 @@ let initialConfig = {
 	noConflict: false, // no URL
 	formatSettings: {},
 	useDefaultLanguage: false,
-	assetsPath: "/resources/",
+	assetsPath: "",
 };
 
 /* General settings */
