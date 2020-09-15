@@ -170,8 +170,6 @@ For example, to find the Button component (that belongs to the `main` package), 
 
 *Note: before building the project you can also set the `PUBLIC_DEPLOY_PATH` environment variable to specify the path where non-bundled assets will be fetched from*
 
-*For example: ``
-
 ## Limitations
 None as of 1.0.0-rc.8 
 
