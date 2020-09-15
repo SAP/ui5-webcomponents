@@ -1,5 +1,9 @@
-commit 3427f3513d2514a78e4d5581b30fec3069f6f772
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Sep 11 16:49:48 2020 +0300
+commit 610d10557b1f8413db0b4c3074a6554661cf0a79
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Sep 15 17:38:32 2020 +0300
 
-    fix(ui5-calendar): Year text is now right in all timezones (#2209)
+     fix: fix visual deviations from Fiori spec (#2217)
+    
+    * fix: fix visual deviations from Fiori spec
+    
+    * add more

@@ -191,6 +191,17 @@
 		<ui5-input id="value-help-trigger-counter" placeholder="event count.."></ui5-input>
 	</div>
 
+	<div>
+		<ui5-title>MultiInput with tokesn with custom icon</ui5-title>
+		<ui5-multi-input style="width: 500px;">
+			<ui5-token slot="tokens" text="Menu">
+				<ui5-icon name="menu" accessible-name="Menu here" slot="closeIcon"></ui5-icon>
+			</ui5-token>
+			<ui5-token slot="tokens" text="Not a menu">
+			</ui5-token>
+		</ui5-multi-input>
+	</div>
+
 	<script>
 
 		var createTokenFromText = function (text) {
