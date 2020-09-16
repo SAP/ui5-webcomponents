@@ -12,6 +12,7 @@ let initialConfig = {
 	calendarType: null,
 	noConflict: false, // no URL
 	formatSettings: {},
+	useDefaultLanguage: false,
 };
 
 /* General settings */
@@ -33,6 +34,16 @@ const getRTL = () => {
 const getLanguage = () => {
 	initConfiguration();
 	return initialConfig.language;
+};
+
+/**
+ * Returns if the default language, that is inlined build time,
+ * should be used, instead of trying fetching the language over the network.
+ * @returns {Boolean}
+ */
+const getUseDefaultLanguage = () => {
+	initConfiguration();
+	return initialConfig.useDefaultLanguage;
 };
 
 const getNoConflict = () => {
@@ -125,6 +136,7 @@ export {
 	getTheme,
 	getRTL,
 	getLanguage,
+	getUseDefaultLanguage,
 	getNoConflict,
 	getCalendarType,
 	getFormatSettings,

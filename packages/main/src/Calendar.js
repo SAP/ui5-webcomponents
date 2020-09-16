@@ -217,7 +217,7 @@ class Calendar extends UI5Element {
 		this._oMonth.minDate = this.minDate;
 		this._oMonth.maxDate = this.maxDate;
 		this._header.monthText = this._oLocaleData.getMonths("wide", this._primaryCalendarType)[this._month];
-		this._header.yearText = oYearFormat.format(this._localDate);
+		this._header.yearText = oYearFormat.format(this._localDate, true);
 		currentMonth = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getMonth();
 		currentYear = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getYear();
 
