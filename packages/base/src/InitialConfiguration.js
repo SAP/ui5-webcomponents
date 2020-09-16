@@ -13,6 +13,7 @@ let initialConfig = {
 	noConflict: false, // no URL
 	formatSettings: {},
 	useDefaultLanguage: false,
+	assetsPath: "",
 };
 
 /* General settings */
@@ -59,6 +60,11 @@ const getCalendarType = () => {
 const getFormatSettings = () => {
 	initConfiguration();
 	return initialConfig.formatSettings;
+};
+
+const getAssetsPath = () => {
+	initConfiguration();
+	return initialConfig.assetsPath;
 };
 
 const booleanMapping = new Map();
@@ -140,4 +146,5 @@ export {
 	getNoConflict,
 	getCalendarType,
 	getFormatSettings,
+	getAssetsPath,
 };

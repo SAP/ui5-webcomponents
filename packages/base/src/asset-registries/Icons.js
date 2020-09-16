@@ -1,5 +1,6 @@
 import { registerIcon, registerCollectionPromise } from "../SVGIconRegistry.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";
+import getEffectiveAssetPath from "../util/getEffectiveAssetPath.js";
 
 const registerIconBundle = async (collectionName, bundleData) => {
 	let resolveFn;
@@ -9,7 +10,7 @@ const registerIconBundle = async (collectionName, bundleData) => {
 	registerCollectionPromise(collectionName, collectionFetched);
 
 	if (typeof bundleData !== "object") { // not inlined from build -> fetch it
-		bundleData = await fetchJsonOnce(bundleData);
+		bundleData = await fetchJsonOnce(getEffectiveAssetPath(bundleData));
 	}
 	fillRegistry(bundleData);
 	resolveFn();
