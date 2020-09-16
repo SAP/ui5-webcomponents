@@ -1,7 +1,7 @@
 const babel = require("rollup-plugin-babel");
 const process = require("process");
 const resolve = require("rollup-plugin-node-resolve");
-const url = require("rollup-plugin-url");
+const url = require("@rollup/plugin-url");
 const { terser } = require("rollup-plugin-terser");
 const notify = require('rollup-plugin-notify');
 const filesize = require('rollup-plugin-filesize');
@@ -26,7 +26,7 @@ function ui5DevImportCheckerPlugin() {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
-	let publicPath = DEPLOY_PUBLIC_PATH || "/resources/";
+	let publicPath = DEPLOY_PUBLIC_PATH;
 
 	if (!process.env.DEV) {
 		plugins.push(filesize({

@@ -1,6 +1,7 @@
 import { fetchJsonOnce } from "../util/FetchHelper.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.js";
+import getEffectiveAssetPath from "../util/getEffectiveAssetPath.js";
 
 const resources = new Map();
 const cldrData = {};
@@ -94,7 +95,7 @@ const fetchCldr = async (language, region, script) => {
 		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrObj);
 	} else if (url) {
 		// fetch it
-		const cldrContent = await fetchJsonOnce(url);
+		const cldrContent = await fetchJsonOnce(getEffectiveAssetPath(url));
 		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrContent);
 	}
 };
