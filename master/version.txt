@@ -1,9 +1,5 @@
-commit 267ba2ed9df45dce2c5f0d01a23426a2bbe33790
+commit 0be4e107cde4bec2d200751aa32e0aab26067684
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Sep 16 12:33:43 2020 +0300
+Date:   Wed Sep 16 14:24:00 2020 +0300
 
-    chore: use Chromedriver 85 (#2219)
-    
-    * chore: use Chromedriver 85
-    
-    * fix
+    feat(framework): Make _property-change publicly available (#2201)
