@@ -194,19 +194,12 @@ yarn build # to build the project
 Afterwards, you can find the static **UI5 Web Components** in the `dist` folder of the corresponding package folder.
 For example, to find the Button component (that belongs to the `main` package), look inside the `packages/main/dist` folder.
 
-## FAQ
-### What's the thing with Yarn?
-In a couple of guides we refer to the [Yarn](https://yarnpkg.com/) node package manager. This is because it offers functionality that the otherwise preferred [npm](https://www.npmjs.com/) package manager is currently lacking. Namely, the [workspace](https://yarnpkg.com/lang/en/docs/workspaces/) setting which is currently used in the [OpenUI5 (mono-)repository](https://github.com/SAP/openui5). Note that npm [might add](https://github.com/npm/npm/pull/15900#issuecomment-315335381) this feature in the future.
+**Note:** Before building the project you can also set the `DEPLOY_PUBLIC_PATH` environment variable to specify the path where non-bundled assets will be fetched from, for example:
 
-Keep in mind that linking the same module with npm and Yarn may cause issues. Also, Yarn can't work with links created by npm and vice versa.
-
-### Where are the npm packages?
-- [UI5 Web Components](https://www.npmjs.com/package/@ui5/webcomponents)
-- [UI5 Web Components Fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori)
-- [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons)
-- [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base)
-- [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base)
-- [UI5 Web Components Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization)
+```
+DEPLOY_PUBLIC_PATH=/my/resources/ yarn build
+```
+(for Windows: `DEPLOY_PUBLIC_PATH="\/my\/resources\/" yarn build`)
 
 ## Limitations
 None as of 1.0.0-rc.5 

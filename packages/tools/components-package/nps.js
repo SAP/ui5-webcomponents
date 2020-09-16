@@ -48,7 +48,7 @@ const getScripts = (options) => {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			test: 'nps "copy.test --watch --safe --skip-initial-copy"',
-			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV",
+			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,DEPLOY_PUBLIC_PATH:/resources/",
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',

@@ -5,6 +5,7 @@ import { fetchTextOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
+import getEffectiveAssetPath from "../util/getEffectiveAssetPath.js";
 import { getUseDefaultLanguage } from "../config/Language.js";
 
 const bundleData = new Map();
@@ -78,7 +79,7 @@ const fetchI18nBundle = async packageName => {
 		return;
 	}
 
-	const content = await fetchTextOnce(bundleURL);
+	const content = await fetchTextOnce(getEffectiveAssetPath(bundleURL));
 	let parser;
 	if (content.startsWith("{")) {
 		parser = JSON.parse;
