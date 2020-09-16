@@ -439,7 +439,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * @private
+	 *  @private
 	 */
 	_propertyChange(name, value) {
 		this._updateAttribute(name, value);
