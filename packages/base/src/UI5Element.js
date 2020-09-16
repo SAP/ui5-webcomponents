@@ -448,7 +448,7 @@ class UI5Element extends HTMLElement {
 			this.dispatchEvent(new CustomEvent("_property-change", {
 				detail: { name, newValue: value },
 				composed: false,
-				bubbles: true,
+				bubbles: false,
 			}));
 		}
 	}
