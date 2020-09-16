@@ -1,5 +1,9 @@
-commit 16c46da9f317193c85d20b498c14f66cfea88388
+commit 267ba2ed9df45dce2c5f0d01a23426a2bbe33790
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Sep 16 11:54:25 2020 +0300
+Date:   Wed Sep 16 12:33:43 2020 +0300
 
-    feat(framework): make assets path configurable (#2214)
+    chore: use Chromedriver 85 (#2219)
+    
+    * chore: use Chromedriver 85
+    
+    * fix
