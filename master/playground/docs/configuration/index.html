@@ -2180,6 +2180,12 @@
       <td>Empty object</td>
       <td>Allows to override locale-specific configuration</td>
     </tr>
+    <tr>
+      <td><a href="#assetsPath">assetsPath</a></td>
+      <td>See the <a href="#assetsPath">Assets path</a> section below</td>
+      <td>Empty string</td>
+      <td>Allows to set the assets path at runtime</td>
+    </tr>
   </tbody>
 </table>
 
@@ -2286,6 +2292,28 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
     </tr>
   </tbody>
 </table>
+
+<p><a name="assetsPath"></a></p>
+<h3 id="assets-path">Assets path</h3>
+
+<p>This configuration setting allows to set the path where asset files (most commonly <code class="highlighter-rouge">.json</code> ) that are to be fetched at runtime, are located. These are:</p>
+<ul>
+  <li>Icon collections</li>
+  <li><code class="highlighter-rouge">i18n</code> message bundles</li>
+  <li><code class="highlighter-rouge">CLDR</code> files</li>
+  <li>Additional themes</li>
+</ul>
+
+<p>For some scenarios the same bundle will be reused from different directories, or the directory structure is unknown in advance. Therefore it’s
+necessary to be able to pass the right directory at runtime, most commonly inside the configuration script directly:</p>
+
+<p>Example:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">data-ui5-config</span> <span class="na">type=</span><span class="s">"application/json"</span><span class="nt">&gt;</span>
+<span class="p">{</span>
+	<span class="dl">"</span><span class="s2">assetsPath</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/my/custom/assets/path</span><span class="dl">"</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
 
 <h2 id="configuration-script">Configuration script</h2>
 

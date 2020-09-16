@@ -1,9 +1,5 @@
-commit 610d10557b1f8413db0b4c3074a6554661cf0a79
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Sep 15 17:38:32 2020 +0300
+commit 16c46da9f317193c85d20b498c14f66cfea88388
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Sep 16 11:54:25 2020 +0300
 
-     fix: fix visual deviations from Fiori spec (#2217)
-    
-    * fix: fix visual deviations from Fiori spec
-    
-    * add more
+    feat(framework): make assets path configurable (#2214)
