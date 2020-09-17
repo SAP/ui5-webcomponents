@@ -2,11 +2,18 @@
 	tokenizer-popover="true"
 	style={{styles.popover}}
 	header-text={{morePopoverTitle}}
-	content-only-on-desktop
+	?content-only-on-desktop="{{hasValueState}}"
 	no-arrow
 	placement-type="Bottom"
 	horizontal-align="Left"
 >
+	{{#unless hasValueState}}
+		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
+			{{#each valueStateMessageText}}
+				{{this}}
+			{{/each}}
+		</div>
+	{{/unless}}
 	<ui5-list
 		class="ui5-tokenizer-list"
 		mode="Delete"
