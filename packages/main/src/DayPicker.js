@@ -18,6 +18,7 @@ import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
+	DAY_PICKER_NON_WORKING_DAY,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -261,7 +262,7 @@ class DayPicker extends UI5Element {
 				weekday += 7;
 			}
 
-			const nonWorkingAriaLabel = this._isWeekend(oCalDate) ? "Non-Working Day " : "";
+			const nonWorkingAriaLabel = this._isWeekend(oCalDate) ? `${this._dayPickerNonWorkingDay} ` : "";
 
 			day = {
 				timestamp: timestamp.toString(),
@@ -511,6 +512,10 @@ class DayPicker extends UI5Element {
 
 	get _dayPickerWeekNumberText() {
 		return this.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT);
+	}
+
+	get _dayPickerNonWorkingDay() {
+		return this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 	}
 
 	_modifySelectionAndNotifySubscribers(sNewDate, bAdd) {
