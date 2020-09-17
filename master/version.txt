@@ -1,5 +1,5 @@
-commit 0be4e107cde4bec2d200751aa32e0aab26067684
+commit 9511d7ad07d333ce84826f7d9475927029417f1f
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Sep 16 14:24:00 2020 +0300
+Date:   Thu Sep 17 09:52:22 2020 +0300
 
-    feat(framework): Make _property-change publicly available (#2201)
+    chore(framework): Do not use insensitive words (#2222)
