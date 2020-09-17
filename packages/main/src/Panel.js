@@ -10,8 +10,7 @@ import {
 } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/navigation-right-arrow.js";
-import findNodeOwner from "@ui5/webcomponents-base/dist/util/findNodeOwner.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
 import Button from "./Button.js";
 import TitleLevel from "./types/TitleLevel.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";

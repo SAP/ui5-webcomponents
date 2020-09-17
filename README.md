@@ -168,6 +168,13 @@ yarn build # to build the project
 Afterwards, you can find the build output in the `dist` folder of the corresponding package folder.
 For example, to find the Button component (that belongs to the `main` package), look inside the `packages/main/dist` folder.
 
+**Note:** Before building the project you can also set the `DEPLOY_PUBLIC_PATH` environment variable to specify the path where non-bundled assets will be fetched from, for example:
+
+```
+DEPLOY_PUBLIC_PATH=/my/resources/ yarn build
+```
+(for Windows: `DEPLOY_PUBLIC_PATH="\/my\/resources\/" yarn build`)
+
 ## Limitations
 None as of 1.0.0-rc.8 
 

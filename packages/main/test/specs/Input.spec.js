@@ -300,7 +300,13 @@ describe("Input general interaction", () => {
 		const input = browser.$("#input-number2");
 
 		input.click();
-		input.keys("1.22.33");
+		input.keys("1");
+		input.keys(".");
+		input.keys("2");
+		input.keys("2");
+		input.keys(".");
+		input.keys("3");
+		input.keys("3");
 		input.keys("Tab");
 
 		browser.pause(500);
