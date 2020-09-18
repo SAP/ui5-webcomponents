@@ -8,18 +8,20 @@
 	horizontal-align="Left"
 >
 	{{#unless hasValueState}}
-		<div slot="header" class="ui5-responsive-popover-header">
-			<div class="row" style="{{styles.popoverHeaderTitle}}">
-				<ui5-title level="H5" class="ui5-responsive-popover-header-text">Remove</ui5-title>
-				<ui5-button
-					class="ui5-responsive-popover-close-btn"
-					icon="decline"
-					design="Transparent"
-					@click="{{closeMorePopover}}"
-				>
-				</ui5-button>
-			</div>
-			<div class="row {{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
+		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
+			{{#if _isPhone}}
+				<div class="row" style="{{styles.popoverHeaderTitle}}">
+					<ui5-title level="H5" class="ui5-responsive-popover-header-text">Remove</ui5-title>
+					<ui5-button
+						class="ui5-responsive-popover-close-btn"
+						icon="decline"
+						design="Transparent"
+						@click="{{closeMorePopover}}"
+					>
+					</ui5-button>
+				</div>
+			{{/if}}
+			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 				{{#each valueStateMessageText}}
 					{{this}}
 				{{/each}}
@@ -37,10 +39,12 @@
 			</ui5-li>
 		{{/each}}
 	</ui5-list>
-	<div slot="footer" class="ui5-responsive-popover-footer">
-		<ui5-button
-			design="Transparent"
-			@click="{{closeMorePopover}}"
-		>OK</ui5-button>
-	</div>
+	{{#if _isPhone}}
+		<div slot="footer" class="ui5-responsive-popover-footer">
+			<ui5-button
+				design="Transparent"
+				@click="{{closeMorePopover}}"
+			>OK</ui5-button>
+		</div>
+	{{/if}}
 </ui5-responsive-popover>

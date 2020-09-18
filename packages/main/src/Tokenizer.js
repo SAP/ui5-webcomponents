@@ -314,6 +314,10 @@ class Tokenizer extends UI5Element {
 		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
+	get _isPhone() {
+		return isPhone();
+	}
+
 	get classes() {
 		return {
 			wrapper: {
@@ -341,11 +345,13 @@ class Tokenizer extends UI5Element {
 			popover: {
 				"min-width": `${this.popoverMinWidth}px`,
 			},
-			popoverHeader: {
+			popoverValueStateMessage: {
 				"width": isPhone() ? "100%" : `${this.popoverMinWidth}px`,
 				"min-height": "2rem",
-				"align-items": "flex-start",
-				"font-size": "0.75rem",
+				"padding": isPhone() ? "0.25rem 1rem" : "0.3rem 0.625rem"
+			},
+			popoverHeader: {
+				"min-height": "2rem",
 			},
 			popoverHeaderTitle: {
 				"justify-content": "left",
