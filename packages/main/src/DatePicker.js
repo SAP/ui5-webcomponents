@@ -533,11 +533,10 @@ class DatePicker extends UI5Element {
 
 	/**
 	 * Adds or extracts a given number of measuring units from the "dateValue" property value
-	 *
+	 * @param {boolean} forward if true indicates addition
 	 * @param {boolean} years indicates that the measuring unit is in years
 	 * @param {boolean} months indicates that the measuring unit is in months
 	 * @param {boolean} days indicates that the measuring unit is in days
-	 * @param {boolean} forward if true indicates addition
 	 * @param {int} step number of measuring units to substract or add defaults to 1
 	 */
 	_changeDateValueWrapper(forward, years, months, days, step = 1) {
@@ -570,6 +569,10 @@ class DatePicker extends UI5Element {
 			return;
 		}
 
+		if (incrementStep === 0 || (!days && !months && !years)) {
+			return;
+		}
+
 		if (days) {
 			date.setDate(date.getDate() + incrementStep);
 		} else if (months) {
@@ -588,8 +591,6 @@ class DatePicker extends UI5Element {
 				// day doesn't exist in this month (February 29th)
 				date.setDate(0);
 			}
-		} else {
-			return;
 		}
 
 		if (date.valueOf() < this._minDate) {

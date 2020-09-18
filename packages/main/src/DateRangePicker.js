@@ -393,10 +393,10 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * Adds or extracts a given number of measuring units from the "dateValue" property value
 	 *
+	 * @param {boolean} forward if true indicates addition
 	 * @param {boolean} years indicates that the measuring unit is in years
 	 * @param {boolean} months indicates that the measuring unit is in months
 	 * @param {boolean} days indicates that the measuring unit is in days
-	 * @param {boolean} forward if true indicates addition
 	 * @param {int} step number of measuring units to substract or add defaults ot 1
 	 */
 	async _changeDateValueWrapper(forward, years, months, days, step = 1) {
