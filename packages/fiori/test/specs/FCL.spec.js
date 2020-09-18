@@ -96,5 +96,34 @@ describe("FlexibleColumnLayout Behavior", () => {
 
 		// assert
 		assert.strictEqual(visibleColumns, "3", "3 columns are visible");
-		assert.strictEqual(fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "new layout set");	});
+		assert.strictEqual(fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "new layout set");
+	});
+
+	it("tests arrows acc attrs", () => {
+		const fcl = browser.$("#fclAcc");
+		const startArrow = fcl.shadow$(".ui5-fcl-arrow--start");
+		const endArrow = fcl.shadow$(".ui5-fcl-arrow--end");
+		const startArrowText1 = "Expand the first column";
+		const startArrowText2 = "Collapse the first column";
+		const endArrowText = "Expand the last column";
+
+		// assert
+		assert.strictEqual(startArrow.getAttribute("title"), startArrowText1,
+			"Start arrow has the correct tooltip.");
+		assert.strictEqual(startArrow.getAttribute("aria-label"), startArrowText1,
+			"Start arrow has the correct aria-label.");
+		assert.strictEqual(endArrow.getAttribute("title"), endArrowText,
+			"End arrow has the correct tooltip.");
+		assert.strictEqual(endArrow.getAttribute("aria-label"), endArrowText,
+			"End arrow has the correct aria-label.");
+
+		// act
+		startArrow.click();
+
+		// assert
+		assert.strictEqual(startArrow.getAttribute("title"), startArrowText2,
+			"Start arrow has the correct tooltip.");
+		assert.strictEqual(startArrow.getAttribute("aria-label"), startArrowText2,
+			"Start arrow has the correct aria-label.");
+	});
 });
