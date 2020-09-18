@@ -362,7 +362,6 @@ class Select extends UI5Element {
 				value: opt.value,
 				textContent: opt.textContent,
 				id: opt._id,
-				index: index + 1,
 			};
 		});
 
@@ -533,11 +532,6 @@ class Select extends UI5Element {
 		//  Angular two way data binding
 		this.selectedItem = selectedOption;
 		this.fireEvent("selected-item-changed");
-	}
-
-	get selectedListItem() {
-		const selectedItem = this._syncedOptions.find(item => item.selected);
-		return selectedItem && selectedItem.id;
 	}
 
 	get valueStateTextMappings() {

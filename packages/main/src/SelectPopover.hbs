@@ -39,7 +39,6 @@
 		{{/unless}}
 
 		<ui5-list
-			id="{{_id}}-select-list"
 			mode="SingleSelectAuto"
 			separators="None"
 			@keydown="{{_handlePickerKeydown}}"
@@ -52,8 +51,6 @@
 					icon="{{this.icon}}"
 					?selected="{{this.selected}}"
 					?aria-selected="{{this.selected}}"
-					aria-setsize="{{../_syncedOptions.length}}"
-					aria-posinset="{{this.index}}"
 				>
 					{{this.textContent}}
 				</ui5-li>
