@@ -75,8 +75,8 @@ describe("DateRangePicker general interaction", () => {
 	it("Change event fired once", () => {
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#daterange-picker1");
 		const dayPicker = browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
-		const dayOne = dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$(".ui5-dp-items-container").$$(".ui5-dp-item")[5];
-		const dayTwo = dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$(".ui5-dp-items-container").$$(".ui5-dp-item")[15];
+		const dayOne = dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item" )[5];
+		const dayTwo = dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item" )[15];
 		const daterangepicker = browser.$("#daterange-picker1");
 
 		daterangepicker.click();

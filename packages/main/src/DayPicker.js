@@ -13,7 +13,13 @@ import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDat
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
+
+import {
+	DAY_PICKER_WEEK_NUMBER_TEXT,
+	DAY_PICKER_NON_WORKING_DAY,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
@@ -135,15 +141,6 @@ const metadata = {
 		},
 
 		/**
-		 * @type {Object}
-		 * @private
-		 */
-		_weekNumbers: {
-			type: Object,
-			multiple: true,
-		},
-
-		/**
 		 * @type {boolean}
 		 * @private
 		 */
@@ -229,6 +226,8 @@ class DayPicker extends UI5Element {
 			"PageTop",
 			this._handleMonthTopOverflow.bind(this)
 		);
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -243,6 +242,8 @@ class DayPicker extends UI5Element {
 		let week = [];
 		this._weekNumbers = [];
 		let weekday;
+		const _monthsNameWide = this._oLocaleData.getMonths("wide", this._calendarDate._oUDate.sCalendarType);
+
 		if (this.minDate) {
 			this._minDateObject = new Date(this._minDate);
 		}
@@ -260,6 +261,9 @@ class DayPicker extends UI5Element {
 			if (weekday < 0) {
 				weekday += 7;
 			}
+
+			const nonWorkingAriaLabel = this._isWeekend(oCalDate) ? `${this._dayPickerNonWorkingDay} ` : "";
+
 			day = {
 				timestamp: timestamp.toString(),
 				selected: this._selectedDates.some(d => {
@@ -271,15 +275,8 @@ class DayPicker extends UI5Element {
 				iDay: oCalDate.getDate(),
 				_index: i.toString(),
 				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
+				ariaLabel: `${nonWorkingAriaLabel}${_monthsNameWide[oCalDate.getMonth()]} ${oCalDate.getDate()}, ${oCalDate.getYear()}`,
 			};
-
-			const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
-
-			if (lastWeekNumber !== weekNumber) {
-				this._weekNumbers.push(weekNumber);
-
-				lastWeekNumber = weekNumber;
-			}
 
 			const isToday = oCalDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
 
@@ -301,10 +298,12 @@ class DayPicker extends UI5Element {
 			if (isToday) {
 				day.classes += " ui5-dp-item--now";
 				todayIndex = i;
+				day.ariaLabel = `today ${day.ariaLabel}`;
 			}
 
 			if (oCalDate.getMonth() !== this._month) {
 				day.classes += " ui5-dp-item--othermonth";
+				day.ariaDisabled = "true";
 			}
 
 			day.id = `${this._id}-${timestamp}`;
@@ -317,8 +316,20 @@ class DayPicker extends UI5Element {
 				day.disabled = true;
 			}
 
+			this._hideWeekNumbers = this.shouldHideWeekNumbers;
+
 			if (day.classes.indexOf("ui5-dp-wday6") !== -1
 				|| _aVisibleDays.length - 1 === i) {
+				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
+				if (lastWeekNumber !== weekNumber) {
+					const weekNum = {
+						weekNum: weekNumber,
+						isHidden: this._hideWeekNumbers,
+					};
+					week.unshift(weekNum);
+					lastWeekNumber = weekNumber;
+				}
+
 				this._weeks.push(week);
 				week = [];
 			}
@@ -338,6 +349,10 @@ class DayPicker extends UI5Element {
 		let dayName;
 
 		this._dayNames = [];
+		this._dayNames.push({
+			classes: "ui5-dp-dayname",
+			name: this._dayPickerWeekNumberText,
+		});
 		for (let i = 0; i < 7; i++) {
 			weekday = i + this._getFirstDayOfWeek();
 			if (weekday > 6) {
@@ -353,8 +368,7 @@ class DayPicker extends UI5Element {
 			this._dayNames.push(dayName);
 		}
 
-		this._dayNames[0].classes += " ui5-dp-firstday";
-		this._hideWeekNumbers = this.shouldHideWeekNumbers;
+		this._dayNames[1].classes += " ui5-dp-firstday";
 	}
 
 	onAfterRendering() {
@@ -489,11 +503,19 @@ class DayPicker extends UI5Element {
 		const focusableDays = [];
 
 		for (let i = 0; i < this._weeks.length; i++) {
-			const week = this._weeks[i].filter(x => !x.disabled);
+			const week = this._weeks[i].slice(1).filter(x => !x.disabled);
 			focusableDays.push(week);
 		}
 
 		return [].concat(...focusableDays);
+	}
+
+	get _dayPickerWeekNumberText() {
+		return this.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT);
+	}
+
+	get _dayPickerNonWorkingDay() {
+		return this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 	}
 
 	_modifySelectionAndNotifySubscribers(sNewDate, bAdd) {
@@ -737,6 +759,7 @@ class DayPicker extends UI5Element {
 	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}
 }
