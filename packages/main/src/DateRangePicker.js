@@ -211,8 +211,12 @@ class DateRangePicker extends DatePicker {
 		}
 		this.valueState = ValueState.None;
 
-		this._firstDateTimestamp = this.getFormat().parse(dates[0]).getTime() / 1000;
-		this._lastDateTimestamp = this.getFormat().parse(dates[1]).getTime() / 1000;
+		const firstDate = this.getFormat().parse(dates[0]);
+		const secondDate = this.getFormat().parse(dates[1]);
+
+		this._firstDateTimestamp = Date.UTC(firstDate.getFullYear(), firstDate.getMonth(), firstDate.getDate(), firstDate.getHours()) / 1000;
+		this._lastDateTimestamp = Date.UTC(secondDate.getFullYear(), secondDate.getMonth(), secondDate.getDate(), secondDate.getHours()) / 1000;
+
 
 		if (this._firstDateTimestamp > this._lastDateTimestamp) {
 			const temp = this._firstDateTimestamp;
@@ -345,8 +349,7 @@ class DateRangePicker extends DatePicker {
 
 	dateIntervalArrayBuilder(firstTimestamp, lastTimestamp) {
 		const datesTimestamps = [],
-			jsDate = new Date(firstTimestamp),
-			tempCalendarDate = new CalendarDate(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
+			tempCalendarDate = CalendarDate.fromTimestamp(firstTimestamp);
 
 		while (tempCalendarDate.valueOf() < lastTimestamp) {
 			datesTimestamps.push(tempCalendarDate.valueOf() / 1000);
@@ -360,7 +363,6 @@ class DateRangePicker extends DatePicker {
 
 	_handleCalendarChange(event) {
 		const newValue = event.detail.dates && event.detail.dates[0];
-
 		this._oneTimeStampSelected = false;
 		if (this.isFirstDatePick) {
 			this.isFirstDatePick = false;
@@ -482,7 +484,7 @@ class DateRangePicker extends DatePicker {
 		this._cleanHoveredAttributeFromVisibleItems();
 
 		this._calendar.timestamp = this._firstDateTimestamp;
-		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp, this._lastDateTimestamp);
+		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp * 1000, this._lastDateTimestamp * 1000);
 		this._focusInputAfterClose = true;
 
 		if (this.isInValidRange(this.value)) {
@@ -517,8 +519,10 @@ class DateRangePicker extends DatePicker {
 		let value = "";
 		const delimiter = this.delimiter,
 			format = this.getFormat(),
-			firstDateString = format.format(new Date(firstDateValue * 1000)),
-			lastDateString = format.format(new Date(lastDateValue * 1000));
+			firstDate = new Date(firstDateValue * 1000),
+			lastDate = new Date(lastDateValue * 1000),
+			firstDateString = format.format(new Date(firstDate.getUTCFullYear(), firstDate.getUTCMonth(), firstDate.getUTCDate(), firstDate.getUTCHours())),
+			lastDateString = format.format(new Date(lastDate.getUTCFullYear(), lastDate.getUTCMonth(), lastDate.getUTCDate(), lastDate.getUTCHours()));
 
 		if (firstDateValue) {
 			if (delimiter && delimiter !== "" && lastDateString) {

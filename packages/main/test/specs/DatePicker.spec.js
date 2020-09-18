@@ -695,10 +695,10 @@ describe("Date Picker Tests", () => {
 	it("Tests week numbers column visibility", () => {
 		// act
 		datepicker.id = "#dp18";
-		datepicker.valueHelpIcon.click()
+		datepicker.valueHelpIcon.click();
 
 		// assert
-		const weekNumbersCol1 = datepicker.dayPicker.shadow$(".ui5-dp-weeknumber-container");
+		const weekNumbersCol1 = datepicker.dayPicker.shadow$(".ui5-dp-weekname-container");
 		assert.equal(weekNumbersCol1.isExisting(), true, "The week numbers column is visible.");
 
 		// close date picker
@@ -707,15 +707,89 @@ describe("Date Picker Tests", () => {
 
 		// act
 		datepicker.id = "#dp19";
-		datepicker.valueHelpIcon.click()
+		datepicker.valueHelpIcon.click();
 
 		// assert
-		const weekNumbersCol2 = datepicker.dayPicker.shadow$(".ui5-dp-weeknumber-container");
+		const weekNumbersCol2 = datepicker.dayPicker.shadow$(".ui5-dp-weekname-container");
 		assert.equal(weekNumbersCol2.isExisting(), false, "The week numbers column is hidden.");
 
 		// close date picker
 		datepicker.innerInput.click();
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
+	});
+
+	it("Calendar root have correct attribute", () => {
+
+		datepicker.id = "#dp18";
+		datepicker.valueHelpIcon.click();
+		const monthpickerContent = datepicker.dayPicker.shadow$(".ui5-dp-content");
+
+		assert.strictEqual(monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
+		assert.strictEqual(monthpickerContent.getAttribute("aria-roledescription"), "Calendar", "Calendar root have correct roledescription")
+		
+	});
+
+	it("DayPicker content wrapped", ()=>{
+		datepicker.id = "#dp19";
+		datepicker.open();
+		let arr = datepicker.getDayPickerContent();
+		
+		arr.forEach(function(el){
+			assert.strictEqual(el.getAttribute("role"), "row", "Content wrapper has correct role");
+		});
+	});
+
+	it("DayPicker day name attribute", ()=>{
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
+		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+		datepicker.id = "#dp13";
+		datepicker.openPicker({ focusInput: true });
+		datepicker.root.keys("May 3, 2100");
+		datepicker.root.keys("Enter");
+		
+		const content = Array.from(datepicker.getDayPickerDayNames());
+		const dayName = ["Week number", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+		content.forEach((element,index) => {
+			assert.strictEqual(element.getAttribute("role"), "columnheader", "Each day have column header role");
+			assert.strictEqual(element.getAttribute("aria-label"), dayName[index], "Aria-label is correct");
+		});
+
+	});
+
+	it("DayPiker day number attribute", ()=>{
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
+		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+		datepicker.id = "#dp13";
+		datepicker.openPicker({ focusInput: true });
+		datepicker.root.keys("May 3, 2100");
+		datepicker.root.keys("Enter");
+
+		const rows = Array.from(datepicker.getDayPickerNumbers());
+		const firstColumn = Array.from(rows[1].$$("div"));
+		const lastColumn = Array.from(rows[rows.length - 1].$$("div"));
+
+		assert.strictEqual(firstColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
+		assert.strictEqual(firstColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+		assert.strictEqual(firstColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+
+		assert.strictEqual(lastColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
+		assert.strictEqual(lastColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+		assert.strictEqual(lastColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+	});
+
+	it("DatePcker dates and week number", ()=>{
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
+		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+		datepicker.id = "#dp13";
+		datepicker.openPicker({ focusInput: true });
+		datepicker.root.keys("May 3, 2100");
+		datepicker.root.keys("Enter");
+
+		const data = Array.from(datepicker.getDayPickerDatesRow(2));
+		assert.strictEqual(data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");
+		assert.strictEqual(data[1].getAttribute("aria-label"), "Non-Working Day May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
 	});
 
 	it("Tests aria-label", () => {

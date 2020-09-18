@@ -7,4 +7,5 @@
 
 :host .ui5-date-picker-input {
 	width: 100%;
+	min-width: inherit;
 }
