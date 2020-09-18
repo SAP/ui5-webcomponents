@@ -257,7 +257,7 @@ class Popover extends Popup {
 
 	isOpenerClicked(event) {
 		const target = event.target;
-		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener);
+		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener) || event.composedPath().indexOf(this._opener) > -1;
 	}
 
 	/**

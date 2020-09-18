@@ -8,6 +8,7 @@
 		class="{{_btnPrev.classes}}"
 		@click={{_handlePrevPress}}
 		data-sap-cal-head-button="Prev"
+		title="{{_prevButtonText}}"
 	>
 		<ui5-icon
 			class="ui5-calheader-arrowicon"
@@ -45,6 +46,7 @@
 		@click={{_handleNextPress}}
 		id="{{_id}}-btnNext"
 		data-sap-cal-head-button="Next"
+		title={{_nextButtonText}}
 	>
 		<ui5-icon
 			class="ui5-calheader-arrowicon"
