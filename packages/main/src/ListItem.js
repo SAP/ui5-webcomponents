@@ -281,7 +281,7 @@ class ListItem extends ListItemBase {
 	}
 
 	get ariaSelected() {
-		if (this.modeMultiSelect) {
+		if (this.modeMultiSelect || this.modeSingleSelect) {
 			return this.selected;
 		}
 
