@@ -1,9 +1,5 @@
-commit 6afe9147d01fe1e8413a03f8f893141d9f51921d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Sep 18 15:14:28 2020 +0300
+commit 746b348ba8db375b9f64e07a759c7eeac2380fc3
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Sep 18 15:33:13 2020 +0300
 
-    fix(ui5-flexible-column-layout) fix arrows screen reader suport (#2227)
-    
-    Add tooltip and aria-label to the toggle columns arrow to match the screen reader spec.
-    
-    FIXES #2226
+     feat(ui5-select): improve accessibility (#2204)
