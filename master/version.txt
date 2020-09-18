@@ -1,5 +1,10 @@
-commit 9511d7ad07d333ce84826f7d9475927029417f1f
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Sep 17 09:52:22 2020 +0300
+commit d4bfd1a6b2ceca9c89e5a50225b31c5275c45691
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Sep 18 09:55:14 2020 +0300
 
-    chore(framework): Do not use insensitive words (#2222)
+    chore(ui5-date-*): make width customizable (#2223)
+    
+    Until now the user can not set a DateRangePicker, DateTimePicker to a width smaller than 15rem, as 15 rem is their min-width.
+    Now we enable that by making the min-width propagated from the host to inner input.
+    
+    FIXES: #2194
