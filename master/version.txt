@@ -1,10 +1,9 @@
-commit d4bfd1a6b2ceca9c89e5a50225b31c5275c45691
+commit 6afe9147d01fe1e8413a03f8f893141d9f51921d
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Sep 18 09:55:14 2020 +0300
+Date:   Fri Sep 18 15:14:28 2020 +0300
 
-    chore(ui5-date-*): make width customizable (#2223)
+    fix(ui5-flexible-column-layout) fix arrows screen reader suport (#2227)
     
-    Until now the user can not set a DateRangePicker, DateTimePicker to a width smaller than 15rem, as 15 rem is their min-width.
-    Now we enable that by making the min-width propagated from the host to inner input.
+    Add tooltip and aria-label to the toggle columns arrow to match the screen reader spec.
     
-    FIXES: #2194
+    FIXES #2226
