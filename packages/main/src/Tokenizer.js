@@ -17,6 +17,7 @@ import { MULTIINPUT_SHOW_MORE_TOKENS, TOKENIZER_ARIA_LABEL, TOKENIZER_POPOVER_RE
 
 // Styles
 import styles from "./generated/themes/Tokenizer.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 /**
@@ -117,7 +118,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ValueStateMessageCss];
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
 	}
 
 	static get staticAreaTemplate() {
@@ -342,6 +343,12 @@ class Tokenizer extends UI5Element {
 			},
 			popoverHeader: {
 				"width": isPhone() ? "100%" : `${this.popoverMinWidth}px`,
+				"min-height": "2rem",
+				"align-items": "flex-start",
+				"font-size": "0.75rem",
+			},
+			popoverHeaderTitle: {
+				"justify-content": "left",
 			},
 		};
 	}
