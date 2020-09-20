@@ -548,7 +548,7 @@
   "79": {
     "id": "79",
     "title": "Multi Input",
-    "content": "&lt;!DOCTYPE html&gt; ui5-multi-input Basic API Empty Multi Input Multi Input with Value Help Icon Multi Input with Value Help Icon and a custom icon Multi Input with 1 token Multi Input with 11 tokens (overflowing) Multi Input with 11 tokens (overflowing) and value help icon Tokens Multi Input with 1 token Add more tokens Multi Input with 5 tokens Add more tokens Tokens + Suggestions Save Cancel Test value-help-trigger with F4 and Alt + ArrowUp/Down MultiInput with tokesn with custom icon",
+    "content": "&lt;!DOCTYPE html&gt; ui5-multi-input Basic API Empty Multi Input Multi Input with Value Help Icon Multi Input with Value Help Icon and a custom icon Multi Input with 1 token Multi Input with 11 tokens (overflowing) Multi Input with 11 tokens (overflowing) and value help icon Value States Multi Input - Success Multi Input - Information Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. Multi Input - Warning Multi Input - Error Tokens Multi Input with 1 token Add more tokens Multi Input with 5 tokens Add more tokens Tokens + Suggestions Save Cancel Test value-help-trigger with F4 and Alt + ArrowUp/Down MultiInput with tokesn with custom icon",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/MultiInput/",
     "relUrl": "/playground/main/pages/MultiInput/"
   },
