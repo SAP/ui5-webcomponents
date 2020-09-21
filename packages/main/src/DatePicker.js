@@ -546,6 +546,13 @@ class DatePicker extends UI5Element {
 		return this.isValid(value) && this.isInValidRange(this._getTimeStampFromString(value));
 	}
 
+	/**
+	 * This method is used in the derived classes
+	 */
+	checkRealValueValidity() {
+		return false;
+	}
+
 	_click(event) {
 		if (isPhone()) {
 			this.responsivePopover.open(this);
