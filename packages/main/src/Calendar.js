@@ -353,9 +353,9 @@ class Calendar extends UI5Element {
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			const jsDateTimeNow = new Date(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDateTimeNow.getTime(), this._primaryCalendarType);
-			return oCalDate.valueOf();
+			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
+			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
+			return calDate.valueOf();
 		}
 		return undefined;
 	}

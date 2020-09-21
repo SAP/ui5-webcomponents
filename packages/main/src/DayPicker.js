@@ -719,13 +719,13 @@ class DayPicker extends UI5Element {
 		let currentTimestamp;
 
 		if (isUp(event.originalEvent) || isLeft(event.originalEvent)) {
-			currentTimestamp = this._weeks[0][event.offset].timestamp * 1000;
+			currentTimestamp = this._weeks[0][event.offset + 1].timestamp * 1000;
 			newDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
 			newDate.setDate(newDate.getDate() - 7);
 		}
 
 		if (isDown(event.originalEvent) || isRight(event.originalEvent)) {
-			currentTimestamp = this._weeks[this._weeks.length - 1][event.offset].timestamp * 1000;
+			currentTimestamp = this._weeks[this._weeks.length - 1][event.offset + 1].timestamp * 1000;
 			newDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
 			newDate.setDate(newDate.getDate() + 7);
 		}
@@ -815,9 +815,9 @@ class DayPicker extends UI5Element {
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			const jsDateTimeNow = new Date(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDateTimeNow.getTime(), this._primaryCalendarType);
-			return oCalDate.valueOf();
+			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
+			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
+			return calDate.valueOf();
 		}
 		return undefined;
 	}
