@@ -456,7 +456,7 @@ class DatePicker extends UI5Element {
 			this.maxDate = null;
 			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
-		if (this._checkValueValidity(this.value)) {
+		if (this._checkValueValidity(this.value) || this.checkRealValueValidity()) {
 			this._changeCalendarSelection();
 		} else {
 			this._calendar.selectedDates = [];
