@@ -6,6 +6,8 @@ import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnable
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
@@ -15,6 +17,8 @@ import { MULTIINPUT_SHOW_MORE_TOKENS, TOKENIZER_ARIA_LABEL, TOKENIZER_POPOVER_RE
 
 // Styles
 import styles from "./generated/themes/Tokenizer.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 /**
  * @public
@@ -28,6 +32,10 @@ const metadata = {
 			propertyName: "tokens",
 			type: HTMLElement,
 			individualSlots: true,
+		},
+		"valueStateMessage": {
+			propertyName: "valueStateMessage",
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
@@ -46,6 +54,18 @@ const metadata = {
 
 		popoverMinWidth: {
 			type: Integer,
+		},
+
+		/**
+		 * Indicates the value state of the related input component.
+		 *
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @private
+		 */
+		valueState: {
+			type: ValueState,
+			defaultValue: ValueState.None,
 		},
 
 		_nMoreCount: { type: Integer },
@@ -95,6 +115,10 @@ class Tokenizer extends UI5Element {
 
 	static get styles() {
 		return styles;
+	}
+
+	static get staticAreaStyles() {
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
 	}
 
 	static get staticAreaTemplate() {
@@ -282,6 +306,18 @@ class Tokenizer extends UI5Element {
 		});
 	}
 
+	get hasValueState() {
+		return this.valueState === ValueState.None || this.valueState === ValueState.Success;
+	}
+
+	get valueStateMessageText() {
+		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
+	}
+
+	get _isPhone() {
+		return isPhone();
+	}
+
 	get classes() {
 		return {
 			wrapper: {
@@ -293,6 +329,14 @@ class Tokenizer extends UI5Element {
 				"ui5-tokenizer--content": true,
 				"ui5-tokenizer-nmore--content": this.showMore,
 			},
+			popoverValueState: {
+				"ui5-valuestatemessage-root": true,
+				"ui5-responsive-popover-header": this.showPopover,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
 		};
 	}
 
@@ -300,6 +344,17 @@ class Tokenizer extends UI5Element {
 		return {
 			popover: {
 				"min-width": `${this.popoverMinWidth}px`,
+			},
+			popoverValueStateMessage: {
+				"width": isPhone() ? "100%" : `${this.popoverMinWidth}px`,
+				"min-height": "2rem",
+				"padding": isPhone() ? "0.25rem 1rem" : "0.3rem 0.625rem",
+			},
+			popoverHeader: {
+				"min-height": "2rem",
+			},
+			popoverHeaderTitle: {
+				"justify-content": "left",
 			},
 		};
 	}
