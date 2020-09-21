@@ -122,6 +122,86 @@
 	</div>
 
 	<div class="sample-container">
+		<h1>Value States</h1>
+
+		<h1 class="sample-container-title">Multi Input - Success</h1>
+		<ui5-multi-input id="multiInput-success"
+			value-state="Success">
+			<ui5-token slot="tokens" text="Amet"></ui5-token>
+			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
+			<ui5-token slot="tokens" text="laboris"></ui5-token>
+			<ui5-token slot="tokens" text="ea"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="ipsum"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+			<ui5-token slot="tokens" text="esse"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="amet"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+		</ui5-multi-input>
+
+		<br>
+		<br>
+		<h1 class="sample-container-title">Multi Input - Information</h1>
+		<ui5-multi-input id="multiInput-information"
+			value-state="Information">
+			<ui5-token slot="tokens" text="Amet"></ui5-token>
+			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
+			<ui5-token slot="tokens" text="laboris"></ui5-token>
+			<ui5-token slot="tokens" text="ea"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="ipsum"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+			<ui5-token slot="tokens" text="esse"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="amet"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		</ui5-multi-input>
+
+		<br>
+		<br>
+
+		<h1 class="sample-container-title">Multi Input - Warning</h1>
+		<ui5-multi-input id="multiInput-warning"
+			value-state="Warning">
+			<ui5-token slot="tokens" text="Amet"></ui5-token>
+			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
+			<ui5-token slot="tokens" text="laboris"></ui5-token>
+			<ui5-token slot="tokens" text="ea"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="ipsum"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+			<ui5-token slot="tokens" text="esse"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="amet"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+		</ui5-multi-input>
+
+		<br>
+		<br>
+
+		<h1 class="sample-container-title">Multi Input - Error</h1>
+		<ui5-multi-input id="multiInput-error"
+			value-state="Error">
+			<ui5-token slot="tokens" text="Amet"></ui5-token>
+			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
+			<ui5-token slot="tokens" text="laboris"></ui5-token>
+			<ui5-token slot="tokens" text="ea"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="ipsum"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+			<ui5-token slot="tokens" text="esse"></ui5-token>
+			<ui5-token slot="tokens" text="eu"></ui5-token>
+			<ui5-token slot="tokens" text="amet"></ui5-token>
+			<ui5-token slot="tokens" text="do"></ui5-token>
+		</ui5-multi-input>
+
+		<br>
+		<br>
+	</div>
+
+	<div class="sample-container">
 		<h1>Tokens</h1>
 
 		<h1 class="sample-container-title">Multi Input with 1 token</h1>
@@ -185,6 +265,17 @@
 		<ui5-multi-input id="multi-with-value-help-icon" show-value-help-icon>
 		</ui5-multi-input>
 		<ui5-input id="value-help-trigger-counter" placeholder="event count.."></ui5-input>
+	</div>
+
+	<div>
+		<ui5-title>MultiInput with tokesn with custom icon</ui5-title>
+		<ui5-multi-input style="width: 500px;">
+			<ui5-token slot="tokens" text="Menu">
+				<ui5-icon name="menu" accessible-name="Menu here" slot="closeIcon"></ui5-icon>
+			</ui5-token>
+			<ui5-token slot="tokens" text="Not a menu">
+			</ui5-token>
+		</ui5-multi-input>
 	</div>
 
 	<script>

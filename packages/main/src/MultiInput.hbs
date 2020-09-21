@@ -5,13 +5,24 @@
 		class="ui5-multi-input-tokenizer"
 		.morePopoverOpener={{this}}
 		.popoverMinWidth={{_inputWidth}}
+		.valueState={{valueState}}
 		?expanded="{{expandedTokenizer}}"
 		show-more
+		@keydown="{{_onTokenizerKeydown}}"
 		@show-more-items-press={{showMorePress}}
 		@token-delete={{tokenDelete}}
 		@focusout="{{_tokenizerFocusOut}}"
 	>
 		<slot name="tokens"></slot>
+		<div slot="valueStateMessage">
+			{{#if shouldDisplayDefaultValueStateMessage}}
+				{{valueStateText}}
+			{{else}}
+				{{#each valueStateMessageText}}
+					{{this}}
+				{{/each}}
+			{{/if}}
+		</div>
 	</ui5-tokenizer>
 {{/inline}}
 

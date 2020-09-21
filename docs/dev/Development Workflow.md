@@ -15,7 +15,7 @@ See how to clone a repo [here](https://docs.github.com/en/github/creating-clonin
 
 *3.0.* Make sure you have the following prerequisites installed
 - [Yarn](https://yarnpkg.com/en)
-- [Node.js](https://nodejs.org/) (**version 8.5 or higher**)
+- [Node.js](https://nodejs.org/) (**version 12 or higher**)
 
 
 *3.1.* Install all dependencies
@@ -71,7 +71,7 @@ You can open a pull request from the Github UI.
 
 *Note: The full guide to open PR from fork can be found [here](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).*
 
-*5.3.* Once the PR is created you would to accept CLA agreement.
+*5.3.* Once the PR is created you would have to accept a Developer Certificate of Origin (DCO).
 Just follow the link posted in the PR by the CLA assistant.
 
 *Note: This is required only for you first PR.*
