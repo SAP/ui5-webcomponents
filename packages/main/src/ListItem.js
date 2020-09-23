@@ -56,6 +56,21 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Used to define the role of the list item.
+		 *
+		 * @public
+		 * @type {String}
+		 * @defaultvalue "option"
+		 * @since 1.0.0-rc.9
+		 *
+		 * @public
+		 */
+		role: {
+			type: String,
+			defaultValue: "option",
+		},
+
 		_mode: {
 			type: ListMode,
 			defaultValue: ListMode.None,
@@ -294,7 +309,7 @@ class ListItem extends ListItemBase {
 
 	get _accInfo() {
 		return {
-			role: "option",
+			role: this.role || "option",
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
