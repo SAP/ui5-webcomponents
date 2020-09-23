@@ -296,14 +296,12 @@ describe("Select general interaction", () => {
 
 
 	it("Tests aria-label and aria-labelledby", () => {
-		const select1 = browser.$("#textAreaAriaLabel").shadow$(".ui5-select-root");
-		const select2 = browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-select-root");
+		const select1 = browser.$("#textAreaAriaLabel").shadow$(".ui5-select-root [id$='labelText']");
+		const select2 = browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-select-root [id$='labelText']");
 		const EXPECTED_ARIA_LABEL1 = "Hello World";
 		const EXPECTED_ARIA_LABEL2 = "info text";
 
-		assert.strictEqual(select1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
-			"The aria-label is correctly set internally.");
-		assert.strictEqual(select2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
-			"The aria-label is correctly set internally.");
+		assert.ok(select1.textContent.indexOf(EXPECTED_ARIA_LABEL1) !== -1, "The aria-labelledby text is correctly set internally.");
+		assert.ok(select2.textContent.indexOf(EXPECTED_ARIA_LABEL2) !== -1, "The aria-labelledby text is correctly set internally.");
 	});
 });
