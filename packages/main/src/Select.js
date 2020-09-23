@@ -579,8 +579,8 @@ class Select extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled
-		&& this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
-		&& this.responsivePopover.opened ? "-1" : "0";
+		|| (this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
+		&& this.responsivePopover.opened) ? "-1" : "0";
 	}
 
 	get classes() {
