@@ -5,8 +5,7 @@
 	id="{{_id}}-select"
 	role="button"
 	aria-haspopup="listbox"
-	aria-label="{{ariaLabelText}}"
-	aria-labelledby="{{_id}}-label"
+	aria-labelledby="{{_id}}-labelText"
 	aria-describedby="{{valueStateTextId}}"
 	aria-disabled="{{isDisabled}}"
 	aria-required="{{required}}"
@@ -31,6 +30,7 @@
 		dir="{{effectiveDir}}"
 	></ui5-icon>
 
+	<span id="{{_id}}-labelText" class="ui5-hidden-text">{{ariaLabelText}} {{_text}}</span>
 	{{#if hasValueState}}
 		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
 	{{/if}}
