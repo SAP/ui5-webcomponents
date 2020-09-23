@@ -212,6 +212,13 @@ class Card extends UI5Element {
 		return !!(this.heading || this.subheading || this.status || this.hasAction || this.avatar);
 	}
 
+<<<<<<< HEAD
+=======
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
+>>>>>>> 67c4d698... feat(ui5-panel): implement headerAriaLabelledBy property (#2200)
 	get ariaCardRoleDescription() {
 		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
 	}
