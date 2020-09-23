@@ -1,5 +1,5 @@
-commit 960f927be3793547f1bcc749bd4a381f7fe563df
+commit 67c4d698126ad4bb164e0f973abd768a6b7e536e
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Sep 23 07:53:41 2020 +0300
+Date:   Wed Sep 23 12:35:15 2020 +0300
 
-    fix(ui5-select): make disabled select not focusable (#2229)
+    feat(ui5-panel): implement headerAriaLabelledBy property (#2200)
