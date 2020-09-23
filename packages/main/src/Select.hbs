@@ -5,8 +5,7 @@
 	id="{{_id}}-select"
 	role="button"
 	aria-haspopup="listbox"
-	aria-label="{{ariaLabelText}}"
-	aria-labelledby="{{_id}}-label"
+	aria-labelledby="{{_id}}-labelText"
 	aria-describedby="{{valueStateTextId}}"
 	aria-disabled="{{isDisabled}}"
 	aria-required="{{required}}"
@@ -19,7 +18,7 @@
 	@click="{{_toggleRespPopover}}"
 >
 	<div class="ui5-select-label-root">
-		<ui5-label id="{{_id}}-label" for="{{_id}}-select">{{_text}}</ui5-label>
+		<ui5-label>{{_text}}</ui5-label>
 	</div>
 
 	<ui5-icon
@@ -28,6 +27,8 @@
 		?pressed="{{_iconPressed}}"
 		dir="{{effectiveDir}}"
 	></ui5-icon>
+
+	<span id="{{_id}}-labelText" class="ui5-hidden-text">{{ariaLabelText}} {{_text}}</span>
 
 	{{#if hasValueState}}
 		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
