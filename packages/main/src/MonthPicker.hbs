@@ -5,7 +5,8 @@
 	aria-multiselectable="false"
 	style="{{styles.main}}"
 	@keydown={{_onkeydown}}
-	@click={{_onclick}}
+	@mousedown={{_onmousedown}}
+	@mouseup={{_onmouseup}}
 >
 	{{#each _quarters}}
 		<div class="ui5-mp-quarter">

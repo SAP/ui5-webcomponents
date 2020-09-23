@@ -10,7 +10,16 @@ import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { isShow, isF4 } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl,
+	isShow,
+	isF4,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
@@ -336,6 +345,19 @@ const metadata = {
  * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
  * use TAB to reach the buttons for changing month and year.
  * <br>
+ *
+ * If the <code>ui5-date-picker</code> is focused and the picker dialog is not opened the user can
+ * increment or decrement the corresponding field of the JS date object referenced by <code>dateValue</code> propery
+ * by using the following shortcuts:
+ * <br>
+ * <ul>
+ * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
+ * <li>[SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one</li>
+ * <li>[SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one</li>
+ * <li>[PAGEUP] - Increments the corresponding day of the month by one</li>
+ * <li>[SHIFT] + [PAGEUP] - Increments the corresponding month by one</li>
+ * <li>[SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -670,8 +692,8 @@ class DatePicker extends UI5Element {
 		}
 
 		const pickedDate = new Date(value),
-			minDate = this._minDate && new Date(this._minDate),
-			maxDate = this._maxDate && new Date(this._maxDate);
+			minDate = new Date(this._minDate),
+			maxDate = new Date(this._maxDate);
 
 		if (minDate && maxDate) {
 			if (minDate <= pickedDate && maxDate >= pickedDate) {
@@ -792,17 +814,30 @@ class DatePicker extends UI5Element {
 	}
 
 	get _maxDate() {
-		if (this.maxDate) {
-			return this._getTimeStampFromString(this.maxDate);
-		}
-		return this.maxDate;
+		return this.maxDate ? this._getTimeStampFromString(this.maxDate) : this._getMaxCalendarDate();
 	}
 
 	get _minDate() {
-		if (this.minDate) {
-			return this._getTimeStampFromString(this.minDate);
-		}
-		return this.minDate;
+		return this.minDate ? this._getTimeStampFromString(this.minDate) : this._getMinCalendarDate();
+	}
+
+	_getMinCalendarDate() {
+		const minDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		minDate.setYear(1);
+		minDate.setMonth(0);
+		minDate.setDate(1);
+		return minDate.valueOf();
+	}
+
+	_getMaxCalendarDate() {
+		const maxDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		maxDate.setYear(9999);
+		maxDate.setMonth(11);
+		const tempDate = new CalendarDate(maxDate, this._primaryCalendarType);
+		tempDate.setDate(1);
+		tempDate.setMonth(tempDate.getMonth() + 1, 0);
+		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
+		return maxDate.valueOf();
 	}
 
 	get openIconTitle() {

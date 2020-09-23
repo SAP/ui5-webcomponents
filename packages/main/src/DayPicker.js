@@ -7,7 +7,22 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+	isUp,
+	isDown,
+	isLeft,
+	isRight,
+	isHomeCtrl,
+	isEndCtrl,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageUpShiftCtrl,
+	isPageDownShift,
+	isPageDownShiftCtrl,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
@@ -15,6 +30,7 @@ import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
+import RenderScheduler from "../../base/src/RenderScheduler.js";
 
 import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
@@ -165,9 +181,6 @@ const metadata = {
 	},
 };
 
-const DEFAULT_MAX_YEAR = 9999;
-const DEFAULT_MIN_YEAR = 1;
-
 /**
  * @class
  *
@@ -215,6 +228,11 @@ class DayPicker extends UI5Element {
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,
 			this._handleItemNavigationBorderReach.bind(this)
+		);
+
+		this._itemNav.attachEvent(
+			ItemNavigation.AFTER_FOCUS,
+			this._handleItemNavigationAfterFocus.bind(this)
 		);
 
 		this._itemNav.attachEvent(
@@ -435,6 +453,30 @@ class DayPicker extends UI5Element {
 		if (isSpace(event)) {
 			return this._handleSpace(event);
 		}
+
+		if (isHomeCtrl(event)) {
+			this._navToStartEndDayOfTheMonth(event, true);
+		}
+
+		if (isEndCtrl(event)) {
+			this._navToStartEndDayOfTheMonth(event, false);
+		}
+
+		if (isPageUpShift(event)) {
+			this._changeYears(event, false, 1);
+		}
+
+		if (isPageUpShiftCtrl(event)) {
+			this._changeYears(event, false, 10);
+		}
+
+		if (isPageDownShift(event)) {
+			this._changeYears(event, true, 1);
+		}
+
+		if (isPageDownShiftCtrl(event)) {
+			this._changeYears(event, true, 10);
+		}
 	}
 
 	_handleEnter(event) {
@@ -451,6 +493,73 @@ class DayPicker extends UI5Element {
 			const targetDate = parseInt(event.target.getAttribute("data-sap-timestamp"));
 			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
 		}
+	}
+
+	_navToStartEndDayOfTheMonth(event, start) {
+		event.preventDefault();
+
+		const currentItem = this._itemNav._getCurrentItem();
+		let currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp")) * 1000;
+		let calDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+
+		if (currentItem.classList.contains("ui5-dp-item--othermonth")) {
+			return;
+		}
+
+		calDate.setDate(1);
+		if (!start) {
+			// set the day to be the last day of the current month
+			calDate.setMonth(calDate.getMonth() + 1, 0);
+		}
+
+		if (calDate.valueOf() < this._minDate) {
+			calDate = CalendarDate.fromLocalJSDate(new Date(this._minDate), this._primaryCalendarType);
+		} else if (calDate.valueOf() > this._maxDate) {
+			calDate = CalendarDate.fromLocalJSDate(new Date(this._maxDate), this._primaryCalendarType);
+		}
+
+		currentTimestamp = calDate.valueOf() / 1000;
+		const newItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === currentTimestamp);
+
+		this._itemNav.currentIndex = newItemIndex;
+		this._itemNav.focusCurrent();
+	}
+
+	/**
+	 * Converts "timestamp" property value into a Java Script Date object and
+	 * adds or extracts a given number of years from it
+	 *
+	 * @param {object} event used to prevent the default browser behavior
+	 * @param {boolean} forward if true indicates addition
+	 * @param {int} step for year number to substract or add
+	 */
+	_changeYears(event, forward, step) {
+		const currentItem = this._itemNav._getCurrentItem();
+		let currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
+		const currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+		let newDate = new CalendarDate(currentDate, this._primaryCalendarType);
+
+		if (forward) {
+			newDate.setYear(newDate.getYear() + step);
+		} else {
+			newDate.setYear(newDate.getYear() - step);
+		}
+
+		if (currentDate.getMonth() !== newDate.getMonth()) {
+			newDate.setDate(0);
+		}
+
+		if (newDate.valueOf() < this._minDate) {
+			newDate = CalendarDate.fromLocalJSDate(new Date(this._minDate), this._primaryCalendarType);
+		} else if (newDate.valueOf() > this._maxDate) {
+			newDate = CalendarDate.fromLocalJSDate(new Date(this._maxDate), this._primaryCalendarType);
+		}
+
+		currentTimestamp = (newDate.valueOf() / 1000);
+
+		this._navigateAndWaitRerender(currentTimestamp);
+
+		event.preventDefault();
 	}
 
 	get shouldHideWeekNumbers() {
@@ -537,13 +646,14 @@ class DayPicker extends UI5Element {
 	_hasNextMonth() {
 		let newMonth = this._month + 1;
 		let newYear = this._year;
+		const maxCalendarYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
 
 		if (newMonth > 11) {
 			newMonth = 0;
 			newYear++;
 		}
 
-		if (newYear > DEFAULT_MAX_YEAR && newMonth === 0) {
+		if (newYear > maxCalendarYear && newMonth === 0) {
 			return false;
 		}
 
@@ -572,13 +682,14 @@ class DayPicker extends UI5Element {
 	_hasPrevMonth() {
 		let newMonth = this._month - 1;
 		let newYear = this._year;
+		const minCalendarYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
 
 		if (newMonth < 0) {
 			newMonth = 11;
 			newYear--;
 		}
 
-		if (newYear < DEFAULT_MIN_YEAR && newMonth === 11) {
+		if (newYear < minCalendarYear && newMonth === 11) {
 			return false;
 		}
 
@@ -600,44 +711,74 @@ class DayPicker extends UI5Element {
 	}
 
 	_handleItemNavigationBorderReach(event) {
-		const currentMonth = this._month,
-			currentYear = this._year;
-		let newMonth,
-			newYear,
-			newDate,
-			currentDate;
+		const currentItem = this._itemNav._getCurrentItem();
+		let newDate;
+		let currentDate;
+		let currentTimestamp;
 
-		if (event.end) {
-			currentDate = new Date(this._weeks[this._weeks.length - 1][event.offset].timestamp * 1000);
-			newMonth = currentMonth < 11 ? currentMonth + 1 : 0;
-			newYear = currentMonth < 11 ? currentYear : currentYear + 1;
-			newDate = currentDate.getMonth() === newMonth ? currentDate.getDate() : currentDate.getDate() + 7;
-		} else if (event.start) {
-			currentDate = new Date(this._weeks[0][event.offset].timestamp * 1000);
-			newMonth = currentMonth > 0 ? currentMonth - 1 : 11;
-			newYear = currentMonth > 0 ? currentYear : currentYear - 1;
-			newDate = currentDate.getMonth() === newMonth ? currentDate.getDate() : currentDate.getDate() - 7;
+		if (isUp(event.originalEvent) || isLeft(event.originalEvent)) {
+			currentTimestamp = this._weeks[0][event.offset + 1].timestamp * 1000;
+			newDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+			newDate.setDate(newDate.getDate() - 7);
 		}
 
-		const oNewDate = this._calendarDate;
-		oNewDate.setDate(newDate);
-		oNewDate.setYear(newYear);
-		oNewDate.setMonth(newMonth);
+		if (isDown(event.originalEvent) || isRight(event.originalEvent)) {
+			currentTimestamp = this._weeks[this._weeks.length - 1][event.offset + 1].timestamp * 1000;
+			newDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+			newDate.setDate(newDate.getDate() + 7);
+		}
 
-		if (oNewDate.getYear() < DEFAULT_MIN_YEAR || oNewDate.getYear() > DEFAULT_MAX_YEAR) {
+		if (isPageUp(event.originalEvent)) {
+			currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
+			currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+			newDate = new CalendarDate(currentDate, this._primaryCalendarType);
+			newDate.setMonth(newDate.getMonth() - 1);
+			if (currentDate.getMonth() === newDate.getMonth()) {
+				newDate.setDate(0);
+			}
+		}
+
+		if (isPageDown(event.originalEvent)) {
+			currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
+			currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+			newDate = new CalendarDate(currentDate, this._primaryCalendarType);
+			newDate.setMonth(newDate.getMonth() + 1);
+			if (newDate.getMonth() - currentDate.getMonth() > 1) {
+				newDate.setDate(0);
+			}
+		}
+
+		if (!newDate) {
 			return;
 		}
 
-		if (this._isOutOfSelectableRange(oNewDate._oUDate.oDate)) {
-			return;
+		if (newDate.valueOf() < this._minDate) {
+			newDate = CalendarDate.fromLocalJSDate(new Date(this._minDate), this._primaryCalendarType);
+		} else if (newDate.valueOf() > this._maxDate) {
+			newDate = CalendarDate.fromLocalJSDate(new Date(this._maxDate), this._primaryCalendarType);
 		}
 
-		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000) });
+		currentTimestamp = (newDate.valueOf() / 1000);
+
+		this._navigateAndWaitRerender(currentTimestamp);
+	}
+
+	_handleItemNavigationAfterFocus() {
+		const currentItem = this._itemNav._getCurrentItem();
+		const currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp"));
+
+		if (currentItem.classList.contains("ui5-dp-item--othermonth")) {
+			this._navigateAndWaitRerender(currentTimestamp);
+		}
+	}
+
+	async _navigateAndWaitRerender(timestamp) {
+		this.fireEvent("navigate", { timestamp });
+		await RenderScheduler.whenFinished();
+
 		const newItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === timestamp);
 		this._itemNav.currentIndex = newItemIndex;
-
 		this._itemNav.focusCurrent();
-
 		this._fireDayPickerRendered();
 	}
 
@@ -668,21 +809,40 @@ class DayPicker extends UI5Element {
 	}
 
 	get _maxDate() {
-		if (this.maxDate) {
-			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(), this.getFormat().parse(this.maxDate).getMonth(), this.getFormat().parse(this.maxDate).getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
-			return oCalDate.valueOf();
-		}
-		return this.maxDate;
+		return this.maxDate ? this._getTimeStampFromString(this.maxDate) : this._getMaxCalendarDate();
 	}
 
 	get _minDate() {
-		if (this.minDate) {
-			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(), this.getFormat().parse(this.minDate).getMonth(), this.getFormat().parse(this.minDate).getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
-			return oCalDate.valueOf();
+		return this.minDate ? this._getTimeStampFromString(this.minDate) : this._getMinCalendarDate();
+	}
+
+	_getTimeStampFromString(value) {
+		const jsDate = this.getFormat().parse(value);
+		if (jsDate) {
+			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
+			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
+			return calDate.valueOf();
 		}
-		return this.minDate;
+		return undefined;
+	}
+
+	_getMinCalendarDate() {
+		const minDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		minDate.setYear(1);
+		minDate.setMonth(0);
+		minDate.setDate(1);
+		return minDate.valueOf();
+	}
+
+	_getMaxCalendarDate() {
+		const maxDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		maxDate.setYear(9999);
+		maxDate.setMonth(11);
+		const tempDate = new CalendarDate(maxDate, this._primaryCalendarType);
+		tempDate.setDate(1);
+		tempDate.setMonth(tempDate.getMonth() + 1, 0);
+		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
+		return maxDate.valueOf();
 	}
 
 	getFormat() {
@@ -709,6 +869,8 @@ class DayPicker extends UI5Element {
 			iDaysOldMonth,
 			iYear;
 
+		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
+		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
 		const _aVisibleDays = [];
 
 		// If date passed generate days for new start date else return the current one
@@ -735,12 +897,12 @@ class DayPicker extends UI5Element {
 		for (let i = 0; i < 42; i++) {
 			iYear = oDay.getYear();
 			oCalDate = new CalendarDate(oDay, this._primaryCalendarType);
-			if (bIncludeBCDates && iYear < DEFAULT_MIN_YEAR) {
+			if (bIncludeBCDates && iYear < minCalendarDateYear) {
 				// For dates before 0001-01-01 we should render only empty squares to keep
 				// the month square matrix correct.
 				oCalDate._bBeforeFirstYear = true;
 				_aVisibleDays.push(oCalDate);
-			} else if (iYear >= DEFAULT_MIN_YEAR && iYear <= DEFAULT_MAX_YEAR) {
+			} else if (iYear >= minCalendarDateYear && iYear <= maxCalendarDateYear) {
 				// Days before 0001-01-01 or after 9999-12-31 should not be rendered.
 				_aVisibleDays.push(oCalDate);
 			}

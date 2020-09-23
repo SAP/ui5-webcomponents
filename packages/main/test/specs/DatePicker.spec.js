@@ -351,9 +351,43 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click()
 		browser.keys("F4");
 
+		assert.notOk(datepicker.calendar.getProperty("_monthPicker")._hidden, "Month picker is open");
+		datepicker.valueHelpIcon.click(); // close the datepicker
+	});
+
+	it("[SHIFT] + [F4] shows year picker after date picker is open", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click()
+		browser.keys(['Shift', 'F4']);
+
 		assert.notOk(datepicker.calendar.getProperty("_yearPicker")._hidden, "Year picker is open");
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
+
+	it("[F4] shows month picker after year picker is open", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click()
+		browser.keys(['Shift', 'F4']);
+		browser.keys('F4');
+
+		assert.notOk(datepicker.calendar.getProperty("_monthPicker")._hidden, "Year picker is open");
+		datepicker.valueHelpIcon.click(); // close the datepicker
+	});
+
+
+	it("[SHIFT] + [F4] shows year picker after month picker is open", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click()
+		browser.keys('F4');
+		browser.keys(['Shift', 'F4']);
+
+		assert.notOk(datepicker.calendar.getProperty("_yearPicker")._hidden, "Year picker is open");
+		datepicker.valueHelpIcon.click(); // close the datepicker
+	});
+
 
 	it("[F4] on year picker doesn't close the date picker", () => {
 		datepicker.id = "#dp11";
@@ -808,5 +842,65 @@ describe("Date Picker Tests", () => {
 
 		assert.strictEqual(datepicker.innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
 			"The aria-label is correct.")
+	});
+
+	it("Page up/down increments/decrements the day value", () => {
+		datepicker.id = "#dp1";
+		datepicker.innerInput.setValue("Jan 1, 2000");
+		datepicker.root.click();
+
+		browser.keys('PageDown');
+
+		let date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 31, "Correct day value");
+		assert.strictEqual(date.getMonth(), 11, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
+
+		browser.keys('PageUp');
+
+		date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
+	});
+
+	it("Shift + Page up/down increments/decrements the month value", () => {
+		datepicker.id = "#dp1";
+		datepicker.innerInput.setValue("Jan 1, 2000");
+		datepicker.root.click();
+
+		browser.keys(['Shift', 'PageDown']);
+
+		let date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 11, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
+
+		browser.keys(['Shift', 'PageUp']);
+
+		date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
+	});
+
+	it("Ctrl + Shift + Page up/down increments/decrements the year value", () => {
+		datepicker.id = "#dp1";
+		datepicker.innerInput.setValue("Jan 1, 2000");
+		datepicker.root.click();
+
+		browser.keys(['Control', 'Shift', 'PageDown']);
+
+		let date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
+
+		browser.keys(['Control', 'Shift', 'PageUp']);
+
+		date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 });
