@@ -976,7 +976,7 @@ class ShellBar extends UI5Element {
 
 	get _showFullWidthSearch() {
 		const size = this._handleBarBreakpoints();
-		const searchBtnHidden = !!this.shadowRoot.querySelector(".ui5-shellbar-search-button.ui5-shellbar-hidden-button")
+		const searchBtnHidden = !!this.shadowRoot.querySelector(".ui5-shellbar-search-button.ui5-shellbar-hidden-button");
 
 		return ((size === "S") || searchBtnHidden);
 	}
