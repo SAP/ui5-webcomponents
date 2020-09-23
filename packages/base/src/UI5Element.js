@@ -45,6 +45,7 @@ const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
 class UI5Element extends HTMLElement {
 	constructor() {
 		super();
+		this._propertyChangeListeners = new Set();
 		this._initializeState();
 		this._upgradeAllProperties();
 		this._initializeContainers();
@@ -59,7 +60,6 @@ class UI5Element extends HTMLElement {
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
 		this._monitoredChildProps = new Map();
-		this._propertyChangeListeners = new Set();
 		this._shouldInvalidateParent = false;
 	}
 

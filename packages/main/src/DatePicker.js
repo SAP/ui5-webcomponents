@@ -9,7 +9,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	isPageUp,
 	isPageDown,

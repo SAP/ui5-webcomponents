@@ -12,7 +12,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -579,8 +579,8 @@ class Select extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled
-		&& this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
-		&& this.responsivePopover.opened ? "-1" : "0";
+		|| (this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
+		&& this.responsivePopover.opened) ? "-1" : "0";
 	}
 
 	get classes() {

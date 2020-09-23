@@ -4,10 +4,14 @@ import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
-import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
+import {
+	getEffectiveAriaLabelText,
+	getAriaLabelledByTexts,
+} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+import findNodeOwner from "@ui5/webcomponents-base/dist/util/findNodeOwner.js";
 import Button from "./Button.js";
 import TitleLevel from "./types/TitleLevel.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
@@ -118,6 +122,7 @@ const metadata = {
 			type: TitleLevel,
 			defaultValue: TitleLevel.H2,
 		},
+
 		/**
 		 * @type {String}
 		 * @defaultvalue ""
@@ -127,6 +132,7 @@ const metadata = {
 		ariaLabel: {
 			type: String,
 		},
+
 		/**
 		 * Receives id(or many ids) of the elements that label the panel
 		 *
@@ -139,23 +145,40 @@ const metadata = {
 			type: String,
 			defaultValue: "",
 		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the header of the panel
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		headerAriaLabelledby: {
+			type: String,
+		},
+
 		/**
 		 * @private
 		 */
 		_hasHeader: {
 			type: Boolean,
 		},
+
 		_header: {
 			type: Object,
 		},
+
 		_contentExpanded: {
 			type: Boolean,
 			noAttribute: true,
 		},
+
 		_animationRunning: {
 			type: Boolean,
 			noAttribute: true,
 		},
+
 		_buttonAccInfo: {
 			type: Object,
 		},
@@ -396,12 +419,23 @@ class Panel extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
+	get header() {
+		return this.getDomRef().querySelector(`#${this._id}-header-title`);
+	}
+
 	get headerAriaLevel() {
 		return this.headerLevel.slice(1);
 	}
 
 	get headerTabIndex() {
 		return (this.header.length || this.fixed) ? "-1" : "0";
+	}
+
+	get headerAriaLabelledByText() {
+		if (!this.headerAriaLabelledby) {
+			return;
+		}
+		return getAriaLabelledByTexts(this.header, findNodeOwner(this), this.headerAriaLabelledby);
 	}
 
 	get nonFixedInternalHeader() {
