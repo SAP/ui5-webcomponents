@@ -1,9 +1,5 @@
-commit a03f2b3597600a3959ae13ae432ddbcd1ef13bdf
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Sun Sep 20 13:46:49 2020 +0300
+commit 960f927be3793547f1bcc749bd4a381f7fe563df
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Sep 23 07:53:41 2020 +0300
 
-    fix(ui5-multiinput): Improve valueStateMessage in nMore popover (#2225)
-    
-    ValueStateMessage is now shown inside the nMore popover on both desktop and mobile devices.
-    
-    FIXES: #1086
+    fix(ui5-select): make disabled select not focusable (#2229)
