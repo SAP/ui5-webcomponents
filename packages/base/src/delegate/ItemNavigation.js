@@ -6,6 +6,8 @@ import {
 	isRight,
 	isHome,
 	isEnd,
+	isPageUp,
+	isPageDown,
 } from "../Keys.js";
 
 import EventProvider from "../EventProvider.js";
@@ -52,9 +54,9 @@ class ItemNavigation extends EventProvider {
 
 	async _onKeyPress(event) {
 		if (this.currentIndex >= this._getItems().length) {
-			this.onOverflowBottomEdge();
+			this.onOverflowBottomEdge(event);
 		} else if (this.currentIndex < 0) {
-			this.onOverflowTopEdge();
+			this.onOverflowTopEdge(event);
 		}
 
 		event.preventDefault();
@@ -63,6 +65,7 @@ class ItemNavigation extends EventProvider {
 
 		this.update();
 		this.focusCurrent();
+		this.fireEvent(ItemNavigation.AFTER_FOCUS);
 	}
 
 	onkeydown(event) {
@@ -88,6 +91,14 @@ class ItemNavigation extends EventProvider {
 
 		if (isEnd(event)) {
 			return this._handleEnd(event);
+		}
+
+		if (isPageUp(event)) {
+			return this._handlePageUp(event);
+		}
+
+		if (isPageDown(event)) {
+			return this._handlePageDown(event);
 		}
 	}
 
@@ -131,6 +142,20 @@ class ItemNavigation extends EventProvider {
 		if (this._canNavigate()) {
 			const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
 			this.currentIndex += (homeEndRange - 1 - this.currentIndex % homeEndRange); // eslint-disable-line
+			this._onKeyPress(event);
+		}
+	}
+
+	_handlePageUp(event) {
+		if (this._canNavigate()) {
+			this.currentIndex -= this.pageSize;
+			this._onKeyPress(event);
+		}
+	}
+
+	_handlePageDown(event) {
+		if (this._canNavigate()) {
+			this.currentIndex += this.pageSize;
 			this._onKeyPress(event);
 		}
 	}
@@ -217,9 +242,9 @@ class ItemNavigation extends EventProvider {
 		this.currentIndex = val;
 	}
 
-	onOverflowBottomEdge() {
+	onOverflowBottomEdge(event) {
 		const items = this._getItems();
-		const offset = this.currentIndex - items.length;
+		const offset = (this.currentIndex - items.length) % this.rowSize;
 
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
 			this.currentIndex = 0;
@@ -232,12 +257,18 @@ class ItemNavigation extends EventProvider {
 			this.currentIndex = items.length - 1;
 		}
 
-		this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset });
+		this.fireEvent(ItemNavigation.BORDER_REACH, {
+			start: false,
+			end: true,
+			originalEvent: event,
+			offset,
+		});
 	}
 
-	onOverflowTopEdge() {
+	onOverflowTopEdge(event) {
 		const items = this._getItems();
-		const offset = this.currentIndex + this.rowSize;
+		const offsetRight = (this.currentIndex + this.rowSize) % this.rowSize;
+		const offset = offsetRight < 0 ? (this.rowSize + offsetRight) : offsetRight;
 
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
 			this.currentIndex = items.length - 1;
@@ -250,7 +281,12 @@ class ItemNavigation extends EventProvider {
 			this.currentIndex = 0;
 		}
 
-		this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset });
+		this.fireEvent(ItemNavigation.BORDER_REACH, {
+			start: true,
+			end: false,
+			originalEvent: event,
+			offset,
+		});
 	}
 
 	_handleNextPage() {
@@ -278,5 +314,6 @@ class ItemNavigation extends EventProvider {
 ItemNavigation.PAGE_TOP = "PageTop";
 ItemNavigation.PAGE_BOTTOM = "PageBottom";
 ItemNavigation.BORDER_REACH = "_borderReach";
+ItemNavigation.AFTER_FOCUS = "_afterFocus";
 
 export default ItemNavigation;
