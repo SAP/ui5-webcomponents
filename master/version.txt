@@ -1,5 +1,5 @@
-commit 67c4d698126ad4bb164e0f973abd768a6b7e536e
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Sep 23 12:35:15 2020 +0300
+commit 41282164448b268ad5fc37675ca7a969df01d0e9
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Sep 23 13:54:14 2020 +0300
 
-    feat(ui5-panel): implement headerAriaLabelledBy property (#2200)
+    feat(framework): Limited support for campact size on IE (#2230)
