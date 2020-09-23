@@ -33,7 +33,6 @@ describe("Card general interaction", () => {
 		assert.strictEqual(field.getProperty("value"), "3", "The events count should remain 3 as the header is not interactive.");
 	});
 
-
 	it("Tests aria-label and aria-labelledby", () => {
 		const card1 = browser.$("#textAreaAriaLabel").shadow$(".ui5-card-root");
 		const card2 = browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-card-root");
