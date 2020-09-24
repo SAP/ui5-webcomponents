@@ -1,13 +1,5 @@
-commit 89f3de57ed1b25c7afcd26b38e4f0cf0469f8431
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Sep 24 14:56:54 2020 +0300
+commit 942b690a277c9afec3d072c5470149b55acd2ed4
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Sep 24 16:03:48 2020 +0300
 
-    chore(ui5-fcl): add template hooks for toggle arrows (#2242)
-    
-    Add template hooks for the toggle arrows of thew FlexibleColumnLayout,
-    so that a derived class can fully customize them.
-    For example: provide different or new ARIA attribbutes or change the values of existing ones.
-    Note: We considered providing slots or proeprties,
-    but we wanted to keep the API more simple and aggreed on this solution.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2183
+    chore(framework): refactor device.js (#2241)
