@@ -1,32 +1,13 @@
-commit 19afe9004c0ced3c41659a3b83f30ab872c4d2c3
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Wed Sep 23 15:26:53 2020 +0300
+commit 89f3de57ed1b25c7afcd26b38e4f0cf0469f8431
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Sep 24 14:56:54 2020 +0300
 
-    feat(ui5-date-picker): keyboard handling improvement (#2146)
+    chore(ui5-fcl): add template hooks for toggle arrows (#2242)
     
-    the following keyboard handling enhancements are implemented:
-    DatePicker
-    [PAGEDOWN] - Decrements the corresponding day of the month by one
-    [SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one
-    [SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one
-    [PAGEUP] - Increments the corresponding day of the month by one
-    [SHIFT] + [PAGEUP] - Increments the corresponding month by one
-    [SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one
-    Calendar
-    [F4] - Shows month picker
-    [SHIFT] + [F4] - Shows year picker
-    Day picker
-    [PAGEUP] - Navigate to the previous month
-    [PAGEDOWN] - Navigate to the next month
-    [SHIFT] + [PAGEUP] - Navigate to the previous year
-    [SHIFT] + [PAGEDOWN] - Navigate to the next year
-    [CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards
-    [CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards
-     Month picker
-    [PAGEUP] - Navigate to the previous month
-    [PAGEDOWN] - Navigate to the next month
-     Year picker
-    [PAGEUP] - Navigate to the previous year range
-    [PAGEDOWN] - Navigate the next year range
+    Add template hooks for the toggle arrows of thew FlexibleColumnLayout,
+    so that a derived class can fully customize them.
+    For example: provide different or new ARIA attribbutes or change the values of existing ones.
+    Note: We considered providing slots or proeprties,
+    but we wanted to keep the API more simple and aggreed on this solution.
     
-    Related to: #1534
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2183
