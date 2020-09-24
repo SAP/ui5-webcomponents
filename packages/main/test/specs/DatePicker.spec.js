@@ -351,9 +351,43 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click()
 		browser.keys("F4");
 
+		assert.notOk(datepicker.calendar.getProperty("_monthPicker")._hidden, "Month picker is open");
+		datepicker.valueHelpIcon.click(); // close the datepicker
+	});
+
+	it("[SHIFT] + [F4] shows year picker after date picker is open", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click()
+		browser.keys(['Shift', 'F4']);
+
 		assert.notOk(datepicker.calendar.getProperty("_yearPicker")._hidden, "Year picker is open");
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
+
+	it("[F4] shows month picker after year picker is open", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click()
+		browser.keys(['Shift', 'F4']);
+		browser.keys('F4');
+
+		assert.notOk(datepicker.calendar.getProperty("_monthPicker")._hidden, "Year picker is open");
+		datepicker.valueHelpIcon.click(); // close the datepicker
+	});
+
+
+	it("[SHIFT] + [F4] shows year picker after month picker is open", () => {
+		datepicker.id = "#dp11";
+
+		datepicker.valueHelpIcon.click()
+		browser.keys('F4');
+		browser.keys(['Shift', 'F4']);
+
+		assert.notOk(datepicker.calendar.getProperty("_yearPicker")._hidden, "Year picker is open");
+		datepicker.valueHelpIcon.click(); // close the datepicker
+	});
+
 
 	it("[F4] on year picker doesn't close the date picker", () => {
 		datepicker.id = "#dp11";
@@ -695,10 +729,10 @@ describe("Date Picker Tests", () => {
 	it("Tests week numbers column visibility", () => {
 		// act
 		datepicker.id = "#dp18";
-		datepicker.valueHelpIcon.click()
+		datepicker.valueHelpIcon.click();
 
 		// assert
-		const weekNumbersCol1 = datepicker.dayPicker.shadow$(".ui5-dp-weeknumber-container");
+		const weekNumbersCol1 = datepicker.dayPicker.shadow$(".ui5-dp-weekname-container");
 		assert.equal(weekNumbersCol1.isExisting(), true, "The week numbers column is visible.");
 
 		// close date picker
@@ -707,14 +741,166 @@ describe("Date Picker Tests", () => {
 
 		// act
 		datepicker.id = "#dp19";
-		datepicker.valueHelpIcon.click()
+		datepicker.valueHelpIcon.click();
 
 		// assert
-		const weekNumbersCol2 = datepicker.dayPicker.shadow$(".ui5-dp-weeknumber-container");
+		const weekNumbersCol2 = datepicker.dayPicker.shadow$(".ui5-dp-weekname-container");
 		assert.equal(weekNumbersCol2.isExisting(), false, "The week numbers column is hidden.");
 
 		// close date picker
 		datepicker.innerInput.click();
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
+	});
+
+	it("Calendar root have correct attribute", () => {
+
+		datepicker.id = "#dp18";
+		datepicker.valueHelpIcon.click();
+		const monthpickerContent = datepicker.dayPicker.shadow$(".ui5-dp-content");
+
+		assert.strictEqual(monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
+		assert.strictEqual(monthpickerContent.getAttribute("aria-roledescription"), "Calendar", "Calendar root have correct roledescription")
+		
+	});
+
+	it("DayPicker content wrapped", ()=>{
+		datepicker.id = "#dp19";
+		datepicker.open();
+		let arr = datepicker.getDayPickerContent();
+		
+		arr.forEach(function(el){
+			assert.strictEqual(el.getAttribute("role"), "row", "Content wrapper has correct role");
+		});
+	});
+
+	it("DayPicker day name attribute", ()=>{
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
+		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+		datepicker.id = "#dp13";
+		datepicker.openPicker({ focusInput: true });
+		datepicker.root.keys("May 3, 2100");
+		datepicker.root.keys("Enter");
+		
+		const content = Array.from(datepicker.getDayPickerDayNames());
+		const dayName = ["Week number", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+		content.forEach((element,index) => {
+			assert.strictEqual(element.getAttribute("role"), "columnheader", "Each day have column header role");
+			assert.strictEqual(element.getAttribute("aria-label"), dayName[index], "Aria-label is correct");
+		});
+
+	});
+
+	it("DayPiker day number attribute", ()=>{
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
+		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+		datepicker.id = "#dp13";
+		datepicker.openPicker({ focusInput: true });
+		datepicker.root.keys("May 3, 2100");
+		datepicker.root.keys("Enter");
+
+		const rows = Array.from(datepicker.getDayPickerNumbers());
+		const firstColumn = Array.from(rows[1].$$("div"));
+		const lastColumn = Array.from(rows[rows.length - 1].$$("div"));
+
+		assert.strictEqual(firstColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
+		assert.strictEqual(firstColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+		assert.strictEqual(firstColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+
+		assert.strictEqual(lastColumn[0].getAttribute("role"), "rowheader", "The week number have rowheader role");
+		assert.strictEqual(lastColumn[1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+		assert.strictEqual(lastColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
+	});
+
+	it("DatePcker dates and week number", ()=>{
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
+		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
+		datepicker.id = "#dp13";
+		datepicker.openPicker({ focusInput: true });
+		datepicker.root.keys("May 3, 2100");
+		datepicker.root.keys("Enter");
+
+		const data = Array.from(datepicker.getDayPickerDatesRow(2));
+		assert.strictEqual(data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");
+		assert.strictEqual(data[1].getAttribute("aria-label"), "Non-Working Day May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+		assert.strictEqual(data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
+	});
+
+	it("Tests aria-label", () => {
+		const EXPECTED_ARIA_LABEL = "Hello World";
+
+		datepicker.id = "#dpAriaLabel";
+		
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
+			"The aria-label is correct.")
+	});
+
+	it("Tests aria-labelledby", () => {
+		const EXPECTED_ARIA_LABEL = "info text";
+
+		datepicker.id = "#dpAriaLabelledBy";
+
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
+			"The aria-label is correct.")
+	});
+
+	it("Page up/down increments/decrements the day value", () => {
+		datepicker.id = "#dp1";
+		datepicker.innerInput.setValue("Jan 1, 2000");
+		datepicker.root.click();
+
+		browser.keys('PageDown');
+
+		let date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 31, "Correct day value");
+		assert.strictEqual(date.getMonth(), 11, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
+
+		browser.keys('PageUp');
+
+		date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
+	});
+
+	it("Shift + Page up/down increments/decrements the month value", () => {
+		datepicker.id = "#dp1";
+		datepicker.innerInput.setValue("Jan 1, 2000");
+		datepicker.root.click();
+
+		browser.keys(['Shift', 'PageDown']);
+
+		let date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 11, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
+
+		browser.keys(['Shift', 'PageUp']);
+
+		date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
+	});
+
+	it("Ctrl + Shift + Page up/down increments/decrements the year value", () => {
+		datepicker.id = "#dp1";
+		datepicker.innerInput.setValue("Jan 1, 2000");
+		datepicker.root.click();
+
+		browser.keys(['Control', 'Shift', 'PageDown']);
+
+		let date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 1999, "Correct year value");
+
+		browser.keys(['Control', 'Shift', 'PageUp']);
+
+		date = new Date(datepicker.innerInput.getValue());
+		assert.strictEqual(date.getDate(), 1, "Correct day value");
+		assert.strictEqual(date.getMonth(), 0, "Correct month value");
+		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 });

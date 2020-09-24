@@ -44,7 +44,8 @@
 					class="ui5-multi-combobox-toggle-button"
 					icon="multiselect-all"
 					design="Transparent"
-					?pressed={{filterSelected}}
+					?pressed={{_showAllItemsButtonPressed}}
+					?disabled={{allItemsSelected}}
 					@click="{{filterSelectedItems}}"
 				></ui5-togglebutton>
 		</div>

@@ -44,7 +44,7 @@ const replaceSelectors = (str, selector, replacement) => {
 	return str;
 };
 
-const adaptLinePart = (line, tag) => {
+const adaptLinePart = (line, tag, pureTag) => {
 	line = line.trim();
 	line = replaceSelectors(line, "::slotted", ``); // first remove all ::slotted() occurrences
 
@@ -59,8 +59,13 @@ const adaptLinePart = (line, tag) => {
 		return line;
 	}
 
-	// IE specific selector (directly written with the tag) - keep it
+	// IE specific selector (directly written with the tag, f.e. ui5-button {}) - keep it
 	if (line.match(new RegExp(`^${tag}[^a-zA-Z0-9-]`))) {
+		return line;
+	}
+
+	// IE specific selector (directly written with the tag attribute, f.e. [ui5-button] {}) - keep it
+	if (pureTag && line.startsWith(`[${pureTag}]`)) {
 		return line;
 	}
 
@@ -68,7 +73,7 @@ const adaptLinePart = (line, tag) => {
 	return `${tag} ${line}`;
 };
 
-const adaptCSSForIE = (str, tag) => {
+const adaptCSSForIE = (str, tag, pureTag) => {
 	str = str.replace(/\n/g, ` `);
 	str = str.replace(/([{}])/g, `$1\n`);
 	let result = ``;
@@ -78,7 +83,7 @@ const adaptCSSForIE = (str, tag) => {
 		if (mustProcess) {
 			const lineParts = line.split(",");
 			const processedLineParts = lineParts.map(linePart => {
-				return adaptLinePart(linePart, tag);
+				return adaptLinePart(linePart, tag, pureTag);
 			});
 			line = processedLineParts.join(",");
 		}

@@ -17,7 +17,8 @@
 	--_ui5_datetime_timeview_phonemode_width: 19.5rem;
 	--_ui5_datetime_timeview_padding: 1rem;
 
-	--_ui5_input_inner_padding: 0 0.75rem;
+	--_ui5_input_inner_padding: 0 0.625rem;
+	--_ui5_input_inner_padding_with_icon: 0 0.25rem 0 0.625rem;
 	--_ui5_input_value_state_icon_padding: var(--_ui5-input-icon-padding);
 	--_ui5_list_no_data_height: 3rem;
 	--_ui5_list_item_cb_margin_right: 0;

@@ -12,6 +12,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -23,6 +24,7 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
+	SELECT_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
@@ -31,6 +33,7 @@ import Popover from "./Popover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
@@ -142,6 +145,43 @@ const metadata = {
 		valueState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
+		},
+
+		/**
+		 * Defines whether the <code>ui5-select</code> is required.
+		 *
+		 * @since 1.0.0-rc.9
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the aria-label attribute for the select.
+		 *
+		 * @type {String}
+		 * @since 1.0.0-rc.9
+		 * @private
+		 * @defaultvalue ""
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the select.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
 		},
 
 		_text: {
@@ -281,7 +321,7 @@ class Select extends UI5Element {
 	async _respPopover() {
 		this._iconPressed = true;
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
 	/**
@@ -299,8 +339,6 @@ class Select extends UI5Element {
 		if (this.disabled) {
 			return;
 		}
-
-		this.updateStaticAreaItemContentDensity();
 
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
@@ -523,6 +561,10 @@ class Select extends UI5Element {
 		return this.disabled || undefined;
 	}
 
+	get selectRoleDescription() {
+		return this.i18nBundle.getText(SELECT_ROLE_DESCRIPTION);
+	}
+
 	get _headerTitleText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
@@ -537,8 +579,8 @@ class Select extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled
-		&& this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
-		&& this.responsivePopover.opened ? "-1" : "0";
+		|| (this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
+		&& this.responsivePopover.opened) ? "-1" : "0";
 	}
 
 	get classes() {
@@ -563,6 +605,10 @@ class Select extends UI5Element {
 				"width": `${this.options.length ? this._listWidth : this.offsetWidth}px`,
 			},
 		};
+	}
+
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get valueStateMessageText() {
@@ -607,19 +653,20 @@ class Select extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-popover");
+		return staticAreaItem.querySelector("[ui5-popover]");
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			Option.define(),
-			Label.define(),
-			ResponsivePopover.define(),
-			Popover.define(),
-			List.define(),
-			StandardListItem.define(),
-			Icon.define(),
-		]);
+	static get dependencies() {
+		return [
+			Option,
+			Label,
+			ResponsivePopover,
+			Popover,
+			List,
+			StandardListItem,
+			Icon,
+			Button,
+		];
 	}
 }
 

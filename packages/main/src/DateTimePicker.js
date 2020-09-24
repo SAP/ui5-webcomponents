@@ -3,6 +3,10 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/icons/date-time.js";
+import {
+	isLeft,
+	isRight,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
 import SegmentedButton from "./SegmentedButton.js";
@@ -179,15 +183,15 @@ class DateTimePicker extends DatePicker {
 		return [super.staticAreaStyles, DateTimePickerPopoverCss];
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			DatePicker.define(),
-			Calendar.define(),
-			Button.define(),
-			ToggleButton.define(),
-			SegmentedButton.define(),
-			WheelSlider.define(),
-		]);
+	static get dependencies() {
+		return [
+			...DatePicker.dependencies,
+			Calendar,
+			Button,
+			ToggleButton,
+			SegmentedButton,
+			WheelSlider,
+		];
 	}
 
 	constructor() {
@@ -245,6 +249,7 @@ class DateTimePicker extends DatePicker {
 		await this.setSlidersValue();
 		this.expandHoursSlider();
 		this.storePreviousValue();
+		this._slidersDomRefs = await this.slidersDomRefs();
 	}
 
 	/**
@@ -263,6 +268,11 @@ class DateTimePicker extends DatePicker {
 	 */
 	isValid(value = "") {
 		return super.isValid(value); // in order to be displayed in the DateTimePicker API reference
+	}
+
+	async slidersDomRefs() {
+		await this.getPicker();
+		return this.responsivePopover.getElementsByClassName("ui5-dt-wheel");
 	}
 
 	/**
@@ -557,7 +567,7 @@ class DateTimePicker extends DatePicker {
 
 	async getPicker() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
 	async getCurrentDateTime() {
@@ -676,6 +686,35 @@ class DateTimePicker extends DatePicker {
 				periodsSlider.value = hours >= config.maxHour ? this.periodsArray[1] : this.periodsArray[0];
 			} else {
 				periodsSlider.value = (hours > config.maxHour || hours === config.minHour) ? this.periodsArray[1] : this.periodsArray[0];
+			}
+		}
+	}
+
+	async _ontimekeydown(event) {
+		if (isLeft(event)) {
+			let expandedSliderIndex = 0;
+			for (let i = 0; i < this._slidersDomRefs.length; i++) {
+				if (this._slidersDomRefs[i]._expanded) {
+					expandedSliderIndex = i;
+				}
+			}
+			if (this._slidersDomRefs[expandedSliderIndex - 1]) {
+				this._slidersDomRefs[expandedSliderIndex - 1].focus();
+			} else {
+				this._slidersDomRefs[this._slidersDomRefs.length - 1].focus();
+			}
+		} else if (isRight(event)) {
+			let expandedSliderIndex = 0;
+
+			for (let i = 0; i < this._slidersDomRefs.length; i++) {
+				if (this._slidersDomRefs[i]._expanded) {
+					expandedSliderIndex = i;
+				}
+			}
+			if (this._slidersDomRefs[expandedSliderIndex + 1]) {
+				this._slidersDomRefs[expandedSliderIndex + 1].focus();
+			} else {
+				this._slidersDomRefs[0].focus();
 			}
 		}
 	}

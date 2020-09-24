@@ -1,0 +1,50 @@
+<ui5-responsive-popover
+	tokenizer-popover="true"
+	style={{styles.popover}}
+	header-text={{morePopoverTitle}}
+	?content-only-on-desktop="{{hasValueState}}"
+	no-arrow
+	placement-type="Bottom"
+	horizontal-align="Left"
+>
+	{{#unless hasValueState}}
+		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
+			{{#if _isPhone}}
+				<div class="row" style="{{styles.popoverHeaderTitle}}">
+					<ui5-title level="H5" class="ui5-responsive-popover-header-text">Remove</ui5-title>
+					<ui5-button
+						class="ui5-responsive-popover-close-btn"
+						icon="decline"
+						design="Transparent"
+						@click="{{closeMorePopover}}"
+					>
+					</ui5-button>
+				</div>
+			{{/if}}
+			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+				{{#each valueStateMessageText}}
+					{{this}}
+				{{/each}}
+			</div>
+		</div>
+	{{/unless}}
+	<ui5-list
+		class="ui5-tokenizer-list"
+		mode="Delete"
+		@ui5-item-delete={{itemDelete}}
+	>
+		{{#each _tokens}}
+			<ui5-li .tokenRef={{this}}>
+				{{this.text}}
+			</ui5-li>
+		{{/each}}
+	</ui5-list>
+	{{#if _isPhone}}
+		<div slot="footer" class="ui5-responsive-popover-footer">
+			<ui5-button
+				design="Transparent"
+				@click="{{closeMorePopover}}"
+			>OK</ui5-button>
+		</div>
+	{{/if}}
+</ui5-responsive-popover>

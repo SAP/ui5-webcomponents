@@ -23,7 +23,7 @@
 	width: 100%;
 }
 
-.ui5-duration-picker-footer > ui5-button {
+.ui5-duration-picker-footer > [ui5-button] {
 	margin: 1%;
 	min-width: 20%;
 }

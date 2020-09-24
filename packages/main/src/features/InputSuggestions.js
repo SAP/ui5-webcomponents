@@ -3,7 +3,10 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
-import "../SuggestionItem.js";
+import SuggestionItem from "../SuggestionItem.js";
+import Button from "../Button.js";
+import GroupHeaderListItem from "../GroupHeaderListItem.js";
+import SuggestionListItem from "../SuggestionListItem.js";
 
 import {
 	LIST_ITEM_POSITION,
@@ -118,7 +121,10 @@ class Suggestions {
 	async open() {
 		this.responsivePopover = await this._respPopover();
 		this._beforeOpen();
-		this.responsivePopover.open(this._getComponent());
+
+		if (this._getItems().length) {
+			this.responsivePopover.open(this._getComponent());
+		}
 	}
 
 	async close(preventFocusRestore = false) {
@@ -319,7 +325,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [...this.responsivePopover.querySelector("ui5-list").children];
+		return [...this.responsivePopover.querySelector("[ui5-list]").children];
 	}
 
 	_getComponent() {
@@ -328,7 +334,7 @@ class Suggestions {
 
 	async _getList() {
 		this.responsivePopover = await this._respPopover();
-		return this.responsivePopover.querySelector("ui5-list");
+		return this.responsivePopover.querySelector("[ui5-list]");
 	}
 
 	async _getListWidth() {
@@ -346,7 +352,7 @@ class Suggestions {
 		}
 
 		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		this.responsivePopover = staticAreaItem.querySelector("[ui5-responsive-popover]");
 		return this.responsivePopover;
 	}
 
@@ -395,14 +401,20 @@ class Suggestions {
 	sanitizeText(text) {
 		return text && text.replace("<", "&lt");
 	}
+
+	static get dependencies() {
+		return [
+			SuggestionItem,
+			ResponsivePopover,
+			List,
+			SuggestionListItem,
+			GroupHeaderListItem,
+			Button,
+		];
+	}
 }
 
 Suggestions.SCROLL_STEP = 60;
-
-// The List and Popover components would be rendered
-// by the issuer component`s template.
-List.define();
-ResponsivePopover.define();
 
 // Add suggestions support to the global features registry so that Input.js can use it
 registerFeature("InputSuggestions", Suggestions);

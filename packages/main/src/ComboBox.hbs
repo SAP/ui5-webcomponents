@@ -25,6 +25,10 @@
 		aria-label="{{ariaLabelText}}"
 	/>
 
+	{{#if icon}}
+		<slot name="icon"></slot>
+	{{/if}}
+
 	{{#unless readonly}}
 		<ui5-icon
 			name="slim-arrow-down"

@@ -215,8 +215,8 @@ class ProductSwitchItem extends UI5Element {
 		this.fireEvent("click", { item: this });
 	}
 
-	static async onDefine() {
-		await Icon.define();
+	static get dependencies() {
+		return [Icon];
 	}
 }
 

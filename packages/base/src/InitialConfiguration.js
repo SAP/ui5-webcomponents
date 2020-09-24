@@ -12,6 +12,8 @@ let initialConfig = {
 	calendarType: null,
 	noConflict: false, // no URL
 	formatSettings: {},
+	useDefaultLanguage: false,
+	assetsPath: "",
 };
 
 /* General settings */
@@ -35,6 +37,16 @@ const getLanguage = () => {
 	return initialConfig.language;
 };
 
+/**
+ * Returns if the default language, that is inlined build time,
+ * should be used, instead of trying fetching the language over the network.
+ * @returns {Boolean}
+ */
+const getUseDefaultLanguage = () => {
+	initConfiguration();
+	return initialConfig.useDefaultLanguage;
+};
+
 const getNoConflict = () => {
 	initConfiguration();
 	return initialConfig.noConflict;
@@ -48,6 +60,11 @@ const getCalendarType = () => {
 const getFormatSettings = () => {
 	initConfiguration();
 	return initialConfig.formatSettings;
+};
+
+const getAssetsPath = () => {
+	initConfiguration();
+	return initialConfig.assetsPath;
 };
 
 const booleanMapping = new Map();
@@ -125,7 +142,9 @@ export {
 	getTheme,
 	getRTL,
 	getLanguage,
+	getUseDefaultLanguage,
 	getNoConflict,
 	getCalendarType,
 	getFormatSettings,
+	getAssetsPath,
 };

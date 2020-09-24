@@ -54,7 +54,7 @@ function toggleSettings() {
 
        // Set selected option of RTL
        Array.prototype.slice.call(textDirectionSwitch.querySelectorAll("ui5-option")).forEach(function(option) {
-        if (urlParameters["sap-ui-rtl"] === "true") {
+        if (urlParameters["isrtl"] === "true") {
           option.selected = option.textContent === "RTL";
         } else {
           option.selected = option.textContent === "LTR";
@@ -80,7 +80,7 @@ function toggleSettings() {
         // Not implemented with string literals, beacause of IE11
         var newLocation = location.origin + location.pathname + "?sap-ui-theme=";
         newLocation += theme;
-        newLocation +=  "&sap-ui-rtl=";
+        newLocation +=  "&isrtl=";
         newLocation += textDirection === "RTL";
 
         window.location = newLocation;
@@ -105,11 +105,13 @@ function setTheme() {
 }
 
 function setRTL() {
-  var rtlIsEnabled = getParams(window.location.href)["sap-ui-rtl"] === "true",
+  var rtlIsEnabled = getParams(window.location.href)["isrtl"] === "true",
     body = document.body;
 
   if (rtlIsEnabled) {
-    body.setAttribute("dir", "rtl");
+    setTimeout(() => {
+      body.setAttribute("dir", "rtl");
+    }, 0);
   } else {
     body.removeAttribute("dir");
   }

@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
@@ -206,6 +207,31 @@ const metadata = {
 		 * @public
 		 */
 		name: {
+			type: String,
+		},
+
+		/**
+		 * Defines the aria-label attribute for the textarea.
+		 *
+		 * @type {String}
+		 * @since 1.0.0-rc.9
+		 * @private
+		 * @defaultvalue ""
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+
+		/**
+		 * Receives id(or many ids) of the elements that label the textarea.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		ariaLabelledby: {
 			type: String,
 		},
 
@@ -454,7 +480,7 @@ class TextArea extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-popover");
+		return staticAreaItem.querySelector("[ui5-popover]");
 	}
 
 	_tokenizeText(value) {
@@ -539,8 +565,34 @@ class TextArea extends UI5Element {
 		return this.disabled ? undefined : "0";
 	}
 
-	get ariaLabelledBy() {
-		return this.showExceededText ? `${this._id}-exceededText` : undefined;
+	get ariaLabelText() {
+		const effectiveAriaLabelText = getEffectiveAriaLabelText(this);
+
+		if (this.showExceededText) {
+			if (effectiveAriaLabelText) {
+				return `${effectiveAriaLabelText} ${this._exceededTextProps.exceededText}`;
+			}
+
+			return this._exceededTextProps.exceededText;
+		}
+
+		return effectiveAriaLabelText;
+	}
+
+	get ariaDescribedBy() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
+	get ariaValueStateHiddenText() {
+		if (!this.hasValueState) {
+			return;
+		}
+
+		if (this.hasCustomValueState) {
+			return this.valueStateMessageText.map(el => el.textContent).join(" ");
+		}
+
+		return this.valueStateText;
 	}
 
 	get ariaInvalid() {
@@ -585,11 +637,12 @@ class TextArea extends UI5Element {
 		};
 	}
 
+	static get dependencies() {
+		return [Popover];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Popover.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

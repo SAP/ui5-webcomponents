@@ -130,6 +130,17 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the content is scrollable.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+		 */
+		disableScrolling: {
+			type: Boolean,
+		},
+
+		/**
 		 * Sets the X translation of the arrow
 		 *
 		 * @private
@@ -246,7 +257,7 @@ class Popover extends Popup {
 
 	isOpenerClicked(event) {
 		const target = event.target;
-		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener);
+		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener) || event.composedPath().indexOf(this._opener) > -1;
 	}
 
 	/**
@@ -489,7 +500,8 @@ class Popover extends Popup {
 
 		this._maxContentHeight = maxContentHeight;
 
-		const arrowTranslateX = isVertical ? targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2 : 0;
+		const arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
+		const arrowTranslateX = isVertical && arrowXCentered ? targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2 : 0;
 		const arrowTranslateY = !isVertical ? targetRect.top + targetRect.height / 2 - top - popoverSize.height / 2 : 0;
 
 		if (this._left === undefined || Math.abs(this._left - left) > 1.5) {
