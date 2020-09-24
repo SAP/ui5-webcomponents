@@ -9,13 +9,24 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isShow, isF4 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import {
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl,
+	isShow,
+	isF4,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
 import Input from "./Input.js";
@@ -130,6 +141,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the <code>ui5-datepicker</code> is required.
+		 *
+		 * @since 1.0.0-rc.9
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
 		 * Determines whether the <code>ui5-date-picker</code> is displayed as disabled.
 		 *
 		 * @type {boolean}
@@ -202,6 +225,31 @@ const metadata = {
 		 */
 		hideWeekNumbers: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the aria-label attribute for the <code>ui5-date-picker</code>.
+		 *
+		 * @type {String}
+		 * @since 1.0.0-rc.9
+		 * @private
+		 * @defaultvalue ""
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the <code>ui5-date-picker</code>.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
 		},
 
 		_isPickerOpen: {
@@ -297,6 +345,19 @@ const metadata = {
  * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
  * use TAB to reach the buttons for changing month and year.
  * <br>
+ *
+ * If the <code>ui5-date-picker</code> is focused and the picker dialog is not opened the user can
+ * increment or decrement the corresponding field of the JS date object referenced by <code>dateValue</code> propery
+ * by using the following shortcuts:
+ * <br>
+ * <ul>
+ * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
+ * <li>[SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one</li>
+ * <li>[SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one</li>
+ * <li>[PAGEUP] - Increments the corresponding day of the month by one</li>
+ * <li>[SHIFT] + [PAGEUP] - Increments the corresponding month by one</li>
+ * <li>[SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -442,9 +503,9 @@ class DatePicker extends UI5Element {
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			const jsDateTimeNow = new Date(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDateTimeNow.getTime(), this._primaryCalendarType);
-			return oCalDate.valueOf();
+			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
+			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
+			return calDate.valueOf();
 		}
 		return undefined;
 	}
@@ -464,6 +525,87 @@ class DatePicker extends UI5Element {
 				this._toggleAndFocusInput();
 			}
 		}
+
+		if (this.isOpen()) {
+			return;
+		}
+
+		if (isPageUpShiftCtrl(event)) {
+			event.preventDefault();
+			this._changeDateValue(true, true, false, false);
+		} else if (isPageUpShift(event)) {
+			event.preventDefault();
+			this._changeDateValue(true, false, true, false);
+		} else if (isPageUp(event)) {
+			event.preventDefault();
+			this._changeDateValue(true, false, false, true);
+		}
+
+		if (isPageDownShiftCtrl(event)) {
+			event.preventDefault();
+			this._changeDateValue(false, true, false, false);
+		} else if (isPageDownShift(event)) {
+			event.preventDefault();
+			this._changeDateValue(false, false, true, false);
+		} else if (isPageDown(event)) {
+			event.preventDefault();
+			this._changeDateValue(false, false, false, true);
+		}
+	}
+
+	/**
+	 * Adds or extracts a given number of measuring units from the "dateValue" property value
+	 *
+	 * @param {boolean} years indicates that the measuring unit is in years
+	 * @param {boolean} months indicates that the measuring unit is in months
+	 * @param {boolean} days indicates that the measuring unit is in days
+	 * @param {boolean} forward if true indicates addition
+	 * @param {int} step number of measuring units to substract or add defaults to 1
+	 */
+	_changeDateValue(forward, years, months, days, step = 1) {
+		let date = this.dateValue;
+
+		if (!date) {
+			return;
+		}
+
+		const oldDate = new Date(date.getTime());
+		const incrementStep = forward ? step : -step;
+
+		if (incrementStep === 0) {
+			return;
+		}
+
+		if (days) {
+			date.setDate(date.getDate() + incrementStep);
+		} else if (months) {
+			date.setMonth(date.getMonth() + incrementStep);
+			const monthDiff = (date.getFullYear() - oldDate.getFullYear()) * 12 + (date.getMonth() - oldDate.getMonth());
+
+			if (date.getMonth() === oldDate.getMonth() || monthDiff !== incrementStep) {
+				// first condition example: 31th of March increment month with -1 results in 2th of March
+				// second condition example: 31th of January increment month with +1 results in 2th of March
+				date.setDate(0);
+			}
+		} else if (years) {
+			date.setFullYear(date.getFullYear() + incrementStep);
+
+			if (date.getMonth() !== oldDate.getMonth()) {
+				// day doesn't exist in this month (February 29th)
+				date.setDate(0);
+			}
+		} else {
+			return;
+		}
+
+		if (date.valueOf() < this._minDate) {
+			date = new Date(this._minDate);
+		} else if (date.valueOf() > this._maxDate) {
+			date = new Date(this._maxDate);
+		}
+
+		this.value = this.formatValue(date);
+		this.fireEvent("change", { value: this.value, valid: true });
 	}
 
 	_toggleAndFocusInput() {
@@ -472,11 +614,11 @@ class DatePicker extends UI5Element {
 	}
 
 	_getInput() {
-		return this.shadowRoot.querySelector("ui5-input");
+		return this.shadowRoot.querySelector("[ui5-input]");
 	}
 
-	_handleInputChange() {
-		let nextValue = this._getInput().getInputValue();
+	async _handleInputChange() {
+		let nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
@@ -494,8 +636,8 @@ class DatePicker extends UI5Element {
 		this.fireEvent("value-changed", { value: nextValue, valid: isValid });
 	}
 
-	_handleInputLiveChange() {
-		const nextValue = this._getInput().getInputValue();
+	async _handleInputLiveChange() {
+		const nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
@@ -534,8 +676,8 @@ class DatePicker extends UI5Element {
 		}
 
 		const pickedDate = new Date(value),
-			minDate = this._minDate && new Date(this._minDate),
-			maxDate = this._maxDate && new Date(this._maxDate);
+			minDate = new Date(this._minDate),
+			maxDate = new Date(this._maxDate);
 
 		if (minDate && maxDate) {
 			if (minDate <= pickedDate && maxDate >= pickedDate) {
@@ -622,6 +764,10 @@ class DatePicker extends UI5Element {
 		return this.phone;
 	}
 
+	get _isIE() {
+		return isIE();
+	}
+
 	getFormat() {
 		if (this._isPattern) {
 			this._oDateFormat = DateFormat.getInstance({
@@ -646,21 +792,36 @@ class DatePicker extends UI5Element {
 			"ariaOwns": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
+			"ariaRequired": this.required,
+			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
 	}
 
 	get _maxDate() {
-		if (this.maxDate) {
-			return this._getTimeStampFromString(this.maxDate);
-		}
-		return this.maxDate;
+		return this.maxDate ? this._getTimeStampFromString(this.maxDate) : this._getMaxCalendarDate();
 	}
 
 	get _minDate() {
-		if (this.minDate) {
-			return this._getTimeStampFromString(this.minDate);
-		}
-		return this.minDate;
+		return this.minDate ? this._getTimeStampFromString(this.minDate) : this._getMinCalendarDate();
+	}
+
+	_getMinCalendarDate() {
+		const minDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		minDate.setYear(1);
+		minDate.setMonth(0);
+		minDate.setDate(1);
+		return minDate.valueOf();
+	}
+
+	_getMaxCalendarDate() {
+		const maxDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		maxDate.setYear(9999);
+		maxDate.setMonth(11);
+		const tempDate = new CalendarDate(maxDate, this._primaryCalendarType);
+		tempDate.setDate(1);
+		tempDate.setMonth(tempDate.getMonth() + 1, 0);
+		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
+		return maxDate.valueOf();
 	}
 
 	get openIconTitle() {
@@ -685,7 +846,7 @@ class DatePicker extends UI5Element {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
 	_canOpenPicker() {
@@ -778,7 +939,6 @@ class DatePicker extends UI5Element {
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {
-			this.updateStaticAreaItemContentDensity();
 			this.openPicker();
 		}
 	}
@@ -847,13 +1007,19 @@ class DatePicker extends UI5Element {
 		return InputType.Text;
 	}
 
+	static get dependencies() {
+		return [
+			Icon,
+			ResponsivePopover,
+			Calendar,
+			Input,
+			Button,
+		];
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			Icon.define(),
-			ResponsivePopover.define(),
-			Calendar.define(),
-			Input.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}

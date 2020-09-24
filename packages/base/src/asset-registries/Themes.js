@@ -1,6 +1,7 @@
 import { fetchJsonOnce, fetchTextOnce } from "../util/FetchHelper.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 import getFileExtension from "../util/getFileExtension.js";
+import getEffectiveAssetPath from "../util/getEffectiveAssetPath.js";
 
 const themeURLs = new Map();
 const themeStyles = new Map();
@@ -68,7 +69,7 @@ const fetchThemeProperties = async (packageName, themeName) => {
 		throw new Error(`You have to import the ${packageName}/dist/Assets.js module to switch to additional themes`);
 	}
 
-	return getFileExtension(url) === ".css" ? fetchTextOnce(url) : fetchJsonOnce(url);
+	return getFileExtension(url) === ".css" ? fetchTextOnce(url) : fetchJsonOnce(getEffectiveAssetPath(url));
 };
 
 const getRegisteredPackages = () => {

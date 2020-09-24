@@ -90,6 +90,13 @@ const metadata = {
 		 * @event
 		 */
 		change: {},
+		/**
+		 * Fired when month, year has changed due to item navigation.
+		 * @since 1.0.0-rc.9
+		 * @public
+		 * @event
+		 */
+		navigate: {},
 	},
 };
 
@@ -145,9 +152,15 @@ class MonthPicker extends UI5Element {
 
 			return [].concat(...focusableMonths);
 		}.bind(this);
+
 		this._itemNav.setItemsCallback = function setItemsCallback(items) {
 			this._quarters = items;
 		}.bind(this);
+
+		this._itemNav.attachEvent(
+			ItemNavigation.BORDER_REACH,
+			this._handleItemNavigationBorderReach.bind(this)
+		);
 	}
 
 	onBeforeRendering() {
@@ -215,11 +228,19 @@ class MonthPicker extends UI5Element {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
-	_onclick(event) {
+	_onmousedown(event) {
+		if (event.target.className.indexOf("ui5-mp-item") > -1) {
+			const targetTimestamp = this.getTimestampFromDOM(event.target);
+			const focusedItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === targetTimestamp);
+			this._itemNav.currentIndex = this._itemNav._getItems().indexOf(focusedItem);
+			this._itemNav.focusCurrent();
+		}
+	}
+
+	_onmouseup(event) {
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this.getTimestampFromDOM(event.target);
 			this.timestamp = timestamp;
-			this._itemNav.current = this._month;
 			this.fireEvent("change", { timestamp });
 		}
 	}
@@ -239,6 +260,14 @@ class MonthPicker extends UI5Element {
 		}
 	}
 
+	_handleItemNavigationBorderReach(event) {
+		if (this._isOutOfSelectableRange(this._month)) {
+			return;
+		}
+
+		this.fireEvent("navigate", event);
+	}
+
 	_isOutOfSelectableRange(monthIndex) {
 		const currentDateYear = this._localDate.getFullYear(),
 			minDate = new Date(this._minDate),
@@ -250,23 +279,41 @@ class MonthPicker extends UI5Element {
 	}
 
 	get _maxDate() {
-		if (this.maxDate) {
-			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(), this.getFormat().parse(this.maxDate).getMonth(), this.getFormat().parse(this.maxDate).getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
-			return oCalDate.valueOf();
-		}
-		return this.maxDate;
+		return this.maxDate ? this._getTimeStampFromString(this.maxDate) : this._getMaxCalendarDate();
 	}
 
 	get _minDate() {
-		if (this.minDate) {
-			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(), this.getFormat().parse(this.minDate).getMonth(), this.getFormat().parse(this.minDate).getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
-			return oCalDate.valueOf();
-		}
-		return this.minDate;
+		return this.minDate ? this._getTimeStampFromString(this.minDate) : this._getMinCalendarDate();
 	}
 
+	_getTimeStampFromString(value) {
+		const jsDate = this.getFormat().parse(value);
+		if (jsDate) {
+			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
+			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
+			return calDate.valueOf();
+		}
+		return undefined;
+	}
+
+	_getMinCalendarDate() {
+		const minDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		minDate.setYear(1);
+		minDate.setMonth(0);
+		minDate.setDate(1);
+		return minDate.valueOf();
+	}
+
+	_getMaxCalendarDate() {
+		const maxDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		maxDate.setYear(9999);
+		maxDate.setMonth(11);
+		const tempDate = new CalendarDate(maxDate, this._primaryCalendarType);
+		tempDate.setDate(1);
+		tempDate.setMonth(tempDate.getMonth() + 1, 0);
+		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
+		return maxDate.valueOf();
+	}
 
 	getFormat() {
 		if (this._isPattern) {

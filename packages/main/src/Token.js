@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import {
 	isBackSpace,
-	isEnter,
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -24,29 +23,17 @@ import styles from "./generated/themes/Token.css.js";
 const metadata = {
 	tag: "ui5-token",
 	languageAware: true,
-	slots: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
-		/**
-		 * Defines the text of the <code>ui5-token</code>.
-		 * <br><br>
-		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-		 *
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: Node,
-		},
-	},
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
 
 		/**
-		 * Defines whether the <code>ui5-token</code> is selected or not.
+		 * Defines the text of the token.
 		 *
-		 * @type {boolean}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
-		selected: { type: Boolean },
+		text: { type: String },
 
 		/**
 		 * Defines whether the <code>ui5-token</code> is read-only.
@@ -59,9 +46,42 @@ const metadata = {
 		 */
 		readonly: { type: Boolean },
 
-		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
-
+		/**
+		 * Set by the tokenizer when a token is in the "more" area (overflowing)
+		 * @type {boolean}
+		 * @private
+		 */
 		overflows: { type: Boolean },
+
+		/** Defines whether the <code>ui5-token</code> is selected or not.
+		 *
+		 * @type {boolean}
+		 * @public
+		 */
+		selected: { type: Boolean },
+
+		/**
+		 * Defines the tabIndex of the component.
+		 * @type {string}
+		 * @private
+		 */
+		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
+	},
+
+	slots: /** @lends  sap.ui.webcomponents.main.Token.prototype */ {
+
+		/**
+		 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
+		 * Accepts <code>ui5-icon</code>
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 * @since 1.0.0-rc.9
+		 */
+		closeIcon: {
+			type: HTMLElement,
+		},
 	},
 
 	events: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
@@ -72,7 +92,7 @@ const metadata = {
 		 * @event
 		 * @param {boolean} backSpace indicates whether token is deleted by backspace key
 		 * @param {boolean} delete indicates whether token is deleted by delete key
-		 * @public
+		 * @private
 		 */
 		"delete": {
 			detail: {
@@ -82,7 +102,7 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when the a token is selected by user interaction with mouse, clicking space or enter
+		 * Fired when the a <code>ui5-token</code> is selected by user interaction with mouse or clicking space.
 		 *
 		 * @event
 		 * @public
@@ -98,13 +118,16 @@ const metadata = {
  *
  * Tokens are small items of information (similar to tags) that mainly serve to visualize previously selected items.
  *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/Token.js";</code>
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Token
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-token
- * @usestextcontent
- * @private
+ * @since 1.0.0-rc.9
+ * @public
  */
 class Token extends UI5Element {
 	static get metadata() {
@@ -129,10 +152,10 @@ class Token extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	_select() {
+	_handleSelect() {
+		this.selected = !this.selected;
 		this.fireEvent("select");
-		this.selected = true;
-	 }
+	}
 
 	 _delete() {
 		this.fireEvent("delete");
@@ -151,9 +174,10 @@ class Token extends UI5Element {
 			});
 		}
 
-		if (isEnter(event) || isSpace(event)) {
-			this.fireEvent("select", {});
-			this.selected = true;
+		if (isSpace(event)) {
+			event.preventDefault();
+
+			this._handleSelect();
 		}
 	}
 
@@ -165,11 +189,12 @@ class Token extends UI5Element {
 		return getTheme() === "sap_fiori_3" ? "decline" : "sys-cancel";
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

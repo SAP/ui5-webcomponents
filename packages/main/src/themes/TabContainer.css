@@ -72,13 +72,8 @@
 }
 
 .ui-tc__overflowButton {
-	display: none;
 	margin-left: auto;
 	margin-right: 0.25rem;
-}
-
-.ui-tc__overflowButton--visible {
-	display: block;
 }
 
 .ui5-tc-root.ui5-tc--textOnly .ui5-tc__content {
@@ -107,11 +102,12 @@
 }
 
 .ui5-tc__contentItem {
-	height: 100%;
+    max-height: 100%;
+	display: flex;
 	overflow: auto;
 }
 
-.ui5-tc__contentItem--hidden {
+.ui5-tc__contentItem[hidden] {
 	display: none;
 }
 

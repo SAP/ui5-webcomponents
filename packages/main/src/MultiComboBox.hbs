@@ -16,17 +16,18 @@
 		@ui5-token-delete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
 		@click={{_click}}
+		@keydown="{{_onTokenizerKeydown}}"
 		?expanded="{{_tokenizerExpanded}}"
 	>
 		{{#each items}}
 			{{#if this.selected}}
 				<ui5-token
-				?readonly="{{../readonly}}"
-				class="ui5-multi-combobox-token"
-				data-ui5-id="{{this._id}}"
-				part="token-{{@index}}"
+					?readonly="{{../readonly}}"
+					class="ui5-multi-combobox-token"
+					data-ui5-id="{{this._id}}"
+					part="token-{{@index}}"
+					text="{{this.text}}"
 				>
-					{{this.text}}
 				</ui5-token>
 			{{/if}}
 		{{/each}}
@@ -52,6 +53,10 @@
 		aria-labelledby="{{_id}}-hiddenText-nMore"
 		aria-describedby="{{valueStateTextId}}"
 	/>
+
+	{{#if icon}}
+		<slot name="icon"></slot>
+	{{/if}}
 
 	{{#unless readonly}}
 		<ui5-icon name="slim-arrow-down"

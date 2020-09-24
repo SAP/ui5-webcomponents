@@ -1,6 +1,7 @@
 import merge from "./thirdparty/merge.js";
 import boot from "./boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
+import executeTemplate from "./renderer/executeTemplate.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
@@ -26,6 +27,7 @@ const metadata = {
 let autoId = 0;
 
 const elementTimeouts = new Map();
+const uniqueDependenciesCache = new Map();
 
 const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
 const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
@@ -43,6 +45,7 @@ const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
 class UI5Element extends HTMLElement {
 	constructor() {
 		super();
+		this._propertyChangeListeners = new Set();
 		this._initializeState();
 		this._upgradeAllProperties();
 		this._initializeContainers();
@@ -57,8 +60,25 @@ class UI5Element extends HTMLElement {
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
 		this._monitoredChildProps = new Map();
-		this._firePropertyChange = false;
 		this._shouldInvalidateParent = false;
+	}
+
+	addEventListener(type, listener, options) {
+		if (type === "_property-change") {
+			this._propertyChangeListeners.add(listener);
+		}
+		return super.addEventListener(type, listener, options);
+	}
+
+	removeEventListener(type, listener, options) {
+		if (type === "_property-change") {
+			this._propertyChangeListeners.delete(listener);
+		}
+		return super.removeEventListener(type, listener, options);
+	}
+
+	_hasPropertyChangeListeners() {
+		return !!this._propertyChangeListeners.size;
 	}
 
 	/**
@@ -98,6 +118,8 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
+		this.setAttribute(this.constructor.getMetadata().getPureTag(), "");
+
 		const needsShadowDOM = this.constructor._needsShadowDOM();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
@@ -390,9 +412,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_attachChildPropertyUpdated(child, listenFor) {
-		const childMetadata = child.constructor.getMetadata(),
-			slotName = this.constructor._getSlotName(child), // all slotted children have the same configuration
-			childProperties = childMetadata.getProperties();
+		const slotName = this.constructor._getSlotName(child); // all slotted children have the same configuration
 
 		let observedProps = [],
 			notObservedProps = [];
@@ -400,7 +420,7 @@ class UI5Element extends HTMLElement {
 		if (Array.isArray(listenFor)) {
 			observedProps = listenFor;
 		} else {
-			observedProps = Array.isArray(listenFor.props) ? listenFor.props : Object.keys(childProperties);
+			observedProps = Array.isArray(listenFor.include) ? listenFor.include : [];
 			notObservedProps = Array.isArray(listenFor.exclude) ? listenFor.exclude : [];
 		}
 
@@ -409,7 +429,6 @@ class UI5Element extends HTMLElement {
 		}
 
 		child.addEventListener("_property-change", this._invalidateParentOnPropertyUpdate);
-		child._firePropertyChange = true;
 	}
 
 	/**
@@ -417,20 +436,19 @@ class UI5Element extends HTMLElement {
 	 */
 	_detachChildPropertyUpdated(child) {
 		child.removeEventListener("_property-change", this._invalidateParentOnPropertyUpdate);
-		child._firePropertyChange = false;
 	}
 
 	/**
-	 * @private
+	 *  @private
 	 */
 	_propertyChange(name, value) {
 		this._updateAttribute(name, value);
 
-		if (this._firePropertyChange) {
+		if (this._hasPropertyChangeListeners()) {
 			this.dispatchEvent(new CustomEvent("_property-change", {
 				detail: { name, newValue: value },
 				composed: false,
-				bubbles: true,
+				bubbles: false,
 			}));
 		}
 	}
@@ -453,7 +471,10 @@ class UI5Element extends HTMLElement {
 		}
 		const { observedProps, notObservedProps } = propsMetadata;
 
-		if (observedProps.includes(prop.detail.name) && !notObservedProps.includes(prop.detail.name)) {
+		const allPropertiesAreObserved = observedProps.length === 1 && observedProps[0] === "*";
+		const shouldObserve = allPropertiesAreObserved || observedProps.includes(prop.detail.name);
+		const shouldSkip = notObservedProps.includes(prop.detail.name);
+		if (shouldObserve && !shouldSkip) {
 			parentNode._invalidate("_parent_", this);
 		}
 	}
@@ -549,7 +570,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		let styleToPrepend;
-		const renderResult = this.constructor.template(this);
+		const renderResult = executeTemplate(this.constructor.template, this);
 
 		// IE11, Edge
 		if (window.ShadyDOM) {
@@ -969,6 +990,50 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * Returns an array with the dependencies for this UI5 Web Component, which could be:
+	 *  - composed components (used in its shadow root or static area item)
+	 *  - slotted components that the component may need to communicate with
+	 *
+	 * @protected
+	 */
+	static get dependencies() {
+		return [];
+	}
+
+	/**
+	 * Returns a list of the unique dependencies for this UI5 Web Component
+	 *
+	 * @public
+	 */
+	static getUniqueDependencies() {
+		if (!uniqueDependenciesCache.has(this)) {
+			const filtered = this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
+			uniqueDependenciesCache.set(this, filtered);
+		}
+
+		return uniqueDependenciesCache.get(this);
+	}
+
+	/**
+	 * Returns a promise that resolves whenever all dependencies for this UI5 Web Component have resolved
+	 *
+	 * @returns {Promise<any[]>}
+	 */
+	static whenDependenciesDefined() {
+		return Promise.all(this.getUniqueDependencies().map(dep => dep.define()));
+	}
+
+	/**
+	 * Hook that will be called upon custom element definition
+	 *
+	 * @protected
+	 * @returns {Promise<void>}
+	 */
+	static async onDefine() {
+		return Promise.resolve();
+	}
+
+	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
 	 * @returns {Promise<UI5Element>}
@@ -976,9 +1041,10 @@ class UI5Element extends HTMLElement {
 	static async define() {
 		await boot();
 
-		if (this.onDefine) {
-			await this.onDefine();
-		}
+		await Promise.all([
+			this.whenDependenciesDefined(),
+			this.onDefine(),
+		]);
 
 		const tag = this.getMetadata().getTag();
 		const altTag = this.getMetadata().getAltTag();

@@ -38,7 +38,6 @@
 }
 
 .ui5-tokenizer--content {
-	height: 100%;
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
@@ -62,6 +61,6 @@
 	justify-content: flex-end;
 }
 
-::slotted(ui5-token) {
+::slotted([ui5-token]) {
 	margin-left: .25rem;
 }

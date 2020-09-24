@@ -23,6 +23,10 @@
 }
 
 /* Workaround for IE */
-ui5-multi-combobox ui5-tokenizer {
+[ui5-multi-combobox] {
+	width: 100%;
+}
+
+[ui5-multi-combobox] [ui5-tokenizer] {
 	flex: 3;
 }

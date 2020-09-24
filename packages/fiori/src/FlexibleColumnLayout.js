@@ -22,6 +22,10 @@ import {
 	FCL_START_COLUMN_TXT,
 	FCL_MIDDLE_COLUMN_TXT,
 	FCL_END_COLUMN_TXT,
+	FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP,
+	FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP,
+	FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP,
+	FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -245,11 +249,12 @@ class FlexibleColumnLayout extends UI5Element {
 		return FlexibleColumnLayoutTemplate;
 	}
 
+	static get dependencies() {
+		return [Button];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Button.define(),
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get BREAKPOINTS() {
@@ -628,6 +633,22 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get _effectiveLayoutsByMedia() {
 		return this._layoutsConfiguration || getLayoutsByMedia();
+	}
+
+	get accStartArrowText() {
+		if (this.startArrowDirection === "mirror") {
+			return this.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+		}
+
+		return this.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
+	}
+
+	get accEndArrowText() {
+		if (this.endArrowDirection === "mirror") {
+			return this.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+		}
+
+		return this.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 }
 

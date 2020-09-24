@@ -57,6 +57,18 @@ const metadata = {
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},
+
+		/**
+		 * Defines the button which will open the overflow menu. If nothing is provided to this slot, the default button will be used.
+		 *
+		 * @type {HTMLElement[]}
+		 * @public
+		 * @slot
+		 * @since 1.0.0-rc.9
+		 */
+		overflowButton: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
@@ -427,9 +439,19 @@ class TabContainer extends UI5Element {
 	}
 
 	async _onOverflowButtonClick(event) {
+		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui-tc__overflowButton > ui5-button");
+
+		if (event.target !== button) {
+			return;
+		}
+
 		this.responsivePopover = await this._respPopover();
 		this.updateStaticAreaItemContentDensity();
-		this.responsivePopover.open(this.getDomRef().querySelector(".ui-tc__overflowButton"));
+		if (this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		} else {
+			this.responsivePopover.open(button);
+		}
 	}
 
 	_onHeaderBackArrowClick() {
@@ -480,6 +502,10 @@ class TabContainer extends UI5Element {
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 
+	get shouldShowOverflow() {
+		return this.showOverflow && this._scrollable;
+	}
+
 	get classes() {
 		return {
 			root: {
@@ -508,10 +534,6 @@ class TabContainer extends UI5Element {
 				"ui5-tc__headerArrow": true,
 				"ui5-tc__headerArrowRight": true,
 				"ui5-tc__headerArrow--visible": this._scrollableForward,
-			},
-			overflowButton: {
-				"ui-tc__overflowButton": true,
-				"ui-tc__overflowButton--visible": this._scrollable,
 			},
 			content: {
 				"ui5-tc__content": true,
@@ -552,14 +574,17 @@ class TabContainer extends UI5Element {
 		return getAnimationMode() !== AnimationMode.None;
 	}
 
+	static get dependencies() {
+		return [
+			Button,
+			Icon,
+			List,
+			ResponsivePopover,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Button.define(),
-			Icon.define(),
-			List.define(),
-			ResponsivePopover.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

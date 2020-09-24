@@ -1,0 +1,14 @@
+@import "./InputIcon.css";
+
+.ui5-multi-input-tokenizer {
+	max-width: calc(100% - 3rem - var(--_ui5_input_icon_min_width));
+	border: none;
+	width: auto;
+	min-width: 0px;
+	height: 100%;
+}
+
+/* Workaround for IE */
+[ui5-multi-input] [ui5-tokenizer] {
+	flex: 3;
+}

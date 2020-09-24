@@ -2,7 +2,12 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
-	isShow, isDown, isBackSpace, isSpace,
+	isShow,
+	isDown,
+	isBackSpace,
+	isSpace,
+	isLeft,
+	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -17,6 +22,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
+import Button from "./Button.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
@@ -63,6 +69,19 @@ const metadata = {
 			type: HTMLElement,
 			listenFor: { include: ["*"] },
 		},
+
+		/**
+		* Defines the icon to be displayed in the <code>ui5-multi-combobox</code>.
+		*
+		* @type {HTMLElement[]}
+		* @slot
+		* @public
+		* @since 1.0.0-rc.9
+		*/
+	   icon: {
+		   type: HTMLElement,
+	   },
+
 	},
 	properties: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
@@ -303,6 +322,20 @@ class MultiComboBox extends UI5Element {
 		return ResponsivePopoverCommonCss;
 	}
 
+	static get dependencies() {
+		return [
+			MultiComboBoxItem,
+			Tokenizer,
+			Token,
+			Icon,
+			ResponsivePopover,
+			List,
+			StandardListItem,
+			ToggleButton,
+			Button,
+		];
+	}
+
 	constructor() {
 		super();
 
@@ -335,7 +368,20 @@ class MultiComboBox extends UI5Element {
 	}
 
 	filterSelectedItems(event) {
+		if (this.allItemsSelected) {
+			this.filterSelected = true;
+			return;
+		}
+
 		this.filterSelected = event.target.pressed;
+	}
+
+	get _showAllItemsButtonPressed() {
+		return this.filterSelected || this.allItemsSelected;
+	}
+
+	get allItemsSelected() {
+		return this.items.length === this.selectedValues.length;
 	}
 
 	get _inputDom() {
@@ -386,7 +432,6 @@ class MultiComboBox extends UI5Element {
 			if (filteredItems.length === 0) {
 				this.allItemsPopover.close();
 			} else {
-				this.updateStaticAreaItemContentDensity();
 				this.allItemsPopover.open(this);
 			}
 		}
@@ -404,13 +449,33 @@ class MultiComboBox extends UI5Element {
 		this.fireSelectionChange();
 	}
 
-	_tokenizerFocusOut() {
-		const tokenizer = this.shadowRoot.querySelector("ui5-tokenizer");
+	_handleLeft() {
+		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
+
+		if (cursorPosition === 0) {
+			this._focusLastToken();
+		}
+	}
+
+	_focusLastToken() {
+		const lastTokenIndex = this._tokenizer.tokens.length - 1;
+
+		if (lastTokenIndex < 0) {
+			return;
+		}
+
+		this._tokenizer.tokens[lastTokenIndex].focus();
+		this._tokenizer._itemNav.currentIndex = lastTokenIndex;
+	}
+
+	_tokenizerFocusOut(event) {
+		const tokenizer = this.shadowRoot.querySelector("[ui5-tokenizer]");
 		const tokensCount = tokenizer.tokens.length - 1;
 
-		tokenizer.tokens.forEach(token => { token.selected = false; });
-
-		this._tokenizer.contentDom.scrollLeft = 0;
+		if (!event.relatedTarget || event.relatedTarget.localName !== "ui5-token") {
+			this._tokenizer.tokens.forEach(token => { token.selected = false; });
+			this._tokenizer.scrollToStart();
+		}
 
 		if (tokensCount === 0 && this._deleting) {
 			setTimeout(() => {
@@ -428,6 +493,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _onkeydown(event) {
+		if (isLeft(event)) {
+			this._handleLeft(event);
+		}
+
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this._toggleRespPopover();
@@ -443,17 +512,22 @@ class MultiComboBox extends UI5Element {
 		if (isBackSpace(event) && event.target.value === "") {
 			event.preventDefault();
 
-			const lastTokenIndex = this._tokenizer.tokens.length - 1;
-
-			if (lastTokenIndex < 0) {
-				return;
-			}
-
-			this._tokenizer.tokens[lastTokenIndex].focus();
-			this._tokenizer._itemNav.currentIndex = lastTokenIndex;
+			this._focusLastToken();
 		}
 
 		this._keyDown = true;
+	}
+
+	_onTokenizerKeydown(event) {
+		if (isRight(event)) {
+			const lastTokenIndex = this._tokenizer.tokens.length - 1;
+
+			if (this._tokenizer.tokens[lastTokenIndex] === document.activeElement.shadowRoot.activeElement) {
+				setTimeout(() => {
+					this.shadowRoot.querySelector("input").focus();
+				}, 0);
+			}
+		}
 	}
 
 	_filterItems(value) {
@@ -514,13 +588,11 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_toggleRespPopover() {
-		this.updateStaticAreaItemContentDensity();
 		this.allItemsPopover.toggle(this);
 	}
 
 	_click(event) {
 		if (isPhone() && !this.readonly && !this._showMorePressed) {
-			this.updateStaticAreaItemContentDensity();
 			this.allItemsPopover.open(this);
 		}
 
@@ -561,7 +633,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizer() {
-		return this.shadowRoot.querySelector("ui5-tokenizer");
+		return this.shadowRoot.querySelector("[ui5-tokenizer]");
 	}
 
 	get nMoreCountText() {
@@ -633,17 +705,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static async onDefine() {
-		await Promise.all([
-			MultiComboBoxItem.define(),
-			Tokenizer.define(),
-			Token.define(),
-			Icon.define(),
-			ResponsivePopover.define(),
-			List.define(),
-			StandardListItem.define(),
-			ToggleButton,
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

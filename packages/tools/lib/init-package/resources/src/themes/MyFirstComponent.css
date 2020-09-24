@@ -1,9 +1,9 @@
 :host {
-    border: 2px solid var(--ui5-demo-border-color);
+    border: 2px solid var(--my-component-border-color);
     background-color: var(--sapBackgroundColor);
     color: var(--sapTextColor);
     display: block;
-    width: 16rem;
+    width: 24rem;
     height: 3rem;
     text-align: center;
     vertical-align: middle;
