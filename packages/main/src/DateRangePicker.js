@@ -225,7 +225,7 @@ class DateRangePicker extends DatePicker {
 		}
 
 		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp * 1000, this._lastDateTimestamp * 1000);
-		this.value = this._formatValue(this._firstDateTimestamp, this._lastDateTimestamp);
+		this.value = this._formatValue(firstDate.valueOf() / 1000, secondDate.valueOf() / 1000);
 		this._prevValue = this.value;
 	}
 
@@ -510,19 +510,25 @@ class DateRangePicker extends DatePicker {
 	}
 
 	_updateValueCalendarSelectedDatesChange() {
-		// Collect both dates and merge them into one
-		this.value = this._formatValue(this._firstDateTimestamp, this._lastDateTimestamp);
+		const calStartDate = CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000, this._primaryCalendarType);
+		const calEndDate = CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000, this._primaryCalendarType);
+		this.value = this._formatValue(calStartDate.toLocalJSDate().valueOf() / 1000, calEndDate.toLocalJSDate().valueOf() / 1000);
 		this._prevValue = this.value;
 	}
 
+	/**
+	 * Combines the start and end dates of a range into a formated string
+	 *
+	 * @param {int} firstDateValue locale start date timestamp
+	 * @param {int} lastDateValue locale end date timestamp
+	 * @returns {string} formated start to end date range
+	 */
 	_formatValue(firstDateValue, lastDateValue) {
 		let value = "";
 		const delimiter = this.delimiter,
 			format = this.getFormat(),
-			firstDate = new Date(firstDateValue * 1000),
-			lastDate = new Date(lastDateValue * 1000),
-			firstDateString = format.format(new Date(firstDate.getUTCFullYear(), firstDate.getUTCMonth(), firstDate.getUTCDate(), firstDate.getUTCHours())),
-			lastDateString = format.format(new Date(lastDate.getUTCFullYear(), lastDate.getUTCMonth(), lastDate.getUTCDate(), lastDate.getUTCHours()));
+			firstDateString = format.format(new Date(firstDateValue * 1000)),
+			lastDateString = format.format(new Date(lastDateValue * 1000));
 
 		if (firstDateValue) {
 			if (delimiter && delimiter !== "" && lastDateString) {

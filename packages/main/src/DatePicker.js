@@ -503,9 +503,8 @@ class DatePicker extends UI5Element {
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
-			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
-			return calDate.valueOf();
+			const calDate = CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
+			return calDate.toUTCJSDate().valueOf();
 		}
 		return undefined;
 	}
@@ -584,44 +583,41 @@ class DatePicker extends UI5Element {
 			return;
 		}
 
-		const oldDate = new Date(date.getTime());
+		let calDate = CalendarDate.fromLocalJSDate(date, this._primaryCalendarType);
+		const oldCalDate = new CalendarDate(calDate, this._primaryCalendarType);
 		const incrementStep = forward ? step : -step;
-
-		if (incrementStep === 0) {
-			return;
-		}
 
 		if (incrementStep === 0 || (!days && !months && !years)) {
 			return;
 		}
 
 		if (days) {
-			date.setDate(date.getDate() + incrementStep);
+			calDate.setDate(calDate.getDate() + incrementStep);
 		} else if (months) {
-			date.setMonth(date.getMonth() + incrementStep);
-			const monthDiff = (date.getFullYear() - oldDate.getFullYear()) * 12 + (date.getMonth() - oldDate.getMonth());
+			calDate.setMonth(calDate.getMonth() + incrementStep);
+			const monthDiff = (calDate.getYear() - oldCalDate.getYear()) * 12 + (calDate.getMonth() - oldCalDate.getMonth());
 
-			if (date.getMonth() === oldDate.getMonth() || monthDiff !== incrementStep) {
+			if (calDate.getMonth() === oldCalDate.getMonth() || monthDiff !== incrementStep) {
 				// first condition example: 31th of March increment month with -1 results in 2th of March
 				// second condition example: 31th of January increment month with +1 results in 2th of March
-				date.setDate(0);
+				calDate.setDate(0);
 			}
 		} else if (years) {
-			date.setFullYear(date.getFullYear() + incrementStep);
+			calDate.setYear(calDate.getYear() + incrementStep);
 
-			if (date.getMonth() !== oldDate.getMonth()) {
+			if (calDate.getMonth() !== oldCalDate.getMonth()) {
 				// day doesn't exist in this month (February 29th)
-				date.setDate(0);
+				calDate.setDate(0);
 			}
 		}
 
-		if (date.valueOf() < this._minDate) {
-			date = new Date(this._minDate);
-		} else if (date.valueOf() > this._maxDate) {
-			date = new Date(this._maxDate);
+		if (calDate.toUTCJSDate().valueOf() < this._minDate) {
+			calDate = CalendarDate.fromTimestamp(this._minDate, this._primaryCalendarType);
+		} else if (calDate.toUTCJSDate().valueOf() > this._maxDate) {
+			calDate = CalendarDate.fromTimestamp(this._maxDate, this._primaryCalendarType);
 		}
 
-		return date;
+		return calDate.toLocalJSDate();
 	}
 
 	_toggleAndFocusInput() {
@@ -826,7 +822,7 @@ class DatePicker extends UI5Element {
 		minDate.setYear(1);
 		minDate.setMonth(0);
 		minDate.setDate(1);
-		return minDate.valueOf();
+		return minDate.toUTCJSDate().valueOf();
 	}
 
 	_getMaxCalendarDate() {
@@ -837,7 +833,7 @@ class DatePicker extends UI5Element {
 		tempDate.setDate(1);
 		tempDate.setMonth(tempDate.getMonth() + 1, 0);
 		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
-		return maxDate.valueOf();
+		return maxDate.toUTCJSDate().valueOf();
 	}
 
 	get openIconTitle() {
