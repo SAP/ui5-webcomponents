@@ -2,7 +2,12 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
-	isShow, isDown, isBackSpace, isSpace,
+	isShow,
+	isDown,
+	isBackSpace,
+	isSpace,
+	isLeft,
+	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -64,6 +69,19 @@ const metadata = {
 			type: HTMLElement,
 			listenFor: { include: ["*"] },
 		},
+
+		/**
+		* Defines the icon to be displayed in the <code>ui5-multi-combobox</code>.
+		*
+		* @type {HTMLElement[]}
+		* @slot
+		* @public
+		* @since 1.0.0-rc.9
+		*/
+	   icon: {
+		   type: HTMLElement,
+	   },
+
 	},
 	properties: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
@@ -431,13 +449,33 @@ class MultiComboBox extends UI5Element {
 		this.fireSelectionChange();
 	}
 
-	_tokenizerFocusOut() {
+	_handleLeft() {
+		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
+
+		if (cursorPosition === 0) {
+			this._focusLastToken();
+		}
+	}
+
+	_focusLastToken() {
+		const lastTokenIndex = this._tokenizer.tokens.length - 1;
+
+		if (lastTokenIndex < 0) {
+			return;
+		}
+
+		this._tokenizer.tokens[lastTokenIndex].focus();
+		this._tokenizer._itemNav.currentIndex = lastTokenIndex;
+	}
+
+	_tokenizerFocusOut(event) {
 		const tokenizer = this.shadowRoot.querySelector("[ui5-tokenizer]");
 		const tokensCount = tokenizer.tokens.length - 1;
 
-		tokenizer.tokens.forEach(token => { token.selected = false; });
-
-		this._tokenizer.scrollToStart();
+		if (!event.relatedTarget || event.relatedTarget.localName !== "ui5-token") {
+			this._tokenizer.tokens.forEach(token => { token.selected = false; });
+			this._tokenizer.scrollToStart();
+		}
 
 		if (tokensCount === 0 && this._deleting) {
 			setTimeout(() => {
@@ -455,6 +493,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _onkeydown(event) {
+		if (isLeft(event)) {
+			this._handleLeft(event);
+		}
+
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this._toggleRespPopover();
@@ -470,17 +512,22 @@ class MultiComboBox extends UI5Element {
 		if (isBackSpace(event) && event.target.value === "") {
 			event.preventDefault();
 
-			const lastTokenIndex = this._tokenizer.tokens.length - 1;
-
-			if (lastTokenIndex < 0) {
-				return;
-			}
-
-			this._tokenizer.tokens[lastTokenIndex].focus();
-			this._tokenizer._itemNav.currentIndex = lastTokenIndex;
+			this._focusLastToken();
 		}
 
 		this._keyDown = true;
+	}
+
+	_onTokenizerKeydown(event) {
+		if (isRight(event)) {
+			const lastTokenIndex = this._tokenizer.tokens.length - 1;
+
+			if (this._tokenizer.tokens[lastTokenIndex] === document.activeElement.shadowRoot.activeElement) {
+				setTimeout(() => {
+					this.shadowRoot.querySelector("input").focus();
+				}, 0);
+			}
+		}
 	}
 
 	_filterItems(value) {

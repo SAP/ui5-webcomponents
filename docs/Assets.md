@@ -22,7 +22,7 @@ The `localization` package provides CLDR assets.
 
 `import "@ui5/webcomponents-localization/dist/Assets.js";`
 
-Usually you don't need to import the assets directly from the `base` package (unless you are developing a Web Components package of your own),
+Usually you don't need to import the assets directly from the `localization` package (unless you are developing a Web Components package of your own),
 but rather from the package(s) containing the actual Web Components you'll be using in your app.
 
 ### `theme-base` package

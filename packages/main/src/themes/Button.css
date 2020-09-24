@@ -56,6 +56,9 @@
 	white-space: inherit;
 	overflow: inherit;
 	text-overflow: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+	line-height: inherit;
 }
 
 :host(:not([active]):hover),
@@ -94,7 +97,6 @@
 }
 
 :host([has-icon]:not([icon-end])) .ui5-button-text {
-	max-width: calc(100% - 1rem);
 	margin-left: var(--_ui5_button_base_icon_margin);
 }
 

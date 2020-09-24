@@ -96,6 +96,55 @@ describe("Duration Picker general interaction", () => {
 		duratationPickerIcon.click();
 	});
 
+	it("Tests Keyboard handling", () => {
+		const durationPicker = browser.$("#duration-default")
+
+		// act
+		durationPicker.click();
+		durationPicker.keys(['Shift', 'PageUp']);
+		durationPicker.keys('Shift');
+
+		// assert
+		assert.strictEqual(durationPicker.shadow$("ui5-input").getProperty("value"), "00:01:00", "The value of minutes is +1");
+		// act
+		durationPicker.click();
+		durationPicker.keys(['Shift', 'PageDown']);
+		durationPicker.keys('Shift');
+
+		// assert
+		assert.strictEqual(durationPicker.shadow$("ui5-input").getProperty("value"), "00:00:00", "The value of minutes is -1");
+
+		// act
+		durationPicker.click();
+		durationPicker.keys('PageUp');
+
+		// assert
+		assert.strictEqual(durationPicker.shadow$("ui5-input").getProperty("value"), "01:00:00", "The value of hours is +1");
+		// act
+		durationPicker.click();
+		durationPicker.keys('PageDown');
+
+		// assert
+		assert.strictEqual(durationPicker.shadow$("ui5-input").getProperty("value"), "00:00:00", "The value of hours is -1");
+
+		// act
+		durationPicker.click();
+		durationPicker.keys(['Shift', 'Control', 'PageUp']);
+		durationPicker.keys('Control');
+		durationPicker.keys('Shift');
+
+		// assert
+		assert.strictEqual(durationPicker.shadow$("ui5-input").getProperty("value"), "00:00:01", "The value of seconds is +1");
+		// act
+		durationPicker.click();
+		durationPicker.keys(['Shift', 'Control', 'PageDown']);
+		durationPicker.keys('Shift');
+		durationPicker.keys('Control');
+
+		// assert
+		assert.strictEqual(durationPicker.shadow$("ui5-input").getProperty("value"), "00:00:00", "The value of seconds is +1");
+	});
+
 	it("tests valueStateMessage slot", () => {
 		const picker = browser.$("#pickerValueStateMessage");
 

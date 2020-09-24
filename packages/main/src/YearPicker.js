@@ -97,6 +97,13 @@ const metadata = {
 		 * @event
 		 */
 		change: {},
+		/**
+		 * Fired when month, year has changed due to item navigation.
+		 * @since 1.0.0-rc.9
+		 * @public
+		 * @event
+		 */
+		navigate: {},
 	},
 };
 
@@ -162,12 +169,15 @@ class YearPicker extends UI5Element {
 	onBeforeRendering() {
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, this._oLocale);
 		const oCalDate = this._calendarDate;
+		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
+		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
+
 		oCalDate.setMonth(0);
 		oCalDate.setDate(1);
-		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1 > YearPicker._MAX_YEAR - YearPicker._ITEMS_COUNT) {
-			oCalDate.setYear(YearPicker._MAX_YEAR - YearPicker._ITEMS_COUNT);
-		} else if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1 < YearPicker._MIN_YEAR) {
-			oCalDate.setYear(YearPicker._MIN_YEAR - 1);
+		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1 > maxCalendarDateYear - YearPicker._ITEMS_COUNT) {
+			oCalDate.setYear(maxCalendarDateYear - YearPicker._ITEMS_COUNT);
+		} else if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1 < minCalendarDateYear) {
+			oCalDate.setYear(minCalendarDateYear - 1);
 		} else {
 			oCalDate.setYear(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1);
 		}
@@ -241,12 +251,20 @@ class YearPicker extends UI5Element {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
-	_onclick(event) {
+	_onmousedown(event) {
+		if (event.target.className.indexOf("ui5-yp-item") > -1) {
+			const targetTimestamp = this.getTimestampFromDom(event.target);
+			const focusedItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === targetTimestamp);
+			this._itemNav.currentIndex = this._itemNav._getItems().indexOf(focusedItem);
+			this._itemNav.focusCurrent();
+		}
+	}
+
+	_onmouseup(event) {
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
 			const timestamp = this.getTimestampFromDom(event.target);
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
-			this._itemNav.current = YearPicker._MIDDLE_ITEM_INDEX;
 			this.fireEvent("change", { timestamp });
 		}
 	}
@@ -292,24 +310,21 @@ class YearPicker extends UI5Element {
 
 	_handleItemNavigationBorderReach(event) {
 		const oCalDate = this._calendarDate;
+		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
+		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
 		oCalDate.setMonth(0);
 		oCalDate.setDate(1);
 
 		if (event.end) {
 			oCalDate.setYear(oCalDate.getYear() + YearPicker._ITEMS_COUNT);
 		} else if (event.start) {
-			if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX < YearPicker._MIN_YEAR) {
+			if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX < minCalendarDateYear) {
 				return;
 			}
 			oCalDate.setYear(oCalDate.getYear() - YearPicker._ITEMS_COUNT);
 		}
 
-		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX > YearPicker._MAX_YEAR) {
-			return;
-		}
-
-		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX)
-		&& this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)) {
+		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX > maxCalendarDateYear) {
 			return;
 		}
 
@@ -319,6 +334,8 @@ class YearPicker extends UI5Element {
 		}
 
 		this.timestamp = oCalDate.valueOf() / 1000;
+
+		this.fireEvent("navigate", event);
 	}
 
 	get _formatPattern() {
@@ -335,21 +352,40 @@ class YearPicker extends UI5Element {
 	}
 
 	get _maxDate() {
-		if (this.maxDate) {
-			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(), this.getFormat().parse(this.maxDate).getMonth(), this.getFormat().parse(this.maxDate).getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
-			return oCalDate.valueOf();
-		}
-		return this.maxDate;
+		return this.maxDate ? this._getTimeStampFromString(this.maxDate) : this._getMaxCalendarDate();
 	}
 
 	get _minDate() {
-		if (this.minDate) {
-			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(), this.getFormat().parse(this.minDate).getMonth(), this.getFormat().parse(this.minDate).getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
-			return oCalDate.valueOf();
+		return this.minDate ? this._getTimeStampFromString(this.minDate) : this._getMinCalendarDate();
+	}
+
+	_getTimeStampFromString(value) {
+		const jsDate = this.getFormat().parse(value);
+		if (jsDate) {
+			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
+			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
+			return calDate.valueOf();
 		}
-		return this.minDate;
+		return undefined;
+	}
+
+	_getMinCalendarDate() {
+		const minDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		minDate.setYear(1);
+		minDate.setMonth(0);
+		minDate.setDate(1);
+		return minDate.valueOf();
+	}
+
+	_getMaxCalendarDate() {
+		const maxDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
+		maxDate.setYear(9999);
+		maxDate.setMonth(11);
+		const tempDate = new CalendarDate(maxDate, this._primaryCalendarType);
+		tempDate.setDate(1);
+		tempDate.setMonth(tempDate.getMonth() + 1, 0);
+		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
+		return maxDate.valueOf();
 	}
 
 	getFormat() {
@@ -378,8 +414,6 @@ class YearPicker extends UI5Element {
 
 YearPicker._ITEMS_COUNT = 20;
 YearPicker._MIDDLE_ITEM_INDEX = 7;
-YearPicker._MAX_YEAR = 9999;
-YearPicker._MIN_YEAR = 1;
 
 YearPicker.define();
 

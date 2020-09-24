@@ -45,6 +45,7 @@ const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
 class UI5Element extends HTMLElement {
 	constructor() {
 		super();
+		this._propertyChangeListeners = new Set();
 		this._initializeState();
 		this._upgradeAllProperties();
 		this._initializeContainers();
@@ -59,8 +60,25 @@ class UI5Element extends HTMLElement {
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
 		this._monitoredChildProps = new Map();
-		this._firePropertyChange = false;
 		this._shouldInvalidateParent = false;
+	}
+
+	addEventListener(type, listener, options) {
+		if (type === "_property-change") {
+			this._propertyChangeListeners.add(listener);
+		}
+		return super.addEventListener(type, listener, options);
+	}
+
+	removeEventListener(type, listener, options) {
+		if (type === "_property-change") {
+			this._propertyChangeListeners.delete(listener);
+		}
+		return super.removeEventListener(type, listener, options);
+	}
+
+	_hasPropertyChangeListeners() {
+		return !!this._propertyChangeListeners.size;
 	}
 
 	/**
@@ -394,9 +412,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_attachChildPropertyUpdated(child, listenFor) {
-		const childMetadata = child.constructor.getMetadata(),
-			slotName = this.constructor._getSlotName(child), // all slotted children have the same configuration
-			childProperties = childMetadata.getProperties();
+		const slotName = this.constructor._getSlotName(child); // all slotted children have the same configuration
 
 		let observedProps = [],
 			notObservedProps = [];
@@ -404,7 +420,7 @@ class UI5Element extends HTMLElement {
 		if (Array.isArray(listenFor)) {
 			observedProps = listenFor;
 		} else {
-			observedProps = Array.isArray(listenFor.props) ? listenFor.props : Object.keys(childProperties);
+			observedProps = Array.isArray(listenFor.include) ? listenFor.include : [];
 			notObservedProps = Array.isArray(listenFor.exclude) ? listenFor.exclude : [];
 		}
 
@@ -413,7 +429,6 @@ class UI5Element extends HTMLElement {
 		}
 
 		child.addEventListener("_property-change", this._invalidateParentOnPropertyUpdate);
-		child._firePropertyChange = true;
 	}
 
 	/**
@@ -421,20 +436,19 @@ class UI5Element extends HTMLElement {
 	 */
 	_detachChildPropertyUpdated(child) {
 		child.removeEventListener("_property-change", this._invalidateParentOnPropertyUpdate);
-		child._firePropertyChange = false;
 	}
 
 	/**
-	 * @private
+	 *  @private
 	 */
 	_propertyChange(name, value) {
 		this._updateAttribute(name, value);
 
-		if (this._firePropertyChange) {
+		if (this._hasPropertyChangeListeners()) {
 			this.dispatchEvent(new CustomEvent("_property-change", {
 				detail: { name, newValue: value },
 				composed: false,
-				bubbles: true,
+				bubbles: false,
 			}));
 		}
 	}
@@ -457,7 +471,10 @@ class UI5Element extends HTMLElement {
 		}
 		const { observedProps, notObservedProps } = propsMetadata;
 
-		if (observedProps.includes(prop.detail.name) && !notObservedProps.includes(prop.detail.name)) {
+		const allPropertiesAreObserved = observedProps.length === 1 && observedProps[0] === "*";
+		const shouldObserve = allPropertiesAreObserved || observedProps.includes(prop.detail.name);
+		const shouldSkip = notObservedProps.includes(prop.detail.name);
+		if (shouldObserve && !shouldSkip) {
 			parentNode._invalidate("_parent_", this);
 		}
 	}

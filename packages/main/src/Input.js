@@ -10,10 +10,11 @@ import {
 	isDown,
 	isSpace,
 	isEnter,
+	isBackSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
@@ -624,10 +625,15 @@ class Input extends UI5Element {
 	}
 
 	async _onfocusin(event) {
+		const inputDomRef = await this.getInputDOMRef();
+
+		if (event.target !== inputDomRef) {
+			return;
+		}
+
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 
-		await this.getInputDOMRef();
 		this._inputIconFocused = event.target && event.target === this.querySelector("[ui5-icon]");
 	}
 
@@ -675,6 +681,11 @@ class Input extends UI5Element {
 
 	async _handleInput(event) {
 		const inputDomRef = await this.getInputDOMRef();
+
+		if (this.value && this.type === InputType.Number && !isBackSpace(event) && !inputDomRef.value) {
+			// For input with type="Number", if the delimiter is entered second time, the inner input is firing event with empty value
+			return;
+		}
 
 		if (event.target === inputDomRef) {
 			// stop the native event, as the semantic "input" would be fired.
@@ -1013,7 +1024,7 @@ class Input extends UI5Element {
 				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-				"ariaLabel": getEffectiveAriaLabelText(this),
+				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this),
 				"ariaRequired": (this._inputAccInfo && this._inputAccInfo.ariaRequired) || this.required,
 			},
 		};

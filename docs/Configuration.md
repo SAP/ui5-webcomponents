@@ -14,6 +14,7 @@ language     | en, de, es, etc...                              | en            |
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
 [noConflict](#noConflict)  | true, false | false                            | When set to true, all events will be fired with a "ui5-" prefix only
 [formatSettings](#formatSettings)| See the [Format settings](#formatSettings) section below		| Empty object | Allows to override locale-specific configuration
+[assetsPath](#assetsPath)| See the [Assets path](#assetsPath) section below		| Empty string | Allows to set the assets path at runtime
 
 ### Content Density
 
@@ -101,6 +102,26 @@ For example, to force the first day of week to Sunday, no matter the locale:
 ------------ | ----------------------------------------------- | ------------- | -------------------------------------------------------------
 firstDayOfWeek | 0 (Sunday) through 6 (Saturday) | *Depends on locale*     | When set, overrides the locale's default value
 
+<a name="assetsPath"></a>
+### Assets path
+
+This configuration setting allows to set the path where asset files (most commonly `.json` ) that are to be fetched at runtime, are located. These are:
+ - Icon collections
+ - `i18n` message bundles
+ - `CLDR` files
+ - Additional themes
+
+For some scenarios the same bundle will be reused from different directories, or the directory structure is unknown in advance. Therefore it's
+necessary to be able to pass the right directory at runtime, most commonly inside the configuration script directly:
+
+Example:
+```html
+<script data-ui5-config type="application/json">
+{
+	"assetsPath": "/my/custom/assets/path"
+}
+</script>
+```
 
 ## Configuration script
 

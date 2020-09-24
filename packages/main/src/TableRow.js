@@ -156,6 +156,32 @@ class TableRow extends UI5Element {
 	get visibleCellsCount() {
 		return this.visibleCells.length;
 	}
+
+	get ariaLabelText() {
+		return this.cells.map((cell, index) => {
+			const columText = this.getColumnTextByIdx(index);
+			const cellText = this.getCellText(cell);
+			return `${columText} ${cellText}`;
+		}).join(" ");
+	}
+
+	getCellText(cell) {
+		return this.getNormilzedTextContent(cell.textContent);
+	}
+
+	getColumnTextByIdx(index) {
+		const columnInfo = this._columnsInfo[index];
+
+		if (!columnInfo) {
+			return "";
+		}
+
+		return this.getNormilzedTextContent(columnInfo.text);
+	}
+
+	getNormilzedTextContent(textContent) {
+		return textContent.replace(/[\n\r\t]/g, "").trim();
+	}
 }
 
 TableRow.define();

@@ -80,3 +80,7 @@
 :host(:not([header-text])) .ui5-popup-header-text {
     display: none;
 }
+
+:host([disable-scrolling]) .ui5-popup-content {
+    overflow: hidden;
+}
