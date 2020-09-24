@@ -272,4 +272,21 @@ describe("General interaction", () => {
 		listItems = popover.$("ui5-list").$$("ui5-li");
 		assert.notOk(popover.opened, "Popover should be closed when no match");
 	});
+
+	it ("Tests selection-change event and its parameters", () => {
+		const combo = $("#combo");
+		const label = $("#selection-change-event-result");
+		const arrow = combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = popover.$("ui5-list").$$("ui5-li");
+
+		arrow.click();
+
+		const listItem = listItems[8];
+
+		listItem.click();
+
+		assert.strictEqual(label.getText(), listItem.shadow$(".ui5-li-title").getText(), "event is fired correctly");
+	});
 });
