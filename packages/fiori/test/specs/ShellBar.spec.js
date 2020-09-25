@@ -57,7 +57,7 @@ describe("Component Behavior", () => {
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
 			const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
+			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(4)");
 			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
 			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
@@ -78,7 +78,6 @@ describe("Component Behavior", () => {
 		it("tests XL Breakpoint 1820px", () => {
 			browser.setWindowSize(1820, 1080);
 
-			const shellbarWrapper = browser.$("#shellbar").shadow$("div");
 			const shellbar = browser.$("#shellbar");
 
 			assert.strictEqual(shellbar.getProperty("breakpointSize") === "XL", true, "XL Breakpoint class should be set");
@@ -94,7 +93,7 @@ describe("Component Behavior", () => {
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
 			const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
+			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(4)");
 			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
 			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
@@ -390,7 +389,8 @@ describe("Component Behavior", () => {
 
 			it("tests if searchfield toggles when clicking on search icon", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const searchField = browser.$("#shellbar").shadow$(".ui5-shellbar-search-field");
+				const searchField = browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper");
+				const cancelButton = browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper .ui5-shellbar-button");
 				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
 				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 				const searchListItem = overflowPopover.$("ui5-list ui5-li:nth-child(1)");
@@ -402,8 +402,7 @@ describe("Component Behavior", () => {
 
 				assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on the search icon within the overflow");
 
-				overflowButton.click();
-				searchListItem.click();
+				cancelButton.click();
 				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden after clicking on the search icon agian");
 			});
 		});
