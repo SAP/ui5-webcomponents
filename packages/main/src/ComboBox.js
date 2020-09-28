@@ -380,6 +380,8 @@ class ComboBox extends UI5Element {
 		if (this._initialRendering) {
 			domValue = this.value;
 			this._filteredItems = this.items;
+		} else if (this.value !== this.filterValue) {
+			domValue = this.filterValue ? this.filterValue : this.value;
 		} else {
 			domValue = this.filterValue;
 		}
@@ -643,7 +645,10 @@ class ComboBox extends UI5Element {
 		if (this.value !== this._tempValue) {
 			this.value = this._tempValue;
 			this.fireEvent("change");
-			this.inner.setSelectionRange(this.value.length, this.value.length);
+
+			setTimeout(() => {
+				this.inner.setSelectionRange(this.value.length, this.value.length);
+			}, 100);
 		}
 
 		this._closeRespPopover();
