@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.3](https://github.com/SAP/ui5-webcomponents/compare/v0.23.2...v0.23.3) (2020-09-28)
+
+
+### Bug Fixes
+
+* **ui5-select:** fix text color of disabled select in hcb/hcw ([#2248](https://github.com/SAP/ui5-webcomponents/issues/2248)) ([2d03d51](https://github.com/SAP/ui5-webcomponents/commit/2d03d51))
+* ***framework:** fix JS error in Device.js ([#2241](https://github.com/SAP/ui5-webcomponents/issues/2241))
+
+### Features
+* **ui5-list**: introduce role property ([#2235](https://github.com/SAP/ui5-webcomponents/issues/2235))
+* **ui5-li, ui5-li-tree, ui5-li-custom, ui5-upload-collection-item:**  implement role property ([#2236](https://github.com/SAP/ui5-webcomponents/issues/2236)) ([7dc0575](https://github.com/SAP/ui5-webcomponents/commit/7dc0575))
+* **ui5-multi-input:** fire value-help-trigger with F4, ALT/OPTION + ARROW_UP/DOWN ([#2145](https://github.com/SAP/ui5-webcomponents/issues/2145)) ([045afc2](https://github.com/SAP/ui5-webcomponents/commit/045afc2)), closes [#2143](https://github.com/SAP/ui5-webcomponents/issues/2143)
+* **ui5-panel:** implement headerAriaLabelledBy property ([#2200](https://github.com/SAP/ui5-webcomponents/issues/2200)) ([3d73dcb](https://github.com/SAP/ui5-webcomponents/commit/3d73dcb))
+* **ui5-select:** improve accessibility ([#2204](https://github.com/SAP/ui5-webcomponents/issues/2204))
+
+### BREAKING CHANGES
+
+* **ui5-multi-input:** value-help-icon-press is renamed to value-help-trigger
+
+
+
+
+
 ## [0.23.2](https://github.com/SAP/ui5-webcomponents/compare/v0.23.1...v0.23.2) (2020-09-15)
 
 
