@@ -1,4 +1,4 @@
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Popup from "./Popup.js";
 
 // Template
@@ -52,7 +52,7 @@ const metadata = {
 		/**
 		 * Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen.
 		 * <br><br>
-		 * <b>Note:</b> The <code>ui5-dialog</code> will be stretched to aproximetly
+		 * <b>Note:</b> The <code>ui5-dialog</code> will be stretched to approximately
 		 * 90% of the viewport.
 		 *
 		 * @type {boolean}
@@ -64,9 +64,29 @@ const metadata = {
 		},
 
 		/**
+		 * Determines whether the <code>ui5-dialog</code> is draggable.
+		 * If this property is set to true, the Dialog will be draggable by its header.
+		 * <br><br>
+		 * <b>Note:</b> The <code>ui5-dialog</code> can be draggable only in desktop mode.
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.9
+		 * @public
+		 */
+		draggable: {
+			type: Boolean,
+		},
+
+		/**
 		 * @private
 		 */
 		onPhone: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 */
+		onDesktop: {
 			type: Boolean,
 		},
 	},
@@ -89,6 +109,9 @@ const metadata = {
  * <h3>Structure</h3>
  * A <code>ui5-dialog</code> consists of a header, content, and a footer for action buttons.
  * The <code>ui5-dialog</code> is usually displayed at the center of the screen.
+ * Its position can be changed by the user. To enable this, you need to set the property <code>draggable</code> accordingly.
+
+
  *
  * <h3>Responsive Behavior</h3>
  * The <code>stretch</code> property can be used to stretch the
@@ -121,10 +144,6 @@ class Dialog extends Popup {
 		return [PopupsCommonCss, dialogCSS];
 	}
 
-	onBeforeRendering() {
-		this.onPhone = isPhone();
-	}
-
 	get isModal() { // Required by Popup.js
 		return true;
 	}
@@ -146,6 +165,107 @@ class Dialog extends Popup {
 				"ui5-popup-content": true,
 			},
 		};
+	}
+
+	onBeforeRendering() {
+		this.onPhone = isPhone();
+		this.onDesktop = isDesktop();
+	}
+
+	onEnterDOM() {
+		this._dragMouseMoveHandler = this._onDragMouseMove.bind(this);
+		this._dragMouseUpHandler = this._onDragMouseUp.bind(this);
+	}
+
+	onExitDOM() {
+		this._dragMouseMoveHandler = null;
+		this._dragMouseUpHandler = null;
+	}
+
+	/**
+	 * Event handlers
+	 */
+	_onDragMouseDown(event) {
+		if (!(this.draggable && this.onDesktop)) {
+			return;
+		}
+
+		// only allow dragging on the header's whitespace
+		if (!event.target.classList.contains("ui5-popup-header-root")
+			&& event.target.getAttribute("slot") !== "header") {
+			return;
+		}
+
+		event.preventDefault();
+
+		const {
+			top,
+			left,
+		} = this.getBoundingClientRect();
+		const {
+			width,
+			height,
+		} = window.getComputedStyle(this);
+
+		Object.assign(this.style, {
+			transform: "none",
+			top: `${top}px`,
+			left: `${left}px`,
+			width: `${Math.round(Number(width) * 100) / 100}px`,
+			height: `${Math.round(Number(height) * 100) / 100}px`,
+		});
+
+		this._x = event.clientX;
+		this._y = event.clientY;
+
+		this._attachDragHandlers();
+	}
+
+	_onDragMouseMove(event) {
+		event.preventDefault();
+
+		const calcX = this._x - event.clientX;
+		const calcY = this._y - event.clientY;
+		const {
+			left,
+			top,
+		} = this.getBoundingClientRect();
+
+
+		Object.assign(this.style, {
+			left: `${Math.floor(left - calcX)}px`,
+			top: `${Math.floor(top - calcY)}px`,
+		});
+
+		this._x = event.clientX;
+		this._y = event.clientY;
+	}
+
+	_onDragMouseUp() {
+		this._x = null;
+		this._y = null;
+
+		this._detachDragHandlers();
+	}
+
+	_attachDragHandlers() {
+		window.addEventListener("mousemove", this._dragMouseMoveHandler);
+		window.addEventListener("mouseup", this._dragMouseUpHandler);
+		this.addEventListener("ui5-before-close", this._recenter);
+	}
+
+	_detachDragHandlers() {
+		window.removeEventListener("mousemove", this._dragMouseMoveHandler);
+		window.removeEventListener("mouseup", this._dragMouseUpHandler);
+	}
+
+	_recenter() {
+		Object.assign(this.style, {
+			top: "",
+			left: "",
+			transform: "",
+		});
+		this.removeEventListener("ui5-before-close", this._recenter);
 	}
 }
 
