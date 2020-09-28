@@ -191,11 +191,13 @@ const metadata = {
 		 * Used to externally manipulate the role of the list
 		 *
 		 * @private
+		 * @type {String}
+		 * @defaultvalue "listbox"
+		 * @since 1.0.0-rc.9
 		 */
-		_role: {
+		role: {
 			type: String,
 			defaultValue: "listbox",
-			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
