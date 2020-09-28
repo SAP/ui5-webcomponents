@@ -44,8 +44,6 @@
 	pointer-events: none;
 	background: var(--sapField_ReadOnly_Background);
 	border-color: var(--sapField_ReadOnly_BorderColor);
-	-webkit-text-fill-color: var(--sapContent_DisabledTextColor);
-	color: var(--sapContent_DisabledTextColor);
 }
 
 [inner-input] {
