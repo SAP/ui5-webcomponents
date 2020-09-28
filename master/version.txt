@@ -1,5 +1,5 @@
-commit 43be0f6f5dd772d4c4c006cafae9dfd42e7aa546
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Sep 28 10:48:42 2020 +0300
+commit d5a91e35c9f4d6da77512afebec04764ecec341b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Sep 28 14:29:54 2020 +0300
 
-    feat(ui5-combobox): introduces selection-change event (#2090)
+     feat(ui5-list): introduce role property (#2235)
