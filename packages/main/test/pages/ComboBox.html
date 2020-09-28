@@ -97,6 +97,9 @@
 
 	<div class="demo-section">
 		<span id="change-event-result"></span>
+		<br />
+		<span id="selection-change-event-result"></span>
+
 	</div>
 
 	<div class="demo-section">
@@ -207,6 +210,10 @@
 	<script>
 		document.getElementById("combo").addEventListener("ui5-change", function(event) {
 			document.getElementById("change-event-result").innerHTML = event.target.value;
+		});
+
+		document.getElementById("combo").addEventListener("ui5-selection-change", function(event) {
+			document.getElementById("selection-change-event-result").innerHTML = event.detail.item.text;
 		});
 
 		document.getElementById("change-cb").addEventListener("ui5-change", function(event) {
