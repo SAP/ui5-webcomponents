@@ -1,5 +1,5 @@
-commit 942b690a277c9afec3d072c5470149b55acd2ed4
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Sep 24 16:03:48 2020 +0300
+commit 43be0f6f5dd772d4c4c006cafae9dfd42e7aa546
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Sep 28 10:48:42 2020 +0300
 
-    chore(framework): refactor device.js (#2241)
+    feat(ui5-combobox): introduces selection-change event (#2090)
