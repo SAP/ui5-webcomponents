@@ -146,7 +146,7 @@ const _getDesktopOS = () => {
 
 		return {
 			"name": OS.WINDOWS,
-			"versionStr": uaResult[1],
+			"versionStr": (uaResult && uaResult[1]) || "",
 		};
 	}
 
