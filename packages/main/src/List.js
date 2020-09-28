@@ -190,9 +190,9 @@ const metadata = {
 		/**
 		 * Used to externally manipulate the role of the list
 		 *
+		 * @private
 		 * @type {String}
 		 * @defaultvalue "listbox"
-		 * @public
 		 * @since 1.0.0-rc.9
 		 */
 		role: {
