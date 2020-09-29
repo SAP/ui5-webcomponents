@@ -34,6 +34,7 @@ import {
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
 	INPUT_SUGGESTIONS_TITLE,
 	ICON_ACCESSIBLE_NAME,
+	MULTICOMBOBOX_DIALOG_OK_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -808,6 +809,10 @@ class MultiComboBox extends UI5Element {
 
 	get _iconAccessibleNameText() {
 		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
+	}
+
+	get _dialogOkButton() {
+		return this.i18nBundle.getText(MULTICOMBOBOX_DIALOG_OK_BUTTON);
 	}
 
 	get _tokenizerExpanded() {
