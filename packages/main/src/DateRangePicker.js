@@ -59,7 +59,7 @@ const metadata = {
  * <h3>Usage</h3>
  * The user can enter a date by:
  * Using the calendar that opens in a popup or typing it in directly in the input field (not available for mobile devices).
- * For the <code><ui5-daterange-picker</code>
+ * For the <code>ui5-daterange-picker</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/DateRangePicker.js";</code>
