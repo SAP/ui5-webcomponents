@@ -148,7 +148,7 @@ const metadata = {
  *
  * The user can:
  * <ul>
- * <li>display a <code>Close</code> button</code></li>
+ * <li>display a <code>Close</code> button</li>
  * <li>can control whether the <code>heading</code> and <code>description</code> should wrap or truncate
  * and display a <code>ShomeMore</code> button to switch between less and more information</code></li>
  * <li>add custom actions by using the <code>ui5-notification-overflow-action</code></code> component</li>
