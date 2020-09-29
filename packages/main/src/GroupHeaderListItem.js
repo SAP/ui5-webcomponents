@@ -37,7 +37,7 @@ const metadata = {
 
 /**
  * @class
- * The <code>ui5-li-group-header</code> is a special list item, used only to separate other list items into logical groups.
+ * The <code>ui5-li-groupheader</code> is a special list item, used only to separate other list items into logical groups.
  *
  * @constructor
  * @author SAP SE
