@@ -645,10 +645,7 @@ class ComboBox extends UI5Element {
 		if (this.value !== this._tempValue) {
 			this.value = this._tempValue;
 			this.fireEvent("change");
-
-			setTimeout(() => {
-				this.inner.setSelectionRange(this.value.length, this.value.length);
-			}, 100);
+			this.inner.setSelectionRange(this.value.length, this.value.length);
 		}
 
 		this._closeRespPopover();
