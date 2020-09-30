@@ -225,8 +225,10 @@ class DateRangePicker extends DatePicker {
 		}
 
 		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp * 1000, this._lastDateTimestamp * 1000);
+
 		this.value = this._formatValue(firstDate.valueOf() / 1000, secondDate.valueOf() / 1000);
-		this._prevValue = this.value;
+		this.realValue = this.value;
+		this._prevValue = this.realValue;
 	}
 
 	_changeCalendarSelection(focusTimestamp) {
@@ -237,23 +239,23 @@ class DateRangePicker extends DatePicker {
 
 		const oCalDate = this._calendarDate,
 			timestamp = focusTimestamp || oCalDate.valueOf() / 1000,
-			dates = this._splitValueByDelimiter(this.value);
+			dates = this._splitValueByDelimiter(this.realValue);
 
 		if (this._initialRendering) {
 			this._oneTimeStampSelected = dates[0].trim() === dates[1].trim();
-			this._setValue(this.value);
+			this._setValue(this.realValue);
 		}
 
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
-		if (this.value && this._checkValueValidity(this.value)) {
+		if (this.realValue && this._checkValueValidity(this.realValue)) {
 			this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._getTimeStampFromString(dates[0]), this._getTimeStampFromString(dates[1]));
 		}
 	}
 
 	get _calendarDate() {
-		const dates = this._splitValueByDelimiter(this.value),
-			value = this._checkValueValidity(this.value) ? dates[0] : this.getFormat().format(new Date()),
+		const dates = this._splitValueByDelimiter(this.realValue),
+			value = this._checkValueValidity(this.realValue) ? dates[0] : this.getFormat().format(new Date()),
 			millisecondsUTCFirstDate = value ? this.getFormat().parse(value, true).getTime() : this.getFormat().parse(this.validValue, true).getTime(),
 			oCalDateFirst = CalendarDate.fromTimestamp(
 				millisecondsUTCFirstDate - (millisecondsUTCFirstDate % (24 * 60 * 60 * 1000)),
@@ -261,6 +263,10 @@ class DateRangePicker extends DatePicker {
 			);
 
 		return oCalDateFirst;
+	}
+
+	get _shoudHideValueInInput() {
+		return this._firstDateTimestamp === this._lastDateTimestamp && this._firstDateTimestamp;
 	}
 
 	/**
@@ -323,6 +329,10 @@ class DateRangePicker extends DatePicker {
 		return this.isValid(value) && this.isInValidRange(value);
 	}
 
+	checkRealValueValidity() {
+		return this.isValid(this.realValue) && this.isInValidRange(this.realValue);
+	}
+
 	isValid(value) {
 		const dateStrings = this._splitValueByDelimiter(value, this.delimiter),
 			isFirstDateValid = super.isValid(dateStrings[0]),
@@ -383,9 +393,9 @@ class DateRangePicker extends DatePicker {
 			const fireChange = this._handleCalendarSelectedDatesChange();
 
 			if (fireChange) {
-				this.fireEvent("change", { value: this.value, valid: true });
+				this.fireEvent("change", { value: this.realValue, valid: true });
 				// Angular two way data binding
-				this.fireEvent("value-changed", { value: this.value, valid: true });
+				this.fireEvent("value-changed", { value: this.realValue, valid: true });
 			}
 		}
 	}
@@ -487,7 +497,7 @@ class DateRangePicker extends DatePicker {
 		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp * 1000, this._lastDateTimestamp * 1000);
 		this._focusInputAfterClose = true;
 
-		if (this.isInValidRange(this.value)) {
+		if (this.isInValidRange(this.realValue)) {
 			this.valueState = ValueState.None;
 		} else {
 			this.valueState = ValueState.Error;
@@ -512,8 +522,14 @@ class DateRangePicker extends DatePicker {
 	_updateValueCalendarSelectedDatesChange() {
 		const calStartDate = CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000, this._primaryCalendarType);
 		const calEndDate = CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000, this._primaryCalendarType);
-		this.value = this._formatValue(calStartDate.toLocalJSDate().valueOf() / 1000, calEndDate.toLocalJSDate().valueOf() / 1000);
-		this._prevValue = this.value;
+
+		// Collect both dates and merge them into one
+		if (this._firstDateTimestamp !== this._lastDateTimestamp || this._oneTimeStampSelected) {
+			this.value = this._formatValue(calStartDate.toLocalJSDate().valueOf() / 1000, calEndDate.toLocalJSDate().valueOf() / 1000);
+		}
+
+		this.realValue = this._formatValue(calStartDate.toLocalJSDate().valueOf() / 1000, calEndDate.toLocalJSDate().valueOf() / 1000);
+		this._prevValue = this.realValue;
 	}
 
 	/**
