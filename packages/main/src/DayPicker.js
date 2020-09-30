@@ -29,8 +29,8 @@ import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calc
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
-import RenderScheduler from "../../base/src/RenderScheduler.js";
 
 import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
