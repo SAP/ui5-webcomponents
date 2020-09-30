@@ -1,5 +1,5 @@
-commit d5a91e35c9f4d6da77512afebec04764ecec341b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Sep 28 14:29:54 2020 +0300
+commit f52e0b13ebe6e5a83936766ab76178b34f166f30
+Author: Lukas Harbarth <lukas742@gmx.net>
+Date:   Wed Sep 30 10:09:48 2020 +0200
 
-     feat(ui5-list): introduce role property (#2235)
+    docs: correct typing errors (#2267)
