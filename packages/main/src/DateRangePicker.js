@@ -257,7 +257,7 @@ class DateRangePicker extends DatePicker {
 	 */
 	get firstDateValue() {
 		const dateValue = new Date(this._firstDateTimestamp * 1000);
-		return new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate()));
+		return new Date(dateValue.getUTCFullYear(), dateValue.getUTCMonth(), dateValue.getUTCDate(), dateValue.getUTCHours());
 	}
 
 	/**
@@ -269,7 +269,7 @@ class DateRangePicker extends DatePicker {
 	 */
 	get lastDateValue() {
 		const dateValue = new Date(this._lastDateTimestamp * 1000);
-		return new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate()));
+		return new Date(dateValue.getUTCFullYear(), dateValue.getUTCMonth(), dateValue.getUTCDate(), dateValue.getUTCHours());
 	}
 
 	get _placeholder() {

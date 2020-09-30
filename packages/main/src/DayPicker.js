@@ -254,8 +254,10 @@ class DayPicker extends UI5Element {
 			timestamp,
 			lastWeekNumber = -1,
 			isDaySelected = false,
-			todayIndex = 0;
-		const _aVisibleDays = this._getVisibleDays(this._calendarDate);
+			todayIndex = 0,
+			startDateTimestamp = Date.UTC(this._calendarDate.getYear(), this._calendarDate.getMonth(), this._calendarDate.getDate(), this._calendarDate._oUDate.oDate.getHours());
+
+		const _aVisibleDays = this._getVisibleDays(CalendarDate.fromTimestamp(startDateTimestamp));
 		this._weeks = [];
 		let week = [];
 		this._weekNumbers = [];
