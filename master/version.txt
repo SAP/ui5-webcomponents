@@ -1,5 +1,9 @@
-commit f52e0b13ebe6e5a83936766ab76178b34f166f30
-Author: Lukas Harbarth <lukas742@gmx.net>
-Date:   Wed Sep 30 10:09:48 2020 +0200
+commit 793a29ea64c2e99bd1921db3cd1b5fc5c2f430a2
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Wed Sep 30 14:26:55 2020 +0300
 
-    docs: correct typing errors (#2267)
+    feat(ui5-multi-combobox): Implement valueStateMessage (#2258)
+    
+    Implement valueStateMessage support for MultiComboBox component.
+    
+    FIXES: #1086

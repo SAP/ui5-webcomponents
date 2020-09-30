@@ -145,6 +145,20 @@
 	</div>
 
 	<div class="demo-section">
+		<span>value state information </span>
+
+		<br>
+		<ui5-multi-combobox allow-custom-values placeholder="Some initial text"
+			value-state="Information">
+			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
+			<ui5-mcb-item text="Compact"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Longest word in the world"></ui5-mcb-item>
+			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		</ui5-multi-combobox>
+	</div>
+
+	<div class="demo-section">
 		<span>value state warning </span>
 
 		<br>
