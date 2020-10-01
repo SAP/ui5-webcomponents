@@ -183,7 +183,7 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("keyboard handling", () => {
 		browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
-		
+
 		it("tests backspace when combobox has an empty value", () => {
 			browser.setWindowSize(1920, 1080);
 
