@@ -1,5 +1,9 @@
-commit cbe29f8c14a49c511d85023184041ec7309cb216
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Oct 1 14:50:03 2020 +0300
+commit 00f5ab58bebd2de3eea82b10f36cfb962bc101bb
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Thu Oct 1 19:06:02 2020 +0300
 
-    chore(playground): fix ui5-side-navigation sample (#2282)
+    fix(ui5-daterange-picker): fix firstDate/lastDate getters values (#2277)
+    
+    Fix the return values of first and last date  public getters, previously returning wrong values.
+    
+    Fixes #2221
