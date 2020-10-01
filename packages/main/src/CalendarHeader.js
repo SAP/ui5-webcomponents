@@ -131,6 +131,12 @@ class CalendarHeader extends UI5Element {
 		}
 	}
 
+	_onMidContainerKeyDown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+	}
+
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
