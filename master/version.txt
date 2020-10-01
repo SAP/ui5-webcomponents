@@ -1,5 +1,10 @@
-commit 443af29fd86a3d92af5d112a7a34208d6002f656
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Oct 1 10:07:12 2020 +0300
+commit 9d83806778fddea9c8898ecfc1885a8122af88e2
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Oct 1 11:15:59 2020 +0300
 
-    fix(ui5-popup, ui5-dialog): remove closed instance from openedPopupsRegistry (#2275)
+    fix(ui5-date-picker): select date with SPACE on keyup (#2279)
+    
+    This PR complements the following PR #2276
+    to fix everything requested by the referenced issue, more specifically forcing date selection with SPACE to take place on keyup, instead of keydown as at the moment.
+    
+    FIXES: #2268
