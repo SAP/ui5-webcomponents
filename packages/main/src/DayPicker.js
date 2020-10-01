@@ -451,7 +451,8 @@ class DayPicker extends UI5Element {
 		}
 
 		if (isSpace(event)) {
-			return this._handleSpace(event);
+			event.preventDefault();
+			return;
 		}
 
 		if (isHomeCtrl(event)) {
@@ -476,6 +477,12 @@ class DayPicker extends UI5Element {
 
 		if (isPageDownShiftCtrl(event)) {
 			this._changeYears(event, true, 10);
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this._handleSpace(event);
 		}
 	}
 
