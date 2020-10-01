@@ -1,9 +1,5 @@
-commit 793a29ea64c2e99bd1921db3cd1b5fc5c2f430a2
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Wed Sep 30 14:26:55 2020 +0300
+commit 443af29fd86a3d92af5d112a7a34208d6002f656
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Oct 1 10:07:12 2020 +0300
 
-    feat(ui5-multi-combobox): Implement valueStateMessage (#2258)
-    
-    Implement valueStateMessage support for MultiComboBox component.
-    
-    FIXES: #1086
+    fix(ui5-popup, ui5-dialog): remove closed instance from openedPopupsRegistry (#2275)
