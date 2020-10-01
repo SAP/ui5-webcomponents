@@ -11,6 +11,7 @@ import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDat
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
+	isEnter,
 	isPageUp,
 	isPageDown,
 	isPageUpShift,
@@ -529,6 +530,10 @@ class DatePicker extends UI5Element {
 			return;
 		}
 
+		if (isEnter(event)) {
+			this._handleEnterPressed();
+		}
+
 		if (isPageUpShiftCtrl(event)) {
 			event.preventDefault();
 			this._changeDateValueWrapper(true, true, false, false);
@@ -553,6 +558,16 @@ class DatePicker extends UI5Element {
 	}
 
 	/**
+	 * This method is used in the derived classes
+	 */
+	_handleEnterPressed() {}
+
+	/**
+	 * This method is used in the derived classes
+	 */
+	_onfocusout() {}
+
+	/**
 	 * Adds or extracts a given number of measuring units from the "dateValue" property value
 	 * @param {boolean} forward if true indicates addition
 	 * @param {boolean} years indicates that the measuring unit is in years
@@ -564,7 +579,6 @@ class DatePicker extends UI5Element {
 		let date = this.dateValue;
 		date = this._changeDateValue(date, forward, years, months, days, step);
 		this.value = this.formatValue(date);
-		this.fireEvent("change", { value: this.value, valid: true });
 	}
 
 	/**

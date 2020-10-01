@@ -431,6 +431,42 @@ class DateRangePicker extends DatePicker {
 			lastDate = this._changeDateValue(lastDate, forward, years, months, days, step);
 		}
 
+		this.value = this._formatValue(firstDate.valueOf() / 1000, lastDate.valueOf() / 1000);
+
+		await RenderScheduler.whenFinished();
+		// Return the caret on the previous position after rendering
+		this._setCaretPosition(innerInput, caretPos);
+	}
+
+	/**
+	 * This method is used in the derived classes
+	 */
+	async _handleEnterPressed() {
+		const innerInput = this.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+		const caretPos = this._getCaretPosition(innerInput);
+
+		this._confirmInput();
+
+		await RenderScheduler.whenFinished();
+		// Return the caret on the previous position after rendering
+		this._setCaretPosition(innerInput, caretPos);
+	}
+
+	_onfocusout() {
+		this._confirmInput();
+	}
+
+	_confirmInput() {
+		const emptyValue = this.value === "";
+
+		if (emptyValue) {
+			return;
+		}
+
+		const dates = this._splitValueByDelimiter(this.value);
+		let firstDate = this.getFormat().parse(dates[0]);
+		let lastDate = this.getFormat().parse(dates[1]);
+
 		if (firstDate > lastDate) {
 			const temp = firstDate;
 			firstDate = lastDate;
@@ -440,12 +476,6 @@ class DateRangePicker extends DatePicker {
 		const newValue = this._formatValue(firstDate.valueOf() / 1000, lastDate.valueOf() / 1000);
 
 		this._setValue(newValue);
-		await RenderScheduler.whenFinished();
-
-		// Return the carent on the previous position after rendering
-		this._setCaretPosition(innerInput, caretPos);
-
-		this.fireEvent("change", { value: newValue, valid: isValid });
 	}
 
 	/**
