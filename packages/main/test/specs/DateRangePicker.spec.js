@@ -177,4 +177,55 @@ describe("DateRangePicker general interaction", () => {
 		browser.keys(['Control', 'Shift', 'PageUp']);
 		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2020 @ Jul 29, 2020");
 	});
+
+	it("Enter keyboard key confirms the date rante in the input field", () => {
+		const dateRange = browser.$("#daterange-picker5");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			dateRange._setValue("Jul 16, 2020 @ Jul 16, 2020");
+		});
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			innerInput.click();
+			dateRange._setCaretPosition(innerInput, 0);
+		});
+
+		browser.keys('PageUp');
+		assert.strictEqual(dateRange.getAttribute("value"), "Jul 17, 2020 @ Jul 16, 2020");
+
+		browser.keys('Enter');
+		assert.strictEqual(dateRange.getAttribute("value"), "Jul 16, 2020 @ Jul 17, 2020");
+	});
+
+	it("Focus out of the input field confirms the date rante", () => {
+		const dateRange = browser.$("#daterange-picker5");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			dateRange._setValue("Jul 16, 2020 @ Jul 16, 2020");
+		});
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			innerInput.click();
+			dateRange._setCaretPosition(innerInput, 0);
+		});
+
+		browser.keys('PageUp');
+		assert.strictEqual(dateRange.getAttribute("value"), "Jul 17, 2020 @ Jul 16, 2020");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker4");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			innerInput.click();
+			dateRange._setCaretPosition(innerInput, 0);
+		});
+		assert.strictEqual(dateRange.getAttribute("value"), "Jul 16, 2020 @ Jul 17, 2020");
+	});
 });
