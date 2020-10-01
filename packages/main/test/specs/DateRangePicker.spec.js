@@ -178,7 +178,7 @@ describe("DateRangePicker general interaction", () => {
 		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2020 @ Jul 29, 2020");
 	});
 
-	it("Enter keyboard key confirms the date rante in the input field", () => {
+	it("Enter keyboard key confirms the date range in the input field", () => {
 		const dateRange = browser.$("#daterange-picker5");
 
 		browser.execute(() => {
@@ -201,7 +201,7 @@ describe("DateRangePicker general interaction", () => {
 		assert.strictEqual(dateRange.getAttribute("value"), "Jul 16, 2020 @ Jul 17, 2020");
 	});
 
-	it("Focus out of the input field confirms the date rante", () => {
+	it("Focus out of the input field confirms the date range", () => {
 		const dateRange = browser.$("#daterange-picker5");
 
 		browser.execute(() => {
