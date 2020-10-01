@@ -222,7 +222,7 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_rootFocused: {
+		focused: {
 			type: Boolean,
 		},
 
@@ -739,13 +739,13 @@ class MultiComboBox extends UI5Element {
 
 	rootFocusIn() {
 		if (!isPhone()) {
-			this._rootFocused = true;
+			this.focused = true;
 		}
 	}
 
 	rootFocusOut(event) {
 		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
-			this._rootFocused = false;
+			this.focused = false;
 		}
 	}
 
@@ -782,7 +782,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this._rootFocused && this.hasValueStateMessage && !this._iconPressed;
+		return this.focused && this.hasValueStateMessage && !this._iconPressed;
 	}
 
 	get valueStateTextMappings() {
@@ -816,7 +816,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizerExpanded() {
-		return this._rootFocused || this.open;
+		return this.focused || this.open;
 	}
 
 	get classes() {
