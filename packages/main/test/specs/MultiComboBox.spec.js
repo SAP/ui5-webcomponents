@@ -183,12 +183,14 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("keyboard handling", () => {
 		browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
-
+		
 		it("tests backspace when combobox has an empty value", () => {
-			let tokens = $("#multi1").shadow$$(".ui5-multi-combobox-token");
-			const input = $("#multi1").shadow$("input");
+			browser.setWindowSize(1920, 1080);
 
-			$("#multi1").setProperty("value", "");
+			let tokens = $("#multi-backspace").shadow$$(".ui5-multi-combobox-token");
+			const input = $("#multi-backspace").shadow$("input");
+
+			$("#multi-backspace").setProperty("value", "");
 
 			input.click();
 			input.keys('Backspace');
@@ -197,7 +199,7 @@ describe("MultiComboBox general interaction", () => {
 
 			input.keys('Backspace');
 
-			tokens = $("#multi1").shadow$$(".ui5-multi-combobox-token");
+			tokens = $("#multi-backspace").shadow$$(".ui5-multi-combobox-token");
 
 			assert.strictEqual(tokens.length, 2, "2 tokens are visible");
 		});

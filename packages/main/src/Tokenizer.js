@@ -274,7 +274,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get showNMore() {
-		return !this.expanded && this.showMore && this.overflownTokens.length;
+		return this.showMore && this.overflownTokens.length;
 	}
 
 	get contentDom() {
@@ -300,7 +300,7 @@ class Tokenizer extends UI5Element {
 			const tokenLeft = tokenRect.left + tokenRect.width;
 			const parentLeft = parentRect.left + parentRect.width;
 
-			token.overflows = (tokenLeft > parentLeft) && !this.expanded;
+			token.overflows = (tokenLeft > parentLeft);
 
 			return token.overflows;
 		});
