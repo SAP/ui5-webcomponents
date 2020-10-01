@@ -1,10 +1,5 @@
-commit 9d83806778fddea9c8898ecfc1885a8122af88e2
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Oct 1 11:15:59 2020 +0300
+commit cbe29f8c14a49c511d85023184041ec7309cb216
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Oct 1 14:50:03 2020 +0300
 
-    fix(ui5-date-picker): select date with SPACE on keyup (#2279)
-    
-    This PR complements the following PR #2276
-    to fix everything requested by the referenced issue, more specifically forcing date selection with SPACE to take place on keyup, instead of keydown as at the moment.
-    
-    FIXES: #2268
+    chore(playground): fix ui5-side-navigation sample (#2282)
