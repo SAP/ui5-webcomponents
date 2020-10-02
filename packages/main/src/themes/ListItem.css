@@ -65,6 +65,10 @@
 	padding-bottom: 0.375rem;
 }
 
+:host([description]) .ui5-li-root {
+	padding: 1rem;
+}
+
 .ui5-li-title-wrapper {
 	display: flex;
 	flex-direction: column;
@@ -142,6 +146,24 @@
 	flex-shrink: 0;
 }
 
+:host([description]) .ui5-li-multisel-cb {
+	align-self: flex-start;
+	margin: var(--_ui5_list_item_selection_btn_margin);
+}
+
+:host([_mode="SingleSelectEnd"][description]) .ui5-li-multisel-cb {
+	margin: var(--_ui5_list_item_selection_btn_margin_rtl);
+}
+
+:host([description]) .ui5-li-singlesel-radiobtn {
+	align-self: flex-start;
+	margin: var(--_ui5_list_item_selection_btn_margin);
+}
+
+:host([_mode="SingleSelectEnd"][description]) .ui5-li-singlesel-radiobtn {
+	margin: var(--_ui5_list_item_selection_btn_margin_rtl);
+}
+
 :host [ui5-checkbox].ui5-li-singlesel-radiobtn {
 	margin-right: var(--_ui5_list_item_cb_margin_right);
 }
@@ -154,4 +176,21 @@
 
 :host [dir="rtl"] .ui5-li-img {
 	margin: .5rem 0 .5rem 0.75rem;
+}
+
+:host([description]) [dir="rtl"] .ui5-li-multisel-cb {
+	margin: var(--_ui5_list_item_selection_btn_margin_rtl);
+}
+
+:host([description]) [dir="rtl"] .ui5-li-singlesel-radiobtn {
+	margin: var(--_ui5_list_item_selection_btn_margin_rtl);
+}
+
+
+:host([_mode="SingleSelectEnd"][description]) [dir="rtl"] .ui5-li-multisel-cb {
+	margin: var(--_ui5_list_item_selection_btn_margin);
+}
+
+:host([_mode="SingleSelectEnd"][description]) [dir="rtl"] .ui5-li-singlesel-radiobtn {
+	margin: var(--_ui5_list_item_selection_btn_margin);
 }
