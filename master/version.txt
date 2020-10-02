@@ -1,9 +1,9 @@
-commit 5c51dc6c2c4fcca45c1c04e99b9f44ca740acfb3
+commit 2faad25cb7274aff52cd6bc6dde6fe1131643b14
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Oct 2 12:29:02 2020 +0300
+Date:   Fri Oct 2 16:08:58 2020 +0300
 
-    fix(ui5-li): correct image size
+    fix(ui5-li): correct sizes
     
-    When ui5-li has image and byline (description), the image should have 3rem height and 3rem width in Compact and Cozy mode. In addition its angles should be rounded.
+    Corrected ui5-li and its icon sizes in Cozy mode.
     
     Part of #2218
