@@ -255,6 +255,7 @@ class DayPicker extends UI5Element {
 			lastWeekNumber = -1,
 			isDaySelected = false,
 			todayIndex = 0;
+
 		const _aVisibleDays = this._getVisibleDays(this._calendarDate);
 		this._weeks = [];
 		let week = [];
@@ -811,8 +812,14 @@ class DayPicker extends UI5Element {
 
 	_isOutOfSelectableRange(date) {
 		const currentDate = date._oUDate ? date.toLocalJSDate() : CalendarDate.fromTimestamp(date).toLocalJSDate();
+		const minDate = this._minDateObject;
+		const maxDate = this._maxDateObject;
 
-		return currentDate > this._maxDateObject || currentDate < this._minDateObject;
+		currentDate.setHours(0);
+		minDate.setHours(0);
+		maxDate.setHours(0);
+
+		return currentDate > maxDate || currentDate < minDate;
 	}
 
 	get _maxDate() {

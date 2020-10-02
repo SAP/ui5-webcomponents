@@ -43,7 +43,7 @@ describe("DateRangePicker general interaction", () => {
 
 		daterangepicker.click();
 		daterangepicker.keys("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-		daterangepicker.keys("09/09/2019 - 10/10/2019");
+		daterangepicker.keys("27/09/2019 - 10/10/2019");
 		daterangepicker.keys("Enter");
 
 		const res = browser.execute(() => {
@@ -54,8 +54,8 @@ describe("DateRangePicker general interaction", () => {
 			return {firstDateValue, lastDateValue};
 		});
 
-		assert.strictEqual(res.firstDateValue, "2019-09-09T00:00:00.000Z", "The first date is in JS Date format");
-		assert.strictEqual(res.lastDateValue, "2019-10-10T00:00:00.000Z", "The last date is JS Date format");
+		assert.deepEqual(new Date(res.firstDateValue), new Date(2019, 8, 27), "The first date is in JS Date format");
+		assert.deepEqual(new Date(res.lastDateValue), new Date(2019, 9, 10), "The last date is JS Date format");
 	});
 
 	it("Initially setting the same date as first & last is possible", () => {
