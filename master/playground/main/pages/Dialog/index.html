@@ -42,11 +42,15 @@
 	<br>
 	<br>
 	<ui5-button id="empty-open">Open empty dialog (no focusable element)</ui5-button>
-	<br><br>
+	<br>
+	<br>
 	<ui5-button id="wide-open">Open wide dialog</ui5-button>
-	<br><br>
+	<br>
+	<br>
 	<ui5-button id="wide-open2">Open wide dialog 2</ui5-button>
-	<br><br>
+	<br>
+	<br>
+	<ui5-button id="draggable-open">Open draggable dialog</ui5-button>
 
 	<ui5-block-layer></ui5-block-layer>
 
@@ -189,6 +193,17 @@
 		</div>
 	</ui5-dialog>
 
+	<ui5-dialog id="draggable-dialog" draggable>
+		<div slot="header" style="flex: 1 0 0; height: 2.5rem;">Draggable dialog</div>
+
+		<p>Move this dialog around the screen by dragging it by its header.</p>
+		<p>This feature available only on Desktop.</p>
+
+		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<ui5-button id="draggable-close" design="Emphasized">OK</ui5-button>
+		</div>
+	</ui5-dialog>
+
 	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
 		<!-- <div slot="header">
 			Hello World
@@ -251,7 +266,6 @@
 	<ui5-dialog id="empty-dialog">Empty</ui5-dialog>
 
 	<script>
-
 		let preventClosing = true;
 
 		btnOpenDialog.addEventListener("click", function () {
@@ -301,9 +315,12 @@
 			bigDangerPop.openBy(bigDanger);
 		});
 
-		window["empty-open"].addEventListener("click", function (event) { window["empty-dialog"].open(); });
-		window["wide-open"].addEventListener("click", function (event) { window["wide-dialog"].open(); });
-		window["wide-open2"].addEventListener("click", function (event) { window["wide-dialog2"].open(); });
+		window["empty-open"].addEventListener("click", function () { window["empty-dialog"].open(); });
+		window["wide-open"].addEventListener("click", function () { window["wide-dialog"].open(); });
+		window["wide-open2"].addEventListener("click", function () { window["wide-dialog2"].open(); });
+		window["draggable-open"].addEventListener("click", function () { window["draggable-dialog"].open(); });
+		window["draggable-close"].addEventListener("click", function () { window["draggable-dialog"].close(); });
+
 	</script>
 </body>
 

@@ -2231,7 +2231,7 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3> The <code>ui5-dialog</code> component is used to temporarily display some information in a size-limited window in front of the regular app screen. It is used to prompt the user for an action or a confirmation. The <code>ui5-dialog</code> interrupts the current app processing as it is the only focused UI element and the main screen is dimmed/blocked. The dialog combines concepts known from other technologies where the windows have names such as dialog box, dialog window, pop-up, pop-up window, alert box, or message box. <br><br> The <code>ui5-dialog</code> is modal, which means that user action is required before returning to the parent window is possible. The content of the <code>ui5-dialog</code> is fully customizable.
 
-<h3>Structure</h3> A <code>ui5-dialog</code> consists of a header, content, and a footer for action buttons. The <code>ui5-dialog</code> is usually displayed at the center of the screen.
+<h3>Structure</h3> A <code>ui5-dialog</code> consists of a header, content, and a footer for action buttons. The <code>ui5-dialog</code> is usually displayed at the center of the screen. Its position can be changed by the user. To enable this, you need to set the property <code>draggable</code> accordingly.
 
 <h3>Responsive Behavior</h3> The <code>stretch</code> property can be used to stretch the <code>ui5-dialog</code> on full screen.
 
@@ -2255,6 +2255,18 @@
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          draggable
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines whether the <code>ui5-dialog</code> is draggable. If this property is set to true, the Dialog will be draggable by its header. <br><br> <b>Note:</b> The <code>ui5-dialog</code> can be draggable only in desktop mode.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.9</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           headerText
                             <br>
                             <code>header-text</code>
@@ -2265,7 +2277,7 @@
                             Defines the header text. <br><br> <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           stretch
                             <br>
@@ -2273,10 +2285,10 @@
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen. <br><br> <b>Note:</b> The <code>ui5-dialog</code> will be stretched to aproximetly 90% of the viewport.
+                            Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen. <br><br> <b>Note:</b> The <code>ui5-dialog</code> will be stretched to approximately 90% of the viewport.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           _ariaLabel
                             <br>
@@ -2288,7 +2300,7 @@
                             Ensures ariaLabel is never null or empty string
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           _ariaLabelledBy
                             <br>
@@ -2300,7 +2312,7 @@
                             Return the ID of an element in the shadow DOM that is going to label this popup
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           _ariaModal
                             <br>
@@ -2312,7 +2324,7 @@
                             Return the value for aria-modal for this popup
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           initialFocus
                             <br>
@@ -2324,7 +2336,7 @@
                             Defines the ID of the HTML Element, which will get the initial focus.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           isModal
                             <br>
@@ -2336,7 +2348,7 @@
                             Implement this getter with relevant logic regarding the modality of the popup (f.e. based on a public property)
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           preventFocusRestore
                             <br>

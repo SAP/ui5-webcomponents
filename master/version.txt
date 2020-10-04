@@ -1,9 +1,7 @@
-commit 2faad25cb7274aff52cd6bc6dde6fe1131643b14
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Oct 2 16:08:58 2020 +0300
+commit 93772fb394bf3ded4b02b1cbc617a2f8b4b5bfd4
+Author: Georgi <gmnullptr@gmail.com>
+Date:   Sun Oct 4 09:14:05 2020 +0300
 
-    fix(ui5-li): correct sizes
+    feat(ui5-dialog): introduce draggable property (#2269)
     
-    Corrected ui5-li and its icon sizes in Cozy mode.
-    
-    Part of #2218
+    Part of #2082
