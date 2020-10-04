@@ -1,7 +1,10 @@
 {{>include "./Popup.hbs"}}
 
 {{#*inline "beforeContent"}}
-	<header class="ui5-popup-header-root" id="ui5-popup-header">
+	<header
+		class="ui5-popup-header-root"
+		id="ui5-popup-header"
+		@mousedown="{{_onDragMouseDown}}">
 		{{#if header.length }}
 			<slot name="header"></slot>
 		{{else}}
