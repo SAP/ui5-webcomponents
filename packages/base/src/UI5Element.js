@@ -890,7 +890,7 @@ class UI5Element extends HTMLElement {
 		const properties = this.getMetadata().getProperties();
 		for (const [prop, propData] of Object.entries(properties)) { // eslint-disable-line
 			if (!isValidPropertyName(prop)) {
-				throw new Error(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`);
+				console.warn(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`); /* eslint-disable-line */
 			}
 
 			if (propData.type === Boolean && propData.defaultValue) {
@@ -946,7 +946,7 @@ class UI5Element extends HTMLElement {
 			const slots = this.getMetadata().getSlots();
 			for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
 				if (!isValidPropertyName(slotName)) {
-					throw new Error(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`);
+					console.warn(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`); /* eslint-disable-line */
 				}
 
 				const propertyName = slotData.propertyName || slotName;
