@@ -43,7 +43,6 @@ const createComponentStyleTag = ElementClass => {
 
 	createStyleInHead(cssContent, {
 		"data-ui5-element-styles": tag,
-		"disabled": "disabled",
 	});
 	if (ponyfillNeeded()) {
 		schedulePonyfill();

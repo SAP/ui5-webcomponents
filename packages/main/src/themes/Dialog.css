@@ -21,6 +21,15 @@
 	max-width: 100vw;
 }
 
+:host([draggable]) .ui5-popup-header-root,
+:host([draggable]) ::slotted([slot="header"]) {
+	cursor: move;
+}
+
+:host([draggable]) .ui5-popup-header-root * {
+	cursor: auto;
+}
+
 .ui5-popup-root {
 	display: flex;
 	flex-direction: column;
