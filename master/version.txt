@@ -1,7 +1,5 @@
-commit 93772fb394bf3ded4b02b1cbc617a2f8b4b5bfd4
-Author: Georgi <gmnullptr@gmail.com>
-Date:   Sun Oct 4 09:14:05 2020 +0300
+commit a816cef14c9730a0d17feee189ad7a064dfb511a
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Oct 5 10:27:12 2020 +0300
 
-    feat(ui5-dialog): introduce draggable property (#2269)
-    
-    Part of #2082
+    fix(framework): Allow role as a property name (#2290)
