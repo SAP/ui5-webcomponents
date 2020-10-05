@@ -639,7 +639,7 @@ class Input extends UI5Element {
 	}
 
 	_handleEscape() {
-		if (this.Suggestions && this.Suggestions._isItemOnTarget()) {
+		if (this.showSuggestions && this.Suggestions && this.Suggestions._isItemOnTarget()) {
 			// Restore the value.
 			this.value = this.valueBeforeItemPreview;
 
