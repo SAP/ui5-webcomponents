@@ -1,5 +1,5 @@
-commit a816cef14c9730a0d17feee189ad7a064dfb511a
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Oct 5 10:27:12 2020 +0300
+commit 0742854fda871cb5ce2177db59296e8a140e4652
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Oct 5 10:41:01 2020 +0300
 
-    fix(framework): Allow role as a property name (#2290)
+    fix(ui5-combobox): allow setting value with javascript (#2253)
