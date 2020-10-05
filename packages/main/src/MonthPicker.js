@@ -289,7 +289,7 @@ class MonthPicker extends UI5Element {
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType).valueOf();
+			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType).toUTCJSDate().valueOf();
 		}
 		return undefined;
 	}
