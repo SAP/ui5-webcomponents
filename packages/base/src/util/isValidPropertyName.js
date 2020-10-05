@@ -4,6 +4,8 @@ const whitelist = [
 	"disabled",
 	"title",
 	"hidden",
+	"role",
+	"draggable",
 ];
 
 /**
