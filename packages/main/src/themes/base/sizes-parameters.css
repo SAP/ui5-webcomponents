@@ -25,7 +25,8 @@
 	--_ui5_list_item_title_size: var(--sapMFontLargeSize);
 	--_ui5_list_item_img_size: 2rem;
 	--_ui5_list_item_img_margin: 0.5rem 0.75rem 0.5rem 0rem;
-	--_ui5_list_item_base_height: 3rem;
+	--_ui5_list_item_base_height: 2.75rem;
+	--_ui5_list_item_icon_size: 1.125rem;
 	--_ui5_list_busy_row_height: 3rem;
 	--_ui5_month_picker_item_height: 3rem;
 	--_ui5_year_picker_item_height: 3rem;
@@ -131,6 +132,7 @@
 	--_ui5_list_item_img_size: 1.75rem;
 	--_ui5_list_item_img_margin: 0.55rem 0.75rem 0.5rem 0rem;
 	--_ui5_list_item_base_height: 2rem;
+	--_ui5_list_item_icon_size: 1rem;
 	--_ui5_list_busy_row_height: 2rem;
 
 	--_ui5_month_picker_item_height: 2rem;

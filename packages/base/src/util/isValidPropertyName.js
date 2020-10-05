@@ -4,6 +4,7 @@ const allowList = [
 	"disabled",
 	"title",
 	"hidden",
+	"draggable",
 ];
 
 /**
