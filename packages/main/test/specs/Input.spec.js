@@ -215,6 +215,26 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelect is not fired as item is 'Inactive'");
 	});
 
+	it("handles suggestions selection cancel with ESC", () => {
+		const suggestionsInput = $("#myInputEsc").shadow$("input");
+
+		// act
+		suggestionsInput.click();
+		suggestionsInput.keys("ch");
+		suggestionsInput.keys("ArrowDown");
+	
+		// assert
+		assert.strictEqual(suggestionsInput.getValue(), "Chromium",
+			"The value is updated as the item has been previewed.");
+
+		// act
+		suggestionsInput.keys("Escape");
+
+		// assert
+		assert.strictEqual(suggestionsInput.getValue(), "ch",
+			"The value is restored as ESC has been pressed.");
+	});
+
 	it("handles group suggestion item via keyboard", () => {
 		const suggestionsInput = $("#myInputGrouping").shadow$("input");
 		const inputResult = $("#inputResultGrouping").shadow$("input");
