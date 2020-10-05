@@ -80,6 +80,36 @@ describe("Dialog general interaction", () => {
 
 		browser.keys("esc");
 	});
+
+	it.only("resizable", () => {
+		const openResizableDialogButton = browser.$("#resizable-open");
+		openResizableDialogButton.click();
+
+		const dialog = browser.$("#resizable-dialog");
+		const widthBeforeResizing = parseInt(dialog.getCSSProperty("width").value);
+		const heightBeforeResizing = parseInt(dialog.getCSSProperty("height").value);
+
+		const handle = browser.$("#resizable-dialog").shadow$(".ui5-popup-resize-handle");
+
+		handle.dragAndDrop({ x: 200, y: 200});
+
+		const widthAfterResizing = parseInt(dialog.getCSSProperty("width").value);
+		const heightAfterResizing = parseInt(dialog.getCSSProperty("height").value);
+
+		assert.notStrictEqual(widthBeforeResizing, widthAfterResizing, "width has changed");
+		assert.notStrictEqual(heightBeforeResizing, heightAfterResizing, "height has changed");
+
+		browser.keys("Enter");
+		openResizableDialogButton.click();
+
+		const widthAfterReopening = parseInt(dialog.getCSSProperty("width").value);
+		const heightAfterReopening = parseInt(dialog.getCSSProperty("height").value);
+
+		assert.strictEqual(widthBeforeResizing, widthAfterReopening, "width has been reset back to initial");
+		assert.strictEqual(heightBeforeResizing, heightAfterReopening, "height has been reset back to initial");
+
+		browser.keys("esc");
+	});
 });
 
 
