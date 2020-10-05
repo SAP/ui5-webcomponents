@@ -1,5 +1,10 @@
-commit 0742854fda871cb5ce2177db59296e8a140e4652
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Oct 5 10:41:01 2020 +0300
+commit ef1fb4065324d0b121d8cbfeb7a6c8ea0e394455
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Oct 5 14:38:55 2020 +0300
 
-    fix(ui5-combobox): allow setting value with javascript (#2253)
+    fix(ui5-input): cancel suggestion selection with ESC (#2289)
+    
+    When the users navigates between the items with UP/DOWN, the value is updated and shows the currently previewed item,
+    Now, the user is able to "cancel" this selection by pressing ESC.
+    
+    FIXES: #2254
