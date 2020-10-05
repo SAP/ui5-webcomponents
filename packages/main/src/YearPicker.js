@@ -362,8 +362,7 @@ class YearPicker extends UI5Element {
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			const calDate = CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
-			return calDate.toUTCJSDate().valueOf();
+			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType).valueOf();
 		}
 		return undefined;
 	}
@@ -373,7 +372,7 @@ class YearPicker extends UI5Element {
 		minDate.setYear(1);
 		minDate.setMonth(0);
 		minDate.setDate(1);
-		return minDate.toUTCJSDate().valueOf();
+		return minDate.valueOf();
 	}
 
 	_getMaxCalendarDate() {
@@ -384,7 +383,7 @@ class YearPicker extends UI5Element {
 		tempDate.setDate(1);
 		tempDate.setMonth(tempDate.getMonth() + 1, 0);
 		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
-		return maxDate.toUTCJSDate().valueOf();
+		return maxDate.valueOf();
 	}
 
 	getFormat() {
