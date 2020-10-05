@@ -182,6 +182,12 @@ class SideNavigation extends UI5Element {
 		const treeItem = event.detail.item;
 		const item = treeItem.associatedItem;
 
+		if (!item.hasAttribute("whole-item-toggleable")) {
+			item.fireEvent("click");
+		} else {
+			item.expanded = !item.expanded;
+		}
+
 		if (item.selected && !this.collapsed) {
 			return;
 		}
