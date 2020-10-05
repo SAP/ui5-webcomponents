@@ -68,6 +68,7 @@ const metadata = {
 		 * If this property is set to true, the Dialog will be draggable by its header.
 		 * <br><br>
 		 * <b>Note:</b> The <code>ui5-dialog</code> can be draggable only in desktop mode.
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.9
 		 * @public
