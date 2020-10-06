@@ -1,10 +1,5 @@
-commit ef1fb4065324d0b121d8cbfeb7a6c8ea0e394455
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Oct 5 14:38:55 2020 +0300
+commit ea0439aa501b7d68eb4879583c0e2e5517cf0a55
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Tue Oct 6 06:36:28 2020 +0200
 
-    fix(ui5-input): cancel suggestion selection with ESC (#2289)
-    
-    When the users navigates between the items with UP/DOWN, the value is updated and shows the currently previewed item,
-    Now, the user is able to "cancel" this selection by pressing ESC.
-    
-    FIXES: #2254
+    docs(ui5-dialog): add jsdoc type to draggable attribute (#2300)
