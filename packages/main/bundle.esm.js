@@ -1,6 +1,11 @@
 import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/config/AssetsPath.js";
 // setAssetsPath("/my-resources/");
 
+import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming";
+attachThemeLoaded(theme => {
+	console.log("Theme load complete: ", theme);
+});
+
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
 
@@ -99,7 +104,6 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/dist/Theming";
 
 const testAssets = {
 	configuration : {
@@ -119,6 +123,8 @@ const testAssets = {
 	applyDirection,
 	ResizeHandler,
 	addCustomCSS,
+	attachThemeLoaded,
+	detachThemeLoaded,
 	getIconNames,
 };
 
