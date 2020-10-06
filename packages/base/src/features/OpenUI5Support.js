@@ -78,6 +78,14 @@ const cssVariablesLoaded = () => {
 	return !!link.href.match(/\/css(-|_)variables\.css/);
 };
 
+const modulePathToUrl = path => {
+	if (path.startsWith("sap/")) {
+		return sap.ui.require.toUrl(path);
+	}
+
+	return path;
+};
+
 const OpenUI5Support = {
 	isLoaded,
 	init,
@@ -85,6 +93,7 @@ const OpenUI5Support = {
 	getLocaleDataObject,
 	attachListeners,
 	cssVariablesLoaded,
+	modulePathToUrl,
 };
 
 registerFeature("OpenUI5Support", OpenUI5Support);
