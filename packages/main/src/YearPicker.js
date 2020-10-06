@@ -209,8 +209,8 @@ class YearPicker extends UI5Element {
 			const year = {
 				timestamp: timestamp.toString(),
 				id: `${this._id}-y${timestamp}`,
-				selected: this._selectedDates.some((timestamp) => {
-					const date = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
+				selected: this._selectedDates.some(itemTimestamp => {
+					const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
 					return date.getYear() === oCalDate.getYear();
 				}),
 				year: oYearFormat.format(oCalDate.toLocalJSDate()),
