@@ -236,11 +236,7 @@ class Calendar extends UI5Element {
 
 	onBeforeRendering() {
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType });
-		const minDateParsed = this.minDate && this.getFormat().parse(this.minDate);
-		const maxDateParsed = this.maxDate && this.getFormat().parse(this.maxDate);
 		const firstDayOfCalendarTimeStamp = this._getMinCalendarDate();
-		let currentMonth = 0;
-		let currentYear = 1;
 
 		if ((this.minDate || this.maxDate) && this._timestamp && !this.isInValidRange(this._timestamp * 1000)) {
 			if (this._minDate) {
@@ -258,8 +254,6 @@ class Calendar extends UI5Element {
 		this._oMonth.maxDate = this.maxDate;
 		this._header.monthText = this._oLocaleData.getMonths("wide", this._primaryCalendarType)[this._month];
 		this._header.yearText = oYearFormat.format(this._localDate, true);
-		currentMonth = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getMonth();
-		currentYear = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getYear();
 
 		// month picker
 		this._monthPicker.primaryCalendarType = this._primaryCalendarType;
@@ -274,6 +268,18 @@ class Calendar extends UI5Element {
 
 		this._isShiftingYears = false;
 
+		this._refreshNavigationButtonsState();
+	}
+
+	_refreshNavigationButtonsState() {
+		const minDateParsed = this.minDate && this.getFormat().parse(this.minDate);
+		const maxDateParsed = this.maxDate && this.getFormat().parse(this.maxDate);
+		let currentMonth = 0;
+		let currentYear = 1;
+
+		currentMonth = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getMonth();
+		currentYear = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getYear();
+
 		if (!this._oMonth._hidden) {
 			if (this.minDate
 				&& minDateParsed.getMonth() === currentMonth
@@ -282,7 +288,7 @@ class Calendar extends UI5Element {
 			} else {
 				this._header._isPrevButtonDisabled = false;
 			}
-
+	
 			if (this.maxDate
 				&& maxDateParsed.getMonth() === currentMonth
 				&& maxDateParsed.getFullYear() === currentYear) {
@@ -292,17 +298,36 @@ class Calendar extends UI5Element {
 			}
 		}
 
-		if (!this._yearPicker._hidden) {
-			currentYear = this._yearPicker.timestamp && CalendarDate.fromTimestamp(this._yearPicker.timestamp * 1000).getYear();
+		if (!this._monthPicker._hidden) {
 			if (this.minDate
-				&& (currentYear - minDateParsed.getFullYear()) < 1) {
+				&& currentYear === minDateParsed.getFullYear()) {
 				this._header._isPrevButtonDisabled = true;
 			} else {
 				this._header._isPrevButtonDisabled = false;
 			}
-
+	
 			if (this.maxDate
-				&& (maxDateParsed.getFullYear() - currentYear) < 1) {
+				&& currentYear === maxDateParsed.getFullYear()) {
+				this._header._isNextButtonDisabled = true;
+			} else {
+				this._header._isNextButtonDisabled = false;
+			}
+		}
+	
+		if (!this._yearPicker._hidden) {
+			const cellsFromTheStart = 7;
+			const cellsToTheEnd = 12;
+
+			currentYear = this._yearPicker.timestamp && CalendarDate.fromTimestamp(this._yearPicker.timestamp * 1000).getYear();
+			if (this.minDate
+				&& (currentYear - minDateParsed.getFullYear()) < cellsFromTheStart) {
+				this._header._isPrevButtonDisabled = true;
+			} else {
+				this._header._isPrevButtonDisabled = false;
+			}
+	
+			if (this.maxDate
+				&& (maxDateParsed.getFullYear() - currentYear) < cellsToTheEnd) {
 				this._header._isNextButtonDisabled = true;
 			} else {
 				this._header._isNextButtonDisabled = false;

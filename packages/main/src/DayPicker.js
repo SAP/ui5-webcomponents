@@ -263,13 +263,9 @@ class DayPicker extends UI5Element {
 		let weekday;
 		const _monthsNameWide = this._oLocaleData.getMonths("wide", this._calendarDate._oUDate.sCalendarType);
 
-		if (this.minDate) {
-			this._minDateObject = new Date(this._minDate);
-		}
+		this._minDateObject = new Date(this._minDate);
+		this._maxDateObject = new Date(this._maxDate);
 
-		if (this.maxDate) {
-			this._maxDateObject = new Date(this._maxDate);
-		}
 		/* eslint-disable no-loop-func */
 		for (let i = 0; i < _aVisibleDays.length; i++) {
 			oCalDate = _aVisibleDays[i];
@@ -812,8 +808,12 @@ class DayPicker extends UI5Element {
 		const maxDate = this._maxDateObject;
 
 		currentDate.setHours(0);
-		minDate.setHours(0);
-		maxDate.setHours(0);
+		if (minDate) {
+			minDate.setHours(0);
+		}
+		if (maxDate) {
+			maxDate.setHours(0);
+		}
 
 		return currentDate > maxDate || currentDate < minDate;
 	}
