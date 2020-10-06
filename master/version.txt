@@ -1,5 +1,5 @@
-commit ea0439aa501b7d68eb4879583c0e2e5517cf0a55
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Tue Oct 6 06:36:28 2020 +0200
+commit c8ffb3838d7ad25a188ea970aa1b25c373a75ff0
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Oct 6 11:33:11 2020 +0300
 
-    docs(ui5-dialog): add jsdoc type to draggable attribute (#2300)
+    feat(framework): Add API to subscribe/unsubscribe for theme loaded (#2303)
