@@ -415,21 +415,6 @@ class Calendar extends UI5Element {
 		}
 	}
 
-	_handleSelectedMonthChange(event) {
-		const oNewDate = this._calendarDate;
-		const newMonthIndex = CalendarDate.fromTimestamp(
-			event.detail.timestamp * 1000,
-			this._primaryCalendarType
-		).getMonth();
-
-		oNewDate.setMonth(newMonthIndex);
-		this.timestamp = oNewDate.valueOf() / 1000;
-
-		this._hideMonthPicker();
-
-		this._focusFirstDayOfMonth(oNewDate);
-	}
-
 	_focusFirstDayOfMonth(targetDate) {
 		let fistDayOfMonthIndex = -1;
 
@@ -443,22 +428,36 @@ class Calendar extends UI5Element {
 		});
 
 		dayPicker._itemNav.currentIndex = fistDayOfMonthIndex;
-		dayPicker._itemNav.focusCurrent();
+	}
+
+	_handleSelectedMonthChange(event) {
+		const oNewDate = this._calendarDate;
+		const oFocusedDate = CalendarDate.fromTimestamp(event.detail.timestamp * 1000, this._primaryCalendarType);
+
+		oNewDate.setMonth(oFocusedDate.getMonth());
+		this.timestamp = oNewDate.valueOf() / 1000;
+		this._monthPicker.timestamp = this.timestamp;
+
+		this._hideMonthPicker();
+		this._focusCurrentDate(oNewDate);
 	}
 
 	_handleSelectedYearChange(event) {
-		const oNewDate = CalendarDate.fromTimestamp(
-			event.detail.timestamp * 1000,
-			this._primaryCalendarType
-		);
-		oNewDate.setMonth(0);
-		oNewDate.setDate(1);
+		const oNewDate = this._calendarDate;
+		const oFocusedDate = CalendarDate.fromTimestamp(event.detail.timestamp * 1000, this._primaryCalendarType);
 
+		oNewDate.setYear(oFocusedDate.getYear());
 		this.timestamp = oNewDate.valueOf() / 1000;
+		this._yearPicker.timestamp = this.timestamp;
 
 		this._hideYearPicker();
+		this._focusCurrentDate(oNewDate);
+	}
 
-		this._focusFirstDayOfMonth(oNewDate);
+	_focusCurrentDate(currentDate) {
+		const dayPicker = this.shadowRoot.querySelector("[ui5-daypicker]");
+		const currentDateIndex = dayPicker._getVisibleDays(currentDate).findIndex(date => date.valueOf() === currentDate.valueOf());
+		dayPicker._itemNav.currentIndex = currentDateIndex;
 	}
 
 	_handleMonthButtonPress() {
@@ -651,6 +650,14 @@ class Calendar extends UI5Element {
 
 		this._calendarWidth = calendarRect.width.toString();
 		this._calendarHeight = calendarRect.height.toString();
+
+		const monthPicker = this.shadowRoot.querySelector("[ui5-monthpicker]");
+		monthPicker._selectedDates = [...this.selectedDates];
+		const currentMonthIndex = monthPicker._itemNav._getItems().findIndex(item => {
+			const calDate = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000, this._primaryCalendarType);
+			return calDate.getMonth() === this._calendarDate.getMonth();
+		});
+		monthPicker._itemNav.currentIndex = currentMonthIndex;
 	}
 
 	_showYearPicker() {
@@ -666,6 +673,14 @@ class Calendar extends UI5Element {
 
 		this._calendarWidth = calendarRect.width.toString();
 		this._calendarHeight = calendarRect.height.toString();
+
+		const yearPicker = this.shadowRoot.querySelector("[ui5-yearpicker]");
+		yearPicker._selectedDates = [...this.selectedDates];
+		const currentYearIndex = yearPicker._itemNav._getItems().findIndex(item => {
+			const calDate = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000, this._primaryCalendarType);
+			return calDate.getYear() === this._calendarDate.getYear();
+		});
+		yearPicker._itemNav.currentIndex = currentYearIndex;
 	}
 
 	_hideMonthPicker() {

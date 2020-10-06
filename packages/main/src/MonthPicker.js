@@ -63,6 +63,11 @@ const metadata = {
 			type: String,
 		},
 
+		_selectedDates: {
+			type: Integer,
+			multiple: true,
+		},
+
 		_quarters: {
 			type: Object,
 			multiple: true,
@@ -161,13 +166,16 @@ class MonthPicker extends UI5Element {
 			ItemNavigation.BORDER_REACH,
 			this._handleItemNavigationBorderReach.bind(this)
 		);
+
+		this._selectedDates = [];
 	}
 
 	onBeforeRendering() {
 		const quarters = [];
-		const oCalDate = CalendarDate.fromTimestamp(new Date().getTime(), this._primaryCalendarType);
+		const oCalDate = this._calendarDate;
 		let timestamp;
 
+		/* eslint-disable no-loop-func */
 		for (let i = 0; i < 12; i++) {
 			oCalDate.setMonth(i);
 			timestamp = oCalDate.valueOf() / 1000;
@@ -175,11 +183,12 @@ class MonthPicker extends UI5Element {
 			const month = {
 				timestamp: timestamp.toString(),
 				id: `${this._id}-m${i}`,
+				selected: this._selectedDates.some(d => d === timestamp),
 				name: this._oLocaleData.getMonths("wide", this._primaryCalendarType)[i],
 				classes: "ui5-mp-item",
 			};
 
-			if (this._month === i) {
+			if (month.selected) {
 				month.classes += " ui5-mp-item--selected";
 			}
 
@@ -231,8 +240,8 @@ class MonthPicker extends UI5Element {
 	_onmousedown(event) {
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
 			const targetTimestamp = this.getTimestampFromDOM(event.target);
-			const focusedItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === targetTimestamp);
-			this._itemNav.currentIndex = this._itemNav._getItems().indexOf(focusedItem);
+			const focusedItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === targetTimestamp);
+			this._itemNav.currentIndex = focusedItemIndex;
 			this._itemNav.focusCurrent();
 		}
 	}
