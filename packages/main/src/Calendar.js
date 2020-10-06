@@ -288,7 +288,7 @@ class Calendar extends UI5Element {
 			} else {
 				this._header._isPrevButtonDisabled = false;
 			}
-	
+
 			if (this.maxDate
 				&& maxDateParsed.getMonth() === currentMonth
 				&& maxDateParsed.getFullYear() === currentYear) {
@@ -305,7 +305,7 @@ class Calendar extends UI5Element {
 			} else {
 				this._header._isPrevButtonDisabled = false;
 			}
-	
+
 			if (this.maxDate
 				&& currentYear === maxDateParsed.getFullYear()) {
 				this._header._isNextButtonDisabled = true;
@@ -313,7 +313,7 @@ class Calendar extends UI5Element {
 				this._header._isNextButtonDisabled = false;
 			}
 		}
-	
+
 		if (!this._yearPicker._hidden) {
 			const cellsFromTheStart = 7;
 			const cellsToTheEnd = 12;
@@ -325,7 +325,7 @@ class Calendar extends UI5Element {
 			} else {
 				this._header._isPrevButtonDisabled = false;
 			}
-	
+
 			if (this.maxDate
 				&& (maxDateParsed.getFullYear() - currentYear) < cellsToTheEnd) {
 				this._header._isNextButtonDisabled = true;
