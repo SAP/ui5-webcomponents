@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.4](https://github.com/SAP/ui5-webcomponents/compare/v0.23.3...v0.23.4) (2020-10-06)
+
+
+### Bug Fixes
+
+* **framework:** don't create IE styles with disabled ([#2284](https://github.com/SAP/ui5-webcomponents/issues/2284)) ([abe3b38](https://github.com/SAP/ui5-webcomponents/commit/abe3b38))
+
+
+### Features
+
+* **framework:** add limited support for campact size on IE ([#2230](https://github.com/SAP/ui5-webcomponents/issues/2230)) ([72bfd84](https://github.com/SAP/ui5-webcomponents/commit/72bfd84))
+* **framework:** make _property-change publicly available ([#2201](https://github.com/SAP/ui5-webcomponents/issues/2201)) ([ff54e3f](https://github.com/SAP/ui5-webcomponents/commit/ff54e3f))
+* **framework:** make assets path configurable ([#2214](https://github.com/SAP/ui5-webcomponents/issues/2214)) ([a513a02](https://github.com/SAP/ui5-webcomponents/commit/a513a02))
+* **framework:** add API to subscribe/unsubscribe for theme loaded ([#2303](https://github.com/SAP/ui5-webcomponents/issues/2303))
+
+
+
+
 ## [0.23.3](https://github.com/SAP/ui5-webcomponents/compare/v0.23.2...v0.23.3) (2020-09-28)
 
 
