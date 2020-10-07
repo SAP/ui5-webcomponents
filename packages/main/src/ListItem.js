@@ -73,7 +73,6 @@ const metadata = {
 		_mode: {
 			type: ListMode,
 			defaultValue: ListMode.None,
-			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
