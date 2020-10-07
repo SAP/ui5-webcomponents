@@ -66,11 +66,11 @@
 }
 
 :host([image]) .ui5-li-content {
-	height: 3rem;;
+	height: 3rem;
 }
 
 :host([description]) .ui5-li-content {
-	height: 3rem;;
+	height: 3rem;
 }
 
 :host([has-title][description]) .ui5-li-title {
