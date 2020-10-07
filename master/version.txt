@@ -1,5 +1,5 @@
-commit c8ffb3838d7ad25a188ea970aa1b25c373a75ff0
+commit efe8b4009d6635545f5d3031a2a1fd8b2025b741
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Oct 6 11:33:11 2020 +0300
+Date:   Wed Oct 7 16:04:54 2020 +0300
 
-    feat(framework): Add API to subscribe/unsubscribe for theme loaded (#2303)
+    chore: fix failing test (#2312)
