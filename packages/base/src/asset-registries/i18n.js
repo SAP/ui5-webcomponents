@@ -5,7 +5,7 @@ import { fetchTextOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
-import getEffectiveAssetPath from "../util/getEffectiveAssetPath.js";
+import { getEffectiveAssetPath } from "../util/EffectiveAssetPath.js";
 import { getUseDefaultLanguage } from "../config/Language.js";
 
 const bundleData = new Map();
