@@ -1,0 +1,17 @@
+<div
+	class="ui5-slider-root"	
+	@input="{{_handleInput}}"
+	@change="{{_handleChange}}"
+	@mousedown="{{_handleDown}}"
+	@keyup="{{_onkeyup}}"
+	@click={{_click}}
+>
+	<div class="ui5-slider-inner">
+		<div class="ui5-slider-progress-container">
+			<div class="ui5-slider-progress"></div>
+		</div>
+		<div class="ui5-slider-tickmarks"></div>
+		<div class="ui5-slider-handle"></div>
+	</div>
+
+</div>

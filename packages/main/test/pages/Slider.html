@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Label</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		html,
+		body {
+			margin: 0;
+		}
+
+		.group {
+			padding: 1rem;
+		}
+	</style>
+</head>
+
+	<body style="background-color: var(--sapBackgroundColor);">
+		<section class="group">
+			<h2>Basic Slider</h2>
+			<ui5-slider id="basic-slider" min="0" max="10"></ui5-slider>
+			<h2>Slider with tickmarks</h2>
+			<ui5-slider id="tickmarks-slider" min="0" max="100" step="2" tickmarks></ui5-slider>
+			<h2>Slider with many steps and small width</h2>
+			<ui5-slider id="small-slider" min="0" max="100" step="1" style="width: 300px;"></ui5-slider>
+			<h2>Smooth slider with no steps</h2>
+			<ui5-slider id="smooth-slider" min="0" max="100" step="0"></ui5-slider>
+		</section>
+	</body>
+</html>
