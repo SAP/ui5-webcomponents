@@ -222,7 +222,7 @@ describe("Input general interaction", () => {
 		suggestionsInput.click();
 		suggestionsInput.keys("ch");
 		suggestionsInput.keys("ArrowDown");
-	
+
 		// assert
 		assert.strictEqual(suggestionsInput.getValue(), "Chromium",
 			"The value is updated as the item has been previewed.");
@@ -331,7 +331,7 @@ describe("Input general interaction", () => {
 
 		browser.pause(500);
 
-		assert.strictEqual(parseFloat(input.getProperty("value")), 1.22, "Value is not lost");
+		assert.strictEqual(parseFloat(input.getProperty("value")).toPrecision(3), "1.22", "Value is not lost");
 	});
 
 	it("fires suggestion-item-preview", () => {
