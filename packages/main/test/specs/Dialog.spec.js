@@ -68,7 +68,8 @@ describe("Dialog general interaction", () => {
 		assert.notStrictEqual(topBeforeDragging, topAfterDragging, "top position has changed");
 		assert.notStrictEqual(leftBeforeDragging, leftAfterDragging, "left position has changed");
 
-		browser.keys("Enter");
+		const closeDraggableDialogButton = browser.$("#draggable-close");
+		closeDraggableDialogButton.click();
 
 		openDraggableDialogButton.click();
 
@@ -78,10 +79,10 @@ describe("Dialog general interaction", () => {
 		assert.strictEqual(topBeforeDragging, topAfterReopening, "top position has been reset back to initial");
 		assert.strictEqual(leftBeforeDragging, leftAfterReopening, "left position has been reset back to initial");
 
-		browser.keys("esc");
+		closeDraggableDialogButton.click();
 	});
 
-	it.only("resizable", () => {
+	it("resizable", () => {
 		const openResizableDialogButton = browser.$("#resizable-open");
 		openResizableDialogButton.click();
 
@@ -99,7 +100,9 @@ describe("Dialog general interaction", () => {
 		assert.notStrictEqual(widthBeforeResizing, widthAfterResizing, "width has changed");
 		assert.notStrictEqual(heightBeforeResizing, heightAfterResizing, "height has changed");
 
-		browser.keys("Enter");
+		const closeResizableDialogButton = browser.$("#resizable-close");
+		closeResizableDialogButton.click();
+
 		openResizableDialogButton.click();
 
 		const widthAfterReopening = parseInt(dialog.getCSSProperty("width").value);
@@ -108,7 +111,9 @@ describe("Dialog general interaction", () => {
 		assert.strictEqual(widthBeforeResizing, widthAfterReopening, "width has been reset back to initial");
 		assert.strictEqual(heightBeforeResizing, heightAfterReopening, "height has been reset back to initial");
 
-		browser.keys("esc");
+		closeResizableDialogButton.click();
+
+		browser.debug();
 	});
 });
 

@@ -1,7 +1,5 @@
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Popup from "./Popup.js";
-
-// Dependencies
 import "@ui5/webcomponents-icons/dist/icons/resize-corner.js";
 import Icon from "./Icon.js";
 
@@ -88,6 +86,7 @@ const metadata = {
 		 * <b>Note:</b> The <code>ui5-dialog</code> can be resizable only in desktop mode.
 		 * <br>
 		 * <b>Note:</b> Upon resizing, externally defined height and width styling will be ignored.
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.10
 		 * @public
@@ -198,12 +197,12 @@ class Dialog extends Popup {
 	}
 
 	onBeforeRendering() {
+		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
 	}
 
 	onEnterDOM() {
-		this._isRTL = this.effectiveDir === "rtl";
 		this._dragMouseMoveHandler = this._onDragMouseMove.bind(this);
 		this._dragMouseUpHandler = this._onDragMouseUp.bind(this);
 
