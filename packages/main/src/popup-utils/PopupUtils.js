@@ -69,16 +69,20 @@ const getClosedPopupParent = el => {
 	return getClosedPopupParent(parent);
 };
 
-
 const getNextZIndex = () => {
 	currentZIndex += 2;
 	return currentZIndex;
+};
+
+const setZIndex = index => {
+	currentZIndex = index;
 };
 
 export {
 	getFocusedElement,
 	isClickInRect,
 	getClosedPopupParent,
+	setZIndex,
 	getNextZIndex,
 	isFocusedElementWithinNode,
 };
