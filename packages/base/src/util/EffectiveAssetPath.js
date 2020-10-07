@@ -1,20 +1,20 @@
 import { getAssetsPath } from "../config/AssetsPath.js";
 
-let assetPathMappingFn = assetPath => assetPath;
+let assetPathMappingFn = assetName => assetName;
 
-const getEffectiveAssetPath = asset => {
-	if (typeof asset !== "string") {
-		return asset;
+const getEffectiveAssetPath = assetName => {
+	if (typeof assetName !== "string") {
+		return assetName;
 	}
 
-	asset = assetPathMappingFn(asset);
+	assetName = assetPathMappingFn(assetName);
 
-	const assetsPath = getAssetsPath();
-	if (assetsPath) {
-		return `${assetsPath}${asset}`;
+	const assetsPathPrefix = getAssetsPath();
+	if (assetsPathPrefix) {
+		return `${assetsPathPrefix}${assetName}`;
 	}
 
-	return asset;
+	return assetName;
 };
 
 const registerAssetPathMappingFunction = mappingFn => {
