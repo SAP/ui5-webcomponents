@@ -330,7 +330,6 @@ describe("Input general interaction", () => {
 		input.keys("Tab");
 
 		browser.pause(500);
-
 		assert.strictEqual(parseFloat(input.getProperty("value")).toPrecision(3), "1.22", "Value is not lost");
 	});
 
