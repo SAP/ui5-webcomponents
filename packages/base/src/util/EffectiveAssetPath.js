@@ -1,15 +1,13 @@
 import { getAssetsPath } from "../config/AssetsPath.js";
-import { getFeature } from "../FeaturesRegistry.js";
+
+let assetPathMappingFn = assetPath => assetPath;
 
 const getEffectiveAssetPath = asset => {
 	if (typeof asset !== "string") {
 		return asset;
 	}
 
-	const OpenUI5Support = getFeature("OpenUI5Support");
-	if (OpenUI5Support) {
-		asset = OpenUI5Support.modulePathToUrl(asset);
-	}
+	asset = assetPathMappingFn(asset);
 
 	const assetsPath = getAssetsPath();
 	if (assetsPath) {
@@ -19,4 +17,11 @@ const getEffectiveAssetPath = asset => {
 	return asset;
 };
 
-export default getEffectiveAssetPath;
+const registerAssetPathMappingFunction = mappingFn => {
+	assetPathMappingFn = mappingFn;
+};
+
+export {
+	getEffectiveAssetPath,
+	registerAssetPathMappingFunction,
+};

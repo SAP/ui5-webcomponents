@@ -9,6 +9,10 @@ attachThemeLoaded(theme => {
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
 
+// Convert OpenUI5 asset paths to real paths
+import { registerAssetPathMappingFunction } from "@ui5/webcomponents-base/dist/util/EffectiveAssetPath.js";
+registerAssetPathMappingFunction(path => path.startsWith("sap/") ? sap.ui.require.toUrl(path) : path);
+
 // Calendars
 import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
