@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
@@ -98,7 +97,7 @@ const metadata = {
 		 * @public
 		 */
 		disabled: {
-			type: Boolean
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Slider.prototype */ {
@@ -136,18 +135,6 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
- * The <code>ui5-label</code> is a component used to represent a label,
- * providing valuable information to the user.
- * Usually it is placed next to a value holder, such as a text field.
- * It informs the user about what data is displayed or expected in the value holder.
- * <br><br>
- * The <code>ui5-label</code> appearance can be influenced by properties,
- * such as <code>required</code> and <code>wrap</code>.
- * The appearance of the Label can be configured in a limited way by using the design property.
- * For a broader choice of designs, you can use custom styles.
- *
- * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Label";</code>
  *
@@ -199,17 +186,18 @@ class Slider extends UI5Element {
 	 * Called when the user starts interacting with the slider
 	 */
 	_handleDown(event) {
-		let _this = this;
+		const _this = this;
 
 		if (this.disabled) {
 			return;
 		}
 
 		this.boundingDOMRect = this.getBoundingClientRect();
-		const moveHandler = function (moveEvent) {
+		const moveHandler = moveEvent => {
 			_this._handleMove(moveEvent);
 		};
-		const upHandler = function () {
+
+		const upHandler = () => {
 			_this._handleUp();
 			_this.removeEventListener("mouseup", upHandler);
 			document.body.removeEventListener("mousemove", moveHandler);
@@ -230,23 +218,23 @@ class Slider extends UI5Element {
 	 */
 	_handleMove(event) {
 		event.preventDefault();
-		console.warn("move");
+		// console.warn("move");
 
 		this._calculateValueFromInteraction(event);
-	};
+	}
 
 	_handleUp() {
-		console.warn("up");
-	};
+		// console.warn("up");
+	}
 
 	/**
 	 * Sets the slider value from an event
 	 */
 	_calculateValueFromInteraction(event) {
-		let pageX = this._getPageXValueFromEvent(event);
-		let value = this._computeValueFromPageX(pageX);
+		const pageX = this._getPageXValueFromEvent(event);
+		const value = this._computeValueFromPageX(pageX);
 		this._setValue(value, true);
-	};
+	}
 
 	/**
 	 * Gets pageX value from event on user interaction with the Slider
@@ -257,56 +245,60 @@ class Slider extends UI5Element {
 		}
 		return event.pageX;
 	}
-	
+
 	_setValue(value) {
-		let min = this.min, max = this.max, step = this.step;
+		const min = this.min;
+		const max = this.max;
+		const step = this.step;
 
 		// "Stepihfy" the raw value - calculate a step value
 		if (this.step !== 0) {
-			let numSteps = Math.round(value / this.step);
-			value = numSteps * this.step;
+			const numSteps = Math.round(value / step);
+			value = numSteps * step;
 		}
 
 		// Normalize value
 		if (value < min) {
 			value = min;
-		}
-		else if (value > max) {
+		} else if (value > max) {
 			value = max;
 		}
 
-		this.value = value;
 		this._updateUI();
+		// this.debounce(() => this.value = value, 100);
 	}
 
 	/**
 	 * Computes the new value (in %) from the pageX position of the cursor
 	 */
 	_computeValueFromPageX(pageX) {
-		let max = this.max, min = this.min;
+		const max = this.max;
+		const min = this.min;
 
 		// Determine pageX position relative to the Slider DOM
-		let xPositionRelative = pageX - this.boundingDOMRect.left;
+		const xPositionRelative = pageX - this.boundingDOMRect.left;
 		// Calculate the percentage complete (the "progress")
-		let percentageComplete = xPositionRelative / this.boundingDOMRect.width;
+		const percentageComplete = xPositionRelative / this.boundingDOMRect.width;
 
-		//TODO RTL support?
+		// TODO RTL support?
 
 		// Fit (map) the complete percentage between the min/max value range
 		return min + percentageComplete * (max - min);
-	};
-	
+	}
+
 	_updateUI() {
-		let max = this.max, min = this.min, value = this.value;
-		let percentageComplete = (value - min) / (max - min);
-		let translatePx = percentageComplete * this.boundingDOMRect.width;
+		const max = this.max;
+		const min = this.min;
+		const value = this.value;
+		const percentageComplete = (value - min) / (max - min);
+		const translatePx = percentageComplete * this.boundingDOMRect.width;
 
 		// Update the position of the handle depending on the value
 		// Center the Slider Handle position under the cursor/pointer
-		this.shadowRoot.querySelector(".ui5-slider-handle").style.setProperty("left", translatePx + "px");
-		this.shadowRoot.querySelector(".ui5-slider-progress").style.setProperty("transform", "scaleX(" + percentageComplete + ")");
-	};
-	
+		this.shadowRoot.querySelector(".ui5-slider-handle").style.setProperty("left", `${translatePx}px`);
+		this.shadowRoot.querySelector(".ui5-slider-progress").style.setProperty("transform", `scaleX(${percentageComplete})`);
+	}
+
 	/**
 	 * Calculates and draws the tickmarks with a CSS gradient style
 	 */
@@ -331,29 +323,35 @@ class Slider extends UI5Element {
 		const tickmarksBackground = `${tickmarksGradientBase + tickmarksGradientdPattern}`;
 
 		// Apply the style to the container
-		this.shadowRoot.querySelector(".ui5-slider-tickmarks").style.setProperty('background', tickmarksBackground);
-	};
+		this.shadowRoot.querySelector(".ui5-slider-tickmarks").style.setProperty("background", tickmarksBackground);
+	}
 
 	setStep(step) {
-		if (typeof step !== 'number' || step < 0) {
+		if (typeof step !== "number" || step < 0) {
 			step = 1;
 		}
-
 		this.step = step;
-	};
+	}
 
 	onBeforeRendering() {
 		if (this.step !== 1) {
-			this.setStep(this.step)
+			this.setStep(this.step);
 		}
-	};
+	}
 
 	onAfterRendering() {
 		if (this.step && this.tickmarks) {
 			this.drawDefaultTickmarks(this.step, this.max, this.min);
 		}
-	};
+	}
 
+	debounce(fn, delay) {
+		clearTimeout(this.debounceFn);
+		this.debounceFn = setTimeout(() => {
+			this.debounceFn = null;
+			fn();
+		}, delay);
+	}
 }
 
 Slider.define();

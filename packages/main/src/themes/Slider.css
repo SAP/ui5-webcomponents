@@ -75,20 +75,21 @@
 	height: 1rem;
 	top: -0.35rem;
 }
-
+/* 
 .ui5-slider-marker {
-	/* display: inline-block;
+	display: inline-block;
 	height: 1rem;
 	border-left: 0.0625rem solid #000;
-	margin: 0.4375rem 0 0 -0.0625rem; */
-}
+	margin: 0.4375rem 0 0 -0.0625rem;
+} 
+*/
 
 .ui5-slider-handle {
 	margin-left: -1rem;
 	top: -0.91rem;
 	height: 1.75rem;
 	width: 1.75rem;
-	direction: ltr;
+	direction: ltr; 
 	border-radius: 1rem;
 	background: #FFF;
 	border: solid 0.125rem #89919a;
