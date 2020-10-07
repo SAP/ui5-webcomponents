@@ -112,8 +112,6 @@ describe("Dialog general interaction", () => {
 		assert.strictEqual(heightBeforeResizing, heightAfterReopening, "height has been reset back to initial");
 
 		closeResizableDialogButton.click();
-
-		browser.debug();
 	});
 });
 
