@@ -1,5 +1,9 @@
-commit de2d07f15d2b7b25cf66ecb73aa917314e3d44b6
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Oct 8 10:23:49 2020 +0300
+commit 990318b07d4ec8fbcca70d3a7197c5f1c9d1e0c8
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Oct 8 12:19:17 2020 +0300
 
-    feat(ui5-shellbar): implement root part (#2299)
+    Revert "fix(ui5-combobox): allow setting value with javascript (#2253)" (#2325)
+    
+    Reverts #2253 as the change causes degradation in the component behavior.
+    
+    FIXES #2321
