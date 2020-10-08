@@ -1,5 +1,7 @@
-commit efe8b4009d6635545f5d3031a2a1fd8b2025b741
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Oct 7 16:04:54 2020 +0300
+commit a98c6bd3f34d817aa61a01999e431c9da92597ea
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Oct 8 07:49:14 2020 +0300
 
-    chore: fix failing test (#2312)
+    fix(ui5-input): deselect suggestion items on input (#2285)
+    
+    Fixes #2256
