@@ -1,6 +1,6 @@
 import { registerIcon, registerCollectionPromise } from "../SVGIconRegistry.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";
-import getEffectiveAssetPath from "../util/getEffectiveAssetPath.js";
+import { getEffectiveAssetPath } from "../util/EffectiveAssetPath.js";
 
 const registerIconBundle = async (collectionName, bundleData) => {
 	let resolveFn;
