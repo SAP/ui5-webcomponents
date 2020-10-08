@@ -301,6 +301,13 @@ class Suggestions {
 		}
 	}
 
+	_deselectItems() {
+		const items = this._getItems();
+		items.forEach(item => {
+			item.selected = false;
+		});
+	}
+
 	_isItemIntoView(item) {
 		const rectItem = item.getDomRef().getBoundingClientRect();
 		const rectInput = this._getComponent().getDomRef().getBoundingClientRect();
