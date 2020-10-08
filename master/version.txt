@@ -1,5 +1,10 @@
-commit 72033bc133d9a318adf7589827d47b6c78c4f438
+commit f9b9eadb8d49048cb90b89dfe17ffcca9ea13936
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Oct 8 15:52:51 2020 +0300
+Date:   Thu Oct 8 18:30:04 2020 +0300
 
-    chore: fix memory leak in NativeResize detachEventHandler (#2320)
+    fix: fix JS error on setLanguage call (#2328)
+    
+    When there is a component that uses CLDR and someone calls **setLanguage**,
+    this causes the webcomponents to re-render and recalculate their state and it turns out that the CLDR for the newly set language is missing and JS error is thrown ("Error: CLDR data for locale de is not loaded").
+    Currently, this can be seen in our "RTL.html" page, if we add a DatePicker and then use the buttons on the page to change the language. This PR ensures that upon setLanguage, the CLDR is fetched/updated before the re-rendering.
+    On the other hand, there is **applyDirection** API that also force re-rendering, that if used together with setLanguage, should wait for the setLanguage to complete to allow the message bundles (although they won't fail with JS error) and CLDR to load.
