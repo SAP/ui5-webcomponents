@@ -1,5 +1,5 @@
-commit 083363ab5b400af13714aaef0e2915079e18c781
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Oct 8 14:07:32 2020 +0300
+commit d69fbcbf160cbdbb9b50900af6cf6f353e335eed
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Oct 8 14:49:49 2020 +0300
 
-    chore: release 1.0.0-rc.9 (#2327)
+    fix(icons): Fix text-formatting icon (#2326)
