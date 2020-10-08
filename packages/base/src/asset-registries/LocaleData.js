@@ -1,7 +1,7 @@
 import { fetchJsonOnce } from "../util/FetchHelper.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.js";
-import getEffectiveAssetPath from "../util/getEffectiveAssetPath.js";
+import { getEffectiveAssetPath } from "../util/EffectiveAssetPath.js";
 
 const resources = new Map();
 const cldrData = {};
