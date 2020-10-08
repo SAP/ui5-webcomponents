@@ -183,7 +183,7 @@ class Slider extends UI5Element {
 
 	}
 
-	// TODO Include touch/pointer events, keyboard handling
+	// TODO Include touch/pointer events, keyboard handling, include more comments for better readibility, refactor it, improve formatiting
 	/**
 	 * Called when the user starts interacting with the slider
 	 */
@@ -225,6 +225,7 @@ class Slider extends UI5Element {
 		}
 
 		this._updateUI(newValue);
+
 		if (this.valueAffected === "startValue") {
 			this._setValue(newValue);
 		} else {
