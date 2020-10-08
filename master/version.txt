@@ -1,5 +1,5 @@
-commit d69fbcbf160cbdbb9b50900af6cf6f353e335eed
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Oct 8 14:49:49 2020 +0300
+commit 72033bc133d9a318adf7589827d47b6c78c4f438
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Oct 8 15:52:51 2020 +0300
 
-    fix(icons): Fix text-formatting icon (#2326)
+    chore: fix memory leak in NativeResize detachEventHandler (#2320)
