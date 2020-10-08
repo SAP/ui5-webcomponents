@@ -10,8 +10,18 @@
 		<div class="ui5-slider-progress-container">
 			<div class="ui5-slider-progress"></div>
 		</div>
-		<div class="ui5-slider-tickmarks"></div>
+
+		{{#if tickmarks}}
+			{{#if step}}
+				<div class="ui5-slider-tickmarks"></div>
+			{{/if}}
+		{{/if}}
+
 		<div class="ui5-slider-handle"></div>
+		{{#if endValue}}
+			<div class="ui5-slider-end-handle"></div>
+		{{/if}}
+
 	</div>
 
 </div>

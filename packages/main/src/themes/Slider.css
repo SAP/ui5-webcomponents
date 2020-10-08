@@ -75,16 +75,8 @@
 	height: 1rem;
 	top: -0.35rem;
 }
-/* 
-.ui5-slider-marker {
-	display: inline-block;
-	height: 1rem;
-	border-left: 0.0625rem solid #000;
-	margin: 0.4375rem 0 0 -0.0625rem;
-} 
-*/
 
-.ui5-slider-handle {
+.ui5-slider-handle, .ui5-slider-end-handle {
 	margin-left: -1rem;
 	top: -0.91rem;
 	height: 1.75rem;
@@ -95,14 +87,4 @@
 	border: solid 0.125rem #89919a;
 	opacity: 0.5;
 	position: absolute;
-}
-
-.ui5-slider-handle:before {
-	content: '';
-	position: absolute;
-	width: 100%;
-	left: 50%;
-	top: 40%;
-	transform: translate(-50%, -50%);
-	cursor: pointer;
 }
