@@ -1,7 +1,5 @@
-commit a98c6bd3f34d817aa61a01999e431c9da92597ea
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Oct 8 07:49:14 2020 +0300
+commit 5b78c1e3a04ed3abbbf1d48bef914aaa6533462b
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Oct 8 09:50:57 2020 +0300
 
-    fix(ui5-input): deselect suggestion items on input (#2285)
-    
-    Fixes #2256
+    chore(tools): Upgrade Chromedriver to 86 (#2316)
