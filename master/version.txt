@@ -1,5 +1,5 @@
-commit 5b78c1e3a04ed3abbbf1d48bef914aaa6533462b
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Oct 8 09:50:57 2020 +0300
+commit de2d07f15d2b7b25cf66ecb73aa917314e3d44b6
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Oct 8 10:23:49 2020 +0300
 
-    chore(tools): Upgrade Chromedriver to 86 (#2316)
+    feat(ui5-shellbar): implement root part (#2299)
