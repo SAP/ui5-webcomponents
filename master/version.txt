@@ -1,9 +1,7 @@
-commit 990318b07d4ec8fbcca70d3a7197c5f1c9d1e0c8
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Oct 8 12:19:17 2020 +0300
+commit df6c972614220e8f4ea666f04f74c9c9cb8c5969
+Author: Pavel Kornev <pavelkornev@gmail.com>
+Date:   Thu Oct 8 12:53:46 2020 +0200
 
-    Revert "fix(ui5-combobox): allow setting value with javascript (#2253)" (#2325)
+    fix(ui5-switch): fix focus border position (#2319)
     
-    Reverts #2253 as the change causes degradation in the component behavior.
-    
-    FIXES #2321
+    This change fixes the wrong focus border position.It's 2px more from the right side because the border itself is not considered.
