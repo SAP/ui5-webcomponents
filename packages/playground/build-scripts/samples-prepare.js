@@ -12,14 +12,6 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-  "FlexibleColumnLayout",
-  "NotificationListItem",
-  "NotificationListGroupItem",
-  "UploadCollection",
-  "Tree",
-  "RatingIndicator",
-  "SideNavigation",
-	"ProgressIndicator",
 	"MultiInput"
 ];
 
