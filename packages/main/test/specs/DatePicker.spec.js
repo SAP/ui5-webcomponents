@@ -726,6 +726,16 @@ describe("Date Picker Tests", () => {
 		assert.ok(datepicker.getDisplayedDay(14).isFocusedDeep(), "Days out of range are disabled");
 	});
 
+	it("Min and Max date are included in the interval", () => {
+		datepicker.id = "#dp33";
+
+		datepicker.root.keys("Escape");
+		datepicker.openPicker({ focusInput: false });
+
+		assert.equal(datepicker.getDisplayedDay(9).hasClass("ui5-dp-item--disabled"), false , "Min date is included");
+		assert.equal(datepicker.getDisplayedDay(11).hasClass("ui5-dp-item--disabled"), false, "Max date is included");
+	});
+
 	it("Tests week numbers column visibility", () => {
 		// act
 		datepicker.id = "#dp18";

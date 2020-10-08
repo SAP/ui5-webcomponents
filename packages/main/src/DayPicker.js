@@ -29,8 +29,8 @@ import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calc
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
-import RenderScheduler from "../../base/src/RenderScheduler.js";
 
 import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
@@ -255,6 +255,7 @@ class DayPicker extends UI5Element {
 			lastWeekNumber = -1,
 			isDaySelected = false,
 			todayIndex = 0;
+
 		const _aVisibleDays = this._getVisibleDays(this._calendarDate);
 		this._weeks = [];
 		let week = [];
@@ -453,7 +454,8 @@ class DayPicker extends UI5Element {
 		}
 
 		if (isSpace(event)) {
-			return this._handleSpace(event);
+			event.preventDefault();
+			return;
 		}
 
 		if (isHomeCtrl(event)) {
@@ -478,6 +480,12 @@ class DayPicker extends UI5Element {
 
 		if (isPageDownShiftCtrl(event)) {
 			this._changeYears(event, true, 10);
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this._handleSpace(event);
 		}
 	}
 
@@ -800,8 +808,14 @@ class DayPicker extends UI5Element {
 
 	_isOutOfSelectableRange(date) {
 		const currentDate = date._oUDate ? date.toLocalJSDate() : CalendarDate.fromTimestamp(date).toLocalJSDate();
+		const minDate = this._minDateObject;
+		const maxDate = this._maxDateObject;
 
-		return currentDate > this._maxDateObject || currentDate < this._minDateObject;
+		currentDate.setHours(0);
+		minDate.setHours(0);
+		maxDate.setHours(0);
+
+		return currentDate > maxDate || currentDate < minDate;
 	}
 
 	get _maxDate() {

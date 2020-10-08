@@ -26,8 +26,8 @@ describe("Dialog general interaction", () => {
 		btnOpenDialog.click();
 		select.click();
 
-		const dialogZIndex = parseInt(browser.$("#dialog").getCSSProperty('z-index').value);
-		const popoverZIndex = parseInt(browser.$(`.${select.getProperty("_id")}`).shadow$("ui5-responsive-popover").getCSSProperty('z-index').value);
+		const dialogZIndex = parseInt(browser.$("#dialog").getCSSProperty("z-index").value);
+		const popoverZIndex = parseInt(browser.$(`.${select.getProperty("_id")}`).shadow$("ui5-responsive-popover").getCSSProperty("z-index").value);
 
 		assert.ok(popoverZIndex > dialogZIndex, "Popover is above dialog.");
 	});
@@ -46,6 +46,39 @@ describe("Dialog general interaction", () => {
 		closeDialogButton.click();
 
 		assert.ok(!browser.$("ui5-static-area").length, "No static area.");
+	});
+
+	it("draggable", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+
+		const openDraggableDialogButton = browser.$("#draggable-open");
+		openDraggableDialogButton.click();
+
+		const dialog = browser.$("#draggable-dialog");
+		const topBeforeDragging = parseInt(dialog.getCSSProperty("top").value);
+		const leftBeforeDragging = parseInt(dialog.getCSSProperty("left").value);
+
+		const header = browser.$("#draggable-dialog").shadow$(".ui5-popup-header-root");
+
+		header.dragAndDrop({ x: -200, y: -200 });
+
+		const topAfterDragging = parseInt(dialog.getCSSProperty("top").value);
+		const leftAfterDragging = parseInt(dialog.getCSSProperty("left").value);
+
+		assert.notStrictEqual(topBeforeDragging, topAfterDragging, "top position has changed");
+		assert.notStrictEqual(leftBeforeDragging, leftAfterDragging, "left position has changed");
+
+		browser.keys("Enter");
+
+		openDraggableDialogButton.click();
+
+		const topAfterReopening = parseInt(dialog.getCSSProperty("top").value);
+		const leftAfterReopening = parseInt(dialog.getCSSProperty("left").value);
+
+		assert.strictEqual(topBeforeDragging, topAfterReopening, "top position has been reset back to initial");
+		assert.strictEqual(leftBeforeDragging, leftAfterReopening, "left position has been reset back to initial");
+
+		browser.keys("esc");
 	});
 });
 

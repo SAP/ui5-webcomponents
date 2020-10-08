@@ -110,10 +110,16 @@
 }
 
 .ui5-li-icon {
-	min-width: 1rem;
-	min-height: 1rem;
+	min-width: var(--_ui5_list_item_icon_size);
+	min-height: var(--_ui5_list_item_icon_size);
 	color: var(--sapContent_NonInteractiveIconColor);
 	padding-right: 0.5rem;
+}
+
+:host([description]) .ui5-li-img {
+	width: 3rem;
+	height: 3rem;
+	border-radius: 0.25rem;
 }
 
 .ui5-li-content {

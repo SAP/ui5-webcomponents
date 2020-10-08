@@ -6,7 +6,7 @@ import {
 	isUp,
 	isPageUp,
 	isPageDown,
-} from "@ui5/webcomponents-base/src/Keys.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-up-arrow.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-down-arrow.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";

@@ -63,7 +63,8 @@
 			input-icon
 			slot="icon"
 			tabindex="-1"
-			@click={{togglePopover}}
+			@click="{{togglePopover}}"
+			@mousedown="{{_onIconMousedown}}"
 			?pressed="{{open}}"
 			dir="{{effectiveDir}}"
 			accessible-name="{{_iconAccessibleNameText}}"
