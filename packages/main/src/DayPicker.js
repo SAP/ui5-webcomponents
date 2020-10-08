@@ -394,7 +394,7 @@ class DayPicker extends UI5Element {
 		if (this.selectedDates.length === 1) {
 			this.fireEvent("daypickerrendered", { focusedItemIndex: this._itemNav.currentIndex });
 		}
-		this._itemNav.focusCurrent();
+		// this._itemNav.focusCurrent();
 	}
 
 	_onmousedown(event) {
