@@ -1,7 +1,7 @@
 import { fetchJsonOnce, fetchTextOnce } from "../util/FetchHelper.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 import getFileExtension from "../util/getFileExtension.js";
-import getEffectiveAssetPath from "../util/getEffectiveAssetPath.js";
+import { getEffectiveAssetPath } from "../util/EffectiveAssetPath.js";
 
 const themeURLs = new Map();
 const themeStyles = new Map();

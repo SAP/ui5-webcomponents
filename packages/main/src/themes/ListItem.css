@@ -61,6 +61,22 @@
 	height: 5rem;
 }
 
+:host([has-title][image]) {
+	height: 5rem;
+}
+
+:host([image]) .ui5-li-content {
+	height: 3rem;
+}
+
+:host([description]) .ui5-li-root {
+	padding: 1rem;
+}
+
+:host([description]) .ui5-li-content {
+	height: 3rem;
+}
+
 :host([has-title][description]) .ui5-li-title {
 	padding-bottom: 0.375rem;
 }
@@ -71,6 +87,12 @@
 	flex: auto;
 	min-width: 1px;
 	line-height: normal;
+}
+
+:host([description]) .ui5-li-title-wrapper {
+	height: 100%;
+	justify-content: space-between;
+	padding: 0.125rem 0;
 }
 
 .ui5-li-title {
@@ -100,13 +122,17 @@
 	white-space: nowrap;
 }
 
+:host([description]) .ui5-li-info {
+	align-self: flex-end;
+}
+
 .ui5-li-img {
 	width: var(--_ui5_list_item_img_size);
 	min-width: var(--_ui5_list_item_img_size);
 	height: var(--_ui5_list_item_img_size);
 	min-height: var(--_ui5_list_item_img_size);
 	margin: var(--_ui5_list_item_img_margin);
-	border-radius: 0;
+	border-radius: 0.25rem;
 }
 
 .ui5-li-icon {
@@ -114,12 +140,6 @@
 	min-height: var(--_ui5_list_item_icon_size);
 	color: var(--sapContent_NonInteractiveIconColor);
 	padding-right: 0.5rem;
-}
-
-:host([description]) .ui5-li-img {
-	width: 3rem;
-	height: 3rem;
-	border-radius: 0.25rem;
 }
 
 .ui5-li-content {
@@ -142,6 +162,31 @@
 	flex-shrink: 0;
 }
 
+:host([description]) .ui5-li-singlesel-radiobtn {
+	align-self: flex-start;
+	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
+}
+
+:host([description]) .ui5-li-multisel-cb {
+	align-self: flex-start;
+	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
+}
+
+:host([_mode="SingleSelectBegin"]) .ui5-li-root {
+	padding-right: 1rem;
+	padding-left: 0;
+}
+
+:host([_mode="MultiSelect"]) .ui5-li-root {
+	padding-right: 1rem;
+	padding-left: 0;
+}
+
+:host([_mode="SingleSelectEnd"]) .ui5-li-root {
+	padding-right: 0;
+	padding-left: 1rem;
+}
+
 :host [ui5-checkbox].ui5-li-singlesel-radiobtn {
 	margin-right: var(--_ui5_list_item_cb_margin_right);
 }
@@ -154,4 +199,19 @@
 
 :host [dir="rtl"] .ui5-li-img {
 	margin: .5rem 0 .5rem 0.75rem;
+}
+
+:host([_mode="SingleSelectBegin"]) [dir="rtl"].ui5-li-root {
+	padding-right: 0;
+	padding-left: 1rem;
+}
+
+:host([_mode="MultiSelect"]) [dir="rtl"].ui5-li-root {
+	padding-right: 0;
+	padding-left: 1rem;
+}
+
+:host([_mode="SingleSelectEnd"]) [dir="rtl"].ui5-li-root {
+	padding-right: 1rem;
+	padding-left: 0;
 }
