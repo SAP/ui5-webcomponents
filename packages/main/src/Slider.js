@@ -175,57 +175,45 @@ class Slider extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	_handleChange() {
-
+	_onMouseMove(event) {
+		this._handleMove(event);
 	}
 
-	_handleInput() {
-
+	_onMouseUp() {
+		this._handleUp();
+		window.removeEventListener("mouseup", this._upHandler);
+		window.removeEventListener("mousemove", this._moveHandler);
 	}
 
-	// TODO Include touch/pointer events, keyboard handling, include more comments for better readibility, refactor it, improve formatiting
 	/**
 	 * Called when the user starts interacting with the slider
 	 */
 	_handleDown(event) {
-		const _this = this;
-
 		if (this.disabled) {
 			return;
 		}
 
-		const oldEndValue = _this.endValue;
-		const oldStartValue = _this.value;
+		const oldEndValue = this.endValue;
+		const oldStartValue = this.value;
 		const clientX = event.clientX != null ? event.clientX : event.targetTouches[0].clientX;
 
-		_this.boundingDOMRect = _this.getBoundingClientRect();
-		const newValue = _this._calculateValueFromInteraction(event);
+		this._boundingDOMRect = this.getBoundingClientRect();
+		const newValue = this._calculateValueFromInteraction(event);
+		this._isNewValueInCurrentRange = oldEndValue && newValue >= oldStartValue && newValue <= oldEndValue;
 
 		// In case of Range Slider assign the handle clossest to the press point, otherwise - the single handle's DOM
-		_this.handle = _this._getClosestHandle(clientX, newValue);
-
-		const moveHandler = moveEvent => {
-			_this._handleMove(moveEvent);
-		};
-		const upHandler = () => {
-			_this._handleUp();
-			_this.removeEventListener("mouseup", upHandler);
-			document.body.removeEventListener("mousemove", moveHandler);
-		};
+		this._sliderHandle = this._correctHandleAndValue(clientX, newValue);
 
 		// After a down event on the slider root, listen for move events on
 		// body, so the slider value is updated even if the user drags the pointer
 		// outside the slider root
-		document.body.addEventListener("mousemove", moveHandler);
-		document.body.addEventListener("mouseup", upHandler);
+		window.addEventListener("mousemove",this._moveHandler);
+		window.addEventListener("mouseup", this._upHandler);
 
 		// Do not update Slider if press is in range - only for range sliders (meaning that endValue property is set)
-		if (oldEndValue && newValue >= oldStartValue && newValue <= oldEndValue) {
-			return;
-		}
+		if (this._isNewValueInCurrentRange) return;
 
 		this._updateUI(newValue);
-
 		if (this.valueAffected === "startValue") {
 			this._setValue(newValue);
 		} else {
@@ -240,7 +228,10 @@ class Slider extends UI5Element {
 	_handleMove(event) {
 		event.preventDefault();
 
-		const value = this._calculateValueFromInteraction(event);
+		// Do not update Slider if press is in range - only for range sliders (meaning that endValue property is set)
+		if (this._isNewValueInCurrentRange) return;
+
+		const value = this._clipValue(this._calculateValueFromInteraction(event));
 		const updateValueAndFireEvent = () => {
 			if (this.valueAffected === "startValue") {
 				this._setValue(value);
@@ -248,7 +239,6 @@ class Slider extends UI5Element {
 				this._setEndValue(value);
 			}
 		}
-
 		// Update Slider UI in real-time (decoupled with rendering)
 		this._updateUI(value);
 		// Prevent re-rendering on every move event fired
@@ -259,7 +249,14 @@ class Slider extends UI5Element {
 		this.fireEvent("change");
 	}
 
-	_getClosestHandle(clientX, value) {
+	
+	/**
+	 * Returns the correct handle DOM and sets the value that has to be modified after user interaction
+	 * Returns that handle that is pressed or closer to the press point
+	 * 
+	 * Determines which one from the value/endValue properties has to be updated after the user action (based on closest handle)
+	 */
+	_correctHandleAndValue(clientX, value) {
 		const handleStart = this.shadowRoot.querySelector(".ui5-slider-handle");
 		const handleEnd = this.shadowRoot.querySelector(".ui5-slider-end-handle");
 
@@ -275,6 +272,12 @@ class Slider extends UI5Element {
 		const inHandleStartDom = clientX >= handleStartDomRect.left && clientX <= handleStartDomRect.right;
 		const inHandleEndDom = clientX >= handleEndDomRect.left && clientX <= handleEndDomRect.right;
 		
+		// Allow updating the slider even if the value is in current range,
+		//  but at the same time the press action is over one of the handles
+		if (inHandleEndDom || inHandleStartDom) {
+			this._isNewValueInCurrentRange = false;
+		}
+
 		// Return that handle that is closer to the press point
 		// If the two handles are overlapping return the second (end) one as in general the more common drag move is to the right
 		if (inHandleEndDom || value > this.endValue) {
@@ -326,98 +329,142 @@ class Slider extends UI5Element {
 	}
 
 	_setValue(value) {
-			this.value = value;
-			this.fireEvent("input");
+		this.value = value;
+		this.fireEvent("input");
 	}
 
 	_setEndValue(value) {
 		this.endValue = value;
 		this.fireEvent("input");
 }
+	/**
+	 * Locks the given value for the given handle between boundaries based on slider properties:
+	 * 1. Restricts value within the min & max properties.
+	 * 2. If range slider, keep start value lower than end value, and the opposite.
+	 * 3. If range slider keep the endValue greater than 0 to prevent removing of the second handle
+	 */
+	_clipValue(value) {
+		value = Math.min(Math.max(value, this.min), this.max);
 
+		// If not a range slider return the value as it is
+		if (!this.endValue) return value;
+
+		// If the start value is become equal or greater than the endValue
+		if (this.valueAffected === "startValue" && value > this.endValue) {
+			return this.valueEnd;
+		}
+
+		// If the endValue is become equal or less than 1. Do not let
+		// the end value to become 0 because the second handle will be removed
+		if (this.valueAffected === "endValue" && value <= 1) {
+			return 1;
+		}
+
+		// If the endValue is become equal or less than the start value
+		if (this.valueAffected === "endValue" && value < this.value) {
+			return this.value;
+		}
+
+		return value;
+	}
 	/**
 	 * Computes the new value (in %) from the pageX position of the cursor
 	 */
-	// TODO RTL support?
 	_computeValueFromPageX(pageX) {
 		const max = this.max;
 		const min = this.min;
 
 		// Determine pageX position relative to the Slider DOM
-		const xPositionRelative = pageX - this.boundingDOMRect.left;
+		const xPositionRelative = pageX - this._boundingDOMRect.left;
 		// Calculate the percentage complete (the "progress")
-		const percentageComplete = xPositionRelative / this.boundingDOMRect.width;
+		const percentageComplete = xPositionRelative / this._boundingDOMRect.width;
 		// Fit (map) the complete percentage between the min/max value range
 		return min + percentageComplete * (max - min);
 	}
 
-	// TODO Refactor the 2 functions below
-
-	// Update UI after user interaction
-	_updateUI(value) {
+	// Update UI after user interaction.
+	_updateUI(newValue) {
 		const max = this.max;
 		const min = this.min;
-		const startValue = this.value;
-		const endValue = this.endValue;
+		const oldStartValue = this.value;
+		const oldEndValue = this.endValue;
+
+		// The progress (completed) percentage of the slider. In case of a range slider it is the range selection
+		let percentageComplete;
+		// How many pixels from the left end of the slider will be the placed the affected by the user action handle
+		let handlePositionFromLeft;
 
 		// The value according to which we update the UI can be either the (start) value
 		// or the endValue property in case of a range. Otherwise just the single "value" prop in case
 		// specified (the single handle slider case). It is determined in _getClosestHandle()
-		// depending on to which handle is closer the user interaction. The same goes for the handle.
-		const handleDom = this.handle;
-		const sliderDomRect = this.boundingDOMRect;
-		let percentageComplete = (value - min) / (max - min);
-		let translateProgressPx = percentageComplete * sliderDomRect.width;
-		// Update the progress indication width. In the case of a range slider
-		// Use the already calculated progress of the first handle to determine 
-		// starting point of the progress indicator.
-		if (this.valueAffected === "startValue") {
-			this.shadowRoot.querySelector(".ui5-slider-progress").style.setProperty("transform", `scaleX(${percentageComplete})`);
-		} else {
-			let percentageComplete = (endValue - min) / (max - min);
-			let translateProgressPx = percentageComplete * sliderDomRect.width;
-			const startProgressPoint = translateProgressPx;
-			const translateRangeProgressPx = ((value - startValue) - min) / (max - min);
-			this.shadowRoot.querySelector(".ui5-slider-progress").style.setProperty("transform", `scaleX(${translateRangeProgressPx})`);
-			this.shadowRoot.querySelector(".ui5-slider-progress").style.setProperty("left", `${startProgressPoint}`);
+		// depending on to which handle is closer the user interaction.
+		const sliderHandle = this._sliderHandle;
+		const sliderDomRect = this._boundingDOMRect;
+		const sliderProgressBar = this.shadowRoot.querySelector(".ui5-slider-progress");
+
+		// In case of a range the newValue can be either the value (as a "startValue") or the endValue property
+		// Update the progress indication width in case of a non-range slider with a single handle
+		if (this.valueAffected === "startValue" && !oldEndValue) {
+			percentageComplete = (newValue - min) / (max - min);
+			handlePositionFromLeft = percentageComplete * sliderDomRect.width;
+			sliderProgressBar.style.setProperty("transform", `scaleX(${percentageComplete})`);
+		} else if (this.valueAffected === "startValue") {
+			// In the case of a range slider when the value changing is the start value:
+			percentageComplete = (oldEndValue - newValue) / (max - min);
+			handlePositionFromLeft = ((newValue - min) / (max - min)) * sliderDomRect.width;
+			sliderProgressBar.style.setProperty("transform", `scaleX(${percentageComplete})`);
+			sliderProgressBar.style.setProperty("left", `${handlePositionFromLeft}px`);
 		}
 
-		// Update the position of the handle depending on the value
-		handleDom.style.setProperty("left", `${translateProgressPx}px`);
+		// If the value modified by the user action is the endValue
+		if (this.valueAffected === "endValue") {
+			percentageComplete = ((newValue - oldStartValue) - min) / (max - min);
+			handlePositionFromLeft = (newValue - min) / (max - min) * sliderDomRect.width;
+			sliderProgressBar.style.setProperty("transform", `scaleX(${percentageComplete})`);
+		}
+
+		// Update the position of the handle whit the calculated left offset
+		sliderHandle.style.setProperty("left", `${handlePositionFromLeft}px`);
 	}
 
-	// Update Slider UI after entering the DOM
-	// TODO Refactor this
+	/**
+	 * Update initial Slider UI representation on entering the DOM
+	 */
 	_initialUISync() {
 		const max = this.max;
 		const min = this.min;
 		const startValue = this.value;
 		const endValue = this.endValue;
 		const sliderDomRect = this.getBoundingClientRect();
+		const sliderStartHandle = this.shadowRoot.querySelector(".ui5-slider-handle");
+		const sliderEndHandle = this.shadowRoot.querySelector(".ui5-slider-end-handle");
+		const sliderProgressBar = this.shadowRoot.querySelector(".ui5-slider-progress");
 
+		// The progress (completed) percentage of the slider. In case of a range slider it is the range selection
+		let percentageComplete;
+		// How many pixels from the left end of the slider will be the placed the affected by the user action handle
+		let handlePositionFromLeft;
+
+		// Update the positions of the handle and the size and position of the progress bar
+		// Note: In case of a Slider with a single handle the progress (completed) bar width
+		// is the same as the position of the handle
 		if (!endValue) {
-			const handleDom = this.shadowRoot.querySelector(".ui5-slider-handle");
-			const percentageComplete = (startValue - min) / (max - min);
-			const translatePx = percentageComplete * sliderDomRect.width;
-
-			// Update the position of the handle depending on the value
-			// Center the Slider Handle position under the cursor/pointer
-			handleDom.style.setProperty("left", `${translatePx}px`);
-			this.shadowRoot.querySelector(".ui5-slider-progress").style.setProperty("transform", `scaleX(${percentageComplete})`);
+			percentageComplete = (startValue - min) / (max - min);
+			handlePositionFromLeft = percentageComplete * sliderDomRect.width;
+			sliderStartHandle.style.setProperty("left", `${handlePositionFromLeft}px`);
+			sliderProgressBar.style.setProperty("transform", `scaleX(${percentageComplete})`);
 		} else {
-			const percentageCompleteSecondHandle = (endValue - min) / (max - min);
-			const percentageComplete = (startValue - min) / (max - min);
-			const translatePx = percentageComplete * sliderDomRect.width;
-			const translatePxSecondHandle = percentageCompleteSecondHandle * sliderDomRect.width;
-			const rangeProgress = ((endValue - startValue) - min) / (max - min);
-			this.shadowRoot.querySelector(".ui5-slider-handle").style.setProperty("left", `${translatePx}px`);
-			this.shadowRoot.querySelector(".ui5-slider-end-handle").style.setProperty("left", `${translatePxSecondHandle}px`);
-			this.shadowRoot.querySelector(".ui5-slider-progress").style.setProperty("left", `${translatePx}px`);
-			this.shadowRoot.querySelector(".ui5-slider-progress").style.setProperty("transform", `scaleX(${rangeProgress})`);
+			const startHandlePositionFromLeft = (startValue - min) / (max - min) * sliderDomRect.width;
+			const endHandlePositionFromLeft = (endValue - min) / (max - min) * sliderDomRect.width;
+			const rangeSelected = ((endValue - startValue) - min) / (max - min);
+
+			sliderStartHandle.style.setProperty("left", `${startHandlePositionFromLeft}px`);
+			sliderEndHandle.style.setProperty("left", `${endHandlePositionFromLeft}px`);
+			sliderProgressBar.style.setProperty("left", `${startHandlePositionFromLeft}px`);
+			sliderProgressBar.style.setProperty("transform", `scaleX(${rangeSelected})`);
 		}
 	}
 
-	// TODO Allow tickmark labeling?
 	/**
 	 * Calculates and draws the tickmarks with a CSS gradient style
 	 */
@@ -428,8 +475,6 @@ class Slider extends UI5Element {
 
 		// Calculate how many tickmarks have to be drawn (max - min / stepValue)
 		const tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;
-
-		// TODO* Make it themable
 		const tickmarkWidth = "1px";
 
 		// Transparent CSS gradient background
@@ -453,6 +498,8 @@ class Slider extends UI5Element {
 	}
 
 	onEnterDOM() {
+		this._moveHandler = this._onMouseMove.bind(this);
+		this._upHandler = this._onMouseUp.bind(this);
 		this._initialUISync() 
 	}
 
