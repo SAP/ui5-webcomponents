@@ -2,6 +2,7 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -134,6 +135,18 @@ const metadata = {
 		ariaLabel: {
 			type: String,
 			defaultValue: undefined,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the checkbox
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
 		},
 
 		_label: {
@@ -297,8 +310,16 @@ class CheckBox extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
 	get ariaLabelledBy() {
-		return this.text ? `${this._id}-label` : undefined;
+		if (!this.ariaLabelText) {
+			return this.text ? `${this._id}-label` : undefined;
+		}
+
+		return undefined;
 	}
 
 	get ariaDescribedBy() {
