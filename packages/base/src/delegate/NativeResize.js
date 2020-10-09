@@ -37,6 +37,7 @@ class NativeResize {
 
 		if (!filteredCallbacks.length) {
 			NativeResize.resizeObserver.unobserve(ref);
+			NativeResize.observedObjects.delete(ref);
 		}
 	}
 }

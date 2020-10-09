@@ -605,6 +605,10 @@ class Input extends UI5Element {
 			return this._handleEscape(event);
 		}
 
+		if (this.showSuggestions) {
+			this.Suggestions._deselectItems();
+		}
+
 		this._keyDown = true;
 	}
 
