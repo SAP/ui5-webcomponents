@@ -87,4 +87,145 @@ describe("DateRangePicker general interaction", () => {
 
 		assert.strictEqual(browser.$("#labelChange").getHTML(false), "1", "The change event was fired once");
 	});
+
+	it("Page up/down increments/decrements day value", () => {
+		const dateRange = browser.$("#daterange-picker5");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			dateRange._setValue("Jul 16, 2020 @ Jul 29, 2020");
+			innerInput.click();
+			dateRange._setCaretPosition(innerInput, 15);
+		});
+
+		browser.keys('PageDown');
+		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2020 @ Jul 28, 2020");
+
+		browser.keys('PageUp');
+		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2020 @ Jul 29, 2020");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			dateRange._setCaretPosition(innerInput, 5);
+		});
+
+		browser.keys('PageDown');
+		assert.strictEqual(dateRange.getProperty("value"), "Jul 15, 2020 @ Jul 29, 2020");
+
+		browser.keys('PageUp');
+		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2020 @ Jul 29, 2020");
+	});
+
+	it("Page up/down increments/decrements month value", () => {
+		const dateRange = browser.$("#daterange-picker5");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			dateRange._setValue("Jul 16, 2020 @ Jul 29, 2020");
+			innerInput.click();
+			dateRange._setCaretPosition(innerInput, 15);
+		});
+
+		browser.keys(['Shift', 'PageUp']);
+		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2020 @ Aug 29, 2020");
+
+		browser.keys(['Shift', 'PageDown']);
+		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2020 @ Jul 29, 2020");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			dateRange._setCaretPosition(innerInput, 5);
+		});
+
+		browser.keys(['Shift', 'PageDown']);
+		assert.strictEqual(dateRange.getProperty("value"), "Jun 16, 2020 @ Jul 29, 2020");
+
+		browser.keys(['Shift', 'PageUp']);
+		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2020 @ Jul 29, 2020");
+	});
+
+	it("Page up/down increments/decrements year value", () => {
+		const dateRange = browser.$("#daterange-picker5");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			dateRange._setValue("Jul 16, 2020 @ Jul 29, 2020");
+			innerInput.click();
+			dateRange._setCaretPosition(innerInput, 15);
+		});
+
+		browser.keys(['Control', 'Shift', 'PageUp']);
+		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2020 @ Jul 29, 2021");
+
+		browser.keys(['Control', 'Shift', 'PageDown']);
+		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2020 @ Jul 29, 2020");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			dateRange._setCaretPosition(innerInput, 5);
+		});
+
+		browser.keys(['Control', 'Shift', 'PageDown']);
+		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2019 @ Jul 29, 2020");
+
+		browser.keys(['Control', 'Shift', 'PageUp']);
+		assert.strictEqual(dateRange.getProperty("value"), "Jul 16, 2020 @ Jul 29, 2020");
+	});
+
+	it("Enter keyboard key confirms the date range in the input field", () => {
+		const dateRange = browser.$("#daterange-picker5");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			dateRange._setValue("Jul 16, 2020 @ Jul 16, 2020");
+		});
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			innerInput.click();
+			dateRange._setCaretPosition(innerInput, 0);
+		});
+
+		browser.keys('PageUp');
+		assert.strictEqual(dateRange.getAttribute("value"), "Jul 17, 2020 @ Jul 16, 2020");
+
+		browser.keys('Enter');
+		assert.strictEqual(dateRange.getAttribute("value"), "Jul 16, 2020 @ Jul 17, 2020");
+	});
+
+	it("Focus out of the input field confirms the date range", () => {
+		const dateRange = browser.$("#daterange-picker5");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			dateRange._setValue("Jul 16, 2020 @ Jul 16, 2020");
+		});
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker5");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			innerInput.click();
+			dateRange._setCaretPosition(innerInput, 0);
+		});
+
+		browser.keys('PageUp');
+		assert.strictEqual(dateRange.getAttribute("value"), "Jul 17, 2020 @ Jul 16, 2020");
+
+		browser.execute(() => {
+			const dateRange = document.getElementById("daterange-picker4");
+			const innerInput = dateRange.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+			innerInput.click();
+			dateRange._setCaretPosition(innerInput, 0);
+		});
+		assert.strictEqual(dateRange.getAttribute("value"), "Jul 16, 2020 @ Jul 17, 2020");
+	});
 });

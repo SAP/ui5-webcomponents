@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.9](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.8...v1.0.0-rc.9) (2020-10-08)
+
+
+### Features
+
+* **framework:** dynamic custom elements scoping ([#2091](https://github.com/SAP/ui5-webcomponents/issues/2091)) ([3588542](https://github.com/SAP/ui5-webcomponents/commit/3588542))
+* **framework:** make assets path configurable ([#2214](https://github.com/SAP/ui5-webcomponents/issues/2214)) ([16c46da](https://github.com/SAP/ui5-webcomponents/commit/16c46da))
+* **tools:** ES5 build supports dynamic imports (inlined) ([#2063](https://github.com/SAP/ui5-webcomponents/issues/2063)) ([3fe5cac](https://github.com/SAP/ui5-webcomponents/commit/3fe5cac))
+* **tools:** process HBS files in nested directories ([#2067](https://github.com/SAP/ui5-webcomponents/issues/2067)) ([13f1d2a](https://github.com/SAP/ui5-webcomponents/commit/13f1d2a)), closes [#2065](https://github.com/SAP/ui5-webcomponents/issues/2065)
+
+
+
+
+
 # [1.0.0-rc.8](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.7...v1.0.0-rc.8) (2020-07-30)
 
 

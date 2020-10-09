@@ -11,6 +11,7 @@ import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDat
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
+	isEnter,
 	isPageUp,
 	isPageDown,
 	isPageUpShift,
@@ -503,9 +504,7 @@ class DatePicker extends UI5Element {
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
-			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
-			return calDate.valueOf();
+			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType).toUTCJSDate().valueOf();
 		}
 		return undefined;
 	}
@@ -530,82 +529,108 @@ class DatePicker extends UI5Element {
 			return;
 		}
 
+		if (isEnter(event)) {
+			this._handleEnterPressed();
+		}
+
 		if (isPageUpShiftCtrl(event)) {
 			event.preventDefault();
-			this._changeDateValue(true, true, false, false);
+			this._changeDateValueWrapper(true, true, false, false);
 		} else if (isPageUpShift(event)) {
 			event.preventDefault();
-			this._changeDateValue(true, false, true, false);
+			this._changeDateValueWrapper(true, false, true, false);
 		} else if (isPageUp(event)) {
 			event.preventDefault();
-			this._changeDateValue(true, false, false, true);
+			this._changeDateValueWrapper(true, false, false, true);
 		}
 
 		if (isPageDownShiftCtrl(event)) {
 			event.preventDefault();
-			this._changeDateValue(false, true, false, false);
+			this._changeDateValueWrapper(false, true, false, false);
 		} else if (isPageDownShift(event)) {
 			event.preventDefault();
-			this._changeDateValue(false, false, true, false);
+			this._changeDateValueWrapper(false, false, true, false);
 		} else if (isPageDown(event)) {
 			event.preventDefault();
-			this._changeDateValue(false, false, false, true);
+			this._changeDateValueWrapper(false, false, false, true);
 		}
+	}
+
+	/**
+	 * This method is used in the derived classes
+	 */
+	_handleEnterPressed() {}
+
+	/**
+	 * This method is used in the derived classes
+	 */
+	_onfocusout() {}
+
+	/**
+	 * Adds or extracts a given number of measuring units from the "dateValue" property value
+	 * @param {boolean} forward if true indicates addition
+	 * @param {boolean} years indicates that the measuring unit is in years
+	 * @param {boolean} months indicates that the measuring unit is in months
+	 * @param {boolean} days indicates that the measuring unit is in days
+	 * @param {int} step number of measuring units to substract or add defaults to 1
+	 */
+	_changeDateValueWrapper(forward, years, months, days, step = 1) {
+		let date = this.dateValue;
+		date = this._changeDateValue(date, forward, years, months, days, step);
+		this.value = this.formatValue(date);
 	}
 
 	/**
 	 * Adds or extracts a given number of measuring units from the "dateValue" property value
 	 *
+	 * @param {boolean} date js date object to be changed
 	 * @param {boolean} years indicates that the measuring unit is in years
 	 * @param {boolean} months indicates that the measuring unit is in months
 	 * @param {boolean} days indicates that the measuring unit is in days
 	 * @param {boolean} forward if true indicates addition
-	 * @param {int} step number of measuring units to substract or add defaults to 1
+	 * @param {int} step number of measuring units to substract or add defaults ot 1
+	 * @returns {Object} JS date object
 	 */
-	_changeDateValue(forward, years, months, days, step = 1) {
-		let date = this.dateValue;
-
+	_changeDateValue(date, forward, years, months, days, step = 1) {
 		if (!date) {
 			return;
 		}
 
-		const oldDate = new Date(date.getTime());
+		let calDate = CalendarDate.fromLocalJSDate(date, this._primaryCalendarType);
+		const oldCalDate = new CalendarDate(calDate, this._primaryCalendarType);
 		const incrementStep = forward ? step : -step;
 
-		if (incrementStep === 0) {
+		if (incrementStep === 0 || (!days && !months && !years)) {
 			return;
 		}
 
 		if (days) {
-			date.setDate(date.getDate() + incrementStep);
+			calDate.setDate(calDate.getDate() + incrementStep);
 		} else if (months) {
-			date.setMonth(date.getMonth() + incrementStep);
-			const monthDiff = (date.getFullYear() - oldDate.getFullYear()) * 12 + (date.getMonth() - oldDate.getMonth());
+			calDate.setMonth(calDate.getMonth() + incrementStep);
+			const monthDiff = (calDate.getYear() - oldCalDate.getYear()) * 12 + (calDate.getMonth() - oldCalDate.getMonth());
 
-			if (date.getMonth() === oldDate.getMonth() || monthDiff !== incrementStep) {
+			if (calDate.getMonth() === oldCalDate.getMonth() || monthDiff !== incrementStep) {
 				// first condition example: 31th of March increment month with -1 results in 2th of March
 				// second condition example: 31th of January increment month with +1 results in 2th of March
-				date.setDate(0);
+				calDate.setDate(0);
 			}
 		} else if (years) {
-			date.setFullYear(date.getFullYear() + incrementStep);
+			calDate.setYear(calDate.getYear() + incrementStep);
 
-			if (date.getMonth() !== oldDate.getMonth()) {
+			if (calDate.getMonth() !== oldCalDate.getMonth()) {
 				// day doesn't exist in this month (February 29th)
-				date.setDate(0);
+				calDate.setDate(0);
 			}
-		} else {
-			return;
 		}
 
-		if (date.valueOf() < this._minDate) {
-			date = new Date(this._minDate);
-		} else if (date.valueOf() > this._maxDate) {
-			date = new Date(this._maxDate);
+		if (calDate.valueOf() < this._minDate) {
+			calDate = CalendarDate.fromTimestamp(this._minDate, this._primaryCalendarType);
+		} else if (calDate.valueOf() > this._maxDate) {
+			calDate = CalendarDate.fromTimestamp(this._maxDate, this._primaryCalendarType);
 		}
 
-		this.value = this.formatValue(date);
-		this.fireEvent("change", { value: this.value, valid: true });
+		return calDate.toLocalJSDate();
 	}
 
 	_toggleAndFocusInput() {
