@@ -186,11 +186,15 @@ class Slider extends UI5Element {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
-
 	
 	onEnterDOM() {
 		this._moveHandler = this._onMouseMove.bind(this);
 		this._upHandler = this._onMouseUp.bind(this);
+		this._mouseOverHandler = this._onMouseOver.bind(this);
+		this._mouseOutHandler= this._onMouseOut.bind(this);		
+
+		this.addEventListener("mouseover", this._mouseOverHandler);
+		this.addEventListener("mouseout", this._mouseOutHandler);
 		this._initialUISync() 
 	}
 
@@ -214,6 +218,14 @@ class Slider extends UI5Element {
 		this._handleUp();
 		window.removeEventListener("mouseup", this._upHandler);
 		window.removeEventListener("mousemove", this._moveHandler);
+	}
+
+	_onMouseOver() {
+		this._handleMouseOver();
+	}
+
+	_onMouseOut() {
+		this._handleMouseOut();
 	}
 
 	/**
@@ -244,7 +256,9 @@ class Slider extends UI5Element {
 		// Do not update Slider if press is in range - only for range sliders (meaning that endValue property is set)
 		if (this._isNewValueInCurrentRange) return;
 
+		this._updateTooltipValue(newValue);
 		this._updateUI(newValue);
+
 		if (this.valueAffected === "startValue") {
 			this._setValue(newValue);
 		} else {
@@ -270,6 +284,8 @@ class Slider extends UI5Element {
 				this._setEndValue(value);
 			}
 		}
+
+		this._updateTooltipValue(value);
 		// Update Slider UI in real-time (decoupled with rendering)
 		this._updateUI(value);
 		// Prevent re-rendering on every move event fired
@@ -280,6 +296,23 @@ class Slider extends UI5Element {
 		this.fireEvent("change");
 	}
 
+	_handleMouseOver(event) {
+		if (!this.showTooltip) return;
+
+		this.shadowRoot.querySelector(".ui5-slider-tooltip").style.setProperty("visibility", "visible");
+		if (this.endValue) {
+			this.shadowRoot.querySelector(".ui5-slider-end-tooltip").style.setProperty("visibility", "visible");
+		}
+	}
+
+	_handleMouseOut(event) {
+		if (!this.showTooltip) return;
+
+		this.shadowRoot.querySelector(".ui5-slider-tooltip").style.setProperty("visibility", "hidden");
+		if (this.endValue) {
+			this.shadowRoot.querySelector(".ui5-slider-end-tooltip").style.setProperty("visibility", "hidden");
+		}
+	}
 	
 	/**
 	 * Returns the correct handle DOM and sets the value that has to be modified after user interaction
@@ -392,6 +425,15 @@ class Slider extends UI5Element {
 
 		return value;
 	}
+
+	_updateTooltipValue(newValue) {
+		if (!this.showTooltip) return;
+		const tooltipToUpdate = this.valueAffected === "startValue" ?
+			this.shadowRoot.querySelector(".ui5-slider-tooltip-value") : this.shadowRoot.querySelector(".ui5-slider-end-tooltip-value");
+		
+		tooltipToUpdate.textContent = newValue;
+	}
+
 	/**
 	 * Computes the new value (in %) from the pageX position of the cursor
 	 */
@@ -416,7 +458,7 @@ class Slider extends UI5Element {
 
 		// The progress (completed) percentage of the slider. In case of a range slider it is the range selection
 		let percentageComplete;
-		// How many pixels from the left end of the slider will be the placed the affected by the user action handle
+		// How many pixels from the left end of the slider will be the placed the affected  by the user action handle
 		let handlePositionFromLeft;
 
 		// The value according to which we update the UI can be either the (start) value

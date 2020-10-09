@@ -59,16 +59,7 @@
 }
 
 
-.ui5-slider-tickmarks {	
-	/* margin: 0;
-	padding: 0;
-	list-style: none;
-	position: absolute;
-	left: 1.0625rem;
-	right: 1.0625rem;;
-	display: block;
-	height: 1.75rem;
-	z-index: 0; */
+.ui5-slider-tickmarks {
 	color: #89919a;
 	position: absolute;
 	width: 100%;
@@ -85,23 +76,31 @@
 	border-radius: 1rem;
 	background: #FFF;
 	border: solid 0.125rem #89919a;
-	opacity: 0.5;
 	position: absolute;
+	opacity: 0.65;
 }
 
 /* ------------------------------ */
 /* Slider Tooltip styles          */
 /* ------------------------------ */
 
-.ui5-slider-tooltip {
-	position: relative;
+.ui5-slider-tooltip, .ui5-slider-end-tooltip {
+	position: absolute;
+	border: 1px solid #333;
+	border-radius: 0.25rem;
+	bottom: 2.25rem;
+	left: -0.5rem;
 	display: block;
-	flex-shrink: 0;
+	color: #333;
+	font-size: 1rem;
+	font-weight: bold;
+	font-family: sans-serif;
 	height: 1.625rem;
-	padding-left: 0.5rem;
-	padding-right: 0.5rem;
+	line-height: 1.625rem;
+	padding: 0.25rem;
 	text-align: center;
-	visibility: visible;
-	background-color: #666;
+	visibility: hidden;
+	background-color: #FFF;
+	min-width: 2.225rem;
 	pointer-events: none;
 }

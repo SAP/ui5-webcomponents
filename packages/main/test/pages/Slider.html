@@ -28,6 +28,10 @@
 			margin: 0;
 		}
 
+		h2 {
+			margin: 25px 0;
+		}
+
 		.group {
 			padding: 1rem;
 		}
@@ -38,6 +42,8 @@
 		<section class="group">
 			<h2>Basic Slider</h2>
 			<ui5-slider id="basic-slider" min="0" max="10"></ui5-slider>
+			<h2>Basic Slider with tooltip</h2>
+			<ui5-slider id="basic-slider-with-tooltip" min="0" max="20" show-tooltip></ui5-slider>
 			<h2>Slider with tickmarks</h2>
 			<ui5-slider id="tickmarks-slider" min="0" max="100" step="2" tickmarks value="12"></ui5-slider>
 			<h2>Slider with many steps and small width</h2>
@@ -46,8 +52,10 @@
 			<ui5-slider id="smooth-slider" min="0" max="100" step="0"></ui5-slider>
 			<h2>Range Slider with steps and tickmarks</h2>
 			<ui5-slider id="range-slider-tickmarks" min="0" max="33" step="1" end-value="11" tickmarks></ui5-slider>
-			<h2>Smooth Range Slider with no steps</h2>
-			<ui5-slider id="range-slider-smooth" min="0" max="30" step="0" value="3" end-value="13"></ui5-slider>
+			<h2>Smooth Range Slider with tooltips and no steps</h2>
+			<ui5-slider id="range-slider-smooth" min="0" max="30" step="0" value="3" end-value="13" show-tooltip></ui5-slider>
+			<h2 style="margin-top: 50px; margin-left: 20%;">Range Slider with steps, tooltips and tickmarks</h2>
+			<ui5-slider id="range-slider-tickmarks-tooltips" min="0" max="42" step="1" value="2" end-value="12" show-tooltip tickmarks style="width: 60%; margin-left: 20%; margin-top: 50px;"></ui5-slider>
 		</section>
 	</body>
 </html>
