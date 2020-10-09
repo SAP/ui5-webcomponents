@@ -14,7 +14,7 @@ import SliderStyles from "./generated/themes/Slider.css.js";
  */
 const metadata = {
 	tag: "ui5-slider",
-	altTag: "ui5-slider",
+	altTag: "ui5-range-slider",
 	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.Slider.prototype */  {
@@ -34,12 +34,12 @@ const metadata = {
 		 * <br><br>
 		 *
 		 * @type {Float}
-		 * @defaultvalue 100
+		 * @defaultvalue 50
 		 * @public
 		 */
 		max: {
 			type: Float,
-			defaultValue: 100,
+			defaultValue: 50,
 		},
 		/**
 		 * Defines the size of the slider's selection intervals. (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
@@ -89,6 +89,17 @@ const metadata = {
 		 * @public
 		 */
 		 tickmarks: {
+			type: Boolean,
+		},
+		/**
+		 * Enables handle tooltip displaying the current value.
+		 * <br><br>
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		showTooltip: {
 			type: Boolean,
 		},
 		/**
@@ -145,7 +156,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Slider
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-range-slider
+ * @tagname ui5-slider
  * @public
  */
 class Slider extends UI5Element {
@@ -251,7 +262,7 @@ class Slider extends UI5Element {
 		// Do not update Slider if press is in range - only for range sliders (meaning that endValue property is set)
 		if (this._isNewValueInCurrentRange) return;
 
-		const value = this._clipValue(this._calculateValueFromInteraction(event));
+		const value = this._calculateValueFromInteraction(event);
 		const updateValueAndFireEvent = () => {
 			if (this.valueAffected === "startValue") {
 				this._setValue(value);
@@ -293,7 +304,7 @@ class Slider extends UI5Element {
 		const inHandleEndDom = clientX >= handleEndDomRect.left && clientX <= handleEndDomRect.right;
 		
 		// Allow updating the slider even if the value is in current range,
-		//  but at the same time the press action is over one of the handles
+		// but at the same time the press action is over one of the handles
 		if (inHandleEndDom || inHandleStartDom) {
 			this._isNewValueInCurrentRange = false;
 		}
@@ -328,14 +339,8 @@ class Slider extends UI5Element {
 			value = numSteps * step;
 		}
 
-		// Normalize value
-		if (value < min) {
-			value = min;
-		} else if (value > max) {
-			value = max;
-		}
-
-		return value;
+		// Normalize value and keep it under constrains defined by the slider's properties
+		return this._clipValue(value);
 	}
 
 	/**

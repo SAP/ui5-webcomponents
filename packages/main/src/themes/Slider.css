@@ -88,3 +88,20 @@
 	opacity: 0.5;
 	position: absolute;
 }
+
+/* ------------------------------ */
+/* Slider Tooltip styles          */
+/* ------------------------------ */
+
+.ui5-slider-tooltip {
+	position: relative;
+	display: block;
+	flex-shrink: 0;
+	height: 1.625rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	text-align: center;
+	visibility: visible;
+	background-color: #666;
+	pointer-events: none;
+}
