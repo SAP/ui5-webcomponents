@@ -39,10 +39,11 @@ const metadata = {
 		 */
 		max: {
 			type: Float,
+			defaultValue: 100,
 		},
 		/**
 		 * Defines the size of the slider's selection intervals. (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
-		 * When 0 or a negative number, the component fallbacks to its default value.
+		 * If 0 no visible interval between value changes will apppear. When negative number, the component fallbacks to its default value.
 		 * <br><br>
 		 *
 		 * @type {Integer}
@@ -124,7 +125,7 @@ const metadata = {
 		*/
 		change: {},
 		/**
-		 * Fired when the value changes due to user interaction.
+		 * Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
 		 *
 		 * @event
 		 * @public
@@ -173,6 +174,25 @@ class Slider extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	
+	onEnterDOM() {
+		this._moveHandler = this._onMouseMove.bind(this);
+		this._upHandler = this._onMouseUp.bind(this);
+		this._initialUISync() 
+	}
+
+	onBeforeRendering() {
+		if (this.step !== 1) {
+			this.setStep(this.step);
+		}
+	}
+
+	onAfterRendering() {
+		if (this.step && this.tickmarks) {
+			this.drawDefaultTickmarks(this.step, this.max, this.min);
+		}
 	}
 
 	_onMouseMove(event) {
@@ -395,9 +415,9 @@ class Slider extends UI5Element {
 		let handlePositionFromLeft;
 
 		// The value according to which we update the UI can be either the (start) value
-		// or the endValue property in case of a range. Otherwise just the single "value" prop in case
-		// specified (the single handle slider case). It is determined in _getClosestHandle()
+		// or the endValue property in case of a range.  It is determined in _getClosestHandle()
 		// depending on to which handle is closer the user interaction.
+		// Otherwise it's a single "value" prop (the single handle slider case).
 		const sliderHandle = this._sliderHandle;
 		const sliderDomRect = this._boundingDOMRect;
 		const sliderProgressBar = this.shadowRoot.querySelector(".ui5-slider-progress");
@@ -495,24 +515,6 @@ class Slider extends UI5Element {
 			step = 1;
 		}
 		this.step = step;
-	}
-
-	onEnterDOM() {
-		this._moveHandler = this._onMouseMove.bind(this);
-		this._upHandler = this._onMouseUp.bind(this);
-		this._initialUISync() 
-	}
-
-	onBeforeRendering() {
-		if (this.step !== 1) {
-			this.setStep(this.step);
-		}
-	}
-
-	onAfterRendering() {
-		if (this.step && this.tickmarks) {
-			this.drawDefaultTickmarks(this.step, this.max, this.min);
-		}
 	}
 
 	debounce(fn, delay) {
