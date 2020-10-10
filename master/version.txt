@@ -1,17 +1,7 @@
-commit 84eb484a14a7fe5927d0bf7e50e34217989efb63
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Fri Oct 9 09:58:56 2020 +0300
+commit 8be4048a6ee32f0e9baada507a8f8f2c1babf70f
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Sat Oct 10 15:11:32 2020 +0300
 
-    feat(ui5-daterange-picker): enhance keyboard handling (#2179)
+    feat(ui5-dialog): introduce resizable property (#2301)
     
-    Depending on the caret symbol position, the corresponding date gets incremented
-    or decremented with one unit of measure by using the following keyboard
-    combinations:
-    [PAGEDOWN] - Decrements the corresponding day of the month by one
-    [SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one
-    [SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one
-    [PAGEUP] - Increments the corresponding day of the month by one
-    [SHIFT] + [PAGEUP] - Increments the corresponding month by one
-    [SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one
-    
-    Fixes #1534
+    Fixes #2082
