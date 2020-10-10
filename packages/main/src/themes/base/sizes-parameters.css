@@ -17,6 +17,9 @@
 	--_ui5_datetime_timeview_phonemode_width: 19.5rem;
 	--_ui5_datetime_timeview_padding: 1rem;
 
+	/* Dialog */
+	--_ui5_dialog_content_min_height: 2.75rem;
+
 	--_ui5_input_inner_padding: 0 0.625rem;
 	--_ui5_input_inner_padding_with_icon: 0 0.25rem 0 0.625rem;
 	--_ui5_input_value_state_icon_padding: var(--_ui5-input-icon-padding);
@@ -115,6 +118,9 @@
 	--_ui5_datetime_timeview_width: 17rem;
 	--_ui5_datetime_timeview_phonemode_width: 18.5rem;
 	--_ui5_datetime_timeview_padding: 0.5rem;
+
+	/* Dialog */
+	--_ui5_dialog_content_min_height: 2.5rem;
 
 	/* Input */
 	--_ui5_input_height: var(--_ui5_input_compact_height);
