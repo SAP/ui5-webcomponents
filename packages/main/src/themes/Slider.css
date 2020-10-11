@@ -2,6 +2,11 @@
 	display: inline-block;
 }
 
+:host([disabled]) {
+	opacity: 0.5;
+	cursor: default;
+	pointer-events: none;
+}
 
 :host {
 	cursor: pointer;
@@ -15,7 +20,6 @@
 	box-sizing: border-box;
 	height: 2rem;
 	padding: 1rem 0;
-
 }
 
 .ui5-slider-inner {
@@ -30,7 +34,7 @@
 	position: relative;
 	background-repeat: no-repeat;
 	z-index: 1;
-    height: 0.25rem;
+	height: 0.25rem;
 
 	background: #89919a;
 	border-radius: 0.25rem;
@@ -89,18 +93,36 @@
 	border: 1px solid #333;
 	border-radius: 0.25rem;
 	bottom: 2.25rem;
-	left: -0.5rem;
+	left: -0.725rem;
 	display: block;
 	color: #333;
 	font-size: 1rem;
 	font-weight: bold;
-	font-family: sans-serif;
 	height: 1.625rem;
 	line-height: 1.625rem;
-	padding: 0.25rem;
+	padding: 0.25rem 0.5rem;
 	text-align: center;
 	visibility: hidden;
 	background-color: #FFF;
 	min-width: 2.225rem;
 	pointer-events: none;
+}
+
+.ui5-slider-labels {
+	position: absolute;
+	top: 1rem;
+	padding: 0;
+	margin: 0;
+}
+
+.ui5-slider-labels li {
+	color: #666;
+	position: relative;
+	list-style: none;
+	padding: 0;
+	margin:0;
+	font-size: 0.75rem;
+	font-weight: bold;
+	text-align: center;
+	display: inline-block;
 }

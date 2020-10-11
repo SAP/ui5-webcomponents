@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 // Template
@@ -51,8 +52,21 @@ const metadata = {
 		 * @public
 		 */
 		step: {
-			type: Float,
+			type: Integer,
 			defaultValue: 1,
+		},
+		/**
+		 * Put a label with a value on every N-th step. The step and tickmarks properties must be enabled.
+		 * Example - if the step value is set to 2 and the label interval is also specified to 2 - than every second
+		 * tickmark will be labelled, which means every 4th round value number.
+		 *
+		 * @type {Integer}
+		 * @defaultvalue 1
+		 * @public
+		 */
+		labelInterval: {
+			type: Integer,
+			defaultValue: 0,
 		},
 		/**
 		 * Current value of the slider
@@ -73,12 +87,12 @@ const metadata = {
 		 * <br><br>
 		 *
 		 * @type {Float}
-		 * @defaultvalue 0
+		 * @defaultvalue null
 		 * @public
 		 */
 		 endValue: {
 			type: Float,
-			defaultValue: 0,
+			defaultValue: null,
 		},
 		/**
 		 * Enables tick marks visualization for each step. The step value must not be set to 0
@@ -191,23 +205,15 @@ class Slider extends UI5Element {
 		this._moveHandler = this._onMouseMove.bind(this);
 		this._upHandler = this._onMouseUp.bind(this);
 		this._mouseOverHandler = this._onMouseOver.bind(this);
-		this._mouseOutHandler= this._onMouseOut.bind(this);		
+		this._mouseOutHandler= this._onMouseOut.bind(this);
 
 		this.addEventListener("mouseover", this._mouseOverHandler);
 		this.addEventListener("mouseout", this._mouseOutHandler);
-		this._initialUISync() 
-	}
 
-	onBeforeRendering() {
-		if (this.step !== 1) {
-			this.setStep(this.step);
-		}
-	}
-
-	onAfterRendering() {
-		if (this.step && this.tickmarks) {
-			this.drawDefaultTickmarks(this.step, this.max, this.min);
-		}
+		// Normalize Slider value according to min/max properties
+		this.value = this._clipValue(this.value)
+		this._initialUISync()
+		this._setStep();
 	}
 
 	_onMouseMove(event) {
@@ -232,9 +238,7 @@ class Slider extends UI5Element {
 	 * Called when the user starts interacting with the slider
 	 */
 	_handleDown(event) {
-		if (this.disabled) {
-			return;
-		}
+		if (this.disabled) return;
 
 		const oldEndValue = this.endValue;
 		const oldStartValue = this.value;
@@ -256,7 +260,6 @@ class Slider extends UI5Element {
 		// Do not update Slider if press is in range - only for range sliders (meaning that endValue property is set)
 		if (this._isNewValueInCurrentRange) return;
 
-		this._updateTooltipValue(newValue);
 		this._updateUI(newValue);
 
 		if (this.valueAffected === "startValue") {
@@ -272,32 +275,29 @@ class Slider extends UI5Element {
 	 */
 	_handleMove(event) {
 		event.preventDefault();
+		if (this.disabled) return;
 
 		// Do not update Slider if press is in range - only for range sliders (meaning that endValue property is set)
 		if (this._isNewValueInCurrentRange) return;
-
 		const value = this._calculateValueFromInteraction(event);
-		const updateValueAndFireEvent = () => {
-			if (this.valueAffected === "startValue") {
-				this._setValue(value);
-			} else {
-				this._setEndValue(value);
-			}
-		}
-
-		this._updateTooltipValue(value);
 		// Update Slider UI in real-time (decoupled with rendering)
 		this._updateUI(value);
-		// Prevent re-rendering on every move event fired
-		this.debounce(updateValueAndFireEvent, 100);
+
+		if (this.valueAffected === "startValue") {
+			this._setValue(value);
+		} else {
+			this._setEndValue(value);
+		}
 	}
 
 	_handleUp() {
+		if (this.disabled) return;
+
 		this.fireEvent("change");
 	}
 
 	_handleMouseOver(event) {
-		if (!this.showTooltip) return;
+		if (this.disabled || !this.showTooltip) return;
 
 		this.shadowRoot.querySelector(".ui5-slider-tooltip").style.setProperty("visibility", "visible");
 		if (this.endValue) {
@@ -367,6 +367,8 @@ class Slider extends UI5Element {
 		let value = this._computeValueFromPageX(pageX);
 
 		// "Stepihfy" the raw value - calculate a step value
+		// Steps are integers, so when Slider is "quantized" (stepped)
+		// the value is also rounded to an integer.
 		if (this.step !== 0) {
 			const numSteps = Math.round(value / step);
 			value = numSteps * step;
@@ -394,12 +396,12 @@ class Slider extends UI5Element {
 	_setEndValue(value) {
 		this.endValue = value;
 		this.fireEvent("input");
-}
+	}
+
 	/**
 	 * Locks the given value for the given handle between boundaries based on slider properties:
 	 * 1. Restricts value within the min & max properties.
 	 * 2. If range slider, keep start value lower than end value, and the opposite.
-	 * 3. If range slider keep the endValue greater than 0 to prevent removing of the second handle
 	 */
 	_clipValue(value) {
 		value = Math.min(Math.max(value, this.min), this.max);
@@ -412,12 +414,6 @@ class Slider extends UI5Element {
 			return this.valueEnd;
 		}
 
-		// If the endValue is become equal or less than 1. Do not let
-		// the end value to become 0 because the second handle will be removed
-		if (this.valueAffected === "endValue" && value <= 1) {
-			return 1;
-		}
-
 		// If the endValue is become equal or less than the start value
 		if (this.valueAffected === "endValue" && value < this.value) {
 			return this.value;
@@ -426,16 +422,9 @@ class Slider extends UI5Element {
 		return value;
 	}
 
-	_updateTooltipValue(newValue) {
-		if (!this.showTooltip) return;
-		const tooltipToUpdate = this.valueAffected === "startValue" ?
-			this.shadowRoot.querySelector(".ui5-slider-tooltip-value") : this.shadowRoot.querySelector(".ui5-slider-end-tooltip-value");
-		
-		tooltipToUpdate.textContent = newValue;
-	}
-
 	/**
-	 * Computes the new value (in %) from the pageX position of the cursor
+	 * Computes the new value (in %) from the pageX position of the cursor.
+	 * Returns the value with rounded to a precision of at most 2 digits after decimal point.
 	 */
 	_computeValueFromPageX(pageX) {
 		const max = this.max;
@@ -446,7 +435,7 @@ class Slider extends UI5Element {
 		// Calculate the percentage complete (the "progress")
 		const percentageComplete = xPositionRelative / this._boundingDOMRect.width;
 		// Fit (map) the complete percentage between the min/max value range
-		return min + percentageComplete * (max - min);
+		return (min + percentageComplete * (max - min)).toFixed(2);
 	}
 
 	// Update UI after user interaction.
@@ -535,12 +524,11 @@ class Slider extends UI5Element {
 	/**
 	 * Calculates and draws the tickmarks with a CSS gradient style
 	 */
-	drawDefaultTickmarks(step, max, min) {
+	_drawDefaultTickmarks(step, max, min) {
+		// Let the CSS do all calculations for more precise browser results
 		const stepStr = String(step);
 		const maxStr = String(max);
 		const minStr = String(min);
-
-		// Calculate how many tickmarks have to be drawn (max - min / stepValue)
 		const tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;
 		const tickmarkWidth = "1px";
 
@@ -555,21 +543,52 @@ class Slider extends UI5Element {
 
 		// Apply the style to the container
 		this.shadowRoot.querySelector(".ui5-slider-tickmarks").style.setProperty("background", tickmarksBackground);
+
+		// If labelsInterval is specified draw labels for the necessary tickmarks
+		if (this.labelInterval) {
+			this._drawDefaultLabels(parseInt(tickmarkWidth));
+		}
+	}
+	/**
+	 * Calculates the labels amout, width and text and creates them
+	 */
+	_drawDefaultLabels(tickmarkWidth) {
+		const labelContainer = this.shadowRoot.querySelector(".ui5-slider-labels");
+		const labelInterval = this.labelInterval;
+		const numberOfLabels = (this.max - this.min) / (this.step * labelInterval);
+
+		// If the required labels are already rendered return
+		if(labelContainer.childElementCount === numberOfLabels) return;
+
+		// numberOfLabels below can be float so that the "distance betweenlabels labels"
+		// calculation to be precize (exactly the same as the distance between the tickmarks).
+		// That's ok as the loop stop condition is set to an int, so it will "floor"
+		// the number of labels anyway.
+		const spaceBetweenLabelsPx = this.getBoundingClientRect().width / numberOfLabels;
+
+		for(let i = 0; i <= numberOfLabels; i++) {
+			const labelItem = document.createElement("li");
+			labelItem.textContent = (i * labelInterval) + Math.round(this.min);
+			labelContainer.appendChild(labelItem);
+
+			// Make every label width as the distance between the tickmarks
+			labelItem.style.setProperty("width", `${spaceBetweenLabelsPx}px`);
+			// Set negative left offset to center evey label to be in the middle of the tickmark above it
+			labelContainer.style.setProperty("left", `-${spaceBetweenLabelsPx / 2}px`);
+			// Set additional width space of the label container to contain the centered labels
+			labelContainer.style.setProperty("width", `calc(100% + ${spaceBetweenLabelsPx}px)`);
+		}
 	}
 
-	setStep(step) {
+	_setStep(step) {
 		if (typeof step !== "number" || step < 0) {
 			step = 1;
 		}
 		this.step = step;
-	}
 
-	debounce(fn, delay) {
-		clearTimeout(this.debounceFn);
-		this.debounceFn = setTimeout(() => {
-			this.debounceFn = null;
-			fn();
-		}, delay);
+		if (this.tickmarks) {
+			this._drawDefaultTickmarks(this.step, this.max, this.min);
+		}
 	}
 }
 

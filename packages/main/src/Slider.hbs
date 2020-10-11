@@ -9,9 +9,12 @@
 			<div class="ui5-slider-progress"></div>
 		</div>
 
-		{{#if tickmarks}}
-			{{#if step}}
+		{{#if step}}
+			{{#if tickmarks}}
 				<div class="ui5-slider-tickmarks"></div>
+				{{#if labelDistance}}
+					<ul class="ui5-slider-labels"></ul>
+				{{/if}}
 			{{/if}}
 		{{/if}}
 
