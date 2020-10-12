@@ -200,19 +200,19 @@ class Slider extends UI5Element {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
-	
+
 	onEnterDOM() {
 		this._moveHandler = this._onMouseMove.bind(this);
 		this._upHandler = this._onMouseUp.bind(this);
 		this._mouseOverHandler = this._onMouseOver.bind(this);
-		this._mouseOutHandler= this._onMouseOut.bind(this);
+		this._mouseOutHandler = this._onMouseOut.bind(this);
 
 		this.addEventListener("mouseover", this._mouseOverHandler);
 		this.addEventListener("mouseout", this._mouseOutHandler);
 
 		// Normalize Slider value according to min/max properties
-		this.value = this._clipValue(this.value)
-		this._initialUISync()
+		this.value = this._clipValue(this.value);
+		this._initialUISync();
 		this._setStep();
 	}
 
@@ -238,7 +238,9 @@ class Slider extends UI5Element {
 	 * Called when the user starts interacting with the slider
 	 */
 	_handleDown(event) {
-		if (this.disabled) return;
+		if (this.disabled) {
+			return;
+		}
 
 		const oldEndValue = this.endValue;
 		const oldStartValue = this.value;
@@ -254,11 +256,13 @@ class Slider extends UI5Element {
 		// After a down event on the slider root, listen for move events on
 		// body, so the slider value is updated even if the user drags the pointer
 		// outside the slider root
-		window.addEventListener("mousemove",this._moveHandler);
+		window.addEventListener("mousemove", this._moveHandler);
 		window.addEventListener("mouseup", this._upHandler);
 
 		// Do not update Slider if press is in range - only for range sliders (meaning that endValue property is set)
-		if (this._isNewValueInCurrentRange) return;
+		if (this._isNewValueInCurrentRange) {
+			return;
+		}
 
 		this._updateUI(newValue);
 
@@ -275,10 +279,15 @@ class Slider extends UI5Element {
 	 */
 	_handleMove(event) {
 		event.preventDefault();
-		if (this.disabled) return;
+		if (this.disabled) {
+			return;
+		}
 
 		// Do not update Slider if press is in range - only for range sliders (meaning that endValue property is set)
-		if (this._isNewValueInCurrentRange) return;
+		if (this._isNewValueInCurrentRange) {
+			return;
+		}
+
 		const value = this._calculateValueFromInteraction(event);
 		// Update Slider UI in real-time (decoupled with rendering)
 		this._updateUI(value);
@@ -291,13 +300,17 @@ class Slider extends UI5Element {
 	}
 
 	_handleUp() {
-		if (this.disabled) return;
+		if (this.disabled) {
+			return;
+		}
 
 		this.fireEvent("change");
 	}
 
 	_handleMouseOver(event) {
-		if (this.disabled || !this.showTooltip) return;
+		if (this.disabled || !this.showTooltip) {
+			return;
+		}
 
 		this.shadowRoot.querySelector(".ui5-slider-tooltip").style.setProperty("visibility", "visible");
 		if (this.endValue) {
@@ -306,18 +319,20 @@ class Slider extends UI5Element {
 	}
 
 	_handleMouseOut(event) {
-		if (!this.showTooltip) return;
+		if (!this.showTooltip) {
+			return;
+		}
 
 		this.shadowRoot.querySelector(".ui5-slider-tooltip").style.setProperty("visibility", "hidden");
 		if (this.endValue) {
 			this.shadowRoot.querySelector(".ui5-slider-end-tooltip").style.setProperty("visibility", "hidden");
 		}
 	}
-	
+
 	/**
 	 * Returns the correct handle DOM and sets the value that has to be modified after user interaction
 	 * Returns that handle that is pressed or closer to the press point
-	 * 
+	 *
 	 * Determines which one from the value/endValue properties has to be updated after the user action (based on closest handle)
 	 */
 	_correctHandleAndValue(clientX, value) {
@@ -335,7 +350,7 @@ class Slider extends UI5Element {
 		const handleEndDomRect = handleEnd.getBoundingClientRect();
 		const inHandleStartDom = clientX >= handleStartDomRect.left && clientX <= handleStartDomRect.right;
 		const inHandleEndDom = clientX >= handleEndDomRect.left && clientX <= handleEndDomRect.right;
-		
+
 		// Allow updating the slider even if the value is in current range,
 		// but at the same time the press action is over one of the handles
 		if (inHandleEndDom || inHandleStartDom) {
@@ -361,8 +376,6 @@ class Slider extends UI5Element {
 	 */
 	_calculateValueFromInteraction(event) {
 		const pageX = this._getPageXValueFromEvent(event);
-		const min = this.min;
-		const max = this.max;
 		const step = this.step;
 		let value = this._computeValueFromPageX(pageX);
 
@@ -407,7 +420,9 @@ class Slider extends UI5Element {
 		value = Math.min(Math.max(value, this.min), this.max);
 
 		// If not a range slider return the value as it is
-		if (!this.endValue) return value;
+		if (!this.endValue) {
+			return value;
+		}
 
 		// If the start value is become equal or greater than the endValue
 		if (this.valueAffected === "startValue" && value > this.endValue) {
@@ -549,6 +564,7 @@ class Slider extends UI5Element {
 			this._drawDefaultLabels(parseInt(tickmarkWidth));
 		}
 	}
+
 	/**
 	 * Calculates the labels amout, width and text and creates them
 	 */
@@ -558,7 +574,9 @@ class Slider extends UI5Element {
 		const numberOfLabels = (this.max - this.min) / (this.step * labelInterval);
 
 		// If the required labels are already rendered return
-		if(labelContainer.childElementCount === numberOfLabels) return;
+		if (labelContainer.childElementCount === numberOfLabels) {
+			return;
+		}
 
 		// numberOfLabels below can be float so that the "distance betweenlabels labels"
 		// calculation to be precize (exactly the same as the distance between the tickmarks).
@@ -566,7 +584,7 @@ class Slider extends UI5Element {
 		// the number of labels anyway.
 		const spaceBetweenLabelsPx = this.getBoundingClientRect().width / numberOfLabels;
 
-		for(let i = 0; i <= numberOfLabels; i++) {
+		for (let i = 0; i <= numberOfLabels; i++) {
 			const labelItem = document.createElement("li");
 			labelItem.textContent = (i * labelInterval) + Math.round(this.min);
 			labelContainer.appendChild(labelItem);

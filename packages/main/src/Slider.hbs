@@ -18,22 +18,11 @@
 			{{/if}}
 		{{/if}}
 
-		<div class="ui5-slider-handle">
-			{{#if showTooltip}}
-				<div class="ui5-slider-tooltip">
-					<span class="ui5-slider-tooltip-value">{{value}}</span>
-				</div>
-			{{/if}}
-		</div>
-		{{#if endValue}}
-			<div class="ui5-slider-end-handle">
-				{{#if showTooltip}}
-					<div class="ui5-slider-end-tooltip">
-						<span class="ui5-slider-end-tooltip-value">{{endValue}}</span>
-					</div>
-				{{/if}}
-			</div>
-		{{/if}}
+		{{> sliderHandler}}
+
+		{{> rangeSliderStartHandler}}
+
+		{{> rangeSliderEndHandler}}
 
 	</div>
 
