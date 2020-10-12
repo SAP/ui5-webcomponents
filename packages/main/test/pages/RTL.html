@@ -75,13 +75,25 @@
 		<ui5-checkbox text="This checkbox however defines dir=ltr" dir="ltr"></ui5-checkbox>
 	</section>
 
-
+	<ui5-date-picker></ui5-date-picker>
 	<script>
 
 		// Utility function to change RTL and apply the changes
 		function setDir(dir) {
 			document.body.dir = dir;
 			window['sap-ui-webcomponents-bundle'].applyDirection();
+		}
+
+		function setDirByLang(lang) {
+			if (lang === "he" || lang === "ar") {
+				setDir("rtl");
+			} else {
+				setDir("ltr");
+			}
+		}
+
+		function setLanguage(lang) {
+			return window['sap-ui-webcomponents-bundle'].configuration.setLanguage(lang);
 		}
 
 		document.getElementById("sw").addEventListener("click", function(e) {
@@ -94,12 +106,10 @@
 
 		document.getElementById("tb").addEventListener("selection-change", function(e) {
 			var lang = e.detail.selectedButton.textContent.toLowerCase();
-			if (lang === "he" || lang === "ar") {
-				setDir("rtl");
-			} else {
-				setDir("ltr");
-			}
-			window['sap-ui-webcomponents-bundle'].configuration.setLanguage(lang);
+
+			setLanguage(lang).then(function() {
+				setDirByLang(lang);
+			});
 		});
 	</script>
 
