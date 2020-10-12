@@ -39,6 +39,10 @@
 	outline-offset: -4px;
 }
 
+:host([placeholder]) {
+	font-style: italic;
+}
+
 .ui5-textarea-root {
 	height: 100%;
 	min-height: var(--_ui5_input_height);
