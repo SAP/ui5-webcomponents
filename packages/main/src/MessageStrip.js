@@ -75,6 +75,7 @@ const metadata = {
 		 */
 		"default": {
 			type: Node,
+			propertyName: "content",
 		},
 
 		/**
@@ -191,6 +192,14 @@ class MessageStrip extends UI5Element {
 
 	get hiddenText() {
 		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}`;
+	}
+
+	get closeButtonAriaLabel() {
+		if (this.content[0] && this.content[0].textContent) {
+			return `${this.hiddenText} ${this.content[0].textContent}`;
+		}
+
+		return this.hiddenText;
 	}
 
 	get _closeButtonText() {

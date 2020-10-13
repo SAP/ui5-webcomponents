@@ -1,9 +1,8 @@
 <div class="{{classes.root}}"
-	id="{{_id}}"
 	role="alert"
 	dir="{{effectiveDir}}"
 	aria-live="assertive"
-	aria-labelledby="{{_id}}">
+>
 
 	{{#unless noIcon}}
 		<div class="ui5-messagestrip-icon-wrapper">
@@ -15,8 +14,8 @@
 		</div>
 	{{/unless}}
 
-	<span class="ui5-hidden-text">{{hiddenText}}</span>
-	<span class="ui5-messagestrip-text"><slot></slot></span>
+	<span id="{{_id}}-hidden-text" class="ui5-hidden-text">{{hiddenText}}</span>
+	<span id="{{_id}}-text" class="ui5-messagestrip-text"><slot></slot></span>
 
 	{{#unless noCloseButton}}
 		<ui5-button
@@ -25,6 +24,7 @@
 				design="Transparent"
 				class="ui5-messagestrip-close-button"
 				title="{{_closeButtonText}}"
+				aria-label="{{closeButtonAriaLabel}}"
 				@click={{_closeClick}}
 		></ui5-button>
 	{{/unless}}
