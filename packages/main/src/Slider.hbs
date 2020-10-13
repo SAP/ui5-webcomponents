@@ -6,23 +6,26 @@
 >
 	<div class="ui5-slider-inner">
 		<div class="ui5-slider-progress-container">
-			<div class="ui5-slider-progress"></div>
+			<div class="ui5-slider-progress" style="transform: scaleX({{progressIndicatorWidth}});"></div>
 		</div>
 
 		{{#if step}}
 			{{#if tickmarks}}
 				<div class="ui5-slider-tickmarks"></div>
-				{{#if labelDistance}}
+				{{#if labelInterval}}
 					<ul class="ui5-slider-labels"></ul>
 				{{/if}}
 			{{/if}}
 		{{/if}}
 
-		{{> sliderHandler}}
 
-		{{> rangeSliderStartHandler}}
-
-		{{> rangeSliderEndHandler}}
+		<div class="ui5-slider-handle" style="	left: {{handlePosition}}px;">
+			{{#if showTooltip}}
+				<div class="ui5-slider-tooltip">
+					<span class="ui5-slider-tooltip-value">{{value}}</span>
+				</div>
+			{{/if}}
+		</div>
 
 	</div>
 

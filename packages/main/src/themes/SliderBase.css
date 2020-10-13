@@ -71,7 +71,7 @@
 	top: -0.35rem;
 }
 
-.ui5-slider-handle, .ui5-slider-end-handle {
+.ui5-slider-handle {
 	margin-left: -1rem;
 	top: -0.91rem;
 	height: 1.75rem;
@@ -88,7 +88,7 @@
 /* Slider Tooltip styles          */
 /* ------------------------------ */
 
-.ui5-slider-tooltip, .ui5-slider-end-tooltip {
+.ui5-slider-tooltip {
 	position: absolute;
 	border: 1px solid #333;
 	border-radius: 0.25rem;
@@ -106,6 +106,7 @@
 	background-color: #FFF;
 	min-width: 2.225rem;
 	pointer-events: none;
+	z-index: 2;
 }
 
 .ui5-slider-labels {

@@ -2,15 +2,15 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 // Styles
-import SliderStyles from "./generated/themes/SliderBase.css.js";
+import styles from "./generated/themes/SliderBase.css.js";
 
 /**
  * @public
  */
 const metadata = {
+	tag: "ui5-slider-base",
 	properties: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */  {
 		/**
 		 * Minimum value of the slider
@@ -45,7 +45,7 @@ const metadata = {
 		 * @public
 		 */
 		step: {
-			type: Integer,
+			type: Float,
 			defaultValue: 1,
 		},
 		/**
@@ -148,50 +148,18 @@ class SliderBase extends UI5Element {
 		return litRender;
 	}
 
-	static get template() {
-		return SliderTemplate;
-	}
-
 	static get styles() {
-		return SliderStyles;
-	}
-
-	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
-	}
-
-	constructor() {
-		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
-	onEnterDOM() {
-		this._moveHandler = this._onMouseMove.bind(this);
-		this._upHandler = this._onMouseUp.bind(this);
-		this._mouseOverHandler = this._onMouseOver.bind(this);
-		this._mouseOutHandler = this._onMouseOut.bind(this);
-
-		this.addEventListener("mouseover", this._mouseOverHandler);
-		this.addEventListener("mouseout", this._mouseOutHandler);
-
-		// Normalize Slider value according to min/max properties
-		this.value = this._clipValue(this.value);
-		// Update initial Slider UI representation on entering the DOM
-		this._updateUI(this.value);
-		// Initial normalization of the step value
-		this._setStep();
-	}
-
-	_onMouseMove(event) {
-		this._handleMove(event);
+		return styles;
 	}
 
 	_onMouseUp() {
 		this._handleUp();
 		window.removeEventListener("mouseup", this._upHandler);
 		window.removeEventListener("mousemove", this._moveHandler);
+	}
+	
+	_onMouseMove(event) {
+		this._handleMove(event);
 	}
 
 	_onMouseOver() {
@@ -205,9 +173,9 @@ class SliderBase extends UI5Element {
 	/**
 	 * Called when the user starts interacting with the slider
 	 */
-	_handleDown(event) {
+	_handleDownBase(event, valueType, min, max) {
 		this._boundingClientRect = this.getBoundingClientRect()
-		const newValue = SliderBase._getValueFromInteraction(event, this.step, this._boundingClientRect);
+		const newValue = SliderBase._getValueFromInteraction(event, this.step, min, max, this._boundingClientRect);
 
 		// After a down event on the slider root, listen for move events on
 		// body, so the slider value is updated even if the user drags the pointer
@@ -224,14 +192,8 @@ class SliderBase extends UI5Element {
 	 * Called when the user moves the slider
 	 * @private
 	 */
-	_handleMove(event) {
-		event.preventDefault();
-
-		if (this.disabled) {
-			return;
-		}
-
-		const value = SliderBase._getValueFromInteraction(event, this.step, this.getBoundingClientRect());
+	_handleMoveBase(event, valueType, min, max) {
+		const newValue = SliderBase._getValueFromInteraction(event, this.step, min, max, this.getBoundingClientRect());
 
 		// Update Slider UI and internal state	
 		this._updateUI(newValue);
@@ -264,10 +226,11 @@ class SliderBase extends UI5Element {
 
 	_updateValue(valueType, value) {
 		this[valueType] = value;
+		this.fireEvent("input");
 	}
 
 	/**
-	 * Locks the given value for the given handle between boundaries based on slider properties:
+	 * Locks the given value between boundaries based on slider properties:
 	 * Restricts value within the min & max properties.
 	 * @private
 	 */
@@ -281,30 +244,29 @@ class SliderBase extends UI5Element {
 	 * 
 	 * @private
 	 */
-	static _getValueFromInteraction(event, stepSize, boundingClientRect) {
+	static _getValueFromInteraction(event, stepSize, min, max, boundingClientRect) {
 		const pageX = this._getPageXValueFromEvent(event);
-		const value = this._computedValueFromPageX(pageX, boundingClientRect);
-
-		this._getSteppedValue(value, stepSize);
+		const value = this._computedValueFromPageX(pageX, min, max, boundingClientRect);
+		const steppedValue = this._getSteppedValue(value, stepSize, min);
 
 		// Normalize value and keep it under constrains defined by the slider's properties
-		return this._clipValue(value);
+		return this._clipValue(steppedValue, min, max);
 	}
 
 	/**
-	 * "Stepihfy" the raw value - calculate a step value
-	 * Steps are integers, so when Slider is "quantized" (stepped)
-	 * the value is also rounded to an integer.
+	 * "Stepify" the raw value - calculate the new value depending on the specified step property
 	 * 
 	 * @private
 	 */
-	static _getSteppedValue(value, stepSize) {
-		if (stepSize !== 0) {
-			const numSteps = Math.round(value / stepSize);
-			return value = numSteps * step;
-		}
-		else {
+	static _getSteppedValue(value, stepSize, min) {
+		if (stepSize === 0) {
 			return value;
+		}
+
+		const stepModuloValue = Math.abs((value - min) % stepSize);
+		// Clip (snap) the new value to the nearest step
+		if (stepModuloValue !== 0) {
+			return (stepModuloValue * 2 >= stepSize) ? (value + stepSize) - stepModuloValue : value - stepModuloValue;
 		}
 	}
 
@@ -326,41 +288,20 @@ class SliderBase extends UI5Element {
 	 * 
 	 * @private
 	 */
-	static _computedValueFromPageX(pageX, boundingClientRect) {
-		const max = this.max;
-		const min = this.min;
-
+	static _computedValueFromPageX(pageX, min, max, boundingClientRect) {
 		// Determine pageX position relative to the Slider DOM
 		const xPositionRelative = pageX - boundingClientRect.left;
 		// Calculate the percentage complete (the "progress")
 		const percentageComplete = xPositionRelative / boundingClientRect.width;
 		// Fit (map) the complete percentage between the min/max value range
-		return (min + percentageComplete * (max - min)).toFixed(2);
-	}
-
-	// Update UI after user interaction.
-	_updateUI(newValue) {
-		const max = this.max;
-		const min = this.min;
-		const boundingClientRect = this._boundingClientRect || this.getBoundingClientRect();
-
-		// The progress (completed) percentage of the slider.
-		const percentageComplete = (newValue - min) / (max - min);
-		// How many pixels from the left end of the slider will be the placed the affected  by the user action handle
-		const handlePositionFromLeft = percentageComplete * this._boundingClientRect.width;
-
-		// Update the progress indication width
-		this.shadowRoot.querySelector(".ui5-slider-progress").style.setProperty("transform", `scaleX(${percentageComplete})`);
-
-		// Update the position of the handle with the calculated left offset
-		this.shadowRoot.querySelector(".ui5-slider-handle").style.setProperty("left", `${handlePositionFromLeft}px`);
+		return min + percentageComplete * (max - min);
 	}
 
 	/**
 	 * Calculates and draws the tickmarks with a CSS gradient style
 	 */
 	_drawDefaultTickmarks(step, max, min) {
-		// Let the CSS do all calculations for more precise browser results
+		// Let the CSS do calculations for precise tickmarks distribution
 		const stepStr = String(step);
 		const maxStr = String(max);
 		const minStr = String(min);
@@ -368,7 +309,7 @@ class SliderBase extends UI5Element {
 		const tickmarkWidth = "1px";
 
 		// Transparent CSS gradient background
-		const tickmarksGradientBase = `linear-gradient(to right, currentColor ${tickmarkWidth}, transparent 0)`;
+		const tickmarksGradientBase = `linear-gradient(to right, currentColor ${tickmarkWidth}, transparent 0) `;
 
 		// Draw the tickmarks as a patern over the gradient background
 		const tickmarksGradientdPattern = `0 center / calc((100% - ${tickmarkWidth}) / (${tickmarksAmount})) 100% repeat-x`;
@@ -391,7 +332,8 @@ class SliderBase extends UI5Element {
 	_drawDefaultLabels(tickmarkWidth) {
 		const labelContainer = this.shadowRoot.querySelector(".ui5-slider-labels");
 		const labelInterval = this.labelInterval;
-		const numberOfLabels = (this.max - this.min) / (this.step * labelInterval);
+		const step = this.step;
+		const numberOfLabels = (this.max - this.min) / (step * labelInterval);
 
 		// If the required labels are already rendered return
 		if (labelContainer.childElementCount === numberOfLabels) {
@@ -400,13 +342,13 @@ class SliderBase extends UI5Element {
 
 		// numberOfLabels below can be float so that the "distance betweenlabels labels"
 		// calculation to be precize (exactly the same as the distance between the tickmarks).
-		// That's ok as the loop stop condition is set to an int, so it will "floor"
-		// the number of labels anyway.
+		// That's ok as the loop stop condition is set to an integer, so it will practically
+		// "floor" the number of labels anyway.
 		const spaceBetweenLabelsPx = this.getBoundingClientRect().width / numberOfLabels;
 
 		for (let i = 0; i <= numberOfLabels; i++) {
 			const labelItem = document.createElement("li");
-			labelItem.textContent = (i * labelInterval) + Math.round(this.min);
+			labelItem.textContent = (i * step * labelInterval) + Math.round(this.min);
 			labelContainer.appendChild(labelItem);
 
 			// Make every label width as the distance between the tickmarks
@@ -430,6 +372,4 @@ class SliderBase extends UI5Element {
 	}
 }
 
-Slider.define();
-
-export default Slider;
+export default SliderBase;
