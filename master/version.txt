@@ -1,8 +1,7 @@
-commit f4e979f7f7a8d38fff642589902d9a1cf64b08ba
+commit 155f8e0a7876f7dd9ded1f42cade71b6f2e4320e
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Oct 13 15:01:31 2020 +0300
+Date:   Tue Oct 13 17:04:30 2020 +0300
 
-    docs: update bug report template (#2346)
+    chore(ui5-date*): enable color and bg-color restyling (#2350)
     
-    The template is part of the preparation for the Maintenance process that will take place in future.
-    The information about Organization, Priority and Business impact, when applicable, would be useful for the issue dispatchers and processors.
+    With this change you can change the color and bg-color by standard CSS, applied on the host of the DatePicker, TimePicker, DateTimePicker and DateRangePicker components
