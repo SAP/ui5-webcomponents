@@ -14,6 +14,7 @@ let initialConfig = {
 	formatSettings: {},
 	useDefaultLanguage: false,
 	assetsPath: "",
+	initialZIndex: 100,
 };
 
 /* General settings */
@@ -65,6 +66,11 @@ const getFormatSettings = () => {
 const getAssetsPath = () => {
 	initConfiguration();
 	return initialConfig.assetsPath;
+};
+
+const getInitialZIndex = () => {
+	initConfiguration();
+	return parseInt(initialConfig.initialZIndex);
 };
 
 const booleanMapping = new Map();
@@ -147,4 +153,5 @@ export {
 	getCalendarType,
 	getFormatSettings,
 	getAssetsPath,
+	getInitialZIndex,
 };
