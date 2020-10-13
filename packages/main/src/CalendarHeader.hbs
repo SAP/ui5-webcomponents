@@ -24,7 +24,7 @@
 		<div
 			id="{{_id}}-btn1"
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
-			.hidden = "{{_isMonthButtonHidden}}"
+			?hidden="{{_isMonthButtonHidden}}"
 			type="{{_btn1.type}}"
 			tabindex="0"
 			@click={{_showMonthPicker}}

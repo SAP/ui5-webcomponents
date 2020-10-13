@@ -39,7 +39,7 @@
 	color: var(--sapButton_TextColor);
 }
 
-[hidden].ui5-calheader-arrowbtn.ui5-calheader-middlebtn{
+[hidden].ui5-calheader-arrowbtn.ui5-calheader-middlebtn {
 	display: none;
 }
 

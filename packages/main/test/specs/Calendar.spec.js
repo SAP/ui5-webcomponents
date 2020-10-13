@@ -150,6 +150,6 @@ describe("Calendar general interaction", () => {
 		browser.keys(["F4"]);
 		browser.keys('PageUp');
 
-		assert.ok(calendarHeader.shadow$(".ui5-calheader-middlebtn").hasClass("ui5-calheader-monthbutton-hidden"), "The button for month is hidden");
+		assert.ok(calendarHeader.shadow$(".ui5-calheader-middlebtn").getAttribute("hidden"), "The button for month is hidden");
 	});
 });
