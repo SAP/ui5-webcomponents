@@ -162,20 +162,12 @@ class SliderBase extends UI5Element {
 		this._handleMove(event);
 	}
 
-	_onMouseOver() {
-		this._handleMouseOver();
-	}
-
-	_onMouseOut() {
-		this._handleMouseOut();
-	}
-
 	/**
 	 * Called when the user starts interacting with the slider
 	 *
 	 * @private
 	 */
-	_handleDownBase(event, valueType, min, max) {
+	_handleDownBase(event, min, max) {
 		this._boundingClientRect = this.getBoundingClientRect();
 		const newValue = SliderBase._getValueFromInteraction(event, this.step, min, max, this._boundingClientRect);
 
@@ -185,9 +177,7 @@ class SliderBase extends UI5Element {
 		window.addEventListener("mousemove", this._moveHandler);
 		window.addEventListener("mouseup", this._upHandler);
 
-		// Update Slider UI and internal state
-		this._updateUI(newValue);
-		this._updateValue(valueType, newValue);
+		return newValue;
 	}
 
 	/**
@@ -216,7 +206,7 @@ class SliderBase extends UI5Element {
 			return;
 		}
 
-		this.shadowRoot.querySelector(".ui5-slider-tooltip").style.setProperty("visibility", "visible");
+		this.shadowRoot.querySelectorAll(".ui5-slider-tooltip").forEach((tooltip) => tooltip.style.setProperty("visibility", "visible"));
 	}
 
 	_handleMouseOut(event) {
@@ -224,7 +214,7 @@ class SliderBase extends UI5Element {
 			return;
 		}
 
-		this.shadowRoot.querySelector(".ui5-slider-tooltip").style.setProperty("visibility", "hidden");
+		this.shadowRoot.querySelectorAll(".ui5-slider-tooltip").forEach((tooltip) => tooltip.style.setProperty("visibility", "hidden"));
 	}
 
 	_updateValue(valueType, value) {

@@ -49,31 +49,39 @@ class Slider extends SliderBase {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._initialRendering = true;
+
 	}
 
 	onEnterDOM() {
 		this._moveHandler = this._onMouseMove.bind(this);
 		this._upHandler = this._onMouseUp.bind(this);
-		this._mouseOverHandler = this._onMouseOver.bind(this);
-		this._mouseOutHandler = this._onMouseOut.bind(this);
+
 
 		this.addEventListener("mouseover", this._mouseOverHandler);
 		this.addEventListener("mouseout", this._mouseOutHandler);
-
-		// Normalize Slider value according to min/max properties
-		this.value = SliderBase._clipValue(this.value, this.min, this.max);
-		// Update initial Slider UI representation on entering the DOM
-		this._initialUISync();
-		// Initial normalization of the step value
 		this._setStep(this.step);
 	}
 
-	get progressIndicatorWidth() {
-		return this._percentageComplete;
+	onBeforeRendering() {
+		if (this._initialRendering) {
+			// Update initial Slider UI representation on entering the DOM
+			this._initialUISync();
+			// Normalize Slider value according to min/max properties
+			this.value = SliderBase._clipValue(this.value, this.min, this.max);
+			this._initialRendering = false;
+		}
 	}
 
-	get handlePosition() {
-		return this._handlePositionFromLeft;
+	get styles() {
+		return {
+			progress: {
+				"transform": `scaleX(${this._percentageComplete})`,
+			},
+			handlePosition: {
+				"left": `${this._handlePositionFromLeft}%`
+			},
+		}
 	}
 
 	/**
@@ -86,7 +94,11 @@ class Slider extends SliderBase {
 			return;
 		}
 
-		this._handleDownBase(event, "value", this.min, this.max);
+		const newValue = this._handleDownBase(event, this.min, this.max);
+
+		// Update Slider UI and internal state
+		this._updateUI(newValue);
+		this._updateValue("value", newValue);
 	}
 
 	/**
@@ -107,12 +119,11 @@ class Slider extends SliderBase {
 	_updateUI(newValue) {
 		const max = this.max;
 		const min = this.min;
-		const boundingClientRect = this._boundingClientRect || this.getBoundingClientRect();
 
 		// The progress (completed) percentage of the slider.
 		this._percentageComplete = (newValue - min) / (max - min);
 		// How many pixels from the left end of the slider will be the placed the affected  by the user action handle
-		this._handlePositionFromLeft = this._percentageComplete * boundingClientRect.width;
+		this._handlePositionFromLeft = this._percentageComplete * 100;
 	}
 
 	/**

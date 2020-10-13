@@ -1,12 +1,12 @@
 <div
 	class="ui5-slider-root"
 	@mousedown="{{_handleDown}}"
-	@keyup="{{_onkeyup}}"
-	@click={{_click}}
+	@mouseover="{{_handleMouseOver}}"
+	@mouseout="{{_handleMouseOut}}"
 >
 	<div class="ui5-slider-inner">
 		<div class="ui5-slider-progress-container">
-			<div class="ui5-slider-progress" style="transform: scaleX({{progressIndicatorWidth}});"></div>
+			<div class="ui5-slider-progress" style="{{styles.progress}}"></div>
 		</div>
 
 		{{#if step}}
@@ -19,7 +19,7 @@
 		{{/if}}
 
 
-		<div class="ui5-slider-handle" style="	left: {{handlePosition}}px;">
+		<div class="ui5-slider-handle" style="{{styles.handlePosition}}">
 			{{#if showTooltip}}
 				<div class="ui5-slider-tooltip">
 					<span class="ui5-slider-tooltip-value">{{value}}</span>
