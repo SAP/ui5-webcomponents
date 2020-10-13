@@ -1,7 +1,8 @@
-commit 8be4048a6ee32f0e9baada507a8f8f2c1babf70f
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Sat Oct 10 15:11:32 2020 +0300
+commit f4e979f7f7a8d38fff642589902d9a1cf64b08ba
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Oct 13 15:01:31 2020 +0300
 
-    feat(ui5-dialog): introduce resizable property (#2301)
+    docs: update bug report template (#2346)
     
-    Fixes #2082
+    The template is part of the preparation for the Maintenance process that will take place in future.
+    The information about Organization, Priority and Business impact, when applicable, would be useful for the issue dispatchers and processors.
