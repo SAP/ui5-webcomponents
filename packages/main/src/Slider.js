@@ -1,6 +1,6 @@
-import SliderBase from "./SliderBase.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import SliderBase from "./SliderBase.js";
 
 // Template
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
@@ -16,7 +16,7 @@ const metadata = {
 		value: {
 			type: Float,
 			defaultValue: 0,
-		}
+		},
 	},
 };
 
@@ -25,7 +25,6 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Label";</code>
  *
  * @constructor
  * @author SAP SE
@@ -76,8 +75,11 @@ class Slider extends SliderBase {
 	get handlePosition() {
 		return this._handlePositionFromLeft;
 	}
+
 	/**
 	 * Called when the user starts interacting with the slider
+	 *
+	 * @private
 	 */
 	_handleDown(event) {
 		if (this.disabled) {
@@ -89,6 +91,7 @@ class Slider extends SliderBase {
 
 	/**
 	 * Called when the user moves the slider
+	 *
 	 * @private
 	 */
 	_handleMove(event) {
@@ -101,7 +104,6 @@ class Slider extends SliderBase {
 		this._handleMoveBase(event, "value", this.min, this.max);
 	}
 
-	// Update UI after user interaction.
 	_updateUI(newValue) {
 		const max = this.max;
 		const min = this.min;
@@ -115,11 +117,13 @@ class Slider extends SliderBase {
 
 	/**
 	 * Update initial Slider UI representation on entering the DOM
+	 *
+	 * @private
 	 */
 	_initialUISync() {
-		this._updateUI(this.value)
+		this._updateUI(this.value);
 	}
-	
+
 	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),

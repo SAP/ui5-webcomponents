@@ -157,7 +157,7 @@ class SliderBase extends UI5Element {
 		window.removeEventListener("mouseup", this._upHandler);
 		window.removeEventListener("mousemove", this._moveHandler);
 	}
-	
+
 	_onMouseMove(event) {
 		this._handleMove(event);
 	}
@@ -172,9 +172,11 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Called when the user starts interacting with the slider
+	 *
+	 * @private
 	 */
 	_handleDownBase(event, valueType, min, max) {
-		this._boundingClientRect = this.getBoundingClientRect()
+		this._boundingClientRect = this.getBoundingClientRect();
 		const newValue = SliderBase._getValueFromInteraction(event, this.step, min, max, this._boundingClientRect);
 
 		// After a down event on the slider root, listen for move events on
@@ -182,7 +184,7 @@ class SliderBase extends UI5Element {
 		// outside the slider root
 		window.addEventListener("mousemove", this._moveHandler);
 		window.addEventListener("mouseup", this._upHandler);
-		
+
 		// Update Slider UI and internal state
 		this._updateUI(newValue);
 		this._updateValue(valueType, newValue);
@@ -190,12 +192,13 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Called when the user moves the slider
+	 *
 	 * @private
 	 */
 	_handleMoveBase(event, valueType, min, max) {
 		const newValue = SliderBase._getValueFromInteraction(event, this.step, min, max, this.getBoundingClientRect());
 
-		// Update Slider UI and internal state	
+		// Update Slider UI and internal state
 		this._updateUI(newValue);
 		this._updateValue(valueType, newValue);
 	}
@@ -241,7 +244,7 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Sets the slider value from an event
-	 * 
+	 *
 	 * @private
 	 */
 	static _getValueFromInteraction(event, stepSize, min, max, boundingClientRect) {
@@ -255,7 +258,7 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * "Stepify" the raw value - calculate the new value depending on the specified step property
-	 * 
+	 *
 	 * @private
 	 */
 	static _getSteppedValue(value, stepSize, min) {
@@ -272,7 +275,7 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Gets pageX value from event on user interaction with the Slider
-	 * 
+	 *
 	 * @private
 	 */
 	static _getPageXValueFromEvent(event) {
@@ -285,7 +288,7 @@ class SliderBase extends UI5Element {
 	/**
 	 * Computes the new value (in %) from the pageX position of the cursor.
 	 * Returns the value with rounded to a precision of at most 2 digits after decimal point.
-	 * 
+	 *
 	 * @private
 	 */
 	static _computedValueFromPageX(pageX, min, max, boundingClientRect) {
@@ -299,6 +302,8 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Calculates and draws the tickmarks with a CSS gradient style
+	 *
+	 * @private
 	 */
 	_drawDefaultTickmarks(step, max, min) {
 		// Let the CSS do calculations for precise tickmarks distribution
@@ -328,6 +333,8 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Calculates the labels amout, width and text and creates them
+	 *
+	 * @private
 	 */
 	_drawDefaultLabels(tickmarkWidth) {
 		const labelContainer = this.shadowRoot.querySelector(".ui5-slider-labels");
