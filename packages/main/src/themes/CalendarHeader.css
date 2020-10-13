@@ -39,7 +39,7 @@
 	color: var(--sapButton_TextColor);
 }
 
-.ui5-calheader-arrowbtn.ui5-calheader-middlebtn.ui5-calheader-monthbutton-hidden {
+[hidden].ui5-calheader-arrowbtn.ui5-calheader-middlebtn{
 	display: none;
 }
 

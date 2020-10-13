@@ -95,7 +95,6 @@ class CalendarHeader extends UI5Element {
 
 	onBeforeRendering() {
 		this._btn1.text = this.monthText;
-		this._btn1.classes = "ui5-calheader-arrowbtn ui5-calheader-middlebtn";
 		this._btn2.text = this.yearText;
 		this._btnPrev.classes = "ui5-calheader-arrowbtn";
 		this._btnNext.classes = "ui5-calheader-arrowbtn";
@@ -106,10 +105,6 @@ class CalendarHeader extends UI5Element {
 
 		if (this._isPrevButtonDisabled) {
 			this._btnPrev.classes += " ui5-calheader-arrowbtn-disabled";
-		}
-
-		if (this._isMonthButtonHidden) {
-			this._btn1.classes += " ui5-calheader-monthbutton-hidden";
 		}
 	}
 
