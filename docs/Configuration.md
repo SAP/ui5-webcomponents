@@ -13,6 +13,7 @@ language     | en, de, es, etc...                              | en            |
 [animationMode](#animationMode)  | full, basic, minimal, none  | full          | Defines different animation scenarios or levels
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
 [noConflict](#noConflict)  | true, false | false                            | When set to true, all events will be fired with a "ui5-" prefix only
+[bubblingEvents](#bubblingEvents)  | true, false | false                            | When set to true, events will propagate through the custom element.
 [formatSettings](#formatSettings)| See the [Format settings](#formatSettings) section below		| Empty object | Allows to override locale-specific configuration
 [assetsPath](#assetsPath)| See the [Assets path](#assetsPath) section below		| Empty string | Allows to set the assets path at runtime
 
@@ -84,6 +85,34 @@ The `noConflict` configuration setting allows certain control over this behavior
  In the above example, only the `selection-change` and `header-click` events will be fired with a prefix.
  You can still use them by listening to `ui5-selection-change` and `ui5-header-click`, but the names `selection-change` and `header-click` will be
  free for use by other UI components and libraries without name collision.
+
+<a name="bubblingEvents"></a>
+### Bubbling Events
+
+By default all events fired by UI5 Web Components are fired with the following options:
+```
+bubble: true,
+capture: false,
+```
+
+This means that they can't be captured in a high order component or in any HTML Element which is parent of a custom element.
+Example:
+In the following HTML Structure:
+```html
+<section>
+	<ui5-input 
+		placeholder="Search ...">
+	</ui5-input>
+</section>
+```
+The ```ui5-input``` fires ```input``` event. By default, the event can be caught only on the custom element(```ui5-input```).
+
+If you want to be able to catch the ```input``` event on the given ```section``` element, you should set explicitly in your configuration the ```bubblingEvents``` property to ```true```.
+If ```bubblingEvents``` is set to true, then all events will be fired with the following options:
+```
+bubble: true,
+capture: true,
+```
 
 <a name="formatSettings"></a>
 ### Format settings

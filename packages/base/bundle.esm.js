@@ -34,6 +34,7 @@ import { getLanguage } from "./dist/config/Language.js";
 import { getCalendarType } from "./dist/config/CalendarType.js";
 import { getTheme, setTheme } from "./dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
+import { getBubblingEvents, setBubblingEvents } from "./dist/config/BubblingEvents";
 import { getRTL } from "./dist/config/RTL.js";
 import { getFirstDayOfWeek } from "./dist/config/FormatSettings.js";
 import { getRegisteredNames as getIconNames } from  "./dist/SVGIconRegistry.js"
@@ -45,6 +46,8 @@ window["sap-ui-webcomponents-bundle"] = {
 		setTheme,
 		getNoConflict,
 		setNoConflict,
+		getBubblingEvents,
+		setBubblingEvents,
 		getCalendarType,
 		getRTL,
 		getFirstDayOfWeek,

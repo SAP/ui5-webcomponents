@@ -17,6 +17,7 @@ import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
+import { getBubblingEvents } from "./config/BubblingEvents.js";
 
 const metadata = {
 	events: {
@@ -685,7 +686,7 @@ class UI5Element extends HTMLElement {
 
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
 			detail: data,
-			composed: false,
+			composed: getBubblingEvents(),
 			bubbles,
 			cancelable,
 		});
@@ -699,7 +700,7 @@ class UI5Element extends HTMLElement {
 
 		const customEvent = new CustomEvent(name, {
 			detail: data,
-			composed: false,
+			composed: getBubblingEvents(),
 			bubbles,
 			cancelable,
 		});
