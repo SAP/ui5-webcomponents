@@ -60,28 +60,50 @@ class Slider extends SliderBase {
 
 		this.addEventListener("mouseover", this._mouseOverHandler);
 		this.addEventListener("mouseout", this._mouseOutHandler);
-		this._setStep(this.step);
 	}
 
 	onBeforeRendering() {
+		// Update initial Slider UI representation and normalize internal state
+		// Normalize Slider value according to min/max properties
+		// Normalize the step value
 		if (this._initialRendering) {
-			// Update initial Slider UI representation on entering the DOM
-			this._initialUISync();
-			// Normalize Slider value according to min/max properties
 			this.value = SliderBase._clipValue(this.value, this.min, this.max);
+			this._setStep(this.step);
+			this._initialUISync();
+			this._drawDefaultTickmarks(this.step, this.max, this.min);
 			this._initialRendering = false;
+		}
+		if (this.step !== 1) {
+			this._setStep(this.step);
 		}
 	}
 
 	get styles() {
 		return {
 			progress: {
-				"transform": `scaleX(${this._percentageComplete})`,
+				"transform": `scaleX(${this._percentageComplete})`
 			},
 			handlePosition: {
 				"left": `${this._handlePositionFromLeft}%`
 			},
+			tickmarks: {
+				"background": `${this._tickmarksBackground}`
+			},
+			label: {
+				"width": `${this._labelWidth}%`
+			},
+			labelContainer: {
+				"width": `100%`,
+				"left": `-${this._labelWidth / 2}%`
+			},
+			tooltipVisibility: {
+				"visibility": `${this._tooltipVisibility}`
+			}
 		}
+	}
+
+	get labelItems() {
+		return this._labelItems;
 	}
 
 	/**

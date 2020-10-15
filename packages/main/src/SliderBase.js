@@ -37,7 +37,7 @@ const metadata = {
 		},
 		/**
 		 * Defines the size of the slider's selection intervals. (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
-		 * If 0 no visible interval between value changes will apppear. When negative number, the component fallbacks to its default value.
+		 * If 0 no visible interval between value changes will appear. When negative number, the component fallbacks to its default value.
 		 * <br><br>
 		 *
 		 * @type {Integer}
@@ -62,7 +62,7 @@ const metadata = {
 			defaultValue: 0,
 		},
 		/**
-		 * Enables tick marks visualization for each step. The step value must not be set to 0
+		 * Enables tick marks visualization for each step. The step value must not be set to 0.
 		 * <br><br>
 		 *
 		 * @type {boolean}
@@ -93,6 +93,14 @@ const metadata = {
 		 */
 		disabled: {
 			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 */
+		_tooltipVisibility: {
+			type: String,
+			defaultValue: "hidden",
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */ {
@@ -206,7 +214,7 @@ class SliderBase extends UI5Element {
 			return;
 		}
 
-		this.shadowRoot.querySelectorAll(".ui5-slider-tooltip").forEach((tooltip) => tooltip.style.setProperty("visibility", "visible"));
+		this._tooltipVisibility = "visible";
 	}
 
 	_handleMouseOut(event) {
@@ -214,7 +222,7 @@ class SliderBase extends UI5Element {
 			return;
 		}
 
-		this.shadowRoot.querySelectorAll(".ui5-slider-tooltip").forEach((tooltip) => tooltip.style.setProperty("visibility", "hidden"));
+		this._tooltipVisibility = "hidden";
 	}
 
 	_updateValue(valueType, value) {
@@ -296,6 +304,10 @@ class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_drawDefaultTickmarks(step, max, min) {
+		if (!this.tickmarks) {
+			return;
+		}
+
 		// Let the CSS do calculations for precise tickmarks distribution
 		const stepStr = String(step);
 		const maxStr = String(max);
@@ -310,10 +322,7 @@ class SliderBase extends UI5Element {
 		const tickmarksGradientdPattern = `0 center / calc((100% - ${tickmarkWidth}) / (${tickmarksAmount})) 100% repeat-x`;
 
 		// Combine to get the complete CSS background gradient property value
-		const tickmarksBackground = `${tickmarksGradientBase + tickmarksGradientdPattern}`;
-
-		// Apply the style to the container
-		this.shadowRoot.querySelector(".ui5-slider-tickmarks").style.setProperty("background", tickmarksBackground);
+		this._tickmarksBackground = `${tickmarksGradientBase + tickmarksGradientdPattern}`;
 
 		// If labelsInterval is specified draw labels for the necessary tickmarks
 		if (this.labelInterval) {
@@ -327,33 +336,26 @@ class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_drawDefaultLabels(tickmarkWidth) {
-		const labelContainer = this.shadowRoot.querySelector(".ui5-slider-labels");
 		const labelInterval = this.labelInterval;
 		const step = this.step;
-		const numberOfLabels = (this.max - this.min) / (step * labelInterval);
+		const newNumberOfLabels = (this.max - this.min) / (step * labelInterval);
 
-		// If the required labels are already rendered return
-		if (labelContainer.childElementCount === numberOfLabels) {
+		// If the required labels are already rendered
+		if (newNumberOfLabels === this._oldNumberOfLabels) {
 			return;
 		}
+
+		this._oldNumberOfLabels = newNumberOfLabels;
+		this._labelWidth = 100 / newNumberOfLabels;
+		this._labelItems = [];
 
 		// numberOfLabels below can be float so that the "distance betweenlabels labels"
 		// calculation to be precize (exactly the same as the distance between the tickmarks).
 		// That's ok as the loop stop condition is set to an integer, so it will practically
 		// "floor" the number of labels anyway.
-		const spaceBetweenLabelsPx = this.getBoundingClientRect().width / numberOfLabels;
-
-		for (let i = 0; i <= numberOfLabels; i++) {
-			const labelItem = document.createElement("li");
-			labelItem.textContent = (i * step * labelInterval) + Math.round(this.min);
-			labelContainer.appendChild(labelItem);
-
-			// Make every label width as the distance between the tickmarks
-			labelItem.style.setProperty("width", `${spaceBetweenLabelsPx}px`);
-			// Set negative left offset to center evey label to be in the middle of the tickmark above it
-			labelContainer.style.setProperty("left", `-${spaceBetweenLabelsPx / 2}px`);
-			// Set additional width space of the label container to contain the centered labels
-			labelContainer.style.setProperty("width", `calc(100% + ${spaceBetweenLabelsPx}px)`);
+		for (let i = 0; i <= newNumberOfLabels; i++) {
+			const labelItemText = (i * step * labelInterval) + Math.round(this.min);
+			this._labelItems.push(document.createTextNode(labelItemText));
 		}
 	}
 
@@ -361,11 +363,12 @@ class SliderBase extends UI5Element {
 		if (typeof step !== "number" || step < 0) {
 			step = 1;
 		}
-		this.step = step;
 
-		if (this.tickmarks) {
-			this._drawDefaultTickmarks(this.step, this.max, this.min);
+		if (this.tickmarks && !this._initialRendering) {
+			this._drawDefaultTickmarks(step, this.max, this.min);
 		}
+		
+		this.step = step;
 	}
 }
 

@@ -11,16 +11,22 @@
 
 		{{#if step}}
 			{{#if tickmarks}}
-				<div class="ui5-slider-tickmarks"></div>
+				<div class="ui5-slider-tickmarks" style="{{styles.tickmarks}}"></div>
 				{{#if labelInterval}}
-					<ul class="ui5-slider-labels"></ul>
+					<ul class="ui5-slider-labels" style="{{styles.labelContainer}}">
+						{{#if labelItems}}
+							{{#each labelItems}}
+								<li style="{{../styles.label}}">{{this}}</li>
+							{{/each}}
+						{{/if}}
+					</ul>
 				{{/if}}
 			{{/if}}
 		{{/if}}
 
 		<div class="ui5-slider-handle" style="{{styles.handlePosition}}">
 			{{#if showTooltip}}
-				<div class="ui5-slider-tooltip">
+				<div class="ui5-slider-tooltip" style="{{styles.tooltipVisibility}}">
 					<span class="ui5-slider-tooltip-value">{{value}}</span>
 				</div>
 			{{/if}}
