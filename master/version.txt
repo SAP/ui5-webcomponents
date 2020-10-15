@@ -1,7 +1,7 @@
-commit 155f8e0a7876f7dd9ded1f42cade71b6f2e4320e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Oct 13 17:04:30 2020 +0300
+commit 6454e2985104bd2fee7c2b1dcdd3215056fd01f8
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Thu Oct 15 18:17:45 2020 +0300
 
-    chore(ui5-date*): enable color and bg-color restyling (#2350)
+    fix(ui5-date-picker):  hiding month button when month picker is shown (#2331)
     
-    With this change you can change the color and bg-color by standard CSS, applied on the host of the DatePicker, TimePicker, DateTimePicker and DateRangePicker components
+    Related to: #2244
