@@ -43,6 +43,9 @@ const metadata = {
 		_isPrevButtonDisabled: {
 			type: Boolean,
 		},
+		_isMonthButtonHidden: {
+			type: Boolean,
+		},
 	},
 	events: {
 		"previous-press": {},
