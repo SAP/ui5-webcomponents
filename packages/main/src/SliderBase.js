@@ -94,7 +94,6 @@ const metadata = {
 		disabled: {
 			type: Boolean,
 		},
-
 		/**
 		 * @private
 		 */

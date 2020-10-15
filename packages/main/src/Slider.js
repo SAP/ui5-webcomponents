@@ -70,8 +70,8 @@ class Slider extends SliderBase {
 
 		if (this.value !== this._prevValue) {
 			this.value = SliderBase._clipValue(this.value, this.min, this.max);
-			this._updateUI(this.value);
 			this._prevValue = this.value;
+			this._updateUI(this.value);
 		}
 	}
 
