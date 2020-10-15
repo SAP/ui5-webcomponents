@@ -259,15 +259,18 @@ class SliderBase extends UI5Element {
 	 * @private
 	 */
 	static _getSteppedValue(value, stepSize, min) {
-		if (stepSize === 0) {
+		const stepModuloValue = Math.abs((value - min) % stepSize);
+
+		if (stepSize === 0 || stepModuloValue === 0) {
 			return value;
 		}
 
-		const stepModuloValue = Math.abs((value - min) % stepSize);
 		// Clip (snap) the new value to the nearest step
-		if (stepModuloValue !== 0) {
-			return (stepModuloValue * 2 >= stepSize) ? (value + stepSize) - stepModuloValue : value - stepModuloValue;
-		}
+		value = (stepModuloValue * 2 >= stepSize) ? (value + stepSize) - stepModuloValue : value - stepModuloValue;
+		
+		// If the step value is not a round number get its precision
+		const stepPrecision = SliderBase._getDecimalPrecisionOfNumber(stepSize);
+		return value.toFixed(stepPrecision);
 	}
 
 	/**
@@ -295,6 +298,20 @@ class SliderBase extends UI5Element {
 		const percentageComplete = xPositionRelative / boundingClientRect.width;
 		// Fit (map) the complete percentage between the min/max value range
 		return min + percentageComplete * (max - min);
+	}
+
+	/**
+	 * Calculates the precision (decimal places) of a number, returns 0 if integer
+	 * Handles scientific notation cases.
+	 * @private
+	 */
+	static _getDecimalPrecisionOfNumber(value) {
+		if (Number.isInteger(value)) {
+			return 0;
+		}
+
+		const match = (String(value)).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
+		return Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? Number(match[2]) : 0));
 	}
 
 	/**
@@ -348,13 +365,17 @@ class SliderBase extends UI5Element {
 		this._labelWidth = 100 / newNumberOfLabels;
 		this._labelItems = [];
 
+		// If the step value is not a round number get its precision
+		const stepPrecision = SliderBase._getDecimalPrecisionOfNumber(step);
+
 		// numberOfLabels below can be float so that the "distance betweenlabels labels"
 		// calculation to be precize (exactly the same as the distance between the tickmarks).
 		// That's ok as the loop stop condition is set to an integer, so it will practically
 		// "floor" the number of labels anyway.
 		for (let i = 0; i <= newNumberOfLabels; i++) {
-			const labelItemText = (i * step * labelInterval) + Math.round(this.min);
-			this._labelItems.push(document.createTextNode(labelItemText));
+			// Format the label numbers with the same decimal precision as the value of the step property
+			let labelItemNumber = ((i * step * labelInterval) + this.min).toFixed(stepPrecision);
+			this._labelItems.push(document.createTextNode(labelItemNumber));
 		}
 	}
 
@@ -366,7 +387,7 @@ class SliderBase extends UI5Element {
 		if (this.tickmarks && !this._initialRendering) {
 			this._drawDefaultTickmarks(step, this.max, this.min);
 		}
-		
+
 		this.step = step;
 	}
 }

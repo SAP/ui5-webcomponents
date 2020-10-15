@@ -78,31 +78,36 @@ class Slider extends SliderBase {
 	get styles() {
 		return {
 			progress: {
-				"transform": `scaleX(${this._percentageComplete})`
+				"transform": `scaleX(${this._percentageComplete})`,
 			},
 			handlePosition: {
-				"left": `${this._handlePositionFromLeft}%`
+				"left": `${this._handlePositionFromLeft}%`,
 			},
 			tickmarks: {
-				"background": `${this._tickmarksBackground}`
+				"background": `${this._tickmarksBackground}`,
 			},
 			label: {
-				"width": `${this._labelWidth}%`
+				"width": `${this._labelWidth}%`,
 			},
 			labelContainer: {
 				"width": `100%`,
-				"left": `-${this._labelWidth / 2}%`
+				"left": `-${this._labelWidth / 2}%`,
 			},
 			tooltipVisibility: {
-				"visibility": `${this._tooltipVisibility}`
-			}
-		}
+				"visibility": `${this._tooltipVisibility}`,
+			},
+		};
 	}
 
 	get labelItems() {
 		return this._labelItems;
 	}
 
+	get tooltipValue() {
+		const stepPrecision = SliderBase._getDecimalPrecisionOfNumber(this.step);
+
+		return this.value.toFixed(stepPrecision);
+	}
 	/**
 	 * Called when the user starts interacting with the slider
 	 *
