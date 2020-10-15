@@ -50,13 +50,11 @@ class Slider extends SliderBase {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._initialRendering = true;
-
 	}
 
 	onEnterDOM() {
 		this._moveHandler = this._onMouseMove.bind(this);
 		this._upHandler = this._onMouseUp.bind(this);
-
 
 		this.addEventListener("mouseover", this._mouseOverHandler);
 		this.addEventListener("mouseout", this._mouseOutHandler);
@@ -68,13 +66,24 @@ class Slider extends SliderBase {
 		// Normalize the step value
 		if (this._initialRendering) {
 			this.value = SliderBase._clipValue(this.value, this.min, this.max);
+			this._prevValue = this.value;
 			this._setStep(this.step);
+			this._prevStepValue = this.step;
 			this._initialUISync();
 			this._drawDefaultTickmarks(this.step, this.max, this.min);
+
 			this._initialRendering = false;
+			return;
 		}
-		if (this.step !== 1) {
+
+		if (this.step !== this._prevStepValue) {
 			this._setStep(this.step);
+			this._prevStepValue = this.step;
+		}
+
+		if (this.value !== this._prevValue) {
+			this._updateUI(this.value);
+			this._prevValue = this.value;
 		}
 	}
 
