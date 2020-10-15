@@ -71,7 +71,6 @@ class Slider extends SliderBase {
 			this._prevStepValue = this.step;
 			this._initialUISync();
 			this._drawDefaultTickmarks(this.step, this.max, this.min);
-
 			this._initialRendering = false;
 			return;
 		}
