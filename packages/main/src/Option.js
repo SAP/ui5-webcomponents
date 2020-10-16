@@ -42,6 +42,15 @@ const metadata = {
 		value: {
 			type: String,
 		},
+
+		/**
+		 * Defines the stable selector that you can use via getStableDomRef method.
+		 * @public
+		 * @since 1.0.0-rc.10
+		 */
+		stableDomRef: {
+			type: String,
+		},
 	},
 
 	events: /** @lends sap.ui.webcomponents.main.Option.prototype */ {},
