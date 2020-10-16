@@ -5,11 +5,12 @@ const serveConfig = `../tools/components-package/serve.json`;
 const port = `9191`;
 
 const assetParametersScript = resolve.sync("@ui5/webcomponents-base/lib/generate-asset-parameters/index.js");
+const versionScript = resolve.sync("@ui5/webcomponents-base/lib/generate-version-info/index.js");
 
 const scripts = {
 	clean: "rimraf dist",
 	lint: "eslint . --config config/.eslintrc.js",
-	prepare: "nps clean copy generateAssetParameters",
+	prepare: "nps clean copy generateAssetParameters generateVersionInfo",
 	build: {
 		default: "nps lint prepare build.bundle",
 		bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
@@ -21,6 +22,7 @@ const scripts = {
 		"webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
 	},
 	generateAssetParameters: `node "${assetParametersScript}"`,
+	generateVersionInfo: `node "${versionScript}"`,
 	watch: {
 		default: 'concurrently "nps watch.test" "nps watch.src" "nps watch.bundle"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',

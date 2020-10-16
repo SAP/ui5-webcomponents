@@ -1,9 +1,10 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
-import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
+import { createThemePropertiesStyleTag, getThemePropertiesStyleTag, removeThemePropertiesStyleTag } from "./ThemePropertiesStyleTag.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
+import { getVersionIndex, compareWithVersion } from "../Version.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
 
@@ -12,20 +13,59 @@ const isThemeBaseRegistered = () => {
 	return registeredPackages.has(BASE_THEME_PACKAGE);
 };
 
+/**
+ * Determines whether the content of a style tag with CSS variables should be updated.
+ * It should always be updated, unless it is for the same theme, and was created by a newer (or the same) runtime version.
+ *
+ * @param packageName
+ * @param theme
+ * @returns {boolean}
+ */
+const shouldUpdate = (packageName, theme) => {
+	const styleElement = getThemePropertiesStyleTag(packageName);
+
+	// No style element created yet -> update
+	if (!styleElement) {
+		return true;
+	}
+
+	const styleElementTheme = styleElement.getAttribute("data-ui5-theme");
+	const styleElementVersionIndex = styleElement.getAttribute("data-ui5-version-index");
+
+	// The tag is created by an older version -> update
+	if (!styleElementTheme || !styleElementVersionIndex) {
+		return true;
+	}
+
+	// The tag is for a different theme -> update
+	if (styleElementTheme !== theme) {
+		return true;
+	}
+
+	// The current runtime's version is newer that the one the style tag was created with -> update
+	if (compareWithVersion(styleElementVersionIndex) === 1) {
+		return true;
+	}
+
+	// Same theme, created by the same or newer version -> do not update
+	return false;
+};
+
 const loadThemeBase = async theme => {
 	if (!isThemeBaseRegistered()) {
 		return;
 	}
 
+	if (!shouldUpdate(BASE_THEME_PACKAGE, theme)) {
+		return;
+	}
+
 	const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
-	createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE);
+	createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE, theme, getVersionIndex());
 };
 
 const deleteThemeBase = () => {
-	const styleElement = document.head.querySelector(`style[data-ui5-theme-properties="${BASE_THEME_PACKAGE}"]`);
-	if (styleElement) {
-		styleElement.parentElement.removeChild(styleElement);
-	}
+	removeThemePropertiesStyleTag(BASE_THEME_PACKAGE);
 };
 
 const loadComponentPackages = async theme => {
@@ -35,8 +75,12 @@ const loadComponentPackages = async theme => {
 			return;
 		}
 
+		if (!shouldUpdate(packageName, theme)) {
+			return;
+		}
+
 		const cssText = await getThemeProperties(packageName, theme);
-		createThemePropertiesStyleTag(cssText, packageName);
+		createThemePropertiesStyleTag(cssText, packageName, theme, getVersionIndex());
 	});
 };
 
