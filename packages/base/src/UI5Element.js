@@ -645,7 +645,9 @@ class UI5Element extends HTMLElement {
 	 * @param {String} refName Defines the name of the stable DOM ref
 	 */
 	getStableDomRef(refName) {
-		return this.staticAreaItemDomRef.querySelector(`[data-ui5-stable=${refName}]`)
+		const staticAreaResult = this.staticAreaItemDomRef && this.staticAreaItemDomRef.querySelector(`[data-ui5-stable=${refName}]`);
+
+		return staticAreaResult
 		|| this.getDomRef().querySelector(`[data-ui5-stable=${refName}]`);
 	}
 
