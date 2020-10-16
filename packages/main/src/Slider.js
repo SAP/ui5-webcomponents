@@ -105,7 +105,6 @@ class Slider extends SliderBase {
 
 	get tooltipValue() {
 		const stepPrecision = SliderBase._getDecimalPrecisionOfNumber(this.step);
-
 		return this.value.toFixed(stepPrecision);
 	}
 	/**
