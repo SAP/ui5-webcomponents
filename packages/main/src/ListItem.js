@@ -5,9 +5,9 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
-import "./RadioButton.js";
-import "./CheckBox.js";
-import "./Button.js";
+import RadioButton from "./RadioButton.js";
+import CheckBox from "./CheckBox.js";
+import Button from "./Button.js";
 import { DELETE, ARIA_LABEL_LIST_ITEM_CHECKBOX } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -56,10 +56,23 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Used to define the role of the list item.
+		 *
+		 * @private
+		 * @type {String}
+		 * @defaultvalue "option"
+		 * @since 1.0.0-rc.9
+		 *
+		 */
+		role: {
+			type: String,
+			defaultValue: "option",
+		},
+
 		_mode: {
 			type: ListMode,
 			defaultValue: ListMode.None,
-			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
@@ -94,6 +107,14 @@ class ListItem extends ListItemBase {
 
 	static get styles() {
 		return [ListItemBase.styles, styles];
+	}
+
+	static get dependencies() {
+		return [
+			Button,
+			RadioButton,
+			CheckBox,
+		];
 	}
 
 	constructor() {
@@ -273,7 +294,7 @@ class ListItem extends ListItemBase {
 	}
 
 	get ariaSelected() {
-		if (this.modeMultiSelect) {
+		if (this.modeMultiSelect || this.modeSingleSelect) {
 			return this.selected;
 		}
 
@@ -286,7 +307,7 @@ class ListItem extends ListItemBase {
 
 	get _accInfo() {
 		return {
-			role: "option",
+			role: this.role,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),

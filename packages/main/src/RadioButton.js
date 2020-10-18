@@ -179,7 +179,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-radibutton</code> component enables users to select a single option from a set of options.
+ * The <code>ui5-radiobutton</code> component enables users to select a single option from a set of options.
  * When a <code>ui5-radiobutton</code> is selected by the user, the
  * <code>select</code> event is fired.
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
@@ -230,11 +230,12 @@ class RadioButton extends UI5Element {
 		return radioButtonCss;
 	}
 
+	static get dependencies() {
+		return [Label];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Label.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {

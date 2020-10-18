@@ -3,6 +3,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
+import RenderScheduler from "../../base/src/RenderScheduler.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
@@ -59,10 +60,29 @@ const metadata = {
  * <h3>Usage</h3>
  * The user can enter a date by:
  * Using the calendar that opens in a popup or typing it in directly in the input field (not available for mobile devices).
- * For the <code>ui5-date-range-picker</code>
+ * For the <code>ui5-daterange-picker</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/DateRangePicker.js";</code>
+ *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-daterange-picker</code> provides advanced keyboard handling.
+ * <br>
+ *
+ * When the <code>ui5-daterange-picker</code> input field is focused the user can
+ * increment or decrement the corresponding field of the JS date object referenced by <code>_firstDateTimestamp</code> propery
+ * if the caret symbol is before the delimiter character or <code>_lastDateTimestamp</code> property if the caret symbol is
+ * after the delimiter character.
+ * The following shortcuts are enabled:
+ * <br>
+ * <ul>
+ * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
+ * <li>[SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one</li>
+ * <li>[SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one</li>
+ * <li>[PAGEUP] - Increments the corresponding day of the month by one</li>
+ * <li>[SHIFT] + [PAGEUP] - Increments the corresponding month by one</li>
+ * <li>[SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one</li>
+ * </ul>
  *
  * @constructor
  * @author SAP SE
@@ -89,28 +109,41 @@ class DateRangePicker extends DatePicker {
 		return DateRangePickerTemplate;
 	}
 
-	static async onDefine() {
-		await DatePicker.define();
-	}
-
 	constructor() {
 		super();
 		this.isFirstDatePick = true;
+		this._initialRendering = true;
+		this._oneTimeStampSelected = false; // Used to determine whether the first & last date is the same
+		this._dayPickerMouseoverHandler = this._itemMouseoverHandler.bind(this);
+		this._respPopoverConfig.beforeOpen = this.handleBeforeOpen;
+		this._respPopoverConfig.beforeClose = this.handleBeforeClose;
 	}
 
 	async onAfterRendering() {
-		this.responsivePopover = await this._respPopover();
-		const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
-		const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
-		dayPicker.addEventListener("item-mouseover", this._itemMouseoverHandler);
-		dayPicker.addEventListener("daypickerrendered", this._keyboardNavigationHandler);
+		const daypicker = this.getDayPicker();
+		this._cleanHoveredAttributeFromVisibleItems(daypicker);
+		this._initialRendering = false;
+	}
 
-		this._cleanHoveredAttributeFromVisibleItems(dayPicker);
+	async handleBeforeOpen() {
+		const daypicker = await this.getDayPicker();
+		daypicker.addEventListener("item-mouseover", this._dayPickerMouseoverHandler);
+		daypicker.addEventListener("daypickerrendered", this._keyboardNavigationHandler);
+	}
+
+	async handleBeforeClose() {
+		const daypicker = await this.getDayPicker();
+		daypicker.removeEventListener("item-mouseover", this._dayPickerMouseoverHandler);
+		daypicker.removeEventListener("daypickerrendered", this._keyboardNavigationHandler);
 	}
 
 	_itemMouseoverHandler(event) {
+		if (this._oneTimeStampSelected) {
+			return;
+		}
+
 		const dayItems = event.target.shadowRoot.querySelectorAll(".ui5-dp-item");
-		const firstDateTimestamp = this._selectedDates[0];
+		const firstDateTimestamp = event.target._selectedDates[0];
 		const lastDateTimestamp = event.detail.target.parentElement.dataset.sapTimestamp;
 
 		for (let i = 0; i < dayItems.length; i++) {
@@ -178,8 +211,11 @@ class DateRangePicker extends DatePicker {
 		}
 		this.valueState = ValueState.None;
 
-		this._firstDateTimestamp = this.getFormat().parse(dates[0]).getTime() / 1000;
-		this._lastDateTimestamp = this.getFormat().parse(dates[1]).getTime() / 1000;
+		const firstDate = this.getFormat().parse(dates[0]);
+		const secondDate = this.getFormat().parse(dates[1]);
+
+		this._firstDateTimestamp = Date.UTC(firstDate.getFullYear(), firstDate.getMonth(), firstDate.getDate(), firstDate.getHours()) / 1000;
+		this._lastDateTimestamp = Date.UTC(secondDate.getFullYear(), secondDate.getMonth(), secondDate.getDate(), secondDate.getHours()) / 1000;
 
 		if (this._firstDateTimestamp > this._lastDateTimestamp) {
 			const temp = this._firstDateTimestamp;
@@ -188,8 +224,10 @@ class DateRangePicker extends DatePicker {
 		}
 
 		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp * 1000, this._lastDateTimestamp * 1000);
-		this.value = this._formatValue(this._firstDateTimestamp, this._lastDateTimestamp);
-		this._prevValue = this.value;
+
+		this.value = this._formatValue(firstDate.valueOf() / 1000, secondDate.valueOf() / 1000);
+		this.realValue = this.value;
+		this._prevValue = this.realValue;
 	}
 
 	_changeCalendarSelection(focusTimestamp) {
@@ -200,18 +238,23 @@ class DateRangePicker extends DatePicker {
 
 		const oCalDate = this._calendarDate,
 			timestamp = focusTimestamp || oCalDate.valueOf() / 1000,
-			dates = this._splitValueByDelimiter(this.value);
+			dates = this._splitValueByDelimiter(this.realValue);
+
+		if (this._initialRendering) {
+			this._oneTimeStampSelected = dates[0].trim() === dates[1].trim();
+			this._setValue(this.realValue);
+		}
 
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
-		if (this.value && this._checkValueValidity(this.value)) {
+		if (this.realValue && this._checkValueValidity(this.realValue)) {
 			this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._getTimeStampFromString(dates[0]), this._getTimeStampFromString(dates[1]));
 		}
 	}
 
 	get _calendarDate() {
-		const dates = this._splitValueByDelimiter(this.value),
-			value = this._checkValueValidity(this.value) ? dates[0] : this.getFormat().format(new Date()),
+		const dates = this._splitValueByDelimiter(this.realValue),
+			value = this._checkValueValidity(this.realValue) ? dates[0] : this.getFormat().format(new Date()),
 			millisecondsUTCFirstDate = value ? this.getFormat().parse(value, true).getTime() : this.getFormat().parse(this.validValue, true).getTime(),
 			oCalDateFirst = CalendarDate.fromTimestamp(
 				millisecondsUTCFirstDate - (millisecondsUTCFirstDate % (24 * 60 * 60 * 1000)),
@@ -219,6 +262,10 @@ class DateRangePicker extends DatePicker {
 			);
 
 		return oCalDateFirst;
+	}
+
+	get _shoudHideValueInInput() {
+		return this._firstDateTimestamp === this._lastDateTimestamp && this._firstDateTimestamp;
 	}
 
 	/**
@@ -230,7 +277,7 @@ class DateRangePicker extends DatePicker {
 	 */
 	get firstDateValue() {
 		const dateValue = new Date(this._firstDateTimestamp * 1000);
-		return new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate()));
+		return new Date(dateValue.getUTCFullYear(), dateValue.getUTCMonth(), dateValue.getUTCDate(), dateValue.getUTCHours());
 	}
 
 	/**
@@ -242,17 +289,28 @@ class DateRangePicker extends DatePicker {
 	 */
 	get lastDateValue() {
 		const dateValue = new Date(this._lastDateTimestamp * 1000);
-		return new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate()));
+		return new Date(dateValue.getUTCFullYear(), dateValue.getUTCMonth(), dateValue.getUTCDate(), dateValue.getUTCHours());
 	}
 
 	get _placeholder() {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat.concat(" ", this.delimiter, " ", this._displayFormat);
 	}
 
+	async getDayPicker() {
+		this.responsivePopover = await this._respPopover();
+		const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
+		return calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
+	}
+
 	async _handleInputChange() {
 		const nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
+		const dates = this._splitValueByDelimiter(nextValue);
+
+		if (dates.length === 2) {
+			this._oneTimeStampSelected = dates[0].trim() === dates[1].trim();
+		}
 
 		if (isValid) {
 			this._setValue(nextValue);
@@ -268,6 +326,10 @@ class DateRangePicker extends DatePicker {
 
 	_checkValueValidity(value) {
 		return this.isValid(value) && this.isInValidRange(value);
+	}
+
+	checkRealValueValidity() {
+		return this.isValid(this.realValue) && this.isInValidRange(this.realValue);
 	}
 
 	isValid(value) {
@@ -296,8 +358,7 @@ class DateRangePicker extends DatePicker {
 
 	dateIntervalArrayBuilder(firstTimestamp, lastTimestamp) {
 		const datesTimestamps = [],
-			jsDate = new Date(firstTimestamp),
-			tempCalendarDate = new CalendarDate(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
+			tempCalendarDate = CalendarDate.fromTimestamp(firstTimestamp);
 
 		while (tempCalendarDate.valueOf() < lastTimestamp) {
 			datesTimestamps.push(tempCalendarDate.valueOf() / 1000);
@@ -311,13 +372,7 @@ class DateRangePicker extends DatePicker {
 
 	_handleCalendarChange(event) {
 		const newValue = event.detail.dates && event.detail.dates[0];
-		const calendarSelectedDates = this._calendar.selectedDates;
-
-		if (calendarSelectedDates[0] === newValue || calendarSelectedDates[calendarSelectedDates.length - 1] === newValue) {
-			this.closePicker();
-			return false;
-		}
-
+		this._oneTimeStampSelected = false;
 		if (this.isFirstDatePick) {
 			this.isFirstDatePick = false;
 			this._firstDateTimestamp = newValue;
@@ -331,15 +386,135 @@ class DateRangePicker extends DatePicker {
 				this._lastDateTimestamp = this._firstDateTimestamp;
 				this._firstDateTimestamp = newValue;
 			} else {
+				this._oneTimeStampSelected = newValue === this._firstDateTimestamp;
 				this._lastDateTimestamp = newValue;
 			}
 			const fireChange = this._handleCalendarSelectedDatesChange();
 
 			if (fireChange) {
-				this.fireEvent("change", { value: this.value, valid: true });
+				this.fireEvent("change", { value: this.realValue, valid: true });
 				// Angular two way data binding
-				this.fireEvent("value-changed", { value: this.value, valid: true });
+				this.fireEvent("value-changed", { value: this.realValue, valid: true });
 			}
+		}
+	}
+
+	/**
+	 * Adds or extracts a given number of measuring units from the "dateValue" property value
+	 *
+	 * @param {boolean} forward if true indicates addition
+	 * @param {boolean} years indicates that the measuring unit is in years
+	 * @param {boolean} months indicates that the measuring unit is in months
+	 * @param {boolean} days indicates that the measuring unit is in days
+	 * @param {int} step number of measuring units to substract or add defaults ot 1
+	 */
+	async _changeDateValueWrapper(forward, years, months, days, step = 1) {
+		const emptyValue = this.value === "";
+		const isValid = emptyValue || this._checkValueValidity(this.value);
+
+		if (!isValid) {
+			return;
+		}
+
+		const dates = this._splitValueByDelimiter(this.value);
+		const innerInput = this.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+		const caretPos = this._getCaretPosition(innerInput);
+		const first = dates[0] && caretPos <= dates[0].trim().length + 1;
+		const last = dates[1] && (caretPos >= this.value.length - dates[1].trim().length - 1 && caretPos <= this.value.length);
+		let firstDate = this.getFormat().parse(dates[0]);
+		let lastDate = this.getFormat().parse(dates[1]);
+
+		if (first && firstDate) {
+			firstDate = this._changeDateValue(firstDate, forward, years, months, days, step);
+		} else if (last && lastDate) {
+			lastDate = this._changeDateValue(lastDate, forward, years, months, days, step);
+		}
+
+		this.value = this._formatValue(firstDate.valueOf() / 1000, lastDate.valueOf() / 1000);
+
+		await RenderScheduler.whenFinished();
+		// Return the caret on the previous position after rendering
+		this._setCaretPosition(innerInput, caretPos);
+	}
+
+	/**
+	 * This method is used in the derived classes
+	 */
+	async _handleEnterPressed() {
+		const innerInput = this.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
+		const caretPos = this._getCaretPosition(innerInput);
+
+		this._confirmInput();
+
+		await RenderScheduler.whenFinished();
+		// Return the caret on the previous position after rendering
+		this._setCaretPosition(innerInput, caretPos);
+	}
+
+	_onfocusout() {
+		this._confirmInput();
+	}
+
+	_confirmInput() {
+		const emptyValue = this.value === "";
+
+		if (emptyValue) {
+			return;
+		}
+
+		const dates = this._splitValueByDelimiter(this.value);
+		let firstDate = this.getFormat().parse(dates[0]);
+		let lastDate = this.getFormat().parse(dates[1]);
+
+		if (firstDate > lastDate) {
+			const temp = firstDate;
+			firstDate = lastDate;
+			lastDate = temp;
+		}
+
+		const newValue = this._formatValue(firstDate.valueOf() / 1000, lastDate.valueOf() / 1000);
+
+		this._setValue(newValue);
+	}
+
+	/**
+	* Returns the caret (cursor) position of the specified text field (field).
+	* Return value range is 0-field.value.length.
+	*/
+	_getCaretPosition(field) {
+		// Initialize
+		let caretPos = 0;
+
+		// IE Support
+		if (document.selection) {
+			// Set focus on the element
+			field.focus();
+
+			// To get cursor position, get empty selection range
+			const selection = document.selection.createRange();
+
+			// Move selection start to 0 position
+			selection.moveStart("character", -field.value.length);
+
+			// The caret position is selection length
+			caretPos = selection.text.length;
+		} else if (field.selectionStart || field.selectionStart === "0") { // Firefox support
+			caretPos = field.selectionDirection === "backward" ? field.selectionStart : field.selectionEnd;
+		}
+
+		return caretPos;
+	}
+
+	_setCaretPosition(field, caretPos) {
+		if (field.createTextRange) {
+			const range = field.createTextRange();
+			range.move("character", caretPos);
+			range.select();
+		} else if (field.selectionStart) {
+			field.focus();
+			field.setSelectionRange(caretPos, caretPos);
+		} else {
+			field.focus();
 		}
 	}
 
@@ -348,10 +523,10 @@ class DateRangePicker extends DatePicker {
 		this._cleanHoveredAttributeFromVisibleItems();
 
 		this._calendar.timestamp = this._firstDateTimestamp;
-		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp, this._lastDateTimestamp);
+		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp * 1000, this._lastDateTimestamp * 1000);
 		this._focusInputAfterClose = true;
 
-		if (this.isInValidRange(this.value)) {
+		if (this.isInValidRange(this.realValue)) {
 			this.valueState = ValueState.None;
 		} else {
 			this.valueState = ValueState.Error;
@@ -360,12 +535,13 @@ class DateRangePicker extends DatePicker {
 		return true;
 	}
 
-	_cleanHoveredAttributeFromVisibleItems(dayPicker) {
+	async _cleanHoveredAttributeFromVisibleItems(dayPicker) {
 		if (!dayPicker) {
 			return;
 		}
 
-		const dayItems = dayPicker.shadowRoot.querySelectorAll(".ui5-dp-item");
+		const daypicker = await this.getDayPicker();
+		const dayItems = daypicker.shadowRoot.querySelectorAll(".ui5-dp-item");
 
 		for (let i = 0; i < dayItems.length; i++) {
 			dayItems[i].removeAttribute("hovered");
@@ -373,11 +549,25 @@ class DateRangePicker extends DatePicker {
 	}
 
 	_updateValueCalendarSelectedDatesChange() {
+		const calStartDate = CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000, this._primaryCalendarType);
+		const calEndDate = CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000, this._primaryCalendarType);
+
 		// Collect both dates and merge them into one
-		this.value = this._formatValue(this._firstDateTimestamp, this._lastDateTimestamp);
-		this._prevValue = this.value;
+		if (this._firstDateTimestamp !== this._lastDateTimestamp || this._oneTimeStampSelected) {
+			this.value = this._formatValue(calStartDate.toLocalJSDate().valueOf() / 1000, calEndDate.toLocalJSDate().valueOf() / 1000);
+		}
+
+		this.realValue = this._formatValue(calStartDate.toLocalJSDate().valueOf() / 1000, calEndDate.toLocalJSDate().valueOf() / 1000);
+		this._prevValue = this.realValue;
 	}
 
+	/**
+	 * Combines the start and end dates of a range into a formated string
+	 *
+	 * @param {int} firstDateValue locale start date timestamp
+	 * @param {int} lastDateValue locale end date timestamp
+	 * @returns {string} formated start to end date range
+	 */
 	_formatValue(firstDateValue, lastDateValue) {
 		let value = "";
 		const delimiter = this.delimiter,
@@ -386,7 +576,7 @@ class DateRangePicker extends DatePicker {
 			lastDateString = format.format(new Date(lastDateValue * 1000));
 
 		if (firstDateValue) {
-			if (delimiter && delimiter !== "" && lastDateString && lastDateString !== firstDateString) {
+			if (delimiter && delimiter !== "" && lastDateString) {
 				value = firstDateString.concat(" ", delimiter, " ", lastDateString);
 			} else {
 				value = firstDateString;

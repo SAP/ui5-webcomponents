@@ -2,7 +2,17 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isShow,
+	isLeft,
+	isRight,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import DurationPickerTemplate from "./generated/templates/DurationPickerTemplate.lit.js";
@@ -11,6 +21,8 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import WheelSlider from "./WheelSlider.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Input from "./Input.js";
+import Icon from "./Icon.js";
+import Button from "./Button.js";
 import "@ui5/webcomponents-icons/dist/icons/fob-watch.js";
 import DurationPickerPopoverTemplate from "./generated/templates/DurationPickerPopoverTemplate.lit.js";
 import {
@@ -225,6 +237,29 @@ const metadata = {
  * When the user directly triggers the sliders display, the actual time is displayed.
  *
  * For the <code>ui5-duration-picker</code>
+ *
+ * <h3>Keyboard handling</h3>
+ * [F4], [ALT]+[UP], [ALT]+[DOWN] Open/Close picker dialog and move focus to it.
+ * <br>
+ * When closed:
+ * <ul>
+ * <li>[PAGEUP] - Increments hours by 1. If max value is reached, the slider doesn't increment.</li>
+ * <li>[PAGEDOWN] - Decrements the corresponding field by 1. If min value is reached, the slider doesn't increment.</li>
+ * <li>[SHIFT]+[PAGEUP] Increments minutes by 1.</li>
+ * <li>[SHIFT]+ [PAGEDOWN] Decrements minutes by 1.</li>
+ * <li>[SHIFT]+[CTRL]+[PAGEUP] Increments seconds by 1.</li>
+ * <li>[SHIFT]+[CTRL]+ [PAGEDOWN] Decrements seconds by 1.</li>
+ * </ul>
+ * When opened:
+ * <ul>
+ * <li>[UP] If focus is on one of the selection lists: Select the value which is above the current value. If the first value is selected, select the last value in the list.</li>
+ * <li>[DOWN] If focus is on one of the selection lists: Select the value which is below the current value. If the last value is selected, select the first value in the list.</li>
+ * <li>[LEFT] If focus is on one of the selection lists: Move focus to the selection list which is left of the current selection list. If focus is at the first selection list, move focus to the last selection list.</li>
+ * <li>[RIGHT] If focus is on one of the selection lists: Move focus to the selection list which is right of the current selection list. When focus is at the last selection list, move focus to the first selection list.</li>
+ * <li>[PAGEUP] If focus is on one of the selection lists: Move focus to the first entry of this list.</li>
+ * <li>[PAGEDOWN] If focus is on one of the selection lists: Move focus to the last entry of this list.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/DurationPicker.js";</code>
@@ -276,6 +311,8 @@ class DurationPicker extends UI5Element {
 				this._isPickerOpen = false;
 			},
 		};
+
+		this._slidersDomRefs = [];
 	}
 
 	onBeforeRendering() {
@@ -420,12 +457,82 @@ class DurationPicker extends UI5Element {
 		return curr;
 	}
 
+	async _handleContainerKeysDown(event) {
+		if (isLeft(event)) {
+			let expandedSliderIndex = 0;
+			for (let i = 0; i < this._slidersDomRefs.length; i++) {
+				if (this._slidersDomRefs[i]._expanded) {
+					expandedSliderIndex = i;
+				}
+			}
+			if (this._slidersDomRefs[expandedSliderIndex - 1]) {
+				this._slidersDomRefs[expandedSliderIndex - 1].focus();
+			} else {
+				this._slidersDomRefs[this._slidersDomRefs.length - 1].focus();
+			}
+		} else if (isRight(event)) {
+			let expandedSliderIndex = 0;
+
+			for (let i = 0; i < this._slidersDomRefs.length; i++) {
+				if (this._slidersDomRefs[i]._expanded) {
+					expandedSliderIndex = i;
+				}
+			}
+			if (this._slidersDomRefs[expandedSliderIndex + 1]) {
+				this._slidersDomRefs[expandedSliderIndex + 1].focus();
+			} else {
+				this._slidersDomRefs[0].focus();
+			}
+		}
+	}
+
 	_onkeydown(event) {
 		if (isShow(event)) {
 			event.preventDefault();
 			this.togglePicker();
 		}
+
+		if (isPageUpShiftCtrl(event)) {
+			event.preventDefault();
+			this._incrementValue(true, false, false, true);
+		} else if (isPageUpShift(event)) {
+			event.preventDefault();
+			this._incrementValue(true, false, true, false);
+		} else if (isPageUp(event)) {
+			event.preventDefault();
+			this._incrementValue(true, true, false, false);
+		}
+
+		if (isPageDownShiftCtrl(event)) {
+			event.preventDefault();
+			this._incrementValue(false, false, false, true);
+		} else if (isPageDownShift(event)) {
+			event.preventDefault();
+			this._incrementValue(false, false, true, false);
+		} else if (isPageDown(event)) {
+			event.preventDefault();
+			this._incrementValue(false, true, false, false);
+		}
 	}
+
+	_incrementValue(increment, hours, minutes, seconds) {
+		const values = this.readFormattedValue(this.value);
+		const incrementStep = increment ? 1 : -1;
+
+		if (hours && !this.hideHours) {
+			values[0] = Number(values[0]) + incrementStep;
+		} else if (minutes && !this.hideMinutes) {
+			values[1] = Number(values[1]) + incrementStep;
+		} else if (seconds && !this.hideSeconds) {
+			values[2] = Number(values[2]) + incrementStep;
+		} else {
+			return;
+		}
+
+		this.value = `${!this.hideHours ? values[0] : ""}${!this.hideHours && !this.hideMinutes ? ":" : ""}${!this.hideMinutes ? values[1] : ""}${!this.hideSeconds ? `:${values[2]}` : ""}`;
+		this.fireEvent("change", { value: this.value });
+	}
+
 
 	generateTimeItemsArray(arrayLength, step = 1) {
 		const resultArray = [];
@@ -486,6 +593,7 @@ class DurationPicker extends UI5Element {
 		} else {
 			this._isPickerOpen = true;
 			this.responsivePopover.open(this);
+			this._slidersDomRefs = await this.slidersDomRefs();
 		}
 	}
 
@@ -495,8 +603,13 @@ class DurationPicker extends UI5Element {
 		}
 
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		this.responsivePopover = staticAreaItem.querySelector("[ui5-responsive-popover]");
 		return this.responsivePopover;
+	}
+
+	async slidersDomRefs() {
+		await this._getResponsivePopover();
+		return this.responsivePopover.default.length ? [...this.responsivePopover.default[0].children].filter(x => x.isUI5Element) : this.responsivePopover.default;
 	}
 
 
@@ -581,13 +694,18 @@ class DurationPicker extends UI5Element {
 		};
 	}
 
-	static async onDefine(...params) {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-			WheelSlider.define(),
-			ResponsivePopover.define(),
-			Input.define(),
-		]);
+	static get dependencies() {
+		return [
+			Icon,
+			WheelSlider,
+			ResponsivePopover,
+			Input,
+			Button,
+		];
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

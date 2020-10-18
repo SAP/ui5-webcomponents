@@ -4,24 +4,24 @@
 	class="ui5-multi-combobox-all-items-responsive-popover"
 	no-arrow
 	_disable-initial-focus
-	content-only-on-desktop
 	@ui5-selection-change={{_listSelectionChange}}
 	@ui5-after-close={{_toggle}}
 	@ui5-after-open={{_toggle}}
 >
-	<div slot="header" class="ui5-responsive-popover-header">
-		<div class="row">
-			<span>{{_headerTitleText}}</span>
-			<ui5-button
-				class="ui5-responsive-popover-close-btn"
-				icon="decline"
-				design="Transparent"
-				@click="{{togglePopover}}"
-			>
-			</ui5-button>
-		</div>
-		<div class="row">
-			<div
+	{{#if _isPhone}}
+		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
+			<div class="row">
+				<span>{{_headerTitleText}}</span>
+				<ui5-button
+					class="ui5-responsive-popover-close-btn"
+					icon="decline"
+					design="Transparent"
+					@click="{{togglePopover}}"
+				>
+				</ui5-button>
+			</div>
+			<div class="row">
+				<div
 					slot="header"
 					class="input-root-phone"
 					value-state="{{valueState}}"
@@ -37,19 +37,34 @@
 						aria-autocomplete="both"
 						aria-labelledby="{{_id}}-hiddenText-nMore"
 						aria-describedby="{{_id}}-valueStateDesc"
-					/>
+						/>
+					</div>
+					<ui5-togglebutton
+						slot="header"
+						class="ui5-multi-combobox-toggle-button"
+						icon="multiselect-all"
+						design="Transparent"
+						?pressed={{_showAllItemsButtonPressed}}
+						?disabled={{allItemsSelected}}
+						@click="{{filterSelectedItems}}"
+					></ui5-togglebutton>
 				</div>
-				<ui5-togglebutton
-					slot="header"
-					class="ui5-multi-combobox-toggle-button"
-					icon="multiselect-all"
-					design="Transparent"
-					?pressed={{_showAllItemsButtonPressed}}
-					?disabled={{allItemsSelected}}
-					@click="{{filterSelectedItems}}"
-				></ui5-togglebutton>
+			{{#if hasValueStateMessage}}
+				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+					{{> valueStateMessage}}
+				</div>
+			{{/if}}
+			</div>
 		</div>
-	</div>
+	{{/if}}
+
+	{{#unless _isPhone}}
+		{{#if hasValueStateMessage}}
+			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
+				{{> valueStateMessage}}
+			</div>
+		{{/if}}
+	{{/unless}}
 
 	<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 		{{#each _filteredItems}}
@@ -57,10 +72,38 @@
 		{{/each}}
 	</ui5-list>
 
-	<div slot="footer" class="ui5-responsive-popover-footer">
-		<ui5-button
-			design="Transparent"
-			@click="{{togglePopover}}"
-		>OK</ui5-button>
-	</div>
+	{{#if _isPhone}}
+		<div slot="footer" class="ui5-responsive-popover-footer">
+			<ui5-button
+				design="Transparent"
+				@click="{{togglePopover}}"
+			>{{_dialogOkButton}}</ui5-button>
+		</div>
+	{{/if}}
 </ui5-responsive-popover>
+
+{{#if hasValueStateMessage}}
+	<ui5-popover
+		skip-registry-update
+		_disable-initial-focus
+		prevent-focus-restore
+		no-padding
+		no-arrow
+		class="ui5-valuestatemessage-popover"
+		placement-type="Bottom"
+	>
+		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
+			{{> valueStateMessage}}
+		</div>
+	</ui5-popover>
+{{/if}}
+
+{{#*inline "valueStateMessage"}}
+	{{#if shouldDisplayDefaultValueStateMessage}}
+		{{valueStateText}}
+	{{else}}
+		{{#each valueStateMessageText}}
+			{{this}}
+		{{/each}}
+	{{/if}}
+{{/inline}}

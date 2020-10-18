@@ -4,7 +4,9 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isDown,
 	isUp,
-} from "@ui5/webcomponents-base/src/Keys.js";
+	isPageUp,
+	isPageDown,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-up-arrow.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-down-arrow.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
@@ -174,8 +176,8 @@ class WheelSlider extends UI5Element {
 		this._updateItemCellHeight();
 	}
 
-	static async onDefine() {
-		await Button.define();
+	static get dependencies() {
+		return [Button];
 	}
 
 	onAfterRendering() {
@@ -396,6 +398,24 @@ class WheelSlider extends UI5Element {
 
 		if (isDown(е)) {
 			this._onArrowDown(е);
+		}
+
+		if (isPageDown(е)) {
+			this._selectLimitCell(е, false);
+		}
+
+		if (isPageUp(е)) {
+			this._selectLimitCell(е, true);
+		}
+	}
+
+	_selectLimitCell(event, isMax) {
+		event.preventDefault();
+		const intexIncrease = this.cyclic ? this._items.length : 0;
+		if (isMax) {
+			this._selectElementByIndex(this._items.length - 1 + intexIncrease);
+		} else {
+			this._selectElementByIndex(intexIncrease);
 		}
 	}
 

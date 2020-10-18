@@ -16,6 +16,7 @@
 		@ui5-token-delete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
 		@click={{_click}}
+		@keydown="{{_onTokenizerKeydown}}"
 		?expanded="{{_tokenizerExpanded}}"
 	>
 		{{#each items}}
@@ -53,12 +54,17 @@
 		aria-describedby="{{valueStateTextId}}"
 	/>
 
+	{{#if icon}}
+		<slot name="icon"></slot>
+	{{/if}}
+
 	{{#unless readonly}}
 		<ui5-icon name="slim-arrow-down"
 			input-icon
 			slot="icon"
 			tabindex="-1"
-			@click={{togglePopover}}
+			@click="{{togglePopover}}"
+			@mousedown="{{_onIconMousedown}}"
 			?pressed="{{open}}"
 			dir="{{effectiveDir}}"
 			accessible-name="{{_iconAccessibleNameText}}"

@@ -8,13 +8,7 @@
 	</div>
 
 	<div class="ui5-fcl-arrow-container" style="{{styles.arrowsContainer.start}}">
-		<ui5-button
-			class="ui5-fcl-arrow ui5-fcl-arrow--start"
-			icon="slim-arrow-right"
-			design="Transparent"
-			@click="{{startArrowClick}}"
-			style="{{styles.arrows.start}}"
-		></ui5-button>
+		{{> startArrow}}
 	</div>
 
 	<div
@@ -26,13 +20,7 @@
 	</div>
 
 	<div class="ui5-fcl-arrow-container" style="{{styles.arrowsContainer.end}}">
-		<ui5-button
-			class="ui5-fcl-arrow ui5-fcl-arrow--end"
-			style="{{styles.arrows.end}}"
-			icon="slim-arrow-left"
-			design="Transparent"
-			@click="{{endArrowClick}}"
-		></ui5-button>
+		{{> endArrow}}
 	</div>
 
 	<div
@@ -47,3 +35,28 @@
 	<span id="{{_id}}-midColumnText" class="ui5-hidden-text">{{accMiddleColumnText}}</span>
 	<span id="{{_id}}-endColumnText" class="ui5-hidden-text">{{accEndColumnText}}</span>
 </div>
+
+{{#*inline "startArrow"}}
+	<ui5-button
+		class="ui5-fcl-arrow ui5-fcl-arrow--start"
+		icon="slim-arrow-right"
+		design="Transparent"
+		@click="{{startArrowClick}}"
+		style="{{styles.arrows.start}}"
+		aria-label="{{accStartArrowText}}"
+		title="{{accStartArrowText}}"
+	></ui5-button>
+{{/inline}}
+
+
+{{#*inline "endArrow"}}
+	<ui5-button
+		class="ui5-fcl-arrow ui5-fcl-arrow--end"
+		style="{{styles.arrows.end}}"
+		icon="slim-arrow-left"
+		design="Transparent"
+		@click="{{endArrowClick}}"
+		aria-label="{{accEndArrowText}}"
+		title="{{accEndArrowText}}"
+	></ui5-button>
+{{/inline}}

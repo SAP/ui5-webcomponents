@@ -148,7 +148,7 @@ const metadata = {
  *
  * The user can:
  * <ul>
- * <li>display a <code>Close</code> button</code></li>
+ * <li>display a <code>Close</code> button</li>
  * <li>can control whether the <code>heading</code> and <code>description</code> should wrap or truncate
  * and display a <code>ShomeMore</code> button to switch between less and more information</code></li>
  * <li>add custom actions by using the <code>ui5-notification-overflow-action</code></code> component</li>
@@ -197,15 +197,18 @@ class NotificationListItem extends NotificationListItemBase {
 		return NotificationListItemTemplate;
 	}
 
+	static get dependencies() {
+		return [
+			Button,
+			Icon,
+			BusyIndicator,
+			Link,
+			Popover,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Button.define(),
-			Icon.define(),
-			BusyIndicator.define(),
-			Link.define(),
-			Popover.define(),
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	onEnterDOM() {

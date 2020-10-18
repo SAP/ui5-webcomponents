@@ -5,6 +5,8 @@ import { fetchTextOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
+import { getEffectiveAssetPath } from "../util/EffectiveAssetPath.js";
+import { getUseDefaultLanguage } from "../config/Language.js";
 
 const bundleData = new Map();
 const bundleURLs = new Map();
@@ -58,13 +60,14 @@ const fetchI18nBundle = async packageName => {
 
 	const language = getLocale().getLanguage();
 	const region = getLocale().getRegion();
-
+	const useDefaultLanguage = getUseDefaultLanguage();
 	let localeId = normalizeLocale(language + (region ? `-${region}` : ``));
+
 	while (localeId !== DEFAULT_LANGUAGE && !bundlesForPackage[localeId]) {
 		localeId = nextFallbackLocale(localeId);
 	}
 
-	if (!bundlesForPackage[localeId]) {
+	if (useDefaultLanguage && localeId === DEFAULT_LANGUAGE) {
 		setI18nBundleData(packageName, null); // reset for the default language (if data was set for a previous language)
 		return;
 	}
@@ -76,7 +79,7 @@ const fetchI18nBundle = async packageName => {
 		return;
 	}
 
-	const content = await fetchTextOnce(bundleURL);
+	const content = await fetchTextOnce(getEffectiveAssetPath(bundleURL));
 	let parser;
 	if (content.startsWith("{")) {
 		parser = JSON.parse;

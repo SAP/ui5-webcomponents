@@ -4,7 +4,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -191,11 +191,13 @@ const metadata = {
 		 * Used to externally manipulate the role of the list
 		 *
 		 * @private
+		 * @type {String}
+		 * @defaultvalue "listbox"
+		 * @since 1.0.0-rc.9
 		 */
-		_role: {
+		role: {
 			type: String,
 			defaultValue: "listbox",
-			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
@@ -305,7 +307,7 @@ const metadata = {
  * <ul>
  * <li><code>ui5-li</code></li>
  * <li><code>ui5-li-custom</code></li>
- * <li><code>ui5-li-group-header</code></li>
+ * <li><code>ui5-li-groupheader</code></li>
  * </ul>
  * <br><br>
  * To benefit from the built-in selection mechanism, you can use the available
@@ -322,7 +324,7 @@ const metadata = {
  * <br>
  * <code>import "@ui5/webcomponents/dist/CustomListItem.js";</code> (for <code>ui5-li-custom</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code> (for <code>ui5-li-group-header</code>)
+ * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code> (for <code>ui5-li-groupheader</code>)
  *
  * @constructor
  * @author SAP SE
@@ -771,8 +773,8 @@ class List extends UI5Element {
 		}, delay);
 	}
 
-	static async onDefine() {
-		await BusyIndicator.define();
+	static get dependencies() {
+		return [BusyIndicator];
 	}
 }
 

@@ -26,12 +26,13 @@ const getStaticStyle = ElementClass => {
  */
 const createComponentStyleTag = ElementClass => {
 	const tag = ElementClass.getMetadata().getTag();
+	const pureTag = ElementClass.getMetadata().getPureTag();
 	if (IEStyleSet.has(tag)) {
 		return;
 	}
 
 	let cssContent = getEffectiveStyle(ElementClass);
-	cssContent = adaptCSSForIE(cssContent, tag);
+	cssContent = adaptCSSForIE(cssContent, tag, pureTag);
 
 	// Append static CSS, if any, for IE
 	let staticCssContent = getStaticStyle(ElementClass);
@@ -42,7 +43,6 @@ const createComponentStyleTag = ElementClass => {
 
 	createStyleInHead(cssContent, {
 		"data-ui5-element-styles": tag,
-		"disabled": "disabled",
 	});
 	if (ponyfillNeeded()) {
 		schedulePonyfill();

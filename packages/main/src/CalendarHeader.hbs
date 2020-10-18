@@ -8,6 +8,7 @@
 		class="{{_btnPrev.classes}}"
 		@click={{_handlePrevPress}}
 		data-sap-cal-head-button="Prev"
+		title="{{_prevButtonText}}"
 	>
 		<ui5-icon
 			class="ui5-calheader-arrowicon"
@@ -16,10 +17,14 @@
 		</ui5-icon>
 	</div>
 
-	<div class="ui5-calheader-midcontainer">
+	<div
+		class="ui5-calheader-midcontainer"
+		@keydown="{{_onMidContainerKeyDown}}"
+	>
 		<div
 			id="{{_id}}-btn1"
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+			?hidden="{{_isMonthButtonHidden}}"
 			type="{{_btn1.type}}"
 			tabindex="0"
 			@click={{_showMonthPicker}}
@@ -45,6 +50,7 @@
 		@click={{_handleNextPress}}
 		id="{{_id}}-btnNext"
 		data-sap-cal-head-button="Next"
+		title={{_nextButtonText}}
 	>
 		<ui5-icon
 			class="ui5-calheader-arrowicon"

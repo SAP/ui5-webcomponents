@@ -44,8 +44,6 @@
 	pointer-events: none;
 	background: var(--sapField_ReadOnly_Background);
 	border-color: var(--sapField_ReadOnly_BorderColor);
-	-webkit-text-fill-color: var(--sapContent_DisabledTextColor);
-	color: var(--sapContent_DisabledTextColor);
 }
 
 [inner-input] {
@@ -64,6 +62,10 @@
 	outline: none;
 	font-size: inherit;
 	font-family: inherit;
+}
+
+[inner-input][inner-input-with-icon] {
+	padding: var(--_ui5_input_inner_padding_with_icon);
 }
 
 [inner-input]::selection {
@@ -190,9 +192,9 @@
 }
 
 /* TODO: Remove this after parser is fixed
-	-	this statement is transformed to "ui5-multi-combobox ui5-icon" which
+	-	this statement is transformed to [ui5-multi-combobox] [ui5-icon] which
 	affects all icons in the combobox incuding these in the list items
 */
-::slotted(ui5-icon[slot="icon"]) {
+::slotted([ui5-icon][slot="icon"]) {
 	padding: var(--_ui5_input_icon_padding);
 }

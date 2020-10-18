@@ -1,5 +1,7 @@
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Popup from "./Popup.js";
+import "@ui5/webcomponents-icons/dist/icons/resize-corner.js";
+import Icon from "./Icon.js";
 
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
@@ -52,7 +54,7 @@ const metadata = {
 		/**
 		 * Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen.
 		 * <br><br>
-		 * <b>Note:</b> The <code>ui5-dialog</code> will be stretched to aproximetly
+		 * <b>Note:</b> The <code>ui5-dialog</code> will be stretched to approximately
 		 * 90% of the viewport.
 		 *
 		 * @type {boolean}
@@ -64,9 +66,47 @@ const metadata = {
 		},
 
 		/**
+		 * Determines whether the <code>ui5-dialog</code> is draggable.
+		 * If this property is set to true, the Dialog will be draggable by its header.
+		 * <br><br>
+		 * <b>Note:</b> The <code>ui5-dialog</code> can be draggable only in desktop mode.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.9
+		 * @public
+		 */
+		draggable: {
+			type: Boolean,
+		},
+
+		/**
+		 * Configures the <code>ui5-dialog</code> to be resizable.
+		 * If this property is set to true, the Dialog will have a resize handle in its bottom right corner in LTR languages.
+		 * In RTL languages, the resize handle will be placed in the bottom left corner.
+		 * <br><br>
+		 * <b>Note:</b> The <code>ui5-dialog</code> can be resizable only in desktop mode.
+		 * <br>
+		 * <b>Note:</b> Upon resizing, externally defined height and width styling will be ignored.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.10
+		 * @public
+		 */
+		resizable: {
+			type: Boolean,
+		},
+
+		/**
 		 * @private
 		 */
 		onPhone: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 */
+		onDesktop: {
 			type: Boolean,
 		},
 	},
@@ -89,6 +129,9 @@ const metadata = {
  * <h3>Structure</h3>
  * A <code>ui5-dialog</code> consists of a header, content, and a footer for action buttons.
  * The <code>ui5-dialog</code> is usually displayed at the center of the screen.
+ * Its position can be changed by the user. To enable this, you need to set the property <code>draggable</code> accordingly.
+
+
  *
  * <h3>Responsive Behavior</h3>
  * The <code>stretch</code> property can be used to stretch the
@@ -97,6 +140,9 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Dialog";</code>
+ *
+ * <b>Note:</b> We don't recommend nesting popup-like components (<code>ui5-dialog</code>, <code>ui5-popover</code>) inside <code>ui5-dialog</code>.
+ * Ideally you should create all popups on the same level inside your HTML page and just open them from one another, rather than nesting them.
  *
  * @constructor
  * @author SAP SE
@@ -110,16 +156,18 @@ class Dialog extends Popup {
 		return metadata;
 	}
 
+	static get dependencies() {
+		return [
+			Icon,
+		];
+	}
+
 	static get template() {
 		return DialogTemplate;
 	}
 
 	static get styles() {
 		return [PopupsCommonCss, dialogCSS];
-	}
-
-	onBeforeRendering() {
-		this.onPhone = isPhone();
 	}
 
 	get isModal() { // Required by Popup.js
@@ -143,6 +191,224 @@ class Dialog extends Popup {
 				"ui5-popup-content": true,
 			},
 		};
+	}
+
+	_clamp(val, min, max) {
+		return Math.min(Math.max(val, min), max);
+	}
+
+	onBeforeRendering() {
+		this._isRTL = this.effectiveDir === "rtl";
+		this.onPhone = isPhone();
+		this.onDesktop = isDesktop();
+	}
+
+	onEnterDOM() {
+		this._dragMouseMoveHandler = this._onDragMouseMove.bind(this);
+		this._dragMouseUpHandler = this._onDragMouseUp.bind(this);
+
+		this._resizeMouseMoveHandler = this._onResizeMouseMove.bind(this);
+		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
+	}
+
+	onExitDOM() {
+		this._dragMouseMoveHandler = null;
+		this._dragMouseUpHandler = null;
+	}
+
+	/**
+	 * Event handlers
+	 */
+	_onDragMouseDown(event) {
+		if (!(this.draggable && this.onDesktop)) {
+			return;
+		}
+
+		// only allow dragging on the header's whitespace
+		if (!event.target.classList.contains("ui5-popup-header-root")
+			&& event.target.getAttribute("slot") !== "header") {
+			return;
+		}
+
+		event.preventDefault();
+
+		const {
+			top,
+			left,
+		} = this.getBoundingClientRect();
+		const {
+			width,
+			height,
+		} = window.getComputedStyle(this);
+
+		Object.assign(this.style, {
+			transform: "none",
+			top: `${top}px`,
+			left: `${left}px`,
+			width: `${Math.round(Number.parseFloat(width) * 100) / 100}px`,
+			height: `${Math.round(Number.parseFloat(height) * 100) / 100}px`,
+		});
+
+		this._x = event.clientX;
+		this._y = event.clientY;
+
+		this._attachDragHandlers();
+	}
+
+	_onDragMouseMove(event) {
+		event.preventDefault();
+
+		const calcX = this._x - event.clientX;
+		const calcY = this._y - event.clientY;
+		const {
+			left,
+			top,
+		} = this.getBoundingClientRect();
+
+		Object.assign(this.style, {
+			left: `${Math.floor(left - calcX)}px`,
+			top: `${Math.floor(top - calcY)}px`,
+		});
+
+		this._x = event.clientX;
+		this._y = event.clientY;
+	}
+
+	_onDragMouseUp() {
+		this._x = null;
+		this._y = null;
+
+		this._detachDragHandlers();
+	}
+
+	_attachDragHandlers() {
+		window.addEventListener("mousemove", this._dragMouseMoveHandler);
+		window.addEventListener("mouseup", this._dragMouseUpHandler);
+		this.addEventListener("ui5-before-close", this._recenter);
+	}
+
+	_detachDragHandlers() {
+		window.removeEventListener("mousemove", this._dragMouseMoveHandler);
+		window.removeEventListener("mouseup", this._dragMouseUpHandler);
+	}
+
+	_recenter() {
+		Object.assign(this.style, {
+			top: "",
+			left: "",
+			transform: "",
+		});
+		this.removeEventListener("ui5-before-close", this._recenter);
+	}
+
+	_onResizeMouseDown(event) {
+		if (!(this.resizable && this.onDesktop)) {
+			return;
+		}
+
+		event.preventDefault();
+
+		const {
+			top,
+			left,
+		} = this.getBoundingClientRect();
+		const {
+			width,
+			height,
+			minWidth,
+			minHeight,
+		} = window.getComputedStyle(this);
+
+		this._initialX = event.clientX;
+		this._initialY = event.clientY;
+		this._initialWidth = Number.parseFloat(width);
+		this._initialHeight = Number.parseFloat(height);
+		this._initialTop = top;
+		this._initialLeft = left;
+		this._minWidth = Number.parseFloat(minWidth);
+		this._minHeight = Number.parseFloat(minHeight);
+
+		Object.assign(this.style, {
+			transform: "none",
+			top: `${top}px`,
+			left: `${left}px`,
+		});
+
+		this._attachResizeHandlers();
+	}
+
+	_onResizeMouseMove(event) {
+		const { clientX, clientY } = event;
+
+		let newWidth;
+		let newLeft;
+
+		if (this._isRTL) {
+			newWidth = this._clamp(
+				this._initialWidth - (clientX - this._initialX),
+				this._minWidth,
+				this._initialLeft + this._initialWidth
+			);
+
+			newLeft = this._clamp(
+				this._initialLeft + (clientX - this._initialX),
+				0,
+				this._initialX + this._initialWidth - this._minWidth
+			);
+		} else {
+			newWidth = this._clamp(
+				this._initialWidth + (clientX - this._initialX),
+				this._minWidth,
+				window.innerWidth - this._initialLeft
+			);
+		}
+
+		const newHeight = this._clamp(
+			this._initialHeight + (clientY - this._initialY),
+			this._minHeight,
+			window.innerHeight - this._initialTop
+		);
+
+		Object.assign(this.style, {
+			height: `${newHeight}px`,
+			width: `${newWidth}px`,
+			left: newLeft ? `${newLeft}px` : undefined,
+		});
+	}
+
+	_onResizeMouseUp() {
+		this._initialX = null;
+		this._initialY = null;
+		this._initialWidth = null;
+		this._initialHeight = null;
+		this._initialTop = null;
+		this._initialLeft = null;
+		this._minWidth = null;
+		this._minHeight = null;
+
+		this._detachResizeHandlers();
+	}
+
+	_attachResizeHandlers() {
+		window.addEventListener("mousemove", this._resizeMouseMoveHandler);
+		window.addEventListener("mouseup", this._resizeMouseUpHandler);
+		this.addEventListener("ui5-before-close", this._revertSize);
+	}
+
+	_detachResizeHandlers() {
+		window.removeEventListener("mousemove", this._resizeMouseMoveHandler);
+		window.removeEventListener("mouseup", this._resizeMouseUpHandler);
+	}
+
+	_revertSize() {
+		Object.assign(this.style, {
+			top: "",
+			left: "",
+			width: "",
+			height: "",
+			transform: "",
+		});
+		this.removeEventListener("ui5-before-close", this._revertSize);
 	}
 }
 

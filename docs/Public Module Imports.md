@@ -404,3 +404,26 @@ registerI18nBundle("@ui5/webcomponents", {
 });
 ```
 
+### 8. Custom elements scoping
+
+```js
+import { setCustomElementsScopingSuffix, setCustomElementsScopingRules } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+```
+
+The `scoping` feature lets you add an arbitrary suffix to the names of all, or some, UI5 Web Components' custom elements:
+
+Example:
+
+```html
+import { setCustomElementsScopingSuffix } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+setCustomElementsScopingSuffix("demo");
+setCustomElementsScopingRules({include: [/^ui5-/], exclude: [/^ui5-my-/, /-test-/]});
+``` 
+
+and then use them with the suffix:
+
+```html
+<ui5-button-demo>Click me</ui5-button-demo>
+```
+
+For more information on scoping and its use cases, see [Micro-frontends and Custom elements scoping](./Scoping.md).

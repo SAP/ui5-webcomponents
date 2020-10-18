@@ -48,7 +48,7 @@ const getScripts = (options) => {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			test: 'nps "copy.test --watch --safe --skip-initial-copy"',
-			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV",
+			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,DEPLOY_PUBLIC_PATH:/resources/",
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
@@ -70,6 +70,20 @@ const getScripts = (options) => {
 			run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
 			spec: "wdio run config/wdio.conf.js",
 		},
+		startWithScope: "nps scope.prepare scope.dev",
+		scope: {
+			prepare: "nps scope.lint prepare scope.testPages",
+			lint: `node "${LIB}/scoping/lint-src.js"`,
+			testPages: {
+				default: "nps scope.testPages.clean scope.testPages.copy scope.testPages.replace",
+				clean: "rimraf dist/test-resources/pages/scoped",
+				copy: `node "${LIB}/copy-and-watch/index.js" "dist/test-resources/pages/**/*" dist/test-resources/scoped`,
+				replace: `node "${LIB}/scoping/scope-test-pages.js" dist/test-resources/scoped demo`,
+			},
+			dev: 'concurrently "nps serve" "nps scope.watch"',
+			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps scope.bundle" "nps watch.styles"',
+			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,SCOPE"
+		}
 	};
 
 	return scripts;

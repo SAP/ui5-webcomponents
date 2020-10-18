@@ -56,6 +56,9 @@
 	white-space: inherit;
 	overflow: inherit;
 	text-overflow: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+	line-height: inherit;
 }
 
 :host(:not([active]):hover),
@@ -94,7 +97,6 @@
 }
 
 :host([has-icon]:not([icon-end])) .ui5-button-text {
-	max-width: calc(100% - 1rem);
 	margin-left: var(--_ui5_button_base_icon_margin);
 }
 
@@ -239,15 +241,15 @@ bdi {
 
 /* IE Specific CSS */
 
-ui5-button[focused] {
+[ui5-button][focused] {
 	outline: none;
 }
 
-ui5-button[focused] .ui5-button-root {
+[ui5-button][focused] .ui5-button-root {
 	position: relative;
 }
 
-ui5-button[focused] .ui5-button-root::after {
+[ui5-button][focused] .ui5-button-root::after {
 	content: "";
 	position: absolute;
 	border-width: 1px;
@@ -259,31 +261,31 @@ ui5-button[focused] .ui5-button-root::after {
 	right: var(--_ui5_button_focus_offset);
 }
 
-ui5-button[active] .ui5-button-root::after {
+[ui5-button][active] .ui5-button-root::after {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
-ui5-button[design="Positive"][focused] .ui5-button-root::after {
+[ui5-button][design="Positive"][focused] .ui5-button-root::after {
 	border-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
-ui5-button[design="Positive"][active][focused] .ui5-button-root::after {
+[ui5-button][design="Positive"][active][focused] .ui5-button-root::after {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
-ui5-button[design="Negative"][focused] .ui5-button-root::after {
+[ui5-button][design="Negative"][focused] .ui5-button-root::after {
 	border-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
-ui5-button[design="Negative"][active][focused] .ui5-button-root::after {
+[ui5-button][design="Negative"][active][focused] .ui5-button-root::after {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
-ui5-button[design="Emphasized"][focused] .ui5-button-root::after {
+[ui5-button][design="Emphasized"][focused] .ui5-button-root::after {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
-ui5-button ui5-icon.ui5-button-icon {
+[ui5-button] [ui5-icon].ui5-button-icon {
 	height: var(--_ui5_button_icon_font_size); /* Center vertically all icons*/
 	top: 0;
 }

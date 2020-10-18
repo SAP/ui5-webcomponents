@@ -1,3 +1,5 @@
+@import "./InvisibleTextStyles.css";
+
 :host(:not([hidden])) {
 	display: inline-block;
 }
@@ -35,6 +37,10 @@
 :host([exceeding]) .ui5-textarea-inner {
 	outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -4px;
+}
+
+:host([placeholder]) {
+	font-style: italic;
 }
 
 .ui5-textarea-root {

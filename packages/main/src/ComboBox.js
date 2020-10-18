@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import getEffectiveAriaLabelText from "@ui5/webcomponents-base/dist/util/getEffectiveAriaLabelText.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -267,6 +267,18 @@ const metadata = {
 		valueStateMessage: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * Defines the icon to be displayed in the input field.
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 * @since 1.0.0-rc.9
+		 */
+		icon: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
@@ -285,6 +297,19 @@ const metadata = {
 		 * @public
 		 */
 		input: {},
+
+		/**
+		 * Fired when selection is changed by user interaction
+		 *
+		 * @event sap.ui.webcomponents.main.Combobox#selection-change
+		 * @param {HTMLElement} item item to be selected.
+		 * @public
+		 */
+		"selection-change": {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
 	},
 };
 
@@ -359,6 +384,7 @@ class ComboBox extends UI5Element {
 		this._initialRendering = true;
 		this._itemFocused = false;
 		this._tempFilterValue = "";
+		this._selectionChanged = false;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -373,7 +399,15 @@ class ComboBox extends UI5Element {
 		}
 
 		if (this._autocomplete && domValue !== "") {
-			this._autoCompleteValue(domValue);
+			const item = this._autoCompleteValue(domValue);
+
+			if (!this._selectionChanged && (item && !item.selected)) {
+				this.fireEvent("selection-change", {
+					item,
+				});
+
+				this._selectionChanged = false;
+			}
 		} else {
 			this._tempValue = domValue;
 		}
@@ -558,6 +592,12 @@ class ComboBox extends UI5Element {
 		this._isKeyNavigation = true;
 		this._itemFocused = true;
 		this.fireEvent("input");
+
+		this.fireEvent("selection-change", {
+			item: this._filteredItems[indexOfItem],
+		});
+
+		this._selectionChanged = true;
 	}
 
 	_keydown(event) {
@@ -617,6 +657,10 @@ class ComboBox extends UI5Element {
 				this.inner.setSelectionRange(0, this._tempValue.length);
 			}, 0);
 		}
+
+		if (matchingItems.length) {
+			return matchingItems[0];
+		}
 	}
 
 	_selectMatchingItem() {
@@ -647,6 +691,14 @@ class ComboBox extends UI5Element {
 		this._tempValue = listItem.mappedItem.text;
 		this.filterValue = this._tempValue;
 
+		if (!listItem.mappedItem.selected) {
+			this.fireEvent("selection-change", {
+				item: listItem.mappedItem,
+			});
+
+			this._selectionChanged = true;
+		}
+
 		this._filteredItems.map(item => {
 			item.selected = (item === listItem.mappedItem);
 
@@ -674,7 +726,7 @@ class ComboBox extends UI5Element {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		this.responsivePopover = staticAreaItem.querySelector("[ui5-responsive-popover]");
 		return this.responsivePopover;
 	}
 
@@ -736,6 +788,19 @@ class ComboBox extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
+	static get dependencies() {
+		return [
+			ComboBoxItem,
+			Icon,
+			ResponsivePopover,
+			List,
+			BusyIndicator,
+			Button,
+			StandardListItem,
+			Popover,
+		];
+	}
+
 	get styles() {
 		return {
 			popoverHeader: {
@@ -759,19 +824,6 @@ class ComboBox extends UI5Element {
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
-	}
-
-	static async onDefine() {
-		await Promise.all([
-			ComboBoxItem.define(),
-			Icon.define(),
-			Popover.define(),
-			ResponsivePopover.define(),
-			List.define(),
-			BusyIndicator.define(),
-			Button.define(),
-			StandardListItem.define(),
-		]);
 	}
 }
 

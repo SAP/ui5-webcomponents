@@ -1,9 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
-	isShow, isDown, isBackSpace, isSpace,
+	isShow,
+	isDown,
+	isBackSpace,
+	isSpace,
+	isLeft,
+	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -17,6 +24,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
+import Button from "./Button.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
@@ -26,6 +34,7 @@ import {
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
 	INPUT_SUGGESTIONS_TITLE,
 	ICON_ACCESSIBLE_NAME,
+	MULTICOMBOBOX_DIALOG_OK_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -35,6 +44,7 @@ import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPop
 // Styles
 import styles from "./generated/themes/MultiComboBox.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 /**
  * @public
@@ -62,6 +72,35 @@ const metadata = {
 			propertyName: "items",
 			type: HTMLElement,
 			listenFor: { include: ["*"] },
+		},
+
+		/**
+		* Defines the icon to be displayed in the <code>ui5-multi-combobox</code>.
+		*
+		* @type {HTMLElement[]}
+		* @slot
+		* @public
+		* @since 1.0.0-rc.9
+		*/
+	   icon: {
+		   type: HTMLElement,
+	   },
+
+		/**
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-multicombobox</code>.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 * <br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+		 * when the <code>ui5-select</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * @type {HTMLElement[]}
+		 * @since 1.0.0-rc.9
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
@@ -186,6 +225,22 @@ const metadata = {
 		_rootFocused: {
 			type: Boolean,
 		},
+
+		_iconPressed: {
+			type: Boolean,
+			noAttribute: true,
+		},
+
+		_inputWidth: {
+			type: Integer,
+			noAttribute: true,
+		},
+
+		_listWidth: {
+			type: Integer,
+			defaultValue: 0,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
@@ -300,7 +355,21 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return ResponsivePopoverCommonCss;
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+	}
+
+	static get dependencies() {
+		return [
+			MultiComboBoxItem,
+			Tokenizer,
+			Token,
+			Icon,
+			ResponsivePopover,
+			List,
+			StandardListItem,
+			ToggleButton,
+			Button,
+		];
 	}
 
 	constructor() {
@@ -311,6 +380,19 @@ class MultiComboBox extends UI5Element {
 		this._deleting = false;
 		this._validationTimeout = null;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._handleResizeBound = this._handleResize.bind(this);
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResizeBound);
+	}
+
+	_handleResize() {
+		this._inputWidth = this.offsetWidth;
 	}
 
 	_inputChange() {
@@ -416,13 +498,33 @@ class MultiComboBox extends UI5Element {
 		this.fireSelectionChange();
 	}
 
-	_tokenizerFocusOut() {
-		const tokenizer = this.shadowRoot.querySelector("ui5-tokenizer");
+	_handleLeft() {
+		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
+
+		if (cursorPosition === 0) {
+			this._focusLastToken();
+		}
+	}
+
+	_focusLastToken() {
+		const lastTokenIndex = this._tokenizer.tokens.length - 1;
+
+		if (lastTokenIndex < 0) {
+			return;
+		}
+
+		this._tokenizer.tokens[lastTokenIndex].focus();
+		this._tokenizer._itemNav.currentIndex = lastTokenIndex;
+	}
+
+	_tokenizerFocusOut(event) {
+		const tokenizer = this.shadowRoot.querySelector("[ui5-tokenizer]");
 		const tokensCount = tokenizer.tokens.length - 1;
 
-		tokenizer.tokens.forEach(token => { token.selected = false; });
-
-		this._tokenizer.scrollToStart();
+		if (!event.relatedTarget || event.relatedTarget.localName !== "ui5-token") {
+			this._tokenizer.tokens.forEach(token => { token.selected = false; });
+			this._tokenizer.scrollToStart();
+		}
 
 		if (tokensCount === 0 && this._deleting) {
 			setTimeout(() => {
@@ -440,6 +542,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _onkeydown(event) {
+		if (isLeft(event)) {
+			this._handleLeft(event);
+		}
+
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this._toggleRespPopover();
@@ -455,17 +561,22 @@ class MultiComboBox extends UI5Element {
 		if (isBackSpace(event) && event.target.value === "") {
 			event.preventDefault();
 
-			const lastTokenIndex = this._tokenizer.tokens.length - 1;
-
-			if (lastTokenIndex < 0) {
-				return;
-			}
-
-			this._tokenizer.tokens[lastTokenIndex].focus();
-			this._tokenizer._itemNav.currentIndex = lastTokenIndex;
+			this._focusLastToken();
 		}
 
 		this._keyDown = true;
+	}
+
+	_onTokenizerKeydown(event) {
+		if (isRight(event)) {
+			const lastTokenIndex = this._tokenizer.tokens.length - 1;
+
+			if (this._tokenizer.tokens[lastTokenIndex] === document.activeElement.shadowRoot.activeElement) {
+				setTimeout(() => {
+					this.shadowRoot.querySelector("input").focus();
+				}, 0);
+			}
+		}
 	}
 
 	_filterItems(value) {
@@ -543,6 +654,7 @@ class MultiComboBox extends UI5Element {
 			this.blur();
 		}
 
+		this._iconPressed = false;
 		this.filterSelected = false;
 	}
 
@@ -560,18 +672,55 @@ class MultiComboBox extends UI5Element {
 
 	async onAfterRendering() {
 		await this._getRespPopover();
+		await this._getList();
+
+		this.toggle(this.shouldDisplayOnlyValueStateMessage);
+		this.storeResponsivePopoverWidth();
 	}
 
-	get valueStateTextMappings() {
-		return {
-			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
-		};
+	get _isPhone() {
+		return isPhone();
+	}
+
+	_onIconMousedown() {
+		this._iconPressed = true;
+	}
+
+	storeResponsivePopoverWidth() {
+		if (this.open && !this._listWidth) {
+			this._listWidth = this.list.offsetWidth;
+		}
+	}
+
+	toggle(isToggled) {
+		if (isToggled && !this.open) {
+			this.openPopover();
+		} else {
+			this.closePopover();
+		}
+	}
+
+	async openPopover() {
+		const popover = await this._getPopover();
+
+		if (popover) {
+			popover.openBy(this);
+		}
+	}
+
+	async closePopover() {
+		const popover = await this._getPopover();
+
+		popover && popover.close();
+	}
+
+	async _getPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("[ui5-popover]");
 	}
 
 	get _tokenizer() {
-		return this.shadowRoot.querySelector("ui5-tokenizer");
+		return this.shadowRoot.querySelector("[ui5-tokenizer]");
 	}
 
 	get nMoreCountText() {
@@ -612,12 +761,36 @@ class MultiComboBox extends UI5Element {
 		return this.valueState !== ValueState.None;
 	}
 
+	get hasValueStateMessage() {
+		return this.hasValueState && this.valueState !== ValueState.Success;
+	}
+
 	get valueStateText() {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
 	get valueStateTextId() {
 		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
+	get valueStateMessageText() {
+		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
+	}
+
+	get shouldDisplayDefaultValueStateMessage() {
+		return !this.valueStateMessage.length && this.hasValueStateMessage;
+	}
+
+	get shouldDisplayOnlyValueStateMessage() {
+		return this._rootFocused && this.hasValueStateMessage && !this._iconPressed;
+	}
+
+	get valueStateTextMappings() {
+		return {
+			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
+		};
 	}
 
 	get _innerInput() {
@@ -638,22 +811,42 @@ class MultiComboBox extends UI5Element {
 		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
 	}
 
+	get _dialogOkButton() {
+		return this.i18nBundle.getText(MULTICOMBOBOX_DIALOG_OK_BUTTON);
+	}
+
 	get _tokenizerExpanded() {
 		return this._rootFocused || this.open;
 	}
 
+	get classes() {
+		return {
+			popoverValueState: {
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			popoverValueStateMessage: {
+				"width": `${this._listWidth}px`,
+				"min-height": "2.5rem",
+				"padding": "0.5625rem 1rem",
+				"display": this._listWidth === 0 ? "none" : "inline-block",
+			},
+			popoverHeader: {
+				"width": `${this._inputWidth}px`,
+			},
+		};
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			MultiComboBoxItem.define(),
-			Tokenizer.define(),
-			Token.define(),
-			Icon.define(),
-			ResponsivePopover.define(),
-			List.define(),
-			StandardListItem.define(),
-			ToggleButton,
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

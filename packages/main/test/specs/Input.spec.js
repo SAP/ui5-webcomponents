@@ -154,7 +154,7 @@ describe("Input general interaction", () => {
 		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrolalble");
 
 		// close suggestions
-		input.keys("Enter"); 
+		input.keys("Enter");
 	});
 
 	it("handles suggestions", () => {
@@ -213,6 +213,26 @@ describe("Input general interaction", () => {
 		inputResult.click();
 
 		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelect is not fired as item is 'Inactive'");
+	});
+
+	it("handles suggestions selection cancel with ESC", () => {
+		const suggestionsInput = $("#myInputEsc").shadow$("input");
+
+		// act
+		suggestionsInput.click();
+		suggestionsInput.keys("ch");
+		suggestionsInput.keys("ArrowDown");
+
+		// assert
+		assert.strictEqual(suggestionsInput.getValue(), "Chromium",
+			"The value is updated as the item has been previewed.");
+
+		// act
+		suggestionsInput.keys("Escape");
+
+		// assert
+		assert.strictEqual(suggestionsInput.getValue(), "ch",
+			"The value is restored as ESC has been pressed.");
 	});
 
 	it("handles group suggestion item via keyboard", () => {
@@ -293,7 +313,24 @@ describe("Input general interaction", () => {
 		const firstListItem = respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 
 		assert.ok(respPopover.isDisplayedInViewport(), "The popover is visible");
-		assert.ok(firstListItem.getHTML().indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.")
+		assert.ok(firstListItem.getHTML().indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.");
+	});
+
+	it("Doesn't remove value on number type input even if locale specific delimiter/multiple delimiters", () => {
+		const input = browser.$("#input-number2");
+
+		input.click();
+		input.keys("1");
+		input.keys(".");
+		input.keys("2");
+		input.keys("2");
+		input.keys(".");
+		input.keys("3");
+		input.keys("3");
+		input.keys("Tab");
+
+		browser.pause(500);
+		assert.strictEqual(parseFloat(input.getProperty("value")).toPrecision(3), "1.22", "Value is not lost");
 	});
 
 	it("fires suggestion-item-preview", () => {
@@ -308,7 +345,7 @@ describe("Input general interaction", () => {
 		inputItemPreview.keys("c");
 
 		inputItemPreview.keys("ArrowDown");
-		
+
 		// assert
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputPreview2");
 		const inputPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");

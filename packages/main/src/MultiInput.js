@@ -1,4 +1,10 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import {
+	isShow,
+	isBackSpace,
+	isLeft,
+	isRight,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
@@ -14,7 +20,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
 		 * Determines whether a value help icon will be should in the end of the input.
-		 * Pressing the icon will fire <code>value-help-icon-press</code> event.
+		 * Pressing the icon will fire <code>value-help-trigger</code> event.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -54,12 +60,13 @@ const metadata = {
 	},
 	events: /** @lends  sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
-		 * Fired when value state icon is pressed.
+		 * Fired when the value help icon is pressed
+		 * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
 		 *
-		 * @event sap.ui.webcomponents.main.MultiInput#value-help-icon-press
+		 * @event sap.ui.webcomponents.main.MultiInput#value-help-trigger
 		 * @public
 		 */
-		"value-help-icon-press": {},
+		"value-help-trigger": {},
 
 		/**
 		 * Fired when a token is about to be deleted.
@@ -118,9 +125,16 @@ class MultiInput extends Input {
 		return [Input.styles, styles];
 	}
 
+	constructor() {
+		super();
+
+		// Prevent suggestions' opening.
+		this._skipOpenSuggestions = false;
+	}
+
 	valueHelpPress(event) {
 		this.closePopover();
-		this.fireEvent("value-help-icon-press", {});
+		this.fireEvent("value-help-trigger", {});
 	}
 
 	showMorePress(event) {
@@ -145,6 +159,7 @@ class MultiInput extends Input {
 
 	_tokenizerFocusOut(event) {
 		if (!this.contains(event.relatedTarget)) {
+			this.tokenizer._tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
 		}
 	}
@@ -157,6 +172,58 @@ class MultiInput extends Input {
 
 	innerFocusIn() {
 		this.expandedTokenizer = true;
+	}
+
+	_onkeydown(event) {
+		super._onkeydown(event);
+
+		if (isLeft(event)) {
+			this._skipOpenSuggestions = true; // Prevent input focus when navigating through the tokens.
+
+			return this._handleLeft(event);
+		}
+
+		this._skipOpenSuggestions = false;
+		if (isBackSpace(event) && event.target.value === "") {
+			event.preventDefault();
+
+			this._focusLastToken();
+		}
+
+		if (isShow(event)) {
+			this.valueHelpPress();
+		}
+	}
+
+	_onTokenizerKeydown(event) {
+		if (isRight(event)) {
+			const lastTokenIndex = this.tokenizer._tokens.length - 1;
+
+			if (this.tokenizer._tokens[lastTokenIndex] === document.activeElement) {
+				setTimeout(() => {
+					this.focus();
+				}, 0);
+			}
+		}
+	}
+
+	_handleLeft() {
+		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
+
+		if (cursorPosition === 0) {
+			this._focusLastToken();
+		}
+	}
+
+	_focusLastToken() {
+		const lastTokenIndex = this.tokenizer._tokens.length - 1;
+
+		if (lastTokenIndex < 0) {
+			return;
+		}
+
+		this.tokenizer._itemNav.currentIndex = lastTokenIndex;
+		this.tokenizer._tokens[lastTokenIndex].focus();
 	}
 
 	_onfocusout(event) {
@@ -175,7 +242,7 @@ class MultiInput extends Input {
 		const valueHelpPressed = this._valueHelpIconPressed;
 		const nonEmptyValue = this.value !== "";
 
-		return parent && nonEmptyValue && !valueHelpPressed;
+		return parent && nonEmptyValue && !valueHelpPressed && !this._skipOpenSuggestions;
 	}
 
 	lastItemDeleted() {
@@ -185,15 +252,16 @@ class MultiInput extends Input {
 	}
 
 	get tokenizer() {
-		return this.shadowRoot.querySelector("ui5-tokenizer");
+		return this.shadowRoot.querySelector("[ui5-tokenizer]");
 	}
 
-	static async onDefine() {
-		await Promise.all([
-			Tokenizer.define(),
-			Token.define(),
-			Icon.define(),
-		]);
+	static get dependencies() {
+		return [
+			...Input.dependencies,
+			Tokenizer,
+			Token,
+			Icon,
+		];
 	}
 }
 

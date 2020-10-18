@@ -17,7 +17,7 @@ const addOpenedPopup = (instance, parentPopovers = []) => {
 
 const removeOpenedPopup = instance => {
 	openedRegistry = openedRegistry.filter(el => {
-		return el !== instance.instance;
+		return el.instance !== instance;
 	});
 
 	if (!openedRegistry.length) {

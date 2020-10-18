@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "UI5-Web-Components-Playground"
-  spec.version       = "1.0.0-rc.8"
+  spec.version       = "1.0.0-rc.9"
   spec.authors       = ["SAP SE"]
   spec.email         = ["openui5@sap.com"]
 

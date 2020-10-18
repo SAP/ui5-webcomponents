@@ -119,6 +119,10 @@ const isHome = event => (event.key ? event.key === "Home" : event.keyCode === Ke
 
 const isEnd = event => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && !hasModifierKeys(event);
 
+const isHomeCtrl = event => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && checkModifierKeys(event, true, false, false);
+
+const isEndCtrl = event => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && checkModifierKeys(event, true, false, false);
+
 const isEscape = event => (event.key ? event.key === "Escape" || event.key === "Esc" : event.keyCode === KeyCodes.ESCAPE) && !hasModifierKeys(event);
 
 const isTabNext = event => (event.key ? event.key === "Tab" : event.keyCode === KeyCodes.TAB) && !hasModifierKeys(event);
@@ -153,6 +157,8 @@ const isF4 = event => {
 	return event.key === "F4" && !hasModifierKeys(event);
 };
 
+const isF4Shift = event => (event.key ? event.key === "F4" : event.keyCode === KeyCodes.F4) && checkModifierKeys(event, false, false, true);
+
 const isShowByArrows = event => {
 	return ((event.key === "ArrowDown" || event.key === "Down") || (event.key === "ArrowUp" || event.key === "Up")) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false);
 };
@@ -172,6 +178,8 @@ export {
 	isDown,
 	isHome,
 	isEnd,
+	isHomeCtrl,
+	isEndCtrl,
 	isEscape,
 	isTabNext,
 	isTabPrevious,
@@ -179,6 +187,7 @@ export {
 	isDelete,
 	isShow,
 	isF4,
+	isF4Shift,
 	isPageUp,
 	isPageDown,
 	isPageUpShift,

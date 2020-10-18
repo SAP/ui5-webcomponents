@@ -1,4 +1,8 @@
-<div class="{{classes.main}}" style="{{styles.main}}">
+<div
+	class="{{classes.main}}"
+	style="{{styles.main}} "
+	@keydown={{_onkeydown}}	
+>
 
 	<ui5-calendar-header
 		id="{{_id}}-head"
@@ -11,6 +15,7 @@
 		@ui5-show-year-press="{{_header.onBtn2Press}}"
 		._isNextButtonDisabled="{{_header._isNextButtonDisabled}}"
 		._isPrevButtonDisabled="{{_header._isPrevButtonDisabled}}"
+		._isMonthButtonHidden="{{_header._isMonthButtonHidden}}"
 	></ui5-calendar-header>
 
 	<div id="{{_id}}-content">
@@ -39,6 +44,7 @@
 			.maxDate="{{_oMonth.maxDate}}"
 			timestamp="{{_monthPicker.timestamp}}"
 			@ui5-change="{{_monthPicker.onSelectedMonthChange}}"
+			@ui5-navigate="{{_monthPicker.onNavigate}}"
 		></ui5-monthpicker>
 
 		<ui5-yearpicker
@@ -52,6 +58,7 @@
 			timestamp="{{_yearPicker.timestamp}}"
 			._selectedYear="{{_yearPicker._selectedYear}}"
 			@ui5-change="{{_yearPicker.onSelectedYearChange}}"
+			@ui5-navigate="{{_yearPicker.onNavigate}}"
 		></ui5-yearpicker>
 	</div>
 </div>

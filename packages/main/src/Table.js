@@ -296,6 +296,7 @@ class Table extends UI5Element {
 				index,
 				minWidth: column.minWidth,
 				demandPopin: column.demandPopin,
+				text: column.textContent,
 				popinText: column.popinText,
 				visible: !this._hiddenColumns[index],
 			};

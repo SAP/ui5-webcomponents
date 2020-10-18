@@ -28,7 +28,6 @@
 	text-align: center;
 	text-overflow: ellipsis;
 	white-space: pre-line;
-	z-index: 999;
 }
 
 @media screen and (-ms-high-contrast: active) {

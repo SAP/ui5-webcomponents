@@ -1,7 +1,10 @@
 {{>include "./Popup.hbs"}}
 
 {{#*inline "beforeContent"}}
-	<header class="ui5-popup-header-root" id="ui5-popup-header">
+	<header
+		class="ui5-popup-header-root"
+		id="ui5-popup-header"
+		@mousedown="{{_onDragMouseDown}}">
 		{{#if header.length }}
 			<slot name="header"></slot>
 		{{else}}
@@ -15,6 +18,14 @@
 		<footer class="ui5-popup-footer-root">
 			<slot name="footer"></slot>
 		</footer>
+	{{/if}}
+	{{#if resizable}}
+		<ui5-icon
+			name="resize-corner"
+			dir="{{effectiveDir}}"
+			class="ui5-popup-resize-handle"
+			@mousedown="{{_onResizeMouseDown}}">
+		</ui5-icon>
 	{{/if}}
 {{/inline}}
 

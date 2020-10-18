@@ -18,6 +18,7 @@ import "../../thirdparty/Map.prototype.keys.js";
 // Number
 import "../../thirdparty/Number.isInteger.js";
 import "../../thirdparty/Number.isNaN.js";
+import "../../thirdparty/Number.parseFloat.js";
 import "../../thirdparty/Number.parseInt.js";
 
 // Element
