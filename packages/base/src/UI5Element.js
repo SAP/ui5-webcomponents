@@ -548,6 +548,7 @@ class UI5Element extends HTMLElement {
 
 		if (this._shouldUpdateFragment()) {
 			this.staticAreaItem._updateFragment(this);
+			this.staticAreaItemDomRef = this.staticAreaItem.staticAreaItemDomRef.shadowRoot;
 		}
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
@@ -643,13 +644,11 @@ class UI5Element extends HTMLElement {
 	 * @method
 	 * @param {String} refName Defines the name of the stable DOM ref
 	 */
-	async getStableDomRef(refName) {
-		const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
+	getStableDomRef(refName) {
+		const staticAreaResult = this.staticAreaItemDomRef && this.staticAreaItemDomRef.querySelector(`[data-ui5-stable=${refName}]`);
 
-		const result = staticAreaItemDomRef.querySelector(`[data-ui5-stable=${refName}]`)
+		return staticAreaResult
 		|| this.getDomRef().querySelector(`[data-ui5-stable=${refName}]`);
-		
-		return result;
 	}
 
 	/**
