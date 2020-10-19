@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import encodeCSS from "@ui5/webcomponents-base/dist/util/encodeCSS.js";
 
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
@@ -41,7 +42,7 @@ const metadata = {
 		 * <br>
 		 * <b>Note:</b> You should import the desired icon first, then use its name as "icon".
 		 * <br><br>
-		 * import "@ui5/webcomponents-icons/dist/icons/{icon_name}.js"
+		 * import "@ui5/webcomponents-icons/dist/{icon_name}.js"
 		 * <br>
 		 * <pre>&lt;ui5-avatar icon-src="employee"></pre>
 		 *
@@ -238,10 +239,9 @@ class Avatar extends UI5Element {
 	}
 
 	get styles() {
-		const image = this.image.replace(/%/g, "%25").replace(/#/g, "%23");
 		return {
 			img: {
-				"background-image": `url("${image}")`,
+				"background-image": `url("${encodeCSS(this.image)}")`,
 			},
 		};
 	}

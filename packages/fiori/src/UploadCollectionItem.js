@@ -11,9 +11,9 @@ import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { isEnter, isEscape, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import UploadState from "./types/UploadState.js";
-import "@ui5/webcomponents-icons/dist/icons/refresh.js";
-import "@ui5/webcomponents-icons/dist/icons/stop.js";
-import "@ui5/webcomponents-icons/dist/icons/edit.js";
+import "@ui5/webcomponents-icons/dist/refresh.js";
+import "@ui5/webcomponents-icons/dist/stop.js";
+import "@ui5/webcomponents-icons/dist/edit.js";
 import {
 	UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT,

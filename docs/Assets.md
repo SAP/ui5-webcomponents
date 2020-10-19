@@ -54,7 +54,7 @@ package are also imported since the `fiori` package internally uses features of 
 
 Normally applications are expected to import only the individual icons that are going to be used, for example:
 
-`import "@ui5/webcomponents-icons/dist/icons/add.js`";`
+`import "@ui5/webcomponents-icons/dist/add.js`";`
 
 However, sometimes it makes sense to import all icons, hence the `import "@ui5/webcomponents-fiori/dist/Assets.js";` JSON import. 
 Along with the icons, it also includes all translatable texts.

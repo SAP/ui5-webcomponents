@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.10](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.9...v1.0.0-rc.10) (2020-11-12)
+
+
+### Bug Fixes
+
+* **framework:** fix JS error on setLanguage call ([#2328](https://github.com/SAP/ui5-webcomponents/issues/2328)) ([f9b9ead](https://github.com/SAP/ui5-webcomponents/commit/f9b9ead))
+
+### Features
+
+* **framework:** make getStableDomRef search in the static area item … ([#2363](https://github.com/SAP/ui5-webcomponents/issues/2363)) ([a68dfbb](https://github.com/SAP/ui5-webcomponents/commit/a68dfbb))
+
 # [1.0.0-rc.9](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.8...v1.0.0-rc.9) (2020-10-08)
 
 

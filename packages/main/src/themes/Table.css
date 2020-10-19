@@ -12,7 +12,7 @@ table {
 .ui5-table-header-row {
 	color: var(--sapTextColor);
 	height: 3rem;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 }
 
@@ -33,7 +33,7 @@ tr {
 	justify-content: center;
 	text-align: center;
 	padding: 0.5rem 1rem;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: 0.875rem;
 	box-sizing: border-box;
 	color: var(--sapTextColor);

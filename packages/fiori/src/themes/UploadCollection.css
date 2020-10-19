@@ -110,8 +110,8 @@
 }
 
 .uc-dnd-overlay .dnd-overlay-text {
-	font-family: var(--sapFontFamily);
-	font-size: var(--sapMFontHeader4Size);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontHeader4Size);
 	color: var(--sapContent_NonInteractiveIconColor);
 }
 
