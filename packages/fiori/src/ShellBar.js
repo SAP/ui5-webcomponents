@@ -350,7 +350,7 @@ const metadata = {
  * <li>copilot</li>
  * <li>notifications</li>
  * <li>overflow</li>
- * <li>profle</li>
+ * <li>profile</li>
  * <li>product-switch</li>
  * </ul>
  *
