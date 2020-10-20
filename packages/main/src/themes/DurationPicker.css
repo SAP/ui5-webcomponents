@@ -2,8 +2,15 @@
 	display: inline-block;
 }
 
+:host {
+	color: var(--sapField_TextColor);
+	background-color: var(--sapField_Background);
+}
+
 :host .ui5-duration-picker-input {
 	width: 100%;
+	color: inherit;
+	background-color: inherit;
 }
 
 .ui5-duration-picker-input-icon-button:hover {

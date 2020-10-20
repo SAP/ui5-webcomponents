@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.9](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.8...v1.0.0-rc.9) (2020-10-08)
+
+
+### Bug Fixes
+
+* **components:** fix setting contentDensity styles ([#2094](https://github.com/SAP/ui5-webcomponents/issues/2094)) ([9454ab7](https://github.com/SAP/ui5-webcomponents/commit/9454ab7)), closes [#2093](https://github.com/SAP/ui5-webcomponents/issues/2093)
+* **ui5-flexible-column-layout:** Fix arrow misplacement in IE ([#2032](https://github.com/SAP/ui5-webcomponents/issues/2032)) ([57be7c2](https://github.com/SAP/ui5-webcomponents/commit/57be7c2)), closes [#1998](https://github.com/SAP/ui5-webcomponents/issues/1998)
+* **ui5-shellbar:** remove width limitation of logo ([230cd7f](https://github.com/SAP/ui5-webcomponents/commit/230cd7f)), closes [#2066](https://github.com/SAP/ui5-webcomponents/issues/2066)
+* **ui5-shellbar-item:** Update count properly ([#2049](https://github.com/SAP/ui5-webcomponents/issues/2049)) ([2499c56](https://github.com/SAP/ui5-webcomponents/commit/2499c56)), closes [#2048](https://github.com/SAP/ui5-webcomponents/issues/2048)
+
+
+### Features
+
+* **ui5-shellbar:** implement root part ([#2299](https://github.com/SAP/ui5-webcomponents/issues/2299)) ([de2d07f](https://github.com/SAP/ui5-webcomponents/commit/de2d07f))
+
+
+
+
+
 # [1.0.0-rc.8](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.7...v1.0.0-rc.8) (2020-07-30)
 
 
