@@ -4,9 +4,13 @@ import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
+import { getSharedResourcePolicy } from "../SharedResources.js";
+import SharedResourceType from "../types/SharedResourceType.js";
+import SharedResourceReusePolicy from "../types/SharedResourceReusePolicy.js";
 import { getVersionIndex, compareWithVersion } from "../Version.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
+const policy = getSharedResourcePolicy(SharedResourceType.ThemeProperties); // shared resource policy for theme properties
 
 const isThemeBaseRegistered = () => {
 	const registeredPackages = getRegisteredPackages();
@@ -14,19 +18,18 @@ const isThemeBaseRegistered = () => {
 };
 
 /**
- * Determines whether the content of a style tag with CSS variables should be updated.
- * It should always be updated, unless it is for the same theme, and was created by a newer (or the same) runtime version.
+ * Determines whether the content of a style tag with CSS variables should be reused.
  *
  * @param packageName
  * @param theme
  * @returns {boolean}
  */
-const shouldUpdate = (packageName, theme) => {
+const shouldReuseStyleTag = (packageName, theme) => {
 	const styleElement = getThemePropertiesStyleTag(packageName);
 
 	// No style element created yet -> update
 	if (!styleElement) {
-		return true;
+		return false;
 	}
 
 	const styleElementTheme = styleElement.getAttribute("data-ui5-theme");
@@ -34,21 +37,24 @@ const shouldUpdate = (packageName, theme) => {
 
 	// The tag is created by an older version -> update
 	if (!styleElementTheme || !styleElementVersionIndex) {
-		return true;
+		return false;
 	}
 
 	// The tag is for a different theme -> update
 	if (styleElementTheme !== theme) {
+		return false;
+	}
+
+	// Always reuse policy - do not update the style
+	if (policy === SharedResourceReusePolicy.Always) {
 		return true;
 	}
 
-	// The current runtime's version is newer that the one the style tag was created with -> update
-	if (compareWithVersion(styleElementVersionIndex) === 1) {
-		return true;
+	if (policy === SharedResourceReusePolicy.Never) {
+		return false;
 	}
 
-	// Same theme, created by the same or newer version -> do not update
-	return false;
+	return compareWithVersion(styleElementVersionIndex) === -1;
 };
 
 const loadThemeBase = async theme => {
@@ -56,7 +62,7 @@ const loadThemeBase = async theme => {
 		return;
 	}
 
-	if (!shouldUpdate(BASE_THEME_PACKAGE, theme)) {
+	if (shouldReuseStyleTag(BASE_THEME_PACKAGE, theme)) {
 		return;
 	}
 
@@ -75,7 +81,7 @@ const loadComponentPackages = async theme => {
 			return;
 		}
 
-		if (!shouldUpdate(packageName, theme)) {
+		if (shouldReuseStyleTag(packageName, theme)) {
 			return;
 		}
 

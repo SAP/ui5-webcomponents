@@ -1,7 +1,21 @@
-import getSharedResource from "./getSharedResource.js";
+import { getSharedResource, getSharedResourcePolicy } from "./SharedResources.js";
+import SharedResourceType from "./types/SharedResourceType.js";
+import SharedResourceReusePolicy from "./types/SharedResourceReusePolicy.js";
+// import { getVersionIndex } from "./Version.js";
 
-const registry = getSharedResource("SVGIcons.registry", new Map());
-const iconCollectionPromises = getSharedResource("SVGIcons.promises", new Map());
+const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons); // shared resource policy for SVG Icons
+let registry = new Map();
+let iconCollectionPromises = new Map();
+
+const SVGIcons = getSharedResource("SVGIcons", {
+	registry: new Map(),
+	promises: new Map(),
+});
+
+if (policy !== SharedResourceReusePolicy.Never) {
+	registry = SVGIcons.registry;
+	iconCollectionPromises = SVGIcons.promises;
+}
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 const DEFAULT_COLLECTION = "SAP-icons";

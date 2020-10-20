@@ -1,11 +1,15 @@
 import setToArray from "./util/setToArray.js";
+import { getSharedResource } from "./SharedResources.js";
+import { getVersionIndex, getVersionInfo } from "./Version.js";
 
+const Tags = getSharedResource("Tags", new Map());
 const Definitions = new Set();
-const Failures = new Set();
+let Failures = {};
 let failureTimeout;
 
 const registerTag = tag => {
 	Definitions.add(tag);
+	Tags.set(tag, getVersionIndex());
 };
 
 const isTagRegistered = tag => {
@@ -17,7 +21,10 @@ const getAllRegisteredTags = () => {
 };
 
 const recordTagRegistrationFailure = tag => {
-	Failures.add(tag);
+	const tagRegVersionIndex = Tags.get(tag);
+	Failures[tagRegVersionIndex] = Failures[tagRegVersionIndex] || new Set();
+	Failures[tagRegVersionIndex].add(tag);
+
 	if (!failureTimeout) {
 		failureTimeout = setTimeout(() => {
 			displayFailedRegistrations();
@@ -27,8 +34,12 @@ const recordTagRegistrationFailure = tag => {
 };
 
 const displayFailedRegistrations = () => {
-	console.warn(`The following tags have already been defined by a different UI5 Web Components version: ${setToArray(Failures).join(", ")}`); // eslint-disable-line
-	Failures.clear();
+	Object.keys(Failures).forEach(versionIndex => {
+		const versionInfo = getVersionInfo(versionIndex);
+		console.warn(`The following tags have already been defined by UI5 Web Components version: ${versionInfo.version}: ${setToArray(Failures[versionIndex]).join(", ")}`); // eslint-disable-line
+	});
+
+	Failures = {};
 };
 
 export {

@@ -1,6 +1,6 @@
-import getSharedResource from "./getSharedResource.js";
+import { getSharedResource } from "./SharedResources.js";
 
-let versionIndex;
+let currentRuntimeVersionIndex;
 
 /**
  * Object to be populated at build-time
@@ -59,18 +59,21 @@ const compare = (ver1, ver2) => {
  * Returns the version info object for the current runtime
  * @returns {{patch: string, major: string, minor: string, buildTime: string, isNext: string, suffix: string, version: string}}
  */
-const getVersionInfo = () => versionInfo;
+const getVersionInfo = versionIndex => {
+	versionIndex = versionIndex || currentRuntimeVersionIndex;
+	return versionsRegistry[versionIndex];
+};
 
 /**
  * Registers the current runtime in the shared versions resource registry
  */
 const registerVersionInfo = () => {
-	if (versionIndex !== undefined) {
+	if (currentRuntimeVersionIndex !== undefined) {
 		throw new Error("Version already registered");
 	}
 
-	versionsRegistry.push(getVersionInfo());
-	versionIndex = versionsRegistry.length - 1;
+	versionsRegistry.push(versionInfo);
+	currentRuntimeVersionIndex = versionsRegistry.length - 1;
 };
 
 /**
@@ -78,11 +81,11 @@ const registerVersionInfo = () => {
  * @returns {*}
  */
 const getVersionIndex = () => {
-	if (versionIndex === undefined) {
+	if (currentRuntimeVersionIndex === undefined) {
 		throw new Error("Version not yet registered");
 	}
 
-	return versionIndex;
+	return currentRuntimeVersionIndex;
 };
 
 /**
@@ -92,7 +95,7 @@ const getVersionIndex = () => {
  */
 const compareWithVersion = otherVersionIndex => {
 	const otherVersionInfo = versionsRegistry[otherVersionIndex];
-	return compare(getVersionInfo(), otherVersionInfo);
+	return compare(versionInfo, otherVersionInfo);
 };
 
 const isOnlyRuntime = () => {
