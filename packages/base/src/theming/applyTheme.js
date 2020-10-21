@@ -54,7 +54,7 @@ const shouldReuseStyleTag = (packageName, theme) => {
 		return false;
 	}
 
-	return compareWithVersion(styleElementVersionIndex) === -1;
+	return compareWithVersion(styleElementVersionIndex) < 0;
 };
 
 const loadThemeBase = async theme => {

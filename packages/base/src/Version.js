@@ -1,6 +1,7 @@
 import { getSharedResource } from "./SharedResources.js";
 
 let currentRuntimeVersionIndex;
+let warnings = true;
 
 /**
  * Object to be populated at build-time
@@ -16,6 +17,11 @@ const versionInfo = {
 	buildTime: "__BUILD_TIME__",
 };
 
+/**
+ * Central registry where all runtimes register themselves by pushing an object with info about their version.
+ * The index in the registry servers as an ID for the runtime.
+ * @type {*}
+ */
 const versionsRegistry = getSharedResource("Versions", []);
 
 /**
@@ -23,7 +29,7 @@ const versionsRegistry = getSharedResource("Versions", []);
  *
  * @param ver1 Version info object 1
  * @param ver2 Version info object 2
- * @returns {number} 1 if ver1 is newer, 0 if equal, -1 if ver2 is newer
+ * @returns {number} positive number if ver1 is newer, 0 if equal, negative number if ver1 is older
  */
 const compare = (ver1, ver2) => {
 	// If major versions differ, bigger one wins
@@ -56,8 +62,10 @@ const compare = (ver1, ver2) => {
 };
 
 /**
- * Returns the version info object for the current runtime
- * @returns {{patch: string, major: string, minor: string, buildTime: string, isNext: string, suffix: string, version: string}}
+ * Returns the version info object for a given runtime (current runtime by default)
+ *
+ * @param versionIndex the ID of the runtime (current runtime if undefined)
+ * @returns {*}
  */
 const getVersionInfo = versionIndex => {
 	versionIndex = versionIndex || currentRuntimeVersionIndex;
@@ -72,7 +80,14 @@ const registerVersionInfo = () => {
 		throw new Error("Version already registered");
 	}
 
-	versionsRegistry.push(versionInfo);
+	versionsRegistry.push({
+		version: versionInfo.version,
+		major: parseInt(versionInfo.major),
+		minor: parseInt(versionInfo.minor),
+		patch: parseInt(versionInfo.patch),
+		suffix: versionInfo.suffix,
+		buildTime: parseInt(versionInfo.buildTime),
+	});
 	currentRuntimeVersionIndex = versionsRegistry.length - 1;
 };
 
@@ -95,22 +110,29 @@ const getVersionIndex = () => {
  */
 const compareWithVersion = otherVersionIndex => {
 	const otherVersionInfo = versionsRegistry[otherVersionIndex];
-	return compare(versionInfo, otherVersionInfo);
+	return compare(getVersionInfo(), otherVersionInfo);
 };
 
-const isOnlyRuntime = () => {
-	return versionsRegistry.length === 1;
+/**
+ * Call this method to stop console warnings such as "Tags already registered by another version"
+ */
+const disableVersionWarnings = () => {
+	warnings = false;
 };
 
-const isNewestRuntime = () => {
-	return !versionsRegistry.some(otherVersionInfo => compare(otherVersionInfo, getVersionInfo()) > 0);
+/**
+ * Determines whether version-related warnings are enabled
+ * @returns {boolean}
+ */
+const versionWarningsEnabled = () => {
+	return warnings;
 };
 
 export {
 	getVersionInfo,
 	registerVersionInfo,
 	getVersionIndex,
-	isOnlyRuntime,
-	isNewestRuntime,
 	compareWithVersion,
+	disableVersionWarnings,
+	versionWarningsEnabled,
 };
