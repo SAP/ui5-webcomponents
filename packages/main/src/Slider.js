@@ -51,23 +51,15 @@ class Slider extends SliderBase {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	onEnterDOM() {
-		this._moveHandler = this._onMouseMove.bind(this);
-		this._upHandler = this._onMouseUp.bind(this);
-
-		this.addEventListener("mouseover", this._mouseOverHandler);
-		this.addEventListener("mouseout", this._mouseOutHandler);
-	}
-
 	onBeforeRendering() {
 		// Update initial Slider UI representation and normalize internal state
 		// Normalize Slider value according to min/max properties
 		// Normalize the step value and draw tickmarks/labels if specified
-		if (this.step !== this._prevStepValue) {
-			this._setStep(this.step);
-			this._prevStepValue = this.step;
-		}
+		this._syncUIAndState();
 
+		// If the value is not modified by user interaction or this is the first rendering.
+		// In all other cases the previous value reference is set by the interaction handlers.
+		// In this case value won't be "stepified" (rounded to the nearest step).
 		if (this.value !== this._prevValue) {
 			this.value = SliderBase._clipValue(this.value, this.min, this.max);
 			this._prevValue = this.value;
@@ -107,13 +99,16 @@ class Slider extends SliderBase {
 		const stepPrecision = SliderBase._getDecimalPrecisionOfNumber(this.step);
 		return this.value.toFixed(stepPrecision);
 	}
+
 	/**
 	 * Called when the user starts interacting with the slider
 	 *
 	 * @private
 	 */
 	_handleDown(event) {
-		if (this.disabled) {
+		// If step is 0 no interaction is available because there is no constant
+		// (equal for all user environments) quantitative representation of the value
+		if (this.disabled || this.step === 0) {
 			return;
 		}
 
@@ -122,6 +117,7 @@ class Slider extends SliderBase {
 		// Update Slider UI and internal state
 		this._updateUI(newValue);
 		this._updateValue("value", newValue);
+		this._prevValue = newValue;
 	}
 
 	/**
@@ -132,11 +128,21 @@ class Slider extends SliderBase {
 	_handleMove(event) {
 		event.preventDefault();
 
-		if (this.disabled) {
+		// If step is 0 no interaction is available because there is no constant
+		// (equal for all user environments) quantitative representation of the value
+		if (this.disabled || this.step === 0) {
 			return;
 		}
 
-		this._handleMoveBase(event, "value", this.min, this.max);
+		let newValue = SliderBase._getValueFromInteraction(event, this.step, this.min, this.max, this.getBoundingClientRect());
+
+		this._prevValue = newValue;
+		this._updateUI(newValue);
+		this._updateValue("value", newValue);
+	}
+
+	_handleUp(event) {
+		this._handleUpBase();
 	}
 
 	_updateUI(newValue) {

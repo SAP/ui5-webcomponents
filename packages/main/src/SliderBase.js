@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 
 // Styles
 import styles from "./generated/themes/SliderBase.css.js";
@@ -101,6 +102,12 @@ const metadata = {
 			type: String,
 			defaultValue: "hidden",
 		},
+		_labelsOverlapping: {
+			type: Boolean,
+		},
+		_hiddenTickmarks: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */ {
 		/**
@@ -147,6 +154,11 @@ const metadata = {
  * @public
  */
 class SliderBase extends UI5Element {
+	constructor() {
+		super();
+		this._handleResize = this._handleResize.bind(this);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -159,14 +171,80 @@ class SliderBase extends UI5Element {
 		return styles;
 	}
 
-	_onMouseUp() {
-		this._handleUp();
-		window.removeEventListener("mouseup", this._upHandler);
-		window.removeEventListener("mousemove", this._moveHandler);
+	get labelItems() {
+		return this._labelItems;
 	}
 
-	_onMouseMove(event) {
-		this._handleMove(event);
+	get classes() {
+		return {
+			label: {
+				"ui5-slider-hidden-labels": this._labelsOverlapping,
+			}
+		}
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResize);
+
+		this._moveHandler = this._handleMove.bind(this);
+		this._upHandler = this._handleUp.bind(this);
+
+		this.addEventListener("mouseover", this._mouseOverHandler);
+		this.addEventListener("mouseout", this._mouseOutHandler);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResize);
+		this.removeEventListener("mouseover", this._mouseOverHandler);
+		this.removeEventListener("mouseout", this._mouseOutHandler);
+	}
+
+	onBeforeRendering() {
+		this._syncUIAndState();
+	}
+
+	onAfterRendering() {
+		this._handleResize();
+	}
+	/**
+	 * Handle the responsiveness of the Slider's UI elements when resing 
+	 *
+	 * @private
+	 */
+	_handleResize() {
+		if (!this.tickmarks) {
+			return;
+		}
+
+		// Convert the string represented calculation expression to a normal one
+		// Check the distance  in pixels exist between every tickmark
+		const tickmarksAmountStrCalc = this._tickmarksAmount.split("/");
+		const tickmarksAmount = tickmarksAmountStrCalc[0] / tickmarksAmountStrCalc[1];
+		const spaceBetweenTickmarks = this.getBoundingClientRect().width / tickmarksAmount;
+
+		// If the pixels between the tickmarks are less than 8 only the first and the last one should be visible
+		// In such case the labels must correspond to the tickmarks, only the first and the last one should exist.
+		if (spaceBetweenTickmarks < 8) {
+			this._tickmarksBackground = `linear-gradient(to right, currentColor 1px, transparent 0) 0 center / calc(100% - 1px) 100% repeat-x`;
+			this._hiddenTickmarks = true;
+			this._labelsOverlapping = true;
+		} else {
+			this._drawDefaultTickmarks(this.step, this.max, this.min);
+			this._hiddenTickmarks = false;
+		}
+
+		if (this.labelInterval <= 0 || this._hiddenTickmarks) {
+			return;
+		}
+		
+		// Cache the labels if not yet fetched
+		if (!this._labels) {
+			this._labels = this.shadowRoot.querySelectorAll(".ui5-slider-labels li");
+		}
+
+		// Check if there are any overlapping labels.
+		// If so - only the first and the last one should be visible
+		this._labelsOverlapping = Array.prototype.some.call(this._labels, label => label.scrollWidth > label.clientWidth);
 	}
 
 	/**
@@ -187,41 +265,22 @@ class SliderBase extends UI5Element {
 		return newValue;
 	}
 
-	/**
-	 * Called when the user moves the slider
-	 *
-	 * @private
-	 */
-	_handleMoveBase(event, valueType, min, max) {
-		const newValue = SliderBase._getValueFromInteraction(event, this.step, min, max, this.getBoundingClientRect());
-
-		// Update Slider UI and internal state
-		this._updateUI(newValue);
-		this._updateValue(valueType, newValue);
-	}
-
-	_handleUp() {
-		if (this.disabled) {
-			return;
-		}
-
+	_handleUpBase() {
+		window.removeEventListener("mouseup", this._upHandler);
+		window.removeEventListener("mousemove", this._moveHandler);
 		this.fireEvent("change");
 	}
 
 	_handleMouseOver(event) {
-		if (this.disabled || !this.showTooltip) {
-			return;
+		if (!this.disabled || this.showTooltip) {
+			this._tooltipVisibility = "visible";
 		}
-
-		this._tooltipVisibility = "visible";
 	}
 
 	_handleMouseOut(event) {
-		if (!this.showTooltip) {
-			return;
+		if (this.showTooltip) {
+			this._tooltipVisibility = "hidden";
 		}
-
-		this._tooltipVisibility = "hidden";
 	}
 
 	_updateValue(valueType, value) {
@@ -230,8 +289,8 @@ class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Locks the given value between boundaries based on slider properties:
-	 * Restricts value within the min & max properties.
+	 * Locks the given value between min and max boundaries based on slider properties
+	 *
 	 * @private
 	 */
 	static _clipValue(value, min, max) {
@@ -248,8 +307,6 @@ class SliderBase extends UI5Element {
 		const pageX = this._getPageXValueFromEvent(event);
 		const value = this._computedValueFromPageX(pageX, min, max, boundingClientRect);
 		const steppedValue = this._getSteppedValue(value, stepSize, min);
-
-		// Normalize value and keep it under constrains defined by the slider's properties
 		return this._clipValue(steppedValue, min, max);
 	}
 
@@ -267,7 +324,7 @@ class SliderBase extends UI5Element {
 
 		// Clip (snap) the new value to the nearest step
 		value = (stepModuloValue * 2 >= stepSize) ? (value + stepSize) - stepModuloValue : value - stepModuloValue;
-		
+
 		// If the step value is not a round number get its precision
 		const stepPrecision = SliderBase._getDecimalPrecisionOfNumber(stepSize);
 		return value.toFixed(stepPrecision);
@@ -309,9 +366,34 @@ class SliderBase extends UI5Element {
 		if (Number.isInteger(value)) {
 			return 0;
 		}
-
 		const match = (String(value)).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
 		return Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? Number(match[2]) : 0));
+	}
+
+	/**
+	 * Update initial Slider UI representation and normalize internal state
+	 * Normalize Range Slider values according to min/max properties
+	 * Normalize the step value and draw tickmarks/labels if specified
+	 * 
+	 * Returns <code>true</code> if UI has to be updated further to sync 
+	 * with the internal state and <code>undefined</code> otherwise
+	 * @private
+	 */
+	_syncUIAndState() {
+		// In this case the value prop is changed programatically (not by user interaction)
+		// and it won't be "stepified" (rounded to the nearest step)
+		if (this.step !== this._prevStepValue) {
+			this._setStep(this.step);
+			this._prevStepValue = this.step;
+			return;
+		}
+
+		if (this.min !== this._prevMin || this.max !== this._prevMax) {
+			this._drawDefaultTickmarks(this.step, this.max, this.min);
+			this._prevMin = this.min;
+			this._prevMax = this.max;
+			return true;
+		}
 	}
 
 	/**
@@ -320,7 +402,7 @@ class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_drawDefaultTickmarks(step, max, min) {
-		if (!this.tickmarks) {
+		if (!this.tickmarks || !this.step) {
 			return;
 		}
 
@@ -328,20 +410,22 @@ class SliderBase extends UI5Element {
 		const stepStr = String(step);
 		const maxStr = String(max);
 		const minStr = String(min);
-		const tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;
 		const tickmarkWidth = "1px";
+
+		this._tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;
+		this._hiddenTickmarks = false;
 
 		// Transparent CSS gradient background
 		const tickmarksGradientBase = `linear-gradient(to right, currentColor ${tickmarkWidth}, transparent 0) `;
 
 		// Draw the tickmarks as a patern over the gradient background
-		const tickmarksGradientdPattern = `0 center / calc((100% - ${tickmarkWidth}) / (${tickmarksAmount})) 100% repeat-x`;
+		const tickmarksGradientdPattern = `0 center / calc((100% - ${tickmarkWidth}) / (${this._tickmarksAmount})) 100% repeat-x`;
 
 		// Combine to get the complete CSS background gradient property value
 		this._tickmarksBackground = `${tickmarksGradientBase + tickmarksGradientdPattern}`;
 
 		// If labelsInterval is specified draw labels for the necessary tickmarks
-		if (this.labelInterval) {
+		if (this.labelInterval > 0) {
 			this._drawDefaultLabels(parseInt(tickmarkWidth));
 		}
 	}
@@ -374,13 +458,17 @@ class SliderBase extends UI5Element {
 		// "floor" the number of labels anyway.
 		for (let i = 0; i <= newNumberOfLabels; i++) {
 			// Format the label numbers with the same decimal precision as the value of the step property
-			let labelItemNumber = ((i * step * labelInterval) + this.min).toFixed(stepPrecision);
+			const labelItemNumber = ((i * step * labelInterval) + this.min).toFixed(stepPrecision);
 			this._labelItems.push(document.createTextNode(labelItemNumber));
 		}
 	}
 
 	_setStep(step) {
-		if (typeof step !== "number" || step < 0) {
+		if (step === 0) {
+			return;
+		}
+
+		if (typeof step !== "number" || step < 0 || isNaN(step)) {
 			step = 1;
 		}
 

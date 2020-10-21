@@ -12,7 +12,7 @@
 	cursor: pointer;
 	vertical-align: top;	
 	position: relative;
-	width: 100%;	
+	width: 100%;
 	z-index: 0;
 }
 
@@ -127,4 +127,8 @@
 	font-weight: bold;
 	text-align: center;
 	display: inline-block;
+}
+
+.ui5-slider-hidden-labels li:not(:first-child):not(:last-child) {
+	visibility: hidden;
 }

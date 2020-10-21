@@ -13,7 +13,7 @@
 			{{#if tickmarks}}
 				<div class="ui5-slider-tickmarks" style="{{styles.tickmarks}}"></div>
 				{{#if labelInterval}}
-					<ul class="ui5-slider-labels" style="{{styles.labelContainer}}">
+					<ul class="ui5-slider-labels {{classes.label}}" style="{{styles.labelContainer}}">
 						{{#if labelItems}}
 							{{#each labelItems}}
 								<li style="{{../styles.label}}">{{this}}</li>
