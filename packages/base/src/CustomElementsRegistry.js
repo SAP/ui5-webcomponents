@@ -5,7 +5,9 @@ import {
 	getVersionInfo,
 	compareWithVersion,
 	versionWarningsEnabled,
+	getAllVersions,
 } from "./Version.js";
+import Logger from "./util/Logger.js";
 
 const Tags = getSharedResource("Tags", new Map());
 const Definitions = new Set();
@@ -33,22 +35,46 @@ const recordTagRegistrationFailure = tag => {
 	if (!failureTimeout) {
 		failureTimeout = setTimeout(() => {
 			displayFailedRegistrations();
+			Failures = {};
 			failureTimeout = undefined;
 		}, 1000);
 	}
 };
 
 const displayFailedRegistrations = () => {
+	if (!versionWarningsEnabled()) {
+		return;
+	}
+
+	const allVersions = getAllVersions();
+	const logger = new Logger(`There are currently ${allVersions.length} UI5 Web Components instances on this HMTL page (loading order: ${allVersions.join(", ")}).`);
+
 	Object.keys(Failures).forEach(otherVersionIndex => {
 		const currentVersionInfo = getVersionInfo();
 		const otherVersionInfo = getVersionInfo(otherVersionIndex);
 		const comparison = compareWithVersion(otherVersionIndex);
-		if (versionWarningsEnabled()) {
-			console.warn(`Runtime version ${currentVersionInfo.version} failed to register one or more tags. The following tags have already been defined by another runtime of ${comparison === 0 ? "the same" : (comparison > 0 ? "an older" : "a newer")} UI5 Web Components version (${otherVersionInfo.version}): ${setToArray(Failures[otherVersionIndex]).sort().join(", ")}.\n\n To prevent this from happening, consider using scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/Scoping.md.\n\n To suppress this warning, add the following code to your bundle:\n import { disableVersionWarnings } from "@ui5/webcomponents-base/dist/Version.js";\n disableVersionWarnings();`); // eslint-disable-line
+
+		let compareWord;
+		if (comparison > 0) {
+			compareWord = "an older";
+		} else if (comparison < 0) {
+			compareWord = "a newer";
+		} else {
+			compareWord = "the same";
+		}
+		logger.para(`Runtime of version ${currentVersionInfo.version} failed to define ${Failures[otherVersionIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version (${otherVersionInfo.version}): ${setToArray(Failures[otherVersionIndex]).sort().join(", ")}.`);
+		if (comparison > 0) {
+			logger.line(`WARNING! If your code uses features of the above web components, unavailable in version ${otherVersionInfo.version}, it might not work as expected!`);
 		}
 	});
 
-	Failures = {};
+	logger.para(`To fix this, consider using scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/Scoping.md.`);
+
+	logger.para(`To suppress this warning, add the following code to your bundle:`);
+	logger.line(`import { disableVersionWarnings } from "@ui5/webcomponents-base/dist/Version.js";`);
+	logger.line(`disableVersionWarnings();`);
+
+	logger.console("warn");
 };
 
 export {

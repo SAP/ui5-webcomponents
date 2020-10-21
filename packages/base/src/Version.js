@@ -128,6 +128,12 @@ const versionWarningsEnabled = () => {
 	return warnings;
 };
 
+/**
+ * Returns an array with strings, containing the versions of all registered runtimes
+ * @returns {*}
+ */
+const getAllVersions = () => versionsRegistry.map(verInfo => verInfo.version);
+
 export {
 	getVersionInfo,
 	registerVersionInfo,
@@ -135,4 +141,5 @@ export {
 	compareWithVersion,
 	disableVersionWarnings,
 	versionWarningsEnabled,
+	getAllVersions,
 };
