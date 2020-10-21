@@ -7,7 +7,14 @@ import { getFeature } from "../FeaturesRegistry.js";
 import { getSharedResourcePolicy } from "../SharedResources.js";
 import SharedResourceType from "../types/SharedResourceType.js";
 import SharedResourceReusePolicy from "../types/SharedResourceReusePolicy.js";
-import { getVersionIndex, compareWithVersion } from "../Version.js";
+import {
+	getVersionIndex,
+	getVersionInfo,
+	compareWithVersion,
+	versionWarningsEnabled,
+	logDisableVersionWarningsInstructions,
+} from "../Version.js";
+import Logger from "../util/Logger.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
 const policy = getSharedResourcePolicy(SharedResourceType.ThemeProperties); // shared resource policy for theme properties
@@ -18,43 +25,62 @@ const isThemeBaseRegistered = () => {
 };
 
 /**
- * Determines whether the content of a style tag with CSS variables should be reused.
+ * Determines whether the theme properties for this package/theme combination should be inserted in DOM.
  *
  * @param packageName
  * @param theme
  * @returns {boolean}
  */
-const shouldReuseStyleTag = (packageName, theme) => {
+const shouldApplyThemeProperties = (packageName, theme) => {
 	const styleElement = getThemePropertiesStyleTag(packageName);
 
-	// No style element created yet -> update
+	// No style element created yet -> apply
 	if (!styleElement) {
-		return false;
+		return true;
 	}
 
 	const styleElementTheme = styleElement.getAttribute("data-ui5-theme");
 	const styleElementVersionIndex = styleElement.getAttribute("data-ui5-version-index");
 
-	// The tag is created by an older version -> update
+	// There is a tag, but it does not have data-ui5-version-index, indicating that it was created before versioning and reuse policies were introduced - assume existing behavior (apply)
 	if (!styleElementTheme || !styleElementVersionIndex) {
-		return false;
-	}
-
-	// The tag is for a different theme -> update
-	if (styleElementTheme !== theme) {
-		return false;
-	}
-
-	// Always reuse policy - do not update the style
-	if (policy === SharedResourceReusePolicy.Always) {
 		return true;
 	}
 
-	if (policy === SharedResourceReusePolicy.Never) {
+	// The tag is for a different theme -> apply
+	if (styleElementTheme !== theme) {
+		return true;
+	}
+
+	const comparison = compareWithVersion(styleElementVersionIndex);
+	const logger = new Logger();
+	const versionInfo = getVersionInfo();
+	const otherVersionInfo = getVersionInfo(styleElementVersionIndex);
+
+	// Always reuse policy - reuse the existing theme properties, do not apply the new ones
+	if (policy === SharedResourceReusePolicy.Always) {
+		if (versionWarningsEnabled() && comparison > 0) {
+			logger.append(`Version ${versionInfo.version} will not update theme properties for ${packageName} for ${theme} although they are created by an older version (${otherVersionInfo.version}), because Shared resources reuse policy is set to "Always reuse"`);
+			logger.line(`If not intended, consider changing the policy to OnlyNewer`);
+			logDisableVersionWarningsInstructions(logger);
+			logger.console("warn");
+		}
 		return false;
 	}
 
-	return compareWithVersion(styleElementVersionIndex) < 0;
+	// Never reuse policy - apply the new theme properties
+	if (policy === SharedResourceReusePolicy.Never) {
+		if (versionWarningsEnabled() && comparison < 0) {
+			logger.append(`Version ${versionInfo.version} will update theme properties for ${packageName} for ${theme} although they are created by a newer version (${otherVersionInfo.version}), because Shared resources reuse policy is set to "Never reuse"`);
+			logger.line(`If not intended, consider changing the policy to OnlyNewer`);
+			logDisableVersionWarningsInstructions(logger);
+			logger.console("warn");
+		}
+		return true;
+	}
+
+	// OnlyNewer reuse policy - apply the new theme properties only if of a newer version (comparison with the style's version returns a positive number).
+	return comparison > 0;
 };
 
 const loadThemeBase = async theme => {
@@ -62,12 +88,10 @@ const loadThemeBase = async theme => {
 		return;
 	}
 
-	if (shouldReuseStyleTag(BASE_THEME_PACKAGE, theme)) {
-		return;
+	if (shouldApplyThemeProperties(BASE_THEME_PACKAGE, theme)) {
+		const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
+		createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE, theme, getVersionIndex());
 	}
-
-	const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
-	createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE, theme, getVersionIndex());
 };
 
 const deleteThemeBase = () => {
@@ -81,12 +105,10 @@ const loadComponentPackages = async theme => {
 			return;
 		}
 
-		if (shouldReuseStyleTag(packageName, theme)) {
-			return;
+		if (shouldApplyThemeProperties(packageName, theme)) {
+			const cssText = await getThemeProperties(packageName, theme);
+			createThemePropertiesStyleTag(cssText, packageName, theme, getVersionIndex());
 		}
-
-		const cssText = await getThemeProperties(packageName, theme);
-		createThemePropertiesStyleTag(cssText, packageName, theme, getVersionIndex());
 	});
 };
 

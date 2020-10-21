@@ -1,4 +1,5 @@
 import { getSharedResource } from "./SharedResources.js";
+import Logger from "./util/Logger.js";
 
 let currentRuntimeVersionIndex;
 let warnings = true;
@@ -106,7 +107,7 @@ const getVersionIndex = () => {
 /**
  * Compares the current runtime's version with the version of another runtime on the same page (in the shared versions resource registry)
  * @param otherVersionIndex The index in the registry of the version to be compared with
- * @returns {number}
+ * @returns {number} Positive number if the current runtime's version is newer, 0 if equal, negative number if the current runtime's version is older
  */
 const compareWithVersion = otherVersionIndex => {
 	const otherVersionInfo = versionsRegistry[otherVersionIndex];
@@ -128,6 +129,16 @@ const versionWarningsEnabled = () => {
 	return warnings;
 };
 
+const logDisableVersionWarningsInstructions = logger => {
+	if (!(logger instanceof Logger)) {
+		throw new Error("logger must be a Logger class instance");
+	}
+
+	logger.para(`To suppress version related warnings such as this one, add the following code to your bundle:`);
+	logger.line(`import { disableVersionWarnings } from "@ui5/webcomponents-base/dist/Version.js";`);
+	logger.line(`disableVersionWarnings();`);
+};
+
 /**
  * Returns an array with strings, containing the versions of all registered runtimes
  * @returns {*}
@@ -142,4 +153,5 @@ export {
 	disableVersionWarnings,
 	versionWarningsEnabled,
 	getAllVersions,
+	logDisableVersionWarningsInstructions,
 };

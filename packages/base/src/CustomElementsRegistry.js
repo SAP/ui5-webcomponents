@@ -5,6 +5,7 @@ import {
 	getVersionInfo,
 	compareWithVersion,
 	versionWarningsEnabled,
+	logDisableVersionWarningsInstructions,
 	getAllVersions,
 } from "./Version.js";
 import Logger from "./util/Logger.js";
@@ -70,9 +71,7 @@ const displayFailedRegistrations = () => {
 
 	logger.para(`To fix this, consider using scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/Scoping.md.`);
 
-	logger.para(`To suppress this warning, add the following code to your bundle:`);
-	logger.line(`import { disableVersionWarnings } from "@ui5/webcomponents-base/dist/Version.js";`);
-	logger.line(`disableVersionWarnings();`);
+	logDisableVersionWarningsInstructions(logger);
 
 	logger.console("warn");
 };
