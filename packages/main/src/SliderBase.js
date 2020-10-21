@@ -157,6 +157,13 @@ class SliderBase extends UI5Element {
 	constructor() {
 		super();
 		this._handleResize = this._handleResize.bind(this);
+		this.DOWN_EVENTS = ['mousedown', 'pointerdown', 'touchstart'];
+		this.UP_EVENTS = ['mouseup', 'pointerup', 'touchend'];
+		this.MOVE_EVENT_MAP = {
+			mousedown: 'mousemove',
+			pointerdown: 'pointermove',
+			touchstart: 'touchmove',
+		};
 	}
 
 	static get metadata() {
@@ -249,26 +256,28 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Called when the user starts interacting with the slider
-	 *
+	 * After a down event on the slider root, listen for move events on
+	 * window, so the slider value is updated even if the user drags the pointer
+	 * outside the slider root
 	 * @private
 	 */
 	_handleDownBase(event, min, max) {
+		// Only allow one type of move event to be listened to (the first one registered after the down event)
+		this._moveEventType = !this._moveEventType ? this.MOVE_EVENT_MAP[event.type] : this._moveEventType;
+		this.UP_EVENTS.forEach((upEventType) => window.addEventListener(upEventType, this._upHandler));
+		window.addEventListener(this._moveEventType, this._moveHandler);
+
 		this._boundingClientRect = this.getBoundingClientRect();
 		const newValue = SliderBase._getValueFromInteraction(event, this.step, min, max, this._boundingClientRect);
-
-		// After a down event on the slider root, listen for move events on
-		// body, so the slider value is updated even if the user drags the pointer
-		// outside the slider root
-		window.addEventListener("mousemove", this._moveHandler);
-		window.addEventListener("mouseup", this._upHandler);
-
 		return newValue;
 	}
 
 	_handleUpBase() {
-		window.removeEventListener("mouseup", this._upHandler);
-		window.removeEventListener("mousemove", this._moveHandler);
 		this.fireEvent("change");
+		this.UP_EVENTS.forEach((upEventType) => window.removeEventListener(upEventType, this._upHandler));
+
+		window.removeEventListener(this._moveEventType, this._moveHandler);
+		this._moveEventType = null;
 	}
 
 	_handleMouseOver(event) {

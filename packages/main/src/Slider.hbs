@@ -1,6 +1,8 @@
 <div
 	class="ui5-slider-root"
 	@mousedown="{{_handleDown}}"
+	@touchstart="{{_handleDown}}"
+	@pointerdown="{{_handleDown}}"
 	@mouseover="{{_handleMouseOver}}"
 	@mouseout="{{_handleMouseOut}}"
 >
