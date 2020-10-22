@@ -1,9 +1,9 @@
 import setToArray from "./util/setToArray.js";
 import { getSharedResource } from "./SharedResources.js";
 import {
-	getRuntimeIndex,
+	getCurrentRuntimeIndex,
 	getRuntime,
-	compareWithRuntime,
+	compareCurrentRuntimeWith,
 	runtimeWarningsEnabled,
 	logDisableRuntimeWarningsInstructions,
 	getAllRuntimes,
@@ -17,7 +17,7 @@ let failureTimeout;
 
 const registerTag = tag => {
 	Definitions.add(tag);
-	Tags.set(tag, getRuntimeIndex());
+	Tags.set(tag, getCurrentRuntimeIndex());
 };
 
 const isTagRegistered = tag => {
@@ -53,7 +53,7 @@ const displayFailedRegistrations = () => {
 	Object.keys(Failures).forEach(otherRuntimeIndex => {
 		const currentRuntime = getRuntime();
 		const otherRuntime = getRuntime(otherRuntimeIndex);
-		const comparison = compareWithRuntime(otherRuntimeIndex);
+		const comparison = compareCurrentRuntimeWith(otherRuntimeIndex);
 
 		let compareWord;
 		if (comparison > 0) {

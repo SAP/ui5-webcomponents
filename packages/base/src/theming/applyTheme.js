@@ -8,9 +8,9 @@ import { getSharedResourcePolicy } from "../SharedResources.js";
 import SharedResourceType from "../types/SharedResourceType.js";
 import SharedResourceReusePolicy from "../types/SharedResourceReusePolicy.js";
 import {
-	getRuntimeIndex,
+	getCurrentRuntimeIndex,
 	getRuntime,
-	compareWithRuntime,
+	compareCurrentRuntimeWith,
 	runtimeWarningsEnabled,
 	logDisableRuntimeWarningsInstructions,
 } from "../Runtimes.js";
@@ -52,7 +52,7 @@ const shouldApplyThemeProperties = (packageName, theme) => {
 		return true;
 	}
 
-	const comparison = compareWithRuntime(styleElementRuntimeIndex);
+	const comparison = compareCurrentRuntimeWith(styleElementRuntimeIndex);
 	const logger = new Logger();
 	const currentRuntime = getRuntime();
 	const otherRuntime = getRuntime(styleElementRuntimeIndex);
@@ -90,7 +90,7 @@ const loadThemeBase = async theme => {
 
 	if (shouldApplyThemeProperties(BASE_THEME_PACKAGE, theme)) {
 		const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
-		createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE, theme, getRuntimeIndex());
+		createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE, theme, getCurrentRuntimeIndex());
 	}
 };
 
@@ -107,7 +107,7 @@ const loadComponentPackages = async theme => {
 
 		if (shouldApplyThemeProperties(packageName, theme)) {
 			const cssText = await getThemeProperties(packageName, theme);
-			createThemePropertiesStyleTag(cssText, packageName, theme, getRuntimeIndex());
+			createThemePropertiesStyleTag(cssText, packageName, theme, getCurrentRuntimeIndex());
 		}
 	});
 };

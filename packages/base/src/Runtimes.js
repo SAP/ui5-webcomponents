@@ -4,10 +4,10 @@ import { getSharedResource } from "./SharedResources.js";
 import Logger from "./util/Logger.js";
 
 let currentRuntimeIndex;
-let warnings = true;
+let showWarnings = true;
 
 /**
- * Central registry where all runtimes register themselves by pushing an object with info about their runtime.
+ * Central registry where all runtimes register themselves by pushing a Runtime instance object.
  * The index in the registry servers as an ID for the runtime.
  * @type {*}
  */
@@ -20,8 +20,7 @@ const registry = getSharedResource("Runtimes", new RuntimeRegistry());
  * @returns {*}
  */
 const getRuntime = runtimeIndex => {
-	runtimeIndex = runtimeIndex || currentRuntimeIndex;
-	return registry.getRuntime(runtimeIndex);
+	return registry.getRuntime(runtimeIndex || currentRuntimeIndex);
 };
 
 /**
@@ -39,7 +38,7 @@ const registerCurrentRuntime = () => {
  * Returns the index of the current runtime's object in the shared runtimes resource registry
  * @returns {*}
  */
-const getRuntimeIndex = () => {
+const getCurrentRuntimeIndex = () => {
 	if (currentRuntimeIndex === undefined) {
 		throw new Error("Runtime not yet registered");
 	}
@@ -52,15 +51,17 @@ const getRuntimeIndex = () => {
  * @param otherRuntimeIndex The index in the registry of the runtime to be compared with
  * @returns {number} Positive number if the current runtime's version is newer, 0 if equal, negative number if the current runtime's version is older
  */
-const compareWithRuntime = otherRuntimeIndex => {
-	return getRuntime().compareTo(getRuntime(otherRuntimeIndex));
+const compareCurrentRuntimeWith = otherRuntimeIndex => {
+	const currentRuntime = getRuntime();
+	const otherRuntime = getRuntime(otherRuntimeIndex);
+	return currentRuntime.compareTo(otherRuntime);
 };
 
 /**
- * Call this method to stop console warnings such as "Tags already registered by another runtime"
+ * Call this method to stop runtime-related console warnings such as "Tags already defined by another runtime"
  */
 const disableRuntimeWarnings = () => {
-	warnings = false;
+	showWarnings = false;
 };
 
 /**
@@ -68,9 +69,13 @@ const disableRuntimeWarnings = () => {
  * @returns {boolean}
  */
 const runtimeWarningsEnabled = () => {
-	return warnings;
+	return showWarnings;
 };
 
+/**
+ * Receives as a parameter a util/Logger.js class instance and logs instructions how to disable runtime-related warnings
+ * @param logger
+ */
 const logDisableRuntimeWarningsInstructions = logger => {
 	if (!(logger instanceof Logger)) {
 		throw new Error("logger must be a Logger class instance");
@@ -92,14 +97,15 @@ const getAllRuntimes = () => registry.getAllRuntimes();
  * @param alias
  */
 const setRuntimeAlias = alias => {
-	registry.getRuntime(currentRuntimeIndex).customAlias = alias;
+	const currentRuntime = getRuntime();
+	currentRuntime.customAlias = alias;
 };
 
 export {
 	getRuntime,
+	getCurrentRuntimeIndex,
 	registerCurrentRuntime,
-	getRuntimeIndex,
-	compareWithRuntime,
+	compareCurrentRuntimeWith,
 	disableRuntimeWarnings,
 	runtimeWarningsEnabled,
 	getAllRuntimes,
