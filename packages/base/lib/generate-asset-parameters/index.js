@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 const mkdirp = require('mkdirp');
 const assets = require('@ui5/webcomponents-tools/assets-meta.js');
 

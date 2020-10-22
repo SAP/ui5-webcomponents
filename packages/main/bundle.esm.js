@@ -1,3 +1,6 @@
+import { setVersionAlias} from "@ui5/webcomponents-base/dist/Version.js";
+setVersionAlias("UI5 Web Components Playground");
+
 import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/config/AssetsPath.js";
 // setAssetsPath("/my-resources/");
 

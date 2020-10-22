@@ -48,7 +48,7 @@ const displayFailedRegistrations = () => {
 	}
 
 	const allVersions = getAllVersions();
-	const logger = new Logger(`There are currently ${allVersions.length} UI5 Web Components instances on this HMTL page (loading order: ${allVersions.join(", ")}).`);
+	const logger = new Logger(`There are currently ${allVersions.length} UI5 Web Components instances on this HMTL page (loading order: ${allVersions.map(ver => `${ver.version} - ${ver.alias}`).join(", ")}).`);
 
 	Object.keys(Failures).forEach(otherVersionIndex => {
 		const currentVersionInfo = getVersionInfo();
@@ -66,10 +66,12 @@ const displayFailedRegistrations = () => {
 		logger.para(`Runtime of version ${currentVersionInfo.version} failed to define ${Failures[otherVersionIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version (${otherVersionInfo.version}): ${setToArray(Failures[otherVersionIndex]).sort().join(", ")}.`);
 		if (comparison > 0) {
 			logger.line(`WARNING! If your code uses features of the above web components, unavailable in version ${otherVersionInfo.version}, it might not work as expected!`);
+		} else {
+			logger.line(`Since the above web components were defined by ${comparison < 0 ? "a newer" : "the same"} version, they should be compatible with your code.`);
 		}
 	});
 
-	logger.para(`To fix this, consider using scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/Scoping.md.`);
+	logger.line(`To fix this, consider using scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/Scoping.md.`);
 
 	logDisableVersionWarningsInstructions(logger);
 

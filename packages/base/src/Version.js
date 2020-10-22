@@ -1,22 +1,10 @@
+import VersionInfo from "../dist/generated/VersionInfo.js";
 import { getSharedResource } from "./SharedResources.js";
 import Logger from "./util/Logger.js";
 
 let currentRuntimeVersionIndex;
 let warnings = true;
-
-/**
- * Object to be populated at build-time
- * @type {{patch: string, major: string, minor: string, buildTime: string, isNext: string, suffix: string, version: string}}
- */
-const versionInfo = {
-	version: "__VERSION__",
-	major: "__MAJOR__",
-	minor: "__MINOR__",
-	patch: "__PATCH__",
-	suffix: "__SUFFIX__",
-	isNext: "__IS_NEXT__",
-	buildTime: "__BUILD_TIME__",
-};
+const compareResultCache = new Map();
 
 /**
  * Central registry where all runtimes register themselves by pushing an object with info about their version.
@@ -81,15 +69,13 @@ const registerVersionInfo = () => {
 		throw new Error("Version already registered");
 	}
 
+	currentRuntimeVersionIndex = versionsRegistry.length;
+	const alias = `unspecified runtime ${currentRuntimeVersionIndex}`;
 	versionsRegistry.push({
-		version: versionInfo.version,
-		major: parseInt(versionInfo.major),
-		minor: parseInt(versionInfo.minor),
-		patch: parseInt(versionInfo.patch),
-		suffix: versionInfo.suffix,
-		buildTime: parseInt(versionInfo.buildTime),
+		...VersionInfo,
+		alias,
+		descriptor: `${VersionInfo.version} -  ${alias}`,
 	});
-	currentRuntimeVersionIndex = versionsRegistry.length - 1;
 };
 
 /**
@@ -110,8 +96,12 @@ const getVersionIndex = () => {
  * @returns {number} Positive number if the current runtime's version is newer, 0 if equal, negative number if the current runtime's version is older
  */
 const compareWithVersion = otherVersionIndex => {
-	const otherVersionInfo = versionsRegistry[otherVersionIndex];
-	return compare(getVersionInfo(), otherVersionInfo);
+	if (!compareResultCache.has(otherVersionIndex)) {
+		const otherVersionInfo = versionsRegistry[otherVersionIndex];
+		compareResultCache.set(otherVersionIndex, compare(getVersionInfo(), otherVersionInfo));
+	}
+
+	return compareResultCache.get(otherVersionIndex);
 };
 
 /**
@@ -140,10 +130,22 @@ const logDisableVersionWarningsInstructions = logger => {
 };
 
 /**
- * Returns an array with strings, containing the versions of all registered runtimes
+ * Returns an array with all versions
  * @returns {*}
  */
-const getAllVersions = () => versionsRegistry.map(verInfo => verInfo.version);
+const getAllVersions = () => {
+	return versionsRegistry.map(versionInfo => {
+		return versionInfo.version;
+	});
+};
+
+/**
+ * Set an alias for the the current app/library/microfrontend which will appear in debug messages and console warnings
+ * @param alias
+ */
+const setVersionAlias = alias => {
+	versionsRegistry[currentRuntimeVersionIndex].alias = alias;
+};
 
 export {
 	getVersionInfo,
@@ -154,4 +156,5 @@ export {
 	versionWarningsEnabled,
 	getAllVersions,
 	logDisableVersionWarningsInstructions,
+	setVersionAlias,
 };
