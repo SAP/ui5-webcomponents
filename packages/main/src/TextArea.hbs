@@ -5,6 +5,9 @@
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 >
+	{{#if ariaLabelledByText}}
+		<span id="{{_id}}-acc-text" class="ui5-hidden-text">{{ariaLabelledByText}}</span>
+	{{/if}}
 
 	{{#if growing}}
 		<div id="{{_id}}-mirror" style="{{styles.mirror}}" class="ui5-textarea-mirror" aria-hidden="true">
@@ -25,6 +28,7 @@
 		?required="{{required}}"
 		aria-required="{{required}}"
 		aria-label="{{ariaLabelText}}"
+		aria-labelledby="{{_id}}-acc-text"
 		aria-describedby="{{ariaDescribedBy}}"
 		maxlength="{{_exceededTextProps.calcedMaxLength}}"
 		.value="{{value}}"

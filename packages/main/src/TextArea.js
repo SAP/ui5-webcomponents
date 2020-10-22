@@ -18,6 +18,7 @@ import {
 	VALUE_STATE_WARNING,
 	TEXTAREA_CHARACTERS_LEFT,
 	TEXTAREA_CHARACTERS_EXCEEDED,
+	REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -577,6 +578,14 @@ class TextArea extends UI5Element {
 		}
 
 		return effectiveAriaLabelText;
+	}
+
+	get ariaLabelledByText() {
+		let result = "";
+		result += this.placeholder ? this.placeholder : "";
+		result += this.required ? ` ${this.i18nBundle.getText(REQUIRED)}` : "";
+
+		return result;
 	}
 
 	get ariaDescribedBy() {
