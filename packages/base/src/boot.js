@@ -5,7 +5,7 @@ import { getTheme } from "./config/Theme.js";
 import applyTheme from "./theming/applyTheme.js";
 import whenPolyfillLoaded from "./compatibility/whenPolyfillLoaded.js";
 import { getFeature } from "./FeaturesRegistry.js";
-import { registerVersionInfo } from "./Version.js";
+import { registerCurrentRuntime } from "./Runtimes.js";
 
 let bootPromise;
 
@@ -15,7 +15,7 @@ const boot = () => {
 	}
 
 	bootPromise = new Promise(async resolve => {
-		registerVersionInfo();
+		registerCurrentRuntime();
 		const OpenUI5Support = getFeature("OpenUI5Support");
 		if (OpenUI5Support) {
 			await OpenUI5Support.init();

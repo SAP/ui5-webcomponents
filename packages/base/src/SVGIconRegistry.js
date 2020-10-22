@@ -1,7 +1,6 @@
 import { getSharedResource, getSharedResourcePolicy } from "./SharedResources.js";
 import SharedResourceType from "./types/SharedResourceType.js";
 import SharedResourceReusePolicy from "./types/SharedResourceReusePolicy.js";
-// import { getVersionIndex } from "./Version.js";
 
 const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons); // shared resource policy for SVG Icons
 let registry = new Map();

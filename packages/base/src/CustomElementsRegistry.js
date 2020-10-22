@@ -1,13 +1,13 @@
 import setToArray from "./util/setToArray.js";
 import { getSharedResource } from "./SharedResources.js";
 import {
-	getVersionIndex,
-	getVersionInfo,
-	compareWithVersion,
-	versionWarningsEnabled,
-	logDisableVersionWarningsInstructions,
-	getAllVersions,
-} from "./Version.js";
+	getRuntimeIndex,
+	getRuntime,
+	compareWithRuntime,
+	runtimeWarningsEnabled,
+	logDisableRuntimeWarningsInstructions,
+	getAllRuntimes,
+} from "./Runtimes.js";
 import Logger from "./util/Logger.js";
 
 const Tags = getSharedResource("Tags", new Map());
@@ -17,7 +17,7 @@ let failureTimeout;
 
 const registerTag = tag => {
 	Definitions.add(tag);
-	Tags.set(tag, getVersionIndex());
+	Tags.set(tag, getRuntimeIndex());
 };
 
 const isTagRegistered = tag => {
@@ -29,9 +29,9 @@ const getAllRegisteredTags = () => {
 };
 
 const recordTagRegistrationFailure = tag => {
-	const tagRegVersionIndex = Tags.get(tag);
-	Failures[tagRegVersionIndex] = Failures[tagRegVersionIndex] || new Set();
-	Failures[tagRegVersionIndex].add(tag);
+	const tagRegRuntimeIndex = Tags.get(tag);
+	Failures[tagRegRuntimeIndex] = Failures[tagRegRuntimeIndex] || new Set();
+	Failures[tagRegRuntimeIndex].add(tag);
 
 	if (!failureTimeout) {
 		failureTimeout = setTimeout(() => {
@@ -43,17 +43,17 @@ const recordTagRegistrationFailure = tag => {
 };
 
 const displayFailedRegistrations = () => {
-	if (!versionWarningsEnabled()) {
+	if (!runtimeWarningsEnabled()) {
 		return;
 	}
 
-	const allVersions = getAllVersions();
-	const logger = new Logger(`There are currently ${allVersions.length} UI5 Web Components instances on this HMTL page (loading order: ${allVersions.map(ver => `${ver.version} - ${ver.alias}`).join(", ")}).`);
+	const allRuntimes = getAllRuntimes();
+	const logger = new Logger(`There are currently ${allRuntimes.length} UI5 Web Components instances on this HMTL page (loading order: ${allRuntimes.map(ver => ver.descriptor).join(", ")}).`);
 
-	Object.keys(Failures).forEach(otherVersionIndex => {
-		const currentVersionInfo = getVersionInfo();
-		const otherVersionInfo = getVersionInfo(otherVersionIndex);
-		const comparison = compareWithVersion(otherVersionIndex);
+	Object.keys(Failures).forEach(otherRuntimeIndex => {
+		const currentRuntime = getRuntime();
+		const otherRuntime = getRuntime(otherRuntimeIndex);
+		const comparison = compareWithRuntime(otherRuntimeIndex);
 
 		let compareWord;
 		if (comparison > 0) {
@@ -63,17 +63,17 @@ const displayFailedRegistrations = () => {
 		} else {
 			compareWord = "the same";
 		}
-		logger.para(`Runtime of version ${currentVersionInfo.version} failed to define ${Failures[otherVersionIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version (${otherVersionInfo.version}): ${setToArray(Failures[otherVersionIndex]).sort().join(", ")}.`);
+		logger.para(`Runtime ${currentRuntime.descriptor} failed to define ${Failures[otherRuntimeIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version (${otherRuntime.descriptor}): ${setToArray(Failures[otherRuntimeIndex]).sort().join(", ")}.`);
 		if (comparison > 0) {
-			logger.line(`WARNING! If your code uses features of the above web components, unavailable in version ${otherVersionInfo.version}, it might not work as expected!`);
+			logger.line(`WARNING! If your code uses features of the above web components, unavailable in version ${otherRuntime.version}, it might not work as expected!`);
 		} else {
-			logger.line(`Since the above web components were defined by ${comparison < 0 ? "a newer" : "the same"} version, they should be compatible with your code.`);
+			logger.line(`Since the above web components were defined by ${comparison < 0 ? "a newer" : "the same"} version runtime, they should be compatible with your code.`);
 		}
 	});
 
-	logger.line(`To fix this, consider using scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/Scoping.md.`);
+	logger.para(`To prevent other runtimes from defining tags that you use, consider using scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/Scoping.md.`);
 
-	logDisableVersionWarningsInstructions(logger);
+	logDisableRuntimeWarningsInstructions(logger);
 
 	logger.console("warn");
 };

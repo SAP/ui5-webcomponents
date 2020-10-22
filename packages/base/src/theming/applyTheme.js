@@ -8,12 +8,12 @@ import { getSharedResourcePolicy } from "../SharedResources.js";
 import SharedResourceType from "../types/SharedResourceType.js";
 import SharedResourceReusePolicy from "../types/SharedResourceReusePolicy.js";
 import {
-	getVersionIndex,
-	getVersionInfo,
-	compareWithVersion,
-	versionWarningsEnabled,
-	logDisableVersionWarningsInstructions,
-} from "../Version.js";
+	getRuntimeIndex,
+	getRuntime,
+	compareWithRuntime,
+	runtimeWarningsEnabled,
+	logDisableRuntimeWarningsInstructions,
+} from "../Runtimes.js";
 import Logger from "../util/Logger.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
@@ -40,10 +40,10 @@ const shouldApplyThemeProperties = (packageName, theme) => {
 	}
 
 	const styleElementTheme = styleElement.getAttribute("data-ui5-theme");
-	const styleElementVersionIndex = styleElement.getAttribute("data-ui5-version-index");
+	const styleElementRuntimeIndex = styleElement.getAttribute("data-ui5-runtime-index");
 
-	// There is a tag, but it does not have data-ui5-version-index, indicating that it was created before versioning and reuse policies were introduced - assume existing behavior (apply)
-	if (!styleElementTheme || !styleElementVersionIndex) {
+	// There is a tag, but it does not have data-ui5-runtime-index, indicating that it was created before runtimeing and reuse policies were introduced - assume existing behavior (apply)
+	if (!styleElementTheme || !styleElementRuntimeIndex) {
 		return true;
 	}
 
@@ -52,17 +52,17 @@ const shouldApplyThemeProperties = (packageName, theme) => {
 		return true;
 	}
 
-	const comparison = compareWithVersion(styleElementVersionIndex);
+	const comparison = compareWithRuntime(styleElementRuntimeIndex);
 	const logger = new Logger();
-	const versionInfo = getVersionInfo();
-	const otherVersionInfo = getVersionInfo(styleElementVersionIndex);
+	const currentRuntime = getRuntime();
+	const otherRuntime = getRuntime(styleElementRuntimeIndex);
 
 	// Always reuse policy - reuse the existing theme properties, do not apply the new ones
 	if (policy === SharedResourceReusePolicy.Always) {
-		if (versionWarningsEnabled() && comparison > 0) {
-			logger.append(`Version ${versionInfo.version} will not update theme properties for ${packageName} for ${theme} although they are created by an older version (${otherVersionInfo.version}), because Shared resources reuse policy is set to "Always reuse"`);
+		if (runtimeWarningsEnabled() && comparison > 0) {
+			logger.append(`Runtime ${currentRuntime.descriptor} will not update theme properties for ${packageName} for ${theme} although they are created by an older runtime (${otherRuntime.descriptor}), because Shared resources reuse policy is set to "Always reuse"`);
 			logger.line(`If not intended, consider changing the policy to OnlyNewer`);
-			logDisableVersionWarningsInstructions(logger);
+			logDisableRuntimeWarningsInstructions(logger);
 			logger.console("warn");
 		}
 		return false;
@@ -70,16 +70,16 @@ const shouldApplyThemeProperties = (packageName, theme) => {
 
 	// Never reuse policy - apply the new theme properties
 	if (policy === SharedResourceReusePolicy.Never) {
-		if (versionWarningsEnabled() && comparison < 0) {
-			logger.append(`Version ${versionInfo.version} will update theme properties for ${packageName} for ${theme} although they are created by a newer version (${otherVersionInfo.version}), because Shared resources reuse policy is set to "Never reuse"`);
+		if (runtimeWarningsEnabled() && comparison < 0) {
+			logger.append(`Runtime ${currentRuntime.descriptor} will update theme properties for ${packageName} for ${theme} although they are created by a newer runtime (${otherRuntime.descriptor}), because Shared resources reuse policy is set to "Never reuse"`);
 			logger.line(`If not intended, consider changing the policy to OnlyNewer`);
-			logDisableVersionWarningsInstructions(logger);
+			logDisableRuntimeWarningsInstructions(logger);
 			logger.console("warn");
 		}
 		return true;
 	}
 
-	// OnlyNewer reuse policy - apply the new theme properties only if of a newer version (comparison with the style's version returns a positive number).
+	// OnlyNewer reuse policy - apply the new theme properties only if of a newer runtime (comparison with the style's runtime returns a positive number).
 	return comparison > 0;
 };
 
@@ -90,7 +90,7 @@ const loadThemeBase = async theme => {
 
 	if (shouldApplyThemeProperties(BASE_THEME_PACKAGE, theme)) {
 		const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
-		createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE, theme, getVersionIndex());
+		createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE, theme, getRuntimeIndex());
 	}
 };
 
@@ -107,7 +107,7 @@ const loadComponentPackages = async theme => {
 
 		if (shouldApplyThemeProperties(packageName, theme)) {
 			const cssText = await getThemeProperties(packageName, theme);
-			createThemePropertiesStyleTag(cssText, packageName, theme, getVersionIndex());
+			createThemePropertiesStyleTag(cssText, packageName, theme, getRuntimeIndex());
 		}
 	});
 };
