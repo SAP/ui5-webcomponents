@@ -1,5 +1,5 @@
-import VersionInfo from "../dist/generated/VersionInfo.js";
-import RuntimeRegistry from "./RuntimeRegistry.js";
+import VersionInfo from "./generated/VersionInfo.js";
+import RuntimeRegistry from "./runtime/RuntimeRegistry.js";
 import { getSharedResource } from "./SharedResources.js";
 import Logger from "./util/Logger.js";
 

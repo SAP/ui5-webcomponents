@@ -71,7 +71,7 @@ const displayFailedRegistrations = () => {
 		}
 	});
 
-	logger.para(`To prevent other runtimes from defining tags that you use, consider using scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/Scoping.md.`);
+	logger.para(`To prevent other runtimes from defining tags that you use, consider using scoping or have third-party libraries use scoping: https://github.com/SAP/ui5-webcomponents/blob/master/docs/Scoping.md.`);
 
 	logDisableRuntimeWarningsInstructions(logger);
 
