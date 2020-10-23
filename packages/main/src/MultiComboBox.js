@@ -400,10 +400,6 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_showMorePopover() {
-		if (this.readonly) {
-			return;
-		}
-
 		this.filterSelected = true;
 		this._toggleRespPopover();
 	}
@@ -757,6 +753,10 @@ class MultiComboBox extends UI5Element {
 		return this.readonly ? "None" : "MultiSelect";
 	}
 
+	get _listItemsType() {
+		return this.readonly ? "Inactive" : "Active";
+	}
+
 	get hasValueState() {
 		return this.valueState !== ValueState.None;
 	}
@@ -816,7 +816,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizerExpanded() {
-		return this._rootFocused || this.open;
+		return (this._rootFocused || this.open) && !this.readonly;
 	}
 
 	get classes() {
