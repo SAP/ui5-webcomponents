@@ -168,11 +168,11 @@ class SliderBase extends UI5Element {
 		this.TICKMARK_COLOR_MAP = {
 			sap_fiori_3: "#89919a",
 			sap_fiori_3_dark: "#89919a",
-			sap_fiori_3_hcw: "#89919a",
-			sap_fiori_3_hcb: "#89919a",
+			sap_fiori_3_hcw: "#000000",
+			sap_fiori_3_hcb: "#ffffff",
 			sap_belize: "#bfbfbf",
-			sap_belize_hcw: "#bfbfbf",
-			sap_belize_hcb: "#bfbfbf",
+			sap_belize_hcw: "#000000",
+			sap_belize_hcb: "#ffffff",
 		}
 	}
 
