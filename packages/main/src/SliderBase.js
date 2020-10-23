@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
 // Styles
 import styles from "./generated/themes/SliderBase.css.js";
@@ -164,6 +165,15 @@ class SliderBase extends UI5Element {
 			pointerdown: 'pointermove',
 			touchstart: 'touchmove',
 		};
+		this.TICKMARK_COLOR_MAP = {
+			sap_fiori_3: "#89919a",
+			sap_fiori_3_dark: "#89919a",
+			sap_fiori_3_hcw: "#89919a",
+			sap_fiori_3_hcb: "#89919a",
+			sap_belize: "#bfbfbf",
+			sap_belize_hcw: "#bfbfbf",
+			sap_belize_hcb: "#bfbfbf",
+		}
 	}
 
 	static get metadata() {
@@ -416,16 +426,20 @@ class SliderBase extends UI5Element {
 		}
 
 		// Let the CSS do calculations for precise tickmarks distribution
+		// There is a CSS bug with the 'currentcolor' value of the gradient that does not 
+		// respect the variable for more than one theme. It has to be set here for now.
 		const stepStr = String(step);
 		const maxStr = String(max);
 		const minStr = String(min);
 		const tickmarkWidth = "1px";
+		const currentTheme = getTheme();
+		const currentColor = this.TICKMARK_COLOR_MAP[currentTheme];
 
 		this._tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;
 		this._hiddenTickmarks = false;
 
 		// Transparent CSS gradient background
-		const tickmarksGradientBase = `linear-gradient(to right, currentColor ${tickmarkWidth}, transparent 0) `;
+		const tickmarksGradientBase = `linear-gradient(to right, ${currentColor} ${tickmarkWidth}, transparent 0) `;
 
 		// Draw the tickmarks as a patern over the gradient background
 		const tickmarksGradientdPattern = `0 center / calc((100% - ${tickmarkWidth}) / (${this._tickmarksAmount})) 100% repeat-x`;
@@ -471,7 +485,7 @@ class SliderBase extends UI5Element {
 			this._labelItems.push(document.createTextNode(labelItemNumber));
 		}
 	}
-
+	
 	_setStep(step) {
 		if (step === 0) {
 			return;

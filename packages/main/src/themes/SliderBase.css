@@ -3,86 +3,77 @@
 }
 
 :host([disabled]) {
-	opacity: 0.5;
+	opacity: var(--_ui5_slider_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
 }
 
 :host {
+	box-sizing: border-box;
 	cursor: pointer;
-	vertical-align: top;	
+	vertical-align: top;
 	position: relative;
 	width: 100%;
+	height: 3.3125rem;
+	padding: 1.406rem 1.0625rem;
 	z-index: 0;
 }
 
 .ui5-slider-root {
 	box-sizing: border-box;
-	height: 2rem;
-	padding: 1rem 0;
+	width: 100%;
+	height: 3.3125rem;
+	padding: 1.406rem 1.0625rem;
 	touch-action: none;
+	-ms-touch-action: pan-y;
 }
 
 .ui5-slider-inner {
 	width: 100%;
+	min-width: var(--_ui5_slider_inner_min_width);
 	position: relative;
-	min-width: 4rem;
-	height: 2rem;
+	background-repeat: no-repeat;
 }
 
 .ui5-slider-progress-container {
-	width: 100%;
-	position: relative;
-	background-repeat: no-repeat;
-	z-index: 1;
-	height: 0.25rem;
-
-	background: #89919a;
-	border-radius: 0.25rem;
+	background: var(--_ui5_slider_progress_container_background);
+	border-radius: var(--_ui5_slider_progress_border_radius);
+	height: var(--_ui5_slider_inner_height);
 }
 
 .ui5-slider-progress {
-	background: #0854a0;
-	border-radius: 0.25rem;
+	background: var(--_ui5_slider_progress_background);
+	border-radius: var(--_ui5_slider_progress_border_radius);
 	position: absolute;
 	width: 100%;
-	height: 100%;
-	transform: scaleX(0);
+	height: var(--_ui5_slider_inner_height);
 	transform-origin: left top;
 	will-change: transform;
 }
 
-
-.ui5-slider-progress:before {
-	content: '';
-	position: absolute;
-	width: 100%;
-	height: 500%;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
-
-
 .ui5-slider-tickmarks {
-	color: #89919a;
+	color: var(--_ui5_slider_tickmark_color);
 	position: absolute;
 	width: 100%;
 	height: 1rem;
-	top: -0.35rem;
+	top: -0.375rem;
 }
 
 .ui5-slider-handle {
-	margin-left: -1rem;
-	top: -0.91rem;
-	height: 1.75rem;
-	width: 1.75rem;
-	direction: ltr; 
+	background: var(--_ui5_slider_handle_background);
+	border: var(--_ui5_slider_handle_border);
 	border-radius: 1rem;
-	background: #FFF;
-	border: solid 0.125rem #89919a;
+	margin-left: var(--_ui5_slider_handle_margin_left);
+	top: var(--_ui5_slider_handle_top);
 	position: absolute;
-	opacity: 0.65;
+	outline: none;
+	height: var(--_ui5_slider_handle_height);
+	width: var(--_ui5_slider_handle_width);
+}
+
+.ui5-slider-inner:hover .ui5-slider-handle {
+	background: var(--_ui5_slider_handle_hover_background);
+	border-color: var(--_ui5_slider_handle_hover_border);
 }
 
 /* ------------------------------ */
@@ -90,44 +81,43 @@
 /* ------------------------------ */
 
 .ui5-slider-tooltip {
-	position: absolute;
-	border: 1px solid #333;
-	border-radius: 0.25rem;
-	bottom: 2.25rem;
-	left: -0.725rem;
-	display: block;
-	color: #333;
-	font-size: 1rem;
-	font-weight: bold;
-	height: 1.625rem;
-	line-height: 1.625rem;
-	padding: 0.25rem 0.5rem;
 	text-align: center;
 	visibility: hidden;
-	background-color: #FFF;
-	min-width: 2.225rem;
 	pointer-events: none;
-	z-index: 2;
+	position: relative;
+	left: -0.725rem;
+	line-height: 1.375rem;
+	bottom: var(--_ui5_slider_tooltip_bottom);
+	background: var(--_ui5_slider_tooltip_background);
+	border: 1px solid var(--_ui5_slider_tooltip_border_color);
+	border-radius: var(--_ui5_slider_tooltip_border_radius);
+	box-shadow: var(--_ui5_slider_tooltip_box_shadow);
+	font-size: var(--_ui5_slider_tooltip_fontsize);
+	color: var(--_ui5_slider_tooltip_color);
+	height: var(--_ui5_slider_tooltip_height);
+	min-width: var(--_ui5_slider_tooltip_min_width);
+	padding: var(--_ui5_slider_tooltip_padding);
+
 }
 
 .ui5-slider-labels {
 	position: absolute;
 	top: 1rem;
-	padding: 0;
 	margin: 0;
+	padding: 0;
 	white-space: nowrap;
 }
 
 .ui5-slider-labels li {
-	color: #666;
 	position: relative;
 	list-style: none;
-	padding: 0;
+	padding-top: 0.3125rem;
+	height: 1rem;
 	margin:0;
-	font-size: 0.75rem;
-	font-weight: bold;
 	text-align: center;
 	display: inline-block;
+	color: var(--_ui5_slider_label_color);
+	font-size: var(--_ui5_slider_label_fontsize);
 }
 
 .ui5-slider-hidden-labels li:not(:first-child):not(:last-child) {
