@@ -6,10 +6,9 @@ import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 const getSharedResourcesInstance = () => getSingletonElementInstance("ui5-shared-resources", document.head);
 
 // Default policies per resource type. Can be overridden by calling "setSharedResourcePolicy"
-const policies = {
-	"SVGIcons": "Always",
-	"ThemeProperties": "OnlyNewer",
-};
+const policies = {};
+policies[SharedResourceType.SVGIcons] = SharedResourceReusePolicy.Always;
+policies[SharedResourceType.ThemeProperties] = SharedResourceReusePolicy.OnlyNewer;
 
 /**
  * Use this method to initialize/get resources that you would like to be shared among UI5 Web Components runtime instances.
