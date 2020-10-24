@@ -18,13 +18,12 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
-
 	<ui5-title>List "infinite-scroll"</ui5-title>
 	<label style="font-size:2rem;">new items loaded:</label><label id="result" style="font-size:2rem;"> 0 times: 0</label>
 	<ui5-list id="infiniteScrollEx" style="height: 300px" infinite-scroll>
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
 		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+		<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
 		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Information">IPhone 3</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
@@ -226,6 +225,37 @@
 		</ui5-li-custom>
 	</ui5-list>
 
+	<br />
+	Change mode:
+	<ui5-select id="select">
+		<ui5-option selected>None</ui5-option>
+		<ui5-option>SingleSelect</ui5-option>
+		<ui5-option>SingleSelectBegin</ui5-option>
+		<ui5-option>SingleSelectEnd</ui5-option>
+		<ui5-option>MultiSelect</ui5-option>
+		<ui5-option>Delete</ui5-option>
+	</ui5-select>
+	<ui5-list id="myList6" header-text="visualization of different combinations of icon / title / description / info / image - (Current mode: None)">
+		<ui5-li-custom>
+			<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+				<ui5-button>Press me</ui5-button>
+				<ui5-link>Go to SAP</ui5-link>
+			</div>
+		</ui5-li-custom>
+		<ui5-li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li info-state="Error" info="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li info-state="Error" info="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li icon="home">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li icon="home" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li icon="home" info-state="Error" info="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li icon="home" info-state="Error" info="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li image="./img/woman_avatar_5.png">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li image="./img/woman_avatar_5.png" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li image="./img/woman_avatar_5.png" info-state="Error" info="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li image="./img/woman_avatar_5.png" info-state="Error" info="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+	</ui5-list>
+
 	<script>
 		'use strict';
 
@@ -242,10 +272,27 @@
 		var lblSelectionChange = document.getElementById('selectionChange');
 		var lblItemPress2 = document.getElementById('itemPress2');
 		var lblSelectionChange2 = document.getElementById('selectionChange2');
+		var visualizationList = document.getElementById('myList6');
+		var select = document.getElementById('select');
+		var modes = {
+			"None": undefined,
+			"SingleSelect": "SingleSelect",
+			"SingleSelectBegin": "SingleSelectBegin",
+			"SingleSelectEnd": "SingleSelectEnd",
+			"MultiSelect": "MultiSelect",
+			"Delete": "Delete"
+		}
 		var items = ["<ui5-li id='arg'>Argentina</ui5-li>", "<ui5-li id='bg'>Bulgaria</ui5-li>", "<ui5-li id='ch'>China</ui5-li>"];
 		var info = {
 			0: "0/3", 1: "1/3", 2: "2/3", 3: "3/3"
 		};
+
+		select.addEventListener("ui5-change", function (event) {
+			var value = event.detail.selectedOption.textContent;
+
+			visualizationList.mode = modes[value];
+			visualizationList.headerText = visualizationList.headerText.replace(/\(.+\)/, `(Current mode: ${value})`);
+		});
 
 		var getItems = function getItems(items) {
 			return items.map(function (item) {

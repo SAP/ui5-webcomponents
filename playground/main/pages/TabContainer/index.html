@@ -411,7 +411,29 @@
                 <ui5-button>Button 3</ui5-button>
             </ui5-tab>
         </ui5-tabcontainer>
-    </section>
+	</section>
+	
+	<section>
+		<h2>Tab Container With Custom Menu Button</h2>
+		<ui5-tabcontainer id="tabContainer-custom-icon" fixed collapsed show-overflow>
+			<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125">
+			</ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab icon="sap-icon://menu2" text="Laptops" semantic-color="Positive" additional-text="25">
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu" text="Monitors" selected semantic-color="Critical" additional-text="45">
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" text="Keyboards" semantic-color="Negative" additional-text="15">
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" disabled text="Disabled"  semantic-color="Negative" additional-text="40">
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" text="Neutral" semantic-color="Neutral" additional-text="40">
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40">
+			</ui5-tab>
+			<ui5-button slot="overflowButton" aria-label="Menu icon here" icon="menu" design="Transparent"></ui5-button>
+		</ui5-tabcontainer>
+	</section>
 
 	<script>
 		document.getElementById("tabContainer1").addEventListener("ui5-tabSelect", function (event) {

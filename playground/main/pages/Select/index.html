@@ -79,6 +79,24 @@
 	<h2> Change event counter holder</h2>
 	<ui5-input id="inputResult"></ui5-input>
 
+	<section>
+		<h3>Select aria-label and aria-labelledby</h3>
+		<span id="infoText">info text</span>
+		<div>
+			<ui5-select id="textAreaAriaLabel" aria-label="Hello World">
+				<ui5-option selected>First</ui5-option>
+				<ui5-option selected>Second</ui5-option>
+				<ui5-option selected>Third</ui5-option>
+			</ui5-select>
+
+			<ui5-select id="textAreaAriaLabelledBy" aria-labelledby="infoText">
+				<ui5-option selected>One</ui5-option>
+				<ui5-option selected>Two</ui5-option>
+				<ui5-option selected>Three</ui5-option>
+			</ui5-select>
+		</div>
+	</section>
+
 	<section class="ui5-content-density-compact">
 		<h3>Select in Compact</h3>
 		<div>

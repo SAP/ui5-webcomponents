@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <title>Button</title>
+
+    <script data-ui5-config type="application/json">
+        {
+            "language": "EN",
+            "noConflict": {
+                "events": ["click"]
+            },
+            "calendarType": "Islamic"
+        }
+    </script>
+
+	
+	
+    
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+	<ui5-select id="select">
+		<ui5-option>1</ui5-option>
+		<ui5-option>2</ui5-option>
+	</ui5-select>
+
+	<br />
+	<br />
+
+	<ui5-button id="btn">Apply custom css and rerender</ui5-button>
+
+	<br />
+	<br />
+
+	<script>
+		const applyCustomCSSAndRerender = function() {
+			window["sap-ui-webcomponents-bundle"].addCustomCSS("ui5-select", ".ui5-select-root { background-color: red; } ");
+		};
+
+		document
+			.getElementById("btn")
+			.addEventListener("click", applyCustomCSSAndRerender);
+
+	</script>
+
+</body>
+</html>
