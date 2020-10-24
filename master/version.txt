@@ -1,7 +1,7 @@
-commit 6454e2985104bd2fee7c2b1dcdd3215056fd01f8
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Thu Oct 15 18:17:45 2020 +0300
+commit 7e65e77e020f62f1de2be55e6bc0a6216b859909
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Oct 23 11:59:17 2020 +0300
 
-    fix(ui5-date-picker):  hiding month button when month picker is shown (#2331)
+    feat(ui5-link): add aria-label and aria-labelledby support (#2357)
     
-    Related to: #2244
+    FIXES: #2356
