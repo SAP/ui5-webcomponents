@@ -1,0 +1,113 @@
+:host(:not([hidden])) {
+	display: inline-block;
+	min-width: 1px;
+}
+
+:host([selected]) .ui5-wiz-step-icon-circle {
+	background: var(--_ui5_wiz_tab_selected_bg);
+}
+
+:host([selected]) .ui5-wiz-step-icon-circle::after {
+	content: "";
+	position: absolute;
+	border-bottom: 0.25rem solid var(--_ui5_wiz_tab_selection_line);
+	border-top-left-radius: 0.1875rem;
+	border-top-right-radius: 0.1875rem;
+	left: 0;
+	right: 0;
+	bottom: -1rem;
+}
+
+:host([selected]) .ui5-wiz-step-icon {
+	color: var(--sapList_Active_TextColor);
+}
+
+:host([selected]) .ui5-wiz-step-initials {
+	color: var(--sapList_Active_TextColor);
+}
+
+:host([disabled]) .ui5-wiz-step-icon-circle {
+	border-color: var(--sapList_BorderColor);
+	background: var(--sapObjectHeader_Background);
+}
+
+:host([disabled]) .ui5-wiz-step-icon {
+	color: var(--sapContent_LabelColor);
+}
+
+:host([disabled]) .ui5-wiz-step-initials {
+	color: var(--sapContent_LabelColor);
+}
+
+.ui5-wiz-step-root {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	padding: 0 .5rem;
+	font-size: var(--sapFontSize);
+	font-family: var(--sapFontFamily);
+	outline: none;
+}
+
+.ui5-wiz-step-main {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	min-width: 2rem;
+	cursor: pointer;
+}
+
+.ui5-wiz-step-root:focus .ui5-wiz-step-main {
+	outline: var(--_ui5_wiz_tab_focus_outline);
+}
+
+.ui5-wiz-step-icon-circle {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	min-width: 2rem;
+	height: 2rem;
+	background: var(--sapObjectHeader_Background);
+	border: var(--_ui5_wiz_tab_border);
+	border-radius: 50%;
+	pointer-events: none;
+}
+
+.ui5-wiz-step-icon {
+	width: 1rem;
+	height: 1rem;
+	color: var(--_ui5_wiz_tab_icon_color);
+	pointer-events: none;
+}
+
+.ui5-wiz-step-initials {
+	color: var(--_ui5_wiz_tab_icon_color);
+}
+
+.ui5-wiz-step-txt {
+	padding: 0 .5rem;
+	color: var(--sapContent_LabelColor);
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.ui5-wiz-step-hr {
+	display: inline-block;
+	border-bottom-color: var(--sapList_BorderColor);
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	height: 1px;
+	flex-grow: 1;
+}
+
+:host([active-separator]) .ui5-wiz-step-hr {
+	border-bottom-color: var(--_ui5_wiz_tab_active_separator_color)
+}
+
+/* IE focus outline fix */
+ui5-wizard-tab .ui5-wiz-step-main {
+	pointer-events: none;
+}
