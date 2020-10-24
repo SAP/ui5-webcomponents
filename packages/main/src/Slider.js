@@ -55,13 +55,13 @@ class Slider extends SliderBase {
 		// Update initial Slider UI representation and normalize internal state
 		// Normalize Slider value according to min/max properties
 		// Normalize the step value and draw tickmarks/labels if specified
-		this._syncUIAndState();
+		this.syncUIAndState();
 
 		// If the value is not modified by user interaction or this is the first rendering.
 		// In all other cases the previous value reference is set by the interaction handlers.
 		// In this case value won't be "stepified" (rounded to the nearest step).
 		if (this.value !== this._prevValue) {
-			this.value = SliderBase._clipValue(this.value, this.min, this.max);
+			this.value = SliderBase.clipValue(this.value, this.min, this.max);
 			this._prevValue = this.value;
 			this._updateUI(this.value);
 		}
@@ -73,7 +73,7 @@ class Slider extends SliderBase {
 				"transform": `scaleX(${this._percentageComplete})`,
 			},
 			handlePosition: {
-				"left": `${this._handlePositionFromLeft}%`,
+				"left": `${this._handlePositionFromStart}%`,
 			},
 			tickmarks: {
 				"background": `${this._tickmarksBackground}`,
@@ -112,11 +112,11 @@ class Slider extends SliderBase {
 			return;
 		}
 
-		const newValue = this._handleDownBase(event, this.min, this.max);
+		const newValue = this.handleDownBase(event, this.min, this.max);
 
 		// Update Slider UI and internal state
 		this._updateUI(newValue);
-		this._updateValue("value", newValue);
+		this.updateValue("value", newValue);
 		this._prevValue = newValue;
 	}
 
@@ -134,17 +134,25 @@ class Slider extends SliderBase {
 			return;
 		}
 
-		let newValue = SliderBase._getValueFromInteraction(event, this.step, this.min, this.max, this.getBoundingClientRect());
+		let newValue = SliderBase.getValueFromInteraction(event, this.step, this.min, this.max, this.getBoundingClientRect());
 
 		this._prevValue = newValue;
 		this._updateUI(newValue);
-		this._updateValue("value", newValue);
+		this.updateValue("value", newValue);
 	}
 
+	/** Called when the user finish interacting with the slider
+	 * 
+	* @private
+	*/
 	_handleUp(event) {
-		this._handleUpBase();
+		this.handleUpBase();
 	}
 
+	/** Updates the UI representation of the Slider according to its internal state.
+	 * 
+	* @private
+	*/
 	_updateUI(newValue) {
 		const max = this.max;
 		const min = this.min;
@@ -152,7 +160,7 @@ class Slider extends SliderBase {
 		// The progress (completed) percentage of the slider.
 		this._percentageComplete = (newValue - min) / (max - min);
 		// How many pixels from the left end of the slider will be the placed the affected  by the user action handle
-		this._handlePositionFromLeft = this._percentageComplete * 100;
+		this._handlePositionFromStart = this._percentageComplete * 100;
 	}
 
 	static async onDefine() {

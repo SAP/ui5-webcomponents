@@ -1,7 +1,3 @@
-:host(:not([hidden])) {
-	display: inline-block;
-}
-
 :host([disabled]) {
 	opacity: var(--_ui5_slider_disabled_opacity);
 	cursor: default;
@@ -9,18 +5,16 @@
 }
 
 :host {
+	display: inline-block;
 	box-sizing: border-box;
 	cursor: pointer;
 	vertical-align: top;
-	position: relative;
 	width: 100%;
 	height: 3.3125rem;
-	padding: 1.406rem 1.0625rem;
 }
 
 .ui5-slider-root {
 	box-sizing: border-box;
-	width: 100%;
 	height: 3.3125rem;
 	padding: 1.406rem 1.0625rem;
 	touch-action: none;
@@ -28,13 +22,14 @@
 }
 
 .ui5-slider-inner {
-	width: 100%;
-	min-width: var(--_ui5_slider_inner_min_width);
-	position: relative;
 	background-repeat: no-repeat;
+	position: relative;
+	min-width: var(--_ui5_slider_inner_min_width);
+	height: 100%;
 }
 
 .ui5-slider-progress-container {
+	width: 100%;
 	background: var(--_ui5_slider_progress_container_background);
 	border: var(--_ui5_slider_progress_border);
 	border-radius: var(--_ui5_slider_progress_border_radius);
@@ -44,8 +39,6 @@
 .ui5-slider-progress {
 	background: var(--_ui5_slider_progress_background);
 	border-radius: var(--_ui5_slider_progress_border_radius);
-	position: absolute;
-	width: 100%;
 	height: var(--_ui5_slider_inner_height);
 	transform-origin: left top;
 	will-change: transform;
@@ -72,14 +65,10 @@
 	width: var(--_ui5_slider_handle_width);
 }
 
-.ui5-slider-inner:hover .ui5-slider-handle {
+.ui5-slider-root:hover .ui5-slider-handle {
 	background: var(--_ui5_slider_handle_hover_background);
 	border-color: var(--_ui5_slider_handle_hover_border);
 }
-
-/* ------------------------------ */
-/* Slider Tooltip styles          */
-/* ------------------------------ */
 
 .ui5-slider-tooltip {
 	text-align: center;
@@ -98,7 +87,6 @@
 	height: var(--_ui5_slider_tooltip_height);
 	min-width: var(--_ui5_slider_tooltip_min_width);
 	padding: var(--_ui5_slider_tooltip_padding);
-
 }
 
 .ui5-slider-labels {
@@ -114,7 +102,7 @@
 	list-style: none;
 	padding-top: 0.3125rem;
 	height: 1rem;
-	margin:0;
+	margin: 0;
 	text-align: center;
 	display: inline-block;
 	color: var(--_ui5_slider_label_color);

@@ -157,7 +157,7 @@ const metadata = {
 class SliderBase extends UI5Element {
 	constructor() {
 		super();
-		this._handleResize = this._handleResize.bind(this);
+
 		this.DOWN_EVENTS = ['mousedown', 'pointerdown', 'touchstart'];
 		this.UP_EVENTS = ['mouseup', 'pointerup', 'touchend'];
 		this.MOVE_EVENT_MAP = {
@@ -165,6 +165,7 @@ class SliderBase extends UI5Element {
 			pointerdown: 'pointermove',
 			touchstart: 'touchmove',
 		};
+
 		this.TICKMARK_COLOR_MAP = {
 			sap_fiori_3: "#89919a",
 			sap_fiori_3_dark: "#89919a",
@@ -174,6 +175,8 @@ class SliderBase extends UI5Element {
 			sap_belize_hcw: "#000000",
 			sap_belize_hcb: "#ffffff",
 		}
+
+		this._resizeHandler = this._handleResize.bind(this);
 	}
 
 	static get metadata() {
@@ -201,7 +204,7 @@ class SliderBase extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this, this._handleResize);
+		ResizeHandler.register(this, this._resizeHandler);
 
 		this._moveHandler = this._handleMove.bind(this);
 		this._upHandler = this._handleUp.bind(this);
@@ -216,12 +219,8 @@ class SliderBase extends UI5Element {
 		this.removeEventListener("mouseout", this._mouseOutHandler);
 	}
 
-	onBeforeRendering() {
-		this._syncUIAndState();
-	}
-
 	onAfterRendering() {
-		this._handleResize();
+		this._resizeHandler();
 	}
 	/**
 	 * Handle the responsiveness of the Slider's UI elements when resing 
@@ -265,24 +264,30 @@ class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Called when the user starts interacting with the slider
-	 * After a down event on the slider root, listen for move events on
-	 * window, so the slider value is updated even if the user drags the pointer
-	 * outside the slider root
-	 * @private
+	 * Called when the user starts interacting with the slider.
+	 * After a down event on the slider root, listen for move events on window, so the slider value 
+	 * is updated even if the user drags the pointer outside the slider root.
+	 * 
+	 * @protected
 	 */
-	_handleDownBase(event, min, max) {
+	handleDownBase(event, min, max) {
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
 		this._moveEventType = !this._moveEventType ? this.MOVE_EVENT_MAP[event.type] : this._moveEventType;
 		this.UP_EVENTS.forEach((upEventType) => window.addEventListener(upEventType, this._upHandler));
 		window.addEventListener(this._moveEventType, this._moveHandler);
 
 		this._boundingClientRect = this.getBoundingClientRect();
-		const newValue = SliderBase._getValueFromInteraction(event, this.step, min, max, this._boundingClientRect);
+		const newValue = SliderBase.getValueFromInteraction(event, this.step, min, max, this._boundingClientRect);
 		return newValue;
 	}
 
-	_handleUpBase() {
+	/** 
+	 * Called when the user finish interacting with the slider
+	 * Fires an <code>change</code> event indicating a final value change, after user interaction is finished.
+	 * 
+	 * @protected
+	 */
+	handleUpBase() {
 		this.fireEvent("change");
 		this.UP_EVENTS.forEach((upEventType) => window.removeEventListener(upEventType, this._upHandler));
 
@@ -290,19 +295,34 @@ class SliderBase extends UI5Element {
 		this._moveEventType = null;
 	}
 
+	/** Shows the tooltip(s) if the <code>showTooltip</code> property is set to true
+	 * 
+	 * @private
+	 */
 	_handleMouseOver(event) {
 		if (!this.disabled || this.showTooltip) {
 			this._tooltipVisibility = "visible";
 		}
 	}
 
+	/** 
+	 * Hides the tooltip(s) if the <code>showTooltip</code> property is set to true
+	 * 
+	 * @private
+	 */
 	_handleMouseOut(event) {
 		if (this.showTooltip) {
 			this._tooltipVisibility = "hidden";
 		}
 	}
 
-	_updateValue(valueType, value) {
+	/** 
+	 * Updates a value property of the component that has been changed due to a user action.
+	 * Fires an <code>input</code> event indicating a value change via interaction that is not yet finished.
+	 * 
+	 * @protected
+	 */
+	updateValue(valueType, value) {
 		this[valueType] = value;
 		this.fireEvent("input");
 	}
@@ -310,9 +330,9 @@ class SliderBase extends UI5Element {
 	/**
 	 * Locks the given value between min and max boundaries based on slider properties
 	 *
-	 * @private
+	 * @protected
 	 */
-	static _clipValue(value, min, max) {
+	static clipValue(value, min, max) {
 		value = Math.min(Math.max(value, min), max);
 		return value;
 	}
@@ -320,21 +340,22 @@ class SliderBase extends UI5Element {
 	/**
 	 * Sets the slider value from an event
 	 *
-	 * @private
+	 * @protected
 	 */
-	static _getValueFromInteraction(event, stepSize, min, max, boundingClientRect) {
-		const pageX = this._getPageXValueFromEvent(event);
-		const value = this._computedValueFromPageX(pageX, min, max, boundingClientRect);
-		const steppedValue = this._getSteppedValue(value, stepSize, min);
-		return this._clipValue(steppedValue, min, max);
+	static getValueFromInteraction(event, stepSize, min, max, boundingClientRect) {
+		const pageX = this.getPageXValueFromEvent(event);
+		const value = this.computedValueFromPageX(pageX, min, max, boundingClientRect);
+		const steppedValue = this.getSteppedValue(value, stepSize, min);
+
+		return this.clipValue(steppedValue, min, max);
 	}
 
 	/**
 	 * "Stepify" the raw value - calculate the new value depending on the specified step property
 	 *
-	 * @private
+	 * @protected
 	 */
-	static _getSteppedValue(value, stepSize, min) {
+	static getSteppedValue(value, stepSize, min) {
 		const stepModuloValue = Math.abs((value - min) % stepSize);
 
 		if (stepSize === 0 || stepModuloValue === 0) {
@@ -352,12 +373,13 @@ class SliderBase extends UI5Element {
 	/**
 	 * Gets pageX value from event on user interaction with the Slider
 	 *
-	 * @private
+	 * @protected
 	 */
-	static _getPageXValueFromEvent(event) {
+	static getPageXValueFromEvent(event) {
 		if (event.targetTouches && event.targetTouches.length > 0) {
 			return event.targetTouches[0].pageX;
 		}
+
 		return event.pageX;
 	}
 
@@ -365,9 +387,9 @@ class SliderBase extends UI5Element {
 	 * Computes the new value (in %) from the pageX position of the cursor.
 	 * Returns the value with rounded to a precision of at most 2 digits after decimal point.
 	 *
-	 * @private
+	 * @protected
 	 */
-	static _computedValueFromPageX(pageX, min, max, boundingClientRect) {
+	static computedValueFromPageX(pageX, min, max, boundingClientRect) {
 		// Determine pageX position relative to the Slider DOM
 		const xPositionRelative = pageX - boundingClientRect.left;
 		// Calculate the percentage complete (the "progress")
@@ -395,10 +417,11 @@ class SliderBase extends UI5Element {
 	 * Normalize the step value and draw tickmarks/labels if specified
 	 * 
 	 * Returns <code>true</code> if UI has to be updated further to sync 
-	 * with the internal state and <code>undefined</code> otherwise
-	 * @private
+	 * with the internal state and <code>undefined</code> otherwise.
+	 *
+	 * @protected
 	 */
-	_syncUIAndState() {
+	syncUIAndState() {
 		// In this case the value prop is changed programatically (not by user interaction)
 		// and it won't be "stepified" (rounded to the nearest step)
 		if (this.step !== this._prevStepValue) {
@@ -425,13 +448,15 @@ class SliderBase extends UI5Element {
 			return;
 		}
 
-		// Let the CSS do calculations for precise tickmarks distribution
-		// There is a CSS bug with the 'currentcolor' value of the gradient that does not 
-		// respect the variable for more than one theme. It has to be set here for now.
-		const stepStr = String(step);
+		// Convert number values to strings to let the CSS do calculations better 
+		// rounding/subpixel behavior" and the most precise tickmarks distribution
 		const maxStr = String(max);
 		const minStr = String(min);
+		const stepStr = String(step);
 		const tickmarkWidth = "1px";
+
+		// There is a CSS bug with the 'currentcolor' value of a CSS gradient that does not 
+		// respect the variable for more than one theme. It has to be set here for now.
 		const currentTheme = getTheme();
 		const currentColor = this.TICKMARK_COLOR_MAP[currentTheme];
 
@@ -485,7 +510,13 @@ class SliderBase extends UI5Element {
 			this._labelItems.push(document.createTextNode(labelItemNumber));
 		}
 	}
-	
+
+	/**
+	 * Normalizes a new <code>step</code> property value.
+	 * If tickmarks are enabled recreates them according to it.
+	 *
+	 * @private
+	 */	
 	_setStep(step) {
 		if (step === 0) {
 			return;
