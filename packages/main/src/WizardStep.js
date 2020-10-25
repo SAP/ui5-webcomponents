@@ -37,11 +37,12 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the step is <code>disabled</code>.
+		 * Defines if the step is <code>disabled</code>. When disabled the step is displayed,
+		 * but the user can't select the step by cliking or navigate to it with scrolling.
 		 * <br><br>
 		 *
-		 * <b>Note:</b> The disabled step is displayed,
-		 * but the user can't select the step by cliking or navigate to it with scrolling.
+		 * <b>Note:</b> Step can't be <code>selected</code> and <code>disabled</code> at the same time.
+		 * In this case the <code>selected</code> property would take precednce.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -53,6 +54,10 @@ const metadata = {
 
 		/**
 		 * Defines the step's <code>selected</code> state - the step that is currently active.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> Step can't be <code>selected</code> and <code>disabled</code> at the same time.
+		 * In this case the <code>selected</code> property would take precednce.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false

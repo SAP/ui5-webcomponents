@@ -30,7 +30,7 @@
 
 	<div class="stretch">
 		<ui5-wizard id="wizTest">
-			<ui5-wizard-step icon="sap-icon://product" text="Product type" disabled>
+			<ui5-wizard-step icon="sap-icon://product" text="Product type">
 				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br>
 
@@ -45,7 +45,7 @@
 				<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step text="Product Information" selected>
+			<ui5-wizard-step text="Product Information" selected disabled>
 				<div style="display: flex;flex-direction: column">
 					<ui5-title>2. Product Information</ui5-title><br>
 					<ui5-label wrap>
@@ -123,7 +123,7 @@
 				<ui5-button id="toStep4" design="Emphasized">Step 4</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step text="Pricing" selected disabled>
+			<ui5-wizard-step text="Pricing" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>4. Pricing</ui5-title><br>
 					<ui5-label wrap>

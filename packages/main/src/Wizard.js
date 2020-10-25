@@ -81,6 +81,9 @@ const metadata = {
  * <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code></li>
  * </ul>
  *
+ * <b>Important:</b> There always should be one selected (active) step at a time.
+ * If no selected step is defined or multiple one are defined as selected, the component will auto select the first step.
+ *
  * <h4>Content</h4>
  * The content occupies the main part of the page. It can hold any type of HTML elements.
  * It's defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code>.
@@ -207,13 +210,21 @@ class Wizard extends UI5Element {
 		}
 
 		// If no selected steps or in case of multiple selected steps -> select the first step
-		// If one step is defined as selected, but it is disabled -> select the first step
-		if (this.selectedStepsCount === 0 || this.selectedStepsCount > 1 || this.selectedStep.disabled) {
+		if (this.selectedStepsCount === 0 || this.selectedStepsCount > 1) {
 			this.deselectAll();
 			this.selectFirstStep();
+			console.warn("Selecting the first step: either no selected step is defined, or multiple selected steps are defined.")
+			return;
+		}
+		
+		// If one step is defined as selected, but it is disabled -> enable the step
+		if (this.selectedStep.disabled) {
+			this.selectedStep.disabled = false;
+			console.warn("Enable the selected step: step can't be selected and disabled at the same time.")
 			return;
 		}
 
+		// TODO: If the slected step is not the first, enable all the prior steps
 		this.selectedStepIndex = this.getSelectedStepIndex();
 	}
 
