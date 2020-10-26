@@ -1,35 +1,11 @@
-<div
-	class="ui5-slider-root"
-	@mousedown="{{_handleDown}}"
-	@touchstart="{{_handleDown}}"
-	@pointerdown="{{_handleDown}}"
-	@mouseover="{{_handleMouseOver}}"
-	@mouseout="{{_handleMouseOut}}"
->
-	<div class="ui5-slider-inner">
-		<div class="ui5-slider-progress-container">
-			<div class="ui5-slider-progress" style="{{styles.progress}}"></div>
-		</div>
+{{>include "./SliderBase.hbs"}}
 
-		{{#if step}}
-			{{#if tickmarks}}
-				<div class="ui5-slider-tickmarks" style="{{styles.tickmarks}}"></div>
-				{{#if labelInterval}}
-					<ul class="ui5-slider-labels {{classes.label}}" style="{{styles.labelContainer}}">
-						{{#each labelItems}}
-							<li style="{{../styles.label}}">{{this}}</li>
-						{{/each}}
-					</ul>
-				{{/if}}
-			{{/if}}
+{{#*inline "handles"}}
+	<div class="ui5-slider-handle" style="{{styles.handlePosition}}">
+		{{#if showTooltip}}
+			<div class="ui5-slider-tooltip" style="{{styles.tooltipVisibility}}">
+				<span class="ui5-slider-tooltip-value">{{tooltipValue}}</span>
+			</div>
 		{{/if}}
-
-		<div class="ui5-slider-handle" style="{{styles.handlePosition}}">
-			{{#if showTooltip}}
-				<div class="ui5-slider-tooltip" style="{{styles.tooltipVisibility}}">
-					<span class="ui5-slider-tooltip-value">{{tooltipValue}}</span>
-				</div>
-			{{/if}}
-		</div>
 	</div>
-</div>
+{{/inline}}
