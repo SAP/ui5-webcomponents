@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import WizardTemplate from "./generated/templates/WizardTemplate.lit.js";
@@ -18,6 +19,14 @@ const metadata = {
 	tag: "ui5-wizard",
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.Wizard.prototype */ {
+		/**
+		 * Defines the width of the component.
+		 * @private
+		 */
+		width: {
+			type: Float,
+		},
+
 		/**
 		 * Defines if the component width is under the phone breakpoint.
 		 * @private
@@ -45,7 +54,7 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Wizard.prototype */ {
 		/**
-		 * Fired when selection is changed by user interaction - either with scrolling,
+		 * Fired when the step selection is changed by user interaction - either with scrolling,
 		 * or by clicking on the steps within the component header.
 		 *
 		 * @event sap.ui.webcomponents.main.Wizard#selection-change
@@ -210,32 +219,49 @@ class Wizard extends UI5Element {
 		}
 
 		// If no selected steps or in case of multiple selected steps -> select the first step
-		if (this.selectedStepsCount === 0 || this.selectedStepsCount > 1) {
-			this.deselectAll();
+		if (this.selectedStepsCount === 0) {
 			this.selectFirstStep();
-			console.warn("Selecting the first step: either no selected step is defined, or multiple selected steps are defined.")
-			return;
-		}
-		
-		// If one step is defined as selected, but it is disabled -> enable the step
-		if (this.selectedStep.disabled) {
-			this.selectedStep.disabled = false;
-			console.warn("Enable the selected step: step can't be selected and disabled at the same time.")
-			return;
+			console.warn("Selecting the first step: no selected step is defined."); // eslint-disable-line
 		}
 
-		// TODO: If the slected step is not the first, enable all the prior steps
+		// If multiple selected steps -> select the last selected one.
+		if (this.selectedStepsCount > 1) {
+			this.selectLastSelectedStep();
+			console.warn(`Selecting the last step defined as selected: multiple selected steps are defined.`); // eslint-disable-line
+		}
+		
+		// If the selected step is defined as disabled -> enable the step.
+		if (this.selectedStep && this.selectedStep.disabled) {
+			this.selectedStep.disabled = false;
+			console.warn("Enable the selected step: step can't be selected and disabled at the same time."); // eslint-disable-line
+		}
+
+		// Place for improvement: If the slected step is not the first, enable all the prior steps
 		this.selectedStepIndex = this.getSelectedStepIndex();
 	}
 
 	/**
-	 * Selectes the firt step.
+	 * Selects the first step.
 	 * @private
 	 */
 	selectFirstStep() {
+		this.deselectAll();
 		this.slottedSteps[0].selected = true;
 		this.slottedSteps[0].disabled = false;
-		this.selectedStepIndex = 0;
+	}
+
+	/**
+	 * Selects the last step from multiple selected ones.
+	 * @private
+	 */
+	selectLastSelectedStep() {
+		const lastSelectedStep = this.lastSelectedStep;
+
+		if (lastSelectedStep) {
+			this.deselectAll();
+			lastSelectedStep.selected = true;
+			lastSelectedStep.disabled = false;
+		}
 	}
 
 	/**
@@ -258,6 +284,8 @@ class Wizard extends UI5Element {
 			const contentItem = this.getStepWrapperByRefId(step._id);
 			return contentItem.offsetTop + contentItem.offsetHeight - Wizard.CONTENT_TOP_OFFSET;
 		});
+
+		console.log(this.stepScrollOffsets);
 	}
 
 	/**
@@ -321,14 +349,14 @@ class Wizard extends UI5Element {
 	}
 
 	/**
-	 * Handles component resize to hide steps' separators and texts
-	 * to ensure more space.
-	 * @param {Event} event
+	 * Handles component resize  to:
+	 * (1) trigger scroll scrollOffset reCalculation and syncSelection
+	 * (2) hide steps' separators and texts to free more space on small sizes
 	 * @private
 	 */
 	onResize() {
-		const width = this.getBoundingClientRect().width;
-		this.phoneSize = width <= Wizard.PHONE_BREAKPOINT;
+		this.width = this.getBoundingClientRect().width;
+		this.phoneSize = this.width <= Wizard.PHONE_BREAKPOINT;
 	}
 
 	/**
@@ -372,11 +400,19 @@ class Wizard extends UI5Element {
 	}
 
 	get selectedStep() {
-		if (this.selectedSteps.length) {
+		if (this.selectedStepsCount) {
 			return this.selectedSteps[0];
 		}
 
 		return null;
+	}
+
+	get lastSelectedStep() {
+		if (this.selectedStepsCount) {
+			return this.selectedSteps[this.selectedStepsCount - 1];
+		}
+
+		return null
 	}
 
 	get selectedSteps() {

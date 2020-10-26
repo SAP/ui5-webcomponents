@@ -918,26 +918,42 @@
 		});
 
 		toStep2.addEventListener("click", function () {
-			deselectAll(wiz);
-			setStep(wiz, 1);
+			deselectAll();
+			setStep(1);
 			toStep2.setAttribute("hidden", true);
 		});
 
 		toStep3.addEventListener("click", function () {
 			deselectAll(wiz);
-			setStep(wiz, 2);
+			setStep(2);
 			toStep3.setAttribute("hidden", true);
 		});
 
 		toStep4.addEventListener("click", function () {
 			deselectAll(wiz);
-			setStep(wiz, 3);
+			setStep(3);
 			toStep4.setAttribute("hidden", true);
 		});
 
 		finalize.addEventListener("click", function () {
 			alert("Finalize")
 		});
+
+		function deselectAll() {
+			Array.from(wiz.children).forEach(function(step) {
+				step.selected = false;
+			});
+		}
+
+		function setStep(idx) {
+			const step = getStep(idx);
+			step.selected = true;
+			step.disabled = false;
+		}
+
+		function getStep(idx) {
+			return Array.from(wiz.children)[idx];
+		}
 	</script>
 </body>
 </html>

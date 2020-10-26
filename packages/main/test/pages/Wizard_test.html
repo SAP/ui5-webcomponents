@@ -30,7 +30,7 @@
 
 	<div class="stretch">
 		<ui5-wizard id="wizTest">
-			<ui5-wizard-step icon="sap-icon://product" text="Product type">
+			<ui5-wizard-step id="st1" icon="sap-icon://product" selected text="Product type">
 				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br>
 
@@ -40,12 +40,14 @@
 
 					<ui5-label wrap>Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
 					</ui5-label>
+
+					<ui5-input id="inpSelectionChangeCounter"></ui5-input>
 				</div>
 
 				<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step text="Product Information" selected disabled>
+			<ui5-wizard-step  id="st2" text="Product Information" disabled>
 				<div style="display: flex;flex-direction: column">
 					<ui5-title>2. Product Information</ui5-title><br>
 					<ui5-label wrap>
@@ -82,7 +84,7 @@
 				<ui5-button id="toStep3" design="Emphasized">Step 3</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step text="Options" disabled>
+			<ui5-wizard-step  id="st3" text="Options" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>3. Options</ui5-title><br>
 
@@ -123,7 +125,7 @@
 				<ui5-button id="toStep4" design="Emphasized">Step 4</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step text="Pricing" disabled>
+			<ui5-wizard-step  id="st4" text="Pricing" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>4. Pricing</ui5-title><br>
 					<ui5-label wrap>
@@ -158,9 +160,10 @@
 
 	<script>
 		var wiz = document.getElementById("wizTest");
-
+		var counter = 0;
 		wiz.addEventListener("selection-change", function () {
 			console.log(event.detail.selectedStep);
+			inpSelectionChangeCounter.value = ++counter;
 		});
 
 		toStep2.addEventListener("click", function () {
