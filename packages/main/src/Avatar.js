@@ -26,6 +26,8 @@ const metadata = {
 
 		/**
 		 * Defines the source path to the desired image.
+		 * <b>Note:</b> If the image source path is already URL-encoded, also make sure to set the <code>noEncoding</code> property to <code>true</code>.
+		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -159,6 +161,19 @@ const metadata = {
 		accessibleName: {
 			type: String,
 		},
+
+		/**
+		 * By default the caret(#) and  percent(%) symbols are automatically URL-encoded in the value of the <code>image</code>.
+		 * Setting <code>noEncoding</code> to <code>true</code> will disable this behavior and the image source path will be used as is.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.10
+		 */
+		noEncoding: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 	},
@@ -238,7 +253,7 @@ class Avatar extends UI5Element {
 	}
 
 	get styles() {
-		const image = this.image.replace(/%/g, "%25").replace(/#/g, "%23");
+		const image = this.noEncoding ? this.image : this.image.replace(/%/g, "%25").replace(/#/g, "%23");
 		return {
 			img: {
 				"background-image": `url("${image}")`,
