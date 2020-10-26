@@ -1,7 +1,5 @@
-commit 7e65e77e020f62f1de2be55e6bc0a6216b859909
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Oct 23 11:59:17 2020 +0300
+commit 2194b16a3af2de36eb39930c7f88a60a87c1704d
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Oct 26 10:40:36 2020 +0200
 
-    feat(ui5-link): add aria-label and aria-labelledby support (#2357)
-    
-    FIXES: #2356
+    fix(ui5-messagestrip): fix close button accessibility (#2352)
