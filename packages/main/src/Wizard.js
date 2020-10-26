@@ -457,7 +457,10 @@ class Wizard extends UI5Element {
 		const lastEnabledStepIndex = this.getLastEnabledStepIndex();
 
 		return this.steps.map((step, idx, arr) => {
-			const hideSeparator = (idx === arr.length - 1) || this.phoneMode;
+			// Hide separator if:
+			// (1) the size is small
+			// (2) on the last step in case it's not a branching one
+			const hideSeparator =  this.phoneMode || ((idx === arr.length - 1) && !step.branching);
 
 			return {
 				icon: step.icon,
@@ -467,6 +470,7 @@ class Wizard extends UI5Element {
 				disabled: step.disabled,
 				hideSeparator,
 				activeSeparator: idx < lastEnabledStepIndex,
+				branchingSeparator: step.branching,
 				pos: idx + 1,
 				size: arr.length,
 				refStepId: step._id,

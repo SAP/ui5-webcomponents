@@ -63,7 +63,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the visibility of the step's separator.
+		 * Defines if the step's separator is hidden or not.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @private
@@ -79,6 +79,16 @@ const metadata = {
 		 * @private
 		 */
 		activeSeparator: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines if the step's separator is dashed or not.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+		 */
+		branchingSeparator: {
 			type: Boolean,
 		},
 

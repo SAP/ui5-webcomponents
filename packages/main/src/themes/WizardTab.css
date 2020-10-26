@@ -107,6 +107,10 @@
 	border-bottom-color: var(--_ui5_wiz_tab_active_separator_color)
 }
 
+:host([branching-separator]) .ui5-wiz-step-hr {
+	border-bottom-style: dashed;
+}
+
 /* IE focus outline fix */
 ui5-wizard-tab .ui5-wiz-step-main {
 	pointer-events: none;

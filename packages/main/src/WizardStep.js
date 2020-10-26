@@ -66,6 +66,22 @@ const metadata = {
 		selected: {
 			type: Boolean,
 		},
+
+		/**
+		 * When <code>branching</code> is enabled a dashed line would be displayed after the step,
+		 * indicating that the next step is not yet known and depends on user choice in the current step.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> It is recommended to use <code>branching</code> on the last known step.
+		 * Later, you can dynamically add new steps when it becomes clear how the wizard flow should continue.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		branching: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.WizardStep.prototype */ {
 	},
