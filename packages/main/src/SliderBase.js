@@ -157,13 +157,14 @@ const metadata = {
 class SliderBase extends UI5Element {
 	constructor() {
 		super();
+		this._resizeHandler = this._handleResize.bind(this);
 
-		this.DOWN_EVENTS = ['mousedown', 'pointerdown', 'touchstart'];
-		this.UP_EVENTS = ['mouseup', 'pointerup', 'touchend'];
+		this.DOWN_EVENTS = ["mousedown", "pointerdown", "touchstart"];
+		this.UP_EVENTS = ["mouseup", "pointerup", "touchend"];
 		this.MOVE_EVENT_MAP = {
-			mousedown: 'mousemove',
-			pointerdown: 'pointermove',
-			touchstart: 'touchmove',
+			mousedown: "mousemove",
+			pointerdown: "pointermove",
+			touchstart: "touchmove",
 		};
 
 		this.TICKMARK_COLOR_MAP = {
@@ -174,9 +175,13 @@ class SliderBase extends UI5Element {
 			sap_belize: "#bfbfbf",
 			sap_belize_hcw: "#000000",
 			sap_belize_hcb: "#ffffff",
-		}
+		};
 
-		this._resizeHandler = this._handleResize.bind(this);
+		this._stateStorage = {
+			step: null,
+			min: null,
+			max: null,
+		};
 	}
 
 	static get metadata() {
@@ -199,8 +204,8 @@ class SliderBase extends UI5Element {
 		return {
 			label: {
 				"ui5-slider-hidden-labels": this._labelsOverlapping,
-			}
-		}
+			},
+		};
 	}
 
 	onEnterDOM() {
@@ -222,8 +227,30 @@ class SliderBase extends UI5Element {
 	onAfterRendering() {
 		this._resizeHandler();
 	}
+
+	/** Shows the tooltip(s) if the <code>showTooltip</code> property is set to true
+	 *
+	 * @private
+	 */
+	_handleMouseOver(event) {
+		if (!this.disabled || this.showTooltip) {
+			this._tooltipVisibility = "visible";
+		}
+	}
+
 	/**
-	 * Handle the responsiveness of the Slider's UI elements when resing 
+	 * Hides the tooltip(s) if the <code>showTooltip</code> property is set to true
+	 *
+	 * @private
+	 */
+	_handleMouseOut(event) {
+		if (this.showTooltip) {
+			this._tooltipVisibility = "hidden";
+		}
+	}
+
+	/**
+	 * Handle the responsiveness of the Slider's UI elements when resing
 	 *
 	 * @private
 	 */
@@ -252,7 +279,7 @@ class SliderBase extends UI5Element {
 		if (this.labelInterval <= 0 || this._hiddenTickmarks) {
 			return;
 		}
-		
+
 		// Cache the labels if not yet fetched
 		if (!this._labels) {
 			this._labels = this.shadowRoot.querySelectorAll(".ui5-slider-labels li");
@@ -265,15 +292,15 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Called when the user starts interacting with the slider.
-	 * After a down event on the slider root, listen for move events on window, so the slider value 
+	 * After a down event on the slider root, listen for move events on window, so the slider value
 	 * is updated even if the user drags the pointer outside the slider root.
-	 * 
+	 *
 	 * @protected
 	 */
 	handleDownBase(event, min, max) {
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
 		this._moveEventType = !this._moveEventType ? this.MOVE_EVENT_MAP[event.type] : this._moveEventType;
-		this.UP_EVENTS.forEach((upEventType) => window.addEventListener(upEventType, this._upHandler));
+		this.UP_EVENTS.forEach(upEventType => window.addEventListener(upEventType, this._upHandler));
 		window.addEventListener(this._moveEventType, this._moveHandler);
 
 		this._boundingClientRect = this.getBoundingClientRect();
@@ -281,49 +308,29 @@ class SliderBase extends UI5Element {
 		return newValue;
 	}
 
-	/** 
+	/**
 	 * Called when the user finish interacting with the slider
 	 * Fires an <code>change</code> event indicating a final value change, after user interaction is finished.
-	 * 
+	 *
 	 * @protected
 	 */
 	handleUpBase() {
 		this.fireEvent("change");
-		this.UP_EVENTS.forEach((upEventType) => window.removeEventListener(upEventType, this._upHandler));
+		this.UP_EVENTS.forEach(upEventType => window.removeEventListener(upEventType, this._upHandler));
 
 		window.removeEventListener(this._moveEventType, this._moveHandler);
 		this._moveEventType = null;
 	}
 
-	/** Shows the tooltip(s) if the <code>showTooltip</code> property is set to true
-	 * 
-	 * @private
-	 */
-	_handleMouseOver(event) {
-		if (!this.disabled || this.showTooltip) {
-			this._tooltipVisibility = "visible";
-		}
-	}
-
-	/** 
-	 * Hides the tooltip(s) if the <code>showTooltip</code> property is set to true
-	 * 
-	 * @private
-	 */
-	_handleMouseOut(event) {
-		if (this.showTooltip) {
-			this._tooltipVisibility = "hidden";
-		}
-	}
-
-	/** 
-	 * Updates a value property of the component that has been changed due to a user action.
+	/**
+	 * Updates value property of the component that has been changed due to a user action.
 	 * Fires an <code>input</code> event indicating a value change via interaction that is not yet finished.
-	 * 
+	 *
 	 * @protected
 	 */
 	updateValue(valueType, value) {
 		this[valueType] = value;
+		this.storePropertyState(valueType);
 		this.fireEvent("input");
 	}
 
@@ -412,30 +419,81 @@ class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Update initial Slider UI representation and normalize internal state
-	 * Normalize Range Slider values according to min/max properties
-	 * Normalize the step value and draw tickmarks/labels if specified
-	 * 
-	 * Returns <code>true</code> if UI has to be updated further to sync 
-	 * with the internal state and <code>undefined</code> otherwise.
+	 * Normalize current properties, update the previously stored state.
 	 *
 	 * @protected
 	 */
-	syncUIAndState() {
-		// In this case the value prop is changed programatically (not by user interaction)
-		// and it won't be "stepified" (rounded to the nearest step)
-		if (this.step !== this._prevStepValue) {
+	syncUIAndState(...values) {
+		// Validate step and update the stored state for the step property.
+		if (this.isPropertyUpdated("step")) {
 			this._setStep(this.step);
-			this._prevStepValue = this.step;
-			return;
+			this.storePropertyState("step");
 		}
 
-		if (this.min !== this._prevMin || this.max !== this._prevMax) {
+		// Recalculate the tickmarks and labels and update the stored state.
+		if (this.isPropertyUpdated("min", "max")) {
 			this._drawDefaultTickmarks(this.step, this.max, this.min);
-			this._prevMin = this.min;
-			this._prevMax = this.max;
-			return true;
+			this.storePropertyState("min", "max");
 		}
+
+		// Here the value props are changed programatically (not by user interaction)
+		// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
+		// min and max bounderies and update the previous state reference.
+		values.forEach(valueType => {
+			if (this.isPropertyUpdated(valueType)) {
+				const normalizedValue = SliderBase.clipValue(this[valueType], this.min, this.max);
+				this.updateValue(valueType, normalizedValue);
+				this.storePropertyState(valueType);
+			}
+		});
+	}
+
+	/**
+	 * In order to always keep the visual UI representation and the internal
+	 * state in sync, the component has a 'state storage' that is updated when the
+	 * current state is changed due to a user action.
+	 *
+	 * Check if the previously saved state is outdated. That would mean
+	 * a property has been changed programatically because the previous state
+	 * is always updated in the interaction handlers.
+	 *
+	 * Will return true if any of the properties is not equal to its previously
+	 * stored value.
+	 *
+	 * @protected
+	 */
+	isCurrentStateUpdated() {
+		return Object.entries(this._stateStorage).some(([propName, propValue]) => this[propName] !== propValue);
+	}
+
+	/**
+	 * Returns the last stored value of a property
+	 *
+	 * @protected
+	 */
+	getStoredPropertyState(property) {
+		return this._stateStorage[property];
+	}
+
+	/**
+	 * Check if one or more properties have been updated compared to their last
+	 * saved values in the state storage.
+	 *
+	 * @protected
+	 */
+	isPropertyUpdated(...properties) {
+		return properties.some(prop => this.getStoredPropertyState(prop) !== this[prop]);
+	}
+
+	/**
+	 * Updates the previously saved in the _stateStorage values of one or more properties.
+	 *
+	 * @protected
+	 */
+	storePropertyState(...props) {
+		props.forEach(property => {
+			this._stateStorage[property] = this[property];
+		});
 	}
 
 	/**
@@ -448,14 +506,14 @@ class SliderBase extends UI5Element {
 			return;
 		}
 
-		// Convert number values to strings to let the CSS do calculations better 
+		// Convert number values to strings to let the CSS do calculations better
 		// rounding/subpixel behavior" and the most precise tickmarks distribution
 		const maxStr = String(max);
 		const minStr = String(min);
 		const stepStr = String(step);
 		const tickmarkWidth = "1px";
 
-		// There is a CSS bug with the 'currentcolor' value of a CSS gradient that does not 
+		// There is a CSS bug with the 'currentcolor' value of a CSS gradient that does not
 		// respect the variable for more than one theme. It has to be set here for now.
 		const currentTheme = getTheme();
 		const currentColor = this.TICKMARK_COLOR_MAP[currentTheme];
@@ -516,13 +574,13 @@ class SliderBase extends UI5Element {
 	 * If tickmarks are enabled recreates them according to it.
 	 *
 	 * @private
-	 */	
+	 */
 	_setStep(step) {
 		if (step === 0) {
 			return;
 		}
 
-		if (typeof step !== "number" || step < 0 || isNaN(step)) {
+		if (typeof step !== "number" || step < 0 || Number.isNaN(step)) {
 			step = 1;
 		}
 
