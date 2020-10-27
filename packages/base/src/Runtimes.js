@@ -27,11 +27,9 @@ const getRuntime = runtimeIndex => {
  * Registers the current runtime in the shared runtimes resource registry
  */
 const registerCurrentRuntime = () => {
-	if (currentRuntimeIndex !== undefined) {
-		throw new Error("Runtime already registered");
+	if (currentRuntimeIndex === undefined) {
+		currentRuntimeIndex = registry.registerRuntime(VersionInfo);
 	}
-
-	currentRuntimeIndex = registry.registerRuntime(VersionInfo);
 };
 
 /**
@@ -40,7 +38,7 @@ const registerCurrentRuntime = () => {
  */
 const getCurrentRuntimeIndex = () => {
 	if (currentRuntimeIndex === undefined) {
-		throw new Error("Runtime not yet registered");
+		registerCurrentRuntime();
 	}
 
 	return currentRuntimeIndex;
@@ -52,6 +50,11 @@ const getCurrentRuntimeIndex = () => {
  * @returns {number} Positive number if the current runtime's version is newer, 0 if equal, negative number if the current runtime's version is older
  */
 const compareCurrentRuntimeWith = otherRuntimeIndex => {
+	// Always consider the current runtime newer than a runtime with "undefined" index
+	if (otherRuntimeIndex === undefined) {
+		return 1;
+	}
+
 	const currentRuntime = getRuntime();
 	const otherRuntime = getRuntime(otherRuntimeIndex);
 	return currentRuntime.compareTo(otherRuntime);
