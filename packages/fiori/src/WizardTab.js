@@ -2,14 +2,14 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import Icon from "./Icon.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 
 import WizardTabTemplate from "./generated/templates/WizardTabTemplate.lit.js";
 import WizardTabCss from "./generated/themes/WizardTab.css.js";
 
 const metadata = {
 	tag: "ui5-wizard-tab",
-	properties: /** @lends sap.ui.webcomponents.main.WizardTab.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.WizardTab.prototype */ {
 		/**
 		 * Defines the <code>icon</code> of the step.
 		 * @type {String}
@@ -134,13 +134,13 @@ const metadata = {
 			defaultValue: "-1",
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.WizardTab.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.WizardTab.prototype */ {
 	},
-	events: /** @lends sap.ui.webcomponents.main.WizardTab.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.WizardTab.prototype */ {
 		/**
 		 * Fired when clicking on none disabled step.
 		 *
-		 * @event sap.ui.webcomponents.main.WizardTab#selection-change-requested
+		 * @event sap.ui.webcomponents.fiori.WizardTab#selection-change-requested
 		 * @private
 		 */
 		"selection-change-requested": {},
@@ -163,7 +163,7 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.WizardTab
+ * @alias sap.ui.webcomponents.fiori.WizardTab
  * @extends UI5Element
  * @tagname ui5-wizard-tab
  * @private

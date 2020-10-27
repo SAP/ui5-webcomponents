@@ -71,8 +71,6 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 | Tree                     | `ui5-tree`           | `import "@ui5/webcomponents/dist/Tree.js";`                |
 | Tree Item                | `ui5-tree-item`      | comes with `ui5-tree`                                      |
-| Wizard                   | `ui5-wizard`         | `import "@ui5/webcomponents/dist/Tree.js";`                |
-| Wizard Step              | `ui5-wizard-step`    | comes with `ui5-wizard`                                    |
 
 ### 2. Assets
 
@@ -149,6 +147,8 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Notification Overflow Action | `ui5-notification-overflow-action` | `import "@ui5/webcomponents-fiori/dist/NotificationOverflowAction.js";`|
 | Upload Collection            | `ui5-upload-collection`            | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`          |
 | Upload Collection Item       | `ui5-upload-collection-item`       | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`      |
+| Wizard                       | `ui5-wizard`                       | `import "@ui5/webcomponents-fiori/dist/Wizard.js";`                    |
+| Wizard Step                  | `ui5-wizard-step`                  | comes with `ui5-wizard`                                                |
 
 ### 2. Assets
 

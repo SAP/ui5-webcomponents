@@ -5,7 +5,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  */
 const metadata = {
 	tag: "ui5-wizard-step",
-	properties: /** @lends sap.ui.webcomponents.main.WizardStep.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
 		/**
 		 * Defines the <code>text</code> of the step.
 		 * <br><br>
@@ -83,9 +83,9 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.WizardStep.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
 	},
-	events: /** @lends sap.ui.webcomponents.main.WizardStep.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
 	},
 };
 
@@ -110,7 +110,7 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.WizardStep
+ * @alias sap.ui.webcomponents.fiori.WizardStep
  * @extends UI5Element
  * @tagname ui5-wizard-step
  * @public

@@ -5,11 +5,13 @@ import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import WizardTemplate from "./generated/templates/WizardTemplate.lit.js";
+
+// Step in header and content
 import WizardTab from "./WizardTab.js";
 import WizardStep from "./WizardStep.js";
 
-// Styles
+// Template and Styles
+import WizardTemplate from "./generated/templates/WizardTemplate.lit.js";
 import WizardCss from "./generated/themes/Wizard.css.js";
 
 /**
@@ -18,7 +20,7 @@ import WizardCss from "./generated/themes/Wizard.css.js";
 const metadata = {
 	tag: "ui5-wizard",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.Wizard.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
 		 * Defines the width of the component.
 		 * @private
@@ -35,7 +37,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.Wizard.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
 		 * Defines the steps.
 		 * <br><br>
@@ -52,12 +54,12 @@ const metadata = {
 			listenFor: { include: ["*"] },
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Wizard.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
 		 * Fired when the step selection is changed by user interaction - either with scrolling,
 		 * or by clicking on the steps within the component header.
 		 *
-		 * @event sap.ui.webcomponents.main.Wizard#selection-change
+		 * @event sap.ui.webcomponents.fiori.Wizard#selection-change
 		 * @param {HTMLElement} selectedStep the newly selected step
 		 * @param {HTMLElement} previouslySelectedStep the previously selected step
 		 * @public
@@ -122,11 +124,11 @@ const metadata = {
  * When the task has only two steps or less.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import @ui5/webcomponents/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
+ * <code>import @ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Wizard
+ * @alias sap.ui.webcomponents.fiori.Wizard
  * @extends UI5Element
  * @tagname ui5-wizard
  * @since 1.0.0-rc.10

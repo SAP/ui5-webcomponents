@@ -1,7 +1,7 @@
 const assert = require("chai").assert;
 
 describe("Wizard general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Wizard_test.html");
+	browser.url("http://localhost:8081/test-resources/pages/Wizard_test.html");
 
 	it("test initial selection", () => {
 		const wiz = browser.$("#wizTest");

@@ -88,7 +88,6 @@ import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";
 import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
-import Wizard from "./dist/Wizard.js";
 
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
