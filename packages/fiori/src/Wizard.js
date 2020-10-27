@@ -1,10 +1,18 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+
+// Texts
+import {
+	WIZARD_NAV_ARIA_ROLE_DESCRIPTION,
+	WIZARD_NAV_STEP_DEFAULT_HEADING,
+} from "./generated/i18n/i18n-defaults.js"
 
 // Step in header and content
 import WizardTab from "./WizardTab.js";
@@ -88,7 +96,7 @@ const metadata = {
  * It shows the sequence of steps, where the minimum recommended number of steps is 3.
  * <ul>
  * <li> Steps can have different visual representations - numbers or icons.
- * <li> Steps might have labels for better readability.</li>
+ * <li> Steps might have labels for better readability - heading and subheding.</li>
  * <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code></li>
  * </ul>
  *
@@ -101,7 +109,7 @@ const metadata = {
  *
  * <h3>Scrolling</h3>
  * The component handles user scrolling by selecting the closest step, based on the current scroll position
- * and scrolls to particular place, when the user clicks on the step within the header.
+ * and scrolls to particular place, when the user clicks on the step within the navigation area.
  * <br><br>
  *
  * <b>Important:</b> In order the component's scrolling behaviour to work, it has to be limited from the outside parent element in terms of height
@@ -121,7 +129,7 @@ const metadata = {
  * <h4>When to use:</h4>
  * When the user has to accomplish a long set of tasks.
  * <h4>When not to use:</h4>
- * When the task has only two steps or less.
+ * When the task has less than 3 steps.
  *
  * <h3>ES6 Module Import</h3>
  * <code>import @ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
@@ -157,6 +165,8 @@ class Wizard extends UI5Element {
 		this.initItemNavigation();
 
 		this._onResize = this.onResize.bind(this);
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -177,6 +187,10 @@ class Wizard extends UI5Element {
 
 	static get dependencies() {
 		return [WizardTab, WizardStep];
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get PHONE_BREAKPOINT() {
@@ -447,6 +461,14 @@ class Wizard extends UI5Element {
 		return this.phoneSize || isPhone();
 	}
 
+	get navAriaRoleDescription() {
+		return this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
+	}
+
+	get navStepDefaultHeading() {
+		return this.i18nBundle.getText(WIZARD_NAV_STEP_DEFAULT_HEADING);
+	}
+
 	/**
 	 * Returns an array of data objects, based on the user defined steps
 	 * to later build the steps (tabs) within the header.
@@ -457,23 +479,30 @@ class Wizard extends UI5Element {
 		const lastEnabledStepIndex = this.getLastEnabledStepIndex();
 
 		return this.steps.map((step, idx, arr) => {
+			const pos = idx + 1;
+
 			// Hide separator if:
-			// (1) the size is small
-			// (2) on the last step in case it's not a branching one
+			// (1) its size is under the phone breakpoint
+			// (2) it's the last step and it's not a branching one
 			const hideSeparator = this.phoneMode || ((idx === arr.length - 1) && !step.branching);
+
+			// Calculate the step's aria-roledectioption: "1. heading" or "Step 1".
+			const roleDescription = step.heading ? `${pos}. ${step.heading}` : `${this.navStepDefaultHeading} ${pos}`;
 
 			return {
 				icon: step.icon,
 				heading: this.phoneMode ? "" : step.heading,
 				subheading: this.phoneMode ? "" : step.subheading,
-				initials: idx + 1,
+				initials: pos,
 				selected: step.selected,
 				disabled: step.disabled,
 				hideSeparator,
 				activeSeparator: idx < lastEnabledStepIndex,
 				branchingSeparator: step.branching,
-				pos: idx + 1,
+				pos,
 				size: arr.length,
+				roleDescription,
+				ariaLabel: getEffectiveAriaLabelText(step),
 				refStepId: step._id,
 				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
 			};

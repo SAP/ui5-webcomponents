@@ -1,5 +1,5 @@
 <div class="ui5-wiz-root">
-	<div class="ui5-wiz-nav" role="navigation" aria-roledescription="Wizard" tabindex="-1">
+	<div class="ui5-wiz-nav" role="navigation" aria-roledescription="{{navAriaRoleDescription}}" tabindex="-1">
 		<ul class="ui5-wiz-nav-list" role="list">
 			{{#each _stepsInHeader}}
 				<ui5-wizard-tab
@@ -15,6 +15,8 @@
 					role="listitem"
 					aria-posinset="{{pos}}"
 					aria-setsize="{{size}}"
+					aria-roledescription="{{roleDescription}}"
+					aria-label="{{ariaLabel}}"
 					data-ui5-content-ref-id="{{this.refStepId}}"
 					data-ui5-index="{{pos}}"
 					_tab-index="{{tabIndex}}"

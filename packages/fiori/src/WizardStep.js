@@ -99,6 +99,26 @@ const metadata = {
 		branching: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines the aria-label of the step.
+		 * @type {boolean}
+		 * @defaultvalue ""
+		 * @private
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Defines the aria-labelledby of the step.
+		 * @type {boolean}
+		 * @defaultvalue ""
+		 * @private
+		 */
+		ariaLabelledby: {
+			type: String,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
 	},

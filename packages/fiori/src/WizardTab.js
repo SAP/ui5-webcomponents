@@ -114,6 +114,36 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the aria-roledescription of the step.
+		 * @type {boolean}
+		 * @defaultvalue ""
+		 * @private
+		 */
+		ariaRoledescription: {
+			type: String,
+		},
+
+		/**
+		 * Defines the aria-label of the step.
+		 * @type {boolean}
+		 * @defaultvalue ""
+		 * @private
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Defines the aria-labelledby of the step.
+		 * @type {boolean}
+		 * @defaultvalue ""
+		 * @private
+		 */
+		ariaLabelledby: {
+			type: String,
+		},
+
+		/**
 		 * Defines the aria-setsize of the step.
 		 * @type {boolean}
 		 * @defaultvalue undefined

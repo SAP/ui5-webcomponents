@@ -1,8 +1,12 @@
 :host(:not([hidden])) {
 	display: inline-block;
+	/* Well known worakround to allow shrinking inside flex containers 
+	 * and shrinking is needed so the texts trucnate properly.
+	 */
 	min-width: 1px;
 }
 
+/* Selected (active) step */
 :host([selected]) .ui5-wiz-step-icon-circle {
 	background: var(--_ui5_wiz_tab_selected_bg);
 }
@@ -26,6 +30,7 @@
 	color: var(--sapList_Active_TextColor);
 }
 
+/* Disabled step */
 :host([disabled]) .ui5-wiz-step-icon-circle {
 	border-color: var(--sapList_BorderColor);
 	background: var(--sapObjectHeader_Background);
@@ -54,6 +59,9 @@
 	align-items: center;
 	flex-direction: row;
 	min-width: 2rem;
+}
+
+:host(:not([disabled])) .ui5-wiz-step-main {
 	cursor: pointer;
 }
 
@@ -61,6 +69,7 @@
 	outline: var(--_ui5_wiz_tab_focus_outline);
 }
 
+/* Icon */
 .ui5-wiz-step-icon-circle {
 	position: relative;
 	display: inline-flex;
@@ -82,10 +91,12 @@
 	pointer-events: none;
 }
 
+/* Texts when no icon set */
 .ui5-wiz-step-initials {
 	color: var(--_ui5_wiz_tab_icon_color);
 }
 
+/* Heading and Subheading */
 .ui5-wiz-step-texts {
 	display: flex;
 	flex-direction: column;
@@ -104,6 +115,7 @@
 	font-size: var(--sapFontSmallSize);
 }
 
+/* Separator */
 .ui5-wiz-step-hr {
 	display: inline-block;
 	border-bottom-color: var(--sapList_BorderColor);
@@ -121,7 +133,7 @@
 	border-bottom-style: dashed;
 }
 
-/* IE focus outline fix */
+/* Workaround for IE to make the focus outline visible */
 ui5-wizard-tab .ui5-wiz-step-main {
 	pointer-events: none;
 }
