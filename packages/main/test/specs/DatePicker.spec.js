@@ -818,7 +818,7 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(lastColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
 	});
 
-	it("DatePcker dates and week number", ()=>{
+	it("DatePicker dates and week number", () => {
 		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";

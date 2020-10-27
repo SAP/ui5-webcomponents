@@ -451,6 +451,7 @@ class Calendar extends UI5Element {
 		});
 
 		dayPicker._itemNav.currentIndex = fistDayOfMonthIndex;
+		dayPicker._itemNav.focusCurrent();
 	}
 
 	_handleSelectedMonthChange(event) {
@@ -564,11 +565,9 @@ class Calendar extends UI5Element {
 			}
 		});
 
-		const weekDaysCount = 7;
-
 		if (lastDayOfMonthIndex !== -1) {
 			// find the DOM for the last day index
-			const lastDay = dayPicker.shadowRoot.querySelector(".ui5-dp-content").children[parseInt(lastDayOfMonthIndex / weekDaysCount) + 1].children[(lastDayOfMonthIndex % weekDaysCount)];
+			const lastDay = dayPicker.shadowRoot.querySelectorAll(".ui5-dp-content .ui5-dp-item")[lastDayOfMonthIndex];
 
 			// update current item in ItemNavigation
 			dayPicker._itemNav.current = lastDayOfMonthIndex;
