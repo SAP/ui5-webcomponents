@@ -21,6 +21,11 @@ class Runtime {
 			return this.compareResultCache.get(otherVer);
 		}
 
+		// If any of the two is a next version, bigger buildTime wins
+		if (this.isNext || otherVer.isNext) {
+			return this.buildTime - otherVer.buildTime;
+		}
+
 		// If major versions differ, bigger one wins
 		const majorDiff = this.major - otherVer.major;
 		if (majorDiff) {
@@ -39,12 +44,7 @@ class Runtime {
 			return patchDiff;
 		}
 
-		// If any of the two is a next version, bigger buildTime wins
-		if (this.isNext || otherVer.isNext) {
-			return this.buildTime - otherVer.buildTime;
-		}
-
-		// If none of the two are next versions, bigger suffix wins, f.e. rc10 > rc9
+		// Bigger suffix wins, f.e. rc10 > rc9
 		// Important: suffix is alphanumeric, must use natural compare
 		const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
 		const result = collator.compare(this.suffix, otherVer.suffix);

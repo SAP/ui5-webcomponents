@@ -7,7 +7,7 @@ import {
 } from "./Runtimes.js";
 
 const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons); // shared resource policy for SVG Icons
-
+const iconKeysCache = new Map();
 let registry;
 let iconCollectionPromises;
 
@@ -29,13 +29,19 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 const DEFAULT_COLLECTION = "SAP-icons";
 
 const calcKey = (name, collection) => {
-	// silently support ui5-compatible URIs
-	if (name.startsWith("sap-icon://")) {
-		name = name.replace("sap-icon://", "");
-		[name, collection] = name.split("/").reverse();
+	const cacheId = `${name} ${collection}`;
+
+	if (!iconKeysCache.has(cacheId)) {
+		// silently support ui5-compatible URIs
+		if (name.startsWith("sap-icon://")) {
+			name = name.replace("sap-icon://", "");
+			[name, collection] = name.split("/").reverse();
+		}
+		collection = collection || DEFAULT_COLLECTION;
+		iconKeysCache.set(cacheId, `${collection}:${name}`);
 	}
-	collection = collection || DEFAULT_COLLECTION;
-	return `${collection}:${name}`;
+
+	return iconKeysCache.get(cacheId);
 };
 
 const registerIcon = (name, { pathData, ltr, accData, collection } = {}) => { // eslint-disable-line
