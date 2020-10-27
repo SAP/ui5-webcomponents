@@ -5,7 +5,7 @@
 }
 
 :host {
-	font-family: var(--sapFontFamily);
+	font-family: "72fallback", var(--sapFontFamily);
 	background-color: var(--sapGroup_TitleBackground);
 	border-bottom: 1px solid var(--sapGroup_TitleBorderColor);
 }
@@ -57,7 +57,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	font-family: var(--sapFontHeaderFamily);
+	font-family: "72fallback", var(--sapFontHeaderFamily);
 	font-size: var(--sapFontHeader5Size);
 	font-weight: normal;
 	color: var(--sapGroup_TitleTextColor);

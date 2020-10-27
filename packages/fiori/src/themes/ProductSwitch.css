@@ -1,5 +1,5 @@
 :host {
-	font-family: var(--sapFontFamily);
+	font-family: "72fallback", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 }
 

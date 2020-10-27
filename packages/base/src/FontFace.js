@@ -56,18 +56,63 @@ const fontFaceCSS = `
 	}
 `;
 
+/**
+ * Some diacritics are supported by the 72 font:
+ *  * Grave
+ *  * Acute
+ *  * Circumflex
+ *  * Tilde
+ *
+ * However, the following diacritics and the combination of multiple diacritics (including the supported ones) are not supported:
+ *  * Breve
+ *  * Horn
+ *  * Dot below
+ *  * Hook above
+ *
+ *
+ * Fallback for the characters that aren't covered by the '72' font to other system fonts
+ *
+ * U+0102-0103: A and a with Breve
+ * U+01A0-01A1: O and o with Horn
+ * U+01AF-01B0: U and u with Horn
+ * U+1EA0-1EB7: A and a with diacritics that are not supported by the font and combination of multiple diacritics
+ * U+1EB8-1EC7: E and e with diacritics that are not supported by the font and combination of multiple diacritics
+ * U+1EC8-1ECB: I and i with diacritics that are not supported by the font and combination of multiple diacritics
+ * U+1ECC-1EE3: O and o with diacritics that are not supported by the font and combination of multiple diacritics
+ * U+1EE4-1EF1: U and u with diacritics that are not supported by the font and combination of multiple diacritics
+ * U+1EF4-1EF7: Y and y with diacritics that are not supported by the font and combination of multiple diacritics
+ *
+ */
+const fallbackFontFaceCSS = `
+	@font-face {
+		font-family: '72fallback';
+		unicode-range: U+0102-0103, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EB7, U+1EB8-1EC7, U+1EC8-1ECB, U+1ECC-1EE3, U+1EE4-1EF1, U+1EF4-1EF7;
+		src: local('Arial'), local('Helvetica'), local('sans-serif');
+	}
+`;
+
 const insertFontFace = () => {
-	if (document.querySelector(`head>style[data-ui5-font-face]`)) {
-		return;
-	}
-
-	// If OpenUI5 is found, let it set the font
 	const OpenUI5Support = getFeature("OpenUI5Support");
-	if (OpenUI5Support && OpenUI5Support.isLoaded()) {
-		return;
+
+	// Only set the main font if there is no OpenUI5 support, or there is, but OpenUI5 is not loaded
+	if (!OpenUI5Support || !OpenUI5Support.isLoaded()) {
+		insertMainFontFace();
 	}
 
-	createStyleInHead(fontFaceCSS, { "data-ui5-font-face": "" });
+	// Always set the fallback font - OpenUI5 in CSS Vars mode does not set it, unlike the main font
+	insertFallbackFontFace();
+};
+
+const insertMainFontFace = () => {
+	if (!document.querySelector(`head>style[data-ui5-font-face]`)) {
+		createStyleInHead(fontFaceCSS, { "data-ui5-font-face": "" });
+	}
+};
+
+const insertFallbackFontFace = () => {
+	if (!document.querySelector(`head>style[data-ui5-font-face-fallback]`)) {
+		createStyleInHead(fallbackFontFaceCSS, { "data-ui5-font-face-fallback": "" });
+	}
 };
 
 export default insertFontFace;

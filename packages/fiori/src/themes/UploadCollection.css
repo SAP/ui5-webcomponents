@@ -110,7 +110,7 @@
 }
 
 .uc-dnd-overlay .dnd-overlay-text {
-	font-family: var(--sapFontFamily);
+	font-family: "72fallback", var(--sapFontFamily);
 	font-size: var(--sapMFontHeader4Size);
 	color: var(--sapContent_NonInteractiveIconColor);
 }

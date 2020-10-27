@@ -19,7 +19,7 @@
 	height: var(--_ui5_day_picker_item_height);
 	margin-top: var(--_ui5_daypicker_item_margin);
 	margin-right: var(--_ui5_daypicker_item_margin);
-	font-family: var(--sapFontFamily);
+	font-family: "72fallback", var(--sapFontFamily);
 	border-radius: var(--_ui5_daypicker_item_border_radius);
 }
 
@@ -31,7 +31,7 @@
 	display: flex;
 	flex-basis: 87.5%;
 	flex-direction: column;
-	font-family: var(--sapFontFamily);
+	font-family: "72fallback", var(--sapFontFamily);
 }
 
 .ui5-dp-days-names-container {

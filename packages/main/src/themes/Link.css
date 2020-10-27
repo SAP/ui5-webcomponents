@@ -7,7 +7,7 @@
 :host {
 	max-width: 100%;
 	color: var(--sapLinkColor);
-	font-family: var(--sapFontFamily);
+	font-family: "72fallback", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	cursor: pointer;
 	outline: none;
