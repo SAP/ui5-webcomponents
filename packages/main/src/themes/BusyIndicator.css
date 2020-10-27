@@ -2,17 +2,25 @@
 	display: inline-block;
 }
 
+:host(:not([hidden])[focused]) .ui5-busyindicator-root {
+	border: 1px dotted var(--sapContent_FocusColor);
+	outline: none;
+}
+
 :host(:not([active])) .ui5-busyindicator-wrapper {
 	display: none;
 }
 
 :host([active]) {
 	color: var(--sapContent_IconColor);
-	pointer-events: none;
 }
 
 :host([active]) :not(.ui5-busyindicator-root--ie) ::slotted(:not([class^="ui5-busyindicator-"])) {
 	opacity: 0.6;
+}
+
+slot {
+	pointer-events: none;
 }
 
 /**
@@ -73,6 +81,7 @@
 	align-items: center;
 	position: relative;
 	background-color: inherit;
+	border: 1px solid transparent;
 }
 
 .ui5-busyindicator-wrapper {

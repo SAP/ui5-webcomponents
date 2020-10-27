@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import Label from "./Label.js";
 
@@ -69,6 +70,13 @@ const metadata = {
 		active: {
 			type: Boolean,
 		},
+
+		/**
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
 	},
 };
 
@@ -110,14 +118,6 @@ class BusyIndicator extends UI5Element {
 		this._preventHandler = this._preventEvent.bind(this);
 	}
 
-	onBeforeRendering() {
-		if (this.active) {
-			this.tabIndex = -1;
-		} else {
-			this.removeAttribute("tabindex");
-		}
-	}
-
 	onEnterDOM() {
 		this.addEventListener("keyup", this._preventHandler, {
 			capture: true,
@@ -157,8 +157,20 @@ class BusyIndicator extends UI5Element {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
+	_onfocusin() {
+		this.focused = true;
+	}
+
+	_onfocusout() {
+		this.focused = false;
+	}
+
 	get ariaTitle() {
 		return this.i18nBundle.getText(BUSY_INDICATOR_TITLE);
+	}
+
+	get rootAriaLabel() {
+		return this.active ? `${this.i18nBundle.getText(BUSY_INDICATOR_TITLE)} ${this.text}` : "";
 	}
 
 	get classes() {
@@ -173,6 +185,10 @@ class BusyIndicator extends UI5Element {
 	_preventEvent(event) {
 		if (this.active) {
 			event.stopImmediatePropagation();
+
+			if (isSpace(event)) {
+				event.preventDefault();
+			}
 		}
 	}
 }

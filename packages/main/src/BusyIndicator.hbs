@@ -1,7 +1,15 @@
-<div class="{{classes.root}}">
+<div
+	class="{{classes.root}}"
+	tabindex="1"
+	title="{{ariaTitle}}"
+	aria-label="{{rootAriaLabel}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+>
+
 	<div class="ui5-busyindicator-wrapper">
 		{{#if active}}
-			<div class="ui5-busyindicator-dynamic-content" role="progressbar" aria-valuemin="0" aria-valuemax="100" title="{{ariaTitle}}">
+			<div class="ui5-busyindicator-dynamic-content" role="progressbar" aria-valuemin="0" aria-valuemax="100">
 				<div class="ui5-busyindicator-circle circle-animation-0"></div>
 				<div class="ui5-busyindicator-circle circle-animation-1"></div>
 				<div class="ui5-busyindicator-circle circle-animation-2"></div>
@@ -14,5 +22,5 @@
 		{{/if}}
 	</div>
 
-	<slot></slot>
+	<slot tabindex="-1"></slot>
 </div>
