@@ -19,7 +19,7 @@
 	opacity: 0.6;
 }
 
-slot {
+:host([active]) slot {
 	pointer-events: none;
 }
 

@@ -173,6 +173,10 @@ class BusyIndicator extends UI5Element {
 		return this.active ? `${this.i18nBundle.getText(BUSY_INDICATOR_TITLE)} ${this.text}` : "";
 	}
 
+	get slotTabindex() {
+		return this.active ? "-1" : "0";
+	}
+
 	get classes() {
 		return {
 			root: {
