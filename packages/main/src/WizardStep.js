@@ -38,11 +38,11 @@ const metadata = {
 
 		/**
 		 * Defines if the step is <code>disabled</code>. When disabled the step is displayed,
-		 * but the user can't select the step by cliking or navigate to it with scrolling.
+		 * but the user can't select the step by clicking or navigate to it with scrolling.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> Step can't be <code>selected</code> and <code>disabled</code> at the same time.
-		 * In this case the <code>selected</code> property would take precednce.
+		 * In this case the <code>selected</code> property would take precedence.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -57,7 +57,7 @@ const metadata = {
 		 * <br><br>
 		 *
 		 * <b>Note:</b> Step can't be <code>selected</code> and <code>disabled</code> at the same time.
-		 * In this case the <code>selected</code> property would take precednce.
+		 * In this case the <code>selected</code> property would take precedence.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -69,11 +69,11 @@ const metadata = {
 
 		/**
 		 * When <code>branching</code> is enabled a dashed line would be displayed after the step,
-		 * indicating that the next step is not yet known and depends on user choice in the current step.
+		 * meant to indicate that the next step is not yet known and depends on user choice in the current step.
 		 * <br><br>
 		 *
-		 * <b>Note:</b> It is recommended to use <code>branching</code> on the last known step.
-		 * Later, you can dynamically add new steps when it becomes clear how the wizard flow should continue.
+		 * <b>Note:</b> It is recommended to use <code>branching</code> on the last known step
+		 * and later add new steps when it becomes clear how the wizard flow should continue.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -100,8 +100,8 @@ const metadata = {
  * <h3>Structure</h3>
  * <ul>
  * <li>Each wizard step has arbitrary content</li>
- * <li>Each wizard step might have an text - degined by the <code>text</code> property</li>
- * <li>Each wizard step might have an icon - degined by the <code>icon</code> property</li>
+ * <li>Each wizard step might have an text - defined by the <code>text</code> property</li>
+ * <li>Each wizard step might have an icon - defined by the <code>icon</code> property</li>
  * </ul>
  *
  * <h3>Usage</h3>

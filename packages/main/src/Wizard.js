@@ -207,7 +207,7 @@ class Wizard extends UI5Element {
 	}
 
 	/**
-	 * Normalizes the step selection as follsows:
+	 * Normalizes the step selection as follows:
 	 * (1) If no selected is provided - the first step is going to be selected.
 	 * (2) If the selected steps are more than one - the first step is going to be selected.
 	 * (3) If the selected step is also disabled - the first step is going to be selected.
@@ -229,14 +229,14 @@ class Wizard extends UI5Element {
 			this.selectLastSelectedStep();
 			console.warn(`Selecting the last step defined as selected: multiple selected steps are defined.`); // eslint-disable-line
 		}
-		
+
 		// If the selected step is defined as disabled -> enable the step.
 		if (this.selectedStep && this.selectedStep.disabled) {
 			this.selectedStep.disabled = false;
 			console.warn("Enable the selected step: step can't be selected and disabled at the same time."); // eslint-disable-line
 		}
 
-		// Place for improvement: If the slected step is not the first, enable all the prior steps
+		// Place for improvement: If the selected step is not the first, enable all the prior steps
 		this.selectedStepIndex = this.getSelectedStepIndex();
 	}
 
@@ -284,8 +284,6 @@ class Wizard extends UI5Element {
 			const contentItem = this.getStepWrapperByRefId(step._id);
 			return contentItem.offsetTop + contentItem.offsetHeight - Wizard.CONTENT_TOP_OFFSET;
 		});
-
-		console.log(this.stepScrollOffsets);
 	}
 
 	/**
@@ -412,7 +410,7 @@ class Wizard extends UI5Element {
 			return this.selectedSteps[this.selectedStepsCount - 1];
 		}
 
-		return null
+		return null;
 	}
 
 	get selectedSteps() {
@@ -460,7 +458,7 @@ class Wizard extends UI5Element {
 			// Hide separator if:
 			// (1) the size is small
 			// (2) on the last step in case it's not a branching one
-			const hideSeparator =  this.phoneMode || ((idx === arr.length - 1) && !step.branching);
+			const hideSeparator = this.phoneMode || ((idx === arr.length - 1) && !step.branching);
 
 			return {
 				icon: step.icon,
@@ -519,10 +517,10 @@ class Wizard extends UI5Element {
 		}
 
 		// Continue searching the closest step index by:
-		// (1) adding the current scroll position to the stepScrollOffsets array
-		// (2) sorting the stepScrollOffsets array
+		// (1) adding the current scroll position to the <code>stepScrollOffsets</code> array
+		// (2) sorting the <code>stepScrollOffsets</code> array
 		// (3) the index of the scroll position gives the index of closest step
-		return [...this.stepScrollOffsets, scrollPos].sort(this.sortAccending).indexOf(scrollPos);
+		return [...this.stepScrollOffsets, scrollPos].sort(this.sortAscending).indexOf(scrollPos);
 	}
 
 	/**
@@ -589,7 +587,7 @@ class Wizard extends UI5Element {
 	}
 
 	/**
-	 * Delays function execution by given treshhold - used to delay the scroll event handling.
+	 * Delays function execution by given threshold - used to delay the scroll event handling.
 	 * @private
 	 */
 	debounce(fn, delay) {
@@ -601,10 +599,10 @@ class Wizard extends UI5Element {
 	}
 
 	/**
-	 * Sorter method for sorting an array accending.
+	 * Sorter method for sorting an array in ascending order.
 	 * @private
 	 */
-	sortAccending(a, b) {
+	sortAscending(a, b) {
 		if (a < b) {
 			return -1;
 		}

@@ -31,7 +31,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines initials to be dispalyed if no <code>icon</code> is set.
+		 * Defines initials to be displayed if no <code>icon</code> is set.
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private

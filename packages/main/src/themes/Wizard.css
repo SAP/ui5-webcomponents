@@ -59,9 +59,6 @@
 }
 
 .ui5-wiz-content-item[stretch] {
-	/*
-	 * Add 2rem to ensure there is enoght scroll height
-	 to reach the last step
-	 */
+	/* Add 2rem to ensure there is enough scroll height to reach the last step */
 	min-height: calc(100% + 2rem);
 }
