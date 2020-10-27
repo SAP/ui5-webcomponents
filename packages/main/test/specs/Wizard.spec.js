@@ -1,6 +1,6 @@
 const assert = require("chai").assert;
 
-describe("Button general interaction", () => {
+describe("Wizard general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Wizard_test.html");
 
 	it("test initial selection", () => {
