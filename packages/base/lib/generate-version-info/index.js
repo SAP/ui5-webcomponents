@@ -9,7 +9,7 @@ if (!matches) {
 	throw new Error("Unsupported version format");
 }
 
-const isNext = version.match(/[a-f0-9]{9}^/);
+const isNext = version.match(/[a-f0-9]{9}$/);
 const buildTime = Math.floor(new Date().getTime() / 1000);
 
 const fileContent = `const VersionInfo = {
