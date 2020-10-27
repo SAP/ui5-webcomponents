@@ -24,22 +24,15 @@
 		html, body {
 			margin: 0;
 			padding: 0;
-		}
-
-		.stretch {
-			position: absolute;
-			overflow: hidden;
 			height: 100%;
-			width: 100%;
 		}
 	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
 
-	<div class="stretch">
 		<ui5-wizard id="wiz">
-			<ui5-wizard-step icon="sap-icon://product" text="Product type">
+			<ui5-wizard-step icon="sap-icon://product" heading="Product type" selected>
 				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br>
 
@@ -55,7 +48,7 @@
 				<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step text="Product Information" disabled>
+			<ui5-wizard-step heading="Product Information" subheading="(Optional)" disabled>
 				<div style="display: flex;flex-direction: column">
 					<ui5-title>2. Product Information</ui5-title><br>
 					<ui5-label wrap>
@@ -92,7 +85,7 @@
 				<ui5-button id="toStep3" design="Emphasized" hidden>Step 3</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step text="Options" disabled>
+			<ui5-wizard-step heading="Options" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>3. Options</ui5-title><br>
 
@@ -133,7 +126,7 @@
 				<ui5-button id="toStep4" design="Emphasized" hidden>Step 4</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step text="Pricing" disabled>
+			<ui5-wizard-step heading="Pricing" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>4. Pricing</ui5-title><br>
 					<ui5-label wrap>
@@ -166,9 +159,9 @@
 		</ui5-wizard>
 	</div>
 
-	<ui5-dialog id="dialog" stretch header-text="Wizard">
+	<ui5-dialog id="dialog" stretch header-heading="Wizard">
 		<ui5-wizard id="wiz2">
-			<ui5-wizard-step icon="sap-icon://home" text="Product type">
+			<ui5-wizard-step icon="sap-icon://home" heading="Product type">
 				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br>
 	
@@ -183,7 +176,7 @@
 				<ui5-button id="toStep22" design="Emphasized">Step 2</ui5-button>
 			</ui5-wizard-step>
 	
-			<ui5-wizard-step text="Product Information" selected disabled>
+			<ui5-wizard-step heading="Product Information" selected>
 				<div style="display: flex;flex-direction: column">
 					<ui5-title>2. Product Information</ui5-title><br>
 					<ui5-label wrap>
@@ -220,7 +213,7 @@
 				<ui5-button id="toStep32" design="Emphasized" hidden>Step 3</ui5-button>
 			</ui5-wizard-step>
 	
-			<ui5-wizard-step text="Options" disabled>
+			<ui5-wizard-step heading="Options" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>3. Options</ui5-title><br>
 	
@@ -261,7 +254,7 @@
 				<ui5-button id="toStep42" design="Emphasized" hidden>Step 4</ui5-button>
 			</ui5-wizard-step>
 	
-			<ui5-wizard-step text="Pricing" disabled>
+			<ui5-wizard-step heading="Pricing" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>4. Pricing</ui5-title><br>
 					<ui5-label wrap>

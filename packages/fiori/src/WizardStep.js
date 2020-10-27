@@ -7,15 +7,32 @@ const metadata = {
 	tag: "ui5-wizard-step",
 	properties: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
 		/**
-		 * Defines the <code>text</code> of the step.
+		 * Defines the <code>heading</code> of the step.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
+		 * <br>
+		 * <b>Note:</b> the text will hide on small sizes (about 559 px).
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		text: {
+		heading: {
+			type: String,
+		},
+
+		/**
+		 * Defines the <code>subheading</code> of the step.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
+		 * <br>
+		 * <b>Note:</b> the text will hide on small sizes (about 559 px).
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		subheading: {
 			type: String,
 		},
 

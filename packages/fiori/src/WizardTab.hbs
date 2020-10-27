@@ -18,8 +18,11 @@
 				<span class="ui5-wiz-step-initials">{{initials}}</span>
 			{{/if}}
 		</div>
-		{{#if text}}
-			<div class="ui5-wiz-step-txt">{{text}}</div>
+		{{#if hasTexts}}
+			<div class="ui5-wiz-step-texts">
+				<div class="ui5-wiz-step-heading">{{heading}}</div>
+				<div class="ui5-wiz-step-subheading">{{subheading}}</div>
+			</div>
 		{{/if}}
 	</div>
 

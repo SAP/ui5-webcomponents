@@ -48,11 +48,6 @@
 			align-items: center;
 			flex-wrap: wrap;
 		}
-
-		.stretch-column {
-			overflow: hidden;
-			height: 100%;
-		}
 	</style>
 </head>
 
@@ -87,9 +82,9 @@
 		</div>
 
 		<!-- mid column -->
-		<div style="box-sizing: border-box;" slot="midColumn" class="stretch-column">
+		<div style="box-sizing: border-box; height: 100%" slot="midColumn">
 			<ui5-wizard id="wiz">
-				<ui5-wizard-step icon="sap-icon://home" text="Product type">
+				<ui5-wizard-step icon="sap-icon://home" heading="Product type">
 					<div style="display: flex; min-height: 200px; flex-direction: column;">
 						<ui5-title>1. Product Type</ui5-title><br>
 	
@@ -105,7 +100,7 @@
 					<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
 				</ui5-wizard-step>
 	
-				<ui5-wizard-step text="Product Information">
+				<ui5-wizard-step heading="Product Information">
 					<div style="display: flex;flex-direction: column">
 						<ui5-title>2. Product Information</ui5-title><br>
 						<ui5-label wrap>
@@ -142,7 +137,7 @@
 					<ui5-button id="toStep3" design="Emphasized" hidden>Step 3</ui5-button>
 				</ui5-wizard-step>
 	
-				<ui5-wizard-step text="Options">
+				<ui5-wizard-step heading="Options">
 					<div style="display: flex; flex-direction: column;">
 						<ui5-title>3. Options</ui5-title><br>
 	
@@ -183,7 +178,7 @@
 					<ui5-button id="toStep4" design="Emphasized" hidden>Step 4</ui5-button>
 				</ui5-wizard-step>
 	
-				<ui5-wizard-step text="Pricing">
+				<ui5-wizard-step heading="Pricing">
 					<div style="display: flex; flex-direction: column;">
 						<ui5-title>4. Pricing</ui5-title><br>
 						<ui5-label wrap>

@@ -464,7 +464,8 @@ class Wizard extends UI5Element {
 
 			return {
 				icon: step.icon,
-				text: this.phoneMode ? "" : step.text,
+				heading: this.phoneMode ? "" : step.heading,
+				subheading: this.phoneMode ? "" : step.subheading,
 				initials: idx + 1,
 				selected: step.selected,
 				disabled: step.disabled,

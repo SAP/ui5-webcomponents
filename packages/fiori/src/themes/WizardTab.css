@@ -86,12 +86,22 @@
 	color: var(--_ui5_wiz_tab_icon_color);
 }
 
-.ui5-wiz-step-txt {
+.ui5-wiz-step-texts {
+	display: flex;
+	flex-direction: column;
 	padding: 0 .5rem;
+}
+
+.ui5-wiz-step-heading,
+.ui5-wiz-step-subheading {
 	color: var(--sapContent_LabelColor);
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+}
+
+.ui5-wiz-step-subheading {
+	font-size: var(--sapFontSmallSize);
 }
 
 .ui5-wiz-step-hr {

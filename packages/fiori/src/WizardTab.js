@@ -21,12 +21,22 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>text</code> of the step.
+		 * Defines the <code>heading</code> of the step.
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
 		 */
-		text: {
+		heading: {
+			type: String,
+		},
+
+		/**
+		 * Defines the <code>subheading</code> of the step.
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		subheading: {
 			type: String,
 		},
 
@@ -237,6 +247,10 @@ class WizardTab extends UI5Element {
 
 	get ariaDisabled() {
 		return this.disabled ? "true" : undefined;
+	}
+
+	get hasTexts() {
+		return this.heading || this.subheading;
 	}
 }
 
