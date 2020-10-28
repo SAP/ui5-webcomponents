@@ -381,8 +381,12 @@ class List extends UI5Element {
 		return `${this._id}-header`;
 	}
 
+	get noData() {
+		return this.items.length !== 0;
+	}
+
 	get showNoDataText() {
-		return this.items.length === 0 && this.noDataText;
+		return !this.noData && this.noDataText;
 	}
 
 	get showBusy() {
