@@ -1,6 +1,7 @@
 :root {
 	--_ui5_daypicker_item_margin: 2px;
 	--_ui5_daypicker_item_border: none;
+	--_ui5_daypicker_item_selected_border_color: var(--sapList_Background);
 	--_ui5_daypicker_item_outline_width: 1px;
 	--_ui5_daypicker_item_outline_offset: 1px;
 	--_ui5_daypicker_daynames_container_height: 2rem;
