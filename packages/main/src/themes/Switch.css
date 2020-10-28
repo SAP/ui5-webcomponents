@@ -70,7 +70,7 @@
 	min-width: 1.625rem;
 	padding: 0 0.125rem;
 	font-size: var(--sapFontSmallSize);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	text-transform: uppercase;
 	text-align: center;
 	color: var(--sapTextColor);

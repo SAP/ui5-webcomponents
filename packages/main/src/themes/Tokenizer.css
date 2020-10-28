@@ -14,7 +14,7 @@
 	padding: var(--_ui5_tokenizer_root_padding);
 	overflow-x: scroll;
 	box-sizing: border-box;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 }
 
 .ui5-tokenizer-no-padding {
