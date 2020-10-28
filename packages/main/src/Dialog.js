@@ -174,6 +174,10 @@ class Dialog extends Popup {
 		return true;
 	}
 
+	get shouldHideBlockLayer() { // Required by Popup.js
+		return false;
+	}
+
 	get _ariaLabelledBy() { // Required by Popup.js
 		return this.ariaLabel ? undefined : "ui5-popup-header";
 	}

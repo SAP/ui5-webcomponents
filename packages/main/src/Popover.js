@@ -107,6 +107,17 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the block layer will be shown if modal property is set to true.
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.10
+		 */
+		hideBlockLayer: {
+			type: Boolean,
+		},
+
+		/**
 		 * Determines whether the <code>ui5-popover</code> arrow is hidden.
 		 *
 		 * @type {boolean}
@@ -618,6 +629,10 @@ class Popover extends Popup {
 
 	get isModal() { // Required by Popup.js
 		return this.modal;
+	}
+
+	get shouldHideBlockLayer() { // Required by Popup.js
+		return this.hideBlockLayer;
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
