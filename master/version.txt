@@ -1,5 +1,42 @@
-commit 2194b16a3af2de36eb39930c7f88a60a87c1704d
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Oct 26 10:40:36 2020 +0200
+commit 11d3bbc6f6913d7c0c0c7700221a895398cab200
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Oct 27 16:12:57 2020 +0200
 
-    fix(ui5-messagestrip): fix close button accessibility (#2352)
+    feat(icons): update icons from latest icon font (#2397)
+    
+    new icons:
+    s4hana
+    translate
+    feedback
+    megamenu
+    text-formatting
+    
+    missing icon names:
+    detail-view (same as show-edit)
+    status-completed (same as status-positive)
+    status-error (same as status-negative)
+    status-in-process (same as status-critical)
+    notification (same as message-error)
+    information (same as message-information)
+    
+    changed icons:
+    message-error: exclamation mark replaced by x
+    error: exclamation mark replaced by x
+    message-success: square shape replaced by circle
+    message-information: square shape replaced by circle
+    question-mark: square shape replaced by circle
+    locked
+    unlocked
+    value-help - style adapted to Fiori3 requirements
+    
+    polishing:
+    car-rental
+    batch-payments
+    folder-blank
+    measurement-document
+    measuring-point
+    folder
+    
+    multiple icons had missing top or bottom pixels due to wrong vertical alignment
+    
+    BREAKING: `soccor` replaced by `soccer`
