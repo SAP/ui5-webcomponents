@@ -43,7 +43,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListItem.prototype */ {
 
 		/**
-		 * Defines if the <code>heading</code> and <code>decription</code> should wrap,
+		 * Defines if the <code>heading</code> and <code>description</code> should wrap,
 		 * they truncate by default.
 		 *
 		 * <br><br>
@@ -71,7 +71,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the state of the <code>heading</code> and <code>decription</code>,
+		 * Defines the state of the <code>heading</code> and <code>description</code>,
 		 * if less or more information is displayed.
 		 * @private
 		 */
