@@ -126,21 +126,23 @@ const metadata = {
 		/**
 		 * Defines the aria-label of the step.
 		 * @type {boolean}
-		 * @defaultvalue ""
+		 * @defaultvalue undefined
 		 * @private
 		 */
 		ariaLabel: {
 			type: String,
+			defaultValue: undefined,
 		},
 
 		/**
 		 * Defines the aria-labelledby of the step.
 		 * @type {boolean}
-		 * @defaultvalue ""
+		 * @defaultvalue undefined
 		 * @private
 		 */
 		ariaLabelledby: {
 			type: String,
+			defaultValue: undefined,
 		},
 
 		/**

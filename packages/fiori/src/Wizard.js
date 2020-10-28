@@ -10,8 +10,8 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Texts
 import {
-	WIZARD_NAV_ARIA_ROLE_DESCRIPTION,
 	WIZARD_NAV_STEP_DEFAULT_HEADING,
+	WIZARD_NAV_ARIA_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Step in header and content
@@ -468,6 +468,10 @@ class Wizard extends UI5Element {
 
 	get navStepDefaultHeading() {
 		return this.i18nBundle.getText(WIZARD_NAV_STEP_DEFAULT_HEADING);
+	}
+
+	get ariaLabelText() {
+		return this.ariaLabel || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
 	/**
