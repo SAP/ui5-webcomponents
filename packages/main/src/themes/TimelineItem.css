@@ -125,7 +125,7 @@
 .ui5-tli-title,
 .ui5-tli-desc {
 	color: var(--sapTextColor);
-	font-family: "72fallback", var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-weight: 400;
 	font-size: var(--sapFontSize);
 }
@@ -137,7 +137,7 @@
 
 .ui5-tli-subtitle {
 	color: var(--sapContent_LabelColor);
-	font-family: "72fallback", var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-weight: 400;
 	font-size: var(--sapFontSmallSize);
 	padding-top: .375rem;

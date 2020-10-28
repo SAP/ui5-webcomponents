@@ -40,7 +40,7 @@
 	text-overflow: ellipsis;
 	box-sizing: border-box;
 	font-size: var(--sapMFontHeader4Size);
-	font-family: "72fallback", var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	color: var(--sapGroup_TitleTextColor);
 	height: 3rem;
 	line-height: 3rem;
@@ -54,7 +54,7 @@
 	box-sizing: border-box;
 	-webkit-text-size-adjust: none;	/* To improve readability Mobile Safari automatically increases the size of small text so let's disable this */
 	font-size: var(--sapFontSize);
-	font-family: "72fallback", var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	line-height: 2rem;
 	background-color: var(--sapList_FooterBackground);
 	color: var(--ui5_list_footer_text_color);

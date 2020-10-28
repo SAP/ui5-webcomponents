@@ -4,7 +4,7 @@
 	vertical-align: middle;
 	text-align: center;
 	box-sizing: border-box;
-	font-family: "72fallback", var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	justify-content: space-between;
 	flex-direction: column;
 	display: inline-flex;

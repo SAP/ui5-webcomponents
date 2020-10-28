@@ -8,7 +8,7 @@
 	display: inline-block;
 	color: var(--sapUiBaseColor);
 	font-size: var(--sapFontSmallSize);
-	font-family: "72fallback", var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	padding: .3rem .625rem;
 	overflow: hidden;
 	text-overflow: ellipsis;

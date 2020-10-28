@@ -11,7 +11,7 @@
 	border: solid 1px var(--sapLegendColor1);
 	border-radius: 1.125em;
 	box-sizing: border-box;
-	font-family: "72fallback", var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	text-align: center;
 }
 

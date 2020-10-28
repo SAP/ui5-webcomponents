@@ -7,7 +7,7 @@
 :host {
 	min-width: var(--_ui5_button_base_min_width);
 	height: var(--_ui5_button_base_height);
-	font-family: "72fallback", var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	text-shadow: var(--_ui5_button_text_shadow);
 	border-radius: var(--_ui5_button_border_radius);

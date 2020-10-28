@@ -17,7 +17,7 @@
     height: 100%;
     width: 100%;
     font-size: var(--sapFontSmallSize);
-    font-family: "72fallback", var(--sapFontFamily);
+    font-family: "72override", var(--sapFontFamily);
 }
 
 .ui5-progress-indicator-bar {

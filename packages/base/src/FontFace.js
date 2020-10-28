@@ -70,7 +70,7 @@ const fontFaceCSS = `
  *  * Hook above
  *
  *
- * Fallback for the characters that aren't covered by the '72' font to other system fonts
+ * Override for the characters that aren't covered by the '72' font to other system fonts
  *
  * U+0102-0103: A and a with Breve
  * U+01A0-01A1: O and o with Horn
@@ -83,9 +83,9 @@ const fontFaceCSS = `
  * U+1EF4-1EF7: Y and y with diacritics that are not supported by the font and combination of multiple diacritics
  *
  */
-const fallbackFontFaceCSS = `
+const overrideFontFaceCSS = `
 	@font-face {
-		font-family: '72fallback';
+		font-family: '72override';
 		unicode-range: U+0102-0103, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EB7, U+1EB8-1EC7, U+1EC8-1ECB, U+1ECC-1EE3, U+1EE4-1EF1, U+1EF4-1EF7;
 		src: local('Arial'), local('Helvetica'), local('sans-serif');
 	}
@@ -99,8 +99,8 @@ const insertFontFace = () => {
 		insertMainFontFace();
 	}
 
-	// Always set the fallback font - OpenUI5 in CSS Vars mode does not set it, unlike the main font
-	insertFallbackFontFace();
+	// Always set the override font - OpenUI5 in CSS Vars mode does not set it, unlike the main font
+	insertOverrideFontFace();
 };
 
 const insertMainFontFace = () => {
@@ -109,9 +109,9 @@ const insertMainFontFace = () => {
 	}
 };
 
-const insertFallbackFontFace = () => {
-	if (!document.querySelector(`head>style[data-ui5-font-face-fallback]`)) {
-		createStyleInHead(fallbackFontFaceCSS, { "data-ui5-font-face-fallback": "" });
+const insertOverrideFontFace = () => {
+	if (!document.querySelector(`head>style[data-ui5-font-face-override]`)) {
+		createStyleInHead(overrideFontFaceCSS, { "data-ui5-font-face-override": "" });
 	}
 };
 
