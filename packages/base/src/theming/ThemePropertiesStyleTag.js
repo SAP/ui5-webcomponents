@@ -5,19 +5,19 @@ import createStyleInHead from "../util/createStyleInHead.js";
  * @param cssText
  * @param packageName
  */
-const createThemePropertiesStyleTag = (cssText, packageName, themeName, versionIndex) => {
+const createThemePropertiesStyleTag = (cssText, packageName, themeName, runtimeIndex) => {
 	const styleElement = getThemePropertiesStyleTag(packageName);
 	if (styleElement) {
 		styleElement.textContent = cssText || "";	// in case of undefined
 		styleElement.setAttribute("data-ui5-package", packageName);
 		styleElement.setAttribute("data-ui5-theme", themeName);
-		styleElement.setAttribute("data-ui5-version-index", versionIndex);
+		styleElement.setAttribute("data-ui5-runtime-index", runtimeIndex);
 	} else {
 		const attributes = {
 			"data-ui5-theme-properties": packageName, // for compatibility
 			"data-ui5-package": packageName,
 			"data-ui5-theme": themeName,
-			"data-ui5-version-index": versionIndex,
+			"data-ui5-runtime-index": runtimeIndex,
 		};
 		createStyleInHead(cssText, attributes);
 	}
