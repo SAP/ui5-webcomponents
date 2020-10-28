@@ -137,8 +137,9 @@ const metadata = {
  * <h3>Structure</h3>
  * <ul>
  * <li>Each wizard step has arbitrary content</li>
- * <li>Each wizard step might have an text - defined by the <code>text</code> property</li>
+ * <li>Each wizard step might have texts - defined by the <code>heading</code> and <code>subheading</code> properties</li>
  * <li>Each wizard step might have an icon - defined by the <code>icon</code> property</li>
+ * <li>Each wizard step might display a number in place of the <code>icon</code>, when it's missing</li>
  * </ul>
  *
  * <h3>Usage</h3>

@@ -26,7 +26,7 @@
 	color: var(--sapList_Active_TextColor);
 }
 
-:host([selected]) .ui5-wiz-step-initials {
+:host([selected]) .ui5-wiz-step-number {
 	color: var(--sapList_Active_TextColor);
 }
 
@@ -40,7 +40,7 @@
 	color: var(--sapContent_LabelColor);
 }
 
-:host([disabled]) .ui5-wiz-step-initials {
+:host([disabled]) .ui5-wiz-step-number {
 	color: var(--sapContent_LabelColor);
 }
 
@@ -92,7 +92,7 @@
 }
 
 /* Texts when no icon set */
-.ui5-wiz-step-initials {
+.ui5-wiz-step-number {
 	color: var(--_ui5_wiz_tab_icon_color);
 }
 

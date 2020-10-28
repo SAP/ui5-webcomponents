@@ -12,7 +12,7 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	WIZARD_NAV_ARIA_ROLE_DESCRIPTION,
 	WIZARD_NAV_STEP_DEFAULT_HEADING,
-} from "./generated/i18n/i18n-defaults.js"
+} from "./generated/i18n/i18n-defaults.js";
 
 // Step in header and content
 import WizardTab from "./WizardTab.js";
@@ -35,14 +35,6 @@ const metadata = {
 		 */
 		width: {
 			type: Float,
-		},
-
-		/**
-		 * Defines if the component width is under the phone breakpoint.
-		 * @private
-		 */
-		phoneSize: {
-			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
@@ -86,8 +78,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-wizard</code> enables users to accomplish a single goal that consists of multiple dependable sub-tasks.
- * The component helps users complete a complex task by dividing it into sections and guiding the user through it.
+ * The <code>ui5-wizard</code> helps users complete a complex task by dividing it into sections and guiding the user through it.
  * It has two main areas - a navigation area at the top showing the step sequence and a content area below it.
  *
  * <h3>Structure</h3>
@@ -100,8 +91,9 @@ const metadata = {
  * <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code></li>
  * </ul>
  *
- * <b>Important:</b> There always should be one selected (active) step at a time.
- * If no selected step is defined or multiple one are defined as selected, the component will auto select the first step.
+ * <b>Note:</b> If no selected step is defined, the first step will be auto selected.
+ * <br>
+ * <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
  *
  * <h4>Content</h4>
  * The content occupies the main part of the page. It can hold any type of HTML elements.
@@ -112,8 +104,15 @@ const metadata = {
  * and scrolls to particular place, when the user clicks on the step within the navigation area.
  * <br><br>
  *
- * <b>Important:</b> In order the component's scrolling behaviour to work, it has to be limited from the outside parent element in terms of height
- * or it has to be given absolute height. Otherwise, the component will be scrolled out with the entire page.
+ * <b>Important:</b> In order the component's scrolling behaviour to work, it has to be limited from the outside parent element in terms of height.
+ * The component or its parent has to be given percentage or absolute height. Otherwise, the component will be scrolled out with the entire page.
+ * <br><br>
+ * <b>For example:</b>
+ * <br><br>
+ * <code>&lt;ui5-dialog style="height: 80%"&gt;<br></code>
+ * <code>&#9;&lt;ui5-wizard&gt;&lt;/ui5-wizard&gt;<br></code>
+ * <code>&lt;/ui5-dialog&gt;</code>
+ *
  *
  * <h4>Moving to next step</h4>
  * The <code>ui5-wizard-step</code> provides the necessary API and it's up to the user of the component to use it to move to the next step.
@@ -122,7 +121,7 @@ const metadata = {
  *
  * The component will automatically scroll to the content of the newly selected step.
  * The Fiori 3 guidelines suggest having a button for moving to the next step upon click.
- * The user can place such a button inside the <code>ui5-wizard-step</code>, for example after its content,
+ * The user can place such a button inside the <code>ui5-wizard-step</code>,
  * and show/hide it when certain fields are filled or user defined criteria is met.
  *
  * <h3>Usage</h3>
@@ -224,9 +223,9 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Normalizes the step selection as follows:
-	 * (1) If no selected is provided - the first step is going to be selected.
-	 * (2) If the selected steps are more than one - the first step is going to be selected.
-	 * (3) If the selected step is also disabled - the first step is going to be selected.
+	 * (1) If there is no selected step - the first step is going to be selected.
+	 * (2) If the selected steps are more than one - the last step is going to be selected.
+	 * (3) If the selected step is also disabled - log a warning.
 	 * @private
 	 */
 	syncSelection() {
@@ -248,8 +247,7 @@ class Wizard extends UI5Element {
 
 		// If the selected step is defined as disabled -> enable the step.
 		if (this.selectedStep && this.selectedStep.disabled) {
-			this.selectedStep.disabled = false;
-			console.warn("Enable the selected step: step can't be selected and disabled at the same time."); // eslint-disable-line
+			console.warn("The selected step is disabled: you need to enable it in order to interact with the step."); // eslint-disable-line
 		}
 
 		// Place for improvement: If the selected step is not the first, enable all the prior steps
@@ -370,7 +368,6 @@ class Wizard extends UI5Element {
 	 */
 	onResize() {
 		this.width = this.getBoundingClientRect().width;
-		this.phoneSize = this.width <= Wizard.PHONE_BREAKPOINT;
 	}
 
 	/**
@@ -397,7 +394,7 @@ class Wizard extends UI5Element {
 	}
 
 	get _stepsInHeader() {
-		return this.getStepInfo();
+		return this.getStepsInfo();
 	}
 
 	get _steps() {
@@ -438,7 +435,7 @@ class Wizard extends UI5Element {
 	}
 
 	get selectedStepsCount() {
-		return this.slottedSteps.filter(step => step.selected).length;
+		return this.selectedSteps.length;
 	}
 
 	get slottedSteps() {
@@ -450,7 +447,7 @@ class Wizard extends UI5Element {
 	}
 
 	get stepsInHeaderDOM() {
-		return Array.from(this.shadowRoot.querySelectorAll("ui5-wizard-tab"));
+		return Array.from(this.shadowRoot.querySelectorAll("[ui5-wizard-tab]"));
 	}
 
 	get enabledStepsInHeaderDOM() {
@@ -458,7 +455,11 @@ class Wizard extends UI5Element {
 	}
 
 	get phoneMode() {
-		return this.phoneSize || isPhone();
+		if (isPhone()) {
+			return true;
+		}
+
+		return this.width <= Wizard.PHONE_BREAKPOINT;
 	}
 
 	get navAriaRoleDescription() {
@@ -475,16 +476,17 @@ class Wizard extends UI5Element {
 	 * @returns {Array<Object>}
 	 * @private
 	 */
-	getStepInfo() {
+	getStepsInfo() {
 		const lastEnabledStepIndex = this.getLastEnabledStepIndex();
+		const stepsCount = this.stepsCount;
 
-		return this.steps.map((step, idx, arr) => {
+		return this.steps.map((step, idx) => {
 			const pos = idx + 1;
 
 			// Hide separator if:
 			// (1) its size is under the phone breakpoint
 			// (2) it's the last step and it's not a branching one
-			const hideSeparator = this.phoneMode || ((idx === arr.length - 1) && !step.branching);
+			const hideSeparator = this.phoneMode || ((idx === stepsCount - 1) && !step.branching);
 
 			// Calculate the step's aria-roledectioption: "1. heading" or "Step 1".
 			const roleDescription = step.heading ? `${pos}. ${step.heading}` : `${this.navStepDefaultHeading} ${pos}`;
@@ -493,14 +495,14 @@ class Wizard extends UI5Element {
 				icon: step.icon,
 				heading: this.phoneMode ? "" : step.heading,
 				subheading: this.phoneMode ? "" : step.subheading,
-				initials: pos,
+				number: pos,
 				selected: step.selected,
 				disabled: step.disabled,
 				hideSeparator,
 				activeSeparator: idx < lastEnabledStepIndex,
 				branchingSeparator: step.branching,
 				pos,
-				size: arr.length,
+				size: stepsCount,
 				roleDescription,
 				ariaLabel: getEffectiveAriaLabelText(step),
 				refStepId: step._id,

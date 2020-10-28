@@ -41,12 +41,12 @@ const metadata = {
 		},
 
 		/**
-		 * Defines initials to be displayed if no <code>icon</code> is set.
+		 * Defines the number that will be displayed in place of the <code>icon</code>, when it's missing.
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
 		 */
-		initials: {
+		number: {
 			type: String,
 		},
 
