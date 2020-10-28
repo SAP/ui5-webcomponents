@@ -259,6 +259,8 @@ class Icon extends UI5Element {
 			return console.warn(`Required icon is not registered. Invalid icon name: ${this.name}`);
 		}
 
+		// in case a new valid name is set, show the icon
+		this.invalid = false;
 		this.pathData = iconData.pathData;
 		this.accData = iconData.accData;
 		this.ltr = iconData.ltr;
