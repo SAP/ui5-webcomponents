@@ -5,11 +5,11 @@ import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 
 // Icons
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
-import "@ui5/webcomponents-icons/dist/icons/message-success.js";
-import "@ui5/webcomponents-icons/dist/icons/message-error.js";
-import "@ui5/webcomponents-icons/dist/icons/message-warning.js";
-import "@ui5/webcomponents-icons/dist/icons/overflow.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/message-success.js";
+import "@ui5/webcomponents-icons/dist/message-error.js";
+import "@ui5/webcomponents-icons/dist/message-warning.js";
+import "@ui5/webcomponents-icons/dist/overflow.js";
 
 // Templates
 import NotifactionOverflowActionsPopoverTemplate from "./generated/templates/NotifactionOverflowActionsPopoverTemplate.lit.js";

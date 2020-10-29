@@ -178,10 +178,10 @@ just the ones that your app will actually use.
 
 |      Icon asset       |                           Module import                        |
 | ------------------------ |  ---------------------------------------------------------- |
-| Accelerated icon           |  `import "@ui5/webcomponents-icons/dist/icons/accelerated.js";`  |
-| Accept icon           |  `import "@ui5/webcomponents-icons/dist/icons/accept.js";`  |
-| ...           |  ...  |
-| Zoom out icon           |  `import "@ui5/webcomponents-icons/dist/icons/zoom-out.js";`  |
+| Accelerated icon         |  `import "@ui5/webcomponents-icons/dist/accelerated.js";`   |
+| Accept icon              |  `import "@ui5/webcomponents-icons/dist/accept.js";`        |
+|           ...            |                          ...                                |
+| Zoom out icon            |  `import "@ui5/webcomponents-icons/dist/zoom-out.js";`      |
 
 For a complete list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
 
