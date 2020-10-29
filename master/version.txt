@@ -1,42 +1,5 @@
-commit 11d3bbc6f6913d7c0c0c7700221a895398cab200
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Oct 27 16:12:57 2020 +0200
+commit 5a550b89af4aa341d292d862c5c1d4c3cd3df437
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Oct 28 15:04:58 2020 +0200
 
-    feat(icons): update icons from latest icon font (#2397)
-    
-    new icons:
-    s4hana
-    translate
-    feedback
-    megamenu
-    text-formatting
-    
-    missing icon names:
-    detail-view (same as show-edit)
-    status-completed (same as status-positive)
-    status-error (same as status-negative)
-    status-in-process (same as status-critical)
-    notification (same as message-error)
-    information (same as message-information)
-    
-    changed icons:
-    message-error: exclamation mark replaced by x
-    error: exclamation mark replaced by x
-    message-success: square shape replaced by circle
-    message-information: square shape replaced by circle
-    question-mark: square shape replaced by circle
-    locked
-    unlocked
-    value-help - style adapted to Fiori3 requirements
-    
-    polishing:
-    car-rental
-    batch-payments
-    folder-blank
-    measurement-document
-    measuring-point
-    folder
-    
-    multiple icons had missing top or bottom pixels due to wrong vertical alignment
-    
-    BREAKING: `soccor` replaced by `soccer`
+    feat(framework): add override font-family for glyphs with diacritics (#2402)
