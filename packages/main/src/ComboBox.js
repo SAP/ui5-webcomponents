@@ -421,8 +421,8 @@ class ComboBox extends UI5Element {
 		if (this._isKeyNavigation && this.responsivePopover && this.responsivePopover.opened) {
 			this.focused = false;
 		} else if (this.shadowRoot.activeElement) {
-            this.focused = this.shadowRoot.activeElement.id === 'ui5-combobox-input';
-        }
+			this.focused = this.shadowRoot.activeElement.id === "ui5-combobox-input";
+		}
 
 		this._initialRendering = false;
 		this._isKeyNavigation = false;
