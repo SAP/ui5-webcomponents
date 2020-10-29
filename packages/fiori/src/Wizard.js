@@ -248,19 +248,19 @@ class Wizard extends UI5Element {
 			return;
 		}
 
-		// If no selected steps or in case of multiple selected steps -> select the first step
+		// If no selected steps -> select the first step.
 		if (this.selectedStepsCount === 0) {
 			this.selectFirstStep();
 			console.warn("Selecting the first step: no selected step is defined."); // eslint-disable-line
 		}
 
-		// If multiple selected steps -> select the last selected one.
+		// If there are multiple selected steps -> keep the last selected one.
 		if (this.selectedStepsCount > 1) {
 			this.selectLastSelectedStep();
 			console.warn(`Selecting the last step defined as selected: multiple selected steps are defined.`); // eslint-disable-line
 		}
 
-		// If the selected step is defined as disabled -> enable the step.
+		// If the selected step is defined as disabled - log warning.
 		if (this.selectedStep && this.selectedStep.disabled) {
 			console.warn("The selected step is disabled: you need to enable it in order to interact with the step."); // eslint-disable-line
 		}
@@ -306,10 +306,12 @@ class Wizard extends UI5Element {
 	/**
 	 * Stores the scroll offsets of the steps,
 	 * e.g. the steps' starting point.
+	 *
+	 * <b>Note:</b> the disabled ones has negative offsets.
 	 * @private
 	 */
 	storeStepScrollOffsets() {
-		this.stepScrollOffsets = this.enabledSteps.map(step => {
+		this.stepScrollOffsets = this.slottedSteps.map(step => {
 			const contentItem = this.getStepWrapperByRefId(step._id);
 			return contentItem.offsetTop + contentItem.offsetHeight - Wizard.CONTENT_TOP_OFFSET;
 		});
@@ -324,30 +326,6 @@ class Wizard extends UI5Element {
 	onSelectionChangeRequested(event) {
 		this.selectionRequestedByClick = true;
 		this.changeSelectionByStepClick(event.target);
-	}
-
-	/**
-	 * Called upon <code>onSelectionChangeRequested</code>.
-	 * Selects the external step (ui5-wizard-step),
-	 * based on the clicked step in the header (ui5-wizard-tab).
-	 * @param {HTMLElement} stepInHeader the step equivalent in the header
-	 * @private
-	 */
-	changeSelectionByStepClick(stepInHeader) {
-		const stepRefId = stepInHeader.getAttribute("data-ui5-content-ref-id");
-		const selectedStep = this.selectedStep;
-		const stepToSelect = this.getStepByRefId(stepRefId);
-
-		// If the currently selected (active) step is clicked,
-		// just scroll to its starting point and stop.
-		if (selectedStep === stepToSelect) {
-			this.scrollToContentItem(this.selectedStepIndex);
-			return;
-		}
-
-		// Change selection and fire "selection-change".
-		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
-		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex);
 	}
 
 	/**
@@ -392,7 +370,7 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	changeSelectionByScroll(scrollPos) {
-		const newlySelectedIndex = this.getClosestStepByScrollPos(scrollPos);
+		const newlySelectedIndex = this.getClosestStepIndexByScrollPos(scrollPos);
 
 		// Skip if already selected - stop.
 		if (this.selectedStepIndex === newlySelectedIndex) {
@@ -406,6 +384,30 @@ class Wizard extends UI5Element {
 			this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex);
 			this.selectionRequestedByScroll = true;
 		}
+	}
+
+	/**
+	 * Called upon <code>onSelectionChangeRequested</code>.
+	 * Selects the external step (ui5-wizard-step),
+	 * based on the clicked step in the header (ui5-wizard-tab).
+	 * @param {HTMLElement} stepInHeader the step equivalent in the header
+	 * @private
+	 */
+	changeSelectionByStepClick(stepInHeader) {
+		const stepRefId = stepInHeader.getAttribute("data-ui5-content-ref-id");
+		const selectedStep = this.selectedStep;
+		const stepToSelect = this.getStepByRefId(stepRefId);
+
+		// If the currently selected (active) step is clicked,
+		// just scroll to its starting point and stop.
+		if (selectedStep === stepToSelect) {
+			this.scrollToContentItem(this.selectedStepIndex);
+			return;
+		}
+
+		// Change selection and fire "selection-change".
+		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
+		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex);
 	}
 
 	get _stepsInHeader() {
@@ -518,7 +520,7 @@ class Wizard extends UI5Element {
 				selected: step.selected,
 				disabled: step.disabled,
 				hideSeparator,
-				activeSeparator: idx < lastEnabledStepIndex,
+				activeSeparator: (idx < lastEnabledStepIndex) && !step.disabled,
 				branchingSeparator: step.branching,
 				pos,
 				size: stepsCount,
@@ -530,6 +532,11 @@ class Wizard extends UI5Element {
 		});
 	}
 
+	/**
+	 * Returns the index of the selected step.
+	 * @returns {Integer}}
+	 * @private
+	 */
 	getSelectedStepIndex() {
 		if (this.selectedStep) {
 			return this.slottedSteps.indexOf(this.selectedStep);
@@ -537,14 +544,21 @@ class Wizard extends UI5Element {
 		return 0;
 	}
 
+	/**
+	 * Returns the index of the last enabled step.
+	 * @returns {Integer}}
+	 * @private
+	 */
 	getLastEnabledStepIndex() {
-		const enabledSteps = this.enabledSteps;
+		let lastEnabledStepIndex = 0;
 
-		if (enabledSteps.length) {
-			return enabledSteps.length - 1;
-		}
+		this.slottedSteps.forEach((step, idx) => {
+			if (!step.disabled) {
+				lastEnabledStepIndex = idx;
+			}
+		});
 
-		return 0;
+		return lastEnabledStepIndex;
 	}
 
 	getStepByRefId(refId) {
@@ -553,27 +567,6 @@ class Wizard extends UI5Element {
 
 	getStepWrapperByRefId(refId) {
 		return this.shadowRoot.querySelector(`[data-ui5-content-item-ref-id=${refId}]`);
-	}
-
-	/**
-	 * Determines the closest step index by given scroll position.
-	 *
-	 * @param {Integer} scrollPos scroll position
-	 * @returns {Integer} closestStepIndex the closest step index
-	 * @private
-	 */
-	getClosestStepByScrollPos(scrollPos) {
-		// If the scroll position is found in the scroll offset storage,
-		// the closest step has index bigger than the index of the found scroll offset by 1.
-		if (this.stepScrollOffsets.indexOf(scrollPos) !== -1) {
-			return this.stepScrollOffsets.indexOf(scrollPos) + 1;
-		}
-
-		// Continue searching the closest step index by:
-		// (1) adding the current scroll position to the <code>stepScrollOffsets</code> array
-		// (2) sorting the <code>stepScrollOffsets</code> array
-		// (3) the index of the scroll position gives the index of closest step
-		return [...this.stepScrollOffsets, scrollPos].sort(this.sortAscending).indexOf(scrollPos);
 	}
 
 	/**
@@ -596,12 +589,50 @@ class Wizard extends UI5Element {
 	 * @param {Integer} stepIndex the index of a step
 	 */
 	scrollToContentItem(stepIndex) {
+		this.contentDOM.scrollTop = this.getClosestScrollPosByStepIndex(stepIndex);
+	}
+
+	/**
+	 * Returns to closest scroll position for the given step index.
+	 * by given step index.
+	 *
+	 * @private
+	 * @param {Integer} stepIndex the index of a step
+	 */
+	getClosestScrollPosByStepIndex(stepIndex) {
 		if (stepIndex === 0) {
-			this.contentDOM.scrollTop = 0;
-			return;
+			return 0;
 		}
 
-		this.contentDOM.scrollTop = this.stepScrollOffsets[stepIndex - 1];
+		// It's possible to have [enabled - 0, disabled - 1, enabled - 2, disabled - 3] step definition and similar.
+		// Consider selection of the third step at index 2, the wizard should scroll where the previous step ends,
+		// but in this case the 2nd step is disabled, so we have to fallback to the first possible step.
+		for (let closestStepIndex = stepIndex - 1; closestStepIndex >= 0; closestStepIndex--) {
+			if (this.stepScrollOffsets[closestStepIndex] > 0) {
+				return this.stepScrollOffsets[closestStepIndex];
+			}
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Returns the closest step index by given scroll position.
+	 *
+	 * @param {Integer} scrollPos scroll position
+	 * @returns {Integer} closestStepIndex the closest step index
+	 * @private
+	 */
+	getClosestStepIndexByScrollPos(scrollPos) {
+		for (let closestStepIndex = 0; closestStepIndex <= this.stepScrollOffsets.length - 1; closestStepIndex++) {
+			const stepOffset = this.stepScrollOffsets[closestStepIndex];
+
+			if (stepOffset > 0 && scrollPos < stepOffset) {
+				return closestStepIndex;
+			}
+		}
+
+		return 0;
 	}
 
 	/**
