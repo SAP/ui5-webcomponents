@@ -712,6 +712,10 @@ class ComboBox extends UI5Element {
 		this._itemFocused = true;
 	}
 
+	get _placeholder() {
+		return this.placeholder || "";
+	}
+
 	get _headerTitleText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}

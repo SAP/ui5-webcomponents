@@ -389,6 +389,10 @@ class FileUploader extends UI5Element {
 		return this.emptyInput.files;
 	}
 
+	get _placeholder() {
+		return this.placeholder || "";
+	}
+
 	get browseText() {
 		return this.i18nBundle.getText(FILEUPLOAD_BROWSE);
 	}

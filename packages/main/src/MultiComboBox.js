@@ -745,6 +745,10 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
+	get _placeholder() {
+		return this.placeholder || "";
+	}
+
 	get editable() {
 		return !this.readonly;
 	}

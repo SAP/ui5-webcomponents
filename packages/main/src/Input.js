@@ -1031,6 +1031,10 @@ class Input extends UI5Element {
 		return this.readonly && !this.disabled;
 	}
 
+	get _placeholder() {
+		return this.placeholder || "";
+	}
+
 	get _headerTitleText() {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
