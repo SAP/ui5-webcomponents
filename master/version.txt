@@ -1,5 +1,5 @@
-commit 5a550b89af4aa341d292d862c5c1d4c3cd3df437
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Oct 28 15:04:58 2020 +0200
+commit 8ae4f91ec6e8003d2b1f494ef1095a0d7127a440
+Author: Lukas Harbarth <lukas742@gmx.net>
+Date:   Thu Oct 29 06:18:22 2020 +0100
 
-    feat(framework): add override font-family for glyphs with diacritics (#2402)
+    docs(NotificationListItem): add type annotation for wrap property, fix typos (#2410)
