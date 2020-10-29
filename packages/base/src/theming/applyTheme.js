@@ -17,7 +17,6 @@ import {
 import Logger from "../util/Logger.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
-const policy = getSharedResourcePolicy(SharedResourceType.ThemeProperties); // shared resource policy for theme properties
 
 const isThemeBaseRegistered = () => {
 	const registeredPackages = getRegisteredPackages();
@@ -32,6 +31,8 @@ const isThemeBaseRegistered = () => {
  * @returns {boolean}
  */
 const shouldApplyThemeProperties = (packageName, theme) => {
+	const policy = getSharedResourcePolicy(SharedResourceType.ThemeProperties); // shared resource policy for theme properties
+
 	const styleElement = getThemePropertiesStyleTag(packageName);
 
 	// No style element created yet -> apply
@@ -76,6 +77,7 @@ const shouldApplyThemeProperties = (packageName, theme) => {
 			logDisableRuntimeWarningsInstructions(logger);
 			logger.console("warn");
 		}
+
 		return true;
 	}
 

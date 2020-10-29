@@ -6,24 +6,20 @@ import {
 	compareCurrentRuntimeWith,
 } from "./Runtimes.js";
 
-const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons); // shared resource policy for SVG Icons
+// Used to store already calculated keys
 const iconKeysCache = new Map();
-let registry;
-let iconCollectionPromises;
 
-// Never reuse policy - have local resources, emulate exactly the same behavior as before reuse policies were created
-if (policy === SharedResourceReusePolicy.Never) {
-	registry = new Map();
-	iconCollectionPromises = new Map();
-// Always reuse or OnlyNewer - use the shared resources
-} else {
-	const SVGIcons = getSharedResource("SVGIcons", {
-		registry: new Map(),
-		promises: new Map(),
-	});
-	registry = SVGIcons.registry;
-	iconCollectionPromises = SVGIcons.promises;
-}
+// Local resources
+const localRegistry = new Map();
+const localIconCollectionPromises = new Map();
+
+// Global resources
+const sharedRegistry = getSharedResource("SVGIcons.registry", new Map());
+const sharedIconCollectionPromises = getSharedResource("SVGIcons.promises", new Map());
+
+// Functions that determine the right registry/promises to use depending on policy
+const getRegistry = policy => { return policy === SharedResourceReusePolicy.Never ? localRegistry : sharedRegistry; };
+const getIconCollectionPromises = policy => { return policy === SharedResourceReusePolicy.Never ? localIconCollectionPromises : sharedIconCollectionPromises; };
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 const DEFAULT_COLLECTION = "SAP-icons";
@@ -46,6 +42,8 @@ const calcKey = (name, collection) => {
 
 const registerIcon = (name, { pathData, ltr, accData, collection } = {}) => { // eslint-disable-line
 	const key = calcKey(name, collection);
+	const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons);
+	const registry = getRegistry(policy);
 
 	// Never reuse policy - update the local registry
 	if (policy === SharedResourceReusePolicy.Never) {
@@ -70,6 +68,9 @@ const registerIcon = (name, { pathData, ltr, accData, collection } = {}) => { //
 
 const getIconDataSync = (name, collection = DEFAULT_COLLECTION) => {
 	const key = calcKey(name, collection);
+	const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons);
+	const registry = getRegistry(policy);
+
 	const iconData = registry.get(key);
 
 	// Icon not found in the registry - must fetch it
@@ -90,6 +91,9 @@ const getIconDataSync = (name, collection = DEFAULT_COLLECTION) => {
 
 const getIconData = async (name, collection = DEFAULT_COLLECTION) => {
 	const key = calcKey(name, collection);
+	const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons);
+	const registry = getRegistry(policy);
+	const iconCollectionPromises = getIconCollectionPromises(policy);
 
 	if (!iconCollectionPromises.has(collection)) {
 		iconCollectionPromises.set(collection, Promise.resolve(ICON_NOT_FOUND));
@@ -105,6 +109,10 @@ const getIconData = async (name, collection = DEFAULT_COLLECTION) => {
 };
 
 const getRegisteredNames = async () => {
+	const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons);
+	const registry = getRegistry(policy);
+	const iconCollectionPromises = getIconCollectionPromises(policy);
+
 	if (iconCollectionPromises.has(DEFAULT_COLLECTION)) {
 		await iconCollectionPromises.get(DEFAULT_COLLECTION);
 	}
@@ -112,6 +120,9 @@ const getRegisteredNames = async () => {
 };
 
 const registerCollectionPromise = (collection, promise) => {
+	const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons);
+	const iconCollectionPromises = getIconCollectionPromises(policy);
+
 	// Never reuse policy - use the local registry
 	if (policy === SharedResourceReusePolicy.Never) {
 		iconCollectionPromises.set(collection, promise);
