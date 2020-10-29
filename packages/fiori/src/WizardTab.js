@@ -34,7 +34,7 @@ const metadata = {
 		 * Defines the <code>subheading</code> of the step.
 		 * @type {String}
 		 * @defaultvalue ""
-		 * @public
+		 * @private
 		 */
 		subheading: {
 			type: String,

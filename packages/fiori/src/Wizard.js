@@ -96,7 +96,7 @@ const metadata = {
  * <h3>Structure</h3>
  * <h4>Navigation area</h4>
  * The top most area of the <code>ui5-wizard</code> is occupied by the navigation area.
- * It shows the sequence of steps, where the minimum recommended number of steps is 3.
+ * It shows the sequence of steps, where the recommended number of steps is between 3 and 8 steps.
  * <ul>
  * <li> Steps can have different visual representations - numbers or icons.
  * <li> Steps might have labels for better readability - heading and subheding.</li>
@@ -125,15 +125,14 @@ const metadata = {
  * <code>&#9;&lt;ui5-wizard&gt;&lt;/ui5-wizard&gt;<br></code>
  * <code>&lt;/ui5-dialog&gt;</code>
  *
- *
  * <h4>Moving to next step</h4>
  * The <code>ui5-wizard-step</code> provides the necessary API and it's up to the user of the component to use it to move to the next step.
- * The user have to set its <code>selected</code> (and remove the <code>disabled</code> if set) property to true.
- * <br>
+ * You have to set its <code>selected</code> property (and remove the <code>disabled</code> one if set) to <code>true</code>.
+ * And, the <code>ui5-wizard</code> will automatically scroll to the content of the newly selected step.
+ * <br><br>
  *
- * The component will automatically scroll to the content of the newly selected step.
- * The Fiori 3 guidelines suggest having a button for moving to the next step upon click.
- * The user can place such a button inside the <code>ui5-wizard-step</code>,
+ * The Fiori 3 guidelines recommends having a "nextStep" button in the content area.
+ * You can place a button, or any other type of element to trigger step change, inside the <code>ui5-wizard-step</code>,
  * and show/hide it when certain fields are filled or user defined criteria is met.
  *
  * <h3>Usage</h3>
@@ -141,6 +140,10 @@ const metadata = {
  * When the user has to accomplish a long set of tasks.
  * <h4>When not to use:</h4>
  * When the task has less than 3 steps.
+ *
+ * <h3>Responsive Behavior</h3>
+ * On small widths the step's heading, subheading and separators in the navigation area
+ * will start truncate and shrink and from particular point they will hide to free as much space as possible.
  *
  * <h3>ES6 Module Import</h3>
  * <code>import @ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
