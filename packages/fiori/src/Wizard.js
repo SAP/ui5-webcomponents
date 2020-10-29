@@ -30,7 +30,19 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
-		 * Defines the width of the component.
+		 * Defines the aria-label text of the <code>ui5-wizard</code>.
+		 *
+		 * @type {String}
+		 * @defaultvalue undefined
+		 * @private
+		 */
+		ariaLabel: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Defines the width of the <code>ui5-wizard</code>.
 		 * @private
 		 */
 		width: {
