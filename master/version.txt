@@ -1,5 +1,5 @@
-commit 8ae4f91ec6e8003d2b1f494ef1095a0d7127a440
-Author: Lukas Harbarth <lukas742@gmx.net>
-Date:   Thu Oct 29 06:18:22 2020 +0100
+commit eb5e4d1ffc724e66cfb428a65ee7676948120b03
+Author: Florian Vogt <florian.vogt@sap.com>
+Date:   Thu Oct 29 14:45:43 2020 +0100
 
-    docs(NotificationListItem): add type annotation for wrap property, fix typos (#2410)
+    docs(README.md): adjust link to in depth tutorial (#2422)
