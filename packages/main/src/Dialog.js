@@ -1,4 +1,5 @@
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popup from "./Popup.js";
 import "@ui5/webcomponents-icons/dist/icons/resize-corner.js";
 import Icon from "./Icon.js";
@@ -204,6 +205,8 @@ class Dialog extends Popup {
 	}
 
 	onEnterDOM() {
+		this._screenResizeHandler = this._center.bind(this);
+
 		this._dragMouseMoveHandler = this._onDragMouseMove.bind(this);
 		this._dragMouseUpHandler = this._onDragMouseUp.bind(this);
 
@@ -212,9 +215,42 @@ class Dialog extends Popup {
 	}
 
 	onExitDOM() {
-		this._dragMouseMoveHandler = null;
-		this._dragMouseUpHandler = null;
+		delete this._screenResizeHandler;
+		delete this._dragMouseMoveHandler;
+		delete this._dragMouseUpHandler;
+		delete this._resizeMouseMoveHandler;
+		delete this._resizeMouseUpHandler;
 	}
+
+	show() {
+		ResizeHandler.register(this, this._screenResizeHandler);
+		ResizeHandler.register(document.body, this._screenResizeHandler);
+
+		this.style.visibility = "hidden";
+
+		super.show();
+		this._center();
+
+		this.style.visibility = "";
+	}
+
+	close() {
+		ResizeHandler.deregister(this, this._screenResizeHandler);
+		ResizeHandler.deregister(document.body, this._screenResizeHandler);
+
+		super.close();
+	}
+
+	_center() {
+		const height = window.innerHeight - this.offsetHeight,
+			width = window.innerWidth - this.offsetWidth;
+
+		Object.assign(this.style, {
+			top: `${Math.round(height / 2)}px`,
+			left: `${Math.round(width / 2)}px`,
+		});
+	}
+
 
 	/**
 	 * Event handlers
@@ -242,7 +278,6 @@ class Dialog extends Popup {
 		} = window.getComputedStyle(this);
 
 		Object.assign(this.style, {
-			transform: "none",
 			top: `${top}px`,
 			left: `${left}px`,
 			width: `${Math.round(Number.parseFloat(width) * 100) / 100}px`,
@@ -284,21 +319,11 @@ class Dialog extends Popup {
 	_attachDragHandlers() {
 		window.addEventListener("mousemove", this._dragMouseMoveHandler);
 		window.addEventListener("mouseup", this._dragMouseUpHandler);
-		this.addEventListener("ui5-before-close", this._recenter);
 	}
 
 	_detachDragHandlers() {
 		window.removeEventListener("mousemove", this._dragMouseMoveHandler);
 		window.removeEventListener("mouseup", this._dragMouseUpHandler);
-	}
-
-	_recenter() {
-		Object.assign(this.style, {
-			top: "",
-			left: "",
-			transform: "",
-		});
-		this.removeEventListener("ui5-before-close", this._recenter);
 	}
 
 	_onResizeMouseDown(event) {
@@ -329,7 +354,6 @@ class Dialog extends Popup {
 		this._minHeight = Number.parseFloat(minHeight);
 
 		Object.assign(this.style, {
-			transform: "none",
 			top: `${top}px`,
 			left: `${left}px`,
 		});
@@ -390,6 +414,8 @@ class Dialog extends Popup {
 	}
 
 	_attachResizeHandlers() {
+		ResizeHandler.deregister(this, this._screenResizeHandler);
+
 		window.addEventListener("mousemove", this._resizeMouseMoveHandler);
 		window.addEventListener("mouseup", this._resizeMouseUpHandler);
 		this.addEventListener("ui5-before-close", this._revertSize);
@@ -406,7 +432,6 @@ class Dialog extends Popup {
 			left: "",
 			width: "",
 			height: "",
-			transform: "",
 		});
 		this.removeEventListener("ui5-before-close", this._revertSize);
 	}
