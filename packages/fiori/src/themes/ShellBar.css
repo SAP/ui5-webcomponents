@@ -10,7 +10,7 @@
 	align-items: center;
 	background: var(--sapShellColor);
 	height: 2.75rem;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	font-weight: normal;
 	box-sizing: border-box;
@@ -92,7 +92,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-menu-button-title {
 	display: inline-block;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	margin: 0;
 	font-size: 0.75rem;
 	white-space: nowrap;
@@ -340,7 +340,7 @@ slot[name="profile"] {
 	justify-content: center;
 	align-items: center;
 	font-size: var(--sapFontSmallSize);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	z-index: 2;
 	box-sizing: border-box;
 }

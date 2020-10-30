@@ -14,7 +14,7 @@
 	border-radius: .25rem;
 	border: 1px solid var(--_ui5_card_border_color);
 	overflow: hidden;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	box-sizing: border-box;
 }
@@ -93,7 +93,7 @@
 
 .ui5-card-header .ui5-card-status {
 	display: inline-block;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
 	color: var(--sapTile_TextColor);
 	text-align: left;
@@ -106,7 +106,7 @@
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-heading {
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapMFontHeader5Size);
 	font-weight: normal;
 	color: var(--sapTile_TitleTextColor);
@@ -114,7 +114,7 @@
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-subheading {
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	font-weight: normal;
 	color: var(--sapTile_TextColor);
