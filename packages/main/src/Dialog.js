@@ -153,6 +153,18 @@ const metadata = {
  * @public
  */
 class Dialog extends Popup {
+	constructor() {
+		super();
+
+		this._screenResizeHandler = this._center.bind(this);
+
+		this._dragMouseMoveHandler = this._onDragMouseMove.bind(this);
+		this._dragMouseUpHandler = this._onDragMouseUp.bind(this);
+
+		this._resizeMouseMoveHandler = this._onResizeMouseMove.bind(this);
+		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -202,16 +214,6 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
-	}
-
-	onEnterDOM() {
-		this._screenResizeHandler = this._center.bind(this);
-
-		this._dragMouseMoveHandler = this._onDragMouseMove.bind(this);
-		this._dragMouseUpHandler = this._onDragMouseUp.bind(this);
-
-		this._resizeMouseMoveHandler = this._onResizeMouseMove.bind(this);
-		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
 	}
 
 	show() {
