@@ -108,7 +108,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the block layer will be shown if modal property is set to true.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 * @since 1.0.0-rc.10

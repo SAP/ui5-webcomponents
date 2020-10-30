@@ -308,7 +308,7 @@ class Popup extends UI5Element {
 			return;
 		}
 
-		if (this.isModal && !this.hideBlockLayer) {
+		if (this.isModal && !this.shouldHideBlockLayer) {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
 			this._blockLayerHidden = false;

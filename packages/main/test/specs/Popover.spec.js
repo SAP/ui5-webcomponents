@@ -137,6 +137,30 @@ describe("Popover general interaction", () => {
 		assert.ok(!popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
+	it("tests modal popover with no block layer", () => {
+		const btnOpenPopover = $("#btnPopModalNoLayer");
+		const popover = $("#modalPopoverNoLayer");
+
+		btnOpenPopover.click();
+		assert.ok(popover.getProperty("opened"), "Popover is opened.");
+
+		const blockLayerIsCreated = browser.execute( () => {
+			const staticAreaItems = document.querySelectorAll("ui5-static-area-item");
+			let result = false;
+
+			staticAreaItems.forEach(item => {
+				if (item.shadowRoot.querySelector(".ui5-block-layer")) {
+					result = true;
+				}
+			});
+
+			return result
+		});
+		assert.notOk(blockLayerIsCreated, "Block layer is not created.");
+
+		browser.keys("Escape");
+	});
+
 	it("tests initial focus", () => {
 		const focusedButton = $("#focusMe");
 		const btnOpenPopover = $("#btnPopFocus");
