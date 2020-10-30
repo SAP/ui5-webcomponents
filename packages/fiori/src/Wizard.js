@@ -534,7 +534,7 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns the index of the selected step.
-	 * @returns {Integer}}
+	 * @returns {Integer}
 	 * @private
 	 */
 	getSelectedStepIndex() {
@@ -546,7 +546,7 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns the index of the last enabled step.
-	 * @returns {Integer}}
+	 * @returns {Integer}
 	 * @private
 	 */
 	getLastEnabledStepIndex() {

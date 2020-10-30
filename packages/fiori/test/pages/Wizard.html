@@ -32,7 +32,7 @@
 <body style="background-color: var(--sapBackgroundColor);">
 	<h2>Wizard</h2>
 	<ui5-wizard id="wiz" style="height: 700px">
-		<ui5-wizard-step heading="Product type" icon="sap-icon://product" selected>
+		<ui5-wizard-step heading="Product type" icon="sap-icon://product" disabled>
 			<div style="display: flex; min-height: 200px; flex-direction: column;">
 				<ui5-title>1. Product Type</ui5-title><br>
 
@@ -126,7 +126,7 @@
 			<ui5-button id="toStep4" design="Emphasized" hidden>Step 4</ui5-button>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Pricing" disabled>
+		<ui5-wizard-step heading="Pricing" selected>
 			<div style="display: flex; flex-direction: column;">
 				<ui5-title>4. Pricing</ui5-title><br>
 				<ui5-label wrap>

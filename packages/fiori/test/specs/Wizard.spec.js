@@ -141,6 +141,7 @@ describe("Wizard general interaction", () => {
 		// Note: scrollIntoView works in Chrome, but if we start executing the test on every browser,
 		// this test should be reworked.
 		step2.scrollIntoView();
+		browser.pause(500);
 
 		// assert - that second step in the content and in the header are properly selected
 		assert.strictEqual(step2.getAttribute("selected"), "true", "Second step in the content is selected.");
