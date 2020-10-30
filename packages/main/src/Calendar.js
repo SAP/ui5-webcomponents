@@ -7,6 +7,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isF4, isF4Shift } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarHeader from "./CalendarHeader.js";
@@ -32,7 +33,7 @@ const metadata = {
 		/**
 		 * Defines the UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
 		 * @type {Integer}
-		 * @public
+		 * @private
 		*/
 		timestamp: {
 			type: Integer,
@@ -50,6 +51,21 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the type of selection used in the calendar component.
+		 * The property takes as value an object of type <code>CalendarSelection</code>.
+		 * Default value <code>CalendarSelection.Single</code> enables single selection
+		 * mode in the calendar component.
+		 * Other possible value is <code>CalendarSelection.Range</code> enables selection
+		 * of a range in the calendar component.
+		 * @type {CalendarSelection}
+		 * @defaultvalue "Single"
+		 * @public
+		 */
+		selection: {
+			type: CalendarSelection
+		},
+
+		/**
 		 * Defines the selected dates as UTC timestamps.
 		 * @type {Array}
 		 * @public
@@ -64,7 +80,6 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.6
 		 * @public
 		 */
 		minDate: {
@@ -76,7 +91,6 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.6
 		 * @public
 		 */
 		maxDate: {
@@ -93,7 +107,6 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0-rc.8
 		 */
 		hideWeekNumbers: {
 			type: Boolean,
@@ -143,45 +156,61 @@ const metadata = {
 /**
  * @class
  *
- * <h3>Keyboard Handling</h3>
-* The <code>ui5-calendar</code> provides advanced keyboard handling.
-* If the <code>ui5-calendar</code> is focused the user can
-* choose a picker by using the following shortcuts: <br>
-* <ul>
-* <li>[F4] - Shows month picker</li>
-* <li>[SHIFT] + [F4] - Shows year picker</li>
-* <br>
-* When a picker is showed and focused the user can use the following keyboard
-* shortcuts in order to perform a navigation:
-* <br>
-* - Day picker: <br>
-* <ul>
-* <li>[PAGEUP] - Navigate to the previous month</li>
-* <li>[PAGEDOWN] - Navigate to the next month</li>
-* <li>[SHIFT] + [PAGEUP] - Navigate to the previous year</li>
-* <li>[SHIFT] + [PAGEDOWN] - Navigate to the next year</li>
-* <li>[CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards</li>
-* <li>[CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards</li>
-* </ul>
-* <br>
-* - Month picker: <br>
-* <ul>
-* <li>[PAGEUP] - Navigate to the previous month</li>
-* <li>[PAGEDOWN] - Navigate to the next month</li>
-* </ul>
-* <br>
-* - Year picker: <br>
-* <ul>
-* <li>[PAGEUP] - Navigate to the previous year range</li>
-* <li>[PAGEDOWN] - Navigate the next year range</li>
-* </ul>
-*/
-
-/**
- * @class
+ * <h3 class="comment-api-title">Overview</h3>
+ * 
+ * The <code>ui5-calendar</code> can be used standale to display the years, months, weeks and days
+ * but the main purpose of the <code>ui5-calendar</code> is to be used within a <code>ui5-date-picker</code>
+ * <br><br>
+ * 
+ * <h3>Usage</h3>
  *
- * The <code>ui5-calendar</code> can be used standale to display the years, months, weeks and days,
- * but the main purpose of the <code>ui5-calendar</code> is to be used within a <code>ui5-date-picker</code>.
+ * The user can navigate to a particular date by:
+ * <br>
+ * <ul>
+ * <li>Pressing over a month inside the <code>ui5-monthpicker</code> component</li>
+ * <li>Pressing over an year inside the <code>ui5-yearpicker</code> component</li>
+ * </ul>
+ * <br>
+ * The user can comfirm a date selection by pressing over a date inside the <code>ui5-daypicker</code> component.
+ * <br><br>
+ *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-calendar</code> provides advanced keyboard handling.
+ * If the <code>ui5-calendar</code> is focused the user can
+ * choose a picker by using the following shortcuts: <br>
+ * <ul>
+ * <li>[F4] - Shows month picker</li>
+ * <li>[SHIFT] + [F4] - Shows year picker</li>
+ * <br>
+ * When a picker is showed and focused the user can use the following keyboard
+ * shortcuts in order to perform a navigation:
+ * <br>
+ * - Day picker: <br>
+ * <ul>
+ * <li>[PAGEUP] - Navigate to the previous month</li>
+ * <li>[PAGEDOWN] - Navigate to the next month</li>
+ * <li>[SHIFT] + [PAGEUP] - Navigate to the previous year</li>
+ * <li>[SHIFT] + [PAGEDOWN] - Navigate to the next year</li>
+ * <li>[CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards</li>
+ * <li>[CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards</li>
+ * </ul>
+ * <br>
+ * - Month picker: <br>
+ * <ul>
+ * <li>[PAGEUP] - Navigate to the previous month</li>
+ * <li>[PAGEDOWN] - Navigate to the next month</li>
+ * </ul>
+ * <br>
+ * - Year picker: <br>
+ * <ul>
+ * <li>[PAGEUP] - Navigate to the previous year range</li>
+ * <li>[PAGEDOWN] - Navigate the next year range</li>
+ * </ul>
+ * <br>
+ *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/Calendar";</code>
  *
  * @constructor
  * @author SAP SE
@@ -189,6 +218,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-calendar
  * @public
+ * @since 1.0.0-rc.10
  */
 class Calendar extends UI5Element {
 	static get metadata() {
