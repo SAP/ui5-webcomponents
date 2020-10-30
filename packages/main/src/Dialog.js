@@ -214,24 +214,12 @@ class Dialog extends Popup {
 		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
 	}
 
-	onExitDOM() {
-		delete this._screenResizeHandler;
-		delete this._dragMouseMoveHandler;
-		delete this._dragMouseUpHandler;
-		delete this._resizeMouseMoveHandler;
-		delete this._resizeMouseUpHandler;
-	}
-
 	show() {
 		ResizeHandler.register(this, this._screenResizeHandler);
 		ResizeHandler.register(document.body, this._screenResizeHandler);
 
-		this.style.visibility = "hidden";
-
 		super.show();
 		this._center();
-
-		this.style.visibility = "";
 	}
 
 	close() {
