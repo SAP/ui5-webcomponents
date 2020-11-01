@@ -1,5 +1,5 @@
 const CalendarSelection = {
 	Single: "Single",
-	Range: "Range"
+	Range: "Range",
 };
 export default CalendarSelection;
