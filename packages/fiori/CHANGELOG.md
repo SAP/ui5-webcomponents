@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.6](https://github.com/SAP/ui5-webcomponents/compare/v0.23.5...v0.23.6) (2020-11-02)
+
+
+### Features
+
+* **ui5-wizard:** introduce new component ([#2400](https://github.com/SAP/ui5-webcomponents/issues/2400)) ([eacbb26](https://github.com/SAP/ui5-webcomponents/commit/eacbb26)), closes [#2368](https://github.com/SAP/ui5-webcomponents/issues/2368)
+
+
+
+
 ## [0.23.5](https://github.com/SAP/ui5-webcomponents/compare/v0.23.4...v0.23.5) (2020-10-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
