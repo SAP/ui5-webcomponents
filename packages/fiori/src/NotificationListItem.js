@@ -43,12 +43,13 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListItem.prototype */ {
 
 		/**
-		 * Defines if the <code>heading</code> and <code>decription</code> should wrap,
+		 * Defines if the <code>heading</code> and <code>description</code> should wrap,
 		 * they truncate by default.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> by default the <code>heading</code> and <code>decription</code>,
 		 * and a <code>ShowMore/Less</code> button would be displayed.
+         * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -70,7 +71,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the state of the <code>heading</code> and <code>decription</code>,
+		 * Defines the state of the <code>heading</code> and <code>description</code>,
 		 * if less or more information is displayed.
 		 * @private
 		 */
@@ -139,19 +140,19 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-li-notification</code> is a type of list item, meant to dispaly notifcatations.
+ * The <code>ui5-li-notification</code> is a type of list item, meant to display notifications.
  * <br>
  *
  * The component has a rich set of various properties that allows the user to set <code>avatar</code>, <code>heading</code>, descriptive <code>content</code>
- * and <code>footnotes</code> to fully describe a notifcation.
+ * and <code>footnotes</code> to fully describe a notification.
  * <br>
  *
  * The user can:
  * <ul>
  * <li>display a <code>Close</code> button</li>
  * <li>can control whether the <code>heading</code> and <code>description</code> should wrap or truncate
- * and display a <code>ShomeMore</code> button to switch between less and more information</code></li>
- * <li>add custom actions by using the <code>ui5-notification-overflow-action</code></code> component</li>
+ * and display a <code>ShowMore</code> button to switch between less and more information</li>
+ * <li>add custom actions by using the <code>ui5-notification-overflow-action</code> component</li>
  * </ul>
  *
  * <h3>Usage</h3>

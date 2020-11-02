@@ -263,4 +263,32 @@ describe("List Tests", () => {
 		assert.strictEqual(ulCustomHeader.getAttribute("aria-labelledby"),
 			null, "aria-labelledby is not present");
 	});
+
+	it("tests title is updated, when initially empty", () => {
+		const btnChangeEmptyItem = $("#changeEmptyItem");
+		const emptyItem = $("#emptyItem");
+		const NEW_TEXT = "updated";
+		const assignedNodesBefore = browser.execute(() => {
+			return document.getElementById("emptyItem").shadowRoot.querySelector("slot").assignedNodes().length;
+		});
+
+		// assert default
+		assert.strictEqual(emptyItem.getProperty("innerHTML"), "",
+			"The value is empty string");
+		assert.strictEqual(assignedNodesBefore, 0,
+			"No slotted elements as no text is present.");
+
+		// act
+		btnChangeEmptyItem.click();	// update the item textContent
+
+		const assignedNodesAfter = browser.execute(() => {
+			return document.getElementById("emptyItem").shadowRoot.querySelector("slot").assignedNodes().length;
+		});
+
+		// assert
+		assert.strictEqual(emptyItem.getProperty("innerHTML"), NEW_TEXT,
+			"The value is updated");
+		assert.strictEqual(assignedNodesAfter, 1,
+			"The new text is slotted.");
+	});
 });
