@@ -34,7 +34,7 @@
 
 .ui5-nli-group-heading {
 	color: var(--sapGroup_TitleTextColor);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontHeader6Size);
 	white-space: nowrap;
 	overflow: hidden;
@@ -50,7 +50,7 @@
 	margin-right: 1rem;
 	color: var(--sapList_TableGroupHeaderTextColor);
 	font-size: var(--sapFontHeader6Size);
-	font-family: var(--sapFontHeaderFamily);
+	font-family: "72override", var(--sapFontHeaderFamily);
 }
 
 [dir="rtl"] .ui5-nli-group-toggle-btn {
