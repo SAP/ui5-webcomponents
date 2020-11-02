@@ -1,10 +1,12 @@
-commit bdec517c95c68452b0e9d16b7288b679897c269c
+commit c84bc8b7a760c24e66ade5387839fa4aa1c15d16
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 2 10:29:16 2020 +0200
+Date:   Mon Nov 2 12:47:53 2020 +0200
 
-    feat(ui5-wizard): introduce new component (#2400)
+    refactor(icons): flatten dist directory (#2425)
     
-    Introduce ui5-wizard and ui5-wizard-step components that enables users to accomplish a single goal that consists of multiple dependable sub-tasks. The ui5-wizard-step API defines both the content of particular step and its corresponding tab, displayed within the Wizard's navigation header with the icon and text properties. Also, the component provides selected and disabled properties, that determine which step is currently "selected" (active), which ones are enabled or disabled. Тhe Wizard does not provide "move to next button", instead we give the user freedom to decide how to move to particular step. It might be button, or something else, placed inside the content of step. At the end, to move to particular step, the user can use the API of the ui5-wizard-step (selected and disabled).
-    In terms of user experience, the wizard allows navigation between enabled (validated) steps upon clicking the steps within the navigation header and via scrolling. When these interactions occur, the wizard updates the selected state and fires selection-change event to notify the interested parties.
+    Change the distribution path of all individual `icons`, which changes all icons' public imports, by bringing the icons modules one level up and removing the additional "icons" folder:
+    ```js
+    import "@ui5/webcomponents-icons/dist/accept.js";
+    ```
     
-    FIXES: #2368
+    BREAKING_CHANGE: All icons imports are changed. The individual icons modules are available in the icon package's "dist" folder. If you previously had `import "@ui5/webcomponents-icons/dist/icons/accept.js"`, now it becomes `import "@ui5/webcomponents-icons/dist/accept.js";`
