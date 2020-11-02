@@ -1,0 +1,64 @@
+:host(:not([hidden])) {
+	display: block;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+}
+
+.ui5-wiz-root {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+.ui5-wiz-nav {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	z-index: 1;
+	height: 4rem;
+	width: 100%;
+	padding: 1rem;
+	background: var(--sapObjectHeader_Background);
+	font-size: var(--sapFontMediumSize);
+	box-shadow: inset 0 -0.125rem var(--sapObjectHeader_BorderColor);
+	box-sizing: border-box;
+	user-select: none;
+	outline: none;
+}
+
+.ui5-wiz-nav-list {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.ui5-wiz-nav-list > * {
+	flex-grow: 1;
+}
+
+.ui5-wiz-content {
+	position: relative;
+	padding: 5rem 1rem 1rem 1rem;
+	overflow: auto;
+	height: calc(100% - 4rem);
+	box-sizing: border-box;
+}
+
+.ui5-wiz-content-item {
+	display: block;
+	box-sizing: border-box;
+	padding-bottom: 2rem;
+}
+
+.ui5-wiz-content-item[hidden] {
+	display: none;
+}
+
+.ui5-wiz-content-item[stretch] {
+	/* Add 2rem to ensure there is enough scroll height to reach the last step */
+	min-height: calc(100% + 2rem);
+}
