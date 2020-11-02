@@ -214,21 +214,19 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
+
+		ResizeHandler.deregister(this, this._screenResizeHandler);
+		ResizeHandler.deregister(document.body, this._screenResizeHandler);
+	}
+
+	onAfterRendering() {
+		ResizeHandler.register(this, this._screenResizeHandler);
+		ResizeHandler.register(document.body, this._screenResizeHandler);
 	}
 
 	show() {
-		ResizeHandler.register(this, this._screenResizeHandler);
-		ResizeHandler.register(document.body, this._screenResizeHandler);
-
 		super.show();
 		this._center();
-	}
-
-	close() {
-		ResizeHandler.deregister(this, this._screenResizeHandler);
-		ResizeHandler.deregister(document.body, this._screenResizeHandler);
-
-		super.close();
 	}
 
 	_center() {
