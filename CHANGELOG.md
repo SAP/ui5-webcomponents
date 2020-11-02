@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.6](https://github.com/SAP/ui5-webcomponents/compare/v0.23.5...v0.23.6) (2020-11-02)
+
+
+### Bug Fixes
+
+* **ui5-date-picker:** fix color contrast of selected day in HCB ([#2378](https://github.com/SAP/ui5-webcomponents/issues/2378)) ([20d3a4f](https://github.com/SAP/ui5-webcomponents/commit/20d3a4f)), closes [#2372](https://github.com/SAP/ui5-webcomponents/issues/2372)
+* **ui5-messagestrip:** fix close button accessibility ([#2352](https://github.com/SAP/ui5-webcomponents/issues/2352)) ([15fd45f](https://github.com/SAP/ui5-webcomponents/commit/15fd45f))
+* **ui5-textarea:** fix placeholder font-style ([#2340](https://github.com/SAP/ui5-webcomponents/issues/2340)) ([293c099](https://github.com/SAP/ui5-webcomponents/commit/293c099))
+
+
+### Features
+
+* **ui5-wizard:** introduce new component ([#2400](https://github.com/SAP/ui5-webcomponents/issues/2400)) ([eacbb26](https://github.com/SAP/ui5-webcomponents/commit/eacbb26)), closes [#2368](https://github.com/SAP/ui5-webcomponents/issues/2368)
+* **ui5-checkbox:** implement ariaLabelledby property ([#2272](https://github.com/SAP/ui5-webcomponents/issues/2272)) ([6bcd68d](https://github.com/SAP/ui5-webcomponents/commit/6bcd68d))
+* **ui5-date-picker:** add screen reader support ([#2224](https://github.com/SAP/ui5-webcomponents/issues/2224)) ([9e61ce5](https://github.com/SAP/ui5-webcomponents/commit/9e61ce5)), closes [#1279](https://github.com/SAP/ui5-webcomponents/issues/1279)
+* **ui5-link:** add aria-label and aria-labelledby support ([#2357](https://github.com/SAP/ui5-webcomponents/issues/2357)) ([178af99](https://github.com/SAP/ui5-webcomponents/commit/178af99)), closes [#2356](https://github.com/SAP/ui5-webcomponents/issues/2356)
+
+
+
 ## [0.23.5](https://github.com/SAP/ui5-webcomponents/compare/v0.23.4...v0.23.5) (2020-10-08)
 
 
