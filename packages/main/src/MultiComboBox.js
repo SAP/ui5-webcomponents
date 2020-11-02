@@ -226,6 +226,10 @@ const metadata = {
 			type: Boolean,
 		},
 
+		_tokenizerFocused: {
+			type: Boolean,
+		},
+
 		_iconPressed: {
 			type: Boolean,
 			noAttribute: true,
@@ -514,6 +518,8 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_tokenizerFocusOut(event) {
+		this._tokenizerFocused = false;
+
 		const tokenizer = this.shadowRoot.querySelector("[ui5-tokenizer]");
 		const tokensCount = tokenizer.tokens.length - 1;
 
@@ -534,6 +540,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_tokenizerFocusIn() {
+		this._tokenizerFocused = true;
 		this.focused = false;
 	}
 
@@ -753,6 +760,10 @@ class MultiComboBox extends UI5Element {
 		return !this.readonly;
 	}
 
+	get _isFocusInside() {
+		return this.focused || this._tokenizerFocused;
+	}
+
 	get selectedItemsListMode() {
 		return this.readonly ? "None" : "MultiSelect";
 	}
@@ -820,7 +831,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizerExpanded() {
-		return (this.focused || this.open) && !this.readonly;
+		return (this._isFocusInside || this.open) && !this.readonly;
 	}
 
 	get classes() {
