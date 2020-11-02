@@ -744,13 +744,13 @@ class MultiComboBox extends UI5Element {
 		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
 	}
 
-	rootFocusIn() {
+	inputFocusIn() {
 		if (!isPhone()) {
 			this.focused = true;
 		}
 	}
 
-	rootFocusOut(event) {
+	inputFocusOut(event) {
 		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
 			this.focused = false;
 		}
