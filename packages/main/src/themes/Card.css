@@ -107,7 +107,7 @@
 
 .ui5-card-header .ui5-card-header-text .ui5-card-heading {
 	font-family: "72override", var(--sapFontFamily);
-	font-size: var(--sapMFontHeader5Size);
+	font-size: var(--sapFontHeader5Size);
 	font-weight: normal;
 	color: var(--sapTile_TitleTextColor);
 	max-height: 3.5rem;
