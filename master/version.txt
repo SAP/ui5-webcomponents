@@ -1,5 +1,5 @@
-commit eb5e4d1ffc724e66cfb428a65ee7676948120b03
-Author: Florian Vogt <florian.vogt@sap.com>
-Date:   Thu Oct 29 14:45:43 2020 +0100
+commit 3674dbcaf99ded6b50962a00845e3e2c986deda7
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Nov 2 10:01:26 2020 +0200
 
-    docs(README.md): adjust link to in depth tutorial (#2422)
+    fix(theme-base): correct inavlid CSS vars (#2427)
