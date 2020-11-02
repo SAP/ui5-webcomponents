@@ -1,4 +1,6 @@
 import { fetchJsonOnce } from "../util/FetchHelper.js";
+import { attachLanguageChange } from "../locale/languageChange.js";
+import getLocale from "../locale/getLocale.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.js";
 import { getEffectiveAssetPath } from "../util/EffectiveAssetPath.js";
@@ -115,6 +117,13 @@ const getCldrData = locale => {
 const _registerMappingFunction = mappingFn => {
 	cldrMappingFn = mappingFn;
 };
+
+// When the language changes dynamically (the user calls setLanguage),
+// re-fetch the required CDRD data.
+attachLanguageChange(() => {
+	const locale = getLocale();
+	return fetchCldr(locale.getLanguage(), locale.getRegion(), locale.getScript());
+});
 
 export {
 	fetchCldr,

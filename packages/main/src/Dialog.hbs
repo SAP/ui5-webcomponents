@@ -19,5 +19,13 @@
 			<slot name="footer"></slot>
 		</footer>
 	{{/if}}
+	{{#if resizable}}
+		<ui5-icon
+			name="resize-corner"
+			dir="{{effectiveDir}}"
+			class="ui5-popup-resize-handle"
+			@mousedown="{{_onResizeMouseDown}}">
+		</ui5-icon>
+	{{/if}}
 {{/inline}}
 

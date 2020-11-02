@@ -548,6 +548,7 @@ class UI5Element extends HTMLElement {
 
 		if (this._shouldUpdateFragment()) {
 			this.staticAreaItem._updateFragment(this);
+			this.staticAreaItemDomRef = this.staticAreaItem.staticAreaItemDomRef.shadowRoot;
 		}
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
@@ -638,12 +639,16 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Use this method in order to get a reference to element in the shadow root of a web component
+	 * Use this method in order to get a reference to an element in the shadow root of the web component or the static area item of the component
 	 * @public
+	 * @method
 	 * @param {String} refName Defines the name of the stable DOM ref
 	 */
 	getStableDomRef(refName) {
-		return this.getDomRef().querySelector(`[data-ui5-stable=${refName}]`);
+		const staticAreaResult = this.staticAreaItemDomRef && this.staticAreaItemDomRef.querySelector(`[data-ui5-stable=${refName}]`);
+
+		return staticAreaResult
+		|| this.getDomRef().querySelector(`[data-ui5-stable=${refName}]`);
 	}
 
 	/**

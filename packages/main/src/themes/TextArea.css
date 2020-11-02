@@ -8,7 +8,7 @@
 	width: 100%;
 	color: var(--sapField_TextColor);
 	font-size: var(--sapFontSize);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-style: normal;
 	border-color: var(--sapField_BorderColor);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
@@ -37,6 +37,10 @@
 :host([exceeding]) .ui5-textarea-inner {
 	outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -4px;
+}
+
+:host([placeholder]) {
+	font-style: italic;
 }
 
 .ui5-textarea-root {
@@ -90,7 +94,7 @@
 	word-break: break-all;
 	padding: var(--_ui5_textarea_padding);
 	font-size: var(--sapFontSize);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	white-space: pre-wrap;
 	box-sizing: border-box;
 }
@@ -138,7 +142,7 @@
 
 :host([value-state]:not([value-state="None"])) .ui5-textarea-inner,
 :host([exceeding]) .ui5-textarea-inner {
-	border-width: var(--_ui5_textarea_error_warning_border_width);
+	border-width: var(--_ui5_textarea_state_border_width);
 }
 
 :host([value-state="Error"]) .ui5-textarea-inner,
@@ -189,7 +193,7 @@
 
 :host([value-state="Information"]:not([readonly]):not([exceeding])) .ui5-textarea-inner {
 	background-color: var(--sapField_InformationBackground);
-	border-width: var(--_ui5_textarea_information_border_width);
+	border-width: var(--_ui5_textarea_state_border_width);
 }
 
 .ui5-textarea-exceeded-text {
@@ -197,6 +201,6 @@
 	align-self: flex-end;
 	padding: 0.125rem 0.125rem 0.5rem;
 	color: var(--sapContent_LabelColor);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
 }

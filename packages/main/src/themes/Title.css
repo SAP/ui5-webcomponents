@@ -7,7 +7,7 @@
 	max-width: 100%;
 	color: var(--sapGroup_TitleTextColor);
 	font-size: var(--ui5_title_level_2Size);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	text-shadow: var(--sapContent_TextShadow);
 }
 

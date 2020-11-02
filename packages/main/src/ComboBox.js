@@ -4,8 +4,8 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isBackSpace,
@@ -394,8 +394,6 @@ class ComboBox extends UI5Element {
 		if (this._initialRendering) {
 			domValue = this.value;
 			this._filteredItems = this.items;
-		} else if (this.value !== this.filterValue) {
-			domValue = this.filterValue ? this.filterValue : this.value;
 		} else {
 			domValue = this.filterValue;
 		}

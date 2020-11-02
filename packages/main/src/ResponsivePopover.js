@@ -5,7 +5,7 @@ import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
 import Title from "./Title.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
 
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";

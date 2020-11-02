@@ -7,8 +7,8 @@ import {
 	isPageUp,
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/icons/navigation-up-arrow.js";
-import "@ui5/webcomponents-icons/dist/icons/navigation-down-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-up-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import WheelSliderTemplate from "./generated/templates/WheelSliderTemplate.lit.js";
 import Button from "./Button.js";

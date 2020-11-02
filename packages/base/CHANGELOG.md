@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.9](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.8...v1.0.0-rc.9) (2020-10-08)
+
+
+### Bug Fixes
+
+* **components:** fix setting contentDensity styles ([#2094](https://github.com/SAP/ui5-webcomponents/issues/2094)) ([9454ab7](https://github.com/SAP/ui5-webcomponents/commit/9454ab7)), closes [#2093](https://github.com/SAP/ui5-webcomponents/issues/2093)
+* **framework:** Allow role as a property name ([#2290](https://github.com/SAP/ui5-webcomponents/issues/2290)) ([a816cef](https://github.com/SAP/ui5-webcomponents/commit/a816cef))
+* **framework:** Do not create IE styles with disabled ([#2284](https://github.com/SAP/ui5-webcomponents/issues/2284)) ([5ecc51e](https://github.com/SAP/ui5-webcomponents/commit/5ecc51e))
+
+
+### Features
+
+* **framework:** Add API to subscribe/unsubscribe for theme loaded ([#2303](https://github.com/SAP/ui5-webcomponents/issues/2303)) ([c8ffb38](https://github.com/SAP/ui5-webcomponents/commit/c8ffb38))
+* **framework:** dynamic custom elements scoping ([#2091](https://github.com/SAP/ui5-webcomponents/issues/2091)) ([3588542](https://github.com/SAP/ui5-webcomponents/commit/3588542))
+* **framework:** Limited support for campact size on IE ([#2230](https://github.com/SAP/ui5-webcomponents/issues/2230)) ([4128216](https://github.com/SAP/ui5-webcomponents/commit/4128216))
+* **framework:** Make _property-change publicly available ([#2201](https://github.com/SAP/ui5-webcomponents/issues/2201)) ([0be4e10](https://github.com/SAP/ui5-webcomponents/commit/0be4e10))
+* **framework:** Make addCustomCSS dynamic ([#2083](https://github.com/SAP/ui5-webcomponents/issues/2083)) ([7b54b9b](https://github.com/SAP/ui5-webcomponents/commit/7b54b9b))
+* **framework:** make assets path configurable ([#2214](https://github.com/SAP/ui5-webcomponents/issues/2214)) ([16c46da](https://github.com/SAP/ui5-webcomponents/commit/16c46da))
+* **framework:** styles and staticAreaStyles may now be nested arrays ([#2058](https://github.com/SAP/ui5-webcomponents/issues/2058)) ([bb87e65](https://github.com/SAP/ui5-webcomponents/commit/bb87e65))
+* **framework:** Support custom dynamic asset paths ([#2305](https://github.com/SAP/ui5-webcomponents/issues/2305)) ([ff245fa](https://github.com/SAP/ui5-webcomponents/commit/ff245fa))
+
+
+
+
+
 # [1.0.0-rc.8](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.7...v1.0.0-rc.8) (2020-07-30)
 
 

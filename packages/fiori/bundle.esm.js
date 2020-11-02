@@ -20,5 +20,6 @@ import UploadCollectionItem from "./dist/UploadCollectionItem.js";
 import NotificationListItem from "./dist/NotificationListItem.js"
 import NotificationListGroupItem from "./dist/NotificationListGroupItem.js";
 import NotificationOverflowAction from "./dist/NotificationOverflowAction.js";
+import Wizard from "./dist/Wizard.js";
 
 export default testAssets;
