@@ -1,10 +1,10 @@
 <div
 	class="ui5-slider-root"
-	@mousedown="{{_handleDown}}"
-	@touchstart="{{_handleDown}}"
-	@pointerdown="{{_handleDown}}"
-	@mouseover="{{_handleMouseOver}}"
-	@mouseout="{{_handleMouseOut}}"
+	@mousedown="{{_onmousedown}}"
+	@touchstart="{{_ontouchstart}}"
+	@pointerdown="{{_onpointerdown}}"
+	@mouseover="{{_onmouseover}}"
+	@mouseout="{{_onmouseout}}"
 >
 	<div class="ui5-slider-inner">
 		<div class="ui5-slider-progress-container">
@@ -15,7 +15,7 @@
 			{{#if tickmarks}}
 				<div class="ui5-slider-tickmarks" style="{{styles.tickmarks}}"></div>
 				{{#if labelInterval}}
-					<ul class="ui5-slider-labels {{classes.label}}" style="{{styles.labelContainer}}">
+					<ul class="ui5-slider-labels {{classes.labelContainer}}" style="{{styles.labelContainer}}">
 						{{#each labelItems}}
 							<li style="{{../styles.label}}">{{this}}</li>
 						{{/each}}

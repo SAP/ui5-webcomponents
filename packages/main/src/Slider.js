@@ -13,6 +13,14 @@ const metadata = {
 	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.Slider.prototype */  {
+		/**
+		 * Current value of the slider
+		 * <br><br>
+		 *
+		 * @type {Float}
+		 * @defaultvalue 0
+		 * @public
+		 */
 		value: {
 			type: Float,
 			defaultValue: 0,
@@ -24,7 +32,9 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
+ * The Slider component represents a numerical range and a handle (grip).
+ * The purpose of the component is to enable visual selection of a value in
+ * a continuous numerical range by moving an adjustable handle.
  *
  * @constructor
  * @author SAP SE
@@ -43,7 +53,7 @@ class Slider extends SliderBase {
 	}
 
 	static get styles() {
-		return SliderBase.styles;
+		return super.styles;
 	}
 
 	constructor() {
@@ -64,10 +74,11 @@ class Slider extends SliderBase {
 	 *
 	 */
 	onBeforeRendering() {
-		if (!this.isCurrentStateUpdated()) {
+		if (!this.isCurrentStateOutdated()) {
 			return;
 		}
 
+		this.notResized = true;
 		this.syncUIAndState("value");
 		this._updateUI(this.value);
 	}
@@ -77,7 +88,7 @@ class Slider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_handleDown(event) {
+	_onmousedown(event) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
 		if (this.disabled || this.step === 0) {
@@ -138,7 +149,7 @@ class Slider extends SliderBase {
 			progress: {
 				"transform": `scaleX(${this._percentageComplete})`,
 			},
-			handlePosition: {
+			handle: {
 				"left": `${this._handlePositionFromStart}%`,
 			},
 			tickmarks: {
@@ -151,7 +162,7 @@ class Slider extends SliderBase {
 				"width": `100%`,
 				"left": `-${this._labelWidth / 2}%`,
 			},
-			tooltipVisibility: {
+			tooltip: {
 				"visibility": `${this._tooltipVisibility}`,
 			},
 		};

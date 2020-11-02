@@ -12,7 +12,6 @@ import styles from "./generated/themes/SliderBase.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-slider-base",
 	properties: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */  {
 		/**
 		 * Minimum value of the slider
@@ -24,18 +23,19 @@ const metadata = {
 		 */
 		min: {
 			type: Float,
+			defaultValue: 0,
 		},
 		/**
 		 * Maximum value of the slider
 		 * <br><br>
 		 *
 		 * @type {Float}
-		 * @defaultvalue 50
+		 * @defaultvalue 100
 		 * @public
 		 */
 		max: {
 			type: Float,
-			defaultValue: 50,
+			defaultValue: 100,
 		},
 		/**
 		 * Defines the size of the slider's selection intervals. (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
@@ -158,14 +158,8 @@ class SliderBase extends UI5Element {
 	constructor() {
 		super();
 		this._resizeHandler = this._handleResize.bind(this);
-
-		this.DOWN_EVENTS = ["mousedown", "pointerdown", "touchstart"];
-		this.UP_EVENTS = ["mouseup", "pointerup", "touchend"];
-		this.MOVE_EVENT_MAP = {
-			mousedown: "mousemove",
-			pointerdown: "pointermove",
-			touchstart: "touchmove",
-		};
+		this._moveHandler = this._handleMove.bind(this);
+		this._upHandler = this._handleUp.bind(this);
 
 		this.TICKMARK_COLOR_MAP = {
 			sap_fiori_3: "#89919a",
@@ -196,13 +190,25 @@ class SliderBase extends UI5Element {
 		return styles;
 	}
 
+	static get UP_EVENTS() {
+		return ["mouseup", "pointerup", "touchend"];
+	}
+
+	static get MOVE_EVENT_MAP() {
+		return {
+			mousedown: "mousemove",
+			pointerdown: "pointermove",
+			touchstart: "touchmove",
+		};
+	}
+
 	get labelItems() {
 		return this._labelItems;
 	}
 
 	get classes() {
 		return {
-			label: {
+			labelContainer: {
 				"ui5-slider-hidden-labels": this._labelsOverlapping,
 			},
 		};
@@ -210,10 +216,6 @@ class SliderBase extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._resizeHandler);
-
-		this._moveHandler = this._handleMove.bind(this);
-		this._upHandler = this._handleUp.bind(this);
-
 		this.addEventListener("mouseover", this._mouseOverHandler);
 		this.addEventListener("mouseout", this._mouseOutHandler);
 	}
@@ -225,14 +227,26 @@ class SliderBase extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._resizeHandler();
+		// Only call if the resize is triggered by a state changes other than
+		// the ones that occured on the previous resize and those caused by user interaction.
+		if (this.notResized) {
+			this._resizeHandler();
+		}
+	}
+
+	_onthouchstart(event) {
+		this._onmousedown(event);
+	}
+
+	_ontpointerdown(event) {
+		this._onmousedown(event);
 	}
 
 	/** Shows the tooltip(s) if the <code>showTooltip</code> property is set to true
 	 *
 	 * @private
 	 */
-	_handleMouseOver(event) {
+	_onmouseover(event) {
 		if (!this.disabled || this.showTooltip) {
 			this._tooltipVisibility = "visible";
 		}
@@ -243,7 +257,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @private
 	 */
-	_handleMouseOut(event) {
+	_onmouseout(event) {
 		if (this.showTooltip) {
 			this._tooltipVisibility = "hidden";
 		}
@@ -258,6 +272,9 @@ class SliderBase extends UI5Element {
 		if (!this.tickmarks) {
 			return;
 		}
+
+		// Mark resizing to avoid unneccessary calls to that function after rendering
+		this.notResized = false;
 
 		// Convert the string represented calculation expression to a normal one
 		// Check the distance  in pixels exist between every tickmark
@@ -299,8 +316,9 @@ class SliderBase extends UI5Element {
 	 */
 	handleDownBase(event, min, max) {
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
-		this._moveEventType = !this._moveEventType ? this.MOVE_EVENT_MAP[event.type] : this._moveEventType;
-		this.UP_EVENTS.forEach(upEventType => window.addEventListener(upEventType, this._upHandler));
+		this._moveEventType = !this._moveEventType ? SliderBase.MOVE_EVENT_MAP[event.type] : this._moveEventType;
+
+		SliderBase.UP_EVENTS.forEach(upEventType => window.addEventListener(upEventType, this._upHandler));
 		window.addEventListener(this._moveEventType, this._moveHandler);
 
 		this._boundingClientRect = this.getBoundingClientRect();
@@ -316,7 +334,7 @@ class SliderBase extends UI5Element {
 	 */
 	handleUpBase() {
 		this.fireEvent("change");
-		this.UP_EVENTS.forEach(upEventType => window.removeEventListener(upEventType, this._upHandler));
+		SliderBase.UP_EVENTS.forEach(upEventType => window.removeEventListener(upEventType, this._upHandler));
 
 		window.removeEventListener(this._moveEventType, this._moveHandler);
 		this._moveEventType = null;
@@ -462,7 +480,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	isCurrentStateUpdated() {
+	isCurrentStateOutdated() {
 		return Object.entries(this._stateStorage).some(([propName, propValue]) => this[propName] !== propValue);
 	}
 
@@ -532,7 +550,7 @@ class SliderBase extends UI5Element {
 
 		// If labelsInterval is specified draw labels for the necessary tickmarks
 		if (this.labelInterval > 0) {
-			this._drawDefaultLabels(parseInt(tickmarkWidth));
+			this._drawDefaultLabels();
 		}
 	}
 
@@ -541,7 +559,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @private
 	 */
-	_drawDefaultLabels(tickmarkWidth) {
+	_drawDefaultLabels() {
 		const labelInterval = this.labelInterval;
 		const step = this.step;
 		const newNumberOfLabels = (this.max - this.min) / (step * labelInterval);
