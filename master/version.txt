@@ -1,12 +1,7 @@
-commit c84bc8b7a760c24e66ade5387839fa4aa1c15d16
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 2 12:47:53 2020 +0200
+commit 64fef9029b2589f30cbc90adcc28dfe9b7e5a54a
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Nov 2 17:21:34 2020 +0200
 
-    refactor(icons): flatten dist directory (#2425)
+    fix(ui5-li): correct truncation behaviour of info text (#2330)
     
-    Change the distribution path of all individual `icons`, which changes all icons' public imports, by bringing the icons modules one level up and removing the additional "icons" folder:
-    ```js
-    import "@ui5/webcomponents-icons/dist/accept.js";
-    ```
-    
-    BREAKING_CHANGE: All icons imports are changed. The individual icons modules are available in the icon package's "dist" folder. If you previously had `import "@ui5/webcomponents-icons/dist/icons/accept.js"`, now it becomes `import "@ui5/webcomponents-icons/dist/accept.js";`
+    Fixes: #2317
