@@ -2,8 +2,9 @@ const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp");
 
-const srcDir = `src/icon-collections/`;
-const destDir = `dist/icons/`;
+const collectionName = process.argv[2] || "SAP-icons";
+const srcFile = path.normalize(`src/${collectionName}.json`);
+const destDir = path.normalize("dist/");
 
 mkdirp.sync(destDir);
 
@@ -18,7 +19,7 @@ registerIcon(name, { pathData, ltr});
 export default { pathData };`;
 
 const accTemplate = (name, pathData, ltr, accData) => `import { registerIcon } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
-import { ${accData.key} } from "../generated/i18n/i18n-defaults.js";
+import { ${accData.key} } from "./generated/i18n/i18n-defaults.js";
 
 const name = "${name}";
 const pathData = "${pathData}";
@@ -43,12 +44,6 @@ const createIcons = (file) => {
 
 		fs.writeFileSync(path.join(destDir, `${name}.js`), content);
 	}
-
 };
 
-fs.readdirSync(srcDir).forEach(collectionFile => {
-	createIcons(path.join(srcDir, collectionFile));
-});
-
-
-
+createIcons(srcFile);
