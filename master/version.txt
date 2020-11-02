@@ -1,5 +1,5 @@
-commit 3674dbcaf99ded6b50962a00845e3e2c986deda7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 2 10:01:26 2020 +0200
+commit 75af076e6ce9ec840f36cb21d6f574bdda8f4b0d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Nov 2 10:07:31 2020 +0200
 
-    fix(theme-base): correct inavlid CSS vars (#2427)
+    chore(framework): Improve behavior with multiple instances of CSSVarsPonyfill (#2420)
