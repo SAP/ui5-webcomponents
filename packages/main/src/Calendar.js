@@ -486,6 +486,7 @@ class Calendar extends UI5Element {
 
 	_handleMonthButtonPress() {
 		this._hideYearPicker();
+		this._header._isMonthButtonHidden = true;
 
 		this[`_${this._monthPicker._hidden ? "show" : "hide"}MonthPicker`]();
 	}
@@ -674,6 +675,7 @@ class Calendar extends UI5Element {
 
 		this._calendarWidth = calendarRect.width.toString();
 		this._calendarHeight = calendarRect.height.toString();
+		this._header._isMonthButtonHidden = true;
 	}
 
 	_showYearPicker() {
@@ -699,6 +701,7 @@ class Calendar extends UI5Element {
 			this._oMonth._hidden = false;
 		}
 		this._monthPicker._hidden = true;
+		this._header._isMonthButtonHidden = false;
 	}
 
 	_hideYearPicker() {

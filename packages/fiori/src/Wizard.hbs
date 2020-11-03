@@ -1,0 +1,41 @@
+<div class="ui5-wiz-root" aria-label="{{ariaLabelText}}">
+	<div class="ui5-wiz-nav" role="navigation" aria-roledescription="{{navAriaRoleDescription}}" tabindex="-1">
+		<ul class="ui5-wiz-nav-list" role="list">
+			{{#each _stepsInHeader}}
+				<ui5-wizard-tab
+					heading="{{heading}}"
+					subheading="{{subheading}}"
+					icon="{{icon}}"
+					number="{{number}}"
+					?disabled="{{disabled}}"
+					?selected="{{selected}}"
+					?hide-separator="{{hideSeparator}}"
+					?active-separator="{{activeSeparator}}"
+					?branching-separator="{{branchingSeparator}}"
+					role="listitem"
+					aria-posinset="{{pos}}"
+					aria-setsize="{{size}}"
+					aria-roledescription="{{roleDescription}}"
+					aria-label="{{ariaLabel}}"
+					data-ui5-content-ref-id="{{this.refStepId}}"
+					data-ui5-index="{{pos}}"
+					_tab-index="{{tabIndex}}"
+					@selection-change-requested="{{../onSelectionChangeRequested}}"
+					@focused="{{../onStepInHeaderFocused}}"
+				></ui5-wizard-tab>
+			{{/each}}
+		</ul>
+	</div>
+
+	<div class="ui5-wiz-content" @scroll="{{onScroll}}">
+		{{#each _steps}}
+			<div class="ui5-wiz-content-item"
+				?hidden="{{disabled}}"
+				?selected="{{selected}}"
+				?stretch="{{stretch}}"
+				data-ui5-content-item-ref-id="{{_id}}">
+					<slot name="{{this._individualSlot}}"></slot>
+			</div>
+		{{/each}}
+	</div>
+</div>

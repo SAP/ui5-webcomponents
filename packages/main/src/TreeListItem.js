@@ -2,8 +2,8 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
-import "@ui5/webcomponents-icons/dist/icons/navigation-right-arrow.js";
-import "@ui5/webcomponents-icons/dist/icons/navigation-down-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 
 // Template
 import TreeListItemTemplate from "./generated/templates/TreeListItemTemplate.lit.js";
