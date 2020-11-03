@@ -20,7 +20,10 @@ const registry = getSharedResource("Runtimes", new RuntimeRegistry());
  * @returns {*}
  */
 const getRuntime = runtimeIndex => {
-	return registry.getRuntime(runtimeIndex || getCurrentRuntimeIndex());
+	if (runtimeIndex === undefined) {
+		runtimeIndex = getCurrentRuntimeIndex();
+	}
+	return registry.getRuntime(runtimeIndex );
 };
 
 /**

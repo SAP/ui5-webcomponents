@@ -1,16 +1,5 @@
-import { setRuntimeAlias } from "@ui5/webcomponents-base/dist/Runtimes.js";
-setRuntimeAlias("UI5 Web Components Playground");
-
-import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/config/AssetsPath.js";
-// setAssetsPath("/my-resources/");
-
-import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming";
-attachThemeLoaded(theme => {
-	console.log("Theme load complete: ", theme);
-});
-
-// OpenUI5 integration
-import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+// Code that must be executed before all other imports (configuration, policies, etc...)
+import "./bundle.bootstrap.js";
 
 // Calendars
 import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";
@@ -27,21 +16,14 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 // Icons
 import "@ui5/webcomponents-icons/dist/Assets.js";
 
-/* Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
-import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
-import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
-registerI18nBundle("@ui5/webcomponents", {
-	bg: "./lang/messagebundle_bg.properties",
-	fr: "./lang/fr.json",
-});
-*/
-
-// asset helpers (needs correct json as url in rollup.config.js)
+// Assets for the main package
 import "./dist/Assets.js";
 
+// Features
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
 
+// Components
 import Avatar from "./dist/Avatar.js";
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
@@ -61,6 +43,10 @@ import Input from "./dist/Input.js";
 import MultiInput from "./dist/MultiInput.js";
 import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";
+import List from "./dist/List.js";
+import StandardListItem from "./dist/StandardListItem.js";
+import CustomListItem from "./dist/CustomListItem.js";
+import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 import Popover from "./dist/Popover.js";
 import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
@@ -87,11 +73,6 @@ import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";
 import Tree from "./dist/Tree.js";
 
-import List from "./dist/List.js";
-import StandardListItem from "./dist/StandardListItem.js";
-import CustomListItem from "./dist/CustomListItem.js";
-import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
-
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 window.RenderScheduler = RenderScheduler;
@@ -107,6 +88,8 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming";
+import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/config/AssetsPath.js";
 
 const testAssets = {
 	configuration : {
