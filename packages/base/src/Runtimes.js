@@ -23,7 +23,7 @@ const getRuntime = runtimeIndex => {
 	if (runtimeIndex === undefined) {
 		runtimeIndex = getCurrentRuntimeIndex();
 	}
-	return registry.getRuntime(runtimeIndex );
+	return registry.getRuntime(runtimeIndex);
 };
 
 /**
