@@ -6,7 +6,7 @@ The `scoping` feature lets you add an arbitrary suffix to the names of all UI5 W
 
 Example:
 
-```html
+```js
 import { setCustomElementsScopingSuffix } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 setCustomElementsScopingSuffix("demo");
 ``` 

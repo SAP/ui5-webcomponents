@@ -9,10 +9,13 @@ import { setCustomElementsScopingSuffix, setCustomElementsScopingRules } from "@
 
 // Set custom resource sharing policies
 import { setSharedResourcePolicy } from "@ui5/webcomponents-base/dist/SharedResources.js";
-setSharedResourcePolicy("SVGIcons", "OnlyNewer");
+import SharedResourceReusePolicy from "@ui5/webcomponents-base/dist/types/SharedResourceReusePolicy.js";
+import SharedResourceReuseType from "@ui5/webcomponents-base/dist/types/SharedResourceType.js";
+setSharedResourcePolicy(SharedResourceReuseType.SVGIcons, SharedResourceReusePolicy.OnlyNewer);
+setSharedResourcePolicy(SharedResourceReuseType.ThemeProperties, SharedResourceReusePolicy.OnlyNewer);
 
 // Set custom assets path
-import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/config/AssetsPath.js";
+import { setAssetsPath } from "@ui5/webcomponents-base/dist/config/AssetsPath.js";
 // setAssetsPath("/my-resources/");
 
 // Attach theme loaded event
@@ -23,6 +26,10 @@ attachThemeLoaded(theme => {
 
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+
+// Set configuration settings
+import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+// setLanguage("de");
 
 /* Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
 import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
