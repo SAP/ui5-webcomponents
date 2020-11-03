@@ -421,6 +421,8 @@ class Calendar extends UI5Element {
 	_handleSelectedDatesChange(event) {
 		this.selectedDates = [...event.detail.dates];
 
+		this.timestamp = this.selectedDates[0];
+
 		this.fireEvent("selected-dates-change", { dates: event.detail.dates });
 	}
 
@@ -463,7 +465,7 @@ class Calendar extends UI5Element {
 		this._monthPicker.timestamp = this.timestamp;
 
 		this._hideMonthPicker();
-		this._focusCurrentDate(oNewDate);
+		this._setDayPickerCurrentIndex(oNewDate);
 	}
 
 	_handleSelectedYearChange(event) {
@@ -475,10 +477,11 @@ class Calendar extends UI5Element {
 		this._yearPicker.timestamp = this.timestamp;
 
 		this._hideYearPicker();
-		this._focusCurrentDate(oNewDate);
+		this._setDayPickerCurrentIndex(oNewDate);
 	}
 
-	_focusCurrentDate(currentDate) {
+	_setDayPickerCurrentIndex(calDate) {
+		const currentDate = new CalendarDate(calDate);
 		const dayPicker = this.shadowRoot.querySelector("[ui5-daypicker]");
 		const currentDateIndex = dayPicker._getVisibleDays(currentDate).findIndex(date => date.valueOf() === currentDate.valueOf());
 		dayPicker._itemNav.currentIndex = currentDateIndex;

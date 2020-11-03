@@ -72,6 +72,39 @@ describe("Calendar general interaction", () => {
 		assert.strictEqual(yearPicker.getProperty("_selectedYear"), YEAR, "Year is set");
 	});
 
+	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
+		const currentElement = browser.execute(() => {
+			const calendar = document.getElementById("calendar1");
+			calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
+			calendar._showYearPicker();
+			const yearPicker = calendar.shadowRoot.querySelector("ui5-yearpicker");
+			return yearPicker.shadowRoot.querySelectorAll(".ui5-yp-interval-container > div[data-sap-timestamp='946684800']:not(ui5-yp-item--selected)");
+		});
+
+		const activeElement = browser.execute(() => document.activeElement);
+
+		assert.strictEqual(currentElement[0].id, activeElement.id, "Current year element is the acrive element");
+		assert.strictEqual(currentElement.length, 1, "Current year element isn't selected");
+
+		browser.execute(() => document.getElementById("calendar1")._hideYearPicker());
+	});
+
+	it("Calendar doesn't mark month as selected when there are no selected dates", () => {
+		const currentElement = browser.execute(() => {
+			const calendar = document.getElementById("calendar1");
+			calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
+			calendar._showMonthPicker();
+			const monthPicker = calendar.shadowRoot.querySelector("ui5-monthpicker");
+			return monthPicker.shadowRoot.querySelectorAll(".ui5-mp-quarter > div[data-sap-timestamp='970358400']:not(ui5-mp-item--selected)");
+		});
+
+		const activeElement = browser.execute(() => document.activeElement);
+		assert.strictEqual(currentElement[0].id, activeElement.id, "Current year element is the acrive element");
+		assert.strictEqual(currentElement.length, 1, "Current year element isn't selected");
+
+		browser.execute(() => document.getElementById("calendar1")._hideMonthPicker());
+	});
+
 	it("Page up/down increments/decrements the month value", () => {
 		const calendar = browser.$("#calendar1");
 		calendar.setProperty("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
