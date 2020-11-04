@@ -1,5 +1,3 @@
-@import "./InvisibleTextStyles.css";
-
 :host([disabled]) {
 	opacity: var(--_ui5_slider_disabled_opacity);
 	cursor: default;
