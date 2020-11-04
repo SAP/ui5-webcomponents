@@ -1,7 +1,7 @@
-commit 64fef9029b2589f30cbc90adcc28dfe9b7e5a54a
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Nov 2 17:21:34 2020 +0200
+commit efb0d8ec9c35607687e5d150725dfe0e1e936675
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Nov 4 11:44:07 2020 +0200
 
-    fix(ui5-li): correct truncation behaviour of info text (#2330)
+    feat(icons-tnt): add new TNT icon collection (#2414)
     
-    Fixes: #2317
+    based on SAP-icons-TNT
