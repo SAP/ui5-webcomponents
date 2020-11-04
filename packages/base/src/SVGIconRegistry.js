@@ -15,6 +15,11 @@ const parseName = name => {
 	let collection;
 	[name, collection] = name.split("/").reverse();
 	collection = collection || DEFAULT_COLLECTION;
+	// hardcoded alias in case icon explorer is used, resolve `SAP-icons-TNT` to `tnt`
+	// aliases can be made a feature in the future if more collections need it or more aliases are needed.
+	if (collection === "SAP-icons-TNT") {
+		collection = "tnt";
+	}
 	const registryKey = `${collection}/${name}`;
 	return { name, collection, registryKey };
 };

@@ -1,19 +1,19 @@
 ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/master/docs/images/UI5_logo_wide.png)
 
-# UI5 Web Components - Icons TNT
+# UI5 Web Components - SAP Fiori Tools Icons
 
 [![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-Provides assets for the rich `SAP-icons-TNT` icon collection.
+Provides assets for the rich `tnt` icon collection.
 
 |        Icon asset        |                           Module import                            |
 | ------------------------ | ------------------------------------------------------------------ |
 | All icons (~33KB zipped) | `import "@ui5/webcomponents-icons-tnt/dist/Assets.js";`                |
-| Actor icon               | `import "@ui5/webcomponents-icons-tnt/dist/icons/actor.js";`           |
-| Ad hoc actor icon        | `import "@ui5/webcomponents-icons-tnt/dist/icons/ad-hoc-actor.js";`    |
+| Actor icon               | `import "@ui5/webcomponents-icons-tnt/dist/actor.js";`           |
+| Ad hoc actor icon        | `import "@ui5/webcomponents-icons-tnt/dist/ad-hoc-actor.js";`    |
 | ...                      | ...                                                                |
-| Workflow editor icon     | `import "@ui5/webcomponents-icons-tnt/dist/icons/workflow-editor.js";` |
+| Workflow editor icon     | `import "@ui5/webcomponents-icons-tnt/dist/workflow-editor.js";` |
 
 *Note:* The `@ui5/webcomponents-icons-tnt` package does not provide any web components per se, but rather icon assets,
 usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import
@@ -26,10 +26,10 @@ Since this is a non-default icon collection, all names have to be prefixed with 
 Example usage with `<ui5-icon>` web component:
 
 ```html
-<ui5-icon name="SAP-icons-TNT/actor"></ui5-icon>
+<ui5-icon name="tnt/actor"></ui5-icon>
 ```
 
-For a full list of the icons in the `SAP-icons-TNT` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT).
+For a full list of the icons in the `tnt` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT).
 
 For a complete list of all public module imports from the `icons` package, click [here](../../docs/Public%20Module%20Imports.md#icons):
 
