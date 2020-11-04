@@ -1,7 +1,8 @@
 {{>include "./SliderBase.hbs"}}
 
 {{#*inline "handles"}}
-	<div class="ui5-slider-handle" style="{{styles.handle}}">
+	<div class="ui5-slider-handle" style="{{styles.handle}}" aria-labelledby="{{_id}}-handle-label">
+	<span id="{{_id}}-handle-label" aria-hidden="true" class="ui5-hidden-text">Slider Handle</span>
 		{{#if showTooltip}}
 			<div class="ui5-slider-tooltip" style="{{styles.tooltip}}">
 				<span class="ui5-slider-tooltip-value">{{tooltipValue}}</span>
