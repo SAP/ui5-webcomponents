@@ -182,6 +182,10 @@ class Dialog extends Popup {
 		return true;
 	}
 
+	get _displayProp() {
+		return "flex";
+	}
+
 	get classes() {
 		return {
 			root: {
