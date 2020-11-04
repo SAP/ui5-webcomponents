@@ -1,0 +1,8 @@
+@import "../base/WizardTab-parameters.css";
+
+:root {
+	--_ui5_wiz_tab_focus_outline: 0.125rem dotted var(--sapContent_FocusColor);
+	--_ui5_wiz_tab_selection_line: var(--sapTextColor);
+	--_ui5_wiz_tab_border: 1px solid var(--sapTextColor);
+	--_ui5_wiz_tab_icon_color: var(--sapTextColor);
+}

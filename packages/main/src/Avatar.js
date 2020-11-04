@@ -41,7 +41,7 @@ const metadata = {
 		 * <br>
 		 * <b>Note:</b> You should import the desired icon first, then use its name as "icon".
 		 * <br><br>
-		 * import "@ui5/webcomponents-icons/dist/icons/{icon_name}.js"
+		 * import "@ui5/webcomponents-icons/dist/{icon_name}.js"
 		 * <br>
 		 * <pre>&lt;ui5-avatar icon-src="employee"></pre>
 		 *
