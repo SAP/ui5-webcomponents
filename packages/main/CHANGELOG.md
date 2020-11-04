@@ -440,7 +440,7 @@ Before:
 
 After:
 ```js
-@ui5/webcomponents-icons/dist/icons/add.js
+@ui5/webcomponents-icons/dist/add.js
 ```
 * **ui5-shellbar:** move component to new `@ui5/webcomponents-fiori` package ([#887](https://github.com/SAP/ui5-webcomponents/pull/887)) ([06f1770](https://github.com/SAP/ui5-webcomponents/commit/17c25ff123436c1f6e11513055b33977b06f1770))
 

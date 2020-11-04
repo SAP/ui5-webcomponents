@@ -250,7 +250,7 @@ class Icon extends UI5Element {
 		if (iconData === ICON_NOT_FOUND) {
 			this.invalid = true;
 			/* eslint-disable-next-line */
-			return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/icons/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/Assets.js".`);
+			return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/Assets.js".`);
 		}
 
 		if (!iconData) {
@@ -259,6 +259,8 @@ class Icon extends UI5Element {
 			return console.warn(`Required icon is not registered. Invalid icon name: ${this.name}`);
 		}
 
+		// in case a new valid name is set, show the icon
+		this.invalid = false;
 		this.pathData = iconData.pathData;
 		this.accData = iconData.accData;
 		this.ltr = iconData.ltr;

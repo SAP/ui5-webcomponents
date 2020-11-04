@@ -1,6 +1,6 @@
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Popup from "./Popup.js";
-import "@ui5/webcomponents-icons/dist/icons/resize-corner.js";
+import "@ui5/webcomponents-icons/dist/resize-corner.js";
 import Icon from "./Icon.js";
 
 // Template
@@ -180,6 +180,10 @@ class Dialog extends Popup {
 
 	get _ariaModal() { // Required by Popup.js
 		return true;
+	}
+
+	get _displayProp() {
+		return "flex";
 	}
 
 	get classes() {

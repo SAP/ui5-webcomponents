@@ -6,7 +6,7 @@
 .ui5-valuestatemessage-root {
 	box-sizing: border-box;
 	display: inline-block;
-	color: var(--sapUiBaseColor);
+	color: var(--sapTextColor);
 	font-size: var(--sapFontSmallSize);
 	font-family: "72override", var(--sapFontFamily);
 	padding: .3rem .625rem;
