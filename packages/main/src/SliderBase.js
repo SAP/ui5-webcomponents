@@ -234,7 +234,7 @@ class SliderBase extends UI5Element {
 		}
 	}
 
-	_onthouchstart(event) {
+	_ontouchstart(event) {
 		this._onmousedown(event);
 	}
 
