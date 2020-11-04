@@ -204,6 +204,10 @@ class Popup extends UI5Element {
 		return staticAreaStyles;
 	}
 
+	get _displayProp() {
+		return "block";
+	}
+
 	/**
 	 * Prevents the user from interacting with the content under the block layer
 	 */
@@ -393,11 +397,11 @@ class Popup extends UI5Element {
 	}
 
 	/**
-	 * Sets "block" display to the popup
+	 * Sets "block" display to the popup. The property can be overriden by derivatives of Popup.
 	 * @protected
 	 */
 	show() {
-		this.style.display = "block";
+		this.style.display = this._displayProp;
 	}
 
 
@@ -417,7 +421,7 @@ class Popup extends UI5Element {
 	}
 
 	/**
-	 * Implement this getter with relevant logic regarding the modality of the popup (f.e. based on a public property)
+	 * Implement this getter with relevant logic regarding the modality of the popup (e.g. based on a public property)
 	 *
 	 * @protected
 	 * @abstract

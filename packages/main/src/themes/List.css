@@ -39,7 +39,7 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	box-sizing: border-box;
-	font-size: var(--sapMFontHeader4Size);
+	font-size: var(--sapFontHeader4Size); 
 	font-family: "72override", var(--sapFontFamily);
 	color: var(--sapGroup_TitleTextColor);
 	height: 3rem;
