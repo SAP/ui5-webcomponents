@@ -1,7 +1,7 @@
-commit efb0d8ec9c35607687e5d150725dfe0e1e936675
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Nov 4 11:44:07 2020 +0200
+commit 03c8447408a24d9be63b136ac8f824ed65f1ea03
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Wed Nov 4 13:08:44 2020 +0200
 
-    feat(icons-tnt): add new TNT icon collection (#2414)
+    fix(ui5-dialog): no longer gets clipped in short screen height in IE (#2429)
     
-    based on SAP-icons-TNT
+    Fixes: #2243
