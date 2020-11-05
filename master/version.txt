@@ -1,7 +1,9 @@
-commit 03c8447408a24d9be63b136ac8f824ed65f1ea03
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Wed Nov 4 13:08:44 2020 +0200
+commit 58b301f3047622c15d23277a6b6fa8d6574998de
+Author: Fan Zou <fan.zou@gmail.com>
+Date:   Thu Nov 5 10:10:07 2020 +0100
 
-    fix(ui5-dialog): no longer gets clipped in short screen height in IE (#2429)
+    fix(ui5-comboBox):  avoid flickering problem (#2408)
     
-    Fixes: #2243
+    Use the right activeElement by focus-checking to solve the flickering problem of the comboBox.
+    
+    Fixes #2365
