@@ -6,7 +6,6 @@ const getCachedLocaleDataInstance = locale => {
 	if (!cache.has(locale)) {
 		cache.set(locale, LocaleData.getInstance(locale));
 	}
-
 	return cache.get(locale);
 };
 
