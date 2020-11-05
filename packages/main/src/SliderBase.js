@@ -322,7 +322,8 @@ class SliderBase extends UI5Element {
 		window.addEventListener(this._moveEventType, this._moveHandler);
 
 		this._boundingClientRect = this.getBoundingClientRect();
-		const newValue = SliderBase.getValueFromInteraction(event, this.step, min, max, this._boundingClientRect);
+		const newValue = SliderBase.getValueFromInteraction(event, this.step, min, max, this._boundingClientRect, this.directionStart);
+
 		return newValue;
 	}
 
@@ -367,9 +368,9 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	static getValueFromInteraction(event, stepSize, min, max, boundingClientRect) {
+	static getValueFromInteraction(event, stepSize, min, max, boundingClientRect, directionStart) {
 		const pageX = this.getPageXValueFromEvent(event);
-		const value = this.computedValueFromPageX(pageX, min, max, boundingClientRect);
+		const value = this.computedValueFromPageX(pageX, min, max, boundingClientRect, directionStart);
 		const steppedValue = this.getSteppedValue(value, stepSize, min);
 
 		return this.clipValue(steppedValue, min, max);
@@ -414,11 +415,11 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	static computedValueFromPageX(pageX, min, max, boundingClientRect) {
+	static computedValueFromPageX(pageX, min, max, boundingClientRect, directionStart) {
 		// Determine pageX position relative to the Slider DOM
-		const xPositionRelative = pageX - boundingClientRect.left;
+		const xRelativePosition = directionStart === "left" ? pageX - boundingClientRect[directionStart] : boundingClientRect[directionStart] - pageX;
 		// Calculate the percentage complete (the "progress")
-		const percentageComplete = xPositionRelative / boundingClientRect.width;
+		const percentageComplete = xRelativePosition / boundingClientRect.width;
 		// Fit (map) the complete percentage between the min/max value range
 		return min + percentageComplete * (max - min);
 	}
@@ -512,6 +513,15 @@ class SliderBase extends UI5Element {
 		props.forEach(property => {
 			this._stateStorage[property] = this[property];
 		});
+	}
+
+	/**
+	 * Returns the start side of a direction - left for LTR, right for RTL
+	 *
+	 * @protected
+	 */
+	get directionStart() {
+		return this.effectiveDir === "rtl" ? "right" : "left";
 	}
 
 	/**

@@ -116,7 +116,7 @@ class Slider extends SliderBase {
 			return;
 		}
 
-		const newValue = SliderBase.getValueFromInteraction(event, this.step, this.min, this.max, this.getBoundingClientRect());
+		const newValue = SliderBase.getValueFromInteraction(event, this.step, this.min, this.max, this.getBoundingClientRect(), this.directionStart);
 
 		this._updateUI(newValue);
 		this.updateValue("value", newValue);
@@ -148,9 +148,10 @@ class Slider extends SliderBase {
 		return {
 			progress: {
 				"transform": `scaleX(${this._percentageComplete})`,
+				"transform-origin": `${this.directionStart} top`,
 			},
 			handle: {
-				"left": `${this._handlePositionFromStart}%`,
+				[this.directionStart]: `${this._handlePositionFromStart}%`,
 			},
 			tickmarks: {
 				"background": `${this._tickmarksBackground}`,
@@ -160,7 +161,7 @@ class Slider extends SliderBase {
 			},
 			labelContainer: {
 				"width": `100%`,
-				"left": `-${this._labelWidth / 2}%`,
+				[this.directionStart]: `-${this._labelWidth / 2}%`,
 			},
 			tooltip: {
 				"visibility": `${this._tooltipVisibility}`,

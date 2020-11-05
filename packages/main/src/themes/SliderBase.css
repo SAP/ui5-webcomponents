@@ -40,7 +40,6 @@
 	background: var(--_ui5_slider_progress_background);
 	border-radius: var(--_ui5_slider_progress_border_radius);
 	height: var(--_ui5_slider_inner_height);
-	transform-origin: left top;
 	will-change: transform;
 }
 
@@ -63,6 +62,10 @@
 	outline: none;
 	height: var(--_ui5_slider_handle_height);
 	width: var(--_ui5_slider_handle_width);
+}
+
+[dir="rtl"] .ui5-slider-handle {
+	margin-right: var(--_ui5_slider_handle_margin_left);
 }
 
 .ui5-slider-root:hover .ui5-slider-handle {
