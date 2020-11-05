@@ -1,9 +1,7 @@
-commit 58b301f3047622c15d23277a6b6fa8d6574998de
-Author: Fan Zou <fan.zou@gmail.com>
-Date:   Thu Nov 5 10:10:07 2020 +0100
+commit cd5fad279944ae593e85d2bb093393e63be2bd31
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Thu Nov 5 11:28:04 2020 +0200
 
-    fix(ui5-comboBox):  avoid flickering problem (#2408)
+    fix(ui5-multi-combobox): make focus outline visible (#2431)
     
-    Use the right activeElement by focus-checking to solve the flickering problem of the comboBox.
-    
-    Fixes #2365
+    FIXES: #2286
