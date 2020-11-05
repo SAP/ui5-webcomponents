@@ -1,7 +1,7 @@
-commit cd5fad279944ae593e85d2bb093393e63be2bd31
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Thu Nov 5 11:28:04 2020 +0200
+commit 095204f99a633ed74c9cd88b806f1d7674c2da93
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Thu Nov 5 14:16:31 2020 +0100
 
-    fix(ui5-multi-combobox): make focus outline visible (#2431)
+    docs(ui5-file-uploader): explain that accept file types require dots (#2438)
     
-    FIXES: #2286
+    #2435
