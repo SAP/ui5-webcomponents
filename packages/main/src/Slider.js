@@ -36,6 +36,33 @@ const metadata = {
  * The purpose of the component is to enable visual selection of a value in
  * a continuous numerical range by moving an adjustable handle.
  *
+ * <h3>Structure</h3>
+ * The most important properties of the Slider are:
+ * <ul>
+ * <li>min - The minimum value of the slider range</li>
+ * <li>max - The maximum value of the slider range</li>
+ * <li>value - The current value of the slider</li>
+ * <li>step - Determines the increments in which the slider will move</li>
+ * <li>showTooltip - Determines if a tooltip should be displayed above the handle</li>
+ * <li>tickmarks - displays a visual divider between the step values</li>
+ * <li>labelInterval - labels some or all of the tickmarks with their values.</li>
+ * </ul>
+ *
+ * <h3>Usage</h3>
+ * The most common usecase is to select values on a continuous numerical scale (e.g. temperature, volume, etc. ).
+ *
+ * <h3>Responsive Behavior</h3>
+ * The <code>sap.m.Slider</code> control adjusts to the size of its parent container by recalculating and 
+ * resizing the width of the control. You can move the slider handle in several different ways:
+ * <ul>
+ * <li>Drag and drop to the desired value</li>
+ * <li>Click/tap on the range bar to move the handle to that location</li>
+ * </ul>
+ *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/Slider";</code>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Slider
@@ -179,9 +206,7 @@ class Slider extends SliderBase {
 	}
 
 	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

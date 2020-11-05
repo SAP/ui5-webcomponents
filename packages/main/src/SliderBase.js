@@ -14,7 +14,7 @@ import styles from "./generated/themes/SliderBase.css.js";
 const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */  {
 		/**
-		 * Minimum value of the slider
+		 * Defines the minimum value of the slider
 		 * <br><br>
 		 *
 		 * @type {Float}
@@ -26,7 +26,7 @@ const metadata = {
 			defaultValue: 0,
 		},
 		/**
-		 * Maximum value of the slider
+		 * Defines the maximum value of the slide
 		 * <br><br>
 		 *
 		 * @type {Float}
@@ -39,7 +39,7 @@ const metadata = {
 		},
 		/**
 		 * Defines the size of the slider's selection intervals. (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
-		 * If 0 no visible interval between value changes will appear. When negative number, the component fallbacks to its default value.
+		 * If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
 		 * <br><br>
 		 *
 		 * @type {Integer}
@@ -51,9 +51,9 @@ const metadata = {
 			defaultValue: 1,
 		},
 		/**
-		 * Put a label with a value on every N-th step. The step and tickmarks properties must be enabled.
+		 * Displays a label with a value on every N-th step. The step and tickmarks properties must be enabled.
 		 * Example - if the step value is set to 2 and the label interval is also specified to 2 - than every second
-		 * tickmark will be labelled, which means every 4th round value number.
+		 * tickmark will be labelled, which means every 4th value number.
 		 *
 		 * @type {Integer}
 		 * @defaultvalue 1
