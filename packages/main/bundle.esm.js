@@ -15,6 +15,7 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 
 // Icons
 import "@ui5/webcomponents-icons/dist/Assets.js";
+import "@ui5/webcomponents-icons-tnt/dist/Assets.js";
 
 // Assets for the main package
 import "./dist/Assets.js";

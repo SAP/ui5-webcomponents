@@ -6,8 +6,8 @@ import {
 	compareCurrentRuntimeWith,
 } from "./Runtimes.js";
 
-// Used to store already calculated keys
-const iconKeysCache = new Map();
+// Used to store already parsed icon names
+const parseCache = new Map();
 
 // Local resources
 const localRegistry = new Map();
@@ -24,24 +24,35 @@ const getIconCollectionPromises = policy => { return policy === SharedResourceRe
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 const DEFAULT_COLLECTION = "SAP-icons";
 
-const calcKey = (name, collection) => {
-	const cacheId = `${name} ${collection}`;
-
-	if (!iconKeysCache.has(cacheId)) {
+const parseName = name => {
+	if (!parseCache.has(name)) {
 		// silently support ui5-compatible URIs
 		if (name.startsWith("sap-icon://")) {
 			name = name.replace("sap-icon://", "");
-			[name, collection] = name.split("/").reverse();
 		}
+
+		let collection;
+		[name, collection] = name.split("/").reverse();
 		collection = collection || DEFAULT_COLLECTION;
-		iconKeysCache.set(cacheId, `${collection}:${name}`);
+		// hardcoded alias in case icon explorer is used, resolve `SAP-icons-TNT` to `tnt`
+		// aliases can be made a feature in the future if more collections need it or more aliases are needed.
+		if (collection === "SAP-icons-TNT") {
+			collection = "tnt";
+		}
+		const registryKey = `${collection}/${name}`;
+		parseCache.set(name, { collection, registryKey });
 	}
 
-	return iconKeysCache.get(cacheId);
+	return parseCache.get(name);
 };
 
+
 const registerIcon = (name, { pathData, ltr, accData, collection } = {}) => { // eslint-disable-line
-	const key = calcKey(name, collection);
+	if (!collection) {
+		collection = DEFAULT_COLLECTION;
+	}
+
+	const key = `${collection}/${name}`;
 	const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons);
 	const registry = getRegistry(policy);
 
@@ -66,12 +77,12 @@ const registerIcon = (name, { pathData, ltr, accData, collection } = {}) => { //
 	}
 };
 
-const getIconDataSync = (name, collection = DEFAULT_COLLECTION) => {
-	const key = calcKey(name, collection);
+const getIconDataSync = nameProp => {
+	const { registryKey } = parseName(nameProp);
 	const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons);
 	const registry = getRegistry(policy);
 
-	const iconData = registry.get(key);
+	const iconData = registry.get(registryKey);
 
 	// Icon not found in the registry - must fetch it
 	if (!iconData) {
@@ -89,8 +100,8 @@ const getIconDataSync = (name, collection = DEFAULT_COLLECTION) => {
 	}
 };
 
-const getIconData = async (name, collection = DEFAULT_COLLECTION) => {
-	const key = calcKey(name, collection);
+const getIconData = async nameProp => {
+	const { collection, registryKey } = parseName(nameProp);
 	const policy = getSharedResourcePolicy(SharedResourceType.SVGIcons);
 	const registry = getRegistry(policy);
 	const iconCollectionPromises = getIconCollectionPromises(policy);
@@ -105,7 +116,7 @@ const getIconData = async (name, collection = DEFAULT_COLLECTION) => {
 		return iconData;
 	}
 
-	return registry.get(key);
+	return registry.get(registryKey);
 };
 
 const getRegisteredNames = async () => {
@@ -113,10 +124,8 @@ const getRegisteredNames = async () => {
 	const registry = getRegistry(policy);
 	const iconCollectionPromises = getIconCollectionPromises(policy);
 
-	if (iconCollectionPromises.has(DEFAULT_COLLECTION)) {
-		await iconCollectionPromises.get(DEFAULT_COLLECTION);
-	}
-	return Array.from(registry.keys()).map(k => k.split(":")[1]);
+	await Promise.all(Array.from(iconCollectionPromises.values()));
+	return Array.from(registry.keys());
 };
 
 const registerCollectionPromise = (collection, promise) => {
