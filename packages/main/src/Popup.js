@@ -308,7 +308,7 @@ class Popup extends UI5Element {
 			return;
 		}
 
-		if (this.isModal && !this.shouldHideBlockLayer) {
+		if (this.isModal && !this.shouldHideBackdrop) {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
 			this._blockLayerHidden = false;
@@ -432,7 +432,7 @@ class Popup extends UI5Element {
 	 * @abstract
 	 * @returns {boolean}
 	 */
-	get shouldHideBlockLayer() {} // eslint-disable-line
+	get shouldHideBackdrop() {} // eslint-disable-line
 
 	/**
 	 * Return the ID of an element in the shadow DOM that is going to label this popup

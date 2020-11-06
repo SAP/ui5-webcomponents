@@ -113,7 +113,7 @@ const metadata = {
 		 * @public
 		 * @since 1.0.0-rc.10
 		 */
-		hideBlockLayer: {
+		hideBackdrop: {
 			type: Boolean,
 		},
 
@@ -631,8 +631,8 @@ class Popover extends Popup {
 		return this.modal;
 	}
 
-	get shouldHideBlockLayer() { // Required by Popup.js
-		return this.hideBlockLayer;
+	get shouldHideBackdrop() { // Required by Popup.js
+		return this.hideBackdrop;
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js

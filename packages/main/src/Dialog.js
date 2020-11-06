@@ -174,7 +174,7 @@ class Dialog extends Popup {
 		return true;
 	}
 
-	get shouldHideBlockLayer() { // Required by Popup.js
+	get shouldHideBackdrop() { // Required by Popup.js
 		return false;
 	}
 
