@@ -25,12 +25,12 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(mcb.getProperty("focused"), "MultiComboBox should be focused.");
 
 			input.keys("ArrowLeft");
-			browser.pause(500);
+			browser.pause(100);
 
 			assert.notOk(mcb.getProperty("focused"), "MultiComboBox should no longer be focused.");
 
 			input.keys("ArrowRight");
-			browser.pause(500);
+			browser.pause(100);
 
 			assert.ok(mcb.getProperty("focused"), "MultiComboBox should be focused again.");
 		});
