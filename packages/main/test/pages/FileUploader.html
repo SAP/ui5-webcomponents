@@ -116,6 +116,13 @@
 			<ui5-button id="uploadBtn">Upload</ui5-button>
 		</div>
 	</div>
+
+	<h3>Test placeholder removal</h3>
+	<section style="display: flex; flex-direction: column;">
+		<ui5-button id="buttonCleanPlaceholder" style="width: 200px;">Remove placholder</ui5-button>
+		<ui5-file-uploader id="fuWithPlaceholder" placeholder="Hello World"></ui5-file-uploader>
+	</section>
+
 	<script>
 		document.getElementById("uploadBtn").addEventListener("click", function() {
 			var fu = document.getElementById("fuFetch");
@@ -135,6 +142,10 @@
 			.catch(function(err) {
 				console.log("Error")
 			})
+		});
+
+		buttonCleanPlaceholder.addEventListener("click", function (event) {
+			fuWithPlaceholder.removeAttribute("placeholder");
 		});
 	</script>
 </body>

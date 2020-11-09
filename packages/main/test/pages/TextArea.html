@@ -205,6 +205,12 @@
 		<ui5-textarea id="textAreaAriaLabelledBy" maxlength="20" show-exceeded-text aria-labelledby="infoText" class="fixed-width fixed-height"></ui5-textarea>
 	</section>
 
+	<h3>Test placeholder removal</h3>
+	<section style="display: flex; flex-direction: column;">
+		<ui5-button id="buttonCleanPlaceholder" style="width: 200px;">Remove placholder</ui5-button>
+		<ui5-textarea id="textareaWithPlaceholder" placeholder="Hello World"></ui5-textarea>
+	</section>
+
 	<script>
 		var changeCounter = 0;
 		var inputCounter = 0;
@@ -217,6 +223,10 @@
 		document.getElementById('textarea-input').addEventListener("ui5-input", function (event) {
 			inputCounter += 1;
 			document.getElementById('inputResult').value = inputCounter;
+		});
+
+		buttonCleanPlaceholder.addEventListener("click", function (event) {
+			textareaWithPlaceholder.removeAttribute("placeholder");
 		});
 	</script>
 

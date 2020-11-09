@@ -179,7 +179,17 @@
 		</div>
 	</section>
 
-    <script type="module">
+	<h3>Test placeholder removal</h3>
+	<section style="display: flex; flex-direction: column;">
+		<ui5-button id="buttonCleanPlaceholder" style="width: 200px;">Remove placholder</ui5-button>
+		<ui5-combobox id="cbxWithPlaceholder" placeholder="Hello World">
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="United States of America"></ui5-cb-item>
+			<ui5-cb-item text="Canada"></ui5-cb-item>
+		</ui5-combobox>
+	</section>
+
+	<script type="module">
 		document.getElementById("lazy").addEventListener("ui5-input", async event => {
 			const { filterValue } = event.target;
 
@@ -224,6 +234,10 @@
 		document.getElementById("input-cb").addEventListener("ui5-input", function(event) {
 			document.getElementById("input-placeholder").innerHTML = event.target.filterValue;
 			document.getElementById("input-count").innerHTML = parseInt(document.getElementById("input-count").innerHTML) + 1;
+		});
+
+		buttonCleanPlaceholder.addEventListener("click", function (event) {
+			cbxWithPlaceholder.removeAttribute("placeholder");
 		});
 	</script>
 

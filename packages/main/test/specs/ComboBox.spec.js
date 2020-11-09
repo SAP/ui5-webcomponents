@@ -315,4 +315,21 @@ describe("General interaction", () => {
 
 		assert.ok(combo.getProperty("focused"), "property focused should be true");
 	});
+
+	it("Tests removing placeholder does not display null", () => {
+		const INITIAL_PLACEHOLDER = "Hello World";
+		const cbx = browser.$("#cbxWithPlaceholder");
+		const btn = browser.$("#buttonCleanPlaceholder");
+
+		// assert
+		assert.strictEqual(cbx.getProperty("placeholder"), INITIAL_PLACEHOLDER,
+			"The initial placeholder is set.");
+
+		// act
+		btn.click();
+
+		// assert
+		assert.strictEqual(cbx.getProperty("placeholder"), "",
+			"The placeholder is reset to empty string.");
+	});
 });

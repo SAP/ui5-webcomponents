@@ -176,7 +176,10 @@ const validateSingleProperty = (value, propData) => {
 		return typeof value === "boolean" ? value : false;
 	}
 	if (propertyType === String) {
-		return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : value.toString();
+		if ( typeof value === "undefined" || value === null) {
+			return propData.defaultValue;
+		}
+		return typeof value === "string" ? value : value.toString();
 	}
 	if (propertyType === Object) {
 		return typeof value === "object" ? value : propData.defaultValue;

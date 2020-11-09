@@ -163,6 +163,7 @@ const metadata = {
 		 */
 		placeholder: {
 			type: String,
+			defaultValue: "",
 		},
 
 		/**
