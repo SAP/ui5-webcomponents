@@ -35,7 +35,7 @@ const metadata = {
 		 *
 		 * To browse all available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 * <br><br>
+		 * <br>
 		 *
 		 * Example:
 		 * <br>
@@ -44,7 +44,7 @@ const metadata = {
 		 *
 		 * <b>Note:</b> To use the SAP Fiori Tools icons,
 		 * you need to set the <code>tnt</code> prefix in front of the icon's name.
-		 * <br><br>
+		 * <br>
 		 *
 		 * Example:
 		 * <br>
