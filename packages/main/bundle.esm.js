@@ -23,6 +23,7 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 
 // Icons
 import "@ui5/webcomponents-icons/dist/Assets.js";
+import "@ui5/webcomponents-icons-tnt/dist/Assets.js";
 
 /* Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
 import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";

@@ -1,6 +1,6 @@
 :host {
 	display: contents;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: 0.875rem;
 	height: 100%;
 	box-sizing: border-box;

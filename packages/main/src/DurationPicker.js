@@ -23,7 +23,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import Input from "./Input.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-import "@ui5/webcomponents-icons/dist/icons/fob-watch.js";
+import "@ui5/webcomponents-icons/dist/fob-watch.js";
 import DurationPickerPopoverTemplate from "./generated/templates/DurationPickerPopoverTemplate.lit.js";
 import {
 	TIMEPICKER_HOURS_LABEL,
