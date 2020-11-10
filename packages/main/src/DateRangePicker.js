@@ -146,7 +146,7 @@ class DateRangePicker extends DatePicker {
 			return;
 		}
 
-		let dates = this._splitValueByDelimiter(value);
+		const dates = this._splitValueByDelimiter(value);
 		if (!isValid) {
 			this.valueState = ValueState.Error;
 			console.warn("Value can not be converted to a valid dates", this); // eslint-disable-line
@@ -171,7 +171,6 @@ class DateRangePicker extends DatePicker {
 	}
 
 	_changeCalendarSelection(focusTimestamp) {
-
 		if (this._calendarDate.getYear() < 1) {
 			// 0 is a valid year, but we cannot display it
 			return;

@@ -455,7 +455,7 @@ class Calendar extends UI5Element {
 
 	_handleSelectedDatesChange(event) {
 		this.timestamp = event.detail.dates[0];
-		this.selectedDates = [...event.detail.dates]
+		this.selectedDates = [...event.detail.dates];
 		this.fireEvent("selected-dates-change", { dates: event.detail.dates });
 	}
 
