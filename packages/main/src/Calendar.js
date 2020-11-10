@@ -53,12 +53,13 @@ const metadata = {
 		/**
 		 * Defines the type of selection used in the calendar component.
 		 * The property takes as value an object of type <code>CalendarSelection</code>.
-		 * Default value <code>CalendarSelection.Single</code> enables single selection
-		 * mode in the calendar component.
-		 * Other possible value is <code>CalendarSelection.Range</code> enables selection
-		 * of a range in the calendar component.
+		 * Accepted property values are:<br>
+		 * <ul>
+		 * <li><code>CalendarSelection.Single</code> - enables a single date selection.(default value)</li>
+		 * <li><code>CalendarSelection.Range</code> - enables selection of a date range.</li>
+		 * <li><code>CalendarSelection.Multiple</code> - enables selection of multiple dates.</li>
+		 * </ul>
 		 * @type {CalendarSelection}
-		 * @defaultvalue "Single"
 		 * @public
 		 */
 		selection: {
@@ -241,6 +242,8 @@ class Calendar extends UI5Element {
 		super();
 		this._oLocale = getLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
+		this.selection = CalendarSelection.Single;
+
 		this._header = {};
 		this._header.onPressPrevious = this._handlePrevious.bind(this);
 		this._header.onPressNext = this._handleNext.bind(this);
@@ -250,6 +253,7 @@ class Calendar extends UI5Element {
 		this._oMonth = {};
 		this._oMonth.onSelectedDatesChange = this._handleSelectedDatesChange.bind(this);
 		this._oMonth.onNavigate = this._handleMonthNavigate.bind(this);
+
 
 		this._monthPicker = {};
 		this._monthPicker._hidden = true;
@@ -278,8 +282,9 @@ class Calendar extends UI5Element {
 
 		this._oMonth.formatPattern = this._formatPattern;
 		this._oMonth.timestamp = this._timestamp;
-		this._oMonth.selectedDates = [...this._selectedDates];
 		this._oMonth.primaryCalendarType = this._primaryCalendarType;
+		this._oMonth.selection = this.selection;
+		this._oMonth.selectedDates = [...this.selectedDates];
 		this._oMonth.minDate = this.minDate;
 		this._oMonth.maxDate = this.maxDate;
 		this._header.monthText = this._oLocaleData.getMonths("wide", this._primaryCalendarType)[this._month];
@@ -449,8 +454,8 @@ class Calendar extends UI5Element {
 	}
 
 	_handleSelectedDatesChange(event) {
-		this.selectedDates = [...event.detail.dates];
-
+		this.timestamp = event.detail.dates[0];
+		this.selectedDates = [...event.detail.dates]
 		this.fireEvent("selected-dates-change", { dates: event.detail.dates });
 	}
 
@@ -523,7 +528,6 @@ class Calendar extends UI5Element {
 
 	_handleYearButtonPress() {
 		this._hideMonthPicker();
-
 		this[`_${this._yearPicker._hidden ? "show" : "hide"}YearPicker`]();
 	}
 

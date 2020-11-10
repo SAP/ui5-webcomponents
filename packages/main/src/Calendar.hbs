@@ -1,7 +1,7 @@
 <div
 	class="{{classes.main}}"
 	style="{{styles.main}} "
-	@keydown={{_onkeydown}}	
+	@keydown={{_onkeydown}}
 >
 
 	<ui5-calendar-header
@@ -26,6 +26,7 @@
 			.selectedDates="{{_oMonth.selectedDates}}"
 			._hidden="{{_oMonth._hidden}}"
 			.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
+			.selection="{{_oMonth.selection}}"
 			.minDate="{{_oMonth.minDate}}"
 			.maxDate="{{_oMonth.maxDate}}"
 			timestamp="{{_oMonth.timestamp}}"

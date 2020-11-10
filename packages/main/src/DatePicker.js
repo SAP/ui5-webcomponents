@@ -25,6 +25,7 @@ import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -469,6 +470,7 @@ class DatePicker extends UI5Element {
 	onBeforeRendering() {
 		this._calendar.primaryCalendarType = this._primaryCalendarType;
 		this._calendar.formatPattern = this._formatPattern;
+		this._calendar.selection = CalendarSelection.Single;
 
 		if (this.minDate && !this.isValid(this.minDate)) {
 			this.minDate = null;
@@ -479,9 +481,9 @@ class DatePicker extends UI5Element {
 			this.maxDate = null;
 			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
-		if (this._checkValueValidity(this.value) || this.checkRealValueValidity()) {
+		if (this._checkValueValidity(this.value)) {
 			this._changeCalendarSelection();
-		} else {
+		} else if (this.value !== "") {
 			this._calendar.selectedDates = [];
 		}
 
@@ -672,13 +674,6 @@ class DatePicker extends UI5Element {
 
 	_checkValueValidity(value) {
 		return this.isValid(value) && this.isInValidRange(this._getTimeStampFromString(value));
-	}
-
-	/**
-	 * This method is used in the derived classes
-	 */
-	checkRealValueValidity() {
-		return false;
 	}
 
 	_click(event) {
@@ -908,7 +903,7 @@ class DatePicker extends UI5Element {
 		this._updateValueCalendarSelectedDatesChange(newValue);
 
 		this._calendar.timestamp = newValue;
-		this._calendar.selectedDates = event.detail.dates;
+		this._calendar.selectedDates = [...event.detail.dates];
 		this._focusInputAfterClose = true;
 
 		if (this.isInValidRange(this._getTimeStampFromString(this.value))) {
@@ -986,9 +981,7 @@ class DatePicker extends UI5Element {
 
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
-		if (this.value) {
-			this._calendar.selectedDates = [timestamp];
-		}
+		this._calendar.selectedDates = this.value ? [timestamp] : [];
 	}
 
 	/**
