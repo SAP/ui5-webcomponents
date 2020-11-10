@@ -1,5 +1,5 @@
-commit 69af261f1b615d608eb9a42236d1ecf303cecc3e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Nov 10 13:04:06 2020 +0200
+commit 0c9b034055a4a38bde52a68df83693f19a01d008
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Nov 10 17:20:21 2020 +0200
 
-    docs: showcase new features within playground (#2452)
+    chore(ui5-avatar): use encodeCSS (#2454)
