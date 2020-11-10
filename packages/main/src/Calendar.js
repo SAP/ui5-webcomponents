@@ -240,8 +240,6 @@ class Calendar extends UI5Element {
 
 	constructor() {
 		super();
-		this._oLocale = getLocale();
-		this._oLocaleData = new LocaleData(this._oLocale);
 		this.selection = CalendarSelection.Single;
 
 		this._header = {};
@@ -283,9 +281,9 @@ class Calendar extends UI5Element {
 
 		this._oMonth.formatPattern = this._formatPattern;
 		this._oMonth.timestamp = this._timestamp;
+		this._oMonth.selectedDates = [...this.selectedDates];
 		this._oMonth.primaryCalendarType = this._primaryCalendarType;
 		this._oMonth.selection = this.selection;
-		this._oMonth.selectedDates = [...this.selectedDates];
 		this._oMonth.minDate = this.minDate;
 		this._oMonth.maxDate = this.maxDate;
 		this._header.monthText = localeData.getMonths("wide", this._primaryCalendarType)[this._month];

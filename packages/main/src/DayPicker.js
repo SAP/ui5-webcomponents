@@ -230,8 +230,6 @@ class DayPicker extends UI5Element {
 
 	constructor() {
 		super();
-		this._oLocale = getLocale();
-		this._oLocaleData = new LocaleData(this._oLocale);
 		this.selection = CalendarSelection.Single;
 
 		this._itemNav = new ItemNavigation(this, {
