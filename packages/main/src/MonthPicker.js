@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -19,6 +19,7 @@ import styles from "./generated/themes/MonthPicker.css.js";
  */
 const metadata = {
 	tag: "ui5-monthpicker",
+	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -138,8 +139,6 @@ class MonthPicker extends UI5Element {
 
 	constructor() {
 		super();
-		this._oLocale = getLocale();
-		this._oLocaleData = new LocaleData(this._oLocale);
 
 		this._itemNav = new ItemNavigation(this, {
 			pageSize: 12,
@@ -171,6 +170,8 @@ class MonthPicker extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		const localeData = getCachedLocaleDataInstance(getLocale());
+
 		const quarters = [];
 		const oCalDate = this._calendarDate;
 		let timestamp;
@@ -184,7 +185,7 @@ class MonthPicker extends UI5Element {
 				timestamp: timestamp.toString(),
 				id: `${this._id}-m${i}`,
 				selected: this._selectedDates.some(d => d === timestamp),
-				name: this._oLocaleData.getMonths("wide", this._primaryCalendarType)[i],
+				name: localeData.getMonths("wide", this._primaryCalendarType)[i],
 				classes: "ui5-mp-item",
 			};
 
@@ -230,7 +231,8 @@ class MonthPicker extends UI5Element {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
 	get _isPattern() {
