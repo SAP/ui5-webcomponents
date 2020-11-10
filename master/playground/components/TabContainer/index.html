@@ -2160,6 +2160,12 @@
 <div class="control-tag">&lt;ui5-tabcontainer&gt;</div>
 
 <section>
+	<!-- Workaround for IE issue -->
+	<style>
+		ui5-tabcontainer {
+			width: calc(100% + 2 * .0625rem) !important;
+		}
+	</style>
 	<h3>Basic TabContainer</h3>
 	<div class="snippet">
 		<ui5-tabcontainer class="full-width" show-overflow>

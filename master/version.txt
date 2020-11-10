@@ -1,7 +1,5 @@
-commit 095204f99a633ed74c9cd88b806f1d7674c2da93
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Thu Nov 5 14:16:31 2020 +0100
+commit 69af261f1b615d608eb9a42236d1ecf303cecc3e
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Nov 10 13:04:06 2020 +0200
 
-    docs(ui5-file-uploader): explain that accept file types require dots (#2438)
-    
-    #2435
+    docs: showcase new features within playground (#2452)
