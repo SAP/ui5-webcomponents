@@ -13,7 +13,7 @@ import {
 	isF4,
 	isF4Shift,
 	isTabNext,
-	isTabPrevious
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
@@ -521,7 +521,7 @@ class Calendar extends UI5Element {
 		const header = this.shadowRoot.querySelector("ui5-calendar-header");
 		header.shadowRoot.querySelector("[data-sap-show-picker='Month']").setAttribute("tabindex", "-1");
 		header.shadowRoot.querySelector("[data-sap-show-picker='Year']").setAttribute("tabindex", "-1");
-		this._setPickerCurrentTabindex(0);	
+		this._setPickerCurrentTabindex(0);
 	}
 
 	_setPickerCurrentTabindex(index) {
