@@ -15,7 +15,6 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Slider.prototype */  {
 		/**
 		 * Current value of the slider
-		 * <br><br>
 		 *
 		 * @type {Float}
 		 * @defaultvalue 0
@@ -44,15 +43,15 @@ const metadata = {
  * <li>value - The current value of the slider</li>
  * <li>step - Determines the increments in which the slider will move</li>
  * <li>showTooltip - Determines if a tooltip should be displayed above the handle</li>
- * <li>tickmarks - displays a visual divider between the step values</li>
- * <li>labelInterval - labels some or all of the tickmarks with their values.</li>
+ * <li>tickmarks - Displays a visual divider between the step values</li>
+ * <li>labelInterval - Labels some or all of the tickmarks with their values.</li>
  * </ul>
  *
  * <h3>Usage</h3>
  * The most common usecase is to select values on a continuous numerical scale (e.g. temperature, volume, etc. ).
  *
  * <h3>Responsive Behavior</h3>
- * The <code>sap.m.Slider</code> control adjusts to the size of its parent container by recalculating and 
+ * The <code>ui5-slider</code> component adjusts to the size of its parent container by recalculating and 
  * resizing the width of the control. You can move the slider handle in several different ways:
  * <ul>
  * <li>Drag and drop to the desired value</li>

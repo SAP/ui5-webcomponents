@@ -15,7 +15,6 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */  {
 		/**
 		 * Defines the minimum value of the slider
-		 * <br><br>
 		 *
 		 * @type {Float}
 		 * @defaultvalue 0
@@ -26,8 +25,7 @@ const metadata = {
 			defaultValue: 0,
 		},
 		/**
-		 * Defines the maximum value of the slide
-		 * <br><br>
+		 * Defines the maximum value of the slider
 		 *
 		 * @type {Float}
 		 * @defaultvalue 100
@@ -40,7 +38,6 @@ const metadata = {
 		/**
 		 * Defines the size of the slider's selection intervals. (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
 		 * If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
-		 * <br><br>
 		 *
 		 * @type {Integer}
 		 * @defaultvalue 1
@@ -56,7 +53,7 @@ const metadata = {
 		 * tickmark will be labelled, which means every 4th value number.
 		 *
 		 * @type {Integer}
-		 * @defaultvalue 1
+		 * @defaultvalue 0
 		 * @public
 		 */
 		labelInterval: {
@@ -64,19 +61,19 @@ const metadata = {
 			defaultValue: 0,
 		},
 		/**
-		 * Enables tick marks visualization for each step. The step value must not be set to 0.
+		 * Enables tick marks visualization for each step.
 		 * <br><br>
+		 * <b>Note:</b> The step must be a positive number.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		 tickmarks: {
+		 showTickmarks: {
 			type: Boolean,
 		},
 		/**
 		 * Enables handle tooltip displaying the current value.
-		 * <br><br>
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -86,8 +83,7 @@ const metadata = {
 			type: Boolean,
 		},
 		/**
-		 * Defines whether the <code>ui5-slider</code> is in disabled state.
-		 * <br><br>
+		 * Defines whether the <code>slider</code> is in disabled state.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -123,7 +119,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Slider.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */ {
 		/**
 		 * Fired when the value changes and the user has finished interacting with the slider.
 		 *
@@ -161,21 +157,14 @@ class SliderBase extends UI5Element {
 		this._moveHandler = this._handleMove.bind(this);
 		this._upHandler = this._handleUp.bind(this);
 
-		this.TICKMARK_COLOR_MAP = {
-			sap_fiori_3: "#89919a",
-			sap_fiori_3_dark: "#89919a",
-			sap_fiori_3_hcw: "#000000",
-			sap_fiori_3_hcb: "#ffffff",
-			sap_belize: "#bfbfbf",
-			sap_belize_hcw: "#000000",
-			sap_belize_hcb: "#ffffff",
-		};
-
 		this._stateStorage = {
 			step: null,
 			min: null,
 			max: null,
 		};
+
+		// Stores the label values for the tickmarks
+		this._labelItems = [];
 	}
 
 	static get metadata() {
@@ -188,6 +177,18 @@ class SliderBase extends UI5Element {
 
 	static get styles() {
 		return styles;
+	}
+
+	static get TICKMARK_COLOR_MAP() {
+		return {
+			sap_fiori_3: "#89919a",
+			sap_fiori_3_dark: "#89919a",
+			sap_fiori_3_hcw: "#000000",
+			sap_fiori_3_hcb: "#ffffff",
+			sap_belize: "#bfbfbf",
+			sap_belize_hcw: "#000000",
+			sap_belize_hcb: "#ffffff",
+		};
 	}
 
 	static get UP_EVENTS() {
@@ -224,6 +225,7 @@ class SliderBase extends UI5Element {
 		ResizeHandler.deregister(this, this._handleResize);
 		this.removeEventListener("mouseover", this._mouseOverHandler);
 		this.removeEventListener("mouseout", this._mouseOutHandler);
+		this._labelItems = null;
 	}
 
 	onAfterRendering() {
@@ -269,7 +271,7 @@ class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_handleResize() {
-		if (!this.tickmarks) {
+		if (!this.showTickmarks) {
 			return;
 		}
 
@@ -278,9 +280,7 @@ class SliderBase extends UI5Element {
 
 		// Convert the string represented calculation expression to a normal one
 		// Check the distance  in pixels exist between every tickmark
-		const tickmarksAmountStrCalc = this._tickmarksAmount.split("/");
-		const tickmarksAmount = tickmarksAmountStrCalc[0] / tickmarksAmountStrCalc[1];
-		const spaceBetweenTickmarks = this.getBoundingClientRect().width / tickmarksAmount;
+		const spaceBetweenTickmarks = this._spaceBetweenTickmarks();
 
 		// If the pixels between the tickmarks are less than 8 only the first and the last one should be visible
 		// In such case the labels must correspond to the tickmarks, only the first and the last one should exist.
@@ -451,6 +451,7 @@ class SliderBase extends UI5Element {
 
 		// Recalculate the tickmarks and labels and update the stored state.
 		if (this.isPropertyUpdated("min", "max")) {
+			this._normalizeMinMaxValues(this.min, this.max);
 			this._drawDefaultTickmarks(this.step, this.max, this.min);
 			this.storePropertyState("min", "max");
 		}
@@ -524,13 +525,20 @@ class SliderBase extends UI5Element {
 		return this.effectiveDir === "rtl" ? "right" : "left";
 	}
 
+	_normalizeMinMaxValues(min, max) {
+		if (min > max) {
+			this.min = max;
+			this.max = min;
+		}
+	}
+
 	/**
 	 * Calculates and draws the tickmarks with a CSS gradient style
 	 *
 	 * @private
 	 */
 	_drawDefaultTickmarks(step, max, min) {
-		if (!this.tickmarks || !this.step) {
+		if (!this.showTickmarks || !this.step) {
 			return;
 		}
 
@@ -544,7 +552,7 @@ class SliderBase extends UI5Element {
 		// There is a CSS bug with the 'currentcolor' value of a CSS gradient that does not
 		// respect the variable for more than one theme. It has to be set here for now.
 		const currentTheme = getTheme();
-		const currentColor = this.TICKMARK_COLOR_MAP[currentTheme];
+		const currentColor = SliderBase.TICKMARK_COLOR_MAP[currentTheme];
 
 		this._tickmarksAmount = `${maxStr - minStr} / ${stepStr}`;
 		this._hiddenTickmarks = false;
@@ -598,6 +606,18 @@ class SliderBase extends UI5Element {
 	}
 
 	/**
+	 * Calculates space between tickmarks
+	 *
+	 * @private
+	 */
+	_spaceBetweenTickmarks() {
+		const tickmarksAmountStrCalc = this._tickmarksAmount.split("/");
+		const tickmarksAmount = tickmarksAmountStrCalc[0] / tickmarksAmountStrCalc[1];
+
+		return this.getBoundingClientRect().width / tickmarksAmount;
+	}
+
+	/**
 	 * Normalizes a new <code>step</code> property value.
 	 * If tickmarks are enabled recreates them according to it.
 	 *
@@ -605,14 +625,21 @@ class SliderBase extends UI5Element {
 	 */
 	_setStep(step) {
 		if (step === 0) {
+			console.warn("The 'step' property must be a positive float number");
 			return;
 		}
 
-		if (typeof step !== "number" || step < 0 || Number.isNaN(step)) {
+		if (step < 0) {
+			console.warn("The 'step' property must be a positive float number. The provided negative number has been converted to its positve equivalent");
+			step = Math.abs(step);
+		}
+
+		if (typeof step !== "number" || Number.isNaN(step)) {
+			console.warn("The 'step' property must be a positive float number. It has been set to its default value of 1");
 			step = 1;
 		}
 
-		if (this.tickmarks && !this._initialRendering) {
+		if (!this._initialRendering) {
 			this._drawDefaultTickmarks(step, this.max, this.min);
 		}
 
