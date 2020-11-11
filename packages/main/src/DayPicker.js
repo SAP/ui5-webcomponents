@@ -424,15 +424,6 @@ class DayPicker extends UI5Element {
 		}
 	}
 
-
-	// _onfocusin(event) {
-	// 	const currentTimestamp = new CalendarDate(this._calendarDate, this._primaryCalendarType).valueOf() / 1000;
-	// 	const currentIndex = this._itemNav._getItems().findIndex(day => parseInt(day.timestamp) === currentTimestamp);
-	// 	this._itemNav.currentIndex = currentIndex;
-	// 	this._itemNav.focusCurrent();
-	// 	this._itemNav.update();
-	// }
-
 	_onmousedown(event) {
 		const target = event.target;
 		const dayPressed = this._isDayPressed(target);
