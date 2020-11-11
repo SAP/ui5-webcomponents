@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.7](https://github.com/SAP/ui5-webcomponents/compare/v0.23.6...v0.23.7) (2020-11-11)
+
+
+### Bug Fixes
+* **ui5-textarea:** set italic to placeholder only ([#2458](https://github.com/SAP/ui5-webcomponents/issues/2458)) ([516ce3b](https://github.com/SAP/ui5-webcomponents/commit/516ce3b))
+
+
+
 ## [0.23.6](https://github.com/SAP/ui5-webcomponents/compare/v0.23.5...v0.23.6) (2020-11-02)
 
 
