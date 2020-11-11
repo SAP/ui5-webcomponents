@@ -39,9 +39,6 @@
 	outline-offset: -4px;
 }
 
-:host([placeholder]) {
-	font-style: italic;
-}
 
 .ui5-textarea-root {
 	height: 100%;
@@ -114,21 +111,25 @@
 
 .ui5-textarea-inner::-webkit-input-placeholder {
 	/* Chrome/Opera/Safari */
+	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
 .ui5-textarea-inner::-moz-placeholder {
 	/* Firefox 19+ */
+	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
 .ui5-textarea-inner:-ms-input-placeholder {
 	/* IE 10+ */
+	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
 .ui5-textarea-inner:-moz-placeholder {
 	/* Firefox 18- */
+	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
