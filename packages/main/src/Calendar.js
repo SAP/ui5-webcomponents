@@ -9,7 +9,12 @@ import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDat
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { isF4, isF4Shift } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isF4,
+	isF4Shift,
+	isTabNext,
+	isTabPrevious
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
@@ -305,6 +310,18 @@ class Calendar extends UI5Element {
 		this._refreshNavigationButtonsState();
 	}
 
+	onAfterRendering() {
+		const header = this.shadowRoot.querySelector("ui5-calendar-header");
+		header.shadowRoot.querySelector("[data-sap-show-picker='Month']").setAttribute("tabindex", "-1");
+		header.shadowRoot.querySelector("[data-sap-show-picker='Year']").setAttribute("tabindex", "-1");
+
+		const dayPicker = this.shadowRoot.querySelector("ui5-daypicker");
+		const currentTimestamp = new CalendarDate(this._calendarDate, this._primaryCalendarType).valueOf() / 1000;
+		const newItemIndex = dayPicker._itemNav._getItems().findIndex(day => parseInt(day.timestamp) === currentTimestamp);
+		dayPicker._itemNav.currentIndex = newItemIndex;
+		dayPicker._itemNav.update();
+	}
+
 	_refreshNavigationButtonsState() {
 		const minDateParsed = this.minDate && this.getFormat().parse(this.minDate);
 		const maxDateParsed = this.maxDate && this.getFormat().parse(this.maxDate);
@@ -450,6 +467,78 @@ class Calendar extends UI5Element {
 			if (!this._monthPicker._hidden) {
 				this._hideMonthPicker();
 			}
+		}
+
+		if (isTabNext(event)) {
+			const header = this.shadowRoot.querySelector("ui5-calendar-header");
+			const monthButton = header.shadowRoot.querySelector("[data-sap-show-picker='Month']");
+			const yearButton = 	header.shadowRoot.querySelector("[data-sap-show-picker='Year']");
+			const target = event.target;
+
+			if (target.tagName === "UI5-DAYPICKER" || target.tagName === "UI5-MONTHPICKER" || target.tagName === "UI5-YEARPICKER") {
+				if (monthButton.getAttribute("hidden") === null) {
+					monthButton.focus();
+				} else {
+					yearButton.focus();
+				}
+				event.preventDefault();
+			} else if (event.target.tagName === "UI5-CALENDAR-HEADER" && event.path[0].getAttribute("data-sap-show-picker") === "Month") {
+				yearButton.focus();
+				event.preventDefault();
+			} else {
+				this._setPickerCurrentTabindex(-1);
+			}
+		}
+
+		if (isTabPrevious(event)) {
+			const header = this.shadowRoot.querySelector("ui5-calendar-header");
+			if (event.target.tagName === "UI5-CALENDAR-HEADER" && event.path[0].getAttribute("data-sap-show-picker") === "Month") {
+				this._moveFocusToPickerContent();
+				event.preventDefault();
+			} else if (event.target.tagName === "UI5-CALENDAR-HEADER" && event.path[0].getAttribute("data-sap-show-picker") === "Year") {
+				const monthButton = header.shadowRoot.querySelector("[data-sap-show-picker='Month']");
+				if (monthButton.getAttribute("hidden") === null) {
+					monthButton.focus();
+				} else {
+					this._moveFocusToPickerContent();
+				}
+				event.preventDefault();
+			}
+		}
+	}
+
+	_moveFocusToPickerContent() {
+		if (!this._oMonth._hidden) {
+			this.shadowRoot.querySelector("ui5-daypicker")._itemNav.focusCurrent();
+		} else if (!this._monthPicker._hidden) {
+			this.shadowRoot.querySelector("ui5-monthpicker")._itemNav.focusCurrent();
+		} else {
+			this.shadowRoot.querySelector("ui5-yearpicker")._itemNav.focusCurrent();
+		}
+	}
+
+	_onfocusout(event) {
+		const header = this.shadowRoot.querySelector("ui5-calendar-header");
+		header.shadowRoot.querySelector("[data-sap-show-picker='Month']").setAttribute("tabindex", "-1");
+		header.shadowRoot.querySelector("[data-sap-show-picker='Year']").setAttribute("tabindex", "-1");
+		this._setPickerCurrentTabindex(0);	
+	}
+
+	_setPickerCurrentTabindex(index) {
+		const dayPicker = this.shadowRoot.querySelector("ui5-daypicker");
+		const monthPicker = this.shadowRoot.querySelector("ui5-monthpicker");
+		const yearPicker = this.shadowRoot.querySelector("ui5-yearpicker");
+
+		if (dayPicker) {
+			dayPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+		}
+
+		if (monthPicker) {
+			monthPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+		}
+
+		if (yearPicker) {
+			yearPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
 		}
 	}
 
