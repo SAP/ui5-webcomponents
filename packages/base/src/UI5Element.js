@@ -17,6 +17,7 @@ import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
+import { getFeature } from "./FeaturesRegistry.js";
 
 const metadata = {
 	events: {
@@ -444,7 +445,7 @@ class UI5Element extends HTMLElement {
 	_propertyChange(name, value) {
 		this._updateAttribute(name, value);
 
-		if (this._hasPropertyChangeListeners()) {
+		if (this._hasPropertyChangeListeners() || this.isOpenUI5Control) {
 			this.dispatchEvent(new CustomEvent("_property-change", {
 				detail: { name, newValue: value },
 				composed: false,
@@ -781,6 +782,15 @@ class UI5Element extends HTMLElement {
 	 */
 	get isUI5Element() {
 		return true;
+	}
+
+	/**
+	 * Used to determine whether an HTML element is an OpenUI5 control
+	 * @returns {*}
+	 */
+	get isOpenUI5Control() {
+		const OpenUI5Support = getFeature("OpenUI5Support");
+		return OpenUI5Support && OpenUI5Support.isOpenUI5Control(this);
 	}
 
 	/**

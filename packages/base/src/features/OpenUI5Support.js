@@ -78,6 +78,12 @@ const cssVariablesLoaded = () => {
 	return !!link.href.match(/\/css(-|_)variables\.css/);
 };
 
+const isOpenUI5Control = element => {
+	const sapUiId = element.getAttribute("data-sap-ui");
+	const id = element.getAttribute("id");
+	return id && sapUiId && id === sapUiId;
+};
+
 const OpenUI5Support = {
 	isLoaded,
 	init,
@@ -85,6 +91,7 @@ const OpenUI5Support = {
 	getLocaleDataObject,
 	attachListeners,
 	cssVariablesLoaded,
+	isOpenUI5Control,
 };
 
 registerFeature("OpenUI5Support", OpenUI5Support);
