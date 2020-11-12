@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.10](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.9...v1.0.0-rc.10) (2020-11-12)
+
+### Featires
+
+* **framework:** add override font-family for glyphs with diacritics ([#2402](https://github.com/SAP/ui5-webcomponents/issues/2402)) ([5a550b8](https://github.com/SAP/ui5-webcomponents/commit/5a550b8))
+
+
+### Bug Fixes
+
+* **theme-base:** correct inavlid CSS vars ([#2427](https://github.com/SAP/ui5-webcomponents/issues/2427)) ([3674dbc](https://github.com/SAP/ui5-webcomponents/commit/3674dbc))
+
+
+
 # [1.0.0-rc.9](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.8...v1.0.0-rc.9) (2020-10-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-theme-base
