@@ -57,6 +57,35 @@ describe("Calendar general interaction", () => {
 		assert.strictEqual(calendar.getProperty("timestamp"), TIMESTAMP);
 	});
 
+	it("Focus goes into the current day item of the day picker", () => {
+		const toggleButton = browser.$("#weekNumbersButton");
+		const calendar = browser.$("#calendar1");
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 22, 0, 0, 0)).valueOf() / 1000);
+		const dayPicker = calendar.shadow$("ui5-daypicker");
+		const header  = calendar.shadow$("ui5-calendar-header");
+		const currentDayItem = dayPicker.shadow$(`div[data-sap-timestamp="974851200"]`);
+		const monthButton = header.shadow$(`[data-sap-show-picker="Month"]`);
+		const yearButton = header.shadow$(`[data-sap-show-picker="Year"]`);
+
+		toggleButton.click();
+		toggleButton.click();
+
+		browser.keys("Tab");
+		assert.ok(currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
+
+		browser.keys("Tab");
+		assert.ok(monthButton.isFocusedDeep(), "Month picker button is focused");
+
+		browser.keys("Tab");
+		assert.ok(yearButton.isFocusedDeep(), "Year picker button is focused");
+
+		browser.keys(["Shift", "Tab"]);
+		assert.ok(monthButton.isFocusedDeep(), "Month picker button is focused");
+
+		browser.keys(["Shift", "Tab"]);
+		assert.ok(currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
+	});
+
 	it("Calendar sets the selected year when yearpicker is opened", () => {
 		const calendar = browser.$("#calendar1");
 		const yearPicker = calendar.shadow$("ui5-yearpicker");
