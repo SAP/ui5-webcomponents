@@ -56,10 +56,23 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Used to define the role of the list item.
+		 *
+		 * @private
+		 * @type {String}
+		 * @defaultvalue "option"
+		 * @since 1.0.0-rc.9
+		 *
+		 */
+		role: {
+			type: String,
+			defaultValue: "option",
+		},
+
 		_mode: {
 			type: ListMode,
 			defaultValue: ListMode.None,
-			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
@@ -294,7 +307,7 @@ class ListItem extends ListItemBase {
 
 	get _accInfo() {
 		return {
-			role: "option",
+			role: this.role,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),

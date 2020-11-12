@@ -39,6 +39,10 @@
 	color: var(--sapButton_TextColor);
 }
 
+[hidden].ui5-calheader-arrowbtn.ui5-calheader-middlebtn {
+	display: none;
+}
+
 .ui5-calheader-arrowbtn:focus {
 	outline: none;
 }
@@ -57,6 +61,7 @@
 .ui5-calheader-middlebtn {
 	border: var(--_ui5_calendar_header_arrow_button_border);
 	border-radius: var(--_ui5_calendar_header_arrow_button_border_radius);
+	display:flex;
 }
 
 .ui5-calheader-arrowicon {

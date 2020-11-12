@@ -29,8 +29,8 @@ import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calc
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
-import RenderScheduler from "../../base/src/RenderScheduler.js";
 
 import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
@@ -255,6 +255,7 @@ class DayPicker extends UI5Element {
 			lastWeekNumber = -1,
 			isDaySelected = false,
 			todayIndex = 0;
+
 		const _aVisibleDays = this._getVisibleDays(this._calendarDate);
 		this._weeks = [];
 		let week = [];
@@ -262,13 +263,9 @@ class DayPicker extends UI5Element {
 		let weekday;
 		const _monthsNameWide = this._oLocaleData.getMonths("wide", this._calendarDate._oUDate.sCalendarType);
 
-		if (this.minDate) {
-			this._minDateObject = new Date(this._minDate);
-		}
+		this._minDateObject = new Date(this._minDate);
+		this._maxDateObject = new Date(this._maxDate);
 
-		if (this.maxDate) {
-			this._maxDateObject = new Date(this._maxDate);
-		}
 		/* eslint-disable no-loop-func */
 		for (let i = 0; i < _aVisibleDays.length; i++) {
 			oCalDate = _aVisibleDays[i];
@@ -390,9 +387,7 @@ class DayPicker extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this.selectedDates.length === 1) {
-			this.fireEvent("daypickerrendered", { focusedItemIndex: this._itemNav.currentIndex });
-		}
+		this._fireDayPickerRendered();
 	}
 
 	_onmousedown(event) {
@@ -453,7 +448,8 @@ class DayPicker extends UI5Element {
 		}
 
 		if (isSpace(event)) {
-			return this._handleSpace(event);
+			event.preventDefault();
+			return;
 		}
 
 		if (isHomeCtrl(event)) {
@@ -478,6 +474,12 @@ class DayPicker extends UI5Element {
 
 		if (isPageDownShiftCtrl(event)) {
 			this._changeYears(event, true, 10);
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this._handleSpace(event);
 		}
 	}
 
@@ -780,8 +782,14 @@ class DayPicker extends UI5Element {
 
 		const newItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === timestamp);
 		this._itemNav.currentIndex = newItemIndex;
-
 		this._itemNav.focusCurrent();
+		this._fireDayPickerRendered();
+	}
+
+	_fireDayPickerRendered() {
+		if (this.selectedDates.length === 1) {
+			this.fireEvent("daypickerrendered", { focusedItemIndex: this._itemNav.currentIndex });
+		}
 	}
 
 	_isWeekend(oDate) {
@@ -800,8 +808,18 @@ class DayPicker extends UI5Element {
 
 	_isOutOfSelectableRange(date) {
 		const currentDate = date._oUDate ? date.toLocalJSDate() : CalendarDate.fromTimestamp(date).toLocalJSDate();
+		const minDate = this._minDateObject;
+		const maxDate = this._maxDateObject;
 
-		return currentDate > this._maxDateObject || currentDate < this._minDateObject;
+		currentDate.setHours(0);
+		if (minDate) {
+			minDate.setHours(0);
+		}
+		if (maxDate) {
+			maxDate.setHours(0);
+		}
+
+		return currentDate > maxDate || currentDate < minDate;
 	}
 
 	get _maxDate() {
@@ -815,9 +833,8 @@ class DayPicker extends UI5Element {
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
-			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
-			return calDate.valueOf();
+			const calDate = CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
+			return calDate.toUTCJSDate().valueOf();
 		}
 		return undefined;
 	}
@@ -827,7 +844,7 @@ class DayPicker extends UI5Element {
 		minDate.setYear(1);
 		minDate.setMonth(0);
 		minDate.setDate(1);
-		return minDate.valueOf();
+		return minDate.toUTCJSDate().valueOf();
 	}
 
 	_getMaxCalendarDate() {
@@ -838,7 +855,7 @@ class DayPicker extends UI5Element {
 		tempDate.setDate(1);
 		tempDate.setMonth(tempDate.getMonth() + 1, 0);
 		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
-		return maxDate.valueOf();
+		return maxDate.toUTCJSDate().valueOf();
 	}
 
 	getFormat() {

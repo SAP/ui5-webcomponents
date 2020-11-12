@@ -20,7 +20,7 @@ import {
 	isPageDownShift,
 	isPageUpShiftCtrl,
 	isPageDownShiftCtrl,
-} from "@ui5/webcomponents-base/src/Keys.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/time-entry-request.js";
 import Icon from "./Icon.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";

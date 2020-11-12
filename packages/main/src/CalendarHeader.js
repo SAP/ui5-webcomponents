@@ -43,6 +43,9 @@ const metadata = {
 		_isPrevButtonDisabled: {
 			type: Boolean,
 		},
+		_isMonthButtonHidden: {
+			type: Boolean,
+		},
 	},
 	events: {
 		"previous-press": {},
@@ -128,6 +131,12 @@ class CalendarHeader extends UI5Element {
 			if (showPickerButton) {
 				this[`_show${showPickerButton}Picker`]();
 			}
+		}
+	}
+
+	_onMidContainerKeyDown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
 		}
 	}
 

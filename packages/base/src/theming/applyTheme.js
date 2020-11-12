@@ -2,6 +2,7 @@ import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "..
 import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
+import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
@@ -76,6 +77,8 @@ const applyTheme = async theme => {
 	if (ponyfillNeeded()) {
 		runPonyfill();
 	}
+
+	fireThemeLoaded(theme);
 };
 
 export default applyTheme;
