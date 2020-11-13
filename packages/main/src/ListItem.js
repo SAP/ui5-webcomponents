@@ -311,6 +311,7 @@ class ListItem extends ListItemBase {
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
+			listItemAriaLabel: undefined,
 		};
 	}
 
