@@ -1,5 +1,5 @@
-commit 0c9b034055a4a38bde52a68df83693f19a01d008
+commit 4e6d07e76ef2b11fd402f5f573d92cd834873ec1
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Nov 10 17:20:21 2020 +0200
+Date:   Fri Nov 13 08:22:33 2020 +0200
 
-    chore(ui5-avatar): use encodeCSS (#2454)
+    chore: comment out failing test (#2472)
