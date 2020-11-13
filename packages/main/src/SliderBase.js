@@ -450,22 +450,20 @@ class SliderBase extends UI5Element {
 		}
 
 		// Recalculate the tickmarks and labels and update the stored state.
-		if (this.isPropertyUpdated("min", "max")) {
+		if (this.isPropertyUpdated("min", "max", values)) {
 			this._normalizeMinMaxValues(this.min, this.max);
 			this._drawDefaultTickmarks(this.step, this.max, this.min);
 			this.storePropertyState("min", "max");
-		}
 
-		// Here the value props are changed programatically (not by user interaction)
-		// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
-		// min and max bounderies and update the previous state reference.
-		values.forEach(valueType => {
-			if (this.isPropertyUpdated(valueType)) {
+			// Here the value props are changed programatically (not by user interaction)
+			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
+			// min and max bounderies and update the previous state reference.
+			values.forEach(valueType => {
 				const normalizedValue = SliderBase.clipValue(this[valueType], this.min, this.max);
 				this.updateValue(valueType, normalizedValue);
 				this.storePropertyState(valueType);
-			}
-		});
+			});
+		}
 	}
 
 	/**
