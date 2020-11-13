@@ -51,7 +51,7 @@ const metadata = {
  * The most common usecase is to select values on a continuous numerical scale (e.g. temperature, volume, etc. ).
  *
  * <h3>Responsive Behavior</h3>
- * The <code>ui5-slider</code> component adjusts to the size of its parent container by recalculating and 
+ * The <code>ui5-slider</code> component adjusts to the size of its parent container by recalculating and
  * resizing the width of the control. You can move the slider handle in several different ways:
  * <ul>
  * <li>Drag and drop to the desired value</li>

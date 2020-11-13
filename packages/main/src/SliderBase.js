@@ -623,17 +623,17 @@ class SliderBase extends UI5Element {
 	 */
 	_setStep(step) {
 		if (step === 0) {
-			console.warn("The 'step' property must be a positive float number");
+			console.warn("The 'step' property must be a positive float number"); // eslint-disable-line
 			return;
 		}
 
 		if (step < 0) {
-			console.warn("The 'step' property must be a positive float number. The provided negative number has been converted to its positve equivalent");
+			console.warn("The 'step' property must be a positive float number. The provided negative number has been converted to its positve equivalent"); // eslint-disable-line
 			step = Math.abs(step);
 		}
 
 		if (typeof step !== "number" || Number.isNaN(step)) {
-			console.warn("The 'step' property must be a positive float number. It has been set to its default value of 1");
+			console.warn("The 'step' property must be a positive float number. It has been set to its default value of 1"); // eslint-disable-line
 			step = 1;
 		}
 
