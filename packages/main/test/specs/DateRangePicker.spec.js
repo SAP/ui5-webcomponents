@@ -201,6 +201,7 @@ describe("DateRangePicker general interaction", () => {
 		assert.strictEqual(dateRange.getAttribute("value"), "Jul 16, 2020 @ Jul 17, 2020");
 	});
 
+	/*
 	it("Focus out of the input field confirms the date range", () => {
 		const dateRange = browser.$("#daterange-picker5");
 
@@ -228,4 +229,5 @@ describe("DateRangePicker general interaction", () => {
 		});
 		assert.strictEqual(dateRange.getAttribute("value"), "Jul 16, 2020 @ Jul 17, 2020");
 	});
+	*/
 });
