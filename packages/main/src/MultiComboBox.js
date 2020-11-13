@@ -11,11 +11,11 @@ import {
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
-import "@ui5/webcomponents-icons/dist/icons/multiselect-all.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/multiselect-all.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
@@ -222,7 +222,11 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_rootFocused: {
+		focused: {
+			type: Boolean,
+		},
+
+		_tokenizerFocused: {
 			type: Boolean,
 		},
 
@@ -520,6 +524,8 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_tokenizerFocusOut(event) {
+		this._tokenizerFocused = false;
+
 		const tokenizer = this.shadowRoot.querySelector("[ui5-tokenizer]");
 		const tokensCount = tokenizer.tokens.length - 1;
 
@@ -537,6 +543,11 @@ class MultiComboBox extends UI5Element {
 				this._deleting = false;
 			}, 0);
 		}
+	}
+
+	_tokenizerFocusIn() {
+		this._tokenizerFocused = true;
+		this.focused = false;
 	}
 
 	_onkeyup() {
@@ -739,20 +750,24 @@ class MultiComboBox extends UI5Element {
 		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
 	}
 
-	rootFocusIn() {
+	inputFocusIn() {
 		if (!isPhone()) {
-			this._rootFocused = true;
+			this.focused = true;
 		}
 	}
 
-	rootFocusOut(event) {
+	inputFocusOut(event) {
 		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
-			this._rootFocused = false;
+			this.focused = false;
 		}
 	}
 
 	get editable() {
 		return !this.readonly;
+	}
+
+	get _isFocusInside() {
+		return this.focused || this._tokenizerFocused;
 	}
 
 	get selectedItemsListMode() {
@@ -788,7 +803,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this._rootFocused && this.hasValueStateMessage && !this._iconPressed;
+		return this.focused && this.hasValueStateMessage && !this._iconPressed;
 	}
 
 	get valueStateTextMappings() {
@@ -822,7 +837,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizerExpanded() {
-		return (this._rootFocused || this.open) && !this.readonly;
+		return (this._isFocusInside || this.open) && !this.readonly;
 	}
 
 	get classes() {

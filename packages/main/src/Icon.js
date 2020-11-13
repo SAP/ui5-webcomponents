@@ -31,14 +31,24 @@ const metadata = {
 
 		/**
 		 * Defines the unique identifier (icon name) of each <code>ui5-icon</code>.
-		 * <br><br>
+		 * <br>
+		 *
 		 * To browse all available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 * <br><br>
+		 * <br>
+		 *
 		 * Example:
 		 * <br>
 		 * <code>name='add'</code>, <code>name='delete'</code>, <code>name='employee'</code>.
+		 * <br><br>
 		 *
+		 * <b>Note:</b> To use the SAP Fiori Tools icons,
+		 * you need to set the <code>tnt</code> prefix in front of the icon's name.
+		 * <br>
+		 *
+		 * Example:
+		 * <br>
+		 * <code>name='tnt/antenna'</code>, <code>name='tnt/actor'</code>, <code>name='tnt/api'</code>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -123,6 +133,17 @@ const metadata = {
  * <br><br>
  * A large set of built-in icons is available
  * and they can be used by setting the <code>name</code> property on the <code>ui5-icon</code>.
+ * But before using an icon, you need to import the desired icon.
+ * <br>
+ *
+ * For the standard icon collection, you have to import an icon from the <code>@ui5/webcomponents-icons</code> package:
+ * <br>
+ * <code>import "@ui5/webcomponents-icons/dist/employee.js";</code>
+ * <br>
+ *
+ * For the SAP Fiori Tools icon collection (supported since 1.0.0-rc.10), you have to import an icon from the <code>@ui5/webcomponents-icons-tnt</code> package:
+ * <br>
+ * <code>import "@ui5/webcomponents-icons-tnt/dist/antenna.js";</code>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -250,7 +271,7 @@ class Icon extends UI5Element {
 		if (iconData === ICON_NOT_FOUND) {
 			this.invalid = true;
 			/* eslint-disable-next-line */
-			return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/icons/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/Assets.js".`);
+			return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/Assets.js".`);
 		}
 
 		if (!iconData) {
@@ -259,6 +280,8 @@ class Icon extends UI5Element {
 			return console.warn(`Required icon is not registered. Invalid icon name: ${this.name}`);
 		}
 
+		// in case a new valid name is set, show the icon
+		this.invalid = false;
 		this.pathData = iconData.pathData;
 		this.accData = iconData.accData;
 		this.ltr = iconData.ltr;

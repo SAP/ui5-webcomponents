@@ -36,6 +36,8 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
 		 * Comma-separated list of file types that the <code>ui5-file-uploader</code> should accept.
+		 * <br><br>
+		 * <b>Note:</b> Please make sure you are adding the <code>.</code> in front on the file type, e.g. <code>.png</code> in case you want to accept png's only.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public

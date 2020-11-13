@@ -1,0 +1,8 @@
+:root {
+	--_ui5_wiz_tab_focus_outline: 1px dotted var(--sapContent_FocusColor);
+	--_ui5_wiz_tab_selected_bg: var(--sapSelectedColor);
+	--_ui5_wiz_tab_border: 1px solid var(--sapSelectedColor);
+	--_ui5_wiz_tab_selection_line: var(--sapSelectedColor);
+	--_ui5_wiz_tab_icon_color: var(--sapSelectedColor);
+	--_ui5_wiz_tab_active_separator_color: var(--sapSelectedColor);
+}

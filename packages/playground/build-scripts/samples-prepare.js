@@ -12,7 +12,8 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-	"MultiInput"
+	"MultiInput",
+	"Wizard",
 ];
 
 packages.forEach(package => {
