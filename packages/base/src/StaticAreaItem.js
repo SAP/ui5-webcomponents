@@ -10,8 +10,8 @@ import executeTemplate from "./renderer/executeTemplate.js";
  * Defines and takes care of ui5-static-are-item items
  */
 class StaticAreaItem {
-	constructor(_ui5ElementContext) {
-		this.ui5ElementContext = _ui5ElementContext;
+	constructor(ui5Element) {
+		this.ui5Element = ui5Element;
 		this._rendered = false;
 	}
 
@@ -23,22 +23,26 @@ class StaticAreaItem {
 	 * @protected
 	 */
 	_updateFragment() {
-		const renderResult = executeTemplate(this.ui5ElementContext.constructor.staticAreaTemplate, this.ui5ElementContext),
-			stylesToAdd = window.ShadyDOM ? false : getStylesString(this.ui5ElementContext.constructor.staticAreaStyles);
+		const renderResult = executeTemplate(this.ui5Element.constructor.staticAreaTemplate, this.ui5Element),
+			stylesToAdd = window.ShadyDOM ? false : getStylesString(this.ui5Element.constructor.staticAreaStyles);
 
 		if (!this.staticAreaItemDomRef) {
-			// Initial rendering of fragment
+			const id = this.ui5Element.getAttribute("id");
 
+			// Initial rendering of fragment
 			this.staticAreaItemDomRef = document.createElement("ui5-static-area-item");
 			this.staticAreaItemDomRef.attachShadow({ mode: "open" });
-			this.staticAreaItemDomRef.classList.add(this.ui5ElementContext._id); // used for getting the popover in the tests
+			this.staticAreaItemDomRef.classList.add(this.ui5Element._id); // used for getting the popover in the tests
+			if (id) {
+				this.staticAreaItemDomRef.setAttribute("id", `${id}--static-area`);
+			}
 
 			getStaticAreaInstance().appendChild(this.staticAreaItemDomRef);
 			this._rendered = true;
 		}
 
-		this._updateContentDensity(this.ui5ElementContext.isCompact);
-		this.ui5ElementContext.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
+		this._updateContentDensity(this.ui5Element.isCompact);
+		this.ui5Element.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToAdd, { eventContext: this.ui5Element });
 	}
 
 	/**

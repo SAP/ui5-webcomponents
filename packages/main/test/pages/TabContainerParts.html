@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Tab Container</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"theme": "sap_fiori_3",
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
+	<style>
+		html,
+		body {
+			margin: 0;
+		}
+
+		/*
+		#tc::part(tab),
+		#tc--static-area::part(tab){
+			background: orange;
+		}
+
+		#tc::part(tab):hover,
+		#tc--static-area::part(tab):hover{
+			background: purple;
+		}
+
+		#tc::part(tab products),
+		#tc--static-area::part(tab products){
+			background: pink;
+			color: green;
+		}
+
+		#tc::part(tab laptops),
+		#tc--static-area::part(tab laptops){
+			color: white;
+			background: black;
+		}
+		*/
+
+		#tc::part(tab-icon laptops),
+		#tc--static-area::part(tab-icon laptops) {
+			color: purple;
+		}
+
+		#tc::part(tab-icon-outer laptops) {
+			background: lawngreen;
+		}
+
+		#tc::part(tab-text laptops),
+		#tc--static-area::part(tab-text laptops) {
+			color: orangered;
+			font-weight: bold;
+		}
+
+		#tc::part(tab monitors),
+		#tc--static-area::part(tab monitors) {
+			color: pink;
+		}
+
+
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+		<ui5-tabcontainer id="tc" show-overflow>
+			<ui5-tab id="products" text="Products" additional-text="125">
+				<ui5-label>Tab 1 content</ui5-label>
+			</ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab id="laptops" icon="sap-icon://menu2" text="Laptops" semantic-color="Positive" additional-text="25">
+				<ui5-label>Tab 2 content</ui5-label>
+			</ui5-tab>
+			<ui5-tab id="monitors" icon="sap-icon://menu" text="Monitors" selected semantic-color="Critical" additional-text="45">
+				<ui5-label>Tab 3 content</ui5-label>
+			</ui5-tab>
+			<ui5-tab id="keyboards" icon="sap-icon://menu2" text="Keyboards" semantic-color="Negative" additional-text="15">
+				<ui5-label>Tab 4 content</ui5-label>
+			</ui5-tab>
+			<ui5-tab id="disabled" icon="sap-icon://menu2" disabled text="Disabled" semantic-color="Negative" additional-text="40">
+				<ui5-label>Tab 5 content</ui5-label>
+			</ui5-tab>
+			<ui5-tab id="neutral" icon="sap-icon://menu2" text="Neutral" semantic-color="Neutral" additional-text="40">
+				<ui5-label>Tab 6 content</ui5-label>
+			</ui5-tab>
+			<ui5-tab id="default" icon="sap-icon://menu2" text="Default" additional-text="40">
+				<ui5-label>Tab 7 content</ui5-label>
+			</ui5-tab>
+		</ui5-tabcontainer>
+
+	</body>
+</html>
