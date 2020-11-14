@@ -249,7 +249,7 @@ class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_onmouseover(event) {
-		if (!this.disabled || this.showTooltip) {
+		if (this.showTooltip) {
 			this._tooltipVisibility = "visible";
 		}
 	}
@@ -450,7 +450,7 @@ class SliderBase extends UI5Element {
 		}
 
 		// Recalculate the tickmarks and labels and update the stored state.
-		if (this.isPropertyUpdated("min", "max", values)) {
+		if (this.isPropertyUpdated("min", "max", ...values)) {
 			this._normalizeMinMaxValues(this.min, this.max);
 			this._drawDefaultTickmarks(this.step, this.max, this.min);
 			this.storePropertyState("min", "max");
