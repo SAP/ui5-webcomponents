@@ -87,13 +87,13 @@ const metadata = {
 	   },
 
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-multicombobox</code>.
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-multi-combobox</code>.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the <code>ui5-select</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * when the <code>ui5-multi-combobox</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.9
 		 * @slot
