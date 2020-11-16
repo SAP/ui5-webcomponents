@@ -1,5 +1,5 @@
-commit ac0d0f2f9b2b185e6e7d1773e755d8690f419d41
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Nov 13 11:18:27 2020 +0200
+commit 9fa2f7c321ea49259edbcabb22cca25f940c4295
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Mon Nov 16 07:56:25 2020 +0100
 
-    chore: comment out failing test until fixed (#2474)
+    docs(ui5-notification-overflow-action): add missing tagname (#2479)
