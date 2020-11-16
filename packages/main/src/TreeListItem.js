@@ -227,7 +227,7 @@ class TreeListItem extends ListItem {
 		return {
 			role: "treeitem",
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
-			ariaLevel: this.level + 1,
+			ariaLevel: this.level,
 			listItemAriaLabel: this.ariaLabelText,
 		};
 	}
