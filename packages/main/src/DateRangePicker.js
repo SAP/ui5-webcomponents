@@ -112,10 +112,6 @@ class DateRangePicker extends DatePicker {
 
 	constructor() {
 		super();
-	}
-
-	onBeforeRendering(...params) {
-		super.onBeforeRendering(...params);
 		this._calendar.selection = CalendarSelection.Range;
 	}
 
@@ -176,15 +172,12 @@ class DateRangePicker extends DatePicker {
 			return;
 		}
 
-		const oCalDate = this._calendarDate,
-			timestamp = focusTimestamp || oCalDate.valueOf() / 1000,
-			dates = this._splitValueByDelimiter(this.value);
+		const oCalDate = this._calendarDate;
+		const timestamp = focusTimestamp || oCalDate.valueOf() / 1000;
 
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
-		this._calendar.selectedDates = this.value && this._checkValueValidity(this.value)
-			? [this._getTimeStampFromString(dates[0]) / 1000, this._getTimeStampFromString(dates[1]) / 1000]
-			: [];
+		this._calendar.selectedDates = this.value ? [this._firstDateTimestamp, this._lastDateTimestamp] : [];
 	}
 
 	get _calendarDate() {
@@ -284,7 +277,7 @@ class DateRangePicker extends DatePicker {
 			this.closePicker();
 			this._firstDateTimestamp = selectedDates[0] < selectedDates[1] ? selectedDates[0] : selectedDates[1];
 			this._lastDateTimestamp = selectedDates[0] > selectedDates[1] ? selectedDates[0] : selectedDates[1];
-			const fireChange = this._handleCalendarSelectedDatesChange(event);
+			const fireChange = this._handleCalendarSelectedDatesChange(event, this._firstDateTimestamp);
 
 			if (fireChange) {
 				this.fireEvent("change", { value: this.value, valid: true });
@@ -294,7 +287,9 @@ class DateRangePicker extends DatePicker {
 		} else {
 			this._firstDateTimestamp = selectedDates[0];
 			this._lastDateTimestamp = undefined;
-			this._handleCalendarSelectedDatesChange(event);
+			this._calendar.timestamp = selectedDates[0];
+			this._calendar.selectedDates = [...event.detail.dates];
+			return false;
 		}
 	}
 
@@ -417,30 +412,12 @@ class DateRangePicker extends DatePicker {
 		}
 	}
 
-	_handleCalendarSelectedDatesChange(event) {
-		this._updateValueCalendarSelectedDatesChange();
-
-		this._calendar.timestamp = this._firstDateTimestamp;
-		this._calendar.selectedDates = [...event.detail.dates];
-		this._focusInputAfterClose = true;
-
-		if (this.isInValidRange(this.value)) {
-			this.valueState = ValueState.None;
-		} else {
-			this.valueState = ValueState.Error;
-		}
-
-		return true;
-	}
-
 	_updateValueCalendarSelectedDatesChange() {
-		if (this._firstDateTimestamp && this._lastDateTimestamp) {
-			const calStartDate = CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000, this._primaryCalendarType);
-			const calEndDate = CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000, this._primaryCalendarType);
+		const calStartDate = CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000, this._primaryCalendarType);
+		const calEndDate = CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000, this._primaryCalendarType);
 
-			this.value = this._formatValue(calStartDate.toLocalJSDate().valueOf() / 1000, calEndDate.toLocalJSDate().valueOf() / 1000);
-			this._prevValue = this.value;
-		}
+		this.value = this._formatValue(calStartDate.toLocalJSDate().valueOf() / 1000, calEndDate.toLocalJSDate().valueOf() / 1000);
+		this._prevValue = this.value;
 	}
 
 	/**
