@@ -3,6 +3,7 @@
 
 	{{#if items.length}}
 		<ui5-tree
+			exportparts="tree-item, tree-item-li, tree-item-icon, tree-item-title"
 			id="ui5-sn-items-tree"
 			mode="None"
 			?_minimal="{{collapsed}}"
@@ -42,6 +43,7 @@
 				<span></span>
 			</div>
 			<ui5-tree
+				exportparts="tree-item, tree-item-li, tree-item-icon, tree-item-title"
 				id="ui5-sn-fixed-items-tree"
 				mode="None"
 				?_minimal="{{collapsed}}"
