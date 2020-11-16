@@ -1,5 +1,5 @@
-commit 9fa2f7c321ea49259edbcabb22cca25f940c4295
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Mon Nov 16 07:56:25 2020 +0100
+commit 60d52b2a8a30c4a3f1e173d026ff471fc22ab7b7
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Nov 16 10:54:56 2020 +0200
 
-    docs(ui5-notification-overflow-action): add missing tagname (#2479)
+    chore(release): publish v1.0.0-rc.10 (#2466)
