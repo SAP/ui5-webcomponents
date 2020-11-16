@@ -43,7 +43,7 @@ const metadata = {
  * <li>value - The current value of the slider</li>
  * <li>step - Determines the increments in which the slider will move</li>
  * <li>showTooltip - Determines if a tooltip should be displayed above the handle</li>
- * <li>tickmarks - Displays a visual divider between the step values</li>
+ * <li>showTickmarks - Displays a visual divider between the step values</li>
  * <li>labelInterval - Labels some or all of the tickmarks with their values.</li>
  * </ul>
  *
@@ -67,6 +67,8 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Slider
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-slider
+ * @since 1.0.0-rc.11
+ * @appenddocs SliderBase
  * @public
  */
 class Slider extends SliderBase {
@@ -123,9 +125,11 @@ class Slider extends SliderBase {
 
 		const newValue = this.handleDownBase(event, this.min, this.max);
 
-		// Update Slider UI and internal state
-		this._updateUI(newValue);
-		this.updateValue("value", newValue);
+		// Do not yet update the Slider if press is over a handle. It will be updated if the user drags the mouse.
+		if (!this._isHandlePressed(SliderBase.getPageXValueFromEvent(event))) {
+			this._updateUI(newValue);
+			this.updateValue("value", newValue);
+		}
 	}
 
 	/**
@@ -155,6 +159,18 @@ class Slider extends SliderBase {
 	_handleUp(event) {
 		this.handleUpBase();
 	}
+
+	/** Determines if the press is over the handle
+	 *
+	 * @private
+	 */
+	_isHandlePressed(clientX) {
+		const sliderHandle = this.shadowRoot.querySelector(".ui5-slider-handle");
+		const sliderHandleDomRect = sliderHandle.getBoundingClientRect();
+
+		return clientX >= sliderHandleDomRect.left && clientX <= sliderHandleDomRect.right;
+	}
+
 
 	/** Updates the UI representation of the Slider according to its internal state.
 	 *
