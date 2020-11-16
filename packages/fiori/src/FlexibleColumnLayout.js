@@ -74,12 +74,48 @@ const metadata = {
 		* Defines the visibility of the arrows,
 		* used for expanding and shrinking the columns.
 		*
+		* @type {String}
+		* @defaultvalue ""
+		* @public
+		* @since 1.0.0-rc.11
+		*/
+		noArrows: {
+			type: Boolean,
+		},
+
+		/**
+		* Defines the accessibility text for the <code>startColumn</code> region.
+		*
+		* @type {String}
+		* @defaultvalue ""
+		* @public
+		* @since 1.0.0-rc.11
+		*/
+		startColumnAccessibleText: {
+			type: String,
+		},
+
+		/**
+		* Defines the accessibility text for the <code>midColumn</code> region.
+		*
+		* @type {String}
+		* @defaultvalue ""
+		* @public
+		* @since 1.0.0-rc.11
+		*/
+		midColumnAccessibleText: {
+			type: String,
+		},
+
+		/**
+		* Defines the accessibility text for the <code>endColumn</code> region.
+		*
 		* @type {boolean}
 		* @defaultvalue false
 		* @public
 		*/
-		noArrows: {
-			type: Boolean,
+		endColumnAccessibleText: {
+			type: String,
 		},
 
 		/**
@@ -620,15 +656,15 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartColumnText() {
-		return this.i18nBundle.getText(FCL_START_COLUMN_TXT);
+		return this.startColumnAccessibleText || this.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
 	get accMiddleColumnText() {
-		return this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+		return this.midColumnAccessibleText || this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
 	get accEndColumnText() {
-		return this.i18nBundle.getText(FCL_END_COLUMN_TXT);
+		return this.endColumnAccessibleText || this.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
 	get _effectiveLayoutsByMedia() {
