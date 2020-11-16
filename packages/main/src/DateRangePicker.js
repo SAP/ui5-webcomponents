@@ -1,9 +1,9 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
-import RenderScheduler from "../../base/src/RenderScheduler.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
