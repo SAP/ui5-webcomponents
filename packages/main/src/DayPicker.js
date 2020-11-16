@@ -88,10 +88,12 @@ const metadata = {
 		 * <li><code>CalendarSelection.Multiple</code> - enables selection of multiple dates.</li>
 		 * </ul>
 		 * @type {CalendarSelection}
+		 * @defaultvalue "Single"
 		 * @public
 		 */
 		selection: {
 			type: CalendarSelection,
+			defaultValue: CalendarSelection.Single,
 		},
 
 		/**
@@ -230,8 +232,6 @@ class DayPicker extends UI5Element {
 
 	constructor() {
 		super();
-		this.selection = CalendarSelection.Single;
-
 		this._itemNav = new ItemNavigation(this, {
 			rowSize: 7,
 			pageSize: 42,

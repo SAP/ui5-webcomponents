@@ -65,10 +65,12 @@ const metadata = {
 		 * <li><code>CalendarSelection.Multiple</code> - enables selection of multiple dates.</li>
 		 * </ul>
 		 * @type {CalendarSelection}
+		 * @defaultvalue "Single"
 		 * @public
 		 */
 		selection: {
 			type: CalendarSelection,
+			defaultValue: CalendarSelection.Single,
 		},
 
 		/**
@@ -245,8 +247,6 @@ class Calendar extends UI5Element {
 
 	constructor() {
 		super();
-		this.selection = CalendarSelection.Single;
-
 		this._header = {};
 		this._header.onPressPrevious = this._handlePrevious.bind(this);
 		this._header.onPressNext = this._handleNext.bind(this);

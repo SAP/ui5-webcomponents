@@ -94,7 +94,7 @@ const metadata = {
 
 		/**
 		 * Defines whether <code>ui5-select</code> is in disabled state.
-		 * <br><br>S
+		 * <br><br>
 		 * <b>Note:</b> A disabled <code>ui5-select</code> is noninteractive.
 		 *
 		 * @type {boolean}
