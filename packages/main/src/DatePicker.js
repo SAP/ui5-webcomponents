@@ -142,7 +142,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-datepicker</code> is required.
+		 * Defines whether the <code>ui5-date-picker</code> is required.
 		 *
 		 * @since 1.0.0-rc.9
 		 * @type {Boolean}
