@@ -120,12 +120,15 @@ class Slider extends SliderBase {
 		if (this.disabled || this.step === 0) {
 			return;
 		}
-
+		
 		const newValue = this.handleDownBase(event, this.min, this.max);
 
-		// Update Slider UI and internal state
-		this._updateUI(newValue);
-		this.updateValue("value", newValue);
+		// Do not yet update the Slider if press is over a handle. It will be updated if the user drags the mouse.
+		if (!this._isHandlePressed(SliderBase.getPageXValueFromEvent(event))) {
+			// Update Slider UI and internal state
+			this._updateUI(newValue);
+			this.updateValue("value", newValue);
+		};
 	}
 
 	/**
@@ -155,6 +158,19 @@ class Slider extends SliderBase {
 	_handleUp(event) {
 		this.handleUpBase();
 	}
+
+	
+	/** Determines if the press is over the handle
+	 *
+	 * @private
+	 */
+	_isHandlePressed(clientX) {
+		const sliderHandle = this.shadowRoot.querySelector(".ui5-slider-handle");
+		const sliderHandleDomRect = sliderHandle.getBoundingClientRect();
+
+		return clientX >= sliderHandleDomRect.left && clientX <= sliderHandleDomRect.right;
+	}
+
 
 	/** Updates the UI representation of the Slider according to its internal state.
 	 *

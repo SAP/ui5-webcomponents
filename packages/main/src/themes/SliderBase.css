@@ -16,7 +16,7 @@
 .ui5-slider-root {
 	box-sizing: border-box;
 	height: 3.3125rem;
-	padding: 1.406rem 1.0625rem;
+	padding: 1.406rem 0;
 	touch-action: none;
 	-ms-touch-action: pan-y;
 }
@@ -41,6 +41,7 @@
 	border-radius: var(--_ui5_slider_progress_border_radius);
 	height: var(--_ui5_slider_inner_height);
 	will-change: transform;
+	position: relative;
 }
 
 .ui5-slider-tickmarks {
@@ -77,8 +78,9 @@
 	text-align: center;
 	visibility: hidden;
 	pointer-events: none;
-	position: relative;
-	left: -0.725rem;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
 	line-height: 1.375rem;
 	bottom: var(--_ui5_slider_tooltip_bottom);
 	background: var(--_ui5_slider_tooltip_background);
@@ -91,6 +93,11 @@
 	min-width: var(--_ui5_slider_tooltip_min_width);
 	padding: var(--_ui5_slider_tooltip_padding);
 }
+
+.ui5-slider-tooltip-value {
+	position: relative;
+}
+
 
 .ui5-slider-labels {
 	position: absolute;
