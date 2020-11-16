@@ -77,6 +77,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationOverflowAction
  * @extends UI5Element
+ * @tagname ui5-notification-overflow-action
  * @public
  */
 class NotificationOverflowAction extends UI5Element {
