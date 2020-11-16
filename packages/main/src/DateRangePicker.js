@@ -174,10 +174,11 @@ class DateRangePicker extends DatePicker {
 
 		const oCalDate = this._calendarDate;
 		const timestamp = focusTimestamp || oCalDate.valueOf() / 1000;
+		const dates = this._splitValueByDelimiter(this.value);
 
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
-		this._calendar.selectedDates = this.value ? [this._firstDateTimestamp, this._lastDateTimestamp] : [];
+		this._calendar.selectedDates = this.value ? [this._getTimeStampFromString(dates[0]) / 1000, this._getTimeStampFromString(dates[1]) / 1000] : [];
 	}
 
 	get _calendarDate() {
@@ -289,6 +290,7 @@ class DateRangePicker extends DatePicker {
 			this._lastDateTimestamp = undefined;
 			this._calendar.timestamp = selectedDates[0];
 			this._calendar.selectedDates = [...event.detail.dates];
+			this.value = "";
 			return false;
 		}
 	}
