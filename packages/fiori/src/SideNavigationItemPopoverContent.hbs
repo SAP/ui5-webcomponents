@@ -6,12 +6,16 @@
         @ui5-item-click="{{handleListItemClick}}"
     >
 	    <ui5-li
+		    part="menu-item"
+		    exportparts="title: menu-item-title"
 		    ?selected="{{_popoverContent.mainItemSelected}}"
 		    .associatedItem="{{_popoverContent.mainItem}}"
 	    >{{_popoverContent.mainItem.text}}</ui5-li>
 
         {{#each _popoverContent.subItems}}
             <ui5-li
+	            part="menu-item"
+	            exportparts="title: menu-item-title"
 	            ?selected="{{this.selected}}"
                 .associatedItem="{{this}}"
             >{{this.text}}</ui5-li>
