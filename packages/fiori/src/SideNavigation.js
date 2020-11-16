@@ -246,6 +246,26 @@ class SideNavigation extends UI5Element {
 			});
 		});
 	}
+
+	get itemsExportParts() {
+		const exports = [
+			"tree-item",
+			"tree-item-li",
+			"tree-item-title",
+			"tree-item-icon",
+		];
+
+		this.items.forEach(item => {
+			if (item.id) {
+				exports.push(`tree-item-${item.id}`);
+				exports.push(`tree-item-li-${item.id}`);
+				exports.push(`tree-item-title-${item.id}`);
+				exports.push(`tree-item-icon-${item.id}`);
+			}
+		});
+
+		return exports.join(", ");
+	}
 }
 
 SideNavigation.define();

@@ -11,8 +11,9 @@
     <slot name="header" slot="header"></slot>
     {{#each _listItems}}
         <ui5-li-tree
-	        part="tree-item"
-	        exportparts="li: tree-item-li, title: tree-item-title, icon: tree-item-icon"
+	        part-id="{{this.treeItem.partId}}"
+	        part="tree-item {{this.treeItem.partId}}"
+	        exportparts="{{this.treeItem.exportParts}}"
             type="Active"
             level="{{this.level}}"
             icon="{{this.treeItem.icon}}"

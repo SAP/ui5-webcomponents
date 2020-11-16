@@ -14,7 +14,7 @@
 
 {{#*inline "listItemContent"}}
 	{{#if _showTitle}}
-		<div part="title" class="ui5-li-title"><slot></slot></div>
+		<div part="title title-{{partId}}" class="ui5-li-title"><slot></slot></div>
 	{{/if}}
 {{/inline}}
 
@@ -22,7 +22,7 @@
 
 {{#*inline "iconBegin"}}
 	{{#if icon}}
-		<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon"></ui5-icon>
+		<ui5-icon part="icon icon-{{partId}}" name="{{icon}}" class="ui5-li-icon"></ui5-icon>
 	{{/if}}
 {{/inline}}
 

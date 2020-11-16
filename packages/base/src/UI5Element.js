@@ -19,6 +19,11 @@ import isSlot from "./util/isSlot.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 
 const metadata = {
+	properties: {
+		partId: {
+			type: String,
+		},
+	},
 	events: {
 		"_property-change": {},
 	},

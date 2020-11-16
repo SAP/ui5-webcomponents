@@ -3,7 +3,7 @@
 
 	{{#if items.length}}
 		<ui5-tree
-			exportparts="tree-item, tree-item-li, tree-item-icon, tree-item-title"
+			exportparts="{{itemsExportParts}}"
 			id="ui5-sn-items-tree"
 			mode="None"
 			?_minimal="{{collapsed}}"
@@ -12,6 +12,7 @@
 		>
 			{{#each _items}}
 				<ui5-tree-item
+					part-id="{{this.item.id}}"
 					icon="{{this.item.icon}}"
 					.associatedItem="{{this.item}}"
 					text="{{this.item.text}}"

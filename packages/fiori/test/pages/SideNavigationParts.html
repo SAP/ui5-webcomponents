@@ -66,6 +66,22 @@
 			color: yellow;
 		}
 
+		/* Tree customization - home */
+		#sn1::part(tree-item-li-home) {
+			background: purple;
+		}
+
+		#sn1::part(tree-item-title-home) {
+			background: black;
+			font-weight: bolder;
+			color: white;
+		}
+
+		#sn1::part(tree-item-icon-home) {
+			background: blue;
+			color: red;
+		}
+
 
 	</style>
 </head>
@@ -81,7 +97,7 @@
 
 	<div class="content">
 		<ui5-side-navigation id="sn1">
-			<ui5-side-navigation-item text="Home" icon="home" ></ui5-side-navigation-item>
+			<ui5-side-navigation-item id="home" text="Home" icon="home" ></ui5-side-navigation-item>
 			<ui5-side-navigation-item text="People" expanded icon="group">
 				<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>

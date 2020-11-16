@@ -126,6 +126,22 @@ class TreeItem extends UI5Element {
 	toggle() {
 		this.expanded = !this.expanded;
 	}
+
+	get exportParts() {
+		const exports = [
+			"li: tree-item-li",
+			"title: tree-item-title",
+			"icon: tree-item-icon",
+		];
+
+		if (this.partId) {
+			exports.push(`li-${this.partId}: tree-item-li-${this.partId}`);
+			exports.push(`title-${this.partId}: tree-item-title-${this.partId}`);
+			exports.push(`icon-${this.partId}: tree-item-icon-${this.partId}`);
+		}
+
+		return exports.join(", ");
+	}
 }
 
 TreeItem.define();
