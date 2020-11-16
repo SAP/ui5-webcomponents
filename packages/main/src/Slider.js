@@ -120,7 +120,7 @@ class Slider extends SliderBase {
 		if (this.disabled || this.step === 0) {
 			return;
 		}
-		
+
 		const newValue = this.handleDownBase(event, this.min, this.max);
 
 		// Do not yet update the Slider if press is over a handle. It will be updated if the user drags the mouse.
@@ -128,7 +128,7 @@ class Slider extends SliderBase {
 			// Update Slider UI and internal state
 			this._updateUI(newValue);
 			this.updateValue("value", newValue);
-		};
+		}
 	}
 
 	/**
@@ -159,7 +159,6 @@ class Slider extends SliderBase {
 		this.handleUpBase();
 	}
 
-	
 	/** Determines if the press is over the handle
 	 *
 	 * @private

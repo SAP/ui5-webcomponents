@@ -1,9 +1,10 @@
 const assert = require("chai").assert;
 
 describe("Slider basic interactions", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Slider.html");
 
 	it("Changing the current value is reflected", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Slider.html");
+
 		const slider = browser.$("#basic-slider");
 		const sliderHandle = slider.shadow$(".ui5-slider-handle");
 
@@ -14,7 +15,6 @@ describe("Slider basic interactions", () => {
 
 		assert.strictEqual(sliderHandle.getAttribute("style"), "left: 30%;", "Slider handle should be 30% from the start");
 
-		slider.moveTo();
 		slider.click();
 
 		assert.strictEqual(sliderHandle.getAttribute("style"), "left: 50%;", "Slider handle should be in the middle of the slider");
@@ -30,10 +30,10 @@ describe("Slider basic interactions", () => {
 		assert.strictEqual(sliderHandle.getAttribute("style"), "left: 90%;", "Slider handle should be 90% from the start");
 		assert.strictEqual(slider.getProperty("value"), 9, "Slider current value should be 9");
 
-		sliderHandle.dragAndDrop({ x: 150, y: 1 });
+		sliderHandle.dragAndDrop({ x:-100, y: 1 });
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "left: 100%;", "Slider handle should be at the end of the slider and not beyond its boundaries");
-		assert.strictEqual(slider.getProperty("value"), 10, "Slider current value should be 10");
+		assert.strictEqual(sliderHandle.getAttribute("style"), "left: 80%;", "Slider handle should be at the end of the slider and not beyond its boundaries");
+		assert.strictEqual(slider.getProperty("value"), 8, "Slider current value should be 8");
 	});
 
 	it("Slider with floating min, max and step property", () => {
@@ -51,7 +51,7 @@ describe("Slider basic interactions", () => {
 	it("Slider should not be interactive if the step property is 0", () => {
 		const slider = browser.$("#inactive-slider");
 
-		slider.click({ x: 200 });
+		slider.click();
 
 		assert.strictEqual(slider.getProperty("value"), 0, "Slider with 0 step should still has its default value of 0");
 	});
@@ -59,9 +59,7 @@ describe("Slider basic interactions", () => {
 	it("Disabled slider is not interactive", () => {
 		const slider = browser.$("#disabled-slider-with-tickmarks");
 
-		slider.click({ x: 100 });
-
-		assert.strictEqual(slider.getProperty("value"), 20, "Slider value should be the initially set one");
+		assert.strictEqual(slider.isClickable(), false, "Range Slider should be disabled");
 	});
 });
 
@@ -160,11 +158,11 @@ describe("Testing resize handling and RTL support", () => {
 		slider.setProperty("step", 1);
 		slider.setProperty("value", 0);
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 0%;", "Initially if no value is set, the Slider handle is at the beginning of the Slider");
+		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 0%;", "Initially if no value is set, the Slider handle is at the right of the Slider");
 
 		slider.setProperty("value", 3);
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 30%;", "Slider handle should be 30% from the start");
+		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 30%;", "Slider handle should be 30% from the right");
 
 		slider.moveTo();
 		slider.click();
@@ -174,17 +172,17 @@ describe("Testing resize handling and RTL support", () => {
 
 		sliderHandle.dragAndDrop({ x: -300, y: 1 });
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 80%;", "Slider handle should be 80% from the start of the slider");
+		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 80%;", "Slider handle should be 80% from the right of the slider");
 		assert.strictEqual(slider.getProperty("value"), 8, "Slider current value should be 8");
 
 		sliderHandle.dragAndDrop({ x: -100, y: 1 });
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 90%;", "Slider handle should be 90% from the start");
+		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 90%;", "Slider handle should be 90% from the right");
 		assert.strictEqual(slider.getProperty("value"), 9, "Slider current value should be 9");
 
 		sliderHandle.dragAndDrop({ x: -150, y: 1 });
 
-		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 100%;", "Slider handle should be at the end of the slider and not beyond its boundaries");
+		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 100%;", "Slider handle should be at the left of the slider and not beyond its boundaries");
 		assert.strictEqual(slider.getProperty("value"), 10, "Slider current value should be 10");
 	});
 
