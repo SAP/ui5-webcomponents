@@ -599,7 +599,7 @@ class SliderBase extends UI5Element {
 		for (let i = 0; i <= newNumberOfLabels; i++) {
 			// Format the label numbers with the same decimal precision as the value of the step property
 			const labelItemNumber = ((i * step * labelInterval) + this.min).toFixed(stepPrecision);
-			this._labelItems.push(document.createTextNode(labelItemNumber));
+			this._labelItems.push(labelItemNumber);
 		}
 	}
 
