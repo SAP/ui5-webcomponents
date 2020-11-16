@@ -74,10 +74,9 @@ const metadata = {
 		* Defines the visibility of the arrows,
 		* used for expanding and shrinking the columns.
 		*
-		* @type {String}
-		* @defaultvalue ""
+		* @type {boolean}
+		* @defaultvalue false
 		* @public
-		* @since 1.0.0-rc.11
 		*/
 		noArrows: {
 			type: Boolean,
@@ -86,7 +85,7 @@ const metadata = {
 		/**
 		* Defines the accessibility text for the <code>startColumn</code> region.
 		*
-		* @type {String}
+		* @type {string}
 		* @defaultvalue ""
 		* @public
 		* @since 1.0.0-rc.11
@@ -98,7 +97,7 @@ const metadata = {
 		/**
 		* Defines the accessibility text for the <code>midColumn</code> region.
 		*
-		* @type {String}
+		* @type {string}
 		* @defaultvalue ""
 		* @public
 		* @since 1.0.0-rc.11
@@ -110,9 +109,10 @@ const metadata = {
 		/**
 		* Defines the accessibility text for the <code>endColumn</code> region.
 		*
-		* @type {boolean}
-		* @defaultvalue false
+		* @type {string}
+		* @defaultvalue ""
 		* @public
+		* @since 1.0.0-rc.11
 		*/
 		endColumnAccessibleText: {
 			type: String,
