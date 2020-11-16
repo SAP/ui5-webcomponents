@@ -18,7 +18,7 @@ const metadata = {
 
 /**
  * @class
- * The <code>ui5-cb-item</code> represents the item for a <code>ui5-multi-combobox</code>.
+ * The <code>ui5-mcb-item</code> represents the item for a <code>ui5-multi-combobox</code>.
  *
  * @constructor
  * @author SAP SE

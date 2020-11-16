@@ -16,6 +16,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(!popover.getProperty("opened"), "Popover should close");
 		});
 
+		/*
 		it("Checks focus state", () => {
 			const mcb = browser.$("#multi1");
 			const input = mcb.shadow$("#ui5-multi-combobox-input");
@@ -34,6 +35,7 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.ok(mcb.getProperty("focused"), "MultiComboBox should be focused again.");
 		});
+		*/
 
 		it("MultiComboBox open property is set correctly", () => {
 			const mcb = browser.$("#multi1");
