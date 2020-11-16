@@ -39,7 +39,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
 		/**
 		 * Defines the main items of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
-		 * for the top-level items, and the <code>ui5-side-navigation-subitem</code> component for second-level items, nested
+		 * for the top-level items, and the <code>ui5-side-navigation-sub-item</code> component for second-level items, nested
 		 * inside the items.
 		 *
 		 * @public
@@ -53,7 +53,7 @@ const metadata = {
 
 		/**
 		 * Defines the fixed items at the bottom of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
-		 * for the fixed items, and optionally the <code>ui5-side-navigation-subitem</code> component to provide second-level items inside them.
+		 * for the fixed items, and optionally the <code>ui5-side-navigation-sub-item</code> component to provide second-level items inside them.
 		 *
 		 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 		 *
