@@ -1,5 +1,5 @@
-commit 60d52b2a8a30c4a3f1e173d026ff471fc22ab7b7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 16 10:54:56 2020 +0200
+commit 03abf00109a848cd21ecb8f6a1f0fbcb8e38a0e1
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Mon Nov 16 12:13:18 2020 +0100
 
-    chore(release): publish v1.0.0-rc.10 (#2466)
+    docs: fix several tag names (#2481)
