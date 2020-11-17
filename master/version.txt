@@ -1,5 +1,16 @@
-commit 03abf00109a848cd21ecb8f6a1f0fbcb8e38a0e1
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Mon Nov 16 12:13:18 2020 +0100
+commit 03cae4b4e10e0f3bcb2da9f28b87be6e1f7c6838
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Nov 17 14:24:36 2020 +0200
 
-    docs: fix several tag names (#2481)
+    feat(ui5-mcb): introduces filter property (#2088)
+    
+    Build-in filters are
+    
+     - StartsWithPerTerm
+     - StartsWith
+     - Contains
+     - None
+    
+    Users can now set filter to None and filter when input event is fired
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/799
