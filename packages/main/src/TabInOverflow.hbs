@@ -7,14 +7,14 @@
 	aria-disabled="{{this.effectiveDisabled}}"
 	aria-selected="{{this.effectiveSelected}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
-	part="tab {{this.id}}"
+	part="{{this.shadowParts.tab}}"
 >
 	<div class="ui5-tab-overflow-itemContent">
 		{{#if this.icon}}
-			<ui5-icon name="{{this.icon}}" part="tab-icon {{this.id}}"></ui5-icon>
+			<ui5-icon name="{{this.icon}}" part="{{this.shadowParts.tabIcon}}"></ui5-icon>
 		{{/if}}
 
-		<span part="tab-text {{this.id}}">
+		<span part="{{this.shadowParts.tabText}}">
 			{{this.text}}
 
 			{{#if this.additionalText}}

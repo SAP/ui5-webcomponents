@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import { kebabToCamelCase } from "@ui5/webcomponents-base/dist/util/StringHelper.js";
 import SemanticColor from "./types/SemanticColor.js";
 import TabLayout from "./types/TabLayout.js";
 import TabContainer from "./TabContainer.js";
@@ -302,6 +303,13 @@ class Tab extends UI5Element {
 
 	get overflowState() {
 		return this.disabled ? "Inactive" : "Active";
+	}
+
+	get shadowParts() {
+		return ["tab", "tab-icon-outer", "tab-icon", "tab-text"].reduce((acc, current) => {
+			acc[kebabToCamelCase(current)] = this.id ? `${current} ${current}--${this.id}` : current;
+			return acc;
+		}, {});
 	}
 }
 

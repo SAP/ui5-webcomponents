@@ -11,16 +11,16 @@
 	aria-labelledby="{{this.ariaLabelledBy}}"
 	data-ui5-stable="{{this.stableDomRef}}"
 	style="list-style-type: none;"
-	part="tab {{this.id}}"
+	part="{{this.shadowParts.tab}}"
 >
 
 	{{#if this.icon}}
-		<div class="ui5-tab-strip-item-icon-outer" part="tab-icon-outer {{this.id}}">
-			<ui5-icon name="{{this.icon}}" class="ui5-tab-strip-item-icon" part="tab-icon {{this.id}}"></ui5-icon>
+		<div class="ui5-tab-strip-item-icon-outer" part="{{this.shadowParts.tabIconOuter}}">
+			<ui5-icon name="{{this.icon}}" class="ui5-tab-strip-item-icon" part="{{this.shadowParts.tabIcon}}"></ui5-icon>
 		</div>
 	{{/if}}
 
-	<div class="ui5-tab-strip-itemContent" part="tab-text {{this.id}}">
+	<div class="ui5-tab-strip-itemContent" part="{{this.shadowParts.tabText}}">
 
 		{{#unless this._isInline}}
 			{{> additionalText}}
