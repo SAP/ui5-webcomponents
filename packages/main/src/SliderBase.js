@@ -72,7 +72,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		 showTickmarks: {
+		showTickmarks: {
 			type: Boolean,
 		},
 		/**
