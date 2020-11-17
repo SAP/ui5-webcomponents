@@ -248,23 +248,43 @@ class SideNavigation extends UI5Element {
 	}
 
 	get itemsExportParts() {
-		const exports = [
+		return this._buildExports(this.items);
+	}
+
+	get fixedItemsExportParts() {
+		return this._buildExports(this.fixedItems);
+	}
+
+	_buildExports(items) {
+		let exports = [
 			"tree-item",
 			"tree-item-li",
 			"tree-item-title",
 			"tree-item-icon",
 		];
 
-		this.items.forEach(item => {
+		items.forEach(item => {
 			if (item.id) {
-				exports.push(`tree-item-${item.id}`);
-				exports.push(`tree-item-li-${item.id}`);
-				exports.push(`tree-item-title-${item.id}`);
-				exports.push(`tree-item-icon-${item.id}`);
+				exports = exports.concat(this._getPartsNamesFor(item.id));
 			}
+
+			item.items.forEach(subItem => {
+				if (subItem.id) {
+					exports = exports.concat(this._getPartsNamesFor(subItem.id));
+				}
+			});
 		});
 
 		return exports.join(", ");
+	}
+
+	_getPartsNamesFor(id) {
+		return [
+			`tree-item-${id}`,
+			`tree-item-li-${id}`,
+			`tree-item-title-${id}`,
+			`tree-item-icon-${id}`,
+		];
 	}
 }
 
