@@ -92,52 +92,6 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 });
 
 describe("Properties synchronization and normalization", () => {
-
-	it("If a negative number is set to the step property it should beconverted it to its positive equivalent", () => {
-		const slider = browser.$("#slider-tickmarks-tooltips-labels");
-
-		slider.setProperty("step", -15);
-
-		assert.strictEqual(slider.getProperty("step"), 15, "Step value should be a positive number");
-	});
-
-	it("Should fallback to default value of 1 if step property is not a valid number", () => {
-		const slider = browser.$("#slider-tickmarks-tooltips-labels");
-
-		slider.setProperty("step", "String value");
-
-		assert.strictEqual(slider.getProperty("step"), 1, "Step value should be its default value");
-	});
-
-	it("If min property is set to a greater number than the max property they should be swapped", () => {
-		const slider = browser.$("#basic-slider");
-
-		slider.setProperty("max", 10);
-		slider.setProperty("min", 100);
-
-		assert.strictEqual(slider.getProperty("min"), 10, "min property should be less than the max one");
-		assert.strictEqual(slider.getProperty("max"), 100, "max property should be greater than the min one");
-		assert.strictEqual(slider.getProperty("value"), 10, "value property should be within the boundaries of the swapped min and max props");
-
-		slider.setProperty("min", 200);
-
-		assert.strictEqual(slider.getProperty("min"), 100, "min property should be the 100");
-		assert.strictEqual(slider.getProperty("max"), 200, "max property should be 200");
-		assert.strictEqual(slider.getProperty("value"), 100, "value property should be within the boundaries of the swapped min and max props");
-	});
-
-	it("Should keep the current value between the boundaries of min and max properties", () => {
-		const slider = browser.$("#basic-slider");
-
-		slider.setProperty("value", 300);
-
-		assert.strictEqual(slider.getProperty("value"), 200, "value prop should always be lower than the max value");
-
-		slider.setProperty("value", 99);
-
-		assert.strictEqual(slider.getProperty("value"), 100, "value prop should always be greater than the min value");
-	});
-
 	it("Should not 'stepify' current value if it is not in result of user interaction", () => {
 		const slider = browser.$("#tickmarks-slider");
 
@@ -189,7 +143,7 @@ describe("Testing resize handling and RTL support", () => {
 	it("Should hide all labels except the first and the last one, if there is not enough space for all of them", () => {
 		const slider = browser.$("#slider-tickmarks-tooltips-labels");
 
-		browser.setWindowSize(500, 2000);
+		browser.setWindowSize(400, 2000);
 
 		assert.strictEqual(slider.getProperty("_labelsOverlapping"), true, "state should reflect if any of the labels is overlapping with another");
 		assert.strictEqual(slider.getProperty("_hiddenTickmarks"), true, "state should reflect if the tickmarks has less than 8px space between each of them");

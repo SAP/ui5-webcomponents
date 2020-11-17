@@ -2,7 +2,6 @@
 	class="ui5-slider-root"
 	@mousedown="{{_onmousedown}}"
 	@touchstart="{{_ontouchstart}}"
-	@pointerdown="{{_onpointerdown}}"
 	@mouseover="{{_onmouseover}}"
 	@mouseout="{{_onmouseout}}"
 	dir="{{effectiveDir}}"
@@ -17,7 +16,7 @@
 				<div class="ui5-slider-tickmarks" style="{{styles.tickmarks}}"></div>
 				{{#if labelInterval}}
 					<ul class="ui5-slider-labels {{classes.labelContainer}}" style="{{styles.labelContainer}}">
-						{{#each labelItems}}
+						{{#each _labels}}
 							<li style="{{../styles.label}}">{{this}}</li>
 						{{/each}}
 					</ul>

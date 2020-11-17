@@ -5,7 +5,6 @@
 }
 
 :host {
-	display: inline-block;
 	box-sizing: border-box;
 	cursor: pointer;
 	vertical-align: top;
@@ -13,10 +12,14 @@
 	height: 3.3125rem;
 }
 
+:host(:not([hidden])) {
+	display: inline-block;
+}
+
 .ui5-slider-root {
 	box-sizing: border-box;
 	height: 3.3125rem;
-	padding: 1.406rem 0;
+	padding: 1rem 0;
 	touch-action: none;
 	-ms-touch-action: pan-y;
 }
@@ -78,10 +81,10 @@
 	text-align: center;
 	visibility: hidden;
 	pointer-events: none;
+	line-height: 1rem;
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%);
-	line-height: 1.375rem;
 	bottom: var(--_ui5_slider_tooltip_bottom);
 	background: var(--_ui5_slider_tooltip_background);
 	border: 1px solid var(--_ui5_slider_tooltip_border_color);
