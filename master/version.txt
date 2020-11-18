@@ -1,7 +1,5 @@
-commit 3b81ad8350f9d24f6dcf08802f21b6cabb65d4e9
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Nov 18 14:44:33 2020 +0200
+commit 28dde4d682c3f6b170f4786cad0e9d9a6561fe78
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Nov 18 16:58:12 2020 +0200
 
-    fix(ui5-popover): correct arrow position on RTL (#2488)
-    
-    FIXES: #2387
+    feat(docs): add playground sections info (#2487)

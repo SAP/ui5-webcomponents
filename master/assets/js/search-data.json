@@ -1066,7 +1066,7 @@
   "153": {
     "id": "153",
     "title": "Components",
-    "content": "Components:",
+    "content": "Components In this section you can find out API docs &amp; samples for all of our components.",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/components",
     "relUrl": "/playground/components"
   },
@@ -1080,7 +1080,7 @@
   "155": {
     "id": "155",
     "title": "Documentation",
-    "content": "Documentation:",
+    "content": "Documentation Developing custom libraries &amp; contribution If you are developing a custom library with custom web components based on UI5 Web Components or if you want to contribute to our project, you can find important information in our development docs, which are hosted in GitHub. Application development with UI5 Web Components In this section of the playground, you can find docs, related to application development with UI5 Web Components. Here you can read more about some in depth topics like assets handling, internationalization, configuration options, etc. This is the list of all our articles for application developers.",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/docs",
     "relUrl": "/playground/docs"
   },
@@ -1150,7 +1150,7 @@
   "165": {
     "id": "165",
     "title": "UI5 Web Components",
-    "content": "&lt;!DOCTYPE html&gt; UI5 Web Components UI5 Web Components Enterprise-flavored sugar on top of native APIs! Get Started Open Github Project &rsaquo; Current version 1.0.0-rc.9 Enterprise Ready Compliant to SAP Fiori design language. Rich feature set. Includes all enterprise standards, such as accessibility, i18n, theming, etc Lightweight Comes with minimal footprint that you can easily add to your app. Easy To Consume Based on web standards. Future proved. Compliant with any technology of choice. Test the UI5 Web Components Get Started &lt;a href=&quot;https://codesandbox.io/s/71r1x5o51q?fontsize=14&amp;module=%2Findex.html&quot;target=&quot;_blank&quot; class=&quot;custom-button coding-button&quot;&gt; Start coding in your browser (CodeSandbox) &lt;/a&gt; Try out the demo apps We have a demo in React... Explore the code RUN THE DEMO APP &rsaquo; ...but how about Angular... Explore the code RUN THE DEMO APP &rsaquo; ...or if you fancy VueJS? Explore the code RUN THE DEMO APP &rsaquo; &lt;/section&gt; Framework Compatibility UI5 Web Components are framework-agnostic and can run with arbitary frameworks: Browser Compatibility UI5 Web Components are supported on all modern browsers and even one old-school browser: Community Twitter YouTube Slack Channel GitHub Docs Playground Documentation FAQ Legal &amp; Privacy Legal Disclosure Privacy Contact Us Report Issue Technical Questions Product Questions &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;",
+    "content": "&lt;!DOCTYPE html&gt; UI5 Web Components UI5 Web Components Enterprise-flavored sugar on top of native APIs! Get Started Open Github Project &rsaquo; Current version 1.0.0-rc.10 Enterprise Ready Compliant to SAP Fiori design language. Rich feature set. Includes all enterprise standards, such as accessibility, i18n, theming, etc Lightweight Comes with minimal footprint that you can easily add to your app. Easy To Consume Based on web standards. Future proved. Compliant with any technology of choice. Test the UI5 Web Components Get Started &lt;a href=&quot;https://codesandbox.io/s/71r1x5o51q?fontsize=14&amp;module=%2Findex.html&quot;target=&quot;_blank&quot; class=&quot;custom-button coding-button&quot;&gt; Start coding in your browser (CodeSandbox) &lt;/a&gt; Try out the demo apps We have a demo in React... Explore the code RUN THE DEMO APP &rsaquo; ...but how about Angular... Explore the code RUN THE DEMO APP &rsaquo; ...or if you fancy VueJS? Explore the code RUN THE DEMO APP &rsaquo; &lt;/section&gt; Framework Compatibility UI5 Web Components are framework-agnostic and can run with arbitary frameworks: Browser Compatibility UI5 Web Components are supported on all modern browsers and even one old-school browser: Community Twitter YouTube Slack Channel GitHub Docs Playground Documentation FAQ Legal &amp; Privacy Legal Disclosure Privacy Contact Us Report Issue Technical Questions Product Questions &lt;/div&gt; &lt;/body&gt; &lt;/html&gt;",
     "url": "https://sap.github.io/ui5-webcomponents/master/",
     "relUrl": "/"
   },
@@ -1164,7 +1164,7 @@
   "167": {
     "id": "167",
     "title": "Tutorials",
-    "content": "Tutorials:",
+    "content": "Tutorials In this section you can find tutorials on how to get started with UI5 Web Components, that are framework specific. We have created a bunch of tutorials, covering the integration of UI5 Web Components with some of the most popular existing frameworks. In these tutorials, you will see some framework specific features &amp; how to use them. You might want to check them before starting the active development. Tutorials:",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/tutorials",
     "relUrl": "/playground/tutorials"
   },
