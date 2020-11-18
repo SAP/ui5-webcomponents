@@ -1,16 +1,7 @@
-commit 03cae4b4e10e0f3bcb2da9f28b87be6e1f7c6838
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Nov 17 14:24:36 2020 +0200
+commit 2b9008cd7b0a8e65f1e2a0f67501bab61c32b2d5
+Author: Nikolay Deshev <mephistobg@gmail.com>
+Date:   Wed Nov 18 10:46:45 2020 +0200
 
-    feat(ui5-mcb): introduces filter property (#2088)
+    feat(ui5-slider): Add Slider component (#2349)
     
-    Build-in filters are
-    
-     - StartsWithPerTerm
-     - StartsWith
-     - Contains
-     - None
-    
-    Users can now set filter to None and filter when input event is fired
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/799
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1245

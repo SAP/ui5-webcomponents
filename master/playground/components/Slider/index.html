@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>CustomTheming - UI5 Web Components</title>
+    <title>Slider - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>CustomTheming | UI5 Web Components</title>
+<title>Slider | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="CustomTheming" />
+<meta property="og:title" content="Slider" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/docs/customtheming/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/docs/customtheming/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/Slider/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/Slider/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/docs/customtheming/","headline":"CustomTheming","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/Slider/","headline":"Slider","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -296,7 +296,7 @@
     
       
         
-          <li class="navigation-list-item active">
+          <li class="navigation-list-item">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs" class="navigation-list-link">Documentation</a>
             
@@ -555,9 +555,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/customtheming/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/customtheming/" class="navigation-list-link">
                         <div class="component-name">CustomTheming</div>
                         
                       </a>
@@ -1144,7 +1144,7 @@
     
       
         
-          <li class="navigation-list-item">
+          <li class="navigation-list-item active">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/components" class="navigation-list-link">Components</a>
             
@@ -1790,9 +1790,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Slider/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Slider/" class="navigation-list-link active">
                         <div class="component-name">Slider</div>
                         
                       </a>
@@ -2170,160 +2170,350 @@
             <nav class="breadcrumb-nav">
               <ol class="breadcrumb-nav-list">
                 
-                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/docs">Documentation</a></li>
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>CustomTheming</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Slider</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="custom-theming-with-sap-theme-designer">Custom Theming with <code class="highlighter-rouge">SAP Theme Designer</code></h1>
+          <header class="component-heading">
+	<h2 class="control-header">Slider</h2>
+	<div class="component-heading-since">
+		<span>v1.0.0-rc.11</span>
+	</div>
+</header>
 
-<p>UI5 Web Components are fully compatible with <code class="highlighter-rouge">SAP Theme Designer</code>. You can create your own theme and effortlessly 
-integrate it in your UI5 Web Components project on HTML level! On top, this does not prevent you from switching to
-and from officially supported themes, while having your own.</p>
+<div class="component-package">@ui5/webcomponents</div>
 
-<p>Follow this simple tutorial to get a custom theme running with UI5 Web Components in 5 minutes:</p>
+<div class="control-tag">&lt;ui5-slider&gt;</div>
 
-<ol>
-  <li>
-    <p>Open <strong>SAP Theme Designer</strong>.</p>
+<section>
+	<h3>Basic Slider</h3>
+	<div class="snippet">
+		<ui5-slider class="samples-margin"></ui5-slider>
+	</div>
 
-    <p>Go to <a href="https://ui5.sap.com">ui5.sap.com</a> and select <code class="highlighter-rouge">Tools</code> -&gt; <code class="highlighter-rouge">UI Theme Designer</code> from the menu, or just follow the
- <a href="https://themedesigner-themedesigner.dispatcher.hanatrial.ondemand.com/index.html">direct link</a>.</p>
-  </li>
-  <li>
-    <p>Create your <strong>custom theme</strong> in <code class="highlighter-rouge">SAP Theme Designer</code>.</p>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-slider&gt;&lt;/ui5-slider&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
-    <ul>
-      <li>
-        <p>Click the <strong>Create a New Theme</strong> button.</p>
-      </li>
-      <li>
-        <p>Choose which SAP stock theme will serve as the base of your custom theme and click the <strong>Create Theme</strong> button in the footer of the dialog.</p>
-      </li>
-      <li>
-        <p>Proceed to change as many parameters as you wish.</p>
-      </li>
-      <li>
-        <p>Once you are done customizing, choose <strong>Theme</strong> -&gt; <strong>Export</strong> from the main menu on top. A dialog will appear,
- asking for <strong>Theme ID</strong> (technical name of your new theme) and a title.</p>
+<section>
+	<h3>Slider with Tooltip</h3>
+	<div class="snippet">
+		<ui5-slider class="samples-margin" min="0" max="20" show-tooltip></ui5-slider>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-slider</span> <span class="na">min=</span><span class="s">"0"</span> <span class="na">max=</span><span class="s">"20"</span> <span class="na">show-tooltip</span><span class="nt">&gt;&lt;/ui5-slider&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
-        <p>The Theme ID you chose at this point will be the one you’ll use in order to switch to your custom theme, for example if you chose <code class="highlighter-rouge">mytheme</code>:</p>
+<section>
+	<h3>Disabled Slider with Tickmarks and Labels</h3>
+	<div class="snippet">
+		<ui5-slider class="samples-margin" min="20" max="100" label-interval="5" disabled show-tickmarks></ui5-slider>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-slider</span> <span class="na">min=</span><span class="s">"20"</span> <span class="na">max=</span><span class="s">"100"</span> <span class="na">label-interval=</span><span class="s">"5"</span> <span class="na">disabled</span> <span class="na">show-tickmarks</span><span class="nt">&gt;&lt;/ui5-slider&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
-        <p><code class="highlighter-rouge">index.html?sap-ui-theme=mytheme</code></p>
-
-        <p><strong>Important:</strong> Before clicking the <strong>Export</strong> button, thus dismissing the dialog and finishing theme creation,
-  it is <em>mandatory</em> that you expand the <strong>Optional Settings (for Experts)</strong> panel, and select the <strong>Source Files + CSS Resources</strong> option.
-  Otherwise, no CSS Variables will be generated.</p>
-      </li>
-    </ul>
-  </li>
-  <li>
-    <p>Download the custom theme <code class="highlighter-rouge">.zip</code> file:</p>
-
-    <p>Your browser will then download a <code class="highlighter-rouge">.zip</code> file with the name of your new theme, e.g. <code class="highlighter-rouge">mytheme.zip</code>.</p>
-  </li>
-  <li>
-    <p>Copy the <code class="highlighter-rouge">css_variables.css</code> file with all CSS Variables for your custom theme to your project.</p>
-
-    <p>You can find this file inside the <code class="highlighter-rouge">.zip</code> in the <code class="highlighter-rouge">\Base\baseLib\&lt;your theme name&gt;\</code> directory.</p>
-
-    <p>For example: <code class="highlighter-rouge">mytheme.zip\Base\baseLib\mytheme\css_variables.css</code>.</p>
-
-    <p>Just copy this file to a directory in your project where it can be statically served.</p>
-  </li>
-  <li>
-    <p>Include the file in your project’s <code class="highlighter-rouge">.html</code> page:</p>
-
-    <p>The simplest option would be to use a <code class="highlighter-rouge">&lt;link&gt;</code> tag and point to where you copied the file:</p>
-
-    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"&lt;path-to-your-css-file&gt;/css_variables.css"</span><span class="nt">&gt;</span>
-</code></pre></div>    </div>
-
-    <p>but you could as well use a <code class="highlighter-rouge">&lt;style&gt;</code> tag and paste the content of <code class="highlighter-rouge">css_variables.css</code> inside, 
- if that’s what you prefer:</p>
-
-    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nt">&lt;style&gt;</span>
-		<span class="c">/* Here goes the content of css_variables.css */</span>
- <span class="nt">&lt;/style&gt;</span>
-</code></pre></div>    </div>
-  </li>
-</ol>
-
-<p>And that’s it! Now you can use your custom theme by setting it either in the URL of your page,
-or in your configuration script:</p>
-
-<p><code class="highlighter-rouge">index.html?sap-ui-theme=mytheme</code></p>
-
-<p>or</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">data-ui5-config</span> <span class="na">type=</span><span class="s">"application/json"</span><span class="nt">&gt;</span>
-<span class="p">{</span>
-	<span class="dl">"</span><span class="s2">theme</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">mytheme</span><span class="dl">"</span>
-<span class="p">}</span>
-<span class="nt">&lt;/script&gt;</span>
-</code></pre></div></div>
-
-<p><em>Note:</em> Using a custom theme does not prevent you from using the official themes. You can freely switch to and from them.</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">setTheme</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Theme.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="nx">setTheme</span><span class="p">(</span><span class="dl">"</span><span class="s2">sap_fiori_3</span><span class="dl">"</span><span class="p">);</span>
-<span class="p">...</span>
-<span class="nx">setTheme</span><span class="p">(</span><span class="dl">"</span><span class="s2">mytheme</span><span class="dl">"</span><span class="p">);</span>
-<span class="p">...</span>
-<span class="nx">setTheme</span><span class="p">(</span><span class="dl">"</span><span class="s2">sap_fiori_3_dark</span><span class="dl">"</span><span class="p">);</span>
-</code></pre></div></div>
-
-<p>For more on configuring themes, see <a href="Configuration.md">Configuration</a>.</p>
+<section>
+	<h3>Slider tooltip, tickmarks and labels</h3>
+	<div class="snippet">
+		<ui5-slider class="samples-margin" min="-20" max="20" step="2" value="12" show-tooltip label-interval="2" show-tickmarks></ui5-slider>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-slider</span> <span class="na">min=</span><span class="s">"-20"</span> <span class="na">max=</span><span class="s">"20"</span> <span class="na">step=</span><span class="s">"2"</span> <span class="na">value=</span><span class="s">"12"</span> <span class="na">show-tooltip</span> <span class="na">label-interval=</span><span class="s">"2"</span> <span class="na">show-tickmarks</span><span class="nt">&gt;&lt;/ui5-slider&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
 
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3> The Slider component represents a numerical range and a handle (grip). The purpose of the component is to enable visual selection of a value in a continuous numerical range by moving an adjustable handle.
 
-<footer class="footer-wrapper">
-    <div class="footer-links">
+<h3>Structure</h3> The most important properties of the Slider are: <ul> <li>min - The minimum value of the slider range</li> <li>max - The maximum value of the slider range</li> <li>value - The current value of the slider</li> <li>step - Determines the increments in which the slider will move</li> <li>showTooltip - Determines if a tooltip should be displayed above the handle</li> <li>showTickmarks - Displays a visual divider between the step values</li> <li>labelInterval - Labels some or all of the tickmarks with their values.</li> </ul>
+
+<h3>Usage</h3> The most common usecase is to select values on a continuous numerical scale (e.g. temperature, volume, etc. ).
+
+<h3>Responsive Behavior</h3> The <code>ui5-slider</code> component adjusts to the size of its parent container by recalculating and resizing the width of the control. You can move the slider handle in several different ways: <ul> <li>Drag and drop to the desired value</li> <li>Click/tap on the range bar to move the handle to that location</li> </ul>
+
+<h3>ES6 Module Import</h3>
+
+<code>import "@ui5/webcomponents/dist/Slider";</code>
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          value
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">Float</div>
+                        <div class="cell api-table-content-cell">0</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Current value of the slider
+                        </div>
+                      </div>
+            
+                  </div>
+            
+            
+            
+            
+          </section>
+        </section>
+      </div>
+    </div>
+      <div class="api-container appended-doc">
+        <h1>SliderBase</h1>
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          directionStart
+                            <br>
+                            <code>direction-start</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Returns the start side of a direction - left for LTR, right for RTL
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          disabled
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the slider is in disabled state.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          labelInterval
+                            <br>
+                            <code>label-interval</code>
+                        </div>
+                        <div class="cell api-table-content-cell">Integer</div>
+                        <div class="cell api-table-content-cell">0</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Displays a label with a value on every N-th step. <br><br> <b>Note:</b> The step and tickmarks properties must be enabled. Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second tickmark will be labelled, which means every 4th value number.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          max
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">Float</div>
+                        <div class="cell api-table-content-cell">100</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the maximum value of the slider
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          min
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">Float</div>
+                        <div class="cell api-table-content-cell">0</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the minimum value of the slider
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          showTickmarks
+                            <br>
+                            <code>show-tickmarks</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Enables tick marks visualization for each step. <br><br> <b>Note:</b> The step must be a positive number.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          showTooltip
+                            <br>
+                            <code>show-tooltip</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Enables handle tooltip displaying the current value.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          step
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">Integer</div>
+                        <div class="cell api-table-content-cell">1</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10). <br><br> <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
+                        </div>
+                      </div>
+            
+                  </div>
+            
+                <h3 class="comment-api-title space-top" >Slots</h3>
+            	<p class="small-space-top" >
+            	  This Element provides slot(s). This means it can display its child nodes.<br>
+            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Slot</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">Node [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the <code>ui5-range-slider</code>. <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
+                    </div>
+            
+                </div>
+            
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">change</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the value changes and the user has finished interacting with the slider.
+                        </div>
+                      </div>
+            
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">input</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
+                        </div>
+                      </div>
+            
+                  </div>
+            
+          </section>
+        </section>
+      </div>
+    <footer class="footer-wrapper">
+      <div class="footer-links">
         <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
         <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+      </div>
+      <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+    </footer>
+
+
+<div class="settings" id="settings-button">
+    <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"
+    width="340.274px" height="340.274px" viewBox="0 0 340.274 340.274" style="enable-background:new 0 0 340.274 340.274;"
+    xml:space="preserve">
+        <path d="M293.629,127.806l-5.795-13.739c19.846-44.856,18.53-46.189,14.676-50.08l-25.353-24.77l-2.516-2.12h-2.937
+        c-1.549,0-6.173,0-44.712,17.48l-14.184-5.719c-18.332-45.444-20.212-45.444-25.58-45.444h-35.765
+        c-5.362,0-7.446-0.006-24.448,45.606l-14.123,5.734C86.848,43.757,71.574,38.19,67.452,38.19l-3.381,0.105L36.801,65.032
+        c-4.138,3.891-5.582,5.263,15.402,49.425l-5.774,13.691C0,146.097,0,147.838,0,153.33v35.068c0,5.501,0,7.44,46.585,24.127
+        l5.773,13.667c-19.843,44.832-18.51,46.178-14.655,50.032l25.353,24.8l2.522,2.168h2.951c1.525,0,6.092,0,44.685-17.516
+        l14.159,5.758c18.335,45.438,20.218,45.427,25.598,45.427h35.771c5.47,0,7.41,0,24.463-45.589l14.195-5.74
+        c26.014,11,41.253,16.585,45.349,16.585l3.404-0.096l27.479-26.901c3.909-3.945,5.278-5.309-15.589-49.288l5.734-13.702
+        c46.496-17.967,46.496-19.853,46.496-25.221v-35.029C340.268,146.361,340.268,144.434,293.629,127.806z M170.128,228.474
+        c-32.798,0-59.504-26.187-59.504-58.364c0-32.153,26.707-58.315,59.504-58.315c32.78,0,59.43,26.168,59.43,58.315
+        C229.552,202.287,202.902,228.474,170.128,228.474z"></path>
+    </svg>
+</div>
+<ui5-dialog id="settings-dialog" header-text="Settings">
+    <section class="settings-form">
+        <div class="settings-content">
+            <div class="setting">
+                <ui5-label for="themeSwitch">Theme:</ui5-label>
+                <ui5-select id="themeSwitch">
+                    <ui5-option value="sap_fiori_3">Quartz Light</ui5-option>
+                    <ui5-option value="sap_fiori_3_dark">Quartz Dark</ui5-option>
+                    <ui5-option value="sap_fiori_3_hcb">Quartz High Contrast Black</ui5-option>
+                    <ui5-option value="sap_fiori_3_hcw">Quartz High Contrast White</ui5-option>
+                    <ui5-option value="sap_belize">Belize</ui5-option>
+                    <ui5-option value="sap_belize_hcb">High Contrast Black</ui5-option>
+                    <ui5-option value="sap_belize_hcw">High Contrast White</ui5-option>
+                </ui5-select>
+            </div>
+            <div class="setting">
+                <ui5-label for="contentDensitySwitch">Content Density:</ui5-label>
+                <ui5-select id="contentDensitySwitch">
+                    <ui5-option>Cozy</ui5-option>
+                    <ui5-option>Compact</ui5-option>
+                </ui5-select>
+            </div>
+            <div class="setting">
+                <ui5-label for="textDirectionSwitch">Text Direction:</ui5-label>
+                <ui5-select id="textDirectionSwitch">
+                    <ui5-option>LTR</ui5-option>
+                    <ui5-option>RTL</ui5-option>
+                </ui5-select>
+            </div>
+        </div>
+    </section>
+    <div slot="footer" class="closing-buttons">
+        <ui5-button id="applyButton" design="Emphasized" class="padding-end">Apply</ui5-button>
+        <ui5-button id="cancelButton">Cancel</ui5-button>
     </div>
-    <img src="https://sap.github.io/ui5-webcomponents/master/ui5-webcomponents/assets/images/sap-logo-svg.svg" alt="SAP Logo" />
-</footer>
+</ui5-dialog>
+
+<!-- UI5 Web Components Assests -->
+<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+
+<link rel="stylesheet" href="https://sap.github.io/ui5-webcomponents/master/assets/css/api.css">
 
 <style>
-    .footer-wrapper {
-        margin-top: 2rem;
-        padding-top: 2rem;
-        padding-bottom: 4rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        border-top: 1px solid #D8D8D8;
-        font-family: "72-Regular";
+    pre {
+        margin-bottom: 0;
     }
-
-    .footer-links {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: flex-start;
-        font-family: "72-Regular";
-    }
-
-    .footer-links > a {
-        color: #333333;
-        text-decoration: none;
-    }
-
-    .footer-links > a:hover {
-        text-decoration: underline;
-    }
-
-    .separator::after {
-        content: "|";
-        padding: 0 1rem;
-        color: #D8D8D8;
-        text-decoration: none;
+    pre.highlight {
+        padding: 1.5rem;
+        padding-bottom: 0;
+        border: 0.0625rem solid #C1C1C1;
     }
 </style>
 
