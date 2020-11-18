@@ -162,14 +162,6 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 describe("Properties synchronization and normalization", () => {
 
-	it("If a negative number is set to the step property it should beconverted it to its positive equivalent", () => {
-		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
-
-		rangeSlider.setProperty("step", -15);
-
-		assert.strictEqual(rangeSlider.getProperty("step"), 15, "Step value should be a positive number");
-	});
-
 	it("Should fallback to default value of 1 if step property is not a valid number", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
 
@@ -178,30 +170,16 @@ describe("Properties synchronization and normalization", () => {
 		assert.strictEqual(rangeSlider.getProperty("step"), 1, "Step value should be its default value");
 	});
 
-	it("If min property is set to a greater number than the max property they should be swapped", () => {
-		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
-
-		rangeSlider.setProperty("max", 10);
-		rangeSlider.setProperty("min", 100);
-
-		assert.strictEqual(rangeSlider.getProperty("min"), 10, "min property should be less than the max one");
-		assert.strictEqual(rangeSlider.getProperty("max"), 100, "max property should be greater than the min one");
-		assert.strictEqual(rangeSlider.getProperty("startValue"), 10, "startValue property should be within the boundaries of the swapped min and max props");
-
-		rangeSlider.setProperty("min", 200);
-
-		assert.strictEqual(rangeSlider.getProperty("min"), 100, "min property should be the 100");
-		assert.strictEqual(rangeSlider.getProperty("max"), 200, "max property should be 200");
-		assert.strictEqual(rangeSlider.getProperty("startValue"), 100, "value property should be within the boundaries of the swapped min and max props");
-	});
-
 	it("Should keep the current values between the boundaries of min and max properties", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
+
+		rangeSlider.setProperty("min", 100);
+		rangeSlider.setProperty("max", 200);
 
 		rangeSlider.setProperty("endValue", 300);
 
 		assert.strictEqual(rangeSlider.getProperty("endValue"), 200, "value prop should always be lower than the max value");
-
+	
 		rangeSlider.setProperty("startValue", 99);
 
 		assert.strictEqual(rangeSlider.getProperty("startValue"), 100, "value prop should always be greater than the min value");
