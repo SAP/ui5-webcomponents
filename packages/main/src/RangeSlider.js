@@ -30,7 +30,7 @@ const metadata = {
 		 * <br><br>
 		 *
 		 * @type {Float}
-		 * @defaultvalue 0
+		 * @defaultvalue 100
 		 * @public
 		 */
 		endValue: {
@@ -46,7 +46,7 @@ const metadata = {
  * Represents a numerical interval and two handles (grips) to select a sub-range within it.
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The purpose of the control is to enable visual selection of sub-ranges within a given interval.
+ * The purpose of the component to enable visual selection of sub-ranges within a given interval.
  *
  * <h3>Structure</h3>
  * The most important properties of the Range Slider are:
@@ -78,7 +78,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.RangeSlider
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends sap.ui.webcomponents.main.SliderBase
  * @tagname ui5-range-slider
  * @since 1.0.0-rc.11
  * @appenddocs SliderBase
@@ -142,23 +142,14 @@ class RangeSlider extends SliderBase {
 			return;
 		}
 
-		const oldEndValue = this.endValue;
-		const oldStartValue = this.startValue;
+		// Calculate the new value from the press position of the event
 		const newValue = this.handleDownBase(event, this._effectiveMin, this._effectiveMax);
 
-		// Check if the new value is in the current select range of values
-		this._isNewValueInCurrentRange = newValue > oldStartValue && newValue < oldEndValue;
-		// Save the initial press point coordinates (position).
-		this._initialPageXPosition = this.constructor.getPageXValueFromEvent(event);
-		// Determine value to be modified depending on the the handle clossest to the press point
-		this._setCurrentValueType(this._initialPageXPosition, newValue);
+		// Determine the rest of the needed details from the start of the interaction.
+		this._saveInteractionStartData(event, newValue);
 
-		// Use the progress bar to save the initial coordinates of the start-handle when the interaction begins.
-		// We will use it as a reference to calculate a moving offset if the whole range selection is dragged.
-		this._initialStartHandlePageX = this.directionStart === "left" ? this.shadowRoot.querySelector(".ui5-slider-progress").getBoundingClientRect().left : this.shadowRoot.querySelector(".ui5-slider-progress").getBoundingClientRect().right;
-
-		// Do not yet update the RangeSlider if press is in range or over a handle. It will be updated if the user drags the mouse.
-		if (this._isNewValueInCurrentRange || this._handeIsPressed) {
+		// Do not yet update the RangeSlider if press is in range or over a handle.
+		if (this._inCurrentRange || this._handeIsPressed) {
 			this._handeIsPressed = false;
 			return;
 		}
@@ -168,6 +159,35 @@ class RangeSlider extends SliderBase {
 		this.updateValue(this._valueAffected, newValue);
 		this.storePropertyState(this._valueAffected);
 	}
+
+
+	/**
+	 * Determines and saves needed values from the start of the interaction:
+	 *
+	 * Is the value calculated is within the currently selected range;
+	 * Initial pageX position of the start handle affected by the interaction;
+	 * Initial pageX value of the pressed postion;
+	 * Affected value property by the action;
+	 *
+	 * @private
+	 */
+	_saveInteractionStartData(event, newValue) {
+		const oldEndValue = this.endValue;
+		const oldStartValue = this.startValue;
+		const progressBarDom = this.shadowRoot.querySelector(".ui5-slider-progress").getBoundingClientRect();
+
+		// Check if the new value is in the current select range of values
+		this._inCurrentRange = newValue > oldStartValue && newValue < oldEndValue;
+		// Save the initial press point coordinates (position)
+		this._initialPageXPosition = this.constructor.getPageXValueFromEvent(event);
+		// Which element of the Range Slider is pressed and which value property to be modified on further interaction
+		this._pressTargetAndAffectedValue(this._initialPageXPosition, newValue);
+
+		// Use the progress bar to save the initial coordinates of the start-handle when the interaction begins.
+		// We will use it as a reference to calculate a moving offset if the whole range selection is dragged.
+		this._initialStartHandlePageX = this.directionStart === "left" ? progressBarDom.left : progressBarDom.right;
+	}
+
 
 	/**
 	 * Called when the user moves the slider
@@ -182,20 +202,36 @@ class RangeSlider extends SliderBase {
 			return;
 		}
 
-		// If the user does not drag the whole range selection,
-		// sync the internal state and the UI with the corresponding value change
-		if (!this._isNewValueInCurrentRange) {
-			const newValue = this.constructor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
-
-			this._updateHandlesAndRange(newValue);
-			this.updateValue(this._valueAffected, newValue);
-			this.storePropertyState(this._valueAffected);
-
+		// Update UI and state when dragging a single Range Slider handle
+		if (!this._inCurrentRange) {
+			this._updateValueOnHandleDrag(event);
 			return;
 		}
 
-		/* If the press is in current range when dragging occurs we move the whole selected range (progress indicator).
-		Calculate the new 'start' and 'end' values from the offset between the original press point and the current position of the mouse */
+		// Updates UI and state when dragging of the whole selected range
+		this._updateValueOnRangeDrag(event);
+	}
+
+	/**
+	 * Updates UI and state when dragging a single Range Slider handle
+	 *
+	 * @private
+	 */
+	_updateValueOnHandleDrag(event) {
+		const newValue = this.constructor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
+
+		this._updateHandlesAndRange(newValue);
+		this.updateValue(this._valueAffected, newValue);
+		this.storePropertyState(this._valueAffected);
+	}
+
+	/**
+	 * Updates UI and state when dragging of the whole selected range
+	 *
+	 * @private
+	 */
+	_updateValueOnRangeDrag(event) {
+		// Calculate the new 'start' and 'end' values from the offset between the original press point and the current position of the mouse
 		const currentPageXPos = this.constructor.getPageXValueFromEvent(event);
 		const newValues = this._calculateRangeOffset(currentPageXPos, this._initialStartHandlePageX);
 
@@ -216,15 +252,24 @@ class RangeSlider extends SliderBase {
 	}
 
 	/**
-	 * Determines which one from the value/endValue properties has to be updated after the user action (based on closest handle)
+	 * Determines where the press occured and which values of the Range Slider
+	 * handles should be updated on further interaction.
+	 *
+	 * If the press is not in the selected range or over one of the Range Slider handles
+	 * determines which one from the value/endValue properties has to be updated
+	 * after the user action (based on closest handle).
+	 *
+	 * Set flags if the press is over a handle or in the selected range,
+	 * in such cases no values are changed on interaction start, but could be
+	 * updated later when dragging.
 	 *
 	 * @private
 	 */
-	_setCurrentValueType(clientX, value) {
+	_pressTargetAndAffectedValue(clientX, value) {
 		const startHandle = this.shadowRoot.querySelector(".start-handle");
 		const endHandle = this.shadowRoot.querySelector(".end-handle");
 
-		// Check if the press point is in the bounds of any handle
+		// Check if the press point is in the bounds of any of the Range Slider handles
 		const handleStartDomRect = startHandle.getBoundingClientRect();
 		const handleEndDomRect = endHandle.getBoundingClientRect();
 		const inHandleStartDom = clientX >= handleStartDomRect.left && clientX <= handleStartDomRect.right;
@@ -232,12 +277,11 @@ class RangeSlider extends SliderBase {
 
 		// Remove the flag for value in current range if the press action is over one of the handles
 		if (inHandleEndDom || inHandleStartDom) {
-			this._isNewValueInCurrentRange = false;
+			this._inCurrentRange = false;
 			this._handeIsPressed = true;
 		}
 
 		// Return that handle that is closer to the press point
-		// If the two handles are overlapping return the second (end) one as in general the more common drag move is to the right
 		if (inHandleEndDom || value > this.endValue) {
 			this._valueAffected = "endValue";
 		}
@@ -249,8 +293,13 @@ class RangeSlider extends SliderBase {
 	}
 
 	/**
-	 * Computes new 'start' and 'end' values in case the user is moving the whole range progress indicator.
-	 * Returns an array with the values
+	 * Calculates startValue/endValue properties when the whole range is moved.
+	 *
+	 * Uses the change of the position of the start handle and adds the initially
+	 * selected range to it, to determine the whole range offset.
+	 *
+	 * @param {Integer} currentPageXPos The current horizontal position of the cursor/touch
+	 * @param {Integer} initialStartHandlePageXPos The initial horizontal position of the start handle
 	 *
 	 * @private
 	 */
@@ -263,37 +312,56 @@ class RangeSlider extends SliderBase {
 
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
-		const step = this._effectiveStep;
-		const dom = this.getBoundingClientRect();
 		const selectedRange = this.endValue - this.startValue;
 
-		// The difference between the new position of the pointer and when the press event initial occured, based on the dragging direction
-		const positionOffset = currentPageXPos > this._initialPageXPosition ? currentPageXPos - this._initialPageXPosition : this._initialPageXPosition - currentPageXPos;
-		let startValue;
-		let	startValuePageX;
+		// Computes the new value based on the difference of the current cursor location from the start of the interaction
+		let startValue = this._calculateStartValueByOffset(currentPageXPos, initialStartHandlePageXPos);
 
-		/* If the dragging direction is from min to max (left to right, by LTR default):
+		// When the end handle reaches the max possible value prevent the start handle from moving
+		// And the opposite - if the start handle reaches the beginning of the slider keep the initially selected range.
+		startValue = this.constructor.clipValue(startValue, min, max - selectedRange);
+
+		return [startValue, startValue + selectedRange];
+	}
+
+	/**
+	 * Computes the new value based on the difference of the current cursor location from the
+	 * start of the interaction.
+	 *
+	 * @param {Integer} currentPageXPos The current horizontal position of the cursor/touch
+	 * @param {Integer} initialStartHandlePageXPos The initial horizontal position of the start handle
+	 *
+	 * @private
+	 */
+	_calculateStartValueByOffset(currentPageXPos, initialStartHandlePageXPos) {
+		const min = this._effectiveMin;
+		const max = this._effectiveMax;
+		const step = this._effectiveStep;
+		const dom = this.getBoundingClientRect();
+
+		let startValue;
+		let startValuePageX;
+		let positionOffset;
+
+		/* Depending on the dragging direction:
 		- calculate the new position of the start handle from its old pageX value combined with the movement offset;
 		- calculate the start value based on its new pageX coordinates;
-		- stepify the calculated value based on the specified step property;
-		Repeat the same calculations in case of a dragging in the opposite direction */
+		- 'stepify' the calculated value based on the specified step property; */
 		if (currentPageXPos > this._initialPageXPosition) {
+			// Difference between the new position of the pointer and when the press event initial occured
+			positionOffset = currentPageXPos - this._initialPageXPosition;
+
 			startValuePageX = initialStartHandlePageXPos + positionOffset;
 			startValue = this.constructor.computedValueFromPageX(startValuePageX, min, max, dom, this.directionStart);
 			startValue = this.constructor.getSteppedValue(startValue, step, min);
 		} else {
+			positionOffset = this._initialPageXPosition - currentPageXPos;
 			startValuePageX = initialStartHandlePageXPos - positionOffset;
 			startValue = this.constructor.computedValueFromPageX(startValuePageX, min, max, dom, this.directionStart);
 			startValue = this.constructor.getSteppedValue(startValue, step, min);
 		}
 
-		// When the end handle reaches the max possible value prevent the start handle from moving
-		// And the opposite - if the start handle reaches the beginning of the slider keep the initially selected range.
-		startValue = this.constructor.clipValue(startValue, min, max - selectedRange);
-		const endValue = startValue + selectedRange;
-
-		this._prevCursorPosition = currentPageXPos;
-		return [startValue, endValue];
+		return startValue;
 	}
 
 	_updateHandlesAndRange(newValue) {
