@@ -111,6 +111,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the tooltip of the button.
+		 * <br>
+		 * <b>Important:</b> Tooltips should only be set to icon only buttons.
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.0.0-rc.11
+		 */
+		tooltip: {
+			type: String,
+		},
+
+		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
 		 * @private
 		 */
@@ -187,6 +200,7 @@ const metadata = {
 		_iconSettings: {
 			type: Object,
 		},
+
 		_buttonAccInfo: {
 			type: Object,
 		},
@@ -370,7 +384,7 @@ class Button extends UI5Element {
 			"ariaExpanded": this.ariaExpanded || (this._buttonAccInfo && this._buttonAccInfo.ariaExpanded),
 			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
 			"ariaHaspopup": this._buttonAccInfo && this._buttonAccInfo.ariaHaspopup,
-			"title": this._buttonAccInfo && this._buttonAccInfo.title,
+			"title": this.tooltip || (this._buttonAccInfo && this._buttonAccInfo.title),
 		};
 	}
 
