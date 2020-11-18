@@ -1,0 +1,76 @@
+
+:host(:not([hidden])) {
+	display: block;
+}
+
+.ui5-avatar-group-items:focus {
+	outline: none;
+}
+
+:host([type="Group"]) .ui5-avatar-group-items:focus {
+	outline: var(--_ui5_avatar_outline);
+	outline-offset: var(--_ui5_avatar_focus_offset);
+}
+
+.ui5-avatar-group-root {
+	display: flex;
+}
+
+.ui5-avatar-group-items {
+	white-space: nowrap;
+	position: relative;
+	display: inline-flex;
+}
+
+:host([type="Group"]) .ui5-avatar-group-items {
+	cursor: pointer;
+}
+
+:host([type="Group"]) ::slotted(ui5-avatar) {
+	pointer-events: none;
+}
+
+.ui5-avatar-group-overflow-btn:not([hidden]) {
+	border-radius: 50%;
+	display: inline-flex;
+	text-overflow: unset;
+}
+
+.ui5-avatar-group-overflow-btn[focused] {
+	outline-offset: var(--_ui5_avatar_group_overflow_button_focus_offset);
+}
+
+:host([avatar-size="XS"]) .ui5-avatar-group-overflow-btn {
+	height: 2rem;
+	width: 2rem;
+	min-width: 2rem;
+	font-size: .75rem;
+}
+
+:host([avatar-size="S"]) .ui5-avatar-group-overflow-btn {
+	height: 3rem;
+	width: 3rem;
+	min-width: 3rem;
+	font-size: 1.125rem;
+}
+
+:host([avatar-size="M"]) .ui5-avatar-group-overflow-btn {
+	height: 4rem;
+	width: 4rem;
+	min-width: 4rem;
+	font-size: 1.625rem;
+}
+
+:host([avatar-size="L"]) .ui5-avatar-group-overflow-btn {
+	height: 5rem;
+	width: 5rem;
+	min-width: 5rem;
+	font-size: 2rem;
+}
+
+:host([avatar-size="XL"]) .ui5-avatar-group-overflow-btn {
+	height: 7rem;
+	width: 7rem;
+	min-width: 7rem;
+	font-size: 2.75rem;
+}
