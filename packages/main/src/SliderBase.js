@@ -402,6 +402,7 @@ class SliderBase extends UI5Element {
 	/**
 	 * Computes the new value (in %) from the pageX position of the cursor.
 	 * Returns the value rounded to a precision of at most 2 digits after decimal point.
+	 * Returns the value rounded to a precision of at most 2 digits after decimal point.
 	 *
 	 * @protected
 	 */

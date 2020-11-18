@@ -24,7 +24,9 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
+import * as Filters from "./ComboBoxFilters.js";
 import Button from "./Button.js";
+
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
@@ -87,13 +89,13 @@ const metadata = {
 	   },
 
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-multicombobox</code>.
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-multi-combobox</code>.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the <code>ui5-select</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * when the <code>ui5-multi-combobox</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.9
 		 * @slot
@@ -199,6 +201,19 @@ const metadata = {
 		 */
 		required: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the filter type of the <code>ui5-multi-combobox</code>.
+		 * Available options are: <code>StartsWithPerTerm</code>, <code>None</code>.
+		 *
+		 * @type {string}
+		 * @defaultvalue "StartsWithPerTerm"
+		 * @public
+		 */
+		filter: {
+			type: String,
+			defaultValue: "StartsWithPerTerm",
 		},
 
 		/**
@@ -586,12 +601,8 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
-	_filterItems(value) {
-		return this.items.filter(item => {
-			return item.text
-				&& item.text.toLowerCase().startsWith(value.toLowerCase())
-				&& (this.filterSelected ? item.selected : true);
-		});
+	_filterItems(str) {
+		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
 	}
 
 	_toggle() {
