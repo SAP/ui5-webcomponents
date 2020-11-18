@@ -39,8 +39,16 @@
 	margin: 0.1875rem 0 0 -0.375rem;
 }
 
-:host([actual-placement-type=Left]) [dir=rtl] .ui5-popover-arrow:after {
+:host([actual-placement-type="Left"]) [dir=rtl] .ui5-popover-arrow:after {
 	margin: .1875rem .25rem 0 0;
+}
+
+:host([actual-placement-type="Bottom"]) [dir=rtl] .ui5-popover-arrow:after {
+	margin: .1875rem .125rem 0 0;
+}
+
+:host([actual-placement-type="Top"]) [dir=rtl] .ui5-popover-arrow:after {
+	margin: -0.4375rem .125rem 0 0
 }
 
 /* pointing downward arrow */
