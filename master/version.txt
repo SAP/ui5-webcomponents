@@ -1,7 +1,9 @@
-commit 2b9008cd7b0a8e65f1e2a0f67501bab61c32b2d5
-Author: Nikolay Deshev <mephistobg@gmail.com>
-Date:   Wed Nov 18 10:46:45 2020 +0200
+commit 973a80d522d3a05745d8087f85d3df9e676febd2
+Author: Diana Pazheva <diana.pazheva@sap.com>
+Date:   Wed Nov 18 11:17:19 2020 +0200
 
-    feat(ui5-slider): Add Slider component (#2349)
+    fix(ui5-select): remove aria-roledescription (#2463)
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1245
+    The reledescription prevents its role of button to be read by JAWS.
+    
+    Fixes #2358
