@@ -70,7 +70,7 @@ describe("Testing Range Slider interactions", () => {
 		const startHandle = rangeSlider.shadow$(".ui5-slider-handle.start-handle");
 		const endHandle = rangeSlider.shadow$(".ui5-slider-handle.end-handle");
 
-		rangeSlider.dragAndDrop({ x: 100, y: 0 });
+		rangeSlider.dragAndDrop({ x: 100, y: 1 });
 
 		assert.strictEqual(rangeSlider.getProperty("startValue"), 8, "startValue should be 8");
 		assert.strictEqual(rangeSlider.getProperty("endValue"), 33, "endValue should be 33");

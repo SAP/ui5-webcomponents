@@ -80,10 +80,6 @@ class Slider extends SliderBase {
 		return SliderTemplate;
 	}
 
-	static get styles() {
-		return super.styles;
-	}
-
 	constructor() {
 		super();
 		this._stateStorage.value = null;
@@ -108,7 +104,7 @@ class Slider extends SliderBase {
 
 		this.notResized = true;
 		this.syncUIAndState("value");
-		this._updateUI(this.value);
+		this._updateHandleAndProgress(this.value);
 	}
 
 	/**
@@ -123,11 +119,11 @@ class Slider extends SliderBase {
 			return;
 		}
 
-		const newValue = this.handleDownBase(event, this.min, this.max);
+		const newValue = this.handleDownBase(event, this._effectiveMin, this._effectiveMax);
 
 		// Do not yet update the Slider if press is over a handle. It will be updated if the user drags the mouse.
-		if (!this._isHandlePressed(SliderBase.getPageXValueFromEvent(event))) {
-			this._updateUI(newValue);
+		if (!this._isHandlePressed(this.constructor.getPageXValueFromEvent(event))) {
+			this._updateHandleAndProgress(newValue);
 			this.updateValue("value", newValue);
 		}
 	}
@@ -142,13 +138,13 @@ class Slider extends SliderBase {
 
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
-		if (this.disabled || this.step === 0) {
+		if (this.disabled || this._effectiveStep === 0) {
 			return;
 		}
 
-		const newValue = SliderBase.getValueFromInteraction(event, this.step, this.min, this.max, this.getBoundingClientRect(), this.directionStart);
+		const newValue = this.constructor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
 
-		this._updateUI(newValue);
+		this._updateHandleAndProgress(newValue);
 		this.updateValue("value", newValue);
 	}
 
@@ -172,31 +168,31 @@ class Slider extends SliderBase {
 	}
 
 
-	/** Updates the UI representation of the Slider according to its internal state.
+	/** Updates the UI representation of the progress bar and handle position
 	 *
 	 * @private
 	 */
-	_updateUI(newValue) {
-		const max = this.max;
-		const min = this.min;
+	_updateHandleAndProgress(newValue) {
+		const max = this._effectiveMax;
+		const min = this._effectiveMin;
 
 		// The progress (completed) percentage of the slider.
-		this._percentageComplete = (newValue - min) / (max - min);
+		this._progressPercentage = (newValue - min) / (max - min);
 		// How many pixels from the left end of the slider will be the placed the affected  by the user action handle
-		this._handlePositionFromStart = this._percentageComplete * 100;
+		this._handlePositionFromStart = this._progressPercentage * 100;
 	}
 
 	get styles() {
 		return {
 			progress: {
-				"transform": `scaleX(${this._percentageComplete})`,
+				"transform": `scaleX(${this._progressPercentage})`,
 				"transform-origin": `${this.directionStart} top`,
 			},
 			handle: {
 				[this.directionStart]: `${this._handlePositionFromStart}%`,
 			},
 			tickmarks: {
-				"background": `${this._tickmarksBackground}`,
+				"background": `${this._tickmarks}`,
 			},
 			label: {
 				"width": `${this._labelWidth}%`,
@@ -216,7 +212,7 @@ class Slider extends SliderBase {
 	}
 
 	get tooltipValue() {
-		const stepPrecision = SliderBase._getDecimalPrecisionOfNumber(this.step);
+		const stepPrecision = this.constructor._getDecimalPrecisionOfNumber(this._effectiveStep);
 		return this.value.toFixed(stepPrecision);
 	}
 
