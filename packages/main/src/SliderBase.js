@@ -309,7 +309,6 @@ class SliderBase extends UI5Element {
 		this._boundingClientRect = this.getBoundingClientRect();
 		const newValue = SliderBase.getValueFromInteraction(event, this.step, min, max, this._boundingClientRect, this.directionStart);
 
-		this._valueOnInteractionStart = newValue;
 		return newValue;
 	}
 
@@ -319,16 +318,11 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	handleUpBase() {
-		if (this._valueOnInteractionStart !== this.value) {
-			this.fireEvent("change");
-		}
-
+	handleUpBase(valueType) {
 		SliderBase.UP_EVENTS.forEach(upEventType => window.removeEventListener(upEventType, this._upHandler));
 		window.removeEventListener(this._moveEventType, this._moveHandler);
 
 		this._moveEventType = null;
-		this._valueOnInteractionStart = null;
 	}
 
 	/**

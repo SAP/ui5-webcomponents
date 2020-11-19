@@ -172,12 +172,14 @@ class RangeSlider extends SliderBase {
 	 * @private
 	 */
 	_saveInteractionStartData(event, newValue) {
-		const oldEndValue = this.endValue;
-		const oldStartValue = this.startValue;
 		const progressBarDom = this.shadowRoot.querySelector(".ui5-slider-progress").getBoundingClientRect();
 
+		// Save the state of the value properties on the start of the interaction
+		this._prevStartValue = this.startValue;
+		this._prevEndValue = this.endValue;
+
 		// Check if the new value is in the current select range of values
-		this._inCurrentRange = newValue > oldStartValue && newValue < oldEndValue;
+		this._inCurrentRange = newValue > this._prevStartValue && newValue < this._prevEndValue;
 		// Save the initial press point coordinates (position)
 		this._initialPageXPosition = this.constructor.getPageXValueFromEvent(event);
 		// Which element of the Range Slider is pressed and which value property to be modified on further interaction
@@ -246,9 +248,16 @@ class RangeSlider extends SliderBase {
 	}
 
 	_handleUp() {
+		if (this.startValue !== this._prevStartValue || this.endValue !== this._prevEndValue) {
+			this.fireEvent("change");
+		}
+
 		this._swapValues();
 		this.handleUpBase();
+
 		this._valueAffected = null;
+		this._prevStartValue = null;
+		this._prevEndValue = null;
 	}
 
 	/**
