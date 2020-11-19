@@ -65,6 +65,7 @@ import RadioButton from "./dist/RadioButton.js";
 import ResponsivePopover from "./dist/ResponsivePopover.js";
 import SegmentedButton from "./dist/SegmentedButton.js";
 import Select from "./dist/Select.js";
+import Slider from "./dist/Slider.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
 import MultiComboBox from "./dist/MultiComboBox.js";

@@ -13,6 +13,7 @@
 	box-sizing: border-box;
 	font-family: "72override", var(--sapFontFamily);
 	text-align: center;
+	letter-spacing: 0.0125em;
 }
 
 /* Bagde with Icon */
@@ -113,6 +114,6 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	text-transform: uppercase;
-	letter-spacing: 0.0125em;
+	letter-spacing: inherit;
 	font-size: var(--ui5-badge-font-size); /* origin from --sapFontSmallSize (0.75rem) */
 }

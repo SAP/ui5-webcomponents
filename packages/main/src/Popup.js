@@ -1,4 +1,5 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
@@ -66,7 +67,7 @@ const metadata = {
 		 * Defines the aria-label attribute for the popup
 		 *
 		 * @type {String}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @private
 		 * @since 1.0.0-rc.8
 		 */
@@ -312,7 +313,7 @@ class Popup extends UI5Element {
 			return;
 		}
 
-		if (this.isModal) {
+		if (this.isModal && !this.shouldHideBackdrop) {
 			// create static area item ref for block layer
 			this.getStaticAreaItemDomRef();
 			this._blockLayerHidden = false;
@@ -430,6 +431,15 @@ class Popup extends UI5Element {
 	get isModal() {} // eslint-disable-line
 
 	/**
+	 * Implement this getter with relevant logic in order to hide the block layer (f.e. based on a public property)
+	 *
+	 * @protected
+	 * @abstract
+	 * @returns {boolean}
+	 */
+	get shouldHideBackdrop() {} // eslint-disable-line
+
+	/**
 	 * Return the ID of an element in the shadow DOM that is going to label this popup
 	 *
 	 * @protected
@@ -454,6 +464,10 @@ class Popup extends UI5Element {
 	 */
 	get _ariaLabel() {
 		return this.ariaLabel || undefined;
+	}
+
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
 	}
 
 	get styles() {
