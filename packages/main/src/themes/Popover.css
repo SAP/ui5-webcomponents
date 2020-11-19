@@ -39,6 +39,18 @@
 	margin: 0.1875rem 0 0 -0.375rem;
 }
 
+:host([actual-placement-type="Left"]) [dir=rtl] .ui5-popover-arrow:after {
+	margin: .1875rem .25rem 0 0;
+}
+
+:host([actual-placement-type="Bottom"]) [dir=rtl] .ui5-popover-arrow:after {
+	margin: .1875rem .125rem 0 0;
+}
+
+:host([actual-placement-type="Top"]) [dir=rtl] .ui5-popover-arrow:after {
+	margin: -0.4375rem .125rem 0 0
+}
+
 /* pointing downward arrow */
 :host([actual-placement-type="Top"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
@@ -62,6 +74,11 @@
 :host(:not([actual-placement-type])) .ui5-popover-arrow:after,
 :host([actual-placement-type="Right"]) .ui5-popover-arrow:after {
 	margin: 0.125rem 0 0 0.25rem;
+}
+
+:host(:not([actual-placement-type])) [dir=rtl] .ui5-popover-arrow:after,
+:host([actual-placement-type="Right"]) [dir=rtl] .ui5-popover-arrow:after {
+	margin: .1875rem -.375rem 0 0;
 }
 
 :host([no-arrow]) .ui5-popover-arrow {
