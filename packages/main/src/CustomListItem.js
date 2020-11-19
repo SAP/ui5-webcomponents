@@ -53,6 +53,22 @@ class CustomListItem extends ListItem {
 		return [ListItem.styles, customListItemCss];
 	}
 
+	_onkeydown(event) {
+		if (!this.focused) {
+			return;
+		}
+
+		super._onkeydown(event);
+	}
+
+	_onkeyup(event) {
+		if (!this.focused) {
+			return;
+		}
+
+		super._onkeyup(event);
+	}
+
 	get classes() {
 		const result = super.classes;
 		result.main["ui5-custom-li-root"] = true;
