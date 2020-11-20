@@ -3,6 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+
 import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
 // Styles
@@ -300,6 +302,10 @@ class SliderBase extends UI5Element {
 	 * @protected
 	 */
 	handleDownBase(event, min, max) {
+		if (isPhone() && this.showTooltip) {
+			this._tooltipVisibility = "visible";
+		}
+
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
 		this._moveEventType = !this._moveEventType ? SliderBase.MOVE_EVENT_MAP[event.type] : this._moveEventType;
 
@@ -309,7 +315,6 @@ class SliderBase extends UI5Element {
 		this._boundingClientRect = this.getBoundingClientRect();
 		const newValue = SliderBase.getValueFromInteraction(event, this.step, min, max, this._boundingClientRect, this.directionStart);
 
-		this._valueOnInteractionStart = newValue;
 		return newValue;
 	}
 
@@ -319,16 +324,15 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	handleUpBase() {
-		if (this._valueOnInteractionStart !== this.value) {
-			this.fireEvent("change");
+	handleUpBase(valueType) {
+		if (isPhone() && this.showTooltip) {
+			this._tooltipVisibility = "hidden";
 		}
 
 		SliderBase.UP_EVENTS.forEach(upEventType => window.removeEventListener(upEventType, this._upHandler));
 		window.removeEventListener(this._moveEventType, this._moveHandler);
 
 		this._moveEventType = null;
-		this._valueOnInteractionStart = null;
 	}
 
 	/**
@@ -401,7 +405,7 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Computes the new value (in %) from the pageX position of the cursor.
-	 * Returns the value with rounded to a precision of at most 2 digits after decimal point.
+	 * Returns the value rounded to a precision of at most 2 digits after decimal point.
 	 *
 	 * @protected
 	 */
@@ -631,10 +635,6 @@ class SliderBase extends UI5Element {
 	 */
 	get _effectiveStep() {
 		let step = this.step;
-
-		if (step === 0) {
-			return;
-		}
 
 		if (step < 0) {
 			step = Math.abs(step);

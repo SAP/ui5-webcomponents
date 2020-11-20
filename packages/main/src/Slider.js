@@ -120,6 +120,7 @@ class Slider extends SliderBase {
 		}
 
 		const newValue = this.handleDownBase(event, this._effectiveMin, this._effectiveMax);
+		this._valueOnInteractionStart = this.value;
 
 		// Do not yet update the Slider if press is over a handle. It will be updated if the user drags the mouse.
 		if (!this._isHandlePressed(this.constructor.getPageXValueFromEvent(event))) {
@@ -153,7 +154,12 @@ class Slider extends SliderBase {
 	 * @private
 	 */
 	_handleUp(event) {
+		if (this._valueOnInteractionStart !== this.value) {
+			this.fireEvent("change");
+		}
+
 		this.handleUpBase();
+		this._valueOnInteractionStart = null;
 	}
 
 	/** Determines if the press is over the handle
