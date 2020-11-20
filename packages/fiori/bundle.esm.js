@@ -15,6 +15,7 @@ import SideNavigationItem from "./dist/SideNavigationItem.js";
 import SideNavigationSubItem from "./dist/SideNavigationSubItem.js";
 import ShellBar from "./dist/ShellBar.js";
 import ShellBarItem from "./dist/ShellBarItem.js";
+import Timeline from "./dist/Timeline.js";
 import UploadCollection from "./dist/UploadCollection.js";
 import UploadCollectionItem from "./dist/UploadCollectionItem.js";
 import NotificationListItem from "./dist/NotificationListItem.js"

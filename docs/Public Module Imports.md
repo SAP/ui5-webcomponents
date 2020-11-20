@@ -64,8 +64,6 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Table Cell               | `ui5-table-cell`     | `import "@ui5/webcomponents/dist/TableCell.js";`           |
 | Textarea                 | `ui5-textarea`       | `import "@ui5/webcomponents/dist/TextArea.js";`            |
 | TimePicker               | `ui5-time-picker`    | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
-| Timeline                 | `ui5-timeline`       | `import "@ui5/webcomponents/dist/Timeline.js";`            |
-| Timeline Item            | `ui5-timeline-item`  | comes with `ui5-timeline`                                  |
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toast                    | `ui5-toast`          | `import "@ui5/webcomponents/dist/Toast.js";`               |
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
@@ -145,6 +143,8 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Notification List Item       | `ui5-li-notifcation`               | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`       |
 | Notification Group List Item | `ui5-li-notification-group`        | `import "@ui5/webcomponents-fiori/dist/NotifcationListGroupItem.js";`  |
 | Notification Overflow Action | `ui5-notification-overflow-action` | `import "@ui5/webcomponents-fiori/dist/NotificationOverflowAction.js";`|
+| Timeline                     | `ui5-timeline`                     | `import "@ui5/webcomponents-fiori/dist/Timeline.js";`                  |
+| Timeline Item                | `ui5-timeline-item`                | comes with `ui5-timeline`                                              |
 | Upload Collection            | `ui5-upload-collection`            | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`          |
 | Upload Collection Item       | `ui5-upload-collection-item`       | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`      |
 | Wizard                       | `ui5-wizard`                       | `import "@ui5/webcomponents-fiori/dist/Wizard.js";`                    |
