@@ -2305,6 +2305,19 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          hideBackdrop
+                            <br>
+                            <code>hide-backdrop</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the block layer will be shown if modal property is set to true.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.10</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           horizontalAlign
                             <br>
                             <code>horizontal-align</code>
@@ -2315,7 +2328,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Determines the horizontal alignment of the <code>ui5-popover</code>. <br><br> Available options are: <ul> <li><code>Center</code></li> <li><code>Left</code></li> <li><code>Right</code></li> <li><code>Stretch</code></li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           modal
                             <br>
@@ -2326,7 +2339,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Defines whether the <code>ui5-popover</code> should close when clicking/tapping outside of the popover. If enabled, it blocks any interaction with the background.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           noArrow
                             <br>
@@ -2338,7 +2351,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Determines whether the <code>ui5-popover</code> arrow is hidden.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           placementType
                             <br>
@@ -2350,7 +2363,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Determines on which side the <code>ui5-popover</code> is placed at. <br><br> Available options are: <ul> <li><code>Left</code></li> <li><code>Right</code></li> <li><code>Top</code></li> <li><code>Bottom</code></li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           verticalAlign
                             <br>
@@ -2362,7 +2375,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Determines the vertical alignment of the <code>ui5-popover</code>. <br><br> Available options are: <ul> <li><code>Center</code></li> <li><code>Top</code></li> <li><code>Bottom</code></li> <li><code>Stretch</code></li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           _ariaLabel
                             <br>
@@ -2374,7 +2387,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Ensures ariaLabel is never null or empty string
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           _ariaLabelledBy
                             <br>
@@ -2386,7 +2399,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Return the ID of an element in the shadow DOM that is going to label this popup
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           _ariaModal
                             <br>
@@ -2398,7 +2411,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Return the value for aria-modal for this popup
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           initialFocus
                             <br>
@@ -2410,7 +2423,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Defines the ID of the HTML Element, which will get the initial focus.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           isModal
                             <br>
@@ -2422,7 +2435,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             Implement this getter with relevant logic regarding the modality of the popup (e.g. based on a public property)
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           preventFocusRestore
                             <br>
@@ -2433,6 +2446,18 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines if the focus should be returned to the previously focused element, when the popup closes.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          shouldHideBackdrop
+                            <br>
+                            <code>should-hide-backdrop</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Implement this getter with relevant logic in order to hide the block layer (f.e. based on a public property)
                         </div>
                       </div>
             

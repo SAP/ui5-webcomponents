@@ -1,5 +1,5 @@
-commit 28dde4d682c3f6b170f4786cad0e9d9a6561fe78
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Nov 18 16:58:12 2020 +0200
+commit 0b948dd10fa6cded66bbc1e9378edbf26ca0c23c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Nov 20 10:22:27 2020 +0200
 
-    feat(docs): add playground sections info (#2487)
+    chore: fix typo in generateTypeAcessors (#2500)
