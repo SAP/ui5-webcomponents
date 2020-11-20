@@ -17,6 +17,6 @@ class CalendarType extends DataType {
 	}
 }
 
-CalendarType.generataTypeAcessors(CalendarTypes);
+CalendarType.generateTypeAcessors(CalendarTypes);
 
 export default CalendarType;

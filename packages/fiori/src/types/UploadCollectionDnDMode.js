@@ -44,6 +44,6 @@ class UploadCollectionDnDOverlayMode extends DataType {
 	}
 }
 
-UploadCollectionDnDOverlayMode.generataTypeAcessors(DndOverlayModes);
+UploadCollectionDnDOverlayMode.generateTypeAcessors(DndOverlayModes);
 
 export default UploadCollectionDnDOverlayMode;
