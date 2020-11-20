@@ -12,6 +12,6 @@ class CalendarSelection extends DataType {
 	}
 }
 
-CalendarSelection.generataTypeAcessors(CalendarSelections);
+CalendarSelection.generateTypeAcessors(CalendarSelections);
 
 export default CalendarSelection;

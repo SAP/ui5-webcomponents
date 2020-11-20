@@ -175,11 +175,11 @@ const metadata = {
  * The user can navigate to a particular date by:
  * <br>
  * <ul>
- * <li>Pressing over a month inside the <code>ui5-monthpicker</code> component</li>
- * <li>Pressing over an year inside the <code>ui5-yearpicker</code> component</li>
+ * <li>Pressing over a month inside the months view</li>
+ * <li>Pressing over an year inside the years view</li>
  * </ul>
  * <br>
- * The user can comfirm a date selection by pressing over a date inside the <code>ui5-daypicker</code> component.
+ * The user can comfirm a date selection by pressing over a date inside the days view.
  * <br><br>
  *
  * <h3>Keyboard Handling</h3>
@@ -226,7 +226,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-calendar
  * @public
- * @since 1.0.0-rc.10
+ * @since 1.0.0-rc.11
  */
 class Calendar extends UI5Element {
 	static get metadata() {
@@ -311,15 +311,13 @@ class Calendar extends UI5Element {
 	}
 
 	onAfterRendering() {
-		const header = this.shadowRoot.querySelector("ui5-calendar-header");
-		header.shadowRoot.querySelector("[data-sap-show-picker='Month']").setAttribute("tabindex", "-1");
-		header.shadowRoot.querySelector("[data-sap-show-picker='Year']").setAttribute("tabindex", "-1");
+		this.monthButton.setAttribute("tabindex", "-1");
+		this.yearButton.setAttribute("tabindex", "-1");
 
-		const dayPicker = this.shadowRoot.querySelector("ui5-daypicker");
 		const currentTimestamp = new CalendarDate(this._calendarDate, this._primaryCalendarType).valueOf() / 1000;
-		const newItemIndex = dayPicker._itemNav._getItems().findIndex(day => parseInt(day.timestamp) === currentTimestamp);
-		dayPicker._itemNav.currentIndex = newItemIndex;
-		dayPicker._itemNav.update();
+		const newItemIndex = this.dayPicker._itemNav._getItems().findIndex(day => parseInt(day.timestamp) === currentTimestamp);
+		this.dayPicker._itemNav.currentIndex = newItemIndex;
+		this.dayPicker._itemNav.update();
 	}
 
 	_refreshNavigationButtonsState() {
@@ -384,6 +382,30 @@ class Calendar extends UI5Element {
 				this._header._isNextButtonDisabled = false;
 			}
 		}
+	}
+
+	get dayPicker() {
+		return this.shadowRoot.querySelector("ui5-daypicker");
+	}
+
+	get monthPicker() {
+		return this.shadowRoot.querySelector("ui5-monthpicker");
+	}
+
+	get yearPicker() {
+		return this.shadowRoot.querySelector("ui5-yearpicker");
+	}
+
+	get header() {
+		return this.shadowRoot.querySelector("ui5-calendar-header");
+	}
+
+	get monthButton() {
+		return this.header.shadowRoot.querySelector("[data-sap-show-picker='Month']");
+	}
+
+	get yearButton() {
+		return this.header.shadowRoot.querySelector("[data-sap-show-picker='Year']");
 	}
 
 	get _timestamp() {
@@ -470,75 +492,75 @@ class Calendar extends UI5Element {
 		}
 
 		if (isTabNext(event)) {
-			const header = this.shadowRoot.querySelector("ui5-calendar-header");
-			const monthButton = header.shadowRoot.querySelector("[data-sap-show-picker='Month']");
-			const yearButton = 	header.shadowRoot.querySelector("[data-sap-show-picker='Year']");
-			const target = event.target;
-
-			if (target.tagName === "UI5-DAYPICKER" || target.tagName === "UI5-MONTHPICKER" || target.tagName === "UI5-YEARPICKER") {
-				if (monthButton.getAttribute("hidden") === null) {
-					monthButton.focus();
-				} else {
-					yearButton.focus();
-				}
-				event.preventDefault();
-			} else if (event.target.tagName === "UI5-CALENDAR-HEADER" && event.path[0].getAttribute("data-sap-show-picker") === "Month") {
-				yearButton.focus();
-				event.preventDefault();
-			} else {
-				this._setPickerCurrentTabindex(-1);
-			}
+			this._handleTabNext(event);
 		}
 
 		if (isTabPrevious(event)) {
-			const header = this.shadowRoot.querySelector("ui5-calendar-header");
-			if (event.target.tagName === "UI5-CALENDAR-HEADER" && event.path[0].getAttribute("data-sap-show-picker") === "Month") {
-				this._moveFocusToPickerContent();
-				event.preventDefault();
-			} else if (event.target.tagName === "UI5-CALENDAR-HEADER" && event.path[0].getAttribute("data-sap-show-picker") === "Year") {
-				const monthButton = header.shadowRoot.querySelector("[data-sap-show-picker='Month']");
-				if (monthButton.getAttribute("hidden") === null) {
-					monthButton.focus();
-				} else {
-					this._moveFocusToPickerContent();
-				}
-				event.preventDefault();
+			this._handleTabPrevous(event);
+		}
+	}
+
+	_handleTabNext(event) {
+		const target = event.target;
+
+		if (target.tagName === "UI5-DAYPICKER" || target.tagName === "UI5-MONTHPICKER" || target.tagName === "UI5-YEARPICKER") {
+			if (this.monthButton.getAttribute("hidden") === null) {
+				this.monthButton.focus();
+			} else {
+				this.yearButton.focus();
 			}
+			event.preventDefault();
+		} else if (target.tagName === "UI5-CALENDAR-HEADER" && event.path[0].getAttribute("data-sap-show-picker") === "Month") {
+			this.yearButton.focus();
+			event.preventDefault();
+		} else {
+			this._setPickerCurrentTabindex(-1);
+		}
+	}
+
+	_handleTabPrevous(event) {
+		const target = event.target;
+
+		if (target.tagName === "UI5-CALENDAR-HEADER" && event.path[0].getAttribute("data-sap-show-picker") === "Month") {
+			this._moveFocusToPickerContent();
+			event.preventDefault();
+		} else if (target.tagName === "UI5-CALENDAR-HEADER" && event.path[0].getAttribute("data-sap-show-picker") === "Year") {
+			if (this.monthButton.getAttribute("hidden") === null) {
+				this.monthButton.focus();
+			} else {
+				this._moveFocusToPickerContent();
+			}
+			event.preventDefault();
 		}
 	}
 
 	_moveFocusToPickerContent() {
 		if (!this._oMonth._hidden) {
-			this.shadowRoot.querySelector("ui5-daypicker")._itemNav.focusCurrent();
+			this.dayPicker._itemNav.focusCurrent();
 		} else if (!this._monthPicker._hidden) {
-			this.shadowRoot.querySelector("ui5-monthpicker")._itemNav.focusCurrent();
+			this.monthPicker._itemNav.focusCurrent();
 		} else {
-			this.shadowRoot.querySelector("ui5-yearpicker")._itemNav.focusCurrent();
+			this.yearPicker._itemNav.focusCurrent();
 		}
 	}
 
 	_onfocusout(event) {
-		const header = this.shadowRoot.querySelector("ui5-calendar-header");
-		header.shadowRoot.querySelector("[data-sap-show-picker='Month']").setAttribute("tabindex", "-1");
-		header.shadowRoot.querySelector("[data-sap-show-picker='Year']").setAttribute("tabindex", "-1");
+		this.monthButton.setAttribute("tabindex", "-1");
+		this.yearButton.setAttribute("tabindex", "-1");
 		this._setPickerCurrentTabindex(0);
 	}
 
 	_setPickerCurrentTabindex(index) {
-		const dayPicker = this.shadowRoot.querySelector("ui5-daypicker");
-		const monthPicker = this.shadowRoot.querySelector("ui5-monthpicker");
-		const yearPicker = this.shadowRoot.querySelector("ui5-yearpicker");
-
-		if (dayPicker) {
-			dayPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+		if (this.dayPicker) {
+			this.dayPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
 		}
 
-		if (monthPicker) {
-			monthPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+		if (this.monthPicker) {
+			this.monthPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
 		}
 
-		if (yearPicker) {
-			yearPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+		if (this.yearPicker) {
+			this.yearPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
 		}
 	}
 
@@ -581,16 +603,14 @@ class Calendar extends UI5Element {
 		let fistDayOfMonthIndex = -1;
 
 		// focus first day of the month
-		const dayPicker = this.shadowRoot.querySelector("[ui5-daypicker]");
-
-		dayPicker._getVisibleDays(targetDate).forEach((date, index) => {
+		this.dayPicker._getVisibleDays(targetDate).forEach((date, index) => {
 			if (date.getDate() === 1 && (fistDayOfMonthIndex === -1)) {
 				fistDayOfMonthIndex = index;
 			}
 		});
 
-		dayPicker._itemNav.currentIndex = fistDayOfMonthIndex;
-		dayPicker._itemNav.focusCurrent();
+		this.dayPicker._itemNav.currentIndex = fistDayOfMonthIndex;
+		this.dayPicker._itemNav.focusCurrent();
 	}
 
 	_handleSelectedYearChange(event) {
@@ -665,9 +685,8 @@ class Calendar extends UI5Element {
 		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
 
 		// focus first day of the month
-		const dayPicker = this.shadowRoot.querySelector("[ui5-daypicker]");
-		const currentMonthDate = dayPicker._calendarDate.setMonth(dayPicker._calendarDate.getMonth());
-		const lastMonthDate = dayPicker._calendarDate.setMonth(dayPicker._calendarDate.getMonth() - 1);
+		const currentMonthDate = this.dayPicker._calendarDate.setMonth(this.dayPicker._calendarDate.getMonth());
+		const lastMonthDate = this.dayPicker._calendarDate.setMonth(this.dayPicker._calendarDate.getMonth() - 1);
 
 		// set the date to last day of last month
 		currentMonthDate.setDate(-1);
@@ -679,7 +698,7 @@ class Calendar extends UI5Element {
 			return;
 		}
 
-		dayPicker._getVisibleDays(lastMonthDate).forEach((date, index) => {
+		this.dayPicker._getVisibleDays(lastMonthDate).forEach((date, index) => {
 			const isSameDate = currentMonthDate.getDate() === date.getDate();
 			const isSameMonth = currentMonthDate.getMonth() === date.getMonth();
 
@@ -692,10 +711,10 @@ class Calendar extends UI5Element {
 
 		if (lastDayOfMonthIndex !== -1) {
 			// find the DOM for the last day index
-			const lastDay = dayPicker.shadowRoot.querySelector(".ui5-dp-content").children[parseInt(lastDayOfMonthIndex / weekDaysCount) + 1].children[(lastDayOfMonthIndex % weekDaysCount)];
+			const lastDay = this.dayPicker.shadowRoot.querySelector(".ui5-dp-content").children[parseInt(lastDayOfMonthIndex / weekDaysCount) + 1].children[(lastDayOfMonthIndex % weekDaysCount)];
 
 			// update current item in ItemNavigation
-			dayPicker._itemNav.current = lastDayOfMonthIndex;
+			this.dayPicker._itemNav.current = lastDayOfMonthIndex;
 
 			// focus the item
 			lastDay.focus();
