@@ -136,6 +136,10 @@ class RangeSlider extends SliderBase {
 	 * @private
 	 */
 	_onmousedown(event) {
+		if (this.showTooltip) {
+			this._tooltipVisibility = "visible";
+		}
+
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
 		if (this.disabled || this._effectiveStep === 0) {
@@ -252,6 +256,10 @@ class RangeSlider extends SliderBase {
 			this.fireEvent("change");
 		}
 
+		if (this.showTooltip) {
+			this._tooltipVisibility = "hidden";
+		}
+
 		this._swapValues();
 		this.handleUpBase();
 
@@ -275,8 +283,8 @@ class RangeSlider extends SliderBase {
 	 * @private
 	 */
 	_pressTargetAndAffectedValue(clientX, value) {
-		const startHandle = this.shadowRoot.querySelector(".start-handle");
-		const endHandle = this.shadowRoot.querySelector(".end-handle");
+		const startHandle = this.shadowRoot.querySelector(".ui5-slider-handle--start");
+		const endHandle = this.shadowRoot.querySelector(".ui5-slider-handle--end");
 
 		// Check if the press point is in the bounds of any of the Range Slider handles
 		const handleStartDomRect = startHandle.getBoundingClientRect();

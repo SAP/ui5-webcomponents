@@ -113,6 +113,10 @@ class Slider extends SliderBase {
 	 * @private
 	 */
 	_onmousedown(event) {
+		if (this.showTooltip) {
+			this._tooltipVisibility = "visible";
+		}
+
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
 		if (this.disabled || this.step === 0) {
@@ -156,6 +160,10 @@ class Slider extends SliderBase {
 	_handleUp(event) {
 		if (this._valueOnInteractionStart !== this.value) {
 			this.fireEvent("change");
+		}
+
+		if (this.showTooltip) {
+			this._tooltipVisibility = "hidden";
 		}
 
 		this.handleUpBase();
