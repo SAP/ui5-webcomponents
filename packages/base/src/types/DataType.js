@@ -11,7 +11,7 @@ class DataType {
 	static isValid(value) {
 	}
 
-	static generataTypeAcessors(types) {
+	static generateTypeAcessors(types) {
 		Object.keys(types).forEach(type => {
 			Object.defineProperty(this, type, {
 				get() {

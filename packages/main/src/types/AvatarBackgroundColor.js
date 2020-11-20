@@ -99,6 +99,6 @@ class AvatarBackgroundColor extends DataType {
 	}
 }
 
-AvatarBackgroundColor.generataTypeAcessors(AvatarBackGroundColors);
+AvatarBackgroundColor.generateTypeAcessors(AvatarBackGroundColors);
 
 export default AvatarBackgroundColor;
