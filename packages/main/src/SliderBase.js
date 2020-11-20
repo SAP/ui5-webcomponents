@@ -3,6 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+
 import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
 // Styles
@@ -300,6 +302,10 @@ class SliderBase extends UI5Element {
 	 * @protected
 	 */
 	handleDownBase(event, min, max) {
+		if (isPhone() && this.showTooltip) {
+			this._tooltipVisibility = "visible";
+		}
+
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
 		this._moveEventType = !this._moveEventType ? SliderBase.MOVE_EVENT_MAP[event.type] : this._moveEventType;
 
@@ -319,6 +325,10 @@ class SliderBase extends UI5Element {
 	 * @protected
 	 */
 	handleUpBase(valueType) {
+		if (isPhone() && this.showTooltip) {
+			this._tooltipVisibility = "hidden";
+		}
+
 		SliderBase.UP_EVENTS.forEach(upEventType => window.removeEventListener(upEventType, this._upHandler));
 		window.removeEventListener(this._moveEventType, this._moveHandler);
 

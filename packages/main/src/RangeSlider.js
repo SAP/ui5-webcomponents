@@ -136,10 +136,6 @@ class RangeSlider extends SliderBase {
 	 * @private
 	 */
 	_onmousedown(event) {
-		if (this.showTooltip) {
-			this._tooltipVisibility = "visible";
-		}
-
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
 		if (this.disabled || this._effectiveStep === 0) {
@@ -254,10 +250,6 @@ class RangeSlider extends SliderBase {
 	_handleUp() {
 		if (this.startValue !== this._prevStartValue || this.endValue !== this._prevEndValue) {
 			this.fireEvent("change");
-		}
-
-		if (this.showTooltip) {
-			this._tooltipVisibility = "hidden";
 		}
 
 		this._swapValues();
