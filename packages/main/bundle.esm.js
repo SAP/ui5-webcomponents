@@ -80,7 +80,6 @@ import TableColumn from "./dist/TableColumn.js";
 import TableRow from "./dist/TableRow.js";
 import TableCell from "./dist/TableCell.js";
 import TextArea from "./dist/TextArea.js";
-import Timeline from "./dist/Timeline.js";
 import TimePicker from "./dist/TimePicker.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";

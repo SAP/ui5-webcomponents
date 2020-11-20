@@ -129,6 +129,6 @@ class FCLLayout extends DataType {
 	}
 }
 
-FCLLayout.generataTypeAcessors(FCLLayouts);
+FCLLayout.generateTypeAcessors(FCLLayouts);
 
 export default FCLLayout;
