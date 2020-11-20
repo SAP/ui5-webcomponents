@@ -7,7 +7,7 @@ describe("Testing Range Slider interactions", () => {
 		browser.setWindowSize(1257, 2000);
 
 		const rangeSlider = browser.$("#range-slider-tickmarks");
-		const startHandle = rangeSlider.shadow$(".ui5-slider-handle.start-handle");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
 
 		assert.strictEqual(startHandle.getAttribute("style"), "left: 0%;", "Initially if no value is set, the Range Slider start-handle is at the beginning of the Range Slider");
 
@@ -28,7 +28,7 @@ describe("Testing Range Slider interactions", () => {
 
 	it("Changing the endValue is reflected", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks");
-		const endHandle = rangeSlider.shadow$(".ui5-slider-handle.end-handle");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
 
 		assert.strictEqual(endHandle.getAttribute("style"), "left: 50%;", "Range Slider end-handle is should be 50% from the start the Range Slider");
 		rangeSlider.setProperty("endValue", 10);
@@ -67,8 +67,8 @@ describe("Testing Range Slider interactions", () => {
 
 	it("Dragging the selected range should change both values and handles", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks");
-		const startHandle = rangeSlider.shadow$(".ui5-slider-handle.start-handle");
-		const endHandle = rangeSlider.shadow$(".ui5-slider-handle.end-handle");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
 
 		rangeSlider.dragAndDrop({ x: 100, y: 1 });
 
@@ -78,8 +78,8 @@ describe("Testing Range Slider interactions", () => {
 
 	it("Dragging the start-handle pass the end-handle should swap the values", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks");
-		const startHandle = rangeSlider.shadow$(".ui5-slider-handle.start-handle");
-		const endHandle = rangeSlider.shadow$(".ui5-slider-handle.end-handle");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
 
 		rangeSlider.setProperty("endValue", 9);
 
@@ -91,8 +91,8 @@ describe("Testing Range Slider interactions", () => {
 
 	it("Dragging the whole range selection should always keep the initially selected range and be within min/max values", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks");
-		const startHandle = rangeSlider.shadow$(".ui5-slider-handle.start-handle");
-		const endHandle = rangeSlider.shadow$(".ui5-slider-handle.end-handle");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
 
 		rangeSlider.setProperty("endValue", 30);
 
@@ -127,12 +127,12 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 	it("Range Slider tooltips are displayed showing the current value", () => {
 		const rangeSlider = browser.$("#basic-range-slider-with-tooltip");
-		const rangeSliderStartTooltip = rangeSlider.shadow$(".ui5-slider-tooltip.start-tooltip");
+		const rangeSliderStartTooltip = rangeSlider.shadow$(".ui5-slider-tooltip--start");
 		const rangeSliderStartTooltipValue = rangeSliderStartTooltip.shadow$(".ui5-slider-tooltip-value");
-		const rangeSliderEndTooltip = rangeSlider.shadow$(".ui5-slider-tooltip.end-tooltip");
+		const rangeSliderEndTooltip = rangeSlider.shadow$(".ui5-slider-tooltip--end");
 		const rangeSliderEndTooltipValue = rangeSliderEndTooltip.shadow$(".ui5-slider-tooltip-value");
-		const startHandle = rangeSlider.shadow$(".ui5-slider-handle.start-handle");
-		const endHandle = rangeSlider.shadow$(".ui5-slider-handle.end-handle");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
 
 		rangeSlider.moveTo();
 
@@ -202,8 +202,8 @@ describe("Properties synchronization and normalization", () => {
 describe("Testing resize handling and RTL support", () => {
 	it("Testing RTL support", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
-		const startHandle = rangeSlider.shadow$(".ui5-slider-handle.start-handle");
-		const endHandle = rangeSlider.shadow$(".ui5-slider-handle.end-handle");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
 
 		rangeSlider.setAttribute("dir", "rtl");
 		rangeSlider.setProperty("min", 0);
