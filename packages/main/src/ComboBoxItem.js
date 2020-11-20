@@ -19,6 +19,14 @@ const metadata = {
 		 * @public
 		 */
 		text: { type: String },
+		/**
+		 * Defines the additional text of the <code>ui5-cb-item</code>.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		additionalText: { type: String },
 	},
 	slots: {
 		//
