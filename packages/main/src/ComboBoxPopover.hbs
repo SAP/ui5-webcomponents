@@ -70,11 +70,11 @@
 		{{#each _filteredItems}}
 			<ui5-li
 				type="Active"
+				.info={{this.additionalText}}
 				._tabIndex={{itemTabIndex}}
 				.mappedItem={{this}}
 				?selected={{this.selected}}
 				?focused={{this.focused}}
-				info={{this.additionalText}}
 			>
 				{{this.text}}
 			</ui5-li>
