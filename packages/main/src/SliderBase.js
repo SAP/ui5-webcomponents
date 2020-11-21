@@ -113,7 +113,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-range-slider</code>.
+		 * Defines the text of the <code>slider</code>.
 		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
@@ -509,8 +509,6 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Returns the start side of a direction - left for LTR, right for RTL
-	 *
-	 * @protected
 	 */
 	get directionStart() {
 		return this.effectiveDir === "rtl" ? "right" : "left";

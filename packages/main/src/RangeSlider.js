@@ -78,10 +78,9 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.RangeSlider
- * @extends sap.ui.webcomponents.main.SliderBase
+ * @extends SliderBase
  * @tagname ui5-range-slider
  * @since 1.0.0-rc.11
- * @appenddocs SliderBase
  * @public
  */
 class RangeSlider extends SliderBase {
