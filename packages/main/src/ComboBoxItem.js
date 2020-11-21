@@ -24,6 +24,7 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
+		 * @since 1.0.0-rc.11
 		 * @public
 		 */
 		additionalText: { type: String },
