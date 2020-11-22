@@ -47,6 +47,23 @@ describe("Attributes propagation", () => {
 		assert.strictEqual(textArea2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
 			"The aria-label is correctly set internally.");
 	});
+
+	it("Tests removing placeholder does not display null", () => {
+		const INITIAL_PLACEHOLDER = "Hello World";
+		const textarea = browser.$("#textareaWithPlaceholder");
+		const btn = browser.$("#buttonCleanPlaceholder");
+
+		// assert
+		assert.strictEqual(textarea.getProperty("placeholder"), INITIAL_PLACEHOLDER,
+			"The initial placeholder is set.");
+
+		// act
+		btn.click();
+
+		// assert
+		assert.strictEqual(textarea.getProperty("placeholder"), "",
+			"The placeholder is reset to empty string.");
+	});
 });
 
 describe("disabled and readonly textarea", () => {

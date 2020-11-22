@@ -31,4 +31,21 @@ describe("API", () => {
 		const input = fileUploader.shadow$("input");
 		assert.strictEqual(input.getProperty("accept"), ".txt,.docx", "Native input is has the rignt accept property.");
 	});
+
+	it("Tests removing placeholder does not display null", () => {
+		const INITIAL_PLACEHOLDER = "Hello World";
+		const fu = browser.$("#fuWithPlaceholder");
+		const btn = browser.$("#buttonCleanPlaceholder");
+
+		// assert
+		assert.strictEqual(fu.getProperty("placeholder"), INITIAL_PLACEHOLDER,
+			"The initial placeholder is set.");
+
+		// act
+		btn.click();
+
+		// assert
+		assert.strictEqual(fu.getProperty("placeholder"), "",
+			"The placeholder is reset to empty string.");
+	});
 });

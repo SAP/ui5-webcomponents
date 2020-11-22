@@ -333,6 +333,23 @@ describe("Input general interaction", () => {
 		assert.strictEqual(parseFloat(input.getProperty("value")).toPrecision(3), "1.22", "Value is not lost");
 	});
 
+	it("Tests removing placeholder does not display null", () => {
+		const INITIAL_PLACEHOLDER = "Hello World";
+		const input = browser.$("#inputWithPlaceholder");
+		const btn = browser.$("#buttonCleanPlaceholder");
+
+		// assert
+		assert.strictEqual(input.getProperty("placeholder"), INITIAL_PLACEHOLDER,
+			"The initial placeholder is set.");
+
+		// act
+		btn.click();
+
+		// assert
+		assert.strictEqual(input.getProperty("placeholder"), "",
+			"The placeholder is reset to empty string.");
+	});
+
 	it("fires suggestion-item-preview", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Input_quickview.html");
 
