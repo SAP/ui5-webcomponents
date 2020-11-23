@@ -13,6 +13,8 @@ const components = [];
  // Add new components here
 const newComponents = [
 	"MultiInput",
+	"RangeSlider",
+	"Slider",
 	"Wizard",
 ];
 
