@@ -211,23 +211,25 @@ class DateRangePicker extends DatePicker {
 		}
 		this.valueState = ValueState.None;
 
-		const firstDate = this.getFormat().parse(dates[0]);
-		const secondDate = this.getFormat().parse(dates[1]);
+		let firstDate = this.getFormat().parse(dates[0]);
+		let lastDate;
 
-		this._firstDateTimestamp = Date.UTC(firstDate.getFullYear(), firstDate.getMonth(), firstDate.getDate(), firstDate.getHours()) / 1000;
-		this._lastDateTimestamp = Date.UTC(secondDate.getFullYear(), secondDate.getMonth(), secondDate.getDate(), secondDate.getHours()) / 1000;
+		if (dates.length > 1) {
+			lastDate = this.getFormat().parse(dates[1]);
 
-		if (this._firstDateTimestamp > this._lastDateTimestamp) {
-			const temp = this._firstDateTimestamp;
-			this._firstDateTimestamp = this._lastDateTimestamp;
-			this._lastDateTimestamp = temp;
+			if (firstDate > lastDate) {
+				const temp = firstDate;
+				firstDate = lastDate;
+				lastDate = temp;
+			}
+			this._lastDateTimestamp = CalendarDate.fromLocalJSDate(lastDate, this._primaryCalendarType).valueOf() / 1000;
 		}
-
+		this._firstDateTimestamp = CalendarDate.fromLocalJSDate(firstDate, this._primaryCalendarType).valueOf() / 1000;
 		this._calendar.selectedDates = this.dateIntervalArrayBuilder(this._firstDateTimestamp * 1000, this._lastDateTimestamp * 1000);
 
-		this.value = this._formatValue(firstDate.valueOf() / 1000, secondDate.valueOf() / 1000);
+		this.value = this._formatValue(firstDate, lastDate);
 		this.realValue = this.value;
-		this._prevValue = this.realValue;
+		this._prevValue = this.value;
 	}
 
 	_changeCalendarSelection(focusTimestamp) {
@@ -430,7 +432,7 @@ class DateRangePicker extends DatePicker {
 			lastDate = this._changeDateValue(lastDate, forward, years, months, days, step);
 		}
 
-		this.value = this._formatValue(firstDate.valueOf() / 1000, lastDate.valueOf() / 1000);
+		this.value = this._formatValue(firstDate, lastDate);
 
 		await RenderScheduler.whenFinished();
 		// Return the caret on the previous position after rendering
@@ -444,7 +446,7 @@ class DateRangePicker extends DatePicker {
 		const innerInput = this.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
 		const caretPos = this._getCaretPosition(innerInput);
 
-		this._confirmInput();
+		this._setValue(this.value);
 
 		await RenderScheduler.whenFinished();
 		// Return the caret on the previous position after rendering
@@ -452,29 +454,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	_onfocusout() {
-		this._confirmInput();
-	}
-
-	_confirmInput() {
-		const emptyValue = this.value === "";
-
-		if (emptyValue) {
-			return;
-		}
-
-		const dates = this._splitValueByDelimiter(this.value);
-		let firstDate = this.getFormat().parse(dates[0]);
-		let lastDate = this.getFormat().parse(dates[1]);
-
-		if (firstDate > lastDate) {
-			const temp = firstDate;
-			firstDate = lastDate;
-			lastDate = temp;
-		}
-
-		const newValue = firstDate && lastDate && this._formatValue(firstDate.valueOf() / 1000, lastDate.valueOf() / 1000);
-
-		this._setValue(newValue);
+		this._setValue(this.value);
 	}
 
 	/**
@@ -554,28 +534,28 @@ class DateRangePicker extends DatePicker {
 
 		// Collect both dates and merge them into one
 		if (this._firstDateTimestamp !== this._lastDateTimestamp || this._oneTimeStampSelected) {
-			this.value = this._formatValue(calStartDate.toLocalJSDate().valueOf() / 1000, calEndDate.toLocalJSDate().valueOf() / 1000);
+			this.value = this._formatValue(calStartDate.toLocalJSDate(), calEndDate.toLocalJSDate());
 		}
 
-		this.realValue = this._formatValue(calStartDate.toLocalJSDate().valueOf() / 1000, calEndDate.toLocalJSDate().valueOf() / 1000);
+		this.realValue = this._formatValue(calStartDate.toLocalJSDate(), calEndDate.toLocalJSDate());
 		this._prevValue = this.realValue;
 	}
 
 	/**
 	 * Combines the start and end dates of a range into a formated string
 	 *
-	 * @param {int} firstDateValue locale start date timestamp
-	 * @param {int} lastDateValue locale end date timestamp
+	 * @param {int} firstDate locale start date
+	 * @param {int} lastDate locale end date
 	 * @returns {string} formated start to end date range
 	 */
-	_formatValue(firstDateValue, lastDateValue) {
+	_formatValue(firstDate, lastDate) {
 		let value = "";
 		const delimiter = this.delimiter,
 			format = this.getFormat(),
-			firstDateString = format.format(new Date(firstDateValue * 1000)),
-			lastDateString = format.format(new Date(lastDateValue * 1000));
+			firstDateString = format.format(firstDate),
+			lastDateString = lastDate && format.format(lastDate);
 
-		if (firstDateValue) {
+		if (firstDate) {
 			if (delimiter && delimiter !== "" && lastDateString) {
 				value = firstDateString.concat(" ", delimiter, " ", lastDateString);
 			} else {

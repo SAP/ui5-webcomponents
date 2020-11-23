@@ -156,7 +156,6 @@ describe("DateRangePicker general interaction", () => {
 		browser.keys("Jul 17, 2020 @ Jul 16, 2020");
 
 		browser.keys("Enter");
-		browser.keys("Enter");
 		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 17, 2020");
 	});
 
