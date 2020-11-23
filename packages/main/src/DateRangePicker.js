@@ -472,7 +472,7 @@ class DateRangePicker extends DatePicker {
 			lastDate = temp;
 		}
 
-		const newValue = this._formatValue(firstDate.valueOf() / 1000, lastDate.valueOf() / 1000);
+		const newValue = firstDate && lastDate && this._formatValue(firstDate.valueOf() / 1000, lastDate.valueOf() / 1000);
 
 		this._setValue(newValue);
 	}
