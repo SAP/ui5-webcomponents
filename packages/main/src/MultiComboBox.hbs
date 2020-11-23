@@ -1,6 +1,4 @@
 <div class="ui5-multi-combobox-root"
-	@focusin={{rootFocusIn}}
-	@focusout={{rootFocusOut}}
 >
 	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{nMoreCountText}}</span>
 
@@ -15,6 +13,7 @@
 		@ui5-show-more-items-press="{{_showMorePopover}}"
 		@ui5-token-delete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
+		@focusin="{{_tokenizerFocusIn}}"
 		@click={{_click}}
 		@keydown="{{_onTokenizerKeydown}}"
 		?expanded="{{_tokenizerExpanded}}"
@@ -46,6 +45,8 @@
 		@keydown="{{_onkeydown}}"
 		@keyup="{{_onkeyup}}"
 		@click={{_click}}
+		@focusin={{inputFocusIn}}
+		@focusout={{inputFocusOut}}
 		role="combobox"
 		aria-haspopup="listbox"
 		aria-expanded="{{open}}"
@@ -63,7 +64,8 @@
 			input-icon
 			slot="icon"
 			tabindex="-1"
-			@click={{togglePopover}}
+			@click="{{togglePopover}}"
+			@mousedown="{{_onIconMousedown}}"
 			?pressed="{{open}}"
 			dir="{{effectiveDir}}"
 			accessible-name="{{_iconAccessibleNameText}}"

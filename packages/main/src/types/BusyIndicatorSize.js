@@ -42,6 +42,6 @@ class BusyIndicatorSize extends DataType {
 	}
 }
 
-BusyIndicatorSize.generataTypeAcessors(BusyIndicatorSizes);
+BusyIndicatorSize.generateTypeAcessors(BusyIndicatorSizes);
 
 export default BusyIndicatorSize;

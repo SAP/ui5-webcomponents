@@ -98,7 +98,7 @@ describe("General interaction", () => {
 
 		// act
 		input.keys("u");
-		
+
 		// assert
 		listItems = popover.$("ui5-list").$$("ui5-li");
 		assert.strictEqual(listItems.length, 2, "Items should be 2");
@@ -271,5 +271,59 @@ describe("General interaction", () => {
 		input.keys("a");
 		listItems = popover.$("ui5-list").$$("ui5-li");
 		assert.notOk(popover.opened, "Popover should be closed when no match");
+	});
+
+	it ("Tests selection-change event and its parameters", () => {
+		const combo = $("#combo");
+		const label = $("#selection-change-event-result");
+		const arrow = combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = popover.$("ui5-list").$$("ui5-li");
+
+		arrow.click();
+
+		const listItem = listItems[8];
+
+		listItem.click();
+
+		assert.strictEqual(label.getText(), listItem.shadow$(".ui5-li-title").getText(), "event is fired correctly");
+	});
+
+	it ("Tests focused property when clicking on the arrow", () => {
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+
+		const combo = $("#combo");
+		const arrow = combo.shadow$("[input-icon]");
+
+		assert.ok(!combo.getProperty("focused"), "property focused should be false");
+
+		arrow.click();
+
+		assert.ok(combo.getProperty("focused"), "property focused should be true");
+	});
+
+	it ("Tests focused property when clicking on the input", () => {
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+
+		const combo = $("#combo");
+		const input = combo.shadow$("#ui5-combobox-input");
+
+		assert.ok(!combo.getProperty("focused"), "property focused should be false");
+
+		input.click();
+
+		assert.ok(combo.getProperty("focused"), "property focused should be true");
+	});
+	
+	it ("Tests Combo with two-column layout", () => {
+		const combo = $("#combobox-two-column-layout");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combobox-two-column-layout");
+		const arrow = combo.shadow$("[input-icon]");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const listItem = popover.$("ui5-list").$$("ui5-li")[0];
+
+		arrow.click();
+		assert.strictEqual(listItem.shadow$(".ui5-li-info").getText(), "DZ", "Additional item text should be displayed");
 	});
 });

@@ -17,10 +17,14 @@
 		</ui5-icon>
 	</div>
 
-	<div class="ui5-calheader-midcontainer">
+	<div
+		class="ui5-calheader-midcontainer"
+		@keydown="{{_onMidContainerKeyDown}}"
+	>
 		<div
 			id="{{_id}}-btn1"
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+			?hidden="{{_isMonthButtonHidden}}"
 			type="{{_btn1.type}}"
 			tabindex="0"
 			@click={{_showMonthPicker}}

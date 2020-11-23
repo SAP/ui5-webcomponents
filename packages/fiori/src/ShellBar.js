@@ -10,10 +10,10 @@ import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/search.js";
-import "@ui5/webcomponents-icons/dist/icons/bell.js";
-import "@ui5/webcomponents-icons/dist/icons/overflow.js";
-import "@ui5/webcomponents-icons/dist/icons/grid.js";
+import "@ui5/webcomponents-icons/dist/search.js";
+import "@ui5/webcomponents-icons/dist/bell.js";
+import "@ui5/webcomponents-icons/dist/overflow.js";
+import "@ui5/webcomponents-icons/dist/grid.js";
 
 import {
 	SHELLBAR_LABEL,

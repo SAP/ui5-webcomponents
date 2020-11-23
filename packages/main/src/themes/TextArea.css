@@ -8,7 +8,7 @@
 	width: 100%;
 	color: var(--sapField_TextColor);
 	font-size: var(--sapFontSize);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-style: normal;
 	border-color: var(--sapField_BorderColor);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
@@ -38,6 +38,7 @@
 	outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -4px;
 }
+
 
 .ui5-textarea-root {
 	height: 100%;
@@ -90,7 +91,7 @@
 	word-break: break-all;
 	padding: var(--_ui5_textarea_padding);
 	font-size: var(--sapFontSize);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	white-space: pre-wrap;
 	box-sizing: border-box;
 }
@@ -110,21 +111,25 @@
 
 .ui5-textarea-inner::-webkit-input-placeholder {
 	/* Chrome/Opera/Safari */
+	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
 .ui5-textarea-inner::-moz-placeholder {
 	/* Firefox 19+ */
+	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
 .ui5-textarea-inner:-ms-input-placeholder {
 	/* IE 10+ */
+	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
 .ui5-textarea-inner:-moz-placeholder {
 	/* Firefox 18- */
+	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
@@ -138,7 +143,7 @@
 
 :host([value-state]:not([value-state="None"])) .ui5-textarea-inner,
 :host([exceeding]) .ui5-textarea-inner {
-	border-width: var(--_ui5_textarea_error_warning_border_width);
+	border-width: var(--_ui5_textarea_state_border_width);
 }
 
 :host([value-state="Error"]) .ui5-textarea-inner,
@@ -189,7 +194,7 @@
 
 :host([value-state="Information"]:not([readonly]):not([exceeding])) .ui5-textarea-inner {
 	background-color: var(--sapField_InformationBackground);
-	border-width: var(--_ui5_textarea_information_border_width);
+	border-width: var(--_ui5_textarea_state_border_width);
 }
 
 .ui5-textarea-exceeded-text {
@@ -197,6 +202,6 @@
 	align-self: flex-end;
 	padding: 0.125rem 0.125rem 0.5rem;
 	color: var(--sapContent_LabelColor);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
 }

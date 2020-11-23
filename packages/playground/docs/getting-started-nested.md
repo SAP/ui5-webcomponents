@@ -19,7 +19,7 @@ npm install @ui5/webcomponents
 
 ## Read the Docs
 
-Documentation and tutorials about UI5 Web Components can be found [here](https://sap.github.io/ui5-webcomponents/master/playground/docs)
+Documentation and tutorials about UI5 Web Components can be found [here](./docs/)
 
 ## Usage
 

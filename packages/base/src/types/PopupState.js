@@ -32,6 +32,6 @@ class PopupState extends DataType {
 	}
 }
 
-PopupState.generataTypeAcessors(PopupStates);
+PopupState.generateTypeAcessors(PopupStates);
 
 export default PopupState;

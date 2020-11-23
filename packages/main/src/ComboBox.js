@@ -4,8 +4,8 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isBackSpace,
@@ -297,6 +297,19 @@ const metadata = {
 		 * @public
 		 */
 		input: {},
+
+		/**
+		 * Fired when selection is changed by user interaction
+		 *
+		 * @event sap.ui.webcomponents.main.Combobox#selection-change
+		 * @param {HTMLElement} item item to be selected.
+		 * @public
+		 */
+		"selection-change": {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		},
 	},
 };
 
@@ -371,6 +384,7 @@ class ComboBox extends UI5Element {
 		this._initialRendering = true;
 		this._itemFocused = false;
 		this._tempFilterValue = "";
+		this._selectionChanged = false;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -385,7 +399,15 @@ class ComboBox extends UI5Element {
 		}
 
 		if (this._autocomplete && domValue !== "") {
-			this._autoCompleteValue(domValue);
+			const item = this._autoCompleteValue(domValue);
+
+			if (!this._selectionChanged && (item && !item.selected)) {
+				this.fireEvent("selection-change", {
+					item,
+				});
+
+				this._selectionChanged = false;
+			}
 		} else {
 			this._tempValue = domValue;
 		}
@@ -398,8 +420,8 @@ class ComboBox extends UI5Element {
 
 		if (this._isKeyNavigation && this.responsivePopover && this.responsivePopover.opened) {
 			this.focused = false;
-		} else {
-			this.focused = this === document.activeElement;
+		} else if (this.shadowRoot.activeElement) {
+			this.focused = this.shadowRoot.activeElement.id === "ui5-combobox-input";
 		}
 
 		this._initialRendering = false;
@@ -413,7 +435,7 @@ class ComboBox extends UI5Element {
 			this.inner.focus();
 		}
 
-		if (this.shouldClosePopover()) {
+		if (this.shouldClosePopover() && !isPhone()) {
 			this.responsivePopover.close(false, false, true);
 		}
 
@@ -434,13 +456,14 @@ class ComboBox extends UI5Element {
 			this.filterValue = this.value;
 		}
 
-		event.target.setSelectionRange(0, this.value.length);
+		!isPhone() && event.target.setSelectionRange(0, this.value.length);
 	}
 
 	_focusout() {
 		this.focused = false;
 
 		this._inputChange();
+		!isPhone() && this._closeRespPopover();
 	}
 
 	_afterOpenPopover() {
@@ -523,6 +546,10 @@ class ComboBox extends UI5Element {
 
 		this._filteredItems = this._filterItems(value);
 
+		if (isPhone()) {
+			return;
+		}
+
 		if (!this._filteredItems.length) {
 			this._closeRespPopover();
 		} else {
@@ -570,6 +597,12 @@ class ComboBox extends UI5Element {
 		this._isKeyNavigation = true;
 		this._itemFocused = true;
 		this.fireEvent("input");
+
+		this.fireEvent("selection-change", {
+			item: this._filteredItems[indexOfItem],
+		});
+
+		this._selectionChanged = true;
 	}
 
 	_keydown(event) {
@@ -582,6 +615,7 @@ class ComboBox extends UI5Element {
 
 		if (isEnter(event)) {
 			this._inputChange();
+			this._closeRespPopover();
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
@@ -629,6 +663,10 @@ class ComboBox extends UI5Element {
 				this.inner.setSelectionRange(0, this._tempValue.length);
 			}, 0);
 		}
+
+		if (matchingItems.length) {
+			return matchingItems[0];
+		}
 	}
 
 	_selectMatchingItem() {
@@ -645,8 +683,6 @@ class ComboBox extends UI5Element {
 			this.fireEvent("change");
 			this.inner.setSelectionRange(this.value.length, this.value.length);
 		}
-
-		this._closeRespPopover();
 	}
 
 	_itemMousedown(event) {
@@ -659,6 +695,14 @@ class ComboBox extends UI5Element {
 		this._tempValue = listItem.mappedItem.text;
 		this.filterValue = this._tempValue;
 
+		if (!listItem.mappedItem.selected) {
+			this.fireEvent("selection-change", {
+				item: listItem.mappedItem,
+			});
+
+			this._selectionChanged = true;
+		}
+
 		this._filteredItems.map(item => {
 			item.selected = (item === listItem.mappedItem);
 
@@ -666,6 +710,7 @@ class ComboBox extends UI5Element {
 		});
 
 		this._inputChange();
+		this._closeRespPopover();
 	}
 
 	_onItemFocus(event) {

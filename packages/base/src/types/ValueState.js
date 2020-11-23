@@ -17,6 +17,6 @@ class ValueState extends DataType {
 	}
 }
 
-ValueState.generataTypeAcessors(ValueStates);
+ValueState.generateTypeAcessors(ValueStates);
 
 export default ValueState;

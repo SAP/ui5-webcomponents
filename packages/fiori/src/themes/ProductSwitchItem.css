@@ -79,7 +79,7 @@
 }
 
 .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-heading {
-	font-size:var( --sapMFontHeader6Size);
+	font-size:var( --sapFontHeader6Size);
 	color:var(--sapGroup_TitleTextColor);
 }
 

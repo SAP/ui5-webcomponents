@@ -50,6 +50,6 @@ class PopoverVerticalAlign extends DataType {
 	}
 }
 
-PopoverVerticalAlign.generataTypeAcessors(PopoverVerticalAligns);
+PopoverVerticalAlign.generateTypeAcessors(PopoverVerticalAligns);
 
 export default PopoverVerticalAlign;

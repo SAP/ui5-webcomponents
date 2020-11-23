@@ -2,8 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import ButtonDesign from "./types/ButtonDesign.js";
@@ -41,6 +41,9 @@ const metadata = {
 			type: Boolean,
 		},
 		_isPrevButtonDisabled: {
+			type: Boolean,
+		},
+		_isMonthButtonHidden: {
 			type: Boolean,
 		},
 	},
@@ -128,6 +131,12 @@ class CalendarHeader extends UI5Element {
 			if (showPickerButton) {
 				this[`_show${showPickerButton}Picker`]();
 			}
+		}
+	}
+
+	_onMidContainerKeyDown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
 		}
 	}
 

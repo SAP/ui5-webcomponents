@@ -10,7 +10,7 @@
 	height: var(--_ui5_input_height);
 	color: var(--sapField_TextColor);
 	font-size: var(--sapFontSize);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-style: normal;
 	background-color: var(--sapField_Background);
 	border: 1px solid var(--sapField_BorderColor);
@@ -44,8 +44,6 @@
 	pointer-events: none;
 	background: var(--sapField_ReadOnly_Background);
 	border-color: var(--sapField_ReadOnly_BorderColor);
-	-webkit-text-fill-color: var(--sapContent_DisabledTextColor);
-	color: var(--sapContent_DisabledTextColor);
 }
 
 [inner-input] {
