@@ -63,7 +63,7 @@ const metadata = {
 		 * @public
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @since 1.0.0-rc.9
+		 * @since 1.0.0-rc.11
 		 */
 		wholeItemToggleable: {
 			type: Boolean,
