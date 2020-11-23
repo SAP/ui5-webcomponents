@@ -552,10 +552,10 @@ class DateRangePicker extends DatePicker {
 		let value = "";
 		const delimiter = this.delimiter,
 			format = this.getFormat(),
-			firstDateString = format.format(firstDate),
+			firstDateString = firstDate && format.format(firstDate),
 			lastDateString = lastDate && format.format(lastDate);
 
-		if (firstDate) {
+		if (firstDateString) {
 			if (delimiter && delimiter !== "" && lastDateString) {
 				value = firstDateString.concat(" ", delimiter, " ", lastDateString);
 			} else {
