@@ -166,6 +166,7 @@ class SliderBase extends UI5Element {
 			step: null,
 			min: null,
 			max: null,
+			labelInterval: null,
 		};
 	}
 
@@ -301,19 +302,25 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	handleDownBase(event, min, max) {
+	handleDownBase(event) {
+		const min = this._effectiveMin;
+		const max = this._effectiveMax;
+		const domRect = this.getBoundingClientRect();
+		const directionStart = this.directionStart;
+		const step = this._effectiveStep;
+		const newValue = SliderBase.getValueFromInteraction(event, step, min, max, domRect, directionStart);
+
 		if (isPhone() && this.showTooltip) {
 			this._tooltipVisibility = "visible";
 		}
 
+		// Mark start of a user interaction
+		this._isUserInteraction = true;
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
 		this._moveEventType = !this._moveEventType ? SliderBase.MOVE_EVENT_MAP[event.type] : this._moveEventType;
 
 		SliderBase.UP_EVENTS.forEach(upEventType => window.addEventListener(upEventType, this._upHandler));
 		window.addEventListener(this._moveEventType, this._moveHandler);
-
-		this._boundingClientRect = this.getBoundingClientRect();
-		const newValue = SliderBase.getValueFromInteraction(event, this.step, min, max, this._boundingClientRect, this.directionStart);
 
 		return newValue;
 	}
@@ -333,6 +340,7 @@ class SliderBase extends UI5Element {
 		window.removeEventListener(this._moveEventType, this._moveHandler);
 
 		this._moveEventType = null;
+		this._isUserInteraction = false;
 	}
 
 	/**
@@ -344,7 +352,9 @@ class SliderBase extends UI5Element {
 	updateValue(valueType, value) {
 		this[valueType] = value;
 		this.storePropertyState(valueType);
-		this.fireEvent("input");
+		if (this._isUserInteraction) {
+			this.fireEvent("input");
+		}
 	}
 
 	/**
@@ -446,7 +456,6 @@ class SliderBase extends UI5Element {
 		// Recalculate the tickmarks and labels and update the stored state.
 		if (this.isPropertyUpdated("min", "max", ...values)) {
 			this.storePropertyState("min", "max");
-			this._createLabels();
 
 			// Here the value props are changed programatically (not by user interaction)
 			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
@@ -456,6 +465,16 @@ class SliderBase extends UI5Element {
 				this.updateValue(valueType, normalizedValue);
 				this.storePropertyState(valueType);
 			});
+		}
+
+		// Labels must be updated if any of the min/max/step/labelInterval props are changed
+		if (this.labelInterval && this.showTickmarks) {
+			this._createLabels();
+		}
+
+		// Update the stored state for the labelInterval, if changed
+		if (this.isPropertyUpdated("labelInterval")) {
+			this.storePropertyState("labelInterval");
 		}
 	}
 

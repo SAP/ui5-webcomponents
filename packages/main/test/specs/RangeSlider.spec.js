@@ -170,6 +170,30 @@ describe("Properties synchronization and normalization", () => {
 		assert.strictEqual(rangeSlider.getProperty("step"), 1, "Step value should be its default value");
 	});
 
+	it("If a negative number is set to the step property its positive equivalent should be used as effective value", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
+
+		rangeSlider.setProperty("step", -7);
+
+		assert.strictEqual(rangeSlider.getProperty("step"), -7, "Step value should be a positive number");
+
+		rangeSlider.click();
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "The current value should be 'stepified' by 7");
+	});
+
+	it("If min property is set to a greater number than the max property their effective values should be swapped, their real ones - not", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
+
+		rangeSlider.setProperty("startValue", 2);
+		rangeSlider.setProperty("max", 10);
+		rangeSlider.setProperty("min", 100);
+
+		assert.strictEqual(rangeSlider.getProperty("min"), 100, "min property itself should not be normalized");
+		assert.strictEqual(rangeSlider.getProperty("max"), 10, "max property itself should not be normalized");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 10, "startValue property should be within the boundaries of the effective (swapped) min and max props");
+	});
+
 	it("Should keep the current values between the boundaries of min and max properties", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
 
@@ -196,6 +220,45 @@ describe("Properties synchronization and normalization", () => {
 
 		assert.strictEqual(rangeSlider.getProperty("startValue"), 14, "startValue should not be stepped to the next step (15)");
 		assert.strictEqual(rangeSlider.getProperty("endValue"), 24, "endValue should not be stepped to the next step (25)");
+	});	
+
+	it("If the step property or the labelInterval are changed, the tickmarks and labels must be updated also", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
+
+		rangeSlider.setProperty("max", 0);
+		rangeSlider.setProperty("min", 40);
+		rangeSlider.setProperty("step", 1);
+
+		assert.strictEqual(rangeSlider.getProperty("_labels").length, 21, "Labels must be 21 - 1 for every 2 tickmarks (and steps)");
+
+		rangeSlider.setProperty("step", 2);
+
+		assert.strictEqual(rangeSlider.getProperty("_labels").length, 11, "Labels must be 12 - 1 for every 2 tickmarks (and 4 current value points)");
+		
+		rangeSlider.setProperty("labelInterval", 4);
+
+		assert.strictEqual(rangeSlider.getProperty("_labels").length, 6, "Labels must be 6 - 1 for every 4 tickmarks (and 8 current value points)");
+	});
+});
+
+describe("Testing events", () => {
+
+	it("Should fire input event on use interaction and change event after user interaction finish", () => {
+		const rangeSlider = browser.$("#test-slider");
+		const eventResultRangeSlider = browser.$("#test-result-slider");
+
+		rangeSlider.click();
+
+		assert.strictEqual(eventResultRangeSlider.getProperty("endValue") , 4, "Both input event and change event are fired after user interaction");
+	});
+
+	it("Should not fire change event after user interaction is finished if the current value is the same as the one at the start of the action", () => {
+		const rangeSlider = browser.$("#test-slider");
+		const eventResultRangeSlider = browser.$("#test-result-slider");
+
+		rangeSlider.click();
+
+		assert.strictEqual(eventResultRangeSlider.getProperty("endValue") , 4, "Change event is not fired if the value is the same as before the start of the action");
 	});
 });
 

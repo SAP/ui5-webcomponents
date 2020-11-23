@@ -37,6 +37,7 @@
 	border: var(--_ui5_slider_progress_border);
 	border-radius: var(--_ui5_slider_progress_border_radius);
 	height: var(--_ui5_slider_inner_height);
+	position: relative;
 }
 
 .ui5-slider-progress {
@@ -53,7 +54,6 @@
 	width: 100%;
 	height: 1rem;
 	top: var(--_ui5_slider_tickmark_top);
-	z-index: -1;
 }
 
 .ui5-slider-handle {

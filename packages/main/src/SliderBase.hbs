@@ -7,10 +7,6 @@
 	dir="{{effectiveDir}}"
 >
 	<div class="ui5-slider-inner">
-		<div class="ui5-slider-progress-container">
-			<div class="ui5-slider-progress" style="{{styles.progress}}"></div>
-		</div>
-
 		{{#if step}}
 			{{#if showTickmarks}}
 				<div class="ui5-slider-tickmarks" style="{{styles.tickmarks}}"></div>
@@ -23,6 +19,10 @@
 				{{/if}}
 			{{/if}}
 		{{/if}}
+
+		<div class="ui5-slider-progress-container">
+			<div class="ui5-slider-progress" style="{{styles.progress}}"></div>
+		</div>
 		{{> handles}}
 	</div>
 </div>
