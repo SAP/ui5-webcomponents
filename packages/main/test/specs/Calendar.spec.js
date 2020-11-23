@@ -143,4 +143,13 @@ describe("Calendar general interaction", () => {
 
 		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
 	});
+
+	it("When month picker is shown the month button is hidden", () => {
+		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
+
+		browser.keys(["F4"]);
+		browser.keys('PageUp');
+
+		assert.ok(calendarHeader.shadow$(".ui5-calheader-middlebtn").getAttribute("hidden"), "The button for month is hidden");
+	});
 });

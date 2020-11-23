@@ -1,8 +1,6 @@
 :host {
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	min-width: 20rem;
+	min-height: 6rem;
 	box-shadow: var(--sapContent_Shadow3);
 }
 
@@ -37,5 +35,20 @@
 }
 
 .ui5-popup-content {
+	min-height: var(--_ui5_dialog_content_min_height);
 	flex: 1 1 auto;
+}
+
+.ui5-popup-resize-handle {
+	position: absolute;
+	bottom: -0.0625rem;
+	right: -0.25rem;
+	cursor: se-resize;
+	color: var(--_ui5_dialog_resize_handle_color);
+}
+
+.ui5-popup-resize-handle[dir=rtl] {
+	left: -0.25rem;
+	right: unset;
+	cursor: sw-resize;
 }

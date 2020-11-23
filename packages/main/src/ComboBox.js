@@ -4,8 +4,8 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isBackSpace,
@@ -394,8 +394,6 @@ class ComboBox extends UI5Element {
 		if (this._initialRendering) {
 			domValue = this.value;
 			this._filteredItems = this.items;
-		} else if (this.value !== this.filterValue) {
-			domValue = this.filterValue ? this.filterValue : this.value;
 		} else {
 			domValue = this.filterValue;
 		}
@@ -422,8 +420,8 @@ class ComboBox extends UI5Element {
 
 		if (this._isKeyNavigation && this.responsivePopover && this.responsivePopover.opened) {
 			this.focused = false;
-		} else {
-			this.focused = this === document.activeElement;
+		} else if (this.shadowRoot.activeElement) {
+			this.focused = this.shadowRoot.activeElement.id === "ui5-combobox-input";
 		}
 
 		this._initialRendering = false;
@@ -437,7 +435,7 @@ class ComboBox extends UI5Element {
 			this.inner.focus();
 		}
 
-		if (this.shouldClosePopover()) {
+		if (this.shouldClosePopover() && !isPhone()) {
 			this.responsivePopover.close(false, false, true);
 		}
 
@@ -458,13 +456,14 @@ class ComboBox extends UI5Element {
 			this.filterValue = this.value;
 		}
 
-		event.target.setSelectionRange(0, this.value.length);
+		!isPhone() && event.target.setSelectionRange(0, this.value.length);
 	}
 
 	_focusout() {
 		this.focused = false;
 
 		this._inputChange();
+		!isPhone() && this._closeRespPopover();
 	}
 
 	_afterOpenPopover() {
@@ -547,6 +546,10 @@ class ComboBox extends UI5Element {
 
 		this._filteredItems = this._filterItems(value);
 
+		if (isPhone()) {
+			return;
+		}
+
 		if (!this._filteredItems.length) {
 			this._closeRespPopover();
 		} else {
@@ -612,6 +615,7 @@ class ComboBox extends UI5Element {
 
 		if (isEnter(event)) {
 			this._inputChange();
+			this._closeRespPopover();
 		}
 
 		if (isShow(event) && !this.readonly && !this.disabled) {
@@ -679,8 +683,6 @@ class ComboBox extends UI5Element {
 			this.fireEvent("change");
 			this.inner.setSelectionRange(this.value.length, this.value.length);
 		}
-
-		this._closeRespPopover();
 	}
 
 	_itemMousedown(event) {
@@ -708,6 +710,7 @@ class ComboBox extends UI5Element {
 		});
 
 		this._inputChange();
+		this._closeRespPopover();
 	}
 
 	_onItemFocus(event) {

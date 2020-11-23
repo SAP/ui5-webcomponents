@@ -29,7 +29,5 @@
 
 .ui5-icon-root {
 	display:flex;
-	transform: scale(1, -1);
-	transform-origin: center;
 	outline: none;
 }

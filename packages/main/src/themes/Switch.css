@@ -70,7 +70,7 @@
 	min-width: 1.625rem;
 	padding: 0 0.125rem;
 	font-size: var(--sapFontSmallSize);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	text-transform: uppercase;
 	text-align: center;
 	color: var(--sapTextColor);
@@ -101,7 +101,8 @@
 	left: -var(--_ui5_switch_outline);
 	top: 0;
 	bottom: 0;
-	width: 100%;
+	left: 0;
+	right: 0;
 	border: var(--_ui5_switch_outline) dotted var(--sapContent_FocusColor);
 	pointer-events: none;
 }

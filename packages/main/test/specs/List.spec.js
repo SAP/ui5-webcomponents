@@ -8,7 +8,7 @@ describe("List Tests", () => {
 
 	it("List is rendered", () => {
 		const list = browser.$("ui5-list").shadow$(".ui5-list-root");
-		
+
 		assert.ok(list, "List is rendered");
 	});
 
@@ -79,7 +79,7 @@ describe("List Tests", () => {
 
 			return result.length;
 		});
-		
+
 		assert.strictEqual(listItemsLength, 3, "List items are rendered");
 	});
 
@@ -246,7 +246,7 @@ describe("List Tests", () => {
 		const listWithCustomHeader = $("#listWithCustomHeader");
 		const ulInternalHeader = listWithInternalHeader.shadow$(".ui5-list-ul");
 		const ulCustomHeader = listWithCustomHeader.shadow$(".ui5-list-ul");
-		
+
 		// assert: List with internal header
 		const listWithInternalHeaderId = listWithInternalHeader.getProperty("_id");
 		assert.strictEqual(ulInternalHeader.getAttribute("aria-label"),
@@ -262,5 +262,43 @@ describe("List Tests", () => {
 			EXPECTED_ARIA_LABEL_TXT, "aria-label is correct");
 		assert.strictEqual(ulCustomHeader.getAttribute("aria-labelledby"),
 			null, "aria-labelledby is not present");
+	});
+
+	it("tests title is updated, when initially empty", () => {
+		const btnChangeEmptyItem = $("#changeEmptyItem");
+		const emptyItem = $("#emptyItem");
+		const NEW_TEXT = "updated";
+		const assignedNodesBefore = browser.execute(() => {
+			return document.getElementById("emptyItem").shadowRoot.querySelector("slot").assignedNodes().length;
+		});
+
+		// assert default
+		assert.strictEqual(emptyItem.getProperty("innerHTML"), "",
+			"The value is empty string");
+		assert.strictEqual(assignedNodesBefore, 0,
+			"No slotted elements as no text is present.");
+
+		// act
+		btnChangeEmptyItem.click();	// update the item textContent
+
+		const assignedNodesAfter = browser.execute(() => {
+			return document.getElementById("emptyItem").shadowRoot.querySelector("slot").assignedNodes().length;
+		});
+
+		// assert
+		assert.strictEqual(emptyItem.getProperty("innerHTML"), NEW_TEXT, "The value is updated");
+		assert.strictEqual(assignedNodesAfter, 1, "The new text is slotted.");
+	});
+
+	it("tests events for ui5-li-custom", () => {
+		const button = $("#liBtn1");
+		const input = $("#customListItemEvents");
+
+		button.click();
+
+		browser.keys("Enter");
+		browser.keys("Space");
+
+		assert.strictEqual(input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
 	});
 });

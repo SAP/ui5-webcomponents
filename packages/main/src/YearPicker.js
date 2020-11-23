@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -20,6 +20,7 @@ import styles from "./generated/themes/YearPicker.css.js";
  */
 const metadata = {
 	tag: "ui5-yearpicker",
+	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -244,7 +245,8 @@ class YearPicker extends UI5Element {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
 	get _isPattern() {
@@ -362,9 +364,7 @@ class YearPicker extends UI5Element {
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
-			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
-			return calDate.valueOf();
+			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType).toUTCJSDate().valueOf();
 		}
 		return undefined;
 	}

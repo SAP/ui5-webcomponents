@@ -8,6 +8,7 @@
 @import "./CheckBox-parameters.css";
 @import "./DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
+@import "./Dialog-parameters.css";
 @import "../base/GroupHeaderListItem-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
@@ -26,7 +27,6 @@
 @import "./Table-parameters.css";
 @import "./TableRow-parameters.css";
 @import "./TextArea-parameters.css";
-@import "./TimelineItem-parameters.css";
 @import "../base/Title-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "./ToggleButton-parameters.css";
@@ -35,3 +35,4 @@
 @import "./Token-parameters.css";
 @import "./ValueStateMessage-parameters.css";
 @import "../base/MultiComboBox-parameters.css";
+@import "./SliderBase-parameters.css";
