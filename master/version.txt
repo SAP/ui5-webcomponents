@@ -1,5 +1,5 @@
-commit 0b948dd10fa6cded66bbc1e9378edbf26ca0c23c
+commit dc052b57cd103be3fcd0d6363f9ef4adccb766c8
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 20 10:22:27 2020 +0200
+Date:   Mon Nov 23 13:52:17 2020 +0200
 
-    chore: fix typo in generateTypeAcessors (#2500)
+    docs: fix (Range)Slider API ref (#2505)

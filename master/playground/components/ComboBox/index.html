@@ -265,6 +265,8 @@
       
     
       
+    
+      
         
       
     
@@ -302,6 +304,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -740,6 +744,8 @@
                 
                   
                 
+                  
+                
               </ul>
             
           </li>
@@ -762,6 +768,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1128,6 +1136,8 @@
                 
                   
                 
+                  
+                
               </ul>
             
           </li>
@@ -1150,6 +1160,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -1726,6 +1738,19 @@
                   
                     <li class="navigation-list-item ">
                       
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/RangeSlider/" class="navigation-list-link">
+                        <div class="component-name">Range Slider</div>
+                        
+                          <span class="new-tag">NEW</span>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/RatingIndicator/" class="navigation-list-link">
                         <div class="component-name">Rating Indicator</div>
                         
@@ -1794,6 +1819,8 @@
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Slider/" class="navigation-list-link">
                         <div class="component-name">Slider</div>
+                        
+                          <span class="new-tag">NEW</span>
                         
                       </a>
                       
@@ -1940,6 +1967,10 @@
         
       
     
+      
+    
+      
+        
       
     
       
@@ -2313,6 +2344,30 @@
 </section>
 
 <section>
+	<h3>ComboBox with Two-Column Layout Items</h3>
+	<div class="snippet responsive-snippet">
+		<ui5-combobox placeholder="Two-column Layout">
+			<ui5-cb-item text="Austria" additional-text="AT"></ui5-cb-item>
+			<ui5-cb-item text="Belgium" additional-text="BE"></ui5-cb-item>
+			<ui5-cb-item text="Brazil" additional-text="BR"></ui5-cb-item>
+			<ui5-cb-item text="Bulgaria" additional-text="BG"></ui5-cb-item>
+			<ui5-cb-item text="Canada" additional-text="CA"></ui5-cb-item>
+		</ui5-combobox>
+	</div>
+
+<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-combobox</span> <span class="na">placeholder=</span><span class="s">"Two-column layout"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Austria"</span> <span class="na">additional-text=</span><span class="s">"AT"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Belgium"</span> <span class="na">additional-text=</span><span class="s">"BE"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Brazil"</span> <span class="na">additional-text=</span><span class="s">"BR"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Bulgaria"</span> <span class="na">additional-text=</span><span class="s">"BG"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+	<span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Canada"</span> <span class="na">additional-text=</span><span class="s">"CA"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
+<span class="nt">&lt;/ui5-combobox&gt;</span></code></pre></figure></pre>
+
+
+</section>
+
+
+<section>
 	<h3>Lazy loading</h3>
 
 	<div class="snippet responsive-snippet">
@@ -2601,6 +2656,19 @@ The <code>ui5-combobox</code> provides advanced keyboard handling.
                     </div>
             
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          additionalText
+                            <br>
+                            <code>additional-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the additional text of the <code>ui5-cb-item</code>.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           text
                             <br>
