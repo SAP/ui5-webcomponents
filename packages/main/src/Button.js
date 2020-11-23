@@ -119,7 +119,7 @@ const metadata = {
 		 * @public
 		 * @since 1.0.0-rc.11
 		 */
-		tooltip: {
+		title: {
 			type: String,
 		},
 
@@ -384,7 +384,7 @@ class Button extends UI5Element {
 			"ariaExpanded": this.ariaExpanded || (this._buttonAccInfo && this._buttonAccInfo.ariaExpanded),
 			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
 			"ariaHaspopup": this._buttonAccInfo && this._buttonAccInfo.ariaHaspopup,
-			"title": this.tooltip || (this._buttonAccInfo && this._buttonAccInfo.title),
+			"title": this.title || (this._buttonAccInfo && this._buttonAccInfo.title),
 		};
 	}
 
@@ -412,6 +412,10 @@ class Button extends UI5Element {
 		}
 
 		return this.nonFocusable ? "-1" : this._tabIndex;
+	}
+
+	get showIconTooltip() {
+		return this.iconOnly && !this.title;
 	}
 
 	get styles() {
