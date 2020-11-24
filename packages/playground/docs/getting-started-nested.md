@@ -19,7 +19,7 @@ npm install @ui5/webcomponents
 
 ## Read the Docs
 
-Documentation and tutorials about UI5 Web Components can be found [here](./docs/)
+Documentation and tutorials about UI5 Web Components can be found [here](./playground/docs/)
 
 ## Usage
 
