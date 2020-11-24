@@ -1,21 +1,5 @@
-commit 30d9d2bb990cc6dcb2d7a6a67d6c735fd86eb371
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Nov 24 13:37:20 2020 +0200
+commit e7dd012d7377d90bf8f9f4df9aeab2cec7c6171b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Nov 24 16:24:50 2020 +0200
 
-    feat(ui5-date-picker): component is now aligned with the specification (#2304)
-    
-    Focus handling is aligned with the KBH specification:
-    
-    When an year is selected from the year picker the day picker is shown and focus
-    is set to the last selected date or to the current date.
-    When a month is selected from the month picker the day picker is shown and focus
-    is set to the last selected date or to the current date.
-    When month picker is opened the focus is set to the selected month or to the current month
-    if there are no selected dates.
-    When year picker is opened the focus is set to the selected year or to the current year
-    if there are no selected dates.
-    Selection is applied in compliance with the UX specification, when a picker is opened:
-    
-    Calendar items from the month picker and year picker are not rendered selected, when there are no
-    selected dates.
-    Fixes #2151
+    fix(ui5-input): don't render aria-describedby if not neccessary (#2512)
