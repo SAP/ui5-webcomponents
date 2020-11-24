@@ -522,7 +522,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0009");
+		datepicker.innerInput.setValue("Jan 1, 0012");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -547,7 +547,7 @@ describe("Date Picker Tests", () => {
 
 		datepicker.btnYear.click();
 
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9979") > -1, "First year in the year picker is correct");
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9976") > -1, "First year in the year picker is correct");
 
 		datepicker.btnNext.click();
 
@@ -567,20 +567,20 @@ describe("Date Picker Tests", () => {
 
 		datepicker.btnYear.click();
 
-		var tenthYear = datepicker.getDisplayedYear(9);
-		assert.ok(tenthYear.getProperty("innerHTML").indexOf("9988") > -1, "Tenth year in the year picker is correct");
+		var tenthYear = datepicker.getDisplayedYear(10);
+		assert.ok(tenthYear.getProperty("innerHTML").indexOf("9986") > -1, "Tenth year in the year picker is correct");
 
 		tenthYear.click();
 		datepicker.btnYear.click();
 
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9980") > -1, "First year in the year picker is correct");
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9976") > -1, "First year in the year picker is correct");
 	});
 
 	it("yearpicker click extreme values min", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0009");
+		datepicker.innerInput.setValue("Jan 1, 0012");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -688,12 +688,9 @@ describe("Date Picker Tests", () => {
 		datepicker.openPicker({ focusInput: false });
 
 		datepicker.btnYear.click();
-		assert.ok(datepicker.getDisplayedYear(10).hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
-		datepicker.root.keys("ArrowDown");
+		assert.ok(datepicker.getDisplayedYear(11).hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
 		datepicker.root.keys("ArrowRight");
-		datepicker.root.keys("ArrowRight");
-		datepicker.root.keys("ArrowRight");
-		assert.ok(datepicker.getDisplayedYear(7).isFocusedDeep(), "Years out of range can not be reached with keyboard");
+		assert.ok(datepicker.getDisplayedYear(0).isFocusedDeep(), "Years out of range can not be reached with keyboard");
 	});
 
 	it("Months are disabled when out of range", () => {
@@ -820,7 +817,7 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(lastColumn[firstColumn.length - 1].getAttribute("role"), "gridcell", "Each day have columnheader role attribute");
 	});
 
-	it("DatePcker dates and week number", ()=>{
+	it("DatePicker dates and week number", () => {
 		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";

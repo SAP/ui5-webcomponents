@@ -389,6 +389,11 @@ class DayPicker extends UI5Element {
 
 	onAfterRendering() {
 		this._fireDayPickerRendered();
+		if (this._inputLiveChangeTrigger) {
+			this._inputLiveChangeTrigger = false;
+		} else {
+			this._itemNav.focusCurrent();
+		}
 	}
 
 	_onmousedown(event) {
