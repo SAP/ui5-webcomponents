@@ -289,6 +289,13 @@ describe("Input general interaction", () => {
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
 	});
 
+	it("Checks if aria-describedby is renderd if not neccessary", () => {
+		const input = browser.$("#input-max-length"); // Input with no show-suggestions attribute
+		const innerInput = input.shadow$("input");
+
+		assert.notOk(innerInput.getAttribute("aria-describedby"), "aria-describedby is not rendered");
+	});
+
 	it("Checks if aria-label is reflected in the shadow DOM", () => {
 		const input = browser.$("#aria-label-input");
 		const innerInput = input.shadow$("input");
