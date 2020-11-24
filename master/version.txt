@@ -1,5 +1,14 @@
-commit dc052b57cd103be3fcd0d6363f9ef4adccb766c8
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 23 13:52:17 2020 +0200
+commit d73ce385ff3f7d2e81a36e98044d5d6f4456b378
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Nov 24 10:07:11 2020 +0200
 
-    docs: fix (Range)Slider API ref (#2505)
+    feat(ui5-side-navigation-item, ui5-side-navigation-sub-item): introduce click event (#2298)
+    
+    This PR introduces the following features:
+    
+    For ```ui5-side-navigation-item```:
+    click event
+    whole-item-toggleable property
+    
+    For ```ui5-side-navigation-sub-item```:
+    click event
