@@ -142,7 +142,7 @@ class RangeSlider extends SliderBase {
 		}
 
 		// Calculate the new value from the press position of the event
-		const newValue = this.handleDownBase(event, this._effectiveMin, this._effectiveMax);
+		const newValue = this.handleDownBase(event);
 
 		// Determine the rest of the needed details from the start of the interaction.
 		this._saveInteractionStartData(event, newValue);

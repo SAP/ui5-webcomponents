@@ -118,7 +118,7 @@ class Slider extends SliderBase {
 			return;
 		}
 
-		const newValue = this.handleDownBase(event, this._effectiveMin, this._effectiveMax);
+		const newValue = this.handleDownBase(event);
 		this._valueOnInteractionStart = this.value;
 
 		// Do not yet update the Slider if press is over a handle. It will be updated if the user drags the mouse.
