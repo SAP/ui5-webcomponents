@@ -70,5 +70,25 @@
 			<h2>Slider with float number step (1.25), tooltips, tickmarks and labels between 3 steps (3.75 value)</h2>
 			<ui5-slider id="slider-tickmarks-tooltips-labels" min="-12.5" max="47.5" step="1.25" value="10" show-tooltip label-interval="3" show-tickmarks></ui5-slider>
 		</section>
+
+		<section class="group">
+			<h2>Event Testing Slider</h2>
+			<ui5-slider id="test-slider" min="0" max="10"></ui5-slider>
+			<h2>Event Testing Result Slider</h2>
+			<ui5-slider id="test-result-slider" value="1"></ui5-slider>
+		</section>
+
+		<script>
+			const eventTargetSlider = document.getElementById("test-slider");
+			const eventResultSlider = document.getElementById("test-result-slider");
+		
+			eventTargetSlider.addEventListener("ui5-input", () => {
+				eventResultSlider.setAttribute("value", parseInt(eventResultSlider.getAttribute("value")) + 1);
+			});
+
+			eventTargetSlider.addEventListener("ui5-change", () => {
+				eventResultSlider.setAttribute("value", parseInt(eventResultSlider.getAttribute("value")) + 1);
+			});
+		</script>
 	</body>
 </html>

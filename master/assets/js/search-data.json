@@ -716,7 +716,7 @@
   "103": {
     "id": "103",
     "title": "Range Slider",
-    "content": "&lt;!DOCTYPE html&gt; UI5 Range Slider Basic Range Slider Range Slider with custom min and max properties and tooltip Range Slider with small step and tooltip Range Slider with tickmarks Disabled Range Slider Range Slider with steps, tooltips, tickmarks and labels",
+    "content": "&lt;!DOCTYPE html&gt; UI5 Range Slider Basic Range Slider Range Slider with custom min and max properties and tooltip Range Slider with small step and tooltip Range Slider with tickmarks Disabled Range Slider Range Slider with steps, tooltips, tickmarks and labels Event Testing Slider Event Testing Result Slider",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/RangeSlider/",
     "relUrl": "/playground/main/pages/RangeSlider/"
   },
@@ -842,7 +842,7 @@
   "121": {
     "id": "121",
     "title": "Slider",
-    "content": "&lt;!DOCTYPE html&gt; UI5 Slider Basic Slider Basic Slider with tooltip Disabled Slider with tickmarks and labels Slider with tickmarks Slider with many steps and small width Inactive slider with no steps and tooltip Slider with steps, tooltips, tickmarks and labels Slider with float number step (1.25), tooltips, tickmarks and labels between 3 steps (3.75 value)",
+    "content": "&lt;!DOCTYPE html&gt; UI5 Slider Basic Slider Basic Slider with tooltip Disabled Slider with tickmarks and labels Slider with tickmarks Slider with many steps and small width Inactive slider with no steps and tooltip Slider with steps, tooltips, tickmarks and labels Slider with float number step (1.25), tooltips, tickmarks and labels between 3 steps (3.75 value) Event Testing Slider Event Testing Result Slider",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Slider/",
     "relUrl": "/playground/main/pages/Slider/"
   },

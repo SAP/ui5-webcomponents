@@ -1,14 +1,21 @@
-commit d73ce385ff3f7d2e81a36e98044d5d6f4456b378
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Nov 24 10:07:11 2020 +0200
+commit 30d9d2bb990cc6dcb2d7a6a67d6c735fd86eb371
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Tue Nov 24 13:37:20 2020 +0200
 
-    feat(ui5-side-navigation-item, ui5-side-navigation-sub-item): introduce click event (#2298)
+    feat(ui5-date-picker): component is now aligned with the specification (#2304)
     
-    This PR introduces the following features:
+    Focus handling is aligned with the KBH specification:
     
-    For ```ui5-side-navigation-item```:
-    click event
-    whole-item-toggleable property
+    When an year is selected from the year picker the day picker is shown and focus
+    is set to the last selected date or to the current date.
+    When a month is selected from the month picker the day picker is shown and focus
+    is set to the last selected date or to the current date.
+    When month picker is opened the focus is set to the selected month or to the current month
+    if there are no selected dates.
+    When year picker is opened the focus is set to the selected year or to the current year
+    if there are no selected dates.
+    Selection is applied in compliance with the UX specification, when a picker is opened:
     
-    For ```ui5-side-navigation-sub-item```:
-    click event
+    Calendar items from the month picker and year picker are not rendered selected, when there are no
+    selected dates.
+    Fixes #2151
