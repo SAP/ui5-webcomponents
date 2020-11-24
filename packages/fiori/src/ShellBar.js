@@ -899,7 +899,22 @@ class ShellBar extends UI5Element {
 					"order": this.isIconHidden("grid") ? "-1" : "6",
 				},
 			},
+			searchField: {
+				"display": this.correctSearchFieldStyles,
+			},
 		};
+	}
+
+	get correctSearchFieldStyles() {
+		if (this.showSearchField) {
+			if (this._fullWidthSearch) {
+				return "flex";
+			} else {
+				return "block"
+			}
+		} else {
+			return "none"
+		}
 	}
 
 	get customItemsInfo() {

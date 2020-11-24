@@ -370,14 +370,6 @@ slot[name="profile"] {
 	width: 100%;
 }
 
-:host(:not([show-search-field])) .ui5-shellbar-search-field {
-	display: none;
-}
-
-:host(:not([show-search-field])) .ui5-shellbar-search-full-width-wrapper {
-	display: none;
-}
-
 .ui5-shellbar-search-full-width-wrapper {
 	position: absolute;
 	top: 0;

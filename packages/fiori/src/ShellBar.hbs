@@ -79,7 +79,7 @@
 
 			{{#if hasSearchField}}
 				{{#if _fullWidthSearch}}
-					<div class="ui5-shellbar-search-full-width-wrapper">
+					<div class="ui5-shellbar-search-full-width-wrapper" style="{{styles.searchField}}">
 						<div class="ui5-shellbar-search-full-field">
 							<slot name="searchField"></slot>
 						</div>
@@ -92,7 +92,7 @@
 					</div>
 				{{/if}}
 
-				<div class="ui5-shellbar-search-field">
+				<div class="ui5-shellbar-search-field" style="{{styles.searchField}}">
 					{{#unless _fullWidthSearch}}
 							<slot name="searchField"></slot>
 					{{/unless}}
