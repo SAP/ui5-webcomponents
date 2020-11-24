@@ -258,6 +258,21 @@ class Card extends UI5Element {
 		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
 	}
 
+	get ariaLabelledByHeader() {
+		const labels = [];
+
+		if (this.subheading) {
+			labels.push(`${this._id}-subheading`);
+		}
+
+		if (this.status) {
+			labels.push(`${this._id}-status`);
+		}
+
+		return labels.join(" ");
+
+	}
+
 	get hasAvatar() {
 		return !!this.avatar.length;
 	}
