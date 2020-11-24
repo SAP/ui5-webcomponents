@@ -110,6 +110,22 @@ const metadata = {
 		},
 
 		/**
+		 * Sets the accessible aria name of the <code>ui5-panel</code>.
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * When set to <code>true</code>, the <code>accessibleName</code> property will be
+		 * applied not only on the panel itself, but on its toggle button too.
+		 * <b>Note:</b> This property only has effect if <code>accessibleName</code> is set.
+ 		 */
+		useAccessibleNameForToggleButton: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the "aria-level" of <code>ui5-panel</code> heading,
 		 * set by the <code>headerText</code>.
 		 * <br><br>
@@ -402,7 +418,7 @@ class Panel extends UI5Element {
 			"ariaLabelledby": this.nonFocusableButton ? this.ariaLabelledbyReference : undefined,
 			"ariaLabel": this.nonFocusableButton ? this.ariaLabelTxt : undefined,
 			"ariaLabelledbyButton": this.nonFocusableButton ? undefined : this.ariaLabelledbyReference,
-			"ariaLabelButton": this.nonFocusableButton ? undefined : this.ariaLabelTxt,
+			"ariaLabelButton": !this.nonFocusableButton && this.useAccessibleNameForToggleButton ? this.accessibleName : undefined,
 			"role": this.nonFixedInternalHeader ? "button" : undefined,
 		};
 	}

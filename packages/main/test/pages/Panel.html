@@ -216,6 +216,40 @@
 		</ui5-panel>
 	</section>
 
+	<section>
+		<!-- accessibleName, useAccessibleNameForToggleButton and header text -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header text and button" use-accessible-name-for-toggle-button header-text="Accessible name test 1">
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+
+		<br><br>
+
+		<!-- accessibleName and header text -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header text" header-text="Accessible name test 2">
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+
+		<br><br>
+
+		<!-- accessibleName, useAccessibleNameForToggleButton and header SLOT -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header SLOT and button" use-accessible-name-for-toggle-button>
+			<div slot="header" class="header">
+				<ui5-title>Accessible name test 3</ui5-title>
+			</div>
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+
+		<br><br>
+
+		<!-- accessibleName and header SLOT -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header SLOT">
+			<div slot="header" class="header">
+				<ui5-title>Accessible name test 4</ui5-title>
+			</div>
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+	</section>
+
 </body>
 
 </html>

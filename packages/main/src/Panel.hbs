@@ -2,6 +2,7 @@
 	data-sap-ui-fastnavgroup="true"
 	class="ui5-panel-root"
 	role="{{accRole}}"
+	aria-label="{{accessibleName}}"
 >
 	<!-- header: either header or h1 with header text -->
 	<div
@@ -13,8 +14,6 @@
 		role="{{accInfo.role}}"
 		aria-expanded="{{accInfo.ariaExpanded}}"
 		aria-controls="{{accInfo.ariaControls}}"
-		aria-label="{{accInfo.ariaLabel}}"
-		aria-labelledby="{{accInfo.ariaLabelledby}}"
 	>
 		{{#unless fixed}}
 			<div class="ui5-panel-header-button-root">
@@ -26,7 +25,6 @@
 					@click="{{_toggleButtonClick}}"
 					._buttonAccInfo="{{accInfo.button}}"
 					aria-label="{{accInfo.ariaLabelButton}}"
-					aria-labelledby="{{accInfo.ariaLabelledbyButton}}"
 				></ui5-button>
 			</div>
 		{{/unless}}
