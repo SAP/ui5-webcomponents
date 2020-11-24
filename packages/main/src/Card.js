@@ -258,6 +258,28 @@ class Card extends UI5Element {
 		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
 	}
 
+	get ariaLabelledByHeader() {
+		const labels = [];
+
+		if (this.subheading) {
+			labels.push(`${this._id}-subheading`);
+		}
+
+		if (this.status) {
+			labels.push(`${this._id}-status`);
+		}
+
+		if (this.hasAvatar) {
+			labels.push(`${this._id}-avatar`);
+		}
+
+		return labels.length !== 0 ? labels.join(" ") : undefined;
+	}
+
+	get ariaLabelledByCard() {
+		return this.heading ? `${this._id}-heading ${this._id}-desc` : `${this._id}-desc`;
+	}
+
 	get hasAvatar() {
 		return !!this.avatar.length;
 	}
