@@ -909,12 +909,12 @@ class ShellBar extends UI5Element {
 		if (this.showSearchField) {
 			if (this._fullWidthSearch) {
 				return "flex";
-			} else {
-				return "block"
 			}
-		} else {
-			return "none"
+
+			return "block";
 		}
+
+		return "none";
 	}
 
 	get customItemsInfo() {
