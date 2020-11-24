@@ -1,0 +1,18 @@
+{{>include "./SliderBase.hbs"}}
+
+{{#*inline "handles"}}
+	<div class="ui5-slider-handle ui5-slider-handle--start" style="{{styles.startHandle}}">
+		{{#if showTooltip}}
+			<div class="ui5-slider-tooltip ui5-slider-tooltip--start" style="{{styles.tooltip}}">
+				<span class="ui5-slider-tooltip-value">{{tooltipStartValue}}</span>
+			</div>
+		{{/if}}
+	</div>
+	<div class="ui5-slider-handle ui5-slider-handle--end" style="{{styles.endHandle}}">
+		{{#if showTooltip}}
+			<div class="ui5-slider-tooltip ui5-slider-tooltip--end" style="{{styles.tooltip}}">
+				<span class="ui5-slider-tooltip-value">{{tooltipEndValue}}</span>
+			</div>
+		{{/if}}
+	</div>
+{{/inline}}

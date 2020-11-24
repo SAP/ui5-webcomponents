@@ -26,6 +26,7 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -420,7 +421,8 @@ class DatePicker extends UI5Element {
 					calendar._hideYearPicker();
 				}
 			},
-			afterOpen: () => {
+			afterOpen: async () => {
+				await RenderScheduler.whenFinished();
 				const calendar = this.calendar;
 
 				if (!calendar) {
@@ -428,6 +430,7 @@ class DatePicker extends UI5Element {
 				}
 
 				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
+				dayPicker._inputLiveChangeTrigger = false;
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
 				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
 				let focusableDay = selectedDay || today;
@@ -668,6 +671,15 @@ class DatePicker extends UI5Element {
 		const nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
+
+		if (this.responsivePopover) {
+			const calendar = this.calendar;
+			const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
+			// If day picker component rerendering is triggered due to a change in the date picker component input filed,
+			// then mark this trigger and avoid moving the focus from the date picker input field throughout the on after
+			// rendering hook of the day picker component
+			dayPicker._inputLiveChangeTrigger = true;
+		}
 
 		this.value = nextValue;
 		this.fireEvent("input", { value: nextValue, valid: isValid });

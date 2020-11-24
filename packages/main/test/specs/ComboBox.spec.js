@@ -315,4 +315,15 @@ describe("General interaction", () => {
 
 		assert.ok(combo.getProperty("focused"), "property focused should be true");
 	});
+	
+	it ("Tests Combo with two-column layout", () => {
+		const combo = $("#combobox-two-column-layout");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combobox-two-column-layout");
+		const arrow = combo.shadow$("[input-icon]");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const listItem = popover.$("ui5-list").$$("ui5-li")[0];
+
+		arrow.click();
+		assert.strictEqual(listItem.shadow$(".ui5-li-info").getText(), "DZ", "Additional item text should be displayed");
+	});
 });

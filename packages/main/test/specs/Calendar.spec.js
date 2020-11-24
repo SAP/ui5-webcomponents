@@ -90,64 +90,80 @@ describe("Calendar general interaction", () => {
 		const calendar = browser.$("#calendar1");
 		const yearPicker = calendar.shadow$("ui5-yearpicker");
 		const YEAR = 1997;
-
-		browser.execute((year) => {
-			const calendar = document.getElementById("calendar1");
-			var newTimestamp = Date.UTC(year) / 1000;
-			calendar.timestamp = newTimestamp;
-			calendar._showYearPicker();
-		}, YEAR);
-
+		calendar.setAttribute("timestamp", Date.UTC(YEAR) / 1000)
+		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Year"]`).click();
 		assert.strictEqual(yearPicker.getProperty("_selectedYear"), YEAR, "Year is set");
+
+		calendar.shadow$("ui5-yearpicker").shadow$(`div[id="ui5wc_5-y852076800"]`).click();
+	});
+
+	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
+		const calendar = browser.$("#calendar1");
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
+		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Year"]`).click();
+		const focusedItem = calendar.shadow$("ui5-yearpicker").shadow$(`div[id="ui5wc_5-y946684800"]`);
+
+		assert.ok(focusedItem.isFocusedDeep(), "Current year element is the acrive element");
+		assert.notOk(focusedItem.hasClass("ui5-mp-item--selected"), "Current year is not selected");
+		focusedItem.click();
+	});
+
+	it("Calendar doesn't mark month as selected when there are no selected dates", () => {
+		const calendar = browser.$("#calendar1");
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
+		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Month"]`).click();
+		const focusedItem = calendar.shadow$("ui5-monthpicker").shadow$(`div[id="ui5wc_4-m10"]`);
+
+		assert.ok(focusedItem.isFocusedDeep(), "Current month element is the acrive element");
+		assert.notOk(focusedItem.hasClass("ui5-mp-item--selected"), "Current month is not selected");
+		focusedItem.click();
 	});
 
 	it("Page up/down increments/decrements the month value", () => {
 		const calendar = browser.$("#calendar1");
-		calendar.setProperty("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
-
-		browser.execute(() => document.getElementById("calendar1")._hideYearPicker());
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 
 		calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-days-names-container").click();
 		browser.keys('PageUp');
 
-		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 8, 1, 0, 0, 0)));
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
 
 		browser.keys('PageDown');
 
-		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 10, 1, 0, 0, 0)));
 	});
 
 	it("Shift + Page up/down increments/decrements the year value by one", () => {
 		const calendar = browser.$("#calendar1");
-		calendar.setProperty("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 
 		calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-days-names-container").click();
 		browser.keys(['Shift', 'PageUp']);
 
-		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1999, 9, 1, 0, 0, 0)));
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1999, 10, 1, 0, 0, 0)));
 
 		browser.keys(['Shift', 'PageDown']);
 
-		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 10, 1, 0, 0, 0)));
 	});
 
 	it("Ctrl + Shift + Page up/down increments/decrements the year value by ten", () => {
 		const calendar = browser.$("#calendar1");
-		calendar.setProperty("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 
 		calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-days-names-container").click();
 		browser.keys(['Control', 'Shift', 'PageUp']);
 
-		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1990, 9, 1, 0, 0, 0)));
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1990, 10, 1, 0, 0, 0)));
 
 		browser.keys(['Control', 'Shift', 'PageDown']);
 
-		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
+		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 10, 1, 0, 0, 0)));
 	});
 
 	it("Page up/down increments/decrements the year value in the month picker", () => {
 		const calendar = browser.$("#calendar1");
-		calendar.setProperty("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
 
 		browser.keys(["F4"]);
 		browser.keys('PageUp');
@@ -161,7 +177,7 @@ describe("Calendar general interaction", () => {
 
 	it("Page up/down increments/decrements the year range in the year picker", () => {
 		const calendar = browser.$("#calendar1");
-		calendar.setProperty("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
 
 		browser.keys(['Shift', 'F4']);
 		browser.keys('PageUp');
