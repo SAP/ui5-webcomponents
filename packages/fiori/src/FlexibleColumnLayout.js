@@ -90,7 +90,7 @@ const metadata = {
 		* @public
 		* @since 1.0.0-rc.11
 		*/
-		startColumnAccessibleText: {
+		startColumnAccessibleName: {
 			type: String,
 		},
 
@@ -102,7 +102,7 @@ const metadata = {
 		* @public
 		* @since 1.0.0-rc.11
 		*/
-		midColumnAccessibleText: {
+		midColumnAccessibleName: {
 			type: String,
 		},
 
@@ -114,7 +114,7 @@ const metadata = {
 		* @public
 		* @since 1.0.0-rc.11
 		*/
-		endColumnAccessibleText: {
+		endColumnAccessibleName: {
 			type: String,
 		},
 
@@ -656,15 +656,15 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartColumnText() {
-		return this.startColumnAccessibleText || this.i18nBundle.getText(FCL_START_COLUMN_TXT);
+		return this.startColumnAccessibleName || this.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
 	get accMiddleColumnText() {
-		return this.midColumnAccessibleText || this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+		return this.midColumnAccessibleName || this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
 	get accEndColumnText() {
-		return this.endColumnAccessibleText || this.i18nBundle.getText(FCL_END_COLUMN_TXT);
+		return this.endColumnAccessibleName || this.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
 	get _effectiveLayoutsByMedia() {
