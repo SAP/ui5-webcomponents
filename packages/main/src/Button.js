@@ -116,7 +116,7 @@ const metadata = {
 		 * <b>Important:</b> Tooltips should only be set to icon only buttons.
 		 * @type {string}
 		 * @defaultvalue: ""
-		 * @public
+		 * @private
 		 * @since 1.0.0-rc.11
 		 */
 		title: {
