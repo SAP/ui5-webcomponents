@@ -1,13 +1,5 @@
-commit 80e31c696b45835f551fa264fb982b5d3aa93305
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Nov 25 15:44:44 2020 +0800
+commit 7ae9253d6b28cf9dd867a986c7f198aee284265c
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Nov 25 10:32:16 2020 +0200
 
-    Translation Delivery (#2516)
-    
-    * chore: translation delivery
-    
-    Change-Id: I69f0f4748664f88b1ebe95638972de074f5d300f
-    
-    * chore: translation delivery
-    
-    Change-Id: Iac28ca6135c5f922315d96f0be02cd4859781e31
+    feat(ui5-button): implement title property (#2492)
