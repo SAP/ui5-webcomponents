@@ -22,6 +22,15 @@ import WizardStep from "./WizardStep.js";
 import WizardTemplate from "./generated/templates/WizardTemplate.lit.js";
 import WizardCss from "./generated/themes/Wizard.css.js";
 
+
+const MIN_STEP_WIDTH_NO_TITLE = 64;
+const MIN_STEP_WIDTH_WITH_TITLE = 200;
+
+const EXPANDED_STEP_CLASS = "data-ui5-wizard-expanded-tab";
+const AFTER_EXPANDED_STEP_CLASS = "data-ui5-wizard-expanded-tab-next";
+const CURRENT_STEP = "data-ui5-wizard-current-tab";
+const BEFORE_EXPANDED_STEP_CLASS = "data-ui5-wizard-expanded-tab-prev";
+
 /**
  * @public
  */
@@ -363,6 +372,77 @@ class Wizard extends UI5Element {
 		this.width = this.getBoundingClientRect().width;
 	}
 
+	_adjustHeaderOverflow() {
+		let counter = 0;
+		let isForward = true;
+		const iWidth = this.width;
+		const iCurrStep = this.getSelectedStepIndex();
+		const iStepsToShow = this.steps.length ?
+				Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) :
+				Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
+
+		const tabs = this.shadowRoot.querySelectorAll("ui5-wizard-tab");
+
+		if (!tabs.length) {
+			return;
+		}
+
+
+		[].forEach.call(tabs, function (step, index) {
+			step.setAttribute(EXPANDED_STEP_CLASS, false);
+			step.setAttribute(BEFORE_EXPANDED_STEP_CLASS, false);
+			step.setAttribute(AFTER_EXPANDED_STEP_CLASS, false);
+
+			if (index > iCurrStep) {
+				tabs[index].setAttribute(CURRENT_STEP, true);
+			}
+		});
+
+		if (tabs[iCurrStep]) {
+			tabs[iCurrStep].setAttribute(EXPANDED_STEP_CLASS, true);
+		}
+
+		for (var i = 1; i < iStepsToShow; i++) {
+			if (isForward) {
+				counter += 1;
+			}
+
+			if (isForward && tabs[iCurrStep + counter]) {
+				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP_CLASS, true);
+				isForward = !isForward;
+			} else if (!isForward && tabs[iCurrStep - counter]) {
+				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP_CLASS, true);
+				isForward = !isForward;
+			} else if (tabs[iCurrStep + counter + 1]) {
+				counter += 1;
+				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP_CLASS, true);
+				isForward = true;
+			} else if (tabs[iCurrStep - counter]) {
+				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP_CLASS, true);
+				counter += 1;
+				isForward = false;
+			}
+		}
+
+		// mark the topmost steps of both groups (in the beginning and the end)
+		for (i = 0; i < tabs.length; i++) {
+			if (tabs[i].getAttribute(EXPANDED_STEP_CLASS) == "true" &&
+				tabs[i - 1] &&
+				tabs[i - 1].getAttribute(EXPANDED_STEP_CLASS) == "false") {
+
+				tabs[i - 1].setAttribute(BEFORE_EXPANDED_STEP_CLASS, true);
+			}
+
+			if (tabs[i].getAttribute(EXPANDED_STEP_CLASS) == "false" &&
+				tabs[i - 1] &&
+				tabs[i - 1].getAttribute(EXPANDED_STEP_CLASS) == "true") {
+
+				tabs[i].setAttribute(AFTER_EXPANDED_STEP_CLASS, true);
+				break;
+			}
+		}
+	}
+
 	/**
 	 * Called upon <code>onScroll</code>.
 	 * Selects the closest step, based on the user scroll position.
@@ -500,26 +580,26 @@ class Wizard extends UI5Element {
 	getStepsInfo() {
 		const lastEnabledStepIndex = this.getLastEnabledStepIndex();
 		const stepsCount = this.stepsCount;
+		const selectedStepIndex = this.getSelectedStepIndex();
+		let inintialZIndex = this.steps.length + 10;
+
+		this._adjustHeaderOverflow();
 
 		return this.steps.map((step, idx) => {
 			const pos = idx + 1;
 
-			// Hide separator if:
-			// (1) its size is under the phone breakpoint
-			// (2) it's the last step and it's not a branching one
-			const hideSeparator = this.phoneMode || ((idx === stepsCount - 1) && !step.branching);
 
 			// Calculate the step's aria-roledectioption: "1. heading" or "Step 1".
 			const roleDescription = step.heading ? `${pos}. ${step.heading}` : `${this.navStepDefaultHeading} ${pos}`;
+			const isAfterCurrent = (idx > selectedStepIndex);
 
 			return {
 				icon: step.icon,
-				heading: this.phoneMode ? "" : step.heading,
-				subheading: this.phoneMode ? "" : step.subheading,
+				heading: step.heading,
+				subheading: step.subheading,
 				number: pos,
 				selected: step.selected,
 				disabled: step.disabled,
-				hideSeparator,
 				activeSeparator: (idx < lastEnabledStepIndex) && !step.disabled,
 				branchingSeparator: step.branching,
 				pos,
@@ -528,6 +608,7 @@ class Wizard extends UI5Element {
 				ariaLabel: getEffectiveAriaLabelText(step),
 				refStepId: step._id,
 				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
+				styles: `z-index: ${isAfterCurrent ? --inintialZIndex : 1 }`
 			};
 		});
 	}
