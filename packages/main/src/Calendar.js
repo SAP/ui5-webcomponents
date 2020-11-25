@@ -710,7 +710,7 @@ class Calendar extends UI5Element {
 
 		if (lastDayOfMonthIndex !== -1) {
 			// find the DOM for the last day index
-			const lastDay = dayPicker.shadowRoot.querySelectorAll(".ui5-dp-content .ui5-dp-item")[lastDayOfMonthIndex];
+			const lastDay = this.dayPicker.shadowRoot.querySelectorAll(".ui5-dp-content .ui5-dp-item")[lastDayOfMonthIndex];
 
 			// update current item in ItemNavigation
 			this.dayPicker._itemNav.current = lastDayOfMonthIndex;
