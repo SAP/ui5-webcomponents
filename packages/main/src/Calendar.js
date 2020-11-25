@@ -293,6 +293,7 @@ class Calendar extends UI5Element {
 		this._oMonth.maxDate = this.maxDate;
 		this._header.monthText = localeData.getMonths("wide", this._primaryCalendarType)[this._month];
 		this._header.yearText = oYearFormat.format(this._localDate, true);
+		this._header.tabIndex = "-1";
 
 		// month picker
 		this._monthPicker.primaryCalendarType = this._primaryCalendarType;
@@ -311,9 +312,6 @@ class Calendar extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this.monthButton.setAttribute("tabindex", "-1");
-		this.yearButton.setAttribute("tabindex", "-1");
-
 		const currentTimestamp = new CalendarDate(this._calendarDate, this._primaryCalendarType).valueOf() / 1000;
 		const newItemIndex = this.dayPicker._itemNav._getItems().findIndex(day => parseInt(day.timestamp) === currentTimestamp);
 		this.dayPicker._itemNav.currentIndex = newItemIndex;
@@ -545,22 +543,21 @@ class Calendar extends UI5Element {
 	}
 
 	_onfocusout(event) {
-		this.monthButton.setAttribute("tabindex", "-1");
-		this.yearButton.setAttribute("tabindex", "-1");
+		this._header.tabIndex = "-1";
 		this._setPickerCurrentTabindex(0);
 	}
 
 	_setPickerCurrentTabindex(index) {
 		if (this.dayPicker) {
-			this.dayPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+			this.dayPicker._setCurrentItemTabIndex(index);
 		}
 
 		if (this.monthPicker) {
-			this.monthPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+			this.monthPicker._setCurrentItemTabIndex(index);
 		}
 
 		if (this.yearPicker) {
-			this.yearPicker._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+			this.yearPicker._setCurrentItemTabIndex(index);
 		}
 	}
 

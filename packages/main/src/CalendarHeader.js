@@ -46,6 +46,10 @@ const metadata = {
 		_isMonthButtonHidden: {
 			type: Boolean,
 		},
+		_tabIndex: {
+			type: String,
+			defaultValue: "0",
+		},
 	},
 	events: {
 		"previous-press": {},
@@ -86,11 +90,9 @@ class CalendarHeader extends UI5Element {
 
 		this._btn1 = {};
 		this._btn1.type = ButtonDesign.Transparent;
-		this._btn1.tabIndex = "0";
 
 		this._btn2 = {};
 		this._btn2.type = ButtonDesign.Transparent;
-		this._btn2.tabIndex = "0";
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}

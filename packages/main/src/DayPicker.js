@@ -681,6 +681,10 @@ class DayPicker extends UI5Element {
 		return this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 	}
 
+	_setCurrentItemTabIndex(index) {
+		this._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+	}
+
 	_modifySelectionAndNotifySubscribers(timestamp) {
 		switch (this.selection) {
 		case CalendarSelection.Single:
