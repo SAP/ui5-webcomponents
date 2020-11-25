@@ -1,5 +1,7 @@
-commit e7dd012d7377d90bf8f9f4df9aeab2cec7c6171b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Nov 24 16:24:50 2020 +0200
+commit 0629facacd9ac2f6fc1e5117f6dff66dcc39174d
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Nov 25 08:39:43 2020 +0200
 
-    fix(ui5-input): don't render aria-describedby if not neccessary (#2512)
+    fix: build error on MacOS 11 from rollup-plugin-terser (#2515)
+    
+    `Error: kill EPERM`
