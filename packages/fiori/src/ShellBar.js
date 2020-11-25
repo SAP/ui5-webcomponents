@@ -604,7 +604,7 @@ class ShellBar extends UI5Element {
 
 		overflowCount = overflowCount.length;
 
-		const items = this._getAllItems(!!overflowCount);
+		const items = this._getAllItems(!!overflowCount).filter(item => item.show);
 
 		const itemsByPriority = items.sort((item1, item2) => {
 			if (item1.priority > item2.priority) {
@@ -736,6 +736,7 @@ class ShellBar extends UI5Element {
 				style: `order: ${this.searchField.length ? 1 : -10}`,
 				id: `${this._id}-item-${1}`,
 				press: this._handleSearchIconPress.bind(this),
+				show: !!this.searchField.length
 			},
 			...this.items.map((item, index) => {
 				return {
