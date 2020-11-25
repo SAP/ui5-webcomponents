@@ -28,6 +28,7 @@ import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
 
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 
 /**
  * @public
@@ -312,10 +313,7 @@ class Calendar extends UI5Element {
 	}
 
 	onAfterRendering() {
-		const currentTimestamp = new CalendarDate(this._calendarDate, this._primaryCalendarType).valueOf() / 1000;
-		const newItemIndex = this.dayPicker._itemNav._getItems().findIndex(day => parseInt(day.timestamp) === currentTimestamp);
-		this.dayPicker._itemNav.currentIndex = newItemIndex;
-		this.dayPicker._itemNav.update();
+		this._setDayPickerCurrentIndex(this._calendarDate, false);
 	}
 
 	_refreshNavigationButtonsState() {
@@ -562,9 +560,10 @@ class Calendar extends UI5Element {
 	}
 
 	_handleSelectedDatesChange(event) {
-		this.timestamp = event.detail.dates[0];
-		this.selectedDates = [...event.detail.dates];
-		this.fireEvent("selected-dates-change", { dates: event.detail.dates });
+		const selectedDates = event.detail.dates; 
+		this.timestamp = selectedDates[selectedDates.length - 1];
+		this.selectedDates = [...selectedDates];
+		this.fireEvent("selected-dates-change", { dates: selectedDates });
 	}
 
 	_handleMonthNavigate(event) {
@@ -604,7 +603,7 @@ class Calendar extends UI5Element {
 		this._monthPicker.timestamp = this.timestamp;
 
 		this._hideMonthPicker();
-		this._setDayPickerCurrentIndex(oNewDate);
+		this._setDayPickerCurrentIndex(oNewDate, true);
 	}
 
 	_handleSelectedYearChange(event) {
@@ -616,14 +615,19 @@ class Calendar extends UI5Element {
 		this._yearPicker.timestamp = this.timestamp;
 
 		this._hideYearPicker();
-		this._setDayPickerCurrentIndex(oNewDate);
+		this._setDayPickerCurrentIndex(oNewDate, true);
 	}
 
-	_setDayPickerCurrentIndex(calDate) {
+	async _setDayPickerCurrentIndex(calDate, applyFocus) {
+		await RenderScheduler.whenFinished();
 		const currentDate = new CalendarDate(calDate);
-		const dayPicker = this.shadowRoot.querySelector("[ui5-daypicker]");
-		const currentDateIndex = dayPicker._getVisibleDays(currentDate).findIndex(date => date.valueOf() === currentDate.valueOf());
-		dayPicker._itemNav.currentIndex = currentDateIndex;
+		const currentDateIndex = this.dayPicker._getVisibleDays(currentDate).findIndex(date => date.valueOf() === currentDate.valueOf());
+		this.dayPicker._itemNav.currentIndex = currentDateIndex;
+		if (applyFocus) {
+			this.dayPicker._itemNav.focusCurrent();
+		} else {
+			this.dayPicker._itemNav.update();
+		}
 	}
 
 	_handleMonthButtonPress() {

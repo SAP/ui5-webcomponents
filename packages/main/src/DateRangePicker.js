@@ -169,24 +169,22 @@ class DateRangePicker extends DatePicker {
 		this._prevValue = this.value;
 	}
 
-	_changeCalendarSelection(focusTimestamp) {
+	_changeCalendarSelection() {
 		if (this._calendarDate.getYear() < 1) {
 			// 0 is a valid year, but we cannot display it
 			return;
 		}
 
-		const oCalDate = this._calendarDate;
-		const timestamp = focusTimestamp || oCalDate.valueOf() / 1000;
+		const timestamp = this._calendarDate.valueOf() / 1000;
 		const dates = this._splitValueByDelimiter(this.value);
-
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
-		this._calendar.selectedDates = this.value ? [this._getTimeStampFromString(dates[0]) / 1000, this._getTimeStampFromString(dates[1]) / 1000] : [];
+		this._calendar.selectedDates = dates.map(date => this._getTimeStampFromString(date) / 1000);
 	}
 
 	get _calendarDate() {
-		const dates = this._splitValueByDelimiter(this.value),
-			value = this._checkValueValidity(this.value) ? dates[0] : this.getFormat().format(new Date()),
+		const dateStrings = this._splitValueByDelimiter(this.value),
+			value = Boolean(this.value) && this._checkValueValidity(this.value) ? dateStrings[0] : this.getFormat().format(new Date()),
 			millisecondsUTCFirstDate = value ? this.getFormat().parse(value, true).getTime() : this.getFormat().parse(this.validValue, true).getTime(),
 			oCalDateFirst = CalendarDate.fromTimestamp(
 				millisecondsUTCFirstDate - (millisecondsUTCFirstDate % (24 * 60 * 60 * 1000)),
@@ -252,27 +250,15 @@ class DateRangePicker extends DatePicker {
 	}
 
 	isValid(value) {
-		const dateStrings = this._splitValueByDelimiter(value, this.delimiter),
-			isFirstDateValid = super.isValid(dateStrings[0]),
-			isLastDateValid = super.isValid(dateStrings[1]);
-
-		if (!dateStrings[1]) {
-			return isFirstDateValid;
-		}
-
-		return isFirstDateValid && isLastDateValid;
+		return this._splitValueByDelimiter(value)
+			.map(dateString => super.isValid(dateString))
+			.every(valid => valid);
 	}
 
 	isInValidRange(value) {
-		const dateStrings = this._splitValueByDelimiter(value, this.delimiter),
-			isFirstDateInValidRange = super.isInValidRange(this._getTimeStampFromString(dateStrings[0])),
-			isLastDateInValidRange = super.isInValidRange(this._getTimeStampFromString(dateStrings[1]));
-
-		if (!dateStrings[1]) {
-			return isFirstDateInValidRange;
-		}
-
-		return isFirstDateInValidRange && isLastDateInValidRange;
+		return this._splitValueByDelimiter(value)
+			.map(dateString => super.isInValidRange(this._getTimeStampFromString(dateString)))
+			.every(valid => valid);
 	}
 
 	_handleCalendarChange(event) {

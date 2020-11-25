@@ -430,7 +430,6 @@ class DatePicker extends UI5Element {
 				}
 
 				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
-				dayPicker._inputLiveChangeTrigger = false;
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
 				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
 				let focusableDay = selectedDay || today;
@@ -671,15 +670,6 @@ class DatePicker extends UI5Element {
 		const nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
-
-		if (this.responsivePopover) {
-			const calendar = this.calendar;
-			const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
-			// If day picker component rerendering is triggered due to a change in the date picker component input filed,
-			// then mark this trigger and avoid moving the focus from the date picker input field throughout the on after
-			// rendering hook of the day picker component
-			dayPicker._inputLiveChangeTrigger = true;
-		}
 
 		this.value = nextValue;
 		this.fireEvent("input", { value: nextValue, valid: isValid });
@@ -984,15 +974,13 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	_changeCalendarSelection(focusTimestamp) {
+	_changeCalendarSelection() {
 		if (this._calendarDate.getYear() < 1) {
 			// 0 is a valid year, but we cannot display it
 			return;
 		}
 
-		const oCalDate = this._calendarDate;
-		const timestamp = focusTimestamp || oCalDate.valueOf() / 1000;
-
+		const timestamp = this._calendarDate.valueOf() / 1000;
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
 		this._calendar.selectedDates = this.value ? [timestamp] : [];

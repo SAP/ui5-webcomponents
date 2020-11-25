@@ -90,18 +90,18 @@ describe("Calendar general interaction", () => {
 		const calendar = browser.$("#calendar1");
 		const yearPicker = calendar.shadow$("ui5-yearpicker");
 		const YEAR = 1997;
-		calendar.setAttribute("timestamp", Date.UTC(YEAR) / 1000)
+		calendar.setAttribute("timestamp", Date.UTC(YEAR) / 1000);
 		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Year"]`).click();
 		assert.strictEqual(yearPicker.getProperty("_selectedYear"), YEAR, "Year is set");
 
-		calendar.shadow$("ui5-yearpicker").shadow$(`div[id="ui5wc_5-y852076800"]`).click();
+		calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="852076800"]`).click();
 	});
 
 	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Year"]`).click();
-		const focusedItem = calendar.shadow$("ui5-yearpicker").shadow$(`div[id="ui5wc_5-y946684800"]`);
+		const focusedItem = calendar.shadow$("ui5-yearpicker").shadow$(`[data-sap-timestamp="946684800"]`);
 
 		assert.ok(focusedItem.isFocusedDeep(), "Current year element is the acrive element");
 		assert.notOk(focusedItem.hasClass("ui5-mp-item--selected"), "Current year is not selected");
@@ -112,7 +112,7 @@ describe("Calendar general interaction", () => {
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Month"]`).click();
-		const focusedItem = calendar.shadow$("ui5-monthpicker").shadow$(`div[id="ui5wc_4-m10"]`);
+		const focusedItem = calendar.shadow$("ui5-monthpicker").shadow$(`[data-sap-timestamp="973036800"]`);
 
 		assert.ok(focusedItem.isFocusedDeep(), "Current month element is the acrive element");
 		assert.notOk(focusedItem.hasClass("ui5-mp-item--selected"), "Current month is not selected");

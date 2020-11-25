@@ -409,12 +409,6 @@ class DayPicker extends UI5Element {
 
 			this._updateSelectionBetween(dayItems, firstTimestamp, lastTimestamp);
 		}
-
-		if (this._inputLiveChangeTrigger) {
-			this._inputLiveChangeTrigger = false;
-		} else {
-			this._itemNav.focusCurrent();
-		}
 	}
 
 	_getVisualizedSelectedDates() {
