@@ -59,5 +59,27 @@ describe("Component Behavior", () => {
 			assert.strictEqual(input.getProperty("value"), "6", "Event is not fired");
 			assert.strictEqual(items[3].getAttribute("expanded"), "false", "Expanded is toggled");
 		});
+
+		it("Tests header visibility", () => {
+			let showHeader = null;
+
+			showHeader = browser.execute(() => {
+				const sideNavigation = document.querySelector("#sn1");
+				sideNavigation.collapsed = false;
+
+				return sideNavigation.showHeader;
+			});
+		
+			assert.strictEqual(showHeader, true, "Header is displayed");
+
+			showHeader = browser.execute( () => {
+				const sideNavigation = document.querySelector("#sn1");
+				sideNavigation.collapsed = true;
+
+				return sideNavigation.showHeader;
+			});
+	
+			assert.strictEqual(showHeader, false, "Header is not displayed");
+		});
 	});
 });
