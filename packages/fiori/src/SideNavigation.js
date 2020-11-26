@@ -5,6 +5,10 @@ import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Tree from "@ui5/webcomponents/dist/Tree.js";
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
+
+import SideNavItemsAlign from "./types/SideNavItemsAlign.js";
+
+// Template
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
 
@@ -27,6 +31,27 @@ const metadata = {
 		 */
 		collapsed: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the items alignment.
+		 * <br><br>
+		 * Available options are <code>Start</code> and <code>Text (default)</code>.
+		 * <br>
+		 * The <code>Text</code> option means the items
+		 * will be aligned by their text - the items without icon will be indented.
+		 * <br>
+		 * The <code>Start</code> option means the items
+		 * will be aligned from the start - the items without icon will not be indented.
+		 *
+		 * @public
+		 * @type {SideNavItemsAlign}
+		 * @defaultvalue "Text"
+		 * @since 1.0.0-rc.11
+		 */
+		alignItems: {
+			type: String,
+			defaultValue: SideNavItemsAlign.Text,
 		},
 
 		/**

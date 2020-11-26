@@ -72,6 +72,7 @@
 
 	/* Tree */
 	--_ui5-tree-indent-step: 1.5rem;
+	--_ui5-tree-indent-padding: 1.625rem;
 	--_ui5-tree-toggle-box-width: 2.75rem;
 	--_ui5-tree-toggle-box-height: 2.25rem;
 	--_ui5-tree-toggle-icon-size: 1.0625rem;

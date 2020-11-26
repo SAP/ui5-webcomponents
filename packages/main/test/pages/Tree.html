@@ -118,6 +118,70 @@
 		</ui5-tree>
 	</ui5-busyindicator>
 
+	<br><br>
+	<ui5-title>Tree with align-items="Text"</ui5-title>
+	<br><br>
+
+	<ui5-tree id="treeTextAligned" align-items="Text">
+		<ui5-tree-item id="treeTextAligned1" text="Tree 1" selected expanded>
+			<ui5-tree-item id="treeTextAligned1.1" icon="home" text="Tree 1.1" selected>
+				<ui5-tree-item id="treeTextAligned1.1.1" icon="home" text="Tree 1.1.1"></ui5-tree-item>
+				<ui5-tree-item id="treeTextAligned1.1.2" text="Tree 1.1.2"></ui5-tree-item>
+			</ui5-tree-item>
+		</ui5-tree-item>
+
+		<ui5-tree-item id="treeTextAligned2" text="Tree 2" icon="paste" expanded>
+			<ui5-tree-item id="treeTextAligned2.1" text="Tree 2.1">
+				<ui5-tree-item id="treeTextAligned2.1.1" text="Tree 2.1.1"></ui5-tree-item>
+				<ui5-tree-item id="treeTextAligned2.1.2" text="Tree 2.1.2">
+					<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+					<ui5-tree-item icon="home" text="Tree 2.1.2.2"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+				</ui5-tree-item>
+				<ui5-tree-item icon="home" text="Tree 2.2">
+					<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+				</ui5-tree-item>
+			</ui5-tree-item>
+			<ui5-tree-item id="treeTextAligned2.2" text="Tree 2.2"></ui5-tree-item>
+		</ui5-tree-item>
+	</ui5-tree>
+
+	<br><br>
+	<ui5-title>Tree with align-items="Start"</ui5-title>
+	<br><br>
+
+	<ui5-tree id="treeStartAligned">
+		<ui5-tree-item id="treeStartAligned1" text="Tree 1" expanded selected>
+			<ui5-tree-item icon="home" text="Tree 1.1" selected>
+				<ui5-tree-item icon="home" text="Tree 1.1.1"></ui5-tree-item>
+				<ui5-tree-item text="Tree 1.1.2"></ui5-tree-item>
+			</ui5-tree-item>
+		</ui5-tree-item>
+
+		<ui5-tree-item id="treeStartAligned2" text="Tree 2" icon="paste" expanded>
+			<ui5-tree-item id="treeStartAligned2.1" text="Tree 2.1">
+				<ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
+				<ui5-tree-item text="Tree 2.1.2">
+					<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+					<ui5-tree-item icon="home" text="Tree 2.1.2.2"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+				</ui5-tree-item>
+				<ui5-tree-item icon="home" text="Tree 2.1.2">
+					<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+					<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+				</ui5-tree-item>
+			</ui5-tree-item>
+			<ui5-tree-item id="treeStartAligned2.2" text="Tree 2.2"></ui5-tree-item>
+		</ui5-tree-item>
+	</ui5-tree>
+
 	<script>
 
 		document.getElementById("density").addEventListener("selectionChange", function(event) {

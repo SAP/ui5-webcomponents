@@ -16,6 +16,10 @@
     justify-content: center;
 }
 
+:host([indent]) .ui5-li-content {
+    padding-left: var(--_ui5-tree-indent-padding);
+}
+
 :host([_minimal]) .ui5-li-root-tree {
     padding: 0;
 }
@@ -80,4 +84,9 @@
 
 :host([active][actionable]) .ui5-li-tree-toggle-icon {
     color: var(--sapList_Active_TextColor);
+}
+
+:host([indent]) [dir="rtl"] .ui5-li-content {
+    padding-left: 0;
+    padding-right: 1.625rem;
 }

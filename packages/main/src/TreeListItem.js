@@ -83,6 +83,16 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines if the item text will have a predefined offset.
+		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.11
+		 */
+		indent: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 		/**

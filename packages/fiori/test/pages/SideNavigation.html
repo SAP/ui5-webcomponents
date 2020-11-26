@@ -73,8 +73,78 @@
 		<ui5-input id="counter" value="0"></ui5-input>
 	</div>
 
+	<br><br>
 
+	<ui5-title>SideNavigation align-items="Text"</ui5-title>
+	<br>
+	<div style="display: flex; flex-direction: row;">
+		<div class="content">
+			<ui5-side-navigation>
+				<ui5-side-navigation-item text="Home" icon="home"></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="People" icon="group" expanded>
+					<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals"></ui5-side-navigation-sub-item>
+					<ui5-side-navigation-sub-item text="From Other Teams"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Locations" selected></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Events">
+					<ui5-side-navigation-sub-item text="Local" icon="employee-rejections"></ui5-side-navigation-sub-item>
+					<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		</div>
 
+		<div class="content">
+			<ui5-side-navigation>
+				<ui5-side-navigation-item text="Home"></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="People" expanded>
+					<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals"></ui5-side-navigation-sub-item>
+					<ui5-side-navigation-sub-item text="From Other Teams"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Locations" selected></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Events">
+					<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
+					<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		</div>
+	</div>
+
+	<br><br>
+	<br><br>
+
+	<ui5-title>SideNavigation align-items="Start" (Default)</ui5-title>
+	<br>
+	<div style="display: flex; flex-direction: row;">
+		<div class="content">
+			<ui5-side-navigation align-items="Start">
+				<ui5-side-navigation-item text="Home" icon="home"></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="People" icon="group" expanded>
+					<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals"></ui5-side-navigation-sub-item>
+					<ui5-side-navigation-sub-item text="From Other Teams"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Locations" selected></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Events">
+					<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
+					<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		</div>
+
+		<div class="content">
+			<ui5-side-navigation align-items="Start">
+				<ui5-side-navigation-item text="Home"></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="People" expanded>
+					<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals"></ui5-side-navigation-sub-item>
+					<ui5-side-navigation-sub-item text="From Other Teams"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Locations" selected></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Events">
+					<ui5-side-navigation-sub-item text="Local" icon="employee-rejections"></ui5-side-navigation-sub-item>
+					<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		</div>
+	</div>
 
 	<script>
 		var sideNavigation = document.querySelector("ui5-side-navigation"),
@@ -87,7 +157,6 @@
 		sideNavigation.addEventListener("ui5-selection-change", function() {
 			input.value = ++counter;
 		});
-
 	</script>
 </body>
 </html>

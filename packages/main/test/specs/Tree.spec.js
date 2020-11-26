@@ -26,8 +26,23 @@ describe("Tree general interaction", () => {
 		toggleButton.click();
 		const listItemsAfter = tree.shadow$$("ui5-li-tree").length;
 		assert.ok(listItemsAfter > listItemsBefore, "After expanding a node, there are more items in the list");
-	})
+	});
 
+	it("Tree items are aligned by their start", () => {
+		const tree = browser.$("#treeStartAligned");
+		const listItems = tree.shadow$$("ui5-li-tree");
+		const itemsIndented = [0, 3, 4].every(index => listItems[index].getProperty("indent") === false);
+
+		assert.strictEqual(itemsIndented, true,  "The items without an icon are indented");
+	});
+
+	it("Tree items are aligned by their text", () => {
+		const tree = browser.$("#treeTextAligned");
+		const listItems = tree.shadow$$("ui5-li-tree");
+		const itemsIndented = [0, 3, 4].every(index => listItems[index].getProperty("indent") === true);
+
+		assert.strictEqual(itemsIndented, true, "The items without an icon are indented");
+	});
 });
 
 describe("Tree proxies properties to list", () => {

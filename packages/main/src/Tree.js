@@ -4,6 +4,7 @@ import TreeItem from "./TreeItem.js";
 import List from "./List.js";
 import TreeListItem from "./TreeListItem.js";
 import ListMode from "./types/ListMode.js";
+import TreeItemsAlign from "./types/TreeItemsAlign.js";
 
 // Template
 import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
@@ -96,6 +97,27 @@ const metadata = {
 		 */
 		_minimal: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the items alignment.
+		 * <br><br>
+		 * Available options are <code>Start</code> and <code>Text (default)</code>.
+		 * <br>
+		 * The <code>Text</code> option means the items
+		 * will be aligned by their text - the items without icon will be indented.
+		 * <br>
+		 * The <code>Start</code> option means the items
+		 * will be aligned from the start - the items without icon will not be indented.
+		 *
+		 * @private
+		 * @type {TreeItemsAlign}
+		 * @defaultvalue "Start"
+		 * @since 1.0.0-rc.11
+		 */
+		alignItems: {
+			type: String,
+			defaultValue: TreeItemsAlign.Start,
 		},
 	},
 	managedSlots: true,
@@ -254,6 +276,7 @@ class Tree extends UI5Element {
 	onBeforeRendering() {
 		this._listItems = [];
 		buildTree(this, 1, this._listItems);
+		this.applyItemsAlignment();
 	}
 
 	onEnterDOM() {
@@ -272,12 +295,87 @@ class Tree extends UI5Element {
 		}, 0);
 	}
 
+	/**
+	 * Analyzes each level and applies identation if necessary.
+	 * - alignItems="Start": does not provide additional indentation
+	 * - alignItems="Text": provides additional indentation for tree level,
+	 *  that consists of mixture of items with and without icons.
+	 */
+	applyItemsAlignment() {
+		if (!this.alignItemsByText || !this.depth) {
+			return;
+		}
+
+		for (let i = 1; i <= this.depth; i++) {
+			const itemsForLevel = this.getItemsByLevel(this._listItems, i);
+			this.indentItems(itemsForLevel);
+		}
+	}
+
+	/**
+	 * Marks the items that needs to be idented.
+	 * @param {Array} items
+	 */
+	indentItems(items) {
+		const hasMixedItems = this.hasMixedItems(items);
+
+		if (!hasMixedItems) {
+			return;
+		}
+
+		items.forEach(item => {
+			item.indent = !item.treeItem.icon;
+		});
+	}
+
+	/**
+	 * Checks if the given items are mixture of ones with and without icons.
+	 * @param {Array} items
+	 * @returns {boolean}
+	 */
+	hasMixedItems(items) {
+		let itemsWithIcons = 0;
+		let itemsWithoutIcons = 0;
+
+		items.forEach(item => {
+			if (item.treeItem.icon) {
+				itemsWithIcons++;
+			} else {
+				itemsWithoutIcons++;
+			}
+		});
+
+		return itemsWithIcons > 0 && itemsWithoutIcons > 0;
+	}
+
+	/**
+	 * Filters all the items for a given level.
+	 * @param {Array} items
+	 * @param {Integer} level
+	 * @returns {Array}
+	 */
+	getItemsByLevel(items, level) {
+		return items.filter(item => item.level === level);
+	}
+
 	get list() {
 		return this.getDomRef();
 	}
 
 	get _role() {
 		return "tree";
+	}
+
+	get depth() {
+		if (this._listItems.length) {
+			return Math.max(...this._listItems.map(item => item.level));
+		}
+
+		return null;
+	}
+
+	get alignItemsByText() {
+		return this.alignItems === TreeItemsAlign.Text;
 	}
 
 	_onListItemStepIn(event) {
