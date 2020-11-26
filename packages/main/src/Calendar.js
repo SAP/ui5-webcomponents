@@ -168,7 +168,6 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-calendar</code> can be used stand alone to display the years, months, weeks and days
- * but the main purpose of the <code>ui5-calendar</code> is to be used within a <code>ui5-date-picker</code>
  * <br><br>
  *
  * <h3>Usage</h3>
