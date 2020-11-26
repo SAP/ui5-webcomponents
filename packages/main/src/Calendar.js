@@ -15,6 +15,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
@@ -28,7 +29,6 @@ import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
 
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 
 /**
  * @public
@@ -560,7 +560,7 @@ class Calendar extends UI5Element {
 	}
 
 	_handleSelectedDatesChange(event) {
-		const selectedDates = event.detail.dates; 
+		const selectedDates = event.detail.dates;
 		this.timestamp = selectedDates[selectedDates.length - 1];
 		this.selectedDates = [...selectedDates];
 		this.fireEvent("selected-dates-change", { dates: selectedDates });
