@@ -736,7 +736,7 @@ class ShellBar extends UI5Element {
 				style: `order: ${this.searchField.length ? 1 : -10}`,
 				id: `${this._id}-item-${1}`,
 				press: this._handleSearchIconPress.bind(this),
-				show: !!this.searchField.length
+				show: !!this.searchField.length,
 			},
 			...this.items.map((item, index) => {
 				return {
