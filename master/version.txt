@@ -1,5 +1,10 @@
-commit 7ae9253d6b28cf9dd867a986c7f198aee284265c
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Nov 25 10:32:16 2020 +0200
+commit 3597902a3246ce355f9661fd3b85b1b0d93f544b
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Nov 26 17:30:58 2020 +0200
 
-    feat(ui5-button): implement title property (#2492)
+    fix(ui5-shellbar): fix overlapping of the search box over icons (#2155)
+    
+    Now, when there is not enough space for the search field it is expanded to full width within the ui5-shellbar
+    and the search filed does not overlap any other elements in the ui5-shellbar any more.
+    
+    FIXES: #2044
