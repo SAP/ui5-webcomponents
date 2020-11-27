@@ -31,7 +31,7 @@ describe("Tree general interaction", () => {
 	it("Tree items are aligned by their start", () => {
 		const tree = browser.$("#treeStartAligned");
 		const listItems = tree.shadow$$("ui5-li-tree");
-		const itemsNotIndented = [0, 3, 4].every(index => listItems[index].getProperty("indent") === false);
+		const itemsNotIndented = [0, 3, 4].every(index => listItems[index].getProperty("indentText") === false);
 
 		assert.strictEqual(itemsNotIndented, true,  "The items without an icon are not indented");
 	});
@@ -39,7 +39,7 @@ describe("Tree general interaction", () => {
 	it("Tree items are aligned by their text", () => {
 		const tree = browser.$("#treeTextAligned");
 		const listItems = tree.shadow$$("ui5-li-tree");
-		const itemsIndented = [0, 3, 4].every(index => listItems[index].getProperty("indent") === true);
+		const itemsIndented = [0, 3, 4].every(index => listItems[index].getProperty("indentText") === true);
 
 		assert.strictEqual(itemsIndented, true, "The items without an icon are indented");
 	});

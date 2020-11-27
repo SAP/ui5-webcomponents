@@ -84,13 +84,24 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the item text will be indented with a predefined offset.
+		 * Defines if the item will be indented with a predefined offset.
 		 * @private
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.11
 		 */
 		indent: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines if the item text will be indented with a predefined offset.
+		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.11
+		 */
+		indentText: {
 			type: Boolean,
 		},
 	},
@@ -201,6 +212,10 @@ class TreeListItem extends ListItem {
 
 	get hasParent() {
 		return this.level > 1;
+	}
+
+	get indentOffset() {
+		return this.indent ? "1.5rem" : "0px";
 	}
 
 	get _toggleIconName() {

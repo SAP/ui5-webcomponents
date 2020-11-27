@@ -38,13 +38,14 @@
 	<div class="ui5-sn-spacer"></div>
 
 	{{#if fixedItems.length}}
-	   <div>
+		<div>
 			<div class="ui5-sn-bottom-content-border">
 				<span></span>
 			</div>
 			<ui5-tree
 				id="ui5-sn-fixed-items-tree"
 				mode="None"
+				align-items="{{alignItems}}"
 				?_minimal="{{collapsed}}"
 				_toggle-button-end
 				@ui5-item-click="{{handleTreeItemClick}}"
@@ -71,7 +72,7 @@
 					</ui5-tree-item>
 				{{/each}}
 			</ui5-tree>
-	   </div>
+		</div>
 	{{/if}}
 
 	{{> footer }}

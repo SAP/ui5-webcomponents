@@ -104,11 +104,11 @@ const metadata = {
 		 * <br><br>
 		 * Available options are <code>Start (default)</code> and <code>Indent</code>.
 		 * <br>
-		 * The <code>Indent</code> option means the items
-		 * will be aligned by their text - the items without icon will be indented.
-		 * <br>
 		 * The <code>Start</code> option means the items
 		 * will be aligned from the start - the items without icon will not be indented.
+		 * <br>
+		 * The <code>Indent</code> option means the items
+		 * will be aligned from the start for a tree branch - the items without icon will not be indented.
 		 *
 		 * @private
 		 * @type {TreeItemsAlign}
@@ -302,29 +302,33 @@ class Tree extends UI5Element {
 	 *  that consists of mixture of items with and without icons.
 	 */
 	applyItemsAlignment() {
-		if (!this.alignItemsIndented || !this.depth) {
+		if (!this.alignItemsIndent || !this.depth) {
 			return;
 		}
 
+		let parentIndented = false;
 		for (let i = 1; i <= this.depth; i++) {
-			const itemsForLevel = this.getItemsByLevel(this._listItems, i);
-			this.indentItems(itemsForLevel);
+			const items = this.getItemsByLevel(this._listItems, i);
+			const hasMixedItems = this.hasMixedItems(items);
+
+			this.indentItems(items, parentIndented, hasMixedItems);
+
+			if (hasMixedItems) {
+				parentIndented = true;
+			}
 		}
 	}
 
 	/**
 	 * Marks the items that needs to be idented.
 	 * @param {Array} items
+	 * @param {Array} indent to indent the entire item
+	 * @param {Array} items to indent the text only
 	 */
-	indentItems(items) {
-		const hasMixedItems = this.hasMixedItems(items);
-
-		if (!hasMixedItems) {
-			return;
-		}
-
+	indentItems(items, indent, indentText) {
 		items.forEach(item => {
-			item.indent = !item.treeItem.icon;
+			item.indent = indent;
+			item.indentText = indentText && !item.treeItem.icon;
 		});
 	}
 
@@ -374,7 +378,7 @@ class Tree extends UI5Element {
 		return null;
 	}
 
-	get alignItemsIndented() {
+	get alignItemsIndent() {
 		return this.alignItems === TreeItemsAlign.Indent;
 	}
 
