@@ -84,7 +84,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the item text will have a predefined offset.
+		 * Defines if the item text will be indented with a predefined offset.
 		 * @private
 		 * @type {boolean}
 		 * @defaultvalue false

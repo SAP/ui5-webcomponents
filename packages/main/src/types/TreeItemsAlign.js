@@ -9,9 +9,9 @@ const TreeItemsAlignments = {
 	/**
 	 * The tree items will be aligned by their text - the items without icons will be indented.
 	 * @public
-	 * @type {Text}
+	 * @type {Indent}
 	 */
-	Text: "Text",
+	Indent: "Indent",
 
 	/**
 	 * The tree items will be aligned from the start - the items without icons will not be indented.

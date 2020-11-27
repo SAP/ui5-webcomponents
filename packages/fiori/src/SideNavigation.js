@@ -36,9 +36,9 @@ const metadata = {
 		/**
 		 * Defines the items alignment.
 		 * <br><br>
-		 * Available options are <code>Start</code> and <code>Text (default)</code>.
+		 * Available options are <code>Start</code> and <code>Indent (default)</code>.
 		 * <br>
-		 * The <code>Text</code> option means the items
+		 * The <code>Indent</code> option means the items
 		 * will be aligned by their text - the items without icon will be indented.
 		 * <br>
 		 * The <code>Start</code> option means the items
@@ -51,7 +51,7 @@ const metadata = {
 		 */
 		alignItems: {
 			type: String,
-			defaultValue: SideNavItemsAlign.Text,
+			defaultValue: SideNavItemsAlign.Indent,
 		},
 
 		/**

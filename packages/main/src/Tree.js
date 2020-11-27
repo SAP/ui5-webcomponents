@@ -102,9 +102,9 @@ const metadata = {
 		/**
 		 * Defines the items alignment.
 		 * <br><br>
-		 * Available options are <code>Start</code> and <code>Text (default)</code>.
+		 * Available options are <code>Start (default)</code> and <code>Indent</code>.
 		 * <br>
-		 * The <code>Text</code> option means the items
+		 * The <code>Indent</code> option means the items
 		 * will be aligned by their text - the items without icon will be indented.
 		 * <br>
 		 * The <code>Start</code> option means the items
@@ -298,11 +298,11 @@ class Tree extends UI5Element {
 	/**
 	 * Analyzes each level and applies identation if necessary.
 	 * - alignItems="Start": does not provide additional indentation
-	 * - alignItems="Text": provides additional indentation for tree level,
+	 * - alignItems="Indent": provides additional indentation for tree level,
 	 *  that consists of mixture of items with and without icons.
 	 */
 	applyItemsAlignment() {
-		if (!this.alignItemsByText || !this.depth) {
+		if (!this.alignItemsIndented || !this.depth) {
 			return;
 		}
 
@@ -374,8 +374,8 @@ class Tree extends UI5Element {
 		return null;
 	}
 
-	get alignItemsByText() {
-		return this.alignItems === TreeItemsAlign.Text;
+	get alignItemsIndented() {
+		return this.alignItems === TreeItemsAlign.Indent;
 	}
 
 	_onListItemStepIn(event) {
