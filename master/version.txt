@@ -1,10 +1,13 @@
-commit 3597902a3246ce355f9661fd3b85b1b0d93f544b
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Nov 26 17:30:58 2020 +0200
+commit d7542af1007c13ffb18eef417f2297351adcfdf9
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Fri Nov 27 13:08:03 2020 +0800
 
-    fix(ui5-shellbar): fix overlapping of the search box over icons (#2155)
+    Translation Delivery (#2519)
     
-    Now, when there is not enough space for the search field it is expanded to full width within the ui5-shellbar
-    and the search filed does not overlap any other elements in the ui5-shellbar any more.
+    * chore: translation delivery
     
-    FIXES: #2044
+    Change-Id: I1d5c7ef323eb162ccd4c662455d0f7d8f3e9ac1f
+    
+    * chore: translation delivery
+    
+    Change-Id: Id8f954867571b9d96ec9421b5f7405eb063c83d5
