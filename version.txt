@@ -1,6 +1,6 @@
-commit f1b4fd11a8d341543296948f6ff779e2d946d6c2
-Merge: 7c34236 083363a
+commit 3cab65b9fe03f01943d03d5de3a16aba2f551a14
+Merge: f1b4fd1 03abf00
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Oct 23 11:43:42 2020 +0300
+Date:   Fri Nov 27 11:30:59 2020 +0200
 
-    Merge tag 'v1.0.0-rc.9' into latest-release-website
+    Merge rc.10

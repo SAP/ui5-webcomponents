@@ -152,6 +152,13 @@
 		<ui5-li >item</ui5-li>
 	</ui5-list>
 
+	<ui5-list id="listWithEmptyItem">
+		<ui5-li id="emptyItem"></ui5-li>
+		<ui5-li>IPhone 3</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+	</ui5-list>
+	<ui5-button id="changeEmptyItem">Change empty item text</ui5-button>
+
 	<script>
 		'use strict';
 
@@ -201,6 +208,10 @@
 		btnTrigger.addEventListener("click", function(e) {
 			var scrollableContiner = infiniteScrollEx.shadowRoot.querySelector(".ui5-list-root");
 			scrollableContiner.scroll(0, scrollableContiner.scrollHeight);
+		});
+
+		changeEmptyItem.addEventListener("click", function(e) {
+			emptyItem.textContent = "updated";
 		});
 
 		var loadMoreCounter = 0;

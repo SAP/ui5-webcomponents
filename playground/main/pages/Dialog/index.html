@@ -51,6 +51,9 @@
 	<br>
 	<br>
 	<ui5-button id="draggable-open">Open draggable dialog</ui5-button>
+	<br>
+	<br>
+	<ui5-button id="resizable-open">Open resizable dialog</ui5-button>
 
 	<ui5-block-layer></ui5-block-layer>
 
@@ -204,6 +207,15 @@
 		</div>
 	</ui5-dialog>
 
+	<ui5-dialog id="resizable-dialog" header-text="Resizable dialog" resizable>
+		<p>Resize this dialog by dragging it by its resize handle.</p>
+		<p>This feature available only on Desktop.</p>
+
+		<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<ui5-button id="resizable-close" design="Emphasized">OK</ui5-button>
+		</div>
+	</ui5-dialog>
+
 	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
 		<!-- <div slot="header">
 			Hello World
@@ -320,7 +332,8 @@
 		window["wide-open2"].addEventListener("click", function () { window["wide-dialog2"].open(); });
 		window["draggable-open"].addEventListener("click", function () { window["draggable-dialog"].open(); });
 		window["draggable-close"].addEventListener("click", function () { window["draggable-dialog"].close(); });
-
+		window["resizable-open"].addEventListener("click", function () { window["resizable-dialog"].open(); });
+		window["resizable-close"].addEventListener("click", function () { window["resizable-dialog"].close(); });
 	</script>
 </body>
 

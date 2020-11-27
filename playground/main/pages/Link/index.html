@@ -83,6 +83,12 @@
 		<ui5-input id="helper-input" value="0"></ui5-input>
 	</section>
 
+	<section class="group">
+		<label id="lbl">Text from aria-labelledby</label>
+		<ui5-link id="ariaLbl" aria-label="Text from aria-label">Go to</ui5-link>
+		<ui5-link id="ariaLblBy" aria-labelledby="lbl">Go to</ui5-link>
+	</section>
+
 	<script>
 		var disLink = document.querySelector("#disabled-link");
 		var link = document.querySelector("#link");
