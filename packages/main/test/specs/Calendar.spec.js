@@ -196,5 +196,58 @@ describe("Calendar general interaction", () => {
 		browser.keys('PageUp');
 
 		assert.ok(calendarHeader.shadow$(".ui5-calheader-middlebtn").getAttribute("hidden"), "The button for month is hidden");
+		browser.keys("Space");
+	});
+
+	it("Calendar with 'Multiple' selection type", () => {
+		const calendar = browser.$("#calendar1");
+		calendar.setAttribute("selection", "Multiple");
+		let selectedDates = browser.execute(() => document.getElementById("calendar1").selectedDates );
+
+		// deselect previously selected dates
+		selectedDates.forEach(timestamp => {
+			const dateDOM = calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="${timestamp}"]`);
+			dateDOM.click();
+		});
+
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
+
+		const dates = [
+			calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="971136000"]`),
+			calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="971222400"]`),
+			calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="971308800"]`),
+		];
+
+		dates.forEach(date => {
+			date.click();
+			assert.ok(date.hasClass("ui5-dp-item--selected"), `${date.getAttribute("data-sap-timestamp")} is selected`);
+		});
+
+		selectedDates = browser.execute(() => document.getElementById("calendar1").selectedDates );
+
+		assert.deepEqual(selectedDates, [971136000, 971222400, 971308800], "Change event is fired with proper data");
+	});
+
+	it("Calendar with 'Range' selection type", () => {
+		const calendar = browser.$("#calendar1");
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
+		calendar.setAttribute("selection", "Range");
+
+		const dates = [
+			calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="971740800"]`),
+			calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="971827200"]`),
+			calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="971913600"]`),
+		];
+
+		dates[0].click();
+		dates[2].click();
+
+		assert.ok(dates[0].hasClass("ui5-dp-item--selected"), `${dates[0].getAttribute("data-sap-timestamp")} is selected`);
+		assert.ok(dates[1].hasClass("ui5-dp-item--selected-between"), `${dates[1].getAttribute("data-sap-timestamp")} is selected between`);
+		assert.ok(dates[2].hasClass("ui5-dp-item--selected"), `${dates[2].getAttribute("data-sap-timestamp")} is selected`);
+
+		const selectedDates = browser.execute(() => document.getElementById("calendar1").selectedDates );
+
+		assert.deepEqual(selectedDates, [971740800, 971913600], "Change event is fired with proper data");
 	});
 });

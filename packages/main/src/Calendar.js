@@ -37,15 +37,6 @@ const metadata = {
 	tag: "ui5-calendar",
 	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
-		 * Defines the UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
-		 * @type {Integer}
-		 * @private
-		*/
-		timestamp: {
-			type: Integer,
-		},
-
-		/**
 		 * Defines the calendar type used for display.
 		 * If not defined, the calendar type of the global configuration is used.
 		 * Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
@@ -121,6 +112,15 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
+		 * @type {Integer}
+		 * @private
+		*/
+		timestamp: {
+			type: Integer,
+		},
+
 		_header: {
 			type: Object,
 		},
@@ -155,10 +155,14 @@ const metadata = {
 		/**
 		 * Fired when the selected dates changed.
 		 * @event sap.ui.webcomponents.main.Calendar#selected-dates-change
-		 * @param {Array} dates The selected dates' timestamps
+		 * @param {Array} dates The selected dates timestamps
 		 * @public
 		 */
-		"selected-dates-change": { type: Array },
+		"selected-dates-change": {
+			detail: {
+				dates: { type: Array },
+			},
+		 },
 	},
 };
 
