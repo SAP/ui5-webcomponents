@@ -7,5 +7,8 @@ permalink: /playground/components
 accordion: false
 ---
 
-# Components:
+# Components
+
+In this section, you can find out API docs & samples for all of our components.
+
 {:toc}

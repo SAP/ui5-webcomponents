@@ -74,20 +74,30 @@
 		{{/if}}
 	</div>
 
-	<div id="{{_id}}-searchfield-wrapper"
-		class="ui5-shellbar-search-field"
-		style="{{styles.searchField}}"
-	>
-		{{#if searchField.length}}
-			<slot name="searchField"></slot>
-		{{/if}}
-	</div>
-
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
-
 		<div class="ui5-shellbar-overflow-container-right-child">
 
 			{{#if hasSearchField}}
+				{{#if _fullWidthSearch}}
+					<div class="ui5-shellbar-search-full-width-wrapper" style="{{styles.searchField}}">
+						<div class="ui5-shellbar-search-full-field">
+							<slot name="searchField"></slot>
+						</div>
+						<ui5-button
+							@click={{_handleCancelButtonPress}}
+							class="ui5-shellbar-button"
+						>
+							Cancel
+						</ui5-button>
+					</div>
+				{{/if}}
+
+				<div class="ui5-shellbar-search-field" style="{{styles.searchField}}">
+					{{#unless _fullWidthSearch}}
+							<slot name="searchField"></slot>
+					{{/unless}}
+				</div>
+
 				<ui5-button
 					id="{{this._id}}-item-1"
 					class="{{classes.items.search}} ui5-shellbar-button ui5-shellbar-search-button"

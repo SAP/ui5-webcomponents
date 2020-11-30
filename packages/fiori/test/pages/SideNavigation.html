@@ -33,10 +33,18 @@
 
 		.content {
 			height: 100%;
+			display: flex;
 		}
 
 		ui5-shellbar::part(root) {
 			padding-left: .5rem;
+		}
+
+		.header {
+			display: flex;
+			flex-direction: column;
+			padding: 1rem;
+			box-sizing: border-box;
 		}
 	</style>
 </head>
@@ -52,17 +60,28 @@
 
 	<div class="content">
 		<ui5-side-navigation id="sn1">
+
+			<!-- Header -->
+			<div slot="header" class="header">
+				<ui5-avatar size="L" image="./img/man_avatar_1.png"></ui5-avatar>
+				<br>
+				<ui5-title>Willam Brown</ui5-title>
+				<ui5-label>UX expert</ui5-label>
+			</div>
+
+			<!-- Items -->
 			<ui5-side-navigation-item text="Home" icon="home" ></ui5-side-navigation-item>
 			<ui5-side-navigation-item text="People" expanded icon="group">
 				<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
-			<ui5-side-navigation-item text="Events" icon="calendar">
+			<ui5-side-navigation-item text="Events" icon="calendar" whole-item-toggleable>
 				<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
 
+			<!-- Fixed Items -->
 			<ui5-side-navigation-item slot="fixedItems" text="Usefull Links" icon="chain-link">
 				<ui5-side-navigation-sub-item text="Vacation Tool"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item text="HR tool"></ui5-side-navigation-sub-item>
@@ -70,7 +89,15 @@
 			<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
 		</ui5-side-navigation>
 
-		<ui5-input id="counter" value="0"></ui5-input>
+		<div>
+			<ui5-label>selection-change event</ui5-label>
+			<ui5-input id="counter" value="0"></ui5-input>
+		</div>
+
+		<div>
+			<ui5-label>click event</ui5-label>
+			<ui5-input id="click-counter" value="0"></ui5-input>
+		</div>
 	</div>
 
 
@@ -79,10 +106,18 @@
 	<script>
 		var sideNavigation = document.querySelector("ui5-side-navigation"),
 			input = document.querySelector("#counter"),
-			counter = 0;
+			clickInput = document.querySelector("#click-counter"),
+			counter = 0,
+			clickCounter = 0;
 		document.querySelector("#startButton").addEventListener("click", function(event) {
 			sideNavigation.collapsed = !sideNavigation.collapsed;
 		});
+
+		document.querySelectorAll("ui5-side-navigation-item").forEach(item => {
+			item.addEventListener("click", event => {
+				clickInput.value = ++clickCounter;
+			});
+		})
 
 		sideNavigation.addEventListener("ui5-selection-change", function() {
 			input.value = ++counter;

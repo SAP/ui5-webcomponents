@@ -24,7 +24,6 @@
 @import "../base/Switch-parameters.css";
 @import "./TabContainer-parameters.css";
 @import "../base/TextArea-parameters.css";
-@import "../base/TimelineItem-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "./WheelSlider-parameters.css";
 @import "../base/ToggleButton-parameters.css";
@@ -36,3 +35,4 @@
 @import "./Token-parameters.css";
 @import "../base/ValueStateMessage-parameters.css";
 @import "./MultiComboBox-parameters.css";
+@import "./SliderBase-parameters.css";

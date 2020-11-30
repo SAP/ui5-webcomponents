@@ -43,6 +43,17 @@ const metadata = {
 			type: String,
 		},
 	},
+
+	events: {
+		/**
+		 * @public
+		 * @event
+		 * @since 1.0.0-rc.9
+		 */
+		click: {
+
+		},
+	},
 };
 
 /**
