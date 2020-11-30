@@ -16,7 +16,7 @@ import {
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 // Templates
@@ -800,7 +800,7 @@ class Input extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("[ui5-popover]");
+		return staticAreaItem && staticAreaItem.querySelector("[ui5-popover]");
 	}
 
 	enableSuggestions() {
@@ -1047,16 +1047,18 @@ class Input extends UI5Element {
 		return this.hasValueState ? `${this._id}-valueStateDesc` : "";
 	}
 
+	get suggestionsCount() {
+		return this.showSuggestions ? `${this._id}-suggestionsCount` : "";
+	}
+
 	get accInfo() {
 		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
-		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._id}-suggestionsCount ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId} ${this._id}-suggestionsCount`.trim();
+		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this.suggestionsCount} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId} ${this.suggestionsCount}`.trim();
 
 		return {
-			"wrapper": {
-			},
 			"input": {
-				"ariaDescribedBy": ariaDescribedBy,
+				"ariaDescribedBy": ariaDescribedBy || undefined,
 				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
 				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
 				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,

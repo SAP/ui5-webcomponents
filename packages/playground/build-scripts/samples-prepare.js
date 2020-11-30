@@ -12,7 +12,10 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-	"MultiInput"
+	"MultiInput",
+	"RangeSlider",
+	"Slider",
+	"Wizard",
 ];
 
 packages.forEach(package => {

@@ -1,0 +1,33 @@
+
+:root {
+	--_ui5_slider_progress_container_background: var(--sapField_BorderColor);
+	--_ui5_slider_progress_border: none;
+	--_ui5_slider_inner_height: 0.25rem;
+	--_ui5_slider_progress_border_radius: 0.25rem;
+	--_ui5_slider_progress_background: var(--sapActiveColor);
+	--_ui5_slider_handle_height: 1.625rem;
+	--_ui5_slider_handle_width: 1.625rem;
+	--_ui5_slider_handle_border: solid 0.125rem var(--sapField_BorderColor);
+	--_ui5_slider_handle_background: var(--sapButton_Background);
+	--_ui5_range_slider_handle_background: rgba(var(--sapButton_Background), 0.25);
+	--_ui5_slider_handle_top: -0.825rem;
+	--_ui5_slider_handle_margin_left: -0.9725rem;
+	--_ui5_slider_handle_hover_background: var(--sapButton_Hover_Background);
+	--_ui5_slider_handle_hover_border: var(--sapButton_Hover_BorderColor);
+	--_ui5_range_slider_handle_hover_background: rgba(var(--sapButton_Background), 0.25);
+	--_ui5_slider_tickmark_color: #89919a;
+	--_ui5_slider_tickmark_top: -0.375rem;
+	--_ui5_slider_disabled_opacity: 0.4;
+	--_ui5_slider_tooltip_fontsize: var(--sapFontSmallSize);
+	--_ui5_slider_tooltip_color: var(--sapContent_LabelColor);
+	--_ui5_slider_tooltip_background: var(--sapField_Background);
+	--_ui5_slider_tooltip_border_radius: var(--sapElement_BorderCornerRadius);
+	--_ui5_slider_tooltip_border_color: var(--sapField_BorderColor);
+	--_ui5_slider_tooltip_padding: 0.4125rem;
+	--_ui5_slider_tooltip_height: 1rem;
+	--_ui5_slider_tooltip_box_shadow: none;
+	--_ui5_slider_tooltip_min_width: 2rem;
+	--_ui5_slider_tooltip_bottom: 2rem;
+	--_ui5_slider_label_fontsize: var(--sapFontSmallSize);
+	--_ui5_slider_label_color: var(--sapContent_LabelColor);
+}

@@ -23,6 +23,7 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 
 // Icons
 import "@ui5/webcomponents-icons/dist/Assets.js";
+import "@ui5/webcomponents-icons-tnt/dist/Assets.js";
 
 /* Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
 import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
@@ -64,6 +65,8 @@ import RadioButton from "./dist/RadioButton.js";
 import ResponsivePopover from "./dist/ResponsivePopover.js";
 import SegmentedButton from "./dist/SegmentedButton.js";
 import Select from "./dist/Select.js";
+import Slider from "./dist/Slider.js";
+import RangeSlider from "./dist/RangeSlider.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
 import MultiComboBox from "./dist/MultiComboBox.js";
@@ -77,7 +80,6 @@ import TableColumn from "./dist/TableColumn.js";
 import TableRow from "./dist/TableRow.js";
 import TableCell from "./dist/TableCell.js";
 import TextArea from "./dist/TextArea.js";
-import Timeline from "./dist/Timeline.js";
 import TimePicker from "./dist/TimePicker.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";

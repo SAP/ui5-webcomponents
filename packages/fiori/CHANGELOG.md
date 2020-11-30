@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.10](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.9...v1.0.0-rc.10) (2020-11-12)
+
+
+
+### Features
+
+* **ui5-wizard:** introduce new component ([#2400](https://github.com/SAP/ui5-webcomponents/issues/2400)) ([bdec517](https://github.com/SAP/ui5-webcomponents/commit/bdec517)), closes [#2368](https://github.com/SAP/ui5-webcomponents/issues/2368)
+
+
+
 # [1.0.0-rc.9](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.8...v1.0.0-rc.9) (2020-10-08)
 
 

@@ -16,7 +16,7 @@ const metadata = {
 	tag: "ui5-timeline",
 	languageAware: true,
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.Timeline.prototype */ {
 		/**
 		 * Determines the content of the <code>ui5-timeline</code>.
 		 *
@@ -45,7 +45,7 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Timeline
+ * @alias sap.ui.webcomponents.fiori.Timeline
  * @extends UI5Element
  * @tagname ui5-timeline
  * @appenddocs TimelineItem
@@ -73,7 +73,7 @@ class Timeline extends UI5Element {
 		super();
 
 		this.initItemNavigation();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get dependencies() {
@@ -81,7 +81,7 @@ class Timeline extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	initItemNavigation() {

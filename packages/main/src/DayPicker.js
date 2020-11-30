@@ -4,7 +4,7 @@ import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleD
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
@@ -56,6 +56,7 @@ const monthDiff = (startDate, endDate) => {
  */
 const metadata = {
 	tag: "ui5-daypicker",
+	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -212,8 +213,6 @@ class DayPicker extends UI5Element {
 
 	constructor() {
 		super();
-		this._oLocale = getLocale();
-		this._oLocaleData = new LocaleData(this._oLocale);
 
 		this._itemNav = new ItemNavigation(this, {
 			rowSize: 7,
@@ -249,6 +248,8 @@ class DayPicker extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		const localeData = getCachedLocaleDataInstance(getLocale());
+
 		let oCalDate,
 			day,
 			timestamp,
@@ -261,7 +262,7 @@ class DayPicker extends UI5Element {
 		let week = [];
 		this._weekNumbers = [];
 		let weekday;
-		const _monthsNameWide = this._oLocaleData.getMonths("wide", this._calendarDate._oUDate.sCalendarType);
+		const _monthsNameWide = localeData.getMonths("wide", this._calendarDate._oUDate.sCalendarType);
 
 		this._minDateObject = new Date(this._minDate);
 		this._maxDateObject = new Date(this._maxDate);
@@ -335,7 +336,7 @@ class DayPicker extends UI5Element {
 
 			if (day.classes.indexOf("ui5-dp-wday6") !== -1
 				|| _aVisibleDays.length - 1 === i) {
-				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
+				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), getLocale(), localeData);
 				if (lastWeekNumber !== weekNumber) {
 					const weekNum = {
 						weekNum: weekNumber,
@@ -358,8 +359,8 @@ class DayPicker extends UI5Element {
 			this._itemNav.current = todayIndex;
 		}
 
-		const aDayNamesWide = this._oLocaleData.getDays("wide", this._primaryCalendarType);
-		const aDayNamesAbbreviated = this._oLocaleData.getDays("abbreviated", this._primaryCalendarType);
+		const aDayNamesWide = localeData.getDays("wide", this._primaryCalendarType);
+		const aDayNamesAbbreviated = localeData.getDays("abbreviated", this._primaryCalendarType);
 		const aUltraShortNames = aDayNamesAbbreviated.map(n => n);
 		let dayName;
 
@@ -388,6 +389,11 @@ class DayPicker extends UI5Element {
 
 	onAfterRendering() {
 		this._fireDayPickerRendered();
+		if (this._inputLiveChangeTrigger) {
+			this._inputLiveChangeTrigger = false;
+		} else {
+			this._itemNav.focusCurrent();
+		}
 	}
 
 	_onmousedown(event) {
@@ -607,7 +613,8 @@ class DayPicker extends UI5Element {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
 	get focusableDays() {
@@ -793,9 +800,11 @@ class DayPicker extends UI5Element {
 	}
 
 	_isWeekend(oDate) {
+		const localeData = getCachedLocaleDataInstance(getLocale());
+
 		const iWeekDay = oDate.getDay(),
-			iWeekendStart = this._oLocaleData.getWeekendStart(),
-			iWeekendEnd = this._oLocaleData.getWeekendEnd();
+			iWeekendStart = localeData.getWeekendStart(),
+			iWeekendEnd = localeData.getWeekendEnd();
 
 		return (iWeekDay >= iWeekendStart && iWeekDay <= iWeekendEnd)
 			|| (iWeekendEnd < iWeekendStart && (iWeekDay >= iWeekendStart || iWeekDay <= iWeekendEnd));
@@ -926,8 +935,9 @@ class DayPicker extends UI5Element {
 	}
 
 	_getFirstDayOfWeek() {
+		const localeData = getCachedLocaleDataInstance(getLocale());
 		const confFirstDayOfWeek = getFirstDayOfWeek();
-		return Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek : this._oLocaleData.getFirstDayOfWeek();
+		return Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek : localeData.getFirstDayOfWeek();
 	}
 
 	get styles() {

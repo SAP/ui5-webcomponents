@@ -6,8 +6,8 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
-import "@ui5/webcomponents-icons/dist/icons/upload-to-cloud.js";
-import "@ui5/webcomponents-icons/dist/icons/document.js";
+import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
+import "@ui5/webcomponents-icons/dist/document.js";
 import {
 	UPLOADCOLLECTION_NO_DATA_TEXT,
 	UPLOADCOLLECTION_NO_DATA_DESCRIPTION,

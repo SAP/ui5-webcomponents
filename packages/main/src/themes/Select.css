@@ -8,7 +8,6 @@
 	outline: none;
 	cursor: pointer;
 	overflow: hidden;
-	box-shadow: var(--sapUiContentShadow1);
 }
 
 .ui5-select-label-root {

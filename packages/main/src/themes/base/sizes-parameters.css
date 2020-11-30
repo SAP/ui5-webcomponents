@@ -25,7 +25,7 @@
 	--_ui5_input_value_state_icon_padding: var(--_ui5-input-icon-padding);
 	--_ui5_list_no_data_height: 3rem;
 	--_ui5_list_item_cb_margin_right: 0;
-	--_ui5_list_item_title_size: var(--sapMFontLargeSize);
+	--_ui5_list_item_title_size: var(--sapFontLargeSize);
 	--_ui5_list_item_img_size: 3rem;
 	--_ui5_list_item_img_margin: 0.5rem 0.75rem 0.5rem 0rem;
 	--_ui5_list_item_base_height: 2.75rem;
@@ -198,6 +198,15 @@
 
 	/* Side Navigation */
 	--ui5_side_navigation_item_height: 2rem;
+
+	/* Slider */
+	--_ui5_slider_handle_height: 1.25rem;
+	--_ui5_slider_handle_width: 1.25rem;
+	--_ui5_slider_handle_top: -0.6425rem;
+	--_ui5_slider_handle_margin_left: -0.7825rem;
+	--_ui5_slider_tooltip_height: 1rem;
+	--_ui5_slider_tooltip_padding: 0.25rem;
+	--_ui5_slider_tooltip_bottom: 1.825rem;
 
 	/* Tree */
 	--_ui5-tree-indent-step: 0.5rem;

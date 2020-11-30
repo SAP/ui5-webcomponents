@@ -4,7 +4,7 @@ import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleD
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -23,8 +23,9 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/appointment-2.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -142,7 +143,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-datepicker</code> is required.
+		 * Defines whether the <code>ui5-date-picker</code> is required.
 		 *
 		 * @since 1.0.0-rc.9
 		 * @type {Boolean}
@@ -419,7 +420,8 @@ class DatePicker extends UI5Element {
 					calendar._hideYearPicker();
 				}
 			},
-			afterOpen: () => {
+			afterOpen: async () => {
+				await RenderScheduler.whenFinished();
 				const calendar = this.calendar;
 
 				if (!calendar) {
@@ -427,6 +429,7 @@ class DatePicker extends UI5Element {
 				}
 
 				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
+				dayPicker._inputLiveChangeTrigger = false;
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
 				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
 				let focusableDay = selectedDay || today;
@@ -666,6 +669,15 @@ class DatePicker extends UI5Element {
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
+		if (this.responsivePopover) {
+			const calendar = this.calendar;
+			const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
+			// If day picker component rerendering is triggered due to a change in the date picker component input filed,
+			// then mark this trigger and avoid moving the focus from the date picker input field throughout the on after
+			// rendering hook of the day picker component
+			dayPicker._inputLiveChangeTrigger = true;
+		}
+
 		this.value = nextValue;
 		this.fireEvent("input", { value: nextValue, valid: isValid });
 	}
@@ -761,7 +773,8 @@ class DatePicker extends UI5Element {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
 	get _formatPattern() {

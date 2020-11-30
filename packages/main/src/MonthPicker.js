@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -19,6 +19,7 @@ import styles from "./generated/themes/MonthPicker.css.js";
  */
 const metadata = {
 	tag: "ui5-monthpicker",
+	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -61,6 +62,11 @@ const metadata = {
 		 */
 		maxDate: {
 			type: String,
+		},
+
+		_selectedDates: {
+			type: Integer,
+			multiple: true,
 		},
 
 		_quarters: {
@@ -133,8 +139,6 @@ class MonthPicker extends UI5Element {
 
 	constructor() {
 		super();
-		this._oLocale = getLocale();
-		this._oLocaleData = new LocaleData(this._oLocale);
 
 		this._itemNav = new ItemNavigation(this, {
 			pageSize: 12,
@@ -161,13 +165,18 @@ class MonthPicker extends UI5Element {
 			ItemNavigation.BORDER_REACH,
 			this._handleItemNavigationBorderReach.bind(this)
 		);
+
+		this._selectedDates = [];
 	}
 
 	onBeforeRendering() {
+		const localeData = getCachedLocaleDataInstance(getLocale());
+
 		const quarters = [];
-		const oCalDate = CalendarDate.fromTimestamp(new Date().getTime(), this._primaryCalendarType);
+		const oCalDate = this._calendarDate;
 		let timestamp;
 
+		/* eslint-disable no-loop-func */
 		for (let i = 0; i < 12; i++) {
 			oCalDate.setMonth(i);
 			timestamp = oCalDate.valueOf() / 1000;
@@ -175,11 +184,12 @@ class MonthPicker extends UI5Element {
 			const month = {
 				timestamp: timestamp.toString(),
 				id: `${this._id}-m${i}`,
-				name: this._oLocaleData.getMonths("wide", this._primaryCalendarType)[i],
+				selected: this._selectedDates.some(d => d === timestamp),
+				name: localeData.getMonths("wide", this._primaryCalendarType)[i],
 				classes: "ui5-mp-item",
 			};
 
-			if (this._month === i) {
+			if (month.selected) {
 				month.classes += " ui5-mp-item--selected";
 			}
 
@@ -221,7 +231,8 @@ class MonthPicker extends UI5Element {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
 	get _isPattern() {
@@ -231,8 +242,8 @@ class MonthPicker extends UI5Element {
 	_onmousedown(event) {
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
 			const targetTimestamp = this.getTimestampFromDOM(event.target);
-			const focusedItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === targetTimestamp);
-			this._itemNav.currentIndex = this._itemNav._getItems().indexOf(focusedItem);
+			const focusedItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === targetTimestamp);
+			this._itemNav.currentIndex = focusedItemIndex;
 			this._itemNav.focusCurrent();
 		}
 	}

@@ -4,7 +4,7 @@ import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleD
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -209,8 +209,6 @@ class Calendar extends UI5Element {
 
 	constructor() {
 		super();
-		this._oLocale = getLocale();
-		this._oLocaleData = new LocaleData(this._oLocale);
 		this._header = {};
 		this._header.onPressPrevious = this._handlePrevious.bind(this);
 		this._header.onPressNext = this._handleNext.bind(this);
@@ -235,6 +233,7 @@ class Calendar extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		const localeData = getCachedLocaleDataInstance(getLocale());
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType });
 		const firstDayOfCalendarTimeStamp = this._getMinCalendarDate();
 
@@ -252,7 +251,7 @@ class Calendar extends UI5Element {
 		this._oMonth.primaryCalendarType = this._primaryCalendarType;
 		this._oMonth.minDate = this.minDate;
 		this._oMonth.maxDate = this.maxDate;
-		this._header.monthText = this._oLocaleData.getMonths("wide", this._primaryCalendarType)[this._month];
+		this._header.monthText = localeData.getMonths("wide", this._primaryCalendarType)[this._month];
 		this._header.yearText = oYearFormat.format(this._localDate, true);
 
 		// month picker
@@ -352,7 +351,8 @@ class Calendar extends UI5Element {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
 	get _formatPattern() {
@@ -421,6 +421,8 @@ class Calendar extends UI5Element {
 	_handleSelectedDatesChange(event) {
 		this.selectedDates = [...event.detail.dates];
 
+		this.timestamp = this.selectedDates[0];
+
 		this.fireEvent("selected-dates-change", { dates: event.detail.dates });
 	}
 
@@ -436,21 +438,6 @@ class Calendar extends UI5Element {
 		if (event.detail.end) {
 			this._handleNext();
 		}
-	}
-
-	_handleSelectedMonthChange(event) {
-		const oNewDate = this._calendarDate;
-		const newMonthIndex = CalendarDate.fromTimestamp(
-			event.detail.timestamp * 1000,
-			this._primaryCalendarType
-		).getMonth();
-
-		oNewDate.setMonth(newMonthIndex);
-		this.timestamp = oNewDate.valueOf() / 1000;
-
-		this._hideMonthPicker();
-
-		this._focusFirstDayOfMonth(oNewDate);
 	}
 
 	_focusFirstDayOfMonth(targetDate) {
@@ -469,19 +456,35 @@ class Calendar extends UI5Element {
 		dayPicker._itemNav.focusCurrent();
 	}
 
-	_handleSelectedYearChange(event) {
-		const oNewDate = CalendarDate.fromTimestamp(
-			event.detail.timestamp * 1000,
-			this._primaryCalendarType
-		);
-		oNewDate.setMonth(0);
-		oNewDate.setDate(1);
+	_handleSelectedMonthChange(event) {
+		const oNewDate = this._calendarDate;
+		const oFocusedDate = CalendarDate.fromTimestamp(event.detail.timestamp * 1000, this._primaryCalendarType);
 
+		oNewDate.setMonth(oFocusedDate.getMonth());
 		this.timestamp = oNewDate.valueOf() / 1000;
+		this._monthPicker.timestamp = this.timestamp;
+
+		this._hideMonthPicker();
+		this._setDayPickerCurrentIndex(oNewDate);
+	}
+
+	_handleSelectedYearChange(event) {
+		const oNewDate = this._calendarDate;
+		const oFocusedDate = CalendarDate.fromTimestamp(event.detail.timestamp * 1000, this._primaryCalendarType);
+
+		oNewDate.setYear(oFocusedDate.getYear());
+		this.timestamp = oNewDate.valueOf() / 1000;
+		this._yearPicker.timestamp = this.timestamp;
 
 		this._hideYearPicker();
+		this._setDayPickerCurrentIndex(oNewDate);
+	}
 
-		this._focusFirstDayOfMonth(oNewDate);
+	_setDayPickerCurrentIndex(calDate) {
+		const currentDate = new CalendarDate(calDate);
+		const dayPicker = this.shadowRoot.querySelector("[ui5-daypicker]");
+		const currentDateIndex = dayPicker._getVisibleDays(currentDate).findIndex(date => date.valueOf() === currentDate.valueOf());
+		dayPicker._itemNav.currentIndex = currentDateIndex;
 	}
 
 	_handleMonthButtonPress() {
@@ -565,11 +568,9 @@ class Calendar extends UI5Element {
 			}
 		});
 
-		const weekDaysCount = 7;
-
 		if (lastDayOfMonthIndex !== -1) {
 			// find the DOM for the last day index
-			const lastDay = dayPicker.shadowRoot.querySelector(".ui5-dp-content").children[parseInt(lastDayOfMonthIndex / weekDaysCount) + 1].children[(lastDayOfMonthIndex % weekDaysCount)];
+			const lastDay = dayPicker.shadowRoot.querySelectorAll(".ui5-dp-content .ui5-dp-item")[lastDayOfMonthIndex];
 
 			// update current item in ItemNavigation
 			dayPicker._itemNav.current = lastDayOfMonthIndex;
@@ -675,6 +676,14 @@ class Calendar extends UI5Element {
 
 		this._calendarWidth = calendarRect.width.toString();
 		this._calendarHeight = calendarRect.height.toString();
+
+		const monthPicker = this.shadowRoot.querySelector("[ui5-monthpicker]");
+		monthPicker._selectedDates = [...this.selectedDates];
+		const currentMonthIndex = monthPicker._itemNav._getItems().findIndex(item => {
+			const calDate = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000, this._primaryCalendarType);
+			return calDate.getMonth() === this._calendarDate.getMonth();
+		});
+		monthPicker._itemNav.currentIndex = currentMonthIndex;
 		this._header._isMonthButtonHidden = true;
 	}
 
@@ -691,6 +700,14 @@ class Calendar extends UI5Element {
 
 		this._calendarWidth = calendarRect.width.toString();
 		this._calendarHeight = calendarRect.height.toString();
+
+		const yearPicker = this.shadowRoot.querySelector("[ui5-yearpicker]");
+		yearPicker._selectedDates = [...this.selectedDates];
+		const currentYearIndex = yearPicker._itemNav._getItems().findIndex(item => {
+			const calDate = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000, this._primaryCalendarType);
+			return calDate.getYear() === this._calendarDate.getYear();
+		});
+		yearPicker._itemNav.currentIndex = currentYearIndex;
 	}
 
 	_hideMonthPicker() {
