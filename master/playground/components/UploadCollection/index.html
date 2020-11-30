@@ -2725,6 +2725,19 @@
                     </div>
             
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">drop</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when an element is dropped inside the drag and drop overlay. <br><br> <b>Note:</b> The <code>drop</code> event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the <code>ui5-upload-collection</code>.
+                        </div>
+                      </div>
+            
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">dataTransfer</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> DataTransfer <br/> <strong class="api-table-event-description bold">description:</strong> The <code>drop</code> event operation data.</div>
+                          </div>
+                        </tr>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">file-deleted</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when the Delete button of any item is pressed. <br><br> <b>Note:</b> A Delete button is displayed on each item, when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
@@ -2737,7 +2750,7 @@
                             <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> The <code>ui5-upload-collection-item</code> which was renamed.</div>
                           </div>
                         </tr>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">selection-change</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when selection is changed by user interaction in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
