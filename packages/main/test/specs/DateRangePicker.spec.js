@@ -24,7 +24,7 @@ describe("DateRangePicker general interaction", () => {
 		assert.strictEqual(daterangepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is on none");
 	});
 
-	it("Selected dates is updates after value update in input", () => {
+	it("Selected dates are updated after value update in the input field", () => {
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#daterange-picker3");
 		const dayPicker = browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
 		const firstDateTimestamp = 1599609600;

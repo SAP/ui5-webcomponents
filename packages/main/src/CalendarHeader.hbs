@@ -26,7 +26,7 @@
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			?hidden="{{_isMonthButtonHidden}}"
 			type="{{_btn1.type}}"
-			tabindex="0"
+			tabindex="{{_tabIndex}}"
 			@click={{_showMonthPicker}}
 			data-sap-show-picker="Month"
 		>
@@ -37,7 +37,7 @@
 			id="{{_id}}-btn2"
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			type="{{_btn2.type}}"
-			tabindex="0"
+			tabindex="{{_tabIndex}}"
 			@click={{_showYearPicker}}
 			data-sap-show-picker="Year"
 		>

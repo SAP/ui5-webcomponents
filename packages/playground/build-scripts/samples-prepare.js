@@ -12,6 +12,7 @@ const components = [];
 
  // Add new components here
 const newComponents = [
+	"Calendar",
 	"MultiInput",
 	"RangeSlider",
 	"Slider",
