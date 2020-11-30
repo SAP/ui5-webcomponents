@@ -1,10 +1,5 @@
-commit b5c4a92023af0753c4781d464c7590d6df6f912d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 30 10:35:43 2020 +0200
+commit fb0b24c6cd3c5ced334c912df3dfb7442a95145d
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Nov 30 12:07:41 2020 +0200
 
-    feat(ui5-side-navigation): add "header" slot (#2520)
-    
-    Provide API, header slot, displayed in the top-most area of the SideNavigation component to enable users adding additional information, usually profile/user data, avatar, etc.
-    Also includes a minor fix (min-width: 3rem;) that prevents the SideNavigation (when collapsed) from shrinking due to resize.
-    
-    FIXES #2518
+    feat(ui5-flexible-column-layout): add start/mid/endColumnAccessibleName properties (#2483)

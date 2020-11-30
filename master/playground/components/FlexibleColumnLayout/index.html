@@ -2696,6 +2696,19 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          endColumnAccessibleName
+                            <br>
+                            <code>end-column-accessible-name</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the accessibility name for the <code>endColumn</code> region.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           endColumnVisible
                             (readonly)
                             <br>
@@ -2707,7 +2720,7 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                             Returns if the <code>end</code> column is visible.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           layout
                             <br>
@@ -2716,6 +2729,19 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                         <div class="cell api-table-content-cell">&quot;OneColumn&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the columns layout and their proportion. <br><br> <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 900px, two columns between 900px and 1280px and three columns for sizes bigger than 1280px. <br><br> Available options are: <ul> <li><code>OneColumn</code></li> <li><code>TwoColumnsStartExpanded</code></li> <li><code>TwoColumnsMidExpanded</code></li> <li><code>ThreeColumnsMidExpanded</code></li> <li><code>ThreeColumnsEndExpanded</code></li> <li><code>ThreeColumnsStartExpandedEndHidden</code></li> <li><code>ThreeColumnsMidExpandedEndHidden</code></li> <li><code>MidColumnFullScreen</code></li> <li><code>EndColumnFullScreen</code></li> </ul> <br><br> <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns in 67%/33% proportion.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          midColumnAccessibleName
+                            <br>
+                            <code>mid-column-accessible-name</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the accessibility name for the <code>midColumn</code> region.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -2745,6 +2771,19 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          startColumnAccessibleName
+                            <br>
+                            <code>start-column-accessible-name</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the accessibility name for the <code>startColumn</code> region.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           startColumnVisible
                             (readonly)
                             <br>
@@ -2756,7 +2795,7 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                             Returns if the <code>start</code> column is visible.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           visibleColumns
                             (readonly)
