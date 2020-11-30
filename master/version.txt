@@ -1,7 +1,5 @@
-commit 37ee83ffecc861a2386b6502109e736b502a7c6a
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Mon Nov 30 16:04:07 2020 +0200
+commit 5f8e0e268dabc1e6d8ce0187bffe184c42c07e9e
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Nov 30 17:37:54 2020 +0200
 
-    fix(ui5-carousel): add all visible items to tab chain (#2530)
-    
-    Fixes: #1996
+    fix(ui5-list): remove focus trap for empty list (#2411)
