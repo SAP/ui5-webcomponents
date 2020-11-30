@@ -1,5 +1,7 @@
-commit 455f6146ccc09f26a83134dff0dcc4646c805427
+commit 37ee83ffecc861a2386b6502109e736b502a7c6a
 Author: Georgi <georgi.minkov@sap.com>
-Date:   Mon Nov 30 14:59:52 2020 +0200
+Date:   Mon Nov 30 16:04:07 2020 +0200
 
-    fix(ui5-upload-collection): fire drop only when files are dropped within dnd overlay (#2527)
+    fix(ui5-carousel): add all visible items to tab chain (#2530)
+    
+    Fixes: #1996
