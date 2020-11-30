@@ -1,0 +1,53 @@
+.ui5-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 2.5rem;
+	box-shadow: inset 0 -0.0625rem var(--sapPageHeader_BorderColor);
+	background-color: var( --sapPageHeader_Background);
+	margin-bottom: 0.5rem;
+	margin-top: 0.5rem;
+}
+
+.ui5-bar .ui5-bar-leftcontent-conteiner {
+	padding-left: 0.5rem;
+}
+
+.ui5-bar .ui5-bar-rightcontent-conteiner {
+	padding-right: 0.5rem;
+}
+.ui5-bar .ui5-bar-midcontent-conteiner {
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+
+.ui5-bar.ui5-bar-design-bottomborder{
+	box-shadow: inset 0 -0.0625rem var(--sapContent_HeaderShadow)
+}
+
+.ui5-bar.ui5-bar-design-topborder{
+	border-top: 0.0625rem solid var(--sapPageFooter_BorderColor);
+	background-color: var(--sapPageFooter_Background);
+}
+
+.ui5-bar.ui5-bar-design-allborders{
+	border-radius: var(--sapElement_BorderCornerRadius);
+	background-color: var(--sapPageFooter_Background);
+	box-shadow: var(--sapContent_Shadow1);
+	border: none;
+}
+
+::slotted([slot="middleContent"]),
+::slotted([slot="rightContent"]),
+::slotted([slot="leftContent"]){
+	display: flex;
+	align-items: center;
+}
+
+/* ::slotted([slotchild]){
+	margin: 0 0.25rem;
+}
+
+::slotted(.slotChild){
+	margin: 0 0.25rem;
+} */
