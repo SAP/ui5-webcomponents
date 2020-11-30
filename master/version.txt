@@ -1,13 +1,10 @@
-commit d7542af1007c13ffb18eef417f2297351adcfdf9
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Fri Nov 27 13:08:03 2020 +0800
+commit b5c4a92023af0753c4781d464c7590d6df6f912d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Nov 30 10:35:43 2020 +0200
 
-    Translation Delivery (#2519)
+    feat(ui5-side-navigation): add "header" slot (#2520)
     
-    * chore: translation delivery
+    Provide API, header slot, displayed in the top-most area of the SideNavigation component to enable users adding additional information, usually profile/user data, avatar, etc.
+    Also includes a minor fix (min-width: 3rem;) that prevents the SideNavigation (when collapsed) from shrinking due to resize.
     
-    Change-Id: I1d5c7ef323eb162ccd4c662455d0f7d8f3e9ac1f
-    
-    * chore: translation delivery
-    
-    Change-Id: Id8f954867571b9d96ec9421b5f7405eb063c83d5
+    FIXES #2518
