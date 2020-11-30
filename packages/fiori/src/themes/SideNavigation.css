@@ -9,6 +9,7 @@
 
 :host([collapsed]) {
     width: 3rem;
+    min-width: 3rem;
 }
 
 .ui5-sn-bottom-content-border {

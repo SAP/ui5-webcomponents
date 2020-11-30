@@ -37,7 +37,7 @@
 	<div class="ui5-sn-spacer"></div>
 
 	{{#if fixedItems.length}}
-	   <div>
+		<div>
 			<div class="ui5-sn-bottom-content-border">
 				<span></span>
 			</div>
@@ -70,12 +70,16 @@
 					</ui5-tree-item>
 				{{/each}}
 			</ui5-tree>
-	   </div>
+		</div>
 	{{/if}}
 
 	{{> footer }}
 </div>
 
-{{#*inline header}}{{/inline}}
+{{#*inline header}}
+	{{#if showHeader}}
+		<slot name="header"></slot>
+	{{/if}}
+{{/inline}}
 
 {{#*inline footer}}{{/inline}}
