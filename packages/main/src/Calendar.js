@@ -315,10 +315,6 @@ class Calendar extends UI5Element {
 		this._refreshNavigationButtonsState();
 	}
 
-	onAfterRendering() {
-		this._setDayPickerCurrentIndex(this._calendarDate, false);
-	}
-
 	_refreshNavigationButtonsState() {
 		const minDateParsed = this.minDate && this.getFormat().parse(this.minDate);
 		const maxDateParsed = this.maxDate && this.getFormat().parse(this.maxDate);
@@ -543,6 +539,13 @@ class Calendar extends UI5Element {
 		}
 	}
 
+	_onfocusin(event) {
+		if (event.target.tagName === "UI5-DAYPICKER") {
+			this._setPickerCurrentTabindex(-1);
+			this._focusCurrentDayItem(this._calendarDate);
+		}
+	}
+
 	_onfocusout(event) {
 		this._header.tabIndex = "-1";
 		this._setPickerCurrentTabindex(0);
@@ -606,7 +609,7 @@ class Calendar extends UI5Element {
 		this._monthPicker.timestamp = this.timestamp;
 
 		this._hideMonthPicker();
-		this._setDayPickerCurrentIndex(oNewDate, true);
+		this._focusCurrentDayItem(oNewDate);
 	}
 
 	_handleSelectedYearChange(event) {
@@ -618,19 +621,15 @@ class Calendar extends UI5Element {
 		this._yearPicker.timestamp = this.timestamp;
 
 		this._hideYearPicker();
-		this._setDayPickerCurrentIndex(oNewDate, true);
+		this._focusCurrentDayItem(oNewDate);
 	}
 
-	async _setDayPickerCurrentIndex(calDate, applyFocus) {
+	async _focusCurrentDayItem(calDate) {
 		await RenderScheduler.whenFinished();
 		const currentDate = new CalendarDate(calDate);
 		const currentDateIndex = this.dayPicker._getVisibleDays(currentDate).findIndex(date => date.valueOf() === currentDate.valueOf());
 		this.dayPicker._itemNav.currentIndex = currentDateIndex;
-		if (applyFocus) {
-			this.dayPicker._itemNav.focusCurrent();
-		} else {
-			this.dayPicker._itemNav.update();
-		}
+		this.dayPicker._itemNav.focusCurrent();
 	}
 
 	_handleMonthButtonPress() {
