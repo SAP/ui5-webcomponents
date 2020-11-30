@@ -1,5 +1,25 @@
-commit fb0b24c6cd3c5ced334c912df3dfb7442a95145d
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Nov 30 12:07:41 2020 +0200
+commit 5470e2399b0c39a2c5adeacba895d09f5c7e94b2
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Mon Nov 30 12:44:55 2020 +0200
 
-    feat(ui5-flexible-column-layout): add start/mid/endColumnAccessibleName properties (#2483)
+    feat(ui5-calendar): introduce new component. (#2424)
+    
+    "CalendarSelection" enumeration is introduced with single, multiple and
+    range selection modes.
+    DayPicker component uses the new "CalendarSelection" class,
+    in order to provide support for the three selection modes.
+    Selection of multiple dates can be configured via the "selection"
+    property of the Calendar component. Holding control keyboard key doesn't
+    allow multiple dates selection.
+    The logic for selecting a range of dates is moved from
+    the DateRangePicker component into the DayPicker component.
+    Selecting a range of dates via mouse now doesn't cause flickering
+    on the hovered items.
+    Updating the selected date range into the DateRangePicker component
+    input field is now reflected visually, when the popover is opened.
+    DateRangePicker now works properly with only start date of the range
+    typed into the input field.
+    Calendar navigation is now compliant with the specification.
+    Playground sample is created.
+    
+    Fixes #1730
