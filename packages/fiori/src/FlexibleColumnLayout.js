@@ -83,7 +83,7 @@ const metadata = {
 		},
 
 		/**
-		* Defines the accessibility text for the <code>startColumn</code> region.
+		* Defines the accessibility name for the <code>startColumn</code> region.
 		*
 		* @type {string}
 		* @defaultvalue ""
@@ -95,7 +95,7 @@ const metadata = {
 		},
 
 		/**
-		* Defines the accessibility text for the <code>midColumn</code> region.
+		* Defines the accessibility name for the <code>midColumn</code> region.
 		*
 		* @type {string}
 		* @defaultvalue ""
@@ -107,7 +107,7 @@ const metadata = {
 		},
 
 		/**
-		* Defines the accessibility text for the <code>endColumn</code> region.
+		* Defines the accessibility name for the <code>endColumn</code> region.
 		*
 		* @type {string}
 		* @defaultvalue ""
