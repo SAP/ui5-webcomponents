@@ -127,6 +127,8 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		/**
 		 * Fired when an element is dropped inside the drag and drop overlay.
+		 * <br><br>
+		 * <b>Note:</b> The <code>drop</code> event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the <code>ui5-upload-collection</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.UploadCollection#drop
 		 * @readonly
