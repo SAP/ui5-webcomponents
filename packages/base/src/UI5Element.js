@@ -712,7 +712,7 @@ class UI5Element extends HTMLElement {
 		// This will be false if the normal event is prevented
 		const normalEventResult = this.dispatchEvent(customEvent);
 
-		// Return false if any of the two events was prevented (its result was false).
+		// Return false if any of the two events were prevented (its result was false).
 		return normalEventResult && compatEventResult;
 	}
 

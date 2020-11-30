@@ -126,6 +126,16 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		/**
+		 * Fired when an element is dropped inside the drag and drop overlay.
+		 *
+		 * @event sap.ui.webcomponents.fiori.UploadCollection#drop
+		 * @readonly
+		 * @param {DataTransfer} dataTransfer The <code>drop</code> event operation data.
+		 * @public
+		 */
+		drop: {},
+
+		/**
 		 * Fired when the Delete button of any item is pressed.
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
@@ -248,6 +258,10 @@ class UploadCollection extends UI5Element {
 	_ondrop(event) {
 		if (this.noDnd) {
 			return;
+		}
+
+		if (event.target !== this.shadowRoot.querySelector(".uc-dnd-overlay")) {
+			event.stopPropagation();
 		}
 
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.None;
