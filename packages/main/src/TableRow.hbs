@@ -6,6 +6,7 @@
 	aria-label="{{ariaLabelText}}"
 	data-sap-focus-ref
 	part="row"
+	role="row"
 >
 	{{#if shouldPopin}}
 		{{#each visibleCells}}
@@ -20,8 +21,8 @@
 
 {{#if shouldPopin}}
 	{{#each popinCells}}
-		<tr part="popin-row" class="{{this.classes}}" @click="{{../_onrowclick}}">
-			<td colspan="{{../visibleCellsCount}}">
+		<tr part="popin-row" role="row" class="{{this.classes}}" @click="{{../_onrowclick}}">
+			<td colspan="{{../visibleCellsCount}}" role="cell">
 				{{#if this.popinText}}
 					<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
 				{{/if}}
