@@ -274,7 +274,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get showNMore() {
-		return this.showMore && this.overflownTokens.length;
+		return this.overflownTokens.length;
 	}
 
 	get contentDom() {
