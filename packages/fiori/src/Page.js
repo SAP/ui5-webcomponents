@@ -170,26 +170,13 @@ class Page extends UI5Element {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
-	get hasFooter() {
-		return !!this.footer.length;
-	}
-
 	get classes() {
 		return {
 			footer: {
 				"ui5-page-floating-footer-root": this.floatingFooter,
 				"ui5-page-show-footer": !this.hideFooter && this.floatingFooter,
-				"ui5-page-hide-footer": this.hideFooter && this.floatingFooter,
+				"ui5-page-hide-footer": this.hideFooter,
 			},
-		};
-	}
-
-	get styles() {
-		debugger;
-		return {
-			// footer: {
-			// 	"display": this.hideFooter ? "block" : "none",
-			// },
 		};
 	}
 }

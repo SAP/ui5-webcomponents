@@ -13,6 +13,7 @@ import ProductSwitchItem from "./dist/ProductSwitchItem.js";
 import SideNavigation from "./dist/SideNavigation.js";
 import SideNavigationItem from "./dist/SideNavigationItem.js";
 import SideNavigationSubItem from "./dist/SideNavigationSubItem.js";
+import Page from "./dist/Page.js";
 import ShellBar from "./dist/ShellBar.js";
 import ShellBarItem from "./dist/ShellBarItem.js";
 import Timeline from "./dist/Timeline.js";
