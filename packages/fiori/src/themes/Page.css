@@ -1,0 +1,66 @@
+.ui5-page-root {
+    height: 100%;
+    overflow: hidden;
+    isolation: isolate;
+    z-index: 0;
+    box-sizing: border-box;
+}
+
+.ui5-page-header-root {
+    z-index: 1;
+}
+
+.ui5-page-content-root {
+    overflow: hidden auto;
+    position: absolute;
+    will-change: scroll-position;
+    width: 100%;
+    top: 3rem;
+    bottom: 0;
+    box-sizing: border-box;
+}
+
+.ui5-page-footer-root {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+}
+
+.ui5-page-floating-footer-root {
+    left: 0.5rem;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    width: auto;
+    transition: bottom 0.35s;
+}
+
+:host([floating-footer]:not([hide-footer])) .ui5-page-content-root {
+    padding-bottom: 3.5rem;
+}
+
+:host(:not([floating-footer]):not([hide-footer])) .ui5-page-content-root {
+    bottom: 2.5rem;
+}
+
+.ui5-page-hide-footer {
+    bottom: -10rem;
+}
+
+/* BackgroundDesign */
+:host([backgroundDesign="Standard"]) .ui5-page-root {
+	background-color: var(--sapBackgroundColor);
+}
+
+:host([backgroundDesign="Solid"]) .ui5-page-root {
+	background-color: var(--sapBackgroundColor);
+}
+
+:host([backgroundDesign="Transparent"]) .ui5-page-root {
+    background-color: transparent;
+}
+
+:host([backgroundDesign="List"]) .ui5-page-root {
+    background-color: var(--sapGroup_ContentBackground);
+}

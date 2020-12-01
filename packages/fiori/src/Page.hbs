@@ -1,0 +1,30 @@
+<div class="ui5-page-root">
+    <header
+        class="ui5-page-header-root"
+        id="ui5-page-header">
+		<div>
+			<div style="height: 3rem;">
+				<slot name="header"></slot>
+			</div>
+		</div>
+    </header>
+
+    <section
+		class="ui5-page-content-root"
+		style="{{styles.content}}"
+    >
+      <div>
+        <slot></slot>
+      </div>
+    </section>
+
+	<footer class="ui5-page-footer-root {{classes.footer}}" style="{{styles.footer}}">
+		<div style="height: 2.5rem">
+			<slot name="footer"></slot>
+		</div>
+	</footer>
+</div>
+
+
+
+
