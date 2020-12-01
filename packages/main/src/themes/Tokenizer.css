@@ -33,7 +33,6 @@
 }
 
 :host([expanded]) .ui5-tokenizer--content {
-	/* display: inline-block; */
 	white-space: nowrap;
 	justify-content: flex-end;
     right: 0;
