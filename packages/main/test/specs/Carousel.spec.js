@@ -65,7 +65,6 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(pageIndicatorDot1.getAttribute("aria-label"), PAGE_INDICATOR_ARIA_LABEL1, "The aria-label of page indicator is correct.");
 		assert.strictEqual(pageIndicatorDot2.getAttribute("aria-label"), PAGE_INDICATOR_ARIA_LABEL2, "The aria-label of page indicator is correct.");
 
-
 		const carouselItem3 = carousel.shadow$(".ui5-carousel-item:nth-child(3)");
 		const carouselItem4 = carousel.shadow$(".ui5-carousel-item:nth-child(4)");
 		const CAROUSEL_ITEM3_POS = "3";
@@ -90,13 +89,29 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(carouselRoot.getAttribute("aria-activedescendant"), ACTIVEDESCENDANT_PAGE_2, "The aria-activedescendant of carousel is correct.");
 	});
 
+	it("all visible elements in the current page have correct tabindex values", () => {
+		const carousel = browser.$("#carouselCards");
+
+		const visibleItems = [
+			carousel.shadow$(".ui5-carousel-item:nth-child(1) slot"),
+			carousel.shadow$(".ui5-carousel-item:nth-child(2) slot"),
+			carousel.shadow$(".ui5-carousel-item:nth-child(3) slot"),
+		];
+
+		assert.strictEqual(
+			visibleItems.every(el => el.getAttribute("tabindex") === "0"),
+			true,
+			"all visible items have correct tabindex values"
+		);
+	});
+
 	it("Arrows and Dots not displayed in case of single page", () => {
 		const carousel = browser.$("#carousel6");
 		const pages = carousel.getProperty("pagesCount");
 		const pageIndicator = carousel.shadow$(".ui5-carousel-navigation-wrapper");
 		const navigationArrows = carousel.shadow$(".ui5-carousel-navigation-arrows");
 
-		assert.ok(!pageIndicator.isExisting(), "Page indicator is not srendered");
+		assert.ok(!pageIndicator.isExisting(), "Page indicator is not rendered");
 		assert.ok(!navigationArrows.isExisting(), "Navigation arrows are not rendered");
 		assert.strictEqual(pages, 1, "There is only 1 page.");
 	});
@@ -149,7 +164,7 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(eventCounter.getProperty("value"), "6", "The navigate event is not fired as no previous item.");
 	});
 
-	it("loadMore event is thrown only when neccessary", () => {
+	it("loadMore event is fired only when neccessary", () => {
 		const carousel = browser.$("#carousel9");
 		const eventCounter = browser.$("#loadmore-result");
 		const navigationArrowForward = carousel.shadow$("ui5-button[arrow-forward]");
@@ -161,12 +176,12 @@ describe("Carousel general interaction", () => {
 		navigationArrowForward.click();
 		navigationArrowForward.click();
 
-		assert.strictEqual(eventCounter.getProperty("value"), "0" , "loadMore event is not thrown");
+		assert.strictEqual(eventCounter.getProperty("value"), "0" , "loadMore event is not fired");
 
 		navigationArrowForward.click();
 		navigationArrowForward.click();
 		navigationArrowForward.click();
 		
-		assert.strictEqual(eventCounter.getProperty("value"), "3", "loadMore event is thrown 3 times");
+		assert.strictEqual(eventCounter.getProperty("value"), "3", "loadMore event is fired 3 times");
 	});
 });

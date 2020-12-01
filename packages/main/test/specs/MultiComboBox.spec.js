@@ -16,6 +16,27 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(!popover.getProperty("opened"), "Popover should close");
 		});
 
+		/*
+		it("Checks focus state", () => {
+			const mcb = browser.$("#multi1");
+			const input = mcb.shadow$("#ui5-multi-combobox-input");
+
+			input.click();
+
+			assert.ok(mcb.getProperty("focused"), "MultiComboBox should be focused.");
+
+			input.keys("ArrowLeft");
+			browser.pause(300);
+
+			assert.notOk(mcb.getProperty("focused"), "MultiComboBox should no longer be focused.");
+
+			input.keys("ArrowRight");
+			browser.pause(500);
+
+			assert.ok(mcb.getProperty("focused"), "MultiComboBox should be focused again.");
+		});
+		*/
+
 		it("MultiComboBox open property is set correctly", () => {
 			const mcb = browser.$("#multi1");
 			const icon = browser.$("#multi1").shadow$("[input-icon]");
@@ -185,12 +206,8 @@ describe("MultiComboBox general interaction", () => {
 		browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
 
 		it("tests backspace when combobox has an empty value", () => {
-			browser.setWindowSize(1920, 1080);
-
-			let tokens = $("#multi-backspace").shadow$$(".ui5-multi-combobox-token");
-			const input = $("#multi-backspace").shadow$("input");
-
-			$("#multi-backspace").setProperty("value", "");
+			let tokens = $("#multi1").shadow$$(".ui5-multi-combobox-token");
+			const input = $("#multi1").shadow$("input");
 
 			input.click();
 			input.keys('Backspace');
@@ -199,7 +216,7 @@ describe("MultiComboBox general interaction", () => {
 
 			input.keys('Backspace');
 
-			tokens = $("#multi-backspace").shadow$$(".ui5-multi-combobox-token");
+			tokens = $("#multi1").shadow$$(".ui5-multi-combobox-token");
 
 			assert.strictEqual(tokens.length, 2, "2 tokens are visible");
 		});

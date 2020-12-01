@@ -22,8 +22,8 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 
 import Button from "./Button.js";
 import Label from "./Label.js";
@@ -103,7 +103,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines when the <code>load-more</code> event is thrown. If not applied the event will not be thrown.
+		 * Defines when the <code>load-more</code> event is fired. If not applied the event will not be fired.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
@@ -185,7 +185,7 @@ const metadata = {
 
 		/**
 		 * Fired for the last items of the <code>ui5-carousel</code> if it is scrolled and the direction of scrolling is to the end.
-		 * The number of items for which the event is thrown is controlled by the <code>infiniteScrollOffset</code> property.
+		 * The number of items for which the event is fired is controlled by the <code>infiniteScrollOffset</code> property.
 		 * @event sap.ui.webcomponents.main.Carousel#load-more
 		 * @public
 		 * @since 1.0.0-rc.8
@@ -377,14 +377,15 @@ class Carousel extends UI5Element {
 	 */
 	get items() {
 		return this.content.map((item, idx) => {
+			const visible = this.isItemInViewport(idx);
 			return {
 				id: `${this._id}-carousel-item-${idx + 1}`,
 				item,
-				tabIndex: idx === this.selectedIndex ? "0" : "-1",
+				tabIndex: visible ? "0" : "-1",
 				posinset: idx + 1,
 				setsize: this.content.length,
 				width: this._itemWidth,
-				classes: this.isItemInViewport(idx) ? "" : "ui5-carousel-item--hidden",
+				classes: visible ? "" : "ui5-carousel-item--hidden",
 			};
 		});
 	}

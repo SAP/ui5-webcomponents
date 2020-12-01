@@ -1,0 +1,34 @@
+<div class="ui5-wiz-step-root"
+	role="{{role}}"
+	tabindex="{{tabIndex}}"
+	aria-current="{{ariaCurrent}}"
+	aria-setsize="{{ariaSetsize}}"
+	aria-posinset="{{ariaPosinset}}"
+	aria-disabled="{{ariaDisabled}}"
+	aria-label="{{ariaLabel}}"
+	aria-roledescription="{{ariaRoledescription}}"
+	@click="{{_onclick}}"
+	@keydown="{{_onkeydown}}"
+	@keyup="{{_onkeyup}}"
+	@focusin="{{_onfocusin}}"
+>
+	<div class="ui5-wiz-step-main">
+		<div class="ui5-wiz-step-icon-circle">
+			{{#if icon}}
+				<ui5-icon class="ui5-wiz-step-icon" name="{{icon}}"></ui5-icon>
+			{{else}}
+				<span class="ui5-wiz-step-number">{{number}}</span>
+			{{/if}}
+		</div>
+		{{#if hasTexts}}
+			<div class="ui5-wiz-step-texts">
+				<div class="ui5-wiz-step-heading">{{heading}}</div>
+				<div class="ui5-wiz-step-subheading">{{subheading}}</div>
+			</div>
+		{{/if}}
+	</div>
+
+	{{#unless hideSeparator}}
+		<div class="ui5-wiz-step-hr"></div>
+	{{/unless}}
+</div>

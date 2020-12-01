@@ -14,7 +14,7 @@
 	padding: var(--_ui5_tokenizer_root_padding);
 	overflow-x: scroll;
 	box-sizing: border-box;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 }
 
 .ui5-tokenizer-no-padding {
@@ -33,8 +33,11 @@
 }
 
 :host([expanded]) .ui5-tokenizer--content {
-	display: inline-block;
+	/* display: inline-block; */
 	white-space: nowrap;
+	justify-content: flex-end;
+    right: 0;
+    overflow: scroll;
 }
 
 .ui5-tokenizer--content {

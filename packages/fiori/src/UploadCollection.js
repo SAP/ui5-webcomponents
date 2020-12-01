@@ -6,8 +6,8 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
-import "@ui5/webcomponents-icons/dist/icons/upload-to-cloud.js";
-import "@ui5/webcomponents-icons/dist/icons/document.js";
+import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
+import "@ui5/webcomponents-icons/dist/document.js";
 import {
 	UPLOADCOLLECTION_NO_DATA_TEXT,
 	UPLOADCOLLECTION_NO_DATA_DESCRIPTION,
@@ -125,6 +125,18 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
+		/**
+		 * Fired when an element is dropped inside the drag and drop overlay.
+		 * <br><br>
+		 * <b>Note:</b> The <code>drop</code> event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the <code>ui5-upload-collection</code>.
+		 *
+		 * @event sap.ui.webcomponents.fiori.UploadCollection#drop
+		 * @readonly
+		 * @param {DataTransfer} dataTransfer The <code>drop</code> event operation data.
+		 * @public
+		 */
+		drop: {},
+
 		/**
 		 * Fired when the Delete button of any item is pressed.
 		 * <br><br>
@@ -248,6 +260,10 @@ class UploadCollection extends UI5Element {
 	_ondrop(event) {
 		if (this.noDnd) {
 			return;
+		}
+
+		if (event.target !== this.shadowRoot.querySelector(".uc-dnd-overlay")) {
+			event.stopPropagation();
 		}
 
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.None;

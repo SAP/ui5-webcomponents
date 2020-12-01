@@ -215,6 +215,26 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelect is not fired as item is 'Inactive'");
 	});
 
+	it("handles suggestions selection cancel with ESC", () => {
+		const suggestionsInput = $("#myInputEsc").shadow$("input");
+
+		// act
+		suggestionsInput.click();
+		suggestionsInput.keys("ch");
+		suggestionsInput.keys("ArrowDown");
+
+		// assert
+		assert.strictEqual(suggestionsInput.getValue(), "Chromium",
+			"The value is updated as the item has been previewed.");
+
+		// act
+		suggestionsInput.keys("Escape");
+
+		// assert
+		assert.strictEqual(suggestionsInput.getValue(), "ch",
+			"The value is restored as ESC has been pressed.");
+	});
+
 	it("handles group suggestion item via keyboard", () => {
 		const suggestionsInput = $("#myInputGrouping").shadow$("input");
 		const inputResult = $("#inputResultGrouping").shadow$("input");
@@ -269,6 +289,13 @@ describe("Input general interaction", () => {
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
 	});
 
+	it("Checks if aria-describedby is renderd if not neccessary", () => {
+		const input = browser.$("#input-max-length"); // Input with no show-suggestions attribute
+		const innerInput = input.shadow$("input");
+
+		assert.notOk(innerInput.getAttribute("aria-describedby"), "aria-describedby is not rendered");
+	});
+
 	it("Checks if aria-label is reflected in the shadow DOM", () => {
 		const input = browser.$("#aria-label-input");
 		const innerInput = input.shadow$("input");
@@ -310,8 +337,7 @@ describe("Input general interaction", () => {
 		input.keys("Tab");
 
 		browser.pause(500);
-
-		assert.strictEqual(parseFloat(input.getProperty("value")), 1.22, "Value is not lost");
+		assert.strictEqual(parseFloat(input.getProperty("value")).toPrecision(3), "1.22", "Value is not lost");
 	});
 
 	it("fires suggestion-item-preview", () => {

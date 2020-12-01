@@ -11,11 +11,12 @@ import {
 	isSpace,
 	isEnter,
 	isBackSpace,
+	isEscape,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 // Templates
@@ -494,10 +495,19 @@ class Input extends UI5Element {
 		// Indicates if there is selected suggestionItem.
 		this.hasSuggestionItemSelected = false;
 
-		// Represents the value before user moves selection between the suggestion items.
-		// Used to register and fire "input" event upon [SPACE] or [ENTER].
-		// Note: the property "value" is updated upon selection move and can`t be used.
+		// Represents the value before user moves selection from suggestion item to another
+		// and its value is updated after each move.
+		// Note: Used to register and fire "input" event upon [SPACE] or [ENTER].
+		// Note: The property "value" is updated upon selection move and can`t be used.
 		this.valueBeforeItemSelection = "";
+
+		// Represents the value before user moves selection between the suggestion items
+		// and its value remains the same when the user navigates up or down the list.
+		// Note: Used to cancel selection upon [ESC].
+		this.valueBeforeItemPreview = "";
+
+		// Indicates if the user selection has been canceled with [ESC].
+		this.suggestionSelectionCanceled = false;
 
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = undefined;
@@ -591,6 +601,14 @@ class Input extends UI5Element {
 			return this._handleEnter(event);
 		}
 
+		if (isEscape(event)) {
+			return this._handleEscape(event);
+		}
+
+		if (this.showSuggestions) {
+			this.Suggestions._deselectItems();
+		}
+
 		this._keyDown = true;
 	}
 
@@ -624,6 +642,20 @@ class Input extends UI5Element {
 		}
 	}
 
+	_handleEscape() {
+		if (this.showSuggestions && this.Suggestions && this.Suggestions._isItemOnTarget()) {
+			// Restore the value.
+			this.value = this.valueBeforeItemPreview;
+
+			// Mark that the selection has been canceled, so the popover can close
+			// and not reopen, due to receiving focus.
+			this.suggestionSelectionCanceled = true;
+
+			// Close suggestion popover
+			this._closeRespPopover(true);
+		}
+	}
+
 	async _onfocusin(event) {
 		const inputDomRef = await this.getInputDOMRef();
 
@@ -633,6 +665,7 @@ class Input extends UI5Element {
 
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
+		this.valueBeforeItemPreview = this.value;
 
 		this._inputIconFocused = event.target && event.target === this.querySelector("[ui5-icon]");
 	}
@@ -682,6 +715,8 @@ class Input extends UI5Element {
 	async _handleInput(event) {
 		const inputDomRef = await this.getInputDOMRef();
 
+		this.suggestionSelectionCanceled = false;
+
 		if (this.value && this.type === InputType.Number && !isBackSpace(event) && !inputDomRef.value) {
 			// For input with type="Number", if the delimiter is entered second time, the inner input is firing event with empty value
 			return;
@@ -711,8 +746,8 @@ class Input extends UI5Element {
 		this._inputWidth = this.offsetWidth;
 	}
 
-	_closeRespPopover() {
-		this.Suggestions.close();
+	_closeRespPopover(preventFocusRestore) {
+		this.Suggestions.close(preventFocusRestore);
 	}
 
 	async _afterOpenPopover() {
@@ -765,7 +800,7 @@ class Input extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("[ui5-popover]");
+		return staticAreaItem && staticAreaItem.querySelector("[ui5-popover]");
 	}
 
 	enableSuggestions() {
@@ -786,7 +821,8 @@ class Input extends UI5Element {
 		return !!(this.suggestionItems.length
 			&& this.focused
 			&& this.showSuggestions
-			&& !this.hasSuggestionItemSelected);
+			&& !this.hasSuggestionItemSelected
+			&& !this.suggestionSelectionCanceled);
 	}
 
 	selectSuggestion(item, keyboardUsed) {
@@ -806,6 +842,9 @@ class Input extends UI5Element {
 			this.fireEvent(this.EVENT_INPUT);
 			this.fireEvent(this.EVENT_CHANGE);
 		}
+
+		this.valueBeforeItemPreview = "";
+		this.suggestionSelectionCanceled = false;
 
 		this.fireEvent(this.EVENT_SUGGESTION_ITEM_SELECT, { item });
 	}
@@ -857,6 +896,7 @@ class Input extends UI5Element {
 
 		this.value = inputValue;
 		this.highlightValue = inputValue;
+		this.valueBeforeItemPreview = inputValue;
 
 		if (isSafari()) {
 			// When setting the value by hand, Safari moves the cursor when typing in the middle of the text (See #1761)
@@ -1007,16 +1047,18 @@ class Input extends UI5Element {
 		return this.hasValueState ? `${this._id}-valueStateDesc` : "";
 	}
 
+	get suggestionsCount() {
+		return this.showSuggestions ? `${this._id}-suggestionsCount` : "";
+	}
+
 	get accInfo() {
 		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
-		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._id}-suggestionsCount ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId} ${this._id}-suggestionsCount`.trim();
+		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this.suggestionsCount} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId} ${this.suggestionsCount}`.trim();
 
 		return {
-			"wrapper": {
-			},
 			"input": {
-				"ariaDescribedBy": ariaDescribedBy,
+				"ariaDescribedBy": ariaDescribedBy || undefined,
 				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
 				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
 				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,

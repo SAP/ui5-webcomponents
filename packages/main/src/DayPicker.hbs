@@ -21,7 +21,7 @@
 		</div>
 		{{#each _weeks}}
 			{{#if this.length}}
-				<div style="display: flex;" role="row"  @mouseover="{{../_onitemmouseover}}" @keydown="{{../_onitemkeydown}}">
+				<div style="display: flex;" role="row"  @mouseover="{{../_onitemmouseover}}">
 					{{#each this}}
 						{{#if this.timestamp}}
 							<div

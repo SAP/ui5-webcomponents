@@ -4,13 +4,14 @@ import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleD
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
+	isEnter,
 	isPageUp,
 	isPageDown,
 	isPageUpShift,
@@ -22,8 +23,10 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/appointment-2.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -141,7 +144,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-datepicker</code> is required.
+		 * Defines whether the <code>ui5-date-picker</code> is required.
 		 *
 		 * @since 1.0.0-rc.9
 		 * @type {Boolean}
@@ -418,7 +421,8 @@ class DatePicker extends UI5Element {
 					calendar._hideYearPicker();
 				}
 			},
-			afterOpen: () => {
+			afterOpen: async () => {
+				await RenderScheduler.whenFinished();
 				const calendar = this.calendar;
 
 				if (!calendar) {
@@ -451,6 +455,7 @@ class DatePicker extends UI5Element {
 
 		this._calendar = {
 			onSelectedDatesChange: this._handleCalendarChange.bind(this),
+			selection: CalendarSelection.Single,
 			selectedDates: [],
 		};
 
@@ -478,9 +483,10 @@ class DatePicker extends UI5Element {
 			this.maxDate = null;
 			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
-		if (this._checkValueValidity(this.value) || this.checkRealValueValidity()) {
+
+		if (this._checkValueValidity(this.value)) {
 			this._changeCalendarSelection();
-		} else {
+		} else if (this.value !== "") {
 			this._calendar.selectedDates = [];
 		}
 
@@ -503,9 +509,7 @@ class DatePicker extends UI5Element {
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
-			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
-			return calDate.valueOf();
+			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType).toUTCJSDate().valueOf();
 		}
 		return undefined;
 	}
@@ -530,82 +534,108 @@ class DatePicker extends UI5Element {
 			return;
 		}
 
+		if (isEnter(event)) {
+			this._handleEnterPressed();
+		}
+
 		if (isPageUpShiftCtrl(event)) {
 			event.preventDefault();
-			this._changeDateValue(true, true, false, false);
+			this._changeDateValueWrapper(true, true, false, false);
 		} else if (isPageUpShift(event)) {
 			event.preventDefault();
-			this._changeDateValue(true, false, true, false);
+			this._changeDateValueWrapper(true, false, true, false);
 		} else if (isPageUp(event)) {
 			event.preventDefault();
-			this._changeDateValue(true, false, false, true);
+			this._changeDateValueWrapper(true, false, false, true);
 		}
 
 		if (isPageDownShiftCtrl(event)) {
 			event.preventDefault();
-			this._changeDateValue(false, true, false, false);
+			this._changeDateValueWrapper(false, true, false, false);
 		} else if (isPageDownShift(event)) {
 			event.preventDefault();
-			this._changeDateValue(false, false, true, false);
+			this._changeDateValueWrapper(false, false, true, false);
 		} else if (isPageDown(event)) {
 			event.preventDefault();
-			this._changeDateValue(false, false, false, true);
+			this._changeDateValueWrapper(false, false, false, true);
 		}
+	}
+
+	/**
+	 * This method is used in the derived classes
+	 */
+	_handleEnterPressed() {}
+
+	/**
+	 * This method is used in the derived classes
+	 */
+	_onfocusout() {}
+
+	/**
+	 * Adds or extracts a given number of measuring units from the "dateValue" property value
+	 * @param {boolean} forward if true indicates addition
+	 * @param {boolean} years indicates that the measuring unit is in years
+	 * @param {boolean} months indicates that the measuring unit is in months
+	 * @param {boolean} days indicates that the measuring unit is in days
+	 * @param {int} step number of measuring units to substract or add defaults to 1
+	 */
+	_changeDateValueWrapper(forward, years, months, days, step = 1) {
+		let date = this.dateValue;
+		date = this._changeDateValue(date, forward, years, months, days, step);
+		this.value = this.formatValue(date);
 	}
 
 	/**
 	 * Adds or extracts a given number of measuring units from the "dateValue" property value
 	 *
+	 * @param {boolean} date js date object to be changed
 	 * @param {boolean} years indicates that the measuring unit is in years
 	 * @param {boolean} months indicates that the measuring unit is in months
 	 * @param {boolean} days indicates that the measuring unit is in days
 	 * @param {boolean} forward if true indicates addition
-	 * @param {int} step number of measuring units to substract or add defaults to 1
+	 * @param {int} step number of measuring units to substract or add defaults ot 1
+	 * @returns {Object} JS date object
 	 */
-	_changeDateValue(forward, years, months, days, step = 1) {
-		let date = this.dateValue;
-
+	_changeDateValue(date, forward, years, months, days, step = 1) {
 		if (!date) {
 			return;
 		}
 
-		const oldDate = new Date(date.getTime());
+		let calDate = CalendarDate.fromLocalJSDate(date, this._primaryCalendarType);
+		const oldCalDate = new CalendarDate(calDate, this._primaryCalendarType);
 		const incrementStep = forward ? step : -step;
 
-		if (incrementStep === 0) {
+		if (incrementStep === 0 || (!days && !months && !years)) {
 			return;
 		}
 
 		if (days) {
-			date.setDate(date.getDate() + incrementStep);
+			calDate.setDate(calDate.getDate() + incrementStep);
 		} else if (months) {
-			date.setMonth(date.getMonth() + incrementStep);
-			const monthDiff = (date.getFullYear() - oldDate.getFullYear()) * 12 + (date.getMonth() - oldDate.getMonth());
+			calDate.setMonth(calDate.getMonth() + incrementStep);
+			const monthDiff = (calDate.getYear() - oldCalDate.getYear()) * 12 + (calDate.getMonth() - oldCalDate.getMonth());
 
-			if (date.getMonth() === oldDate.getMonth() || monthDiff !== incrementStep) {
+			if (calDate.getMonth() === oldCalDate.getMonth() || monthDiff !== incrementStep) {
 				// first condition example: 31th of March increment month with -1 results in 2th of March
 				// second condition example: 31th of January increment month with +1 results in 2th of March
-				date.setDate(0);
+				calDate.setDate(0);
 			}
 		} else if (years) {
-			date.setFullYear(date.getFullYear() + incrementStep);
+			calDate.setYear(calDate.getYear() + incrementStep);
 
-			if (date.getMonth() !== oldDate.getMonth()) {
+			if (calDate.getMonth() !== oldCalDate.getMonth()) {
 				// day doesn't exist in this month (February 29th)
-				date.setDate(0);
+				calDate.setDate(0);
 			}
-		} else {
-			return;
 		}
 
-		if (date.valueOf() < this._minDate) {
-			date = new Date(this._minDate);
-		} else if (date.valueOf() > this._maxDate) {
-			date = new Date(this._maxDate);
+		if (calDate.valueOf() < this._minDate) {
+			calDate = CalendarDate.fromTimestamp(this._minDate, this._primaryCalendarType);
+		} else if (calDate.valueOf() > this._maxDate) {
+			calDate = CalendarDate.fromTimestamp(this._maxDate, this._primaryCalendarType);
 		}
 
-		this.value = this.formatValue(date);
-		this.fireEvent("change", { value: this.value, valid: true });
+		return calDate.toLocalJSDate();
 	}
 
 	_toggleAndFocusInput() {
@@ -647,13 +677,6 @@ class DatePicker extends UI5Element {
 
 	_checkValueValidity(value) {
 		return this.isValid(value) && this.isInValidRange(this._getTimeStampFromString(value));
-	}
-
-	/**
-	 * This method is used in the derived classes
-	 */
-	checkRealValueValidity() {
-		return false;
 	}
 
 	_click(event) {
@@ -736,7 +759,8 @@ class DatePicker extends UI5Element {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
 	get _formatPattern() {
@@ -883,7 +907,7 @@ class DatePicker extends UI5Element {
 		this._updateValueCalendarSelectedDatesChange(newValue);
 
 		this._calendar.timestamp = newValue;
-		this._calendar.selectedDates = event.detail.dates;
+		this._calendar.selectedDates = [...event.detail.dates];
 		this._focusInputAfterClose = true;
 
 		if (this.isInValidRange(this._getTimeStampFromString(this.value))) {
@@ -950,20 +974,16 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	_changeCalendarSelection(focusTimestamp) {
+	_changeCalendarSelection() {
 		if (this._calendarDate.getYear() < 1) {
 			// 0 is a valid year, but we cannot display it
 			return;
 		}
 
-		const oCalDate = this._calendarDate;
-		const timestamp = focusTimestamp || oCalDate.valueOf() / 1000;
-
+		const timestamp = this._calendarDate.valueOf() / 1000;
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
-		if (this.value) {
-			this._calendar.selectedDates = [timestamp];
-		}
+		this._calendar.selectedDates = this.value ? [timestamp] : [];
 	}
 
 	/**

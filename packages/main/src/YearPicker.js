@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -20,6 +20,7 @@ import styles from "./generated/themes/YearPicker.css.js";
  */
 const metadata = {
 	tag: "ui5-yearpicker",
+	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -63,6 +64,11 @@ const metadata = {
 		maxDate: {
 			type: String,
 			defaultValue: undefined,
+		},
+
+		_selectedDates: {
+			type: Integer,
+			multiple: true,
 		},
 
 		_selectedYear: {
@@ -164,6 +170,7 @@ class YearPicker extends UI5Element {
 		);
 
 		this._yearIntervals = [];
+		this._selectedDates = [];
 	}
 
 	onBeforeRendering() {
@@ -189,6 +196,7 @@ class YearPicker extends UI5Element {
 			this._selectedYear = this._year;
 		}
 
+		/* eslint-disable no-loop-func */
 		for (let i = 0; i < YearPicker._ITEMS_COUNT; i++) {
 			const intervalIndex = parseInt(i / 4);
 			if (!intervals[intervalIndex]) {
@@ -202,11 +210,15 @@ class YearPicker extends UI5Element {
 			const year = {
 				timestamp: timestamp.toString(),
 				id: `${this._id}-y${timestamp}`,
+				selected: this._selectedDates.some(itemTimestamp => {
+					const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
+					return date.getYear() === oCalDate.getYear();
+				}),
 				year: oYearFormat.format(oCalDate.toLocalJSDate()),
 				classes: "ui5-yp-item",
 			};
 
-			if (oCalDate.getYear() === this._selectedYear) {
+			if (year.selected) {
 				year.classes += " ui5-yp-item--selected";
 			}
 
@@ -244,18 +256,23 @@ class YearPicker extends UI5Element {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
 	get _isPattern() {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
+	_setCurrentItemTabIndex(index) {
+		this._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+	}
+
 	_onmousedown(event) {
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
 			const targetTimestamp = this.getTimestampFromDom(event.target);
-			const focusedItem = this._itemNav._getItems().find(item => parseInt(item.timestamp) === targetTimestamp);
-			this._itemNav.currentIndex = this._itemNav._getItems().indexOf(focusedItem);
+			const focusedItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === targetTimestamp);
+			this._itemNav.currentIndex = focusedItemIndex;
 			this._itemNav.focusCurrent();
 		}
 	}
@@ -362,9 +379,7 @@ class YearPicker extends UI5Element {
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			const jsDateTimeNow = Date.UTC(jsDate.getFullYear(), jsDate.getMonth(), jsDate.getDate());
-			const calDate = CalendarDate.fromTimestamp(jsDateTimeNow, this._primaryCalendarType);
-			return calDate.valueOf();
+			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType).toUTCJSDate().valueOf();
 		}
 		return undefined;
 	}
@@ -413,7 +428,7 @@ class YearPicker extends UI5Element {
 }
 
 YearPicker._ITEMS_COUNT = 20;
-YearPicker._MIDDLE_ITEM_INDEX = 7;
+YearPicker._MIDDLE_ITEM_INDEX = 10;
 
 YearPicker.define();
 

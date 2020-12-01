@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Icon from "./Icon.js";
-import Link from "./Link.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Link from "@ui5/webcomponents/dist/Link.js";
 import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
 
 // Styles
@@ -12,7 +12,7 @@ import styles from "./generated/themes/TimelineItem.css.js";
  */
 const metadata = {
 	tag: "ui5-timeline-item",
-	slots: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.TimelineItem.prototype */ {
 		/**
 		 * Determines the description of the <code>ui5-timeline-item</code>.
 		 *
@@ -24,7 +24,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.TimelineItem.prototype */ {
 		/**
 		 * Defines the icon to be displayed as graphical element within the <code>ui5-timeline-item</code>.
 		 * SAP-icons font provides numerous options.
@@ -89,7 +89,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.TimelineItem.prototype */ {
 		/**
 		 * Fired when the item name is pressed either with a
 		 * click/tap or by using the Enter or Space key.
@@ -97,7 +97,7 @@ const metadata = {
 		 * <b>Note:</b> The event will not be fired if the <code>item-name-clickable</code>
 		 * attribute is not set.
 		 *
-		 * @event sap.ui.webcomponents.main.TimelineItem#item-name-click
+		 * @event sap.ui.webcomponents.fiori.TimelineItem#item-name-click
 		 * @public
 		 */
 		"item-name-click": {},
@@ -113,7 +113,7 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TimelineItem
+ * @alias sap.ui.webcomponents.fiori.TimelineItem
  * @extends UI5Element
  * @tagname ui5-timeline-item
  * @public

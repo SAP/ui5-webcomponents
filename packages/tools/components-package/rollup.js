@@ -1,13 +1,13 @@
-const babel = require("rollup-plugin-babel");
 const process = require("process");
-const resolve = require("rollup-plugin-node-resolve");
+const fs = require("fs");
+const os = require("os");
+const { babel } = require("@rollup/plugin-babel");
+const { nodeResolve } = require("@rollup/plugin-node-resolve");
 const url = require("@rollup/plugin-url");
 const { terser } = require("rollup-plugin-terser");
 const notify = require('rollup-plugin-notify');
 const filesize = require('rollup-plugin-filesize');
 const livereload = require('rollup-plugin-livereload');
-const os = require("os");
-const fs = require("fs");
 
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
@@ -57,10 +57,12 @@ const getPlugins = ({ transpile }) => {
 		}));
 	}
 
-	plugins.push(resolve());
+	plugins.push(nodeResolve());
 
 	if (!process.env.DEV) {
-		plugins.push(terser());
+		plugins.push(terser({
+			numWorkers: 1,	// temp workaround for `Error: kill EPERM` error on MacOS 11
+		}));
 	}
 
 	if (process.env.DEV) {

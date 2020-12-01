@@ -8,8 +8,8 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import FCLLayout from "./types/FCLLayout.js";
 import {
 	getLayoutsByMedia,
@@ -80,6 +80,42 @@ const metadata = {
 		*/
 		noArrows: {
 			type: Boolean,
+		},
+
+		/**
+		* Defines the accessibility name for the <code>startColumn</code> region.
+		*
+		* @type {string}
+		* @defaultvalue ""
+		* @public
+		* @since 1.0.0-rc.11
+		*/
+		startColumnAccessibleName: {
+			type: String,
+		},
+
+		/**
+		* Defines the accessibility name for the <code>midColumn</code> region.
+		*
+		* @type {string}
+		* @defaultvalue ""
+		* @public
+		* @since 1.0.0-rc.11
+		*/
+		midColumnAccessibleName: {
+			type: String,
+		},
+
+		/**
+		* Defines the accessibility name for the <code>endColumn</code> region.
+		*
+		* @type {string}
+		* @defaultvalue ""
+		* @public
+		* @since 1.0.0-rc.11
+		*/
+		endColumnAccessibleName: {
+			type: String,
 		},
 
 		/**
@@ -620,15 +656,15 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartColumnText() {
-		return this.i18nBundle.getText(FCL_START_COLUMN_TXT);
+		return this.startColumnAccessibleName || this.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
 	get accMiddleColumnText() {
-		return this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+		return this.midColumnAccessibleName || this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
 	get accEndColumnText() {
-		return this.i18nBundle.getText(FCL_END_COLUMN_TXT);
+		return this.endColumnAccessibleName || this.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
 	get _effectiveLayoutsByMedia() {

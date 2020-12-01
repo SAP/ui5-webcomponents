@@ -20,6 +20,11 @@
 	width: auto;
 	min-width: 0px;
 	height: 100%;
+	flex: 0 1 auto;
+}
+
+#ui5-multi-combobox-input {
+	flex-grow: 1;
 }
 
 /* Workaround for IE */

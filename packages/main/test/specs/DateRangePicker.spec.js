@@ -17,14 +17,14 @@ describe("DateRangePicker general interaction", () => {
 		const daterangepicker = browser.$("#daterange-picker3");
 
 		daterangepicker.click();
-		daterangepicker.keys("\b\b\b\b\b\b\b\b\b\b\b\b\b");
+		daterangepicker.keys(["Control", "A"]);
 		daterangepicker.keys("09/09/2020 - 10/10/2020");
 		daterangepicker.keys("Enter");
 
 		assert.strictEqual(daterangepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is on none");
 	});
 
-	it("Selected dates is updates after value update in input", () => {
+	it("Selected dates are updated after value update in the input field", () => {
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#daterange-picker3");
 		const dayPicker = browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
 		const firstDateTimestamp = 1599609600;
@@ -42,9 +42,9 @@ describe("DateRangePicker general interaction", () => {
 		const daterangepicker = browser.$("#daterange-picker4");
 
 		daterangepicker.click();
-		daterangepicker.keys("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-		daterangepicker.keys("09/09/2019 - 10/10/2019");
-		daterangepicker.keys("Enter");
+		browser.keys(["Control", "A"]);
+		browser.keys("27/09/2019 - 10/10/2019");
+		browser.keys("Enter");
 
 		const res = browser.execute(() => {
 			const myDRP = document.getElementById("daterange-picker4");
@@ -54,8 +54,8 @@ describe("DateRangePicker general interaction", () => {
 			return {firstDateValue, lastDateValue};
 		});
 
-		assert.strictEqual(res.firstDateValue, "2019-09-09T00:00:00.000Z", "The first date is in JS Date format");
-		assert.strictEqual(res.lastDateValue, "2019-10-10T00:00:00.000Z", "The last date is JS Date format");
+		assert.deepEqual(new Date(res.firstDateValue), new Date(2019, 8, 27), "The first date is in JS Date format");
+		assert.deepEqual(new Date(res.lastDateValue), new Date(2019, 9, 10), "The last date is JS Date format");
 	});
 
 	it("Initially setting the same date as first & last is possible", () => {
@@ -80,11 +80,93 @@ describe("DateRangePicker general interaction", () => {
 		const daterangepicker = browser.$("#daterange-picker1");
 
 		daterangepicker.click();
-		daterangepicker.keys("F4");
+		browser.keys("F4");
 
 		dayOne.click();
 		dayTwo.click();
 
 		assert.strictEqual(browser.$("#labelChange").getHTML(false), "1", "The change event was fired once");
 	});
+
+	it("Page up/down increments/decrements day value", () => {
+		const dateRangePicker = browser.$("#daterange-picker5");
+		dateRangePicker.setAttribute("value", "Jul 16, 2020 @ Jul 29, 2020");
+		dateRangePicker.click();
+		browser.keys("End");
+
+		browser.keys('PageDown');
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 28, 2020");
+
+		browser.keys('PageUp');
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 29, 2020");
+
+		browser.keys("Home");
+		browser.keys('PageDown');
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 15, 2020 @ Jul 29, 2020");
+
+		browser.keys('PageUp');
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 29, 2020");
+	});
+
+	it("Page up/down increments/decrements month value", () => {
+		const dateRangePicker = browser.$("#daterange-picker5");
+		dateRangePicker.setAttribute("value", "Jul 16, 2020 @ Jul 29, 2020");
+		dateRangePicker.click();
+		browser.keys("End");
+
+		browser.keys(['Shift', 'PageUp']);
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Aug 29, 2020");
+
+		browser.keys(['Shift', 'PageDown']);
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 29, 2020");
+
+		browser.keys("Home");
+		browser.keys(['Shift', 'PageDown']);
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jun 16, 2020 @ Jul 29, 2020");
+
+		browser.keys(['Shift', 'PageUp']);
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 29, 2020");
+	});
+
+	it("Page up/down increments/decrements year value", () => {
+		const dateRangePicker = browser.$("#daterange-picker5");
+		dateRangePicker.setAttribute("value", "Jul 16, 2020 @ Jul 29, 2020");
+		dateRangePicker.click();
+		browser.keys("End");
+
+		browser.keys(['Control', 'Shift', 'PageUp']);
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 29, 2021");
+
+		browser.keys(['Control', 'Shift', 'PageDown']);
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 29, 2020");
+
+		browser.keys("Home");
+		browser.keys(['Control', 'Shift', 'PageDown']);
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2019 @ Jul 29, 2020");
+
+		browser.keys(['Control', 'Shift', 'PageUp']);
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 29, 2020");
+	});
+
+	it("Enter keyboard key confirms the date range in the input field", () => {
+		const dateRangePicker = browser.$("#daterange-picker5");
+		dateRangePicker.click();
+		
+		browser.keys(["Control", "A"]);
+		browser.keys("Jul 17, 2020 @ Jul 16, 2020");
+
+		browser.keys("Enter");
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 17, 2020");
+	});
+
+	it("Focus out of the input field confirms the date range", () => {
+		const dateRangePicker = browser.$("#daterange-picker5");
+		dateRangePicker.click();
+		browser.keys(["Control", "A"]);
+		browser.keys("Jul 17, 2020 @ Jul 16, 2020");
+
+		browser.keys("Tab");
+		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 17, 2020");
+	});
+
 });
