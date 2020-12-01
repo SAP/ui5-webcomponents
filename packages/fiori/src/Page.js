@@ -43,10 +43,10 @@ const metadata = {
          * If set to false, there will be no vertical scrolling at all.
          *
 		 * @type {Boolean}
-		 * @defaultvalue true
+		 * @defaultvalue false
 		 * @public
 		 */
-		enableScrolling: {
+		disableScrolling: {
 			type: Boolean,
 		},
 
@@ -176,6 +176,14 @@ class Page extends UI5Element {
 				"ui5-page-floating-footer-root": this.floatingFooter,
 				"ui5-page-show-footer": !this.hideFooter && this.floatingFooter,
 				"ui5-page-hide-footer": this.hideFooter,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			content: {
+				"overflow": this.disableScrolling ? "hidden" : "auto",
 			},
 		};
 	}
