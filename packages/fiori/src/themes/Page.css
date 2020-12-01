@@ -1,7 +1,13 @@
+
+:host(:not([hidden])) {
+    width: 100%;
+    height: 100%;
+}
+
 .ui5-page-root {
     height: 100%;
     overflow: hidden;
-    isolation: isolate;
+    position: relative;
     z-index: 0;
     box-sizing: border-box;
 }
@@ -30,10 +36,17 @@
 
 .ui5-page-floating-footer-root {
     left: 0.5rem;
-    bottom: 0.5rem;
     right: 0.5rem;
     width: auto;
-    transition: bottom 0.35s;
+    transition: bottom 0.4s;
+}
+
+.ui5-page-show-footer {
+    bottom: 0.5rem;
+}
+
+.ui5-page-hide-footer {
+    bottom: -10rem;
 }
 
 :host([floating-footer]:not([hide-footer])) .ui5-page-content-root {
@@ -42,10 +55,6 @@
 
 :host(:not([floating-footer]):not([hide-footer])) .ui5-page-content-root {
     bottom: 2.5rem;
-}
-
-.ui5-page-hide-footer {
-    bottom: -10rem;
 }
 
 /* BackgroundDesign */
