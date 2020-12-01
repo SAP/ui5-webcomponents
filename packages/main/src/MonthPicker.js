@@ -239,6 +239,10 @@ class MonthPicker extends UI5Element {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
+	_setCurrentItemTabIndex(index) {
+		this._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+	}
+
 	_onmousedown(event) {
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
 			const targetTimestamp = this.getTimestampFromDOM(event.target);

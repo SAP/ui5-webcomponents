@@ -52,6 +52,20 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the header of the <code>ui5-side-navigation</code>.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> The header is displayed when the component is expanded - the property <code>collapsed</code> is false;
+		 *
+		 * @public
+		 * @since 1.0.0-rc.11
+		 * @slot
+		 */
+		header: {
+			type: HTMLElement,
+		},
+
+		/**
 		 * Defines the fixed items at the bottom of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
 		 * for the fixed items, and optionally the <code>ui5-side-navigation-sub-item</code> component to provide second-level items inside them.
 		 *
@@ -87,10 +101,13 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>SideNavigation</code> is used as a standard menu in applications.
- * It consists of two containers: the main navigation section (top-aligned) and the secondary section (bottom-aligned).
- * Usually the main navigation section is related to the user’s current work context,
- * whereas the secondary section is mostly used to link additional information that may be of interest (legal information, developer communities, external help, contact information and so on).
-
+ * It consists of three containers: header (top-aligned), main navigation section (top-aligned) and the secondary section (bottom-aligned).
+ * <ul>
+ * <li>The header is meant for displaying user related information - profile data, avatar, etc.</li>
+ * <li>The main navigation section is related to the user’s current work context</li>
+ * <li>The secondary section is mostly used to link additional information that may be of interest (legal information, developer communities, external help, contact information and so on). </li>
+ * </ul>
+ *
  * <h3>Usage</h3>
  *
  * Use the available <code>ui5-side-navigation-item</code> and <code>ui5-side-navigation-sub-item</code> components to build your menu.
@@ -225,6 +242,14 @@ class SideNavigation extends UI5Element {
 	async closePicker(opener) {
 		const responsivePopover = await this.getPicker();
 		responsivePopover.close();
+	}
+
+	get hasHeader() {
+		return !!this.header.length;
+	}
+
+	get showHeader() {
+		return this.hasHeader && !this.collapsed;
 	}
 
 	get _itemsTree() {

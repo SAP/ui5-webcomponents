@@ -83,6 +83,42 @@ const metadata = {
 		},
 
 		/**
+		* Defines the accessibility name for the <code>startColumn</code> region.
+		*
+		* @type {string}
+		* @defaultvalue ""
+		* @public
+		* @since 1.0.0-rc.11
+		*/
+		startColumnAccessibleName: {
+			type: String,
+		},
+
+		/**
+		* Defines the accessibility name for the <code>midColumn</code> region.
+		*
+		* @type {string}
+		* @defaultvalue ""
+		* @public
+		* @since 1.0.0-rc.11
+		*/
+		midColumnAccessibleName: {
+			type: String,
+		},
+
+		/**
+		* Defines the accessibility name for the <code>endColumn</code> region.
+		*
+		* @type {string}
+		* @defaultvalue ""
+		* @public
+		* @since 1.0.0-rc.11
+		*/
+		endColumnAccessibleName: {
+			type: String,
+		},
+
+		/**
 		* Defines the component width in px.
 		*
 		* @type {Float}
@@ -620,15 +656,15 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartColumnText() {
-		return this.i18nBundle.getText(FCL_START_COLUMN_TXT);
+		return this.startColumnAccessibleName || this.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
 	get accMiddleColumnText() {
-		return this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+		return this.midColumnAccessibleName || this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
 	get accEndColumnText() {
-		return this.i18nBundle.getText(FCL_END_COLUMN_TXT);
+		return this.endColumnAccessibleName || this.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
 	get _effectiveLayoutsByMedia() {

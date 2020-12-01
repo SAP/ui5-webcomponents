@@ -39,6 +39,13 @@
 		ui5-shellbar::part(root) {
 			padding-left: .5rem;
 		}
+
+		.header {
+			display: flex;
+			flex-direction: column;
+			padding: 1rem;
+			box-sizing: border-box;
+		}
 	</style>
 </head>
 
@@ -53,6 +60,16 @@
 
 	<div class="content">
 		<ui5-side-navigation id="sn1">
+
+			<!-- Header -->
+			<div slot="header" class="header">
+				<ui5-avatar size="L" image="./img/man_avatar_1.png"></ui5-avatar>
+				<br>
+				<ui5-title>Willam Brown</ui5-title>
+				<ui5-label>UX expert</ui5-label>
+			</div>
+
+			<!-- Items -->
 			<ui5-side-navigation-item text="Home" icon="home" ></ui5-side-navigation-item>
 			<ui5-side-navigation-item text="People" expanded icon="group">
 				<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals"></ui5-side-navigation-sub-item>
@@ -64,6 +81,7 @@
 				<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
 
+			<!-- Fixed Items -->
 			<ui5-side-navigation-item slot="fixedItems" text="Usefull Links" icon="chain-link">
 				<ui5-side-navigation-sub-item text="Vacation Tool"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item text="HR tool"></ui5-side-navigation-sub-item>

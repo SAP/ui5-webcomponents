@@ -14,7 +14,9 @@
 		</header>
 	{{/if}}
 
-	<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
+	{{#if hasData}}
+		<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
+	{{/if}}
 
 	<ul id="{{_id}}-listUl"
 		class="ui5-list-ul"
@@ -46,5 +48,7 @@
 		</div>
 	{{/if}}
 
-	<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>
+	{{#if hasData}}
+		<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>
+	{{/if}}
 </div>

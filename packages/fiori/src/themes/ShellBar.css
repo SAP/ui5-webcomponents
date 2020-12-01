@@ -170,15 +170,19 @@ slot[name="profile"] {
 	padding: 0.25rem 1rem;
 }
 
+:host([breakpoint-size="S"]) .ui5-shellbar-search-full-width-wrapper {
+	padding: 0.25rem 1rem;
+}
+
 :host([breakpoint-size="S"]) ::slotted([ui5-button][slot="startButton"]) {
 	margin-right: 0;
 }
 
-:host([breakpoint-size="S"]) .ui5-shellbar-search-field {
-	width: 200px;
+:host([breakpoint-size="M"]) .ui5-shellbar-root {
+	padding: 0.25rem 2rem;
 }
 
-:host([breakpoint-size="M"]) .ui5-shellbar-root {
+:host([breakpoint-size="M"]) .ui5-shellbar-search-full-width-wrapper {
 	padding: 0.25rem 2rem;
 }
 
@@ -263,8 +267,11 @@ slot[name="profile"] {
 	overflow: hidden;
 	box-sizing: border-box;
 	white-space: nowrap;
-	margin-left: 8rem;
 	flex: 1;
+}
+
+:host(:not([show-search-field])) .ui5-shellbar-overflow-container-right {
+	margin-left: 8rem;
 }
 
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
@@ -306,11 +313,6 @@ slot[name="profile"] {
 	background-color: transparent;
 	cursor: pointer;
 }
-
-:host(:not([show-search-field])) .ui5-shellbar-search-field {
-	display: none;
-}
-
 
 :host([breakpoint-size="L"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
 	margin-left: 1rem;
@@ -358,11 +360,31 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-search-field {
-	z-index: 101;
-	position: absolute;
 	width: 240px;
-	top: 0.25rem;
+	min-width: 240px;
+	margin-left: 0.5rem;
+}
+
+.ui5-shellbar-search-full-width-wrapper .ui5-shellbar-search-full-field {
 	height: 2.25rem;
+	width: 100%;
+}
+
+.ui5-shellbar-search-full-width-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: var(--sapShellColor);
+	height: 100%;
+	width: 100%;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+.ui5-shellbar-search-full-width-wrapper .ui5-shellbar-button {
+	width: auto;
 }
 
 ::slotted([ui5-input]) {
@@ -370,6 +392,7 @@ slot[name="profile"] {
 	border: 1px solid var(--sapShell_InteractiveBorderColor);
 	color: var(--sapShell_TextColor);
 	height: 100%;
+	width: 100%;
 }
 
 ::slotted([ui5-input][focused]) {
@@ -451,8 +474,12 @@ slot[name="profile"] {
 	margin-left: 0;
 }
 
-[dir="rtl"] .ui5-shellbar-overflow-container-right {
+:host(:not([show-search-field])) [dir="rtl"] .ui5-shellbar-overflow-container-right {
 	margin-right: 8rem;
+	margin-left: 0;
+}
+
+[dir="rtl"] .ui5-shellbar-overflow-container-right {
 	margin-left: 0;
 }
 

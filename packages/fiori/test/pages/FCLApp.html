@@ -177,7 +177,12 @@
 </ui5-shellbar>
 
 <!--- FLEXIBLE COLUMN LAYOUT -->
-<ui5-flexible-column-layout id="fcl">
+<ui5-flexible-column-layout
+	id="fcl"
+	start-column-accessible-name="Companies list"
+	mid-column-accessible-name="Products List"
+	end-column-accessible-name="Product Details"
+>
 	<div class="column" id="startColumn" slot="startColumn">
 		<ui5-busyindicator id="startBusy">
 			<div class="ui5-message-page">
