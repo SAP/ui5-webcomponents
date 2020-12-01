@@ -31,7 +31,6 @@ const metadata = {
 		/**
 		 * @type {HTMLElement[]}
 		 * @slot
-		 * @since 1.0.0-rc.11
 		 * @public
 		 */
 		startContent: {
@@ -40,7 +39,6 @@ const metadata = {
 		/**
 		 * @type {HTMLElement[]}
 		 * @slot
-		 * @since 1.0.0-rc.11
 		 * @public
 		 */
 		middleContent: {
@@ -49,7 +47,6 @@ const metadata = {
 		/**
 		 * @type {HTMLElement[]}
 		 * @slot
-		 * @since 1.0.0-rc.11
 		 * @public
 		 */
 		endContent: {
@@ -65,10 +62,13 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
+ * The Bar control consists of three areas to hold its content. It has the capability to center content, such as a title, while having other controls on the left and right side.
  *
  * <h3>Usage</h3>
- *
+ * With the use of the design property, you can set the style of the Bar to appear designed with bottom border, top border and all borders.
+ * 
+ * Note: Do not place a Bar inside another Bar or inside any bar-like control. Doing so causes unpredictable behavior.
+ * 
  * For the <code>ui5-bar</code>
  * <h3>ES6 Module Import</h3>
  *
@@ -99,18 +99,10 @@ class Bar extends UI5Element {
 		return BarTemplate;
 	}
 
-	static get dependencies() {
-		return [];
-	}
-
-	static async onDefine() {
-
-	}
-
 	get classes() {
 		return {
 			root: {
-				"ui5-bar" : true,
+				"ui5-bar-root" : true,
 				"ui5-bar-design-bottomborder" : this.design === BarDesign.BottomBorder,
 				"ui5-bar-design-topborder" : this.design === BarDesign.TopBorder,
 				"ui5-bar-design-allborders" : this.design === BarDesign.AllBorders,

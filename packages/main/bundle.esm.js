@@ -42,7 +42,6 @@ import "./dist/features/InputSuggestions.js";
 
 import Avatar from "./dist/Avatar.js";
 import Badge from "./dist/Badge.js";
-import Bar from "./dist/Bar.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
 import Card from "./dist/Card.js";

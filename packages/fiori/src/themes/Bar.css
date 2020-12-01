@@ -2,42 +2,51 @@
 	background-color: var( --sapPageHeader_Background);
 	height: var(--_ui5_bar_base_height);
 	width: 100%;
+	box-shadow: inset 0 -0.0625rem var(--sapPageFooter_BorderColor);
+	display: block;
+	margin-bottom: 0.5rem;
+	margin-top: 0.5rem;
 }
 
-.ui5-bar {
+.ui5-bar-root {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	height: inherit;
 	width: inherit;
 	background-color: inherit;
-	margin-bottom: 0.5rem;
-	margin-top: 0.5rem;
+	box-shadow: inherit;
+	border-radius: inherit;
 }
 
-.ui5-bar .ui5-bar-leftcontent-container {
+.ui5-bar-root .ui5-bar-startcontent-container {
 	padding-left: 0.5rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
-.ui5-bar .ui5-bar-rightcontent-container {
+.ui5-bar-root .ui5-bar-endcontent-container {
 	padding-right: 0.5rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
-.ui5-bar .ui5-bar-midcontent-container {
+.ui5-bar-root .ui5-bar-midcontent-container {
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
-.ui5-bar.ui5-bar-design-bottomborder{
-	background-color: var(--sapPageHeader_Background);
-	box-shadow: inset 0 -0.0625rem var(--sapPageFooter_BorderColor);
-}
-
-.ui5-bar.ui5-bar-design-topborder{
+:host([design="TopBorder"]){
 	background-color: var(--sapPageFooter_Background);
 	border-top: 0.0625rem solid var(--sapPageFooter_BorderColor);
+	box-shadow: none;
 }
 
-.ui5-bar.ui5-bar-design-allborders{
+:host([design="AllBorders"]){
 	border-radius: var(--sapElement_BorderCornerRadius);
 	background-color: var(--sapPageFooter_Background);
 	box-shadow: var(--sapContent_Shadow1);
