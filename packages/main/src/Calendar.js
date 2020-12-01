@@ -567,7 +567,7 @@ class Calendar extends UI5Element {
 
 		// Deselecting a date in multiple selection type
 		if (this.selection === CalendarSelection.Multiple && this.selectedDates.length > selectedDates.length) {
-			const deselectedDates = this.selectedDates.filter(timestamp => !selectedDates.includes(timestamp)); 
+			const deselectedDates = this.selectedDates.filter(timestamp => !selectedDates.includes(timestamp));
 			this.timestamp = deselectedDates[0];
 		} else {
 			this.timestamp = selectedDates[selectedDates.length - 1];
