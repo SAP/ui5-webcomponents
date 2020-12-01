@@ -11,17 +11,8 @@ import BarCss from "./generated/themes/Bar.css.js";
  */
 const metadata = {
 	tag: "ui5-bar",
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.Bar.prototype */ {
-		/**
-		 * Defines the <code>ui5-bar</code> design.
-		 * @type {BarDesign}
-		 * @defaultvalue "BottomBorder"
-		 * @public
-		 */
-		design: {
-			type: BarDesign,
-			defaultValue: BarDesign.BottomBorder
-		},
 		/**
 		 * Defines the <code>ui5-bar</code> design.
 		 * <br><br>
@@ -35,12 +26,6 @@ const metadata = {
 			type: BarDesign,
 			defaultValue: BarDesign.BottomBorder,
 		},
-		/**
-		 * 
-		 */
-		style: {
-			type: String,
-		}
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Bar.prototype */ {
 		/**
@@ -49,7 +34,7 @@ const metadata = {
 		 * @since 1.0.0-rc.11
 		 * @public
 		 */
-		leftContent: {
+		startContent: {
 			type: HTMLElement,
 		},
 		/**
@@ -67,7 +52,7 @@ const metadata = {
 		 * @since 1.0.0-rc.11
 		 * @public
 		 */
-		rightContent: {
+		endContent: {
 			type: HTMLElement,
 		},
 	},
@@ -95,6 +80,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-bar
  * @public
+ * @since 1.0.0-rc.11
  */
 class Bar extends UI5Element {
 	static get metadata() {
@@ -121,17 +107,6 @@ class Bar extends UI5Element {
 
 	}
 
-	// onAfterRendering() {
-	// 	const slots = this.children;
-	// 	for (let i = 0; i < slots.length; i++) {
-	// 		const currentSlotChildren = slots[i].children;
-	// 		for (let j = 0; j < currentSlotChildren.length; j++) {
-	// 			currentSlotChildren[j].classList.add("slotChild");
-	// 			currentSlotChildren[j].setAttribute("slotChild", "");
-	// 		}
-	// 	}
-	// }
-
 	get classes() {
 		return {
 			root: {
@@ -141,10 +116,6 @@ class Bar extends UI5Element {
 				"ui5-bar-design-allborders" : this.design === BarDesign.AllBorders,
 			},
 		};
-	}
-
-	get innerStyles() {
-		return this.getAttribute("style");
 	}
 }
 

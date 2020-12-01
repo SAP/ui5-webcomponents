@@ -183,6 +183,7 @@
   "--sapPageFooter_Background",
   "--sapPageFooter_BorderColor",
   "--sapPageFooter_TextColor",
+  "--sapPageHeader_Background",
   "--sapPageHeader_BorderColor",
   "--sapPageHeader_TextColor",
   "--sapPositiveColor",

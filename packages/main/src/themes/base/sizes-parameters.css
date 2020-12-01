@@ -83,6 +83,7 @@
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
+	--_ui5_bar_base_height: 2.5rem;
 	--_ui5_button_base_height: 1.625rem;
 	--_ui5_button_base_padding: 0.4375rem;
 	--_ui5_button_base_min_width: 2rem;
