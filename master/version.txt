@@ -1,5 +1,13 @@
-commit e06d6f39d8bdedf78d27ac926f615742825149d2
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Dec 2 11:01:28 2020 +0200
+commit 0c9b8c5f98bb195b86a0364b25d106ebc47770ed
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Dec 2 18:44:27 2020 +0800
 
-    fix(ui5-table): improve accessibility (#2534)
+    Translation Delivery (#2538)
+    
+    * chore: translation delivery
+    
+    Change-Id: Id5fb424f405f387a599ef3295529aa28f1242f48
+    
+    * chore: translation delivery
+    
+    Change-Id: I47c4929e171592cfcb88d84ef97927928eb9fd11
