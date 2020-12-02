@@ -10,21 +10,28 @@ const BarTypes = {
 	 * @public
 	 * @type {BottomBorder}
 	 */
-	BottomBorder: "BottomBorder",
+	Header: "Header",
+
+	/**
+	 * Subheader type
+	 * @public
+	 * @type {SubHeader}
+	 */
+	SubHeader: "SubHeader",
 
 	/**
 	 * Footer type
 	 * @public
-	 * @type {TopBorder}
+	 * @type {Footer}
 	 */
-	TopBorder: "TopBorder",
+	Footer: "Footer",
 
 	/**
-	 * All borders type - there is visible border on all sides
+	 * Floating Footer type - there is visible border on all sides
 	 * @public
-	 * @type {AllBorders}
+	 * @type {FloatingFooter}
 	 */
-	AllBorders: "AllBorders",
+	FloatingFooter: "FloatingFooter",
 };
 
 /**

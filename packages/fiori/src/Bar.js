@@ -66,9 +66,9 @@ const metadata = {
  *
  * <h3>Usage</h3>
  * With the use of the design property, you can set the style of the Bar to appear designed with bottom border, top border and all borders.
- * 
+ *
  * Note: Do not place a Bar inside another Bar or inside any bar-like control. Doing so causes unpredictable behavior.
- * 
+ *
  * For the <code>ui5-bar</code>
  * <h3>ES6 Module Import</h3>
  *
@@ -97,17 +97,6 @@ class Bar extends UI5Element {
 
 	static get template() {
 		return BarTemplate;
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-bar-root" : true,
-				"ui5-bar-design-bottomborder" : this.design === BarDesign.BottomBorder,
-				"ui5-bar-design-topborder" : this.design === BarDesign.TopBorder,
-				"ui5-bar-design-allborders" : this.design === BarDesign.AllBorders,
-			},
-		};
 	}
 }
 
