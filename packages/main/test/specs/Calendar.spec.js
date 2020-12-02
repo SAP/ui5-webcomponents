@@ -228,7 +228,7 @@ describe("Calendar general interaction", () => {
 		assert.deepEqual(selectedDates, [971136000, 971222400, 971308800], "Change event is fired with proper data");
 	});
 
-	it("Keyboard navigation works properly, when calendar is with 'Multiple' selection type", () => {
+	it("Keyboard navigation works properly, when calendar selection type is set to 'Multiple'", () => {
 		const toggleButton = browser.$("#weekNumbersButton");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("selection", "Multiple");
