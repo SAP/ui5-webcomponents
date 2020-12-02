@@ -46,10 +46,11 @@ class UI5Element extends HTMLElement {
 	constructor() {
 		super();
 		this._propertyChangeListeners = new Set();
+		this._changedState = [];
 		this._initializeState();
 		this._upgradeAllProperties();
 		this._initializeContainers();
-		this._upToDate = false;
+		this._renderPending = true;
 		this._inDOM = false;
 		this._fullyConnected = false;
 
@@ -227,6 +228,8 @@ class UI5Element extends HTMLElement {
 		const canSlotText = this.constructor.getMetadata().canSlotText();
 		const domChildren = Array.from(canSlotText ? this.childNodes : this.children);
 
+		this._invalidate("slots");
+
 		// Init the _state object based on the supported slots
 		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
 			this._clearSlot(slotName, slotData);
@@ -303,7 +306,6 @@ class UI5Element extends HTMLElement {
 		slottedChildrenMap.forEach((children, slot) => {
 			this._state[slot] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
 		});
-		this._invalidate("slots");
 	}
 
 	/**
@@ -330,7 +332,6 @@ class UI5Element extends HTMLElement {
 		});
 
 		this._state[propertyName] = [];
-		this._invalidate(propertyName, []);
 	}
 
 	/**
@@ -475,6 +476,7 @@ class UI5Element extends HTMLElement {
 		const shouldObserve = allPropertiesAreObserved || observedProps.includes(prop.detail.name);
 		const shouldSkip = notObservedProps.includes(prop.detail.name);
 		if (shouldObserve && !shouldSkip) {
+			// console.log("_PARENT_", prop.detail.name)
 			parentNode._invalidate("_parent_", this);
 		}
 	}
@@ -502,18 +504,19 @@ class UI5Element extends HTMLElement {
 	 * Asynchronously re-renders an already rendered web component
 	 * @private
 	 */
-	_invalidate() {
-		if (this._shouldInvalidateParent) {
-			this.parentNode._invalidate();
-		}
-
-		if (!this._upToDate) {
-			// console.log("already invalidated", this, ...arguments);
+	_invalidate(changedEntity, newValue, oldValue) {
+		if ((!this.constructor.getMetadata().isAbstract() && !this.getDomRef()) || this._suppressInvalidation) {
 			return;
 		}
 
-		if (this.getDomRef() && !this._suppressInvalidation) {
-			this._upToDate = false;
+		this._changedState.push({ changedEntity, newValue, oldValue });
+
+		if (this._shouldInvalidateParent) {
+			this.parentNode._invalidate("_invalidate_parent_");
+		}
+
+		if (!this._renderPending) {
+			this._renderPending = true;
 			// console.log("INVAL", this, ...arguments);
 			RenderScheduler.renderDeferred(this);
 		}
@@ -543,9 +546,21 @@ class UI5Element extends HTMLElement {
 
 		// Update the shadow root with the render result
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
-		this._upToDate = true;
-		this._updateShadowRoot();
+		this._renderPending = false;
+		if (this._changedState.length) {
+			console.log("Changed state was:", this.localName, this._changedState.map(x => { // eslint-disable-line
+				let res = x.changedEntity;
+				if (typeof x.newValue !== "object") {
+					res = `${res} (${x.oldValue} => ${x.newValue})`;
+				}
 
+				return res;
+			}));
+		}
+		this._changedState = [];
+
+		// Update shadow root and static area item
+		this._updateShadowRoot();
 		if (this._shouldUpdateFragment()) {
 			this.staticAreaItem._updateFragment(this);
 			this.staticAreaItemDomRef = this.staticAreaItem.staticAreaItemDomRef.shadowRoot;
@@ -939,7 +954,7 @@ class UI5Element extends HTMLElement {
 
 					if (oldState !== value) {
 						this._state[prop] = value;
-						this._invalidate(prop, value);
+						this._invalidate(prop, value, oldState);
 						this._propertyChange(prop, value);
 					}
 				},

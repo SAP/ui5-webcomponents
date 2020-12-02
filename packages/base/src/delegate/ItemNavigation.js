@@ -179,7 +179,7 @@ class ItemNavigation extends EventProvider {
 		}
 
 
-		this.rootWebComponent._invalidate();
+		// this.rootWebComponent._invalidate("_item_navigation_");
 	}
 
 	focusCurrent() {
