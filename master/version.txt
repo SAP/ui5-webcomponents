@@ -1,5 +1,5 @@
-commit 5f8e0e268dabc1e6d8ce0187bffe184c42c07e9e
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Nov 30 17:37:54 2020 +0200
+commit e06d6f39d8bdedf78d27ac926f615742825149d2
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Dec 2 11:01:28 2020 +0200
 
-    fix(ui5-list): remove focus trap for empty list (#2411)
+    fix(ui5-table): improve accessibility (#2534)
