@@ -16,15 +16,15 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-bar</code> design.
 		 * <br><br>
-		 * <b>Note:</b> Available options are "BottomBorder", "TopBorder", "AllBorders".
+		 * <b>Note:</b> Available options are "Header", "SubHeader", "Footer", "FloatingFooter".
 		 *
 		 * @type {BarDesign}
-		 * @defaultvalue "BottomBorder"
+		 * @defaultvalue "Header"
 		 * @public
 		 */
 		design: {
 			type: BarDesign,
-			defaultValue: BarDesign.BottomBorder,
+			defaultValue: BarDesign.Header,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Bar.prototype */ {

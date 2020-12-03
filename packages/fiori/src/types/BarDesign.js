@@ -8,7 +8,7 @@ const BarTypes = {
 	/**
 	 * Default type
 	 * @public
-	 * @type {BottomBorder}
+	 * @type {Header}
 	 */
 	Header: "Header",
 
