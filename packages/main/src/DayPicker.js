@@ -867,12 +867,13 @@ class DayPicker extends UI5Element {
 		const minDate = this._minDateObject;
 		const maxDate = this._maxDateObject;
 
-		currentDate.setHours(0);
+		currentDate.setHours(0, 0, 0);
+
 		if (minDate) {
-			minDate.setHours(0);
+			minDate.setHours(0, 0, 0);
 		}
 		if (maxDate) {
-			maxDate.setHours(0);
+			maxDate.setHours(0, 0, 0);
 		}
 
 		return currentDate > maxDate || currentDate < minDate;
