@@ -1,13 +1,10 @@
-commit 0c9b8c5f98bb195b86a0364b25d106ebc47770ed
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Dec 2 18:44:27 2020 +0800
+commit 371d12d372fca802207b5396edebedbbd950452e
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Thu Dec 3 15:12:11 2020 +0200
 
-    Translation Delivery (#2538)
+    fix(ui5-calendar): keyboard navigation in the picker grid now works properly (#2532)
     
-    * chore: translation delivery
+    * fix(ui5-calendar): keyboard navigation works properly after date deselection
     
-    Change-Id: Id5fb424f405f387a599ef3295529aa28f1242f48
-    
-    * chore: translation delivery
-    
-    Change-Id: I47c4929e171592cfcb88d84ef97927928eb9fd11
+    Deselecting a date, when ui5-calendar selection type is "Multiple",
+    now doesn't cause keyboard navigation in the grid to stop working.
