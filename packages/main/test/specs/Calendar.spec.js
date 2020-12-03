@@ -228,6 +228,25 @@ describe("Calendar general interaction", () => {
 		assert.deepEqual(selectedDates, [971136000, 971222400, 971308800], "Change event is fired with proper data");
 	});
 
+	it("Keyboard navigation works properly, when calendar selection type is set to 'Multiple'", () => {
+		const toggleButton = browser.$("#weekNumbersButton");
+		const calendar = browser.$("#calendar1");
+		calendar.setAttribute("selection", "Multiple");
+		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
+
+		toggleButton.click();
+		toggleButton.click();
+		browser.keys("Tab");
+		// Select the focused date
+		browser.keys("Space");
+
+		// Deselect the focused date
+		browser.keys("Space");
+		browser.keys("ArrowRight");
+
+		assert.ok(calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="971222400"]`).isFocusedDeep(), "Focus is properly set");
+	});
+
 	it("Calendar with 'Range' selection type", () => {
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
