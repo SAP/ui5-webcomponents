@@ -167,10 +167,6 @@ class UI5ElementMetadata {
 	isLanguageAware() {
 		return !!this.metadata.languageAware;
 	}
-
-	isAbstract() {
-		return this.metadata.abstract;
-	}
 }
 
 const validateSingleProperty = (value, propData) => {

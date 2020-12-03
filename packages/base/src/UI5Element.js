@@ -505,7 +505,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_invalidate(changedEntity, newValue, oldValue) {
-		if ((!this.constructor.getMetadata().isAbstract() && !this.getDomRef()) || this._suppressInvalidation) {
+		if ((!this.constructor.isAbstract() && !this.getDomRef()) || this._suppressInvalidation) {
 			return;
 		}
 
@@ -824,6 +824,10 @@ class UI5Element extends HTMLElement {
 
 		// Use default slot as a fallback
 		return "default";
+	}
+
+	static isAbstract() {
+		return !this.render;
 	}
 
 	/**
