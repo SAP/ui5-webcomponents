@@ -44,8 +44,9 @@
 	position: relative;
 	padding: 5rem 1rem 1rem 1rem;
 	overflow: auto;
-	height: calc(100% - 4rem);
+	height: 100%;
 	box-sizing: border-box;
+	background: var(--sapBackgroundColor);
 }
 
 .ui5-wiz-content-item {
