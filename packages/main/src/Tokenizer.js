@@ -161,6 +161,7 @@ class Tokenizer extends UI5Element {
 			popover.open(this.morePopoverOpener || this);
 		}
 
+		this.scrollToEnd();
 		this.fireEvent("show-more-items-press");
 	}
 
@@ -263,10 +264,21 @@ class Tokenizer extends UI5Element {
 		this.contentDom.scrollLeft = 0;
 	}
 
+	/**
+	 * Scrolls the container of the tokens to its end.
+	 * This method is used by MultiInput and MultiComboBox.
+	 * @private
+	 */
+	scrollToEnd() {
+		this.contentDom.scrollLeft = Math.ceil(this.getBoundingClientRect().width);
+	}
+
 	async closeMorePopover() {
 		const popover = await this.getPopover();
 
 		popover.close();
+
+		this.scrollToStart();
 	}
 
 	get _nMoreText() {

@@ -759,11 +759,19 @@ class MultiComboBox extends UI5Element {
 		if (!isPhone()) {
 			this.focused = true;
 		}
+
+		// ensure the last token is in view by scrolling the tokenizer to its end
+		this._tokenizer.scrollToEnd();
 	}
 
 	inputFocusOut(event) {
 		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
 			this.focused = false;
+		}
+
+		// restore tokenizer's scroll position
+		if (!event.relatedTarget || event.relatedTarget.localName !== "ui5-token") {
+			this._tokenizer.scrollToStart();
 		}
 	}
 
