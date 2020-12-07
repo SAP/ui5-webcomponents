@@ -16,6 +16,7 @@ const newComponents = [
 	"Calendar",
 	"MultiInput",
 	"Wizard",
+	"AvatarGroup",
 ];
 
 packages.forEach(package => {

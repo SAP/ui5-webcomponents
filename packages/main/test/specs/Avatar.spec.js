@@ -43,4 +43,32 @@ describe("Avatar", () => {
 		// initials are rendered
 		assert.ok(initials.isExisting(), "initials are rendered");
 	});
+
+	it("Tests if clicked event is thrown for interactive avatars", () => {
+		const avatarRoot = browser.$("#interactive-avatar").shadow$(".ui5-avatar-root");
+		const input = browser.$("#click-event");
+	
+		avatarRoot.click();
+		assert.strictEqual(input.getAttribute("value"), "1", "Mouse click throws event");
+	
+		avatarRoot.keys("Enter");
+		assert.strictEqual(input.getAttribute("value"), "2", "Enter throws event");
+	
+		avatarRoot.keys("Space");
+		assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
+	  });
+	  
+	  it("Tests if clicked event is not thrown for non interactive avatars", () => {
+		const avatarRoot = browser.$("#non-interactive-avatar").shadow$(".ui5-avatar-root");;
+		const input = browser.$("#click-event");
+	
+		avatarRoot.click();
+		assert.strictEqual(input.getAttribute("value"), "3", "Mouse click throws event");
+	
+		avatarRoot.keys("Enter");
+		assert.strictEqual(input.getAttribute("value"), "3", "Enter throws event");
+	
+		avatarRoot.keys("Space");
+		assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
+		});
 });

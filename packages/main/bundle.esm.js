@@ -41,6 +41,7 @@ import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
 
 import Avatar from "./dist/Avatar.js";
+import AvatarGroup from "./dist/AvatarGroup.js";
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
