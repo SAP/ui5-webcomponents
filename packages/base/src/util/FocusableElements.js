@@ -38,6 +38,11 @@ const findFocusableElement = (container, forward) => {
 	while (child) {
 		const originalChild = child;
 
+		// @todo discuss
+		if (child.isUI5Element) {
+			return child;
+		}
+
 		child = child.isUI5Element ? child.getFocusDomRef() : child;
 		if (!child) {
 			return null;

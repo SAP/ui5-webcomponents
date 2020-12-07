@@ -77,7 +77,7 @@ const metadata = {
 		},
 
 		/**
-		 * @private
+		 * @protected
 		 */
 		// _disableInitialFocus: {
 		// 	type: Boolean,
@@ -88,6 +88,14 @@ const metadata = {
 		 * @private
 		 */
 		_initialFocusApplied: {
+			type: Boolean,
+		},
+
+		/**
+		 * True if the initial focus is already internally applied.
+		 * @private
+		 */
+		_focusAppliedAfterOpen: {
 			type: Boolean,
 		},
 
@@ -298,6 +306,23 @@ class Popup extends UI5Element {
 	}
 
 	/**
+	 * @private
+	 */
+	_applyFocusAfterOpen() {
+		const shouldApply = !(this._focusAppliedAfterOpen || this._disableInitialFocus /* || this._preventInitialFocus */);
+
+		if (this.isOpen() && shouldApply) {
+
+			// @todo discuss
+			// setTimeout(() => {
+				this.applyInitialFocus();
+			// }, 0);
+
+			this._focusAppliedAfterOpen = true;
+		}
+	}
+
+	/**
 	 * Override this method to provide custom logic for the popup's open/closed state. Maps to the "opened" property by default.
 	 * @public
 	 * @returns {boolean}
@@ -342,14 +367,7 @@ class Popup extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this.opened &&
-			// !this._disableInitialFocus &&
-			// !this._preventInitialFocus &&
-			!this._initialFocusApplied) {
-
-			this.applyInitialFocus();
-			this._initialFocusApplied = true;
-		}
+		this._applyFocusAfterOpen();
 	}
 
 	/**
@@ -390,7 +408,7 @@ class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this._initialFocusApplied = false;
+		this._focusAppliedAfterOpen = false;
 
 		this.fireEvent("after-close", {}, false, false);
 	}

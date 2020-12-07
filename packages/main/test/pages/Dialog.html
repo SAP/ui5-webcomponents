@@ -50,6 +50,9 @@
 	<br>
 	<br>
 	<ui5-button id="resizable-open">Open resizable dialog</ui5-button>
+	<br>
+	<br>
+	<ui5-button id="dynamic-open">Open dialog which is created dynamically</ui5-button>
 
 	<ui5-block-layer></ui5-block-layer>
 
@@ -330,6 +333,19 @@
 		window["draggable-close"].addEventListener("click", function () { window["draggable-dialog"].close(); });
 		window["resizable-open"].addEventListener("click", function () { window["resizable-dialog"].open(); });
 		window["resizable-close"].addEventListener("click", function () { window["resizable-dialog"].close(); });
+
+
+		window["dynamic-open"].addEventListener("click", function () {
+			let dialog = document.createElement("ui5-dialog"),
+				button = document.createElement("ui5-button");
+
+			button.appendChild(document.createTextNode("Ok"));
+			dialog.appendChild(button);
+
+			document.body.appendChild(dialog);
+
+			dialog.open();
+		});
 	</script>
 </body>
 
