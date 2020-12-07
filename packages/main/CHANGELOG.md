@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.1](https://github.com/SAP/ui5-webcomponents/compare/v0.27.0...v0.27.1) (2020-12-07)
+
+
+### Bug Fixes
+
+* **ui5-badge:** enable letter spacing overwrite ([#2493](https://github.com/SAP/ui5-webcomponents/issues/2493)) ([53e3274](https://github.com/SAP/ui5-webcomponents/commit/53e3274)), closes [#2451](https://github.com/SAP/ui5-webcomponents/issues/2451)
+* **ui5-input:** don't render aria-describedby if not neccessary ([#2512](https://github.com/SAP/ui5-webcomponents/issues/2512)) ([0af9323](https://github.com/SAP/ui5-webcomponents/commit/0af9323))
+* **ui5-popover:** correct arrow position on RTL ([#2488](https://github.com/SAP/ui5-webcomponents/issues/2488)) ([d3b5439](https://github.com/SAP/ui5-webcomponents/commit/d3b5439)), closes [#2387](https://github.com/SAP/ui5-webcomponents/issues/2387)
+
+
+### Features
+
+* **ui5-avatar-group:** initial implementation ([#2524](https://github.com/SAP/ui5-webcomponents/issues/2524)) ([43ac177](https://github.com/SAP/ui5-webcomponents/commit/43ac177)), closes [#2409](https://github.com/SAP/ui5-webcomponents/issues/2409)
+* **ui5-button:** implement title property ([#2492](https://github.com/SAP/ui5-webcomponents/issues/2492)) ([c03d2b2](https://github.com/SAP/ui5-webcomponents/commit/c03d2b2))
+
+
+
+
+
 # [1.0.0-rc.10](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.9...v1.0.0-rc.10) (2020-11-12)
 
 

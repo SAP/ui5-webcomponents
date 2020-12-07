@@ -86,6 +86,7 @@
   "--sapCriticalColor",
   "--sapCriticalElementColor",
   "--sapCriticalTextColor",
+  "--sapElement_BorderCornerRadius",
   "--sapErrorBackground",
   "--sapErrorBorderColor",
   "--sapField_Background",

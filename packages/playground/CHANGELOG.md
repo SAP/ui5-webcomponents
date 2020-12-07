@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.1](https://github.com/SAP/ui5-webcomponents/compare/v0.27.0...v0.27.1) (2020-12-07)
+
+
+### Features
+
+* **ui5-avatar-group:** initial implementation ([#2524](https://github.com/SAP/ui5-webcomponents/issues/2524)) ([43ac177](https://github.com/SAP/ui5-webcomponents/commit/43ac177)), closes [#2409](https://github.com/SAP/ui5-webcomponents/issues/2409)
+* **ui5-bar:** initial implementation ([#2533](https://github.com/SAP/ui5-webcomponents/issues/2533)) ([478e170](https://github.com/SAP/ui5-webcomponents/commit/478e170))
+
+
+
+
+
 # [1.0.0-rc.10](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.9...v1.0.0-rc.10) (2020-11-12)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization
