@@ -79,7 +79,15 @@ const metadata = {
 		/**
 		 * @private
 		 */
-		_disableInitialFocus: {
+		// _disableInitialFocus: {
+		// 	type: Boolean,
+		// },
+
+		/**
+		 * True if the initial focus is already internally applied.
+		 * @private
+		 */
+		_initialFocusApplied: {
 			type: Boolean,
 		},
 
@@ -325,14 +333,23 @@ class Popup extends UI5Element {
 		this._focusedElementBeforeOpen = getFocusedElement();
 		this.show();
 
-		if (!this._disableInitialFocus && !preventInitialFocus) {
-			this.applyInitialFocus();
-		}
+		// this._preventInitialFocus = preventInitialFocus;
 
 		this._addOpenedPopup();
 
 		this.opened = true;
 		this.fireEvent("after-open", {}, false, false);
+	}
+
+	onAfterRendering() {
+		if (this.opened &&
+			// !this._disableInitialFocus &&
+			// !this._preventInitialFocus &&
+			!this._initialFocusApplied) {
+
+			this.applyInitialFocus();
+			this._initialFocusApplied = true;
+		}
 	}
 
 	/**
@@ -372,6 +389,8 @@ class Popup extends UI5Element {
 		if (!this.preventFocusRestore && !preventFocusRestore) {
 			this.resetFocus();
 		}
+
+		this._initialFocusApplied = false;
 
 		this.fireEvent("after-close", {}, false, false);
 	}
