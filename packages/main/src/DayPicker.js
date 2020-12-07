@@ -863,20 +863,7 @@ class DayPicker extends UI5Element {
 	}
 
 	_isOutOfSelectableRange(date) {
-		const currentDate = date._oUDate ? date.toLocalJSDate() : CalendarDate.fromTimestamp(date).toLocalJSDate();
-		const minDate = this._minDateObject;
-		const maxDate = this._maxDateObject;
-
-		currentDate.setHours(0, 0, 0);
-
-		if (minDate) {
-			minDate.setHours(0, 0, 0);
-		}
-		if (maxDate) {
-			maxDate.setHours(0, 0, 0);
-		}
-
-		return currentDate > maxDate || currentDate < minDate;
+		return date.valueOf() < this._minDate || date.valueOf() > this._maxDate;
 	}
 
 	get _maxDate() {
