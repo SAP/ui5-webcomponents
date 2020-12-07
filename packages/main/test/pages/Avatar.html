@@ -111,5 +111,28 @@
 		<ui5-avatar id="myAvatar3" image="./img/woman_avatar_5.png" icon="filter" initials="SF"></ui5-avatar>
 		<ui5-avatar id="myAvatar4" initials="SF" shape="Square" size="M"></ui5-avatar>
 	</section>
+
+	<section>
+		<h3>Avatar - interactive</h3>
+		<ui5-avatar id="interactive-avatar" interactive initials="XS" size="XS"></ui5-avatar>
+		<ui5-avatar id="non-interactive-avatar" initials="S" size="S"></ui5-avatar>
+		<ui5-input id="click-event" value="0"></ui5-input>
+	</section>
+
+	<script>
+		var avatar = document.getElementById("interactive-avatar"),
+			nonInteractiveAvatar = document.getElementById("non-interactive-avatar"),
+			input = document.getElementById("click-event"),
+			inputValue = 0;
+
+		avatar.addEventListener("ui5-click", function() {
+			input.value = ++inputValue;
+		});
+
+		nonInteractiveAvatar.addEventListener("ui5-click", function() {
+			input.value = ++inputValue;
+		});
+	</script>
+
 </body>
 </html>
