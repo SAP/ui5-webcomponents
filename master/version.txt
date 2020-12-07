@@ -1,5 +1,12 @@
-commit c2baf6b78fbf01ab9f71cd67b7c338436ac4f4f9
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Dec 7 14:52:58 2020 +0200
+commit ae926ee2fadc42ba608a04b019f45023012411e9
+Author: Dobrin Dimchev <dobrin.yonkov1@gmail.com>
+Date:   Mon Dec 7 16:23:17 2020 +0200
 
-    fix(ui5-textarea): announce required textarea (#2385)
+    feat(ui5-avatar-group): initial implementation (#2524)
+    
+    Introduce new component in the main package, called AvatarGroup. The component is used to display a group of avatars arranged horizontally. It is useful to visually showcase a group of related avatars, such as, project team members or employees. The control allows you to display the avatars in different sizes, depending on your use case.
+    Supports 2 main types - Group and Individual:
+    - Group type: The avatars are displayed as partially overlapped on top of each other and the entire group has one click/tap area.
+    - Individual type: The avatars are displayed side-by-side and each avatar has its own click/tap area.
+    
+    Fixes: #2409
