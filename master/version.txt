@@ -1,7 +1,5 @@
-commit 9e30e530a1880507f3ae06e691a4c054551cbc63
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Dec 3 23:25:23 2020 +0800
+commit c2baf6b78fbf01ab9f71cd67b7c338436ac4f4f9
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Dec 7 14:52:58 2020 +0200
 
-    chore: translation delivery (#2543)
-    
-    Change-Id: I777db31c1b65eb78fa329fe376c467e674597020
+    fix(ui5-textarea): announce required textarea (#2385)
