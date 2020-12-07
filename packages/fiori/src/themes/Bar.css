@@ -44,7 +44,7 @@
 	box-shadow: none;
 }
 
-:host([design="SubHeader"]){
+:host([design="Subheader"]){
 	height: var(--_ui5_bar_subheader_height);
 }
 

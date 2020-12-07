@@ -15,9 +15,9 @@ const BarTypes = {
 	/**
 	 * Subheader type
 	 * @public
-	 * @type {SubHeader}
+	 * @type {Subheader}
 	 */
-	SubHeader: "SubHeader",
+	Subheader: "Subheader",
 
 	/**
 	 * Footer type

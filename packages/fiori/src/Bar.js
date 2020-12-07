@@ -16,7 +16,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-bar</code> design.
 		 * <br><br>
-		 * <b>Note:</b> Available options are "Header", "SubHeader", "Footer", "FloatingFooter".
+		 * <b>Note:</b> Available options are "Header", "Subheader", "Footer", "FloatingFooter".
 		 *
 		 * @type {BarDesign}
 		 * @defaultvalue "Header"
@@ -65,7 +65,7 @@ const metadata = {
  * The Bar component consists of three areas to hold its content. It has the capability to center content, such as a title, while having other components on the left and right side.
  *
  * <h3>Usage</h3>
- * With the use of the design property, you can set the style of the Bar to appear designed like a Header, SubHeader, Footer and FloatingFooter.
+ * With the use of the design property, you can set the style of the Bar to appear designed like a Header, Subheader, Footer and FloatingFooter.
  *
  * Note: Do not place a Bar inside another Bar or inside any bar-like component. Doing so causes unpredictable behavior.
  *
