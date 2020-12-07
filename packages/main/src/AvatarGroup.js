@@ -118,6 +118,7 @@ const metadata = {
 		* @param {boolean} overflowButtonClicked indicates if the overflow button is clicked
 		* @event
 		* @public
+		* @since 1.0.0-rc.11
 		*/
 	   click: {
 			detail: {
@@ -136,10 +137,10 @@ const metadata = {
  * Displays a group of avatars arranged horizontally. It is useful to visually
  * showcase a group of related avatars, such as, project team members or employees.
  *
- * The control allows you to display the avatars in different sizes,
+ * The component allows you to display the avatars in different sizes,
  * depending on your use case.
  *
- * The <code>AvatarGroup</code> control has two group types:
+ * The <code>AvatarGroup</code> component has two group types:
  * <ul>
  * <li><code>Group</code> type: The avatars are displayed as partially overlapped on
  * top of each other and the entire group has one click/tap area.</li>
@@ -310,6 +311,10 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		if (isEnter(event)) {
+			this._fireGroupEvent(event.target);
+		}
+
 		if (isSpace(event)) {
 			// prevent scrolling
 			event.preventDefault();
@@ -317,7 +322,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_onkeyup(event) {
-		if (!event.shiftKey && (isSpace(event) || isEnter(event))) {
+		if (!event.shiftKey && isSpace(event)) {
 			event.preventDefault();
 			this._fireGroupEvent(event.target);
 		}
@@ -428,11 +433,6 @@ class AvatarGroup extends UI5Element {
 				hiddenItems = this._itemsCount - index;
 				break;
 			}
-		}
-
-		if (hiddenItems === 1) {
-			// show overflow button with at least 2 items
-			hiddenItems++;
 		}
 
 		// hide the items that did not fit the container size

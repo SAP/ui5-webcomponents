@@ -37,6 +37,7 @@
 }
 
 .ui5-avatar-group-overflow-btn[focused] {
+	outline: var(--_ui5_button_outline);
 	outline-offset: var(--_ui5_avatar_group_overflow_button_focus_offset);
 }
 

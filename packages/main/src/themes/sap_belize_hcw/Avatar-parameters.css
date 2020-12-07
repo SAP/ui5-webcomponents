@@ -12,4 +12,5 @@
     --ui5-avatar-accent9: #fff;
     --ui5-avatar-accent10: #fff;
     --ui5-avatar-placeholder: #fff;
+    --_ui5_avatar_outline: 0.125rem dotted var(--sapContent_FocusColor);
 }

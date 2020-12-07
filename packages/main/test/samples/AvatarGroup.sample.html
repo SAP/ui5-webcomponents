@@ -12,7 +12,7 @@
 <section>
 	<h4>Avatar Group - type "Individual"</h4> 
 	<div class="snippet individual">
-		<ui5-popover header-text="Person Card" class="personPopover" style="width: 300px" placement-type="Bottom">
+		<ui5-popover header-text="Person Card" class="personPopover" style="width: 300px" placement-type="Bottom" prevent-focus-restore>
 			<div class="avatar-slot" style="display: inline-block;">
 				<ui5-avatar id="popAvatar"></ui5-avatar>
 			</div>
@@ -108,7 +108,7 @@
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-popover header-text="Person Card" class="personPopover" style="width: 300px" placement-type="Bottom">
+<ui5-popover header-text="Person Card" class="personPopover" style="width: 300px" placement-type="Bottom" prevent-focus-restore>
 	...
 	<ui5-avatar id="popAvatar"></ui5-avatar>
 	...

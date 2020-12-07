@@ -331,8 +331,14 @@ class Avatar extends UI5Element {
 		}
 	}
 
+	_onkeydown(event) {
+		if (this.interactive && isEnter(event)) {
+			this.fireEvent("click");
+		}
+	}
+
 	_onkeyup(event) {
-		if (this.interactive && !event.shiftKey && (isSpace(event) || isEnter(event))) {
+		if (this.interactive && !event.shiftKey && isSpace(event)) {
 			this.fireEvent("click");
 		}
 	}
