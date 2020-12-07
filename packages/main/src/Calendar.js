@@ -623,9 +623,11 @@ class Calendar extends UI5Element {
 
 	async _setDayPickerCurrentIndex(calDate, applyFocus) {
 		await RenderScheduler.whenFinished();
-		const currentDate = new CalendarDate(calDate);
-		const currentDateIndex = this.dayPicker._getVisibleDays(currentDate).findIndex(date => date.valueOf() === currentDate.valueOf());
-		this.dayPicker._itemNav.currentIndex = currentDateIndex;
+		const currentDate = new CalendarDate(calDate, this._primaryCalendarType);
+		const currentIndex = this.dayPicker.focusableDays.findIndex(item => {
+			return CalendarDate.fromLocalJSDate(new Date(item.timestamp * 1000), this._primaryCalendarType).isSame(currentDate);
+		});
+		this.dayPicker._itemNav.currentIndex = currentIndex;
 		if (applyFocus) {
 			this.dayPicker._itemNav.focusCurrent();
 		} else {

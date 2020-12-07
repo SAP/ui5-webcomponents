@@ -568,7 +568,7 @@ class DayPicker extends UI5Element {
 		}
 
 		currentTimestamp = calDate.valueOf() / 1000;
-		const newItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === currentTimestamp);
+		const newItemIndex = this.focusableDays.findIndex(item => parseInt(item.timestamp) === currentTimestamp);
 
 		this._itemNav.currentIndex = newItemIndex;
 		this._itemNav.focusCurrent();
@@ -660,7 +660,7 @@ class DayPicker extends UI5Element {
 		const focusableDays = [];
 
 		for (let i = 0; i < this._weeks.length; i++) {
-			const week = this._weeks[i].slice(1).filter(x => !x.disabled);
+			const week = this._weeks[i].slice(1).filter(dayItem => !dayItem.disabled);
 			focusableDays.push(week);
 		}
 
@@ -676,7 +676,10 @@ class DayPicker extends UI5Element {
 	}
 
 	_setCurrentItemTabIndex(index) {
-		this._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+		const currentItem = this._itemNav._getCurrentItem();
+		if (currentItem) {
+			currentItem.setAttribute("tabindex", index.toString());
+		}
 	}
 
 	_modifySelectionAndNotifySubscribers(timestamp) {
@@ -841,7 +844,7 @@ class DayPicker extends UI5Element {
 		this.fireEvent("navigate", { timestamp });
 		await RenderScheduler.whenFinished();
 
-		const newItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === timestamp);
+		const newItemIndex = this.focusableDays.findIndex(item => parseInt(item.timestamp) === timestamp);
 		this._itemNav.currentIndex = newItemIndex;
 		this._itemNav.focusCurrent();
 	}
