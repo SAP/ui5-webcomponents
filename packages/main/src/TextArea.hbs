@@ -5,7 +5,6 @@
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 >
-
 	{{#if growing}}
 		<div id="{{_id}}-mirror" style="{{styles.mirror}}" class="ui5-textarea-mirror" aria-hidden="true">
 			{{#each _mirrorText}}
@@ -23,7 +22,6 @@
 		?disabled="{{disabled}}"
 		?readonly="{{readonly}}"
 		?required="{{required}}"
-		aria-required="{{required}}"
 		aria-label="{{ariaLabelText}}"
 		aria-describedby="{{ariaDescribedBy}}"
 		maxlength="{{_exceededTextProps.calcedMaxLength}}"
