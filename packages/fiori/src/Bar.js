@@ -62,7 +62,7 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The Bar component consists of three areas to hold its content. It has the capability to center content, such as a title, while having other controls on the left and right side.
+ * The Bar component consists of three areas to hold its content. It has the capability to center content, such as a title, while having other components on the left and right side.
  *
  * <h3>Usage</h3>
  * With the use of the design property, you can set the style of the Bar to appear designed like a Header, SubHeader, Footer and FloatingFooter.

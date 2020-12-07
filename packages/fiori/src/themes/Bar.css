@@ -55,22 +55,8 @@
 	border: none;
 }
 
-::slotted([slot="middleContent"]),
-::slotted([slot="endContent"]),
-::slotted([slot="startContent"]){
+::slotted(*){
 	display: flex;
 	align-items: center;
 	margin: 0 0.25rem;
-}
-
-::slotted([slot="startContent"]) {
-	order: 1;
-}
-
-::slotted([slot="middleContent"]) {
-	order: 2;
-}
-
-::slotted([slot="endContent"]) {
-	order: 3;
 }
