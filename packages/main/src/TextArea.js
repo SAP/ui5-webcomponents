@@ -530,6 +530,10 @@ class TextArea extends UI5Element {
 		};
 	}
 
+	get _placeholder() {
+		return this.placeholder || "";
+	}
+
 	get classes() {
 		return {
 			valueStateMsg: {
