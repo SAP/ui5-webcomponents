@@ -91,7 +91,7 @@
 					peoplePopover.openBy(targetRef);
 				}
 	
-				avatarGroup.addEventListener("ui5-click", function (event) {
+				avatarGroup.addEventListener("click", function (event) {
 					if (event.detail.overflowButtonClicked) {
 						onButtonClicked(event.detail.targetRef);
 					} else {
@@ -122,67 +122,36 @@
 
 <ui5-avatar-group type="Individual" avatar-size="M">
 	<ui5-avatar icon="employee"></ui5-avatar>
-	<ui5-avatar icon="employee"></ui5-avatar>
 	<ui5-avatar initials="JD"></ui5-avatar>
 	<ui5-avatar image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-	<ui5-avatar image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
-	<ui5-avatar icon="employee"></ui5-avatar>
-	<ui5-avatar icon="employee"></ui5-avatar>
-	<ui5-avatar initials="JD"></ui5-avatar>
-	<ui5-avatar image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-	<ui5-avatar image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
-	<ui5-avatar icon="employee"></ui5-avatar>
-	<ui5-avatar icon="employee"></ui5-avatar>
-	<ui5-avatar initials="JD"></ui5-avatar>
-	<ui5-avatar image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-	<ui5-avatar image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+	...
 </ui5-avatar-group>
 
 <script>
 	const avatarGroup = document.querySelector("ui5-avatar-group");
-
 	const peoplePopover = document.querySelector(".peoplePopover");
 	const personPopover = document.querySelector(".personPopover");
 
-	const popAvatar = personPopover.querySelector("ui5-avatar");
-
 	function onAvatarClicked(avatarRef) {
-		const avatarIndex = avatarGroup.items.indexOf(avatarRef);
-
-		popAvatar.backgroundColor = avatarGroup.colorScheme[avatarIndex];
-		popAvatar.initials = avatarRef.initials;
-		popAvatar.image = avatarRef.image;
-		popAvatar.icon = avatarRef.icon;
-
 		personPopover.openBy(avatarRef);
 	}
 
 	function onButtonClicked(targetRef) {
-		const hiddenItems = avatarGroup.hiddenItems;
-		const placeholder = peoplePopover.querySelector(".placeholder");
-		const firstHiddenIndex = avatarGroup.items.length - hiddenItems.length;
-
 		let html = "";
+		const firstHiddenIndex = avatarGroup.items.length - avatarGroup.hiddenItems.length;
 
-		hiddenItems.forEach((avatar, index) => {
-			const avatarColor = avatarGroup.colorScheme[firstHiddenIndex + index];
-
-			html += `<div class="avatar-slot" style="padding: 5px">
-						<ui5-avatar 
-							interactive
-							icon="${avatar.icon}" 
-							image="${avatar.image}" 
-							initials="${avatar.initials}"
-							background-color="${avatarColor}"
-						</ui5-avatar>
-					</div>`;
+		avatarGroup.hiddenItems.forEach((avatar, index) => {
+			html += `<ui5-avatar 
+						...
+						background-color="${avatarGroup.colorScheme[firstHiddenIndex + index]}"
+					</ui5-avatar>`;
 		});
 
 		placeholder.innerHTML = html;
 		peoplePopover.openBy(targetRef);
 	}
 
-	avatarGroup.addEventListener("ui5-click", function (event) {
+	avatarGroup.addEventListener("click", function (event) {
 		if (event.detail.overflowButtonClicked) {
 			onButtonClicked(event.detail.targetRef);
 		} else {
@@ -247,7 +216,7 @@
 					peoplePopover.openBy(targetRef);
 				}
 	
-				avatarGroup.addEventListener("ui5-click", function (event) {
+				avatarGroup.addEventListener("click", function (event) {
 					onAvatarGroupClick(event.detail.targetRef);
 				});
 	
@@ -267,20 +236,9 @@
 
 <ui5-avatar-group type="Group" avatar-size="M">
 	<ui5-avatar icon="employee"></ui5-avatar>
-	<ui5-avatar icon="employee"></ui5-avatar>
 	<ui5-avatar initials="JD"></ui5-avatar>
 	<ui5-avatar image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-	<ui5-avatar image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
-	<ui5-avatar icon="employee"></ui5-avatar>
-	<ui5-avatar icon="employee"></ui5-avatar>
-	<ui5-avatar initials="JD"></ui5-avatar>
-	<ui5-avatar image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-	<ui5-avatar image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
-	<ui5-avatar icon="employee"></ui5-avatar>
-	<ui5-avatar icon="employee"></ui5-avatar>
-	<ui5-avatar initials="JD"></ui5-avatar>
-	<ui5-avatar image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
-	<ui5-avatar image="../../../assets/images/avatars/man_avatar_3.png"></ui5-avatar>
+	...
 </ui5-avatar-group>
 
 <script>
@@ -290,31 +248,10 @@
 	const peoplePopover = document.querySelector(".peoplePopover");
 
 	function onAvatarGroupClick(targetRef) {
-		const placeholder = peoplePopover.querySelector(".placeholder");
-
-		let html = "";
-
-		avatarGroup.items.forEach((avatar, index) => {
-			const avatarColor = avatarGroup.colorScheme[index];
-
-			html += `<div class="avatar-slot" style="padding: 5px">
-						<ui5-avatar 
-							interactive
-							icon="${avatar.icon}" 
-							image="${avatar.image}" 
-							initials="${avatar.initials}"
-							background-color="${avatarColor}"
-						</ui5-avatar>
-					</div>`;
-		});
-
-		placeholder.innerHTML = html;
-
-		peoplePopover.close();
 		peoplePopover.openBy(targetRef);
 	}
 
-	avatarGroup.addEventListener("ui5-click", function (event) {
+	avatarGroup.addEventListener("click", function (event) {
 		onAvatarGroupClick(event.detail.targetRef);
 	});
 </script>

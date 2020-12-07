@@ -220,7 +220,7 @@
 	}
 
 
-	avatarGroupIndividual.addEventListener("ui5-click", function (event) {
+	avatarGroupIndividual.addEventListener("click", function (event) {
 		eventTargetRef.value = event.detail.targetRef.tagName;
 		eventOverflowButtonClicked.value = event.detail.overflowButtonClicked;
 		
@@ -231,7 +231,7 @@
 		}
 	});
 
-	avatarGroupGroup.addEventListener("ui5-click", function (event) { 
+	avatarGroupGroup.addEventListener("click", function (event) { 
 		eventTargetRef.value = event.detail.targetRef.tagName + '.' + event.detail.targetRef.className;
 		eventOverflowButtonClicked.value = event.detail.overflowButtonClicked;
 

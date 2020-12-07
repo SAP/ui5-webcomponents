@@ -17,6 +17,7 @@ const newComponents = [
 	"RangeSlider",
 	"Slider",
 	"Wizard",
+	"AvatarGroup",
 ];
 
 packages.forEach(package => {
