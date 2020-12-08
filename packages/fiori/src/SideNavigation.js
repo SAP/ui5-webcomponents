@@ -47,7 +47,7 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
-			invalidateParent: true,
+			onChildChange: "invalidate",
 			type: HTMLElement,
 		},
 
@@ -76,7 +76,7 @@ const metadata = {
 		 */
 		fixedItems: {
 			type: HTMLElement,
-			invalidateParent: true,
+			onChildChange: "invalidate",
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {

@@ -69,16 +69,7 @@ const metadata = {
 		"default": {
 			propertyName: "options",
 			type: HTMLElement,
-			invalidateParent: true,
-			/*
-			onChildChange: {
-				"action": "invalidate",
-				"triggerOn": {
-					properties: ["selected"],
-					slots: "*"
-				}
-			},
-			*/
+			onChildChange: "invalidate",
 		},
 
 		/**

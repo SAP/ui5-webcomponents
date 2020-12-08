@@ -1,6 +1,7 @@
 import merge from "./thirdparty/merge.js";
 import boot from "./boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
+import EventProvider from "./EventProvider.js";
 import executeTemplate from "./renderer/executeTemplate.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
@@ -19,12 +20,6 @@ import isSlot from "./util/isSlot.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 
-const metadata = {
-	events: {
-		"_property-change": {},
-	},
-};
-
 let autoId = 0;
 
 const elementTimeouts = new Map();
@@ -32,6 +27,24 @@ const uniqueDependenciesCache = new Map();
 
 const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
 const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
+
+/*
+const _invalidate = (type, name, newValue, oldValue) => {
+	if ((!this.constructor.isAbstract() && !this.getDomRef()) || this._suppressInvalidation) {
+		return;
+	}
+
+	this._changedState.push({
+		type,
+		name,
+		newValue,
+		oldValue,
+	});
+
+	RenderScheduler.renderDeferred(this);
+
+};
+*/
 
 /**
  * Base class for all UI5 Web Components
@@ -46,7 +59,6 @@ const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
 class UI5Element extends HTMLElement {
 	constructor() {
 		super();
-		this._propertyChangeListeners = new Set();
 		this._changedState = [];
 		this._initializeState();
 		this._upgradeAllProperties();
@@ -60,26 +72,9 @@ class UI5Element extends HTMLElement {
 		});
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
-		this._monitoredChildProps = new Map();
-		this._shouldInvalidateParent = false;
-	}
-
-	addEventListener(type, listener, options) {
-		if (type === "_property-change") {
-			this._propertyChangeListeners.add(listener);
-		}
-		return super.addEventListener(type, listener, options);
-	}
-
-	removeEventListener(type, listener, options) {
-		if (type === "_property-change") {
-			this._propertyChangeListeners.delete(listener);
-		}
-		return super.removeEventListener(type, listener, options);
-	}
-
-	_hasPropertyChangeListeners() {
-		return !!this._propertyChangeListeners.size;
+		this._childChangeListeners = new Map();
+		this._slotChangeListeners = new Map();
+		this._eventProvider = new EventProvider();
 	}
 
 	/**
@@ -236,7 +231,7 @@ class UI5Element extends HTMLElement {
 			const propertyName = slotData.propertyName || slotName;
 			propertyNameToSlotMap.set(propertyName, slotName);
 			slotsCachedContentMap.set(propertyName, [...this._state[propertyName]]);
-			this._clearSlot(propertyName);
+			this._clearSlot(slotName, slotData);
 		}
 
 		const autoIncrementMap = new Map();
@@ -282,16 +277,12 @@ class UI5Element extends HTMLElement {
 
 			child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
 
-			if (child.isUI5Element && slotData.listenFor) {
-				this._attachChildPropertyUpdated(child, slotData.listenFor);
-			}
-
-			if (child.isUI5Element && slotData.invalidateParent) {
-				child._shouldInvalidateParent = true;
+			if (child.isUI5Element && slotData.onChildChange) {
+				child._attachChange(this._getChildChangeListener(slotName));
 			}
 
 			if (isSlot(child)) {
-				this._attachSlotChange(child);
+				this._attachSlotChange(child, slotName);
 			}
 
 			const propertyName = slotData.propertyName || slotName;
@@ -316,7 +307,7 @@ class UI5Element extends HTMLElement {
 		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
 			const propertyName = slotData.propertyName || slotName;
 			if (!arraysAreEqual(slotsCachedContentMap.get(propertyName), this._state[propertyName])) {
-				this._invalidate("slot", propertyNameToSlotMap.get(propertyName));
+				this._invalidate("slot", propertyNameToSlotMap.get(propertyName), "added/removed children"); // invalidation due to changes to slotted children
 				invalidated = true;
 			}
 		}
@@ -324,7 +315,7 @@ class UI5Element extends HTMLElement {
 		// If none of the slots had an invalidation due to changes to immediate children,
 		// the change is considered to be text content of the default slot
 		if (!invalidated) {
-			this._invalidate("slot", "default");
+			this._invalidate("slot", "default", "changed text content"); // invalidation due to slotted text change (possibly deeply nested)
 		}
 	}
 
@@ -332,21 +323,83 @@ class UI5Element extends HTMLElement {
 	 * Removes all children from the slot and detaches listeners, if any
 	 * @private
 	 */
-	_clearSlot(propertyName) {
+	_clearSlot(slotName, slotData) {
+		const propertyName = slotData.propertyName || slotName;
 		const children = this._state[propertyName];
 
 		children.forEach(child => {
 			if (child && child.isUI5Element) {
-				this._detachChildPropertyUpdated(child);
-				child._shouldInvalidateParent = false;
+				child._detachChange(this._getChildChangeListener(slotName));
 			}
 
 			if (isSlot(child)) {
-				this._detachSlotChange(child);
+				this._detachSlotChange(child, slotName);
 			}
 		});
 
 		this._state[propertyName] = [];
+	}
+
+	_attachChange(callback) {
+		this._eventProvider.attachEvent("change", callback);
+	}
+
+	_detachChange(callback) {
+		this._eventProvider.detachEvent("change", callback);
+	}
+
+	/**
+	 * Callback that is executed whenever a monitored child changes its state
+	 *
+	 * @param slotName the slot in which a child was invalidated
+	 * @param changeInfo
+	 * @private
+	 */
+	_onChildChange(slotName, changeInfo) {
+		const config = this.constructor.getMetadata().getSlots()[slotName].onChildChange;
+		let action;
+
+		// The simple format was used: onChildChange: "invalidate/notify";
+		if (typeof config === "string") {
+			action = config;
+		// The complex format was used: onChildChange: { action: "invalidate/notify", ...}
+		} else if (typeof config === "object") {
+			action = config.action;
+
+			// A property was changed
+			if (changeInfo.type === "property") {
+				// The component does not listen for property changes at all
+				if (!config.monitoredProperties) {
+					return;
+				}
+
+				// The component is listening for property changes to specific properties, but this one is not included
+				if (Array.isArray(config.monitoredProperties) && !config.monitoredProperties.includes(changeInfo.name)) {
+					return;
+				}
+			}
+
+			// A slot was changed
+			if (changeInfo.type === "slot") {
+				// The component does not listen for slot changes at all
+				if (!config.monitoredSlots) {
+					return;
+				}
+
+				// The component is listening for slot changes to specific slots, but this one is not included
+				if (Array.isArray(config.monitoredSlots) && !config.monitoredSlots.includes(changeInfo.name)) {
+					return;
+				}
+			}
+		}
+
+		if (action === "invalidate") {
+			this._invalidate("slot", slotName, "child change"); // invalidation due to child change in a slot with onChildUpdate metadata
+		} else if (action === "notify" && typeof this.childChangedCallback === "function") {
+			this.childChangedCallback(slotName, changeInfo);
+		} else {
+			throw new Error(`Unknown onChildChange action: ${action}`);
+		}
 	}
 
 	/**
@@ -425,117 +478,79 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * Returns a singleton event listener for the "change" event of a child in a given slot
+	 *
+	 * @param slotName the name of the slot, where the child is
+	 * @returns {any}
 	 * @private
 	 */
-	_attachChildPropertyUpdated(child, listenFor) {
-		const slotName = this.constructor._getSlotName(child); // all slotted children have the same configuration
-
-		let observedProps = [],
-			notObservedProps = [];
-
-		if (Array.isArray(listenFor)) {
-			observedProps = listenFor;
-		} else {
-			observedProps = Array.isArray(listenFor.include) ? listenFor.include : [];
-			notObservedProps = Array.isArray(listenFor.exclude) ? listenFor.exclude : [];
+	_getChildChangeListener(slotName) {
+		if (!this._childChangeListeners.has(slotName)) {
+			this._childChangeListeners.set(slotName, this._onChildChange.bind(this, slotName));
 		}
+		return this._childChangeListeners.get(slotName);
+	}
 
-		if (!this._monitoredChildProps.has(slotName)) {
-			this._monitoredChildProps.set(slotName, { observedProps, notObservedProps });
+	/**
+	 * Returns a singleton slotchange event listener that invalidates the component due to changes in the given slot
+	 *
+	 * @param slotName the name of the slot, where the slot element (whose slotchange event we're listening to) is
+	 * @returns {any}
+	 * @private
+	 */
+	_getSlotChangeListener(slotName) {
+		if (!this._slotChangeListeners.has(slotName)) {
+			this._slotChangeListeners.set(slotName, this._onSlotChange.bind(this, slotName));
 		}
-
-		child.addEventListener("_property-change", this._invalidateParentOnPropertyUpdate);
+		return this._slotChangeListeners.get(slotName);
 	}
 
 	/**
 	 * @private
 	 */
-	_detachChildPropertyUpdated(child) {
-		child.removeEventListener("_property-change", this._invalidateParentOnPropertyUpdate);
-	}
-
-	/**
-	 *  @private
-	 */
-	_propertyChange(name, value) {
-		this._updateAttribute(name, value);
-
-		if (this._hasPropertyChangeListeners()) {
-			this.dispatchEvent(new CustomEvent("_property-change", {
-				detail: { name, newValue: value },
-				composed: false,
-				bubbles: false,
-			}));
-		}
+	_attachSlotChange(child, slotName) {
+		child.addEventListener("slotchange", this._getSlotChangeListener(slotName));
 	}
 
 	/**
 	 * @private
 	 */
-	_invalidateParentOnPropertyUpdate(prop) {
-		// The web component to be invalidated
-		const parentNode = this.parentNode;
-		if (!parentNode) {
-			return;
-		}
-
-		const slotName = parentNode.constructor._getSlotName(this);
-		const propsMetadata = parentNode._monitoredChildProps.get(slotName);
-
-		if (!propsMetadata) {
-			return;
-		}
-		const { observedProps, notObservedProps } = propsMetadata;
-
-		const allPropertiesAreObserved = observedProps.length === 1 && observedProps[0] === "*";
-		const shouldObserve = allPropertiesAreObserved || observedProps.includes(prop.detail.name);
-		const shouldSkip = notObservedProps.includes(prop.detail.name);
-		if (shouldObserve && !shouldSkip) {
-			// console.log("_PARENT_", prop.detail.name)
-			parentNode._invalidate("_parent_", this);
-		}
+	_detachSlotChange(child, slotName) {
+		child.removeEventListener("slotchange", this._getSlotChangeListener(slotName));
 	}
 
 	/**
+	 * Whenever a slot element is slotted inside a UI5 Web Component, its slotchange event invalidates the component
+	 *
+	 * @param slotName the name of the slot, where the slot element (whose slotchange event we're listening to) is
 	 * @private
 	 */
-	_attachSlotChange(child) {
-		if (!this._invalidateOnSlotChange) {
-			this._invalidateOnSlotChange = () => {
-				this._invalidate("slotchange");
-			};
-		}
-		child.addEventListener("slotchange", this._invalidateOnSlotChange);
-	}
-
-	/**
-	 * @private
-	 */
-	_detachSlotChange(child) {
-		child.removeEventListener("slotchange", this._invalidateOnSlotChange);
+	_onSlotChange(slotName) {
+		this._invalidate("slot", slotName, "slotchange of a slot child"); // invalidation due to the slotchange event of a slotted slot element
 	}
 
 	/**
 	 * Asynchronously re-renders an already rendered web component
 	 * @private
 	 */
-	_invalidate(type, name, newValue, oldValue) {
+	_invalidate(type, name, reason, newValue, oldValue) {
 		if ((!this.constructor.isAbstract() && !this.getDomRef()) || this._suppressInvalidation) {
 			return;
 		}
 
-		this._changedState.push({
+		const changeInfo = {
 			type,
 			name,
+			reason,
 			newValue,
 			oldValue,
-		});
+		};
+
+		this._changedState.push(changeInfo);
 
 		RenderScheduler.renderDeferred(this);
 
-		if (this._shouldInvalidateParent) {
-			this.parentNode._invalidate("_invalidate_parent_");
-		}
+		this._eventProvider.fireEvent("change", changeInfo);
 	}
 
 	/**
@@ -567,10 +582,10 @@ class UI5Element extends HTMLElement {
 			if (this.id) {
 				element = `${element}#${this.id}`;
 			}
-			console.log("Rerendering due to changes:", element, this._changedState.map(x => { // eslint-disable-line
-				let res = `${x.type} ${x.name}`;
+			console.log("Re-rendering:", element, this._changedState.map(x => { // eslint-disable-line
+				let res = `${x.type}(${x.reason}): ${x.name}`;
 				if (x.type === "property") {
-					res = `${res} (${x.oldValue} => ${x.newValue})`;
+					res = `${res} ${x.oldValue} => ${x.newValue}`;
 				}
 
 				return res;
@@ -977,8 +992,8 @@ class UI5Element extends HTMLElement {
 
 					if (oldState !== value) {
 						this._state[prop] = value;
-						this._invalidate("property", prop, value, oldState);
-						this._propertyChange(prop, value);
+						this._invalidate("property", prop, "", value, oldState); // invalidation due to property change
+						this._updateAttribute(prop, value);
 					}
 				},
 			});
@@ -1013,7 +1028,7 @@ class UI5Element extends HTMLElement {
 	 * @protected
 	 */
 	static get metadata() {
-		return metadata;
+		return {};
 	}
 
 	/**

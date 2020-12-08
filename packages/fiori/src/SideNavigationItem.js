@@ -91,7 +91,7 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
-			invalidateParent: true,
+			onChildChange: "invalidate",
 			type: HTMLElement,
 		},
 	},

@@ -73,7 +73,7 @@ const metadata = {
 		"default": {
 			propertyName: "items",
 			type: HTMLElement,
-			listenFor: { include: ["*"] },
+			onChildChange: "invalidate",
 		},
 
 		/**
