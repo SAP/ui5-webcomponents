@@ -823,7 +823,6 @@ class DatePicker extends UI5Element {
 			"ariaOwns": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
-			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
 	}
