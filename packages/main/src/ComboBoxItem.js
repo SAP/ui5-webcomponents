@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 /**
  * @public
@@ -41,18 +40,6 @@ const metadata = {
 class ComboBoxItem extends UI5Element {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return "";
-	}
-
-	static get template() {
-		return "";
 	}
 }
 

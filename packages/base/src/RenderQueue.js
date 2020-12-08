@@ -1,4 +1,4 @@
-const MAX_PROCESS_COUNT = 100;
+const MAX_PROCESS_COUNT = 10;
 
 class RenderQueue {
 	constructor() {

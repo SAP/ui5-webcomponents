@@ -197,7 +197,7 @@ class UI5Element extends HTMLElement {
 		const mutationObserverOptions = {
 			childList: true,
 			subtree: canSlotText,
-			characterData: true,
+			characterData: canSlotText,
 		};
 		DOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
 	}
@@ -312,11 +312,19 @@ class UI5Element extends HTMLElement {
 		});
 
 		// Compare the content of each slot with the cached values and invalidate for the ones that changed
+		let invalidated = false;
 		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
 			const propertyName = slotData.propertyName || slotName;
 			if (!arraysAreEqual(slotsCachedContentMap.get(propertyName), this._state[propertyName])) {
 				this._invalidate("slot", propertyNameToSlotMap.get(propertyName));
+				invalidated = true;
 			}
+		}
+
+		// If none of the slots had an invalidation due to changes to immediate children,
+		// the change is considered to be text content of the default slot
+		if (!invalidated) {
+			this._invalidate("slot", "default");
 		}
 	}
 
@@ -511,14 +519,14 @@ class UI5Element extends HTMLElement {
 	 * Asynchronously re-renders an already rendered web component
 	 * @private
 	 */
-	_invalidate(changedEntityType, changedEntity, newValue, oldValue) {
+	_invalidate(type, name, newValue, oldValue) {
 		if ((!this.constructor.isAbstract() && !this.getDomRef()) || this._suppressInvalidation) {
 			return;
 		}
 
 		this._changedState.push({
-			changedEntityType,
-			changedEntity,
+			type,
+			name,
 			newValue,
 			oldValue,
 		});
@@ -560,8 +568,8 @@ class UI5Element extends HTMLElement {
 				element = `${element}#${this.id}`;
 			}
 			console.log("Rerendering due to changes:", element, this._changedState.map(x => { // eslint-disable-line
-				let res = `${x.changedEntityType} ${x.changedEntity}`;
-				if (x.changedEntityType === "property") {
+				let res = `${x.type} ${x.name}`;
+				if (x.type === "property") {
 					res = `${res} (${x.oldValue} => ${x.newValue})`;
 				}
 
