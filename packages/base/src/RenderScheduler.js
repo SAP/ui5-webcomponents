@@ -14,6 +14,8 @@ let mutationObserverTimer;
 
 let queuePromise;
 
+let renderTaskId = 1;
+
 /**
  * Class that manages the rendering/re-rendering of web components
  * This is always asynchronous
@@ -63,7 +65,11 @@ class RenderScheduler {
 			queuePromise = new Promise(resolve => {
 				window.requestAnimationFrame(() => {
 					// Render all components in the queue
+
+					console.log(`--------------------RENDER TASK ${renderTaskId} START------------------------------`); // eslint-disable-line
 					invalidatedWebComponents.process(component => component._render());
+					console.log(`--------------------RENDER TASK ${renderTaskId} END------------------------------`); // eslint-disable-line
+					renderTaskId++;
 
 					// Resolve the promise so that callers of renderDeferred can continue
 					queuePromise = null;

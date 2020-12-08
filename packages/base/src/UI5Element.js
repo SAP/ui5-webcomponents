@@ -16,6 +16,7 @@ import Float from "./types/Float.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
+import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 
 const metadata = {
@@ -50,7 +51,6 @@ class UI5Element extends HTMLElement {
 		this._initializeState();
 		this._upgradeAllProperties();
 		this._initializeContainers();
-		this._renderPending = true;
 		this._inDOM = false;
 		this._fullyConnected = false;
 
@@ -228,11 +228,15 @@ class UI5Element extends HTMLElement {
 		const canSlotText = this.constructor.getMetadata().canSlotText();
 		const domChildren = Array.from(canSlotText ? this.childNodes : this.children);
 
-		this._invalidate("slots");
+		const slotsCachedContentMap = new Map(); // Store here the content of each slot before the mutation occurred
+		const propertyNameToSlotMap = new Map(); // Used for reverse lookup to determine to which slot the property name corresponds
 
-		// Init the _state object based on the supported slots
+		// Init the _state object based on the supported slots and store the previous values
 		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
-			this._clearSlot(slotName, slotData);
+			const propertyName = slotData.propertyName || slotName;
+			propertyNameToSlotMap.set(propertyName, slotName);
+			slotsCachedContentMap.set(propertyName, [...this._state[propertyName]]);
+			this._clearSlot(propertyName);
 		}
 
 		const autoIncrementMap = new Map();
@@ -303,22 +307,25 @@ class UI5Element extends HTMLElement {
 
 		// Distribute the child in the _state object, keeping the Light DOM order,
 		// not the order elements are defined.
-		slottedChildrenMap.forEach((children, slot) => {
-			this._state[slot] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
+		slottedChildrenMap.forEach((children, propertyName) => {
+			this._state[propertyName] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
 		});
+
+		// Compare the content of each slot with the cached values and invalidate for the ones that changed
+		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
+			const propertyName = slotData.propertyName || slotName;
+			if (!arraysAreEqual(slotsCachedContentMap.get(propertyName), this._state[propertyName])) {
+				this._invalidate("slot", propertyNameToSlotMap.get(propertyName));
+			}
+		}
 	}
 
 	/**
 	 * Removes all children from the slot and detaches listeners, if any
 	 * @private
 	 */
-	_clearSlot(slotName, slotData) {
-		const propertyName = slotData.propertyName || slotName;
-
-		let children = this._state[propertyName];
-		if (!Array.isArray(children)) {
-			children = [children];
-		}
+	_clearSlot(propertyName) {
+		const children = this._state[propertyName];
 
 		children.forEach(child => {
 			if (child && child.isUI5Element) {
@@ -504,21 +511,22 @@ class UI5Element extends HTMLElement {
 	 * Asynchronously re-renders an already rendered web component
 	 * @private
 	 */
-	_invalidate(changedEntity, newValue, oldValue) {
+	_invalidate(changedEntityType, changedEntity, newValue, oldValue) {
 		if ((!this.constructor.isAbstract() && !this.getDomRef()) || this._suppressInvalidation) {
 			return;
 		}
 
-		this._changedState.push({ changedEntity, newValue, oldValue });
+		this._changedState.push({
+			changedEntityType,
+			changedEntity,
+			newValue,
+			oldValue,
+		});
+
+		RenderScheduler.renderDeferred(this);
 
 		if (this._shouldInvalidateParent) {
 			this.parentNode._invalidate("_invalidate_parent_");
-		}
-
-		if (!this._renderPending) {
-			this._renderPending = true;
-			// console.log("INVAL", this, ...arguments);
-			RenderScheduler.renderDeferred(this);
 		}
 	}
 
@@ -546,11 +554,14 @@ class UI5Element extends HTMLElement {
 
 		// Update the shadow root with the render result
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
-		this._renderPending = false;
 		if (this._changedState.length) {
-			console.log("Changed state was:", this.localName, this._changedState.map(x => { // eslint-disable-line
-				let res = x.changedEntity;
-				if (typeof x.newValue !== "object") {
+			let element = this.localName;
+			if (this.id) {
+				element = `${element}#${this.id}`;
+			}
+			console.log("Rerendering due to changes:", element, this._changedState.map(x => { // eslint-disable-line
+				let res = `${x.changedEntityType} ${x.changedEntity}`;
+				if (x.changedEntityType === "property") {
 					res = `${res} (${x.oldValue} => ${x.newValue})`;
 				}
 
@@ -958,7 +969,7 @@ class UI5Element extends HTMLElement {
 
 					if (oldState !== value) {
 						this._state[prop] = value;
-						this._invalidate(prop, value, oldState);
+						this._invalidate("property", prop, value, oldState);
 						this._propertyChange(prop, value);
 					}
 				},
@@ -982,7 +993,7 @@ class UI5Element extends HTMLElement {
 						return [];
 					},
 					set() {
-						throw new Error("Cannot set slots directly, use the DOM APIs");
+						throw new Error("Cannot set slot content directly, use the DOM APIs (appendChild, removeChild, etc...)");
 					},
 				});
 			}

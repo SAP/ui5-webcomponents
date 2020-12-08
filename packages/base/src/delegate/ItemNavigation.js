@@ -177,9 +177,6 @@ class ItemNavigation extends EventProvider {
 		for (let i = 0; i < items.length; i++) {
 			items[i]._tabIndex = (i === this.currentIndex ? "0" : "-1");
 		}
-
-
-		// this.rootWebComponent._invalidate("_item_navigation_");
 	}
 
 	focusCurrent() {
