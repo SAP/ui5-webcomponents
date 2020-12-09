@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.2](https://github.com/SAP/ui5-webcomponents/compare/v0.27.1...v0.27.2) (2020-12-09)
+
+
+### Bug Fixes
+
+* **ui5-wizard:** fix styling issues ([#2547](https://github.com/SAP/ui5-webcomponents/issues/2547)) ([7c45a0c](https://github.com/SAP/ui5-webcomponents/commit/7c45a0c)), closes [#2523](https://github.com/SAP/ui5-webcomponents/issues/2523)
+
+
+
+
+
 ## [0.27.1](https://github.com/SAP/ui5-webcomponents/compare/v0.27.0...v0.27.1) (2020-12-07)
 
 
