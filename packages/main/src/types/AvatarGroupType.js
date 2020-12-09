@@ -38,6 +38,6 @@ class AvatarGroupType extends DataType {
 	}
 }
 
-AvatarGroupType.generateTypeAcessors(AvatarGroupTypes);
+AvatarGroupType.generataTypeAcessors(AvatarGroupTypes);
 
 export default AvatarGroupType;
