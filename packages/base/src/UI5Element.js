@@ -898,7 +898,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	static _getDefaultState() {
-		if (this._defaultState) {
+		if (Object.prototype.hasOwnProperty.call(this, "_defaultState")) {
 			return this._defaultState;
 		}
 
