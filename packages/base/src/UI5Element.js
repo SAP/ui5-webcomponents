@@ -28,24 +28,6 @@ const uniqueDependenciesCache = new Map();
 const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
 const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
 
-/*
-const _invalidate = (type, name, newValue, oldValue) => {
-	if ((!this.constructor.isAbstract() && !this.getDomRef()) || this._suppressInvalidation) {
-		return;
-	}
-
-	this._changedState.push({
-		type,
-		name,
-		newValue,
-		oldValue,
-	});
-
-	RenderScheduler.renderDeferred(this);
-
-};
-*/
-
 /**
  * Base class for all UI5 Web Components
  *
@@ -63,6 +45,7 @@ class UI5Element extends HTMLElement {
 		this._initializeState();
 		this._upgradeAllProperties();
 		this._initializeContainers();
+		this._suppressInvalidation = true;
 		this._inDOM = false;
 		this._fullyConnected = false;
 
@@ -127,23 +110,20 @@ class UI5Element extends HTMLElement {
 			await this._processChildren();
 		}
 
-		// Render the Shadow DOM
-		if (needsShadowDOM) {
-			if (!this.shadowRoot) { // Workaround for Firefox74 bug
-				await Promise.resolve();
-			}
+		if (needsShadowDOM && !this.shadowRoot) { // Workaround for Firefox74 bug
+			await Promise.resolve();
+		}
 
-			if (!this._inDOM) { // Component removed from DOM while _processChildren was running
-				return;
-			}
+		if (!this._inDOM) { // Component removed from DOM while _processChildren was running
+			return;
+		}
 
-			RenderScheduler.register(this);
-			RenderScheduler.renderImmediately(this);
-			this._domRefReadyPromise._deferredResolve();
-			this._fullyConnected = true;
-			if (typeof this.onEnterDOM === "function") {
-				this.onEnterDOM();
-			}
+		RenderScheduler.register(this);
+		RenderScheduler.renderImmediately(this);
+		this._domRefReadyPromise._deferredResolve();
+		this._fullyConnected = true;
+		if (typeof this.onEnterDOM === "function") {
+			this.onEnterDOM();
 		}
 	}
 
@@ -534,7 +514,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_invalidate(type, name, reason, newValue, oldValue) {
-		if ((!this.constructor.isAbstract() && !this.getDomRef()) || this._suppressInvalidation) {
+		if (this._suppressInvalidation) {
 			return;
 		}
 
@@ -573,7 +553,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		// resume normal invalidation handling
-		delete this._suppressInvalidation;
+		this._suppressInvalidation = false;
 
 		// Update the shadow root with the render result
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
@@ -858,10 +838,6 @@ class UI5Element extends HTMLElement {
 
 		// Use default slot as a fallback
 		return "default";
-	}
-
-	static isAbstract() {
-		return !this.render;
 	}
 
 	/**
