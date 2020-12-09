@@ -1,7 +1,10 @@
-commit 766bcc06c6bee38af8fceeaf600e48562c47135f
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Mon Dec 7 17:16:23 2020 +0200
+commit 65cb42fb77285f6bba93975603420590e4fc337e
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Dec 9 09:06:28 2020 +0200
 
-    fix(ui5-date-picker): fixing the min and max date in timezones half hour difference (#2544)
+    fix(ui5-wizard): fix styling issues (#2547)
     
-    Fixes #2542
+    - set default content background (equivalent to Standard in openui5)
+    - remove additional space from the content bottom
+    
+    FIXES #2523
