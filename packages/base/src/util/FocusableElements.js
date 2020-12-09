@@ -5,7 +5,7 @@ const isFocusTrap = el => {
 	return el.hasAttribute("data-ui5-focus-trap");
 };
 
-const getFirstFocusableElement = container => {
+const getFirstFocusableElement = async container => {
 	if (!container || isNodeHidden(container)) {
 		return null;
 	}
@@ -13,7 +13,7 @@ const getFirstFocusableElement = container => {
 	return findFocusableElement(container, true);
 };
 
-const getLastFocusableElement = container => {
+const getLastFocusableElement = async container => {
 	if (!container || isNodeHidden(container)) {
 		return null;
 	}
@@ -21,7 +21,7 @@ const getLastFocusableElement = container => {
 	return findFocusableElement(container, false);
 };
 
-const findFocusableElement = (container, forward) => {
+const findFocusableElement = async (container, forward) => {
 	let child;
 
 	if (container.shadowRoot) {
@@ -35,15 +35,12 @@ const findFocusableElement = (container, forward) => {
 
 	let focusableDescendant;
 
+	/* eslint-disable no-await-in-loop */
+
 	while (child) {
 		const originalChild = child;
 
-		// @todo discuss
-		if (child.isUI5Element) {
-			return child;
-		}
-
-		child = child.isUI5Element ? child.getFocusDomRef() : child;
+		child = child.isUI5Element ? await child.getFocusDomRefAsync() : child;
 		if (!child) {
 			return null;
 		}
@@ -53,7 +50,7 @@ const findFocusableElement = (container, forward) => {
 				return (child && typeof child.focus === "function") ? child : null;
 			}
 
-			focusableDescendant = findFocusableElement(child, forward);
+			focusableDescendant = await findFocusableElement(child, forward);
 			if (focusableDescendant) {
 				return (focusableDescendant && typeof focusableDescendant.focus === "function") ? focusableDescendant : null;
 			}
@@ -61,6 +58,8 @@ const findFocusableElement = (container, forward) => {
 
 		child = forward ? originalChild.nextSibling : originalChild.previousSibling;
 	}
+
+	/* eslint-enable no-await-in-loop */
 
 	return null;
 };

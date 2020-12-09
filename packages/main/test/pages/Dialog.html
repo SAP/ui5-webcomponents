@@ -339,7 +339,10 @@
 			let dialog = document.createElement("ui5-dialog"),
 				button = document.createElement("ui5-button");
 
+			button.setAttribute("id", "dynamic-dialog-button");
 			button.appendChild(document.createTextNode("Ok"));
+
+			dialog.setAttribute("id", "dynamic-dialog");
 			dialog.appendChild(button);
 
 			document.body.appendChild(dialog);

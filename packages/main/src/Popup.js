@@ -79,23 +79,7 @@ const metadata = {
 		/**
 		 * @protected
 		 */
-		// _disableInitialFocus: {
-		// 	type: Boolean,
-		// },
-
-		/**
-		 * True if the initial focus is already internally applied.
-		 * @private
-		 */
-		_initialFocusApplied: {
-			type: Boolean,
-		},
-
-		/**
-		 * True if the initial focus is already internally applied.
-		 * @private
-		 */
-		_focusAppliedAfterOpen: {
+		_disableInitialFocus: {
 			type: Boolean,
 		},
 
@@ -262,8 +246,8 @@ class Popup extends UI5Element {
 	 * Focus trapping
 	 * @private
 	 */
-	forwardToFirst() {
-		const firstFocusable = getFirstFocusableElement(this);
+	async forwardToFirst() {
+		const firstFocusable = await getFirstFocusableElement(this);
 
 		if (firstFocusable) {
 			firstFocusable.focus();
@@ -274,8 +258,8 @@ class Popup extends UI5Element {
 	 * Focus trapping
 	 * @private
 	 */
-	forwardToLast() {
-		const lastFocusable = getLastFocusableElement(this);
+	async forwardToLast() {
+		const lastFocusable = await getLastFocusableElement(this);
 
 		if (lastFocusable) {
 			lastFocusable.focus();
@@ -286,8 +270,8 @@ class Popup extends UI5Element {
 	 * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
 	 * @protected
 	 */
-	applyInitialFocus() {
-		this.applyFocus();
+	async applyInitialFocus() {
+		await this.applyFocus();
 	}
 
 	/**
@@ -295,30 +279,15 @@ class Popup extends UI5Element {
 	 * or the first focusable element otherwise.
 	 * @public
 	 */
-	applyFocus() {
+	async applyFocus() {
+		await this._waitForDomRef();
+
 		const element = this.getRootNode().getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)
-			|| getFirstFocusableElement(this);
+			|| await getFirstFocusableElement(this);
 
 		if (element) {
 			element.focus();
-		}
-	}
-
-	/**
-	 * @private
-	 */
-	_applyFocusAfterOpen() {
-		const shouldApply = !(this._focusAppliedAfterOpen || this._disableInitialFocus /* || this._preventInitialFocus */);
-
-		if (this.isOpen() && shouldApply) {
-
-			// @todo discuss
-			// setTimeout(() => {
-				this.applyInitialFocus();
-			// }, 0);
-
-			this._focusAppliedAfterOpen = true;
 		}
 	}
 
@@ -358,16 +327,14 @@ class Popup extends UI5Element {
 		this._focusedElementBeforeOpen = getFocusedElement();
 		this.show();
 
-		// this._preventInitialFocus = preventInitialFocus;
+		if (!this._disableInitialFocus && !preventInitialFocus) {
+			this.applyInitialFocus();
+		}
 
 		this._addOpenedPopup();
 
 		this.opened = true;
 		this.fireEvent("after-open", {}, false, false);
-	}
-
-	onAfterRendering() {
-		this._applyFocusAfterOpen();
 	}
 
 	/**
@@ -407,8 +374,6 @@ class Popup extends UI5Element {
 		if (!this.preventFocusRestore && !preventFocusRestore) {
 			this.resetFocus();
 		}
-
-		this._focusAppliedAfterOpen = false;
 
 		this.fireEvent("after-close", {}, false, false);
 	}

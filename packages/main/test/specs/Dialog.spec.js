@@ -113,6 +113,22 @@ describe("Dialog general interaction", () => {
 
 		closeResizableDialogButton.click();
 	});
+
+	it("initial focus after dynamic dialog creation", () => {
+		const openDynamicDialog = browser.$("#dynamic-open");
+		openDynamicDialog.click();
+
+		const dialog = browser.$("#dynamic-dialog");
+		const button = dialog.shadow$("#dynamic-dialog-button");
+
+		dialog.open();
+
+		button.waitForExist();
+
+		assert.strictEqual(document.activeElement, button, "the active element is the first button");
+
+		dialog.close();
+	});
 });
 
 
