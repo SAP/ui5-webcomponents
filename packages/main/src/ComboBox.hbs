@@ -9,7 +9,6 @@
 		placeholder="{{placeholder}}"
 		?disabled={{disabled}}
 		?readonly={{readonly}}
-		?required={{required}}
 		value-state="{{valueState}}"
 		@input="{{_input}}"
 		@change="{{_inputChange}}"
@@ -23,6 +22,7 @@
 		aria-autocomplete="both"
 		aria-describedby="{{valueStateTextId}}"
 		aria-label="{{ariaLabelText}}"
+		aria-required="{{required}}"
 	/>
 
 	{{#if icon}}
