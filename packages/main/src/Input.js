@@ -1067,7 +1067,6 @@ class Input extends UI5Element {
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
 				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this),
-				"ariaRequired": (this._inputAccInfo && this._inputAccInfo.ariaRequired) || this.required,
 			},
 		};
 	}

@@ -86,6 +86,18 @@ describe("Date Picker Tests", () => {
 		assert.ok(!datepicker.hasIcon(), "icon is not displayed");
 	});
 
+	it("required", () => {
+		datepicker.id = "#dp-required";
+
+		assert.ok(datepicker.input.getProperty("required"), "input has required set");
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-required"), "true", "Aria-required attribute is set correctly.");
+
+		datepicker.root.removeAttribute("required");
+
+		assert.notOk(datepicker.input.getProperty("required"), "required property is not set");
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-required"), "false", "Aria-required attribute is set correctly.");
+	});
+
 	it("placeholder", () => {
 		datepicker.root.setAttribute("placeholder", "test placeholder");
 
