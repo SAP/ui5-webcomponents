@@ -1,7 +1,5 @@
-commit 1fc3180f1be744bb8460b056d5ff149a49d6c783
+commit 038a505e42db8a5590ab096535db9f10826cc6b2
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Dec 9 12:07:03 2020 +0200
+Date:   Wed Dec 9 15:45:00 2020 +0200
 
-    fix(ui5-tree): make the height of tree adjustable (#2546)
-    
-    FIXES #2545
+    chore: fix typo in method name (#2558)
