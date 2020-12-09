@@ -49,6 +49,6 @@ class PopoverHorizontalAlign extends DataType {
 	}
 }
 
-PopoverHorizontalAlign.generateTypeAcessors(PopoverHorizontalAligns);
+PopoverHorizontalAlign.generateTypeAccessors(PopoverHorizontalAligns);
 
 export default PopoverHorizontalAlign;

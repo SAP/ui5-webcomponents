@@ -35,6 +35,6 @@ class TabLayout extends DataType {
 	}
 }
 
-TabLayout.generateTypeAcessors(TabLayouts);
+TabLayout.generateTypeAccessors(TabLayouts);
 
 export default TabLayout;

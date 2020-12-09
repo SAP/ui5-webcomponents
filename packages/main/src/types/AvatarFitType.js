@@ -35,6 +35,6 @@ class AvatarFitType extends DataType {
 	}
 }
 
-AvatarFitType.generateTypeAcessors(AvatarFitTypes);
+AvatarFitType.generateTypeAccessors(AvatarFitTypes);
 
 export default AvatarFitType;

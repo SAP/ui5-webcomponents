@@ -62,6 +62,6 @@ class AvatarSize extends DataType {
 	}
 }
 
-AvatarSize.generateTypeAcessors(AvatarSizes);
+AvatarSize.generateTypeAccessors(AvatarSizes);
 
 export default AvatarSize;
