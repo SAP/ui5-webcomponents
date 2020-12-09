@@ -381,40 +381,8 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_onChildChange(slotName, childChangeInfo) {
-		const config = this.constructor.getMetadata().getSlots()[slotName].invalidateOnChildChange;
-
-		// The simple format was used: invalidateOnChildChange: true;
-		if (typeof config === "boolean") {
-			if (config === false) {
-				return;
-			}
-		// The complex format was used: invalidateOnChildChange: { properties, slots }
-		} else if (typeof config === "object") {
-			// A property was changed
-			if (childChangeInfo.type === "property") {
-				// The component does not listen for property changes at all
-				if (!config.properties) {
-					return;
-				}
-
-				// The component is listening for property changes to specific properties, but this one is not included
-				if (Array.isArray(config.properties) && !config.properties.includes(childChangeInfo.name)) {
-					return;
-				}
-			}
-
-			// A slot was changed
-			if (childChangeInfo.type === "slot") {
-				// The component does not listen for slot changes at all
-				if (!config.slots) {
-					return;
-				}
-
-				// The component is listening for slot changes to specific slots, but this one is not included
-				if (Array.isArray(config.slots) && !config.slots.includes(childChangeInfo.name)) {
-					return;
-				}
-			}
+		if (!this.constructor.getMetadata().shouldInvalidateOnChildChange(slotName, childChangeInfo.type, childChangeInfo.name)) {
+			return;
 		}
 
 		// The component should be invalidated as this type of change on the child is listened for

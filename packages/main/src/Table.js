@@ -44,7 +44,8 @@ const metadata = {
 			type: HTMLElement,
 			individualSlots: true,
 			invalidateOnChildChange: {
-				properties: "*",
+				properties: true,
+				slots: false,
 			},
 		},
 	},
