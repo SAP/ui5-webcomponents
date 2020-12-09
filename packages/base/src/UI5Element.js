@@ -29,6 +29,21 @@ const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
 const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
 
 /**
+ *
+ * @param changeInfo
+ * @private
+ */
+function _invalidate(changeInfo) {
+	if (this._suppressInvalidation) {
+		return;
+	}
+
+	this._changedState.push(changeInfo);
+	RenderScheduler.renderDeferred(this);
+	this._eventProvider.fireEvent("change", changeInfo);
+}
+
+/**
  * Base class for all UI5 Web Components
  *
  * @class
@@ -287,7 +302,11 @@ class UI5Element extends HTMLElement {
 		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
 			const propertyName = slotData.propertyName || slotName;
 			if (!arraysAreEqual(slotsCachedContentMap.get(propertyName), this._state[propertyName])) {
-				this._invalidate("slot", propertyNameToSlotMap.get(propertyName), "added/removed children"); // invalidation due to changes to slotted children
+				_invalidate.call(this, {
+					type: "slot",
+					name: propertyNameToSlotMap.get(propertyName),
+					reason: "added/removed children",
+				});
 				invalidated = true;
 			}
 		}
@@ -295,7 +314,11 @@ class UI5Element extends HTMLElement {
 		// If none of the slots had an invalidation due to changes to immediate children,
 		// the change is considered to be text content of the default slot
 		if (!invalidated) {
-			this._invalidate("slot", "default", "changed text content"); // invalidation due to slotted text change (possibly deeply nested)
+			_invalidate.call(this, {
+				type: "slot",
+				name: "default",
+				reason: "changed text content",
+			});
 		}
 	}
 
@@ -320,10 +343,22 @@ class UI5Element extends HTMLElement {
 		this._state[propertyName] = [];
 	}
 
+	/**
+	 * Attach a callback that will be executed whenever the component is invalidated
+	 *
+	 * @param callback
+	 * @protected
+	 */
 	_attachChange(callback) {
 		this._eventProvider.attachEvent("change", callback);
 	}
 
+	/**
+	 * Detach the callback that is executed whenever the component is invalidated
+	 *
+	 * @param callback
+	 * @protected
+	 */
 	_detachChange(callback) {
 		this._eventProvider.detachEvent("change", callback);
 	}
@@ -374,7 +409,11 @@ class UI5Element extends HTMLElement {
 		}
 
 		if (action === "invalidate") {
-			this._invalidate("slot", slotName, "child change"); // invalidation due to child change in a slot with onChildUpdate metadata
+			_invalidate.call(this, {
+				type: "slot",
+				name: slotName,
+				reason: "child change",
+			});
 		} else if (action === "notify" && typeof this.childChangedCallback === "function") {
 			this.childChangedCallback(slotName, changeInfo);
 		} else {
@@ -506,31 +545,11 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_onSlotChange(slotName) {
-		this._invalidate("slot", slotName, "slotchange of a slot child"); // invalidation due to the slotchange event of a slotted slot element
-	}
-
-	/**
-	 * Asynchronously re-renders an already rendered web component
-	 * @private
-	 */
-	_invalidate(type, name, reason, newValue, oldValue) {
-		if (this._suppressInvalidation) {
-			return;
-		}
-
-		const changeInfo = {
-			type,
-			name,
-			reason,
-			newValue,
-			oldValue,
-		};
-
-		this._changedState.push(changeInfo);
-
-		RenderScheduler.renderDeferred(this);
-
-		this._eventProvider.fireEvent("change", changeInfo);
+		_invalidate.call(this, {
+			type: "slot",
+			name: slotName,
+			reason: "slotchange of a slot child",
+		});
 	}
 
 	/**
@@ -968,7 +987,13 @@ class UI5Element extends HTMLElement {
 
 					if (oldState !== value) {
 						this._state[prop] = value;
-						this._invalidate("property", prop, "", value, oldState); // invalidation due to property change
+						_invalidate.call(this, {
+							type: "property",
+							name: prop,
+							reason: "",
+							newValue: value,
+							oldValue: oldState,
+						});
 						this._updateAttribute(prop, value);
 					}
 				},
