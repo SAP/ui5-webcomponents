@@ -56,6 +56,6 @@ class SemanticColor extends DataType {
 	}
 }
 
-SemanticColor.generateTypeAcessors(SemanticColors);
+SemanticColor.generateTypeAccessors(SemanticColors);
 
 export default SemanticColor;

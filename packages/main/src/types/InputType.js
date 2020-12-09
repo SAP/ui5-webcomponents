@@ -63,6 +63,6 @@ class InputType extends DataType {
 	}
 }
 
-InputType.generateTypeAcessors(InputTypes);
+InputType.generateTypeAccessors(InputTypes);
 
 export default InputType;

@@ -42,6 +42,6 @@ class ListItemType extends DataType {
 	}
 }
 
-ListItemType.generateTypeAcessors(ListItemTypes);
+ListItemType.generateTypeAccessors(ListItemTypes);
 
 export default ListItemType;

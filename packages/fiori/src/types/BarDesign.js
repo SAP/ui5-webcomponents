@@ -49,6 +49,6 @@ class BarDesign extends DataType {
 	}
 }
 
-BarDesign.generateTypeAcessors(BarTypes);
+BarDesign.generateTypeAccessors(BarTypes);
 
 export default BarDesign;
