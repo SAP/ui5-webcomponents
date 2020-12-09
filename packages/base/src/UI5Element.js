@@ -48,7 +48,7 @@ function _invalidate(changeInfo) {
 
 	this._changedState.push(changeInfo);
 	RenderScheduler.renderDeferred(this);
-	this._eventProvider.fireEvent("change", changeInfo);
+	this._eventProvider.fireEvent("change", { ...changeInfo, target: this });
 }
 
 /**
@@ -423,6 +423,7 @@ class UI5Element extends HTMLElement {
 			type: "slot",
 			name: slotName,
 			reason: "childchange",
+			child: childChangeInfo.target,
 		});
 	}
 
@@ -577,7 +578,10 @@ class UI5Element extends HTMLElement {
 	 *      Can only trigger for slots with "invalidateOnChildChange" metadata descriptor
 	 *
 	 *  - newValue: the new value of the property (for type="property" only)
+	 *
 	 *  - oldValue: the old value of the property (for type="property" only)
+	 *
+	 *  - child the child that was changed (for type="slot" and reason="childchange" only)
 	 *
 	 * @public
 	 * @returns {boolean} Whether the invalidation will be allowed (true) or suppressed (false)
