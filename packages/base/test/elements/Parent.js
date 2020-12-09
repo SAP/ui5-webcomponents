@@ -7,11 +7,15 @@ const metadata = {
 	slots: {
 		default: {
 			type: Node,
-			listenFor: ["prop1"],
+			invalidateOnChildChange: {
+				properties: ["prop1"]
+			},
 		},
 		items: {
 			type: HTMLElement,
-			listenFor: { include: ["*"], exclude: ["prop3"] }
+			invalidateOnChildChange: {
+				properties: true
+			},
 		}
 	}
 };

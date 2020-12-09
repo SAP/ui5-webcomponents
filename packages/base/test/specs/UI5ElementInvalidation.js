@@ -12,10 +12,9 @@ describe("Invalidation works", () => {
 			// Exactly 1 invalidation for each property change
 			let invalidations = 0;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidations++;
+				return true;
 			};
 
 			el.strProp = "new value";
@@ -40,10 +39,9 @@ describe("Invalidation works", () => {
 
 			let invalidations = 0;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidations++;
+				return true;
 			};
 
 			el.strProp = text;
@@ -68,10 +66,9 @@ describe("Invalidation works", () => {
 
 			let invalidations = 0;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidations++;
+				return true;
 			};
 
 			el.objectProp = otherObj;
@@ -96,10 +93,9 @@ describe("Invalidation works", () => {
 
 			let invalidations = 0;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidations++;
+				return true;
 			};
 
 			el.multiProp = otherArr;
@@ -121,10 +117,9 @@ describe("Invalidation works", () => {
 			// Number of invalidations may vary with children/slots count, so just check for invalidation
 			let invalidated = false;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidated = true;
+				return true;
 			};
 
 			const div = document.createElement("div");
@@ -150,10 +145,9 @@ describe("Invalidation works", () => {
 
 			let invalidated = false;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidated = true;
+				return true;
 			};
 
 			el.removeChild(div);
@@ -177,10 +171,9 @@ describe("Invalidation works", () => {
 			// Number of invalidations may vary with children/slots count, so just check for invalidation
 			let invalidated = false;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidated = true;
+				return true;
 			};
 
 			el.textContent = "test2";
@@ -204,10 +197,9 @@ describe("Invalidation works", () => {
 			// Number of invalidations may vary with children/slots count, so just check for invalidation
 			let invalidated = false;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidated = true;
+				return true;
 			};
 
 			el.childNodes[0].nodeValue = "test2";
@@ -231,10 +223,9 @@ describe("Invalidation works", () => {
 				rendering: 0,
 			};
 
-			const originalInvalidate = el._invalidate;
-			el._invalidate = () => {
-				originalInvalidate.apply(el, arguments);
+			el.onInvalidation = () => {
 				operations.invalidation++;
+				return true;
 			};
 
 			const originalRender = el._render;
