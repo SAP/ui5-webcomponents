@@ -29,12 +29,20 @@ const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
 const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
 
 /**
+ * Triggers re-rendering of a UI5Element instance due to state change.
  *
- * @param changeInfo
+ * @param  changeInfo An object with information about the change that caused invalidation.
  * @private
  */
 function _invalidate(changeInfo) {
+	// Invalidation should be suppressed: 1) before the component is rendered for the first time 2) and during the execution of onBeforeRendering
+	// This is necessary not only as an optimization, but also to avoid infinite loops on invalidation between children and parents (when invalidateOnChildChange is used)
 	if (this._suppressInvalidation) {
+		return;
+	}
+
+	// Call the onInvalidation hook and suppress invalidation if it returned "false"
+	if (!this.onInvalidation(changeInfo)) {
 		return;
 	}
 
@@ -60,9 +68,9 @@ class UI5Element extends HTMLElement {
 		this._initializeState();
 		this._upgradeAllProperties();
 		this._initializeContainers();
-		this._suppressInvalidation = true;
-		this._inDOM = false;
-		this._fullyConnected = false;
+		this._suppressInvalidation = true; // A flag telling whether all invalidations should be ignored. Initialized with "true" because a UI5Element can not be invalidated until it is rendered for the first time
+		this._inDOM = false; // A flag telling whether the UI5Element is currently in the DOM tree of the document or not
+		this._fullyConnected = false; // A flag telling whether the UI5Element's onEnterDOM hook was called (since it's possible to have the element removed from DOM before that)
 
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
@@ -272,10 +280,12 @@ class UI5Element extends HTMLElement {
 
 			child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
 
-			if (child.isUI5Element && slotData.onChildChange) {
+			// Listen for any invalidation on the child if invalidateOnChildChange is true or an object (ignore when false or not set)
+			if (child.isUI5Element && slotData.invalidateOnChildChange) {
 				child._attachChange(this._getChildChangeListener(slotName));
 			}
 
+			// Listen for the slotchange event if the child is a slot itself
 			if (isSlot(child)) {
 				this._attachSlotChange(child, slotName);
 			}
@@ -305,7 +315,7 @@ class UI5Element extends HTMLElement {
 				_invalidate.call(this, {
 					type: "slot",
 					name: propertyNameToSlotMap.get(propertyName),
-					reason: "added/removed children",
+					reason: "children",
 				});
 				invalidated = true;
 			}
@@ -317,7 +327,7 @@ class UI5Element extends HTMLElement {
 			_invalidate.call(this, {
 				type: "slot",
 				name: "default",
-				reason: "changed text content",
+				reason: "textcontent",
 			});
 		}
 	}
@@ -367,58 +377,53 @@ class UI5Element extends HTMLElement {
 	 * Callback that is executed whenever a monitored child changes its state
 	 *
 	 * @param slotName the slot in which a child was invalidated
-	 * @param changeInfo
+	 * @param childChangeInfo the changeInfo object for the child in the given slot
 	 * @private
 	 */
-	_onChildChange(slotName, changeInfo) {
-		const config = this.constructor.getMetadata().getSlots()[slotName].onChildChange;
-		let action;
+	_onChildChange(slotName, childChangeInfo) {
+		const config = this.constructor.getMetadata().getSlots()[slotName].invalidateOnChildChange;
 
-		// The simple format was used: onChildChange: "invalidate/notify";
-		if (typeof config === "string") {
-			action = config;
-		// The complex format was used: onChildChange: { action: "invalidate/notify", ...}
+		// The simple format was used: invalidateOnChildChange: true;
+		if (typeof config === "boolean") {
+			if (config === false) {
+				return;
+			}
+		// The complex format was used: invalidateOnChildChange: { properties, slots }
 		} else if (typeof config === "object") {
-			action = config.action;
-
 			// A property was changed
-			if (changeInfo.type === "property") {
+			if (childChangeInfo.type === "property") {
 				// The component does not listen for property changes at all
-				if (!config.monitoredProperties) {
+				if (!config.properties) {
 					return;
 				}
 
 				// The component is listening for property changes to specific properties, but this one is not included
-				if (Array.isArray(config.monitoredProperties) && !config.monitoredProperties.includes(changeInfo.name)) {
+				if (Array.isArray(config.properties) && !config.properties.includes(childChangeInfo.name)) {
 					return;
 				}
 			}
 
 			// A slot was changed
-			if (changeInfo.type === "slot") {
+			if (childChangeInfo.type === "slot") {
 				// The component does not listen for slot changes at all
-				if (!config.monitoredSlots) {
+				if (!config.slots) {
 					return;
 				}
 
 				// The component is listening for slot changes to specific slots, but this one is not included
-				if (Array.isArray(config.monitoredSlots) && !config.monitoredSlots.includes(changeInfo.name)) {
+				if (Array.isArray(config.slots) && !config.slots.includes(childChangeInfo.name)) {
 					return;
 				}
 			}
 		}
 
-		if (action === "invalidate") {
-			_invalidate.call(this, {
-				type: "slot",
-				name: slotName,
-				reason: "child change",
-			});
-		} else if (action === "notify" && typeof this.childChangedCallback === "function") {
-			this.childChangedCallback(slotName, changeInfo);
-		} else {
-			throw new Error(`Unknown onChildChange action: ${action}`);
-		}
+		// The component should be invalidated as this type of change on the child is listened for
+		// However, no matter what changed on the child (property/slot), the invalidation is registered as "type=slot" for the component itself
+		_invalidate.call(this, {
+			type: "slot",
+			name: slotName,
+			reason: "childchange",
+		});
 	}
 
 	/**
@@ -548,8 +553,37 @@ class UI5Element extends HTMLElement {
 		_invalidate.call(this, {
 			type: "slot",
 			name: slotName,
-			reason: "slotchange of a slot child",
+			reason: "slotchange",
 		});
+	}
+
+	/**
+	 * A callback that is executed each time an already rendered component is invalidated (scheduled for re-rendering)
+	 *
+	 * @param  changeInfo An object with information about the change that caused invalidation.
+	 * The object can have the following properties:
+	 *  - type: (property|slot) tells what caused the invalidation
+	 *   1) property: a property value was changed either directly or as a result of changing the corresponding attribute
+	 *   2) slot: a slotted node(nodes) changed in one of several ways (see "reason")
+	 *
+	 *  - name: the name of the property or slot that caused the invalidation
+	 *
+	 *  - reason: (children|textcontent|childchange|slotchange) relevant only for type="slot" only and tells exactly what changed in the slot
+	 *   1) children: immediate children (HTML elements or text nodes) were added, removed or reordered in the slot
+	 *   2) textcontent: text nodes in the slot changed value (or nested text nodes were added or changed value). Can only trigger for slots of "type: Node"
+	 *   3) slotchange: a slot element, slotted inside that slot had its "slotchange" event listener called. This practically means that transitively slotted children changed.
+	 *      Can only trigger if the child of a slot is a slot element itself.
+	 *   4) childchange: indicates that a UI5Element child in that slot was invalidated and in turn invalidated the component.
+	 *      Can only trigger for slots with "invalidateOnChildChange" metadata descriptor
+	 *
+	 *  - newValue: the new value of the property (for type="property" only)
+	 *  - oldValue: the old value of the property (for type="property" only)
+	 *
+	 * @public
+	 * @returns {boolean} Whether the invalidation will be allowed (true) or suppressed (false)
+	 */
+	onInvalidation(changeInfo) {
+		return true;
 	}
 
 	/**
@@ -582,7 +616,11 @@ class UI5Element extends HTMLElement {
 				element = `${element}#${this.id}`;
 			}
 			console.log("Re-rendering:", element, this._changedState.map(x => { // eslint-disable-line
-				let res = `${x.type}(${x.reason}): ${x.name}`;
+				let res = `${x.type}`;
+				if (x.reason) {
+					res = `${res}(${x.reason})`;
+				}
+				res = `${res}: ${x.name}`;
 				if (x.type === "property") {
 					res = `${res} ${x.oldValue} => ${x.newValue}`;
 				}
@@ -990,7 +1028,6 @@ class UI5Element extends HTMLElement {
 						_invalidate.call(this, {
 							type: "property",
 							name: prop,
-							reason: "",
 							newValue: value,
 							oldValue: oldState,
 						});

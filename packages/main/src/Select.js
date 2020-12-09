@@ -69,7 +69,7 @@ const metadata = {
 		"default": {
 			propertyName: "options",
 			type: HTMLElement,
-			onChildChange: "invalidate",
+			invalidateOnChildChange: true,
 		},
 
 		/**

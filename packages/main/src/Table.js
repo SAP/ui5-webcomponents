@@ -43,7 +43,9 @@ const metadata = {
 		columns: {
 			type: HTMLElement,
 			individualSlots: true,
-			onChildChange: "invalidate",
+			invalidateOnChildChange: {
+				properties: "*",
+			},
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {

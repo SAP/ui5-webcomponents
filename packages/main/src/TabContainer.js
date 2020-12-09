@@ -55,9 +55,8 @@ const metadata = {
 			propertyName: "items",
 			type: HTMLElement,
 			individualSlots: true,
-			onChildChange: {
-				action: "invalidate",
-				monitoredProperties: "*",
+			invalidateOnChildChange: {
+				properties: "*",
 			},
 		},
 

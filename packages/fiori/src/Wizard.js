@@ -63,7 +63,7 @@ const metadata = {
 			propertyName: "steps",
 			type: HTMLElement,
 			"individualSlots": true,
-			onChildChange: "invalidate",
+			invalidateOnChildChange: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
