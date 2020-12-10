@@ -64,24 +64,23 @@ function _invalidate(changeInfo) {
 class UI5Element extends HTMLElement {
 	constructor() {
 		super();
+
 		this._changedState = []; // Filled on each invalidation, cleared on re-render (used for debugging)
 		this._suppressInvalidation = true; // A flag telling whether all invalidations should be ignored. Initialized with "true" because a UI5Element can not be invalidated until it is rendered for the first time
 		this._inDOM = false; // A flag telling whether the UI5Element is currently in the DOM tree of the document or not
 		this._fullyConnected = false; // A flag telling whether the UI5Element's onEnterDOM hook was called (since it's possible to have the element removed from DOM before that)
-
-		this._initializeState();
-		this._upgradeAllProperties();
-		this._initializeContainers();
-
+		this._childChangeListeners = new Map(); // used to store lazy listeners per slot for the child change event of every child inside that slot
+		this._slotChangeListeners = new Map(); // used to store lazy listeners per slot for the slotchange event of all slot children inside that slot
+		this._eventProvider = new EventProvider(); // used by parent components for listening to changes to child components
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
 			deferredResolve = resolve;
 		});
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
-		this._childChangeListeners = new Map();
-		this._slotChangeListeners = new Map();
-		this._eventProvider = new EventProvider();
+		this._initializeState();
+		this._upgradeAllProperties();
+		this._initializeContainers();
 	}
 
 	/**
