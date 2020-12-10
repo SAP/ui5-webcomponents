@@ -119,11 +119,12 @@ describe("Dialog general interaction", () => {
 		openDynamicDialog.click();
 
 		const dialog = browser.$("#dynamic-dialog");
+		dialog.waitForExist();
+
 		const button = dialog.shadow$("#dynamic-dialog-button");
-
-		dialog.open();
-
 		button.waitForExist();
+
+		browser.pause(500);
 
 		assert.strictEqual(document.activeElement, button, "the active element is the first button");
 

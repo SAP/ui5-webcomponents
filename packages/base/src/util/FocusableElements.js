@@ -40,7 +40,10 @@ const findFocusableElement = async (container, forward) => {
 	while (child) {
 		const originalChild = child;
 
-		child = child.isUI5Element ? await child.getFocusDomRefAsync() : child;
+		if (child.isUI5Element) {
+			child = await child.getFocusDomRefAsync();
+		}
+
 		if (!child) {
 			return null;
 		}
