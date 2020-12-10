@@ -64,13 +64,14 @@ function _invalidate(changeInfo) {
 class UI5Element extends HTMLElement {
 	constructor() {
 		super();
-		this._changedState = [];
-		this._initializeState();
-		this._upgradeAllProperties();
-		this._initializeContainers();
+		this._changedState = []; // Filled on each invalidation, cleared on re-render (used for debugging)
 		this._suppressInvalidation = true; // A flag telling whether all invalidations should be ignored. Initialized with "true" because a UI5Element can not be invalidated until it is rendered for the first time
 		this._inDOM = false; // A flag telling whether the UI5Element is currently in the DOM tree of the document or not
 		this._fullyConnected = false; // A flag telling whether the UI5Element's onEnterDOM hook was called (since it's possible to have the element removed from DOM before that)
+
+		this._initializeState();
+		this._upgradeAllProperties();
+		this._initializeContainers();
 
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
