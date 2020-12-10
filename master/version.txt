@@ -1,5 +1,7 @@
-commit 038a505e42db8a5590ab096535db9f10826cc6b2
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Dec 9 15:45:00 2020 +0200
+commit 6afed1556db179d61590ef6e9ec784aaab70b0c6
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Dec 10 17:53:57 2020 +0800
 
-    chore: fix typo in method name (#2558)
+    chore: translation delivery (#2563)
+    
+    Change-Id: I719ee6de013f216e7a80fc876033f0437ace7fa0
