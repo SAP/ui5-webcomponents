@@ -1,7 +1,7 @@
 <div
 		class="ui5-date-picker-root"
 		style="{{styles.main}}"
-		@keydown={{_onkeydown}}
+		@keydown="{{_onkeydown}}"
 		@focusout="{{_onfocusout}}"
 >
 	<!-- INPUT -->
@@ -12,6 +12,7 @@
 			type="{{type}}"
 			value="{{value}}"
 			?disabled="{{disabled}}"
+			?required="{{required}}"
 			?readonly="{{readonly}}"
 			value-state="{{valueState}}"
 			@ui5-change="{{_handleInputChange}}"

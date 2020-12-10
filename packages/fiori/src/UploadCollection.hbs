@@ -1,4 +1,4 @@
-<div class="ui5-uc-root">
+<div class="ui5-uc-root" @drop="{{_ondrop}}">
 	<div class="ui5-uc-header">
 		<slot name="header"></slot>
 	</div>
@@ -24,7 +24,6 @@
 				@dragenter="{{_ondragenter}}"
 				@dragleave="{{_ondragleave}}"
 				@dragover="{{_ondragover}}"
-				@drop="{{_ondrop}}"
 			>
 				<ui5-icon name="upload-to-cloud"></ui5-icon>
 				<span class="dnd-overlay-text">{{_dndOverlayText}}</span>

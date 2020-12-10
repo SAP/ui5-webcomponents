@@ -46,6 +46,10 @@ const metadata = {
 		_isMonthButtonHidden: {
 			type: Boolean,
 		},
+		_tabIndex: {
+			type: String,
+			defaultValue: "0",
+		},
 	},
 	events: {
 		"previous-press": {},

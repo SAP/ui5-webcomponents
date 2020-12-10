@@ -25,6 +25,7 @@ import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
@@ -429,7 +430,6 @@ class DatePicker extends UI5Element {
 				}
 
 				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
-				dayPicker._inputLiveChangeTrigger = false;
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
 				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
 				let focusableDay = selectedDay || today;
@@ -455,6 +455,7 @@ class DatePicker extends UI5Element {
 
 		this._calendar = {
 			onSelectedDatesChange: this._handleCalendarChange.bind(this),
+			selection: CalendarSelection.Single,
 			selectedDates: [],
 		};
 
@@ -482,9 +483,10 @@ class DatePicker extends UI5Element {
 			this.maxDate = null;
 			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
-		if (this._checkValueValidity(this.value) || this.checkRealValueValidity()) {
+
+		if (this._checkValueValidity(this.value)) {
 			this._changeCalendarSelection();
-		} else {
+		} else if (this.value !== "") {
 			this._calendar.selectedDates = [];
 		}
 
@@ -669,28 +671,12 @@ class DatePicker extends UI5Element {
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
-		if (this.responsivePopover) {
-			const calendar = this.calendar;
-			const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
-			// If day picker component rerendering is triggered due to a change in the date picker component input filed,
-			// then mark this trigger and avoid moving the focus from the date picker input field throughout the on after
-			// rendering hook of the day picker component
-			dayPicker._inputLiveChangeTrigger = true;
-		}
-
 		this.value = nextValue;
 		this.fireEvent("input", { value: nextValue, valid: isValid });
 	}
 
 	_checkValueValidity(value) {
 		return this.isValid(value) && this.isInValidRange(this._getTimeStampFromString(value));
-	}
-
-	/**
-	 * This method is used in the derived classes
-	 */
-	checkRealValueValidity() {
-		return false;
 	}
 
 	_click(event) {
@@ -837,7 +823,6 @@ class DatePicker extends UI5Element {
 			"ariaOwns": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
-			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
 	}
@@ -921,7 +906,7 @@ class DatePicker extends UI5Element {
 		this._updateValueCalendarSelectedDatesChange(newValue);
 
 		this._calendar.timestamp = newValue;
-		this._calendar.selectedDates = event.detail.dates;
+		this._calendar.selectedDates = [...event.detail.dates];
 		this._focusInputAfterClose = true;
 
 		if (this.isInValidRange(this._getTimeStampFromString(this.value))) {
@@ -988,20 +973,16 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	_changeCalendarSelection(focusTimestamp) {
+	_changeCalendarSelection() {
 		if (this._calendarDate.getYear() < 1) {
 			// 0 is a valid year, but we cannot display it
 			return;
 		}
 
-		const oCalDate = this._calendarDate;
-		const timestamp = focusTimestamp || oCalDate.valueOf() / 1000;
-
+		const timestamp = this._calendarDate.valueOf() / 1000;
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
-		if (this.value) {
-			this._calendar.selectedDates = [timestamp];
-		}
+		this._calendar.selectedDates = this.value ? [timestamp] : [];
 	}
 
 	/**

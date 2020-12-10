@@ -3,12 +3,12 @@
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 	<title>Calendar Playground</title>
 
 	<script>
-		delete Document.prototype.adoptedStyleSheets
+		delete Document.prototype.adoptedStyleSheets;
 	</script>
 
 	<script data-ui5-config type="application/json">
@@ -24,8 +24,48 @@
 </head>
 <body style="background-color: var(--sapBackgroundColor);">
 
-<ui5-calendar id="calendar1"></ui5-calendar>
-<ui5-calendar id="calendar2" primary-calendar-type='Islamic'></ui5-calendar>
+	<section>
+		<ui5-label id="selectLabel" label-for="selectionType">Selection type for the first calendar:</ui5-label>
+		<ui5-select id="selectionType">
+			<ui5-option selected>Single</ui5-option>
+			<ui5-option>Multiple</ui5-option>
+			<ui5-option>Range</ui5-option>
+		</ui5-select>
+		<br>
+		<ui5-label id="toggleButtonLabel" label-for="weekNumbersButton">Show/hide weeknumbers for the first calendar:</ui5-label>
+		<ui5-togglebutton id="weekNumbersButton">hide</ui5-togglebutton>
+
+		<ui5-calendar id="calendar1"></ui5-calendar>
+		<ui5-textarea id="textArea" placeholder="Selected dates..."></ui5-textarea>
+	</section>
+
+	<section>
+		<ui5-calendar id="calendar2" primary-calendar-type='Islamic'></ui5-calendar>
+	</section>
+	<section>
+		<ui5-calendar id="calendar3" min-date="1/7/2020" max-date="21/10/2020" format-pattern="dd/MM/yyyy"></ui5-calendar>
+	</section>
 
 </body>
+
+<script>
+	const toggleButton = document.getElementById("weekNumbersButton");
+	const select = document.getElementById("selectionType");
+	const calendar1 = document.getElementById("calendar1");
+	const textArea = document.getElementById("textArea");
+
+	select.addEventListener("ui5-change", function(event) {
+		calendar1.setAttribute("selection", event.detail.selectedOption.textContent)
+	});
+
+	toggleButton.addEventListener("click", function(event) {
+		calendar1.hideWeekNumbers = event.target.pressed ? true : false;
+		toggleButton.innerHTML = event.target.pressed ? "show" : "hide";
+	});
+
+	calendar1.addEventListener("ui5-selected-dates-change", function(event) {
+		textArea.setAttribute("value", event.detail.dates.join(", "));
+	});
+</script>
+
 </html>

@@ -36,6 +36,6 @@ class AvatarShape extends DataType {
 	}
 }
 
-AvatarShape.generateTypeAcessors(AvatarShapes);
+AvatarShape.generateTypeAccessors(AvatarShapes);
 
 export default AvatarShape;
