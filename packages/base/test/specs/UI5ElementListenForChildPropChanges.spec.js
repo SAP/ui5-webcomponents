@@ -11,7 +11,7 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 
 			let parentInvalidated = false;
 
-			parent.onInvalidate = () => {
+			parent.onInvalidation = () => {
 				parentInvalidated = true;
 				return true;
 			};
@@ -34,7 +34,7 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 
 			let parentInvalidated = false;
 
-			parent.onInvalidate = () => {
+			parent.onInvalidation = () => {
 				parentInvalidated = true;
 				return true;
 			};
@@ -57,7 +57,7 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 
 			let parentInvalidatedCount = 0;
 
-			parent.onInvalidate = () => {
+			parent.onInvalidation = () => {
 				parentInvalidatedCount++;
 				return true;
 			};
