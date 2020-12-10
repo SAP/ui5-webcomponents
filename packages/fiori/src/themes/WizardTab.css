@@ -74,6 +74,7 @@
 	text-align: center;
 	width: 2rem;
 	height: 2rem;
+	margin: 0 0.1875rem;
 	line-height: 2;
 	border-width: 1px;
 	border-style: solid;
@@ -117,6 +118,7 @@
 
 :host([data-ui5-wizard-expanded-tab-prev="true"]) .ui5-wiz-step-heading,
 :host([data-ui5-wizard-expanded-tab-prev="true"]) .ui5-wiz-step-subheading,
+:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-texts,
 :host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-heading,
 :host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-subheading {
 	display: none;
@@ -134,7 +136,7 @@
 	border-bottom-style: solid;
 	height: 1px;
 	flex-grow: 1;
-	margin-right: .5rem;
+	margin-right: .25rem;
 }
 
 :host([active-separator]) .ui5-wiz-step-hr {
@@ -150,7 +152,15 @@ ui5-wizard-tab .ui5-wiz-step-main {
 	pointer-events: none;
 }
 
-:host([data-ui5-wizard-expanded-tab="false"][data-ui5-wizard-current-tab="true"]) .ui5-wiz-step-root {
+:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-root {
 	position: absolute;
+	top: 0;
+}
+
+:host([data-ui5-wizard-after-current-tab="true"]) .ui5-wiz-step-root {
 	right: 0;
+}
+
+:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-hr {
+	display: none;
 }

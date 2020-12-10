@@ -22,6 +22,7 @@
 					_tab-index="{{tabIndex}}"
 					@selection-change-requested="{{../onSelectionChangeRequested}}"
 					@focused="{{../onStepInHeaderFocused}}"
+					@click="{{../_onGroupedTabClick}}"
 					style={{styles}}
 				></ui5-wizard-tab>
 			{{/each}}

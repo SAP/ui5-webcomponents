@@ -1,0 +1,32 @@
+<ui5-responsive-popover
+	horizontal-align="Center"
+	placement-type="Bottom"
+	class="ui5-wizard-responsive-popover"
+	@ui5-after-close={{_afterClosePopover}}
+	content-only-on-desktop
+	prevent-focus-restore
+	with-padding
+	_hide-header
+>
+	<ul class="ui5-wizard-responsive-popover-list" type="none">
+		{{#each _groupedTabs}}
+			<li>
+				<ui5-button
+					icon="{{this.icon}}"
+					?disabled="{{this.disabled}}"
+					design="Transparent"
+					data-ui5-header-tab-ref-id="{{this.ariaPosinset}}"
+					@click="{{../_onOverflowStepButtonClick}}"
+				>
+				{{this.heading}}
+				</ui5-button>
+			</li>
+		{{/each}}
+	</ul>
+	<div slot="footer" class="ui5-responsive-popover-footer">
+		<ui5-button
+			design="Transparent"
+			@click="{{_closeRespPopover}}"
+		>Cancel</ui5-button>
+	</div>
+</ui5-responsive-popover>
