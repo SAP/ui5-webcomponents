@@ -126,7 +126,7 @@ describe("Dialog general interaction", () => {
 		assert.strictEqual(activeElement.getProperty("id"), closeButton.getProperty("id"), "the active element is the close button");
 
 		closeButton.click();
-	}​​);
+	});
 });
 
 
