@@ -114,19 +114,19 @@ describe("Dialog general interaction", () => {
 		closeResizableDialogButton.click();
 	});
 
-	it("initial focus after dynamic dialog creation", () => {​​
-        const openDynamicDialog = browser.$("#dynamic-open");
+	it("initial focus after dynamic dialog creation", () => {
+		const openDynamicDialog = browser.$("#dynamic-open");
 		openDynamicDialog.click();
 
-        const closeButton = browser.$("#dynamic-dialog-close-button");
+		const closeButton = browser.$("#dynamic-dialog-close-button");
 
-        browser.pause(500);
+		browser.pause(500);
 
-        const activeElement = $(browser.getActiveElement());
+		const activeElement = $(browser.getActiveElement());
 		assert.strictEqual(activeElement.getProperty("id"), closeButton.getProperty("id"), "the active element is the close button");
 
-        closeButton.click();
-    }​​);
+		closeButton.click();
+	}​​);
 });
 
 

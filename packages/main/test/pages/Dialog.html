@@ -334,24 +334,23 @@
 		window["resizable-open"].addEventListener("click", function () { window["resizable-dialog"].open(); });
 		window["resizable-close"].addEventListener("click", function () { window["resizable-dialog"].close(); });
 
-
 		window["dynamic-open"].addEventListener("click", function () {
-            let dialog = document.createElement("ui5-dialog"),
-                button = document.createElement("ui5-button");
+			var dialog = document.createElement("ui5-dialog"),
+				button = document.createElement("ui5-button");
 
-            button.setAttribute("id", "dynamic-dialog-close-button");
-            button.appendChild(document.createTextNode("Close"));
-            button.addEventListener("click", function () {
-                dialog.close();
-            });
+			button.setAttribute("id", "dynamic-dialog-close-button");
+			button.appendChild(document.createTextNode("Close"));
+			button.addEventListener("click", function () {
+				dialog.close();
+			});
 
-            dialog.setAttribute("id", "dynamic-dialog");
-            dialog.appendChild(button);
+			dialog.setAttribute("id", "dynamic-dialog");
+			dialog.appendChild(button);
 
-            document.body.appendChild(dialog);
+			document.body.appendChild(dialog);
 
-            dialog.open();
-        });
+			dialog.open();
+		});
 	</script>
 </body>
 
