@@ -41,10 +41,8 @@ function _invalidate(changeInfo) {
 		return;
 	}
 
-	// Call the onInvalidation hook and suppress invalidation if it returned "false"
-	if (!this.onInvalidation(changeInfo)) {
-		return;
-	}
+	// Call the onInvalidation hook
+	this.onInvalidation(changeInfo);
 
 	this._changedState.push(changeInfo);
 	RenderScheduler.renderDeferred(this);
@@ -552,11 +550,8 @@ class UI5Element extends HTMLElement {
 	 *  - child the child that was changed (for type="slot" and reason="childchange" only)
 	 *
 	 * @public
-	 * @returns {boolean} Whether the invalidation will be allowed (true) or suppressed (false)
 	 */
-	onInvalidation(changeInfo) {
-		return true;
-	}
+	onInvalidation(changeInfo) {}
 
 	/**
 	 * Do not call this method directly, only intended to be called by RenderScheduler.js

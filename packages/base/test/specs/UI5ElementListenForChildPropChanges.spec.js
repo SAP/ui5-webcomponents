@@ -13,7 +13,6 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 
 			parent.onInvalidation = () => {
 				parentInvalidated = true;
-				return true;
 			};
 
 			child.prop1 = "a"; // child1(default slot) prop1 -> invalidates
@@ -36,7 +35,6 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 
 			parent.onInvalidation = () => {
 				parentInvalidated = true;
-				return true;
 			};
 
 			child.prop2 = "b"; // child1(default slot) prop 2 -> does not
@@ -59,7 +57,6 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 
 			parent.onInvalidation = () => {
 				parentInvalidatedCount++;
-				return true;
 			};
 
 			child.prop1 = "c";

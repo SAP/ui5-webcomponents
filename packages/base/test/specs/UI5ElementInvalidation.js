@@ -14,7 +14,6 @@ describe("Invalidation works", () => {
 
 			el.onInvalidation = () => {
 				invalidations++;
-				return true;
 			};
 
 			el.strProp = "new value";
@@ -41,7 +40,6 @@ describe("Invalidation works", () => {
 
 			el.onInvalidation = () => {
 				invalidations++;
-				return true;
 			};
 
 			el.strProp = text;
@@ -68,7 +66,6 @@ describe("Invalidation works", () => {
 
 			el.onInvalidation = () => {
 				invalidations++;
-				return true;
 			};
 
 			el.objectProp = otherObj;
@@ -95,7 +92,6 @@ describe("Invalidation works", () => {
 
 			el.onInvalidation = () => {
 				invalidations++;
-				return true;
 			};
 
 			el.multiProp = otherArr;
@@ -119,7 +115,6 @@ describe("Invalidation works", () => {
 
 			el.onInvalidation = () => {
 				invalidated = true;
-				return true;
 			};
 
 			const div = document.createElement("div");
@@ -147,7 +142,6 @@ describe("Invalidation works", () => {
 
 			el.onInvalidation = () => {
 				invalidated = true;
-				return true;
 			};
 
 			el.removeChild(div);
@@ -173,7 +167,6 @@ describe("Invalidation works", () => {
 
 			el.onInvalidation = () => {
 				invalidated = true;
-				return true;
 			};
 
 			el.textContent = "test2";
@@ -199,7 +192,6 @@ describe("Invalidation works", () => {
 
 			el.onInvalidation = () => {
 				invalidated = true;
-				return true;
 			};
 
 			el.childNodes[0].nodeValue = "test2";
@@ -225,7 +217,6 @@ describe("Invalidation works", () => {
 
 			el.onInvalidation = () => {
 				operations.invalidation++;
-				return true;
 			};
 
 			const originalRender = el._render;
