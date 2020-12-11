@@ -2303,12 +2303,15 @@
 	<style>
 		.ui5-side-nav {
 			height: 93%;
-		}	
+		}
+
+		ui5-shellbar::part(root) {
+			padding-left: .5rem;
+		}
 	</style>
 	<h3>Side Navigation in Application</h3>
 	<div class="snippet" style="height: 40rem;">
-			<ui5-shellbar primary-title="UI5 Web Components" secondary-title="The Best Run SAP" show-co-pilot
-		>
+		<ui5-shellbar primary-title="UI5 Web Components" secondary-title="The Best Run SAP" show-co-pilot>
 			<ui5-button icon="menu" slot="startButton" id="startButton"></ui5-button>
 		</ui5-shellbar>
 
@@ -2363,6 +2366,12 @@
 	<span class="kd">const</span> <span class="nx">sideNavigation</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-side-navigation</span><span class="dl">"</span><span class="p">);</span>
 	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#startButton</span><span class="dl">"</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="nx">sideNavigation</span><span class="p">.</span><span class="nx">collapsed</span> <span class="o">=</span> <span class="o">!</span><span class="nx">sideNavigation</span><span class="p">.</span><span class="nx">collapsed</span><span class="p">);</span>
 <span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;style&gt;</span>
+	<span class="nt">ui5-shellbar</span><span class="nd">::part</span><span class="o">(</span><span class="nt">root</span><span class="o">)</span> <span class="p">{</span>
+		<span class="nl">padding-left</span><span class="p">:</span> <span class="m">.5rem</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
 	</code></pre></figure></pre>
 </section>
 

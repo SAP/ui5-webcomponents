@@ -1,7 +1,5 @@
-commit 6afed1556db179d61590ef6e9ec784aaab70b0c6
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Dec 10 17:53:57 2020 +0800
+commit 0338fdc4ac710af23b9e85037f0e1a61405625fa
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Dec 11 10:12:19 2020 +0200
 
-    chore: translation delivery (#2563)
-    
-    Change-Id: I719ee6de013f216e7a80fc876033f0437ace7fa0
+    fix(docs): fix ui5-side-navigation sample (#2564)
