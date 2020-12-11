@@ -149,7 +149,7 @@ class MonthPicker extends UI5Element {
 			},
 		});
 
-		this._itemNav.getItemsCallback = function getItemsCallback() {
+		this._itemNav.getItemsCallback = () => {
 			const focusableMonths = [];
 
 			for (let i = 0; i < this._quarters.length; i++) {
@@ -158,11 +158,7 @@ class MonthPicker extends UI5Element {
 			}
 
 			return [].concat(...focusableMonths);
-		}.bind(this);
-
-		this._itemNav.setItemsCallback = function setItemsCallback(items) {
-			this._quarters = items;
-		}.bind(this);
+		};
 
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,

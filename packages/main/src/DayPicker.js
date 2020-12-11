@@ -241,9 +241,7 @@ class DayPicker extends UI5Element {
 			},
 		});
 
-		this._itemNav.getItemsCallback = function getItemsCallback() {
-			return this.focusableDays;
-		}.bind(this);
+		this._itemNav.getItemsCallback = () => this.focusableDays;
 
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,
