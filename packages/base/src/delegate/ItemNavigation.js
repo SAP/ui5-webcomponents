@@ -31,6 +31,10 @@ class ItemNavigation extends EventProvider {
 
 		this.pageSize = options.pageSize;
 
+		if (options.onUpdate) {
+			this.onUpdate = options.onUpdate;
+		}
+
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
 		this.rootWebComponent._onComponentStateFinalized = () => {
@@ -176,6 +180,10 @@ class ItemNavigation extends EventProvider {
 
 		for (let i = 0; i < items.length; i++) {
 			items[i]._tabIndex = (i === this.currentIndex ? "0" : "-1");
+		}
+
+		if (typeof this.onUpdate === "function") {
+			this.onUpdate();
 		}
 	}
 

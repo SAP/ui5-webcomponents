@@ -151,6 +151,9 @@ class YearPicker extends UI5Element {
 			pageSize: 20,
 			rowSize: 4,
 			behavior: ItemNavigationBehavior.Paging,
+			onUpdate: () => {
+				this._yearIntervals = [...this._yearIntervals];
+			},
 		});
 
 		this._itemNav.getItemsCallback = function getItemsCallback() {

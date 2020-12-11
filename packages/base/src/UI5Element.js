@@ -576,7 +576,6 @@ class UI5Element extends HTMLElement {
 		this._suppressInvalidation = false;
 
 		// Update the shadow root with the render result
-		/*
 		if (this._changedState.length) {
 			let element = this.localName;
 			if (this.id) {
@@ -595,7 +594,6 @@ class UI5Element extends HTMLElement {
 				return res;
 			}));
 		}
-		*/
 		this._changedState = [];
 
 		// Update shadow root and static area item
