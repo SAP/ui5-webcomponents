@@ -36,7 +36,8 @@
 }
 
 /* RTL */
-:host([__has-icon]) .ui5-badge-root[rtl] .ui5-badge-text {
+:host([__has-icon]) .ui5-badge-root[dir="rtl"] .ui5-badge-text {
+	padding-left: 0;
 	padding-right: 0.1875em;
 }
 
