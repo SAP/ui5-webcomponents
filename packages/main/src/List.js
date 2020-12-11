@@ -382,7 +382,7 @@ class List extends UI5Element {
 	}
 
 	get hasData() {
-		return this.items.length !== 0;
+		return this.getSlottedNodes("items").length !== 0;
 	}
 
 	get showNoDataText() {
