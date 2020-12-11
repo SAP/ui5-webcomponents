@@ -13,12 +13,15 @@
 	<style>
 		.ui5-side-nav {
 			height: 93%;
-		}	
+		}
+
+		ui5-shellbar::part(root) {
+			padding-left: .5rem;
+		}
 	</style>
 	<h3>Side Navigation in Application</h3>
 	<div class="snippet" style="height: 40rem;">
-			<ui5-shellbar primary-title="UI5 Web Components" secondary-title="The Best Run SAP" show-co-pilot
-		>
+		<ui5-shellbar primary-title="UI5 Web Components" secondary-title="The Best Run SAP" show-co-pilot>
 			<ui5-button icon="menu" slot="startButton" id="startButton"></ui5-button>
 		</ui5-shellbar>
 
@@ -74,6 +77,12 @@ show-co-pilot
 	const sideNavigation = document.querySelector("ui5-side-navigation");
 	document.querySelector("#startButton").addEventListener("click", event => sideNavigation.collapsed = !sideNavigation.collapsed);
 </script>
+
+<style>
+	ui5-shellbar::part(root) {
+		padding-left: .5rem;
+	}
+</style>
 	</xmp></pre>
 </section>
 
