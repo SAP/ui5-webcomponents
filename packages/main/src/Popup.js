@@ -77,7 +77,7 @@ const metadata = {
 		},
 
 		/**
-		 * @protected
+		 * @private
 		 */
 		_disableInitialFocus: {
 			type: Boolean,
