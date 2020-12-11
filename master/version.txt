@@ -1,5 +1,5 @@
-commit 0338fdc4ac710af23b9e85037f0e1a61405625fa
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Dec 11 10:12:19 2020 +0200
+commit 5f6d8fc1f29fad6c2921c36e558fa61de419b938
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Dec 11 14:42:14 2020 +0200
 
-    fix(docs): fix ui5-side-navigation sample (#2564)
+    fix(ui5-badge): fix RTL appearance (#2569)
