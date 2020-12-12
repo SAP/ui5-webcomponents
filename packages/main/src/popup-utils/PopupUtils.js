@@ -1,4 +1,6 @@
-let currentZIndex = 100;
+import { getInitialZIndex } from "@ui5/webcomponents-base/dist/InitialConfiguration.js";
+
+let currentZIndex;
 
 const getFocusedElement = () => {
 	let element = document.activeElement;
@@ -71,8 +73,16 @@ const getClosedPopupParent = el => {
 
 
 const getNextZIndex = () => {
+	if (!currentZIndex) {
+		setZIndex();
+	}
+
 	currentZIndex += 2;
 	return currentZIndex;
+};
+
+const setZIndex = () => {
+	currentZIndex = getInitialZIndex() || 100;
 };
 
 export {

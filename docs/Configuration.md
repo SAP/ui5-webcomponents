@@ -15,6 +15,7 @@ calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     |
 [noConflict](#noConflict)  | true, false | false                            | When set to true, all events will be fired with a "ui5-" prefix only
 [formatSettings](#formatSettings)| See the [Format settings](#formatSettings) section below		| Empty object | Allows to override locale-specific configuration
 [assetsPath](#assetsPath)| See the [Assets path](#assetsPath) section below		| Empty string | Allows to set the assets path at runtime
+[initialZIndex](#initialZIndex)| Positive Integer Number | 100 | Defines the initial ```z-index``` for all popups(dialogs and popovers).
 
 ### Content Density
 
@@ -123,6 +124,12 @@ Example:
 </script>
 ```
 
+<a name="initialZIndex"></a>
+### Initial ```z-index```
+
+This configuration setting allows to set the initial ```z-index``` for all popovers in your application. By default, the ```z-index``` start from 100.
+This setting doesn't have a custom setter, because only its initial value is intended to be used.
+
 ## Configuration script
 
 In order to provide configuration settings, include the following ```<script>``` element in your HTML page:
@@ -138,7 +145,8 @@ In order to provide configuration settings, include the following ```<script>```
 	"theme": "sap_belize_hcb",
 	"noConflict": {
 		"events": ["selection-change", "header-click"]
-	}
+	},
+	"initialZIndex": "500"
 }
 </script>
 ```
@@ -159,4 +167,5 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
+import { getInitialZIndex } from "@ui5/webcomponents-base/dist/config/InitialZIndex.js";
 ```
