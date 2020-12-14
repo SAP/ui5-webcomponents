@@ -508,7 +508,6 @@ class Wizard extends UI5Element {
 		if (this._isGroupAtEnd(event.target)) {
 			return this._showPopover(event.target, false);
 		}
-		this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex);
 	}
 
 	_onOverflowStepButtonClick(event) {
@@ -566,6 +565,8 @@ class Wizard extends UI5Element {
 		const stepRefId = stepInHeader.getAttribute("data-ui5-content-ref-id");
 		const selectedStep = this.selectedStep;
 		const stepToSelect = this.getStepByRefId(stepRefId);
+		const bExpanded = stepInHeader.getAttribute(EXPANDED_STEP_CLASS) === "true";
+		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 
 		// If the currently selected (active) step is clicked,
 		// just scroll to its starting point and stop.
@@ -574,9 +575,8 @@ class Wizard extends UI5Element {
 			return;
 		}
 
-		if (stepInHeader.getAttribute("data-ui5-wizard-expanded-tab") === "true") {
+		if (bExpanded || (!bExpanded && (newlySelectedIndex === 0 || newlySelectedIndex === this.steps.length - 1))) {
 			// Change selection and fire "selection-change".
-			const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex);
 		}
 	}
@@ -822,10 +822,8 @@ class Wizard extends UI5Element {
 		const tabs = this.shadowRoot.querySelectorAll("ui5-wizard-tab");
 		const selectedStepIndex = this.getSelectedStepIndex();
 		if (selectedStep && stepToSelect) {
-			tabs[selectedStepIndex].setAttribute(CURRENT_STEP, false);
 			selectedStep.selected = false;
 			stepToSelect.selected = true;
-			tabs[stepToSelectIndex].setAttribute(CURRENT_STEP, true);
 
 			this.fireEvent("selection-change", {
 				selectedStep: stepToSelect,
