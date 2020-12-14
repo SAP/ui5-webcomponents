@@ -46,17 +46,16 @@ describe("Card general interaction", () => {
 	});
 
 	it("Tests internal aria-labelledby labeling", () => {
-		const card1 = browser.$("#card2").shadow$(".ui5-card-root");
-		const header = browser.$("#card2").shadow$(".ui5-card-header");
-		const card2 = browser.$("#card3").shadow$(".ui5-card-root");
-		const header2 = browser.$("#card3").shadow$(".ui5-card-header");
-		const EXPECTED_ARIA_LABELLEDBY_CARD = "ui5wc_20-heading ui5wc_20-desc";
-		const EXPECTED_ARIA_LABELLEDBY_HEADER = "ui5wc_20-subheading ui5wc_20-status ui5wc_20-avatar";
-		const EXPECTED_ARIA_LABELLEDBY_CARD2 = "ui5wc_21-heading ui5wc_21-desc";
-		const EXPECTED_ARIA_LABELLEDBY_HEADER2 = "ui5wc_21-subheading";
-
-
-
+		const card1 = $("#card2").shadow$(".ui5-card-root");
+		const card1Id = $("#card2").getProperty("_id");
+		const header = $("#card2").shadow$(".ui5-card-header");
+		const card2 = $("#card3").shadow$(".ui5-card-root");
+		const card2Id = $("#card3").getProperty("_id");
+		const header2 = $("#card3").shadow$(".ui5-card-header");
+		const EXPECTED_ARIA_LABELLEDBY_CARD = `${card1Id}-heading ${card1Id}-desc`;
+		const EXPECTED_ARIA_LABELLEDBY_HEADER = `${card1Id}-subheading ${card1Id}-status ${card1Id}-avatar`;
+		const EXPECTED_ARIA_LABELLEDBY_CARD2 = `${card2Id}-heading ${card2Id}-desc`;
+		const EXPECTED_ARIA_LABELLEDBY_HEADER2 = `${card2Id}-subheading`;
 
 		assert.strictEqual(card1.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLEDBY_CARD,
 			"The aria-labelledby of card is correctly set internally.");
