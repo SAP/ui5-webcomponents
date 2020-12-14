@@ -1,13 +1,9 @@
-commit d40ae7c8140763cd13d6dac64693e8c10a4d532d
-Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-Date:   Mon Dec 14 10:20:56 2020 +0200
+commit dba026572d1a6fc6cae149f239b8fcc0af05e16c
+Author: Alexandar Mitsev <alexandar.mitsev@sap.com>
+Date:   Mon Dec 14 14:29:41 2020 +0200
 
-    chore(deps): bump ini from 1.3.5 to 1.3.8 in /packages/playground (#2574)
+    fix(ui5-dialog): apply initial focus after rendering (#2551)
     
-    Bumps [ini](https://github.com/isaacs/ini) from 1.3.5 to 1.3.8.
-    - [Release notes](https://github.com/isaacs/ini/releases)
-    - [Commits](https://github.com/isaacs/ini/compare/v1.3.5...v1.3.8)
+    Now the initial focus is applied also in cases when the dialog is open before it is fully rendered.
     
-    Signed-off-by: dependabot[bot] <support@github.com>
-    
-    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+    Fixes: #2537
