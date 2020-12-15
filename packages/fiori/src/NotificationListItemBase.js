@@ -71,7 +71,7 @@ const metadata = {
 		/**
 		 * Defines the actions, displayed in the top-right area.
 		 * <br><br>
-		 * <b>Note:</b> use the <code>ui5-notification-overflow-action</code> component.
+		 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 		 *
 		 * @type {HTMLElement}
 		 * @slot
@@ -104,7 +104,7 @@ const metadata = {
  * @extends ListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
- * @appenddocs NotificationOverflowAction
+ * @appenddocs NotificationAction
  * @public
  */
 class NotificationListItemBase extends ListItemBase {

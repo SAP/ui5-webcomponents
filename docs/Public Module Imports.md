@@ -142,7 +142,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Product Switch Item          | `ui5-product-switch-item`          | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`         |
 | Notification List Item       | `ui5-li-notifcation`               | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`       |
 | Notification Group List Item | `ui5-li-notification-group`        | `import "@ui5/webcomponents-fiori/dist/NotifcationListGroupItem.js";`  |
-| Notification Overflow Action | `ui5-notification-overflow-action` | `import "@ui5/webcomponents-fiori/dist/NotificationOverflowAction.js";`|
+| Notification Overflow Action | `ui5-notification-action`          | `import "@ui5/webcomponents-fiori/dist/NotificationAction.js";`        |
 | Timeline                     | `ui5-timeline`                     | `import "@ui5/webcomponents-fiori/dist/Timeline.js";`                  |
 | Timeline Item                | `ui5-timeline-item`                | comes with `ui5-timeline`                                              |
 | Upload Collection            | `ui5-upload-collection`            | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`          |

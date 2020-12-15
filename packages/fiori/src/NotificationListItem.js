@@ -152,7 +152,7 @@ const metadata = {
  * <li>display a <code>Close</code> button</li>
  * <li>can control whether the <code>heading</code> and <code>description</code> should wrap or truncate
  * and display a <code>ShowMore</code> button to switch between less and more information</li>
- * <li>add custom actions by using the <code>ui5-notification-overflow-action</code> component</li>
+ * <li>add custom actions by using the <code>ui5-notification-action</code> component</li>
  * </ul>
  *
  * <h3>Usage</h3>
@@ -162,13 +162,13 @@ const metadata = {
  *
  * <code>import @ui5/webcomponents/dist/NotificationListItem.js";</code>
  * <br>
- * <code>import @ui5/webcomponents/dist/NotificationOverflowAction.js";</code> (optional)
+ * <code>import @ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListItem
  * @extends NotificationListItemBase
  * @tagname ui5-li-notification
- * @appenddocs NotificationOverflowAction
+ * @appenddocs NotificationAction
  * @since 1.0.0-rc.8
  * @public
  */
