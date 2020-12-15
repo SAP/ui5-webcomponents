@@ -205,7 +205,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		if (this.read) {
 			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_READ);
 		}
-		
+
 		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 	}
 
