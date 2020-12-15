@@ -32,7 +32,6 @@ const MIN_STEP_WIDTH_WITH_TITLE = 200;
 
 const EXPANDED_STEP_CLASS = "data-ui5-wizard-expanded-tab";
 const AFTER_EXPANDED_STEP_CLASS = "data-ui5-wizard-expanded-tab-next";
-const CURRENT_STEP = "data-ui5-wizard-current-tab";
 const AFTER_CURRENT_STEP_CLASS = "data-ui5-wizard-after-current-tab";
 const BEFORE_EXPANDED_STEP_CLASS = "data-ui5-wizard-expanded-tab-prev";
 
@@ -497,10 +496,6 @@ class Wizard extends UI5Element {
 	}
 
 	async _onGroupedTabClick(event) {
-		const stepRefId = event.target.getAttribute("data-ui5-content-ref-id");
-		const stepToSelect = this.getStepByRefId(stepRefId);
-		const newlySelectedIndex = this.stepsInHeaderDOM.indexOf(event.target);
-
 		if (this._isGroupAtStart(event.target)) {
 			return this._showPopover(event.target, true);
 		}
@@ -819,8 +814,6 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex) {
-		const tabs = this.shadowRoot.querySelectorAll("ui5-wizard-tab");
-		const selectedStepIndex = this.getSelectedStepIndex();
 		if (selectedStep && stepToSelect) {
 			selectedStep.selected = false;
 			stepToSelect.selected = true;

@@ -2,6 +2,7 @@
 	box-shadow: var(--sapContent_Shadow1);
 }
 .ui5-wizard-responsive-popover-list {
+	list-style: none;
 	margin: 0;
 	padding: 0;
 }
