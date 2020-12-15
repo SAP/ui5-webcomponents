@@ -693,6 +693,16 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * Waits for dom ref and then returns the DOM Element marked with "data-sap-focus-ref" inside the template.
+	 * This is the element that will receive the focus by default.
+	 * @public
+	 */
+	async getFocusDomRefAsync() {
+		await this._waitForDomRef();
+		return this.getFocusDomRef();
+	}
+
+	/**
 	 * Use this method in order to get a reference to an element in the shadow root of the web component or the static area item of the component
 	 * @public
 	 * @method

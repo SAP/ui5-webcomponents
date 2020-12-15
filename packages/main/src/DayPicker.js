@@ -281,9 +281,6 @@ class DayPicker extends UI5Element {
 		let weekday;
 		const _monthsNameWide = localeData.getMonths("wide", this._calendarDate._oUDate.sCalendarType);
 
-		this._minDateObject = new Date(this._minDate);
-		this._maxDateObject = new Date(this._maxDate);
-
 		const visualizedSelectedDates = this._getVisualizedSelectedDates();
 
 		/* eslint-disable no-loop-func */
@@ -339,7 +336,7 @@ class DayPicker extends UI5Element {
 			if (this._isWeekend(oCalDate)) {
 				day.classes += " ui5-dp-item--weeekend";
 			}
-			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)) {
+			if (this._isOutOfSelectableRange(oCalDate)) {
 				day.classes += " ui5-dp-item--disabled";
 				day.disabled = true;
 			}
@@ -862,19 +859,7 @@ class DayPicker extends UI5Element {
 	}
 
 	_isOutOfSelectableRange(date) {
-		const currentDate = date._oUDate ? date.toLocalJSDate() : CalendarDate.fromTimestamp(date).toLocalJSDate();
-		const minDate = this._minDateObject;
-		const maxDate = this._maxDateObject;
-
-		currentDate.setHours(0);
-		if (minDate) {
-			minDate.setHours(0);
-		}
-		if (maxDate) {
-			maxDate.setHours(0);
-		}
-
-		return currentDate > maxDate || currentDate < minDate;
+		return date.valueOf() < this._minDate || date.valueOf() > this._maxDate;
 	}
 
 	get _maxDate() {

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Bar test page</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<section>
+		<ui5-bar design="Footer">
+			<ui5-button design="Positive" slot="endContent">Agree</ui5-button>
+			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
+			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
+		</ui5-bar>
+		<ui5-bar design="Subheader">
+			<ui5-button slot="startContent">Left Button</ui5-button>
+			<ui5-label slot="endContent" id="basic-label">Basic Label</ui5-label>
+			<ui5-button slot="middleContent">Middle Button</ui5-button>
+			<ui5-button slot="middleContent">Middle2 Button</ui5-button>
+			<ui5-button slot="startContent">Middle3 Button</ui5-button>
+			<ui5-button slot="endContent">Right Button</ui5-button>
+		</ui5-bar>
+		<ui5-bar design="FloatingFooter">
+			<ui5-button design="Positive" slot="endContent">Agree</ui5-button>
+			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
+			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
+		</ui5-bar>
+		<ui5-bar design="Header">
+			<ui5-button icon="home" title="Go home" slot="startContent"></ui5-button>
+			<ui5-label id="basic-label" slot="middleContent">Title</ui5-label>
+			<ui5-button icon="action-settings" title="Go to settings" slot="endContent"></ui5-button>
+		</ui5-bar>
+	</section>
+	<style>
+		ui5-bar {
+			margin: 0.25rem 0;
+		}
+	</style>
+</body>
+</html>

@@ -3,20 +3,20 @@
 	dir="{{effectiveDir}}"
 	role="region"
 	aria-label="{{ariaLabelText}}"
-	aria-labelledby="{{_id}}-desc {{_id}}-heading">
+	aria-labelledby="{{ariaLabelledByCard}}">
 	{{#if hasHeader}}
 		<div class="{{classes.header}}"
 			@click="{{_headerClick}}"
 			@keydown="{{_headerKeydown}}"
 			@keyup="{{_headerKeyup}}"
 			role="{{ariaHeaderRole}}"
-			aria-labelledby="{{_id}}-subheading {{_id}}-status"
+			aria-labelledby="{{ariaLabelledByHeader}}"
 			aria-level="{{ariaLevel}}"
 			aria-roledescription="{{ariaCardHeaderRoleDescription}}"
 			tabindex="0">
 
 			{{#if hasAvatar}}
-				<div class="ui5-card-avatar" aria-label="{{ariaCardAvatarLabel}}">
+				<div id="{{_id}}-avatar" class="ui5-card-avatar" aria-label="{{ariaCardAvatarLabel}}">
 					<slot name="avatar"></slot>
 				</div>
 			{{/if}}

@@ -103,9 +103,9 @@ describe("FlexibleColumnLayout Behavior", () => {
 		const fcl = browser.$("#fclAcc");
 		const startArrow = fcl.shadow$(".ui5-fcl-arrow--start");
 		const endArrow = fcl.shadow$(".ui5-fcl-arrow--end");
-		const startArrowText1 = "Expand the first column";
-		const startArrowText2 = "Collapse the first column";
-		const endArrowText = "Expand the last column";
+		const startArrowText1 = "Expand products list";
+		const startArrowText2 = "Collapse products list";
+		const endArrowText = "Expand product detailed information";
 
 		// assert
 		assert.strictEqual(startArrow.getAttribute("title"), startArrowText1,

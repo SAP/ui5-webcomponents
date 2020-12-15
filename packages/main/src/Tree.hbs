@@ -7,6 +7,7 @@
     @ui5-item-click="{{_onListItemClick}}"
     @ui5-item-delete="{{_onListItemDelete}}"
     @ui5-selection-change="{{_onListSelectionChange}}"
+    class="ui5-tree-root"
 >
     <slot name="header" slot="header"></slot>
     {{#each _listItems}}

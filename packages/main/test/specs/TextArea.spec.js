@@ -23,7 +23,8 @@ describe("Attributes propagation", () => {
 	});
 
 	it("Required attribute is propagated properly", () => {
-		assert.ok(browser.$("#required-textarea").shadow$("textarea").getAttribute("required"), "Required property was propagated");
+		assert.strictEqual(browser.$("#required-textarea").shadow$("textarea").getAttribute("aria-required"), "true", "Aria-required attribute is set correctly");
+		assert.strictEqual(browser.$("#basic-textarea").shadow$("textarea").getAttribute("aria-required"), "false", "Aria-required attribute is set correctly");
 	});
 
 	it("Value attribute is propagated properly", () => {

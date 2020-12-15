@@ -1,0 +1,17 @@
+<div class="ui5-avatar-group-root">
+	<div 
+		class="ui5-avatar-group-items" 
+		@keyup="{{_onkeyup}}" 
+		@keydown="{{_onkeydown}}" 
+		@focusin="{{_onfocusin}}" 
+		tabindex="{{_groupTabIndex}}"
+		@click="{{_onGroupClick}}"
+		@ui5-click="{{_onUI5Click}}"
+	>
+		<slot></slot>
+
+		<ui5-button ?hidden="{{_overflowBtnHidden}}" tabindex="{{_overflowButtonTabIndex}}" class="ui5-avatar-group-overflow-btn">
+			{{_overflowButtonText}}
+		</ui5-button>
+	</div>
+</div>

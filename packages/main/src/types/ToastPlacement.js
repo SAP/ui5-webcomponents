@@ -87,6 +87,6 @@ class ToastPlacement extends DataType {
 	}
 }
 
-ToastPlacement.generateTypeAcessors(ToastPlacements);
+ToastPlacement.generateTypeAccessors(ToastPlacements);
 
 export default ToastPlacement;

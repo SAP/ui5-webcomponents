@@ -43,6 +43,6 @@ class PanelAccessibleRole extends DataType {
 	}
 }
 
-PanelAccessibleRole.generateTypeAcessors(PanelAccessibleRoles);
+PanelAccessibleRole.generateTypeAccessors(PanelAccessibleRoles);
 
 export default PanelAccessibleRole;
