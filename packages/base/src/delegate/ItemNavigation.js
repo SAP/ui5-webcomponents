@@ -44,7 +44,7 @@ import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
  *
  * 2) Call the "update" method of ItemNavigation whenever you want to change the current item.
  * This is most commonly required if the user for example clicks on an item and thus selects it directly.
- * Pass as the only argument to "update" the item that becomes current (must be one of the items, returned by "getItemsCallback".
+ * Pass as the only argument to "update" the item that becomes current (must be one of the items, returned by "getItemsCallback").
  *
  * @class
  * @public
@@ -58,6 +58,9 @@ class ItemNavigation extends EventProvider {
 	 *  - navigationMode (Auto|Horizontal|Vertical): whether the items are displayed horizontally (Horizontal), vertically (Vertical) or as a matrix (Auto) meaning the user can navigate in both directions (up/down and left/right)
 	 *  - rowSize: tells how many items per row there are when the items are not rendered as a flat list but rather as a matrix. Relevant for navigationMode=Auto
 	 *  - behavior (Static|Cycling|Paging): tells what to do when trying to navigate beyond the first and last items
+	 *    Static means that nothing happens if the user tries to navigate beyond the first/last item.
+	 *    Cycling means that when the user navigates beyond the last item they go to the first and vice versa.
+	 *    Paging means that when the urse navigates beyond the first/last item, a new "page" of items appears (as commonly observed with calendars for example)
 	 *  - pageSize: tells how many items the user skips by using the PageUp/PageDown keys
 	 *  - getItemsCallback: function that, when called, returns an array with all items the user can navigate among
 	 *  - affectedPropertiesNames: a list of metadata properties on the root component which, upon user navigation, will be reassigned by address thus causing the root component to invalidate
