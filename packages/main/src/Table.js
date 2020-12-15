@@ -117,7 +117,7 @@ const metadata = {
 		 */
 		_columnHeader: {
 			type: Object,
-		}
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 		/**
