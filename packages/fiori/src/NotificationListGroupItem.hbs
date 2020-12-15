@@ -6,6 +6,7 @@
 	role="option"
 	tabindex="{{_tabIndex}}"
 	dir="{{effectiveDir}}"
+	aria-expanded="{{ariaExpanded}}"
 	aria-labelledby="{{ariaLabelledBy}}"
 	style="list-style-type: none;"
 >
@@ -15,6 +16,8 @@
 			design="Transparent"
 			@click="{{_onBtnToggleClick}}"
 			class="ui5-nli-group-toggle-btn"
+			title="{{toggleBtnAccessibleName}}"
+			aria-label="{{toggleBtnAccessibleName}}"
 		></ui5-button>
 
 		{{#if hasPriority}}
@@ -41,7 +44,8 @@
 					design="Transparent"
 					@click="{{_onBtnOverflowClick}}"
 					class="ui5-nli-overflow-btn"
-					title="{{overflowBtnTitle}}"
+					title="{{overflowBtnAccessibleName}}"
+					aria-label="{{overflowBtnAccessibleName}}"
 				></ui5-button>
 			{{else}}
 				{{#each standardActions}}
@@ -64,7 +68,8 @@
 				icon="decline"
 				design="Transparent"
 				@click="{{_onBtnCloseClick}}"
-				title="{{closeBtnTitle}}"
+				title="{{closeBtnAccessibleName}}"
+				aria-label="{{closeBtnAccessibleName}}"
 				close-btn
 			></ui5-button>
 		{{/if}}

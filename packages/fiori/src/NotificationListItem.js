@@ -58,19 +58,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the <code>notification</code> is new or has been already read.
-		 * <br><br>
-		 * <b>Note:</b> if set to <code>false</code> the <code>heading</code> has bold font,
-		 * if set to true - it has a normal font.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		read: {
-			type: Boolean,
-		},
-
-		/**
 		 * Defines the state of the <code>heading</code> and <code>description</code>,
 		 * if less or more information is displayed.
 		 * @private
@@ -236,11 +223,11 @@ class NotificationListItem extends NotificationListItemBase {
 		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
 	}
 
-	get overflowBtnTitle() {
+	get overflowBtnAccessibleName() {
 		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
 	}
 
-	get closeBtnTitle() {
+	get closeBtnAccessibleName() {
 		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
 	}
 
@@ -257,7 +244,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get headingDOM() {
-		return this.shadowRoot.querySelector(".ui5-nli-title");
+		return this.shadowRoot.querySelector(".ui5-nli-heading");
 	}
 
 	get headingHeight() {

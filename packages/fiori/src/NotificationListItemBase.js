@@ -56,6 +56,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the <code>notification</code> is new or has been already read.
+		 * <br><br>
+		 * <b>Note:</b> if set to <code>false</code> the <code>heading</code> has bold font,
+		 * if set to true - it has a normal font.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		read: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines if a busy indicator would be displayed over the item.
 		 * @type {boolean}
 		 * @defaultvalue false

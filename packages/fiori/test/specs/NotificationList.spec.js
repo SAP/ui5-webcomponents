@@ -113,13 +113,36 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests List Group Item ACC invisible text", () => {
-		const EXPECTED_RESULT = "Notification group High Priority Counter 2";
+		const EXPECTED_RESULT = "Notification group unread High Priority Counter 2";
 		const firstGroupItem = $("#nlgi1");
 		const invisibleText = firstGroupItem.shadow$(".ui5-hidden-text");
 
 		// assert
 		assert.strictEqual(invisibleText.getText().toLowerCase(), EXPECTED_RESULT.toLowerCase(),
 			"The invisible text is correct.");
+	});
+
+	it("tests List Group Item aria-expanded aria-label when collapsed and expanded", () => {
+		const groupItem = browser.$("#nlgi3");
+		const goupItemRoot = groupItem.shadow$(".ui5-nli-group-root");
+		const goupItemToggleBtn = groupItem.shadow$(".ui5-nli-group-toggle-btn");
+		const TOGGLE_BUTTON_EXPAND_GROUP = "Expand Group";
+		const TOGGLE_BUTTON_COLLAPSE_GROUP = "Collapse Group";
+
+		// assert
+		assert.strictEqual(goupItemRoot.getAttribute("aria-expanded"), "false",
+			"The aria-expanded value is correct.");
+		assert.strictEqual(goupItemToggleBtn.getAttribute("aria-label"), TOGGLE_BUTTON_EXPAND_GROUP,
+			"The aria-label value is correct.");
+
+		// act
+		goupItemToggleBtn.click();
+
+		// assert
+		assert.strictEqual(goupItemRoot.getAttribute("aria-expanded"), "true",
+			"The aria-expanded value is correct.");
+		assert.strictEqual(goupItemToggleBtn.getAttribute("aria-label"), TOGGLE_BUTTON_COLLAPSE_GROUP,
+			"The aria-label value is correct.");
 	});
 
 	it("tests List Group Item ACC ariaLabelledBy", () => {
