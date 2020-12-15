@@ -110,6 +110,14 @@ const metadata = {
 		_noDataDisplayed: {
 			type: Boolean,
 		},
+
+		/**
+		 * Used to represent the table column header for the purpose of the item navigation as it does not work with DOM objects directly
+		 * @private
+		 */
+		_columnHeader: {
+			type: Object,
+		}
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 		/**
@@ -194,14 +202,17 @@ class Table extends UI5Element {
 	constructor() {
 		super();
 
+		// The ItemNavigation requires each item to 1) have a "_tabIndex" property and 2) be either a UI5Element, or have an id property (to find it in the component's shadow DOM by)
+		this._columnHeader = {
+			id: `${this._id}-columnHeader`,
+			_tabIndex: "0",
+		};
+
 		this._itemNavigation = new ItemNavigation(this, {
 			navigationMode: NavigationMode.Vertical,
+			affectedPropertiesNames: ["_columnHeader"],
+			getItemsCallback: () => [this._columnHeader, ...this.rows],
 		});
-
-		this._itemNavigation.getItemsCallback = function getItemsCallback() {
-			const columnHeader = this.getColumnHeader();
-			return columnHeader ? [columnHeader, ...this.rows] : this.rows;
-		}.bind(this);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
 
@@ -245,7 +256,7 @@ class Table extends UI5Element {
 
 	_onColumnHeaderClick(event) {
 		this.getColumnHeader().focus();
-		this._itemNavigation.update(event.target);
+		this._itemNavigation.update(this._columnHeader);
 	}
 
 	getColumnHeader() {

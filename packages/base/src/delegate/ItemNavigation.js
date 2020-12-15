@@ -36,6 +36,10 @@ class ItemNavigation extends EventProvider {
 			this.affectedPropertiesNames = options.affectedPropertiesNames;
 		}
 
+		if (options.getItemsCallback) {
+			this._getItems = options.getItemsCallback;
+		}
+
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
 		this.rootWebComponent._onComponentStateFinalized = () => {
@@ -184,8 +188,9 @@ class ItemNavigation extends EventProvider {
 		}
 
 		if (Array.isArray(this.affectedPropertiesNames)) {
-			this.affectedPropertiesNames.forEach(prop => {
-				this.rootWebComponent[prop] = [...this.rootWebComponent[prop]];
+			this.affectedPropertiesNames.forEach(propName => {
+				const prop = this.rootWebComponent[propName];
+				this.rootWebComponent[propName] = Array.isArray(prop) ? [...prop] : {...prop};
 			});
 		}
 	}
