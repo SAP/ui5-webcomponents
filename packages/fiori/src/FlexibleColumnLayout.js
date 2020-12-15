@@ -83,39 +83,23 @@ const metadata = {
 		},
 
 		/**
-		* Defines the accessibility name for the <code>startColumn</code> region.
-		*
-		* @type {string}
-		* @defaultvalue ""
-		* @public
-		* @since 1.0.0-rc.11
-		*/
-		startColumnAccessibleName: {
-			type: String,
-		},
-
-		/**
-		* Defines the accessibility name for the <code>midColumn</code> region.
-		*
-		* @type {string}
-		* @defaultvalue ""
-		* @public
-		* @since 1.0.0-rc.11
-		*/
-		midColumnAccessibleName: {
-			type: String,
-		},
-
-		/**
-		* Defines the accessibility name for the <code>endColumn</code> region.
-		*
-		* @type {string}
-		* @defaultvalue ""
-		* @public
-		* @since 1.0.0-rc.11
-		*/
-		endColumnAccessibleName: {
-			type: String,
+		 * On object of strings that defines several additional accessibility texts for even further customization.
+		 *
+		 * It supports the following fields:
+		 *  - <code>startColumnAccessibleName</code>: the accessibility name for the <code>startColumn</code> region
+		 *  - <code>midColumnAccessibleName</code>: the accessibility name for the <code>midColumn</code> region
+		 *  - <code>endColumnAccessibleName</code>: the accessibility name for the <code>endColumn</code> region
+		 *  - <code>startArrowLeftText</code>: the text that the first arrow (between the <code>begin</code> and <code>mid</code> columns) will have when pointing to the left
+		 *  - <code>startArrowRightText</code>: the text that the first arrow (between the <code>begin</code> and <code>mid</code> columns) will have when pointing to the right
+		 *  - <code>endArrowLeftText</code>: the text that the second arrow (between the <code>mid</code> and <code>end</code> columns) will have when pointing to the left
+		 *  - <code>endArrowRightText</code>: the text that the second arrow (between the <code>mid</code> and <code>end</code> columns) will have when pointing to the right
+		 *
+		 * @type {object}
+		 * @public
+		 * @since 1.0.0-rc.11
+		 */
+		accessibilityTexts: {
+			type: Object,
 		},
 
 		/**
@@ -656,15 +640,15 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartColumnText() {
-		return this.startColumnAccessibleName || this.i18nBundle.getText(FCL_START_COLUMN_TXT);
+		return this.accessibilityTexts.startColumnAccessibleName || this.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
 	get accMiddleColumnText() {
-		return this.midColumnAccessibleName || this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+		return this.accessibilityTexts.midColumnAccessibleName || this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
 	get accEndColumnText() {
-		return this.endColumnAccessibleName || this.i18nBundle.getText(FCL_END_COLUMN_TXT);
+		return this.accessibilityTexts.endColumnAccessibleName || this.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
 	get _effectiveLayoutsByMedia() {
@@ -672,19 +656,23 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartArrowText() {
+		const customTexts = this.accessibilityTexts;
+
 		if (this.startArrowDirection === "mirror") {
-			return this.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+			return customTexts.startArrowLeftText || this.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
 		}
 
-		return this.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
+		return customTexts.startArrowRightText || this.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 
 	get accEndArrowText() {
+		const customTexts = this.accessibilityTexts;
+
 		if (this.endArrowDirection === "mirror") {
-			return this.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+			return customTexts.endArrowRightText || this.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
 		}
 
-		return this.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP);
+		return customTexts.endArrowLeftText || this.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 }
 
