@@ -185,6 +185,11 @@ describe("Testing events", () => {
 	});
 });
 
+describe("Accessibility: Testing keyboard handling", () => {
+	it("Tab should focus the slider and move the visible focus outline to the slider's handle", () => {
+	});
+});
+
 describe("Testing resize handling and RTL support", () => {
 	it("Testing RTL support", () => {
 		const slider = browser.$("#basic-slider");

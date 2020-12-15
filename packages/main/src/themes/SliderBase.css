@@ -20,6 +20,7 @@
 	box-sizing: border-box;
 	height: 3.3125rem;
 	padding: 1rem 0;
+	outline: none;
 	touch-action: none;
 	-ms-touch-action: pan-y;
 }
@@ -68,10 +69,14 @@
 	width: var(--_ui5_slider_handle_width);
 }
 
+.ui5-slider-handle:focus {
+	outline: var(--_ui5_slider_handle_outline);
+	outline-offset: var(--_ui5_slider_handle_outline_offset);
+}
+
 .ui5-slider-handle--start, .ui5-slider-handle--end {
 	background: var(--_ui5_range_slider_handle_background);
 }
-
 
 [dir="rtl"] .ui5-slider-handle {
 	margin-right: var(--_ui5_slider_handle_margin_left);
