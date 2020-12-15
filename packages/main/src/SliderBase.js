@@ -277,6 +277,47 @@ class SliderBase extends UI5Element {
 		}
 	}
 
+	_setInitialValue(valueType, value) {
+		this[`_${valueType}Initial`] = value;
+	}	
+
+	_getInitialValue(valueType) {
+		return this[`_${valueType}Initial`];
+	}
+
+	_onKeyDownBase(event) {
+		if (this.disabled) {
+			return;
+		}
+
+		if (SliderBase._isActionKey(event)) {
+			event.preventDefault();
+			this._isUserInteraction = true;
+			this._handleActionKeyPress(event);
+		}
+	}
+
+	_onkeyup(event) {
+		if (this.disabled) {
+			return;
+		}
+
+		this._isUserInteraction = false;
+	}
+
+	static _isActionKey(event) {
+		return this.ACTION_KEYS.some(actionKey => actionKey(event));
+	}
+	
+	_isFocusing() {
+		return this._isInProcessOfFocusing;
+	}
+
+	_setIsFocusing(isInProcessOfFocusing) {
+		this._isInProcessOfFocusing = isInProcessOfFocusing;
+	}
+
+
 	/**
 	 * Sets initial value when the component is focused in, can be restored with ESC key
 	 *

@@ -1,6 +1,7 @@
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SliderBase from "./SliderBase.js";
+import {isEscape, isTabPrevious, isTabNext, isHome, isEnd} from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Template
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
@@ -99,6 +100,12 @@ class RangeSlider extends SliderBase {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
+	onEnterDOM() {
+		this._sliderStartHandle = this.shadowRoot.querySelector(".ui5-slider-handle--start");
+		this._sliderEndHandle = this.shadowRoot.querySelector(".ui5-slider-handle--end");
+		this._sliderProgress = this.shadowRoot.querySelector(".ui5-slider-progress");
+	}
+
 	get tooltipStartValue() {
 		const stepPrecision = this.constructor._getDecimalPrecisionOfNumber(this._effectiveStep);
 		return this.startValue.toFixed(stepPrecision);
@@ -127,6 +134,103 @@ class RangeSlider extends SliderBase {
 		this.notResized = true;
 		this.syncUIAndState("startValue", "endValue");
 		this._updateHandlesAndRange(null);
+	}
+
+	_onfocusin(event) {	
+		this.focused = true;
+
+		this._setInitialValue("startValue", this._prevStartValue || this.startValue);
+		this._setInitialValue("endValue", this._prevEndValue || this.endValue);
+	}
+
+	_onfocusout(event) {
+		if (this._isFocusing()) {			
+			// Prevent focusout when the focus is getting initially set within the slider before the 
+			// slider customElement itself is finished focusing.
+			this._preventFocusOut();
+		} else {
+			this.focused = false;
+			this._valueAffected = null;
+
+			// Reset the stored Slider's initial value saved when it was first focused
+			this._setInitialValue("value", null);
+		}
+	}
+
+	_preventFocusOut() {
+		this._focusInnerElement();
+	}
+
+	_onkeydown(event) {
+		this._onKeyDownBase(event);
+	}
+
+	_handleActionKeyPress(event) {
+		if (isEscape(event)) {
+			this.startValue = this._prevStartValue;
+			this.endValue = this._prevEndValue;
+		}
+
+
+		if (this.shadowRoot.activeElement === this._sliderStartHandle) {
+			this._valueAffected = "startValue"
+		}
+		
+		if (this.shadowRoot.activeElement === this._sliderEndHandle) {
+			this._valueAffected = "endValue"	
+		}
+		
+		const min = this._effectiveMin;
+		const max = this._effectiveMax;
+		const valueType = this._valueAffected;
+
+		if ((isEnd(event) || isHome(event)) && !valueType) {
+			const eventType = isHome(event) ? "home" : "end"
+			this._handleHomeEndKeys(event, eventType, min, max)
+
+			return;
+		}
+
+		if (valueType) {
+			const newValueOffset = SliderBase.prototype._handleActionKeyPress.call(this, event, valueType);
+
+			if (!newValueOffset) {
+				return;
+			}
+
+			const newValue = isEscape(event) ? this._getInitialValue(valueType) : this.constructor.clipValue(newValueOffset + currentValue, min, max);
+			const currentValue = this[valueType];
+
+			this._updateHandlesAndRange(newValue);
+			this.updateValue(valueType, newValue);
+			this.storePropertyState(valueType);
+		} else {
+			const newValueOffset = SliderBase.prototype._handleActionKeyPress.call(this, event, null);
+
+			if (!newValueOffset) {
+				return;
+			}
+
+			const newStartValue = isEscape(event) ? this._getInitialValue("startValue") : this.constructor.clipValue(newValueOffset + this.startValue, min, max);
+			const newEndValue = isEscape(event) ? this._getInitialValue("endValue") : this.constructor.clipValue(newValueOffset + this.endValue, min, max);
+
+			this.updateValue("startValue", newStartValue);
+			this.updateValue("endValue", newEndValue);
+			this._updateHandlesAndRange(null);
+			this.storePropertyState("startValue", "endValue");
+		}
+	}
+
+	_handleHomeEndKeys(event, eventType, min, max) {
+			const affectedValue = eventType === "home" ? "startValue" : "endValue";
+			const newValueOffset = SliderBase.prototype._handleActionKeyPress.call(this, event, affectedValue)
+			const newStartValue = this.constructor.clipValue(newValueOffset + this.startValue, min, max);
+			const newEndValue = this.constructor.clipValue(newValueOffset + this.endValue, min, max);
+
+			this.updateValue("startValue", newStartValue);
+			this.updateValue("endValue", newEndValue);
+			this._updateHandlesAndRange(null);
+			this.storePropertyState("startValue", "endValue");
 	}
 
 	/**
@@ -254,9 +358,9 @@ class RangeSlider extends SliderBase {
 		this._swapValues();
 		this.handleUpBase();
 
-		this._valueAffected = null;
 		this._prevStartValue = null;
 		this._prevEndValue = null;
+		this._inCurrentRange = null;
 	}
 
 	/**
@@ -299,6 +403,37 @@ class RangeSlider extends SliderBase {
 			this._valueAffected = "startValue";
 		}
 	}
+
+	/* Flag the component that it is currently being in process of focusing in. When the slider is getting focused
+	we need that focus to be delegated to the Slider's handle and to not stay on the slider's shadow root div, as it
+	is by default. In theory this can be achieved either if the 'delegatesFocus' attribute of the .attachShadow()
+	customElement method is set to true or if we forward it manually as part of the component logic. 
+	
+	As we use lit-element as base of our core UI5 element class that 'delegatesFocus' property is not set to 'true' and 
+	we have to manage the focus here. If at some point in the future this changes, the focus delegating logic could be 
+	removed as it will become redundant.
+	
+	When we manually set the focus on mouseDown to the first focusable element inside the shadowDom - the slider's handle,
+	that inside focus and subsquently the shadowRoot.activeElement are set a moment before the global document.activeElement
+	is set to the customElement (ui5-slider) causing a 'race condition'.
+	
+	In order for a element within the shadowRoot to be focused, the global document.activeElement MUST be the parent
+	customElement of the shadow root, in our case the ui5-slider component. Because of that after our focusin of the handle,
+	a focusout event fired by the browser immidiatly after, resetting the focus.
+	
+	Note: If we set the focus to the handle a bit later in time, for example on a mouseup or click event it will
+	work fine and we will avoid the described race condition as our customElement will be already finished focusing.
+	However, that does not work for us as we need the focus to be set to the handle exactly on mousedown,
+	because of the nature of the component and its available drag interactions.*/
+	_focusInnerElement() {
+		if (this._inCurrentRange) {
+			this._sliderProgress.focus();
+		} else if (this._valueAffected === "startValue") {
+			this._sliderStartHandle.focus();
+		} else {
+			this._sliderEndHandle.focus();
+		}
+	}	
 
 	/**
 	 * Calculates startValue/endValue properties when the whole range is moved.
@@ -417,6 +552,10 @@ class RangeSlider extends SliderBase {
 			this.startValue = this.endValue;
 			this.endValue = oldStartValue;
 		}
+	}
+
+	get tabIndexProgress() {
+		return this.tabIndex;
 	}
 
 	get styles() {

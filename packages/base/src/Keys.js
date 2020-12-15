@@ -212,4 +212,5 @@ export {
 	isPageDownShift,
 	isPageUpShiftCtrl,
 	isPageDownShiftCtrl,
+	getCtrlKey,
 };

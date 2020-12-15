@@ -6,6 +6,7 @@ import SliderBase from "./SliderBase.js";
 
 // Template
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 
 /**
  * @public
@@ -112,6 +113,10 @@ class Slider extends SliderBase {
 		this.notResized = true;
 		this.syncUIAndState("value");
 		this._updateHandleAndProgress(this.value);
+	}
+
+	_onkeydown(event) {
+		this._onKeyDownBase(event, "value");
 	}
 
 	/**
