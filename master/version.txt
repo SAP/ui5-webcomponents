@@ -1,9 +1,5 @@
-commit 2647941eee6b91cc0d611c8d5dc546805f53e844
-Author: GerganaKremenska <gergana.kremenska@sap.com>
-Date:   Tue Dec 15 08:11:48 2020 +0200
+commit a634532a4af9b577830f4ff95df6ef9dcf42f6b8
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Dec 15 11:52:53 2020 +0200
 
-    fix(ui5-card): correct aria-labelledBy to card and header (#2577)
-    
-    Now the aria-labelledBy of card and header contain only the rendered elements.
-    
-    Fixes: #2426
+    refactor(ui5-flexible-column-layout): Add more accessibility texts (#2571)
