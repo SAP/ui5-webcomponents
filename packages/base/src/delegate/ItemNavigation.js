@@ -9,6 +9,7 @@ import {
 	isPageUp,
 	isPageDown,
 } from "../Keys.js";
+import getActiveElement from "../util/getActiveElement.js";
 
 import EventProvider from "../EventProvider.js";
 import NavigationMode from "../types/NavigationMode.js";
@@ -31,8 +32,8 @@ class ItemNavigation extends EventProvider {
 
 		this.pageSize = options.pageSize;
 
-		if (options.onUpdate) {
-			this.onUpdate = options.onUpdate;
+		if (options.affectedPropertiesNames) {
+			this.affectedPropertiesNames = options.affectedPropertiesNames;
 		}
 
 		this.rootWebComponent = rootWebComponent;
@@ -182,8 +183,10 @@ class ItemNavigation extends EventProvider {
 			items[i]._tabIndex = (i === this.currentIndex ? "0" : "-1");
 		}
 
-		if (typeof this.onUpdate === "function") {
-			this.onUpdate();
+		if (Array.isArray(this.affectedPropertiesNames)) {
+			this.affectedPropertiesNames.forEach(prop => {
+				this.rootWebComponent[prop] = [...this.rootWebComponent[prop]];
+			});
 		}
 	}
 
@@ -196,12 +199,7 @@ class ItemNavigation extends EventProvider {
 
 	_canNavigate() {
 		const currentItem = this._getCurrentItem();
-
-		let activeElement = document.activeElement;
-
-		while (activeElement.shadowRoot && activeElement.shadowRoot.activeElement) {
-			activeElement = activeElement.shadowRoot.activeElement;
-		}
+		const activeElement = getActiveElement();
 
 		return currentItem && currentItem === activeElement;
 	}

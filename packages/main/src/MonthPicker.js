@@ -144,9 +144,7 @@ class MonthPicker extends UI5Element {
 			pageSize: 12,
 			rowSize: 3,
 			behavior: ItemNavigationBehavior.Paging,
-			onUpdate: () => {
-				this._quarters = [...this._quarters];
-			},
+			affectedPropertiesNames: ["_quarters"],
 		});
 
 		this._itemNav.getItemsCallback = () => {

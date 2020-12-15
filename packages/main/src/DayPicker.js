@@ -236,9 +236,7 @@ class DayPicker extends UI5Element {
 			rowSize: 7,
 			pageSize: 42,
 			behavior: ItemNavigationBehavior.Paging,
-			onUpdate: () => {
-				this._weeks = [...this._weeks];
-			},
+			affectedPropertiesNames: ["_weeks"],
 		});
 
 		this._itemNav.getItemsCallback = () => this.focusableDays;
