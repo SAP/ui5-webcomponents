@@ -1,9 +1,9 @@
-commit dba026572d1a6fc6cae149f239b8fcc0af05e16c
-Author: Alexandar Mitsev <alexandar.mitsev@sap.com>
-Date:   Mon Dec 14 14:29:41 2020 +0200
+commit 2647941eee6b91cc0d611c8d5dc546805f53e844
+Author: GerganaKremenska <gergana.kremenska@sap.com>
+Date:   Tue Dec 15 08:11:48 2020 +0200
 
-    fix(ui5-dialog): apply initial focus after rendering (#2551)
+    fix(ui5-card): correct aria-labelledBy to card and header (#2577)
     
-    Now the initial focus is applied also in cases when the dialog is open before it is fully rendered.
+    Now the aria-labelledBy of card and header contain only the rendered elements.
     
-    Fixes: #2537
+    Fixes: #2426
