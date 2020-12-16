@@ -71,8 +71,6 @@ class ItemNavigation extends EventProvider {
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
 		this.behavior = options.behavior || ItemNavigationBehavior.Static;
-		this.hasNextPage = true; // used in Paging mode and controlled from the rootWebComponent
-		this.hasPrevPage = true; // used in Paging mode and controlled from the rootWebComponent
 		const navigationMode = options.navigationMode;
 		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
 		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
@@ -87,6 +85,10 @@ class ItemNavigation extends EventProvider {
 		if (options.getItemsCallback) {
 			this._getItems = options.getItemsCallback;
 		}
+
+		const trueFunction = () => true;
+		this._hasNextPage = typeof options.hasNextPageCallback === "function" ? options.hasNextPageCallback : trueFunction;
+		this._hasPreviousPage = typeof options.hasPreviousPageCallback === "function" ? options.hasPreviousPageCallback : trueFunction;
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
@@ -367,10 +369,9 @@ class ItemNavigation extends EventProvider {
 	}
 
 	_handleNextPage() {
-		this.fireEvent(ItemNavigation.PAGE_BOTTOM);
 		const items = this._getItems();
 
-		if (!this.hasNextPage) {
+		if (!this._hasNextPage()) {
 			this.currentIndex = items.length - 1;
 		} else {
 			this.currentIndex -= this.pageSize;
@@ -378,9 +379,7 @@ class ItemNavigation extends EventProvider {
 	}
 
 	_handlePrevPage() {
-		this.fireEvent(ItemNavigation.PAGE_TOP);
-
-		if (!this.hasPrevPage) {
+		if (!this._hasPreviousPage()) {
 			this.currentIndex = 0;
 		} else {
 			this.currentIndex = this.pageSize + this.currentIndex;
@@ -388,8 +387,6 @@ class ItemNavigation extends EventProvider {
 	}
 }
 
-ItemNavigation.PAGE_TOP = "PageTop";
-ItemNavigation.PAGE_BOTTOM = "PageBottom";
 ItemNavigation.BORDER_REACH = "_borderReach";
 ItemNavigation.AFTER_FOCUS = "_afterFocus";
 

@@ -237,9 +237,10 @@ class DayPicker extends UI5Element {
 			pageSize: 42,
 			behavior: ItemNavigationBehavior.Paging,
 			affectedPropertiesNames: ["_weeks"],
+			getItemsCallback: () => this.focusableDays,
+			hasNextPageCallback: this._hasNextMonth.bind(this),
+			hasPreviousPageCallback: this._hasPrevMonth.bind(this),
 		});
-
-		this._itemNav.getItemsCallback = () => this.focusableDays;
 
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,
@@ -249,16 +250,6 @@ class DayPicker extends UI5Element {
 		this._itemNav.attachEvent(
 			ItemNavigation.AFTER_FOCUS,
 			this._handleItemNavigationAfterFocus.bind(this)
-		);
-
-		this._itemNav.attachEvent(
-			"PageBottom",
-			this._handleMonthBottomOverflow.bind(this)
-		);
-
-		this._itemNav.attachEvent(
-			"PageTop",
-			this._handleMonthTopOverflow.bind(this)
 		);
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
@@ -697,14 +688,6 @@ class DayPicker extends UI5Element {
 		}
 
 		this.fireEvent("change", { dates: [...this._selectedDates] });
-	}
-
-	_handleMonthBottomOverflow(event) {
-		this._itemNav.hasNextPage = this._hasNextMonth();
-	}
-
-	_handleMonthTopOverflow(event) {
-		this._itemNav.hasPrevPage = this._hasPrevMonth();
 	}
 
 	_hasNextMonth() {
