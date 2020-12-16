@@ -800,18 +800,19 @@ class DatePicker extends UI5Element {
 	}
 
 	getFormat() {
+		let dateFormat;
 		if (this._isPattern) {
-			this._oDateFormat = DateFormat.getInstance({
+			dateFormat = DateFormat.getInstance({
 				pattern: this._formatPattern,
 				calendarType: this._primaryCalendarType,
 			});
 		} else {
-			this._oDateFormat = DateFormat.getInstance({
+			dateFormat = DateFormat.getInstance({
 				style: this._formatPattern,
 				calendarType: this._primaryCalendarType,
 			});
 		}
-		return this._oDateFormat;
+		return dateFormat;
 	}
 
 	get accInfo() {
