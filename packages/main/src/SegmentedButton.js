@@ -106,7 +106,10 @@ class SegmentedButton extends UI5Element {
 
 	constructor() {
 		super();
-		this.initItemNavigation();
+
+		this._itemNavigation = new ItemNavigation(this, {
+			getItemsCallback: () => this.getSlottedNodes("buttons"),
+		});
 
 		this.absoluteWidthSet = false; // set to true whenever we set absolute width to the component
 		this.percentageWidthSet = false; //  set to true whenever we set 100% width to the component
@@ -155,12 +158,6 @@ class SegmentedButton extends UI5Element {
 
 			return width;
 		});
-	}
-
-	initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this);
-
-		this._itemNavigation.getItemsCallback = () => this.getSlottedNodes("buttons");
 	}
 
 	normalizeSelection() {

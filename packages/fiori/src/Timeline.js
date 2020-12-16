@@ -72,7 +72,10 @@ class Timeline extends UI5Element {
 	constructor() {
 		super();
 
-		this.initItemNavigation();
+		this._itemNavigation = new ItemNavigation(this, {
+			getItemsCallback: () => this.items,
+		});
+
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
@@ -84,13 +87,14 @@ class Timeline extends UI5Element {
 		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
-	initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this);
-		this._itemNavigation.getItemsCallback = () => this.items;
-	}
-
 	get ariaLabel() {
 		return this.i18nBundle.getText(TIMELINE_ARIA_LABEL);
+	}
+
+	_onfocusin(event) {
+		const target = event.target;
+
+		this._itemNavigation.update(target);
 	}
 }
 
