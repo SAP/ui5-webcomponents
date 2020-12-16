@@ -237,7 +237,10 @@ class MonthPicker extends UI5Element {
 	}
 
 	_setCurrentItemTabIndex(index) {
-		this._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+		const currentItem = this._itemNav._getCurrentItem();
+		if (currentItem) {
+			currentItem.setAttribute("tabindex", index.toString());
+		}
 	}
 
 	_onmousedown(event) {
