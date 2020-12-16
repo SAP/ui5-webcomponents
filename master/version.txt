@@ -1,18 +1,5 @@
-commit 10a6b923d8ffce757321166b6dcc47bdf7b6e59f
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Dec 16 11:47:10 2020 +0200
+commit a1a3f8041557cb305a33f412f9235d4a7971887a
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Dec 16 12:25:46 2020 +0200
 
-    refactor(ui5-notification-action): rename component (#2580)
-    
-    Based on the feedback that NotificationOverflowAction is not completely matching its purpose and usage, as it can be both displayed within and out of the overflow popover of a notification item. We decided to rename it as follows:
-    - rename `NotificationOverflowAction` -> `NotificationAction`
-    - rename `ui5-notification-overflow-action` to `ui5-notification-action`
-    
-    BREAKING_CHANGE If you previously used `ui5-notification-overflow-action` and had the following import statement:
-    ```js
-    import "@ui5/webcomponents-fiori/dist/NotificationOverflowAction.js";
-    ```
-    now you have to  use the `ui5-notification-action` tag and import  the following module:
-    ```js
-    import "@ui5/webcomponents-fiori/dist/NotificationAction.js";
-    ```
+    feat(framework): Change child-parent invalidation API (#2541)
