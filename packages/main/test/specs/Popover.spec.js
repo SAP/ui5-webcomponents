@@ -233,11 +233,13 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests focus when there is no focusable content", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+
 		const firstBtn = $("#firstBtn");
 		const popoverId = "popNoFocusableContent";
 
 		firstBtn.click();
-	
+
 		let activeElementId = $(browser.getActiveElement()).getAttribute("id");
 
 		assert.strictEqual(activeElementId, popoverId, "Popover is focused");
