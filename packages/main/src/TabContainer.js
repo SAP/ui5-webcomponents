@@ -274,7 +274,9 @@ class TabContainer extends UI5Element {
 		this._scrollEnablement.attachEvent("scroll", this._updateScrolling.bind(this));
 
 		// Init ItemNavigation
-		this._initItemNavigation();
+		this._itemNavigation = new ItemNavigation(this, {
+			getItemsCallback: () => this._getTabs(),
+		});
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
@@ -346,11 +348,6 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this);
-		this._itemNavigation.getItemsCallback = () => this._getTabs();
-	}
-
 	_onHeaderItemSelect(tab) {
 		if (!tab.hasAttribute("disabled")) {
 			this._onItemSelect(tab);
@@ -375,7 +372,7 @@ class TabContainer extends UI5Element {
 				item.selected = selected;
 
 				if (selected) {
-					this._itemNavigation.current = selectedTabIndex;
+					this._itemNavigation.update(item);
 				}
 			}
 		}, this);

@@ -416,9 +416,8 @@ class List extends UI5Element {
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, {
 			navigationMode: NavigationMode.Vertical,
+			getItemsCallback: () => this.getSlottedNodes("items"),
 		});
-
-		this._itemNavigation.getItemsCallback = () => this.getSlottedNodes("items");
 	}
 
 	prepareListItems() {
