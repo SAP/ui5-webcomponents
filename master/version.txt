@@ -1,9 +1,5 @@
-commit 66cd1d7b79964aeb8b0bddaf2aa1950990a36494
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Wed Dec 16 14:40:45 2020 +0200
+commit 283e9db268d29b9cab9488f9cf409fd880cdc651
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Dec 16 15:56:50 2020 +0200
 
-    fix(ui5-datepicker): keyboard navigation works properly (#2549)
-    
-    Keyboard navigation now works properly, when ui5-datepicker
-    component popover is opened and there are disabled dates
-    in the corresponding ui5-calendar component due to min/max set.
+    refactor: use ItemNavigation optimally (#2585)
