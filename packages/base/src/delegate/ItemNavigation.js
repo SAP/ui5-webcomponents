@@ -9,13 +9,62 @@ import {
 	isPageUp,
 	isPageDown,
 } from "../Keys.js";
+import getActiveElement from "../util/getActiveElement.js";
 
 import EventProvider from "../EventProvider.js";
 import NavigationMode from "../types/NavigationMode.js";
 import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
 
-// navigatable items must have id and tabindex
+/**
+ * The ItemNavigation class manages the calculations to determine the correct "tabindex" for a group of related items inside a root component.
+ * Important: ItemNavigation only does the calculations and does not change "tabindex" directly, this is a responsibility of the developer.
+ *
+ * The keys that trigger ItemNavigation are:
+ *  - Up/down
+ *  - Left/right
+ *  - Home/End
+ *  - PageUp/PageDown
+ *
+ * Usage:
+ * 1) Use the "getItemsCallback" constructor property to pass a callback to ItemNavigation, which, whenever called, will return the list of items to navigate among.
+ *
+ * Each item passed to ItemNavigation via "getItemsCallback" must be:
+ *  - A) either a UI5Element with a "_tabIndex" property
+ *  - B) or an Object with "id" and "_tabIndex" properties which represents a part of the root component's shadow DOM.
+ *    The "id" must be a valid ID within the shadow root of the component ItemNavigation operates on.
+ *    This object must not be a DOM object because, as said, ItemNavigation will not set "tabindex" on it. It must be a representation of a DOM object only
+ *    and the developer has the responsibility to update the "tabindex" in the component's DOM.
+ *  - C) a combination of the above
+ *
+ * Whenever the user navigates with the keyboard, ItemNavigation will modify the "_tabIndex" properties of the items.
+ * It is the items' responsibilities to re-render themselves and apply the correct value of "tabindex" (i.e. to map the "_tabIndex" ItemNavigation set to them to the "tabindex" property).
+ * If the items of the ItemNavigation are UI5Elements themselves, this can happen naturally since they will be invalidated by their "_tabIndex" property.
+ * If the items are Objects with "id" and "_tabIndex" however, it is the developer's responsibility to apply these and the easiest way is to have the root component invalidated by ItemNavigation.
+ * To do so, set the "affectedPropertiesNames" constructor property to point to one or more of the root component's properties that need refreshing when "_tabIndex" is changed deeply.
+ *
+ * 2) Call the "update" method of ItemNavigation whenever you want to change the current item.
+ * This is most commonly required if the user for example clicks on an item and thus selects it directly.
+ * Pass as the only argument to "update" the item that becomes current (must be one of the items, returned by "getItemsCallback").
+ *
+ * @class
+ * @public
+ */
 class ItemNavigation extends EventProvider {
+	/**
+	 *
+	 * @param rootWebComponent the component to operate on (component that slots or contains within its shadow root the items the user navigates among)
+	 * @param options Object with configuration options:
+	 *  - currentIndex: the index of the item that will be initially selected (from which navigation will begin)
+	 *  - navigationMode (Auto|Horizontal|Vertical): whether the items are displayed horizontally (Horizontal), vertically (Vertical) or as a matrix (Auto) meaning the user can navigate in both directions (up/down and left/right)
+	 *  - rowSize: tells how many items per row there are when the items are not rendered as a flat list but rather as a matrix. Relevant for navigationMode=Auto
+	 *  - behavior (Static|Cycling|Paging): tells what to do when trying to navigate beyond the first and last items
+	 *    Static means that nothing happens if the user tries to navigate beyond the first/last item.
+	 *    Cycling means that when the user navigates beyond the last item they go to the first and vice versa.
+	 *    Paging means that when the urse navigates beyond the first/last item, a new "page" of items appears (as commonly observed with calendars for example)
+	 *  - pageSize: tells how many items the user skips by using the PageUp/PageDown keys
+	 *  - getItemsCallback: function that, when called, returns an array with all items the user can navigate among
+	 *  - affectedPropertiesNames: a list of metadata properties on the root component which, upon user navigation, will be reassigned by address thus causing the root component to invalidate
+	 */
 	constructor(rootWebComponent, options = {}) {
 		super();
 
@@ -30,6 +79,14 @@ class ItemNavigation extends EventProvider {
 		this.verticalNavigationOn = autoNavigation || navigationMode === NavigationMode.Vertical;
 
 		this.pageSize = options.pageSize;
+
+		if (options.affectedPropertiesNames) {
+			this.affectedPropertiesNames = options.affectedPropertiesNames;
+		}
+
+		if (options.getItemsCallback) {
+			this._getItems = options.getItemsCallback;
+		}
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
@@ -160,6 +217,13 @@ class ItemNavigation extends EventProvider {
 		}
 	}
 
+	/**
+	 * Call this method to set a new "current" (selected) item in the item navigation
+	 * Note: the item passed to this function must be one of the items, returned by the getItemsCallback function
+	 *
+	 * @public
+	 * @param current the new selected item
+	 */
 	update(current) {
 		const origItems = this._getItems();
 
@@ -178,10 +242,18 @@ class ItemNavigation extends EventProvider {
 			items[i]._tabIndex = (i === this.currentIndex ? "0" : "-1");
 		}
 
-
-		this.rootWebComponent._invalidate();
+		if (Array.isArray(this.affectedPropertiesNames)) {
+			this.affectedPropertiesNames.forEach(propName => {
+				const prop = this.rootWebComponent[propName];
+				this.rootWebComponent[propName] = Array.isArray(prop) ? [...prop] : { ...prop };
+			});
+		}
 	}
 
+	/**
+	 * @public
+	 * @deprecated
+	 */
 	focusCurrent() {
 		const currentItem = this._getCurrentItem();
 		if (currentItem) {
@@ -191,12 +263,7 @@ class ItemNavigation extends EventProvider {
 
 	_canNavigate() {
 		const currentItem = this._getCurrentItem();
-
-		let activeElement = document.activeElement;
-
-		while (activeElement.shadowRoot && activeElement.shadowRoot.activeElement) {
-			activeElement = activeElement.shadowRoot.activeElement;
-		}
+		const activeElement = getActiveElement();
 
 		return currentItem && currentItem === activeElement;
 	}
@@ -234,10 +301,20 @@ class ItemNavigation extends EventProvider {
 		return this.rootWebComponent.getDomRef().querySelector(`#${currentItem.id}`);
 	}
 
-	set getItemsCallback(fn) {
-		this._getItems = fn;
+	/**
+	 * Set to callback that returns the list of items to navigate among
+	 * @public
+	 * @param callback a function that returns an array of items to navigate among
+	 */
+	set getItemsCallback(callback) {
+		this._getItems = callback;
 	}
 
+	/**
+	 * @public
+	 * @deprecated
+	 * @param val
+	 */
 	set current(val) {
 		this.currentIndex = val;
 	}

@@ -236,11 +236,10 @@ class DayPicker extends UI5Element {
 			rowSize: 7,
 			pageSize: 42,
 			behavior: ItemNavigationBehavior.Paging,
+			affectedPropertiesNames: ["_weeks"],
 		});
 
-		this._itemNav.getItemsCallback = function getItemsCallback() {
-			return this.focusableDays;
-		}.bind(this);
+		this._itemNav.getItemsCallback = () => this.focusableDays;
 
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,

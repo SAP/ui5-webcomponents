@@ -151,9 +151,10 @@ class YearPicker extends UI5Element {
 			pageSize: 20,
 			rowSize: 4,
 			behavior: ItemNavigationBehavior.Paging,
+			affectedPropertiesNames: ["_yearIntervals"],
 		});
 
-		this._itemNav.getItemsCallback = function getItemsCallback() {
+		this._itemNav.getItemsCallback = () => {
 			const focusableYears = [];
 
 			for (let i = 0; i < this._yearIntervals.length; i++) {
@@ -162,7 +163,7 @@ class YearPicker extends UI5Element {
 			}
 
 			return [].concat(...focusableYears);
-		}.bind(this);
+		};
 
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,

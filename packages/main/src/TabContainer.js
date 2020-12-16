@@ -55,7 +55,10 @@ const metadata = {
 			propertyName: "items",
 			type: HTMLElement,
 			individualSlots: true,
-			listenFor: { include: ["*"] },
+			invalidateOnChildChange: {
+				properties: true,
+				slots: false,
+			},
 		},
 
 		/**
