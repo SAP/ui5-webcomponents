@@ -116,7 +116,11 @@ Setting | Type | Default | Description
 
 `*` The `type` setting is required.
 
-`**` The `invalidateOnChildChange` setting can be either a `Boolean` (`true` meaning invalidate the component on any change of a child in this slot) or an `Object` with `properties` and `slots` fields. They in turn can be either of
+`**` 
+**Important:** `invalidateOnChildChange` is not meant to be used with standard DOM Elements and is not to be confused with `MutationObserver`-like functionality. 
+It rather targets the use case of components that slot abstract items (`UI5Element` instances without a template) and require to be invalidated in turn whenever these items are invalidated.  
+
+The `invalidateOnChildChange` setting can be either a `Boolean` (`true` meaning invalidate the component on any change of a child in this slot) or an `Object` with `properties` and `slots` fields. They in turn can be either of
 type `Boolean` (`true` meaning invalidate on any property change or any slot change) or `Array` of strings indicating exactly which properties or slots lead to invalidation.
 
 Examples:
