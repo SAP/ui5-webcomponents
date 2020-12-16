@@ -1,11 +1,3 @@
-:host(:not([hidden])) {
-	display: inline-block;
-	/* Well known worakround to allow shrinking inside flex containers 
-	 * and shrinking is needed so the texts trucnate properly.
-	 */
-	min-width: 1px;
-}
-
 /* Selected (active) step */
 :host([selected]:not([disabled])) .ui5-wiz-step-icon-circle {
 	background: var(--_ui5_wiz_tab_selected_bg);
