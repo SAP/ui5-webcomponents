@@ -7,6 +7,7 @@ import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "./popup-utils/PopupUtils.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
+import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
@@ -242,6 +243,12 @@ class Popup extends UI5Element {
 		});
 	}
 
+	_onRootFocusOut(e) {
+		if (e.target === this._root && isTabPrevious(e)) {
+			e.preventDefault();
+		}
+	}
+
 	/**
 	 * Focus trapping
 	 * @private
@@ -251,6 +258,8 @@ class Popup extends UI5Element {
 
 		if (firstFocusable) {
 			firstFocusable.focus();
+		} else {
+			this._root.focus();
 		}
 	}
 
@@ -263,6 +272,8 @@ class Popup extends UI5Element {
 
 		if (lastFocusable) {
 			lastFocusable.focus();
+		} else {
+			this._root.focus();
 		}
 	}
 
@@ -284,7 +295,8 @@ class Popup extends UI5Element {
 
 		const element = this.getRootNode().getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)
-			|| await getFirstFocusableElement(this);
+			|| await getFirstFocusableElement(this)
+			|| this._root; // in case of no focusable content focus the root
 
 		if (element) {
 			element.focus();
@@ -468,6 +480,10 @@ class Popup extends UI5Element {
 		return this.ariaLabel || undefined;
 	}
 
+	get _root() {
+		return this.shadowRoot.querySelector(".ui5-popup-root");
+	}
+
 	get dir() {
 		return getRTL() ? "rtl" : "ltr";
 	}
@@ -484,8 +500,12 @@ class Popup extends UI5Element {
 
 	get classes() {
 		return {
-			root: {},
-			content: {},
+			root: {
+				"ui5-popup-root": true,
+			},
+			content: {
+				"ui5-popup-content": true,
+			},
 		};
 	}
 }

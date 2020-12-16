@@ -6,6 +6,8 @@
 	aria-label="{{_ariaLabel}}"
 	aria-labelledby="{{_ariaLabelledBy}}"
 	dir="{{dir}}"
+	tabindex="-1"
+	@keydown={{_onRootFocusOut}}
 >
 
 	<span class="first-fe" data-ui5-focus-trap tabindex="0" @focusin={{forwardToLast}}></span>
