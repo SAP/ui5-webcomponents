@@ -1,5 +1,9 @@
-commit a1a3f8041557cb305a33f412f9235d4a7971887a
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Dec 16 12:25:46 2020 +0200
+commit 66cd1d7b79964aeb8b0bddaf2aa1950990a36494
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Wed Dec 16 14:40:45 2020 +0200
 
-    feat(framework): Change child-parent invalidation API (#2541)
+    fix(ui5-datepicker): keyboard navigation works properly (#2549)
+    
+    Keyboard navigation now works properly, when ui5-datepicker
+    component popover is opened and there are disabled dates
+    in the corresponding ui5-calendar component due to min/max set.
