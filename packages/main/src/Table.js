@@ -3,8 +3,10 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import TableGrowingType from "./types/TableGrowingType.js";
 
 // Texts
 import { TABLE_LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
@@ -14,6 +16,8 @@ import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/Table.css.js";
+
+const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 /**
  * @public
@@ -76,7 +80,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> If not specified a built-in text will be displayed.
 		 * <br>
-		 * <b>Note:</b> This property takes effect if <code>hasMore</code> is set.
+		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to "Button".
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -91,7 +95,7 @@ const metadata = {
 		 * Defines the subtext that will be displayed under the <code>loadMoreText</code>.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> This property takes effect if <code>hasMore</code> is set.
+		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to "Button".
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -114,16 +118,27 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if additonal row will be displayed at the bottom of the table.
-		 * Pressing on the row will fire the <code>load-more</code> event.
+		 * Controls the growing capability of the table either by pressing a "More" button,
+		 * or via user scroll. In both cases <code>load-more</code> event is fired.
 		 *
-		 * @type {boolean}
+		 * Available options:
+		 * <br><br>
+		 * "Button" - Shows a "More" button at the bottom of the table, pressing of which triggers the "load-more" event.
+		 * <br>
+		 * "Scroll" - The "load-more" event is triggered when the user scrolls to the bottom of the table;
+		 * <br>
+		 * "None" (default) - The growing is off.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> On IE <code>growing</code> type "Scroll" will fallback to "Button".
+		 * @type {TableGrowingType}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.11
 		 * @public
 		 */
-		hasMore: {
-			type: Boolean,
+		growing: {
+			type: TableGrowingType,
+			defaultvalue: TableGrowingType.None,
 		},
 
 		/**
@@ -294,6 +309,8 @@ class Table extends UI5Element {
 		this._handleResize = this.popinContent.bind(this);
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
+		this.tableEndObserved = false;
 	}
 
 	onBeforeRendering() {
@@ -319,12 +336,24 @@ class Table extends UI5Element {
 		this.visibleColumnsCount = this.visibleColumns.length;
 	}
 
+	onAfterRendering() {
+		if (this.growsOnScroll) {
+			this.observeTableEnd();
+		}
+	}
+
 	onEnterDOM() {
+		this.growingIntersectionObserver = this.getIntersectionObserver();
+
 		ResizeHandler.register(this.getDomRef(), this._handleResize);
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
+
+		this.growingIntersectionObserver.disconnect();
+		this.growingIntersectionObserver = null;
+		this.tableEndObserved = false;
 	}
 
 	onRowFocused(event) {
@@ -356,6 +385,23 @@ class Table extends UI5Element {
 	}
 
 	_onLoadMoreClick() {
+		this.fireEvent("load-more");
+	}
+
+	observeTableEnd() {
+		if (!this.tableEndObserved) {
+			this.getIntersectionObserver().observe(this.tableEndDOM);
+			this.tableEndObserved = true;
+		}
+	}
+
+	onInteresection(entries) {
+		if (entries.some(entry => entry.isIntersecting)) {
+			this.debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
+		}
+	}
+
+	loadMore() {
 		this.fireEvent("load-more");
 	}
 
@@ -417,6 +463,31 @@ class Table extends UI5Element {
 		}, this);
 	}
 
+	getIntersectionObserver() {
+		if (!this.growingIntersectionObserver) {
+			this.growingIntersectionObserver = new IntersectionObserver(this.onInteresection.bind(this), {
+				root: document,
+				rootMargin: "0px",
+				threshold: 1.0,
+			});
+		}
+
+		return this.growingIntersectionObserver;
+	}
+
+	get useLoadMore() {
+		if (isIE()) {
+			// On IE fallback to "More" button, even if growing of type "Scroll" is set.
+			return this.growing === TableGrowingType.Button || this.growing === TableGrowingType.Scroll;
+		}
+
+		return this.growing === TableGrowingType.Button;
+	}
+
+	get growsOnScroll() {
+		return !isIE() && this.growing === TableGrowingType.Scroll;
+	}
+
 	get _loadMoreText() {
 		return this.loadMoreText || this.i18nBundle.getText(TABLE_LOAD_MORE_TEXT);
 	}
@@ -427,6 +498,18 @@ class Table extends UI5Element {
 		}
 
 		return `${this._id}-showMore-text`;
+	}
+
+	get tableEndDOM() {
+		return this.shadowRoot.querySelector(".ui5-table-end-marker");
+	}
+
+	debounce(fn, delay) {
+		clearTimeout(this.debounceInterval);
+		this.debounceInterval = setTimeout(() => {
+			this.debounceInterval = null;
+			fn();
+		}, delay);
 	}
 }
 

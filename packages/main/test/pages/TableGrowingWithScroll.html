@@ -16,55 +16,36 @@
 <style></style>
 
 <body style="background-color: var(--sapBackgroundColor);">
+	<br><br>
 	<ui5-input id="inputLoadMoreCounter"></ui5-input>
-	<ui5-table id="tbl" growing="Button">
-		<ui5-table-column id="column-1" slot="columns" width="350px">
-			<ui5-label>Product</ui5-label>
-		</ui5-table-column>
+	<br><br>
+	<ui5-button id="btnScroll">SrollToBottom</ui5-button>
+	<br><br>
+	<ui5-busyindicator id="ind" style="display: block;">
+		<ui5-table id="tbl" growing="Scroll">
+			<ui5-table-column id="column-1" slot="columns" width="350px">
+				<ui5-label>Product</ui5-label>
+			</ui5-table-column>
 
-		<ui5-table-column id="column-2" slot="columns" min-width="800" popin-text="Supplier">
-			<ui5-label>Supplier</ui5-label>
-		</ui5-table-column>
+			<ui5-table-column id="column-2" slot="columns" min-width="800" popin-text="Supplier">
+				<ui5-label>Supplier</ui5-label>
+			</ui5-table-column>
 
-		<ui5-table-column id="column-3" slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
-			<div class="column-content">
-				<ui5-label>Dimensions</ui5-label>
-			</div>
-		</ui5-table-column>
+			<ui5-table-column id="column-3" slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
+				<div class="column-content">
+					<ui5-label>Dimensions</ui5-label>
+				</div>
+			</ui5-table-column>
 
-		<ui5-table-column id="column-4" slot="columns" min-width="600" popin-text="Weight" demand-popin>
-			<ui5-label>Weight</ui5-label>
-		</ui5-table-column>
+			<ui5-table-column id="column-4" slot="columns" min-width="600" popin-text="Weight" demand-popin>
+				<ui5-label>Weight</ui5-label>
+			</ui5-table-column>
 
-		<ui5-table-column id="column-5" slot="columns">
-			<ui5-label>Price</ui5-label>
-		</ui5-table-column>
-	</ui5-table>
-
-	<h3>Custom texts</h3>
-	<ui5-table id="tbl2" growing="Button" load-more-text="Load more" load-more-subtext="4 of 123">
-		<ui5-table-column id="column-1" slot="columns" width="350px">
-			<ui5-label>Product</ui5-label>
-		</ui5-table-column>
-
-		<ui5-table-column id="column-2" slot="columns" min-width="800" popin-text="Supplier">
-			<ui5-label>Supplier</ui5-label>
-		</ui5-table-column>
-
-		<ui5-table-column id="column-3" slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
-			<div class="column-content">
-				<ui5-label>Dimensions</ui5-label>
-			</div>
-		</ui5-table-column>
-
-		<ui5-table-column id="column-4" slot="columns" min-width="600" popin-text="Weight" demand-popin>
-			<ui5-label>Weight</ui5-label>
-		</ui5-table-column>
-
-		<ui5-table-column id="column-5" slot="columns">
-			<ui5-label>Price</ui5-label>
-		</ui5-table-column>
-	</ui5-table>
+			<ui5-table-column id="column-5" slot="columns">
+				<ui5-label>Price</ui5-label>
+			</ui5-table-column>
+		</ui5-table>
+	</ui5-busyindicator>
 </body>
 
 <script>
@@ -762,36 +743,42 @@
 				"DimUnit": "cm"
 			}]
 		};
-		var ROWS = 4;
+		var INITIAL_ROWS = 30;
+		var NEW_ROWS = 5
 		var table = document.getElementById("tbl");
-		var table2 = document.getElementById("tbl2");
+		var ind = document.getElementById("ind");
 		var loadMoreTracker = 1;
-
+		var timeoutTracker = null;
 		function init(tbl, rows) {
 			var html = '';
-			products.ProductCollection.slice(0, ROWS).forEach(function (product, index, arr) {
+			products.ProductCollection.slice(0, rows).forEach(function (product, index, arr) {
 				var test = "<ui5-table-row  id=roll-".concat(index, ">\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<div class=\"double-line-content\">\n\t\t\t\t\t\t\t\t\t<ui5-label>\n\t\t\t\t\t\t\t\t\t\t<b>").concat(product.Name, "</b>\n\t\t\t\t\t\t\t\t\t</ui5-label>\n\t\t\t\t\t\t\t\t\t<ui5-label style=\"margin-top: 0.5rem\">").concat(product.ProductId, "</ui5-label>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.SupplierName, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.Width, " x ").concat(product.Depth, " x ").concat(product.Height, " ").concat(product.DimUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label style=\"color: #2b7c2b\" class=\"middle\">\n\t\t\t\t\t\t\t\t\t<b>").concat(product.WeightMeasure, "</b> ").concat(product.WeightUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >\n\t\t\t\t\t\t\t\t\t<b>").concat(product.Price, "</b> ").concat(product.CurrencyCode, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t</ui5-table-row>");
 				html += test;
 			});
 
 			tbl.insertAdjacentHTML('beforeend', html);
-
-			tbl.setAttribute("load-more-subtext", "[" + loadMoreTracker * ROWS + " / 123]");
 			inputLoadMoreCounter.value = loadMoreTracker - 1;
 		}
 
 		function loadMore() {
+			ind.setAttribute("active", "true");
+			
 			++loadMoreTracker;
-			init(table, ROWS);
-			console.log("load-more");
+			init(table, NEW_ROWS);
+			
+			if (timeoutTracker) {
+				clearTimeout(timeoutTracker);
+			}
+			timeoutTracker = setTimeout(() => {
+				ind.active = false;
+			}, 500);
 		}
 
 		table.addEventListener("ui5-load-more", loadMore);
-		table2.addEventListener("ui5-load-more", function() {
-			init(table2, ROWS);
-			console.log("load-more");
+		btnScroll.addEventListener("ui5-click", function() {
+			document.body.scrollTop = 10000;
 		});
-
-		init(table, ROWS);
+		
+		init(table, INITIAL_ROWS);
 </script>
 </html>

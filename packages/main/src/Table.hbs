@@ -25,8 +25,12 @@
 			{{/if}}
 		{{/unless}}
 
-		{{#if hasMore}}
+		{{#if useLoadMore}}
 			{{> loadMoreRow}}
+		{{/if}}
+
+		{{#if growsOnScroll}}
+			{{> tableEndMarker}}
 		{{/if}}
 	</tbody>
 </table>
@@ -60,4 +64,12 @@
 		</div>
 	</td>
 </tr>
+{{/inline}}
+
+{{#*inline "tableEndMarker"}}
+	<tr tabindex="-1">
+		<td tabindex="-1">
+			<span tabindex="-1" aria-hidden="true" class="ui5-table-end-marker"></span>
+		</td>
+	</tr>
 {{/inline}}
