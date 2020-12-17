@@ -42,7 +42,7 @@
 	</ui5-table>
 
 	<h3>Custom texts</h3>
-	<ui5-table id="tbl2" growing="Button" load-more-text="Load more" load-more-subtext="4 of 123">
+	<ui5-table id="tbl2" growing="Button" more-text="Load more" more-subtext="4 of 123">
 		<ui5-table-column id="column-1" slot="columns" width="350px">
 			<ui5-label>Product</ui5-label>
 		</ui5-table-column>
@@ -776,7 +776,7 @@
 
 			tbl.insertAdjacentHTML('beforeend', html);
 
-			tbl.setAttribute("load-more-subtext", "[" + loadMoreTracker * ROWS + " / 123]");
+			tbl.setAttribute("more-subtext", "[" + loadMoreTracker * ROWS + " / 123]");
 			inputLoadMoreCounter.value = loadMoreTracker - 1;
 		}
 

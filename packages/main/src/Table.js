@@ -74,35 +74,35 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text that will be displayed inside the additional row at the bottom of the table,
+		 * Defines the text that will be displayed inside the <code>More</code> button at the bottom of the table,
 		 * meant for loading more rows upon press.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> If not specified a built-in text will be displayed.
 		 * <br>
-		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to "Button".
+		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.11
 		 * @public
 		 */
-		loadMoreText: {
+		moreText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the subtext that will be displayed under the <code>loadMoreText</code>.
+		 * Defines the subtext that will be displayed under the <code>moreText</code>.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to "Button".
+		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.11
 		 * @public
 		 */
-		loadMoreSubtext: {
+		moreSubtext: {
 			type: String,
 		},
 
@@ -118,21 +118,23 @@ const metadata = {
 		},
 
 		/**
-		 * Controls the growing capability of the table either by pressing a "More" button,
+		 * Defines whether the table will have growing capability either by pressing a <code>More</code> button,
 		 * or via user scroll. In both cases <code>load-more</code> event is fired.
+		 * <br><br>
 		 *
 		 * Available options:
 		 * <br><br>
-		 * "Button" - Shows a "More" button at the bottom of the table, pressing of which triggers the "load-more" event.
+		 * <code>Button</code> - Shows a <code>More</code> button at the bottom of the table, pressing of which triggers the <code>load-more</code> event.
 		 * <br>
-		 * "Scroll" - The "load-more" event is triggered when the user scrolls to the bottom of the table;
+		 * <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the table;
 		 * <br>
-		 * "None" (default) - The growing is off.
+		 * <code>None</code> (default) - The growing is off.
 		 * <br><br>
 		 *
-		 * <b>Note:</b> On IE <code>growing</code> type "Scroll" will fallback to "Button".
+		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported Internet Explorer,
+		 * and the component will fallback to <code>growing="Button"</code>.
 		 * @type {TableGrowingType}
-		 * @defaultvalue false
+		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.11
 		 * @public
 		 */
@@ -181,7 +183,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the active state of the "load more" row.
+		 * Defines the active state of the <code>More</code> button.
 		 * @private
 		 */
 		_loadMoreActive: {
@@ -225,8 +227,10 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when the user presses the <code>showMore</code> row of the table.
+		 * Fired when the user presses the <code>More</code> button or scrolls to the table's end.
 		 * <br><br>
+		 * 
+		 * <b>Note:</b> The event will be fired if <code>growing</code> is set to <code>Button</code> or <code>Scroll</code>.
 		 * @event sap.ui.webcomponents.main.Table#load-more
 		 * @public
 		 * @since 1.0.0-rc.11
@@ -475,7 +479,7 @@ class Table extends UI5Element {
 		return this.growingIntersectionObserver;
 	}
 
-	get useLoadMore() {
+	get useMoreRow() {
 		if (isIE()) {
 			// On IE fallback to "More" button, even if growing of type "Scroll" is set.
 			return this.growing === TableGrowingType.Button || this.growing === TableGrowingType.Scroll;
@@ -488,8 +492,8 @@ class Table extends UI5Element {
 		return !isIE() && this.growing === TableGrowingType.Scroll;
 	}
 
-	get _loadMoreText() {
-		return this.loadMoreText || this.i18nBundle.getText(TABLE_LOAD_MORE_TEXT);
+	get _moreText() {
+		return this.moreText || this.i18nBundle.getText(TABLE_LOAD_MORE_TEXT);
 	}
 
 	get loadMoreAriaLabelledBy() {

@@ -753,6 +753,7 @@
 		var btnScroll = document.getElementById("btnScroll");
 		var loadMoreTracker = 1;
 		var timeoutTracker = null;
+
 		function init(tbl, rows) {
 			var html = '';
 			products.ProductCollection.slice(0, rows).forEach(function (product, index, arr) {
@@ -773,16 +774,16 @@
 			if (timeoutTracker) {
 				clearTimeout(timeoutTracker);
 			}
-			timeoutTracker = setTimeout(() => {
+			timeoutTracker = setTimeout(function() {
 				ind.active = false;
-			}, 500);
+			}, 1000);
 		}
 
 		table.addEventListener("ui5-load-more", loadMore);
 		btnScroll.addEventListener("click", function() {
 			document.scrollingElement.scrollTop = document.scrollingElement.scrollHeight;
 		});
-		
+
 		init(table, INITIAL_ROWS);
 </script>
 </html>
