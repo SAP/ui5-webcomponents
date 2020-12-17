@@ -65,4 +65,34 @@ describe("Table general interaction", () => {
 		assert.strictEqual(row.getAttribute("aria-label"), EXPECTED_TEXT, 
 			"The aria-label value is correct.");
 	});
+
+	// describe("Growing Table", () => {
+	// 	it("tests the 'load-more' event", () => {
+	// 		browser.url("http://localhost:8080/test-resources/pages/TableLoadMore.html");
+
+	// 		const inputResult = browser.$("#inputloadMoreCounter");
+	// 		const loadMoreTrigger = browser.$("#tbl").shadow$(".ui5-table-load-more-row-inner");
+
+	// 		// act
+	// 		loadMoreTrigger.click();
+
+	// 		// assert
+	// 		assert.strictEqual(inputResult.getPropertyValue, "1", 
+	// 			"The load-more is fired.");
+
+	// 		// act
+	// 		loadMoreTrigger.keys("Space");
+
+	// 		// assert
+	// 		assert.strictEqual(inputResult.getPropertyValue, "2", 
+	// 			"The load-more is fired 2nd time.");
+
+	// 		// act
+	// 		loadMoreTrigger.keys("Enter");
+
+	// 		// assert
+	// 		assert.strictEqual(inputResult.getPropertyValue, "3", 
+	// 			"The load-more is fired 3rd time.");
+	// 	});
+	// });
 });

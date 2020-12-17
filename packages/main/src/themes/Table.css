@@ -1,3 +1,5 @@
+@import "./TableShowMoreRow.css";
+
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
