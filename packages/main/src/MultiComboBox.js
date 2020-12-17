@@ -338,6 +338,12 @@ const metadata = {
  * <li> Backspace -  deletes the token and focus the next token. </li>
  * </ul>
  *
+ * In the context of <code>ui5-multi-combobox</code>, you can provide a custom stable DOM ref for:
+ * <ul>
+ * <li>Every <code>ui5-mcb-item</code> that you provide.
+ * Example: <code><ui5-mcb-item stable-dom-ref="item1"></ui5-mcb-item></code></li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/MultiComboBox";</code>
