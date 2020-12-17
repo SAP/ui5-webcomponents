@@ -340,23 +340,8 @@ class DayPicker extends PickerBase {
 
 		if (dayPressed) {
 			const targetDate = parseInt(target.getAttribute("data-sap-timestamp"));
-
-			// findIndex, give it to item navigation
-			for (let i = 0; i < this._weeks.length; i++) {
-				for (let j = 0; j < this._weeks[i].length; j++) {
-					if (parseInt(this._weeks[i][j].timestamp) === targetDate) {
-						let index = parseInt(target.getAttribute("data-sap-index"));
-						if (this.minDate || this.maxDate) {
-							const focusableItem = this.focusableDays.find(item => parseInt(item._index) === index);
-							index = focusableItem ? this.focusableDays.indexOf(focusableItem) : index;
-						}
-
-						this._itemNav.current = index;
-						this._itemNav.update();
-						break;
-					}
-				}
-			}
+			const selectedDay = this.focusableDays.find(day => parseInt(day.timestamp) === targetDate);
+			this._itemNav.update(selectedDay);
 
 			this.targetDate = targetDate;
 		}
@@ -560,21 +545,12 @@ class DayPicker extends PickerBase {
 	}
 
 	_modifySelectionAndNotifySubscribers(timestamp) {
-		switch (this.selection) {
-		case CalendarSelection.Single:
+		if (this.selection === CalendarSelection.Single) {
 			this.selectedDates = [timestamp];
-			break;
-		case CalendarSelection.Multiple:
-			this.selectedDates = this.selectedDates.includes(timestamp)
-				? this.selectedDates.filter(value => value !== timestamp)
-				: [...this.selectedDates, timestamp];
-			break;
-		case CalendarSelection.Range:
-			this.selectedDates = (this.selectedDates.length === 1)
-				? [...this.selectedDates, timestamp]
-				: [timestamp];
-			break;
-		default:
+		} else if (this.selection === CalendarSelection.Multiple) {
+			this.selectedDates = this.selectedDates.includes(timestamp) ? this.selectedDates.filter(value => value !== timestamp) : [...this.selectedDates, timestamp];
+		} else {
+			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	: [timestamp];
 		}
 
 		this.fireEvent("change", { dates: [...this.selectedDates] });
