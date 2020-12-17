@@ -26,7 +26,7 @@
 @import "./TabContainer-parameters.css";
 @import "./Table-parameters.css";
 @import "./TableRow-parameters.css";
-@import "./TableShowMoreRow-parameters.css";
+@import "./TableLoadMoreRow-parameters.css";
 @import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Title-parameters.css";

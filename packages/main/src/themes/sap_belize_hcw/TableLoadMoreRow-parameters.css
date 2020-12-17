@@ -1,4 +1,4 @@
-@import "../base/TableShowMoreRow-parameters.css";
+@import "../base/TableLoadMoreRow-parameters.css";
 
 :root {
 	--ui5_table_load_more_padding: 0.25rem;

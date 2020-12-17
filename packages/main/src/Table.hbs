@@ -26,12 +26,12 @@
 		{{/unless}}
 
 		{{#if hasMore}}
-			{{> showMoreRow}}
+			{{> loadMoreRow}}
 		{{/if}}
 	</tbody>
 </table>
 
-{{#*inline "showMoreRow"}}
+{{#*inline "loadMoreRow"}}
 <tr>
 	<td colspan="{{visibleColumnsCount}}">
 		<div class="ui5-table-load-more-row">
