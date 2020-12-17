@@ -1,5 +1,7 @@
-commit 283e9db268d29b9cab9488f9cf409fd880cdc651
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Dec 16 15:56:50 2020 +0200
+commit 9661ab83566de233f23f860eff4cd034ed10e6d2
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Dec 17 09:52:46 2020 +0200
 
-    refactor: use ItemNavigation optimally (#2585)
+    fix(ui5-avatar): fix XS size (#2582)
+    
+    With the introduce of the AvatarGroup the XS size of the Avatar has been broken. Due to the following css the XS size appeared 3rem X 3rem, instead of 2rem X 2rem (as it is by spec). The "XS" styles define min-height and min-width, but the default styles make it 3rem by 3rem.

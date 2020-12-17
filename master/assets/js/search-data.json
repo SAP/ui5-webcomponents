@@ -44,7 +44,7 @@
   "7": {
     "id": "7",
     "title": "Avatar Group",
-    "content": "&lt;!DOCTYPE html&gt; avatar-group Fiori 3 Fiori 3 Dark Fiori 3 High Contrast Black Fiori 3 High Contrast White Belize Belize High Contrast Black Belize High Contrast White or in the browser console, for example: window[&#39;sap-ui-webcomponents-bundle&#39;].configuration.setTheme(&quot;sap_belize_hcb&quot;) English | German | Spanish | French Test your web components here Business card this is footer Business card John Doe Software Developer this is footer TargetRef Tag Name: Event Overflow Button Clicked: Reset fields",
+    "content": "&lt;!DOCTYPE html&gt; avatar-group Fiori 3 Fiori 3 Dark Fiori 3 High Contrast Black Fiori 3 High Contrast White Belize Belize High Contrast Black Belize High Contrast White or in the browser console, for example: window[&#39;sap-ui-webcomponents-bundle&#39;].configuration.setTheme(&quot;sap_belize_hcb&quot;) English | German | Spanish | French Test your web components here Business card this is footer Business card John Doe Software Developer this is footer TargetRef Tag Name: Event Overflow Button Clicked: Reset fields &quot;XS&quot; size &quot;S&quot; size Unordinary group",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/AvatarGroup/",
     "relUrl": "/playground/main/pages/AvatarGroup/"
   },
