@@ -347,7 +347,9 @@ class Table extends UI5Element {
 	}
 
 	onEnterDOM() {
-		this.growingIntersectionObserver = this.getIntersectionObserver();
+		if(!isIE()) {
+			this.growingIntersectionObserver = this.getIntersectionObserver();
+		}
 
 		ResizeHandler.register(this.getDomRef(), this._handleResize);
 	}
@@ -355,9 +357,11 @@ class Table extends UI5Element {
 	onExitDOM() {
 		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
 
-		this.growingIntersectionObserver.disconnect();
-		this.growingIntersectionObserver = null;
-		this.tableEndObserved = false;
+		if(!isIE()) {
+			this.growingIntersectionObserver.disconnect();
+			this.growingIntersectionObserver = null;
+			this.tableEndObserved = false;
+		}
 	}
 
 	onRowFocused(event) {
