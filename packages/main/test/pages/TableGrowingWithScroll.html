@@ -21,31 +21,34 @@
 	<br><br>
 	<ui5-button id="btnScroll">SrollToBottom</ui5-button>
 	<br><br>
-	<ui5-busyindicator id="ind" style="display: block;">
-		<ui5-table id="tbl" growing="Scroll">
-			<ui5-table-column id="column-1" slot="columns" width="350px">
-				<ui5-label>Product</ui5-label>
-			</ui5-table-column>
 
-			<ui5-table-column id="column-2" slot="columns" min-width="800" popin-text="Supplier">
-				<ui5-label>Supplier</ui5-label>
-			</ui5-table-column>
+	<section>
+		<ui5-busyindicator id="ind" style="display: block;">
+			<ui5-table id="tbl" growing="Scroll">
+				<ui5-table-column id="column-1" slot="columns" width="350px">
+					<ui5-label>Product</ui5-label>
+				</ui5-table-column>
 
-			<ui5-table-column id="column-3" slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
-				<div class="column-content">
-					<ui5-label>Dimensions</ui5-label>
-				</div>
-			</ui5-table-column>
+				<ui5-table-column id="column-2" slot="columns" min-width="800" popin-text="Supplier">
+					<ui5-label>Supplier</ui5-label>
+				</ui5-table-column>
 
-			<ui5-table-column id="column-4" slot="columns" min-width="600" popin-text="Weight" demand-popin>
-				<ui5-label>Weight</ui5-label>
-			</ui5-table-column>
+				<ui5-table-column id="column-3" slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
+					<div class="column-content">
+						<ui5-label>Dimensions</ui5-label>
+					</div>
+				</ui5-table-column>
 
-			<ui5-table-column id="column-5" slot="columns">
-				<ui5-label>Price</ui5-label>
-			</ui5-table-column>
-		</ui5-table>
-	</ui5-busyindicator>
+				<ui5-table-column id="column-4" slot="columns" min-width="600" popin-text="Weight" demand-popin>
+					<ui5-label>Weight</ui5-label>
+				</ui5-table-column>
+
+				<ui5-table-column id="column-5" slot="columns">
+					<ui5-label>Price</ui5-label>
+				</ui5-table-column>
+			</ui5-table>
+		</ui5-busyindicator>
+	</section>
 </body>
 
 <script>
@@ -747,6 +750,7 @@
 		var NEW_ROWS = 5
 		var table = document.getElementById("tbl");
 		var ind = document.getElementById("ind");
+		var btnScroll = document.getElementById("btnScroll");
 		var loadMoreTracker = 1;
 		var timeoutTracker = null;
 		function init(tbl, rows) {
@@ -762,7 +766,7 @@
 
 		function loadMore() {
 			ind.setAttribute("active", "true");
-			
+
 			++loadMoreTracker;
 			init(table, NEW_ROWS);
 			
@@ -775,8 +779,8 @@
 		}
 
 		table.addEventListener("ui5-load-more", loadMore);
-		btnScroll.addEventListener("ui5-click", function() {
-			document.body.scrollTop = 10000;
+		btnScroll.addEventListener("click", function() {
+			document.scrollingElement.scrollTop = document.scrollingElement.scrollHeight;
 		});
 		
 		init(table, INITIAL_ROWS);
