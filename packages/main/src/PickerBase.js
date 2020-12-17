@@ -9,6 +9,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import { getMinCalendarDate, getMaxCalendarDate } from "./util/DateTime.js";
 
 /**
  * @public
@@ -147,22 +148,11 @@ class PickerBase extends UI5Element {
 	}
 
 	_getMinCalendarDate() {
-		const minDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
-		minDate.setYear(1);
-		minDate.setMonth(0);
-		minDate.setDate(1);
-		return minDate.toUTCJSDate().valueOf();
+		return getMinCalendarDate(this._primaryCalendarType);
 	}
 
 	_getMaxCalendarDate() {
-		const maxDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
-		maxDate.setYear(9999);
-		maxDate.setMonth(11);
-		const tempDate = new CalendarDate(maxDate, this._primaryCalendarType);
-		tempDate.setDate(1);
-		tempDate.setMonth(tempDate.getMonth() + 1, 0);
-		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
-		return maxDate.toUTCJSDate().valueOf();
+		return getMaxCalendarDate(this._primaryCalendarType);
 	}
 
 	getFormat() {

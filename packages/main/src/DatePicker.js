@@ -28,6 +28,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
+import { getMaxCalendarDate, getMinCalendarDate } from "./util/DateTime.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -837,22 +838,11 @@ class DatePicker extends UI5Element {
 	}
 
 	_getMinCalendarDate() {
-		const minDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
-		minDate.setYear(1);
-		minDate.setMonth(0);
-		minDate.setDate(1);
-		return minDate.valueOf();
+		return getMinCalendarDate(this._primaryCalendarType);
 	}
 
 	_getMaxCalendarDate() {
-		const maxDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
-		maxDate.setYear(9999);
-		maxDate.setMonth(11);
-		const tempDate = new CalendarDate(maxDate, this._primaryCalendarType);
-		tempDate.setDate(1);
-		tempDate.setMonth(tempDate.getMonth() + 1, 0);
-		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
-		return maxDate.valueOf();
+		return getMaxCalendarDate(this._primaryCalendarType);
 	}
 
 	get openIconTitle() {
