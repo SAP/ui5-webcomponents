@@ -18,7 +18,6 @@ import {
 	isPageDownShift,
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
@@ -69,16 +68,6 @@ const metadata = {
 		selection: {
 			type: CalendarSelection,
 			defaultValue: CalendarSelection.Single,
-		},
-
-		/**
-		 * Sets the selected dates as UTC timestamps.
-		 * @type {Array}
-		 * @public
-		 */
-		selectedDates: {
-			type: Integer,
-			multiple: true,
 		},
 
 		/**
@@ -325,8 +314,8 @@ class DayPicker extends PickerBase {
 		const visualizedDates = this._getVisualizedSelectedDates();
 		if (this.selection === CalendarSelection.Range && visualizedDates.length > 0) {
 			const dayItems = this.getDomRef().querySelectorAll(".ui5-dp-item");
-			const firstTimestamp = this._selectedDates[0];
-			const lastTimestamp = (visualizedDates.length === 1) ? parseInt(dayItems[this._itemNav.currentIndex].dataset.sapTimestamp) : this._selectedDates[1];
+			const firstTimestamp = this.selectedDates[0];
+			const lastTimestamp = (visualizedDates.length === 1) ? parseInt(dayItems[this._itemNav.currentIndex].dataset.sapTimestamp) : this.selectedDates[1];
 
 			this._updateSelectionBetween(dayItems, firstTimestamp, lastTimestamp);
 		}
@@ -389,7 +378,7 @@ class DayPicker extends PickerBase {
 		const hoveredItem = event.target.classList.contains("ui5-dp-item") ? event.target : event.target.parentElement;
 		if (this.selectedDates.length === 1 && this.selection === CalendarSelection.Range && hoveredItem.classList.contains("ui5-dp-item")) {
 			const dayItems = this.getDomRef().querySelectorAll(".ui5-dp-item");
-			const firstTimestamp = this._selectedDates[0];
+			const firstTimestamp = this.selectedDates[0];
 			const lastTimestamp = parseInt(hoveredItem.dataset.sapTimestamp);
 
 			this._updateSelectionBetween(dayItems, firstTimestamp, lastTimestamp);
@@ -544,10 +533,6 @@ class DayPicker extends PickerBase {
 		return CalendarDate.fromTimestamp(new Date().getTime(), this._primaryCalendarType);
 	}
 
-	get _selectedDates() {
-		return this.selectedDates || [];
-	}
-
 	get focusableDays() {
 		const focusableDays = [];
 
@@ -582,17 +567,17 @@ class DayPicker extends PickerBase {
 		case CalendarSelection.Multiple:
 			this.selectedDates = this.selectedDates.includes(timestamp)
 				? this.selectedDates.filter(value => value !== timestamp)
-				: [...this._selectedDates, timestamp];
+				: [...this.selectedDates, timestamp];
 			break;
 		case CalendarSelection.Range:
 			this.selectedDates = (this.selectedDates.length === 1)
-				? [...this._selectedDates, timestamp]
+				? [...this.selectedDates, timestamp]
 				: [timestamp];
 			break;
 		default:
 		}
 
-		this.fireEvent("change", { dates: [...this._selectedDates] });
+		this.fireEvent("change", { dates: [...this.selectedDates] });
 	}
 
 	_hasNextMonth() {

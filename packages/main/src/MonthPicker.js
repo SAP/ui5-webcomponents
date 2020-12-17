@@ -1,6 +1,5 @@
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
@@ -15,11 +14,6 @@ import styles from "./generated/themes/MonthPicker.css.js";
 const metadata = {
 	tag: "ui5-monthpicker",
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
-		_selectedDates: {
-			type: Integer,
-			multiple: true,
-		},
-
 		_quarters: {
 			type: Object,
 			multiple: true,
@@ -99,8 +93,6 @@ class MonthPicker extends PickerBase {
 			ItemNavigation.BORDER_REACH,
 			this._handleItemNavigationBorderReach.bind(this)
 		);
-
-		this._selectedDates = [];
 	}
 
 	onBeforeRendering() {
@@ -118,7 +110,7 @@ class MonthPicker extends PickerBase {
 			const month = {
 				timestamp: timestamp.toString(),
 				id: `${this._id}-m${i}`,
-				selected: this._selectedDates.some(d => d === timestamp),
+				selected: this.selectedDates.some(d => d === timestamp),
 				name: localeData.getMonths("wide", this._primaryCalendarType)[i],
 				classes: "ui5-mp-item",
 			};

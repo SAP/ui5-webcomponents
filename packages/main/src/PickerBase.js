@@ -69,6 +69,16 @@ const metadata = {
 		formatPattern: {
 			type: String,
 		},
+
+		/**
+		 * Defines the selected dates as UTC timestamps.
+		 * @type {Array}
+		 * @public
+		 */
+		selectedDates: {
+			type: Integer,
+			multiple: true,
+		},
 	},
 };
 

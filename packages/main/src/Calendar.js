@@ -3,7 +3,6 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
 	isF4,
 	isF4Shift,
@@ -48,16 +47,6 @@ const metadata = {
 		selection: {
 			type: CalendarSelection,
 			defaultValue: CalendarSelection.Single,
-		},
-
-		/**
-		 * Defines the selected dates as UTC timestamps.
-		 * @type {Array}
-		 * @public
-		 */
-		selectedDates: {
-			type: Integer,
-			multiple: true,
 		},
 
 		/**
@@ -351,10 +340,6 @@ class Calendar extends PickerBase {
 
 	get yearButton() {
 		return this.header.shadowRoot.querySelector("[data-sap-show-picker='Year']");
-	}
-
-	get _selectedDates() {
-		return this.selectedDates || [];
 	}
 
 	_onkeydown(event) {
@@ -714,7 +699,7 @@ class Calendar extends PickerBase {
 		this._calendarHeight = calendarRect.height.toString();
 
 		const monthPicker = this.shadowRoot.querySelector("[ui5-monthpicker]");
-		monthPicker._selectedDates = [...this.selectedDates];
+		monthPicker.selectedDates = [...this.selectedDates];
 		const currentMonthIndex = monthPicker._itemNav._getItems().findIndex(item => {
 			const calDate = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000, this._primaryCalendarType);
 			return calDate.getMonth() === this._calendarDate.getMonth();
@@ -738,7 +723,7 @@ class Calendar extends PickerBase {
 		this._calendarHeight = calendarRect.height.toString();
 
 		const yearPicker = this.shadowRoot.querySelector("[ui5-yearpicker]");
-		yearPicker._selectedDates = [...this.selectedDates];
+		yearPicker.selectedDates = [...this.selectedDates];
 		const currentYearIndex = yearPicker._itemNav._getItems().findIndex(item => {
 			const calDate = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000, this._primaryCalendarType);
 			return calDate.getYear() === this._calendarDate.getYear();

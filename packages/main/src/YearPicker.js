@@ -17,11 +17,6 @@ import styles from "./generated/themes/YearPicker.css.js";
 const metadata = {
 	tag: "ui5-yearpicker",
 	properties: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
-		_selectedDates: {
-			type: Integer,
-			multiple: true,
-		},
-
 		_selectedYear: {
 			type: Integer,
 			noAttribute: true,
@@ -108,7 +103,6 @@ class YearPicker extends PickerBase {
 		);
 
 		this._yearIntervals = [];
-		this._selectedDates = [];
 	}
 
 	onBeforeRendering() {
@@ -148,7 +142,7 @@ class YearPicker extends PickerBase {
 			const year = {
 				timestamp: timestamp.toString(),
 				id: `${this._id}-y${timestamp}`,
-				selected: this._selectedDates.some(itemTimestamp => {
+				selected: this.selectedDates.some(itemTimestamp => {
 					const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
 					return date.getYear() === oCalDate.getYear();
 				}),
