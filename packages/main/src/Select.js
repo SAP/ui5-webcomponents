@@ -247,7 +247,7 @@ const metadata = {
  *
  * <h3>Stable DOM Refs</h3>
  *
- * In the context of <code>ui5-select</code>, you can provide a custom stable DOM refs for:
+ * In the context of <code>ui5-select</code>, you can provide a custom stable DOM ref for:
  * <ul>
  * <li>Every <code>ui5-option</code> that you provide.
  * Example: <code><ui5-option stable-dom-ref="option1"></ui5-option></code></li>
