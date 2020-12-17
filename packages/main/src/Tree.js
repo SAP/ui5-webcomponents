@@ -113,6 +113,7 @@ const metadata = {
 		"default": {
 			type: HTMLElement,
 			propertyName: "items",
+			invalidateOnChildChange: true,
 		},
 
 		/**
@@ -246,30 +247,9 @@ class Tree extends UI5Element {
 		];
 	}
 
-	constructor() {
-		super();
-		this._observer = new MutationObserver(this.onTreeStructureChange.bind(this));
-	}
-
 	onBeforeRendering() {
 		this._listItems = [];
 		buildTree(this, 1, this._listItems);
-	}
-
-	onEnterDOM() {
-		this._observer.observe(this, { attributes: true, childList: true, subtree: true });
-	}
-
-	onExitDOM() {
-		this._observer.disconnect();
-	}
-
-	onTreeStructureChange() {
-		// setTimeout is needed for IE11 so that it does not interfere with ItemNavigation.js and its await on RenderScheduler.
-		// Otherwise this invalidation happens too soon and the ItemNavigation is blocked on waiting the tree to finish
-		setTimeout(() => {
-			this._listItems = []; // trigger onBeforeRendering by modifying the tracked property and force tree re-build
-		}, 0);
 	}
 
 	get list() {

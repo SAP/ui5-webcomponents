@@ -5,10 +5,10 @@ import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-notification-overflow-action",
-	properties: /** @lends  sap.ui.webcomponents.fiori.NotificationOverflowAction.prototype */ {
+	tag: "ui5-notification-action",
+	properties: /** @lends  sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-notification-overflow-action</code>.
+		 * Defines the text of the <code>ui5-notification-action</code>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -70,22 +70,22 @@ const metadata = {
 
 /**
  * @class
- * The <code>ui5-notification-overflow-action</code> represents an abstract action,
+ * The <code>ui5-notification-action</code> represents an abstract action,
  * used in the <code>ui5-li-notification</code> and the <code>ui5-li-notification-group</code> items.
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.NotificationOverflowAction
+ * @alias sap.ui.webcomponents.fiori.NotificationAction
  * @extends UI5Element
- * @tagname ui5-notification-overflow-action
+ * @tagname ui5-notification-action
  * @public
  */
-class NotificationOverflowAction extends UI5Element {
+class NotificationAction extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 }
 
-NotificationOverflowAction.define();
+NotificationAction.define();
 
-export default NotificationOverflowAction;
+export default NotificationAction;

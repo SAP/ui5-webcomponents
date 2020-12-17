@@ -62,12 +62,10 @@ class ProductSwitch extends UI5Element {
 	constructor() {
 		super();
 
-		this.initItemNavigation();
-	}
-
-	initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this, { rowSize: 4 });
-		this._itemNavigation.getItemsCallback = () => this.items;
+		this._itemNavigation = new ItemNavigation(this, {
+			rowSize: 4,
+			getItemsCallback: () => this.items,
+		});
 	}
 
 	static get metadata() {
