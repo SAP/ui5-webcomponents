@@ -1,14 +1,8 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
 	isF4,
 	isF4Shift,
@@ -16,6 +10,7 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import PickerBase from "./PickerBase.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
@@ -37,17 +32,6 @@ const metadata = {
 	tag: "ui5-calendar",
 	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
-		 * Defines the calendar type used for display.
-		 * If not defined, the calendar type of the global configuration is used.
-		 * Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
-		 * @type {CalendarType}
-		 * @public
-		 */
-		primaryCalendarType: {
-			type: CalendarType,
-		},
-
-		/**
 		 * Defines the type of selection used in the calendar component.
 		 * The property takes as value an object of type <code>CalendarSelection</code>.
 		 * Accepted property values are:<br>
@@ -66,38 +50,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the selected dates as UTC timestamps.
-		 * @type {Array}
-		 * @public
-		 */
-		selectedDates: {
-			type: Integer,
-			multiple: true,
-		},
-
-		/**
-		 * Determines the мinimum date available for selection.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		minDate: {
-			type: String,
-		},
-
-		/**
-		 * Determines the maximum date available for selection.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		maxDate: {
-			type: String,
-		},
-
-		/**
 		 * Defines the visibility of the week numbers column.
 		 * <br><br>
 		 *
@@ -110,15 +62,6 @@ const metadata = {
 		 */
 		hideWeekNumbers: {
 			type: Boolean,
-		},
-
-		/**
-		 * Defines the UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
-		 * @type {Integer}
-		 * @private
-		*/
-		timestamp: {
-			type: Integer,
 		},
 
 		_header: {
@@ -145,10 +88,6 @@ const metadata = {
 		_calendarHeight: {
 			type: String,
 			noAttribute: true,
-		},
-
-		formatPattern: {
-			type: String,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
@@ -227,18 +166,14 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Calendar
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends sap.ui.webcomponents.main.PickerBase
  * @tagname ui5-calendar
  * @public
  * @since 1.0.0-rc.11
  */
-class Calendar extends UI5Element {
+class Calendar extends PickerBase {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 
 	static get template() {
@@ -405,74 +340,6 @@ class Calendar extends UI5Element {
 
 	get yearButton() {
 		return this.header.shadowRoot.querySelector("[data-sap-show-picker='Year']");
-	}
-
-	get _timestamp() {
-		return this.timestamp !== undefined ? this.timestamp : Math.floor(new Date().getTime() / 1000);
-	}
-
-	get _localDate() {
-		return new Date(this._timestamp * 1000);
-	}
-
-	get _calendarDate() {
-		return CalendarDate.fromTimestamp(this._localDate.getTime(), this._primaryCalendarType);
-	}
-
-	get _month() {
-		return this._calendarDate.getMonth();
-	}
-
-	get _primaryCalendarType() {
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
-	}
-
-	get _formatPattern() {
-		return this.formatPattern || "medium"; // get from config
-	}
-
-	get _isPattern() {
-		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
-	}
-
-	get _selectedDates() {
-		return this.selectedDates || [];
-	}
-
-	get _maxDate() {
-		return this.maxDate ? this._getTimeStampFromString(this.maxDate) : this._getMaxCalendarDate();
-	}
-
-	get _minDate() {
-		return this.minDate ? this._getTimeStampFromString(this.minDate) : this._getMinCalendarDate();
-	}
-
-	_getTimeStampFromString(value) {
-		const jsDate = this.getFormat().parse(value);
-		if (jsDate) {
-			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType).toUTCJSDate().valueOf();
-		}
-		return undefined;
-	}
-
-	_getMinCalendarDate() {
-		const minDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
-		minDate.setYear(1);
-		minDate.setMonth(0);
-		minDate.setDate(1);
-		return minDate.valueOf();
-	}
-
-	_getMaxCalendarDate() {
-		const maxDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
-		maxDate.setYear(9999);
-		maxDate.setMonth(11);
-		const tempDate = new CalendarDate(maxDate, this._primaryCalendarType);
-		tempDate.setDate(1);
-		tempDate.setMonth(tempDate.getMonth() + 1, 0);
-		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
-		return maxDate.valueOf();
 	}
 
 	_onkeydown(event) {
@@ -832,7 +699,7 @@ class Calendar extends UI5Element {
 		this._calendarHeight = calendarRect.height.toString();
 
 		const monthPicker = this.shadowRoot.querySelector("[ui5-monthpicker]");
-		monthPicker._selectedDates = [...this.selectedDates];
+		monthPicker.selectedDates = [...this.selectedDates];
 		const currentMonthIndex = monthPicker._itemNav._getItems().findIndex(item => {
 			const calDate = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000, this._primaryCalendarType);
 			return calDate.getMonth() === this._calendarDate.getMonth();
@@ -856,7 +723,7 @@ class Calendar extends UI5Element {
 		this._calendarHeight = calendarRect.height.toString();
 
 		const yearPicker = this.shadowRoot.querySelector("[ui5-yearpicker]");
-		yearPicker._selectedDates = [...this.selectedDates];
+		yearPicker.selectedDates = [...this.selectedDates];
 		const currentYearIndex = yearPicker._itemNav._getItems().findIndex(item => {
 			const calDate = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000, this._primaryCalendarType);
 			return calDate.getYear() === this._calendarDate.getYear();
@@ -941,21 +808,6 @@ class Calendar extends UI5Element {
 		return false;
 	}
 
-	getFormat() {
-		if (this._isPattern) {
-			this._oDateFormat = DateFormat.getInstance({
-				pattern: this._formatPattern,
-				calendarType: this._primaryCalendarType,
-			});
-		} else {
-			this._oDateFormat = DateFormat.getInstance({
-				style: this._formatPattern,
-				calendarType: this._primaryCalendarType,
-			});
-		}
-		return this._oDateFormat;
-	}
-
 	get styles() {
 		return {
 			main: {
@@ -972,10 +824,6 @@ class Calendar extends UI5Element {
 			MonthPicker,
 			YearPicker,
 		];
-	}
-
-	static async onDefine() {
-		await fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript());
 	}
 }
 
