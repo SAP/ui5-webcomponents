@@ -1,5 +1,4 @@
 <table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table">
-
 	<thead>
 		<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" tabindex="{{_columnHeader._tabIndex}}" style="height: 48px" @click="{{_onColumnHeaderClick}}">
 			{{#each visibleColumns}}
@@ -25,5 +24,40 @@
 				</tr>
 			{{/if}}
 		{{/unless}}
+
+		{{#if hasMore}}
+			{{> loadMoreRow}}
+		{{/if}}
 	</tbody>
 </table>
+
+{{#*inline "loadMoreRow"}}
+<tr>
+	<td colspan="{{visibleColumnsCount}}">
+		<div class="ui5-table-load-more-row">
+			<div 
+				tabindex="0"
+				role="button"
+				aria-labelledby="{{loadMoreAriaLabelledBy}}"
+				?active="{{_loadMoreActive}}"
+				@click="{{_onLoadMoreClick}}"
+				@keydown="{{_onLoadMoreKeydown}}"
+				@keyup="{{_onLoadMoreKeyup}}"
+				class="ui5-table-load-more-row-inner"
+			>
+				<span
+					id="{{_id}}-showMore-text"
+					class="ui5-table-load-more-row-text">{{_loadMoreText}}
+				</span>
+
+				{{#if loadMoreSubtext}}
+				<span
+					id="{{_id}}-showMore-desc"
+					class="ui5-table-load-more-row-desc">{{loadMoreSubtext}}
+				</span>
+				{{/if}}
+			</div>
+		</div>
+	</td>
+</tr>
+{{/inline}}

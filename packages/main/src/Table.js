@@ -3,6 +3,13 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+
+// Texts
+import { TABLE_LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
+
+// Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
@@ -63,6 +70,39 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the text that will be displayed inside the additional row at the bottom of the table,
+		 * meant for loading more rows upon press.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> If not specified a built-in text will be displayed.
+		 * <br>
+		 * <b>Note:</b> This property takes effect if <code>hasMore</code> is set.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.11
+		 * @public
+		 */
+		loadMoreText: {
+			type: String,
+		},
+
+		/**
+		 * Defines the subtext that will be displayed under the <code>loadMoreText</code>.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> This property takes effect if <code>hasMore</code> is set.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.11
+		 * @public
+		 */
+		loadMoreSubtext: {
+			type: String,
+		},
+
+		/**
 		 * Defines if the value of <code>noDataText</code> will be diplayed when there is no rows present in the table.
 		 *
 		 * @type {boolean}
@@ -72,6 +112,20 @@ const metadata = {
 		showNoData: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines if additonal row will be displayed at the bottom of the table.
+		 * Pressing on the row will fire the <code>load-more</code> event.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.11
+		 * @public
+		 */
+		hasMore: {
+			type: Boolean,
+		},
+
 		/**
 		 * Determines whether the column headers remain fixed at the top of the page during
 		 * vertical scrolling as long as the Web Component is in the viewport.
@@ -112,6 +166,14 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the active state of the "load more" row.
+		 * @private
+		 */
+		_loadMoreActive: {
+			type: Boolean,
+		},
+
+		/**
 		 * Used to represent the table column header for the purpose of the item navigation as it does not work with DOM objects directly
 		 * @private
 		 */
@@ -146,6 +208,15 @@ const metadata = {
 				poppedColumns: {},
 			},
 		},
+
+		/**
+		 * Fired when the user presses the <code>showMore</code> row of the table.
+		 * <br><br>
+		 * @event sap.ui.webcomponents.main.Table#load-more
+		 * @public
+		 * @since 1.0.0-rc.11
+		 */
+		"load-more": {},
 	},
 };
 
@@ -199,6 +270,10 @@ class Table extends UI5Element {
 		return TableTemplate;
 	}
 
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
+	}
+
 	constructor() {
 		super();
 
@@ -217,6 +292,8 @@ class Table extends UI5Element {
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
 
 		this._handleResize = this.popinContent.bind(this);
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -257,6 +334,29 @@ class Table extends UI5Element {
 	_onColumnHeaderClick(event) {
 		this.getColumnHeader().focus();
 		this._itemNavigation.update(this._columnHeader);
+	}
+
+	_onLoadMoreKeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+			this._loadMoreActive = true;
+		}
+
+		if (isEnter(event)) {
+			this._onLoadMoreClick();
+			this._loadMoreActive = true;
+		}
+	}
+
+	_onLoadMoreKeyup(event) {
+		if (isSpace(event)) {
+			this._onLoadMoreClick();
+		}
+		this._loadMoreActive = false;
+	}
+
+	_onLoadMoreClick() {
+		this.fireEvent("load-more");
 	}
 
 	getColumnHeader() {
@@ -315,6 +415,18 @@ class Table extends UI5Element {
 				visible: !this._hiddenColumns[index],
 			};
 		}, this);
+	}
+
+	get _loadMoreText() {
+		return this.loadMoreText || this.i18nBundle.getText(TABLE_LOAD_MORE_TEXT);
+	}
+
+	get loadMoreAriaLabelledBy() {
+		if (this.moreDataText) {
+			return `${this._id}-showMore-text ${this._id}-showMore-desc`;
+		}
+
+		return `${this._id}-showMore-text`;
 	}
 }
 
