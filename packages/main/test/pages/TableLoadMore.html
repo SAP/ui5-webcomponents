@@ -16,7 +16,7 @@
 <style></style>
 
 <body style="background-color: var(--sapBackgroundColor);">
-	<ui5-input id="inputloadMoreCounter"></ui5-input>
+	<ui5-input id="inputLoadMoreCounter"></ui5-input>
 	<ui5-table id="tbl" has-more>
 		<ui5-table-column id="column-1" slot="columns" width="350px">
 			<ui5-label>Product</ui5-label>
@@ -777,7 +777,7 @@
 			tbl.insertAdjacentHTML('beforeend', html);
 
 			tbl.setAttribute("load-more-subtext", "[" + loadMoreTracker * ROWS + " / 123]");
-			inputloadMoreCounter.value = loadMoreTracker - 1;
+			inputLoadMoreCounter.value = loadMoreTracker - 1;
 		}
 
 		function loadMore() {
@@ -786,8 +786,8 @@
 			console.log("load-more");
 		}
 
-		table.addEventListener("load-more", loadMore);
-		table2.addEventListener("load-more", function() {
+		table.addEventListener("ui5-load-more", loadMore);
+		table2.addEventListener("ui5-load-more", function() {
 			init(table2, ROWS);
 			console.log("load-more");
 		});

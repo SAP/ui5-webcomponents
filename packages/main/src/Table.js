@@ -71,6 +71,8 @@ const metadata = {
 		 * meant for loading more rows upon press.
 		 *
 		 * <br><br>
+		 * <b>Note:</b> If not specified a built-in text will be displayed.
+		 * <br>
 		 * <b>Note:</b> This property takes effect if <code>hasMore</code> is set.
 		 *
 		 * @type {string}
