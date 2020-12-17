@@ -229,7 +229,7 @@ const metadata = {
 		/**
 		 * Fired when the user presses the <code>More</code> button or scrolls to the table's end.
 		 * <br><br>
-		 * 
+		 *
 		 * <b>Note:</b> The event will be fired if <code>growing</code> is set to <code>Button</code> or <code>Scroll</code>.
 		 * @event sap.ui.webcomponents.main.Table#load-more
 		 * @public
@@ -347,7 +347,7 @@ class Table extends UI5Element {
 	}
 
 	onEnterDOM() {
-		if(!isIE()) {
+		if (!isIE()) {
 			this.growingIntersectionObserver = this.getIntersectionObserver();
 		}
 
@@ -357,7 +357,7 @@ class Table extends UI5Element {
 	onExitDOM() {
 		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
 
-		if(!isIE()) {
+		if (!isIE()) {
 			this.growingIntersectionObserver.disconnect();
 			this.growingIntersectionObserver = null;
 			this.tableEndObserved = false;
