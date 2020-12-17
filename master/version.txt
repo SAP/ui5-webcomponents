@@ -1,5 +1,7 @@
-commit fd38af85c2bcc78c8969a59a2e317ffd02620e5a
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Dec 17 15:50:44 2020 +0200
+commit 2e5d5cd0d113f11cb454c499e0241eb555de2294
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Dec 17 16:57:37 2020 +0200
 
-    refactor: Date/time components refactoring part 1 (#2586)
+    feat(ui5-table): add "loadMore" capability (#2589)
+    
+    Adds "loadMore" capability to the Table through a special row, displayed at the bottom as first part of the following requirement https://github.com/SAP/ui5-webcomponents/issues/2570 At later point, the loadMore capability will be available upon scroll as well.
