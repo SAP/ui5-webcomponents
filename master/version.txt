@@ -1,7 +1,5 @@
-commit 2aeb1c518a4d2c7638e2ad832c7bbb5dfffb1d53
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Fri Dec 18 15:07:16 2020 +0800
+commit f1f9d888f1a9d1d0b38f655566074cd2af419b8c
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Dec 18 09:52:56 2020 +0200
 
-    chore: translation delivery (#2594)
-    
-    Change-Id: I2a6ee749888af9a1e3cc4d3f4687c9a66a863721
+    refactor: simplify ItemNavigation usage in datetime components (#2592)
