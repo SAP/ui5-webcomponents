@@ -12,6 +12,6 @@ const debounce = (fn, delay) => {
 		debounceInterval = null;
 		fn();
 	}, delay);
-}
+};
 
 export default debounce;
