@@ -7,6 +7,7 @@ import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 
 // Texts
 import {
@@ -343,7 +344,7 @@ class Wizard extends UI5Element {
 			return;
 		}
 
-		this.debounce(this.changeSelectionByScroll.bind(this, event.target.scrollTop), Wizard.SCROLL_DEBOUNCE_RATE);
+		debounce(this.changeSelectionByScroll.bind(this, event.target.scrollTop), Wizard.SCROLL_DEBOUNCE_RATE);
 	}
 
 	/**
@@ -658,18 +659,6 @@ class Wizard extends UI5Element {
 
 			this.selectedStepIndex = selectedStepIndex;
 		}
-	}
-
-	/**
-	 * Delays function execution by given threshold - used to delay the scroll event handling.
-	 * @private
-	 */
-	debounce(fn, delay) {
-		clearTimeout(this.debounceInterval);
-		this.debounceInterval = setTimeout(() => {
-			this.debounceInterval = null;
-			fn();
-		}, delay);
 	}
 
 	/**

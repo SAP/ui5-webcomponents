@@ -6,7 +6,8 @@ import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import TableGrowingType from "./types/TableGrowingType.js";
+import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
+import TableGrowingMode from "./types/TableGrowingMode.js";
 
 // Texts
 import { TABLE_LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
@@ -131,16 +132,16 @@ const metadata = {
 		 * <code>None</code> (default) - The growing is off.
 		 * <br><br>
 		 *
-		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported Internet Explorer,
+		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * and the component will fallback to <code>growing="Button"</code>.
-		 * @type {TableGrowingType}
+		 * @type {TableGrowingMode}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.11
 		 * @public
 		 */
 		growing: {
-			type: TableGrowingType,
-			defaultvalue: TableGrowingType.None,
+			type: TableGrowingMode,
+			defaultvalue: TableGrowingMode.None,
 		},
 
 		/**
@@ -405,7 +406,7 @@ class Table extends UI5Element {
 
 	onInteresection(entries) {
 		if (entries.some(entry => entry.isIntersecting)) {
-			this.debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
+			debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
 		}
 	}
 
@@ -486,14 +487,14 @@ class Table extends UI5Element {
 	get useMoreRow() {
 		if (isIE()) {
 			// On IE fallback to "More" button, even if growing of type "Scroll" is set.
-			return this.growing === TableGrowingType.Button || this.growing === TableGrowingType.Scroll;
+			return this.growing === TableGrowingMode.Button || this.growing === TableGrowingMode.Scroll;
 		}
 
-		return this.growing === TableGrowingType.Button;
+		return this.growing === TableGrowingMode.Button;
 	}
 
 	get growsOnScroll() {
-		return !isIE() && this.growing === TableGrowingType.Scroll;
+		return !isIE() && this.growing === TableGrowingMode.Scroll;
 	}
 
 	get _moreText() {
@@ -510,14 +511,6 @@ class Table extends UI5Element {
 
 	get tableEndDOM() {
 		return this.shadowRoot.querySelector(".ui5-table-end-marker");
-	}
-
-	debounce(fn, delay) {
-		clearTimeout(this.debounceInterval);
-		this.debounceInterval = setTimeout(() => {
-			this.debounceInterval = null;
-			fn();
-		}, delay);
 	}
 }
 

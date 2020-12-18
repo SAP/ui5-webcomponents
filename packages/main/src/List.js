@@ -5,6 +5,7 @@ import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/Tabbab
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -553,7 +554,7 @@ class List extends UI5Element {
 		if (!this.infiniteScroll) {
 			return;
 		}
-		this.debounce(this.loadMore.bind(this, event.target), INFINITE_SCROLL_DEBOUNCE_RATE);
+		debounce(this.loadMore.bind(this, event.target), INFINITE_SCROLL_DEBOUNCE_RATE);
 	}
 
 	_onfocusin(event) {
@@ -766,14 +767,6 @@ class List extends UI5Element {
 		if (scrollHeight - BUSYINDICATOR_HEIGHT <= height + scrollTop) {
 			this.fireEvent("load-more");
 		}
-	}
-
-	debounce(fn, delay) {
-		clearTimeout(this.debounceInterval);
-		this.debounceInterval = setTimeout(() => {
-			this.debounceInterval = null;
-			fn();
-		}, delay);
 	}
 
 	static get dependencies() {
