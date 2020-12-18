@@ -75,19 +75,9 @@ class MonthPicker extends PickerBase {
 			pageSize: 12,
 			rowSize: 3,
 			behavior: ItemNavigationBehavior.Paging,
+			getItemsCallback: () => this.focusableMonths,
 			affectedPropertiesNames: ["_quarters"],
 		});
-
-		this._itemNav.getItemsCallback = () => {
-			const focusableMonths = [];
-
-			for (let i = 0; i < this._quarters.length; i++) {
-				const quarter = this._quarters[i].filter(x => !x.disabled);
-				focusableMonths.push(quarter);
-			}
-
-			return [].concat(...focusableMonths);
-		};
 
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,
@@ -150,9 +140,8 @@ class MonthPicker extends PickerBase {
 	_onmousedown(event) {
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
 			const targetTimestamp = this.getTimestampFromDom(event.target);
-			const focusedItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === targetTimestamp);
-			this._itemNav.currentIndex = focusedItemIndex;
-			this._itemNav.focusCurrent();
+			const focusedItem = this.focusableMonths.find(item => parseInt(item.timestamp) === targetTimestamp);
+			this._itemNav.update(focusedItem);
 		}
 	}
 
@@ -195,6 +184,17 @@ class MonthPicker extends PickerBase {
 			maxDateCheck = maxDate && ((currentDateYear === maxDate.getFullYear() && monthIndex > maxDate.getMonth()) || (currentDateYear > maxDate.getFullYear()));
 
 		return maxDateCheck || minDateCheck;
+	}
+
+	get focusableMonths() {
+		const focusableMonths = [];
+
+		for (let i = 0; i < this._quarters.length; i++) {
+			const quarter = this._quarters[i].filter(x => !x.disabled);
+			focusableMonths.push(quarter);
+		}
+
+		return [].concat(...focusableMonths);
 	}
 
 	get styles() {

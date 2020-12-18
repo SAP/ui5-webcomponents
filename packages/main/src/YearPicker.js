@@ -83,19 +83,9 @@ class YearPicker extends PickerBase {
 			pageSize: 20,
 			rowSize: 4,
 			behavior: ItemNavigationBehavior.Paging,
+			getItemsCallback: () => this.focusableYears,
 			affectedPropertiesNames: ["_yearIntervals"],
 		});
-
-		this._itemNav.getItemsCallback = () => {
-			const focusableYears = [];
-
-			for (let i = 0; i < this._yearIntervals.length; i++) {
-				const yearInterval = this._yearIntervals[i].filter(x => !x.disabled);
-				focusableYears.push(yearInterval);
-			}
-
-			return [].concat(...focusableYears);
-		};
 
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,
@@ -181,9 +171,8 @@ class YearPicker extends PickerBase {
 	_onmousedown(event) {
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
 			const targetTimestamp = this.getTimestampFromDom(event.target);
-			const focusedItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === targetTimestamp);
-			this._itemNav.currentIndex = focusedItemIndex;
-			this._itemNav.focusCurrent();
+			const focusedItem = this.focusableYears.find(item => parseInt(item.timestamp) === targetTimestamp);
+			this._itemNav.update(focusedItem);
 		}
 	}
 
@@ -267,6 +256,17 @@ class YearPicker extends PickerBase {
 			maxDateCheck = maxDate && year > maxDate.getFullYear();
 
 		return minDateCheck || maxDateCheck;
+	}
+
+	get focusableYears() {
+		const focusableYears = [];
+
+		for (let i = 0; i < this._yearIntervals.length; i++) {
+			const yearInterval = this._yearIntervals[i].filter(x => !x.disabled);
+			focusableYears.push(yearInterval);
+		}
+
+		return [].concat(...focusableYears);
 	}
 
 	get styles() {
