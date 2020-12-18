@@ -1,24 +1,29 @@
 <div
 	class="ui5-select-root"
 	dir="{{effectiveDir}}"
-	tabindex="{{tabIndex}}"
 	id="{{_id}}-select"
-	role="combobox"
-	value="{{_text}}"
-	aria-haspopup="listbox"
-	aria-label="{{ariaLabelText}}"
-	aria-describedby="{{valueStateTextId}}"
-	aria-disabled="{{isDisabled}}"
-	aria-required="{{required}}"
-	aria-expanded="{{_isPickerOpen}}"
-	@keydown="{{_onkeydown}}"
-	@keyup="{{_onkeyup}}"
-	@focusin="{{_onfocusin}}"
-	@focusout="{{_onfocusout}}"
 	@click="{{_toggleRespPopover}}"
 >
 	<div class="ui5-select-label-root">
 		<ui5-label>{{_text}}</ui5-label>
+	</div>
+
+	<div
+		class="ui5-hidden-text"
+		tabindex="{{tabIndex}}"
+		role="combobox"
+		aria-haspopup="listbox"
+		aria-label="{{ariaLabelText}}"
+		aria-describedby="{{valueStateTextId}}"
+		aria-disabled="{{isDisabled}}"
+		aria-required="{{required}}"
+		aria-expanded="{{_isPickerOpen}}"
+		@keydown="{{_onkeydown}}"
+		@keyup="{{_onkeyup}}"
+		@focusin="{{_onfocusin}}"
+		@focusout="{{_onfocusout}}"
+	>
+		{{_text}}
 	</div>
 
 	<ui5-icon
