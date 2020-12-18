@@ -1,5 +1,7 @@
-commit f1f9d888f1a9d1d0b38f655566074cd2af419b8c
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Dec 18 09:52:56 2020 +0200
+commit 50304f58cd751ab9f378a9a41c5ee2a8a9a06ce2
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Dec 18 17:29:49 2020 +0200
 
-    refactor: simplify ItemNavigation usage in datetime components (#2592)
+    feat(ui5-option): provide stableDomRef (#2366)
+    
+    Fixes: #1718

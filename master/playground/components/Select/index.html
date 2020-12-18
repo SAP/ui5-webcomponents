@@ -2413,7 +2413,13 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3> The <code>ui5-select</code> component is used to create a drop-down list. The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-option</code> component.
 
-<h3>Keyboard Handling</h3> The <code>ui5-select</code> provides advanced keyboard handling. If the <code>ui5-select</code> is focused, you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys. Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys. <br> <h3>ES6 Module Import</h3> <code>import "@ui5/webcomponents/dist/Select";</code> <br> <code>import "@ui5/webcomponents/dist/Option";</code>
+<h3>Keyboard Handling</h3> The <code>ui5-select</code> provides advanced keyboard handling. If the <code>ui5-select</code> is focused, you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys. Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys. <br>
+
+<h3>Stable DOM Refs</h3>
+
+In the context of <code>ui5-select</code>, you can provide a custom stable DOM ref for: <ul> <li>Every <code>ui5-option</code> that you provide. Example: <code><ui5-option stable-dom-ref="option1"></ui5-option></code></li> </ul>
+
+<h3>ES6 Module Import</h3> <code>import "@ui5/webcomponents/dist/Select";</code> <br> <code>import "@ui5/webcomponents/dist/Option";</code>
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -2560,7 +2566,7 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3>
 
-The <code>ui5-option</code> component defines the content of an opton in the <code>ui5-select</code>.
+The <code>ui5-option</code> component defines the content of an option in the <code>ui5-select</code>.
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -2597,6 +2603,19 @@ The <code>ui5-option</code> component defines the content of an opton in the <co
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          stableDomRef
+                            <br>
+                            <code>stable-dom-ref</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the stable selector that you can use via getStableDomRef method.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.10</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           value
                             <br>
