@@ -1,4 +1,4 @@
-<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table">
+<table class="ui5-table-root" border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table">
 	<thead>
 		<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" tabindex="{{_columnHeader._tabIndex}}" style="height: 48px" @click="{{_onColumnHeaderClick}}">
 			{{#each visibleColumns}}
@@ -25,12 +25,17 @@
 			{{/if}}
 		{{/unless}}
 
-		{{#if useMoreRow}}
+
+		{{#if busy}}
+			{{> busyRow}}
+		{{/if}}
+
+		{{#if growsWithButton}}
 			{{> moreRow}}
 		{{/if}}
 
 		{{#if growsOnScroll}}
-			{{> tableEndMarker}}
+			{{> tableEndRow}}
 		{{/if}}
 	</tbody>
 </table>
@@ -66,10 +71,18 @@
 </tr>
 {{/inline}}
 
-{{#*inline "tableEndMarker"}}
+{{#*inline "tableEndRow"}}
 	<tr tabindex="-1" class="ui5-table-end-row">
 		<td tabindex="-1">
 			<span tabindex="-1" aria-hidden="true" class="ui5-table-end-marker"></span>
+		</td>
+	</tr>
+{{/inline}}
+
+{{#*inline "busyRow"}}
+	<tr tabindex="-1" class="ui5-table-busy-row">
+		<td tabindex="-1" colspan="{{visibleColumnsCount}}" style="text-align: center;">
+			<ui5-busyindicator active size="Medium"></ui5-busyindicator>
 		</td>
 	</tr>
 {{/inline}}

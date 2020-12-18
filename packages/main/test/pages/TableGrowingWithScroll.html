@@ -16,6 +16,18 @@
 <style></style>
 
 <body style="background-color: var(--sapBackgroundColor);">
+<pre><code>
+&ltui5-table growing="Scroll">&lt/ui5-table>
+
+table.addEventListener("load-more", () => {
+	table.busy = true; // set busy state
+
+	setTimeout(function() { // load items -  make take some time
+		loadMoreRows();
+		table.busy = false; // remove busy state
+	}, 1500);
+});
+</code></pre>
 	<br><br>
 	<ui5-input id="inputLoadMoreCounter"></ui5-input>
 	<br><br>
@@ -23,7 +35,6 @@
 	<br><br>
 
 	<section>
-		<ui5-busyindicator id="ind" style="display: block;">
 			<ui5-table id="tbl" growing="Scroll">
 				<ui5-table-column id="column-1" slot="columns" width="350px">
 					<ui5-label>Product</ui5-label>
@@ -47,7 +58,6 @@
 					<ui5-label>Price</ui5-label>
 				</ui5-table-column>
 			</ui5-table>
-		</ui5-busyindicator>
 	</section>
 </body>
 
@@ -746,10 +756,9 @@
 				"DimUnit": "cm"
 			}]
 		};
-		var INITIAL_ROWS = 30;
-		var NEW_ROWS = 5
+		var INITIAL_ROWS = 20;
+		var NEW_ROWS = 8;
 		var table = document.getElementById("tbl");
-		var ind = document.getElementById("ind");
 		var btnScroll = document.getElementById("btnScroll");
 		var loadMoreTracker = 1;
 		var timeoutTracker = null;
@@ -762,24 +771,26 @@
 			});
 
 			tbl.insertAdjacentHTML('beforeend', html);
-			inputLoadMoreCounter.value = loadMoreTracker - 1;
 		}
 
 		function loadMore() {
-			ind.setAttribute("active", "true");
+			table.busy = true;
 
 			++loadMoreTracker;
-			init(table, NEW_ROWS);
-			
+			inputLoadMoreCounter.value = loadMoreTracker - 1;
+
 			if (timeoutTracker) {
 				clearTimeout(timeoutTracker);
 			}
+
 			timeoutTracker = setTimeout(function() {
-				ind.active = false;
-			}, 1000);
+				init(table, NEW_ROWS);
+				table.busy = false;
+			}, 1500);
 		}
 
 		table.addEventListener("ui5-load-more", loadMore);
+
 		btnScroll.addEventListener("click", function() {
 			document.scrollingElement.scrollTop = document.scrollingElement.scrollHeight;
 		});

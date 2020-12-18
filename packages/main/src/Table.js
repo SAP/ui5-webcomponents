@@ -8,6 +8,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
+import BusyIndicator from "./BusyIndicator.js";
 
 // Texts
 import { TABLE_LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
@@ -142,6 +143,21 @@ const metadata = {
 		growing: {
 			type: TableGrowingMode,
 			defaultvalue: TableGrowingMode.None,
+		},
+
+		/**
+		 * Defines if the table is in busy state.
+		 * <b>
+		 *
+		 * In this state the component's opacity is reduced
+		 * and busy indicator is displayed at the bottom of the table.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.11
+		 * @public
+		*/
+		busy: {
+			type: Boolean,
 		},
 
 		/**
@@ -290,6 +306,10 @@ class Table extends UI5Element {
 		return TableTemplate;
 	}
 
+	static get dependencies() {
+		return [BusyIndicator];
+	}
+
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
@@ -328,6 +348,7 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
+			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
 		});
@@ -484,7 +505,7 @@ class Table extends UI5Element {
 		return this.growingIntersectionObserver;
 	}
 
-	get useMoreRow() {
+	get growsWithButton() {
 		if (isIE()) {
 			// On IE fallback to "More" button, even if growing of type "Scroll" is set.
 			return this.growing === TableGrowingMode.Button || this.growing === TableGrowingMode.Scroll;
