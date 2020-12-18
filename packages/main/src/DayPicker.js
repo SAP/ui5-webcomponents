@@ -339,7 +339,7 @@ class DayPicker extends PickerBase {
 		const dayPressed = this._isDayPressed(target);
 
 		if (dayPressed) {
-			const targetDate = parseInt(target.getAttribute("data-sap-timestamp"));
+			const targetDate = this.getTimestampFromDom(target);
 			const selectedDay = this.focusableDays.find(day => parseInt(day.timestamp) === targetDate);
 			this._itemNav.update(selectedDay);
 
