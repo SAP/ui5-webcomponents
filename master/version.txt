@@ -1,7 +1,7 @@
-commit 2e5d5cd0d113f11cb454c499e0241eb555de2294
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Dec 17 16:57:37 2020 +0200
+commit 2aeb1c518a4d2c7638e2ad832c7bbb5dfffb1d53
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Fri Dec 18 15:07:16 2020 +0800
 
-    feat(ui5-table): add "loadMore" capability (#2589)
+    chore: translation delivery (#2594)
     
-    Adds "loadMore" capability to the Table through a special row, displayed at the bottom as first part of the following requirement https://github.com/SAP/ui5-webcomponents/issues/2570 At later point, the loadMore capability will be available upon scroll as well.
+    Change-Id: I2a6ee749888af9a1e3cc4d3f4687c9a66a863721
