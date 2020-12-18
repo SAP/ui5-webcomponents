@@ -1,0 +1,67 @@
+<div
+	class="{{classes.main}}"
+	style="{{styles.main}} "
+	@keydown={{_onkeydown}}
+	@focusout={{_onfocusout}}
+>
+
+	<ui5-calendar-header
+		id="{{_id}}-head"
+		month-text="{{_header.monthText}}"
+		year-text="{{_header.yearText}}"
+		.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
+		@ui5-previous-press="{{_header.onPressPrevious}}"
+		@ui5-next-press="{{_header.onPressNext}}"
+		@ui5-show-month-press="{{_header.onBtn1Press}}"
+		@ui5-show-year-press="{{_header.onBtn2Press}}"
+		._isNextButtonDisabled="{{_header._isNextButtonDisabled}}"
+		._isPrevButtonDisabled="{{_header._isPrevButtonDisabled}}"
+		._isMonthButtonHidden="{{_header._isMonthButtonHidden}}"
+		._tabIndex="{{_header.tabIndex}}"
+	></ui5-calendar-header>
+
+	<div id="{{_id}}-content">
+		<ui5-daypicker
+			id="{{_id}}-daypicker"
+			class="{{classes.dayPicker}}"
+			format-pattern="{{_oMonth.formatPattern}}"
+			.selectedDates="{{_oMonth.selectedDates}}"
+			._hidden="{{_oMonth._hidden}}"
+			.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
+			.selection="{{_oMonth.selection}}"
+			.minDate="{{_oMonth.minDate}}"
+			.maxDate="{{_oMonth.maxDate}}"
+			timestamp="{{_oMonth.timestamp}}"
+			@ui5-change="{{_oMonth.onSelectedDatesChange}}"
+			@ui5-navigate="{{_oMonth.onNavigate}}"
+			?hide-week-numbers="{{hideWeekNumbers}}"
+		></ui5-daypicker>
+
+		<ui5-monthpicker
+			id="{{_id}}-MP"
+			class="{{classes.monthPicker}}"
+			format-pattern="{{_oMonth.formatPattern}}"
+			._hidden="{{_monthPicker._hidden}}"
+			.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
+			.minDate="{{_oMonth.minDate}}"
+			.maxDate="{{_oMonth.maxDate}}"
+			timestamp="{{_monthPicker.timestamp}}"
+			@ui5-change="{{_monthPicker.onSelectedMonthChange}}"
+			@ui5-navigate="{{_monthPicker.onNavigate}}"
+		></ui5-monthpicker>
+
+		<ui5-yearpicker
+			id="{{_id}}-YP"
+			class="{{classes.yearPicker}}"
+			format-pattern="{{_oMonth.formatPattern}}"
+			._hidden="{{_yearPicker._hidden}}"
+			.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
+			.minDate="{{_oMonth.minDate}}"
+			.maxDate="{{_oMonth.maxDate}}"
+			timestamp="{{_yearPicker.timestamp}}"
+			._selectedYear="{{_yearPicker._selectedYear}}"
+			@ui5-change="{{_yearPicker.onSelectedYearChange}}"
+			@ui5-navigate="{{_yearPicker.onNavigate}}"
+		></ui5-yearpicker>
+	</div>
+</div>

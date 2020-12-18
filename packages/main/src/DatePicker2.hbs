@@ -1,0 +1,44 @@
+<div
+		class="ui5-date-picker-root"
+		style="{{styles.main}}"
+		@keydown="{{_onkeydown}}"
+		@focusout="{{_onfocusout}}"
+>
+	<!-- INPUT -->
+	<ui5-input
+			id="{{_id}}-inner"
+			class="ui5-date-picker-input"
+			placeholder="{{_placeholder}}"
+			type="{{type}}"
+			value="{{value}}"
+			?disabled="{{disabled}}"
+			?required="{{required}}"
+			?readonly="{{readonly}}"
+			value-state="{{valueState}}"
+			@ui5-change="{{_handleInputChange}}"
+			@ui5-input="{{_handleInputLiveChange}}"
+			data-sap-focus-ref
+			._inputAccInfo ="{{accInfo}}"
+	>
+
+		{{#if valueStateMessage.length}}
+			<slot name="valueStateMessage" slot="valueStateMessage"></slot>
+		{{/if}}
+
+		{{#unless readonly}}
+			<ui5-icon
+				slot="icon"
+				name="{{openIconName}}"
+				tabindex="-1"
+				accessible-name="{{openIconTitle}}"
+				show-tooltip
+				@click="{{togglePicker}}"
+				input-icon
+				?pressed="{{_isPickerOpen}}"
+				dir="{{effectiveDir}}"
+			></ui5-icon>
+		{{/unless}}
+	</ui5-input>
+
+	<slot name="formSupport"></slot>
+</div>

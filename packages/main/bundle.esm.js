@@ -45,6 +45,7 @@ import AvatarGroup from "./dist/AvatarGroup.js";
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
+import Calendar2 from "./dist/Calendar2.js";
 import Card from "./dist/Card.js";
 import Carousel from "./dist/Carousel.js";
 import CheckBox from "./dist/CheckBox.js";
