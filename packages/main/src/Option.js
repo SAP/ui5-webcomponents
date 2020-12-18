@@ -57,7 +57,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-option</code> component defines the content of an opton in the <code>ui5-select</code>.
+ * The <code>ui5-option</code> component defines the content of an option in the <code>ui5-select</code>.
  *
  * @constructor
  * @author SAP SE
