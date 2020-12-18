@@ -59,7 +59,6 @@
 [ui5-wizard-tab] {
 	display: table-cell;
 	position: relative;
-	min-width: 10.5rem;
 }
 
 .ui5-wiz-nav {
