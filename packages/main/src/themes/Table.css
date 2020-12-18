@@ -47,3 +47,7 @@ tr {
 :host([_no-data-displayed]) {
 	border-bottom: 1px solid var(--sapList_TableGroupHeaderBorderColor);
 }
+
+.ui5-table-end-row {
+	height: 0px;
+}
