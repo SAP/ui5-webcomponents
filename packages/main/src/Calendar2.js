@@ -3,13 +3,6 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
-import {
-	isF4,
-	isF4Shift,
-	isTabNext,
-	isTabPrevious,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import PickerBase from "./PickerBase.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
@@ -64,22 +57,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_header: {
-			type: Object,
-		},
-
-		_oMonth: {
-			type: Object,
-		},
-
-		_monthPicker: {
-			type: Object,
-		},
-
-		_yearPicker: {
-			type: Object,
-		},
-
 		_calendarWidth: {
 			type: String,
 			noAttribute: true,
@@ -88,6 +65,14 @@ const metadata = {
 		_calendarHeight: {
 			type: String,
 			noAttribute: true,
+		},
+
+		/**
+		 * Which picker is currently visible to the user: day/month/year
+		 */
+		_currentPicker: {
+			type: String,
+			defaultValue: "day",
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
@@ -184,17 +169,208 @@ class Calendar2 extends PickerBase {
 		return calendarCSS;
 	}
 
-	constructor() {
-		super();
-
-	}
-
-	onBeforeRendering() {
-
-	}
-
 	onAfterRendering() {
+		this._setDimensions();
+	}
 
+	get _headerTabIndex() {
+		return -1;
+	}
+
+	get _headerTexts() {
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType });
+
+		return {
+			month: localeData.getMonths("wide", this._primaryCalendarType)[this._month],
+			year: yearFormat.format(this._localDate, true),
+		};
+	}
+
+	/**
+	 * Only calculate the width/height once upon the first daypicker render - based on the day picker dimensions (as it's the biggest)
+	 * @private
+	 */
+	_setDimensions() {
+		if (this._currentPicker === "day" && !this._calendarWidth) {
+			const calendarRect = this.shadowRoot.querySelector(".ui5-cal-root").getBoundingClientRect();
+			this._calendarWidth = calendarRect.width.toString();
+			this._calendarHeight = calendarRect.height.toString();
+		}
+	}
+
+	/**
+	 * The user clicked the "month" button in the header
+	 */
+	onHeaderShowMonthPress() {
+		this._currentPicker = "month";
+	}
+
+	/**
+	 * The user clicked the "year" button in the header
+	 */
+	onHeaderShowYearPress() {
+		this._currentPicker = "year";
+	}
+
+	/**
+	 * The year clicked the "Previous" button in the header
+	 */
+	onHeaderPreviousPress() {
+		this._showPreviousPage();
+	}
+
+	/**
+	 * The year clicked the "Next" button in the header
+	 */
+	onHeaderNextPress() {
+		this._showNextPage();
+	}
+
+	get _headerButtonsState() {
+		const minDateParsed = this.minDate && this.getFormat().parse(this.minDate);
+		const maxDateParsed = this.maxDate && this.getFormat().parse(this.maxDate);
+		let currentMonth = 0;
+		let currentYear = 1;
+
+		let prevDisabled;
+		let nextDisabled;
+
+		currentMonth = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getMonth();
+		currentYear = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getYear();
+
+		if (this._currentPicker === "day") {
+			if (this.minDate
+				&& minDateParsed.getMonth() === currentMonth
+				&& minDateParsed.getFullYear() === currentYear) {
+				prevDisabled = true;
+			} else {
+				prevDisabled = false;
+			}
+
+			if (this.maxDate
+				&& maxDateParsed.getMonth() === currentMonth
+				&& maxDateParsed.getFullYear() === currentYear) {
+				nextDisabled = true;
+			} else {
+				nextDisabled = false;
+			}
+		}
+
+		if (this._currentPicker === "month") {
+			if (this.minDate
+				&& currentYear === minDateParsed.getFullYear()) {
+				prevDisabled = true;
+			} else {
+				prevDisabled = false;
+			}
+
+			if (this.maxDate
+				&& currentYear === maxDateParsed.getFullYear()) {
+				nextDisabled = true;
+			} else {
+				nextDisabled = false;
+			}
+		}
+
+		if (this._currentPicker === "year") {
+			const cellsFromTheStart = 7;
+			const cellsToTheEnd = 12;
+
+			currentYear = this._yearPicker.timestamp && CalendarDate.fromTimestamp(this._yearPicker.timestamp * 1000).getYear();
+			if (this.minDate
+				&& (currentYear - minDateParsed.getFullYear()) < cellsFromTheStart) {
+				prevDisabled = true;
+			} else {
+				prevDisabled = false;
+			}
+
+			if (this.maxDate
+				&& (maxDateParsed.getFullYear() - currentYear) < cellsToTheEnd) {
+				nextDisabled = true;
+			} else {
+				nextDisabled = false;
+			}
+		}
+
+		return {
+			prevDisabled,
+			nextDisabled,
+		};
+	}
+
+	/**
+	 * The month button is only hidden when the month picker is shown
+	 * @returns {boolean}
+	 * @private
+	 */
+	get _isHeaderMonthButtonHidden() {
+		return this._currentPicker === "month";
+	}
+
+	get _isDayPickerHidden() {
+		return this._currentPicker !== "day";
+	}
+
+	get _isMonthPickerHidden() {
+		return this._currentPicker !== "month";
+	}
+
+	get _isYearPickerHidden() {
+		return this._currentPicker !== "year";
+	}
+
+	onSelectedDatesChange(event) {
+		const selectedDates = event.detail.dates;
+
+		// Deselecting a date in multiple selection type
+		if (this.selection === CalendarSelection.Multiple && this.selectedDates.length > selectedDates.length) {
+			const deselectedDates = this.selectedDates.filter(timestamp => !selectedDates.includes(timestamp));
+			this.timestamp = deselectedDates[0];
+		} else {
+			this.timestamp = selectedDates[selectedDates.length - 1];
+		}
+
+		this.selectedDates = [...selectedDates];
+		this.fireEvent("selected-dates-change", { dates: selectedDates });
+	}
+
+	onSelectedMonthChange(event) {
+		const oNewDate = this._calendarDate;
+		const oFocusedDate = CalendarDate.fromTimestamp(event.detail.timestamp * 1000, this._primaryCalendarType);
+
+		oNewDate.setMonth(oFocusedDate.getMonth());
+		this.timestamp = oNewDate.valueOf() / 1000;
+
+		this._currentPicker = "day";
+		// this._setDayPickerCurrentIndex(oNewDate, true);
+	}
+
+	onSelectedYearChange(event) {
+		const oNewDate = this._calendarDate;
+		const oFocusedDate = CalendarDate.fromTimestamp(event.detail.timestamp * 1000, this._primaryCalendarType);
+
+		oNewDate.setYear(oFocusedDate.getYear());
+		this.timestamp = oNewDate.valueOf() / 1000;
+
+		this._currentPicker = "day";
+		// this._setDayPickerCurrentIndex(oNewDate, true);
+	}
+
+	onNavigate(event) {
+		this.timestamp = event.detail.timestamp;
+	}
+
+	get _currentPickerDOM() {
+		return this.shadowRoot.querySelector(`[ui5-${this._currentPicker}picker]`);
+	}
+
+	_showPreviousPage() {
+		this._currentPickerDOM._showPreviousPage();
+	}
+
+	_showNextPage() {
+		this._currentPickerDOM._showNextPage();
 	}
 
 	get classes() {
@@ -203,13 +379,13 @@ class Calendar2 extends PickerBase {
 				"ui5-cal-root": true,
 			},
 			dayPicker: {
-				".ui5-daypicker--hidden": !this._yearPicker._hidden || !this._monthPicker._hidden,
+				".ui5-daypicker--hidden": this._isDayPickerHidden,
 			},
 			yearPicker: {
-				"ui5-yearpicker--hidden": this._yearPicker._hidden,
+				"ui5-yearpicker--hidden": this._isYearPickerHidden,
 			},
 			monthPicker: {
-				"ui5-monthpicker--hidden": this._monthPicker._hidden,
+				"ui5-monthpicker--hidden": this._isMonthPickerHidden,
 			},
 		};
 	}

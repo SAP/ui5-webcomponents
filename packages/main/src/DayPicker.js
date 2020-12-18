@@ -676,6 +676,64 @@ class DayPicker extends PickerBase {
 		this._navigateAndWaitRerender(currentTimestamp);
 	}
 
+	_showPreviousPage() {
+		const currentItem = this._itemNav._getCurrentItem();
+		let newDate;
+		// let currentDate;
+		let currentTimestamp;
+
+		currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
+		const currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+		newDate = new CalendarDate(currentDate, this._primaryCalendarType);
+		newDate.setMonth(newDate.getMonth() - 1);
+		if (currentDate.getMonth() === newDate.getMonth()) {
+			newDate.setDate(0);
+		}
+
+		if (!newDate) {
+			return;
+		}
+
+		if (newDate.valueOf() < this._minDate) {
+			newDate = CalendarDate.fromLocalJSDate(new Date(this._minDate), this._primaryCalendarType);
+		} else if (newDate.valueOf() > this._maxDate) {
+			newDate = CalendarDate.fromLocalJSDate(new Date(this._maxDate), this._primaryCalendarType);
+		}
+
+		currentTimestamp = (newDate.valueOf() / 1000);
+
+		this._navigateAndWaitRerender(currentTimestamp);
+	}
+
+	_showNextPage() {
+		const currentItem = this._itemNav._getCurrentItem();
+		let newDate;
+		// let currentDate;
+		let currentTimestamp;
+
+		currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
+		const currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
+		newDate = new CalendarDate(currentDate, this._primaryCalendarType);
+		newDate.setMonth(newDate.getMonth() + 1);
+		if (newDate.getMonth() - currentDate.getMonth() > 1) {
+			newDate.setDate(0);
+		}
+
+		if (!newDate) {
+			return;
+		}
+
+		if (newDate.valueOf() < this._minDate) {
+			newDate = CalendarDate.fromLocalJSDate(new Date(this._minDate), this._primaryCalendarType);
+		} else if (newDate.valueOf() > this._maxDate) {
+			newDate = CalendarDate.fromLocalJSDate(new Date(this._maxDate), this._primaryCalendarType);
+		}
+
+		currentTimestamp = (newDate.valueOf() / 1000);
+
+		this._navigateAndWaitRerender(currentTimestamp);
+	}
+
 	_handleItemNavigationAfterFocus() {
 		const currentItem = this._itemNav._getCurrentItem();
 		const currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp"));

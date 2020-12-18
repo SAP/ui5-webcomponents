@@ -220,33 +220,61 @@ class YearPicker extends PickerBase {
 	}
 
 	_handleItemNavigationBorderReach(event) {
+		if (event.start) {
+			this._showPreviousPage();
+		}
+
+		if (event.end) {
+			this._showNextPage();
+		}
+	}
+
+	_showPreviousPage() {
 		const oCalDate = this._calendarDate;
 		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
 		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
 		oCalDate.setMonth(0);
 		oCalDate.setDate(1);
 
-		if (event.end) {
-			oCalDate.setYear(oCalDate.getYear() + YearPicker._ITEMS_COUNT);
-		} else if (event.start) {
-			if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX < minCalendarDateYear) {
-				return;
-			}
-			oCalDate.setYear(oCalDate.getYear() - YearPicker._ITEMS_COUNT);
+		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX < minCalendarDateYear) {
+			return;
 		}
+		oCalDate.setYear(oCalDate.getYear() - YearPicker._ITEMS_COUNT);
 
 		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX > maxCalendarDateYear) {
 			return;
 		}
 
 		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX)
-		&& this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)) {
+			&& this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)) {
 			return;
 		}
 
 		this.timestamp = oCalDate.valueOf() / 1000;
 
-		this.fireEvent("navigate", event);
+		this.fireEvent("navigate", { timestamp: this.timestamp });
+	}
+
+	_showNextPage() {
+		const oCalDate = this._calendarDate;
+		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
+		oCalDate.setMonth(0);
+		oCalDate.setDate(1);
+
+		oCalDate.setYear(oCalDate.getYear() + YearPicker._ITEMS_COUNT);
+
+		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX > maxCalendarDateYear) {
+			return;
+		}
+
+		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX)
+			&& this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)) {
+			return;
+		}
+
+		this.timestamp = oCalDate.valueOf() / 1000;
+
+		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}
 
 	_isOutOfSelectableRange(year) {

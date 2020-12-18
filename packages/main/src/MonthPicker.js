@@ -1,4 +1,5 @@
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
@@ -173,7 +174,42 @@ class MonthPicker extends PickerBase {
 			return;
 		}
 
-		this.fireEvent("navigate", event);
+		// copied from Calendar.js
+		if (event.start) {
+			this._showPreviousPage();
+		}
+
+		if (event.end) {
+			this._showNextPage();
+		}
+	}
+
+	_showPreviousPage() {
+		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
+		if (this._calendarDate.getYear() === minCalendarDateYear) {
+			return;
+		}
+
+		const oNewDate = this._calendarDate;
+		oNewDate.setYear(this._calendarDate.getYear() - 1);
+
+		this.timestamp = oNewDate.valueOf() / 1000;
+
+		this.fireEvent("navigate", { timestamp: this.timestamp });
+	}
+
+	_showNextPage() {
+		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
+		if (this._calendarDate.getYear() === maxCalendarDateYear) {
+			return;
+		}
+
+		const newDate = this._calendarDate;
+		newDate.setYear(this._calendarDate.getYear() + 1);
+
+		this.timestamp = newDate.valueOf() / 1000;
+
+		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}
 
 	_isOutOfSelectableRange(monthIndex) {
