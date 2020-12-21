@@ -113,6 +113,10 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
+		_focusedDate: {
+			type: Object,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
@@ -278,9 +282,20 @@ class DayPicker extends PickerBase {
 		}
 		/* eslint-enable no-loop-func */
 
-		if (!isDaySelected && todayIndex && this._itemNav.current === 0) {
+		if (!isDaySelected && todayIndex && this._itemNav.currentIndex === 0) { // current === 0 was wrong, it is a setter not a getter
 			this._itemNav.current = todayIndex;
 		}
+
+		if (typeof this._focusedDate.isSame === "function") {
+			const currentIndex = this.focusableDays.findIndex(item => {
+				return CalendarDate.fromLocalJSDate(new Date(item.timestamp * 1000), this._primaryCalendarType).toString() === this._focusedDate.toString();
+			});
+			this._focusedDate = {};
+			this._itemNav.currentIndex = currentIndex;
+		}
+
+		// const selectedItem = this.focusableDays.find(item => CalendarDate.fromTimestamp(item.timestamp * 1000).toString() === this._calendarDate.toString());
+		// this._itemNav.update(selectedItem);
 
 		const aDayNamesWide = localeData.getDays("wide", this._primaryCalendarType);
 		const aDayNamesAbbreviated = localeData.getDays("abbreviated", this._primaryCalendarType);
@@ -318,6 +333,10 @@ class DayPicker extends PickerBase {
 			const lastTimestamp = (visualizedDates.length === 1) ? parseInt(dayItems[this._itemNav.currentIndex].dataset.sapTimestamp) : this.selectedDates[1];
 
 			this._updateSelectionBetween(dayItems, firstTimestamp, lastTimestamp);
+		}
+
+		if (!this._hidden) {
+			this._itemNav.focusCurrent();
 		}
 	}
 

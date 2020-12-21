@@ -3,6 +3,10 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
+import {
+	isF4,
+	isF4Shift,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import PickerBase from "./PickerBase.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
@@ -55,16 +59,6 @@ const metadata = {
 		 */
 		hideWeekNumbers: {
 			type: Boolean,
-		},
-
-		_calendarWidth: {
-			type: String,
-			noAttribute: true,
-		},
-
-		_calendarHeight: {
-			type: String,
-			noAttribute: true,
 		},
 
 		/**
@@ -169,14 +163,6 @@ class Calendar2 extends PickerBase {
 		return calendarCSS;
 	}
 
-	onAfterRendering() {
-		this._setDimensions();
-	}
-
-	get _headerTabIndex() {
-		return -1;
-	}
-
 	get _headerTexts() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType });
@@ -185,18 +171,6 @@ class Calendar2 extends PickerBase {
 			month: localeData.getMonths("wide", this._primaryCalendarType)[this._month],
 			year: yearFormat.format(this._localDate, true),
 		};
-	}
-
-	/**
-	 * Only calculate the width/height once upon the first daypicker render - based on the day picker dimensions (as it's the biggest)
-	 * @private
-	 */
-	_setDimensions() {
-		if (this._currentPicker === "day" && !this._calendarWidth) {
-			const calendarRect = this.shadowRoot.querySelector(".ui5-cal-root").getBoundingClientRect();
-			this._calendarWidth = calendarRect.width.toString();
-			this._calendarHeight = calendarRect.height.toString();
-		}
 	}
 
 	/**
@@ -230,14 +204,12 @@ class Calendar2 extends PickerBase {
 	get _headerButtonsState() {
 		const minDateParsed = this.minDate && this.getFormat().parse(this.minDate);
 		const maxDateParsed = this.maxDate && this.getFormat().parse(this.maxDate);
-		let currentMonth = 0;
-		let currentYear = 1;
 
 		let prevDisabled;
 		let nextDisabled;
 
-		currentMonth = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getMonth();
-		currentYear = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getYear();
+		const currentMonth = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getMonth();
+		const currentYear = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getYear();
 
 		if (this._currentPicker === "day") {
 			if (this.minDate
@@ -277,7 +249,6 @@ class Calendar2 extends PickerBase {
 			const cellsFromTheStart = 7;
 			const cellsToTheEnd = 12;
 
-			currentYear = this._yearPicker.timestamp && CalendarDate.fromTimestamp(this._yearPicker.timestamp * 1000).getYear();
 			if (this.minDate
 				&& (currentYear - minDateParsed.getFullYear()) < cellsFromTheStart) {
 				prevDisabled = true;
@@ -343,7 +314,7 @@ class Calendar2 extends PickerBase {
 		this.timestamp = oNewDate.valueOf() / 1000;
 
 		this._currentPicker = "day";
-		// this._setDayPickerCurrentIndex(oNewDate, true);
+		this._dayPickerFocusedDate = oNewDate;
 	}
 
 	onSelectedYearChange(event) {
@@ -354,7 +325,7 @@ class Calendar2 extends PickerBase {
 		this.timestamp = oNewDate.valueOf() / 1000;
 
 		this._currentPicker = "day";
-		// this._setDayPickerCurrentIndex(oNewDate, true);
+		this._dayPickerFocusedDate = oNewDate;
 	}
 
 	onNavigate(event) {
@@ -371,6 +342,16 @@ class Calendar2 extends PickerBase {
 
 	_showNextPage() {
 		this._currentPickerDOM._showNextPage();
+	}
+
+	_onkeydown(event) {
+		if (isF4(event)) {
+			this._currentPicker = "month";
+		}
+
+		if (isF4Shift(event)) {
+			this._currentPicker = "year";
+		}
 	}
 
 	get classes() {

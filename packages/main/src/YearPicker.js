@@ -158,7 +158,9 @@ class YearPicker extends PickerBase {
 	}
 
 	onAfterRendering() {
-		this._itemNav.focusCurrent();
+		if (!this._hidden) {
+			this._itemNav.focusCurrent();
+		}
 	}
 
 	_setCurrentItemTabIndex(index) {
