@@ -47,7 +47,7 @@ const metadata = {
 		/**
 		 * Defines the stable selector that you can use via getStableDomRef method.
 		 * @public
-		 * @since 1.0.0-rc.10
+		 * @since 1.0.0-rc.11
 		 */
 		stableDomRef: {
 			type: String,
