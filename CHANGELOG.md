@@ -59,7 +59,35 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ui5-table:** add "loadMore" capability ([#2589](https://github.com/SAP/ui5-webcomponents/issues/2589)) ([2e5d5cd](https://github.com/SAP/ui5-webcomponents/commit/2e5d5cd))
 
 
+### BREAKING CHANGE
 
+* **ui5-flexible-column-layout:** introduce accessibilityTexts property ([#2571](https://github.com/SAP/ui5-webcomponents/issues/2571)) ([a634532](https://github.com/SAP/ui5-webcomponents/commit/a634532))
+
+The startColumnAccessibleName, midColumnAccessibleName and endColumnAccessibleName properties have been removed. Use the new accessibilityTexts property to provide these (as keys to the object).
+
+* **ui5-timeline:** move ui5-timeline to fiori package ([#2498](https://github.com/SAP/ui5-webcomponents/issues/2498)) ([e0a32f4](https://github.com/SAP/ui5-webcomponents/commit/e0a32f4))
+
+Timeline component has been moved to the "fiori" package. 
+
+If previously had:
+```js
+import Timeline from "@ui5/webcomponents/dist/Timeline.js";
+```
+you have to change it to:
+```js
+import Timeline from "@ui5/webcomponents-fiori/dist/Timeline.js";
+```
+
+* **ui5-notification-action:** rename component ([#2580](https://github.com/SAP/ui5-webcomponents/issues/2580)) ([10a6b92](https://github.com/SAP/ui5-webcomponents/commit/10a6b92))
+
+If you previously used `ui5-notification-overflow-action` and had the following import statement:
+```js
+import "@ui5/webcomponents-fiori/dist/NotificationOverflowAction.js";
+```
+now you have to  use the `ui5-notification-action` tag and import  the following module:
+```js
+import "@ui5/webcomponents-fiori/dist/NotificationAction.js";
+```
 
 
 # [1.0.0-rc.10](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.9...v1.0.0-rc.10) (2020-11-12)
