@@ -1,7 +1,5 @@
-commit 45ba21ca18b93d7df064972946e30290f6520d96
+commit 82b703434ba38834707cae9c039e53fc5609f757
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Dec 21 15:19:13 2020 +0200
+Date:   Mon Dec 21 15:33:05 2020 +0200
 
-    fix(ui5-slider): default slot is never used (#2609)
-    
-    The default slot is never used.
+    chore: release v1.0.0-rc.11 (#2603)
