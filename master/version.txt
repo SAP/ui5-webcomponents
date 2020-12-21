@@ -1,10 +1,7 @@
-commit 1d73d973c94ea485850194c02c4914b76210e068
+commit 45ba21ca18b93d7df064972946e30290f6520d96
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Dec 21 13:48:55 2020 +0200
+Date:   Mon Dec 21 15:19:13 2020 +0200
 
-    fix(ui5-bar): render ui5-icon inside bar properly (#2608)
+    fix(ui5-slider): default slot is never used (#2609)
     
-    Ensure ui5-icon is displayed when used inside ui5-bar. Currently the ui5-icon does not get displayed.
-    The solution is to remove **"::slotted(*) { display: flex;"** because it breaks the ui5-icon's display (and potentially the display of other components).
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2600
+    The default slot is never used.
