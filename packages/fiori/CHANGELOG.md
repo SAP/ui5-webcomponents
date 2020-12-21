@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
+
+
+### Bug Fixes
+
+* **docs:** fix ui5-side-navigation sample ([#2564](https://github.com/SAP/ui5-webcomponents/issues/2564)) ([0338fdc](https://github.com/SAP/ui5-webcomponents/commit/0338fdc))
+* **ui5-shellbar:** fix overlapping of the search box over icons ([#2155](https://github.com/SAP/ui5-webcomponents/issues/2155)) ([3597902](https://github.com/SAP/ui5-webcomponents/commit/3597902)), closes [#2044](https://github.com/SAP/ui5-webcomponents/issues/2044)
+* **ui5-upload-collection:** fire drop only when files are dropped within dnd overlay ([#2527](https://github.com/SAP/ui5-webcomponents/issues/2527)) ([455f614](https://github.com/SAP/ui5-webcomponents/commit/455f614))
+* **ui5-wizard:** correct phone breakpoint size ([#2596](https://github.com/SAP/ui5-webcomponents/issues/2596)) ([c98d9ba](https://github.com/SAP/ui5-webcomponents/commit/c98d9ba))
+* **ui5-wizard:** fix styling issues ([#2547](https://github.com/SAP/ui5-webcomponents/issues/2547)) ([65cb42f](https://github.com/SAP/ui5-webcomponents/commit/65cb42f)), closes [#2523](https://github.com/SAP/ui5-webcomponents/issues/2523)
+
+
+### Features
+
+* **framework:** Change child-parent invalidation API ([#2541](https://github.com/SAP/ui5-webcomponents/issues/2541)) ([a1a3f80](https://github.com/SAP/ui5-webcomponents/commit/a1a3f80))
+* **ui5-bar:** initial implementation ([#2533](https://github.com/SAP/ui5-webcomponents/issues/2533)) ([5c601cd](https://github.com/SAP/ui5-webcomponents/commit/5c601cd)), closes [#2434](https://github.com/SAP/ui5-webcomponents/issues/2434)
+* **ui5-flexible-column-layout:** add start/mid/endColumnAccessibleName properties ([#2483](https://github.com/SAP/ui5-webcomponents/issues/2483)) ([fb0b24c](https://github.com/SAP/ui5-webcomponents/commit/fb0b24c))
+* **ui5-side-navigation:** add "header" slot ([#2520](https://github.com/SAP/ui5-webcomponents/issues/2520)) ([b5c4a92](https://github.com/SAP/ui5-webcomponents/commit/b5c4a92)), closes [#2518](https://github.com/SAP/ui5-webcomponents/issues/2518)
+* **ui5-side-navigation-item, ui5-side-navigation-sub-item:** introduce click event ([#2298](https://github.com/SAP/ui5-webcomponents/issues/2298)) ([d73ce38](https://github.com/SAP/ui5-webcomponents/commit/d73ce38))
+
+
+
+
+
 # [1.0.0-rc.10](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.9...v1.0.0-rc.10) (2020-11-12)
 
 
