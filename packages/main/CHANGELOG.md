@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.3](https://github.com/SAP/ui5-webcomponents/compare/v0.27.2...v0.27.3) (2020-12-21)
+
+
+### Features
+
+* **ui5-popover:** implement hide-block-layer property ([#2413](https://github.com/SAP/ui5-webcomponents/issues/2413)) ([5bf8523](https://github.com/SAP/ui5-webcomponents/commit/5bf8523))
+
+
+
+
+
 ## [0.27.2](https://github.com/SAP/ui5-webcomponents/compare/v0.27.1...v0.27.2) (2020-12-09)
 
 
