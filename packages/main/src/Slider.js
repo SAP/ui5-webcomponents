@@ -1,10 +1,10 @@
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 
 // Template
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
-import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 
 /**
  * @public
@@ -82,8 +82,8 @@ class Slider extends SliderBase {
 
 	constructor() {
 		super();
-		this._stateStorage.value = null;		
-		this._setInitialValue("value", null)
+		this._stateStorage.value = null;
+		this._setInitialValue("value", null);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -113,7 +113,7 @@ class Slider extends SliderBase {
 	}
 
 	_onkeydown(event) {
-		this._onKeyDownBase(event, "value");
+		this._handleKeyDown(event, "value");
 	}
 
 	/**
@@ -129,7 +129,7 @@ class Slider extends SliderBase {
 		}
 
 		const newValue = this.handleDownBase(event);
-		this._valueOnInteractionStart = this.value;		
+		this._valueOnInteractionStart = this.value;
 
 		// Set initial value if one is not set previously on focus in.
 		// It will be restored if ESC key is pressed.
@@ -159,8 +159,8 @@ class Slider extends SliderBase {
 	}
 
 	_onfocusout(event) {
-		// Prevent focusout when the focus is getting initially set within the slider before the 
-		// slider customElement itself is finished focusing.
+		// Prevent focusout when the focus is getting set within the slider internal
+		// element (on the handle), before the Slider' customElement itself is finished focusing
 		if (this._isFocusing()) {
 			this._preventFocusOut();
 			return;
@@ -169,7 +169,7 @@ class Slider extends SliderBase {
 		// Reset focus state and the stored Slider's initial
 		// value that was saved when it was first focused in
 		this.focused = false;
-		this._setInitialValue("value", null)
+		this._setInitialValue("value", null);
 	}
 
 
