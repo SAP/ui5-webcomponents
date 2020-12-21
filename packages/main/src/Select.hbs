@@ -4,12 +4,7 @@
 	id="{{_id}}-select"
 	@click="{{_toggleRespPopover}}"
 >
-	<div class="ui5-select-label-root">
-		<ui5-label>{{_text}}</ui5-label>
-	</div>
-
-	<div
-		class="ui5-hidden-text"
+	<div class="ui5-select-label-root"
 		tabindex="{{tabIndex}}"
 		role="combobox"
 		aria-haspopup="listbox"
@@ -25,6 +20,8 @@
 	>
 		{{_text}}
 	</div>
+
+	<span id="{{_id}}-selectionText" class="ui5-hidden-text" aria-live="polite" role="status"></span>
 
 	<ui5-icon
 		name="slim-arrow-down"

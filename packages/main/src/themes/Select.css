@@ -11,17 +11,20 @@
 }
 
 .ui5-select-label-root {
-	display: inline-flex;
-	align-items: center;
 	flex-shrink: 1;
 	flex-grow: 1;
-	height: 100%;
+	align-self: center;
 	min-width: 1rem;
 	padding-left: 0.5rem;
-}
-
-.ui5-select-label-root [ui5-label] {
 	cursor: pointer;
+	outline: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: var(--sapContent_LabelColor);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+	font-weight: normal;
 }
 
 :host [dir="rtl"].ui5-select-root .ui5-select-label-root {
