@@ -10,9 +10,10 @@
 
 .ui5-cal-root {
 	background: var(--sapList_Background);
-    min-width: var(--_ui5-calendar_width);
     position: relative;
     isolation: isolate;
+    min-width: var(--_ui5-calendar_width);
+    min-height: var(--_ui5-calendar_height);
 }
 
 .ui5-cal-root .ui5-cal-content {
