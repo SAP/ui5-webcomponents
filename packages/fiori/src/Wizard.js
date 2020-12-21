@@ -211,7 +211,7 @@ class Wizard extends UI5Element {
 	}
 
 	static get PHONE_BREAKPOINT() {
-		return 559;
+		return 599;
 	}
 
 	static get SCROLL_DEBOUNCE_RATE() {
