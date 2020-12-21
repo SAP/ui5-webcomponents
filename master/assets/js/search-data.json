@@ -72,7 +72,7 @@
   "11": {
     "id": "11",
     "title": "Bar",
-    "content": "&lt;!DOCTYPE html&gt; Bar test page Agree Decline Cancel Left Button Basic Label Middle Button Middle2 Button Middle3 Button Right Button Agree Decline Cancel Title",
+    "content": "&lt;!DOCTYPE html&gt; Bar test page Header design Title Subheader design Start Button Basic Label Middle1 Button Middle2 Button Basic Label End Button Footer design Agree Decline Cancel FloatingFooter design Agree Decline Cancel",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/fiori/pages/Bar/",
     "relUrl": "/playground/fiori/pages/Bar/"
   },

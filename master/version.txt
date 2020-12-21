@@ -1,5 +1,10 @@
-commit a5cb04474fe2305d3ae8851410dfe4499d1a8ec4
+commit 1d73d973c94ea485850194c02c4914b76210e068
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Dec 21 10:19:17 2020 +0200
+Date:   Mon Dec 21 13:48:55 2020 +0200
 
-    docs: correct since tags (#2599)
+    fix(ui5-bar): render ui5-icon inside bar properly (#2608)
+    
+    Ensure ui5-icon is displayed when used inside ui5-bar. Currently the ui5-icon does not get displayed.
+    The solution is to remove **"::slotted(*) { display: flex;"** because it breaks the ui5-icon's display (and potentially the display of other components).
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2600
