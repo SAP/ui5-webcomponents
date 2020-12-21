@@ -1,7 +1,5 @@
-commit 50304f58cd751ab9f378a9a41c5ee2a8a9a06ce2
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Dec 18 17:29:49 2020 +0200
+commit a5cb04474fe2305d3ae8851410dfe4499d1a8ec4
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Dec 21 10:19:17 2020 +0200
 
-    feat(ui5-option): provide stableDomRef (#2366)
-    
-    Fixes: #1718
+    docs: correct since tags (#2599)
