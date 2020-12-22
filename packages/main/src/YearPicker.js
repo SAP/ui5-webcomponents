@@ -45,13 +45,13 @@ const metadata = {
 	},
 	events: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
 		/**
-		 * Fired when the user selects a new Date on the Web Component.
+		 * Fired when the user selects a year (space/enter/click).
 		 * @public
 		 * @event
 		 */
 		change: {},
 		/**
-		 * Fired when month, year has changed due to item navigation.
+		 * Fired when the user navigates with the keyboard.
 		 * @since 1.0.0-rc.9
 		 * @public
 		 * @event
@@ -60,8 +60,8 @@ const metadata = {
 	},
 };
 
-const PAGE_SIZE = 20;
-const ROW_SIZE = 4;
+const PAGE_SIZE = 20; // Total years on a single page
+const ROW_SIZE = 4; // Years per row (5 rows of 4 years each)
 
 /**
  * @class
@@ -88,13 +88,8 @@ class YearPicker extends PickerBase {
 		return YearPickerTemplate;
 	}
 
-	constructor() {
-		super();
-		this._oLocale = getLocale();
-	}
-
 	onBeforeRendering() {
-		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, this._oLocale);
+		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, getLocale());
 
 		if (!this._firstYear) {
 			this._firstYear = this._calendarDate.getYear() - PAGE_SIZE / 2;
@@ -121,7 +116,7 @@ class YearPicker extends PickerBase {
 
 		/* eslint-disable no-loop-func */
 		for (let i = 0; i < PAGE_SIZE; i++) {
-			const intervalIndex = parseInt(i / 4);
+			const intervalIndex = parseInt(i / ROW_SIZE);
 			if (!intervals[intervalIndex]) {
 				intervals[intervalIndex] = [];
 			}
@@ -167,49 +162,24 @@ class YearPicker extends PickerBase {
 		}
 	}
 
-	_onmouseup(event) {
-		if (event.target.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(event.target);
-			this.timestamp = timestamp;
-			this.fireEvent("change", { timestamp });
-		}
-	}
-
 	_onkeydown(event) {
 		if (isEnter(event)) {
 			this._selectYear(event);
-			return;
-		}
-
-		if (isSpace(event)) {
+		} else if (isSpace(event)) {
 			event.preventDefault();
-		}
-
-		if (isLeft(event)) {
+		} else if (isLeft(event)) {
 			this._modifyTimestampBy(-1);
-		}
-
-		if (isRight(event)) {
+		} else if (isRight(event)) {
 			this._modifyTimestampBy(1);
-		}
-
-		if (isUp(event)) {
+		} else if (isUp(event)) {
 			this._modifyTimestampBy(-ROW_SIZE);
-		}
-
-		if (isDown(event)) {
+		} else if (isDown(event)) {
 			this._modifyTimestampBy(ROW_SIZE);
-		}
-
-		if (isPageUp(event)) {
+		} else if (isPageUp(event)) {
 			this._modifyTimestampBy(-PAGE_SIZE);
-		}
-
-		if (isPageDown(event)) {
+		} else if (isPageDown(event)) {
 			this._modifyTimestampBy(PAGE_SIZE);
-		}
-
-		if (isHome(event) || isEnd(event)) {
+		} else if (isHome(event) || isEnd(event)) {
 			this._years.forEach(row => {
 				const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getYear() === this._calendarDate.getYear());
 				if (indexInRow !== -1) {
@@ -217,13 +187,9 @@ class YearPicker extends PickerBase {
 					this._setTimestamp(parseInt(row[index].timestamp));
 				}
 			});
-		}
-
-		if (isHomeCtrl(event)) {
+		} else if (isHomeCtrl(event)) {
 			this._setTimestamp(parseInt(this._years[0][0].timestamp));
-		}
-
-		if (isEndCtrl(event)) {
+		} else if (isEndCtrl(event)) {
 			this._setTimestamp(parseInt(this._years[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp));
 		}
 	}
@@ -268,6 +234,11 @@ class YearPicker extends PickerBase {
 		}
 	}
 
+	/**
+	 * User clicked with the mouser or pressed Enter/Space
+	 * @param event
+	 * @private
+	 */
 	_selectYear(event) {
 		event.preventDefault();
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
@@ -277,10 +248,18 @@ class YearPicker extends PickerBase {
 		}
 	}
 
+	/**
+	 * User pressed the "<" button in the calendar header (same as PageUp)
+	 * @private
+	 */
 	_showPreviousPage() {
 		this._modifyTimestampBy(-PAGE_SIZE);
 	}
 
+	/**
+	 * User pressed the ">" button in the calendar header (same as PageDown)
+	 * @private
+	 */
 	_showNextPage() {
 		this._modifyTimestampBy(PAGE_SIZE);
 	}
@@ -292,14 +271,6 @@ class YearPicker extends PickerBase {
 			maxDateCheck = maxDate && year > maxDate.getFullYear();
 
 		return minDateCheck || maxDateCheck;
-	}
-
-	get styles() {
-		return {
-			main: {
-				display: this._hidden ? "none" : "",
-			},
-		};
 	}
 }
 

@@ -348,7 +348,7 @@ class Calendar2 extends PickerBase {
 				"ui5-cal-root": true,
 			},
 			dayPicker: {
-				".ui5-daypicker--hidden": this._isDayPickerHidden,
+				"ui5-daypicker--hidden": this._isDayPickerHidden,
 			},
 			yearPicker: {
 				"ui5-yearpicker--hidden": this._isYearPickerHidden,
