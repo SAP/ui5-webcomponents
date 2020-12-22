@@ -1,6 +1,5 @@
 <div
 	class="{{classes.main}}"
-	style="{{styles.main}} "
 	@keydown={{_onkeydown}}
 >
 	<div id="{{_id}}-content" class="ui5-cal-content">
@@ -18,13 +17,13 @@
 			@ui5-change="{{onSelectedDatesChange}}"
 			@ui5-navigate="{{onNavigate}}"
 			?hide-week-numbers="{{hideWeekNumbers}}"
-			._focusedDate={{_dayPickerFocusedDate}}
 		></ui5-daypicker>
 
 		<ui5-monthpicker
 			id="{{_id}}-MP"
 			class="{{classes.monthPicker}}"
 			format-pattern="{{_formatPattern}}"
+			.selectedDates="{{selectedDates}}"
 			._hidden="{{_isMonthPickerHidden}}"
 			.primaryCalendarType="{{_primaryCalendarType}}"
 			.minDate="{{minDate}}"
@@ -38,6 +37,7 @@
 			id="{{_id}}-YP"
 			class="{{classes.yearPicker}}"
 			format-pattern="{{_formatPattern}}"
+			.selectedDates="{{selectedDates}}"
 			._hidden="{{_isYearPickerHidden}}"
 			.primaryCalendarType="{{_primaryCalendarType}}"
 			.minDate="{{minDate}}"

@@ -1,9 +1,15 @@
 :root {
-    --_ui5-calendar_width: 19rem;
-    --_ui5-calendar_height: 23rem;
+
+    /* Calendar */
+    --_ui5-calendar_width: 20rem;
+    --_ui5-calendar_height: 24rem;
+    --_ui5-calendar_padding: 1rem 0.5rem 0 0.5rem;
 	--_ui5_calendar_header_height: 3rem;
+	--_ui5_calendar_header_width: 19rem;
+	--_ui5_calendar_header_top: 1rem;
 	--_ui5_calendar_header_arrow_button_width: 2.5rem;
 	--_ui5_calendar_header_padding: 0.25rem 0;
+
 	--_ui5_checkbox_root_side_padding: .6875rem;
 	--_ui5_checkbox_icon_size: 1rem;
 	--_ui5_custom_list_item_height: 3rem;
@@ -95,9 +101,14 @@
 	--_ui5_button_base_padding: 0.4375rem;
 	--_ui5_button_base_min_width: 2rem;
 	--_ui5_button_icon_font_size: 1rem;
+
+    /* Calendar */
     --_ui5-calendar_width: 17rem;
-    --_ui5-calendar_height: 16.75rem;
+    --_ui5-calendar_height: 17rem;
+    --_ui5-calendar_padding: 0.5rem 0.25rem 0 0.25rem;
 	--_ui5_calendar_header_height: 2rem;
+    --_ui5_calendar_header_width: 16.5rem;
+    --_ui5_calendar_header_top: 0.5rem;
 	--_ui5_calendar_header_padding: 0;
 	--_ui5_calendar_header_arrow_button_width: 2rem;
 

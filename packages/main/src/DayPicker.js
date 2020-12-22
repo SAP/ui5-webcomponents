@@ -113,10 +113,6 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
-
-		_focusedDate: {
-			type: Object,
-		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
@@ -286,6 +282,14 @@ class DayPicker extends PickerBase {
 			this._itemNav.current = todayIndex;
 		}
 
+		/*
+		const currentIndex = this.focusableDays.findIndex(item => {
+			return CalendarDate.fromLocalJSDate(new Date(item.timestamp * 1000), this._primaryCalendarType).toString() === this._calendarDate.toString();
+		});
+		this._itemNav.currentIndex = currentIndex;
+		*/
+
+		/*
 		if (typeof this._focusedDate.isSame === "function") {
 			const currentIndex = this.focusableDays.findIndex(item => {
 				return CalendarDate.fromLocalJSDate(new Date(item.timestamp * 1000), this._primaryCalendarType).toString() === this._focusedDate.toString();
@@ -293,6 +297,7 @@ class DayPicker extends PickerBase {
 			this._focusedDate = {};
 			this._itemNav.currentIndex = currentIndex;
 		}
+		*/
 
 		// const selectedItem = this.focusableDays.find(item => CalendarDate.fromTimestamp(item.timestamp * 1000).toString() === this._calendarDate.toString());
 		// this._itemNav.update(selectedItem);

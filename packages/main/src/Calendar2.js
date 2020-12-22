@@ -314,7 +314,6 @@ class Calendar2 extends PickerBase {
 		this.timestamp = oNewDate.valueOf() / 1000;
 
 		this._currentPicker = "day";
-		this._dayPickerFocusedDate = oNewDate;
 	}
 
 	onSelectedYearChange(event) {
@@ -325,7 +324,6 @@ class Calendar2 extends PickerBase {
 		this.timestamp = oNewDate.valueOf() / 1000;
 
 		this._currentPicker = "day";
-		this._dayPickerFocusedDate = oNewDate;
 	}
 
 	onNavigate(event) {
@@ -367,15 +365,6 @@ class Calendar2 extends PickerBase {
 			},
 			monthPicker: {
 				"ui5-monthpicker--hidden": this._isMonthPickerHidden,
-			},
-		};
-	}
-
-	get styles() {
-		return {
-			main: {
-				"height": `${this._calendarHeight ? `${this._calendarHeight}px` : "auto"}`,
-				"width": `${this._calendarWidth ? `${this._calendarWidth}px` : "auto"}`,
 			},
 		};
 	}
