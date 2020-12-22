@@ -17,7 +17,7 @@ import styles from "./generated/themes/YearPicker.css.js";
 const metadata = {
 	tag: "ui5-yearpicker",
 	properties: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
-		_yearIntervals: {
+		_years: {
 			type: Object,
 			multiple: true,
 		},
@@ -84,7 +84,7 @@ class YearPicker extends PickerBase {
 			rowSize: 4,
 			behavior: ItemNavigationBehavior.Paging,
 			getItemsCallback: () => this.focusableYears,
-			affectedPropertiesNames: ["_yearIntervals"],
+			affectedPropertiesNames: ["_years"],
 		});
 
 		this._itemNav.attachEvent(
@@ -97,7 +97,7 @@ class YearPicker extends PickerBase {
 			this._handleItemNavigationAfterFocus.bind(this)
 		);
 
-		this._yearIntervals = [];
+		this._years = [];
 	}
 
 	onBeforeRendering() {
@@ -160,7 +160,7 @@ class YearPicker extends PickerBase {
 			}
 		}
 
-		this._yearIntervals = intervals;
+		this._years = intervals;
 
 		const currentIndex = this.focusableYears.findIndex(item => {
 			return CalendarDate.fromLocalJSDate(new Date(item.timestamp * 1000), this._primaryCalendarType).getYear() === this._calendarDate.getYear();
@@ -199,15 +199,22 @@ class YearPicker extends PickerBase {
 
 	_onkeydown(event) {
 		if (isEnter(event)) {
-			return this._handleEnter(event);
+			this._selectYear(event);
+			return;
 		}
 
 		if (isSpace(event)) {
-			return this._handleSpace(event);
+			event.preventDefault();
 		}
 	}
 
-	_handleEnter(event) {
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this._selectYear(event);
+		}
+	}
+
+	_selectYear(event) {
 		event.preventDefault();
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
 			const timestamp = this.getTimestampFromDom(event.target);
@@ -218,12 +225,6 @@ class YearPicker extends PickerBase {
 		}
 	}
 
-	_handleSpace(event) {
-		event.preventDefault();
-		if (event.target.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(event.target);
-		}
-	}
 
 	_handleItemNavigationBorderReach(event) {
 		if (event.start) {
@@ -304,8 +305,8 @@ class YearPicker extends PickerBase {
 	get focusableYears() {
 		const focusableYears = [];
 
-		for (let i = 0; i < this._yearIntervals.length; i++) {
-			const yearInterval = this._yearIntervals[i].filter(x => !x.disabled);
+		for (let i = 0; i < this._years.length; i++) {
+			const yearInterval = this._years[i].filter(x => !x.disabled);
 			focusableYears.push(yearInterval);
 		}
 

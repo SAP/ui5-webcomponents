@@ -5,10 +5,11 @@
 	aria-multiselectable="false"
 	style="{{styles.main}}"
 	@keydown={{_onkeydown}}
+	@keyup={{_onkeyup}}
 	@mousedown={{_onmousedown}}
 	@mouseup={{_onmouseup}}
 >
-	{{#each _yearIntervals}}
+	{{#each _years}}
 		<div class="ui5-yp-interval-container">
 			{{#each this}}
 				<div id="{{this.id}}"
