@@ -6,18 +6,18 @@
 	style="{{styles.main}}"
 	@keydown={{_onkeydown}}
 	@keyup={{_onkeyup}}
-	@mousedown={{_onmousedown}}
 	@mouseup={{_onmouseup}}
 >
 	{{#each _years}}
 		<div class="ui5-yp-interval-container">
 			{{#each this}}
-				<div id="{{this.id}}"
+				<div
 					tabindex="{{this._tabIndex}}"
 					data-sap-timestamp="{{this.timestamp}}"
 					class="{{this.classes}}"
 					role="gridcell"
-					aria-selected="false">
+					aria-selected="{{this.ariaSelected}}"
+				>
 						{{this.year}}
 				</div>
 			{{/each}}

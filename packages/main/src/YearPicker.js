@@ -1,10 +1,21 @@
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import {
+	isEnter,
+	isSpace,
+	isDown,
+	isUp,
+	isLeft,
+	isRight,
+	isHome,
+	isEnd,
+	isHomeCtrl,
+	isEndCtrl,
+	isPageUp,
+	isPageDown,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import PickerBase from "./PickerBase.js";
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
 
@@ -27,7 +38,7 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		_anchorYear: {
+		_firstYear: {
 			type: Integer,
 			noAttribute: true,
 		},
@@ -48,6 +59,9 @@ const metadata = {
 		navigate: {},
 	},
 };
+
+const PAGE_SIZE = 20;
+const ROW_SIZE = 4;
 
 /**
  * @class
@@ -76,40 +90,20 @@ class YearPicker extends PickerBase {
 
 	constructor() {
 		super();
-
 		this._oLocale = getLocale();
-
-		this._itemNav = new ItemNavigation(this, {
-			pageSize: 20,
-			rowSize: 4,
-			behavior: ItemNavigationBehavior.Paging,
-			getItemsCallback: () => this.focusableYears,
-			affectedPropertiesNames: ["_years"],
-		});
-
-		this._itemNav.attachEvent(
-			ItemNavigation.BORDER_REACH,
-			this._handleItemNavigationBorderReach.bind(this)
-		);
-
-		this._itemNav.attachEvent(
-			ItemNavigation.AFTER_FOCUS,
-			this._handleItemNavigationAfterFocus.bind(this)
-		);
-
-		this._years = [];
 	}
 
 	onBeforeRendering() {
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, this._oLocale);
 
-		if (!this._anchorYear) {
-			this._anchorYear = this._calendarDate.getYear();
+		if (!this._firstYear) {
+			this._firstYear = this._calendarDate.getYear() - PAGE_SIZE / 2;
 		}
 
 		const oCalDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
-		oCalDate.setYear(this._anchorYear);
+		oCalDate.setYear(this._firstYear);
 
+		/*
 		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
 		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
 
@@ -120,33 +114,35 @@ class YearPicker extends PickerBase {
 		} else {
 			oCalDate.setYear(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1);
 		}
+		*/
 
 		const intervals = [];
 		let timestamp;
 
 		/* eslint-disable no-loop-func */
-		for (let i = 0; i < YearPicker._ITEMS_COUNT; i++) {
+		for (let i = 0; i < PAGE_SIZE; i++) {
 			const intervalIndex = parseInt(i / 4);
 			if (!intervals[intervalIndex]) {
 				intervals[intervalIndex] = [];
 			}
 
-			oCalDate.setYear(oCalDate.getYear() + 1);
-
 			timestamp = oCalDate.valueOf() / 1000;
+
+			const isSelected = this.selectedDates.some(itemTimestamp => {
+				const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
+				return date.getYear() === oCalDate.getYear();
+			});
 
 			const year = {
 				timestamp: timestamp.toString(),
-				id: `${this._id}-y${timestamp}`,
-				selected: this.selectedDates.some(itemTimestamp => {
-					const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
-					return date.getYear() === oCalDate.getYear();
-				}),
+				_tabIndex: oCalDate.getYear() === this._calendarDate.getYear() ? "0" : "-1",
+				selected: isSelected,
+				ariaSelected: isSelected ? "true" : "false",
 				year: oYearFormat.format(oCalDate.toLocalJSDate()),
 				classes: "ui5-yp-item",
 			};
 
-			if (year.selected) {
+			if (isSelected) {
 				year.classes += " ui5-yp-item--selected";
 			}
 
@@ -158,34 +154,16 @@ class YearPicker extends PickerBase {
 			if (intervals[intervalIndex]) {
 				intervals[intervalIndex].push(year);
 			}
+
+			oCalDate.setYear(oCalDate.getYear() + 1);
 		}
 
 		this._years = intervals;
-
-		const currentIndex = this.focusableYears.findIndex(item => {
-			return CalendarDate.fromLocalJSDate(new Date(item.timestamp * 1000), this._primaryCalendarType).getYear() === this._calendarDate.getYear();
-		});
-		this._itemNav.currentIndex = currentIndex;
 	}
 
 	onAfterRendering() {
 		if (!this._hidden) {
-			this._itemNav.focusCurrent();
-		}
-	}
-
-	_setCurrentItemTabIndex(index) {
-		const currentItem = this._itemNav._getCurrentItem();
-		if (currentItem) {
-			currentItem.setAttribute("tabindex", index.toString());
-		}
-	}
-
-	_onmousedown(event) {
-		if (event.target.className.indexOf("ui5-yp-item") > -1) {
-			const targetTimestamp = this.getTimestampFromDom(event.target);
-			const focusedItem = this.focusableYears.find(item => parseInt(item.timestamp) === targetTimestamp);
-			this._itemNav.update(focusedItem);
+			this.shadowRoot.querySelector(`[tabindex="0"]`).focus();
 		}
 	}
 
@@ -206,6 +184,82 @@ class YearPicker extends PickerBase {
 		if (isSpace(event)) {
 			event.preventDefault();
 		}
+
+		if (isLeft(event)) {
+			this._modifyTimestampBy(-1);
+		}
+
+		if (isRight(event)) {
+			this._modifyTimestampBy(1);
+		}
+
+		if (isUp(event)) {
+			this._modifyTimestampBy(-ROW_SIZE);
+		}
+
+		if (isDown(event)) {
+			this._modifyTimestampBy(ROW_SIZE);
+		}
+
+		if (isPageUp(event)) {
+			this._modifyTimestampBy(-PAGE_SIZE);
+		}
+
+		if (isPageDown(event)) {
+			this._modifyTimestampBy(PAGE_SIZE);
+		}
+
+		if (isHome(event) || isEnd(event)) {
+			this._years.forEach(row => {
+				const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getYear() === this._calendarDate.getYear());
+				if (indexInRow !== -1) {
+					const index = isHome(event) ? 0 : ROW_SIZE - 1;
+					this._setTimestamp(parseInt(row[index].timestamp));
+				}
+			});
+		}
+
+		if (isHomeCtrl(event)) {
+			this._setTimestamp(parseInt(this._years[0][0].timestamp));
+		}
+
+		if (isEndCtrl(event)) {
+			this._setTimestamp(parseInt(this._years[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp));
+		}
+	}
+
+	/**
+	 * Sets the timestamp to an absolute value
+	 * @param value
+	 * @private
+	 */
+	_setTimestamp(value) {
+		this.timestamp = value;
+		this.fireEvent("navigate", { timestamp: this.timestamp });
+	}
+
+	/**
+	 * Modifies timestamp by a given amount of years and, if necessary, loads the prev/next page
+	 * @param amount
+	 * @private
+	 */
+	_modifyTimestampBy(amount) {
+		// Modify the current timestamp
+		const newDate = new CalendarDate(this._calendarDate);
+		newDate.setYear(this._calendarDate.getYear() + amount);
+		this.timestamp = newDate.valueOf() / 1000;
+
+		// Check for page overflow and show the prev/next page if necessary
+		const newYear = newDate.getYear();
+		if (newYear < this._firstYear) {
+			this._firstYear -= PAGE_SIZE;
+		}
+		if (newYear >= this._firstYear + PAGE_SIZE) {
+			this._firstYear += PAGE_SIZE;
+		}
+
+		// Notify the calendar to update its timestamp
+		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}
 
 	_onkeyup(event) {
@@ -218,79 +272,17 @@ class YearPicker extends PickerBase {
 		event.preventDefault();
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
 			const timestamp = this.getTimestampFromDom(event.target);
-
 			this.timestamp = timestamp;
-			this._itemNav.current = YearPicker._MIDDLE_ITEM_INDEX;
 			this.fireEvent("change", { timestamp });
 		}
 	}
 
-
-	_handleItemNavigationBorderReach(event) {
-		if (event.start) {
-			this._showPreviousPage();
-		}
-
-		if (event.end) {
-			this._showNextPage();
-		}
-	}
-
-	_handleItemNavigationAfterFocus() {
-		const currentItem = this._itemNav._getCurrentItem();
-		const currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp"));
-		this.timestamp = currentTimestamp;
-		this.fireEvent("navigate", { timestamp: currentTimestamp });
-	}
-
 	_showPreviousPage() {
-		const oCalDate = this._calendarDate;
-		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
-		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
-		// oCalDate.setMonth(0);
-		// oCalDate.setDate(1);
-
-		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX < minCalendarDateYear) {
-			return;
-		}
-		oCalDate.setYear(oCalDate.getYear() - YearPicker._ITEMS_COUNT);
-
-		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX > maxCalendarDateYear) {
-			return;
-		}
-
-		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX)
-			&& this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)) {
-			return;
-		}
-
-		this.timestamp = oCalDate.valueOf() / 1000;
-		this._anchorYear = this._calendarDate.getYear();
-
-		this.fireEvent("navigate", { timestamp: this.timestamp });
+		this._modifyTimestampBy(-PAGE_SIZE);
 	}
 
 	_showNextPage() {
-		const oCalDate = this._calendarDate;
-		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
-		// oCalDate.setMonth(0);
-		// oCalDate.setDate(1);
-
-		oCalDate.setYear(oCalDate.getYear() + YearPicker._ITEMS_COUNT);
-
-		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX > maxCalendarDateYear) {
-			return;
-		}
-
-		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX)
-			&& this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)) {
-			return;
-		}
-
-		this.timestamp = oCalDate.valueOf() / 1000;
-		this._anchorYear = this._calendarDate.getYear();
-
-		this.fireEvent("navigate", { timestamp: this.timestamp });
+		this._modifyTimestampBy(PAGE_SIZE);
 	}
 
 	_isOutOfSelectableRange(year) {
@@ -302,17 +294,6 @@ class YearPicker extends PickerBase {
 		return minDateCheck || maxDateCheck;
 	}
 
-	get focusableYears() {
-		const focusableYears = [];
-
-		for (let i = 0; i < this._years.length; i++) {
-			const yearInterval = this._years[i].filter(x => !x.disabled);
-			focusableYears.push(yearInterval);
-		}
-
-		return [].concat(...focusableYears);
-	}
-
 	get styles() {
 		return {
 			main: {
@@ -321,9 +302,6 @@ class YearPicker extends PickerBase {
 		};
 	}
 }
-
-YearPicker._ITEMS_COUNT = 20;
-YearPicker._MIDDLE_ITEM_INDEX = 10;
 
 YearPicker.define();
 
