@@ -17,11 +17,6 @@ import styles from "./generated/themes/YearPicker.css.js";
 const metadata = {
 	tag: "ui5-yearpicker",
 	properties: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
-		_selectedYear: {
-			type: Integer,
-			noAttribute: true,
-		},
-
 		_yearIntervals: {
 			type: Object,
 			multiple: true,
@@ -32,7 +27,7 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		_anchorTimestamp: {
+		_anchorYear: {
 			type: Integer,
 			noAttribute: true,
 		},
@@ -108,13 +103,12 @@ class YearPicker extends PickerBase {
 	onBeforeRendering() {
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, this._oLocale);
 
-		if (!this._anchorTimestamp) {
-			this._anchorTimestamp = this._timestamp;
+		if (!this._anchorYear) {
+			this._anchorYear = this._calendarDate.getYear();
 		}
 
-		const oCalDate = CalendarDate.fromTimestamp(this._anchorTimestamp * 1000, this._primaryCalendarType);
-		oCalDate.setMonth(this._calendarDate.getMonth());
-		oCalDate.setDate(this._calendarDate.getDate());
+		const oCalDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+		oCalDate.setYear(this._anchorYear);
 
 		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
 		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
@@ -129,10 +123,6 @@ class YearPicker extends PickerBase {
 
 		const intervals = [];
 		let timestamp;
-
-		if (this._selectedYear === undefined) {
-			this._selectedYear = this._year;
-		}
 
 		/* eslint-disable no-loop-func */
 		for (let i = 0; i < YearPicker._ITEMS_COUNT; i++) {
@@ -203,7 +193,6 @@ class YearPicker extends PickerBase {
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
 			const timestamp = this.getTimestampFromDom(event.target);
 			this.timestamp = timestamp;
-			this._selectedYear = this._year;
 			this.fireEvent("change", { timestamp });
 		}
 	}
@@ -224,7 +213,6 @@ class YearPicker extends PickerBase {
 			const timestamp = this.getTimestampFromDom(event.target);
 
 			this.timestamp = timestamp;
-			this._selectedYear = this._year;
 			this._itemNav.current = YearPicker._MIDDLE_ITEM_INDEX;
 			this.fireEvent("change", { timestamp });
 		}
@@ -234,11 +222,6 @@ class YearPicker extends PickerBase {
 		event.preventDefault();
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
 			const timestamp = this.getTimestampFromDom(event.target);
-
-			this._selectedYear = CalendarDate.fromTimestamp(
-				timestamp * 1000,
-				this._primaryCalendarType
-			).getYear();
 		}
 	}
 
@@ -281,7 +264,7 @@ class YearPicker extends PickerBase {
 		}
 
 		this.timestamp = oCalDate.valueOf() / 1000;
-		this._anchorTimestamp = this._timestamp;
+		this._anchorYear = this._calendarDate.getYear();
 
 		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}
@@ -304,7 +287,7 @@ class YearPicker extends PickerBase {
 		}
 
 		this.timestamp = oCalDate.valueOf() / 1000;
-		this._anchorTimestamp = this._timestamp;
+		this._anchorYear = this._calendarDate.getYear();
 
 		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}

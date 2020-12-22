@@ -307,22 +307,12 @@ class Calendar2 extends PickerBase {
 	}
 
 	onSelectedMonthChange(event) {
-		const oNewDate = this._calendarDate;
-		const oFocusedDate = CalendarDate.fromTimestamp(event.detail.timestamp * 1000, this._primaryCalendarType);
-
-		oNewDate.setMonth(oFocusedDate.getMonth());
-		this.timestamp = oNewDate.valueOf() / 1000;
-
+		this.timestamp = event.detail.timestamp;
 		this._currentPicker = "day";
 	}
 
 	onSelectedYearChange(event) {
-		const oNewDate = this._calendarDate;
-		const oFocusedDate = CalendarDate.fromTimestamp(event.detail.timestamp * 1000, this._primaryCalendarType);
-
-		oNewDate.setYear(oFocusedDate.getYear());
-		this.timestamp = oNewDate.valueOf() / 1000;
-
+		this.timestamp = event.detail.timestamp;
 		this._currentPicker = "day";
 	}
 
@@ -343,11 +333,11 @@ class Calendar2 extends PickerBase {
 	}
 
 	_onkeydown(event) {
-		if (isF4(event)) {
+		if (isF4(event) && this._currentPicker === "day") {
 			this._currentPicker = "month";
 		}
 
-		if (isF4Shift(event)) {
+		if (isF4Shift(event) && this._currentPicker === "day") {
 			this._currentPicker = "year";
 		}
 	}
