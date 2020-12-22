@@ -336,7 +336,7 @@ class SliderBase extends UI5Element {
 	_preserveFocus(isFocusing) {
 		this._isInnerElementFocusing = isFocusing;
 	}
-	
+
 	/**
 	 * Return if an inside element within the component is currently being focused
 	 *
@@ -354,7 +354,7 @@ class SliderBase extends UI5Element {
 	 * As we use lit-element as base of our core UI5 element class that 'delegatesFocus' property is not set to 'true' and
 	 * we have to manage the focus here. If at some point in the future this changes, the focus delegating logic could be
 	 * removed as it will become redundant.
-	 * 
+	 *
 	 * When we manually set the focus on mouseDown to the first focusable element inside the shadowDom,
 	 * that inner focus (shadowRoot.activeElement) is set a moment before the global document.activeElement
 	 * is set to the customElement (ui5-slider) causing a 'race condition'.
