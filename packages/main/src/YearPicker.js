@@ -182,15 +182,15 @@ class YearPicker extends PickerBase {
 		} else if (isHome(event) || isEnd(event)) {
 			this._years.forEach(row => {
 				const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getYear() === this._calendarDate.getYear());
-				if (indexInRow !== -1) {
-					const index = isHome(event) ? 0 : ROW_SIZE - 1;
+				if (indexInRow !== -1) { // The current year is on this row
+					const index = isHome(event) ? 0 : ROW_SIZE - 1; // select the first (if Home) or last (if End) year on the row
 					this._setTimestamp(parseInt(row[index].timestamp));
 				}
 			});
 		} else if (isHomeCtrl(event)) {
-			this._setTimestamp(parseInt(this._years[0][0].timestamp));
+			this._setTimestamp(parseInt(this._years[0][0].timestamp)); // first year of first row
 		} else if (isEndCtrl(event)) {
-			this._setTimestamp(parseInt(this._years[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp));
+			this._setTimestamp(parseInt(this._years[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last year of last row
 		}
 	}
 
