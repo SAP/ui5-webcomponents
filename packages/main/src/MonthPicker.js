@@ -84,6 +84,11 @@ class MonthPicker extends PickerBase {
 			ItemNavigation.BORDER_REACH,
 			this._handleItemNavigationBorderReach.bind(this)
 		);
+
+		this._itemNav.attachEvent(
+			ItemNavigation.AFTER_FOCUS,
+			this._handleItemNavigationAfterFocus.bind(this)
+		);
 	}
 
 	onBeforeRendering() {
@@ -125,6 +130,11 @@ class MonthPicker extends PickerBase {
 		}
 
 		this._quarters = quarters;
+
+		const currentIndex = this.focusableMonths.findIndex(item => {
+			return CalendarDate.fromLocalJSDate(new Date(item.timestamp * 1000), this._primaryCalendarType).toString() === this._calendarDate.toString();
+		});
+		this._itemNav.currentIndex = currentIndex;
 	}
 
 	onAfterRendering() {
@@ -184,6 +194,13 @@ class MonthPicker extends PickerBase {
 		if (event.end) {
 			this._showNextPage();
 		}
+	}
+
+	_handleItemNavigationAfterFocus() {
+		const currentItem = this._itemNav._getCurrentItem();
+		const currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp"));
+		this.timestamp = currentTimestamp;
+		this.fireEvent("navigate", { timestamp: currentTimestamp });
 	}
 
 	_showPreviousPage() {
