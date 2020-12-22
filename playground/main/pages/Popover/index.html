@@ -175,6 +175,20 @@
 		</div>
 	</ui5-popover>
 
+	<ui5-button id="btnPopModalNoLayer">Opens modal popover with no block layer!</ui5-button>
+
+	<ui5-popover id="modalPopoverNoLayer" modal header-text="Modal popover" hide-backdrop>
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>Again</ui5-li>
+			<ui5-li>Wooooooooooooooooooooooooooooorld</ui5-li>
+		</ui5-list>
+
+		<div slot="footer">
+			<ui5-button id="modalPopoverNoLayerClose">Close</ui5-button>
+		</div>
+	</ui5-popover>
+
 	<ui5-button id="btnPopFocus">Opens popover with initial focus!</ui5-button>
 
 	<ui5-popover id="popFocus" initial-focus="focusMe" header-text="Popover header">
@@ -376,6 +390,14 @@
 
 		btnPopModal.addEventListener("click", function (event) {
 			modalPopover.openBy(btnPopModal);
+		});
+
+		btnPopModalNoLayer.addEventListener("click", function() {
+			modalPopoverNoLayer.openBy(btnPopModalNoLayer);
+		});
+
+		modalPopoverNoLayerClose.addEventListener("click", function() {
+			modalPopoverNoLayer.close();
 		});
 
 		modalPopoverClose.addEventListener("click", function (event) {

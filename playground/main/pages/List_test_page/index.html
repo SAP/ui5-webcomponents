@@ -158,6 +158,26 @@
 		<ui5-li>HP Monitor 24</ui5-li>
 	</ui5-list>
 	<ui5-button id="changeEmptyItem">Change empty item text</ui5-button>
+	<br>
+	<ui5-title>Events within ui5-li-custom</ui5-title>
+	<br>
+
+	<ui5-list id="customList" separators="Inner">
+		<ui5-li-custom>
+			<ui5-button id="liBtn1" design="Transparent">List Button 1</ui5-button>
+			<br />
+		</ui5-li-custom>
+		<ui5-li-custom>
+			<ui5-button design="Transparent">List Button 2</ui5-button>
+			<br />
+		</ui5-li-custom>
+		<ui5-li-custom>
+			<ui5-button design="Transparent">List Button 2</ui5-button>
+			<br />
+		</ui5-li-custom>
+	</ui5-list>
+
+	<ui5-input value="0" id="customListItemEvents"></ui5-input>
 
 	<script>
 		'use strict';
@@ -226,6 +246,15 @@
 
 		detailListItem.addEventListener("ui5-detailClick", function(e) {
 			detailPressCounter.innerHTML = parseInt(detailPressCounter.innerHTML) + 1;
+		});
+
+		var ui5List = document.getElementById("customList"),
+			liBtn1 = document.getElementById("liBtn1"),
+			customListItemEventsValue = 0,
+			customListItemEventsInput = document.getElementById("customListItemEvents");
+
+		ui5List.addEventListener("ui5-item-click", (event) => {
+			customListItemEventsInput.value = ++customListItemEventsValue;
 		});
 	</script>
 </body>
