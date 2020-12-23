@@ -152,18 +152,22 @@ class MonthPicker extends PickerBase {
 		} else if (isPageDown(event)) {
 			this._modifyTimestampBy(PAGE_SIZE);
 		} else if (isHome(event) || isEnd(event)) {
-			this._months.forEach(row => {
-				const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getMonth() === this._calendarDate.getMonth());
-				if (indexInRow !== -1) { // The current month is on this row
-					const index = isHome(event) ? 0 : ROW_SIZE - 1; // select the first (if Home) or last (if End) month on the row
-					this._setTimestamp(parseInt(row[index].timestamp));
-				}
-			});
+			this._onHomeOrEnd(isHome(event));
 		} else if (isHomeCtrl(event)) {
 			this._setTimestamp(parseInt(this._months[0][0].timestamp)); // first month of first row
 		} else if (isEndCtrl(event)) {
 			this._setTimestamp(parseInt(this._months[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last month of last row
 		}
+	}
+
+	_onHomeOrEnd(homePressed) {
+		this._months.forEach(row => {
+			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getMonth() === this._calendarDate.getMonth());
+			if (indexInRow !== -1) { // The current month is on this row
+				const index = homePressed ? 0 : ROW_SIZE - 1; // select the first (if Home) or last (if End) month on the row
+				this._setTimestamp(parseInt(row[index].timestamp));
+			}
+		});
 	}
 
 	/**

@@ -380,16 +380,7 @@ class DayPicker extends PickerBase {
 		} else if (isPageDownShiftCtrl(event)) {
 			this._modifyTimestampBy(10, "year");
 		} else if (isHome(event) || isEnd(event)) {
-			this._weeks.forEach(week => {
-				const dayInThisWeek = week.findIndex(item => {
-					const date = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000);
-					return date.getMonth() === this._calendarDate.getMonth() && date.getDate() === this._calendarDate.getDate();
-				}) !== -1;
-				if (dayInThisWeek) { // The current day is in this week
-					const index = isHome(event) ? 1 : 7; // select the first (if Home) or last (if End) day of the week
-					this._setTimestamp(parseInt(week[index].timestamp));
-				}
-			});
+			this._onHomeOrEnd(isHome(event));
 		} else if (isHomeCtrl(event)) {
 			const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
 			tempDate.setDate(1); // Set the first day of the month
@@ -400,6 +391,19 @@ class DayPicker extends PickerBase {
 			tempDate.setDate(0); // Set the last day of the month (0th day of next month)
 			this._setTimestamp(tempDate.valueOf() / 1000);
 		}
+	}
+
+	_onHomeOrEnd(homePressed) {
+		this._weeks.forEach(week => {
+			const dayInThisWeek = week.findIndex(item => {
+				const date = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000);
+				return date.getMonth() === this._calendarDate.getMonth() && date.getDate() === this._calendarDate.getDate();
+			}) !== -1;
+			if (dayInThisWeek) { // The current day is in this week
+				const index = homePressed ? 1 : 7; // select the first (if Home) or last (if End) day of the week
+				this._setTimestamp(parseInt(week[index].timestamp));
+			}
+		});
 	}
 
 	_showPreviousPage() {
@@ -429,6 +433,11 @@ class DayPicker extends PickerBase {
 			newDate.setDate(this._calendarDate.getDate() + amount);
 		} else if (unit === "month") {
 			newDate.setMonth(this._calendarDate.getMonth() + amount);
+			const stillSameMonth = amount < 0 && newDate.getMonth() === this._calendarDate.getMonth(); // PageUp remained in the same month
+			const monthSkipped = amount > 0 && newDate.getMonth() - this._calendarDate.getMonth() > 1; // PageDown skipped a whole month
+			if (stillSameMonth || monthSkipped) { // Select the last day of the month in any of these 2 scenarios
+				newDate.setDate(0);
+			}
 		} else {
 			newDate.setYear(this._calendarDate.getYear() + amount);
 		}
