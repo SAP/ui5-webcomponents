@@ -277,21 +277,27 @@ class SliderBase extends UI5Element {
 		}
 	}
 
+	/**
+	 * Sets initial value when the component is focused in, can be restored with ESC key
+	 *
+	 * @private
+	 */
 	_setInitialValue(valueType, value) {
 		this[`_${valueType}Initial`] = value;
-	}	
+	}
 
 	_getInitialValue(valueType) {
 		return this[`_${valueType}Initial`];
 	}
 
-	_onKeyDownBase(event) {
+	_onkeydown(event) {
 		if (this.disabled) {
 			return;
 		}
 
 		if (SliderBase._isActionKey(event)) {
 			event.preventDefault();
+
 			this._isUserInteraction = true;
 			this._handleActionKeyPress(event);
 		}
@@ -305,18 +311,52 @@ class SliderBase extends UI5Element {
 		this._isUserInteraction = false;
 	}
 
-	static _isActionKey(event) {
-		return this.ACTION_KEYS.some(actionKey => actionKey(event));
+	/**
+	 * Flags if an inner element is currently being focused
+	 *
+	 * @private
+	 */
+	_preserveFocus(isFocusing) {
+		this._isInnerElementFocusing = isFocusing;
 	}
-	
+
+	/**
+	 * Return if an inside element within the component is currently being focused
+	 *
+	 * @private
+	 */
 	_isFocusing() {
-		return this._isInProcessOfFocusing;
+		return this._isInnerElementFocusing;
 	}
 
-	_setIsFocusing(isInProcessOfFocusing) {
-		this._isInProcessOfFocusing = isInProcessOfFocusing;
-	}
+	/**
+	 * Prevent focus out when inner element within the component is currently being in process of focusing in.
+	 * In theory this can be achieved either if the shadow root is focusable and 'delegatesFocus' attribute of
+	 * the .attachShadow() customElement method is set to true, or if we forward it manually.
 
+	 * As we use lit-element as base of our core UI5 element class that 'delegatesFocus' property is not set to 'true' and
+	 * we have to manage the focus here. If at some point in the future this changes, the focus delegating logic could be
+	 * removed as it will become redundant.
+	 *
+	 * When we manually set the focus on mouseDown to the first focusable element inside the shadowDom,
+	 * that inner focus (shadowRoot.activeElement) is set a moment before the global document.activeElement
+	 * is set to the customElement (ui5-slider) causing a 'race condition'.
+	 *
+	 * In order for a element within the shadowRoot to be focused, the global document.activeElement MUST be the parent
+	 * customElement of the shadow root, in our case the ui5-slider component. Because of that after our focusin of the handle,
+	 * a focusout event fired by the browser immidiatly after, resetting the focus. Focus out must be manually prevented
+	 * in both initial focusing and switching the focus between inner elements of the component cases.
+
+	 * Note: If we set the focus to the handle with a timeout or a bit later in time, on a mouseup or click event it will
+	 * work fine and we will avoid the described race condition as our host customElement will be already finished focusing.
+	 * However, that does not work for us as we need the focus to be set to the handle exactly on mousedown,
+	 * because of the nature of the component and its available drag interactions.
+	 *
+	 * @private
+	 */
+	_preventFocusOut() {
+		this._focusInnerElement();
+	}
 
 	/**
 	 * Sets initial value when the component is focused in, can be restored with ESC key

@@ -1,12 +1,12 @@
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+<<<<<<< HEAD
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+=======
+>>>>>>> 0b3a6aaf (Focus and keyboard handling documentation)
 import SliderBase from "./SliderBase.js";
-
-// Template
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
-import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 
 /**
  * @public
@@ -113,10 +113,6 @@ class Slider extends SliderBase {
 		this.notResized = true;
 		this.syncUIAndState("value");
 		this._updateHandleAndProgress(this.value);
-	}
-
-	_onkeydown(event) {
-		this._onKeyDownBase(event, "value");
 	}
 
 	/**

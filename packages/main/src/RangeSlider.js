@@ -1,9 +1,12 @@
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import SliderBase from "./SliderBase.js";
-import {isEscape, isTabPrevious, isTabNext, isHome, isEnd} from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isEscape,
+	isHome,
+	isEnd,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 
-// Template
+import SliderBase from "./SliderBase.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
 
 /**
@@ -136,101 +139,145 @@ class RangeSlider extends SliderBase {
 		this._updateHandlesAndRange(null);
 	}
 
-	_onfocusin(event) {	
+	_onfocusin(event) {
 		this.focused = true;
 
-		this._setInitialValue("startValue", this._prevStartValue || this.startValue);
-		this._setInitialValue("endValue", this._prevEndValue || this.endValue);
-	}
-
-	_onfocusout(event) {
-		if (this._isFocusing()) {			
-			// Prevent focusout when the focus is getting initially set within the slider before the 
-			// slider customElement itself is finished focusing.
-			this._preventFocusOut();
-		} else {
-			this.focused = false;
-			this._valueAffected = null;
-
-			// Reset the stored Slider's initial value saved when it was first focused
-			this._setInitialValue("value", null);
+		// If this is the initial focusin of the component save its initial
+		// value properties so they could be restored on ESC key press
+		if (!this._getInitialValue("endValue")) {
+			this._setInitialValue("startValue", this.startValue);
+			this._setInitialValue("endValue", this.endValue);
 		}
 	}
 
-	_preventFocusOut() {
-		this._focusInnerElement();
+	/**
+	 * Handles focus out event of the focusable components inner elements.
+	 * Prevent focusout when the focus is getting initially set within the slider before the
+	 * slider customElement itself is finished focusing.
+	 *
+	 * Prevents the focus from leaving the Range Slider when the focus is managed between
+	 * its inner elements in result of user interactions.
+	 *
+	 * Resets the stored Range Slider's initial values saved when it was first focused
+	 *
+	 * @private
+	 */
+	_onfocusout(event) {
+		if (this._isFocusing()) {
+			this._preventFocusOut();
+		} else {
+			this.focused = false;
+			this._setAffectedValue(null);
+			this._setInitialValue("startValue", null);
+			this._setInitialValue("endValue", null);
+		}
 	}
 
-	_onkeydown(event) {
-		this._onKeyDownBase(event);
+	/**
+	* Handles keyup logic. If one of the handles came across the other
+	* swap the start and end values. Reset the affected value by the finished
+	* user interaction.
+	*
+	* @private
+	*/
+	_onkeyup(event) {
+		SliderBase.prototype._onkeyup.call(this, event);
+
+		this._swapValues();
+		this._setAffectedValue(null);
 	}
 
 	_handleActionKeyPress(event) {
 		if (isEscape(event)) {
-			this.startValue = this._prevStartValue;
-			this.endValue = this._prevEndValue;
-		}
-
-
-		if (this.shadowRoot.activeElement === this._sliderStartHandle) {
-			this._valueAffected = "startValue"
-		}
-		
-		if (this.shadowRoot.activeElement === this._sliderEndHandle) {
-			this._valueAffected = "endValue"	
-		}
-		
-		const min = this._effectiveMin;
-		const max = this._effectiveMax;
-		const valueType = this._valueAffected;
-
-		if ((isEnd(event) || isHome(event)) && !valueType) {
-			const eventType = isHome(event) ? "home" : "end"
-			this._handleHomeEndKeys(event, eventType, min, max)
-
+			this.update(null, this._getInitialValue("startValue"), this._getInitialValue("endValue"));
 			return;
 		}
 
-		if (valueType) {
-			const newValueOffset = SliderBase.prototype._handleActionKeyPress.call(this, event, valueType);
+		// Set the target of the interaction based on the focused inner element
+		this._setAffectedValueByFocusedElement();
 
-			if (!newValueOffset) {
-				return;
-			}
+		const min = this._effectiveMin;
+		const max = this._effectiveMax;
+		const affectedValue = this._getAffectedValue();
 
-			const newValue = isEscape(event) ? this._getInitialValue(valueType) : this.constructor.clipValue(newValueOffset + currentValue, min, max);
-			const currentValue = this[valueType];
+		// If home/end key is pressed and no single handle is focused the active element
+		// is the range selection - update both start and end values. Otherwise, if 'home'
+		// is pressed the 'startValue'will be used for the start-handle offset calculation,
+		// if 'End' is pressed - the 'endValue' will be used for the end-handle update.
+		if ((isEnd(event) || isHome(event)) && !affectedValue) {
+			this._homeEndForSelectedRange(event, isHome(event) ? "startValue" : "endValue", min, max);
+			return;
+		}
 
-			this._updateHandlesAndRange(newValue);
-			this.updateValue(valueType, newValue);
-			this.storePropertyState(valueType);
-		} else {
-			const newValueOffset = SliderBase.prototype._handleActionKeyPress.call(this, event, null);
+		// Calculate how much the value should be increased/decreased based on the action key
+		const newValueOffset = this._handleActionKeyPressBase(event, affectedValue);
 
-			if (!newValueOffset) {
-				return;
-			}
+		if (!newValueOffset) {
+			return;
+		}
 
-			const newStartValue = isEscape(event) ? this._getInitialValue("startValue") : this.constructor.clipValue(newValueOffset + this.startValue, min, max);
-			const newEndValue = isEscape(event) ? this._getInitialValue("endValue") : this.constructor.clipValue(newValueOffset + this.endValue, min, max);
-
-			this.updateValue("startValue", newStartValue);
-			this.updateValue("endValue", newEndValue);
-			this._updateHandlesAndRange(null);
-			this.storePropertyState("startValue", "endValue");
+		// Update a single value if one of the handles is focused or the range if not already at min or max
+		if (affectedValue && !this._inCurrentRange) {
+			const newValue = this.constructor.clipValue(newValueOffset + this[affectedValue], min, max);
+			this.update(affectedValue, newValue, null);
+		} else if ((newValueOffset < 0 && this.startValue > min) || (newValueOffset > 0 && this.endValue < max)) {
+			const newStartValue = this.constructor.clipValue(newValueOffset + this.startValue, min, max);
+			const newEndValue = this.constructor.clipValue(newValueOffset + this.endValue, min, max);
+			this.update(affectedValue, newStartValue, newEndValue);
 		}
 	}
 
-	_handleHomeEndKeys(event, eventType, min, max) {
-			const affectedValue = eventType === "home" ? "startValue" : "endValue";
-			const newValueOffset = SliderBase.prototype._handleActionKeyPress.call(this, event, affectedValue)
-			const newStartValue = this.constructor.clipValue(newValueOffset + this.startValue, min, max);
-			const newEndValue = this.constructor.clipValue(newValueOffset + this.endValue, min, max);
+	/**
+	 * Determines affected value (start/end) depending on the currently
+	 * active inner element within the Range Slider - used in the keyboard handling.
+	 *
+	 * @private
+	 */
+	_setAffectedValueByFocusedElement() {
+		if (this.shadowRoot.activeElement === this._sliderStartHandle) {
+			this._setAffectedValue("startValue");
+		}
 
-			this.updateValue("startValue", newStartValue);
-			this.updateValue("endValue", newEndValue);
+		if (this.shadowRoot.activeElement === this._sliderEndHandle) {
+			this._setAffectedValue("endValue");
+		}
+
+		if (this.shadowRoot.activeElement === this._sliderProgress) {
+			this._inCurrentRange = true;
+		}
+	}
+
+	/**
+	 * Calculates the start and end values when the 'Home" or 'End' keys
+	 * are pressed on the selected range bar.
+	 *
+	 * @private
+	 */
+	_homeEndForSelectedRange(event, affectedValue, min, max) {
+		const newValueOffset = this._handleActionKeyPressBase(event, affectedValue);
+		const newStartValue = this.constructor.clipValue(newValueOffset + this.startValue, min, max);
+		const newEndValue = this.constructor.clipValue(newValueOffset + this.endValue, min, max);
+
+		this.update(null, newStartValue, newEndValue);
+	}
+
+	/**
+	 * Update values, stored inner state and the visual UI representation of the component.
+	 * If no specific type of value property is passed - the range is selected - update both handles,
+	 * otherwise update the handle corresponding to the affected by the user interacton value prop.
+	 *
+	 * @private
+	 */
+	update(affectedValue, startValue, endValue) {
+		if (!affectedValue) {
+			this.updateValue("startValue", startValue);
+			this.updateValue("endValue", endValue);
 			this._updateHandlesAndRange(null);
-			this.storePropertyState("startValue", "endValue");
+		} else {
+			const newValue = startValue;
+			this._updateHandlesAndRange(newValue);
+			this.updateValue(affectedValue, newValue);
+		}
 	}
 
 	/**
@@ -258,9 +305,7 @@ class RangeSlider extends SliderBase {
 		}
 
 		// Update Slider UI and internal state
-		this._updateHandlesAndRange(newValue);
-		this.updateValue(this._valueAffected, newValue);
-		this.storePropertyState(this._valueAffected);
+		this.update(this._getAffectedValue(), newValue, null);
 	}
 
 
@@ -278,18 +323,16 @@ class RangeSlider extends SliderBase {
 		const progressBarDom = this.shadowRoot.querySelector(".ui5-slider-progress").getBoundingClientRect();
 
 		// Save the state of the value properties on the start of the interaction
-		this._prevStartValue = this.startValue;
-		this._prevEndValue = this.endValue;
+		this._startValueAtBeginningOfAction = this.startValue;
+		this._endValueAtBeginningOfAction = this.endValue;
 
 		// Check if the new value is in the current select range of values
-		this._inCurrentRange = newValue > this._prevStartValue && newValue < this._prevEndValue;
+		this._inCurrentRange = newValue > this._startValueAtBeginningOfAction && newValue < this._endValueAtBeginningOfAction;
 		// Save the initial press point coordinates (position)
 		this._initialPageXPosition = this.constructor.getPageXValueFromEvent(event);
 		// Which element of the Range Slider is pressed and which value property to be modified on further interaction
 		this._pressTargetAndAffectedValue(this._initialPageXPosition, newValue);
-
 		// Use the progress bar to save the initial coordinates of the start-handle when the interaction begins.
-		// We will use it as a reference to calculate a moving offset if the whole range selection is dragged.
 		this._initialStartHandlePageX = this.directionStart === "left" ? progressBarDom.left : progressBarDom.right;
 	}
 
@@ -324,10 +367,7 @@ class RangeSlider extends SliderBase {
 	 */
 	_updateValueOnHandleDrag(event) {
 		const newValue = this.constructor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
-
-		this._updateHandlesAndRange(newValue);
-		this.updateValue(this._valueAffected, newValue);
-		this.storePropertyState(this._valueAffected);
+		this.update(this._getAffectedValue(), newValue, null);
 	}
 
 	/**
@@ -340,27 +380,27 @@ class RangeSlider extends SliderBase {
 		const currentPageXPos = this.constructor.getPageXValueFromEvent(event);
 		const newValues = this._calculateRangeOffset(currentPageXPos, this._initialStartHandlePageX);
 
-		// No matter the which value is set as the one to be modified (this._valueAffected) we want to modify both of them
-		this._valueAffected = null;
+		// No matter the which value is set as the one to be modified (by prev. user action) we want to modify both of them
+		this._setAffectedValue(null);
 
 		// Update the UI and the state acccording to the calculated new values
-		this.updateValue("startValue", newValues[0]);
-		this.updateValue("endValue", newValues[1]);
-		this._updateHandlesAndRange(null);
-		this.storePropertyState("startValue", "endValue");
+		this.update(null, newValues[0], newValues[1]);
 	}
 
 	_handleUp() {
-		if (this.startValue !== this._prevStartValue || this.endValue !== this._prevEndValue) {
+		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
 			this.fireEvent("change");
 		}
 
 		this._swapValues();
-		this.handleUpBase();
+		this._setAffectedValueByFocusedElement();
+		this._setAffectedValue(null);
 
-		this._prevStartValue = null;
-		this._prevEndValue = null;
+		this._startValueAtBeginningOfAction = null;
+		this._endValueAtBeginningOfAction = null;
 		this._inCurrentRange = null;
+
+		this.handleUpBase();
 	}
 
 	/**
@@ -395,45 +435,75 @@ class RangeSlider extends SliderBase {
 
 		// Return that handle that is closer to the press point
 		if (inHandleEndDom || value > this.endValue) {
-			this._valueAffected = "endValue";
+			this._setAffectedValue("endValue");
 		}
 
 		// If one of the handle is pressed return that one
 		if (inHandleStartDom || value < this.startValue) {
-			this._valueAffected = "startValue";
+			this._setAffectedValue("startValue");
 		}
 	}
 
-	/* Flag the component that it is currently being in process of focusing in. When the slider is getting focused
-	we need that focus to be delegated to the Slider's handle and to not stay on the slider's shadow root div, as it
-	is by default. In theory this can be achieved either if the 'delegatesFocus' attribute of the .attachShadow()
-	customElement method is set to true or if we forward it manually as part of the component logic. 
-	
-	As we use lit-element as base of our core UI5 element class that 'delegatesFocus' property is not set to 'true' and 
-	we have to manage the focus here. If at some point in the future this changes, the focus delegating logic could be 
-	removed as it will become redundant.
-	
-	When we manually set the focus on mouseDown to the first focusable element inside the shadowDom - the slider's handle,
-	that inside focus and subsquently the shadowRoot.activeElement are set a moment before the global document.activeElement
-	is set to the customElement (ui5-slider) causing a 'race condition'.
-	
-	In order for a element within the shadowRoot to be focused, the global document.activeElement MUST be the parent
-	customElement of the shadow root, in our case the ui5-slider component. Because of that after our focusin of the handle,
-	a focusout event fired by the browser immidiatly after, resetting the focus.
-	
-	Note: If we set the focus to the handle a bit later in time, for example on a mouseup or click event it will
-	work fine and we will avoid the described race condition as our customElement will be already finished focusing.
-	However, that does not work for us as we need the focus to be set to the handle exactly on mousedown,
-	because of the nature of the component and its available drag interactions.*/
+	/**
+	 * Sets the value property (start/end) that will get updated
+	 * by a user action depending on that user action's characteristics
+	 * - mouse press position - cursor coordinates relative to the start/end handles
+	 * - selected inner element via a keyboard navigation
+	 *
+	 * @param {String} valuePropAffectedByInteraction The value that will get modified by the interaction
+	 * @private
+	 */
+	_setAffectedValue(valuePropAffectedByInteraction) {
+		this._valueAffected = valuePropAffectedByInteraction;
+	}
+
+	_getAffectedValue() {
+		return this._valueAffected;
+	}
+
+	/**
+	 * Manage the focus between the focusable inner elements within the component.
+	 *
+	 * On initial focusin or if the whole range is affected by the user interaction
+	 * set the focus on the progress selection, otherwise on one of the Range Slider
+	 * handles based on the determined affected value by the user action.
+	 *
+	 * If one of the handles came across the other one in result of a user action
+	 * switch the focus between them to keep it visually consistent.
+	 *
+	 * Note:
+	 * In some cases this function is going to get called twice on one user action.
+	 *
+	 * 1. When the focus is initially set to an inner element it is done in the very beginning,
+	 * of an interaction - on 'mousedown' and 'keydown' events. The focus of the host custom element
+	 * is still not being received, causining an immediate focusout that we prevent by
+	 * calling this function once again.
+	 *
+	 * 2. When the focused is manually switched from one inner element to another.
+	 * The focusout handler is one and the same for all focusable parts within the
+	 * Range Slider and when is called it checks if it should keep the focus within
+	 * the component and which part of it should get focused if that is the case.
+	 *
+	 * @private
+	 */
 	_focusInnerElement() {
-		if (this._inCurrentRange) {
+		const isReversed = this._getAreValuesReversed();
+		const affectedValue = this._getAffectedValue();
+
+		if (this._inCurrentRange || !affectedValue) {
 			this._sliderProgress.focus();
-		} else if (this._valueAffected === "startValue") {
-			this._sliderStartHandle.focus();
-		} else {
-			this._sliderEndHandle.focus();
 		}
-	}	
+
+		if ((affectedValue === "startValue" && !isReversed) || (affectedValue === "endValue" && isReversed)) {
+			this._sliderStartHandle.focus();
+			this._switchReversedValues();
+		}
+
+		if ((affectedValue === "endValue" && !isReversed) || (affectedValue === "startValue" && isReversed)) {
+			this._sliderEndHandle.focus();
+			this._switchReversedValues();
+		}
+	}
 
 	/**
 	 * Calculates startValue/endValue properties when the whole range is moved.
@@ -507,21 +577,26 @@ class RangeSlider extends SliderBase {
 		return startValue;
 	}
 
+	/**
+	 * Updates the visual representation of the component by calculating
+	 * the styles of the handles and the range selection based on the new state.
+	 *
+	 * @private
+	 */
 	_updateHandlesAndRange(newValue) {
 		const max = this._effectiveMax;
 		const min = this._effectiveMin;
 		const prevStartValue = this.getStoredPropertyState("startValue");
 		const prevEndValue = this.getStoredPropertyState("endValue");
+		const affectedValue = this._getAffectedValue();
 
 		// The value according to which we update the UI can be either the startValue
 		// or the endValue property. It is determined in _getClosestHandle()
 		// depending on to which handle is closer the user interaction.
-		if (this._valueAffected === "startValue") {
-			// When the value changing is the start value:
+		if (affectedValue === "startValue") {
 			this._selectedRange = (prevEndValue - newValue) / (max - min);
 			this._firstHandlePositionFromStart = ((newValue - min) / (max - min)) * 100;
-		} else if (this._valueAffected === "endValue") {
-			// Wen the value changing is the end value:
+		} else if (affectedValue === "endValue") {
 			this._selectedRange = ((newValue - prevStartValue)) / (max - min);
 			this._secondHandlePositionFromStart = (newValue - min) / (max - min) * 100;
 		} else {
@@ -533,25 +608,53 @@ class RangeSlider extends SliderBase {
 	}
 
 	/**
-	 * Swaps start and end values and handles (thumbs), if one came accros the other
+	 * Swaps the start and end values of the handles if one came accros the other:
+	 * - If the start value is greater than the endValue swap them and their handles
+	 * - If the endValue become less than the start value swap them and their handles
+	 *
+	 * Switches the focus to the opposite of the currently focused handle.
+	 *
+	 * Note: Only the property values are reversed, the DOM elements of the handles
+	 * corresponding to them are never switched.
 	 *
 	 * @private
 	 */
 	_swapValues() {
-		// If the start value is greater than the endValue swap them and their handles
-		if (this._valueAffected === "startValue" && this.startValue > this.endValue) {
-			const oldEndValue = this.endValue;
+		const affectedValue = this._getAffectedValue();
+
+		if (affectedValue === "startValue" && this.startValue > this.endValue) {
+			const prevEndValue = this.endValue;
 			this.endValue = this.startValue;
-			this.startValue = oldEndValue;
-			return;
+			this.startValue = prevEndValue;
+
+			this._switchReversedValues();
+			this._focusInnerElement();
 		}
 
-		// If the endValue become less than the start value swap them and their handles
-		if (this._valueAffected === "endValue" && this.endValue < this.startValue) {
-			const oldStartValue = this.startValue;
+		if (affectedValue === "endValue" && this.endValue < this.startValue) {
+			const prevStartValue = this.startValue;
 			this.startValue = this.endValue;
-			this.endValue = oldStartValue;
+			this.endValue = prevStartValue;
+
+			this._switchReversedValues();
+			this._focusInnerElement();
 		}
+	}
+
+	/**
+	 * Flag that we have swapped the values of the 'start' and 'end' properties,
+	 * to correctly switch the focus within the component from one handle to another
+	 * when the swapping is finished. As we only swap property values and not
+	 * the handle elements themselves, we must also swap their focus.
+	 *
+	 * @private
+	 */
+	_switchReversedValues() {
+		this._reversedValues = !this._reversedValues;
+	 }
+
+	 _getAreValuesReversed(areValuesReversed) {
+		return this._reversedValues;
 	}
 
 	get tabIndexProgress() {
