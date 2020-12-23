@@ -8,6 +8,8 @@ import {
 	isDown,
 	isLeft,
 	isRight,
+	isHome,
+	isEnd,
 	isHomeCtrl,
 	isEndCtrl,
 	isPageUp,
@@ -183,6 +185,7 @@ class DayPicker extends PickerBase {
 				weekday += 7;
 			}
 
+			const isFocused = oCalDate.getMonth() === this._calendarDate.getMonth() && oCalDate.getDate() === this._calendarDate.getDate();
 			const isSelected = this._isDaySelected(timestamp);
 			const isSelectedBetween = this._isDayInsideSelectionRange(timestamp);
 			const isOtherMonth = oCalDate.getMonth() !== this._month;
@@ -196,7 +199,7 @@ class DayPicker extends PickerBase {
 
 			day = {
 				timestamp: timestamp.toString(),
-				_tabIndex: oCalDate.getDate() === this._calendarDate.getDate() ? "0" : "-1",
+				_tabIndex: isFocused ? "0" : "-1",
 				selected: isSelected,
 				iDay: oCalDate.getDate(),
 				_index: i.toString(),
@@ -316,19 +319,6 @@ class DayPicker extends PickerBase {
 		return timestamp > min && timestamp < max;
 	}
 
-	_getVisualizedSelectedDates() {
-		switch (this.selection) {
-		case CalendarSelection.Single:
-			return [this.selectedDates[0]];
-		case CalendarSelection.Multiple:
-			return [...this.selectedDates];
-		case CalendarSelection.Range:
-			return this.selectedDates.slice(0, 2);
-		default:
-			return [];
-		}
-	}
-
 	_selectDate(event) {
 		const target = event.target;
 
@@ -381,36 +371,46 @@ class DayPicker extends PickerBase {
 		if (isEnter(event)) {
 			this._selectDate(event);
 			return;
-		}
-
-		if (isSpace(event)) {
+		} else if (isSpace(event)) {
 			event.preventDefault();
 			return;
-		}
+		} else if (isLeft(event)) {
+			this._modifyTimestampBy(-1, "day");
+		} else if (isRight(event)) {
+			this._modifyTimestampBy(1, "day");
+		} else if (isUp(event)) {
+			this._modifyTimestampBy(-7, "day");
+		} else if (isDown(event)) {
+			this._modifyTimestampBy(7, "day");
+		} else if (isPageUp(event)) {
+			this._modifyTimestampBy(-1, "month");
+		} else if (isPageDown(event)) {
+			this._modifyTimestampBy(1, "month");
+		} else if (isPageUpShift(event)) {
+			this._modifyTimestampBy(-1, "year");
+		} else if (isPageDownShift(event)) {
+			this._modifyTimestampBy(1, "year");
+		} else if (isPageUpShiftCtrl(event)) {
+			this._modifyTimestampBy(-10, "year");
+		} else if (isPageDownShiftCtrl(event)) {
+			this._modifyTimestampBy(10, "year");
+		} else if (isHome(event)) {
 
-		if (isHomeCtrl(event)) {
-			this._navToStartEndDayOfTheMonth(event, true);
-		}
+		} else if (isEnd(event)) {
 
-		if (isEndCtrl(event)) {
-			this._navToStartEndDayOfTheMonth(event, false);
-		}
+		} else if (isHomeCtrl(event)) {
 
-		if (isPageUpShift(event)) {
-			this._changeYears(event, false, 1);
-		}
+		} else if (isEndCtrl(event)) {
 
-		if (isPageUpShiftCtrl(event)) {
-			this._changeYears(event, false, 10);
 		}
+	}
 
-		if (isPageDownShift(event)) {
-			this._changeYears(event, true, 1);
-		}
+	_showPreviousPage() {
+		this._modifyTimestampBy(-1, "month");
+	}
 
-		if (isPageDownShiftCtrl(event)) {
-			this._changeYears(event, true, 10);
-		}
+	_showNextPage() {
+		this._modifyTimestampBy(1, "month");
 	}
 
 	_onkeyup(event) {
@@ -419,71 +419,20 @@ class DayPicker extends PickerBase {
 		}
 	}
 
-	_navToStartEndDayOfTheMonth(event, start) {
-		event.preventDefault();
-
-		const currentItem = this._itemNav._getCurrentItem();
-		let currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp")) * 1000;
-		let calDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
-
-		if (currentItem.classList.contains("ui5-dp-item--othermonth")) {
-			return;
-		}
-
-		calDate.setDate(1);
-		if (!start) {
-			// set the day to be the last day of the current month
-			calDate.setMonth(calDate.getMonth() + 1, 0);
-		}
-
-		if (calDate.valueOf() < this._minDate) {
-			calDate = CalendarDate.fromLocalJSDate(new Date(this._minDate), this._primaryCalendarType);
-		} else if (calDate.valueOf() > this._maxDate) {
-			calDate = CalendarDate.fromLocalJSDate(new Date(this._maxDate), this._primaryCalendarType);
-		}
-
-		currentTimestamp = calDate.valueOf() / 1000;
-		const newItemIndex = this.focusableDays.findIndex(item => parseInt(item.timestamp) === currentTimestamp);
-
-		this._itemNav.currentIndex = newItemIndex;
-		this._itemNav.focusCurrent();
-	}
-
-	/**
-	 * Converts "timestamp" property value into a Java Script Date object and
-	 * adds or extracts a given number of years from it
-	 *
-	 * @param {object} event used to prevent the default browser behavior
-	 * @param {boolean} forward if true indicates addition
-	 * @param {int} step for year number to substract or add
-	 */
-	_changeYears(event, forward, step) {
-		const currentItem = this._itemNav._getCurrentItem();
-		let currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
-		const currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
-		let newDate = new CalendarDate(currentDate, this._primaryCalendarType);
-
-		if (forward) {
-			newDate.setYear(newDate.getYear() + step);
+	_modifyTimestampBy(amount, unit) {
+		// Modify the current timestamp
+		const newDate = new CalendarDate(this._calendarDate);
+		if (unit === "day") {
+			newDate.setDate(this._calendarDate.getDate() + amount);
+		} else if (unit === "month") {
+			newDate.setMonth(this._calendarDate.getMonth() + amount);
 		} else {
-			newDate.setYear(newDate.getYear() - step);
+			newDate.setYear(this._calendarDate.getYear() + amount);
 		}
+		this.timestamp = newDate.valueOf() / 1000;
 
-		if (currentDate.getMonth() !== newDate.getMonth()) {
-			newDate.setDate(0);
-		}
-
-		if (newDate.valueOf() < this._minDate) {
-			newDate = CalendarDate.fromLocalJSDate(new Date(this._minDate), this._primaryCalendarType);
-		} else if (newDate.valueOf() > this._maxDate) {
-			newDate = CalendarDate.fromLocalJSDate(new Date(this._maxDate), this._primaryCalendarType);
-		}
-
-		currentTimestamp = (newDate.valueOf() / 1000);
-
-		this._navigateAndWaitRerender(currentTimestamp);
-
-		event.preventDefault();
+		// Notify the calendar to update its timestamp
+		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}
 
 	get shouldHideWeekNumbers() {
@@ -494,232 +443,12 @@ class DayPicker extends PickerBase {
 		return this.hideWeekNumbers;
 	}
 
-	get _currentCalendarDate() {
-		return CalendarDate.fromTimestamp(new Date().getTime(), this._primaryCalendarType);
-	}
-
-	get focusableDays() {
-		const focusableDays = [];
-
-		for (let i = 0; i < this._weeks.length; i++) {
-			const week = this._weeks[i].slice(1).filter(dayItem => !dayItem.disabled);
-			focusableDays.push(week);
-		}
-
-		return [].concat(...focusableDays);
-	}
-
 	get _dayPickerWeekNumberText() {
 		return this.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT);
 	}
 
 	get _dayPickerNonWorkingDay() {
 		return this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
-	}
-
-	_setCurrentItemTabIndex(index) {
-		const currentItem = this._itemNav._getCurrentItem();
-		if (currentItem) {
-			currentItem.setAttribute("tabindex", index.toString());
-		}
-	}
-
-	_hasNextMonth() {
-		let newMonth = this._month + 1;
-		let newYear = this._year;
-		const maxCalendarYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
-
-		if (newMonth > 11) {
-			newMonth = 0;
-			newYear++;
-		}
-
-		if (newYear > maxCalendarYear && newMonth === 0) {
-			return false;
-		}
-
-		if (!this.maxDate) {
-			return true;
-		}
-
-		const oNewDate = this._calendarDate;
-		oNewDate.setDate(oNewDate.getDate());
-		oNewDate.setYear(newYear);
-		oNewDate.setMonth(newMonth);
-
-		const monthsBetween = monthDiff(oNewDate.valueOf(), this._maxDate);
-		if (monthsBetween < 0) {
-			return false;
-		}
-
-		const lastFocusableDay = this.focusableDays[this.focusableDays.length - 1].iDay;
-		if (monthsBetween === 0 && CalendarDate.fromTimestamp(this._maxDate).toLocalJSDate().getDate() === lastFocusableDay) {
-			return false;
-		}
-
-		return true;
-	}
-
-	_hasPrevMonth() {
-		let newMonth = this._month - 1;
-		let newYear = this._year;
-		const minCalendarYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
-
-		if (newMonth < 0) {
-			newMonth = 11;
-			newYear--;
-		}
-
-		if (newYear < minCalendarYear && newMonth === 11) {
-			return false;
-		}
-
-		if (!this.minDate) {
-			return true;
-		}
-
-		const oNewDate = this._calendarDate;
-		oNewDate.setDate(oNewDate.getDate());
-		oNewDate.setYear(newYear);
-		oNewDate.setMonth(newMonth);
-
-		const monthsBetween = monthDiff(this._minDate, oNewDate.valueOf());
-		if (this.minDate && monthsBetween < 0) {
-			return false;
-		}
-
-		return true;
-	}
-
-	_handleItemNavigationBorderReach(event) {
-		const currentItem = this._itemNav._getCurrentItem();
-		let newDate;
-		let currentDate;
-		let currentTimestamp;
-
-		if (isUp(event.originalEvent) || isLeft(event.originalEvent)) {
-			currentTimestamp = this._weeks[0][event.offset + 1].timestamp * 1000;
-			newDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
-			newDate.setDate(newDate.getDate() - 7);
-		}
-
-		if (isDown(event.originalEvent) || isRight(event.originalEvent)) {
-			currentTimestamp = this._weeks[this._weeks.length - 1][event.offset + 1].timestamp * 1000;
-			newDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
-			newDate.setDate(newDate.getDate() + 7);
-		}
-
-		if (isPageUp(event.originalEvent)) {
-			currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
-			currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
-			newDate = new CalendarDate(currentDate, this._primaryCalendarType);
-			newDate.setMonth(newDate.getMonth() - 1);
-			if (currentDate.getMonth() === newDate.getMonth()) {
-				newDate.setDate(0);
-			}
-		}
-
-		if (isPageDown(event.originalEvent)) {
-			currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
-			currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
-			newDate = new CalendarDate(currentDate, this._primaryCalendarType);
-			newDate.setMonth(newDate.getMonth() + 1);
-			if (newDate.getMonth() - currentDate.getMonth() > 1) {
-				newDate.setDate(0);
-			}
-		}
-
-		if (!newDate) {
-			return;
-		}
-
-		if (newDate.valueOf() < this._minDate) {
-			newDate = CalendarDate.fromLocalJSDate(new Date(this._minDate), this._primaryCalendarType);
-		} else if (newDate.valueOf() > this._maxDate) {
-			newDate = CalendarDate.fromLocalJSDate(new Date(this._maxDate), this._primaryCalendarType);
-		}
-
-		currentTimestamp = (newDate.valueOf() / 1000);
-
-		this._navigateAndWaitRerender(currentTimestamp);
-	}
-
-	_showPreviousPage() {
-		const currentItem = this._itemNav._getCurrentItem();
-		let newDate;
-		// let currentDate;
-		let currentTimestamp;
-
-		currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
-		const currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
-		newDate = new CalendarDate(currentDate, this._primaryCalendarType);
-		newDate.setMonth(newDate.getMonth() - 1);
-		if (currentDate.getMonth() === newDate.getMonth()) {
-			newDate.setDate(0);
-		}
-
-		if (!newDate) {
-			return;
-		}
-
-		if (newDate.valueOf() < this._minDate) {
-			newDate = CalendarDate.fromLocalJSDate(new Date(this._minDate), this._primaryCalendarType);
-		} else if (newDate.valueOf() > this._maxDate) {
-			newDate = CalendarDate.fromLocalJSDate(new Date(this._maxDate), this._primaryCalendarType);
-		}
-
-		currentTimestamp = (newDate.valueOf() / 1000);
-
-		this._navigateAndWaitRerender(currentTimestamp);
-	}
-
-	_showNextPage() {
-		const currentItem = this._itemNav._getCurrentItem();
-		let newDate;
-		// let currentDate;
-		let currentTimestamp;
-
-		currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp") * 1000);
-		const currentDate = CalendarDate.fromTimestamp(currentTimestamp, this._primaryCalendarType);
-		newDate = new CalendarDate(currentDate, this._primaryCalendarType);
-		newDate.setMonth(newDate.getMonth() + 1);
-		if (newDate.getMonth() - currentDate.getMonth() > 1) {
-			newDate.setDate(0);
-		}
-
-		if (!newDate) {
-			return;
-		}
-
-		if (newDate.valueOf() < this._minDate) {
-			newDate = CalendarDate.fromLocalJSDate(new Date(this._minDate), this._primaryCalendarType);
-		} else if (newDate.valueOf() > this._maxDate) {
-			newDate = CalendarDate.fromLocalJSDate(new Date(this._maxDate), this._primaryCalendarType);
-		}
-
-		currentTimestamp = (newDate.valueOf() / 1000);
-
-		this._navigateAndWaitRerender(currentTimestamp);
-	}
-
-	_handleItemNavigationAfterFocus() {
-		const currentItem = this._itemNav._getCurrentItem();
-		const currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp"));
-		this.timestamp = currentTimestamp;
-		this.fireEvent("navigate", { timestamp: currentTimestamp });
-
-		if (currentItem.classList.contains("ui5-dp-item--othermonth")) {
-			this._navigateAndWaitRerender(currentTimestamp);
-		}
-	}
-
-	async _navigateAndWaitRerender(timestamp) {
-		// this.fireEvent("navigate", { timestamp });
-		await RenderScheduler.whenFinished();
-
-		const newItemIndex = this.focusableDays.findIndex(item => parseInt(item.timestamp) === timestamp);
-		this._itemNav.currentIndex = newItemIndex;
-		this._itemNav.focusCurrent();
 	}
 
 	_isWeekend(oDate) {
