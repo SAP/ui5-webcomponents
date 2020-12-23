@@ -22,7 +22,6 @@ import {
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import PickerBase from "./PickerBase.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
@@ -34,17 +33,6 @@ import {
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
-
-const monthDiff = (startDate, endDate) => {
-	let months;
-	const _startDate = CalendarDate.fromTimestamp(startDate).toLocalJSDate(),
-		_endDate = CalendarDate.fromTimestamp(endDate).toLocalJSDate();
-
-	months = (_endDate.getFullYear() - _startDate.getFullYear()) * 12;
-	months -= _startDate.getMonth();
-	months += _endDate.getMonth();
-	return months;
-};
 
 /**
  * @public
@@ -341,7 +329,6 @@ class DayPicker extends PickerBase {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
-
 	}
 
 	_onitemmouseover(event) {
@@ -370,10 +357,8 @@ class DayPicker extends PickerBase {
 	_onkeydown(event) {
 		if (isEnter(event)) {
 			this._selectDate(event);
-			return;
 		} else if (isSpace(event)) {
 			event.preventDefault();
-			return;
 		} else if (isLeft(event)) {
 			this._modifyTimestampBy(-1, "day");
 		} else if (isRight(event)) {
@@ -394,14 +379,26 @@ class DayPicker extends PickerBase {
 			this._modifyTimestampBy(-10, "year");
 		} else if (isPageDownShiftCtrl(event)) {
 			this._modifyTimestampBy(10, "year");
-		} else if (isHome(event)) {
-
-		} else if (isEnd(event)) {
-
+		} else if (isHome(event) || isEnd(event)) {
+			this._weeks.forEach(week => {
+				const dayInThisWeek = week.findIndex(item => {
+					const date = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000);
+					return date.getMonth() === this._calendarDate.getMonth() && date.getDate() === this._calendarDate.getDate();
+				}) !== -1;
+				if (dayInThisWeek) { // The current day is in this week
+					const index = isHome(event) ? 1 : 7; // select the first (if Home) or last (if End) day of the week
+					this._setTimestamp(parseInt(week[index].timestamp));
+				}
+			});
 		} else if (isHomeCtrl(event)) {
-
+			const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			tempDate.setDate(1); // Set the first day of the month
+			this._setTimestamp(tempDate.valueOf() / 1000);
 		} else if (isEndCtrl(event)) {
-
+			const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			tempDate.setMonth(tempDate.getMonth() + 1);
+			tempDate.setDate(0); // Set the last day of the month (0th day of next month)
+			this._setTimestamp(tempDate.valueOf() / 1000);
 		}
 	}
 
@@ -419,6 +416,12 @@ class DayPicker extends PickerBase {
 		}
 	}
 
+	/**
+	 * Modifies the timestamp by a certain amount of days/months/years
+	 * @param amount
+	 * @param unit
+	 * @private
+	 */
 	_modifyTimestampBy(amount, unit) {
 		// Modify the current timestamp
 		const newDate = new CalendarDate(this._calendarDate);
@@ -432,6 +435,16 @@ class DayPicker extends PickerBase {
 		this.timestamp = newDate.valueOf() / 1000;
 
 		// Notify the calendar to update its timestamp
+		this.fireEvent("navigate", { timestamp: this.timestamp });
+	}
+
+	/**
+	 * Sets the timestamp to an absolute value
+	 * @param value
+	 * @private
+	 */
+	_setTimestamp(value) {
+		this.timestamp = value;
 		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}
 
