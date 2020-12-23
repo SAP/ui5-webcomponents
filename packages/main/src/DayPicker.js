@@ -96,6 +96,10 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
+		_hoverTimestamp: {
+			type: String,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
@@ -112,6 +116,8 @@ const metadata = {
 		navigate: {},
 	},
 };
+
+const isBetween = (x, num1, num2) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 
 /**
  * @class
@@ -298,13 +304,18 @@ class DayPicker extends PickerBase {
 	}
 
 	_isDayInsideSelectionRange(timestamp) {
+		// No selection at all (or not in range selection mode)
 		if (this.selection !== CalendarSelection.Range || !this.selectedDates.length) {
 			return false;
 		}
-		const min = Math.min(...this.selectedDates);
-		const max = Math.max(...this.selectedDates);
 
-		return timestamp > min && timestamp < max;
+		// One date selected
+		if (this.selectedDates.length === 1 && this._hoverTimestamp) {
+			return isBetween(timestamp, this.selectedDates[0], this._hoverTimestamp);
+		}
+
+		// Two dates selected
+		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
 	}
 
 	_selectDate(event) {
@@ -331,27 +342,11 @@ class DayPicker extends PickerBase {
 		});
 	}
 
-	_onitemmouseover(event) {
-		const hoveredItem = event.target.classList.contains("ui5-dp-item") ? event.target : event.target.parentElement;
-		if (this.selectedDates.length === 1 && this.selection === CalendarSelection.Range && hoveredItem.classList.contains("ui5-dp-item")) {
-			const dayItems = this.getDomRef().querySelectorAll(".ui5-dp-item");
-			const firstTimestamp = this.selectedDates[0];
-			const lastTimestamp = parseInt(hoveredItem.dataset.sapTimestamp);
-
-			this._updateSelectionBetween(dayItems, firstTimestamp, lastTimestamp);
+	_onmouseover(event) {
+		const hoveredItem = event.target.closest(".ui5-dp-item");
+		if (hoveredItem && this.selection === CalendarSelection.Range && this.selectedDates.length === 1) {
+			this._hoverTimestamp = this.getTimestampFromDom(hoveredItem);
 		}
-	}
-
-	_updateSelectionBetween(dayItems, firstTimestamp, lastTimestamp) {
-		dayItems.forEach(day => {
-			const dayTimestamp = parseInt(day.dataset.sapTimestamp);
-
-			if ((dayTimestamp > firstTimestamp && dayTimestamp < lastTimestamp) || (dayTimestamp > lastTimestamp && dayTimestamp < firstTimestamp)) {
-				day.classList.add("ui5-dp-item--selected-between");
-			} else {
-				day.classList.remove("ui5-dp-item--selected-between");
-			}
-		});
 	}
 
 	_onkeydown(event) {

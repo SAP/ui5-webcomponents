@@ -4,6 +4,7 @@
 	@keydown={{_onkeydown}}
 	@keyup={{_onkeyup}}
 	@click={{_selectDate}}
+	@mouseover={{_onmouseover}}
 >
 
 	<div id="{{_id}}-content" class="ui5-dp-content" role="grid" aria-roledescription="Calendar">
@@ -20,7 +21,7 @@
 		</div>
 		{{#each _weeks}}
 			{{#if this.length}}
-				<div style="display: flex;" role="row"  @mouseover="{{../_onitemmouseover}}">
+				<div style="display: flex;" role="row">
 					{{#each this}}
 						{{#if this.timestamp}}
 							<div
