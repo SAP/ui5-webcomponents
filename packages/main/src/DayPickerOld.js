@@ -1,6 +1,7 @@
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
 	isSpace,
 	isEnter,
@@ -20,6 +21,7 @@ import {
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import PickerBase from "./PickerBase.js";
@@ -85,15 +87,20 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the effective weeks numbers visibility,
+		 * based on the <code>primaryCalendarType</code> and <code>hideWeekNumbers</code> property.
+		 * @type {boolean}
+		 * @private
+		 */
+		_hideWeekNumbers: {
+			type: Boolean,
+		},
+
+		/**
 		 * @type {Object}
 		 * @private
 		 */
 		_weeks: {
-			type: Object,
-			multiple: true,
-		},
-
-		_dayNames: {
 			type: Object,
 			multiple: true,
 		},
@@ -148,29 +155,47 @@ class DayPicker extends PickerBase {
 		return dayPickerCSS;
 	}
 
-	onBeforeRendering() {
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		this._buildWeeks(localeData);
-		this._buildDayNames(localeData);
+	constructor() {
+		super();
+		this._itemNav = new ItemNavigation(this, {
+			rowSize: 7,
+			pageSize: 42,
+			behavior: ItemNavigationBehavior.Paging,
+			affectedPropertiesNames: ["_weeks"],
+			getItemsCallback: () => this.focusableDays,
+			hasNextPageCallback: this._hasNextMonth.bind(this),
+			hasPreviousPageCallback: this._hasPrevMonth.bind(this),
+		});
+
+		this._itemNav.attachEvent(
+			ItemNavigation.BORDER_REACH,
+			this._handleItemNavigationBorderReach.bind(this)
+		);
+
+		this._itemNav.attachEvent(
+			ItemNavigation.AFTER_FOCUS,
+			this._handleItemNavigationAfterFocus.bind(this)
+		);
 	}
 
-	/**
-	 * Builds the _weeks object that represents the month
-	 * @param localeData
-	 * @private
-	 */
-	_buildWeeks(localeData) {
+	onBeforeRendering() {
+		const localeData = getCachedLocaleDataInstance(getLocale());
+
 		let oCalDate,
 			day,
 			timestamp,
-			lastWeekNumber = -1;
+			lastWeekNumber = -1,
+			isDaySelected = false,
+			todayIndex = 0;
 
-		const _aVisibleDays = this._getVisibleDays();
+		const _aVisibleDays = this._getVisibleDays(this._calendarDate);
 		this._weeks = [];
 		let week = [];
 		this._weekNumbers = [];
 		let weekday;
-		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
+		const _monthsNameWide = localeData.getMonths("wide", this._calendarDate._oUDate.sCalendarType);
+
+		const visualizedSelectedDates = this._getVisualizedSelectedDates();
 
 		/* eslint-disable no-loop-func */
 		for (let i = 0; i < _aVisibleDays.length; i++) {
@@ -183,65 +208,62 @@ class DayPicker extends PickerBase {
 				weekday += 7;
 			}
 
-			const isSelected = this._isDaySelected(timestamp);
-			const isSelectedBetween = this._isDayInsideSelectionRange(timestamp);
-			const isOtherMonth = oCalDate.getMonth() !== this._month;
-			const isWeekend = this._isWeekend(oCalDate);
-			const isDisabled = this._isOutOfSelectableRange(oCalDate);
-			const isToday = oCalDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
-			const isFirstDayOfWeek = oCalDate.getDay() === this._getFirstDayOfWeek();
-
-			const nonWorkingAriaLabel = isWeekend ? `${this._dayPickerNonWorkingDay} ` : "";
-			const todayAriaLabel = isToday ? `today ` : "";
+			const nonWorkingAriaLabel = this._isWeekend(oCalDate) ? `${this._dayPickerNonWorkingDay} ` : "";
 
 			day = {
 				timestamp: timestamp.toString(),
-				_tabIndex: oCalDate.getDate() === this._calendarDate.getDate() ? "0" : "-1",
-				selected: isSelected,
+				selected: visualizedSelectedDates.some(d => {
+					return d === timestamp;
+				}),
 				iDay: oCalDate.getDate(),
 				_index: i.toString(),
 				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
-				ariaLabel: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[oCalDate.getMonth()]} ${oCalDate.getDate()}, ${oCalDate.getYear()}`,
-				ariaSelected: isSelected ? "true" : "false",
-				ariaDisabled: isOtherMonth ? "true" : undefined,
-				disabled: isDisabled,
+				ariaLabel: `${nonWorkingAriaLabel}${_monthsNameWide[oCalDate.getMonth()]} ${oCalDate.getDate()}, ${oCalDate.getYear()}`,
 			};
 
-			if (isFirstDayOfWeek) {
+			const isToday = oCalDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
+
+			week.push(day);
+
+			if (oCalDate.getDay() === this._getFirstDayOfWeek()) {
 				day.classes += " ui5-dp-firstday";
 			}
 
-			if (isSelected) {
+			if (day.selected) {
 				day.classes += " ui5-dp-item--selected";
-			}
-
-			if (isSelectedBetween) {
-				day.classes += " ui5-dp-item--selected-between";
+				isDaySelected = true;
 			}
 
 			if (isToday) {
 				day.classes += " ui5-dp-item--now";
+				todayIndex = i;
+				day.ariaLabel = `today ${day.ariaLabel}`;
 			}
 
-			if (isOtherMonth) {
+			if (oCalDate.getMonth() !== this._month) {
 				day.classes += " ui5-dp-item--othermonth";
+				day.ariaDisabled = "true";
 			}
 
-			if (isWeekend) {
+			day.id = `${this._id}-${timestamp}`;
+
+			if (this._isWeekend(oCalDate)) {
 				day.classes += " ui5-dp-item--weeekend";
 			}
-			if (isDisabled) {
+			if (this._isOutOfSelectableRange(oCalDate)) {
 				day.classes += " ui5-dp-item--disabled";
+				day.disabled = true;
 			}
 
-			week.push(day);
+			this._hideWeekNumbers = this.shouldHideWeekNumbers;
 
-			if (weekday === 6 || i === _aVisibleDays.length - 1) {
+			if (day.classes.indexOf("ui5-dp-wday6") !== -1
+				|| _aVisibleDays.length - 1 === i) {
 				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), getLocale(), localeData);
 				if (lastWeekNumber !== weekNumber) {
 					const weekNum = {
 						weekNum: weekNumber,
-						isHidden: this.shouldHideWeekNumbers,
+						isHidden: this._hideWeekNumbers,
 					};
 					week.unshift(weekNum);
 					lastWeekNumber = weekNumber;
@@ -255,18 +277,19 @@ class DayPicker extends PickerBase {
 			this._weeks.push([]);
 		}
 		/* eslint-enable no-loop-func */
-	}
 
-	/**
-	 * Builds the dayNames object (header of the month)
-	 * @param localeData
-	 * @private
-	 */
-	_buildDayNames(localeData) {
-		let weekday;
+		if (!isDaySelected && todayIndex && this._itemNav.currentIndex === 0) { // current === 0 was wrong, it is a setter not a getter
+			this._itemNav.current = todayIndex;
+		}
+
+		const currentIndex = this.focusableDays.findIndex(item => {
+			return CalendarDate.fromLocalJSDate(new Date(item.timestamp * 1000), this._primaryCalendarType).toString() === this._calendarDate.toString();
+		});
+		this._itemNav.currentIndex = currentIndex;
 
 		const aDayNamesWide = localeData.getDays("wide", this._primaryCalendarType);
 		const aDayNamesAbbreviated = localeData.getDays("abbreviated", this._primaryCalendarType);
+		const aUltraShortNames = aDayNamesAbbreviated.map(n => n);
 		let dayName;
 
 		this._dayNames = [];
@@ -280,8 +303,9 @@ class DayPicker extends PickerBase {
 				weekday -= 7;
 			}
 			dayName = {
+				id: `${this._id}-WH${i.toString()}`,
 				name: aDayNamesWide[weekday],
-				ultraShortName: aDayNamesAbbreviated[weekday],
+				ultraShortName: aUltraShortNames[weekday],
 				classes: "ui5-dp-dayname",
 			};
 
@@ -292,28 +316,18 @@ class DayPicker extends PickerBase {
 	}
 
 	onAfterRendering() {
+		const visualizedDates = this._getVisualizedSelectedDates();
+		if (this.selection === CalendarSelection.Range && visualizedDates.length > 0) {
+			const dayItems = this.getDomRef().querySelectorAll(".ui5-dp-item");
+			const firstTimestamp = this.selectedDates[0];
+			const lastTimestamp = (visualizedDates.length === 1) ? parseInt(dayItems[this._itemNav.currentIndex].dataset.sapTimestamp) : this.selectedDates[1];
+
+			this._updateSelectionBetween(dayItems, firstTimestamp, lastTimestamp);
+		}
+
 		if (!this._hidden) {
-			this.shadowRoot.querySelector(`[tabindex="0"]`).focus();
+			this._itemNav.focusCurrent();
 		}
-	}
-
-	_isDaySelected(timestamp) {
-		if (this.selection === CalendarSelection.Single) {
-			return timestamp === this.selectedDates[0];
-		}
-
-		// Multiple, Range
-		return this.selectedDates.includes(timestamp);
-	}
-
-	_isDayInsideSelectionRange(timestamp) {
-		if (this.selection !== CalendarSelection.Range || !this.selectedDates.length) {
-			return false;
-		}
-		const min = Math.min(...this.selectedDates);
-		const max = Math.max(...this.selectedDates);
-
-		return timestamp > min && timestamp < max;
 	}
 
 	_getVisualizedSelectedDates() {
@@ -769,7 +783,7 @@ class DayPicker extends PickerBase {
 		return date.valueOf() < this._minDate || date.valueOf() > this._maxDate;
 	}
 
-	_getVisibleDays() {
+	_getVisibleDays(oStartDate, bIncludeBCDates) {
 		let oCalDate,
 			iDaysOldMonth,
 			iYear;
@@ -778,10 +792,15 @@ class DayPicker extends PickerBase {
 		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
 		const _aVisibleDays = [];
 
+		// If date passed generate days for new start date else return the current one
+		if (!oStartDate) {
+			return _aVisibleDays;
+		}
+
 		const iFirstDayOfWeek = this._getFirstDayOfWeek();
 
 		// determine weekday of first day in month
-		const oFirstDay = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+		const oFirstDay = new CalendarDate(oStartDate, this._primaryCalendarType);
 		oFirstDay.setDate(1);
 		iDaysOldMonth = oFirstDay.getDay() - iFirstDayOfWeek;
 		if (iDaysOldMonth < 0) {
@@ -797,7 +816,12 @@ class DayPicker extends PickerBase {
 		for (let i = 0; i < 42; i++) {
 			iYear = oDay.getYear();
 			oCalDate = new CalendarDate(oDay, this._primaryCalendarType);
-			if (iYear >= minCalendarDateYear && iYear <= maxCalendarDateYear) {
+			if (bIncludeBCDates && iYear < minCalendarDateYear) {
+				// For dates before 0001-01-01 we should render only empty squares to keep
+				// the month square matrix correct.
+				oCalDate._bBeforeFirstYear = true;
+				_aVisibleDays.push(oCalDate);
+			} else if (iYear >= minCalendarDateYear && iYear <= maxCalendarDateYear) {
 				// Days before 0001-01-01 or after 9999-12-31 should not be rendered.
 				_aVisibleDays.push(oCalDate);
 			}
