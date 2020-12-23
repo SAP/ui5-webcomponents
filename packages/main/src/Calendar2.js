@@ -187,18 +187,23 @@ class Calendar2 extends PickerBase {
 		this._currentPicker = "year";
 	}
 
+
+	get _currentPickerDOM() {
+		return this.shadowRoot.querySelector(`[ui5-${this._currentPicker}picker]`);
+	}
+
 	/**
 	 * The year clicked the "Previous" button in the header
 	 */
 	onHeaderPreviousPress() {
-		this._showPreviousPage();
+		this._currentPickerDOM._showPreviousPage();
 	}
 
 	/**
 	 * The year clicked the "Next" button in the header
 	 */
 	onHeaderNextPress() {
-		this._showNextPage();
+		this._currentPickerDOM._showNextPage();
 	}
 
 	get _headerButtonsState() {
@@ -318,18 +323,6 @@ class Calendar2 extends PickerBase {
 
 	onNavigate(event) {
 		this.timestamp = event.detail.timestamp;
-	}
-
-	get _currentPickerDOM() {
-		return this.shadowRoot.querySelector(`[ui5-${this._currentPicker}picker]`);
-	}
-
-	_showPreviousPage() {
-		this._currentPickerDOM._showPreviousPage();
-	}
-
-	_showNextPage() {
-		this._currentPickerDOM._showNextPage();
 	}
 
 	_onkeydown(event) {

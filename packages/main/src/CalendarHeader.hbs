@@ -6,7 +6,7 @@
 	<div
 		id="{{_id}}-btnPrev"
 		class="{{_btnPrev.classes}}"
-		@click={{_handlePrevPress}}
+		@mousedown={{_handlePrevPress}}
 		data-sap-cal-head-button="Prev"
 		title="{{_prevButtonText}}"
 	>
@@ -49,7 +49,7 @@
 
 	<div
 		class="{{_btnNext.classes}}"
-		@click={{_handleNextPress}}
+		@mousedown={{_handleNextPress}}
 		id="{{_id}}-btnNext"
 		data-sap-cal-head-button="Next"
 		title={{_nextButtonText}}

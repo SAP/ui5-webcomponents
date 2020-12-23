@@ -85,6 +85,7 @@ class MonthPicker extends PickerBase {
 
 	onBeforeRendering() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
+		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
 
 		const months = [];
 		const tempDate = this._calendarDate;
@@ -102,7 +103,7 @@ class MonthPicker extends PickerBase {
 				_tabIndex: tempDate.getMonth() === this._calendarDate.getMonth() ? "0" : "-1",
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
-				name: localeData.getMonths("wide", this._primaryCalendarType)[i],
+				name: monthsNames[i],
 				classes: "ui5-mp-item",
 			};
 
