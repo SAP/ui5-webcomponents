@@ -156,12 +156,18 @@ class YearPicker extends PickerBase {
 	}
 
 	onAfterRendering() {
-		if (!this._hidden) {
+		if (this._autoFocus && !this._hidden) {
 			this.shadowRoot.querySelector(`[tabindex="0"]`).focus();
 		}
 	}
 
+	_onfocusin() {
+		this._autoFocus = true;
+	}
+
 	_onkeydown(event) {
+		let preventDefault = true;
+
 		if (isEnter(event)) {
 			this._selectYear(event);
 		} else if (isSpace(event)) {
@@ -184,6 +190,12 @@ class YearPicker extends PickerBase {
 			this._setTimestamp(parseInt(this._years[0][0].timestamp)); // first year of first row
 		} else if (isEndCtrl(event)) {
 			this._setTimestamp(parseInt(this._years[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last year of last row
+		} else {
+			preventDefault = false;
+		}
+
+		if (preventDefault) {
+			event.preventDefault();
 		}
 	}
 

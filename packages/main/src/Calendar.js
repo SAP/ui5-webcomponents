@@ -288,11 +288,13 @@ class Calendar extends PickerBase {
 	onSelectedMonthChange(event) {
 		this.timestamp = event.detail.timestamp;
 		this._currentPicker = "day";
+		this._autoFocus = true;
 	}
 
 	onSelectedYearChange(event) {
 		this.timestamp = event.detail.timestamp;
 		this._currentPicker = "day";
+		this._autoFocus = true;
 	}
 
 	onNavigate(event) {

@@ -289,9 +289,13 @@ class DayPicker extends PickerBase {
 	}
 
 	onAfterRendering() {
-		if (!this._hidden) {
+		if (this._autoFocus && !this._hidden) {
 			this.shadowRoot.querySelector(`[tabindex="0"]`).focus();
 		}
+	}
+
+	_onfocusin() {
+		this._autoFocus = true;
 	}
 
 	_isDaySelected(timestamp) {
@@ -350,6 +354,8 @@ class DayPicker extends PickerBase {
 	}
 
 	_onkeydown(event) {
+		let preventDefault = true;
+
 		if (isEnter(event)) {
 			this._selectDate(event);
 		} else if (isSpace(event)) {
@@ -385,6 +391,12 @@ class DayPicker extends PickerBase {
 			tempDate.setMonth(tempDate.getMonth() + 1);
 			tempDate.setDate(0); // Set the last day of the month (0th day of next month)
 			this._setTimestamp(tempDate.valueOf() / 1000);
+		} else {
+			preventDefault = false;
+		}
+
+		if (preventDefault) {
+			event.preventDefault();
 		}
 	}
 

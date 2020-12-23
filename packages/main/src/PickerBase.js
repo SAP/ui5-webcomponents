@@ -79,6 +79,13 @@ const metadata = {
 			type: Integer,
 			multiple: true,
 		},
+
+		/**
+		 * Defines whether the component will automatically focus itself after each re-render
+		 */
+		_autoFocus: {
+			type: Boolean,
+		},
 	},
 };
 

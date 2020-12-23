@@ -14,9 +14,10 @@
 			.minDate="{{minDate}}"
 			.maxDate="{{maxDate}}"
 			timestamp="{{_timestamp}}"
+			?hide-week-numbers="{{hideWeekNumbers}}"
+			?_auto-focus="{{_autoFocus}}"
 			@ui5-change="{{onSelectedDatesChange}}"
 			@ui5-navigate="{{onNavigate}}"
-			?hide-week-numbers="{{hideWeekNumbers}}"
 		></ui5-daypicker>
 
 		<ui5-monthpicker
@@ -29,6 +30,7 @@
 			.minDate="{{minDate}}"
 			.maxDate="{{maxDate}}"
 			timestamp="{{_timestamp}}"
+			_auto-focus
 			@ui5-change="{{onSelectedMonthChange}}"
 			@ui5-navigate="{{onNavigate}}"
 		></ui5-monthpicker>
@@ -43,6 +45,7 @@
 			.minDate="{{minDate}}"
 			.maxDate="{{maxDate}}"
 			timestamp="{{_timestamp}}"
+			_auto-focus
 			@ui5-change="{{onSelectedYearChange}}"
 			@ui5-navigate="{{onNavigate}}"
 		></ui5-yearpicker>
