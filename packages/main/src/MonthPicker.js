@@ -1,9 +1,20 @@
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isEnter,
+	isSpace,
+	isDown,
+	isUp,
+	isLeft,
+	isRight,
+	isHome,
+	isEnd,
+	isHomeCtrl,
+	isEndCtrl,
+	isPageUp,
+	isPageDown,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import PickerBase from "./PickerBase.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 
@@ -15,7 +26,7 @@ import styles from "./generated/themes/MonthPicker.css.js";
 const metadata = {
 	tag: "ui5-monthpicker",
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
-		_quarters: {
+		_months: {
 			type: Object,
 			multiple: true,
 		},
@@ -27,13 +38,13 @@ const metadata = {
 	},
 	events: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
-		 * Fired when the user selects a new Date on the Web Component.
+		 * Fired when the user selects a month (space/enter/click).
 		 * @public
 		 * @event
 		 */
 		change: {},
 		/**
-		 * Fired when month, year has changed due to item navigation.
+		 * Fired when the user navigates with the keyboard.
 		 * @since 1.0.0-rc.9
 		 * @public
 		 * @event
@@ -41,6 +52,9 @@ const metadata = {
 		navigate: {},
 	},
 };
+
+const PAGE_SIZE = 12; // Total months on a single page
+const ROW_SIZE = 3; // Months per row (4 rows of 3 months each)
 
 /**
  * Month picker component.
@@ -69,49 +83,30 @@ class MonthPicker extends PickerBase {
 		return styles;
 	}
 
-	constructor() {
-		super();
-
-		this._itemNav = new ItemNavigation(this, {
-			pageSize: 12,
-			rowSize: 3,
-			behavior: ItemNavigationBehavior.Paging,
-			getItemsCallback: () => this.focusableMonths,
-			affectedPropertiesNames: ["_quarters"],
-		});
-
-		this._itemNav.attachEvent(
-			ItemNavigation.BORDER_REACH,
-			this._handleItemNavigationBorderReach.bind(this)
-		);
-
-		this._itemNav.attachEvent(
-			ItemNavigation.AFTER_FOCUS,
-			this._handleItemNavigationAfterFocus.bind(this)
-		);
-	}
-
 	onBeforeRendering() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 
-		const quarters = [];
-		const oCalDate = this._calendarDate;
+		const months = [];
+		const tempDate = this._calendarDate;
 		let timestamp;
 
 		/* eslint-disable no-loop-func */
 		for (let i = 0; i < 12; i++) {
-			oCalDate.setMonth(i);
-			timestamp = oCalDate.valueOf() / 1000;
+			tempDate.setMonth(i);
+			timestamp = tempDate.valueOf() / 1000;
+
+			const isSelected = this.selectedDates.some(d => d === timestamp);
 
 			const month = {
 				timestamp: timestamp.toString(),
-				id: `${this._id}-m${i}`,
-				selected: this.selectedDates.some(d => d === timestamp),
+				_tabIndex: tempDate.getMonth() === this._calendarDate.getMonth() ? "0" : "-1",
+				selected: isSelected,
+				ariaSelected: isSelected ? "true" : "false",
 				name: localeData.getMonths("wide", this._primaryCalendarType)[i],
 				classes: "ui5-mp-item",
 			};
 
-			if (month.selected) {
+			if (isSelected) {
 				month.classes += " ui5-mp-item--selected";
 			}
 
@@ -120,59 +115,93 @@ class MonthPicker extends PickerBase {
 				month.disabled = true;
 			}
 
-			const quarterIndex = parseInt(i / 3);
+			const quarterIndex = parseInt(i / ROW_SIZE);
 
-			if (quarters[quarterIndex]) {
-				quarters[quarterIndex].push(month);
+			if (months[quarterIndex]) {
+				months[quarterIndex].push(month);
 			} else {
-				quarters[quarterIndex] = [month];
+				months[quarterIndex] = [month];
 			}
 		}
 
-		this._quarters = quarters;
-
-		const currentIndex = this.focusableMonths.findIndex(item => {
-			return CalendarDate.fromLocalJSDate(new Date(item.timestamp * 1000), this._primaryCalendarType).toString() === this._calendarDate.toString();
-		});
-		this._itemNav.currentIndex = currentIndex;
+		this._months = months;
 	}
 
 	onAfterRendering() {
 		if (!this._hidden) {
-			this._itemNav.focusCurrent();
-		}
-	}
-
-	_setCurrentItemTabIndex(index) {
-		const currentItem = this._itemNav._getCurrentItem();
-		if (currentItem) {
-			currentItem.setAttribute("tabindex", index.toString());
-		}
-	}
-
-	_onmousedown(event) {
-		if (event.target.className.indexOf("ui5-mp-item") > -1) {
-			const targetTimestamp = this.getTimestampFromDom(event.target);
-			const focusedItem = this.focusableMonths.find(item => parseInt(item.timestamp) === targetTimestamp);
-			this._itemNav.update(focusedItem);
-		}
-	}
-
-	_onmouseup(event) {
-		if (event.target.className.indexOf("ui5-mp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(event.target);
-			this.timestamp = timestamp;
-			this.fireEvent("change", { timestamp });
+			this.shadowRoot.querySelector(`[tabindex="0"]`).focus();
 		}
 	}
 
 	_onkeydown(event) {
-		if (isSpace(event) || isEnter(event)) {
-			this._activateMonth(event);
+		if (isEnter(event)) {
+			this._selectMonth(event);
+		} else if (isSpace(event)) {
+			event.preventDefault();
+		} else if (isLeft(event)) {
+			this._modifyTimestampBy(-1);
+		} else if (isRight(event)) {
+			this._modifyTimestampBy(1);
+		} else if (isUp(event)) {
+			this._modifyTimestampBy(-ROW_SIZE);
+		} else if (isDown(event)) {
+			this._modifyTimestampBy(ROW_SIZE);
+		} else if (isPageUp(event)) {
+			this._modifyTimestampBy(-PAGE_SIZE);
+		} else if (isPageDown(event)) {
+			this._modifyTimestampBy(PAGE_SIZE);
+		} else if (isHome(event) || isEnd(event)) {
+			this._months.forEach(row => {
+				const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getMonth() === this._calendarDate.getMonth());
+				if (indexInRow !== -1) { // The current month is on this row
+					const index = isHome(event) ? 0 : ROW_SIZE - 1; // select the first (if Home) or last (if End) month on the row
+					this._setTimestamp(parseInt(row[index].timestamp));
+				}
+			});
+		} else if (isHomeCtrl(event)) {
+			this._setTimestamp(parseInt(this._months[0][0].timestamp)); // first month of first row
+		} else if (isEndCtrl(event)) {
+			this._setTimestamp(parseInt(this._months[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last month of last row
 		}
 	}
 
-	_activateMonth(event) {
+	/**
+	 * Sets the timestamp to an absolute value
+	 * @param value
+	 * @private
+	 */
+	_setTimestamp(value) {
+		this.timestamp = value;
+		this.fireEvent("navigate", { timestamp: this.timestamp });
+	}
+
+	/**
+	 * Modifies timestamp by a given amount of months and, if necessary, loads the prev/next page
+	 * @param amount
+	 * @private
+	 */
+	_modifyTimestampBy(amount) {
+		// Modify the current timestamp
+		const newDate = new CalendarDate(this._calendarDate);
+		newDate.setMonth(this._calendarDate.getMonth() + amount);
+		this.timestamp = newDate.valueOf() / 1000;
+
+		// Notify the calendar to update its timestamp
+		this.fireEvent("navigate", { timestamp: this.timestamp });
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this._selectMonth(event);
+		}
+	}
+
+	/**
+	 * User clicked with the mouser or pressed Enter/Space
+	 * @param event
+	 * @private
+	 */
+	_selectMonth(event) {
 		event.preventDefault();
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this.getTimestampFromDom(event.target);
@@ -181,54 +210,20 @@ class MonthPicker extends PickerBase {
 		}
 	}
 
-	_handleItemNavigationBorderReach(event) {
-		if (this._isOutOfSelectableRange(this._month)) {
-			return;
-		}
-
-		// copied from Calendar.js
-		if (event.start) {
-			this._showPreviousPage();
-		}
-
-		if (event.end) {
-			this._showNextPage();
-		}
-	}
-
-	_handleItemNavigationAfterFocus() {
-		const currentItem = this._itemNav._getCurrentItem();
-		const currentTimestamp = parseInt(currentItem.getAttribute("data-sap-timestamp"));
-		this.timestamp = currentTimestamp;
-		this.fireEvent("navigate", { timestamp: currentTimestamp });
-	}
-
+	/**
+	 * User pressed the "<" button in the calendar header (same as PageUp)
+	 * @private
+	 */
 	_showPreviousPage() {
-		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
-		if (this._calendarDate.getYear() === minCalendarDateYear) {
-			return;
-		}
-
-		const oNewDate = this._calendarDate;
-		oNewDate.setYear(this._calendarDate.getYear() - 1);
-
-		this.timestamp = oNewDate.valueOf() / 1000;
-
-		this.fireEvent("navigate", { timestamp: this.timestamp });
+		this._modifyTimestampBy(-PAGE_SIZE);
 	}
 
+	/**
+	 * User pressed the ">" button in the calendar header (same as PageDown)
+	 * @private
+	 */
 	_showNextPage() {
-		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
-		if (this._calendarDate.getYear() === maxCalendarDateYear) {
-			return;
-		}
-
-		const newDate = this._calendarDate;
-		newDate.setYear(this._calendarDate.getYear() + 1);
-
-		this.timestamp = newDate.valueOf() / 1000;
-
-		this.fireEvent("navigate", { timestamp: this.timestamp });
+		this._modifyTimestampBy(PAGE_SIZE);
 	}
 
 	_isOutOfSelectableRange(monthIndex) {
@@ -239,25 +234,6 @@ class MonthPicker extends PickerBase {
 			maxDateCheck = maxDate && ((currentDateYear === maxDate.getFullYear() && monthIndex > maxDate.getMonth()) || (currentDateYear > maxDate.getFullYear()));
 
 		return maxDateCheck || minDateCheck;
-	}
-
-	get focusableMonths() {
-		const focusableMonths = [];
-
-		for (let i = 0; i < this._quarters.length; i++) {
-			const quarter = this._quarters[i].filter(x => !x.disabled);
-			focusableMonths.push(quarter);
-		}
-
-		return [].concat(...focusableMonths);
-	}
-
-	get styles() {
-		return {
-			main: {
-				display: this._hidden ? "none" : "",
-			},
-		};
 	}
 }
 

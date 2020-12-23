@@ -95,19 +95,19 @@ class YearPicker extends PickerBase {
 			this._firstYear = this._calendarDate.getYear() - PAGE_SIZE / 2;
 		}
 
-		const oCalDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
-		oCalDate.setYear(this._firstYear);
+		const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+		tempDate.setYear(this._firstYear);
 
 		/*
 		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
 		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
 
-		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1 > maxCalendarDateYear - YearPicker._ITEMS_COUNT) {
-			oCalDate.setYear(maxCalendarDateYear - YearPicker._ITEMS_COUNT);
-		} else if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1 < minCalendarDateYear) {
-			oCalDate.setYear(minCalendarDateYear - 1);
+		if (tempDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1 > maxCalendarDateYear - YearPicker._ITEMS_COUNT) {
+			tempDate.setYear(maxCalendarDateYear - YearPicker._ITEMS_COUNT);
+		} else if (tempDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1 < minCalendarDateYear) {
+			tempDate.setYear(minCalendarDateYear - 1);
 		} else {
-			oCalDate.setYear(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1);
+			tempDate.setYear(tempDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1);
 		}
 		*/
 
@@ -116,24 +116,19 @@ class YearPicker extends PickerBase {
 
 		/* eslint-disable no-loop-func */
 		for (let i = 0; i < PAGE_SIZE; i++) {
-			const intervalIndex = parseInt(i / ROW_SIZE);
-			if (!intervals[intervalIndex]) {
-				intervals[intervalIndex] = [];
-			}
-
-			timestamp = oCalDate.valueOf() / 1000;
+			timestamp = tempDate.valueOf() / 1000;
 
 			const isSelected = this.selectedDates.some(itemTimestamp => {
 				const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
-				return date.getYear() === oCalDate.getYear();
+				return date.getYear() === tempDate.getYear();
 			});
 
 			const year = {
 				timestamp: timestamp.toString(),
-				_tabIndex: oCalDate.getYear() === this._calendarDate.getYear() ? "0" : "-1",
+				_tabIndex: tempDate.getYear() === this._calendarDate.getYear() ? "0" : "-1",
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
-				year: oYearFormat.format(oCalDate.toLocalJSDate()),
+				year: oYearFormat.format(tempDate.toLocalJSDate()),
 				classes: "ui5-yp-item",
 			};
 
@@ -141,16 +136,20 @@ class YearPicker extends PickerBase {
 				year.classes += " ui5-yp-item--selected";
 			}
 
-			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate.getYear())) {
+			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(tempDate.getYear())) {
 				year.classes += " ui5-yp-item--disabled";
 				year.disabled = true;
 			}
 
+			const intervalIndex = parseInt(i / ROW_SIZE);
+
 			if (intervals[intervalIndex]) {
 				intervals[intervalIndex].push(year);
+			} else {
+				intervals[intervalIndex] = [year];
 			}
 
-			oCalDate.setYear(oCalDate.getYear() + 1);
+			tempDate.setYear(tempDate.getYear() + 1);
 		}
 
 		this._years = intervals;
