@@ -297,18 +297,12 @@ class Calendar2 extends PickerBase {
 	}
 
 	onSelectedDatesChange(event) {
+		const timestamp = event.detail.timestamp;
 		const selectedDates = event.detail.dates;
 
-		// Deselecting a date in multiple selection type
-		if (this.selection === CalendarSelection.Multiple && this.selectedDates.length > selectedDates.length) {
-			const deselectedDates = this.selectedDates.filter(timestamp => !selectedDates.includes(timestamp));
-			this.timestamp = deselectedDates[0];
-		} else {
-			this.timestamp = selectedDates[selectedDates.length - 1];
-		}
-
-		this.selectedDates = [...selectedDates];
-		this.fireEvent("selected-dates-change", { dates: selectedDates });
+		this.timestamp = timestamp;
+		this.selectedDates = selectedDates;
+		this.fireEvent("selected-dates-change", { dates: [...selectedDates] });
 	}
 
 	onSelectedMonthChange(event) {

@@ -329,29 +329,29 @@ class DayPicker extends PickerBase {
 		}
 	}
 
-	_onmousedown(event) {
+	_selectDate(event) {
 		const target = event.target;
-		const dayPressed = this._isDayPressed(target);
 
-		if (dayPressed) {
-			const targetDate = this.getTimestampFromDom(target);
-			const selectedDay = this.focusableDays.find(day => parseInt(day.timestamp) === targetDate);
-			this._itemNav.update(selectedDay);
-
-			this.targetDate = targetDate;
-		}
-	}
-
-	_onmouseup(event) {
-		const dayPressed = this._isDayPressed(event.target);
-		if (this.targetDate) {
-			this._modifySelectionAndNotifySubscribers(this.targetDate);
-			this.targetDate = null;
+		if (!this._isDayPressed(target)) {
+			return;
 		}
 
-		if (!dayPressed) {
-			this._itemNav.focusCurrent();
+		const timestamp = this.getTimestampFromDom(target);
+
+		this.timestamp = timestamp;
+		if (this.selection === CalendarSelection.Single) {
+			this.selectedDates = [timestamp];
+		} else if (this.selection === CalendarSelection.Multiple) {
+			this.selectedDates = this.selectedDates.includes(timestamp) ? this.selectedDates.filter(value => value !== timestamp) : [...this.selectedDates, timestamp];
+		} else {
+			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	: [timestamp];
 		}
+
+		this.fireEvent("change", {
+			timestamp: this.timestamp,
+			dates: this.selectedDates,
+		});
+
 	}
 
 	_onitemmouseover(event) {
@@ -379,7 +379,8 @@ class DayPicker extends PickerBase {
 
 	_onkeydown(event) {
 		if (isEnter(event)) {
-			return this._handleEnter(event);
+			this._selectDate(event);
+			return;
 		}
 
 		if (isSpace(event)) {
@@ -414,23 +415,7 @@ class DayPicker extends PickerBase {
 
 	_onkeyup(event) {
 		if (isSpace(event)) {
-			this._handleSpace(event);
-		}
-	}
-
-	_handleEnter(event) {
-		event.preventDefault();
-		if (event.target.className.indexOf("ui5-dp-item") > -1) {
-			const targetDate = parseInt(event.target.getAttribute("data-sap-timestamp"));
-			this._modifySelectionAndNotifySubscribers(targetDate);
-		}
-	}
-
-	_handleSpace(event) {
-		event.preventDefault();
-		if (event.target.className.indexOf("ui5-dp-item") > -1) {
-			const targetDate = parseInt(event.target.getAttribute("data-sap-timestamp"));
-			this._modifySelectionAndNotifySubscribers(targetDate);
+			this._selectDate(event);
 		}
 	}
 
@@ -537,18 +522,6 @@ class DayPicker extends PickerBase {
 		if (currentItem) {
 			currentItem.setAttribute("tabindex", index.toString());
 		}
-	}
-
-	_modifySelectionAndNotifySubscribers(timestamp) {
-		if (this.selection === CalendarSelection.Single) {
-			this.selectedDates = [timestamp];
-		} else if (this.selection === CalendarSelection.Multiple) {
-			this.selectedDates = this.selectedDates.includes(timestamp) ? this.selectedDates.filter(value => value !== timestamp) : [...this.selectedDates, timestamp];
-		} else {
-			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	: [timestamp];
-		}
-
-		this.fireEvent("change", { dates: [...this.selectedDates] });
 	}
 
 	_hasNextMonth() {
