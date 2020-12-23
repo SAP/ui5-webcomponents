@@ -203,7 +203,7 @@ class YearPicker extends PickerBase {
 	 * @private
 	 */
 	_setTimestamp(value) {
-		this.timestamp = value;
+		this._safelyUpdateTimestamp(value);
 		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}
 
@@ -216,7 +216,7 @@ class YearPicker extends PickerBase {
 		// Modify the current timestamp
 		const newDate = new CalendarDate(this._calendarDate);
 		newDate.setYear(this._calendarDate.getYear() + amount);
-		this.timestamp = newDate.valueOf() / 1000;
+		this._safelyUpdateTimestamp(newDate.valueOf() / 1000);
 
 		// Check for page overflow and show the prev/next page if necessary
 		const newYear = newDate.getYear();
@@ -246,7 +246,7 @@ class YearPicker extends PickerBase {
 		event.preventDefault();
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
 			const timestamp = this.getTimestampFromDom(event.target);
-			this.timestamp = timestamp;
+			this._safelyUpdateTimestamp(timestamp);
 			this.fireEvent("change", { timestamp });
 		}
 	}

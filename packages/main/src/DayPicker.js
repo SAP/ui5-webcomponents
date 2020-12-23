@@ -327,7 +327,7 @@ class DayPicker extends PickerBase {
 
 		const timestamp = this.getTimestampFromDom(target);
 
-		this.timestamp = timestamp;
+		this._safelyUpdateTimestamp(timestamp);
 		if (this.selection === CalendarSelection.Single) {
 			this.selectedDates = [timestamp];
 		} else if (this.selection === CalendarSelection.Multiple) {
@@ -436,7 +436,7 @@ class DayPicker extends PickerBase {
 		} else {
 			newDate.setYear(this._calendarDate.getYear() + amount);
 		}
-		this.timestamp = newDate.valueOf() / 1000;
+		this._safelyUpdateTimestamp(newDate.valueOf() / 1000);
 
 		// Notify the calendar to update its timestamp
 		this.fireEvent("navigate", { timestamp: this.timestamp });
@@ -448,7 +448,7 @@ class DayPicker extends PickerBase {
 	 * @private
 	 */
 	_setTimestamp(value) {
-		this.timestamp = value;
+		this._safelyUpdateTimestamp(value);
 		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}
 

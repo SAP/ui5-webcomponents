@@ -176,7 +176,7 @@ class MonthPicker extends PickerBase {
 	 * @private
 	 */
 	_setTimestamp(value) {
-		this.timestamp = value;
+		this._safelyUpdateTimestamp(value);
 		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}
 
@@ -189,7 +189,7 @@ class MonthPicker extends PickerBase {
 		// Modify the current timestamp
 		const newDate = new CalendarDate(this._calendarDate);
 		newDate.setMonth(this._calendarDate.getMonth() + amount);
-		this.timestamp = newDate.valueOf() / 1000;
+		this._safelyUpdateTimestamp(newDate.valueOf() / 1000);
 
 		// Notify the calendar to update its timestamp
 		this.fireEvent("navigate", { timestamp: this.timestamp });
@@ -210,8 +210,8 @@ class MonthPicker extends PickerBase {
 		event.preventDefault();
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this.getTimestampFromDom(event.target);
-			this.timestamp = timestamp;
-			this.fireEvent("change", { timestamp });
+			this._safelyUpdateTimestamp(timestamp);
+			this.fireEvent("change", { timestamp: this.timestamp });
 		}
 	}
 

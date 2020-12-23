@@ -210,43 +210,29 @@ class Calendar2 extends PickerBase {
 		const minDateParsed = this.minDate && this.getFormat().parse(this.minDate);
 		const maxDateParsed = this.maxDate && this.getFormat().parse(this.maxDate);
 
-		let prevDisabled;
-		let nextDisabled;
+		let prevDisabled = false;
+		let nextDisabled = false;
 
 		const currentMonth = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getMonth();
 		const currentYear = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getYear();
 
 		if (this._currentPicker === "day") {
-			if (this.minDate
-				&& minDateParsed.getMonth() === currentMonth
-				&& minDateParsed.getFullYear() === currentYear) {
+			if (this.minDate && minDateParsed.getMonth() === currentMonth && minDateParsed.getFullYear() === currentYear) {
 				prevDisabled = true;
-			} else {
-				prevDisabled = false;
 			}
 
-			if (this.maxDate
-				&& maxDateParsed.getMonth() === currentMonth
-				&& maxDateParsed.getFullYear() === currentYear) {
+			if (this.maxDate && maxDateParsed.getMonth() === currentMonth && maxDateParsed.getFullYear() === currentYear) {
 				nextDisabled = true;
-			} else {
-				nextDisabled = false;
 			}
 		}
 
 		if (this._currentPicker === "month") {
-			if (this.minDate
-				&& currentYear === minDateParsed.getFullYear()) {
+			if (this.minDate && currentYear === minDateParsed.getFullYear()) {
 				prevDisabled = true;
-			} else {
-				prevDisabled = false;
 			}
 
-			if (this.maxDate
-				&& currentYear === maxDateParsed.getFullYear()) {
+			if (this.maxDate && currentYear === maxDateParsed.getFullYear()) {
 				nextDisabled = true;
-			} else {
-				nextDisabled = false;
 			}
 		}
 
@@ -254,18 +240,12 @@ class Calendar2 extends PickerBase {
 			const cellsFromTheStart = 7;
 			const cellsToTheEnd = 12;
 
-			if (this.minDate
-				&& (currentYear - minDateParsed.getFullYear()) < cellsFromTheStart) {
+			if (this.minDate && (currentYear - minDateParsed.getFullYear()) < cellsFromTheStart) {
 				prevDisabled = true;
-			} else {
-				prevDisabled = false;
 			}
 
-			if (this.maxDate
-				&& (maxDateParsed.getFullYear() - currentYear) < cellsToTheEnd) {
+			if (this.maxDate && (maxDateParsed.getFullYear() - currentYear) < cellsToTheEnd) {
 				nextDisabled = true;
-			} else {
-				nextDisabled = false;
 			}
 		}
 

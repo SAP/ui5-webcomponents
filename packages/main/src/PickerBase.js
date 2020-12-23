@@ -190,6 +190,26 @@ class PickerBase extends UI5Element {
 		return parseInt(oMonthDomRef);
 	}
 
+	/**
+	 * Safely update a timestamp by enforcing limits
+	 *
+	 * @param timestamp
+	 * @protected
+	 */
+	_safelyUpdateTimestamp(timestamp) {
+		const min = this._minDate / 1000;
+		const max = this._maxDate / 1000;
+
+		if (timestamp < min) {
+			timestamp = min;
+		}
+		if (timestamp > max) {
+			timestamp = max;
+		}
+
+		this.timestamp = timestamp;
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
