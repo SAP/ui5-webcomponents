@@ -1,5 +1,5 @@
-commit 82b703434ba38834707cae9c039e53fc5609f757
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Dec 21 15:33:05 2020 +0200
+commit 01362f6555b22b631b742af454699cec137ebe88
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Dec 23 15:29:14 2020 +0200
 
-    chore: release v1.0.0-rc.11 (#2603)
+    fix(ui5-shellbar) accessibility improvements (#2613)
