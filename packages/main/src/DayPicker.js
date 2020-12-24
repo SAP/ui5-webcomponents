@@ -383,24 +383,18 @@ class DayPicker extends PickerBase {
 	 */
 	_multipleSelection(timestamp) {
 		const min = Math.min(...this.selectedDates);
-		const minDate = CalendarDate.fromTimestamp(min * 1000);
 		const max = Math.max(...this.selectedDates);
-		const maxDate = CalendarDate.fromTimestamp(max * 1000);
+		let start;
+		let end;
+		let toggle = false;
 
-		const date = CalendarDate.fromTimestamp(timestamp * 1000);
-
-		if (timestamp < min) { // before the first selected - select all from the newly selected to the first
-			while (date.valueOf() < minDate.valueOf()) {
-				this._addTimestampToSelection(date.valueOf() / 1000);
-				date.setDate(date.getDate() + 1);
-			}
+		if (timestamp < min) {
+			start = timestamp;
+			end = min;
 		} else if (timestamp >= min && timestamp <= max) { // inside the current range - toggle all between the selected and focused
-
 			const distanceToMin = Math.abs(timestamp - min);
 			const distanceToMax = Math.abs(timestamp - max);
 
-			let start;
-			let end;
 			if (distanceToMin < distanceToMax) {
 				start = timestamp;
 				end = max;
@@ -408,20 +402,18 @@ class DayPicker extends PickerBase {
 				start = min;
 				end = timestamp;
 			}
+			toggle = true;
+		} else {
+			start = max;
+			end = timestamp;
+		}
 
-			const startDate = CalendarDate.fromTimestamp(start * 1000);
-			const endDate = CalendarDate.fromTimestamp(end * 1000);
+		const startDate = CalendarDate.fromTimestamp(start * 1000);
+		const endDate = CalendarDate.fromTimestamp(end * 1000);
 
-			do {
-				this._toggleTimestampInSelection(startDate.valueOf() / 1000);
-				startDate.setDate(startDate.getDate() + 1);
-			} while (startDate.valueOf() <= endDate.valueOf());
-
-		} else { // after the last selected - select all from the last to the newly selected
-			while (date.valueOf() > maxDate.valueOf()) {
-				this._addTimestampToSelection(date.valueOf() / 1000);
-				date.setDate(date.getDate() - 1);
-			}
+		while (startDate.valueOf() <= endDate.valueOf()) {
+			this[toggle ? "_toggleTimestampInSelection" : "_addTimestampToSelection"](startDate.valueOf() / 1000);
+			startDate.setDate(startDate.getDate() + 1);
 		}
 	}
 
