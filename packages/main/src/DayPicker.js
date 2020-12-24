@@ -91,6 +91,7 @@ const metadata = {
 		},
 
 		/**
+		 * When set, the component will skip all work in onBeforeRendering and will not automatically set the focus on itself
 		 * @type {boolean}
 		 * @private
 		 */
@@ -100,7 +101,7 @@ const metadata = {
 		},
 
 		/**
-		 * When selection="Range" and the first day in the range is selected, this is the currently hovered or focused day by the user
+		 * When selection="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
 		 * @private
 		 */
 		_secondTimestamp: {
@@ -163,7 +164,7 @@ class DayPicker extends PickerBase {
 	 */
 	_buildWeeks(localeData) {
 		if (this._hidden) {
-			return;
+			return; // Optimization to not do any work unless the current picker
 		}
 
 		let oCalDate,
@@ -266,7 +267,7 @@ class DayPicker extends PickerBase {
 	 */
 	_buildDayNames(localeData) {
 		if (this._hidden) {
-			return;
+			return; // Optimization to not do any work unless the current picker
 		}
 
 		let weekday;
@@ -303,10 +304,20 @@ class DayPicker extends PickerBase {
 		}
 	}
 
+	/**
+	 * Once focused, always update the focus after each rerendering
+	 * @private
+	 */
 	_onfocusin() {
 		this._autoFocus = true;
 	}
 
+	/**
+	 * Tells if the day is selected (dark blue)
+	 * @param timestamp
+	 * @returns {boolean}
+	 * @private
+	 */
 	_isDaySelected(timestamp) {
 		if (this.selection === CalendarSelection.Single) {
 			return timestamp === this.selectedDates[0];
@@ -316,21 +327,33 @@ class DayPicker extends PickerBase {
 		return this.selectedDates.includes(timestamp);
 	}
 
+	/**
+	 * Tells if the day is inside a selection range (light blue)
+	 * @param timestamp
+	 * @returns {*}
+	 * @private
+	 */
 	_isDayInsideSelectionRange(timestamp) {
 		// No selection at all (or not in range selection mode)
 		if (this.selection !== CalendarSelection.Range || !this.selectedDates.length) {
 			return false;
 		}
 
-		// One date selected
+		// Only one date selected - the user is hovering with the mouse or navigating with the keyboard to select the second one
 		if (this.selectedDates.length === 1 && this._secondTimestamp) {
 			return isBetween(timestamp, this.selectedDates[0], this._secondTimestamp);
 		}
 
-		// Two dates selected
+		// Two dates selected - stable range
 		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
 	}
 
+	/**
+	 * Selects/deselects a day
+	 * @param event
+	 * @param isShift true if the user did Click+Shift or Enter+Shift (but not Space+Shift)
+	 * @private
+	 */
 	_selectDate(event, isShift) {
 		const target = event.target;
 
@@ -361,8 +384,43 @@ class DayPicker extends PickerBase {
 		});
 	}
 
+	/**
+	 * Selects/deselects the whole row (week)
+	 * @param event
+	 * @private
+	 */
+	_selectWeek(event) {
+		this._weeks.forEach(week => {
+			const dayInThisWeek = week.findIndex(item => {
+				const date = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000);
+				return date.getMonth() === this._calendarDate.getMonth() && date.getDate() === this._calendarDate.getDate();
+			}) !== -1;
+			if (dayInThisWeek) { // The current day is in this week
+				const notAllDaysOfThisWeekSelected = week.some(item => item.timestamp && !this.selectedDates.includes(parseInt(item.timestamp)));
+				if (notAllDaysOfThisWeekSelected) { // even if one day is not selected, select the whole week
+					week.filter(item => item.timestamp).forEach(item => {
+						this._addTimestampToSelection(parseInt(item.timestamp));
+					});
+				} else { // only if all days of this week are selected, deselect them
+					week.filter(item => item.timestamp).forEach(item => {
+						this._removeTimestampFromSelection(parseInt(item.timestamp));
+					});
+				}
+			}
+		});
+
+		this.fireEvent("change", {
+			timestamp: this.timestamp,
+			dates: this.selectedDates,
+		});
+	}
+
 	_toggleTimestampInSelection(timestamp) {
-		this.selectedDates = this.selectedDates.includes(timestamp) ? this.selectedDates.filter(value => value !== timestamp) : [...this.selectedDates,timestamp];
+		if (this.selectedDates.includes(timestamp)) {
+			this._removeTimestampFromSelection(timestamp)
+		} else {
+			this._addTimestampToSelection(timestamp);
+		}
 	}
 
 
@@ -373,7 +431,7 @@ class DayPicker extends PickerBase {
 	}
 
 	_removeTimestampFromSelection(timestamp) {
-		this.selectedDates.filter(value => value !== timestamp);
+		this.selectedDates = this.selectedDates.filter(value => value !== timestamp);
 	}
 
 	/**
@@ -418,6 +476,11 @@ class DayPicker extends PickerBase {
 	}
 
 
+	/**
+	 * Set the hovered day as the _secondTimestamp
+	 * @param event
+	 * @private
+	 */
 	_onmouseover(event) {
 		const hoveredItem = event.target.closest(".ui5-dp-item");
 		if (hoveredItem && this.selection === CalendarSelection.Range && this.selectedDates.length === 1) {
@@ -473,26 +536,21 @@ class DayPicker extends PickerBase {
 	}
 
 	_onkeyup(event) {
-		if (isSpace(event)) {
+		// Even if Space+Shift was pressed, ignore the shift unless in Multiple selection
+		if (isSpace(event) || isSpaceShift(event) && this.selection !== CalendarSelection.Multiple) {
 			this._selectDate(event, false);
+		} else if (isSpaceShift(event)) {
+			this._selectWeek(event);
 		}
-
-		if (isSpaceShift(event)) {
-			this._onShiftSpace(event);
-		}
-	}
-
-	_onclick(event) {
-		this._selectDate(event, event.shiftKey);
 	}
 
 	/**
-	 * On Shift+Space select the whole row
+	 * Click is the same as Enter: Click+Shift has the same effect as Enter+Shift
 	 * @param event
 	 * @private
 	 */
-	_onShiftSpace(event) {
-
+	_onclick(event) {
+		this._selectDate(event, event.shiftKey);
 	}
 
 	/**
@@ -513,10 +571,18 @@ class DayPicker extends PickerBase {
 		});
 	}
 
+	/**
+	 * Same as PageUp
+	 * @private
+	 */
 	_showPreviousPage() {
 		this._modifyTimestampBy(-1, "month");
 	}
 
+	/**
+	 * Same as PageDown
+	 * @private
+	 */
 	_showNextPage() {
 		this._modifyTimestampBy(1, "month");
 	}
@@ -561,7 +627,7 @@ class DayPicker extends PickerBase {
 	}
 
 	/**
-	 * During range selection, treat the currently focused item as hover item as the user navigates with keys
+	 * During range selection, when the user is navigating with the keyboard, the currently focused day is considered the "second day"
 	 * @private
 	 */
 	_updateSecondTimestamp() {
