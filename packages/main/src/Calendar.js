@@ -1,6 +1,3 @@
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import {
@@ -161,16 +158,6 @@ class Calendar extends PickerBase {
 
 	static get styles() {
 		return calendarCSS;
-	}
-
-	get _headerTexts() {
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType });
-
-		return {
-			month: localeData.getMonths("wide", this._primaryCalendarType)[this._month],
-			year: yearFormat.format(this._localDate, true),
-		};
 	}
 
 	/**

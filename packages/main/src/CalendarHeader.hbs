@@ -26,24 +26,22 @@
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			style="width: auto;"
 			?hidden="{{_isMonthButtonHidden}}"
-			type="{{_btn1.type}}"
 			tabindex="0"
 			@click={{_showMonthPicker}}
 			data-sap-show-picker="Month"
 		>
-			{{_btn1.text}}
+			{{_monthButtonText}}
 		</div>
 
 		<div
 			id="{{_id}}-btn2"
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			style="width: auto;"
-			type="{{_btn2.type}}"
 			tabindex="0"
 			@click={{_showYearPicker}}
 			data-sap-show-picker="Year"
 		>
-			{{_btn2.text}}
+			{{_yearButtonText}}
 		</div>
 	</div>
 

@@ -1,12 +1,17 @@
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
-import ButtonDesign from "./types/ButtonDesign.js";
 import CalendarHeaderTemplate from "./generated/templates/CalendarHeaderTemplate.lit.js";
 import {
 	CALENDAR_HEADER_NEXT_BUTTON,
@@ -19,24 +24,24 @@ import styles from "./generated/themes/CalendarHeader.css.js";
 const metadata = {
 	tag: "ui5-calendar-header",
 	properties: {
-		monthText: {
-			type: String,
+		/**
+		 * Already normalized by Calendar
+		 * @type {Integer}
+		 * @private
+		 */
+		timestamp: {
+			type: Integer,
 		},
-		yearText: {
-			type: String,
+
+		/**
+		 * Already normalized by Calendar
+		 * @type {CalendarType}
+		 * @private
+		 */
+		primaryCalendarType: {
+			type: CalendarType,
 		},
-		_btnPrev: {
-			type: Object,
-		},
-		_btnNext: {
-			type: Object,
-		},
-		_btn1: {
-			type: Object,
-		},
-		_btn2: {
-			type: Object,
-		},
+
 		_isNextButtonDisabled: {
 			type: Boolean,
 		},
@@ -84,18 +89,18 @@ class CalendarHeader extends UI5Element {
 		this._btnNext = {};
 		this._btnNext.icon = "slim-arrow-right";
 
-		this._btn1 = {};
-		this._btn1.type = ButtonDesign.Transparent;
-
-		this._btn2 = {};
-		this._btn2.type = ButtonDesign.Transparent;
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
-		this._btn1.text = this.monthText;
-		this._btn2.text = this.yearText;
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType });
+		const localDate = new Date(this.timestamp * 1000);
+		const calendarDate = CalendarDate.fromTimestamp(localDate.getTime(), this.primaryCalendarType);
+
+		this._monthButtonText = localeData.getMonths("wide", this.primaryCalendarType)[calendarDate.getMonth()];
+		this._yearButtonText = yearFormat.format(localDate, true);
+
 		this._btnPrev.classes = "ui5-calheader-arrowbtn";
 		this._btnNext.classes = "ui5-calheader-arrowbtn";
 

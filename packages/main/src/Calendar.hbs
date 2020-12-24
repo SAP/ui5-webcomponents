@@ -54,8 +54,8 @@
 	<!-- Positioned absolutely above the content, but this DOM order ensures tab order -->
 	<ui5-calendar-header
 			id="{{_id}}-head"
-			month-text="{{_headerTexts.month}}"
-			year-text="{{_headerTexts.year}}"
+			.primaryCalendarType="{{_primaryCalendarType}}"
+			timestamp="{{_timestamp}}"
 			._isPrevButtonDisabled="{{_headerButtonsState.prevDisabled}}"
 			._isNextButtonDisabled="{{_headerButtonsState.nextDisabled}}"
 			._isMonthButtonHidden="{{_isHeaderMonthButtonHidden}}"
