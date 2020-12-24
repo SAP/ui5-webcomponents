@@ -84,6 +84,14 @@ class MonthPicker extends PickerBase {
 	}
 
 	onBeforeRendering() {
+		this._buildMonths();
+	}
+
+	_buildMonths() {
+		if (this._hidden) {
+			return;
+		}
+
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
 

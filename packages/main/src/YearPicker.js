@@ -89,6 +89,14 @@ class YearPicker extends PickerBase {
 	}
 
 	onBeforeRendering() {
+		this._buildYears();
+	}
+
+	_buildYears() {
+		if (this._hidden) {
+			return;
+		}
+
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, getLocale());
 
 		if (!this._firstYear) {
@@ -97,19 +105,6 @@ class YearPicker extends PickerBase {
 
 		const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
 		tempDate.setYear(this._firstYear);
-
-		/*
-		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
-		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
-
-		if (tempDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1 > maxCalendarDateYear - YearPicker._ITEMS_COUNT) {
-			tempDate.setYear(maxCalendarDateYear - YearPicker._ITEMS_COUNT);
-		} else if (tempDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1 < minCalendarDateYear) {
-			tempDate.setYear(minCalendarDateYear - 1);
-		} else {
-			tempDate.setYear(tempDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1);
-		}
-		*/
 
 		const intervals = [];
 		let timestamp;

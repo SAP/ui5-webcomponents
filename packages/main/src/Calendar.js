@@ -311,23 +311,6 @@ class Calendar extends PickerBase {
 		}
 	}
 
-	get classes() {
-		return {
-			main: {
-				"ui5-cal-root": true,
-			},
-			dayPicker: {
-				"ui5-daypicker--hidden": this._isDayPickerHidden,
-			},
-			yearPicker: {
-				"ui5-yearpicker--hidden": this._isYearPickerHidden,
-			},
-			monthPicker: {
-				"ui5-monthpicker--hidden": this._isMonthPickerHidden,
-			},
-		};
-	}
-
 	static get dependencies() {
 		return [
 			CalendarHeader,

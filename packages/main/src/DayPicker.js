@@ -156,6 +156,10 @@ class DayPicker extends PickerBase {
 	 * @private
 	 */
 	_buildWeeks(localeData) {
+		if (this._hidden) {
+			return;
+		}
+
 		let oCalDate,
 			day,
 			timestamp,
@@ -260,6 +264,10 @@ class DayPicker extends PickerBase {
 	 * @private
 	 */
 	_buildDayNames(localeData) {
+		if (this._hidden) {
+			return;
+		}
+
 		let weekday;
 
 		const aDayNamesWide = localeData.getDays("wide", this._primaryCalendarType);

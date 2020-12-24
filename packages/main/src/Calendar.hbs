@@ -1,11 +1,11 @@
 <div
-	class="{{classes.main}}"
+	class="ui5-cal-root"
 	@keydown={{_onkeydown}}
 >
 	<div id="{{_id}}-content" class="ui5-cal-content">
 		<ui5-daypicker
 			id="{{_id}}-daypicker"
-			class="{{classes.dayPicker}}"
+			?hidden="{{_isDayPickerHidden}}"
 			format-pattern="{{_formatPattern}}"
 			.selectedDates="{{selectedDates}}"
 			._hidden="{{_isDayPickerHidden}}"
@@ -22,7 +22,7 @@
 
 		<ui5-monthpicker
 			id="{{_id}}-MP"
-			class="{{classes.monthPicker}}"
+			?hidden="{{_isMonthPickerHidden}}"
 			format-pattern="{{_formatPattern}}"
 			.selectedDates="{{selectedDates}}"
 			._hidden="{{_isMonthPickerHidden}}"
@@ -37,7 +37,7 @@
 
 		<ui5-yearpicker
 			id="{{_id}}-YP"
-			class="{{classes.yearPicker}}"
+			?hidden="{{_isYearPickerHidden}}"
 			format-pattern="{{_formatPattern}}"
 			.selectedDates="{{selectedDates}}"
 			._hidden="{{_isYearPickerHidden}}"
