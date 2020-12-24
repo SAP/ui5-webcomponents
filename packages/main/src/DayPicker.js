@@ -3,7 +3,9 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import {
 	isSpace,
+	isSpaceShift,
 	isEnter,
+	isEnterShift,
 	isUp,
 	isDown,
 	isLeft,
@@ -329,7 +331,7 @@ class DayPicker extends PickerBase {
 		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
 	}
 
-	_selectDate(event) {
+	_selectDate(event, isShift) {
 		const target = event.target;
 
 		if (!this._isDayPressed(target)) {
@@ -344,7 +346,11 @@ class DayPicker extends PickerBase {
 		if (this.selection === CalendarSelection.Single) {
 			this.selectedDates = [timestamp];
 		} else if (this.selection === CalendarSelection.Multiple) {
-			this.selectedDates = this.selectedDates.includes(timestamp) ? this.selectedDates.filter(value => value !== timestamp) : [...this.selectedDates, timestamp];
+			if (this.selectedDates.length > 0 && isShift) {
+				this._multipleSelection(timestamp);
+			} else {
+				this._toggleTimestampInSelection(timestamp);
+			}
 		} else {
 			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	: [timestamp];
 		}
@@ -354,6 +360,71 @@ class DayPicker extends PickerBase {
 			dates: this.selectedDates,
 		});
 	}
+
+	_toggleTimestampInSelection(timestamp) {
+		this.selectedDates = this.selectedDates.includes(timestamp) ? this.selectedDates.filter(value => value !== timestamp) : [...this.selectedDates,timestamp];
+	}
+
+
+	_addTimestampToSelection(timestamp) {
+		if (!this.selectedDates.includes(timestamp)) {
+			this.selectedDates = [...this.selectedDates, timestamp];
+		}
+	}
+
+	_removeTimestampFromSelection(timestamp) {
+		this.selectedDates.filter(value => value !== timestamp);
+	}
+
+	/**
+	 * When at least one day is selected and the user pressed shift
+	 * @param timestamp
+	 * @private
+	 */
+	_multipleSelection(timestamp) {
+		const min = Math.min(...this.selectedDates);
+		const minDate = CalendarDate.fromTimestamp(min * 1000);
+		const max = Math.max(...this.selectedDates);
+		const maxDate = CalendarDate.fromTimestamp(max * 1000);
+
+		const date = CalendarDate.fromTimestamp(timestamp * 1000);
+
+		if (timestamp < min) { // before the first selected - select all from the newly selected to the first
+			while (date.valueOf() < minDate.valueOf()) {
+				this._addTimestampToSelection(date.valueOf() / 1000);
+				date.setDate(date.getDate() + 1);
+			}
+		} else if (timestamp >= min && timestamp <= max) { // inside the current range - toggle all between the selected and focused
+
+			const distanceToMin = Math.abs(timestamp - min);
+			const distanceToMax = Math.abs(timestamp - max);
+
+			let start;
+			let end;
+			if (distanceToMin < distanceToMax) {
+				start = timestamp;
+				end = max;
+			} else {
+				start = min;
+				end = timestamp;
+			}
+
+			const startDate = CalendarDate.fromTimestamp(start * 1000);
+			const endDate = CalendarDate.fromTimestamp(end * 1000);
+
+			do {
+				this._toggleTimestampInSelection(startDate.valueOf() / 1000);
+				startDate.setDate(startDate.getDate() + 1);
+			} while (startDate.valueOf() <= endDate.valueOf());
+
+		} else { // after the last selected - select all from the last to the newly selected
+			while (date.valueOf() > maxDate.valueOf()) {
+				this._addTimestampToSelection(date.valueOf() / 1000);
+				date.setDate(date.getDate() - 1);
+			}
+		}
+	}
+
 
 	_onmouseover(event) {
 		const hoveredItem = event.target.closest(".ui5-dp-item");
@@ -365,9 +436,9 @@ class DayPicker extends PickerBase {
 	_onkeydown(event) {
 		let preventDefault = true;
 
-		if (isEnter(event)) {
-			this._selectDate(event);
-		} else if (isSpace(event)) {
+		if (isEnter(event) || isEnterShift(event)) {
+			this._selectDate(event, isEnterShift(event));
+		} else if (isSpace(event) || isSpaceShift(event)) {
 			event.preventDefault();
 		} else if (isLeft(event)) {
 			this._modifyTimestampBy(-1, "day");
@@ -409,6 +480,34 @@ class DayPicker extends PickerBase {
 		}
 	}
 
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this._selectDate(event, false);
+		}
+
+		if (isSpaceShift(event)) {
+			this._onShiftSpace(event);
+		}
+	}
+
+	_onclick(event) {
+		this._selectDate(event, event.shiftKey);
+	}
+
+	/**
+	 * On Shift+Space select the whole row
+	 * @param event
+	 * @private
+	 */
+	_onShiftSpace(event) {
+
+	}
+
+	/**
+	 * One Home or End, move the focus to the first or last item in the row
+	 * @param homePressed
+	 * @private
+	 */
 	_onHomeOrEnd(homePressed) {
 		this._weeks.forEach(week => {
 			const dayInThisWeek = week.findIndex(item => {
@@ -428,12 +527,6 @@ class DayPicker extends PickerBase {
 
 	_showNextPage() {
 		this._modifyTimestampBy(1, "month");
-	}
-
-	_onkeyup(event) {
-		if (isSpace(event)) {
-			this._selectDate(event);
-		}
 	}
 
 	/**

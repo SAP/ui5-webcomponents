@@ -105,7 +105,11 @@ const KeyCodes = {
 
 const isEnter = event => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && !hasModifierKeys(event);
 
+const isEnterShift = event => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && checkModifierKeys(event, false, false, true);
+
 const isSpace = event => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && !hasModifierKeys(event);
+
+const isSpaceShift = event => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, false, false, true);
 
 const isLeft = event => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && !hasModifierKeys(event);
 
@@ -171,7 +175,9 @@ const checkModifierKeys = (event, bCtrlKey, bAltKey, bShiftKey) => event.shiftKe
 
 export {
 	isEnter,
+	isEnterShift,
 	isSpace,
+	isSpaceShift,
 	isLeft,
 	isRight,
 	isUp,
