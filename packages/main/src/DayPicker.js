@@ -200,7 +200,6 @@ class DayPicker extends PickerBase {
 				_tabIndex: isFocused ? "0" : "-1",
 				selected: isSelected,
 				iDay: oCalDate.getDate(),
-				_index: i.toString(),
 				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
 				ariaLabel: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[oCalDate.getMonth()]} ${oCalDate.getDate()}, ${oCalDate.getYear()}`,
 				ariaSelected: isSelected ? "true" : "false",
@@ -240,20 +239,16 @@ class DayPicker extends PickerBase {
 			if (weekday === 6 || i === _aVisibleDays.length - 1) {
 				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), getLocale(), localeData);
 				if (lastWeekNumber !== weekNumber) {
-					const weekNum = {
+					week.unshift({
 						weekNum: weekNumber,
 						isHidden: this.shouldHideWeekNumbers,
-					};
-					week.unshift(weekNum);
+					});
 					lastWeekNumber = weekNumber;
 				}
 
 				this._weeks.push(week);
 				week = [];
 			}
-		}
-		while (this._weeks.length < 6) {
-			this._weeks.push([]);
 		}
 		/* eslint-enable no-loop-func */
 	}
