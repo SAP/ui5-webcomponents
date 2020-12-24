@@ -417,7 +417,7 @@ class DayPicker extends PickerBase {
 
 	_toggleTimestampInSelection(timestamp) {
 		if (this.selectedDates.includes(timestamp)) {
-			this._removeTimestampFromSelection(timestamp)
+			this._removeTimestampFromSelection(timestamp);
 		} else {
 			this._addTimestampToSelection(timestamp);
 		}
@@ -537,7 +537,7 @@ class DayPicker extends PickerBase {
 
 	_onkeyup(event) {
 		// Even if Space+Shift was pressed, ignore the shift unless in Multiple selection
-		if (isSpace(event) || isSpaceShift(event) && this.selection !== CalendarSelection.Multiple) {
+		if (isSpace(event) || (isSpaceShift(event) && this.selection !== CalendarSelection.Multiple)) {
 			this._selectDate(event, false);
 		} else if (isSpaceShift(event)) {
 			this._selectWeek(event);

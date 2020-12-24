@@ -268,7 +268,7 @@ const metadata = {
 		_calendarSelectedDates: {
 			type: Integer,
 			multiple: true,
-		}
+		},
 	},
 
 	slots: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
@@ -430,10 +430,8 @@ class DatePicker extends UI5Element {
 	}
 
 	onBeforeRendering() {
-
 		if (this._checkValueValidity(this.value)) {
 			const timestamp = this._calendarDate.valueOf() / 1000;
-			if (!timestamp) debugger;
 			this._calendarSelectedDates = this.value ? [timestamp] : [];
 		}
 
@@ -457,9 +455,7 @@ class DatePicker extends UI5Element {
 		if (isShow(event)) {
 			event.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
 			if (this.isOpen()) {
-				if (isF4(event)) {
-
-				} else {
+				if (!isF4(event)) {
 					this._toggleAndFocusInput();
 				}
 			} else {
