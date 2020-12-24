@@ -9,7 +9,6 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	isEnter,
@@ -26,6 +25,7 @@ import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import { getMaxCalendarDate, getMinCalendarDate } from "./util/DateTime.js";
@@ -265,10 +265,9 @@ const metadata = {
 			type: Object,
 		},
 
-		_calendarSelectedDates: {
-			type: Integer,
-			multiple: true,
-		}
+		_calendar: {
+			type: Object,
+		},
 	},
 
 	slots: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
@@ -416,25 +415,80 @@ class DatePicker extends UI5Element {
 					this._getInput().focus();
 					this._focusInputAfterClose = false;
 				}
+
+				const calendar = this.calendar;
+				if (calendar) {
+					calendar._hideMonthPicker();
+					calendar._hideYearPicker();
+				}
 			},
 			afterOpen: async () => {
 				await RenderScheduler.whenFinished();
+				const calendar = this.calendar;
+
+				if (!calendar) {
+					return;
+				}
+
+				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
+				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
+				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
+				let focusableDay = selectedDay || today;
+				if (!selectedDay && (this.minDate || this.maxDate) && !this.isInValidRange((new Date().getTime()))) {
+					focusableDay = this.findFirstFocusableDay(dayPicker);
+				}
+
 				if (this._focusInputAfterOpen) {
 					this._focusInputAfterOpen = false;
 					this._getInput().focus();
+				} else if (focusableDay) {
+					focusableDay.focus();
+
+					let focusableDayIdx = parseInt(focusableDay.getAttribute("data-sap-index"));
+					const focusableItem = dayPicker.focusableDays.find(item => parseInt(item._index) === focusableDayIdx);
+					focusableDayIdx = focusableItem ? dayPicker.focusableDays.indexOf(focusableItem) : focusableDayIdx;
+
+					dayPicker._itemNav.current = focusableDayIdx;
+					dayPicker._itemNav.update();
 				}
 			},
+		};
+
+		this._calendar = {
+			onSelectedDatesChange: this._handleCalendarChange.bind(this),
+			selection: CalendarSelection.Single,
+			selectedDates: [],
 		};
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
+	findFirstFocusableDay(daypicker) {
+		const today = new Date();
+		if (!this.isInValidRange(today.getTime())) {
+			const focusableItems = Array.from(daypicker.shadowRoot.querySelectorAll(".ui5-dp-item"));
+			return focusableItems.filter(x => !x.classList.contains("ui5-dp-item--disabled"))[0];
+		}
+	}
+
 	onBeforeRendering() {
+		this._calendar.primaryCalendarType = this._primaryCalendarType;
+		this._calendar.formatPattern = this._formatPattern;
+
+		if (this.minDate && !this.isValid(this.minDate)) {
+			this.minDate = null;
+			console.warn(`In order for the "minDate" property to have effect, you should enter valid date format`); // eslint-disable-line
+		}
+
+		if (this.maxDate && !this.isValid(this.maxDate)) {
+			this.maxDate = null;
+			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
+		}
 
 		if (this._checkValueValidity(this.value)) {
-			const timestamp = this._calendarDate.valueOf() / 1000;
-			if (!timestamp) debugger;
-			this._calendarSelectedDates = this.value ? [timestamp] : [];
+			this._changeCalendarSelection();
+		} else if (this.value !== "") {
+			this._calendar.selectedDates = [];
 		}
 
 		const FormSupport = getFeature("FormSupport");
@@ -442,6 +496,14 @@ class DatePicker extends UI5Element {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+		}
+
+		if (this.minDate) {
+			this._calendar.minDate = this.minDate;
+		}
+
+		if (this.maxDate) {
+			this._calendar.maxDate = this.maxDate;
 		}
 	}
 
@@ -458,7 +520,9 @@ class DatePicker extends UI5Element {
 			event.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
 			if (this.isOpen()) {
 				if (isF4(event)) {
-
+					if (this.calendar._monthPicker._hidden) {
+						this.calendar._showYearPicker();
+					}
 				} else {
 					this._toggleAndFocusInput();
 				}
@@ -682,6 +746,10 @@ class DatePicker extends UI5Element {
 		return this.getFormat().format(new Date());
 	}
 
+	get calendar() {
+		return this.responsivePopover.querySelector(`#${this._id}-calendar`);
+	}
+
 	get _calendarDate() {
 		const millisecondsUTC = this.getFormat().parse(this.validValue, true).getTime();
 		const oCalDate = CalendarDate.fromTimestamp(
@@ -806,8 +874,13 @@ class DatePicker extends UI5Element {
 		return !this.disabled && !this.readonly;
 	}
 
-	onSelectedDatesChange(event) {
+	_handleCalendarChange(event) {
 		const iNewValue = event.detail.dates && event.detail.dates[0];
+
+		if (this._calendar.selectedDates.indexOf(iNewValue) !== -1) {
+			this.closePicker();
+			return false;
+		}
 
 		const fireChange = this._handleCalendarSelectedDatesChange(event, iNewValue);
 
@@ -820,12 +893,11 @@ class DatePicker extends UI5Element {
 		this.closePicker();
 	}
 
-	/**
-	 * @protected
-	 */
 	_handleCalendarSelectedDatesChange(event, newValue) {
 		this._updateValueCalendarSelectedDatesChange(newValue);
 
+		this._calendar.timestamp = newValue;
+		this._calendar.selectedDates = [...event.detail.dates];
 		this._focusInputAfterClose = true;
 
 		if (this.isInValidRange(this._getTimeStampFromString(this.value))) {
@@ -837,9 +909,6 @@ class DatePicker extends UI5Element {
 		return true;
 	}
 
-	/**
-	 * @protected
-	 */
 	_updateValueCalendarSelectedDatesChange(newValue) {
 		this.value = this.getFormat().format(
 			new Date(CalendarDate.fromTimestamp(
@@ -878,6 +947,7 @@ class DatePicker extends UI5Element {
 	async openPicker(options) {
 		this._isPickerOpen = true;
 		this.responsivePopover = await this._respPopover();
+		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;
@@ -894,6 +964,18 @@ class DatePicker extends UI5Element {
 		}
 	}
 
+	_changeCalendarSelection() {
+		if (this._calendarDate.getYear() < 1) {
+			// 0 is a valid year, but we cannot display it
+			return;
+		}
+
+		const timestamp = this._calendarDate.valueOf() / 1000;
+		this._calendar = Object.assign({}, this._calendar);
+		this._calendar.timestamp = timestamp;
+		this._calendar.selectedDates = this.value ? [timestamp] : [];
+	}
+
 	/**
 	 * Checks if the picker is open.
 	 * @returns {Boolean} true if the picker is open, false otherwise
@@ -901,6 +983,22 @@ class DatePicker extends UI5Element {
 	 */
 	isOpen() {
 		return !!this._isPickerOpen;
+	}
+
+	/**
+	 * Gets some semantic details about an event originated in the control.
+	 * @param {*} event An event object
+	 * @returns {Object} Semantic details
+	 */
+	getSemanticTargetInfo(event) {
+		const oDomTarget = getDomTarget(event);
+		let isInput = false;
+
+		if (oDomTarget && oDomTarget.className.indexOf("ui5-input-inner") > -1) {
+			isInput = true;
+		}
+
+		return { isInput };
 	}
 
 	/**
@@ -943,6 +1041,21 @@ class DatePicker extends UI5Element {
 		]);
 	}
 }
+
+const getDomTarget = event => {
+	let target,
+		composedPath;
+
+	if (typeof event.composedPath === "function") {
+		composedPath = event.composedPath();
+	}
+
+	if (Array.isArray(composedPath) && composedPath.length) {
+		target = composedPath[0];
+	}
+
+	return target;
+};
 
 DatePicker.define();
 

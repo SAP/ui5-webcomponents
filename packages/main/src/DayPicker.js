@@ -97,7 +97,11 @@ const metadata = {
 			noAttribute: true,
 		},
 
-		_hoverTimestamp: {
+		/**
+		 * When selection="Range" and the first day in the range is selected, this is the currently hovered or focused day by the user
+		 * @private
+		 */
+		_secondTimestamp: {
 			type: String,
 		},
 	},
@@ -317,8 +321,8 @@ class DayPicker extends PickerBase {
 		}
 
 		// One date selected
-		if (this.selectedDates.length === 1 && this._hoverTimestamp) {
-			return isBetween(timestamp, this.selectedDates[0], this._hoverTimestamp);
+		if (this.selectedDates.length === 1 && this._secondTimestamp) {
+			return isBetween(timestamp, this.selectedDates[0], this._secondTimestamp);
 		}
 
 		// Two dates selected
@@ -335,6 +339,8 @@ class DayPicker extends PickerBase {
 		const timestamp = this.getTimestampFromDom(target);
 
 		this._safelyUpdateTimestamp(timestamp);
+		this._updateSecondTimestamp();
+
 		if (this.selection === CalendarSelection.Single) {
 			this.selectedDates = [timestamp];
 		} else if (this.selection === CalendarSelection.Multiple) {
@@ -352,7 +358,7 @@ class DayPicker extends PickerBase {
 	_onmouseover(event) {
 		const hoveredItem = event.target.closest(".ui5-dp-item");
 		if (hoveredItem && this.selection === CalendarSelection.Range && this.selectedDates.length === 1) {
-			this._hoverTimestamp = this.getTimestampFromDom(hoveredItem);
+			this._secondTimestamp = this.getTimestampFromDom(hoveredItem);
 		}
 	}
 
@@ -452,6 +458,7 @@ class DayPicker extends PickerBase {
 			newDate.setYear(this._calendarDate.getYear() + amount);
 		}
 		this._safelyUpdateTimestamp(newDate.valueOf() / 1000);
+		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
 		this.fireEvent("navigate", { timestamp: this.timestamp });
@@ -464,7 +471,18 @@ class DayPicker extends PickerBase {
 	 */
 	_setTimestamp(value) {
 		this._safelyUpdateTimestamp(value);
+		this._updateSecondTimestamp();
 		this.fireEvent("navigate", { timestamp: this.timestamp });
+	}
+
+	/**
+	 * During range selection, treat the currently focused item as hover item as the user navigates with keys
+	 * @private
+	 */
+	_updateSecondTimestamp() {
+		if (this.selection === CalendarSelection.Range && this.selectedDates.length === 1) {
+			this._secondTimestamp = this.timestamp;
+		}
 	}
 
 	get shouldHideWeekNumbers() {
