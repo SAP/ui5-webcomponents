@@ -1,5 +1,17 @@
-commit 01362f6555b22b631b742af454699cec137ebe88
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Dec 23 15:29:14 2020 +0200
+commit d9e3b0ebec43df4416dc47a729b73c898e7e66a7
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Fri Dec 25 17:30:09 2020 +0800
 
-    fix(ui5-shellbar) accessibility improvements (#2613)
+    Translation Delivery (#2619)
+    
+    * chore: translation delivery
+    
+    Change-Id: I679f1017fc7e95e21930904dc77d172b832e763c
+    
+    * chore: translation delivery
+    
+    Change-Id: Id8f9da8e17951bb1992d2207488100ca682dbf76
+    
+    * chore: translation delivery
+    
+    Change-Id: I2e9418d120a0a98e4b58533bca1c4928dadae8ab
