@@ -11,17 +11,11 @@ describe("Calendar general interaction", () => {
 
 	it("Year is set in the header", () => {
 		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const headerText = parseInt(calendarHeader.getAttribute("year-text"));
+		const yearButton = calendarHeader.$(`[data-sap-show-picker="Year"]`);
+		const headerText = parseInt(yearButton.getText());
 		const currentYear = new Date().getFullYear();
 
 		assert.equal(headerText, currentYear, "Year is set in the header");
-	});
-
-	it("Default year is the current year", () => {
-		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const calendarYear = parseInt(calendarHeader.getAttribute("year-text"));
-
-		assert.strictEqual(calendarYear, new Date().getFullYear(), "Default year is correct");
 	});
 
 	it("Month is set in the header", () => {
@@ -31,21 +25,11 @@ describe("Calendar general interaction", () => {
 		});
 
 		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const monthText = calendarHeader.getAttribute("month-text");
+		const monthButton = calendarHeader.$(`[data-sap-show-picker="Month"]`);
+		const monthText = monthButton.getText();
 		const currentMonth = new Date().getMonth();
 
-		assert.strictEqual(monthText.toString(), monthMap.get(currentMonth), "Month is set in the header");
-	});
-
-	it("Default month is the current year", () => {
-		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const monthMap = new Map();
-		["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].forEach((month, index) => {
-			monthMap.set(index, month);
-		});
-		const calendarMonth = calendarHeader.getAttribute("month-text");
-
-		assert.strictEqual(calendarMonth, monthMap.get(new Date().getMonth()), "Default month is correct");
+		assert.strictEqual(monthText, monthMap.get(currentMonth), "Month is set in the header");
 	});
 
 	it("timestamp is propagated to the content part", () => {
