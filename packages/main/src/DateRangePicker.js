@@ -3,6 +3,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
 
@@ -284,16 +285,7 @@ class DateRangePicker extends DatePicker {
 		}
 	}
 
-	/**
-	 * Adds or extracts a given number of measuring units from the "dateValue" property value
-	 *
-	 * @param {boolean} forward if true indicates addition
-	 * @param {boolean} years indicates that the measuring unit is in years
-	 * @param {boolean} months indicates that the measuring unit is in months
-	 * @param {boolean} days indicates that the measuring unit is in days
-	 * @param {int} step number of measuring units to substract or add defaults ot 1
-	 */
-	async _changeDateValueWrapper(forward, years, months, days, step = 1) {
+	async _modifyDateValue(amount, unit) {
 		const emptyValue = this.value === "";
 		const isValid = emptyValue || this._checkValueValidity(this.value);
 
@@ -310,9 +302,9 @@ class DateRangePicker extends DatePicker {
 		let lastDate = this.getFormat().parse(dates[1]);
 
 		if (first && firstDate) {
-			firstDate = this._changeDateValue(firstDate, forward, years, months, days, step);
+			firstDate = modifyDateBy(CalendarDate.fromLocalJSDate(firstDate, this._primaryCalendarType), amount, unit).toLocalJSDate();
 		} else if (last && lastDate) {
-			lastDate = this._changeDateValue(lastDate, forward, years, months, days, step);
+			lastDate = modifyDateBy(CalendarDate.fromLocalJSDate(lastDate, this._primaryCalendarType), amount, unit).toLocalJSDate();
 		}
 
 		this.value = this._formatValue(firstDate, lastDate);

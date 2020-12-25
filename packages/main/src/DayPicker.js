@@ -22,6 +22,7 @@ import {
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
@@ -595,19 +596,7 @@ class DayPicker extends PickerBase {
 	 */
 	_modifyTimestampBy(amount, unit) {
 		// Modify the current timestamp
-		const newDate = new CalendarDate(this._calendarDate);
-		if (unit === "day") {
-			newDate.setDate(this._calendarDate.getDate() + amount);
-		} else if (unit === "month") {
-			newDate.setMonth(this._calendarDate.getMonth() + amount);
-			const stillSameMonth = amount < 0 && newDate.getMonth() === this._calendarDate.getMonth(); // PageUp remained in the same month
-			const monthSkipped = amount > 0 && newDate.getMonth() - this._calendarDate.getMonth() > 1; // PageDown skipped a whole month
-			if (stillSameMonth || monthSkipped) { // Select the last day of the month in any of these 2 scenarios
-				newDate.setDate(0);
-			}
-		} else {
-			newDate.setYear(this._calendarDate.getYear() + amount);
-		}
+		const newDate = modifyDateBy(this._calendarDate, amount, unit);
 		this._safelyUpdateTimestamp(newDate.valueOf() / 1000);
 		this._updateSecondTimestamp();
 

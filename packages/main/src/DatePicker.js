@@ -8,6 +8,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
@@ -450,6 +451,8 @@ class DatePicker extends UI5Element {
 			const timestamp = this._calendarDate.valueOf() / 1000;
 			return [timestamp];
 		}
+
+		return [];
 	}
 
 	_getTimeStampFromString(value) {
@@ -482,24 +485,22 @@ class DatePicker extends UI5Element {
 
 		if (isPageUpShiftCtrl(event)) {
 			event.preventDefault();
-			this._changeDateValueWrapper(true, true, false, false);
+			this._modifyDateValue(1, "year");
 		} else if (isPageUpShift(event)) {
 			event.preventDefault();
-			this._changeDateValueWrapper(true, false, true, false);
+			this._modifyDateValue(1, "month");
 		} else if (isPageUp(event)) {
 			event.preventDefault();
-			this._changeDateValueWrapper(true, false, false, true);
-		}
-
-		if (isPageDownShiftCtrl(event)) {
+			this._modifyDateValue(1, "day");
+		} else if (isPageDownShiftCtrl(event)) {
 			event.preventDefault();
-			this._changeDateValueWrapper(false, true, false, false);
+			this._modifyDateValue(-1, "year");
 		} else if (isPageDownShift(event)) {
 			event.preventDefault();
-			this._changeDateValueWrapper(false, false, true, false);
+			this._modifyDateValue(-1, "month");
 		} else if (isPageDown(event)) {
 			event.preventDefault();
-			this._changeDateValueWrapper(false, false, false, true);
+			this._modifyDateValue(-1, "day");
 		}
 	}
 
@@ -513,71 +514,21 @@ class DatePicker extends UI5Element {
 	 */
 	_onfocusout() {}
 
-	/**
-	 * Adds or extracts a given number of measuring units from the "dateValue" property value
-	 * @param {boolean} forward if true indicates addition
-	 * @param {boolean} years indicates that the measuring unit is in years
-	 * @param {boolean} months indicates that the measuring unit is in months
-	 * @param {boolean} days indicates that the measuring unit is in days
-	 * @param {int} step number of measuring units to substract or add defaults to 1
-	 */
-	_changeDateValueWrapper(forward, years, months, days, step = 1) {
-		let date = this.dateValue;
-		date = this._changeDateValue(date, forward, years, months, days, step);
-		this.value = this.formatValue(date);
-	}
 
 	/**
-	 * Adds or extracts a given number of measuring units from the "dateValue" property value
 	 *
-	 * @param {boolean} date js date object to be changed
-	 * @param {boolean} years indicates that the measuring unit is in years
-	 * @param {boolean} months indicates that the measuring unit is in months
-	 * @param {boolean} days indicates that the measuring unit is in days
-	 * @param {boolean} forward if true indicates addition
-	 * @param {int} step number of measuring units to substract or add defaults ot 1
-	 * @returns {Object} JS date object
+	 * @param amount
+	 * @param unit
+	 * @protected
 	 */
-	_changeDateValue(date, forward, years, months, days, step = 1) {
-		if (!date) {
+	_modifyDateValue(amount, unit) {
+		if (!this.dateValue) {
 			return;
 		}
 
-		let calDate = CalendarDate.fromLocalJSDate(date, this._primaryCalendarType);
-		const oldCalDate = new CalendarDate(calDate, this._primaryCalendarType);
-		const incrementStep = forward ? step : -step;
-
-		if (incrementStep === 0 || (!days && !months && !years)) {
-			return;
-		}
-
-		if (days) {
-			calDate.setDate(calDate.getDate() + incrementStep);
-		} else if (months) {
-			calDate.setMonth(calDate.getMonth() + incrementStep);
-			const monthDiff = (calDate.getYear() - oldCalDate.getYear()) * 12 + (calDate.getMonth() - oldCalDate.getMonth());
-
-			if (calDate.getMonth() === oldCalDate.getMonth() || monthDiff !== incrementStep) {
-				// first condition example: 31th of March increment month with -1 results in 2th of March
-				// second condition example: 31th of January increment month with +1 results in 2th of March
-				calDate.setDate(0);
-			}
-		} else if (years) {
-			calDate.setYear(calDate.getYear() + incrementStep);
-
-			if (calDate.getMonth() !== oldCalDate.getMonth()) {
-				// day doesn't exist in this month (February 29th)
-				calDate.setDate(0);
-			}
-		}
-
-		if (calDate.valueOf() < this._minDate) {
-			calDate = CalendarDate.fromTimestamp(this._minDate, this._primaryCalendarType);
-		} else if (calDate.valueOf() > this._maxDate) {
-			calDate = CalendarDate.fromTimestamp(this._maxDate, this._primaryCalendarType);
-		}
-
-		return calDate.toLocalJSDate();
+		let calendarDate = CalendarDate.fromLocalJSDate(this.dateValue, this._primaryCalendarType);
+		calendarDate = modifyDateBy(calendarDate, amount, unit);
+		this.value = this.formatValue(calendarDate.toLocalJSDate());
 	}
 
 	_toggleAndFocusInput() {
