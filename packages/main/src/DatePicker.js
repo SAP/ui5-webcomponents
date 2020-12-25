@@ -9,7 +9,6 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	isEnter,
@@ -265,9 +264,9 @@ const metadata = {
 			type: Object,
 		},
 
-		_calendarSelectedDates: {
-			type: Integer,
-			multiple: true,
+		_calendarCurrentPicker: {
+			type: String,
+			defaultValue: "day",
 		},
 	},
 
@@ -430,16 +429,26 @@ class DatePicker extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this._checkValueValidity(this.value)) {
-			const timestamp = this._calendarDate.valueOf() / 1000;
-			this._calendarSelectedDates = this.value ? [timestamp] : [];
-		}
-
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+		}
+	}
+
+	/**
+	 * Used to pass the "value" of the datepicker to the calendar as "selectedDates"
+	 * @private
+	 */
+	get _calendarSelectedDates() {
+		if (!this.value) {
+			return [];
+		}
+
+		if (this._checkValueValidity(this.value)) {
+			const timestamp = this._calendarDate.valueOf() / 1000;
+			return [timestamp];
 		}
 	}
 
@@ -580,6 +589,10 @@ class DatePicker extends UI5Element {
 		return this.shadowRoot.querySelector("[ui5-input]");
 	}
 
+	/**
+	 * The user changed the input and focused out
+	 * @private
+	 */
 	async _handleInputChange() {
 		let nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
@@ -599,6 +612,10 @@ class DatePicker extends UI5Element {
 		this.fireEvent("value-changed", { value: nextValue, valid: isValid });
 	}
 
+	/**
+	 * The user is typing in the input
+	 * @private
+	 */
 	async _handleInputLiveChange() {
 		const nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
@@ -802,6 +819,10 @@ class DatePicker extends UI5Element {
 		return !this.disabled && !this.readonly;
 	}
 
+	/**
+	 * The user selected a new date in the calendar
+	 * @param event
+	 */
 	onSelectedDatesChange(event) {
 		const iNewValue = event.detail.dates && event.detail.dates[0];
 
@@ -873,6 +894,7 @@ class DatePicker extends UI5Element {
 	 */
 	async openPicker(options) {
 		this._isPickerOpen = true;
+		this._calendarCurrentPicker = "day";
 		this.responsivePopover = await this._respPopover();
 
 		if (options && options.focusInput) {
@@ -897,6 +919,22 @@ class DatePicker extends UI5Element {
 	 */
 	isOpen() {
 		return !!this._isPickerOpen;
+	}
+
+	/**
+	 * Gets some semantic details about an event originated in the control.
+	 * @param {*} event An event object
+	 * @returns {Object} Semantic details
+	 */
+	getSemanticTargetInfo(event) {
+		const oDomTarget = getDomTarget(event);
+		let isInput = false;
+
+		if (oDomTarget && oDomTarget.className.indexOf("ui5-input-inner") > -1) {
+			isInput = true;
+		}
+
+		return { isInput };
 	}
 
 	/**
@@ -939,6 +977,21 @@ class DatePicker extends UI5Element {
 		]);
 	}
 }
+
+const getDomTarget = event => {
+	let target,
+		composedPath;
+
+	if (typeof event.composedPath === "function") {
+		composedPath = event.composedPath();
+	}
+
+	if (Array.isArray(composedPath) && composedPath.length) {
+		target = composedPath[0];
+	}
+
+	return target;
+};
 
 DatePicker.define();
 

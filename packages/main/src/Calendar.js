@@ -120,18 +120,30 @@ const metadata = {
  * <li>[SHIFT] + [PAGEDOWN] - Navigate to the next year</li>
  * <li>[CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards</li>
  * <li>[CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards</li>
+ * <li>[HOME] - Navigate to the first day of the week
+ * <li>[END] - Navigate to the last day of the week
+ * <li>[CTRL] + [HOME] - Navigate to the first day of the month
+ * <li>[CTRL] + [END] - Navigate to the last day of the month
  * </ul>
  * <br>
  * - Month picker: <br>
  * <ul>
  * <li>[PAGEUP] - Navigate to the previous month</li>
  * <li>[PAGEDOWN] - Navigate to the next month</li>
+ * <li>[HOME] - Navigate to the first month of the current row
+ * <li>[END] - Navigate to the last month of the current row
+ * <li>[CTRL] + [HOME] - Navigate to the first month of the current year
+ * <li>[CTRL] + [END] - Navigate to the last month of the year
  * </ul>
  * <br>
  * - Year picker: <br>
  * <ul>
  * <li>[PAGEUP] - Navigate to the previous year range</li>
  * <li>[PAGEDOWN] - Navigate the next year range</li>
+ * <li>[HOME] - Navigate to the first year of the current row
+ * <li>[END] - Navigate to the last year of the current row
+ * <li>[CTRL] + [HOME] - Navigate to the first year of the current year range
+ * <li>[CTRL] + [END] - Navigate to the last year of the current year range
  * </ul>
  * <br>
  *
