@@ -17,13 +17,16 @@
 		<ui5-calendar
 			class="ui5-dt-cal {{classes.dateTimeView}}"
 			id="{{_id}}-calendar"
-			primary-calendar-type="{{_calendar.primaryCalendarType}}"
-			format-pattern="{{_calendar.formatPattern}}"
+			primary-calendar-type="{{_primaryCalendarType}}"
+			format-pattern="{{_formatPattern}}"
 			timestamp="{{_calTimestamp}}"
-			.selectedDates="{{_calDates}}"
-			.minDate="{{_calendar.minDate}}"
-			.maxDate="{{_calendar.maxDate}}"
-			@ui5-selected-dates-change="{{_calendar.onSelectedDatesChange}}"
+			.selectedDates={{_calDates}}
+			selection="{{_calendarSelection}}"
+			.minDate="{{minDate}}"
+			.maxDate="{{maxDate}}"
+			@ui5-selected-dates-change="{{onSelectedDatesChange}}"
+			?hide-week-numbers="{{hideWeekNumbers}}"
+			._currentPicker="{{_calendarCurrentPicker}}"
 		>
 		</ui5-calendar>
 

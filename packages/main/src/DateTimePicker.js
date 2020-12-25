@@ -296,11 +296,11 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get _calTimestamp() {
-		return this._calendarPreview ? this._calendarPreview.timestamp : this._calendar.timestamp;
+		return this._calendarPreview ? this._calendarPreview.timestamp : this._calendarTimestamp;
 	}
 
 	get _calDates() {
-		return this._calendarPreview ? this._calendarPreview.selectedDates : this._calendar.selectedDates;
+		return this._calendarPreview ? this._calendarPreview.selectedDates : this._calendarSelectedDates;
 	}
 
 	get secondsArray() {
@@ -415,7 +415,7 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	_handleCalendarChange(event) {
+	onSelectedDatesChange(event) {
 		const newValue = event.detail.dates && event.detail.dates[0];
 		super._handleCalendarSelectedDatesChange(event, newValue);
 		this.storeCalendarSelection();
@@ -505,8 +505,8 @@ class DateTimePicker extends DatePicker {
 	 */
 	storeCalendarSelection() {
 		this._calendarPreview = {
-			timestamp: this._calendar.timestamp,
-			dates: this._calendar.selectedDates,
+			timestamp: this._calendarTimestamp,
+			dates: this._calendarSelectedDates,
 		};
 	}
 

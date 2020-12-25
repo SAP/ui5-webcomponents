@@ -166,6 +166,9 @@ class DateRangePicker extends DatePicker {
 		this._prevValue = this.value;
 	}
 
+	/**
+	 * @override
+	 */
 	get _calendarDate() {
 		const dateStrings = this._splitValueByDelimiter(this.value),
 			value = Boolean(this.value) && this._checkValueValidity(this.value) ? dateStrings[0] : this.getFormat().format(new Date()),

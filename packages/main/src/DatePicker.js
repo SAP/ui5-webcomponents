@@ -463,6 +463,13 @@ class DatePicker extends UI5Element {
 		return [];
 	}
 
+	/**
+	 * @protected
+	 */
+	get _calendarTimestamp() {
+		return this._calendarDate.valueOf() / 1000;
+	}
+
 	_getTimeStampFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
@@ -573,7 +580,7 @@ class DatePicker extends UI5Element {
 
 	/**
 	 * The user is typing in the input
-	 * @private
+	 * @protected
 	 */
 	async _handleInputLiveChange() {
 		const nextValue = await this._getInput().getInputValue();
@@ -654,6 +661,9 @@ class DatePicker extends UI5Element {
 		return this.getFormat().format(new Date());
 	}
 
+	/**
+	 * @protected
+	 */
 	get _calendarDate() {
 		const millisecondsUTC = this.getFormat().parse(this.validValue, true).getTime();
 		const oCalDate = CalendarDate.fromTimestamp(
