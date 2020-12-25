@@ -11,7 +11,7 @@ describe("Calendar general interaction", () => {
 
 	it("Year is set in the header", () => {
 		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const yearButton = calendarHeader.$(`[data-sap-show-picker="Year"]`);
+		const yearButton = calendarHeader.shadow$(`[data-sap-show-picker="Year"]`);
 		const headerText = parseInt(yearButton.getText());
 		const currentYear = new Date().getFullYear();
 
@@ -25,20 +25,11 @@ describe("Calendar general interaction", () => {
 		});
 
 		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const monthButton = calendarHeader.$(`[data-sap-show-picker="Month"]`);
+		const monthButton = calendarHeader.shadow$(`[data-sap-show-picker="Month"]`);
 		const monthText = monthButton.getText();
 		const currentMonth = new Date().getMonth();
 
 		assert.strictEqual(monthText, monthMap.get(currentMonth), "Month is set in the header");
-	});
-
-	it("timestamp is propagated to the content part", () => {
-		const calendar = browser.$("#calendar1");
-		const TIMESTAMP = 1;
-
-		calendar.setProperty("timestamp", TIMESTAMP);
-
-		assert.strictEqual(calendar.getProperty("timestamp"), TIMESTAMP);
 	});
 
 	it("Focus goes into the current day item of the day picker", () => {
@@ -70,15 +61,14 @@ describe("Calendar general interaction", () => {
 		assert.ok(currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
 	});
 
-	it("Calendar sets the selected year when yearpicker is opened", () => {
+	it("Calendar focuses the selected year when yearpicker is opened", () => {
 		const calendar = browser.$("#calendar1");
 		const yearPicker = calendar.shadow$("ui5-yearpicker");
 		const YEAR = 1997;
 		calendar.setAttribute("timestamp", Date.UTC(YEAR) / 1000);
 		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Year"]`).click();
-		assert.strictEqual(yearPicker.getProperty("_selectedYear"), YEAR, "Year is set");
-
-		calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="852076800"]`).click();
+		const focusedItemTimestamp = yearPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
+		assert.ok(new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear() === 1997, "The focused year is 1997");
 	});
 
 	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
