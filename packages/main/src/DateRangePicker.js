@@ -1,11 +1,8 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
-import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
-import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
@@ -72,10 +69,8 @@ const metadata = {
  * <br>
  *
  * When the <code>ui5-daterange-picker</code> input field is focused the user can
- * increment or decrement the corresponding field of the JS date object referenced by <code>_firstDateTimestamp</code> propery
- * if the caret symbol is before the delimiter character or <code>_lastDateTimestamp</code> property if the caret symbol is
- * after the delimiter character.
- * The following shortcuts are enabled:
+ * increment or decrement respectively the range start or end date, depending on where the cursor is.
+ * The following shortcuts are available:
  * <br>
  * <ul>
  * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
@@ -99,21 +94,22 @@ class DateRangePicker extends DatePicker {
 		return metadata;
 	}
 
-	static get render() {
-		return litRender;
-	}
-
 	static get styles() {
 		return [DatePicker.styles, DateRangePickerCss];
 	}
 
-	static get template() {
-		return DateRangePickerTemplate;
+	/**
+	 * @override
+	 */
+	get _calendarSelection() {
+		return "Range";
 	}
 
-	constructor() {
-		super();
-		this._calendar.selection = CalendarSelection.Range;
+	/**
+	 * @override
+	 */
+	get _calendarSelectedDates() {
+		return [this._firstDateTimestamp, this._lastDateTimestamp].filter(date => !!date);
 	}
 
 	_splitValueByDelimiter(value) {
@@ -168,19 +164,6 @@ class DateRangePicker extends DatePicker {
 
 		this.value = this._formatValue(firstDate, lastDate);
 		this._prevValue = this.value;
-	}
-
-	_changeCalendarSelection() {
-		if (this._calendarDate.getYear() < 1) {
-			// 0 is a valid year, but we cannot display it
-			return;
-		}
-
-		const timestamp = this._calendarDate.valueOf() / 1000;
-		const dates = this._splitValueByDelimiter(this.value);
-		this._calendar = Object.assign({}, this._calendar);
-		this._calendar.timestamp = timestamp;
-		this._calendar.selectedDates = dates.map(date => this._getTimeStampFromString(date) / 1000);
 	}
 
 	get _calendarDate() {
@@ -262,12 +245,12 @@ class DateRangePicker extends DatePicker {
 			.every(valid => valid);
 	}
 
-	_handleCalendarChange(event) {
+	onSelectedDatesChange(event) {
 		const selectedDates = event.detail.dates;
 		if (selectedDates.length === 2) {
 			this.closePicker();
-			this._firstDateTimestamp = selectedDates[0] < selectedDates[1] ? selectedDates[0] : selectedDates[1];
-			this._lastDateTimestamp = selectedDates[0] > selectedDates[1] ? selectedDates[0] : selectedDates[1];
+			this._firstDateTimestamp = Math.min(...selectedDates);
+			this._lastDateTimestamp = Math.max(...selectedDates);
 			const fireChange = this._handleCalendarSelectedDatesChange(event, this._firstDateTimestamp);
 
 			if (fireChange) {
@@ -278,9 +261,6 @@ class DateRangePicker extends DatePicker {
 		} else {
 			this._firstDateTimestamp = selectedDates[0];
 			this._lastDateTimestamp = undefined;
-			this._calendar.timestamp = selectedDates[0];
-			this._calendar.selectedDates = [...event.detail.dates];
-			this.value = "";
 			return false;
 		}
 	}
@@ -373,6 +353,9 @@ class DateRangePicker extends DatePicker {
 		}
 	}
 
+	/**
+	 * @override
+	 */
 	_updateValueCalendarSelectedDatesChange() {
 		const calStartDate = CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000, this._primaryCalendarType);
 		const calEndDate = CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000, this._primaryCalendarType);

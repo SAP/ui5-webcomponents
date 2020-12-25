@@ -439,8 +439,16 @@ class DatePicker extends UI5Element {
 	}
 
 	/**
-	 * Used to pass the "value" of the datepicker to the calendar as "selectedDates"
-	 * @private
+	 * @returns {string}
+	 * @protected
+	 */
+	get _calendarSelection() {
+		return "Single";
+	}
+
+	/**
+	 * Used to convert the "value" of the datepicker to the calendar as "selectedDates"
+	 * @protected
 	 */
 	get _calendarSelectedDates() {
 		if (!this.value) {
@@ -773,6 +781,7 @@ class DatePicker extends UI5Element {
 	/**
 	 * The user selected a new date in the calendar
 	 * @param event
+	 * @protected
 	 */
 	onSelectedDatesChange(event) {
 		const iNewValue = event.detail.dates && event.detail.dates[0];
