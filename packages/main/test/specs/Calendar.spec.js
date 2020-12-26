@@ -62,6 +62,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar focuses the selected year when yearpicker is opened", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		const yearPicker = calendar.shadow$("ui5-yearpicker");
 		const YEAR = 1997;
@@ -72,6 +73,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Year"]`).click();
@@ -79,10 +81,10 @@ describe("Calendar general interaction", () => {
 
 		assert.ok(focusedItem.isFocusedDeep(), "Current year element is the active element");
 		assert.notOk(focusedItem.hasClass("ui5-yp-item--selected"), "Current year is not selected");
-		focusedItem.click();
 	});
 
 	it("Calendar doesn't mark month as selected when there are no selected dates", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Month"]`).click();
@@ -95,6 +97,7 @@ describe("Calendar general interaction", () => {
 	it("Page up/down increments/decrements the month value", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
+
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 
 		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).focus();

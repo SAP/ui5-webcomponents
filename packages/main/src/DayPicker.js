@@ -27,6 +27,7 @@ import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calc
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import PickerBase from "./PickerBase.js";
+import { getMinCalendarDate, getMaxCalendarDate } from "./util/DateTime.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 import {
@@ -658,7 +659,7 @@ class DayPicker extends PickerBase {
 	}
 
 	_isOutOfSelectableRange(date) {
-		return date.valueOf() < this._minDate || date.valueOf() > this._maxDate;
+		return date.valueOf() < this._minDate.valueOf() || date.valueOf() > this._maxDate.valueOf();
 	}
 
 	_getVisibleDays() {
@@ -666,8 +667,6 @@ class DayPicker extends PickerBase {
 			iDaysOldMonth,
 			iYear;
 
-		const minCalendarDateYear = CalendarDate.fromTimestamp(this._getMinCalendarDate(), this._primaryCalendarType).getYear();
-		const maxCalendarDateYear = CalendarDate.fromTimestamp(this._getMaxCalendarDate(), this._primaryCalendarType).getYear();
 		const _aVisibleDays = [];
 
 		const iFirstDayOfWeek = this._getFirstDayOfWeek();
@@ -689,7 +688,7 @@ class DayPicker extends PickerBase {
 		for (let i = 0; i < 42; i++) {
 			iYear = oDay.getYear();
 			oCalDate = new CalendarDate(oDay, this._primaryCalendarType);
-			if (iYear >= minCalendarDateYear && iYear <= maxCalendarDateYear) {
+			if (iYear >= getMinCalendarDate(this._primaryCalendarType).getYear() && iYear <= getMaxCalendarDate(this._primaryCalendarType).getYear()) {
 				// Days before 0001-01-01 or after 9999-12-31 should not be rendered.
 				_aVisibleDays.push(oCalDate);
 			}

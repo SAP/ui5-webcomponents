@@ -253,8 +253,8 @@ class MonthPicker extends PickerBase {
 
 	_isOutOfSelectableRange(monthIndex) {
 		const currentDateYear = this._localDate.getFullYear(),
-			minDate = new Date(this._minDate),
-			maxDate = new Date(this._maxDate),
+			minDate = new Date(this._minDate.valueOf()),
+			maxDate = new Date(this._maxDate.valueOf()),
 			minDateCheck = minDate && ((currentDateYear === minDate.getFullYear() && monthIndex < minDate.getMonth()) || currentDateYear < minDate.getFullYear()),
 			maxDateCheck = maxDate && ((currentDateYear === maxDate.getFullYear() && monthIndex > maxDate.getMonth()) || (currentDateYear > maxDate.getFullYear()));
 

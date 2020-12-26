@@ -147,29 +147,26 @@ class PickerBase extends UI5Element {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
-	get _maxDate() {
-		return this.maxDate ? this._getTimeStampFromString(this.maxDate) : this._getMaxCalendarDate();
+	get _minDate() {
+		return this.minDate ? this._getCalendarDateFromString(this.minDate) : getMinCalendarDate(this._primaryCalendarType);
 	}
 
-	get _minDate() {
-		return this.minDate ? this._getTimeStampFromString(this.minDate) : this._getMinCalendarDate();
+	get _maxDate() {
+		return this.maxDate ? this._getCalendarDateFromString(this.maxDate) : getMaxCalendarDate(this._primaryCalendarType);
+	}
+
+	_getCalendarDateFromString(value) {
+		const jsDate = this.getFormat().parse(value);
+		if (jsDate) {
+			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
+		}
 	}
 
 	_getTimeStampFromString(value) {
-		const jsDate = this.getFormat().parse(value);
-		if (jsDate) {
-			const calDate = CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
+		const calDate = this._getCalendarDateFromString(value);
+		if (calDate) {
 			return calDate.toUTCJSDate().valueOf();
 		}
-		return undefined;
-	}
-
-	_getMinCalendarDate() {
-		return getMinCalendarDate(this._primaryCalendarType);
-	}
-
-	_getMaxCalendarDate() {
-		return getMaxCalendarDate(this._primaryCalendarType);
 	}
 
 	getFormat() {
@@ -204,8 +201,8 @@ class PickerBase extends UI5Element {
 	 * @protected
 	 */
 	_safelyUpdateTimestamp(timestamp) {
-		const min = this._minDate / 1000;
-		const max = this._maxDate / 1000;
+		const min = this._minDate.valueOf() / 1000;
+		const max = this._maxDate.valueOf() / 1000;
 
 		if (timestamp < min) {
 			timestamp = min;

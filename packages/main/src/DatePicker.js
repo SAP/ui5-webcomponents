@@ -622,8 +622,8 @@ class DatePicker extends UI5Element {
 		}
 
 		const pickedDate = new Date(value),
-			minDate = new Date(this._minDate),
-			maxDate = new Date(this._maxDate);
+			minDate = new Date(this._minDate.valueOf()),
+			maxDate = new Date(this._maxDate.valueOf());
 
 		if (minDate && maxDate) {
 			if (minDate <= pickedDate && maxDate >= pickedDate) {
@@ -743,20 +743,12 @@ class DatePicker extends UI5Element {
 		};
 	}
 
-	get _maxDate() {
-		return this.maxDate ? this._getTimeStampFromString(this.maxDate) : this._getMaxCalendarDate();
-	}
-
 	get _minDate() {
-		return this.minDate ? this._getTimeStampFromString(this.minDate) : this._getMinCalendarDate();
+		return this.minDate ? this._getCalendarDateFromString(this.minDate) : getMinCalendarDate(this._primaryCalendarType);
 	}
 
-	_getMinCalendarDate() {
-		return getMinCalendarDate(this._primaryCalendarType);
-	}
-
-	_getMaxCalendarDate() {
-		return getMaxCalendarDate(this._primaryCalendarType);
+	get _maxDate() {
+		return this.maxDate ? this._getCalendarDateFromString(this.maxDate) : getMaxCalendarDate(this._primaryCalendarType);
 	}
 
 	get openIconTitle() {

@@ -99,9 +99,14 @@ class YearPicker extends PickerBase {
 
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, getLocale());
 
-		if (!this._firstYear) {
+		// If first load (so no _firstYear) or the date was changed by more than 20 years - reset _firstYear
+		if (!this._firstYear || Math.abs(this._firstYear - this._calendarDate.getYear()) >= PAGE_SIZE) {
 			this._firstYear = this._calendarDate.getYear() - PAGE_SIZE / 2;
 		}
+
+		// Keep it in the range between the min and max year
+		this._firstYear = Math.max(this._firstYear, this._minDate.getYear());
+		this._firstYear = Math.min(this._firstYear, this._maxDate.getYear());
 
 		const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
 		tempDate.setYear(this._firstYear);
@@ -275,8 +280,8 @@ class YearPicker extends PickerBase {
 	}
 
 	_isOutOfSelectableRange(year) {
-		const minDate = new Date(this._minDate),
-			maxDate = new Date(this._maxDate),
+		const minDate = new Date(this._minDate.valueOf()),
+			maxDate = new Date(this._maxDate.valueOf()),
 			minDateCheck = minDate && year < minDate.getFullYear(),
 			maxDateCheck = maxDate && year > maxDate.getFullYear();
 

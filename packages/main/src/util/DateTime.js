@@ -5,7 +5,7 @@ const getMinCalendarDate = primaryCalendarType => {
 	minDate.setYear(1);
 	minDate.setMonth(0);
 	minDate.setDate(1);
-	return minDate.valueOf();
+	return minDate;
 };
 
 const getMaxCalendarDate = primaryCalendarType => {
@@ -16,7 +16,7 @@ const getMaxCalendarDate = primaryCalendarType => {
 	tempDate.setDate(1);
 	tempDate.setMonth(tempDate.getMonth() + 1, 0);
 	maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
-	return maxDate.valueOf();
+	return maxDate;
 };
 
 export {
