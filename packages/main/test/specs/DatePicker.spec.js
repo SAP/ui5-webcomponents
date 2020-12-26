@@ -588,7 +588,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9976") > -1, "First year in the year picker is correct");
 	});
 
-	it("yearpicker click extreme values min", () => {
+	it("yearpicker click extreme values min above 10", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
@@ -599,8 +599,15 @@ describe("Date Picker Tests", () => {
 
 		var thirdYear = datepicker.getDisplayedYear(2);
 		assert.ok(thirdYear.getProperty("innerHTML").indexOf("0004") > -1, "Third year in the year picker is correct");
+	});
 
-		thirdYear.click();
+	it("yearpicker click extreme values min below 10", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Jan 1, 0004");
+		datepicker.valueHelpIcon.click();
+
 		datepicker.btnYear.click();
 
 		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
@@ -702,7 +709,8 @@ describe("Date Picker Tests", () => {
 		datepicker.btnYear.click();
 		assert.ok(datepicker.getDisplayedYear(11).hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
 		datepicker.root.keys("ArrowRight");
-		assert.ok(datepicker.getDisplayedYear(0).isFocusedDeep(), "Years out of range can not be reached with keyboard");
+		assert.ok(datepicker.getDisplayedYear(10).isFocusedDeep(), "Focus remained on year 2100");
+		assert.ok(!datepicker.getDisplayedYear(11).isFocusedDeep(), "Years out of range (2101) can not be reached with keyboard");
 	});
 
 	it("Months are disabled when out of range", () => {

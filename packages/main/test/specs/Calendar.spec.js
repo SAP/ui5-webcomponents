@@ -142,6 +142,7 @@ describe("Calendar general interaction", () => {
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
 
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys(["F4"]);
 		browser.keys('PageUp');
 
@@ -157,6 +158,7 @@ describe("Calendar general interaction", () => {
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
 
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys(['Shift', 'F4']);
 		browser.keys('PageUp');
 
@@ -169,8 +171,10 @@ describe("Calendar general interaction", () => {
 
 	it("When month picker is shown the month button is hidden", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
-		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
+		const calendar = browser.$("#calendar1");
+		const calendarHeader = calendar.shadow$("ui5-calendar-header");
 
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys(["F4"]);
 		browser.keys('PageUp');
 
