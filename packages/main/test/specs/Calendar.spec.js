@@ -153,6 +153,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Page up/down increments/decrements the year range in the year picker", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
 
@@ -167,6 +168,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("When month picker is shown the month button is hidden", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
 
 		browser.keys(["F4"]);
@@ -177,16 +179,9 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar with 'Multiple' selection type", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("selection", "Multiple");
-		let selectedDates = browser.execute(() => document.getElementById("calendar1").selectedDates );
-
-		// deselect previously selected dates
-		selectedDates.forEach(timestamp => {
-			const dateDOM = calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="${timestamp}"]`);
-			dateDOM.click();
-		});
-
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
 
 		const dates = [
@@ -200,12 +195,13 @@ describe("Calendar general interaction", () => {
 			assert.ok(date.hasClass("ui5-dp-item--selected"), `${date.getAttribute("data-sap-timestamp")} is selected`);
 		});
 
-		selectedDates = browser.execute(() => document.getElementById("calendar1").selectedDates );
+		const selectedDates = calendar.getProperty("selectedDates");
 
 		assert.deepEqual(selectedDates, [971136000, 971222400, 971308800], "Change event is fired with proper data");
 	});
 
 	it("Keyboard navigation works properly, when calendar selection type is set to 'Multiple'", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const toggleButton = browser.$("#weekNumbersButton");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("selection", "Multiple");
@@ -225,6 +221,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar with 'Range' selection type", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
 		calendar.setAttribute("selection", "Range");
@@ -242,7 +239,7 @@ describe("Calendar general interaction", () => {
 		assert.ok(dates[1].hasClass("ui5-dp-item--selected-between"), `${dates[1].getAttribute("data-sap-timestamp")} is selected between`);
 		assert.ok(dates[2].hasClass("ui5-dp-item--selected"), `${dates[2].getAttribute("data-sap-timestamp")} is selected`);
 
-		const selectedDates = browser.execute(() => document.getElementById("calendar1").selectedDates );
+		const selectedDates = calendar.getProperty("selectedDates");
 
 		assert.deepEqual(selectedDates, [971740800, 971913600], "Change event is fired with proper data");
 	});

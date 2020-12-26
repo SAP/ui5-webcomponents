@@ -17,6 +17,7 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import PickerBase from "./PickerBase.js";
+import { getMaxCalendarDate } from "./util/DateTime.js";
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
 
 // Styles
@@ -99,14 +100,7 @@ class YearPicker extends PickerBase {
 
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, getLocale());
 
-		// If first load (so no _firstYear) or the date was changed by more than 20 years - reset _firstYear
-		if (!this._firstYear || Math.abs(this._firstYear - this._calendarDate.getYear()) >= PAGE_SIZE) {
-			this._firstYear = this._calendarDate.getYear() - PAGE_SIZE / 2;
-		}
-
-		// Keep it in the range between the min and max year
-		this._firstYear = Math.max(this._firstYear, this._minDate.getYear());
-		this._firstYear = Math.min(this._firstYear, this._maxDate.getYear() - PAGE_SIZE + 1); // if max year is 9999 -> 9980
+		this._calculateFirstYear();
 
 		const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
 		tempDate.setYear(this._firstYear);
@@ -153,6 +147,24 @@ class YearPicker extends PickerBase {
 		}
 
 		this._years = intervals;
+	}
+
+	_calculateFirstYear() {
+		const absoluteMaxYear = getMaxCalendarDate(this._primaryCalendarType).getYear(); // 9999
+
+		// If first load (so no _firstYear) or the date was changed by more than 20 years - reset _firstYear
+		if (!this._firstYear || Math.abs(this._firstYear - this._calendarDate.getYear()) >= PAGE_SIZE) {
+			this._firstYear = this._calendarDate.getYear() - PAGE_SIZE / 2;
+		}
+
+		// Keep it in the range between the min and max year
+		this._firstYear = Math.max(this._firstYear, this._minDate.getYear());
+		this._firstYear = Math.min(this._firstYear, this._maxDate.getYear());
+
+		// If first year is > 9980, make it 9980 to not show any years beyond 9999
+		if (this._firstYear > absoluteMaxYear - PAGE_SIZE + 1) {
+			this._firstYear = absoluteMaxYear - PAGE_SIZE + 1;
+		}
 	}
 
 	onAfterRendering() {
