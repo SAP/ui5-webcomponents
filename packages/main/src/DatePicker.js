@@ -470,12 +470,18 @@ class DatePicker extends UI5Element {
 		return this._calendarDate.valueOf() / 1000;
 	}
 
-	_getTimeStampFromString(value) {
+	_getCalendarDateFromString(value) {
 		const jsDate = this.getFormat().parse(value);
 		if (jsDate) {
-			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType).toUTCJSDate().valueOf();
+			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
 		}
-		return undefined;
+	}
+
+	_getTimeStampFromString(value) {
+		const calDate = this._getCalendarDateFromString(value);
+		if (calDate) {
+			return calDate.toUTCJSDate().valueOf();
+		}
 	}
 
 	_onkeydown(event) {

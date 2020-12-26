@@ -119,7 +119,11 @@ class PickerBase extends UI5Element {
 	}
 
 	get _timestamp() {
-		return this.timestamp !== undefined ? this.timestamp : Math.floor(new Date().getTime() / 1000);
+		let timestamp = this.timestamp !== undefined ? this.timestamp : Math.floor(new Date().getTime() / 1000);
+		if (timestamp < this._minTimestamp || timestamp > this._maxTimestamp) {
+			timestamp = this._minTimestamp;
+		}
+		return timestamp;
 	}
 
 	get _localDate() {
@@ -153,6 +157,14 @@ class PickerBase extends UI5Element {
 
 	get _maxDate() {
 		return this.maxDate ? this._getCalendarDateFromString(this.maxDate) : getMaxCalendarDate(this._primaryCalendarType);
+	}
+
+	get _minTimestamp() {
+		return this._minDate.valueOf() / 1000;
+	}
+
+	get _maxTimestamp() {
+		return this._maxDate.valueOf() / 1000;
 	}
 
 	_getCalendarDateFromString(value) {
