@@ -217,7 +217,7 @@ describe("Date Picker Tests", () => {
 
 		const firstDisplayedDate = datepicker.getFirstDisplayedDate();
 
-		assert.ok(firstDisplayedDate.getProperty("data-sap-timestamp").indexOf("1548633600") > -1, "28 Jan is the first displayed date for Feb 2019")
+		assert.ok(firstDisplayedDate.getAttribute("data-sap-timestamp").indexOf("1548633600") > -1, "28 Jan is the first displayed date for Feb 2019")
 
 		const calendarDate_3_Feb_2019 = datepicker.getPickerDate(1549152000);
 
@@ -236,7 +236,7 @@ describe("Date Picker Tests", () => {
 		const firstDisplayedDate = datepicker.getFirstDisplayedDate();
 
 		// first displayed date should be Jan 27, 2019, so this is February
-		assert.ok(firstDisplayedDate.getProperty("data-sap-timestamp").indexOf("1548547200") > -1, "Feb is the displayed month");
+		assert.ok(firstDisplayedDate.getAttribute("data-sap-timestamp").indexOf("1548547200") > -1, "Feb is the displayed month");
 	});
 
 	it("picker stays open on input click", () => {
@@ -363,7 +363,7 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click()
 		browser.keys("F4");
 
-		assert.notOk(datepicker.calendar.getProperty("_monthPicker")._hidden, "Month picker is open");
+		assert.notOk(datepicker.calendar.shadow$("ui5-monthpicker")._hidden, "Month picker is open");
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
 
@@ -373,7 +373,7 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click()
 		browser.keys(['Shift', 'F4']);
 
-		assert.notOk(datepicker.calendar.getProperty("_yearPicker")._hidden, "Year picker is open");
+		assert.notOk(datepicker.calendar.shadow$("ui5-yearpicker")._hidden, "Year picker is open");
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
 
@@ -384,7 +384,7 @@ describe("Date Picker Tests", () => {
 		browser.keys(['Shift', 'F4']);
 		browser.keys('F4');
 
-		assert.notOk(datepicker.calendar.getProperty("_monthPicker")._hidden, "Year picker is open");
+		assert.notOk(datepicker.calendar.shadow$("ui5-monthpicker")._hidden, "Year picker is open");
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
 
@@ -396,7 +396,7 @@ describe("Date Picker Tests", () => {
 		browser.keys('F4');
 		browser.keys(['Shift', 'F4']);
 
-		assert.notOk(datepicker.calendar.getProperty("_yearPicker")._hidden, "Year picker is open");
+		assert.notOk(datepicker.calendar.shadow$("ui5-yearpicker")._hidden, "Year picker is open");
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
 
@@ -421,7 +421,7 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.setValue("Dec 31, 9999");
 		datepicker.valueHelpIcon.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 	});
 
 	it("daypicker extreme values min", () => {
@@ -433,7 +433,7 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.setValue("Jan 1, 0001");
 		datepicker.valueHelpIcon.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
 	});
 
 	it("daypicker prev extreme values min", () => {
@@ -447,11 +447,11 @@ describe("Date Picker Tests", () => {
 
 		datepicker.btnPrev.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
 
 		datepicker.btnPrev.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
 	});
 
 	it("daypicker next extreme values max", () => {
@@ -465,11 +465,11 @@ describe("Date Picker Tests", () => {
 
 		datepicker.btnNext.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 
 		datepicker.btnNext.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 	});
 
 	it("monthpicker next extreme values max", () => {

@@ -418,7 +418,7 @@ class DateTimePicker extends DatePicker {
 	onSelectedDatesChange(event) {
 		const newValue = event.detail.dates && event.detail.dates[0];
 		this._calendarPreview = {
-			timestamp: newValue,
+			timestamp: event.detail.timestamp,
 			dates: [newValue],
 		};
 	}

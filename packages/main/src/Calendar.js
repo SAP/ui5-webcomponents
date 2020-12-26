@@ -281,7 +281,7 @@ class Calendar extends PickerBase {
 
 		this.timestamp = timestamp;
 		this.selectedDates = selectedDates;
-		this.fireEvent("selected-dates-change", { dates: [...selectedDates] });
+		this.fireEvent("selected-dates-change", { timestamp, dates: [...selectedDates] });
 	}
 
 	onSelectedMonthChange(event) {
