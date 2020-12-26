@@ -106,7 +106,7 @@ class YearPicker extends PickerBase {
 
 		// Keep it in the range between the min and max year
 		this._firstYear = Math.max(this._firstYear, this._minDate.getYear());
-		this._firstYear = Math.min(this._firstYear, this._maxDate.getYear());
+		this._firstYear = Math.min(this._firstYear, this._maxDate.getYear() - PAGE_SIZE + 1); // if max year is 9999 -> 9980
 
 		const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
 		tempDate.setYear(this._firstYear);
