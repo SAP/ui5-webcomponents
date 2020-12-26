@@ -217,7 +217,7 @@ describe("Date Picker Tests", () => {
 
 		const firstDisplayedDate = datepicker.getFirstDisplayedDate();
 
-		assert.ok(firstDisplayedDate.getProperty("id").indexOf("1548633600") > -1, "28 Jan is the first displayed date for Feb 2019")
+		assert.ok(firstDisplayedDate.getProperty("data-sap-timestamp").indexOf("1548633600") > -1, "28 Jan is the first displayed date for Feb 2019")
 
 		const calendarDate_3_Feb_2019 = datepicker.getPickerDate(1549152000);
 
@@ -236,7 +236,7 @@ describe("Date Picker Tests", () => {
 		const firstDisplayedDate = datepicker.getFirstDisplayedDate();
 
 		// first displayed date should be Jan 27, 2019, so this is February
-		assert.ok(firstDisplayedDate.getProperty("id").indexOf("1548547200") > -1, "Feb is the displayed month");
+		assert.ok(firstDisplayedDate.getProperty("data-sap-timestamp").indexOf("1548547200") > -1, "Feb is the displayed month");
 	});
 
 	it("picker stays open on input click", () => {
@@ -421,7 +421,7 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.setValue("Dec 31, 9999");
 		datepicker.valueHelpIcon.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 	});
 
 	it("daypicker extreme values min", () => {
@@ -433,7 +433,7 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.setValue("Jan 1, 0001");
 		datepicker.valueHelpIcon.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
 	});
 
 	it("daypicker prev extreme values min", () => {
@@ -447,11 +447,11 @@ describe("Date Picker Tests", () => {
 
 		datepicker.btnPrev.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
 
 		datepicker.btnPrev.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
 	});
 
 	it("daypicker next extreme values max", () => {
@@ -465,11 +465,11 @@ describe("Date Picker Tests", () => {
 
 		datepicker.btnNext.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 
 		datepicker.btnNext.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 	});
 
 	it("monthpicker next extreme values max", () => {
@@ -779,14 +779,14 @@ describe("Date Picker Tests", () => {
 
 		assert.strictEqual(monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
 		assert.strictEqual(monthpickerContent.getAttribute("aria-roledescription"), "Calendar", "Calendar root have correct roledescription")
-		
+
 	});
 
 	it("DayPicker content wrapped", ()=>{
 		datepicker.id = "#dp19";
 		datepicker.open();
 		let arr = datepicker.getDayPickerContent();
-		
+
 		arr.forEach(function(el){
 			assert.strictEqual(el.getAttribute("role"), "row", "Content wrapper has correct role");
 		});
@@ -799,7 +799,7 @@ describe("Date Picker Tests", () => {
 		// datepicker.openPicker({ focusInput: true });
 		// datepicker.root.keys("May 3, 2100");
 		// datepicker.root.keys("Enter");
-		
+
 		// const content = Array.from(datepicker.getDayPickerDayNames());
 		// const dayName = ["Week number", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		// content.forEach((element,index) => {
@@ -848,7 +848,7 @@ describe("Date Picker Tests", () => {
 		const EXPECTED_ARIA_LABEL = "Hello World";
 
 		datepicker.id = "#dpAriaLabel";
-		
+
 		assert.strictEqual(datepicker.innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
 			"The aria-label is correct.")
 	});

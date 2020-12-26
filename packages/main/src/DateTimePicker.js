@@ -417,18 +417,11 @@ class DateTimePicker extends DatePicker {
 	 */
 	onSelectedDatesChange(event) {
 		const newValue = event.detail.dates && event.detail.dates[0];
-		super._handleCalendarSelectedDatesChange(event, newValue);
-		this.storeCalendarSelection();
+		this._calendarPreview = {
+			timestamp: newValue,
+			dates: [newValue],
+		};
 	}
-
-	/**
-	 * @override
-	 * Overwrite the method to avoid updating the <code>value</code> when the user clicks on the calendar.
-	 *
-	 * <b>Note:</b> the <code>DateTimePicker</code> should change and update the value
-	 * after user presses the <code>submit</code> button.
-	 */
-	_updateValueCalendarSelectedDatesChange() {}
 
 	/**
 	 * Handles document resize to switch between <code>phoneMode</code> and normal appearance.
@@ -458,6 +451,7 @@ class DateTimePicker extends DatePicker {
 			this.fireEvent("value-changed", { value: this.value, valid });
 		}
 
+		this._focusInputAfterClose = true;
 		this.closePicker();
 	}
 
@@ -495,20 +489,6 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * PRIVATE METHODS
 	 */
-
-	 /**
-	 * Stores a preview of the calendar selection to restore it
-	 * when the user switches between the time and date view.
-	 * <br><br>
-	 * <b>Note:</b> this is needed, because the <code>value</code> is not immediately updated on user interaction,
-	 * but only after the user presses the <code>sumbit</code> button.
-	 */
-	storeCalendarSelection() {
-		this._calendarPreview = {
-			timestamp: this._calendarTimestamp,
-			dates: this._calendarSelectedDates,
-		};
-	}
 
 	/**
 	 * Stores the <code>value</code> when the picker opens to compare with the <code>value</code>,
