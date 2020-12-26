@@ -100,7 +100,7 @@ describe("Calendar general interaction", () => {
 
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 
-		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).focus();
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys('PageUp');
 
 		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
@@ -114,7 +114,7 @@ describe("Calendar general interaction", () => {
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 
-		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).focus();
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys(['Shift', 'PageUp']);
 
 		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1999, 10, 1, 0, 0, 0)));
@@ -128,7 +128,7 @@ describe("Calendar general interaction", () => {
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 
-		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).focus();
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys(['Control', 'Shift', 'PageUp']);
 
 		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1990, 10, 1, 0, 0, 0)));
