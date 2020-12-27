@@ -1,5 +1,4 @@
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
-import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import {
 	isF4,
 	isF4Shift,
@@ -9,6 +8,7 @@ import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
+import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -27,20 +27,19 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Defines the type of selection used in the calendar component.
-		 * The property takes as value an object of type <code>CalendarSelection</code>.
 		 * Accepted property values are:<br>
 		 * <ul>
-		 * <li><code>CalendarSelection.Single</code> - enables a single date selection.(default value)</li>
-		 * <li><code>CalendarSelection.Range</code> - enables selection of a date range.</li>
-		 * <li><code>CalendarSelection.Multiple</code> - enables selection of multiple dates.</li>
+		 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
+		 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
+		 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
 		 * </ul>
-		 * @type {CalendarSelection}
+		 * @type {CalendarSelectionMode}
 		 * @defaultvalue "Single"
 		 * @public
 		 */
-		selection: {
-			type: CalendarSelection,
-			defaultValue: CalendarSelection.Single,
+		selectionMode: {
+			type: CalendarSelectionMode,
+			defaultValue: CalendarSelectionMode.Single,
 		},
 
 		/**

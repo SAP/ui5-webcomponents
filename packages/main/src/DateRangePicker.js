@@ -101,7 +101,7 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	get _calendarSelection() {
+	get _calendarSelectionMode() {
 		return "Range";
 	}
 

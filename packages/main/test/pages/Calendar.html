@@ -55,7 +55,7 @@
 	const textArea = document.getElementById("textArea");
 
 	select.addEventListener("ui5-change", function(event) {
-		calendar1.setAttribute("selection", event.detail.selectedOption.textContent)
+		calendar1.setAttribute("selection-mode", event.detail.selectedOption.textContent)
 	});
 
 	toggleButton.addEventListener("click", function(event) {

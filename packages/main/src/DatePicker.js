@@ -442,7 +442,7 @@ class DatePicker extends UI5Element {
 	 * @returns {string}
 	 * @protected
 	 */
-	get _calendarSelection() {
+	get _calendarSelectionMode() {
 		return "Single";
 	}
 

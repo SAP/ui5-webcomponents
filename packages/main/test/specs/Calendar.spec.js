@@ -185,7 +185,7 @@ describe("Calendar general interaction", () => {
 	it("Calendar with 'Multiple' selection type", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
-		calendar.setAttribute("selection", "Multiple");
+		calendar.setAttribute("selection-mode", "Multiple");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
 
 		const dates = [
@@ -208,7 +208,7 @@ describe("Calendar general interaction", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const toggleButton = browser.$("#weekNumbersButton");
 		const calendar = browser.$("#calendar1");
-		calendar.setAttribute("selection", "Multiple");
+		calendar.setAttribute("selection-mode", "Multiple");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
 
 		toggleButton.click();
@@ -228,7 +228,7 @@ describe("Calendar general interaction", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
-		calendar.setAttribute("selection", "Range");
+		calendar.setAttribute("selection-mode", "Range");
 
 		const dates = [
 			calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="971740800"]`),

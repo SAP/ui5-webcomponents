@@ -24,7 +24,7 @@ import {
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
-import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
+import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import PickerBase from "./PickerBase.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
@@ -44,21 +44,20 @@ const metadata = {
 	tag: "ui5-daypicker",
 	properties: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
-		 * Defines the type of selection used in the calendar component.
-		 * The property takes as value an object of type <code>CalendarSelection</code>.
+		 * Defines the type of selection used in the day picker component.
 		 * Accepted property values are:<br>
 		 * <ul>
-		 * <li><code>CalendarSelection.Single</code> - enables a single date selection.(default value)</li>
-		 * <li><code>CalendarSelection.Range</code> - enables selection of a date range.</li>
-		 * <li><code>CalendarSelection.Multiple</code> - enables selection of multiple dates.</li>
+		 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
+		 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
+		 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
 		 * </ul>
-		 * @type {CalendarSelection}
+		 * @type {CalendarSelectionMode}
 		 * @defaultvalue "Single"
 		 * @public
 		 */
-		selection: {
-			type: CalendarSelection,
-			defaultValue: CalendarSelection.Single,
+		selectionMode: {
+			type: CalendarSelectionMode,
+			defaultValue: CalendarSelectionMode.Single,
 		},
 
 		/**
@@ -102,7 +101,7 @@ const metadata = {
 		},
 
 		/**
-		 * When selection="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
+		 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
 		 * @private
 		 */
 		_secondTimestamp: {
@@ -313,7 +312,7 @@ class DayPicker extends PickerBase {
 	 * @private
 	 */
 	_isDaySelected(timestamp) {
-		if (this.selection === CalendarSelection.Single) {
+		if (this.selectionMode === CalendarSelectionMode.Single) {
 			return timestamp === this.selectedDates[0];
 		}
 
@@ -329,7 +328,7 @@ class DayPicker extends PickerBase {
 	 */
 	_isDayInsideSelectionRange(timestamp) {
 		// No selection at all (or not in range selection mode)
-		if (this.selection !== CalendarSelection.Range || !this.selectedDates.length) {
+		if (this.selectionMode !== CalendarSelectionMode.Range || !this.selectedDates.length) {
 			return false;
 		}
 
@@ -360,9 +359,9 @@ class DayPicker extends PickerBase {
 		this._safelySetTimestamp(timestamp);
 		this._updateSecondTimestamp();
 
-		if (this.selection === CalendarSelection.Single) {
+		if (this.selectionMode === CalendarSelectionMode.Single) {
 			this.selectedDates = [timestamp];
-		} else if (this.selection === CalendarSelection.Multiple) {
+		} else if (this.selectionMode === CalendarSelectionMode.Multiple) {
 			if (this.selectedDates.length > 0 && isShift) {
 				this._multipleSelection(timestamp);
 			} else {
@@ -477,7 +476,7 @@ class DayPicker extends PickerBase {
 	 */
 	_onmouseover(event) {
 		const hoveredItem = event.target.closest(".ui5-dp-item");
-		if (hoveredItem && this.selection === CalendarSelection.Range && this.selectedDates.length === 1) {
+		if (hoveredItem && this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
 			this._secondTimestamp = this.getTimestampFromDom(hoveredItem);
 		}
 	}
@@ -531,7 +530,7 @@ class DayPicker extends PickerBase {
 
 	_onkeyup(event) {
 		// Even if Space+Shift was pressed, ignore the shift unless in Multiple selection
-		if (isSpace(event) || (isSpaceShift(event) && this.selection !== CalendarSelection.Multiple)) {
+		if (isSpace(event) || (isSpaceShift(event) && this.selectionMode !== CalendarSelectionMode.Multiple)) {
 			this._selectDate(event, false);
 		} else if (isSpaceShift(event)) {
 			this._selectWeek(event);
@@ -630,7 +629,7 @@ class DayPicker extends PickerBase {
 	 * @private
 	 */
 	_updateSecondTimestamp() {
-		if (this.selection === CalendarSelection.Range && this.selectedDates.length === 1) {
+		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
 			this._secondTimestamp = this.timestamp;
 		}
 	}
