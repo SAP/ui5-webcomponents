@@ -437,7 +437,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("daypicker prev extreme values min", () => {
-		var _1Jan0001 = "-62135596800";
+		var _31Dec0000 = "-62135683200";
 
 		datepicker.open();
 		datepicker.id = "#dp12";
@@ -447,11 +447,7 @@ describe("Date Picker Tests", () => {
 
 		datepicker.btnPrev.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
-
-		datepicker.btnPrev.click();
-
-		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_31Dec0000) > -1, "Jan 1, 0001 is the second displayed date");
 	});
 
 	it("daypicker next extreme values max", () => {
@@ -460,12 +456,8 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Nov 31, 9999");
+		datepicker.innerInput.setValue("Nov 30, 9999");
 		datepicker.valueHelpIcon.click();
-
-		datepicker.btnNext.click();
-
-		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 
 		datepicker.btnNext.click();
 
@@ -483,10 +475,6 @@ describe("Date Picker Tests", () => {
 		datepicker.btnNext.click();
 
 		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("9999") > -1, "year button's text is correct");
-
-		datepicker.btnNext.click();
-
-		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("9999") > -1, "year button's text is correct");
 	});
 
 	it("monthpicker prev extreme values min", () => {
@@ -497,10 +485,6 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnMonth.click();
-		datepicker.btnPrev.click();
-
-		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("0001") > -1, "year button's text is correct");
-
 		datepicker.btnPrev.click();
 
 		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("0001") > -1, "year button's text is correct");
@@ -544,10 +528,6 @@ describe("Date Picker Tests", () => {
 		datepicker.btnPrev.click();
 
 		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
-
-		datepicker.btnPrev.click();
-
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
 	});
 
 	it("yearpicker next page extreme values max", () => {
@@ -560,10 +540,6 @@ describe("Date Picker Tests", () => {
 		datepicker.btnYear.click();
 
 		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9976") > -1, "First year in the year picker is correct");
-
-		datepicker.btnNext.click();
-
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9980") > -1, "First year in the year picker is correct");
 
 		datepicker.btnNext.click();
 
