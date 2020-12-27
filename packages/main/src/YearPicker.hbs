@@ -12,8 +12,9 @@
 		<div class="ui5-yp-interval-container">
 			{{#each this}}
 				<div
-					tabindex="{{this._tabIndex}}"
 					data-sap-timestamp="{{this.timestamp}}"
+					tabindex="{{this._tabIndex}}"
+					?data-sap-focus-ref="{{this.focusRef}}"
 					class="{{this.classes}}"
 					role="gridcell"
 					aria-selected="{{this.ariaSelected}}"

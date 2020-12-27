@@ -207,6 +207,7 @@ class DayPicker extends PickerBase {
 
 			day = {
 				timestamp: timestamp.toString(),
+				focusRef: isFocused,
 				_tabIndex: isFocused ? "0" : "-1",
 				selected: isSelected,
 				iDay: oCalDate.getDate(),
@@ -303,14 +304,10 @@ class DayPicker extends PickerBase {
 
 	onAfterRendering() {
 		if (this._autoFocus && !this._hidden) {
-			this.shadowRoot.querySelector(`[tabindex="0"]`).focus();
+			this.focus();
 		}
 	}
 
-	/**
-	 * Once focused, always update the focus after each rerendering
-	 * @private
-	 */
 	_onfocusin() {
 		this._autoFocus = true;
 	}

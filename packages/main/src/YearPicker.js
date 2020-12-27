@@ -117,10 +117,12 @@ class YearPicker extends PickerBase {
 				const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
 				return date.getYear() === tempDate.getYear();
 			});
+			const isFocused = tempDate.getYear() === this._calendarDate.getYear();
 
 			const year = {
 				timestamp: timestamp.toString(),
-				_tabIndex: tempDate.getYear() === this._calendarDate.getYear() ? "0" : "-1",
+				_tabIndex: isFocused ? "0" : "-1",
+				focusRef: isFocused,
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
 				year: oYearFormat.format(tempDate.toLocalJSDate()),
@@ -169,13 +171,9 @@ class YearPicker extends PickerBase {
 	}
 
 	onAfterRendering() {
-		if (this._autoFocus && !this._hidden) {
-			this.shadowRoot.querySelector(`[tabindex="0"]`).focus();
+		if (!this._hidden) {
+			this.focus();
 		}
-	}
-
-	_onfocusin() {
-		this._autoFocus = true;
 	}
 
 	_onkeydown(event) {

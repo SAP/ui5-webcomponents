@@ -97,7 +97,7 @@ class MonthPicker extends PickerBase {
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
 
 		const months = [];
-		const tempDate = this._calendarDate;
+		const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
 		let timestamp;
 
 		/* eslint-disable no-loop-func */
@@ -106,10 +106,12 @@ class MonthPicker extends PickerBase {
 			timestamp = tempDate.valueOf() / 1000;
 
 			const isSelected = this.selectedDates.some(d => d === timestamp);
+			const isFocused = tempDate.getMonth() === this._calendarDate.getMonth();
 
 			const month = {
 				timestamp: timestamp.toString(),
-				_tabIndex: tempDate.getMonth() === this._calendarDate.getMonth() ? "0" : "-1",
+				focusRef: isFocused,
+				_tabIndex: isFocused ? "0" : "-1",
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
 				name: monthsNames[i],
@@ -138,13 +140,9 @@ class MonthPicker extends PickerBase {
 	}
 
 	onAfterRendering() {
-		if (this._autoFocus && !this._hidden) {
-			this.shadowRoot.querySelector(`[tabindex="0"]`).focus();
+		if (!this._hidden) {
+			this.focus();
 		}
-	}
-
-	_onfocusin() {
-		this._autoFocus = true;
 	}
 
 	_onkeydown(event) {
