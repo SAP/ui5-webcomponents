@@ -154,6 +154,7 @@ class DayPicker extends PickerBase {
 	}
 
 	onBeforeRendering() {
+		super.onBeforeRendering();
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		this._buildWeeks(localeData);
 		this._buildDayNames(localeData);

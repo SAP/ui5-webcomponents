@@ -90,6 +90,7 @@ class YearPicker extends PickerBase {
 	}
 
 	onBeforeRendering() {
+		super.onBeforeRendering();
 		this._buildYears();
 	}
 

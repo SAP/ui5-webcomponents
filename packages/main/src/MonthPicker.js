@@ -84,6 +84,7 @@ class MonthPicker extends PickerBase {
 	}
 
 	onBeforeRendering() {
+		super.onBeforeRendering();
 		this._buildMonths();
 	}
 
