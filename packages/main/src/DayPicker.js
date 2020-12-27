@@ -246,7 +246,7 @@ class DayPicker extends PickerBase {
 
 			week.push(day);
 
-			if (weekday === 6 || i === 42 - 1) {
+			if (weekday === 6) {
 				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData);
 				if (lastWeekNumber !== weekNumber) {
 					week.unshift({
