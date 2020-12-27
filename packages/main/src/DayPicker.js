@@ -127,6 +127,8 @@ const metadata = {
 
 const isBetween = (x, num1, num2) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 
+const DAYS_IN_WEEK = 7;
+
 /**
  * @class
  *
@@ -172,24 +174,18 @@ class DayPicker extends PickerBase {
 		this._weeks = [];
 		this._weekNumbers = [];
 
-		let day,
-			weekday,
-			timestamp,
-			lastWeekNumber = -1,
-			week = [];
-
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
 		const nonWorkingDayLabel = this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 		const todayLabel = this.i18nBundle.getText(DAY_PICKER_TODAY);
 		const tempDate = this._getFirstDay();
 
-		for (let i = 0; i < 42; i++) {
-			timestamp = tempDate.valueOf() / 1000; // no need to round because CalendarDate does it
+		let week = [];
+		for (let i = 0; i < DAYS_IN_WEEK * 6; i++) { // always show 6 weeks total, 42 days to avoid jumping
+			const timestamp = tempDate.valueOf() / 1000; // no need to round because CalendarDate does it
 
-			// day of the week
-			weekday = tempDate.getDay() - this._getFirstDayOfWeek();
-			if (weekday < 0) {
-				weekday += 7;
+			let dayOfTheWeek = tempDate.getDay() - this._getFirstDayOfWeek();
+			if (dayOfTheWeek < 0) {
+				dayOfTheWeek += DAYS_IN_WEEK;
 			}
 
 			const isFocused = tempDate.getMonth() === this._calendarDate.getMonth() && tempDate.getDate() === this._calendarDate.getDate();
@@ -204,13 +200,13 @@ class DayPicker extends PickerBase {
 			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
 			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
 
-			day = {
+			const day = {
 				timestamp: timestamp.toString(),
 				focusRef: isFocused,
 				_tabIndex: isFocused ? "0" : "-1",
 				selected: isSelected,
 				iDay: tempDate.getDate(),
-				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
+				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
 				ariaLabel: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`,
 				ariaSelected: isSelected ? "true" : "false",
 				ariaDisabled: isOtherMonth ? "true" : undefined,
@@ -246,16 +242,14 @@ class DayPicker extends PickerBase {
 
 			week.push(day);
 
-			if (weekday === 6) {
-				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData);
-				if (lastWeekNumber !== weekNumber) {
-					week.unshift({
-						weekNum: weekNumber,
-						isHidden: this.shouldHideWeekNumbers,
-					});
-					lastWeekNumber = weekNumber;
-				}
+			if (dayOfTheWeek === DAYS_IN_WEEK - 1) { // 0-indexed so 6 is the last day of the week
+				week.unshift({
+					weekNum: calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData),
+					isHidden: this.shouldHideWeekNumbers,
+				});
+			}
 
+			if (week.length === DAYS_IN_WEEK + 1) { // 7 entries for each day + 1 for the week numbers
 				this._weeks.push(week);
 				week = [];
 			}
@@ -274,7 +268,7 @@ class DayPicker extends PickerBase {
 			return; // Optimization to not do any work unless the current picker
 		}
 
-		let weekday;
+		let dayOfTheWeek;
 
 		const aDayNamesWide = localeData.getDays("wide", this._primaryCalendarType);
 		const aDayNamesAbbreviated = localeData.getDays("abbreviated", this._primaryCalendarType);
@@ -285,14 +279,14 @@ class DayPicker extends PickerBase {
 			classes: "ui5-dp-dayname",
 			name: this.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT),
 		});
-		for (let i = 0; i < 7; i++) {
-			weekday = i + this._getFirstDayOfWeek();
-			if (weekday > 6) {
-				weekday -= 7;
+		for (let i = 0; i < DAYS_IN_WEEK; i++) {
+			dayOfTheWeek = i + this._getFirstDayOfWeek();
+			if (dayOfTheWeek > DAYS_IN_WEEK - 1) { // 0-indexed so index of 6 is the maximum allowed
+				dayOfTheWeek -= DAYS_IN_WEEK;
 			}
 			dayName = {
-				name: aDayNamesWide[weekday],
-				ultraShortName: aDayNamesAbbreviated[weekday],
+				name: aDayNamesWide[dayOfTheWeek],
+				ultraShortName: aDayNamesAbbreviated[dayOfTheWeek],
 				classes: "ui5-dp-dayname",
 			};
 
