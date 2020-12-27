@@ -1,3 +1,4 @@
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import {
 	isF4,
@@ -175,7 +176,8 @@ class Calendar extends PickerBase {
 		return calendarCSS;
 	}
 
-	onAfterRendering() {
+	async onAfterRendering() {
+		await RenderScheduler.whenFinished(); // Await for the current picker to render and then ask if it has previous/next pages
 		this._previousButtonDisabled = !this._currentPickerDOM._hasPreviousPage();
 		this._nextButtonDisabled = !this._currentPickerDOM._hasNextPage();
 	}
