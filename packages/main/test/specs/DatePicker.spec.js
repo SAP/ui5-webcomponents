@@ -425,7 +425,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("daypicker extreme values min", () => {
-		var _1Jan0001 = "-62135596800";
+		var _31Dec0000 = "-62135683200";
 
 		datepicker.open();
 		datepicker.id = "#dp12";
@@ -433,7 +433,7 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.setValue("Jan 1, 0001");
 		datepicker.valueHelpIcon.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_31Dec0000) > -1, "Jan 1, 0001 is the second displayed date");
 	});
 
 	it("daypicker prev extreme values min", () => {
