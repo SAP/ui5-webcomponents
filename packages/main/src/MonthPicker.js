@@ -107,6 +107,7 @@ class MonthPicker extends PickerBase {
 
 			const isSelected = this.selectedDates.some(d => d === timestamp);
 			const isFocused = tempDate.getMonth() === this._calendarDate.getMonth();
+			const isDisabled = this._isOutOfSelectableRange(tempDate);
 
 			const month = {
 				timestamp: timestamp.toString(),
@@ -115,6 +116,7 @@ class MonthPicker extends PickerBase {
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
 				name: monthsNames[i],
+				disabled: isDisabled,
 				classes: "ui5-mp-item",
 			};
 
@@ -122,9 +124,8 @@ class MonthPicker extends PickerBase {
 				month.classes += " ui5-mp-item--selected";
 			}
 
-			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(i)) {
+			if (isDisabled) {
 				month.classes += " ui5-mp-item--disabled";
-				month.disabled = true;
 			}
 
 			const quarterIndex = parseInt(i / ROW_SIZE);
@@ -266,14 +267,15 @@ class MonthPicker extends PickerBase {
 		this._modifyTimestampBy(PAGE_SIZE);
 	}
 
-	_isOutOfSelectableRange(monthIndex) {
-		const currentDateYear = this._localDate.getFullYear(),
-			minDate = new Date(this._minDate.valueOf()),
-			maxDate = new Date(this._maxDate.valueOf()),
-			minDateCheck = minDate && ((currentDateYear === minDate.getFullYear() && monthIndex < minDate.getMonth()) || currentDateYear < minDate.getFullYear()),
-			maxDateCheck = maxDate && ((currentDateYear === maxDate.getFullYear() && monthIndex > maxDate.getMonth()) || (currentDateYear > maxDate.getFullYear()));
+	_isOutOfSelectableRange(date) {
+		const month = date.getMonth();
+		const year = date.getYear();
+		const minYear = this._minDate.getYear();
+		const minMonth = this._minDate.getMonth();
+		const maxYear = this._maxDate.getYear();
+		const maxMonth = this._maxDate.getMonth();
 
-		return maxDateCheck || minDateCheck;
+		return year < minYear || (year === minYear && month < minMonth) || year > maxYear || (year === maxYear && month > maxMonth);
 	}
 }
 

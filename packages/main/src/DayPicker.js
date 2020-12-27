@@ -169,12 +169,12 @@ class DayPicker extends PickerBase {
 			return; // Optimization to not do any work unless the current picker
 		}
 
-		let oCalDate,
+		let tempDate,
 			day,
 			timestamp,
 			lastWeekNumber = -1;
 
-		const _aVisibleDays = this._getVisibleDays();
+		const visibleDays = this._getVisibleDays();
 		this._weeks = [];
 		let week = [];
 		this._weekNumbers = [];
@@ -182,24 +182,24 @@ class DayPicker extends PickerBase {
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
 
 		/* eslint-disable no-loop-func */
-		for (let i = 0; i < _aVisibleDays.length; i++) {
-			oCalDate = _aVisibleDays[i];
-			timestamp = oCalDate.valueOf() / 1000; // no need to round because CalendarDate does it
+		for (let i = 0; i < visibleDays.length; i++) {
+			tempDate = visibleDays[i];
+			timestamp = tempDate.valueOf() / 1000; // no need to round because CalendarDate does it
 
 			// day of the week
-			weekday = oCalDate.getDay() - this._getFirstDayOfWeek();
+			weekday = tempDate.getDay() - this._getFirstDayOfWeek();
 			if (weekday < 0) {
 				weekday += 7;
 			}
 
-			const isFocused = oCalDate.getMonth() === this._calendarDate.getMonth() && oCalDate.getDate() === this._calendarDate.getDate();
+			const isFocused = tempDate.getMonth() === this._calendarDate.getMonth() && tempDate.getDate() === this._calendarDate.getDate();
 			const isSelected = this._isDaySelected(timestamp);
 			const isSelectedBetween = this._isDayInsideSelectionRange(timestamp);
-			const isOtherMonth = oCalDate.getMonth() !== this._month;
-			const isWeekend = this._isWeekend(oCalDate);
-			const isDisabled = this._isOutOfSelectableRange(oCalDate);
-			const isToday = oCalDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
-			const isFirstDayOfWeek = oCalDate.getDay() === this._getFirstDayOfWeek();
+			const isOtherMonth = tempDate.getMonth() !== this._month;
+			const isWeekend = this._isWeekend(tempDate);
+			const isDisabled = this._isOutOfSelectableRange(tempDate);
+			const isToday = tempDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
+			const isFirstDayOfWeek = tempDate.getDay() === this._getFirstDayOfWeek();
 
 			const nonWorkingAriaLabel = isWeekend ? `${this._dayPickerNonWorkingDay} ` : "";
 			const todayAriaLabel = isToday ? `today ` : "";
@@ -209,9 +209,9 @@ class DayPicker extends PickerBase {
 				focusRef: isFocused,
 				_tabIndex: isFocused ? "0" : "-1",
 				selected: isSelected,
-				iDay: oCalDate.getDate(),
+				iDay: tempDate.getDate(),
 				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
-				ariaLabel: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[oCalDate.getMonth()]} ${oCalDate.getDate()}, ${oCalDate.getYear()}`,
+				ariaLabel: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`,
 				ariaSelected: isSelected ? "true" : "false",
 				ariaDisabled: isOtherMonth ? "true" : undefined,
 				disabled: isDisabled,
@@ -246,8 +246,8 @@ class DayPicker extends PickerBase {
 
 			week.push(day);
 
-			if (weekday === 6 || i === _aVisibleDays.length - 1) {
-				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), getLocale(), localeData);
+			if (weekday === 6 || i === visibleDays.length - 1) {
+				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData);
 				if (lastWeekNumber !== weekNumber) {
 					week.unshift({
 						weekNum: weekNumber,
@@ -677,11 +677,11 @@ class DayPicker extends PickerBase {
 	}
 
 	_getVisibleDays() {
-		let oCalDate,
+		let tempDate,
 			iDaysOldMonth,
 			iYear;
 
-		const _aVisibleDays = [];
+		const visibleDays = [];
 
 		const iFirstDayOfWeek = this._getFirstDayOfWeek();
 
@@ -701,15 +701,15 @@ class DayPicker extends PickerBase {
 		const oDay = new CalendarDate(oFirstDay, this._primaryCalendarType);
 		for (let i = 0; i < 42; i++) {
 			iYear = oDay.getYear();
-			oCalDate = new CalendarDate(oDay, this._primaryCalendarType);
+			tempDate = new CalendarDate(oDay, this._primaryCalendarType);
 			if (iYear >= getMinCalendarDate(this._primaryCalendarType).getYear() && iYear <= getMaxCalendarDate(this._primaryCalendarType).getYear()) {
 				// Days before 0001-01-01 or after 9999-12-31 should not be rendered.
-				_aVisibleDays.push(oCalDate);
+				visibleDays.push(tempDate);
 			}
 			oDay.setDate(oDay.getDate() + 1);
 		}
 
-		return _aVisibleDays;
+		return visibleDays;
 	}
 
 	_getFirstDayOfWeek() {

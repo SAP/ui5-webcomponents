@@ -14,7 +14,6 @@ import {
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import PickerBase from "./PickerBase.js";
 import { getMaxCalendarDate } from "./util/DateTime.js";
@@ -36,11 +35,6 @@ const metadata = {
 
 		_hidden: {
 			type: Boolean,
-			noAttribute: true,
-		},
-
-		_firstYear: {
-			type: Integer,
 			noAttribute: true,
 		},
 	},
@@ -118,6 +112,7 @@ class YearPicker extends PickerBase {
 				return date.getYear() === tempDate.getYear();
 			});
 			const isFocused = tempDate.getYear() === this._calendarDate.getYear();
+			const isDisabled = this._isOutOfSelectableRange(tempDate);
 
 			const year = {
 				timestamp: timestamp.toString(),
@@ -126,6 +121,7 @@ class YearPicker extends PickerBase {
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
 				year: oYearFormat.format(tempDate.toLocalJSDate()),
+				disabled: isDisabled,
 				classes: "ui5-yp-item",
 			};
 
@@ -133,9 +129,8 @@ class YearPicker extends PickerBase {
 				year.classes += " ui5-yp-item--selected";
 			}
 
-			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(tempDate.getYear())) {
+			if (isDisabled) {
 				year.classes += " ui5-yp-item--disabled";
-				year.disabled = true;
 			}
 
 			const intervalIndex = parseInt(i / ROW_SIZE);
@@ -310,13 +305,8 @@ class YearPicker extends PickerBase {
 		this._modifyTimestampBy(PAGE_SIZE);
 	}
 
-	_isOutOfSelectableRange(year) {
-		const minDate = new Date(this._minDate.valueOf()),
-			maxDate = new Date(this._maxDate.valueOf()),
-			minDateCheck = minDate && year < minDate.getFullYear(),
-			maxDateCheck = maxDate && year > maxDate.getFullYear();
-
-		return minDateCheck || maxDateCheck;
+	_isOutOfSelectableRange(date) {
+		return date.getYear() < this._minDate.getYear() || date.getYear() > this._maxDate.getYear();
 	}
 }
 
