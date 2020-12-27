@@ -65,6 +65,14 @@ const metadata = {
 			type: String,
 			defaultValue: "day",
 		},
+
+		_previousButtonDisabled: {
+			type: Boolean,
+		},
+
+		_nextButtonDisabled: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
@@ -103,17 +111,13 @@ const metadata = {
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-calendar</code> provides advanced keyboard handling.
- * If the <code>ui5-calendar</code> is focused the user can
- * choose a picker by using the following shortcuts: <br>
- * <ul>
- * <li>[F4] - Shows month picker</li>
- * <li>[SHIFT] + [F4] - Shows year picker</li>
- * <br>
  * When a picker is showed and focused the user can use the following keyboard
  * shortcuts in order to perform a navigation:
  * <br>
  * - Day picker: <br>
  * <ul>
+ * <li>[F4] - Shows month picker</li>
+ * <li>[SHIFT] + [F4] - Shows year picker</li>
  * <li>[PAGEUP] - Navigate to the previous month</li>
  * <li>[PAGEDOWN] - Navigate to the next month</li>
  * <li>[SHIFT] + [PAGEUP] - Navigate to the previous year</li>
@@ -172,6 +176,11 @@ class Calendar extends PickerBase {
 		return calendarCSS;
 	}
 
+	onAfterRendering() {
+		this._previousButtonDisabled = !this._currentPickerDOM._hasPreviousPage();
+		this._nextButtonDisabled = !this._currentPickerDOM._hasNextPage();
+	}
+
 	/**
 	 * The user clicked the "month" button in the header
 	 */
@@ -203,55 +212,6 @@ class Calendar extends PickerBase {
 	 */
 	onHeaderNextPress() {
 		this._currentPickerDOM._showNextPage();
-	}
-
-	get _headerButtonsState() {
-		const minDateParsed = this.minDate && this.getFormat().parse(this.minDate);
-		const maxDateParsed = this.maxDate && this.getFormat().parse(this.maxDate);
-
-		let prevDisabled = false;
-		let nextDisabled = false;
-
-		const currentMonth = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getMonth();
-		const currentYear = this.timestamp && CalendarDate.fromTimestamp(this.timestamp * 1000).getYear();
-
-		if (this._currentPicker === "day") {
-			if (this.minDate && minDateParsed.getMonth() === currentMonth && minDateParsed.getFullYear() === currentYear) {
-				prevDisabled = true;
-			}
-
-			if (this.maxDate && maxDateParsed.getMonth() === currentMonth && maxDateParsed.getFullYear() === currentYear) {
-				nextDisabled = true;
-			}
-		}
-
-		if (this._currentPicker === "month") {
-			if (this.minDate && currentYear === minDateParsed.getFullYear()) {
-				prevDisabled = true;
-			}
-
-			if (this.maxDate && currentYear === maxDateParsed.getFullYear()) {
-				nextDisabled = true;
-			}
-		}
-
-		if (this._currentPicker === "year") {
-			const cellsFromTheStart = 7;
-			const cellsToTheEnd = 12;
-
-			if (this.minDate && (currentYear - minDateParsed.getFullYear()) < cellsFromTheStart) {
-				prevDisabled = true;
-			}
-
-			if (this.maxDate && (maxDateParsed.getFullYear() - currentYear) < cellsToTheEnd) {
-				nextDisabled = true;
-			}
-		}
-
-		return {
-			prevDisabled,
-			nextDisabled,
-		};
 	}
 
 	/**

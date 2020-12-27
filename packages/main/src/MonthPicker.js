@@ -236,16 +236,34 @@ class MonthPicker extends PickerBase {
 	}
 
 	/**
+	 * Called from Calendar.js
+	 * @protected
+	 */
+	_hasPreviousPage() {
+		return this._calendarDate.getYear() !== this._minDate.getYear();
+	}
+
+	/**
+	 * Called from Calendar.js
+	 * @protected
+	 */
+	_hasNextPage() {
+		return this._calendarDate.getYear() !== this._maxDate.getYear();
+	}
+
+	/**
+	 * Called by Calendar.js
 	 * User pressed the "<" button in the calendar header (same as PageUp)
-	 * @private
+	 * @protected
 	 */
 	_showPreviousPage() {
 		this._modifyTimestampBy(-PAGE_SIZE);
 	}
 
 	/**
+	 * Called by Calendar.js
 	 * User pressed the ">" button in the calendar header (same as PageDown)
-	 * @private
+	 * @protected
 	 */
 	_showNextPage() {
 		this._modifyTimestampBy(PAGE_SIZE);

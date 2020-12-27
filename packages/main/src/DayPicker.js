@@ -574,16 +574,34 @@ class DayPicker extends PickerBase {
 	}
 
 	/**
+	 * Called from Calendar.js
+	 * @protected
+	 */
+	_hasPreviousPage() {
+		return !(this._calendarDate.getMonth() === this._minDate.getMonth() && this._calendarDate.getYear() === this._minDate.getYear());
+	}
+
+	/**
+	 * Called from Calendar.js
+	 * @protected
+	 */
+	_hasNextPage() {
+		return !(this._calendarDate.getMonth() === this._maxDate.getMonth() && this._calendarDate.getYear() === this._maxDate.getYear());
+	}
+
+	/**
+	 * Called from Calendar.js
 	 * Same as PageUp
-	 * @private
+	 * @protected
 	 */
 	_showPreviousPage() {
 		this._modifyTimestampBy(-1, "month");
 	}
 
 	/**
+	 * Called from Calendar.js
 	 * Same as PageDown
-	 * @private
+	 * @protected
 	 */
 	_showNextPage() {
 		this._modifyTimestampBy(1, "month");

@@ -276,16 +276,34 @@ class YearPicker extends PickerBase {
 	}
 
 	/**
+	 * Called from Calendar.js
+	 * @protected
+	 */
+	_hasPreviousPage() {
+		return this._firstYear > this._minDate.getYear();
+	}
+
+	/**
+	 * Called from Calendar.js
+	 * @protected
+	 */
+	_hasNextPage() {
+		return this._firstYear + PAGE_SIZE - 1 < this._maxDate.getYear();
+	}
+
+	/**
+	 * Called by Calendar.js
 	 * User pressed the "<" button in the calendar header (same as PageUp)
-	 * @private
+	 * @protected
 	 */
 	_showPreviousPage() {
 		this._modifyTimestampBy(-PAGE_SIZE);
 	}
 
 	/**
+	 * Called by Calendar.js
 	 * User pressed the ">" button in the calendar header (same as PageDown)
-	 * @private
+	 * @protected
 	 */
 	_showNextPage() {
 		this._modifyTimestampBy(PAGE_SIZE);
