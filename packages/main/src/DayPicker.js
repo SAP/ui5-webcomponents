@@ -22,7 +22,6 @@ import {
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
@@ -363,7 +362,7 @@ class DayPicker extends PickerBase {
 
 		const timestamp = this.getTimestampFromDom(target);
 
-		this._safelyUpdateTimestamp(timestamp);
+		this._safelySetTimestamp(timestamp);
 		this._updateSecondTimestamp();
 
 		if (this.selection === CalendarSelection.Single) {
@@ -613,8 +612,7 @@ class DayPicker extends PickerBase {
 	 */
 	_modifyTimestampBy(amount, unit) {
 		// Modify the current timestamp
-		const newDate = modifyDateBy(this._calendarDate, amount, unit);
-		this._safelyUpdateTimestamp(newDate.valueOf() / 1000);
+		this._safelyModifyTimestampBy(amount, unit);
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
@@ -627,7 +625,7 @@ class DayPicker extends PickerBase {
 	 * @private
 	 */
 	_setTimestamp(value) {
-		this._safelyUpdateTimestamp(value);
+		this._safelySetTimestamp(value);
 		this._updateSecondTimestamp();
 		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}
@@ -700,7 +698,7 @@ class DayPicker extends PickerBase {
 			oFirstDay.setDate(1 - iDaysOldMonth);
 		}
 
-		const oDay = new CalendarDate(oFirstDay);
+		const oDay = new CalendarDate(oFirstDay, this._primaryCalendarType);
 		for (let i = 0; i < 42; i++) {
 			iYear = oDay.getYear();
 			oCalDate = new CalendarDate(oDay, this._primaryCalendarType);

@@ -6,15 +6,16 @@ import CalendarDate from "./CalendarDate.js";
  * @param date CalendarDate instance
  * @param amount how many days/months/years to add (can be a negative number)
  * @param unit what to modify: "day", "month" or "year"
+ * @param primaryCalendarType
  */
-const modifyDateBy = (date, amount, unit) => {
-	const newDate = new CalendarDate(date);
+const modifyDateBy = (date, amount, unit, primaryCalendarType) => {
+	const newDate = new CalendarDate(date, primaryCalendarType);
 	if (unit === "day") {
 		newDate.setDate(date.getDate() + amount);
 	} else if (unit === "month") {
 		newDate.setMonth(date.getMonth() + amount);
-		const stillSameMonth = amount < 0 && newDate.getMonth() === date.getMonth(); // f.e. PageUp remained in the same month
-		const monthSkipped = amount > 0 && newDate.getMonth() - date.getMonth() > 1; // f.e. PageDown skipped a whole month
+		const stillSameMonth = amount === -1 && newDate.getMonth() === date.getMonth(); // f.e. PageUp remained in the same month
+		const monthSkipped = amount === 1 && newDate.getMonth() - date.getMonth() > 1; // f.e. PageDown skipped a whole month
 		if (stillSameMonth || monthSkipped) { // Select the last day of the month in any of these 2 scenarios
 			newDate.setDate(0);
 		}

@@ -285,9 +285,9 @@ class DateRangePicker extends DatePicker {
 		let lastDate = this.getFormat().parse(dates[1]);
 
 		if (first && firstDate) {
-			firstDate = modifyDateBy(CalendarDate.fromLocalJSDate(firstDate, this._primaryCalendarType), amount, unit).toLocalJSDate();
+			firstDate = modifyDateBy(CalendarDate.fromLocalJSDate(firstDate, this._primaryCalendarType), amount, unit, this._primaryCalendarType).toLocalJSDate();
 		} else if (last && lastDate) {
-			lastDate = modifyDateBy(CalendarDate.fromLocalJSDate(lastDate, this._primaryCalendarType), amount, unit).toLocalJSDate();
+			lastDate = modifyDateBy(CalendarDate.fromLocalJSDate(lastDate, this._primaryCalendarType), amount, unit, this._primaryCalendarType).toLocalJSDate();
 		}
 
 		this.value = this._formatValue(firstDate, lastDate);

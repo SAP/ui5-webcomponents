@@ -548,7 +548,7 @@ class DatePicker extends UI5Element {
 		}
 
 		let calendarDate = CalendarDate.fromLocalJSDate(this.dateValue, this._primaryCalendarType);
-		calendarDate = modifyDateBy(calendarDate, amount, unit);
+		calendarDate = modifyDateBy(calendarDate, amount, unit, this._primaryCalendarType);
 		this.value = this.formatValue(calendarDate.toLocalJSDate());
 	}
 

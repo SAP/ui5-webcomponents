@@ -9,6 +9,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import { getMinCalendarDate, getMaxCalendarDate } from "./util/DateTime.js";
 
 /**
@@ -113,6 +114,10 @@ class PickerBase extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		this._calculateAll();
+	}
+
+	_calculateAll() {
 		// The following variables are calculated once per rendering and stored as they are costly due to UniversalDate usage
 		this._primaryCalendarType = this._calculatePrimaryCalendarType(); // prerequisite for all calculations
 		this._minDate = this._calculateMinDate(); // CalendarDate object: minDate(if provided) or the absolute minimum date
@@ -216,7 +221,7 @@ class PickerBase extends UI5Element {
 	 * @param timestamp
 	 * @protected
 	 */
-	_safelyUpdateTimestamp(timestamp) {
+	_safelySetTimestamp(timestamp) {
 		const min = this._minDate.valueOf() / 1000;
 		const max = this._maxDate.valueOf() / 1000;
 
@@ -228,6 +233,18 @@ class PickerBase extends UI5Element {
 		}
 
 		this.timestamp = timestamp;
+		this._calculateAll();
+	}
+
+	/**
+	 * Safely modify a stamp by a certain amount of days/months/years by enforcing limits
+	 * @param amount
+	 * @param unit
+	 * @protected
+	 */
+	_safelyModifyTimestampBy(amount, unit) {
+		const newDate = modifyDateBy(this._calendarDate, amount, unit, this._primaryCalendarType);
+		this._safelySetTimestamp(newDate.valueOf() / 1000);
 	}
 
 	static async onDefine() {
