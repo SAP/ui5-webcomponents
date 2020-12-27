@@ -233,7 +233,6 @@ class PickerBase extends UI5Element {
 		}
 
 		this.timestamp = timestamp;
-		this._calculateAll();
 	}
 
 	/**

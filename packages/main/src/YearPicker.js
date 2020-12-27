@@ -154,10 +154,23 @@ class YearPicker extends PickerBase {
 
 	_calculateFirstYear() {
 		const absoluteMaxYear = getMaxCalendarDate(this._primaryCalendarType).getYear(); // 9999
+		const currentYear = this._calendarDate.getYear();
 
-		// If first load (so no _firstYear) or the date was changed by more than 20 years - reset _firstYear
-		if (!this._firstYear || Math.abs(this._firstYear - this._calendarDate.getYear()) >= PAGE_SIZE) {
-			this._firstYear = this._calendarDate.getYear() - PAGE_SIZE / 2;
+		// 1. If first load - center the current year (set first year to be current year minus half page size)
+		if (!this._firstYear) {
+			this._firstYear = currentYear - PAGE_SIZE / 2;
+		}
+
+		// 2. If out of range - change by a page (20) - do not center in order to keep the same position as the last page
+		if (currentYear < this._firstYear) {
+			this._firstYear -= PAGE_SIZE;
+		} else if (currentYear >= this._firstYear + PAGE_SIZE) {
+			this._firstYear += PAGE_SIZE;
+		}
+
+		// 3. If the date was changed by more than 20 years - reset _firstYear completely
+		if (Math.abs(this._firstYear - currentYear) >= PAGE_SIZE) {
+			this._firstYear = currentYear - PAGE_SIZE / 2;
 		}
 
 		// Keep it in the range between the min and max year
@@ -238,15 +251,6 @@ class YearPicker extends PickerBase {
 	_modifyTimestampBy(amount) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, "year");
-
-		// Check for page overflow and show the prev/next page if necessary
-		const newYear = this._calendarDate.getYear();
-		if (newYear < this._firstYear) {
-			this._firstYear -= PAGE_SIZE;
-		}
-		if (newYear >= this._firstYear + PAGE_SIZE) {
-			this._firstYear += PAGE_SIZE;
-		}
 
 		// Notify the calendar to update its timestamp
 		this.fireEvent("navigate", { timestamp: this.timestamp });
