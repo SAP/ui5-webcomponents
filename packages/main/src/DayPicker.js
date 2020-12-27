@@ -26,12 +26,12 @@ import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calc
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
 import PickerBase from "./PickerBase.js";
-import { getMinCalendarDate, getMaxCalendarDate } from "./util/DateTime.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
 	DAY_PICKER_NON_WORKING_DAY,
+	DAY_PICKER_TODAY,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -169,21 +169,21 @@ class DayPicker extends PickerBase {
 			return; // Optimization to not do any work unless the current picker
 		}
 
-		let tempDate,
-			day,
-			timestamp,
-			lastWeekNumber = -1;
-
-		const visibleDays = this._getVisibleDays();
 		this._weeks = [];
-		let week = [];
 		this._weekNumbers = [];
-		let weekday;
-		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
 
-		/* eslint-disable no-loop-func */
-		for (let i = 0; i < visibleDays.length; i++) {
-			tempDate = visibleDays[i];
+		let day,
+			weekday,
+			timestamp,
+			lastWeekNumber = -1,
+			week = [];
+
+		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
+		const nonWorkingDayLabel = this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
+		const todayLabel = this.i18nBundle.getText(DAY_PICKER_TODAY);
+		const tempDate = this._getFirstDay();
+
+		for (let i = 0; i < 42; i++) {
 			timestamp = tempDate.valueOf() / 1000; // no need to round because CalendarDate does it
 
 			// day of the week
@@ -201,8 +201,8 @@ class DayPicker extends PickerBase {
 			const isToday = tempDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
 			const isFirstDayOfWeek = tempDate.getDay() === this._getFirstDayOfWeek();
 
-			const nonWorkingAriaLabel = isWeekend ? `${this._dayPickerNonWorkingDay} ` : "";
-			const todayAriaLabel = isToday ? `today ` : "";
+			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
+			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
 
 			day = {
 				timestamp: timestamp.toString(),
@@ -246,7 +246,7 @@ class DayPicker extends PickerBase {
 
 			week.push(day);
 
-			if (weekday === 6 || i === visibleDays.length - 1) {
+			if (weekday === 6 || i === 42 - 1) {
 				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData);
 				if (lastWeekNumber !== weekNumber) {
 					week.unshift({
@@ -259,8 +259,9 @@ class DayPicker extends PickerBase {
 				this._weeks.push(week);
 				week = [];
 			}
+
+			tempDate.setDate(tempDate.getDate() + 1);
 		}
-		/* eslint-enable no-loop-func */
 	}
 
 	/**
@@ -282,7 +283,7 @@ class DayPicker extends PickerBase {
 		this._dayNames = [];
 		this._dayNames.push({
 			classes: "ui5-dp-dayname",
-			name: this._dayPickerWeekNumberText,
+			name: this.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT),
 		});
 		for (let i = 0; i < 7; i++) {
 			weekday = i + this._getFirstDayOfWeek();
@@ -648,14 +649,6 @@ class DayPicker extends PickerBase {
 		return this.hideWeekNumbers;
 	}
 
-	get _dayPickerWeekNumberText() {
-		return this.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT);
-	}
-
-	get _dayPickerNonWorkingDay() {
-		return this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
-	}
-
 	_isWeekend(oDate) {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 
@@ -676,40 +669,24 @@ class DayPicker extends PickerBase {
 		return date.valueOf() < this._minDate.valueOf() || date.valueOf() > this._maxDate.valueOf();
 	}
 
-	_getVisibleDays() {
-		let tempDate,
-			iDaysOldMonth,
-			iYear;
+	_getFirstDay() {
+		let daysFromPreviousMonth;
 
-		const visibleDays = [];
-
-		const iFirstDayOfWeek = this._getFirstDayOfWeek();
+		const firstDayOfWeek = this._getFirstDayOfWeek();
 
 		// determine weekday of first day in month
-		const oFirstDay = new CalendarDate(this._calendarDate, this._primaryCalendarType);
-		oFirstDay.setDate(1);
-		iDaysOldMonth = oFirstDay.getDay() - iFirstDayOfWeek;
-		if (iDaysOldMonth < 0) {
-			iDaysOldMonth = 7 + iDaysOldMonth;
+		const firstDay = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+		firstDay.setDate(1);
+		daysFromPreviousMonth = firstDay.getDay() - firstDayOfWeek;
+		if (daysFromPreviousMonth < 0) {
+			daysFromPreviousMonth = 7 + daysFromPreviousMonth;
 		}
 
-		if (iDaysOldMonth > 0) {
-			// determine first day for display
-			oFirstDay.setDate(1 - iDaysOldMonth);
+		if (daysFromPreviousMonth > 0) {
+			firstDay.setDate(1 - daysFromPreviousMonth);
 		}
 
-		const oDay = new CalendarDate(oFirstDay, this._primaryCalendarType);
-		for (let i = 0; i < 42; i++) {
-			iYear = oDay.getYear();
-			tempDate = new CalendarDate(oDay, this._primaryCalendarType);
-			if (iYear >= getMinCalendarDate(this._primaryCalendarType).getYear() && iYear <= getMaxCalendarDate(this._primaryCalendarType).getYear()) {
-				// Days before 0001-01-01 or after 9999-12-31 should not be rendered.
-				visibleDays.push(tempDate);
-			}
-			oDay.setDate(oDay.getDate() + 1);
-		}
-
-		return visibleDays;
+		return firstDay;
 	}
 
 	_getFirstDayOfWeek() {
