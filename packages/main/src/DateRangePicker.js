@@ -102,20 +102,20 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	get _effectiveTimestamp() {
+	get _calendarSelectionMode() {
+		return "Range";
+	}
+
+	/**
+	 * @override
+	 */
+	get _calendarTimestamp() {
 		if (this.value && this._checkValueValidity(this.value)) {
 			const dateStrings = this._splitValueByDelimiter(this.value);
 			return this.getFormat().parse(dateStrings[0], true).getTime() / 1000;
 		}
 
 		return getRoundedTimestamp();
-	}
-
-	/**
-	 * @override
-	 */
-	get _calendarSelectionMode() {
-		return "Range";
 	}
 
 	/**

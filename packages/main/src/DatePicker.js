@@ -339,18 +339,6 @@ class DatePicker extends PickerBase {
 		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
 	}
 
-	/**
-	 * @override
-	 * @protected
-	 */
-	get _effectiveTimestamp() {
-		if (this.isValid(this.value)) {
-			return this.getFormat().parse(this.value, true).getTime() / 1000;
-		}
-
-		return getRoundedTimestamp();
-	}
-
 	constructor() {
 		super();
 
@@ -398,6 +386,20 @@ class DatePicker extends PickerBase {
 	}
 
 	/**
+	 * @protected
+	 */
+	get _calendarTimestamp() {
+		let millisecondsUTC;
+		if (this.isValid(this.value)) {
+			millisecondsUTC =  this.getFormat().parse(this.value, true).getTime();
+		} else {
+			millisecondsUTC = new Date().getTime();
+		}
+
+		return getRoundedTimestamp(millisecondsUTC);
+	}
+
+	/**
 	 * Used to convert the "value" of the datepicker to the calendar as "selectedDates"
 	 * @protected
 	 */
@@ -411,13 +413,6 @@ class DatePicker extends PickerBase {
 		}
 
 		return [];
-	}
-
-	/**
-	 * @protected
-	 */
-	get _calendarTimestamp() {
-		return getRoundedTimestamp(this._effectiveTimestamp * 1000);
 	}
 
 	_onkeydown(event) {

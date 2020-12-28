@@ -89,6 +89,14 @@ const metadata = {
 		_hoursCollapsed: {
 			type: Boolean,
 		},
+
+		/**
+		 * Selected, but not yet confirmed date/time
+		 * @private
+		 */
+		_calendarPreview: {
+			type: Object,
+		}
 	},
 };
 
@@ -295,11 +303,11 @@ class DateTimePicker extends DatePicker {
 		return this.normalizePattern(this.formatPattern);
 	}
 
-	get _calTimestamp() {
+	get _effectiveCalendarTimestamp() {
 		return this._calendarPreview ? this._calendarPreview.timestamp : this._calendarTimestamp;
 	}
 
-	get _calDates() {
+	get _effectiveCalendarSelectedDates() {
 		return this._calendarPreview ? this._calendarPreview.selectedDates : this._calendarSelectedDates;
 	}
 
@@ -563,7 +571,7 @@ class DateTimePicker extends DatePicker {
 		// the date set in the calendar
 		const currentCalendarValue = this.getFormat().format(
 			new Date(CalendarDate.fromTimestamp(
-				this._calTimestamp * 1000,
+				this._effectiveCalendarTimestamp * 1000,
 				this._primaryCalendarType
 			).valueOf()),
 			true

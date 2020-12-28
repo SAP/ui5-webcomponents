@@ -9,7 +9,6 @@ import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
-import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 
 /**
  * @public
@@ -101,44 +100,12 @@ class PickerBase extends UI5Element {
 		return this.maxDate ? this._getCalendarDateFromString(this.maxDate) : getMaxCalendarDate(this._primaryCalendarType);
 	}
 
-	/**
-	 * @abstract
-	 * @protected
-	 */
-	get _effectiveTimestamp() {
-		return undefined;
-	}
-
-	get _timestamp() {
-		let timestamp = this._effectiveTimestamp !== undefined ? this._effectiveTimestamp : getRoundedTimestamp();
-		if (timestamp < this._minTimestamp || timestamp > this._maxTimestamp) {
-			timestamp = this._minTimestamp;
-		}
-		return timestamp;
-	}
-
-	get _localDate() {
-		return new Date(this._timestamp * 1000);
-	}
-
-	get _calendarDate() {
-		return CalendarDate.fromTimestamp(this._localDate.getTime(), this._primaryCalendarType);
-	}
-
 	get _formatPattern() {
 		return this.formatPattern || "medium"; // get from config
 	}
 
 	get _isPattern() {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
-	}
-
-	get _minTimestamp() {
-		return this._minDate.valueOf() / 1000;
-	}
-
-	get _maxTimestamp() {
-		return this._maxDate.valueOf() / 1000;
 	}
 
 	_getCalendarDateFromString(value) {

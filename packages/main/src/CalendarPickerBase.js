@@ -1,5 +1,7 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
+import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 import PickerBase from "./PickerBase.js";
 
 /**
@@ -45,12 +47,28 @@ class CalendarPickerBase extends PickerBase {
 		return metadata;
 	}
 
-	/**
-	 * @override
-	 * @protected
-	 */
-	get _effectiveTimestamp() {
-		return this.timestamp;
+	get _minTimestamp() {
+		return this._minDate.valueOf() / 1000;
+	}
+
+	get _maxTimestamp() {
+		return this._maxDate.valueOf() / 1000;
+	}
+
+	get _timestamp() {
+		let timestamp = this.timestamp !== undefined ? this.timestamp : getRoundedTimestamp();
+		if (timestamp < this._minTimestamp || timestamp > this._maxTimestamp) {
+			timestamp = this._minTimestamp;
+		}
+		return timestamp;
+	}
+
+	get _localDate() {
+		return new Date(this._timestamp * 1000);
+	}
+
+	get _calendarDate() {
+		return CalendarDate.fromTimestamp(this._localDate.getTime(), this._primaryCalendarType);
 	}
 
 	/**
