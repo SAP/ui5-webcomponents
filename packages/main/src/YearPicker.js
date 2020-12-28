@@ -1,4 +1,3 @@
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import {
 	isEnter,
@@ -17,7 +16,7 @@ import {
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
-import CalendarPickerBase from "./CalendarPickerBase.js";
+import CalendarPart from "./CalendarPart.js";
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
 import styles from "./generated/themes/YearPicker.css.js";
 
@@ -27,26 +26,6 @@ import styles from "./generated/themes/YearPicker.css.js";
 const metadata = {
 	tag: "ui5-yearpicker",
 	properties: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
-		/**
-		 * The timestamp of the currently focused date
-		 * @type {Integer}
-		 * @public
-		 */
-		timestamp: {
-			type: Integer,
-		},
-
-		/**
-		 * An array of UTC timestamps representing the selected dates.
-		 * @type {Array}
-		 * @public
-		 */
-		selectedDates: {
-			type: Integer,
-			multiple: true,
-			compareValues: true,
-		},
-
 		_years: {
 			type: Object,
 			multiple: true,
@@ -85,11 +64,11 @@ const ROW_SIZE = 4; // Years per row (5 rows of 4 years each)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.YearPicker
- * @extends sap.ui.webcomponents.main.CalendarPickerBase
+ * @extends sap.ui.webcomponents.main.CalendarPart
  * @tagname ui5-yearpicker
  * @public
  */
-class YearPicker extends CalendarPickerBase {
+class YearPicker extends CalendarPart {
 	static get metadata() {
 		return metadata;
 	}

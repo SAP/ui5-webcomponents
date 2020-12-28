@@ -2,7 +2,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
-import PickerBase from "./PickerBase.js";
+import DateComponentBase from "./DateComponentBase.js";
 
 /**
  * @public
@@ -10,7 +10,8 @@ import PickerBase from "./PickerBase.js";
 const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
-		 * The timestamp of the currently focused date
+		 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
+		 * <b>Node:</b> Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
 		 * @type {Integer}
 		 * @public
 		 */
@@ -19,7 +20,7 @@ const metadata = {
 		},
 
 		/**
-		 * An array of UTC timestamps representing the selected dates.
+		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 		 * @type {Array}
 		 * @public
 		 */
@@ -34,15 +35,17 @@ const metadata = {
 /**
  * @class
  *
- * Abstract base class for Calendar, DayPicker, MonthPicker and YearPicker that adds support for the following properties: timestamp, selectedDates
+ * Abstract base class for Calendar, DayPicker, MonthPicker and YearPicker that adds support for:
+ *  - common properties (timestamp, selectedDates): declarations and methods that operate on them
+ *  - other common code
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.CalendarPickerBase
- * @extends sap.ui.webcomponents.main.PickerBase
+ * @alias sap.ui.webcomponents.main.CalendarPart
+ * @extends sap.ui.webcomponents.main.DateComponentBase
  * @public
  */
-class CalendarPickerBase extends PickerBase {
+class CalendarPart extends DateComponentBase {
 	static get metadata() {
 		return metadata;
 	}
@@ -55,6 +58,10 @@ class CalendarPickerBase extends PickerBase {
 		return this._maxDate.valueOf() / 1000;
 	}
 
+	/**
+	 * Returns the effective timestamp to be used by the respective calendar part
+	 * @protected
+	 */
 	get _timestamp() {
 		let timestamp = this.timestamp !== undefined ? this.timestamp : getRoundedTimestamp();
 		if (timestamp < this._minTimestamp || timestamp > this._maxTimestamp) {
@@ -67,12 +74,16 @@ class CalendarPickerBase extends PickerBase {
 		return new Date(this._timestamp * 1000);
 	}
 
+	/**
+	 * Returns a CalendarDate instance, representing the _timestamp getter - this date is central to all components' rendering logic
+	 * @protected
+	 */
 	get _calendarDate() {
 		return CalendarDate.fromTimestamp(this._localDate.getTime(), this._primaryCalendarType);
 	}
 
 	/**
-	 * Safely update a timestamp by enforcing limits
+	 * Change a timestamp and enforce limits
 	 *
 	 * @param timestamp
 	 * @protected
@@ -92,7 +103,7 @@ class CalendarPickerBase extends PickerBase {
 	}
 
 	/**
-	 * Safely modify a stamp by a certain amount of days/months/years by enforcing limits
+	 * Modify a timestamp by a certain amount of days/months/years and enforce limits
 	 * @param amount
 	 * @param unit
 	 * @protected
@@ -108,4 +119,4 @@ class CalendarPickerBase extends PickerBase {
 	}
 }
 
-export default CalendarPickerBase;
+export default CalendarPart;

@@ -25,7 +25,7 @@ import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDat
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
-import CalendarPickerBase from "./CalendarPickerBase.js";
+import CalendarPart from "./CalendarPart.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 import {
@@ -135,11 +135,11 @@ const DAYS_IN_WEEK = 7;
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DayPicker
- * @extends sap.ui.webcomponents.main.CalendarPickerBase
+ * @extends sap.ui.webcomponents.main.CalendarPart
  * @tagname ui5-daypicker
  * @public
  */
-class DayPicker extends CalendarPickerBase {
+class DayPicker extends CalendarPart {
 	static get metadata() {
 		return metadata;
 	}

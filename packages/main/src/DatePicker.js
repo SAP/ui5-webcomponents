@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -24,7 +23,7 @@ import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
-import PickerBase from "./PickerBase.js";
+import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -48,7 +47,6 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 const metadata = {
 	tag: "ui5-date-picker",
 	altTag: "ui5-datepicker",
-	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
@@ -310,17 +308,13 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DatePicker
- * @extends sap.ui.webcomponents.main.PickerBase
+ * @extends sap.ui.webcomponents.main.DateComponentBase
  * @tagname ui5-date-picker
  * @public
  */
-class DatePicker extends PickerBase {
+class DatePicker extends DateComponentBase {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 
 	static get template() {
@@ -378,6 +372,7 @@ class DatePicker extends PickerBase {
 	}
 
 	/**
+	 * Override in derivatives to change calendar selection mode
 	 * @returns {string}
 	 * @protected
 	 */
@@ -386,12 +381,14 @@ class DatePicker extends PickerBase {
 	}
 
 	/**
+	 * Used to provide a timestamp to the Calendar based on the component's state
+	 * Override in derivatives to provide the calendar a timestamp based on their properties
 	 * @protected
 	 */
 	get _calendarTimestamp() {
 		let millisecondsUTC;
 		if (this.isValid(this.value)) {
-			millisecondsUTC =  this.getFormat().parse(this.value, true).getTime();
+			millisecondsUTC = this.getFormat().parse(this.value, true).getTime();
 		} else {
 			millisecondsUTC = new Date().getTime();
 		}
@@ -400,7 +397,8 @@ class DatePicker extends PickerBase {
 	}
 
 	/**
-	 * Used to convert the "value" of the datepicker to the calendar as "selectedDates"
+	 * Used to provide selectedDates to the calendar based on the component's state
+	 * Override in derivatives to provide different rules for setting the calendar's selected dates
 	 * @protected
 	 */
 	get _calendarSelectedDates() {

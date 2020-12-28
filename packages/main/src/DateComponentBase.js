@@ -14,6 +14,7 @@ import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-local
  * @public
  */
 const metadata = {
+	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
 		 * Sets a calendar type used for display.
@@ -65,15 +66,19 @@ const metadata = {
 /**
  * @class
  *
- * Abstract class for that provides support for properties, common to many date-related components: primaryCalendar, minDate, maxDate and formatPattern
+ * Abstract class that provides common functionality for date-related components (day picker, month picker, year picker, calendar, date picker, date range picker, date time picker)
+ * This includes:
+ *  - "languageAware: true" metadata setting, CLDR fetch and i18n initialization
+ *  - common properties (primaryCalendar, minDate, maxDate and formatPattern) declaration and methods that operate on them
+ *  - additional common methods
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.PickerBase
+ * @alias sap.ui.webcomponents.main.DateComponentBase
  * @extends sap.ui.webcomponents.base.UI5Element
  * @public
  */
-class PickerBase extends UI5Element {
+class DateComponentBase extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -146,4 +151,4 @@ class PickerBase extends UI5Element {
 	}
 }
 
-export default PickerBase;
+export default DateComponentBase;

@@ -43,12 +43,6 @@ const metadata = {
 			type: Integer,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.DateRangePicker.prototype */ {
-		//
-	},
-	events: /** @lends sap.ui.webcomponents.main.DateRangePicker.prototype */ {
-		//
-	},
 };
 
 /**
@@ -100,6 +94,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
+	 * Required by DatePicker.js
 	 * @override
 	 */
 	get _calendarSelectionMode() {
@@ -107,6 +102,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
+	 * Required by DatePicker.js
 	 * @override
 	 */
 	get _calendarTimestamp() {
@@ -119,6 +115,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
+	 * Required by DatePicker.js
 	 * @override
 	 */
 	get _calendarSelectedDates() {
@@ -266,6 +263,9 @@ class DateRangePicker extends DatePicker {
 		}
 	}
 
+	/**
+	 * @override
+	 */
 	async _modifyDateValue(amount, unit) {
 		const emptyValue = this.value === "";
 		const isValid = emptyValue || this._checkValueValidity(this.value);
