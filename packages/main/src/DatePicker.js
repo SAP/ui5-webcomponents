@@ -1,15 +1,9 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
-import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
@@ -29,6 +23,7 @@ import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
+import PickerBase from "./PickerBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -85,63 +80,6 @@ const metadata = {
 		valueState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
-		},
-
-		/**
-		 * Determines the format, displayed in the input field.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		formatPattern: {
-			type: String,
-		},
-
-		/**
-		 * Determines the minimum date available for selection.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @since 1.0.0-rc.6
-		 * @public
-		 */
-		minDate: {
-			type: String,
-		},
-
-		/**
-		 * Determines the maximum date available for selection.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @since 1.0.0-rc.6
-		 * @public
-		 */
-		maxDate: {
-			type: String,
-		},
-
-		/**
-		 * Determines the calendar type.
-		 * The input value is formated according to the calendar type
-		 * and the picker shows the months and years from the specified calendar.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Gregorian</code></li>
-		 * <li><code>Islamic</code></li>
-		 * <li><code>Japanese</code></li>
-		 * <li><code>Buddhist</code></li>
-		 * <li><code>Persian</code></li>
-		 * </ul>
-		 *
-		 * @type {CalendarType}
-		 * @defaultvalue "Gregorian"
-		 * @public
-		 */
-		primaryCalendarType: {
-			type: CalendarType,
 		},
 
 		/**
@@ -371,11 +309,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DatePicker
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends sap.ui.webcomponents.main.PickerBase
  * @tagname ui5-date-picker
  * @public
  */
-class DatePicker extends UI5Element {
+class DatePicker extends PickerBase {
 	static get metadata() {
 		return metadata;
 	}
@@ -398,6 +336,14 @@ class DatePicker extends UI5Element {
 
 	static get staticAreaStyles() {
 		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
+	}
+
+	/**
+	 * @override
+	 * @protected
+	 */
+	get _effectiveTimestamp() {
+		return this.getFormat().parse(this.validValue, true).getTime() / 1000;
 	}
 
 	constructor() {
@@ -468,20 +414,6 @@ class DatePicker extends UI5Element {
 	 */
 	get _calendarTimestamp() {
 		return this._calendarDate.valueOf() / 1000;
-	}
-
-	_getCalendarDateFromString(value) {
-		const jsDate = this.getFormat().parse(value);
-		if (jsDate) {
-			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
-		}
-	}
-
-	_getTimeStampFromString(value) {
-		const calDate = this._getCalendarDateFromString(value);
-		if (calDate) {
-			return calDate.toUTCJSDate().valueOf();
-		}
 	}
 
 	_onkeydown(event) {
@@ -667,31 +599,6 @@ class DatePicker extends UI5Element {
 		return this.getFormat().format(new Date());
 	}
 
-	/**
-	 * @protected
-	 */
-	get _calendarDate() {
-		const millisecondsUTC = this.getFormat().parse(this.validValue, true).getTime();
-		const oCalDate = CalendarDate.fromTimestamp(
-			millisecondsUTC - (millisecondsUTC % (24 * 60 * 60 * 1000)),
-			this._primaryCalendarType
-		);
-		return oCalDate;
-	}
-
-	get _primaryCalendarType() {
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
-	}
-
-	get _formatPattern() {
-		return this.formatPattern || "medium"; // get from config
-	}
-
-	get _isPattern() {
-		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
-	}
-
 	get _displayFormat() {
 		return this.getFormat().oFormatOptions.pattern;
 	}
@@ -720,22 +627,6 @@ class DatePicker extends UI5Element {
 		return isIE();
 	}
 
-	getFormat() {
-		let dateFormat;
-		if (this._isPattern) {
-			dateFormat = DateFormat.getInstance({
-				pattern: this._formatPattern,
-				calendarType: this._primaryCalendarType,
-			});
-		} else {
-			dateFormat = DateFormat.getInstance({
-				style: this._formatPattern,
-				calendarType: this._primaryCalendarType,
-			});
-		}
-		return dateFormat;
-	}
-
 	get accInfo() {
 		return {
 			"ariaDescribedBy": `${this._id}-date`,
@@ -747,14 +638,6 @@ class DatePicker extends UI5Element {
 			"ariaDescription": this.dateAriaDescription,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
-	}
-
-	get _minDate() {
-		return this.minDate ? this._getCalendarDateFromString(this.minDate) : getMinCalendarDate(this._primaryCalendarType);
-	}
-
-	get _maxDate() {
-		return this.maxDate ? this._getCalendarDateFromString(this.maxDate) : getMaxCalendarDate(this._primaryCalendarType);
 	}
 
 	get openIconTitle() {

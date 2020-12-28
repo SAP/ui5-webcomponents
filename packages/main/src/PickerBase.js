@@ -5,11 +5,9 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 
 /**
@@ -17,15 +15,6 @@ import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-local
  */
 const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
-		/**
-		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
-		 * @type {Integer}
-		 * @public
-		 */
-		timestamp: {
-			type: Integer,
-		},
-
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
@@ -70,32 +59,18 @@ const metadata = {
 		formatPattern: {
 			type: String,
 		},
-
-		/**
-		 * Defines the selected dates as UTC timestamps.
-		 * @type {Array}
-		 * @public
-		 */
-		selectedDates: {
-			type: Integer,
-			multiple: true,
-			compareValues: true,
-		},
 	},
 };
 
 /**
- * Base picker component.
- *
  * @class
  *
- * Abstract class for Calendar, DayPicker, MonthPicker and YearPicker
+ * Abstract class for that provides support for properties, common to many date-related components: primaryCalendar, minDate, maxDate and formatPattern
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.PickerBase
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-monthpicker
  * @public
  */
 class PickerBase extends UI5Element {
@@ -125,8 +100,16 @@ class PickerBase extends UI5Element {
 		return this.maxDate ? this._getCalendarDateFromString(this.maxDate) : getMaxCalendarDate(this._primaryCalendarType);
 	}
 
+	/**
+	 * @abstract
+	 * @protected
+	 */
+	get _effectiveTimestamp() {
+		return undefined;
+	}
+
 	get _timestamp() {
-		let timestamp = this.timestamp !== undefined ? this.timestamp : Math.floor(new Date().getTime() / 1000);
+		let timestamp = this._effectiveTimestamp !== undefined ? this._effectiveTimestamp : Math.floor(new Date().getTime() / 1000);
 		if (timestamp < this._minTimestamp || timestamp > this._maxTimestamp) {
 			timestamp = this._minTimestamp;
 		}
@@ -185,42 +168,6 @@ class PickerBase extends UI5Element {
 			});
 		}
 		return dateFormat;
-	}
-
-	/**
-	 * Safely update a timestamp by enforcing limits
-	 *
-	 * @param timestamp
-	 * @protected
-	 */
-	_safelySetTimestamp(timestamp) {
-		const min = this._minDate.valueOf() / 1000;
-		const max = this._maxDate.valueOf() / 1000;
-
-		if (timestamp < min) {
-			timestamp = min;
-		}
-		if (timestamp > max) {
-			timestamp = max;
-		}
-
-		this.timestamp = timestamp;
-	}
-
-	/**
-	 * Safely modify a stamp by a certain amount of days/months/years by enforcing limits
-	 * @param amount
-	 * @param unit
-	 * @protected
-	 */
-	_safelyModifyTimestampBy(amount, unit) {
-		const newDate = modifyDateBy(this._calendarDate, amount, unit, this._primaryCalendarType);
-		this._safelySetTimestamp(newDate.valueOf() / 1000);
-	}
-
-	_getTimestampFromDom(domNode) {
-		const oMonthDomRef = domNode.getAttribute("data-sap-timestamp");
-		return parseInt(oMonthDomRef);
 	}
 
 	static async onDefine() {

@@ -1,9 +1,10 @@
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import {
 	isF4,
 	isF4Shift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import PickerBase from "./PickerBase.js";
+import CalendarPickerBase from "./CalendarPickerBase.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
@@ -25,6 +26,26 @@ import calendarCSS from "./generated/themes/Calendar.css.js";
 const metadata = {
 	tag: "ui5-calendar",
 	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
+		/**
+		 * The timestamp of the currently focused date
+		 * @type {Integer}
+		 * @public
+		 */
+		timestamp: {
+			type: Integer,
+		},
+
+		/**
+		 * An array of UTC timestamps representing the selected dates.
+		 * @type {Array}
+		 * @public
+		 */
+		selectedDates: {
+			type: Integer,
+			multiple: true,
+			compareValues: true,
+		},
+
 		/**
 		 * Defines the type of selection used in the calendar component.
 		 * Accepted property values are:<br>
@@ -157,12 +178,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Calendar
- * @extends sap.ui.webcomponents.main.PickerBase
+ * @extends sap.ui.webcomponents.main.CalendarPickerBase
  * @tagname ui5-calendar
  * @public
  * @since 1.0.0-rc.11
  */
-class Calendar extends PickerBase {
+class Calendar extends CalendarPickerBase {
 	static get metadata() {
 		return metadata;
 	}

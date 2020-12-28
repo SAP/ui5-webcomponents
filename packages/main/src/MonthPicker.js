@@ -1,3 +1,4 @@
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import {
@@ -15,7 +16,7 @@ import {
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import PickerBase from "./PickerBase.js";
+import CalendarPickerBase from "./CalendarPickerBase.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 import styles from "./generated/themes/MonthPicker.css.js";
 /**
@@ -24,6 +25,26 @@ import styles from "./generated/themes/MonthPicker.css.js";
 const metadata = {
 	tag: "ui5-monthpicker",
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
+		/**
+		 * The timestamp of the currently focused date
+		 * @type {Integer}
+		 * @public
+		 */
+		timestamp: {
+			type: Integer,
+		},
+
+		/**
+		 * An array of UTC timestamps representing the selected dates.
+		 * @type {Array}
+		 * @public
+		 */
+		selectedDates: {
+			type: Integer,
+			multiple: true,
+			compareValues: true,
+		},
+
 		_months: {
 			type: Object,
 			multiple: true,
@@ -42,7 +63,7 @@ const metadata = {
 		 */
 		change: {},
 		/**
-		 * Fired when the user navigates with the keyboard.
+		 * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
 		 * @since 1.0.0-rc.9
 		 * @public
 		 * @event
@@ -64,11 +85,11 @@ const ROW_SIZE = 3; // Months per row (4 rows of 3 months each)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MonthPicker
- * @extends sap.ui.webcomponents.main.PickerBase
+ * @extends sap.ui.webcomponents.main.CalendarPickerBase
  * @tagname ui5-monthpicker
  * @public
  */
-class MonthPicker extends PickerBase {
+class MonthPicker extends CalendarPickerBase {
 	static get metadata() {
 		return metadata;
 	}

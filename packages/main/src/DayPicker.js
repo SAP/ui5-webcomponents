@@ -25,7 +25,7 @@ import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDat
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
-import PickerBase from "./PickerBase.js";
+import CalendarPickerBase from "./CalendarPickerBase.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 import {
@@ -109,13 +109,13 @@ const metadata = {
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
-		 * Fired when the user selects a new Date on the Web Component.
+		 * Fired when the selected date(s) change
 		 * @public
 		 * @event
 		 */
 		change: {},
 		/**
-		 * Fired when month, year has changed due to item navigation.
+		 * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
 		 * @public
 		 * @event
 		 */
@@ -135,11 +135,11 @@ const DAYS_IN_WEEK = 7;
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DayPicker
- * @extends sap.ui.webcomponents.main.PickerBase
+ * @extends sap.ui.webcomponents.main.CalendarPickerBase
  * @tagname ui5-daypicker
  * @public
  */
-class DayPicker extends PickerBase {
+class DayPicker extends CalendarPickerBase {
 	static get metadata() {
 		return metadata;
 	}

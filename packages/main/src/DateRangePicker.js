@@ -101,6 +101,16 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
+	get _effectiveTimestamp() {
+		const dateStrings = this._splitValueByDelimiter(this.value),
+			value = Boolean(this.value) && this._checkValueValidity(this.value) ? dateStrings[0] : this.getFormat().format(new Date()),
+			millisecondsUTCFirstDate = value ? this.getFormat().parse(value, true).getTime() : this.getFormat().parse(this.validValue, true).getTime();
+		return millisecondsUTCFirstDate / 1000;
+	}
+
+	/**
+	 * @override
+	 */
 	get _calendarSelectionMode() {
 		return "Range";
 	}
@@ -164,21 +174,6 @@ class DateRangePicker extends DatePicker {
 
 		this.value = this._formatValue(firstDate, lastDate);
 		this._prevValue = this.value;
-	}
-
-	/**
-	 * @override
-	 */
-	get _calendarDate() {
-		const dateStrings = this._splitValueByDelimiter(this.value),
-			value = Boolean(this.value) && this._checkValueValidity(this.value) ? dateStrings[0] : this.getFormat().format(new Date()),
-			millisecondsUTCFirstDate = value ? this.getFormat().parse(value, true).getTime() : this.getFormat().parse(this.validValue, true).getTime(),
-			oCalDateFirst = CalendarDate.fromTimestamp(
-				millisecondsUTCFirstDate - (millisecondsUTCFirstDate % (24 * 60 * 60 * 1000)),
-				this._primaryCalendarType
-			);
-
-		return oCalDateFirst;
 	}
 
 	/**
