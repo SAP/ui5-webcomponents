@@ -3,6 +3,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
+import getTodayTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayTimestamp.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
@@ -102,10 +103,12 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	get _effectiveTimestamp() {
-		const dateStrings = this._splitValueByDelimiter(this.value),
-			value = Boolean(this.value) && this._checkValueValidity(this.value) ? dateStrings[0] : this.getFormat().format(new Date()),
-			millisecondsUTCFirstDate = value ? this.getFormat().parse(value, true).getTime() : this.getFormat().parse(this.validValue, true).getTime();
-		return millisecondsUTCFirstDate / 1000;
+		if (this.value && this._checkValueValidity(this.value)) {
+			const dateStrings = this._splitValueByDelimiter(this.value);
+			return this.getFormat().parse(dateStrings[0], true).getTime() / 1000;
+		}
+
+		return getTodayTimestamp();
 	}
 
 	/**

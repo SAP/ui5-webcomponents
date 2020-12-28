@@ -4,6 +4,7 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
+import getTodayTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
@@ -343,7 +344,11 @@ class DatePicker extends PickerBase {
 	 * @protected
 	 */
 	get _effectiveTimestamp() {
-		return this.getFormat().parse(this.validValue, true).getTime() / 1000;
+		if (this.isValid(this.value)) {
+			return this.getFormat().parse(this.value, true).getTime() / 1000;
+		}
+
+		return getTodayTimestamp();
 	}
 
 	constructor() {
@@ -590,13 +595,6 @@ class DatePicker extends PickerBase {
 		}
 
 		return this.getFormat().format(this.getFormat().parse(value));
-	}
-
-	get validValue() {
-		if (this.isValid(this.value)) {
-			return this.value;
-		}
-		return this.getFormat().format(new Date());
 	}
 
 	get _displayFormat() {
