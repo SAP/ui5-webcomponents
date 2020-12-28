@@ -34,7 +34,6 @@ import {
 	DAY_PICKER_TODAY,
 } from "./generated/i18n/i18n-defaults.js";
 
-// Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
 
 /**
@@ -358,7 +357,7 @@ class DayPicker extends PickerBase {
 			return;
 		}
 
-		const timestamp = this.getTimestampFromDom(target);
+		const timestamp = this._getTimestampFromDom(target);
 
 		this._safelySetTimestamp(timestamp);
 		this._updateSecondTimestamp();
@@ -481,7 +480,7 @@ class DayPicker extends PickerBase {
 	_onmouseover(event) {
 		const hoveredItem = event.target.closest(".ui5-dp-item");
 		if (hoveredItem && this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
-			this._secondTimestamp = this.getTimestampFromDom(hoveredItem);
+			this._secondTimestamp = this._getTimestampFromDom(hoveredItem);
 		}
 	}
 

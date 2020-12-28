@@ -15,11 +15,9 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 import PickerBase from "./PickerBase.js";
-import { getMaxCalendarDate } from "./util/DateTime.js";
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
-
-// Styles
 import styles from "./generated/themes/YearPicker.css.js";
 
 /**
@@ -267,7 +265,7 @@ class YearPicker extends PickerBase {
 	_selectYear(event) {
 		event.preventDefault();
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(event.target);
+			const timestamp = this._getTimestampFromDom(event.target);
 			this._safelySetTimestamp(timestamp);
 			this.fireEvent("change", { timestamp: this.timestamp });
 		}

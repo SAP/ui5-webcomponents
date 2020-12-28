@@ -17,8 +17,6 @@ import {
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import PickerBase from "./PickerBase.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
-
-// Styles
 import styles from "./generated/themes/MonthPicker.css.js";
 /**
  * @public
@@ -229,7 +227,7 @@ class MonthPicker extends PickerBase {
 	_selectMonth(event) {
 		event.preventDefault();
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(event.target);
+			const timestamp = this._getTimestampFromDom(event.target);
 			this._safelySetTimestamp(timestamp);
 			this.fireEvent("change", { timestamp: this.timestamp });
 		}

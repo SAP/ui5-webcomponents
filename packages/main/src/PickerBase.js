@@ -10,7 +10,7 @@ import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
-import { getMinCalendarDate, getMaxCalendarDate } from "./util/DateTime.js";
+import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 
 /**
  * @public
@@ -187,11 +187,6 @@ class PickerBase extends UI5Element {
 		return dateFormat;
 	}
 
-	getTimestampFromDom(domNode) {
-		const oMonthDomRef = domNode.getAttribute("data-sap-timestamp");
-		return parseInt(oMonthDomRef);
-	}
-
 	/**
 	 * Safely update a timestamp by enforcing limits
 	 *
@@ -221,6 +216,11 @@ class PickerBase extends UI5Element {
 	_safelyModifyTimestampBy(amount, unit) {
 		const newDate = modifyDateBy(this._calendarDate, amount, unit, this._primaryCalendarType);
 		this._safelySetTimestamp(newDate.valueOf() / 1000);
+	}
+
+	_getTimestampFromDom(domNode) {
+		const oMonthDomRef = domNode.getAttribute("data-sap-timestamp");
+		return parseInt(oMonthDomRef);
 	}
 
 	static async onDefine() {
