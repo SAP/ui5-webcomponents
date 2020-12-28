@@ -494,7 +494,7 @@ class DatePicker extends DateComponentBase {
 
 	/**
 	 * The user changed the input and focused out
-	 * @private
+	 * @protected
 	 */
 	async _handleInputChange() {
 		let nextValue = await this._getInput().getInputValue();
@@ -528,6 +528,9 @@ class DatePicker extends DateComponentBase {
 		this.fireEvent("input", { value: nextValue, valid: isValid });
 	}
 
+	/**
+	 * @protected
+	 */
 	_checkValueValidity(value) {
 		return this.isValid(value) && this.isInValidRange(this._getTimeStampFromString(value));
 	}
@@ -595,6 +598,9 @@ class DatePicker extends DateComponentBase {
 		return this.getFormat().oFormatOptions.pattern;
 	}
 
+	/**
+	 * @protected
+	 */
 	get _placeholder() {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
 	}

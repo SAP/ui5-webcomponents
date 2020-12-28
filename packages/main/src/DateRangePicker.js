@@ -201,10 +201,16 @@ class DateRangePicker extends DatePicker {
 		return new Date(dateValue.getUTCFullYear(), dateValue.getUTCMonth(), dateValue.getUTCDate(), dateValue.getUTCHours());
 	}
 
+	/**
+	 * @override
+	 */
 	get _placeholder() {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat.concat(" ", this.delimiter, " ", this._displayFormat);
 	}
 
+	/**
+	 * @override
+	 */
 	async _handleInputChange() {
 		const nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
@@ -222,22 +228,34 @@ class DateRangePicker extends DatePicker {
 		this.fireEvent("value-changed", { value: nextValue, valid: isValid });
 	}
 
+	/**
+	 * @override
+	 */
 	_checkValueValidity(value) {
 		return this.isValid(value) && this.isInValidRange(value);
 	}
 
+	/**
+	 * @override
+	 */
 	isValid(value) {
 		return this._splitValueByDelimiter(value)
 			.map(dateString => super.isValid(dateString))
 			.every(valid => valid);
 	}
 
+	/**
+	 * @override
+	 */
 	isInValidRange(value) {
 		return this._splitValueByDelimiter(value)
 			.map(dateString => super.isInValidRange(this._getTimeStampFromString(dateString)))
 			.every(valid => valid);
 	}
 
+	/**
+	 * @override
+	 */
 	onSelectedDatesChange(event) {
 		const selectedDates = event.detail.dates;
 		if (selectedDates.length === 2) {
