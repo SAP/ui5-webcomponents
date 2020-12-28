@@ -205,12 +205,6 @@ class DateRangePicker extends DatePicker {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat.concat(" ", this.delimiter, " ", this._displayFormat);
 	}
 
-	async getDayPicker() {
-		this.responsivePopover = await this._respPopover();
-		const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
-		return calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
-	}
-
 	async _handleInputChange() {
 		const nextValue = await this._getInput().getInputValue();
 		const emptyValue = nextValue === "";
@@ -297,7 +291,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
-	 * This method is used in the derived classes
+	 * @override
 	 */
 	async _handleEnterPressed() {
 		const innerInput = this.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
@@ -310,6 +304,9 @@ class DateRangePicker extends DatePicker {
 		setCaretPosition(innerInput, caretPos);
 	}
 
+	/**
+	 * @override
+	 */
 	_onfocusout() {
 		this._setValue(this.value);
 	}

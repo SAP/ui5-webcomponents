@@ -455,12 +455,14 @@ class DatePicker extends DateComponentBase {
 	}
 
 	/**
-	 * This method is used in the derived classes
+	 * @abstract
+	 * @protected
 	 */
 	_handleEnterPressed() {}
 
 	/**
-	 * This method is used in the derived classes
+	 * @abstract
+	 * @protected
 	 */
 	_onfocusout() {}
 
