@@ -417,7 +417,7 @@ class DatePicker extends PickerBase {
 	 * @protected
 	 */
 	get _calendarTimestamp() {
-		return getRoundedTimestamp(this._effectiveTimestamp);
+		return getRoundedTimestamp(this._effectiveTimestamp * 1000);
 	}
 
 	_onkeydown(event) {
