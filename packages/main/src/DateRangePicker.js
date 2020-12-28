@@ -1,6 +1,7 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
@@ -276,7 +277,7 @@ class DateRangePicker extends DatePicker {
 
 		const dates = this._splitValueByDelimiter(this.value);
 		const innerInput = this.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
-		const caretPos = this._getCaretPosition(innerInput);
+		const caretPos = getCaretPosition(innerInput);
 		const first = dates[0] && caretPos <= dates[0].trim().length + 1;
 		const last = dates[1] && (caretPos >= this.value.length - dates[1].trim().length - 1 && caretPos <= this.value.length);
 		let firstDate = this.getFormat().parse(dates[0]);
@@ -292,7 +293,7 @@ class DateRangePicker extends DatePicker {
 
 		await RenderScheduler.whenFinished();
 		// Return the caret on the previous position after rendering
-		this._setCaretPosition(innerInput, caretPos);
+		setCaretPosition(innerInput, caretPos);
 	}
 
 	/**
@@ -300,58 +301,17 @@ class DateRangePicker extends DatePicker {
 	 */
 	async _handleEnterPressed() {
 		const innerInput = this.shadowRoot.querySelector("ui5-input").shadowRoot.querySelector(".ui5-input-inner");
-		const caretPos = this._getCaretPosition(innerInput);
+		const caretPos = getCaretPosition(innerInput);
 
 		this._setValue(this.value);
 
 		await RenderScheduler.whenFinished();
 		// Return the caret on the previous position after rendering
-		this._setCaretPosition(innerInput, caretPos);
+		setCaretPosition(innerInput, caretPos);
 	}
 
 	_onfocusout() {
 		this._setValue(this.value);
-	}
-
-	/**
-	* Returns the caret (cursor) position of the specified text field (field).
-	* Return value range is 0-field.value.length.
-	*/
-	_getCaretPosition(field) {
-		// Initialize
-		let caretPos = 0;
-
-		// IE Support
-		if (document.selection) {
-			// Set focus on the element
-			field.focus();
-
-			// To get cursor position, get empty selection range
-			const selection = document.selection.createRange();
-
-			// Move selection start to 0 position
-			selection.moveStart("character", -field.value.length);
-
-			// The caret position is selection length
-			caretPos = selection.text.length;
-		} else if (field.selectionStart || field.selectionStart === "0") { // Firefox support
-			caretPos = field.selectionDirection === "backward" ? field.selectionStart : field.selectionEnd;
-		}
-
-		return caretPos;
-	}
-
-	_setCaretPosition(field, caretPos) {
-		if (field.createTextRange) {
-			const range = field.createTextRange();
-			range.move("character", caretPos);
-			range.select();
-		} else if (field.selectionStart) {
-			field.focus();
-			field.setSelectionRange(caretPos, caretPos);
-		} else {
-			field.focus();
-		}
 	}
 
 	/**
