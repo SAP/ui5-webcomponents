@@ -4,7 +4,7 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
-import getTodayTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayTimestamp.js";
+import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
@@ -348,7 +348,7 @@ class DatePicker extends PickerBase {
 			return this.getFormat().parse(this.value, true).getTime() / 1000;
 		}
 
-		return getTodayTimestamp();
+		return getRoundedTimestamp();
 	}
 
 	constructor() {
@@ -407,8 +407,7 @@ class DatePicker extends PickerBase {
 		}
 
 		if (this._checkValueValidity(this.value)) {
-			const timestamp = this._calendarDate.valueOf() / 1000;
-			return [timestamp];
+			return [this._calendarTimestamp];
 		}
 
 		return [];
@@ -418,7 +417,7 @@ class DatePicker extends PickerBase {
 	 * @protected
 	 */
 	get _calendarTimestamp() {
-		return this._calendarDate.valueOf() / 1000;
+		return getRoundedTimestamp(this._effectiveTimestamp);
 	}
 
 	_onkeydown(event) {

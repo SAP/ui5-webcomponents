@@ -3,7 +3,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
-import getTodayTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayTimestamp.js";
+import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
@@ -108,7 +108,7 @@ class DateRangePicker extends DatePicker {
 			return this.getFormat().parse(dateStrings[0], true).getTime() / 1000;
 		}
 
-		return getTodayTimestamp();
+		return getRoundedTimestamp();
 	}
 
 	/**

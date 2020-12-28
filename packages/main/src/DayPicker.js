@@ -23,6 +23,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
+import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPickerBase from "./CalendarPickerBase.js";
@@ -176,7 +177,7 @@ class DayPicker extends CalendarPickerBase {
 		const nonWorkingDayLabel = this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 		const todayLabel = this.i18nBundle.getText(DAY_PICKER_TODAY);
 		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
-		const todayDate = CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType); // current day date - calculate once
+		const todayDate = CalendarDate.fromTimestamp(getRoundedTimestamp() * 1000, this._primaryCalendarType); // current day date - calculate once
 		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
 		const minDate = this._minDate; // store the _minDate (expensive getter)
 		const maxDate = this._maxDate; // store the _maxDate (expensive getter)
