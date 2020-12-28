@@ -154,7 +154,6 @@ class DayPicker extends PickerBase {
 	}
 
 	onBeforeRendering() {
-		super.onBeforeRendering();
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		this._buildWeeks(localeData);
 		this._buildDayNames(localeData);
@@ -173,28 +172,33 @@ class DayPicker extends PickerBase {
 		this._weeks = [];
 		this._weekNumbers = [];
 
+		const firstDayOfWeek = this._getFirstDayOfWeek();
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
 		const nonWorkingDayLabel = this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 		const todayLabel = this.i18nBundle.getText(DAY_PICKER_TODAY);
-		const tempDate = this._getFirstDay();
+		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
+		const todayDate = CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType); // current day date - calculate once
+		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
+		const minDate = this._minDate; // store the _minDate (expensive getter)
+		const maxDate = this._maxDate; // store the _maxDate (expensive getter)
 
 		let week = [];
 		for (let i = 0; i < DAYS_IN_WEEK * 6; i++) { // always show 6 weeks total, 42 days to avoid jumping
 			const timestamp = tempDate.valueOf() / 1000; // no need to round because CalendarDate does it
 
-			let dayOfTheWeek = tempDate.getDay() - this._getFirstDayOfWeek();
+			let dayOfTheWeek = tempDate.getDay() - firstDayOfWeek;
 			if (dayOfTheWeek < 0) {
 				dayOfTheWeek += DAYS_IN_WEEK;
 			}
 
-			const isFocused = tempDate.getMonth() === this._calendarDate.getMonth() && tempDate.getDate() === this._calendarDate.getDate();
+			const isFocused = tempDate.getMonth() === calendarDate.getMonth() && tempDate.getDate() === calendarDate.getDate();
 			const isSelected = this._isDaySelected(timestamp);
 			const isSelectedBetween = this._isDayInsideSelectionRange(timestamp);
-			const isOtherMonth = tempDate.getMonth() !== this._month;
+			const isOtherMonth = tempDate.getMonth() !== calendarDate.getMonth();
 			const isWeekend = this._isWeekend(tempDate);
-			const isDisabled = this._isOutOfSelectableRange(tempDate);
-			const isToday = tempDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
-			const isFirstDayOfWeek = tempDate.getDay() === this._getFirstDayOfWeek();
+			const isDisabled = tempDate.valueOf() < minDate.valueOf() || tempDate.valueOf() > maxDate.valueOf();
+			const isToday = tempDate.isSame(todayDate);
+			const isFirstDayOfWeek = tempDate.getDay() === firstDayOfWeek;
 
 			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
 			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
@@ -656,10 +660,6 @@ class DayPicker extends PickerBase {
 	_isDayPressed(target) {
 		const targetParent = target.parentNode;
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
-	}
-
-	_isOutOfSelectableRange(date) {
-		return date.valueOf() < this._minDate.valueOf() || date.valueOf() > this._maxDate.valueOf();
 	}
 
 	_getFirstDay() {

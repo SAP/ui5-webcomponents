@@ -84,7 +84,6 @@ class MonthPicker extends PickerBase {
 	}
 
 	onBeforeRendering() {
-		super.onBeforeRendering();
 		this._buildMonths();
 	}
 
@@ -97,7 +96,10 @@ class MonthPicker extends PickerBase {
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
 
 		const months = [];
-		const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+		const calendarDate = this._calendarDate; // store the value of the expensive getter
+		const minDate = this._minDate; // store the value of the expensive getter
+		const maxDate = this._maxDate; // store the value of the expensive getter
+		const tempDate = new CalendarDate(calendarDate, this._primaryCalendarType);
 		let timestamp;
 
 		/* eslint-disable no-loop-func */
@@ -106,8 +108,8 @@ class MonthPicker extends PickerBase {
 			timestamp = tempDate.valueOf() / 1000;
 
 			const isSelected = this.selectedDates.some(d => d === timestamp);
-			const isFocused = tempDate.getMonth() === this._calendarDate.getMonth();
-			const isDisabled = this._isOutOfSelectableRange(tempDate);
+			const isFocused = tempDate.getMonth() === calendarDate.getMonth();
+			const isDisabled = this._isOutOfSelectableRange(tempDate, minDate, maxDate);
 
 			const month = {
 				timestamp: timestamp.toString(),
@@ -267,13 +269,13 @@ class MonthPicker extends PickerBase {
 		this._modifyTimestampBy(PAGE_SIZE);
 	}
 
-	_isOutOfSelectableRange(date) {
+	_isOutOfSelectableRange(date, minDate, maxDate) {
 		const month = date.getMonth();
 		const year = date.getYear();
-		const minYear = this._minDate.getYear();
-		const minMonth = this._minDate.getMonth();
-		const maxYear = this._maxDate.getYear();
-		const maxMonth = this._maxDate.getMonth();
+		const minYear = minDate.getYear();
+		const minMonth = minDate.getMonth();
+		const maxYear = maxDate.getYear();
+		const maxMonth = maxDate.getMonth();
 
 		return year < minYear || (year === minYear && month < minMonth) || year > maxYear || (year === maxYear && month > maxMonth);
 	}

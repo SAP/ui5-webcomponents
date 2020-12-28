@@ -109,38 +109,23 @@ class PickerBase extends UI5Element {
 
 	constructor() {
 		super();
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	onBeforeRendering() {
-		this._calculateAll();
-	}
-
-	_calculateAll() {
-		// The following variables are calculated once per rendering and stored as they are costly due to UniversalDate usage
-		this._primaryCalendarType = this._calculatePrimaryCalendarType(); // prerequisite for all calculations
-		this._minDate = this._calculateMinDate(); // CalendarDate object: minDate(if provided) or the absolute minimum date
-		this._maxDate = this._calculateMaxDate(); // CalendarDate object: maxDate(if provided) or the absolute maximum date
-		this._timestamp = this._calculateTimestamp(); // Effective timestamp, factoring in min/max date
-		this._localDate = this._calculateLocalDate(); // JS Date object, representing _timestamp
-		this._calendarDate = this._calculateCalendarDate(); // CalendarDate object, representing the _timestamp
-	}
-
-	_calculatePrimaryCalendarType() {
+	get _primaryCalendarType() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
-	_calculateMinDate() {
+	get _minDate() {
 		return this.minDate ? this._getCalendarDateFromString(this.minDate) : getMinCalendarDate(this._primaryCalendarType);
 	}
 
-	_calculateMaxDate() {
+	get _maxDate() {
 		return this.maxDate ? this._getCalendarDateFromString(this.maxDate) : getMaxCalendarDate(this._primaryCalendarType);
 	}
 
-	_calculateTimestamp() {
+	get _timestamp() {
 		let timestamp = this.timestamp !== undefined ? this.timestamp : Math.floor(new Date().getTime() / 1000);
 		if (timestamp < this._minTimestamp || timestamp > this._maxTimestamp) {
 			timestamp = this._minTimestamp;
@@ -148,20 +133,12 @@ class PickerBase extends UI5Element {
 		return timestamp;
 	}
 
-	_calculateLocalDate() {
+	get _localDate() {
 		return new Date(this._timestamp * 1000);
 	}
 
-	_calculateCalendarDate() {
+	get _calendarDate() {
 		return CalendarDate.fromTimestamp(this._localDate.getTime(), this._primaryCalendarType);
-	}
-
-	get _month() {
-		return this._calendarDate.getMonth();
-	}
-
-	get _year() {
-		return this._calendarDate.getYear();
 	}
 
 	get _formatPattern() {

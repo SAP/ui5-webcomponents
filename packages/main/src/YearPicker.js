@@ -84,7 +84,6 @@ class YearPicker extends PickerBase {
 	}
 
 	onBeforeRendering() {
-		super.onBeforeRendering();
 		this._buildYears();
 	}
 
@@ -97,7 +96,10 @@ class YearPicker extends PickerBase {
 
 		this._calculateFirstYear();
 
-		const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+		const calendarDate = this._calendarDate; // store the value of the expensive getter
+		const minDate = this._minDate; // store the value of the expensive getter
+		const maxDate = this._maxDate; // store the value of the expensive getter
+		const tempDate = new CalendarDate(calendarDate, this._primaryCalendarType);
 		tempDate.setYear(this._firstYear);
 
 		const intervals = [];
@@ -111,8 +113,8 @@ class YearPicker extends PickerBase {
 				const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
 				return date.getYear() === tempDate.getYear();
 			});
-			const isFocused = tempDate.getYear() === this._calendarDate.getYear();
-			const isDisabled = this._isOutOfSelectableRange(tempDate);
+			const isFocused = tempDate.getYear() === calendarDate.getYear();
+			const isDisabled = tempDate.getYear() < minDate.getYear() || tempDate.getYear() > maxDate.getYear();
 
 			const year = {
 				timestamp: timestamp.toString(),
@@ -303,10 +305,6 @@ class YearPicker extends PickerBase {
 	 */
 	_showNextPage() {
 		this._modifyTimestampBy(PAGE_SIZE);
-	}
-
-	_isOutOfSelectableRange(date) {
-		return date.getYear() < this._minDate.getYear() || date.getYear() > this._maxDate.getYear();
 	}
 }
 
