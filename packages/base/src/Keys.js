@@ -153,9 +153,9 @@ const isPageUpShiftCtrl = event => (event.key ? event.key === "PageUp" : event.k
 
 const isPageDownShiftCtrl = event => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, true, false, true);
 
-const isPlus = event => (event.keyCode ? event.keyCode === KeyCodes.PLUS : KeyCodes.NUMPAD_PLUS) || (event.key === "=" && checkModifierKeys(event, false, false, true));
+const isPlus = event => (event.key ? event.key === "+" : event.keyCode === KeyCodes.PLUS) || (event.keyCode === KeyCodes.NUMPAD_PLUS && !hasModifierKeys(event));
 
-const isMinus = event => ((event.key ? event.key === "-" : event.keyCode === KeyCodes.MINUS) && !hasModifierKeys(event)) || (event.keyCode === KeyCodes.NUMPAD_MINUS);
+const isMinus = event => (event.key ? event.key === "-" : event.keyCode === KeyCodes.MINUS) || (event.keyCode === KeyCodes.NUMPAD_MINUS && !hasModifierKeys(event));
 
 const isShow = event => {
 	if (event.key) {

@@ -303,7 +303,7 @@ describe("Accessibility: Testing keyboard handling", () => {
 		assert.strictEqual(slider.getProperty("value"), 2, "Value is increased");
 	});
 
-	it("PageDown should increase the value of the slider with a big increment step", () => {
+	it("PageDown should decrease the value of the slider with a big increment step", () => {
 		const slider = browser.$("#basic-slider-with-tooltip");
 
 		browser.keys("PageDown");
@@ -317,11 +317,50 @@ describe("Accessibility: Testing keyboard handling", () => {
 		assert.strictEqual(slider.getProperty("value"), 1, "Value is increased");
 	});
 
-	it("A '-' key press should increase the value of the slider with a small increment step", () => {
+	it("A '-' key press should decrease the value of the slider with a small increment step", () => {
 		const slider = browser.$("#basic-slider-with-tooltip");
 
 		browser.keys("-");
 		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+	});
+
+	it("A numpad '+' key press should increase the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+		const numpadAdd = "\uE025";
+
+		browser.keys(numpadAdd);
+		assert.strictEqual(slider.getProperty("value"), 1, "Value is increased");
+	});
+
+	it("A numpad '-' key press should decrease the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+		const numpadSubtract = "\uE027";
+
+		browser.keys(numpadSubtract);
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+	});	
+
+	it("An 'End' key press should increase the value of the slider to its max", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys("End");
+		assert.strictEqual(slider.getProperty("value"), 20, "Value is decreased");
+	});
+
+	it("A 'Home' key press should set the value of the slider to its minimum", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys("Home");
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is increased");
+	});
+
+	it("A 'Esc' key press should return the value of the slider at its initial point at the time of its focusing", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		slider.setProperty("value", 12);
+
+		browser.keys("Escape");
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is increased");
 	});
 });
 
