@@ -307,7 +307,7 @@ class SliderBase extends UI5Element {
 		return this[`_${valueType}Initial`];
 	}
 
-	_handleKeyDown(event) {
+	_onkeydown(event) {
 		if (this.disabled) {
 			return;
 		}
@@ -750,7 +750,7 @@ class SliderBase extends UI5Element {
 		}
 	}
 
-	_handleActionKeyPress(event, affectedValue) {
+	_handleActionKeyPressBase(event, affectedValue) {
 		const isUpAction = SliderBase._isIncreaseValueAction(event);
 		const isBigStep = SliderBase._isBigStepAction(event);
 

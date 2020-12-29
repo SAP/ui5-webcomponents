@@ -112,10 +112,6 @@ class Slider extends SliderBase {
 		this._updateHandleAndProgress(this.value);
 	}
 
-	_onkeydown(event) {
-		this._handleKeyDown(event, "value");
-	}
-
 	/**
 	 * Called when the user starts interacting with the slider
 	 *
@@ -234,7 +230,7 @@ class Slider extends SliderBase {
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 		const currentValue = this.value;
-		const newValue = isEscape(event) ? this._getInitialValue("value") : this.constructor.clipValue(SliderBase.prototype._handleActionKeyPress.call(this, event, "value") + currentValue, min, max);
+		const newValue = isEscape(event) ? this._getInitialValue("value") : this.constructor.clipValue(this._handleActionKeyPressBase(event, "value") + currentValue, min, max);
 
 		if (newValue !== currentValue) {
 			this._updateHandleAndProgress(newValue);

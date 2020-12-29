@@ -185,8 +185,75 @@ describe("Testing events", () => {
 	});
 });
 
+describe("Accessibility: Testing focus", () => {
+	it("Click anywhere in the Slider should focus the Slider's handle and set the 'focused' property to true", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Slider.html");
+
+		const slider = browser.$("#basic-slider");
+		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+
+		slider.click();
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
+		assert.strictEqual(slider.getProperty("focused"), true, "Slider state is focused");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
+	});
+
+	it("Tab should focus the Slider and move the visible focus outline to the slider's handle", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+
+		browser.keys("Tab");
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-slider-with-tooltip").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
+		assert.strictEqual(slider.getProperty("focused"), true, "Slider is focused");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
+	});
+
+	it("Shift+Tab should focus the previous Slider and move the visible focus outline to the previous slider's handle", () => {
+		const slider = browser.$("#basic-slider");
+		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+
+		browser.keys(["Shift", "Tab"]);
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
+		assert.strictEqual(slider.getProperty("focused"), true, "Slider is focused");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
+	});
+});
+
+
 describe("Accessibility: Testing keyboard handling", () => {
-	it("Tab should focus the slider and move the visible focus outline to the slider's handle", () => {
+	it("Right arrow should increase the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider");
+		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+
+		slider.setProperty("value", 0);
+		browser.keys("ArrowRight");
+
+		assert.strictEqual(slider.getProperty("value"), 1, "Value is increased");
+	});
+
+	it("Left arrow should decrease the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider");
+		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+
+		slider.setProperty("value", 0);
+		browser.keys("ArrowLeft");
+
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is increased");
 	});
 });
 
