@@ -1,6 +1,7 @@
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SliderBase from "./SliderBase.js";
 
 // Template
@@ -89,6 +90,7 @@ class Slider extends SliderBase {
 
 	onEnterDOM() {
 		this._sliderHandle = this.shadowRoot.querySelector(".ui5-slider-handle");
+		ResizeHandler.register(this, this._resizeHandler);
 	}
 
 	/**

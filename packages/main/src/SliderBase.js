@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
@@ -251,10 +250,6 @@ class SliderBase extends UI5Element {
 				"ui5-slider-hidden-labels": this._labelsOverlapping,
 			},
 		};
-	}
-
-	onEnterDOM() {
-		ResizeHandler.register(this, this._resizeHandler);
 	}
 
 	onExitDOM() {
