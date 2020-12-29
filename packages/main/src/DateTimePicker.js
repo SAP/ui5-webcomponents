@@ -414,8 +414,8 @@ class DateTimePicker extends DatePicker {
 	 * @override
 	 * Overwrite the method to update the time sliders.
 	 */
-	_handleInputLiveChange() {
-		super._handleInputLiveChange();
+	_onInputInput(event) {
+		super._onInputInput(event);
 		this.setSlidersValue();
 	}
 

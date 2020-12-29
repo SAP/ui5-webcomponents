@@ -7,7 +7,6 @@ import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getR
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
-	isEnter,
 	isPageUp,
 	isPageDown,
 	isPageUpShift,
@@ -429,10 +428,6 @@ class DatePicker extends DateComponentBase {
 			return;
 		}
 
-		if (isEnter(event)) {
-			this._handleEnterPressed();
-		}
-
 		if (isPageUpShiftCtrl(event)) {
 			event.preventDefault();
 			this._modifyDateValue(1, "year");
@@ -453,19 +448,6 @@ class DatePicker extends DateComponentBase {
 			this._modifyDateValue(-1, "day");
 		}
 	}
-
-	/**
-	 * @abstract
-	 * @protected
-	 */
-	_handleEnterPressed() {}
-
-	/**
-	 * @abstract
-	 * @protected
-	 */
-	_onfocusout() {}
-
 
 	/**
 	 *
@@ -493,16 +475,23 @@ class DatePicker extends DateComponentBase {
 	}
 
 	/**
-	 * The user changed the input and focused out
+	 * The ui5-input "submit" event handler
+	 * @abstract
 	 * @protected
 	 */
-	async _handleInputChange() {
-		let nextValue = await this._getInput().getInputValue();
+	_onInputSubmit() {}
+
+	/**
+	 * The ui5-input "change" event handler
+	 * @protected
+	 */
+	_onInputChange(event) {
+		let nextValue = event.target.value;
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
 		if (isValid) {
-			nextValue = this.normalizeValue(nextValue);
+			nextValue = this._enforceFormat(nextValue);
 			this.valueState = ValueState.None;
 		} else {
 			this.valueState = ValueState.Error;
@@ -516,11 +505,11 @@ class DatePicker extends DateComponentBase {
 	}
 
 	/**
-	 * The user is typing in the input
+	 * The ui5-input "input" event handler
 	 * @protected
 	 */
-	async _handleInputLiveChange() {
-		const nextValue = await this._getInput().getInputValue();
+	async _onInputInput(event) {
+		const nextValue = event.target.value;
 		const emptyValue = nextValue === "";
 		const isValid = emptyValue || this._checkValueValidity(nextValue);
 
@@ -586,7 +575,7 @@ class DatePicker extends DateComponentBase {
 
 	// because the parser understands more than one format
 	// but we need values in one format
-	normalizeValue(value) {
+	_enforceFormat(value) {
 		if (value === "") {
 			return value;
 		}
