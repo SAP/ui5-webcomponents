@@ -329,31 +329,28 @@ class DatePicker extends DateComponentBase {
 		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
 	}
 
-	constructor() {
-		super();
+	/**
+	 * @protected
+	 */
+	onResponsivePopoverAfterClose() {
+		this._isPickerOpen = false;
+		if (isPhone()) {
+			this.blur(); // close device's keyboard and prevent further typing
+		} else if (this._focusInputAfterClose) {
+			this._getInput().focus();
+			this._focusInputAfterClose = false;
+		}
+	}
 
-		this._respPopoverConfig = {
-			allowTargetOverlap: true,
-			stayOpenOnScroll: true,
-			afterClose: () => {
-				this._isPickerOpen = false;
-
-				if (isPhone()) {
-					// close device's keyboard and prevent further typing
-					this.blur();
-				} else if (this._focusInputAfterClose) {
-					this._getInput().focus();
-					this._focusInputAfterClose = false;
-				}
-			},
-			afterOpen: async () => {
-				await RenderScheduler.whenFinished();
-				if (this._focusInputAfterOpen) {
-					this._focusInputAfterOpen = false;
-					this._getInput().focus();
-				}
-			},
-		};
+	/**
+	 * @protected
+	 */
+	async onResponsivePopoverAfterOpen() {
+		await RenderScheduler.whenFinished();
+		if (this._focusInputAfterOpen) {
+			this._focusInputAfterOpen = false;
+			this._getInput().focus();
+		}
 	}
 
 	onBeforeRendering() {

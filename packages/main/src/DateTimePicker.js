@@ -95,6 +95,7 @@ const metadata = {
 		 */
 		_calendarPreview: {
 			type: Object,
+			defaultValue: null,
 		},
 	},
 };
@@ -203,17 +204,16 @@ class DateTimePicker extends DatePicker {
 
 	constructor() {
 		super();
-
-		this._calendarPreview = null; // preview of the calendar selection
-
-		const superFn = this._respPopoverConfig.afterClose;
-		this._respPopoverConfig.afterClose = () => {
-			superFn();
-			this._showTimeView = false;
-			this._calendarPreview = null;
-		};
-
 		this._handleResizeBound = this._handleResize.bind(this);
+	}
+
+	/**
+	 * @override
+	 */
+	onResponsivePopoverAfterClose() {
+		super.onResponsivePopoverAfterClose();
+		this._showTimeView = false;
+		this._calendarPreview = null;
 	}
 
 	/**
