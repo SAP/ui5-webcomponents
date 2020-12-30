@@ -61,7 +61,7 @@ describe("Date Picker Tests", () => {
 
 	it("Value State Message", () => {
 		datepicker.id = "#dp17"
-		datepicker.root.click();
+		datepicker.input.click();
 
 		const inputStaticAreaItem = datepicker.inputStaticAreaItem;
 		const popover = inputStaticAreaItem.shadow$("ui5-popover");
@@ -140,7 +140,7 @@ describe("Date Picker Tests", () => {
 	it("focusout fires change", () => {
 		datepicker.id = "#dp5";
 
-		datepicker.root.click();
+		datepicker.input.click();
 		datepicker.innerInput.setValue("Jan 6, 2015");
 		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
@@ -616,7 +616,7 @@ describe("Date Picker Tests", () => {
 	it("Going under the minimum date changes value state", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.root.click();
+		datepicker.input.click();
 		datepicker.root.keys("Jan 1, 1999");
 		datepicker.root.keys("Enter");
 
@@ -629,7 +629,7 @@ describe("Date Picker Tests", () => {
 	it("Going over the maximum date changes value state", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.root.click();
+		datepicker.input.click();
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
@@ -646,7 +646,7 @@ describe("Date Picker Tests", () => {
 	it("Maximum or minimum date changes value state to none", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.root.click();
+		datepicker.input.click();
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
@@ -656,7 +656,7 @@ describe("Date Picker Tests", () => {
 
 		assert.equal(datepicker.input.getProperty("valueState"), "None", "value state of the input is valid");
 
-		datepicker.root.click();
+		datepicker.input.click();
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
@@ -673,7 +673,7 @@ describe("Date Picker Tests", () => {
 	it("Years are disabled when out of range", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.root.click();
+		datepicker.input.click();
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
@@ -849,7 +849,7 @@ describe("Date Picker Tests", () => {
 	it("Page up/down increments/decrements the day value", () => {
 		datepicker.id = "#dp1";
 		datepicker.innerInput.setValue("Jan 1, 2000");
-		datepicker.root.click();
+		datepicker.input.click();
 
 		browser.keys('PageDown');
 
@@ -869,7 +869,7 @@ describe("Date Picker Tests", () => {
 	it("Shift + Page up/down increments/decrements the month value", () => {
 		datepicker.id = "#dp1";
 		datepicker.innerInput.setValue("Jan 1, 2000");
-		datepicker.root.click();
+		datepicker.input.click();
 
 		browser.keys(['Shift', 'PageDown']);
 
@@ -889,7 +889,7 @@ describe("Date Picker Tests", () => {
 	it("Ctrl + Shift + Page up/down increments/decrements the year value", () => {
 		datepicker.id = "#dp1";
 		datepicker.innerInput.setValue("Jan 1, 2000");
-		datepicker.root.click();
+		datepicker.input.click();
 
 		browser.keys(['Control', 'Shift', 'PageDown']);
 

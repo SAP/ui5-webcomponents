@@ -357,14 +357,6 @@ class DatePicker extends DateComponentBase {
 	}
 
 	onBeforeRendering() {
-		// Change the value state to Error/None, but only if needed
-		const isValid = this._checkValueValidity(this.value);
-		if (!isValid) { // If not valid - always set Error regardless of the current value state
-			this.valueState = ValueState.Error;
-		} else if (isValid && this.valueState === ValueState.Error) { // However if valid, change only Error (but not the others) to None
-			this.valueState = ValueState.None;
-		}
-
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
@@ -477,10 +469,24 @@ class DatePicker extends DateComponentBase {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 
+		if (this.value === value) {
+			return;
+		}
+
 		this.value = value;
+		this._updateValueState(); // Change the value state to Error/None, but only if needed
 		events.forEach(event => {
 			this.fireEvent(event, { value, valid });
 		});
+	}
+
+	_updateValueState() {
+		const isValid = this._checkValueValidity(this.value);
+		if (!isValid) { // If not valid - always set Error regardless of the current value state
+			this.valueState = ValueState.Error;
+		} else if (isValid && this.valueState === ValueState.Error) { // However if valid, change only Error (but not the others) to None
+			this.valueState = ValueState.None;
+		}
 	}
 
 	_toggleAndFocusInput() {
@@ -569,7 +575,7 @@ class DatePicker extends DateComponentBase {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, true));
+		return this.getFormat().format(this.getFormat().parse(value, true), true); // it is important to both parse and format the date as UTC
 	}
 
 	get _displayFormat() {
