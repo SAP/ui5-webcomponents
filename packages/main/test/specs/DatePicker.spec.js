@@ -141,7 +141,7 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp5";
 
 		datepicker.input.click();
-		datepicker.root.setProperty("value", "Jan 6, 2015");
+		datepicker.root.keys("Jan 1, 1999");
 		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
 		assert.equal(browser.$("#lbl").getHTML(false), "1", 'change has fired once');
