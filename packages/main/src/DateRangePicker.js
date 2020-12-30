@@ -142,9 +142,6 @@ class DateRangePicker extends DatePicker {
 	async _onInputSubmit(event) {
 		const input = this._getInput();
 		const caretPos = input.getCaretPosition();
-
-		super._onInputSubmit(event);
-
 		await RenderScheduler.whenFinished();
 		input.setCaretPosition(caretPos); // Return the caret on the previous position after rendering
 	}

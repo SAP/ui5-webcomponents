@@ -469,10 +469,6 @@ class DatePicker extends DateComponentBase {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 
-		if (this.value === value) {
-			return;
-		}
-
 		this.value = value;
 		this._updateValueState(); // Change the value state to Error/None, but only if needed
 		events.forEach(event => {
@@ -502,9 +498,7 @@ class DatePicker extends DateComponentBase {
 	 * The ui5-input "submit" event handler - fire change event when the user presses enter
 	 * @protected
 	 */
-	_onInputSubmit(event) {
-		this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
-	}
+	_onInputSubmit(event) {}
 
 	/**
 	 * The ui5-input "change" event handler - fire change event when the user focuses out of the input

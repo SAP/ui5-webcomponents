@@ -141,7 +141,7 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp5";
 
 		datepicker.input.click();
-		datepicker.innerInput.setValue("Jan 6, 2015");
+		datepicker.root.setProperty("value", "Jan 6, 2015");
 		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
 		assert.equal(browser.$("#lbl").getHTML(false), "1", 'change has fired once');
@@ -154,7 +154,7 @@ describe("Date Picker Tests", () => {
 		const timestamp_8_Jan_2015 = timestamp_6_Jan_2015 + 2 * 24 * 60 * 60;
 
 		//type in the input
-		datepicker.innerInput.setValue("Jan 6, 2015");
+		datepicker.root.setProperty("value", "Jan 6, 2015");
 
 		//open picker
 		datepicker.valueHelpIcon.click();
@@ -212,7 +212,7 @@ describe("Date Picker Tests", () => {
 		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg");
 		datepicker.id = "#dp7_1";
 
-		datepicker.innerInput.setValue("фев 6, 2019");
+		datepicker.root.setProperty("value", "фев 6, 2019");
 		datepicker.valueHelpIcon.click();
 
 		const firstDisplayedDate = datepicker.getFirstDisplayedDate();
@@ -229,7 +229,7 @@ describe("Date Picker Tests", () => {
 
 		datepicker.id = "#dp7_2";
 
-		datepicker.innerInput.setValue("Jan 30, 2019");
+		datepicker.root.setProperty("value", "Jan 30, 2019");
 		datepicker.valueHelpIcon.click();
 		datepicker.btnNext.click();
 
@@ -418,7 +418,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Dec 31, 9999");
+		datepicker.root.setProperty("value", "Dec 31, 9999");
 		datepicker.valueHelpIcon.click();
 
 		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
@@ -430,7 +430,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0001");
+		datepicker.root.setProperty("value", "Jan 1, 0001");
 		datepicker.valueHelpIcon.click();
 
 		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_31Dec0000) > -1, "Jan 1, 0001 is the second displayed date");
@@ -442,7 +442,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Feb 1, 0001");
+		datepicker.root.setProperty("value", "Feb 1, 0001");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnPrev.click();
@@ -456,7 +456,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Nov 30, 9999");
+		datepicker.root.setProperty("value", "Nov 30, 9999");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnNext.click();
@@ -468,7 +468,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Dec 31, 9998");
+		datepicker.root.setProperty("value", "Dec 31, 9998");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnMonth.click();
@@ -481,7 +481,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0002");
+		datepicker.root.setProperty("value", "Jan 1, 0002");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnMonth.click();
@@ -494,7 +494,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Dec 31, 9995");
+		datepicker.root.setProperty("value", "Dec 31, 9995");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -506,7 +506,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0003");
+		datepicker.root.setProperty("value", "Jan 1, 0003");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -518,7 +518,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0012");
+		datepicker.root.setProperty("value", "Jan 1, 0012");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -534,7 +534,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Dec 31, 9986");
+		datepicker.root.setProperty("value", "Dec 31, 9986");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -550,7 +550,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Dec 31, 9986");
+		datepicker.root.setProperty("value", "Dec 31, 9986");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -568,7 +568,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0012");
+		datepicker.root.setProperty("value", "Jan 1, 0012");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -581,7 +581,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0004");
+		datepicker.root.setProperty("value", "Jan 1, 0004");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -848,7 +848,7 @@ describe("Date Picker Tests", () => {
 
 	it("Page up/down increments/decrements the day value", () => {
 		datepicker.id = "#dp1";
-		datepicker.innerInput.setValue("Jan 1, 2000");
+		datepicker.root.setProperty("value", "Jan 1, 2000");
 		datepicker.input.click();
 
 		browser.keys('PageDown');
@@ -868,7 +868,7 @@ describe("Date Picker Tests", () => {
 
 	it("Shift + Page up/down increments/decrements the month value", () => {
 		datepicker.id = "#dp1";
-		datepicker.innerInput.setValue("Jan 1, 2000");
+		datepicker.root.setProperty("value", "Jan 1, 2000");
 		datepicker.input.click();
 
 		browser.keys(['Shift', 'PageDown']);
@@ -888,7 +888,7 @@ describe("Date Picker Tests", () => {
 
 	it("Ctrl + Shift + Page up/down increments/decrements the year value", () => {
 		datepicker.id = "#dp1";
-		datepicker.innerInput.setValue("Jan 1, 2000");
+		datepicker.root.setProperty("value", "Jan 1, 2000");
 		datepicker.input.click();
 
 		browser.keys(['Control', 'Shift', 'PageDown']);

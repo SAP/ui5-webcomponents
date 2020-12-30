@@ -70,6 +70,13 @@
 			focusInput: true
 		});
 	});
+
+	d.addEventListener("change", function(event) {
+		console.log("change", event.detail.value, event.detail.valid, event.target);
+	});
+	dr.addEventListener("change", function(event) {
+		console.log("change", event.detail.value, event.detail.valid, event.target);
+	});
 </script>
 
 
