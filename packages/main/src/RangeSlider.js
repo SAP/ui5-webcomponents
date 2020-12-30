@@ -5,7 +5,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SliderBase from "./SliderBase.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
 
@@ -107,6 +107,8 @@ class RangeSlider extends SliderBase {
 		this._sliderStartHandle = this.shadowRoot.querySelector(".ui5-slider-handle--start");
 		this._sliderEndHandle = this.shadowRoot.querySelector(".ui5-slider-handle--end");
 		this._sliderProgress = this.shadowRoot.querySelector(".ui5-slider-progress");
+
+		ResizeHandler.register(this, this._resizeHandler);
 	}
 
 	get tooltipStartValue() {
@@ -455,6 +457,11 @@ class RangeSlider extends SliderBase {
 	 */
 	_setAffectedValue(valuePropAffectedByInteraction) {
 		this._valueAffected = valuePropAffectedByInteraction;
+
+		// If the values have been swapped reset the reversed flag
+		if (this._areValuesReversed()) {
+			this._setValuesAreReversed();
+		}
 	}
 
 	_getAffectedValue() {
@@ -487,7 +494,7 @@ class RangeSlider extends SliderBase {
 	 * @private
 	 */
 	_focusInnerElement() {
-		const isReversed = this._getAreValuesReversed();
+		const isReversed = this._areValuesReversed();
 		const affectedValue = this._getAffectedValue();
 
 		if (this._inCurrentRange || !affectedValue) {
@@ -496,12 +503,10 @@ class RangeSlider extends SliderBase {
 
 		if ((affectedValue === "startValue" && !isReversed) || (affectedValue === "endValue" && isReversed)) {
 			this._sliderStartHandle.focus();
-			this._switchReversedValues();
 		}
 
 		if ((affectedValue === "endValue" && !isReversed) || (affectedValue === "startValue" && isReversed)) {
 			this._sliderEndHandle.focus();
-			this._switchReversedValues();
 		}
 	}
 
@@ -627,7 +632,7 @@ class RangeSlider extends SliderBase {
 			this.endValue = this.startValue;
 			this.startValue = prevEndValue;
 
-			this._switchReversedValues();
+			this._setValuesAreReversed();
 			this._focusInnerElement();
 		}
 
@@ -636,7 +641,7 @@ class RangeSlider extends SliderBase {
 			this.startValue = this.endValue;
 			this.endValue = prevStartValue;
 
-			this._switchReversedValues();
+			this._setValuesAreReversed();
 			this._focusInnerElement();
 		}
 	}
@@ -649,11 +654,11 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_switchReversedValues() {
+	_setValuesAreReversed() {
 		this._reversedValues = !this._reversedValues;
 	 }
 
-	 _getAreValuesReversed(areValuesReversed) {
+	 _areValuesReversed() {
 		return this._reversedValues;
 	}
 

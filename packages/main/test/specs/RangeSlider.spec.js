@@ -262,6 +262,567 @@ describe("Testing events", () => {
 	});
 });
 
+
+describe("Accessibility: Testing focus", () => {
+	it("Click anywhere in the  Range Slider should focus the closest handle and set the 'focused' property to true", () => {
+		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
+
+		const rangeSlider = browser.$("#basic-range-slider");
+		const rangeSliderStartHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const rangeSliderEndHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
+
+		rangeSlider.click();
+
+		let innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(rangeSlider.isFocused(), true, "RangeSlider component is focused");
+		assert.strictEqual(rangeSlider.getProperty("focused"), true, "RangeSlider state is focused");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderEndHandle.getAttribute("class"), "RangeSlider second handle has the shadowDom focus");
+
+		rangeSlider.setProperty("startValue", 30);
+		rangeSliderStartHandle.click({ x: -200});
+
+		innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderStartHandle.getAttribute("class"), "RangeSlider second handle has the shadowDom focus");
+	});
+
+	it("Click currently selected range should focus it and set the 'focused' property to true", () => {
+		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
+
+		const rangeSlider = browser.$("#basic-range-slider");
+		const rangeSliderSelection = rangeSlider.shadow$(".ui5-slider-progress");
+
+		rangeSlider.setProperty("endValue", 60);
+		rangeSlider.click();
+
+		let innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(rangeSlider.isFocused(), true, "RangeSlider component is focused");
+		assert.strictEqual(rangeSlider.getProperty("focused"), true, "RangeSlider state is focused");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderSelection.getAttribute("class"), "RangeSlider progress bar has the shadowDom focus");
+	});
+
+
+	it("When not yet focused, 'Tab' should focus the Range Slider and move the focus to the progress bar", () => {
+		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
+
+		const rangeSlider = browser.$("#basic-range-slider");
+		const rangeSliderSelection = rangeSlider.shadow$(".ui5-slider-progress");
+
+		browser.keys("Tab");
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(rangeSlider.isFocused(), true, "Range Slider component is focused");
+		assert.strictEqual(rangeSlider.getProperty("focused"), true, "Range Slider is focused");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderSelection.getAttribute("class"), "Range Slider progress tracker has the shadowDom focus");
+	});
+	
+	it("When progress bar has the focus, 'Tab' should move the focus to the first handle", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+		const rangeSliderStartHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+
+		browser.keys("Tab");
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderStartHandle.getAttribute("class"), "Range Slider first handle has the hadowDom focus");
+	});
+
+	it("When the first handle has the focus, 'Tab' should focus the second handle", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+		const rangeSliderEndHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
+
+		browser.keys("Tab");
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderEndHandle.getAttribute("class"), "Range Slider second handle has the shadowDom focus");
+	});
+
+	it("When the second handle has the focus, 'Tab' should move the focus away from the Range Slider", () => {
+		const currentRangeSlider = browser.$("#basic-range-slider");
+		const nextRangeSlider = browser.$("#basic-range-slider-with-tooltip");
+		const rangeSliderSelection = nextRangeSlider.shadow$(".ui5-slider-progress");
+
+		browser.keys("Tab");
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider-with-tooltip").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(currentRangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
+		assert.strictEqual(currentRangeSlider.getProperty("focused"), false, "First RangeSlider state is not focused");
+
+		assert.strictEqual(nextRangeSlider.isFocused(), true, "Next RangeSlider is focused");
+		assert.strictEqual(nextRangeSlider.getProperty("focused"), true, "Next RangeSlider's state is focused");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderSelection.getAttribute("class"), "Next Range Slider second handle has the shadowDom focus");
+	});
+
+	it("Shift+Tab should focus the previous Range Slider and move the focus to its second handle", () => {
+		const currentRangeSlider = browser.$("#basic-range-slider-with-tooltip");
+		const previousRangeSlider = browser.$("#basic-range-slider");
+		const previousRangeSliderEndHandle = previousRangeSlider.shadow$(".ui5-slider-handle--end");
+
+		browser.keys(["Shift", "Tab"]);
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(currentRangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
+		assert.strictEqual(currentRangeSlider.getProperty("focused"), false, "First RangeSlider state is not focused");
+
+		assert.strictEqual(previousRangeSlider.isFocused(), true, "Slider component is focused");
+		assert.strictEqual(previousRangeSlider.getProperty("focused"), true, "Slider is focused");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), previousRangeSliderEndHandle.getAttribute("class"), "Previous Range Slider second handle now has the shadowDom focus");
+	});
+
+	it("When the second handle has the focus, 'Shift' + 'Tab' should move the focus to the first handle", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+		const rangeSliderStartHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+
+		browser.keys(["Shift", "Tab"]);
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderStartHandle.getAttribute("class"), "Range Slider first handle has the shadowDom focus");
+	});
+
+	it("When the first handle has the focus, 'Shift' + 'Tab' should move the focus to the progress bar", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+		const rangeSliderSelection = rangeSlider.shadow$(".ui5-slider-progress");
+
+		browser.keys(["Shift", "Tab"]);
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderSelection.getAttribute("class"), "Range Slider first handle has the shadowDom focus");
+	});
+
+	it("When the progress bar has the focus, 'Shift' + 'Tab' should move the focus away from the Range Slider", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Shift", "Tab"]);
+
+		assert.strictEqual(rangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
+		assert.strictEqual(rangeSlider.getProperty("focused"), false, "First RangeSlider state is not focused");
+	});
+
+	it("When one handle come across the other and the values are swapped the focus must be switched between the handles", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
+
+		startHandle.dragAndDrop({ x: 400, y: 1 });
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), endHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
+	});
+});
+
+
+describe("Accessibility: Testing keyboard handling", () => {
+	it("When progress bar is focused 'Right Arrow' key should increase both values of the Range Slider with a small increment step", () => {
+		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys("Tab");
+		browser.keys("ArrowRight");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 1, "start-value is increased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "end-value is increased");
+	});
+
+	it("When progress bar is focused 'Left Arrow' key should decrease both values of the Range Slider with a small increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys("ArrowLeft");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When progress bar is focused 'Up Arrow' key should increase both values of the Range Slider with a small increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys("ArrowUp");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 1, "start-value is increased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "end-value is increased");
+	});
+
+	it("When progress bar is focused 'Down' key should decrease both values of the Range Slider with a small increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys("ArrowDown");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When progress bar is focused 'Control' + 'Right Arrow' key should increase both values of the Range Slider with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Control", "ArrowRight"]);
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 10, "start-value is increased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 30, "end-value is increased");
+	});
+
+	it("When progress bar is focused 'Control' + 'Left Arrow' key should decrease both values of the Range Slider with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Control", "ArrowLeft"]);
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When progress bar is focused 'Control' + 'Up Arrow' key should increase both values of the Range Slider with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Control", "ArrowUp"]);
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 10, "start-value is increased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 30, "end-value is increased");
+	});
+
+	it("When progress bar is focused 'Control' + 'Down' key should decrease both values of the Range Slider with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Control", "ArrowDown"]);
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When progress bar is focused 'Page Up' key should increase both values of the Range Slider with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys("PageUp");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 10, "start-value is increased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 30, "end-value is increased");
+	});
+
+	it("When progress bar is focused 'Page Down' key should decrease both values of the Range Slider with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys("PageDown");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When progress bar is focused the '+' key should increase both values of the Range Slider with a small increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+		const numpadAdd = "\uE025";
+
+		browser.keys("+");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 1, "start-value is increased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "end-value is increased");
+
+		browser.keys(numpadAdd);
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 2, "start-value is increased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 22, "end-value is increased");
+	});
+
+	it("When progress bar is focused the '-' key should decrease both values of the Range Slider with a small increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+		const numpadSubtract = "\uE027";
+
+		browser.keys("-");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 1, "start-value is decreased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "end-value is decreased");
+
+		browser.keys(numpadSubtract);
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When progress bar is focused an 'End' key press should offset the selected range to the end of the Range Slider", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys("End");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 80, "start-value is decreased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 100, "end-value is decreased");
+	});
+
+	it("When progress bar is focused a 'Home' key press should offset the selected range to the start of the Range Slider", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys("Home");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("A 'Esc' key press should return the values of the Range Slider at their initial point at the time of its focusing", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		rangeSlider.setProperty("startValue", 24);
+		rangeSlider.setProperty("endValue", 42);
+
+		browser.keys("Escape");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When a handle is focused 'Right Arrow' key should increase its value with a small increment step", () => {
+		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
+
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys("Tab");
+		browser.keys("Tab");
+		browser.keys("ArrowRight");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 1, "start-value is increased");
+
+		browser.keys("Tab");
+		browser.keys("ArrowRight");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "end-value is increased");
+	});
+
+	it("When a handle is focused 'Left Arrow' key should decrease its value with a small increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Shift", "Tab"]);
+		browser.keys("ArrowLeft");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is increased");
+
+		browser.keys("Tab");
+		browser.keys("ArrowLeft");
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When a handle is focused 'Up Arrow' key should increase its value with a small increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Shift", "Tab"]);
+		browser.keys("ArrowUp");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 1, "start-value is increased");
+
+		browser.keys("Tab");
+		browser.keys("ArrowUp");
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "end-value is decreased");
+	});
+
+	it("When a handle is focused 'Down' key should decrease its value with a small increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Shift", "Tab"]);
+		browser.keys("ArrowDown");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is increased");
+
+		browser.keys("Tab");
+		browser.keys("ArrowDown");
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When a handle is focused 'Control' + 'Right Arrow' key should increase its value with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Shift", "Tab"]);
+		browser.keys(["Control", "ArrowRight"]);
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 10, "start-value is increased");
+
+		browser.keys("Tab");
+		browser.keys(["Control", "ArrowRight"]);
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 30, "end-value is increased");
+	});
+
+	it("When a handle is focused 'Control' + 'Left Arrow' key should decrease its vale with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Shift", "Tab"]);
+		browser.keys(["Control", "ArrowLeft"]);
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+
+		browser.keys("Tab");
+		browser.keys(["Control", "ArrowLeft"]);
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When a handle is focused 'Control' + 'Up Arrow' key should increase its value with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Shift", "Tab"]);
+		browser.keys(["Control", "ArrowUp"]);
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 10, "start-value is increased");
+
+		browser.keys("Tab");
+		browser.keys(["Control", "ArrowUp"]);
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 30, "end-value is increased");
+	});
+
+	it("When handle is focused 'Control' + 'Down' key should decrease its value with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Shift", "Tab"]);
+		browser.keys(["Control", "ArrowDown"]);
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+
+		browser.keys("Tab");
+		browser.keys(["Control", "ArrowDown"]);
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When a handle is focused 'Page Up' key should increase its value with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+		browser.keys(["Shift", "Tab"]);
+		browser.keys("PageUp");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 10, "start-value is increased");
+
+		browser.keys("Tab");
+		browser.keys("PageUp");
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 30, "end-value is increased");
+	});
+
+	it("When a handle is focused 'Page Down' key should decrease its value with a big increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Shift", "Tab"]);
+		browser.keys("PageDown");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+
+		browser.keys("Tab");
+		browser.keys("PageDown");
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+	});
+
+	it("When a handle focused the '+' key should increase its value with a small increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+		const numpadAdd = "\uE025";
+
+		browser.keys(["Shift", "Tab"]);
+		browser.keys("+");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 1, "start-value is increased");
+
+		browser.keys(numpadAdd);
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 2, "start-value is increased");
+
+		browser.keys("Tab");
+		browser.keys("+");
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "end-value is increased");
+
+		browser.keys(numpadAdd);
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 22, "end-value is increased");
+
+	});
+
+	it("When a handle focused the '-' key should decrease its value with a small increment step", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+		const numpadSubtract = "\uE027";
+
+		browser.keys(["Shift", "Tab"]);
+		browser.keys("-");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 1, "start-value is decreased");
+
+		browser.keys(numpadSubtract);
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+
+		browser.keys("Tab");
+		browser.keys("-");
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "end-value is decreased");
+
+		browser.keys(numpadSubtract);
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 20, "end-value is decreased");
+
+	});
+
+	it("When a handle is focused an 'End' key press should set its value to the maximum allowed", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys("End");
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 100, "end-value is decreased");
+	});
+
+	it("When a handle is focused a 'Home' key press should set its value to the start of the Range Slider", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+
+		browser.keys(["Shift", "Tab"]);
+		browser.keys("Home");
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
+	});
+
+	it("When one handle come across the other and the values are swapped the focus must be switched between the handles", () => {
+		const rangeSlider = browser.$("#basic-range-slider");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
+
+		rangeSlider.setProperty("endValue", 20);
+		startHandle.click();
+		browser.keys("End");
+
+		let innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 100, "The original end-value is set to min and switched as a start-value");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), endHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
+
+		browser.keys("Home");
+
+		innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "The original end-value is set to min and switched as a start-value");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), startHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
+	});
+});
+
 describe("Testing resize handling and RTL support", () => {
 	it("Testing RTL support", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
