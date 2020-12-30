@@ -1,5 +1,3 @@
-import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -17,7 +15,6 @@ import {
 	isF4,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
@@ -357,11 +354,17 @@ class DatePicker extends DateComponentBase {
 				}
 			},
 		};
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
+		// Change the value state to Error/None, but only if needed
+		const isValid = this._checkValueValidity(this.value);
+		if (!isValid) { // If not valid - always set Error regardless of the current value state
+			this.valueState = ValueState.Error;
+		} else if (isValid && this.valueState === ValueState.Error) { // However if valid, change only Error (but not the others) to None
+			this.valueState = ValueState.None;
+		}
+
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
@@ -380,14 +383,15 @@ class DatePicker extends DateComponentBase {
 	}
 
 	/**
-	 * Used to provide a timestamp to the Calendar based on the component's state
+	 * Used to provide a timestamp to the Calendar (to focus it to a relevant date when open) based on the component's state
 	 * Override in derivatives to provide the calendar a timestamp based on their properties
+	 * By default focus the calendar on the selected date if set, or the current day otherwise
 	 * @protected
 	 */
 	get _calendarTimestamp() {
 		let millisecondsUTC;
-		if (this.isValid(this.value)) {
-			millisecondsUTC = this.getFormat().parse(this.value, true).getTime();
+		if (this.value && this._checkValueValidity(this.value)) {
+			millisecondsUTC = this.dateValueUTC.getTime();
 		} else {
 			millisecondsUTC = new Date().getTime();
 		}
@@ -406,7 +410,7 @@ class DatePicker extends DateComponentBase {
 		}
 
 		if (this._checkValueValidity(this.value)) {
-			return [this._calendarTimestamp];
+			return [getRoundedTimestamp(this.dateValueUTC.getTime())];
 		}
 
 		return [];
@@ -461,8 +465,22 @@ class DatePicker extends DateComponentBase {
 		}
 
 		let calendarDate = CalendarDate.fromLocalJSDate(this.dateValue, this._primaryCalendarType);
-		calendarDate = modifyDateBy(calendarDate, amount, unit, this._primaryCalendarType);
-		this.value = this.formatValue(calendarDate.toLocalJSDate());
+		calendarDate = modifyDateBy(calendarDate, amount, unit, this._primaryCalendarType, this._minDate, this._maxDate);
+		const newValue = this.formatValue(calendarDate.toUTCJSDate());
+
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
+	}
+
+	_updateValueAndFireEvents(value, normalizeValue, events) {
+		const valid = this._checkValueValidity(value);
+		if (valid && normalizeValue) {
+			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
+		}
+
+		this.value = value;
+		events.forEach(event => {
+			this.fireEvent(event, { value, valid });
+		});
 	}
 
 	_toggleAndFocusInput() {
@@ -475,53 +493,37 @@ class DatePicker extends DateComponentBase {
 	}
 
 	/**
-	 * The ui5-input "submit" event handler
-	 * @abstract
+	 * The ui5-input "submit" event handler - fire change event when the user presses enter
 	 * @protected
 	 */
-	_onInputSubmit() {}
-
-	/**
-	 * The ui5-input "change" event handler
-	 * @protected
-	 */
-	_onInputChange(event) {
-		let nextValue = event.target.value;
-		const emptyValue = nextValue === "";
-		const isValid = emptyValue || this._checkValueValidity(nextValue);
-
-		if (isValid) {
-			nextValue = this._enforceFormat(nextValue);
-			this.valueState = ValueState.None;
-		} else {
-			this.valueState = ValueState.Error;
-		}
-
-
-		this.value = nextValue;
-		this.fireEvent("change", { value: nextValue, valid: isValid });
-		// Angular two way data binding
-		this.fireEvent("value-changed", { value: nextValue, valid: isValid });
+	_onInputSubmit(event) {
+		this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
 	}
 
 	/**
-	 * The ui5-input "input" event handler
+	 * The ui5-input "change" event handler - fire change event when the user focuses out of the input
+	 * @protected
+	 */
+	_onInputChange(event) {
+		this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
+	}
+
+	/**
+	 * The ui5-input "input" event handler - fire input even when the user types
 	 * @protected
 	 */
 	async _onInputInput(event) {
-		const nextValue = event.target.value;
-		const emptyValue = nextValue === "";
-		const isValid = emptyValue || this._checkValueValidity(nextValue);
-
-		this.value = nextValue;
-		this.fireEvent("input", { value: nextValue, valid: isValid });
+		this._updateValueAndFireEvents(event.target.value, false, ["input"]);
 	}
 
 	/**
 	 * @protected
 	 */
 	_checkValueValidity(value) {
-		return this.isValid(value) && this.isInValidRange(this._getTimeStampFromString(value));
+		if (value === "") {
+			return true;
+		}
+		return this.isValid(value) && this.isInValidRange(value);
 	}
 
 	_click(event) {
@@ -537,7 +539,11 @@ class DatePicker extends DateComponentBase {
 	 * @public
 	 */
 	isValid(value = "") {
-		return !!(value && this.getFormat().parse(value));
+		if (value === "") {
+			return true;
+		}
+
+		return !!this.getFormat().parse(value);
 	}
 
 	/**
@@ -550,37 +556,20 @@ class DatePicker extends DateComponentBase {
 			return true;
 		}
 
-		const pickedDate = new Date(value),
-			minDate = new Date(this._minDate.valueOf()),
-			maxDate = new Date(this._maxDate.valueOf());
-
-		if (minDate && maxDate) {
-			if (minDate <= pickedDate && maxDate >= pickedDate) {
-				return true;
-			}
-		} else if (minDate && !maxDate) {
-			if (minDate <= pickedDate) {
-				return true;
-			}
-		} else if (maxDate && !minDate) {
-			if (maxDate >= pickedDate) {
-				return true;
-			}
-		} else if (!maxDate && !minDate) {
-			return true;
-		}
-
-		return false;
+		const calendarDate = this._getCalendarDateFromString(value);
+		return calendarDate.valueOf() >= this._minDate.valueOf() && calendarDate.valueOf() <= this._maxDate.valueOf();
 	}
 
-	// because the parser understands more than one format
-	// but we need values in one format
-	_enforceFormat(value) {
+	/**
+	 * The parser understands many formats, but we need one format
+	 * @protected
+	 */
+	normalizeValue(value) {
 		if (value === "") {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value));
+		return this.getFormat().format(this.getFormat().parse(value, true));
 	}
 
 	get _displayFormat() {
@@ -662,47 +651,13 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	onSelectedDatesChange(event) {
-		const iNewValue = event.detail.dates && event.detail.dates[0];
-
-		const fireChange = this._handleCalendarSelectedDatesChange(event, iNewValue);
-
-		if (fireChange) {
-			this.fireEvent("change", { value: this.value, valid: true });
-			// Angular two way data binding
-			this.fireEvent("value-changed", { value: this.value, valid: true });
-		}
-
-		this.closePicker();
-	}
-
-	/**
-	 * @protected
-	 */
-	_handleCalendarSelectedDatesChange(event, newValue) {
-		this._updateValueCalendarSelectedDatesChange(newValue);
+		const timestamp = event.detail.dates && event.detail.dates[0];
+		const calendarDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
+		const newValue = this.getFormat().format(calendarDate.toUTCJSDate(), true);
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
 		this._focusInputAfterClose = true;
-
-		if (this.isInValidRange(this._getTimeStampFromString(this.value))) {
-			this.valueState = ValueState.None;
-		} else {
-			this.valueState = ValueState.Error;
-		}
-
-		return true;
-	}
-
-	/**
-	 * @protected
-	 */
-	_updateValueCalendarSelectedDatesChange(newValue) {
-		this.value = this.getFormat().format(
-			new Date(CalendarDate.fromTimestamp(
-				newValue * 1000,
-				this._primaryCalendarType
-			).valueOf()),
-			true
-		);
+		this.closePicker();
 	}
 
 	/**
@@ -776,7 +731,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	/**
-	 * Currently selected date represented as JavaScript Date instance.
+	 * Currently selected date represented as a Local JavaScript Date instance.
 	 *
 	 * @readonly
 	 * @type { Date }
@@ -784,6 +739,10 @@ class DatePicker extends DateComponentBase {
 	 */
 	get dateValue() {
 		return this.getFormat().parse(this.value);
+	}
+
+	get dateValueUTC() {
+		return this.getFormat().parse(this.value, true);
 	}
 
 	get styles() {
@@ -806,13 +765,6 @@ class DatePicker extends DateComponentBase {
 			Input,
 			Button,
 		];
-	}
-
-	static async onDefine() {
-		await Promise.all([
-			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
 	}
 }
 

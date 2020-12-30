@@ -1,5 +1,6 @@
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -17,14 +18,13 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.DateRangePicker.prototype */ {
 		/**
 		 * Determines the symbol which separates the dates.
+		 * If not supplied the default time interval delimiter for the current locale will be used.
 		 *
 		 * @type {string}
-		 * @defaultvalue "-"
 		 * @public
 		 */
 		delimiter: {
 			type: String,
-			defaultValue: "-",
 		},
 		/**
 		 * Defines the UNIX timestamp of the first date - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -123,57 +123,17 @@ class DateRangePicker extends DatePicker {
 	}
 
 	_splitValueByDelimiter(value) {
-		let returnValue = [];
-
-		if (!value) {
-			return ["", ""];
-		}
-
-		if (this.delimiter) {
-			returnValue = String(value).split(this.delimiter);
-		}
-
-		return returnValue;
+		return value ? value.split(this._effectiveDelimiter).map(date => date.trim()) : ["", ""];
 	}
 
-	_setValue(value) {
-		const emptyValue = value === "",
-			isValid = emptyValue || this._checkValueValidity(value);
-
-		if (value === this._prevValue) {
-			return this;
+	get _effectiveDelimiter() {
+		if (this.delimiter) {
+			return this.delimiter;
 		}
 
-		if (!value) {
-			this.value = "";
-			return;
-		}
-
-		const dates = this._splitValueByDelimiter(value);
-		if (!isValid) {
-			this.valueState = ValueState.Error;
-			console.warn("Value can not be converted to a valid dates", this); // eslint-disable-line
-			return;
-		}
-		this.valueState = ValueState.None;
-
-		let firstDate = this.getFormat().parse(dates[0]);
-		let lastDate;
-
-		if (dates.length > 1) {
-			lastDate = this.getFormat().parse(dates[1]);
-
-			if (firstDate > lastDate) {
-				const temp = firstDate;
-				firstDate = lastDate;
-				lastDate = temp;
-			}
-			this._lastDateTimestamp = CalendarDate.fromLocalJSDate(lastDate, this._primaryCalendarType).valueOf() / 1000;
-		}
-		this._firstDateTimestamp = CalendarDate.fromLocalJSDate(firstDate, this._primaryCalendarType).valueOf() / 1000;
-
-		this.value = this._formatValue(firstDate, lastDate);
-		this._prevValue = this.value;
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		const pattern = localeData.getIntervalPattern();
+		return pattern.slice(pattern.indexOf("{0}") + 3, pattern.indexOf("{1}")).trim();
 	}
 
 	/**
@@ -204,27 +164,7 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	get _placeholder() {
-		return this.placeholder !== undefined ? this.placeholder : this._displayFormat.concat(" ", this.delimiter, " ", this._displayFormat);
-	}
-
-	/**
-	 * @override
-	 */
-	_onInputChange(event) {
-		const nextValue = event.target.value;
-		const emptyValue = nextValue === "";
-		const isValid = emptyValue || this._checkValueValidity(nextValue);
-
-		if (isValid) {
-			this._setValue(nextValue);
-			this.valueState = ValueState.None;
-		} else {
-			this.valueState = ValueState.Error;
-		}
-
-		this.fireEvent("change", { value: nextValue, valid: isValid });
-		// Angular two way data binding
-		this.fireEvent("value-changed", { value: nextValue, valid: isValid });
+		return this.placeholder !== undefined ? this.placeholder : this._displayFormat.concat(" ", this._effectiveDelimiter, " ", this._displayFormat);
 	}
 
 	/**
@@ -234,37 +174,62 @@ class DateRangePicker extends DatePicker {
 		const input = this._getInput();
 		const caretPos = input.getCaretPosition();
 
-		this._setValue(this.value);
+		super._onInputSubmit(event);
 
 		await RenderScheduler.whenFinished();
-		// Return the caret on the previous position after rendering
-		input.setCaretPosition(caretPos);
+		input.setCaretPosition(caretPos); // Return the caret on the previous position after rendering
 	}
 
 	/**
-	 * @override
-	 */
-	_checkValueValidity(value) {
-		return this.isValid(value) && this.isInValidRange(value);
-	}
-
-	/**
+	 * Empty value is valid, but non-empty value is valid only if both parts are not empty and valid
 	 * @override
 	 */
 	isValid(value) {
-		return this._splitValueByDelimiter(value)
-			.map(dateString => super.isValid(dateString))
-			.every(valid => valid);
+		if (value === "") {
+			return true;
+		}
+
+		return this._splitValueByDelimiter(value).every(dateString => dateString && super.isValid(dateString));
 	}
 
 	/**
+	 * Empty value is in range, but non-empty value is in range if both parts are not empty and in range
 	 * @override
 	 */
 	isInValidRange(value) {
-		return this._splitValueByDelimiter(value)
-			.map(dateString => super.isInValidRange(this._getTimeStampFromString(dateString)))
-			.every(valid => valid);
+		if (value === "") {
+			return true;
+		}
+
+		return this._splitValueByDelimiter(value).every(dateString => dateString && super.isInValidRange(dateString));
 	}
+
+	/**
+	 * We enforce the correct format by processing the two parts separately and joining them again
+	 * @override
+	 */
+	normalizeValue(value) {
+		if (value === "") {
+			return value;
+		}
+
+		const dates = this._splitValueByDelimiter(value);
+
+		let firstLocalDate = this.getFormat().parse(super.normalizeValue(dates[0]));
+		let lastLocalDate = this.getFormat().parse(super.normalizeValue(dates[1]));
+
+		if (lastLocalDate.getTime() < firstLocalDate.getTime()) {
+			const temp = new Date(firstLocalDate);
+			firstLocalDate = new Date(lastLocalDate);
+			lastLocalDate = new Date(temp);
+		}
+
+		this._firstDateTimestamp = CalendarDate.fromLocalJSDate(firstLocalDate).valueOf() / 1000;
+		this._lastDateTimestamp = CalendarDate.fromLocalJSDate(lastLocalDate).valueOf() / 1000;
+
+		return this._buildValue(firstLocalDate, lastLocalDate);
+	}
+
 
 	/**
 	 * @override
@@ -272,16 +237,16 @@ class DateRangePicker extends DatePicker {
 	onSelectedDatesChange(event) {
 		const selectedDates = event.detail.dates;
 		if (selectedDates.length === 2) {
-			this.closePicker();
 			this._firstDateTimestamp = Math.min(...selectedDates);
 			this._lastDateTimestamp = Math.max(...selectedDates);
-			const fireChange = this._handleCalendarSelectedDatesChange(event, this._firstDateTimestamp);
 
-			if (fireChange) {
-				this.fireEvent("change", { value: this.value, valid: true });
-				// Angular two way data binding
-				this.fireEvent("value-changed", { value: this.value, valid: true });
-			}
+			const calStartDate = CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000, this._primaryCalendarType);
+			const calEndDate = CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000, this._primaryCalendarType);
+			const newValue = this._buildValue(calStartDate.toLocalJSDate(), calEndDate.toLocalJSDate());
+			this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
+
+			this._focusInputAfterClose = true;
+			this.closePicker();
 		} else {
 			this._firstDateTimestamp = selectedDates[0];
 			this._lastDateTimestamp = undefined;
@@ -293,6 +258,7 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	async _modifyDateValue(amount, unit) {
+		let flipped = false;
 		const emptyValue = this.value === "";
 		const isValid = emptyValue || this._checkValueValidity(this.value);
 
@@ -303,7 +269,7 @@ class DateRangePicker extends DatePicker {
 		const dates = this._splitValueByDelimiter(this.value);
 
 		const input = this._getInput();
-		const caretPos = input.getCaretPosition();
+		let caretPos = input.getCaretPosition();
 
 		const first = dates[0] && caretPos <= dates[0].trim().length + 1;
 		const last = dates[1] && (caretPos >= this.value.length - dates[1].trim().length - 1 && caretPos <= this.value.length);
@@ -311,28 +277,31 @@ class DateRangePicker extends DatePicker {
 		let lastDate = this.getFormat().parse(dates[1]);
 
 		if (first && firstDate) {
-			firstDate = modifyDateBy(CalendarDate.fromLocalJSDate(firstDate, this._primaryCalendarType), amount, unit, this._primaryCalendarType).toLocalJSDate();
+			firstDate = modifyDateBy(CalendarDate.fromLocalJSDate(firstDate, this._primaryCalendarType), amount, unit, this._primaryCalendarType, this._minDate, this._maxDate).toLocalJSDate();
 		} else if (last && lastDate) {
-			lastDate = modifyDateBy(CalendarDate.fromLocalJSDate(lastDate, this._primaryCalendarType), amount, unit, this._primaryCalendarType).toLocalJSDate();
+			lastDate = modifyDateBy(CalendarDate.fromLocalJSDate(lastDate, this._primaryCalendarType), amount, unit, this._primaryCalendarType, this._minDate, this._maxDate).toLocalJSDate();
 		}
 
-		this.value = this._formatValue(firstDate, lastDate);
+		if (firstDate.valueOf() > lastDate.valueOf()) {
+			flipped = true;
+		}
+
+		const newValue = this._buildValue(firstDate, lastDate);
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
 		await RenderScheduler.whenFinished();
 		// Return the caret on the previous position after rendering
+
+		if (flipped) {
+			const half = Math.ceil(this.value.length / 2);
+			if (caretPos < half) {
+				caretPos += (half + 1);
+			} else {
+				caretPos -= (half + 1);
+			}
+		}
+
 		input.setCaretPosition(caretPos);
-	}
-
-	/**
-	 * @override
-	 */
-	_updateValueCalendarSelectedDatesChange() {
-		const calStartDate = CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000, this._primaryCalendarType);
-		const calEndDate = CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000, this._primaryCalendarType);
-
-		// Collect both dates and merge them into one
-		this.value = this._formatValue(calStartDate.toLocalJSDate(), calEndDate.toLocalJSDate());
-		this._prevValue = this.value;
 	}
 
 	/**
@@ -342,9 +311,9 @@ class DateRangePicker extends DatePicker {
 	 * @param {int} lastDate locale end date
 	 * @returns {string} formated start to end date range
 	 */
-	_formatValue(firstDate, lastDate) {
+	_buildValue(firstDate, lastDate) {
 		let value = "";
-		const delimiter = this.delimiter,
+		const delimiter = this._effectiveDelimiter,
 			format = this.getFormat(),
 			firstDateString = firstDate && format.format(firstDate),
 			lastDateString = lastDate && format.format(lastDate);
