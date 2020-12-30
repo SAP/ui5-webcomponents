@@ -206,12 +206,6 @@ class DateTimePicker extends DatePicker {
 
 		this._calendarPreview = null; // preview of the calendar selection
 
-		this._hoursConfig = { // hours configuration (12/24 hour format)
-			minHour: 0,
-			maxHour: 0,
-			isTwelveHoursFormat: false,
-		};
-
 		const superFn = this._respPopoverConfig.afterClose;
 		this._respPopoverConfig.afterClose = () => {
 			superFn();
@@ -226,9 +220,18 @@ class DateTimePicker extends DatePicker {
 	 * LIFECYCLE METHODS
 	 */
 
-	onBeforeRendering() {
-		super.onBeforeRendering();
-		this.updateHoursFormatConfig();
+	get _hoursConfig() { // hours configuration (12/24 hour format)
+		const formatArray = this.getFormat().aFormatArray;
+
+		if (formatArray.length < 7) {
+			return { // does not contain time data
+				minHour: 0,
+				maxHour: 0,
+				isTwelveHoursFormat: false,
+			};
+		}
+
+		return getHoursConfigByFormat(formatArray[6].type);
 	}
 
 	onEnterDOM() {
@@ -715,19 +718,6 @@ class DateTimePicker extends DatePicker {
 	isTimeControlContained() {
 		const format = this.getFormat().aFormatArray;
 		return getTimeControlsByFormat(format, this._hoursConfig);
-	}
-
-	updateHoursFormatConfig() {
-		const formatArray = this.getFormat().aFormatArray;
-
-		if (formatArray.length < 7) {
-			return; // does not contain time data
-		}
-
-		const config = getHoursConfigByFormat(formatArray[6].type);
-		this._hoursConfig.minHour = config.minHour;
-		this._hoursConfig.maxHour = config.maxHour;
-		this._hoursConfig.isTwelveHoursFormat = config.isTwelveHoursFormat;
 	}
 }
 
