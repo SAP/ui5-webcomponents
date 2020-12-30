@@ -153,18 +153,19 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	isValid(value) {
-		return value === "" || this._splitValueByDelimiter(value).every(dateString => super.isValid(dateString));
+		const parts = this._splitValueByDelimiter(value);
+		return parts.length <= 2 && parts.every(dateString => super.isValid(dateString)); // must be at most 2 dates and each must be valid
 	}
 
 	/**
 	 * @override
 	 */
 	isInValidRange(value) {
-		return value === "" || this._splitValueByDelimiter(value).every(dateString => super.isInValidRange(dateString));
+		return this._splitValueByDelimiter(value).every(dateString => super.isInValidRange(dateString));
 	}
 
 	/**
-	 * Extract both dates as timestamps, flip if necessary, and build (which will use the desired format)
+	 * Extract both dates as timestamps, flip if necessary, and build (which will use the desired format so we enforce the format too)
 	 * @override
 	 */
 	normalizeValue(value) {
@@ -181,11 +182,11 @@ class DateRangePicker extends DatePicker {
 	 */
 	onSelectedDatesChange(event) {
 		const selectedDates = event.detail.dates;
-		if (selectedDates.length !== 2) {
+		if (selectedDates.length !== 2) { // Do nothing until the user selects 2 dates, we don't change any state at all for one date
 			return;
 		}
 
-		const newValue = this._buildValue(Math.min(...selectedDates), Math.max(...selectedDates));
+		const newValue = this._buildValue(...selectedDates); // the value will be normalized so we don't need to order them here
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 		this._focusInputAfterClose = true;
 		this.closePicker();
@@ -195,8 +196,7 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	async _modifyDateValue(amount, unit) {
-		// If empty or only one date -> treat as datepicker entirely
-		if (!this._lastDateTimestamp) {
+		if (!this._lastDateTimestamp) { // If empty or only one date -> treat as datepicker entirely
 			return super._modifyDateValue(amount, unit);
 		}
 
@@ -204,18 +204,18 @@ class DateRangePicker extends DatePicker {
 		let caretPos = input.getCaretPosition();
 		let newValue;
 
-		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date
+		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date -> change it and keep the seoond date
 			const firstDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000, this._primaryCalendarType), amount, unit, this._primaryCalendarType, this._minDate, this._maxDate);
 			const newFirstDateTimestamp = firstDateModified.valueOf() / 1000;
-			if (newFirstDateTimestamp > this._lastDateTimestamp) {
-				caretPos += Math.ceil(this.value.length / 2); // dates flipped -> move the caret to the same position on the last date
+			if (newFirstDateTimestamp > this._lastDateTimestamp) { // dates flipped -> move the caret to the same position but on the last date
+				caretPos += Math.ceil(this.value.length / 2);
 			}
-			newValue = this._buildValue(newFirstDateTimestamp, this._lastDateTimestamp); // the value will be normalized, it's ok if first date > last date
+			newValue = this._buildValue(newFirstDateTimestamp, this._lastDateTimestamp); // the value will be normalized so we don't try to order them here
 		} else {
 			const lastDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000, this._primaryCalendarType), amount, unit, this._primaryCalendarType, this._minDate, this._maxDate);
 			const newLastDateTimestamp = lastDateModified.valueOf() / 1000;
-			newValue = this._buildValue(this._firstDateTimestamp, newLastDateTimestamp); // the value will be normalized, it's ok if first date > last date
-			if (newLastDateTimestamp < this._firstDateTimestamp) { // dates flipped -> move the caret to the same position on the first date
+			newValue = this._buildValue(this._firstDateTimestamp, newLastDateTimestamp); // the value will be normalized so we don't try to order them here
+			if (newLastDateTimestamp < this._firstDateTimestamp) { // dates flipped -> move the caret to the same position but on the first date
 				caretPos -= Math.ceil(this.value.length / 2);
 			}
 		}
@@ -226,11 +226,11 @@ class DateRangePicker extends DatePicker {
 	}
 
 	get _effectiveDelimiter() {
-		return this.delimiter || this.constructor.getMetadata().getProperties().delimiter.defaultValue; // cannot be an empty string
+		return this.delimiter || this.constructor.getMetadata().getProperties().delimiter.defaultValue; // treat empty string as the default value
 	}
 
 	_splitValueByDelimiter(value) {
-		return value ? value.split(this._effectiveDelimiter).map(date => date.trim()) : ["", ""];
+		return value.split(this._effectiveDelimiter).map(date => date.trim()); // just split by delimiter and trim spaces
 	}
 
 	/**
@@ -242,7 +242,7 @@ class DateRangePicker extends DatePicker {
 			return undefined;
 		}
 
-		const dateStrings = this._splitValueByDelimiter(value);
+		const dateStrings = this._splitValueByDelimiter(value); // at least one item guaranteed due to the checks above (non-empty and valid)
 		return this.getFormat().parse(dateStrings[0], true).getTime() / 1000;
 	}
 
@@ -264,20 +264,18 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
-	 * Builds a string value out of two UTC timestamps
+	 * Builds a string value out of two UTC timestamps - this method is the counterpart to _extractFirstTimestamp/_extractLastTimestamp
 	 * @private
 	 */
 	_buildValue(firstDateTimestamp, lastDateTimestamp) {
 		if (firstDateTimestamp) {
-			const firstDate = CalendarDate.fromTimestamp(firstDateTimestamp * 1000, this._primaryCalendarType).toLocalJSDate();
-			const firstDateString = this.getFormat().format(firstDate);
+			const firstDateString = this._getStringFromTimestamp(firstDateTimestamp * 1000);
 
 			if (!lastDateTimestamp) {
 				return firstDateString;
 			}
 
-			const lastDate = CalendarDate.fromTimestamp(lastDateTimestamp * 1000, this._primaryCalendarType).toLocalJSDate();
-			const lastDateString = this.getFormat().format(lastDate);
+			const lastDateString = this._getStringFromTimestamp(lastDateTimestamp * 1000);
 			return `${firstDateString} ${this._effectiveDelimiter} ${lastDateString}`;
 		}
 

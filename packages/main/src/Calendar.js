@@ -195,7 +195,6 @@ class Calendar extends CalendarPart {
 		this._currentPicker = "year";
 	}
 
-
 	get _currentPickerDOM() {
 		return this.shadowRoot.querySelector(`[ui5-${this._currentPicker}picker]`);
 	}
