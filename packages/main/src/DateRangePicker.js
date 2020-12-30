@@ -1,6 +1,3 @@
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -18,29 +15,14 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.DateRangePicker.prototype */ {
 		/**
 		 * Determines the symbol which separates the dates.
-		 * If not supplied the default time interval delimiter for the current locale will be used.
+		 * If not supplied, the default time interval delimiter for the current locale will be used.
 		 *
 		 * @type {string}
 		 * @public
 		 */
 		delimiter: {
 			type: String,
-		},
-		/**
-		 * Defines the UNIX timestamp of the first date - seconds since 00:00:00 UTC on Jan 1, 1970.
-		 * @type {number}
-		 * @private
-		*/
-		_firstDateTimestamp: {
-			type: Integer,
-		},
-		/**
-		 * Defines the UNIX timestamp of the second date- seconds since 00:00:00 UTC on Jan 1, 1970.
-		 * @type {number}
-		 * @private
-		*/
-		_lastDateTimestamp: {
-			type: Integer,
+			defaultValue: "-",
 		},
 	},
 };
@@ -93,6 +75,14 @@ class DateRangePicker extends DatePicker {
 		return [DatePicker.styles, DateRangePickerCss];
 	}
 
+	get _firstDateTimestamp() {
+		return this._extractFirstTimestamp(this.value);
+	}
+
+	get _lastDateTimestamp() {
+		return this._extractLastTimestamp(this.value);
+	}
+
 	/**
 	 * Required by DatePicker.js
 	 * @override
@@ -102,16 +92,11 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
-	 * Required by DatePicker.js
+	 * Required by DatePicker.js - set the calendar focus on the first selected date (or today if not set)
 	 * @override
 	 */
 	get _calendarTimestamp() {
-		if (this.value && this._checkValueValidity(this.value)) {
-			const dateStrings = this._splitValueByDelimiter(this.value);
-			return this.getFormat().parse(dateStrings[0], true).getTime() / 1000;
-		}
-
-		return getRoundedTimestamp();
+		return this._firstDateTimestamp || getRoundedTimestamp();
 	}
 
 	/**
@@ -122,20 +107,6 @@ class DateRangePicker extends DatePicker {
 		return [this._firstDateTimestamp, this._lastDateTimestamp].filter(date => !!date);
 	}
 
-	_splitValueByDelimiter(value) {
-		return value ? value.split(this._effectiveDelimiter).map(date => date.trim()) : ["", ""];
-	}
-
-	get _effectiveDelimiter() {
-		if (this.delimiter) {
-			return this.delimiter;
-		}
-
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		const pattern = localeData.getIntervalPattern();
-		return pattern.slice(pattern.indexOf("{0}") + 3, pattern.indexOf("{1}")).trim();
-	}
-
 	/**
 	 * Currently selected first date represented as JavaScript Date instance.
 	 *
@@ -144,8 +115,7 @@ class DateRangePicker extends DatePicker {
 	 * @public
 	 */
 	get firstDateValue() {
-		const dateValue = new Date(this._firstDateTimestamp * 1000);
-		return new Date(dateValue.getUTCFullYear(), dateValue.getUTCMonth(), dateValue.getUTCDate(), dateValue.getUTCHours());
+		return CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000).toLocalJSDate();
 	}
 
 	/**
@@ -156,15 +126,14 @@ class DateRangePicker extends DatePicker {
 	 * @public
 	 */
 	get lastDateValue() {
-		const dateValue = new Date(this._lastDateTimestamp * 1000);
-		return new Date(dateValue.getUTCFullYear(), dateValue.getUTCMonth(), dateValue.getUTCDate(), dateValue.getUTCHours());
+		return CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000).toLocalJSDate();
 	}
 
 	/**
 	 * @override
 	 */
 	get _placeholder() {
-		return this.placeholder !== undefined ? this.placeholder : this._displayFormat.concat(" ", this._effectiveDelimiter, " ", this._displayFormat);
+		return this.placeholder !== undefined ? this.placeholder : `${this._displayFormat} ${this._effectiveDelimiter} ${this._displayFormat}`;
 	}
 
 	/**
@@ -181,152 +150,138 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
-	 * Empty value is valid, but non-empty value is valid only if both parts are not empty and valid
 	 * @override
 	 */
 	isValid(value) {
-		if (value === "") {
-			return true;
-		}
-
-		return this._splitValueByDelimiter(value).every(dateString => dateString && super.isValid(dateString));
+		return value === "" || this._splitValueByDelimiter(value).every(dateString => super.isValid(dateString));
 	}
 
 	/**
-	 * Empty value is in range, but non-empty value is in range if both parts are not empty and in range
 	 * @override
 	 */
 	isInValidRange(value) {
-		if (value === "") {
-			return true;
-		}
-
-		return this._splitValueByDelimiter(value).every(dateString => dateString && super.isInValidRange(dateString));
+		return value === "" || this._splitValueByDelimiter(value).every(dateString => super.isInValidRange(dateString));
 	}
 
 	/**
-	 * We enforce the correct format by processing the two parts separately and joining them again
+	 * Extract both dates as timestamps, flip if necessary, and build (which will use the desired format)
 	 * @override
 	 */
 	normalizeValue(value) {
-		if (value === "") {
-			return value;
+		const firstDateTimestamp = this._extractFirstTimestamp(value);
+		const lastDateTimestamp = this._extractLastTimestamp(value);
+		if (firstDateTimestamp && lastDateTimestamp && firstDateTimestamp > lastDateTimestamp) { // if both are timestamps (not undefined), flip if necessary
+			return this._buildValue(lastDateTimestamp, firstDateTimestamp);
 		}
-
-		const dates = this._splitValueByDelimiter(value);
-
-		let firstLocalDate = this.getFormat().parse(super.normalizeValue(dates[0]));
-		let lastLocalDate = this.getFormat().parse(super.normalizeValue(dates[1]));
-
-		if (lastLocalDate.getTime() < firstLocalDate.getTime()) {
-			const temp = new Date(firstLocalDate);
-			firstLocalDate = new Date(lastLocalDate);
-			lastLocalDate = new Date(temp);
-		}
-
-		this._firstDateTimestamp = CalendarDate.fromLocalJSDate(firstLocalDate).valueOf() / 1000;
-		this._lastDateTimestamp = CalendarDate.fromLocalJSDate(lastLocalDate).valueOf() / 1000;
-
-		return this._buildValue(firstLocalDate, lastLocalDate);
+		return this._buildValue(firstDateTimestamp, lastDateTimestamp);
 	}
-
 
 	/**
 	 * @override
 	 */
 	onSelectedDatesChange(event) {
 		const selectedDates = event.detail.dates;
-		if (selectedDates.length === 2) {
-			this._firstDateTimestamp = Math.min(...selectedDates);
-			this._lastDateTimestamp = Math.max(...selectedDates);
-
-			const calStartDate = CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000, this._primaryCalendarType);
-			const calEndDate = CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000, this._primaryCalendarType);
-			const newValue = this._buildValue(calStartDate.toLocalJSDate(), calEndDate.toLocalJSDate());
-			this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
-
-			this._focusInputAfterClose = true;
-			this.closePicker();
-		} else {
-			this._firstDateTimestamp = selectedDates[0];
-			this._lastDateTimestamp = undefined;
-			return false;
+		if (selectedDates.length !== 2) {
+			return;
 		}
+
+		const newValue = this._buildValue(Math.min(...selectedDates), Math.max(...selectedDates));
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
+		this._focusInputAfterClose = true;
+		this.closePicker();
 	}
 
 	/**
 	 * @override
 	 */
 	async _modifyDateValue(amount, unit) {
-		let flipped = false;
-		const emptyValue = this.value === "";
-		const isValid = emptyValue || this._checkValueValidity(this.value);
-
-		if (!isValid) {
-			return;
+		// If empty or only one date -> treat as datepicker entirely
+		if (!this._lastDateTimestamp) {
+			return super._modifyDateValue(amount, unit);
 		}
-
-		const dates = this._splitValueByDelimiter(this.value);
 
 		const input = this._getInput();
 		let caretPos = input.getCaretPosition();
+		let newValue;
 
-		const first = dates[0] && caretPos <= dates[0].trim().length + 1;
-		const last = dates[1] && (caretPos >= this.value.length - dates[1].trim().length - 1 && caretPos <= this.value.length);
-		let firstDate = this.getFormat().parse(dates[0]);
-		let lastDate = this.getFormat().parse(dates[1]);
-
-		if (first && firstDate) {
-			firstDate = modifyDateBy(CalendarDate.fromLocalJSDate(firstDate, this._primaryCalendarType), amount, unit, this._primaryCalendarType, this._minDate, this._maxDate).toLocalJSDate();
-		} else if (last && lastDate) {
-			lastDate = modifyDateBy(CalendarDate.fromLocalJSDate(lastDate, this._primaryCalendarType), amount, unit, this._primaryCalendarType, this._minDate, this._maxDate).toLocalJSDate();
+		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date
+			const firstDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000, this._primaryCalendarType), amount, unit, this._primaryCalendarType, this._minDate, this._maxDate);
+			const newFirstDateTimestamp = firstDateModified.valueOf() / 1000;
+			if (newFirstDateTimestamp > this._lastDateTimestamp) {
+				caretPos += Math.ceil(this.value.length / 2); // dates flipped -> move the caret to the same position on the last date
+			}
+			newValue = this._buildValue(newFirstDateTimestamp, this._lastDateTimestamp); // the value will be normalized, it's ok if first date > last date
+		} else {
+			const lastDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000, this._primaryCalendarType), amount, unit, this._primaryCalendarType, this._minDate, this._maxDate);
+			const newLastDateTimestamp = lastDateModified.valueOf() / 1000;
+			newValue = this._buildValue(this._firstDateTimestamp, newLastDateTimestamp); // the value will be normalized, it's ok if first date > last date
+			if (newLastDateTimestamp < this._firstDateTimestamp) { // dates flipped -> move the caret to the same position on the first date
+				caretPos -= Math.ceil(this.value.length / 2);
+			}
 		}
-
-		if (firstDate.valueOf() > lastDate.valueOf()) {
-			flipped = true;
-		}
-
-		const newValue = this._buildValue(firstDate, lastDate);
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
 		await RenderScheduler.whenFinished();
-		// Return the caret on the previous position after rendering
+		input.setCaretPosition(caretPos); // Return the caret to the previous (or the adjusted, if dates flipped) position after rendering
+	}
 
-		if (flipped) {
-			const half = Math.ceil(this.value.length / 2);
-			if (caretPos < half) {
-				caretPos += (half + 1);
-			} else {
-				caretPos -= (half + 1);
-			}
-		}
+	get _effectiveDelimiter() {
+		return this.delimiter || this.constructor.getMetadata().getProperties().delimiter.defaultValue; // cannot be an empty string
+	}
 
-		input.setCaretPosition(caretPos);
+	_splitValueByDelimiter(value) {
+		return value ? value.split(this._effectiveDelimiter).map(date => date.trim()) : ["", ""];
 	}
 
 	/**
-	 * Combines the start and end dates of a range into a formated string
-	 *
-	 * @param {int} firstDate locale start date
-	 * @param {int} lastDate locale end date
-	 * @returns {string} formated start to end date range
+	 * Returns a UTC timestamp, representing the first date in the value string or undefined if the value is empty
+	 * @private
 	 */
-	_buildValue(firstDate, lastDate) {
-		let value = "";
-		const delimiter = this._effectiveDelimiter,
-			format = this.getFormat(),
-			firstDateString = firstDate && format.format(firstDate),
-			lastDateString = lastDate && format.format(lastDate);
-
-		if (firstDateString) {
-			if (delimiter && delimiter !== "" && lastDateString) {
-				value = firstDateString.concat(" ", delimiter, " ", lastDateString);
-			} else {
-				value = firstDateString;
-			}
+	_extractFirstTimestamp(value) {
+		if (!value || !this._checkValueValidity(value)) {
+			return undefined;
 		}
 
-		return value;
+		const dateStrings = this._splitValueByDelimiter(value);
+		return this.getFormat().parse(dateStrings[0], true).getTime() / 1000;
+	}
+
+	/**
+	 * Returns a UTC timestamp, representing the last date in the value string or undefined if the value is empty or there is just one date
+	 * @private
+	 */
+	_extractLastTimestamp(value) {
+		if (!value || !this._checkValueValidity(value)) {
+			return undefined;
+		}
+
+		const dateStrings = this._splitValueByDelimiter(value);
+		if (dateStrings[1]) {
+			return this.getFormat().parse(dateStrings[1], true).getTime() / 1000;
+		}
+
+		return undefined;
+	}
+
+	/**
+	 * Builds a string value out of two UTC timestamps
+	 * @private
+	 */
+	_buildValue(firstDateTimestamp, lastDateTimestamp) {
+		if (firstDateTimestamp) {
+			const firstDate = CalendarDate.fromTimestamp(firstDateTimestamp * 1000, this._primaryCalendarType).toLocalJSDate();
+			const firstDateString = this.getFormat().format(firstDate);
+
+			if (!lastDateTimestamp) {
+				return firstDateString;
+			}
+
+			const lastDate = CalendarDate.fromTimestamp(lastDateTimestamp * 1000, this._primaryCalendarType).toLocalJSDate();
+			const lastDateString = this.getFormat().format(lastDate);
+			return `${firstDateString} ${this._effectiveDelimiter} ${lastDateString}`;
+		}
+
+		return "";
 	}
 }
 
