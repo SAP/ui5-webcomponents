@@ -453,9 +453,9 @@ class DatePicker extends DateComponentBase {
 			return;
 		}
 
-		let calendarDate = CalendarDate.fromLocalJSDate(this.dateValue, this._primaryCalendarType);
-		calendarDate = modifyDateBy(calendarDate, amount, unit, this._primaryCalendarType, this._minDate, this._maxDate);
-		const newValue = this.formatValue(calendarDate.toUTCJSDate());
+		let calendarDate = this.dateValue;
+		calendarDate = modifyDateBy(calendarDate, amount, unit, this.getFormat().parse(this._minDate), this.getFormat().parse(this._maxDate));
+		const newValue = this.formatValue(calendarDate);
 
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}

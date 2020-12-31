@@ -109,7 +109,7 @@ class CalendarPart extends DateComponentBase {
 	 * @protected
 	 */
 	_safelyModifyTimestampBy(amount, unit) {
-		const newDate = modifyDateBy(this._calendarDate, amount, unit, this._primaryCalendarType);
+		const newDate = modifyDateBy(this._localDate, amount, unit);
 		this._safelySetTimestamp(newDate.valueOf() / 1000);
 	}
 
