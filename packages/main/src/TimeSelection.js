@@ -12,7 +12,7 @@ import {
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
-import timeSelectionTemplate from "./generated/templates/timeSelectionTemplate.lit.js";
+import timeSelectionTemplate from "./generated/templates/TimeSelectionTemplate.lit.js";
 import WheelSlider from "./WheelSlider.js";
 import {
 	getHours,
