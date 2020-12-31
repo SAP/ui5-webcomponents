@@ -292,11 +292,6 @@ class TimePicker extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (!this.formatPattern) {
-			const localeData = getCachedLocaleDataInstance(getLocale());
-			this.formatPattern = localeData.getTimePattern(this.getFormat().oFormatOptions.style);
-		}
-
 		if (this.value === undefined) {
 			this.value = this.getFormat().format(new Date());
 		}
@@ -418,7 +413,11 @@ class TimePicker extends UI5Element {
 	}
 
 	get _formatPattern() {
-		return this.formatPattern || "medium"; // get from config
+		const hasHours = !!this.formatPattern.match(/H/i);
+		const fallback = !this.formatPattern || !hasHours;
+
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		return fallback ? localeData.getTimePattern("medium") : this.formatPattern;
 	}
 
 	get _isPattern() {

@@ -132,9 +132,8 @@ class TimeSelection extends UI5Element {
 	}
 
 	get _hoursConfiguration() {
-		const formatArray = this.getFormat().aFormatArray;
-		const formatToUse = formatArray[0] && formatArray[0].type ? formatArray[0].type : "hour0_23";
-		return getHoursConfigByFormat(formatToUse);
+		const hourFormat = this.getFormat().aFormatArray.find(item => item.type.startsWith("hour")); // try to find an entry for the hours
+		return getHoursConfigByFormat(hourFormat ? hourFormat.type : "hour0_23");
 	}
 
 	get _neededSliders() {

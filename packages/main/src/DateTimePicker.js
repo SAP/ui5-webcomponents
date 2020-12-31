@@ -3,32 +3,15 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
-import {
-	isLeft,
-	isRight,
-} from "@ui5/webcomponents-base/dist/Keys.js";
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
 import SegmentedButton from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
-import WheelSlider from "./WheelSlider.js";
-
-// time functions
-import {
-	getHours,
-	getMinutes,
-	getSeconds,
-	getHoursConfigByFormat,
-	getTimeControlsByFormat,
-} from "./timepicker-utils/TimeSlider.js";
+import TimeSelection from "./TimeSelection.js";
 
 // i18n texts
 import {
-	TIMEPICKER_HOURS_LABEL,
-	TIMEPICKER_MINUTES_LABEL,
-	TIMEPICKER_SECONDS_LABEL,
-	TIMEPICKER_PERIODS_LABEL,
 	TIMEPICKER_SUBMIT_BUTTON,
 	TIMEPICKER_CANCEL_BUTTON,
 	DATETIME_PICKER_DATE_BUTTON,
@@ -76,16 +59,6 @@ const metadata = {
 		 * @private
 		 */
 		_phoneMode: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the state the hours slider - expanded by default.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @private
-		 */
-		_hoursCollapsed: {
 			type: Boolean,
 		},
 
@@ -198,7 +171,7 @@ class DateTimePicker extends DatePicker {
 			Button,
 			ToggleButton,
 			SegmentedButton,
-			WheelSlider,
+			TimeSelection,
 		];
 	}
 
@@ -214,25 +187,12 @@ class DateTimePicker extends DatePicker {
 		super.onResponsivePopoverAfterClose();
 		this._showTimeView = false;
 		this._calendarPreview = null;
+		this.tempValue = null;
 	}
 
 	/**
 	 * LIFECYCLE METHODS
 	 */
-
-	get _hoursConfig() { // hours configuration (12/24 hour format)
-		const formatArray = this.getFormat().aFormatArray;
-
-		if (formatArray.length < 7) {
-			return { // does not contain time data
-				minHour: 0,
-				maxHour: 0,
-				isTwelveHoursFormat: false,
-			};
-		}
-
-		return getHoursConfigByFormat(formatArray[6].type);
-	}
 
 	onEnterDOM() {
 		ResizeHandler.register(document.body, this._handleResizeBound);
@@ -256,10 +216,7 @@ class DateTimePicker extends DatePicker {
 	 */
 	async openPicker(options) {
 		await super.openPicker(options);
-		await this.setSlidersValue();
-		this.expandHoursSlider();
 		this.storePreviousValue();
-		this._slidersDomRefs = await this.slidersDomRefs();
 	}
 
 	/**
@@ -280,11 +237,6 @@ class DateTimePicker extends DatePicker {
 		return super.isValid(value); // in order to be displayed in the DateTimePicker API reference
 	}
 
-	async slidersDomRefs() {
-		await this.getPicker();
-		return this.responsivePopover.getElementsByClassName("ui5-dt-wheel");
-	}
-
 	/**
 	 * Read-only getters
 	 */
@@ -302,7 +254,11 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get _formatPattern() {
-		return this.normalizePattern(this.formatPattern);
+		const hasHours = !!this.formatPattern.match(/H/i);
+		const fallback = !this.formatPattern || !hasHours;
+
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		return fallback ? localeData.getCombinedDateTimePattern("medium", "medium", this._primaryCalendarType) : this.formatPattern;
 	}
 
 	get _effectiveCalendarTimestamp() {
@@ -313,40 +269,12 @@ class DateTimePicker extends DatePicker {
 		return this._calendarPreview ? this._calendarPreview.selectedDates : this._calendarSelectedDates;
 	}
 
-	get secondsArray() {
-		return getSeconds();
-	}
-
-	get minutesArray() {
-		return getMinutes();
-	}
-
-	get hoursArray() {
-		return getHours(this._hoursConfig);
-	}
-
-	get periodsArray() {
-		return this.getFormat().aDayPeriods.map(x => x.toUpperCase());
+	get _effectiveTimeValue() {
+		return this.tempValue ? this.tempValue : this.value;
 	}
 
 	get openIconName() {
 		return "date-time";
-	}
-
-	get hoursLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_HOURS_LABEL);
-	}
-
-	get minutesLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_MINUTES_LABEL);
-	}
-
-	get secondsLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_SECONDS_LABEL);
-	}
-
-	get periodLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_PERIODS_LABEL);
 	}
 
 	get btnOKLabel() {
@@ -381,26 +309,6 @@ class DateTimePicker extends DatePicker {
 		return super.phone || this._phoneMode;
 	}
 
-	get shouldBuildHoursSlider() {
-		return this.isTimeControlContained()[0];
-	}
-
-	get shouldBuildMinutesSlider() {
-		return this.isTimeControlContained()[1];
-	}
-
-	get shouldBuildSecondsSlider() {
-		return this.isTimeControlContained()[2];
-	}
-
-	get shouldBuildPeriodsSlider() {
-		return this.isTimeControlContained()[3];
-	}
-
-	get _hoursExpanded() {
-		return !this._hoursCollapsed;
-	}
-
 	/**
 	 * Defines whether the dialog on mobile should have header
 	 * @private
@@ -413,15 +321,6 @@ class DateTimePicker extends DatePicker {
 	 * EVENT HANDLERS
 	 */
 
-	 /**
-	 * @override
-	 * Overwrite the method to update the time sliders.
-	 */
-	_onInputInput(event) {
-		super._onInputInput(event);
-		this.setSlidersValue();
-	}
-
 	/**
 	 * @override
 	 */
@@ -431,6 +330,10 @@ class DateTimePicker extends DatePicker {
 			timestamp: event.detail.timestamp,
 			dates: [newValue],
 		};
+	}
+
+	onTimeSelectionChange(event) {
+		this.tempValue = event.detail.value; // every time the user changes the sliders -> update tempValue
 	}
 
 	/**
@@ -443,15 +346,14 @@ class DateTimePicker extends DatePicker {
 
 		if (modeChange) {
 			this._phoneMode = toPhoneMode;
-			this.setSlidersValue();
 		}
 	}
 
 	/**
 	 * Handles clicking on the <code>submit</code> button, within the picker`s footer.
 	 */
-	async _submitClick() {
-		const selectedDate = await this.getCurrentDateTime();
+	_submitClick() {
+		const selectedDate = this.getCurrentDateTime();
 
 		this.value = this.getFormat().format(selectedDate);
 		const valid = this.isValid(this.value);
@@ -508,68 +410,12 @@ class DateTimePicker extends DatePicker {
 		this.previousValue = this.value;
 	}
 
-	/**
-	 * Normalizes the current <code>formatPattern</code>.
-	 *
-	 * Fallbacks to the default <code>formatPattern</code> according to the locale when:
-	 * - no format is set at all
-	 * - the format does not include hours
-	 *
-	 * @param {string} pattern The current <code>formatPattern</code>
-	 * @returns {string}
-	 */
-	normalizePattern(pattern) {
-		const hasHours = !!pattern.match(/H/i);
-		const fallback = !pattern || !hasHours;
-
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		return fallback ? localeData.getCombinedDateTimePattern("medium", "medium", this._primaryCalendarType) : pattern;
-	}
-
-	/**
-	 * Expands the "hours" time slider.
-	 */
-	expandHoursSlider() {
-		this._hoursCollapsed = false;
-	}
-
-	/**
-	 * Collapses the "hours" time slider.
-	 */
-	collapseHoursSlider() {
-		this._hoursCollapsed = true;
-	}
-
-	async getHoursSlider() {
-		return (await this.getPicker()).querySelector(".ui5-dt-hours-wheel");
-	}
-
-	async getMinutesSlider() {
-		return (await this.getPicker()).querySelector(".ui5-dt-minutes-wheel");
-	}
-
-	async getSecondsSlider() {
-		return (await this.getPicker()).querySelector(".ui5-dt-seconds-wheel");
-	}
-
-	async getPeriodsSlider() {
-		return (await this.getPicker()).querySelector(".ui5-dt-periods-wheel");
-	}
-
 	async getPicker() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
-	async getCurrentDateTime() {
-		// the time set in the timepicker
-		const selectedTime = new Date();
-		const timeValues = await this.getTimePickerValues();
-
-		selectedTime.setHours(timeValues.hours);
-		selectedTime.setMinutes(timeValues.minutes);
-		selectedTime.setSeconds(timeValues.seconds);
-
+	getCurrentDateTime() {
 		// the date set in the calendar
 		const currentCalendarValue = this.getFormat().format(
 			new Date(CalendarDate.fromTimestamp(
@@ -580,144 +426,13 @@ class DateTimePicker extends DatePicker {
 		);
 
 		// merge both the date and time
-		const selectedDate = this.getFormat().parse(currentCalendarValue) || selectedTime;
+		const selectedDate = this.getFormat().parse(currentCalendarValue);
+		const selectedTime = this.getFormat().parse(this.tempValue);
 		selectedDate.setHours(selectedTime.getHours());
 		selectedDate.setMinutes(selectedTime.getMinutes());
 		selectedDate.setSeconds(selectedTime.getSeconds());
 
 		return selectedDate;
-	}
-
-	async getTimePickerValues() {
-		const secondsSlider = await this.getSecondsSlider();
-		const minutesSlider = await this.getMinutesSlider();
-		const hoursSlider = await this.getHoursSlider();
-		const periodsSlider = await this.getPeriodsSlider();
-
-		let hours = hoursSlider ? hoursSlider.value : this._hoursConfig.minHour.toString();
-		const minutes = minutesSlider ? minutesSlider.value : "0";
-		const seconds = secondsSlider ? secondsSlider.value : "0";
-		const period = periodsSlider ? periodsSlider.value : this.periodsArray[0];
-
-		if (period === this.periodsArray[0]) { // AM
-			hours = hours === "12" ? 0 : hours;
-		}
-
-		if (period === this.periodsArray[1]) { // PM
-			hours = hours === "12" ? hours : hours * 1 + 12;
-		}
-
-		return {
-			hours,
-			minutes,
-			seconds,
-			period,
-		};
-	}
-
-	/**
-	 * Sets hours, minutes, seconds and period according to the current <code>value</code>
-	 * or the current time if the <code>value</code> is not set.
-	 */
-	async setSlidersValue() {
-		const currentDate = this.value ? this.getFormat().parse(this.value) : new Date();
-
-		if (currentDate) {
-			await this.setHours(currentDate.getHours());
-			await this.setMinutes(currentDate.getMinutes());
-			await this.setSeconds(currentDate.getSeconds());
-			await this.setPeriod(currentDate.getHours());
-		}
-	}
-
-	async setHours(value) {
-		let tempValue = "";
-		const hoursSlider = await this.getHoursSlider();
-		const config = this._hoursConfig;
-
-		if (hoursSlider) {
-			if (config.isTwelveHoursFormat && value > config.maxHour) {
-				tempValue = value - 12;
-			} else if (config.isTwelveHoursFormat && value < config.minHour) {
-				tempValue = value + 12;
-			} else {
-				tempValue = value;
-			}
-
-			hoursSlider.value = this.normalizeDigit(tempValue);
-		}
-	}
-
-	async setMinutes(value) {
-		const minutesSlider = await this.getMinutesSlider();
-
-		if (minutesSlider) {
-			minutesSlider.value = this.normalizeDigit(value);
-		}
-	}
-
-	async setSeconds(value) {
-		const secondsSlider = await this.getSecondsSlider();
-
-		if (secondsSlider) {
-			secondsSlider.value = this.normalizeDigit(value);
-		}
-	}
-
-	async setPeriod(hours) {
-		const config = this._hoursConfig;
-		const periodsSlider = await this.getPeriodsSlider();
-
-		if (!periodsSlider) {
-			return;
-		}
-
-		if (config.isTwelveHoursFormat) {
-			if (config.minHour === 1) {
-				periodsSlider.value = hours >= config.maxHour ? this.periodsArray[1] : this.periodsArray[0];
-			} else {
-				periodsSlider.value = (hours > config.maxHour || hours === config.minHour) ? this.periodsArray[1] : this.periodsArray[0];
-			}
-		}
-	}
-
-	async _ontimekeydown(event) {
-		if (isLeft(event)) {
-			let expandedSliderIndex = 0;
-			for (let i = 0; i < this._slidersDomRefs.length; i++) {
-				if (this._slidersDomRefs[i]._expanded) {
-					expandedSliderIndex = i;
-				}
-			}
-			if (this._slidersDomRefs[expandedSliderIndex - 1]) {
-				this._slidersDomRefs[expandedSliderIndex - 1].focus();
-			} else {
-				this._slidersDomRefs[this._slidersDomRefs.length - 1].focus();
-			}
-		} else if (isRight(event)) {
-			let expandedSliderIndex = 0;
-
-			for (let i = 0; i < this._slidersDomRefs.length; i++) {
-				if (this._slidersDomRefs[i]._expanded) {
-					expandedSliderIndex = i;
-				}
-			}
-			if (this._slidersDomRefs[expandedSliderIndex + 1]) {
-				this._slidersDomRefs[expandedSliderIndex + 1].focus();
-			} else {
-				this._slidersDomRefs[0].focus();
-			}
-		}
-	}
-
-	normalizeDigit(value) {
-		const valueAsString = value.toString();
-		return valueAsString.length === 1 ? `0${value}` : valueAsString;
-	}
-
-	isTimeControlContained() {
-		const format = this.getFormat().aFormatArray;
-		return getTimeControlsByFormat(format, this._hoursConfig);
 	}
 }
 
