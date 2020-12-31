@@ -62,15 +62,16 @@ const metadata = {
 		 * Indicates if the wheelslider is expanded.
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @private
+		 * @public
 		 */
-		_expanded: {
+		expanded: {
 			type: Boolean,
 		},
 
 		_items: {
 			type: String,
 			multiple: true,
+			compareValues: true,
 		},
 
 		_itemsToShow: {
@@ -163,7 +164,7 @@ class WheelSlider extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (!this._expanded && this.cyclic) {
+		if (!this.expanded && this.cyclic) {
 			const index = this._currentElementIndex % this._items.length;
 			this._currentElementIndex = (this._timesMultipliedOnCyclic() / 2) * this._items.length + index;
 		}
@@ -185,11 +186,11 @@ class WheelSlider extends UI5Element {
 			this._scroller.scrollContainer = this.shadowRoot.querySelector(`#${this._id}--wrapper`);
 		}
 
-		if (!this._expanded) {
+		if (!this.expanded) {
 			this._scroller.scrollTo(0, 0);
 		}
 
-		if (this._expanded) {
+		if (this.expanded) {
 			const elements = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item");
 			for (let i = 0; i < elements.length; i++) {
 				if (elements[i].textContent === this.value) {
@@ -212,12 +213,12 @@ class WheelSlider extends UI5Element {
 	}
 
 	expandSlider() {
-		this._expanded = true;
+		this.expanded = true;
 		this.fireEvent("expand", {});
 	}
 
 	collapseSlider() {
-		this._expanded = false;
+		this.expanded = false;
 		this.fireEvent("collapse", {});
 	}
 
@@ -258,7 +259,7 @@ class WheelSlider extends UI5Element {
 	}
 
 	_handleScrollTouchEnd() {
-		if (this._expanded) {
+		if (this.expanded) {
 			this._selectElementByIndex(this._currentElementIndex);
 		}
 	}
@@ -340,7 +341,7 @@ class WheelSlider extends UI5Element {
 		e.stopPropagation();
 		e.preventDefault();
 
-		if (e.timeStamp === this._prevWheelTimestamp || !this._expanded) {
+		if (e.timeStamp === this._prevWheelTimestamp || !this.expanded) {
 			return;
 		}
 
@@ -358,12 +359,12 @@ class WheelSlider extends UI5Element {
 			return;
 		}
 
-		if (this._expanded) {
+		if (this.expanded) {
 			this.value = e.target.textContent;
 			this._selectElement(e.target);
 			this.fireEvent("select", { value: this.value });
 		} else {
-			this._expanded = true;
+			this.expanded = true;
 		}
 	}
 
@@ -388,7 +389,7 @@ class WheelSlider extends UI5Element {
 	}
 
 	_onkeydown(е) {
-		if (!this._expanded) {
+		if (!this.expanded) {
 			return;
 		}
 
@@ -417,16 +418,6 @@ class WheelSlider extends UI5Element {
 		} else {
 			this._selectElementByIndex(intexIncrease);
 		}
-	}
-
-	_onfocusin(e) {
-		e.preventDefault();
-		this.expandSlider();
-	}
-
-	_onfocusout(e) {
-		e.preventDefault();
-		this.collapseSlider();
 	}
 }
 
