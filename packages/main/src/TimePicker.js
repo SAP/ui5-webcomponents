@@ -7,12 +7,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
-	isLeft,
-	isRight,
-	isTabNext,
-	isTabPrevious,
 	isShow,
 	isPageUp,
 	isPageDown,
@@ -23,27 +18,14 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import Icon from "./Icon.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
 import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
 import Input from "./Input.js";
 import Button from "./Button.js";
-import WheelSlider from "./WheelSlider.js";
-import {
-	getHours,
-	getMinutes,
-	getSeconds,
-	getHoursConfigByFormat,
-	getTimeControlsByFormat,
-} from "./timepicker-utils/TimeSlider.js";
+import TimeSelection from "./TimeSelection.js";
 
 import {
-	TIMEPICKER_HOURS_LABEL,
-	TIMEPICKER_MINUTES_LABEL,
-	TIMEPICKER_SECONDS_LABEL,
-	TIMEPICKER_PERIODS_LABEL,
 	TIMEPICKER_SUBMIT_BUTTON,
 	TIMEPICKER_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
@@ -153,22 +135,6 @@ const metadata = {
 		_isPickerOpen: {
 			type: Boolean,
 			noAttribute: true,
-		},
-
-		_respPopover: {
-			type: Object,
-		},
-
-		_hours: {
-			type: String,
-		},
-
-		_minutes: {
-			type: String,
-		},
-
-		_seconds: {
-			type: String,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
@@ -298,7 +264,7 @@ class TimePicker extends UI5Element {
 		return [
 			Icon,
 			ResponsivePopover,
-			WheelSlider,
+			TimeSelection,
 			Input,
 			Button,
 		];
@@ -315,32 +281,14 @@ class TimePicker extends UI5Element {
 		return [ResponsivePopoverCommonCss, TimePickerPopoverCss];
 	}
 
-
 	constructor() {
 		super();
-
-		this.prevValue = null;
-		this._isPickerOpen = false;
+		this.tempValue = null;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
 
-		this._respPopover = {
-			placementType: PopoverPlacementType.Bottom,
-			horizontalAlign: PopoverHorizontalAlign.Left,
-			allowTargetOverlap: true,
-			stayOpenOnScroll: true,
-			afterClose: () => {
-				this._isPickerOpen = false;
-				this.closePicker();
-			},
-		};
-
-		this._hoursParameters = {
-			minHour: 0,
-			maxHour: 0,
-			isTwelveHoursFormat: false,
-		};
-
-		this._slidersDomRefs = [];
+	onResponsivePopoverAfterClose() {
+		this._isPickerOpen = false;
 	}
 
 	onBeforeRendering() {
@@ -352,8 +300,6 @@ class TimePicker extends UI5Element {
 		if (this.value === undefined) {
 			this.value = this.getFormat().format(new Date());
 		}
-
-		this._initHoursFormatParameters();
 	}
 
 	async _handleInputClick() {
@@ -382,56 +328,7 @@ class TimePicker extends UI5Element {
 		const isValid = this.isValid(nextValue);
 
 		this.value = nextValue;
-		this.setSlidersValue();
 		this.fireEvent("input", { value: nextValue, valid: isValid });
-	}
-
-	setSlidersValue() {
-		const currentDate = this._getInput() ? this.getFormat().parse(this._getInput().getAttribute("value")) : null,
-			secondsSlider = this.secondsSlider,
-			minutesSlider = this.minutesSlider,
-			hoursSlider = this.hoursSlider,
-			periodsSlider = this.periodsSlider;
-
-		if (!currentDate) {
-			return;
-		}
-		if (hoursSlider) {
-			let tempValue = "";
-			if (this._hoursParameters.isTwelveHoursFormat && currentDate.getHours() > this._hoursParameters.maxHour) {
-				tempValue = currentDate.getHours() - 12;
-			} else if (this._hoursParameters.isTwelveHoursFormat && currentDate.getHours() < this._hoursParameters.minHour) {
-				tempValue = currentDate.getHours() + 12;
-			} else {
-				tempValue = currentDate.getHours();
-			}
-			if (tempValue.toString().length === 1) {
-				hoursSlider.value = `0${tempValue}`;
-			} else {
-				hoursSlider.value = tempValue.toString();
-			}
-		}
-		if (minutesSlider) {
-			const tempValue = currentDate.getMinutes();
-			if (tempValue.toString().length === 1) {
-				minutesSlider.value = `0${tempValue}`;
-			} else {
-				minutesSlider.value = tempValue.toString();
-			}
-		}
-		if (secondsSlider) {
-			const tempValue = currentDate.getSeconds();
-			if (tempValue.toString().length === 1) {
-				secondsSlider.value = `0${tempValue}`;
-			} else {
-				secondsSlider.value = tempValue.toString();
-			}
-		}
-		if (this._hoursParameters.isTwelveHoursFormat && periodsSlider && this._hoursParameters.minHour === 1) {
-			periodsSlider.value = currentDate.getHours() >= this._hoursParameters.maxHour ? this.periodsArray[1] : this.periodsArray[0];
-		} else if (this._hoursParameters.isTwelveHoursFormat && periodsSlider) {
-			periodsSlider.value = (currentDate.getHours() > this._hoursParameters.maxHour || currentDate.getHours() === this._hoursParameters.minHour) ? this.periodsArray[1] : this.periodsArray[0];
-		}
 	}
 
 	/**
@@ -439,13 +336,9 @@ class TimePicker extends UI5Element {
 	 * @public
 	 */
 	async closePicker() {
-		await this._getPopover();
-		this.responsivePopover.close();
+		const responsivePopover = await this._getPopover();
+		responsivePopover.close();
 		this._isPickerOpen = false;
-
-		for (let i = 0; i < this._slidersDomRefs.length; i++) {
-			this._slidersDomRefs[i].collapseSlider();
-		}
 	}
 
 	/**
@@ -455,25 +348,16 @@ class TimePicker extends UI5Element {
 	 * @public
 	 */
 	async openPicker() {
-		await this._getPopover();
-		this.responsivePopover.open(this);
+		const responsivePopover = await this._getPopover();
+		responsivePopover.open(this);
 		this._isPickerOpen = true;
-		this._slidersDomRefs = await this.slidersDomRefs();
-
-		this.setSlidersValue();
-
-		if (this._slidersDomRefs[0]) {
-			this._slidersDomRefs[0].focus();
-		}
 	}
 
 	togglePicker() {
 		if (this.isOpen()) {
 			this.closePicker();
-			this._isPickerOpen = false;
 		} else if (this._canOpenPicker()) {
 			this.openPicker();
-			this._isPickerOpen = true;
 		}
 	}
 
@@ -492,29 +376,7 @@ class TimePicker extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector("[ui5-responsive-popover]");
-		return this.responsivePopover;
-	}
-
-	get secondsArray() {
-		return getSeconds();
-	}
-
-	get minutesArray() {
-		return getMinutes();
-	}
-
-	get hoursArray() {
-		return getHours(this._hoursParameters);
-	}
-
-	get periodsArray() {
-		return this.getFormat().aDayPeriods.map(x => x.toUpperCase());
-	}
-
-	async slidersDomRefs() {
-		await this._getPopover();
-		return this.responsivePopover.default.length ? [...this.responsivePopover.default[0].children].filter(x => x.isUI5Element) : this.responsivePopover.default;
+		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
 	_getInput() {
@@ -526,57 +388,12 @@ class TimePicker extends UI5Element {
 		return input && input.getInputDOMRef();
 	}
 
-	get secondsSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-time-picker-seconds-wheelslider");
-	}
-
-	get minutesSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-time-picker-minutes-wheelslider");
-	}
-
-	get hoursSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-time-picker-hours-wheelslider");
-	}
-
-	get periodsSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-time-picker-period-wheelslider");
+	onTimeSelectionChange(event) {
+		this.tempValue = event.detail.value; // every time the user changes the sliders -> update tempValue
 	}
 
 	submitPickers() {
-		const selectedDate = new Date(),
-			secondsSlider = this.secondsSlider,
-			minutesSlider = this.minutesSlider,
-			hoursSlider = this.hoursSlider,
-			periodsSlider = this.periodsSlider,
-			minutes = minutesSlider ? minutesSlider.getAttribute("value") : "0",
-			seconds = secondsSlider ? secondsSlider.getAttribute("value") : "0",
-			period = periodsSlider ? periodsSlider.getAttribute("value") : this.periodsArray[0],
-			isTwelveHoursFormat = this._hoursParameters.isTwelveHoursFormat;
-
-		let hours = hoursSlider ? hoursSlider.getAttribute("value") : this._hoursParameters.minHour.toString();
-
-		if (isTwelveHoursFormat) {
-			if (period === this.periodsArray[0]) { // AM
-				hours = hours === "12" ? 0 : hours;
-			}
-
-			if (period === this.periodsArray[1]) { // PM
-				hours = hours === "12" ? hours : hours * 1 + 12;
-			}
-		}
-
-		selectedDate.setHours(hours);
-		selectedDate.setMinutes(minutes);
-		selectedDate.setSeconds(seconds);
-
-		this.setPrevValue(this.value);
-		this.setValue(this.getFormat().format(selectedDate));
-
-		if (this.prevValue !== this.value) {
-			this.fireEvent("change", { value: this.value, valid: true });
-			this.previousValue = this.value;
-		}
-
+		this.setValue(this.tempValue); // set tempValue to value (no need to nullify tempValue)
 		this.closePicker();
 	}
 
@@ -589,10 +406,7 @@ class TimePicker extends UI5Element {
 	 * @public
 	 */
 	isValid(value) {
-		if (value === "") {
-			return true;
-		}
-		return !!(value && this.getFormat().parse(value));
+		return value === "" || this.getFormat().parse(value);
 	}
 
 	normalizeValue(value) {
@@ -619,139 +433,40 @@ class TimePicker extends UI5Element {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
 	}
 
-	handleSliderClicked(event) {
-		if (event.target._expanded) {
-			this.openSlider(event.target.label);
-		}
-	}
-
-	openSlider(label) {
-		for (let i = 0; i < this._slidersDomRefs.length; i++) {
-			if (this._slidersDomRefs[i].label !== label) {
-				this._slidersDomRefs[i].collapseSlider();
-			}
-		}
-	}
-
-	async _onfocuscontainerin(e) {
-		if (e.target !== e.currentTarget) {
-			return;
-		}
-		let sliders = [];
-		if (this._slidersDomRefs.length) {
-			sliders = await this.slidersDomRefs();
-		} else {
-			sliders = this._slidersDomRefs;
-		}
-		if (sliders[0]) {
-			sliders[0].focus();
-		}
-	}
-
-	async _oncontainerkeydown(e) {
-		if (isLeft(e)) {
-			let expandedSliderIndex = 0;
-			for (let i = 0; i < this._slidersDomRefs.length; i++) {
-				if (this._slidersDomRefs[i]._expanded) {
-					expandedSliderIndex = i;
-				}
-			}
-			if (this._slidersDomRefs[expandedSliderIndex - 1]) {
-				this._slidersDomRefs[expandedSliderIndex - 1].focus();
-			} else {
-				this._slidersDomRefs[this._slidersDomRefs.length - 1].focus();
-			}
-		} else if (isRight(e)) {
-			let expandedSliderIndex = 0;
-
-			for (let i = 0; i < this._slidersDomRefs.length; i++) {
-				if (this._slidersDomRefs[i]._expanded) {
-					expandedSliderIndex = i;
-				}
-			}
-			if (this._slidersDomRefs[expandedSliderIndex + 1]) {
-				this._slidersDomRefs[expandedSliderIndex + 1].focus();
-			} else {
-				this._slidersDomRefs[0].focus();
-			}
-		}
-
-		if (isTabNext(e) && e.target === this._slidersDomRefs[this._slidersDomRefs.length - 1]) {
-			const responsivePopover = await this._getPopover();
-			e.preventDefault();
-			responsivePopover.querySelector(".ui5-time-picker-footer").firstElementChild.focus();
-		} else if (isTabPrevious(e) && e.target === this._slidersDomRefs[0]) {
-			const responsivePopover = await this._getPopover();
-			e.preventDefault();
-			responsivePopover.querySelector(`.ui5-time-picker-footer`).lastElementChild.focus();
-		}
-	}
-
-	_onfooterkeydown(e) {
-		if (isTabNext(e) && e.target === e.target.parentElement.lastElementChild) {
-			e.preventDefault();
-			this._slidersDomRefs[0].focus();
-		}
-
-		if (isTabPrevious(e) && e.target === e.target.parentElement.firstElementChild) {
-			e.preventDefault();
-			this._slidersDomRefs[this._slidersDomRefs.length - 1].focus();
-		}
-	}
-
-	_ontimepickerkeydown(e) {
-		this._handleTimepickerKeysDown(e);
-	}
-
-	_ontimepickerpopoverkeydown(e) {
-		this._handleTimepickerKeysDown(e);
-	}
-
-	_handleTimepickerKeysDown(e) {
+	_onkeydown(e) {
 		if (isShow(e)) {
 			e.preventDefault();
 			this.togglePicker();
-		}
-
-		if (this.isOpen()) {
-			return;
-		}
-
-		if (isPageUpShiftCtrl(e)) {
+		} else if (isPageUpShiftCtrl(e)) {
 			e.preventDefault();
-			this._incrementValue(true, false, false, true);
+			this._modifyValueBy(1, "second");
 		} else if (isPageUpShift(e)) {
 			e.preventDefault();
-			this._incrementValue(true, false, true, false);
+			this._modifyValueBy(1, "minute");
 		} else if (isPageUp(e)) {
 			e.preventDefault();
-			this._incrementValue(true, true, false, false);
-		}
-
-		if (isPageDownShiftCtrl(e)) {
+			this._modifyValueBy(1, "hour");
+		} else if (isPageDownShiftCtrl(e)) {
 			e.preventDefault();
-			this._incrementValue(false, false, false, true);
+			this._modifyValueBy(-1, "second");
 		} else if (isPageDownShift(e)) {
 			e.preventDefault();
-			this._incrementValue(false, false, true, false);
+			this._modifyValueBy(-1, "minute");
 		} else if (isPageDown(e)) {
 			e.preventDefault();
-			this._incrementValue(false, true, false, false);
+			this._modifyValueBy(-1, "hour");
 		}
 	}
 
-	_incrementValue(increment, hours, minutes, seconds) {
+	_modifyValueBy(amount, unit) {
 		const date = this.dateValue;
-		const incrementStep = increment ? 1 : -1;
 
-		if (hours && this.shouldBuildHoursSlider) {
-			date.setHours(date.getHours() + incrementStep);
-		} else if (minutes && this.shouldBuildMinutesSlider) {
-			date.setMinutes(date.getMinutes() + incrementStep);
-		} else if (seconds && this.shouldBuildSecondsSlider) {
-			date.setSeconds(date.getSeconds() + incrementStep);
-		} else {
-			return;
+		if (unit === "hour") {
+			date.setHours(date.getHours() + amount);
+		} else if (unit === "minute") {
+			date.setMinutes(date.getMinutes() + amount);
+		} else if (unit === "second") {
+			date.setSeconds(date.getSeconds() + amount);
 		}
 
 		this.setValue(this.formatValue(date));
@@ -780,16 +495,9 @@ class TimePicker extends UI5Element {
 	setValue(value) {
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
-			this.setSlidersValue();
 			this.valueState = ValueState.None;
 		} else {
 			this.valueState = ValueState.Error;
-		}
-	}
-
-	setPrevValue(value) {
-		if (this.isValid(value)) {
-			this.prevValue = this.normalizeValue(value);
 		}
 	}
 
@@ -803,20 +511,6 @@ class TimePicker extends UI5Element {
 		return this.getFormat().format(oDate);
 	}
 
-	_getSlidersContained() {
-		const formatArray = this.getFormat().aFormatArray;
-		return getTimeControlsByFormat(formatArray, this._hoursParameters);
-	}
-
-	_initHoursFormatParameters() {
-		const formatArray = this.getFormat().aFormatArray;
-		const config = getHoursConfigByFormat(formatArray[0].type);
-
-		this._hoursParameters.minHour = config.minHour;
-		this._hoursParameters.maxHour = config.maxHour;
-		this._hoursParameters.isTwelveHoursFormat = config.isTwelveHoursFormat;
-	}
-
 	/**
 	 * Currently selected date represented as JavaScript Date instance
 	 *
@@ -828,53 +522,12 @@ class TimePicker extends UI5Element {
 		return this.getFormat().parse(this.value);
 	}
 
-	get shouldBuildHoursSlider() {
-		return this._getSlidersContained()[0];
-	}
-
-	get shouldBuildMinutesSlider() {
-		return this._getSlidersContained()[1];
-	}
-
-	get shouldBuildSecondsSlider() {
-		return this._getSlidersContained()[2];
-	}
-
-	get shouldBuildPeriodsSlider() {
-		return this._getSlidersContained()[3];
-	}
-
-	get hoursSliderTitle() {
-		return this.i18nBundle.getText(TIMEPICKER_HOURS_LABEL);
-	}
-
-	get minutesSliderTitle() {
-		return this.i18nBundle.getText(TIMEPICKER_MINUTES_LABEL);
-	}
-
-	get secondsSliderTitle() {
-		return this.i18nBundle.getText(TIMEPICKER_SECONDS_LABEL);
-	}
-
-	get periodSliderTitle() {
-		return this.i18nBundle.getText(TIMEPICKER_PERIODS_LABEL);
-	}
-
 	get submitButtonLabel() {
 		return this.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}
 
 	get cancelButtonLabel() {
 		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
-	}
-
-	get classes() {
-		return {
-			container: {
-				"ui5-time-picker-sliders-container": true,
-				"ui5-phone": isPhone(),
-			},
-		};
 	}
 }
 

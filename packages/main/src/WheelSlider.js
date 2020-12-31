@@ -294,6 +294,11 @@ class WheelSlider extends UI5Element {
 
 		if (index < itemsCount && index > -1) {
 			this._scroller.scrollTo(0, scrollBy);
+			if (this._scroller.scrollContainer.clientHeight === 0) {
+				setTimeout(() => {
+					this._scroller.scrollTo(0, scrollBy);
+				}, 500);
+			}
 			this._currentElementIndex = index;
 			this.value = this._items[index - (this._getCurrentRepetition() * this._items.length)];
 			this.fireEvent("select", { value: this.value });

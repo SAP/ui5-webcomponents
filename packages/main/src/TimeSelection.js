@@ -131,12 +131,6 @@ class TimeSelection extends UI5Element {
 		this._slidersDomRefs = [];
 	}
 
-	onBeforeRendering() {
-		if (this.value === undefined) {
-			this.value = this.getFormat().format(new Date());
-		}
-	}
-
 	get _hoursConfiguration() {
 		const formatArray = this.getFormat().aFormatArray;
 		const formatToUse = formatArray[0] && formatArray[0].type ? formatArray[0].type : "hour0_23";
@@ -198,7 +192,7 @@ class TimeSelection extends UI5Element {
 
 	get _hours() {
 		let hours;
-		const dateValue = this.dateValue;
+		const dateValue = this.validDateValue;
 		if (this._hoursConfiguration.isTwelveHoursFormat && dateValue.getHours() > this._hoursConfiguration.maxHour) {
 			hours = dateValue.getHours() - 12;
 		} else if (this._hoursConfiguration.isTwelveHoursFormat && dateValue.getHours() < this._hoursConfiguration.minHour) {
@@ -213,12 +207,12 @@ class TimeSelection extends UI5Element {
 	}
 
 	get _minutes() {
-		const minutes = this.dateValue.getMinutes().toString();
+		const minutes = this.validDateValue.getMinutes().toString();
 		return minutes.length === 1 ? `0${minutes}` : minutes;
 	}
 
 	get _seconds() {
-		const seconds = this.dateValue.getSeconds().toString();
+		const seconds = this.validDateValue.getSeconds().toString();
 		return seconds.length === 1 ? `0${seconds}` : seconds;
 	}
 
@@ -228,7 +222,7 @@ class TimeSelection extends UI5Element {
 		}
 
 		let period;
-		const dateValue = this.dateValue;
+		const dateValue = this.validDateValue;
 		if (this._hoursConfiguration.minHour === 1) {
 			period = dateValue.getHours() >= this._hoursConfiguration.maxHour ? this.periodsArray[1] : this.periodsArray[0];
 		} else {
@@ -394,6 +388,10 @@ class TimeSelection extends UI5Element {
 
 	get dateValue() {
 		return this.value ? this.getFormat().parse(this.value) : new Date();
+	}
+
+	get validDateValue() {
+		return this.isValid(this.value) ? this.dateValue : new Date();
 	}
 
 	get hoursSliderTitle() {
