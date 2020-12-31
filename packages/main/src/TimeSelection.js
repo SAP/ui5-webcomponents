@@ -113,9 +113,7 @@ class TimeSelection extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [
-			WheelSlider,
-		];
+		return [WheelSlider];
 	}
 
 	static async onDefine() {
@@ -128,7 +126,6 @@ class TimeSelection extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-		this._slidersDomRefs = [];
 	}
 
 	get _hoursConfiguration() {
@@ -230,7 +227,8 @@ class TimeSelection extends UI5Element {
 		return period;
 	}
 
-	setValue(value) {
+	setValue(date) {
+		const value = this.formatValue(date);
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
 			this.fireEvent("change", { value: this.value, valid: true });
@@ -253,21 +251,21 @@ class TimeSelection extends UI5Element {
 
 		const date = this.dateValue;
 		date.setHours(hours);
-		this.setValue(this.formatValue(date));
+		this.setValue(date);
 	}
 
 	onMinutesChange(event) {
 		const minutes = event.detail.value;
 		const date = this.dateValue;
 		date.setMinutes(minutes);
-		this.setValue(this.formatValue(date));
+		this.setValue(date);
 	}
 
 	onSecondsChange(event) {
 		const seconds = event.detail.value;
 		const date = this.dateValue;
 		date.setSeconds(seconds);
-		this.setValue(this.formatValue(date));
+		this.setValue(date);
 	}
 
 	onPeriodChange(event) {
@@ -278,22 +276,11 @@ class TimeSelection extends UI5Element {
 		} if (period === this.periodsArray[1] && date.getHours() < 12) {
 			date.setHours(date.getHours() + 12);
 		}
-		this.setValue(this.formatValue(date));
+		this.setValue(date);
 	}
 
-	/**
-	 * Checks if a value is valid against the current format patternt of the TimeSelection.
-	 *
-	 * <br><br>
-	 * <b>Note:</b> an empty string is considered as valid value.
-	 * @param {string} value The value to be tested against the current date format
-	 * @public
-	 */
 	isValid(value) {
-		if (value === "") {
-			return true;
-		}
-		return !!(value && this.getFormat().parse(value));
+		return value === "" || this.getFormat().parse(value);
 	}
 
 	normalizeValue(value) {
@@ -315,10 +302,6 @@ class TimeSelection extends UI5Element {
 
 	get _isPattern() {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
-	}
-
-	get _displayFormat() {
-		return this.getFormat().oFormatOptions.pattern;
 	}
 
 	/**
