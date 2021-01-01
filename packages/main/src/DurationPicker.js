@@ -158,6 +158,30 @@ class DurationPicker extends TimePickerBase {
 	}
 
 	/**
+	 * The "value" property might be "02:03" (HH:ss) or just "12"(ss) but the ui5-time-selection component requires a value compliant with _formatPattern
+	 * We split the value and shift up to 3 times, filling the values for the configured units (based on hideHours, hideMinutes, hideSeconds)
+	 * @override
+	 */
+	get _effectiveValue() {
+		let hours = "00",
+			minutes = "00",
+			seconds = "00";
+
+		const parts = this.value.split(":");
+		if (parts.length && !this.hideHours) {
+			hours = parts.shift();
+		}
+		if (parts.length && !this.hideMinutes) {
+			minutes = parts.shift();
+		}
+		if (parts.length && !this.hideSeconds) {
+			seconds = parts.shift();
+		}
+
+		return `${hours}:${minutes}:${seconds}`;
+	}
+
+	/**
 	 * @override
 	 */
 	get openIconName() {
@@ -168,7 +192,10 @@ class DurationPicker extends TimePickerBase {
 	 * @override
 	 */
 	normalizeValue(value) {
-		value = super.normalizeValue(value);
+		if (value.length < 8) {
+			return value;
+		}
+		// value = super.normalizeValue(this.value);
 		const parts = value.split(":");
 		const newParts = [];
 		if (!this.hideHours) {

@@ -212,6 +212,10 @@ class TimePickerBase extends UI5Element {
 		return undefined;
 	}
 
+	get _effectiveValue() {
+		return this.value;
+	}
+
 	onTimeSelectionChange(event) {
 		this.tempValue = event.detail.value; // every time the user changes the sliders -> update tempValue
 	}
@@ -352,7 +356,7 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 */
 	get dateValue() {
-		return this.getFormat().parse(this.value);
+		return this.getFormat().parse(this._effectiveValue);
 	}
 
 	get _isPattern() {
