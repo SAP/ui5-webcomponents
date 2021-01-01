@@ -65,9 +65,8 @@ const metadata = {
 		 * Selected, but not yet confirmed date/time
 		 * @private
 		 */
-		_calendarPreview: {
+		_previewValues: {
 			type: Object,
-			defaultValue: null,
 		},
 
 		_currentTimeSlider: {
@@ -190,8 +189,7 @@ class DateTimePicker extends DatePicker {
 	onResponsivePopoverAfterClose() {
 		super.onResponsivePopoverAfterClose();
 		this._showTimeView = false;
-		this._calendarPreview = null;
-		this.tempValue = null;
+		this._previewValues = {};
 	}
 
 	/**
@@ -267,15 +265,15 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get _effectiveCalendarTimestamp() {
-		return this._calendarPreview ? this._calendarPreview.timestamp : this._calendarTimestamp;
+		return this._previewValues.calendarTimestamp ? this._previewValues.calendarTimestamp : this._calendarTimestamp;
 	}
 
 	get _effectiveCalendarSelectedDates() {
-		return this._calendarPreview ? this._calendarPreview.dates : this._calendarSelectedDates;
+		return this._previewValues.calendarSelectedDate ? [this._previewValues.calendarSelectedDate] : this._calendarSelectedDates;
 	}
 
 	get _effectiveTimeValue() {
-		return this.tempValue ? this.tempValue : this.value;
+		return this._previewValues.timeSelectionValue ? this._previewValues.timeSelectionValue : this.value;
 	}
 
 	get openIconName() {
@@ -330,15 +328,18 @@ class DateTimePicker extends DatePicker {
 	 * @override
 	 */
 	onSelectedDatesChange(event) {
-		const newValue = event.detail.dates && event.detail.dates[0];
-		this._calendarPreview = {
-			timestamp: event.detail.timestamp,
-			dates: [newValue],
+		this._previewValues = {
+			...this._previewValues,
+			calendarTimestamp: event.detail.timestamp,
+			calendarSelectedDate: event.detail.dates[0],
 		};
 	}
 
 	onTimeSelectionChange(event) {
-		this.tempValue = event.detail.value; // every time the user changes the sliders -> update tempValue
+		this._previewValues = {
+			...this._previewValues,
+			timeSelectionValue: event.detail.value,
+		};
 	}
 
 	onTimeSliderChange(event) {
