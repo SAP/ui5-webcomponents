@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -31,6 +32,8 @@ import {
 
 // Styles
 import timeSelectionCss from "./generated/themes/TimeSelection.css.js";
+
+const capitalizeFirst = str => str.substr(0,1).toUpperCase() + str.substr(1);
 
 /**
  * @public
@@ -66,6 +69,67 @@ const metadata = {
 		 */
 		formatPattern: {
 			type: String,
+		},
+
+		/**
+		 * Hides the hours slider regardless of formatPattern
+		 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+		 * @public
+		 */
+		hideHours: {
+			type: Boolean,
+		},
+
+		/**
+		 * Hides the minutes slider regardless of formatPattern
+		 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+		 * @public
+		 */
+		hideMinutes: {
+			type: Boolean,
+		},
+
+		/**
+		 * Hides the seconds slider regardless of formatPattern
+		 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+		 * @public
+		 */
+		hideSeconds: {
+			type: Boolean,
+		},
+
+		/**
+		 * The maximum number of hours to be displayed for the hours slider (only needed for the duration picker use case)
+		 * @public
+		 */
+		maxHours: {
+			type: Integer,
+		},
+
+		/**
+		 * The maximum number of minutes to be displayed for the minutes slider (only needed for the duration picker use case)
+		 * @public
+		 */
+		maxMinutes: {
+			type: Integer,
+		},
+
+		secondsStep: {
+			type: Integer,
+			defaultValue: 1,
+		},
+
+		minutesStep: {
+			type: Integer,
+			defaultValue: 1,
+		},
+
+		/**
+		 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
+		 * @public
+		 */
+		maxSeconds: {
+			type: Integer,
 		},
 
 		_currentSlider: {
@@ -141,15 +205,15 @@ class TimeSelection extends UI5Element {
 	}
 
 	get _hasHoursSlider() {
-		return this._neededSliders[0];
+		return this._neededSliders[0] && !this.hideHours;
 	}
 
 	get _hasMinutesSlider() {
-		return this._neededSliders[1];
+		return this._neededSliders[1] && !this.hideMinutes;
 	}
 
 	get _hasSecondsSlider() {
-		return this._neededSliders[2];
+		return this._neededSliders[2] && !this.hideSeconds;
 	}
 
 	get _hasPeriodsSlider() {
@@ -157,15 +221,15 @@ class TimeSelection extends UI5Element {
 	}
 
 	get secondsArray() {
-		return getSeconds();
+		return getSeconds(this.maxSeconds ? this.maxSeconds + 1 : undefined, this.secondsStep);
 	}
 
 	get minutesArray() {
-		return getMinutes();
+		return getMinutes(this.maxMinutes ? this.maxMinutes + 1 : undefined, this.minutesStep);
 	}
 
 	get hoursArray() {
-		return getHours(this._hoursConfiguration);
+		return getHours(this._hoursConfiguration, this.maxHours ? this.maxHours + 1 : undefined);
 	}
 
 	get periodsArray() {
@@ -326,9 +390,13 @@ class TimeSelection extends UI5Element {
 		return this.shadowRoot.querySelector(`[data-sap-slider="${this._currentSlider}"]`);
 	}
 
+	get _activeSliders() {
+		return ["hours", "minutes", "seconds", "period"].filter(slider => this[`_has${capitalizeFirst(slider)}Slider`]);
+	}
+
 	_onfocusin(event) {
 		if (!this._currentSlider) {
-			this._setCurrentSlider("hours");
+			this._setCurrentSlider(this._activeSliders[0]);
 		}
 
 		if (event.target === event.currentTarget) {
@@ -348,7 +416,7 @@ class TimeSelection extends UI5Element {
 		}
 		event.preventDefault();
 
-		const activeSliders = ["hours", "minutes", "seconds", "period"].filter((slider, index) => this._neededSliders[index]);
+		const activeSliders = this._activeSliders;
 		const activeSlider = event.target.closest("[ui5-wheelslider]").getAttribute("data-sap-slider");
 		let index = activeSliders.indexOf(activeSlider);
 		if (isLeft(event)) {
