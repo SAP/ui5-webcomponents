@@ -1,7 +1,6 @@
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
@@ -69,6 +68,11 @@ const metadata = {
 		_calendarPreview: {
 			type: Object,
 			defaultValue: null,
+		},
+
+		_currentTimeSlider: {
+			type: String,
+			defaultValue: "hours",
 		},
 	},
 };
@@ -216,6 +220,7 @@ class DateTimePicker extends DatePicker {
 	 */
 	async openPicker(options) {
 		await super.openPicker(options);
+		this._currentTimeSlider = "hours";
 		this.storePreviousValue();
 	}
 
@@ -266,7 +271,7 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get _effectiveCalendarSelectedDates() {
-		return this._calendarPreview ? this._calendarPreview.selectedDates : this._calendarSelectedDates;
+		return this._calendarPreview ? this._calendarPreview.dates : this._calendarSelectedDates;
 	}
 
 	get _effectiveTimeValue() {
@@ -336,10 +341,14 @@ class DateTimePicker extends DatePicker {
 		this.tempValue = event.detail.value; // every time the user changes the sliders -> update tempValue
 	}
 
+	onTimeSliderChange(event) {
+		this._currentTimeSlider = event.detail.slider;
+	}
+
 	/**
 	 * Handles document resize to switch between <code>phoneMode</code> and normal appearance.
 	 */
-	async _handleResize() {
+	_handleResize() {
 		const documentWidth = document.body.offsetWidth;
 		const toPhoneMode = documentWidth <= PHONE_MODE_BREAKPOINT;
 		const modeChange = (toPhoneMode && !this._phoneMode) || (!toPhoneMode && this._phoneMode); // XOR not allowed by lint
@@ -349,11 +358,15 @@ class DateTimePicker extends DatePicker {
 		}
 	}
 
+	get _submitDisabled() {
+		return !this._effectiveCalendarSelectedDates || !this._effectiveCalendarSelectedDates.length;
+	}
+
 	/**
 	 * Handles clicking on the <code>submit</code> button, within the picker`s footer.
 	 */
 	_submitClick() {
-		const selectedDate = this.getCurrentDateTime();
+		const selectedDate = this.getSelectedDateTime();
 
 		this.value = this.getFormat().format(selectedDate);
 		const valid = this.isValid(this.value);
@@ -371,7 +384,7 @@ class DateTimePicker extends DatePicker {
 	 * Handles clicking on the <code>cancel</code> button, within the picker`s footer,
 	 * that would disregard the user selection.
 	 */
-	async _cancelClick() {
+	_cancelClick() {
 		this.value = this.previousValue;
 		this.closePicker();
 	}
@@ -381,26 +394,12 @@ class DateTimePicker extends DatePicker {
 	 * between the date and time views.
 	 * @param {Event} event
 	 */
-	async _dateTimeSwitchChange(event) {
+	_dateTimeSwitchChange(event) {
 		this._showTimeView = event.target.getAttribute("key") === "Time";
-
 		if (this._showTimeView) {
-			this.expandHoursSlider();
+			this._currentTimeSlider = "hours";
 		}
 	}
-
-	/**
-	 * Handles clicking on "minutes", "seconds" and "periods" sliders.
-	 * <b>Note:</b> not bound for "hours" click
-	 * @param {Event} event
-	 */
-	_sliderClick() {
-		this.collapseHoursSlider();
-	}
-
-	/**
-	 * PRIVATE METHODS
-	 */
 
 	/**
 	 * Stores the <code>value</code> when the picker opens to compare with the <code>value</code>,
@@ -415,19 +414,9 @@ class DateTimePicker extends DatePicker {
 		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
-	getCurrentDateTime() {
-		// the date set in the calendar
-		const currentCalendarValue = this.getFormat().format(
-			new Date(CalendarDate.fromTimestamp(
-				this._effectiveCalendarTimestamp * 1000,
-				this._primaryCalendarType
-			).valueOf()),
-			true
-		);
-
-		// merge both the date and time
-		const selectedDate = this.getFormat().parse(currentCalendarValue);
-		const selectedTime = this.getFormat().parse(this.tempValue);
+	getSelectedDateTime() {
+		const selectedDate = new Date(this._effectiveCalendarSelectedDates[0] * 1000);
+		const selectedTime = this.getFormat().parse(this._effectiveTimeValue);
 		selectedDate.setHours(selectedTime.getHours());
 		selectedDate.setMinutes(selectedTime.getMinutes());
 		selectedDate.setSeconds(selectedTime.getSeconds());

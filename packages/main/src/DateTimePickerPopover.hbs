@@ -38,7 +38,9 @@
 				class="ui5-dt-time {{classes.dateTimeView}}"
 				value="{{_effectiveTimeValue}}"
 				format-pattern="{{_formatPattern}}"
+				._currentSlider="{{_currentTimeSlider}}"
 				@change="{{onTimeSelectionChange}}"
+				@slider-change="{{onTimeSliderChange}}"
 		></ui5-time-selection>
 	</div>
 {{/inline}}
@@ -49,6 +51,7 @@
 			id="ok"
 			class="ui5-dt-picker-action"
 			design="Emphasized"
+			?disabled="{{_submitDisabled}}"
 			@click="{{_submitClick}}"
 		>
 			{{btnOKLabel}}

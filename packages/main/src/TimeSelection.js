@@ -76,11 +76,13 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.TimeSelection.prototype */ {
 		/**
 		 * Fired when the value changes due to user interaction with the sliders
-		 *
-		 * @event
-		 * @public
 		 */
 		change: {},
+
+		/**
+		 * Fired when the expanded/collapsed slider changes (a new slider is expanded or the expanded slider is collapsed)
+		 */
+		sliderChange: {},
 	},
 };
 
@@ -309,7 +311,15 @@ class TimeSelection extends UI5Element {
 	 * @param event
 	 */
 	selectSlider(event) {
-		this._currentSlider = event.target.closest("[ui5-wheelslider]").getAttribute("data-sap-slider");
+		this._setCurrentSlider(event.target.closest("[ui5-wheelslider]").getAttribute("data-sap-slider"));
+	}
+
+	_setCurrentSlider(slider) {
+		if (this._currentSlider === slider) {
+			return;
+		}
+		this._currentSlider = slider;
+		this.fireEvent("slider-change", { slider });
 	}
 
 	get _currentSliderDOM() {
@@ -318,7 +328,7 @@ class TimeSelection extends UI5Element {
 
 	_onfocusin(event) {
 		if (!this._currentSlider) {
-			this._currentSlider = "hours";
+			this._setCurrentSlider("hours");
 		}
 
 		if (event.target === event.currentTarget) {
@@ -328,20 +338,24 @@ class TimeSelection extends UI5Element {
 
 	_onfocusout(event) {
 		if (!this.shadowRoot.contains(event.relatedTarget)) {
-			this._currentSlider = "";
+			this._setCurrentSlider("");
 		}
 	}
 
 	async _onkeydown(event) {
+		if (!(isLeft(event) || isRight(event))) {
+			return;
+		}
+
 		const activeSliders = ["hours", "minutes", "seconds", "period"].filter((slider, index) => this._neededSliders[index]);
-		const currentSlider = event.target.closest("[ui5-wheelslider]").getAttribute("data-sap-slider");
-		let index = activeSliders.indexOf(currentSlider);
+		const activeSlider = event.target.closest("[ui5-wheelslider]").getAttribute("data-sap-slider");
+		let index = activeSliders.indexOf(activeSlider);
 		if (isLeft(event)) {
 			index = index === 0 ? activeSliders.length - 1 : index - 1;
 		} else if (isRight(event)) {
 			index = index === activeSliders.length - 1 ? 0 : index + 1;
 		}
-		this._currentSlider = activeSliders[index];
+		this._setCurrentSlider(activeSliders[index]);
 		this._currentSliderDOM.focus();
 	}
 
