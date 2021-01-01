@@ -4,6 +4,7 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import {
 	isShow,
@@ -195,6 +196,22 @@ class TimePickerBase extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
+	/**
+	 * @abstract
+	 * @protected
+	 */
+	get _placeholder() {
+		return undefined;
+	}
+
+	/**
+	 * @abstract
+	 * @protected
+	 */
+	get _formatPattern() {
+		return undefined;
+	}
+
 	onTimeSelectionChange(event) {
 		this.tempValue = event.detail.value; // every time the user changes the sliders -> update tempValue
 	}
@@ -219,12 +236,6 @@ class TimePickerBase extends UI5Element {
 			inputField.select();
 		}
 	}
-
-	/**
-	 * @abstract
-	 * @protected
-	 */
-	isValid(value) {}
 
 	setValue(value) {
 		if (this.isValid(value)) {
@@ -334,18 +345,64 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
-	 * @abstract
-	 * @protected
+	 * Currently selected date represented as JavaScript Date instance
+	 *
+	 * @readonly
+	 * @type { Date }
+	 * @public
 	 */
 	get dateValue() {
-		return undefined;
+		return this.getFormat().parse(this.value);
+	}
+
+	get _isPattern() {
+		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
+	}
+
+	getFormat() {
+		let dateFormat;
+		if (this._isPattern) {
+			dateFormat = DateFormat.getInstance({
+				pattern: this._formatPattern,
+			});
+		} else {
+			dateFormat = DateFormat.getInstance({
+				style: this._formatPattern,
+			});
+		}
+
+		return dateFormat;
 	}
 
 	/**
-	 * @abstract
-	 * @protected
+	 * Formats a Java Script date object into a string representing a locale date and time
+	 * according to the <code>formatPattern</code> property of the TimePicker instance
+	 * @param {object} oDate A Java Script date object to be formatted as string
+	 * @public
 	 */
-	formatValue(date) {}
+	formatValue(oDate) {
+		return this.getFormat().format(oDate);
+	}
+
+	/**
+	 * Checks if a value is valid against the current format patternt of the TimePicker.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> an empty string is considered as valid value.
+	 * @param {string} value The value to be tested against the current date format
+	 * @public
+	 */
+	isValid(value) {
+		return value === "" || this.getFormat().parse(value);
+	}
+
+	normalizeValue(value) {
+		if (value === "") {
+			return value;
+		}
+
+		return this.getFormat().format(this.getFormat().parse(value));
+	}
 
 	_modifyValueBy(amount, unit) {
 		const date = this.dateValue;
@@ -374,6 +431,9 @@ class TimePickerBase extends UI5Element {
 		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
 
+	/**
+	 * @protected
+	 */
 	get openIconName() {
 		return "time-entry-request";
 	}

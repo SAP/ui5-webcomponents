@@ -1,8 +1,5 @@
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
-import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import TimePickerBase from "./TimePickerBase.js";
 
 /**
@@ -107,7 +104,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TimePicker
- * @extends UI5Element
+ * @extends TimePickerBase
  * @tagname ui5-time-picker
  * @public
  * @since 1.0.0-rc.6
@@ -115,26 +112,6 @@ const metadata = {
 class TimePicker extends TimePickerBase {
 	static get metadata() {
 		return metadata;
-	}
-
-	/**
-	 * Checks if a value is valid against the current format patternt of the TimePicker.
-	 *
-	 * <br><br>
-	 * <b>Note:</b> an empty string is considered as valid value.
-	 * @param {string} value The value to be tested against the current date format
-	 * @public
-	 */
-	isValid(value) {
-		return value === "" || this.getFormat().parse(value);
-	}
-
-	normalizeValue(value) {
-		if (value === "") {
-			return value;
-		}
-
-		return this.getFormat().format(this.getFormat().parse(value));
 	}
 
 	get _formatPattern() {
@@ -145,56 +122,12 @@ class TimePicker extends TimePickerBase {
 		return fallback ? localeData.getTimePattern("medium") : this.formatPattern;
 	}
 
-	get _isPattern() {
-		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
-	}
-
 	get _displayFormat() {
 		return this.getFormat().oFormatOptions.pattern;
 	}
 
 	get _placeholder() {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
-	}
-
-	getFormat() {
-		let dateFormat;
-		if (this._isPattern) {
-			dateFormat = DateFormat.getInstance({
-				pattern: this._formatPattern,
-			});
-		} else {
-			dateFormat = DateFormat.getInstance({
-				style: this._formatPattern,
-			});
-		}
-
-		return dateFormat;
-	}
-
-	/**
-	 * Formats a Java Script date object into a string representing a locale date and time
-	 * according to the <code>formatPattern</code> property of the TimePicker instance
-	 * @param {object} oDate A Java Script date object to be formatted as string
-	 * @public
-	 */
-	formatValue(oDate) {
-		return this.getFormat().format(oDate);
-	}
-
-	/**
-	 * Currently selected date represented as JavaScript Date instance
-	 *
-	 * @readonly
-	 * @type { Date }
-	 * @public
-	 */
-	get dateValue() {
-		return this.getFormat().parse(this.value);
-	}
-
-	get openIconName() {
-		return "time-entry-request";
 	}
 }
 

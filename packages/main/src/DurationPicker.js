@@ -144,7 +144,7 @@ const metadata = {
  * @since 1.0.0-rc.7
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DurationPicker
- * @extends UI5Element
+ * @extends TimePickerBase
  * @tagname ui5-duration-picker
  * @public
  */
@@ -160,20 +160,27 @@ class DurationPicker extends TimePickerBase {
 	/**
 	 * @override
 	 */
-	normalizeValue(value) {
-		return value;
-	}
-
-	isValid(value) {
-		return value === "" || value;
-	}
-
-	get dateValue() {
-		return new Date();
-	}
-
 	get openIconName() {
 		return "fob-watch";
+	}
+
+	/**
+	 * @override
+	 */
+	normalizeValue(value) {
+		value = super.normalizeValue(value);
+		const parts = value.split(":");
+		const newParts = [];
+		if (!this.hideHours) {
+			newParts.push(parts[0]);
+		}
+		if (!this.hideMinutes) {
+			newParts.push(parts[1]);
+		}
+		if (!this.hideSeconds) {
+			newParts.push(parts[2]);
+		}
+		return newParts.join(":");
 	}
 
 	get maxHours() {
