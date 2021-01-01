@@ -221,7 +221,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	submitPickers() {
-		this.setValue(this.tempValue); // set tempValue to value (no need to nullify tempValue)
+		this._updateValueAndFireEvents(this.tempValue, true, ["change", "value-changed"]);
 		this.closePicker();
 	}
 
@@ -241,30 +241,34 @@ class TimePickerBase extends UI5Element {
 		}
 	}
 
-	setValue(value) {
-		if (this.isValid(value)) {
-			this.value = this.normalizeValue(value);
-			this.valueState = ValueState.None;
-		} else {
+	_updateValueAndFireEvents(value, normalizeValue, events) {
+		const valid = this.isValid(value);
+		if (valid && normalizeValue) {
+			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
+		}
+
+		this.value = value;
+		this._updateValueState(); // Change the value state to Error/None, but only if needed
+		events.forEach(event => {
+			this.fireEvent(event, { value, valid });
+		});
+	}
+
+	_updateValueState() {
+		const isValid = this.isValid(this.value);
+		if (!isValid) { // If not valid - always set Error regardless of the current value state
 			this.valueState = ValueState.Error;
+		} else if (isValid && this.valueState === ValueState.Error) { // However if valid, change only Error (but not the others) to None
+			this.valueState = ValueState.None;
 		}
 	}
 
-	async _handleInputChange() {
-		const nextValue = await this._getInput().getInputValue();
-		const isValid = this.isValid(nextValue);
-
-		this.setValue(nextValue);
-		this.fireEvent("change", { value: nextValue, valid: isValid });
-		this.fireEvent("value-changed", { value: nextValue, valid: isValid });
+	async _handleInputChange(event) {
+		this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
 	}
 
-	async _handleInputLiveChange() {
-		const nextValue = await this._getInput().getInputValue();
-		const isValid = this.isValid(nextValue);
-
-		this.value = nextValue;
-		this.fireEvent("input", { value: nextValue, valid: isValid });
+	async _handleInputLiveChange(event) {
+		this._updateValueAndFireEvents(event.target.value, false, ["input"]);
 	}
 
 	/**
@@ -419,8 +423,8 @@ class TimePickerBase extends UI5Element {
 			date.setSeconds(date.getSeconds() + amount);
 		}
 
-		this.setValue(this.formatValue(date));
-		this.fireEvent("change", { value: this.value, valid: true });
+		const newValue = this.formatValue(date);
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
 	_handleWheel(e) {

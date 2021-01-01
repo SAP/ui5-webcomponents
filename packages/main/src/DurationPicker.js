@@ -211,15 +211,15 @@ class DurationPicker extends TimePickerBase {
 	}
 
 	get maxHours() {
-		return this.maxValue.split(":")[0];
+		return parseInt(this.maxValue.split(":")[0]);
 	}
 
 	get maxMinutes() {
-		return this.maxValue.split(":")[1];
+		return parseInt(this.maxValue.split(":")[1]);
 	}
 
 	get maxSeconds() {
-		return this.maxValue.split(":")[2];
+		return parseInt(this.maxValue.split(":")[2]);
 	}
 }
 
