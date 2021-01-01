@@ -33,7 +33,7 @@ import {
 // Styles
 import timeSelectionCss from "./generated/themes/TimeSelection.css.js";
 
-const capitalizeFirst = str => str.substr(0,1).toUpperCase() + str.substr(1);
+const capitalizeFirst = str => str.substr(0, 1).toUpperCase() + str.substr(1);
 
 /**
  * @public

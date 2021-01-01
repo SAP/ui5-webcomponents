@@ -1,4 +1,4 @@
-const generateTimeItemsArray = (x, step) => {
+const generateTimeItemsArray = (x, step = 1) => {
 	const array = [];
 	for (let i = 0; i < x; i++) {
 		if (i % step === 0) {
@@ -18,9 +18,9 @@ const getHours = (config, max) => {
 	let hoursValueArray = [];
 
 	if (config.isTwelveHoursFormat) {
-		hoursValueArray = generateTimeItemsArray(max || 12);
+		hoursValueArray = generateTimeItemsArray(max || 12, 1);
 	} else {
-		hoursValueArray = generateTimeItemsArray(max || 24);
+		hoursValueArray = generateTimeItemsArray(max || 24, 1);
 	}
 
 	if (config.minHour === 1) {
