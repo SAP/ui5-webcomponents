@@ -114,6 +114,14 @@ const metadata = {
 			type: Integer,
 		},
 
+		/**
+		 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
+		 * @public
+		 */
+		maxSeconds: {
+			type: Integer,
+		},
+
 		secondsStep: {
 			type: Integer,
 			defaultValue: 1,
@@ -122,14 +130,6 @@ const metadata = {
 		minutesStep: {
 			type: Integer,
 			defaultValue: 1,
-		},
-
-		/**
-		 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
-		 * @public
-		 */
-		maxSeconds: {
-			type: Integer,
 		},
 
 		_currentSlider: {

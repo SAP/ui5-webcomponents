@@ -522,6 +522,10 @@ class TimePicker extends UI5Element {
 	get cancelButtonLabel() {
 		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
+
+	get openIconName() {
+		return "time-entry-request";
+	}
 }
 
 TimePicker.define();

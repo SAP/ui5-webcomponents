@@ -685,6 +685,10 @@ class DurationPicker extends UI5Element {
 		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
 
+	get openIconName() {
+		return "fob-watch";
+	}
+
 	get classes() {
 		return {
 			container: {
