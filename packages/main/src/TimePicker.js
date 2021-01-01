@@ -291,12 +291,6 @@ class TimePicker extends UI5Element {
 		this._isPickerOpen = false;
 	}
 
-	onBeforeRendering() {
-		if (this.value === undefined) {
-			this.value = this.getFormat().format(new Date());
-		}
-	}
-
 	async _handleInputClick() {
 		if (this._isPickerOpen) {
 			return;
