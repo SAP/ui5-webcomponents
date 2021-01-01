@@ -3,7 +3,6 @@
     /* Calendar */
     --_ui5-calendar_width: 20rem;
     --_ui5-calendar_height: 24rem;
-    --_ui5-calendar_padding: 1rem 0.5rem 0 0.5rem;
 	--_ui5_calendar_header_height: 3rem;
 	--_ui5_calendar_header_width: 19rem;
 	--_ui5_calendar_header_top: 1rem;
@@ -105,7 +104,6 @@
     /* Calendar */
     --_ui5-calendar_width: 17rem;
     --_ui5-calendar_height: 17rem;
-    --_ui5-calendar_padding: 0.5rem 0.25rem 0 0.25rem;
 	--_ui5_calendar_header_height: 2rem;
     --_ui5_calendar_header_width: 16.5rem;
     --_ui5_calendar_header_top: 0.5rem;

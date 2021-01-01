@@ -346,6 +346,7 @@ class TimeSelection extends UI5Element {
 		if (!(isLeft(event) || isRight(event))) {
 			return;
 		}
+		event.preventDefault();
 
 		const activeSliders = ["hours", "minutes", "seconds", "period"].filter((slider, index) => this._neededSliders[index]);
 		const activeSlider = event.target.closest("[ui5-wheelslider]").getAttribute("data-sap-slider");

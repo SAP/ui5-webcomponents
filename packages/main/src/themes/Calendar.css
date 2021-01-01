@@ -14,7 +14,6 @@
     isolation: isolate;
     width: var(--_ui5-calendar_width);
     height: var(--_ui5-calendar_height);
-    padding: var(--_ui5-calendar_padding);
 }
 
 .ui5-cal-root .ui5-cal-content {
