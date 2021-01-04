@@ -79,9 +79,9 @@ describe("DateTimePicker general interaction", () => {
 		browser.keys("Space");
 
 		// select new time
-		picker.$(".ui5-dt-hours-wheel").setProperty("value","01");
-		picker.$(".ui5-dt-minutes-wheel").setProperty("value","02");
-		picker.$(".ui5-dt-seconds-wheel").setProperty("value","03");
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).setProperty("value","01");
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).setProperty("value","02");
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).setProperty("value","03");
 		picker.$("#ok").click();
 
 		// assert
@@ -158,7 +158,7 @@ describe("DateTimePicker general interaction", () => {
 
 		// assert
 		const picker = getPicker("dt");
-		const expanded = picker.$(".ui5-dt-hours-wheel").getProperty("_expanded");
+		const expanded = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getProperty("_expanded");
 		assert.strictEqual(expanded, true, "The  hours slider is expanded.");
 
 		closePickerById("dt");
@@ -171,10 +171,10 @@ describe("DateTimePicker general interaction", () => {
 		openPickerById("dtTest12AM");
 
 		const picker = getPicker("dtTest12AM");
-		picker.$(".ui5-dt-hours-wheel").setProperty("value","12");
-		picker.$(".ui5-dt-minutes-wheel").setProperty("value","00");
-		picker.$(".ui5-dt-seconds-wheel").setProperty("value","00");
-		picker.$(".ui5-dt-periods-wheel").setProperty("value","AM");
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).setProperty("value","12");
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).setProperty("value","00");
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).setProperty("value","00");
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`).setProperty("value","AM");
 		picker.$("#ok").click();
 
 		// assert
@@ -189,10 +189,10 @@ describe("DateTimePicker general interaction", () => {
 		openPickerById("dtTest12PM");
 
 		const picker = getPicker("dtTest12PM");
-		picker.$(".ui5-dt-hours-wheel").setProperty("value","12");
-		picker.$(".ui5-dt-minutes-wheel").setProperty("value","00");
-		picker.$(".ui5-dt-seconds-wheel").setProperty("value","00");
-		picker.$(".ui5-dt-periods-wheel").setProperty("value","PM");
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).setProperty("value","12");
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).setProperty("value","00");
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).setProperty("value","00");
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`).setProperty("value","PM");
 		picker.$("#ok").click();
 
 		// assert

@@ -22,9 +22,9 @@ describe("TimePicker general interaction", () => {
 		timepicker.setProperty("value", "11:12:13");
 		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
 
-		const hoursSliderValue = timepickerPopover.$(".ui5-time-picker-hours-wheelslider").getValue();
-		const minutesSliderValue = timepickerPopover.$(".ui5-time-picker-minutes-wheelslider").getValue();
-		const secondsSliderValue = timepickerPopover.$(".ui5-time-picker-seconds-wheelslider").getValue();
+		const hoursSliderValue = timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getValue();
+		const minutesSliderValue = timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).getValue();
+		const secondsSliderValue = timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).getValue();
 
 		// assert
 		assert.strictEqual(hoursSliderValue, "11", "Hours are equal");
@@ -39,9 +39,9 @@ describe("TimePicker general interaction", () => {
 
 		// act
 		timepickerPopover.setProperty("opened", true);
-		timepickerPopover.$(".ui5-time-picker-hours-wheelslider").setProperty("value","14");
-		timepickerPopover.$(".ui5-time-picker-minutes-wheelslider").setProperty("value","15");
-		timepickerPopover.$(".ui5-time-picker-seconds-wheelslider").setProperty("value","16");
+		timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).setProperty("value","14");
+		timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).setProperty("value","15");
+		timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).setProperty("value","16");
 		timepickerPopover.$("#submit").click();
 
 		const textValue = timepicker.shadow$("ui5-input").getValue();
@@ -87,7 +87,7 @@ describe("TimePicker general interaction", () => {
 
 		// act - submit value after changing time
 		icon.click();
-		timepickerPopover.$(".ui5-time-picker-hours-wheelslider").setProperty("value", "10");
+		timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).setProperty("value", "10");
 		timepickerPopover.$("#submit").click();
 
 		// assert
@@ -102,7 +102,7 @@ describe("TimePicker general interaction", () => {
 
 		// act - submit value after changing time
 		icon.click();
-		timepickerPopover.$(".ui5-time-picker-hours-wheelslider").setProperty("value", "11");
+		timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).setProperty("value", "11");
 		timepickerPopover.$("#submit").click();
 
 		// assert
