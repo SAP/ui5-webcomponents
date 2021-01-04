@@ -75,18 +75,18 @@ describe("DateTimePicker general interaction", () => {
 		// select the next day (the right from the selected)
 		const selectedDay = picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$(".ui5-dp-item--selected");
 		selectedDay.click();
-		selectedDay.keys("ArrowRight");
+		browser.keys("ArrowRight");
 		browser.keys("Space");
 
 		// select new time
 		const hours = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
-		hours.click(); hours.keys("PageDown"); // select 01
+		hours.click(); browser.keys("PageDown"); // select 01
 
 		const minutes = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`);
-		minutes.click(); minutes.keys("PageDown", "ArrowDown", "ArrowDown");// select 02
+		minutes.click(); browser.keys("PageDown", "ArrowDown", "ArrowDown");// select 02
 
 		const seconds = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`);
-		seconds.click(); seconds.keys("PageDown", "ArrowDown", "ArrowDown", "ArrowDown");// select 03
+		seconds.click(); browser.keys("PageDown", "ArrowDown", "ArrowDown", "ArrowDown");// select 03
 
 		picker.$("#ok").click();
 
@@ -182,16 +182,16 @@ describe("DateTimePicker general interaction", () => {
 
 		// select new time
 		const hours = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
-		hours.click(); hours.keys("PageUp"); // select 12
+		hours.click(); browser.keys("PageUp"); // select 12
 
 		const minutes = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`);
-		minutes.click(); minutes.keys("PageDown");// select 00
+		minutes.click(); browser.keys("PageDown");// select 00
 
 		const seconds = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`);
-		seconds.click(); seconds.keys("PageDown");// select 00
+		seconds.click(); browser.keys("PageDown");// select 00
 
 		const period = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`);
-		period.click(); period.keys("PageDown");// select AM
+		period.click(); browser.keys("PageDown");// select AM
 
 		picker.$("#ok").click();
 
@@ -210,16 +210,16 @@ describe("DateTimePicker general interaction", () => {
 
 		// select new time
 		const hours = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
-		hours.click(); hours.keys("PageUp"); // select 12
+		hours.click(); browser.keys("PageUp"); // select 12
 
 		const minutes = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`);
-		minutes.click(); minutes.keys("PageDown");// select 00
+		minutes.click(); browser.keys("PageDown");// select 00
 
 		const seconds = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`);
-		seconds.click(); seconds.keys("PageDown");// select 00
+		seconds.click(); browser.keys("PageDown");// select 00
 
 		const period = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`);
-		period.click(); period.keys("PageUp");// select AM
+		period.click(); browser.keys("PageUp");// select AM
 
 
 		picker.$("#ok").click();
