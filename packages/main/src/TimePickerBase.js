@@ -245,7 +245,7 @@ class TimePickerBase extends UI5Element {
 		if (value === this.value) {
 			return;
 		}
-		
+
 		const valid = this.isValid(value);
 		if (valid && normalizeValue) {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
