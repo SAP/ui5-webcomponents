@@ -37,7 +37,7 @@ const getTimeSlidersCount = id => {
 	const picker = getPicker(id);
 
 	return browser.execute( picker => {
-		return picker.querySelectorAll("ui5-wheelslider").length;
+		return picker.querySelector("ui5-time-selection").shadowRoot.querySelectorAll("ui5-wheelslider").length;
 	}, picker);
 }
 
@@ -79,9 +79,15 @@ describe("DateTimePicker general interaction", () => {
 		browser.keys("Space");
 
 		// select new time
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).setProperty("value","01");
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).setProperty("value","02");
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).setProperty("value","03");
+		const hours = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
+		hours.click(); hours.keys("PageDown"); // select 01
+
+		const minutes = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`);
+		minutes.click(); minutes.keys("PageDown", "ArrowDown");// select 02
+
+		const seconds = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`);
+		seconds.click(); seconds.keys("PageDown", "ArrowDown", "ArrowDown");// select 03
+
 		picker.$("#ok").click();
 
 		// assert
@@ -93,10 +99,12 @@ describe("DateTimePicker general interaction", () => {
 		// test submit from empty value to current date/time value
 		openPickerById("dt1");
 
+		const picker = getPicker("dt1");
 		const inputCounter = browser.$("#input1");
 		const submitBtn = getSubmitButton("dt1");
 
 		// act
+		picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$("[data-sap-focus-ref]").click(); // select a date to enable the OK button
 		submitBtn.click();
 
 		// assert
@@ -158,7 +166,7 @@ describe("DateTimePicker general interaction", () => {
 
 		// assert
 		const picker = getPicker("dt");
-		const expanded = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getProperty("_expanded");
+		const expanded = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getProperty("expanded");
 		assert.strictEqual(expanded, true, "The  hours slider is expanded.");
 
 		closePickerById("dt");
@@ -171,10 +179,20 @@ describe("DateTimePicker general interaction", () => {
 		openPickerById("dtTest12AM");
 
 		const picker = getPicker("dtTest12AM");
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).setProperty("value","12");
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).setProperty("value","00");
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).setProperty("value","00");
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`).setProperty("value","AM");
+
+		// select new time
+		const hours = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
+		hours.click(); hours.keys("PageUp"); // select 12
+
+		const minutes = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`);
+		minutes.click(); minutes.keys("PageDown");// select 00
+
+		const seconds = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`);
+		seconds.click(); seconds.keys("PageDown");// select 00
+
+		const period = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`);
+		period.click(); period.keys("PageDown");// select AM
+
 		picker.$("#ok").click();
 
 		// assert
@@ -189,10 +207,21 @@ describe("DateTimePicker general interaction", () => {
 		openPickerById("dtTest12PM");
 
 		const picker = getPicker("dtTest12PM");
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).setProperty("value","12");
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).setProperty("value","00");
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).setProperty("value","00");
-		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`).setProperty("value","PM");
+
+		// select new time
+		const hours = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
+		hours.click(); hours.keys("PageUp"); // select 12
+
+		const minutes = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`);
+		minutes.click(); minutes.keys("PageDown");// select 00
+
+		const seconds = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`);
+		seconds.click(); seconds.keys("PageDown");// select 00
+
+		const period = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`);
+		period.click(); period.keys("PageUp");// select AM
+
+
 		picker.$("#ok").click();
 
 		// assert

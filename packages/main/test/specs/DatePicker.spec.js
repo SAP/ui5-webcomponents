@@ -50,15 +50,6 @@ describe("Date Picker Tests", () => {
 		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
-	it("Can focus the input after open", () => {
-		datepicker.id = "#dp1";
-		datepicker.openPicker({ focusInput: true });
-		const a = datepicker.innerInput.isFocusedDeep();
-
-		console.log(datepicker.innerInput.isFocusedDeep());
-		assert.ok(a, "inner input is focused");
-	});
-
 	it("Value State Message", () => {
 		datepicker.id = "#dp17"
 		datepicker.input.click();
@@ -680,7 +671,7 @@ describe("Date Picker Tests", () => {
 		datepicker.root.keys("Jan 8, 2100");
 		datepicker.root.keys("Enter");
 
-		datepicker.openPicker({ focusInput: false });
+		datepicker.openPicker();
 
 		datepicker.btnYear.click();
 		assert.ok(datepicker.getDisplayedYear(11).hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
@@ -692,7 +683,7 @@ describe("Date Picker Tests", () => {
 	it("Months are disabled when out of range", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.openPicker({ focusInput: false });
+		datepicker.openPicker();
 
 		datepicker.btnMonth.click();
 		assert.ok(datepicker.getDisplayedMonth(10).hasClass("ui5-mp-item--disabled"), "Months out of range are disabled");
@@ -705,7 +696,7 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp33";
 
 		datepicker.root.keys("Escape");
-		datepicker.openPicker({ focusInput: false });
+		datepicker.openPicker();
 
 		assert.ok(datepicker.getDisplayedDay(15).hasClass("ui5-dp-item--disabled"), "Days out of range are disabled");
 	});
@@ -715,7 +706,7 @@ describe("Date Picker Tests", () => {
 		datepicker.root.keys("Escape");
 
 		datepicker.id = "#dp34";
-		datepicker.openPicker({ focusInput: false });
+		datepicker.openPicker();
 		assert.ok(datepicker.getDisplayedDay(14).isFocusedDeep(), "Days out of range are disabled");
 	});
 
@@ -723,7 +714,7 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp33";
 
 		datepicker.root.keys("Escape");
-		datepicker.openPicker({ focusInput: false });
+		datepicker.openPicker();
 
 		assert.equal(datepicker.getDisplayedDay(9).hasClass("ui5-dp-item--disabled"), false , "Min date is included");
 		assert.equal(datepicker.getDisplayedDay(11).hasClass("ui5-dp-item--disabled"), false, "Max date is included");
@@ -780,7 +771,7 @@ describe("Date Picker Tests", () => {
 		// browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		// datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		// datepicker.id = "#dp13";
-		// datepicker.openPicker({ focusInput: true });
+		// datepicker.openPicker();
 		// datepicker.root.keys("May 3, 2100");
 		// datepicker.root.keys("Enter");
 
@@ -796,7 +787,7 @@ describe("Date Picker Tests", () => {
 		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
-		datepicker.openPicker({ focusInput: true });
+		datepicker.openPicker();
 		datepicker.root.keys("May 3, 2100");
 		datepicker.root.keys("Enter");
 
@@ -817,7 +808,7 @@ describe("Date Picker Tests", () => {
 		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
-		datepicker.openPicker({ focusInput: true });
+		datepicker.openPicker();
 		datepicker.root.keys("May 3, 2100");
 		datepicker.root.keys("Enter");
 

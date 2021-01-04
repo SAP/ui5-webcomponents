@@ -17,7 +17,6 @@ import {
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
@@ -339,17 +338,6 @@ class DatePicker extends DateComponentBase {
 		} else if (this._focusInputAfterClose) {
 			this._getInput().focus();
 			this._focusInputAfterClose = false;
-		}
-	}
-
-	/**
-	 * @protected
-	 */
-	async onResponsivePopoverAfterOpen() {
-		await RenderScheduler.whenFinished();
-		if (this._focusInputAfterOpen) {
-			this._focusInputAfterOpen = false;
-			this._getInput().focus();
 		}
 	}
 
@@ -677,19 +665,12 @@ class DatePicker extends DateComponentBase {
 
 	/**
 	 * Opens the picker.
-	 * @param {object} options A JSON object with additional configuration.<br>
-	 * <code>{ focusInput: true }</code> By default, the focus goes in the picker after opening it.
-	 * Specify this option to focus the input field.
 	 * @public
 	 */
-	async openPicker(options) {
+	async openPicker() {
 		this._isPickerOpen = true;
 		this._calendarCurrentPicker = "day";
 		this.responsivePopover = await this._respPopover();
-
-		if (options && options.focusInput) {
-			this._focusInputAfterOpen = true;
-		}
 
 		this.responsivePopover.open(this);
 	}

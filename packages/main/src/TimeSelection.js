@@ -315,28 +315,28 @@ class TimeSelection extends UI5Element {
 			}
 		}
 
-		const date = this.dateValue;
+		const date = this.validDateValue;
 		date.setHours(hours);
 		this.setValue(date);
 	}
 
 	onMinutesChange(event) {
 		const minutes = event.detail.value;
-		const date = this.dateValue;
+		const date = this.validDateValue;
 		date.setMinutes(minutes);
 		this.setValue(date);
 	}
 
 	onSecondsChange(event) {
 		const seconds = event.detail.value;
-		const date = this.dateValue;
+		const date = this.validDateValue;
 		date.setSeconds(seconds);
 		this.setValue(date);
 	}
 
 	onPeriodChange(event) {
 		const period = event.detail.value;
-		const date = this.dateValue;
+		const date = this.validDateValue;
 		if (period === this.periodsArray[0] && date.getHours() >= 12) {
 			date.setHours(date.getHours() - 12);
 		} if (period === this.periodsArray[1] && date.getHours() < 12) {

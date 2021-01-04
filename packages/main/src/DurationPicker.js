@@ -167,6 +167,27 @@ class DurationPicker extends TimePickerBase {
 		return metadata;
 	}
 
+	/**
+	 * In order to keep the existing behavior (although not consistent with the other picker components), we enforce limits and step on each change and initially
+	 */
+	onBeforeRendering() {
+		const value = this.value;
+		if (this.isValid(value)) {
+			this.value = this.normalizeValue(value);
+		}
+	}
+
+	/**
+	 * In order to keep the existing behavior (although not consistent with the other picker components), we do not update "value" on input, only fire event
+	 * @override
+	 */
+	async _handleInputLiveChange(event) {
+		const value = event.target.value;
+		const valid = this.isValid(value);
+		this._updateValueState(); // Change the value state to Error/None, but only if needed
+		this.fireEvent("input", { value, valid });
+	}
+
 	get _formatPattern() {
 		return "HH:mm:ss";
 	}
@@ -177,7 +198,7 @@ class DurationPicker extends TimePickerBase {
 	 * @override
 	 */
 	get _effectiveValue() {
-		return this._toFullFormat(this.value);
+		return this.isValid(this.value) ? this._toFullFormat(this.value) : "00:00:00";
 	}
 
 	/**

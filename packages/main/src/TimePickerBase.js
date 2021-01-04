@@ -242,11 +242,16 @@ class TimePickerBase extends UI5Element {
 	}
 
 	_updateValueAndFireEvents(value, normalizeValue, events) {
+		if (value === this.value) {
+			return;
+		}
+		
 		const valid = this.isValid(value);
 		if (valid && normalizeValue) {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 
+		this.value = "";
 		this.value = value;
 		this._updateValueState(); // Change the value state to Error/None, but only if needed
 		events.forEach(event => {
@@ -414,6 +419,9 @@ class TimePickerBase extends UI5Element {
 
 	_modifyValueBy(amount, unit) {
 		const date = this.dateValue;
+		if (!date) {
+			return;
+		}
 
 		if (unit === "hour") {
 			date.setHours(date.getHours() + amount);
