@@ -219,7 +219,7 @@ class DateTimePicker extends DatePicker {
 	async openPicker(options) {
 		await super.openPicker(options);
 		this._currentTimeSlider = "hours";
-		this.storePreviousValue();
+		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
 	}
 
 	/**
@@ -369,10 +369,11 @@ class DateTimePicker extends DatePicker {
 	_submitClick() {
 		const selectedDate = this.getSelectedDateTime();
 
-		this.value = this.getFormat().format(selectedDate);
-		const valid = this.isValid(this.value);
+		const value = this.getFormat().format(selectedDate);
+		const valid = this.isValid(value);
 
-		if (this.value !== this.previousValue) {
+		if (this.value !== value) {
+			this.value = value;
 			this.fireEvent("change", { value: this.value, valid });
 			this.fireEvent("value-changed", { value: this.value, valid });
 		}
@@ -386,7 +387,6 @@ class DateTimePicker extends DatePicker {
 	 * that would disregard the user selection.
 	 */
 	_cancelClick() {
-		this.value = this.previousValue;
 		this.closePicker();
 	}
 
@@ -400,14 +400,6 @@ class DateTimePicker extends DatePicker {
 		if (this._showTimeView) {
 			this._currentTimeSlider = "hours";
 		}
-	}
-
-	/**
-	 * Stores the <code>value</code> when the picker opens to compare with the <code>value</code>,
-	 * selected by any user interaction and fire the <code>change</code> event, if they differ.
-	 */
-	storePreviousValue() {
-		this.previousValue = this.value;
 	}
 
 	async getPicker() {
