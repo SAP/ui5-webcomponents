@@ -491,9 +491,9 @@ class RangeSlider extends SliderBase {
 	 * Range Slider and when is called it checks if it should keep the focus within
 	 * the component and which part of it should get focused if that is the case.
 	 *
-	 * @private
+	 * @protected
 	 */
-	_focusInnerElement() {
+	focusInnerElement() {
 		const isReversed = this._areValuesReversed();
 		const affectedValue = this._getAffectedValue();
 
@@ -633,7 +633,7 @@ class RangeSlider extends SliderBase {
 			this.startValue = prevEndValue;
 
 			this._setValuesAreReversed();
-			this._focusInnerElement();
+			this.focusInnerElement();
 		}
 
 		if (affectedValue === "endValue" && this.endValue < this.startValue) {
@@ -642,7 +642,7 @@ class RangeSlider extends SliderBase {
 			this.endValue = prevStartValue;
 
 			this._setValuesAreReversed();
-			this._focusInnerElement();
+			this.focusInnerElement();
 		}
 	}
 
