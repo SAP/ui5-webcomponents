@@ -1,9 +1,11 @@
 const assert = require("chai").assert;
 
 const openPickerById = (id, options) => {
-	return browser.execute((id, options) => {
+	const res = browser.execute((id, options) => {
 		return document.querySelector(`#${id}`).openPicker(options);
 	}, id, options);
+	browser.pause(1000);
+	return res;
 }
 
 const closePickerById = id => {

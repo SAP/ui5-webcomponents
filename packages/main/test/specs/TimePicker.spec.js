@@ -21,6 +21,7 @@ describe("TimePicker general interaction", () => {
 		// act
 		timepicker.setProperty("value", "11:12:13");
 		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		browser.pause(500);
 
 		const hoursSliderValue = timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getValue();
 		const minutesSliderValue = timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).getValue();
@@ -38,7 +39,8 @@ describe("TimePicker general interaction", () => {
 		const picker = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		// act
-		picker.setProperty("opened", true);
+		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		browser.pause(500);
 
 		const hours = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
 		hours.click(); browser.keys("PageDown"); // select 00
