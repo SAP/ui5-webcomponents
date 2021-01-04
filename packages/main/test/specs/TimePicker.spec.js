@@ -52,7 +52,7 @@ describe("TimePicker general interaction", () => {
 		seconds.click(); seconds.keys("PageDown");// select 00
 		for (let i=1; i<= 16; i++) seconds.keys("ArrowDown"); // Select 16
 
-		timepickerPopover.$("#submit").click();
+		picker.$("#submit").click();
 
 		const textValue = timepicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(textValue.substring(0,2), "14", "Hours are equal");
@@ -89,6 +89,7 @@ describe("TimePicker general interaction", () => {
 
 		// act - submit the same time
 		icon.click();
+		browser.pause(500); // workaround for the wheelslider bug of not scrolling to the right place immediately
 		const timepickerPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		timepickerPopover.$("#submit").click();
 

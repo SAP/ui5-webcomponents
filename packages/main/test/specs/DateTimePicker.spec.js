@@ -83,10 +83,10 @@ describe("DateTimePicker general interaction", () => {
 		hours.click(); hours.keys("PageDown"); // select 01
 
 		const minutes = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`);
-		minutes.click(); minutes.keys("PageDown", "ArrowDown");// select 02
+		minutes.click(); minutes.keys("PageDown", "ArrowDown", "ArrowDown");// select 02
 
 		const seconds = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`);
-		seconds.click(); seconds.keys("PageDown", "ArrowDown", "ArrowDown");// select 03
+		seconds.click(); seconds.keys("PageDown", "ArrowDown", "ArrowDown", "ArrowDown");// select 03
 
 		picker.$("#ok").click();
 

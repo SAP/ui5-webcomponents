@@ -693,22 +693,6 @@ class DatePicker extends DateComponentBase {
 	}
 
 	/**
-	 * Gets some semantic details about an event originated in the control.
-	 * @param {*} event An event object
-	 * @returns {Object} Semantic details
-	 */
-	getSemanticTargetInfo(event) {
-		const oDomTarget = getDomTarget(event);
-		let isInput = false;
-
-		if (oDomTarget && oDomTarget.className.indexOf("ui5-input-inner") > -1) {
-			isInput = true;
-		}
-
-		return { isInput };
-	}
-
-	/**
 	 * Currently selected date represented as a Local JavaScript Date instance.
 	 *
 	 * @readonly
@@ -745,21 +729,6 @@ class DatePicker extends DateComponentBase {
 		];
 	}
 }
-
-const getDomTarget = event => {
-	let target,
-		composedPath;
-
-	if (typeof event.composedPath === "function") {
-		composedPath = event.composedPath();
-	}
-
-	if (Array.isArray(composedPath) && composedPath.length) {
-		target = composedPath[0];
-	}
-
-	return target;
-};
 
 DatePicker.define();
 
