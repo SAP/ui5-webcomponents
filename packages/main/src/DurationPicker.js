@@ -90,6 +90,20 @@ const metadata = {
 	},
 };
 
+const getNearestValue = (x, step, max) => {
+	const down = Math.floor(x / step) * step; // closest value rounded down to the step
+	const up = Math.ceil(x / step) * step; // closest value rounded up to the step
+	if (up > max || x - down < up - x) { // if the rounded-up value is more than max, or x is closer to the rounded-down value, return down
+		return down;
+	}
+	return up; // x is closer to the rounded-up value and it is not
+};
+
+const pad = number => {
+	number = parseInt(number);
+	return number < 9 ? `0${number}` : `${number}`;
+};
+
 /**
  * @class
  *
@@ -163,11 +177,26 @@ class DurationPicker extends TimePickerBase {
 	 * @override
 	 */
 	get _effectiveValue() {
+		return this._toFullFormat(this.value);
+	}
+
+	/**
+	 * @override
+	 */
+	get openIconName() {
+		return "fob-watch";
+	}
+
+	/**
+	 * Transforms the value to HH:mm:ss format to be compatible with time manipulation logic (keyboard handling, time selection component)
+	 * @private
+	 */
+	_toFullFormat(value) {
 		let hours = "00",
 			minutes = "00",
 			seconds = "00";
 
-		const parts = this.value.split(":");
+		const parts = value.split(":");
 		if (parts.length && !this.hideHours) {
 			hours = parts.shift();
 		}
@@ -182,20 +211,10 @@ class DurationPicker extends TimePickerBase {
 	}
 
 	/**
-	 * @override
+	 * Transforms the value from HH:mm:ss format to the needed partial format (f.e. HH:ss or mm or ss) to be displayed in the input
+	 * @private
 	 */
-	get openIconName() {
-		return "fob-watch";
-	}
-
-	/**
-	 * @override
-	 */
-	normalizeValue(value) {
-		if (value.length < 8) {
-			return value;
-		}
-		// value = super.normalizeValue(this.value);
+	_toPartialFormat(value) {
 		const parts = value.split(":");
 		const newParts = [];
 		if (!this.hideHours) {
@@ -208,6 +227,27 @@ class DurationPicker extends TimePickerBase {
 			newParts.push(parts[2]);
 		}
 		return newParts.join(":");
+	}
+
+	_enforceLimitsAndStep(fullFormatValue) {
+		let [hours, minutes, seconds] = fullFormatValue.split(":");
+		hours = Math.min(hours, this.maxHours);
+		minutes = Math.min(minutes, this.maxMinutes);
+		seconds = Math.min(seconds, this.maxSeconds);
+
+		minutes = getNearestValue(minutes, this.minutesStep, this.maxMinutes);
+		seconds = getNearestValue(seconds, this.secondsStep, this.maxSeconds);
+
+		return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+	}
+
+	/**
+	 * @override
+	 */
+	normalizeValue(value) {
+		let fullFormatValue = this._toFullFormat(value); // transform to full format (HH:mm:ss) if not already in this format, in order to normalize the value
+		fullFormatValue = this._enforceLimitsAndStep(fullFormatValue);
+		return this._toPartialFormat(fullFormatValue); // finally transform back to the needed format for the input
 	}
 
 	get maxHours() {
