@@ -1,8 +1,7 @@
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SliderBase from "./SliderBase.js";
-
-// Template
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
 
 /**
@@ -97,6 +96,10 @@ class RangeSlider extends SliderBase {
 		this._stateStorage.startValue = null;
 		this._stateStorage.endValue = null;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._resizeHandler);
 	}
 
 	get tooltipStartValue() {

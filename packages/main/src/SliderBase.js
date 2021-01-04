@@ -355,8 +355,14 @@ class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_preventFocusOut() {
-		this._focusInnerElement();
+		this.focusInnerElement();
 	}
+
+	/**
+	 * This method is reserved for derived classes for managing the focus between the component's inner elements
+	 * @protected
+	 */
+	focusInnerElement() {}
 
 	/**
 	 * Handle the responsiveness of the Slider's UI elements when resizing
@@ -435,7 +441,7 @@ class SliderBase extends UI5Element {
 
 		if (!focusedElement || focusedElement !== event.target) {
 			this._preserveFocus(true);
-			this._focusInnerElement();
+			this.focusInnerElement();
 		}
 	}
 

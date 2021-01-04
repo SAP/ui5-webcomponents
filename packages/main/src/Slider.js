@@ -114,6 +114,10 @@ class Slider extends SliderBase {
 		this._updateHandleAndProgress(this.value);
 	}
 
+	focusInnerElement() {
+		this._sliderHandle.focus();
+	}
+
 	/**
 	 * Called when the user starts interacting with the slider
 	 *
@@ -140,10 +144,6 @@ class Slider extends SliderBase {
 			this._updateHandleAndProgress(newValue);
 			this.updateValue("value", newValue);
 		}
-	}
-
-	_focusInnerElement() {
-		this._sliderHandle.focus();
 	}
 
 	_onfocusin(event) {
