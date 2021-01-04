@@ -133,8 +133,12 @@ class Tokenizer extends UI5Element {
 		super();
 
 		this._resizeHandler = this._handleResize.bind(this);
-		this._itemNav = new ItemNavigation(this, { currentIndex: "-1" });
-		this._itemNav.getItemsCallback = this._getVisibleTokens.bind(this);
+
+		this._itemNav = new ItemNavigation(this, {
+			currentIndex: "-1",
+			getItemsCallback: this._getVisibleTokens.bind(this),
+		});
+
 		this._scrollEnablement = new ScrollEnablement(this);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
@@ -192,11 +196,23 @@ class Tokenizer extends UI5Element {
 	}
 
 	_tokenDelete(event) {
-		if (event.detail && event.detail.backSpace) {
-			this._deleteByBackspace();
+		let nextTokenIndex; // The index of the next token that needs to be focused next due to the deletion
+		const deletedTokenIndex = this._getVisibleTokens().indexOf(event.target); // The index of the token that just got deleted
+
+		if (event.detail && event.detail.backSpace) { // on backspace key select the previous item (unless deleting the first)
+			nextTokenIndex = deletedTokenIndex === 0 ? deletedTokenIndex + 1 : deletedTokenIndex - 1;
+		} else { // on delete key or mouse click on the "x" select the next item (unless deleting the last)
+			nextTokenIndex = deletedTokenIndex === this._getVisibleTokens().length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
+		}
+		const nextToken = this._getVisibleTokens()[nextTokenIndex]; // if the last item was deleted this will be undefined
+		this._itemNav.update(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
+
+		if (nextToken) {
+			setTimeout(() => {
+				nextToken.focus();
+			}, 0);
 		}
 
-		this._updateAndFocus();
 		this.fireEvent("token-delete", { ref: event.target });
 	}
 
@@ -229,28 +245,6 @@ class Tokenizer extends UI5Element {
 					token.selected = false;
 				}
 			});
-		}
-	}
-
-	/* Keyboard handling */
-
-	_updateAndFocus() {
-		if (this._tokens.length) {
-			this._itemNav.update();
-
-			setTimeout(() => {
-				this._itemNav.focusCurrent();
-			}, 0);
-		}
-	}
-
-	_deleteByBackspace() {
-		const newIndex = this._itemNav.currentIndex - 1;
-
-		if (newIndex < 0) {
-			this._itemNav.currentIndex = 0;
-		} else {
-			this._itemNav.currentIndex = newIndex;
 		}
 	}
 

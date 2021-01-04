@@ -921,4 +921,21 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(date.getMonth(), 0, "Correct month value");
 		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
+
+	it("Keyboard navigation works when there are disabled dates in the calendar grid", () => {
+		datepicker.id = "#dp33";
+		datepicker.innerInput.click();
+		browser.keys("Jan 1, 2000");
+
+		datepicker.valueHelpIcon.click();
+
+		browser.keys("ArrowDown");
+
+		assert.ok(datepicker.getDisplayedDay(13).isFocusedDeep(), "Successfully navigated");
+
+		browser.keys("Escape");
+		datepicker.innerInput.click();
+		browser.keys(["Control", "A"]);
+		browser.keys("Backspace");
+	});
 });

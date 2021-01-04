@@ -127,19 +127,6 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */ {
-		/**
-		 * Defines the text of the <code>slider</code>.
-		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-		 *
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: Node,
-		},
-	},
 	events: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */ {
 		/**
 		 * Fired when the value changes and the user has finished interacting with the slider.

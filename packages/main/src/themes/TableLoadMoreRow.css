@@ -1,0 +1,68 @@
+/* Show more row */
+.ui5-table-load-more-row {
+	display: flex;
+	align-items: center;
+	padding: var(--ui5_table_load_more_padding);
+	border-top: 1px solid var(--sapList_BorderColor);
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+}
+
+.ui5-table-load-more-row-inner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	min-height: var(--ui5_table_load_more_text_height);
+	width: 100%;
+	color: var(--sapButton_TextColor);
+	background-color: var(--sapList_Background);
+	border: var(--ui5_table_load_more_border);
+	border-radius: var(--ui5_table_load_more_border_radius);
+	box-sizing: border-box;
+}
+
+.ui5-table-load-more-row-inner:focus {
+	outline: var(--ui5_table_row_outline_width) dotted var(--sapContent_FocusColor);
+	outline-offset: -0.125rem;
+	border-color: transparent;
+}
+
+.ui5-table-load-more-row-inner:hover {
+	background-color: var(--sapList_Hover_Background);
+}
+
+.ui5-table-load-more-row-inner:active,
+.ui5-table-load-more-row-inner[active] {
+	background-color: var(--sapList_Active_Background);
+	border-color: var(--sapList_Active_Background);
+}
+
+.ui5-table-load-more-row-inner[active] > *,
+.ui5-table-load-more-row-inner:active> * {
+	color: var(--sapList_Active_TextColor);
+}
+
+.ui5-table-load-more-row-text,
+.ui5-table-load-more-row-desc {
+	width: 100%;
+	text-align: center;
+	font-family: "72override", var(--sapFontFamily);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	box-sizing: border-box;
+}
+
+.ui5-table-load-more-row-text {
+	height: var(--ui5_table_load_more_text_height);
+	padding: 0.875rem 1rem 0 1rem;
+	font-size: var(--_ui5_table_load_more_text_font_size);
+	font-weight: bold;
+}
+
+.ui5-table-load-more-row-desc {
+	font-size: var(--sapFontSize);
+	padding: var(--_ui5_table_load_more_desc_padding);
+}

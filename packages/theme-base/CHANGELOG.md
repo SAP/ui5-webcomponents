@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
+
+
+### Features
+
+* **ui5-bar:** initial implementation ([#2533](https://github.com/SAP/ui5-webcomponents/issues/2533)) ([5c601cd](https://github.com/SAP/ui5-webcomponents/commit/5c601cd)), closes [#2434](https://github.com/SAP/ui5-webcomponents/issues/2434)
+* **ui5-slider:** Add Slider component ([#2349](https://github.com/SAP/ui5-webcomponents/issues/2349)) ([2b9008c](https://github.com/SAP/ui5-webcomponents/commit/2b9008c))
+
+
+
+
+
 # [1.0.0-rc.10](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.9...v1.0.0-rc.10) (2020-11-12)
 
 ### Featires

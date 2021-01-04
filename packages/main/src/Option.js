@@ -5,6 +5,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 */
 const metadata = {
 	tag: "ui5-option",
+	managedSlots: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Option.prototype */ {
 
 		/**
@@ -42,8 +43,21 @@ const metadata = {
 		value: {
 			type: String,
 		},
-	},
 
+		/**
+		 * Defines the stable selector that you can use via getStableDomRef method.
+		 * @public
+		 * @since 1.0.0-rc.11
+		 */
+		stableDomRef: {
+			type: String,
+		},
+	},
+	slots: {
+		"default": {
+			type: Node,
+		},
+	},
 	events: /** @lends sap.ui.webcomponents.main.Option.prototype */ {},
 };
 
@@ -52,7 +66,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-option</code> component defines the content of an opton in the <code>ui5-select</code>.
+ * The <code>ui5-option</code> component defines the content of an option in the <code>ui5-select</code>.
  *
  * @constructor
  * @author SAP SE

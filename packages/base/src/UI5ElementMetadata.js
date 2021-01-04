@@ -167,6 +167,74 @@ class UI5ElementMetadata {
 	isLanguageAware() {
 		return !!this.metadata.languageAware;
 	}
+
+	/**
+	 * Matches a changed entity (property/slot) with the given name against the "invalidateOnChildChange" configuration
+	 * and determines whether this should cause and invalidation
+	 *
+	 * @param slotName the name of the slot in which a child was changed
+	 * @param type the type of change in the child: "property" or "slot"
+	 * @param name the name of the property/slot that changed
+	 * @returns {boolean}
+	 */
+	shouldInvalidateOnChildChange(slotName, type, name) {
+		const config = this.getSlots()[slotName].invalidateOnChildChange;
+
+		// invalidateOnChildChange was not set in the slot metadata - by default child changes do not affect the component
+		if (config === undefined) {
+			return false;
+		}
+
+		// The simple format was used: invalidateOnChildChange: true/false;
+		if (typeof config === "boolean") {
+			return config;
+		}
+
+		// The complex format was used: invalidateOnChildChange: { properties, slots }
+		if (typeof config === "object") {
+			// A property was changed
+			if (type === "property") {
+				// The config object does not have a properties field
+				if (config.properties === undefined) {
+					return false;
+				}
+
+				// The config object has the short format: properties: true/false
+				if (typeof config.properties === "boolean") {
+					return config.properties;
+				}
+
+				// The config object has the complex format: properties: [...]
+				if (Array.isArray(config.properties)) {
+					return config.properties.includes(name);
+				}
+
+				throw new Error("Wrong format for invalidateOnChildChange.properties: boolean or array is expected");
+			}
+
+			// A slot was changed
+			if (type === "slot") {
+				// The config object does not have a slots field
+				if (config.slots === undefined) {
+					return false;
+				}
+
+				// The config object has the short format: slots: true/false
+				if (typeof config.slots === "boolean") {
+					return config.slots;
+				}
+
+				// The config object has the complex format: slots: [...]
+				if (Array.isArray(config.slots)) {
+					return config.slots.includes(name);
+				}
+
+				throw new Error("Wrong format for invalidateOnChildChange.slots: boolean or array is expected");
+			}
+		}
+
+		throw new Error("Wrong format for invalidateOnChildChange: boolean or object is expected");
+	}
 }
 
 const validateSingleProperty = (value, propData) => {

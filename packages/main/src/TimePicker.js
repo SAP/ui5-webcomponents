@@ -763,17 +763,18 @@ class TimePicker extends UI5Element {
 	}
 
 	getFormat() {
+		let dateFormat;
 		if (this._isPattern) {
-			this._oDateFormat = DateFormat.getInstance({
+			dateFormat = DateFormat.getInstance({
 				pattern: this._formatPattern,
 			});
 		} else {
-			this._oDateFormat = DateFormat.getInstance({
+			dateFormat = DateFormat.getInstance({
 				style: this._formatPattern,
 			});
 		}
 
-		return this._oDateFormat;
+		return dateFormat;
 	}
 
 	setValue(value) {

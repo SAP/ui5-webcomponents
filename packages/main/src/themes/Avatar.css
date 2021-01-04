@@ -42,6 +42,8 @@
 
 :host([_size="XS"]),
 :host([size="XS"]) {
+	height: 2rem;
+	width: 2rem;
 	min-height: 2rem;
 	min-width: 2rem;
 	font-size: .75rem;
