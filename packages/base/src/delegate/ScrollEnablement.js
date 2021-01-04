@@ -42,9 +42,24 @@ class ScrollEnablement extends EventProvider {
 		return this._container;
 	}
 
-	scrollTo(left, top) {
-		this._container.scrollLeft = left;
-		this._container.scrollTop = top;
+	/**
+	 * Scrolls the container to the left/top position, retrying retryCount times, if the container is not yet painted
+	 *
+	 * @param left
+	 * @param top
+	 * @param retryCount
+	 * @param retryInterval
+	 */
+	scrollTo(left, top, retryCount = 0, retryInterval = 0) {
+		const containerPainted = this.scrollContainer.clientHeight > 0 && this.scrollContainer.clientWidth > 0;
+		if (!containerPainted && retryCount > 0) {
+			setTimeout(() => {
+				this.scrollTo(left, top, retryCount - 1, retryInterval);
+			}, retryInterval);
+		} else {
+			this._container.scrollLeft = left;
+			this._container.scrollTop = top;
+		}
 	}
 
 	move(dx, dy) {

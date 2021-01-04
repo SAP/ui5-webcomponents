@@ -809,8 +809,9 @@ describe("Date Picker Tests", () => {
 		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
 		datepicker.openPicker();
-		datepicker.input.keys("May 3, 2100");
-		datepicker.input.keys("Enter");
+		datepicker.input.click();
+		browser.keys("May 3, 2100");
+		browser.keys("Enter");
 
 		const data = Array.from(datepicker.getDayPickerDatesRow(2));
 		assert.strictEqual(data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");
