@@ -81,14 +81,14 @@ describe("DateTimePicker general interaction", () => {
 		browser.keys("Space");
 
 		// select new time
-		const hours = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
-		hours.click(); browser.keys("PageDown"); // select 01
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown"); // select 01
 
-		const minutes = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`);
-		minutes.click(); browser.keys("PageDown", "ArrowDown", "ArrowDown");// select 02
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown", "ArrowDown", "ArrowDown");// select 02
 
-		const seconds = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`);
-		seconds.click(); browser.keys("PageDown", "ArrowDown", "ArrowDown", "ArrowDown");// select 03
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown", "ArrowDown", "ArrowDown", "ArrowDown");// select 03
 
 		picker.$("#ok").click();
 
@@ -183,17 +183,17 @@ describe("DateTimePicker general interaction", () => {
 		const picker = getPicker("dtTest12AM");
 
 		// select new time
-		const hours = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
-		hours.click(); browser.keys("PageUp"); // select 12
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageUp"); // select 12
 
-		const minutes = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`);
-		minutes.click(); browser.keys("PageDown");// select 00
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown");// select 00
 
-		const seconds = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`);
-		seconds.click(); browser.keys("PageDown");// select 00
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown");// select 00
 
-		const period = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`);
-		period.click(); browser.keys("PageDown");// select AM
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown");// select AM
 
 		picker.$("#ok").click();
 
@@ -211,17 +211,17 @@ describe("DateTimePicker general interaction", () => {
 		const picker = getPicker("dtTest12PM");
 
 		// select new time
-		const hours = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
-		hours.click(); browser.keys("PageUp"); // select 12
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageUp"); // select 12
 
-		const minutes = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`);
-		minutes.click(); browser.keys("PageDown");// select 00
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown");// select 00
 
-		const seconds = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`);
-		seconds.click(); browser.keys("PageDown");// select 00
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown");// select 00
 
-		const period = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`);
-		period.click(); browser.keys("PageUp");// select AM
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="period"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageUp");// select PM
 
 
 		picker.$("#ok").click();

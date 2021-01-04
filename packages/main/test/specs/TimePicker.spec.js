@@ -42,16 +42,16 @@ describe("TimePicker general interaction", () => {
 		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
 		browser.pause(500);
 
-		const hours = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
-		hours.click(); browser.keys("PageDown"); // select 00
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown"); // select 00
 		for (let i=1; i<= 14; i++) browser.keys("ArrowDown"); // Select 14
 
-		const minutes = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`);
-		minutes.click(); browser.keys("PageDown");// select 00
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown");// select 00
 		for (let i=1; i<= 15; i++) browser.keys("ArrowDown"); // Select 15
 
-		const seconds = picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`);
-		seconds.click(); browser.keys("PageDown");// select 00
+		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown");// select 00
 		for (let i=1; i<= 16; i++) browser.keys("ArrowDown"); // Select 16
 
 		picker.$("#submit").click();
@@ -101,8 +101,8 @@ describe("TimePicker general interaction", () => {
 		// act - submit value after changing time
 		icon.click();
 
-		const hours = timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`);
-		hours.click(); browser.keys("PageDown"); // select 00
+		timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown"); // select 00
 		for (let i=1; i<= 10; i++) browser.keys("ArrowDown"); // Select 10
 		timepickerPopover.$("#submit").click();
 
@@ -118,7 +118,8 @@ describe("TimePicker general interaction", () => {
 
 		// act - submit value after changing time
 		icon.click();
-		hours.click(); browser.keys("ArrowDown"); // select 11
+		timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("ArrowDown"); // select 11
 		timepickerPopover.$("#submit").click();
 
 		// assert
