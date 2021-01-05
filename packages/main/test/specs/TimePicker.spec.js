@@ -40,7 +40,8 @@ describe("TimePicker general interaction", () => {
 
 		// act
 		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
-		browser.pause(500);
+		browser.keys("Escape");
+		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
 
 		// picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
 		browser.keys("PageDown"); // select 00
