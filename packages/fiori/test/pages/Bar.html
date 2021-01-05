@@ -13,38 +13,54 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-</head>
-
-<body style="background-color: var(--sapBackgroundColor);">
-	<section>
-		<ui5-bar design="Footer">
-			<ui5-button design="Positive" slot="endContent">Agree</ui5-button>
-			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
-			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
-		</ui5-bar>
-		<ui5-bar design="Subheader">
-			<ui5-button slot="startContent">Left Button</ui5-button>
-			<ui5-label slot="endContent" id="basic-label">Basic Label</ui5-label>
-			<ui5-button slot="middleContent">Middle Button</ui5-button>
-			<ui5-button slot="middleContent">Middle2 Button</ui5-button>
-			<ui5-button slot="startContent">Middle3 Button</ui5-button>
-			<ui5-button slot="endContent">Right Button</ui5-button>
-		</ui5-bar>
-		<ui5-bar design="FloatingFooter">
-			<ui5-button design="Positive" slot="endContent">Agree</ui5-button>
-			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
-			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
-		</ui5-bar>
-		<ui5-bar design="Header">
-			<ui5-button icon="home" title="Go home" slot="startContent"></ui5-button>
-			<ui5-label id="basic-label" slot="middleContent">Title</ui5-label>
-			<ui5-button icon="action-settings" title="Go to settings" slot="endContent"></ui5-button>
-		</ui5-bar>
-	</section>
 	<style>
 		ui5-bar {
 			margin: 0.25rem 0;
 		}
 	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<section>
+		<ui5-title level="3">Header design</ui5-title>
+		<ui5-bar design="Header">
+			<ui5-button icon="home" title="Go home" slot="startContent"></ui5-button>
+			<ui5-label slot="middleContent">Title</ui5-label>
+			<ui5-button icon="action-settings" title="Go to settings" slot="endContent"></ui5-button>
+		</ui5-bar>
+		<br>
+
+		<ui5-title level="3">Subheader design</ui5-title>
+		<br>
+		<ui5-bar design="Subheader">
+			<div slot="startContent" style="display: flex; align-items: center;">
+				<ui5-button>Start Button</ui5-button>
+				<ui5-label>Basic Label</ui5-label>
+			</div>
+
+			<ui5-button slot="middleContent">Middle1 Button</ui5-button>
+			<ui5-button slot="middleContent">Middle2 Button</ui5-button>
+
+			<ui5-label slot="endContent">Basic Label</ui5-label>
+			<ui5-button slot="endContent">End Button</ui5-button>
+		</ui5-bar>
+
+		<br>
+		<ui5-title level="3">Footer design</ui5-title>
+		<ui5-bar design="Footer">
+			<ui5-icon name="home" slot="startContent"></ui5-icon>
+			<ui5-button design="Positive" slot="endContent">Agree</ui5-button>
+			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
+			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
+		</ui5-bar>
+
+		<br>
+		<ui5-title level="3">FloatingFooter design</ui5-title>
+		<ui5-bar design="FloatingFooter">
+			<ui5-button design="Positive" slot="endContent">Agree</ui5-button>
+			<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
+			<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
+		</ui5-bar>
+	</section>
 </body>
 </html>

@@ -73,7 +73,7 @@ const metadata = {
 		"default": {
 			propertyName: "items",
 			type: HTMLElement,
-			listenFor: { include: ["*"] },
+			invalidateOnChildChange: true,
 		},
 
 		/**
@@ -205,7 +205,7 @@ const metadata = {
 
 		/**
 		 * Defines the filter type of the <code>ui5-multi-combobox</code>.
-		 * Available options are: <code>StartsWithPerTerm</code>, <code>None</code>.
+		 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code>, <code>Contains</code> and <code>None</code>.
 		 *
 		 * @type {string}
 		 * @defaultvalue "StartsWithPerTerm"
@@ -336,6 +336,12 @@ const metadata = {
  * <li> Left/Right arrow keys - moves the focus selection form the currently focused token to the previous/next one (if available). </li>
  * <li> Delete -  deletes the token and focuses the previous token. </li>
  * <li> Backspace -  deletes the token and focus the next token. </li>
+ * </ul>
+ *
+ * In the context of <code>ui5-multi-combobox</code>, you can provide a custom stable DOM ref for:
+ * <ul>
+ * <li>Every <code>ui5-mcb-item</code> that you provide.
+ * Example: <code><ui5-mcb-item stable-dom-ref="item1"></ui5-mcb-item></code></li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>

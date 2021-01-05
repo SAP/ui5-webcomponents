@@ -246,8 +246,8 @@ class Popup extends UI5Element {
 	 * Focus trapping
 	 * @private
 	 */
-	forwardToFirst() {
-		const firstFocusable = getFirstFocusableElement(this);
+	async forwardToFirst() {
+		const firstFocusable = await getFirstFocusableElement(this);
 
 		if (firstFocusable) {
 			firstFocusable.focus();
@@ -258,8 +258,8 @@ class Popup extends UI5Element {
 	 * Focus trapping
 	 * @private
 	 */
-	forwardToLast() {
-		const lastFocusable = getLastFocusableElement(this);
+	async forwardToLast() {
+		const lastFocusable = await getLastFocusableElement(this);
 
 		if (lastFocusable) {
 			lastFocusable.focus();
@@ -270,8 +270,8 @@ class Popup extends UI5Element {
 	 * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
 	 * @protected
 	 */
-	applyInitialFocus() {
-		this.applyFocus();
+	async applyInitialFocus() {
+		await this.applyFocus();
 	}
 
 	/**
@@ -279,10 +279,12 @@ class Popup extends UI5Element {
 	 * or the first focusable element otherwise.
 	 * @public
 	 */
-	applyFocus() {
+	async applyFocus() {
+		await this._waitForDomRef();
+
 		const element = this.getRootNode().getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)
-			|| getFirstFocusableElement(this);
+			|| await getFirstFocusableElement(this);
 
 		if (element) {
 			element.focus();

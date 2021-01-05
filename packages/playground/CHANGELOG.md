@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
+
+
+### Bug Fixes
+
+* **docs:** update section info ([#2501](https://github.com/SAP/ui5-webcomponents/issues/2501)) ([be3b83e](https://github.com/SAP/ui5-webcomponents/commit/be3b83e))
+
+
+### Features
+
+* **docs:** add playground sections info ([#2487](https://github.com/SAP/ui5-webcomponents/issues/2487)) ([28dde4d](https://github.com/SAP/ui5-webcomponents/commit/28dde4d))
+* **ui5-avatar-group:** initial implementation ([#2524](https://github.com/SAP/ui5-webcomponents/issues/2524)) ([ae926ee](https://github.com/SAP/ui5-webcomponents/commit/ae926ee)), closes [#2409](https://github.com/SAP/ui5-webcomponents/issues/2409)
+* **ui5-bar:** initial implementation ([#2533](https://github.com/SAP/ui5-webcomponents/issues/2533)) ([5c601cd](https://github.com/SAP/ui5-webcomponents/commit/5c601cd)), closes [#2434](https://github.com/SAP/ui5-webcomponents/issues/2434)
+* **ui5-calendar:** introduce new component. ([#2424](https://github.com/SAP/ui5-webcomponents/issues/2424)) ([5470e23](https://github.com/SAP/ui5-webcomponents/commit/5470e23)), closes [#1730](https://github.com/SAP/ui5-webcomponents/issues/1730)
+
+
+
+
+
 # [1.0.0-rc.10](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.9...v1.0.0-rc.10) (2020-11-12)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization

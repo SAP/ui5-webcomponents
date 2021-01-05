@@ -1,12 +1,9 @@
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+
 let currentZIndex = 100;
 
 const getFocusedElement = () => {
-	let element = document.activeElement;
-
-	while (element && element.shadowRoot && element.shadowRoot.activeElement) {
-		element = element.shadowRoot.activeElement;
-	}
-
+	const element = getActiveElement();
 	return (element && typeof element.focus === "function") ? element : null;
 };
 

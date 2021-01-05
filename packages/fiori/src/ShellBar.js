@@ -181,7 +181,7 @@ const metadata = {
 		"default": {
 			propertyName: "items",
 			type: HTMLElement,
-			invalidateParent: true,
+			invalidateOnChildChange: true,
 		},
 
 		/**
@@ -342,6 +342,25 @@ const metadata = {
  * The <code>ui5-shellbar</code> is meant to serve as an application header
  * and includes numerous built-in features, such as: logo, profile image/icon, title, search field, notifications and so on.
  * <br><br>
+ *
+ * <h3>Stable DOM Refs</h3>
+ *
+ * You can use the following stable DOM refs for the <code>ui5-shellbar</code>:
+ * <ul>
+ * <li>logo</li>
+ * <li>copilot</li>
+ * <li>notifications</li>
+ * <li>overflow</li>
+ * <li>profile</li>
+ * <li>product-switch</li>
+ * </ul>
+ *
+ * In the context of <code>ui5-shellbar</code>, you can provide a custom stable DOM refs for:
+ * <ul>
+ * <li>Every <code>ui5-shellbar-item</code> that you provide.
+ * Example: <code><ui5-shellbar-item stable-dom-ref="messages"></ui5-shellbar-item></code></li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ShellBar";</code>
  *

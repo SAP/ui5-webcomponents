@@ -67,6 +67,7 @@ const metadata = {
 			type: String,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
 
 		/**
@@ -77,7 +78,9 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
+			propertyName: "items",
 			type: HTMLElement,
+			invalidateOnChildChange: true,
 		},
 	},
 };
@@ -108,10 +111,6 @@ const metadata = {
 class TreeItem extends UI5Element {
 	static get metadata() {
 		return metadata;
-	}
-
-	get items() {
-		return [...this.children];
 	}
 
 	get requiresToggleButton() {

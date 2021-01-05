@@ -63,7 +63,7 @@ const metadata = {
 			propertyName: "steps",
 			type: HTMLElement,
 			"individualSlots": true,
-			listenFor: { include: ["*"] },
+			invalidateOnChildChange: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
@@ -176,7 +176,10 @@ class Wizard extends UI5Element {
 		// due to user scroll.
 		this.selectionRequestedByScroll = false;
 
-		this.initItemNavigation();
+		this._itemNavigation = new ItemNavigation(this, {
+			navigationMode: NavigationMode.Horizontal,
+			getItemsCallback: () => this.enabledStepsInHeaderDOM,
+		});
 
 		this._onResize = this.onResize.bind(this);
 
@@ -208,7 +211,7 @@ class Wizard extends UI5Element {
 	}
 
 	static get PHONE_BREAKPOINT() {
-		return 559;
+		return 599;
 	}
 
 	static get SCROLL_DEBOUNCE_RATE() {
@@ -655,19 +658,6 @@ class Wizard extends UI5Element {
 
 			this.selectedStepIndex = selectedStepIndex;
 		}
-	}
-
-	/**
-	 * Initializes the <code>ItemNavigation</code>
-	 * that controls the navigation between the steps in the navigation header.
-	 * @private
-	 */
-	initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this, {
-			navigationMode: NavigationMode.Horizontal,
-		});
-
-		this._itemNavigation.getItemsCallback = () => this.enabledStepsInHeaderDOM;
 	}
 
 	/**

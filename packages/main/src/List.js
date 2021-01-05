@@ -382,7 +382,7 @@ class List extends UI5Element {
 	}
 
 	get hasData() {
-		return this.items.length !== 0;
+		return this.getSlottedNodes("items").length !== 0;
 	}
 
 	get showNoDataText() {
@@ -416,9 +416,8 @@ class List extends UI5Element {
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, {
 			navigationMode: NavigationMode.Vertical,
+			getItemsCallback: () => this.getSlottedNodes("items"),
 		});
-
-		this._itemNavigation.getItemsCallback = () => this.getSlottedNodes("items");
 	}
 
 	prepareListItems() {

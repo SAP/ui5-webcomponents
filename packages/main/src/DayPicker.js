@@ -1,11 +1,6 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
 	isSpace,
@@ -23,14 +18,13 @@ import {
 	isPageDownShift,
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarSelection from "@ui5/webcomponents-base/dist/types/CalendarSelection.js";
+import PickerBase from "./PickerBase.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 import {
@@ -57,27 +51,7 @@ const monthDiff = (startDate, endDate) => {
  */
 const metadata = {
 	tag: "ui5-daypicker",
-	languageAware: true,
 	properties: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
-		/**
-		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
-		 * @type {number}
-		 * @public
-		 */
-		timestamp: {
-			type: Integer,
-		},
-
-		/**
-		 * Sets a calendar type used for display.
-		 * If not set, the calendar type of the global configuration is used.
-		 * @type {CalendarType}
-		 * @public
-		 */
-		primaryCalendarType: {
-			type: CalendarType,
-		},
-
 		/**
 		 * Defines the type of selection used in the calendar component.
 		 * The property takes as value an object of type <code>CalendarSelection</code>.
@@ -94,51 +68,6 @@ const metadata = {
 		selection: {
 			type: CalendarSelection,
 			defaultValue: CalendarSelection.Single,
-		},
-
-		/**
-		 * Sets the selected dates as UTC timestamps.
-		 * @type {Array}
-		 * @public
-		 */
-		selectedDates: {
-			type: Integer,
-			multiple: true,
-		},
-
-		/**
-		 * Determines the minimum date available for selection.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @since 1.0.0-rc.6
-		 * @public
-		 */
-		minDate: {
-			type: String,
-		},
-
-		/**
-		 * Determines the maximum date available for selection.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @since 1.0.0-rc.6
-		 * @public
-		 */
-		maxDate: {
-			type: String,
-		},
-
-		/**
-		 * Determines the format, displayed in the input field.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		formatPattern: {
-			type: String,
 		},
 
 		/**
@@ -209,17 +138,13 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DayPicker
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends sap.ui.webcomponents.main.PickerBase
  * @tagname ui5-daypicker
  * @public
  */
-class DayPicker extends UI5Element {
+class DayPicker extends PickerBase {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 
 	static get template() {
@@ -236,11 +161,11 @@ class DayPicker extends UI5Element {
 			rowSize: 7,
 			pageSize: 42,
 			behavior: ItemNavigationBehavior.Paging,
+			affectedPropertiesNames: ["_weeks"],
+			getItemsCallback: () => this.focusableDays,
+			hasNextPageCallback: this._hasNextMonth.bind(this),
+			hasPreviousPageCallback: this._hasPrevMonth.bind(this),
 		});
-
-		this._itemNav.getItemsCallback = function getItemsCallback() {
-			return this.focusableDays;
-		}.bind(this);
 
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,
@@ -251,18 +176,6 @@ class DayPicker extends UI5Element {
 			ItemNavigation.AFTER_FOCUS,
 			this._handleItemNavigationAfterFocus.bind(this)
 		);
-
-		this._itemNav.attachEvent(
-			"PageBottom",
-			this._handleMonthBottomOverflow.bind(this)
-		);
-
-		this._itemNav.attachEvent(
-			"PageTop",
-			this._handleMonthTopOverflow.bind(this)
-		);
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -401,8 +314,8 @@ class DayPicker extends UI5Element {
 		const visualizedDates = this._getVisualizedSelectedDates();
 		if (this.selection === CalendarSelection.Range && visualizedDates.length > 0) {
 			const dayItems = this.getDomRef().querySelectorAll(".ui5-dp-item");
-			const firstTimestamp = this._selectedDates[0];
-			const lastTimestamp = (visualizedDates.length === 1) ? parseInt(dayItems[this._itemNav.currentIndex].dataset.sapTimestamp) : this._selectedDates[1];
+			const firstTimestamp = this.selectedDates[0];
+			const lastTimestamp = (visualizedDates.length === 1) ? parseInt(dayItems[this._itemNav.currentIndex].dataset.sapTimestamp) : this.selectedDates[1];
 
 			this._updateSelectionBetween(dayItems, firstTimestamp, lastTimestamp);
 		}
@@ -426,24 +339,9 @@ class DayPicker extends UI5Element {
 		const dayPressed = this._isDayPressed(target);
 
 		if (dayPressed) {
-			const targetDate = parseInt(target.getAttribute("data-sap-timestamp"));
-
-			// findIndex, give it to item navigation
-			for (let i = 0; i < this._weeks.length; i++) {
-				for (let j = 0; j < this._weeks[i].length; j++) {
-					if (parseInt(this._weeks[i][j].timestamp) === targetDate) {
-						let index = parseInt(target.getAttribute("data-sap-index"));
-						if (this.minDate || this.maxDate) {
-							const focusableItem = this.focusableDays.find(item => parseInt(item._index) === index);
-							index = focusableItem ? this.focusableDays.indexOf(focusableItem) : index;
-						}
-
-						this._itemNav.current = index;
-						this._itemNav.update();
-						break;
-					}
-				}
-			}
+			const targetDate = this.getTimestampFromDom(target);
+			const selectedDay = this.focusableDays.find(day => parseInt(day.timestamp) === targetDate);
+			this._itemNav.update(selectedDay);
 
 			this.targetDate = targetDate;
 		}
@@ -465,7 +363,7 @@ class DayPicker extends UI5Element {
 		const hoveredItem = event.target.classList.contains("ui5-dp-item") ? event.target : event.target.parentElement;
 		if (this.selectedDates.length === 1 && this.selection === CalendarSelection.Range && hoveredItem.classList.contains("ui5-dp-item")) {
 			const dayItems = this.getDomRef().querySelectorAll(".ui5-dp-item");
-			const firstTimestamp = this._selectedDates[0];
+			const firstTimestamp = this.selectedDates[0];
 			const lastTimestamp = parseInt(hoveredItem.dataset.sapTimestamp);
 
 			this._updateSelectionBetween(dayItems, firstTimestamp, lastTimestamp);
@@ -565,7 +463,7 @@ class DayPicker extends UI5Element {
 		}
 
 		currentTimestamp = calDate.valueOf() / 1000;
-		const newItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === currentTimestamp);
+		const newItemIndex = this.focusableDays.findIndex(item => parseInt(item.timestamp) === currentTimestamp);
 
 		this._itemNav.currentIndex = newItemIndex;
 		this._itemNav.focusCurrent();
@@ -616,48 +514,15 @@ class DayPicker extends UI5Element {
 		return this.hideWeekNumbers;
 	}
 
-	get _timestamp() {
-		return this.timestamp !== undefined ? this.timestamp : Math.floor(new Date().getTime() / 1000);
-	}
-
-	get _localDate() {
-		return new Date(this._timestamp * 1000);
-	}
-
-	get _calendarDate() {
-		return CalendarDate.fromTimestamp(this._localDate.getTime(), this._primaryCalendarType);
-	}
-
-	get _formatPattern() {
-		return this.formatPattern || "medium"; // get from config
-	}
-
-	get _month() {
-		return this._calendarDate.getMonth();
-	}
-
-	get _year() {
-		return this._calendarDate.getYear();
-	}
-
 	get _currentCalendarDate() {
 		return CalendarDate.fromTimestamp(new Date().getTime(), this._primaryCalendarType);
-	}
-
-	get _selectedDates() {
-		return this.selectedDates || [];
-	}
-
-	get _primaryCalendarType() {
-		const localeData = getCachedLocaleDataInstance(getLocale());
-		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
 	get focusableDays() {
 		const focusableDays = [];
 
 		for (let i = 0; i < this._weeks.length; i++) {
-			const week = this._weeks[i].slice(1).filter(x => !x.disabled);
+			const week = this._weeks[i].slice(1).filter(dayItem => !dayItem.disabled);
 			focusableDays.push(week);
 		}
 
@@ -673,36 +538,22 @@ class DayPicker extends UI5Element {
 	}
 
 	_setCurrentItemTabIndex(index) {
-		this._itemNav._getCurrentItem().setAttribute("tabindex", index.toString());
+		const currentItem = this._itemNav._getCurrentItem();
+		if (currentItem) {
+			currentItem.setAttribute("tabindex", index.toString());
+		}
 	}
 
 	_modifySelectionAndNotifySubscribers(timestamp) {
-		switch (this.selection) {
-		case CalendarSelection.Single:
+		if (this.selection === CalendarSelection.Single) {
 			this.selectedDates = [timestamp];
-			break;
-		case CalendarSelection.Multiple:
-			this.selectedDates = this.selectedDates.includes(timestamp)
-				? this.selectedDates.filter(value => value !== timestamp)
-				: [...this._selectedDates, timestamp];
-			break;
-		case CalendarSelection.Range:
-			this.selectedDates = (this.selectedDates.length === 1)
-				? [...this._selectedDates, timestamp]
-				: [timestamp];
-			break;
-		default:
+		} else if (this.selection === CalendarSelection.Multiple) {
+			this.selectedDates = this.selectedDates.includes(timestamp) ? this.selectedDates.filter(value => value !== timestamp) : [...this.selectedDates, timestamp];
+		} else {
+			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	: [timestamp];
 		}
 
-		this.fireEvent("change", { dates: [...this._selectedDates] });
-	}
-
-	_handleMonthBottomOverflow(event) {
-		this._itemNav.hasNextPage = this._hasNextMonth();
-	}
-
-	_handleMonthTopOverflow(event) {
-		this._itemNav.hasPrevPage = this._hasPrevMonth();
+		this.fireEvent("change", { dates: [...this.selectedDates] });
 	}
 
 	_hasNextMonth() {
@@ -838,7 +689,7 @@ class DayPicker extends UI5Element {
 		this.fireEvent("navigate", { timestamp });
 		await RenderScheduler.whenFinished();
 
-		const newItemIndex = this._itemNav._getItems().findIndex(item => parseInt(item.timestamp) === timestamp);
+		const newItemIndex = this.focusableDays.findIndex(item => parseInt(item.timestamp) === timestamp);
 		this._itemNav.currentIndex = newItemIndex;
 		this._itemNav.focusCurrent();
 	}
@@ -861,61 +712,6 @@ class DayPicker extends UI5Element {
 
 	_isOutOfSelectableRange(date) {
 		return date.valueOf() < this._minDate || date.valueOf() > this._maxDate;
-	}
-
-	get _maxDate() {
-		return this.maxDate ? this._getTimeStampFromString(this.maxDate) : this._getMaxCalendarDate();
-	}
-
-	get _minDate() {
-		return this.minDate ? this._getTimeStampFromString(this.minDate) : this._getMinCalendarDate();
-	}
-
-	_getTimeStampFromString(value) {
-		const jsDate = this.getFormat().parse(value);
-		if (jsDate) {
-			const calDate = CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
-			return calDate.toUTCJSDate().valueOf();
-		}
-		return undefined;
-	}
-
-	_getMinCalendarDate() {
-		const minDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
-		minDate.setYear(1);
-		minDate.setMonth(0);
-		minDate.setDate(1);
-		return minDate.toUTCJSDate().valueOf();
-	}
-
-	_getMaxCalendarDate() {
-		const maxDate = new CalendarDate(1, 0, 1, this._primaryCalendarType);
-		maxDate.setYear(9999);
-		maxDate.setMonth(11);
-		const tempDate = new CalendarDate(maxDate, this._primaryCalendarType);
-		tempDate.setDate(1);
-		tempDate.setMonth(tempDate.getMonth() + 1, 0);
-		maxDate.setDate(tempDate.getDate());// 31st for Gregorian Calendar
-		return maxDate.toUTCJSDate().valueOf();
-	}
-
-	getFormat() {
-		if (this._isPattern) {
-			this._oDateFormat = DateFormat.getInstance({
-				pattern: this._formatPattern,
-				calendarType: this._primaryCalendarType,
-			});
-		} else {
-			this._oDateFormat = DateFormat.getInstance({
-				style: this._formatPattern,
-				calendarType: this._primaryCalendarType,
-			});
-		}
-		return this._oDateFormat;
-	}
-
-	get _isPattern() {
-		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
 	_getVisibleDays(oStartDate, bIncludeBCDates) {
@@ -981,13 +777,6 @@ class DayPicker extends UI5Element {
 				width: "100%",
 			},
 		};
-	}
-
-	static async onDefine() {
-		await Promise.all([
-			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
 	}
 }
 

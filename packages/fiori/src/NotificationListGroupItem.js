@@ -93,7 +93,7 @@ const metadata = {
  * <li><code>Toggle</code> button to expand and collapse the group</li>
  * <li><code>Priority</code> icon to display the priority of the group</li>
  * <li><code>Heading</code> to entitle the group</li>
- * <li>Custom actions - with the use of <code>ui5-notification-overflow-action</code></li>
+ * <li>Custom actions - with the use of <code>ui5-notification-action</code></li>
  * <li>Items of the group</li>
  * </ul>
  *
@@ -104,14 +104,14 @@ const metadata = {
  *
  * <code>import @ui5/webcomponents/dist/NotificationListGroupItem.js";</code>
  * <br>
- * <code>import @ui5/webcomponents/dist/NotificationOverflowAction.js";</code> (optional)
+ * <code>import @ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListGroupItem
  * @extends NotificationListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
- * @appenddocs NotificationOverflowAction
+ * @appenddocs NotificationAction
  * @public
  */
 class NotificationListGroupItem extends NotificationListItemBase {

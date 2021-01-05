@@ -63,7 +63,10 @@ class RenderScheduler {
 			queuePromise = new Promise(resolve => {
 				window.requestAnimationFrame(() => {
 					// Render all components in the queue
+
+					// console.log(`--------------------RENDER TASK START------------------------------`); // eslint-disable-line
 					invalidatedWebComponents.process(component => component._render());
+					// console.log(`--------------------RENDER TASK END------------------------------`); // eslint-disable-line
 
 					// Resolve the promise so that callers of renderDeferred can continue
 					queuePromise = null;

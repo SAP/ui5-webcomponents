@@ -1,4 +1,4 @@
-<div class="ui5-timeline-root">
+<div class="ui5-timeline-root" @focusin={{_onfocusin}}>
 	<ul class="ui5-timeline-list" role="listbox" aria-live="polite" aria-label="{{ariaLabel}}">
 		{{#each items}}
 			<li class="ui5-timeline-list-item" style="list-style-type: none;">

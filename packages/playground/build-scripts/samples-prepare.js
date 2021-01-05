@@ -14,10 +14,8 @@ const components = [];
 const newComponents = [
 	"Bar",
 	"Calendar",
-	"MultiInput",
 	"RangeSlider",
 	"Slider",
-	"Wizard",
 	"AvatarGroup",
 ];
 
