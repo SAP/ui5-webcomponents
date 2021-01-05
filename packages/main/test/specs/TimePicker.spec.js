@@ -21,7 +21,7 @@ describe("TimePicker general interaction", () => {
 		// act
 		timepicker.setProperty("value", "11:12:13");
 		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
-		browser.pause(500);
+		// browser.pause(500);
 
 		const hoursSliderValue = timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getValue();
 		const minutesSliderValue = timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).getValue();
@@ -57,9 +57,8 @@ describe("TimePicker general interaction", () => {
 		browser.keys("PageDown");// select 00
 		for (let i=1; i<= 16; i++) browser.keys("ArrowDown"); // Select 16
 
-		browser.keys("Tab");
-		browser.keys("Enter");
-		// picker.$("#submit").click();
+		browser.keys("Tab"); // Move to submit
+		browser.keys("Enter"); // Enter on submit
 
 		const textValue = timepicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(textValue.substring(0,2), "14", "Hours are equal");
@@ -96,7 +95,6 @@ describe("TimePicker general interaction", () => {
 
 		// act - submit the same time
 		icon.click();
-		browser.pause(500); // workaround for the wheelslider bug of not scrolling to the right place immediately
 		const timepickerPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		timepickerPopover.$("#submit").click();
 
@@ -105,13 +103,12 @@ describe("TimePicker general interaction", () => {
 
 		// act - submit value after changing time
 		icon.click();
-		browser.pause(500);
 
-		// timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
 		browser.keys("PageDown"); // select 00
 		for (let i=1; i<= 10; i++) browser.keys("ArrowDown"); // Select 10
-		browser.keys("Tab", "Tab", "Enter");
-		// timepickerPopover.$("#submit").click();
+
+		timepickerPopover.$("#submit").click();
 
 		// assert
 		assert.strictEqual(changeResult.getProperty("value"), "1", "Change fired as expected");
@@ -127,7 +124,7 @@ describe("TimePicker general interaction", () => {
 		icon.click();
 		timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
 		browser.keys("ArrowDown"); // select 11
-		timepickerPopover.$("#submit").click();
+		timepickerPopover.$("#submit").click(); // click submit (the other test tests Enter, this one tests click)
 
 		// assert
 		assert.strictEqual(changeResult.getProperty("value"), "2", "Change fired as expected");

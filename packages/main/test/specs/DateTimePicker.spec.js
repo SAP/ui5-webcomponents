@@ -85,10 +85,12 @@ describe("DateTimePicker general interaction", () => {
 		browser.keys("PageDown"); // select 01
 
 		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageDown", "ArrowDown", "ArrowDown");// select 02
+		browser.keys("PageDown"); // select 0
+		browser.keys("ArrowDown"); browser.keys("ArrowDown"); // select 02
 
 		picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
-		browser.keys("PageDown", "ArrowDown", "ArrowDown", "ArrowDown");// select 03
+		browser.keys("PageDown"); // select 0
+		browser.keys("ArrowDown"); browser.keys("ArrowDown"); browser.keys("ArrowDown"); // select 03
 
 		picker.$("#ok").click();
 
