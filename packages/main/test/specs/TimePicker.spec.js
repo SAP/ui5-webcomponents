@@ -56,7 +56,9 @@ describe("TimePicker general interaction", () => {
 		browser.keys("PageDown");// select 00
 		for (let i=1; i<= 16; i++) browser.keys("ArrowDown"); // Select 16
 
-		picker.$("#submit").click();
+		browser.keys("Tab");
+		browser.keys("Enter");
+		// picker.$("#submit").click();
 
 		const textValue = timepicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(textValue.substring(0,2), "14", "Hours are equal");
@@ -107,7 +109,8 @@ describe("TimePicker general interaction", () => {
 		// timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
 		browser.keys("PageDown"); // select 00
 		for (let i=1; i<= 10; i++) browser.keys("ArrowDown"); // Select 10
-		timepickerPopover.$("#submit").click();
+		browser.keys("Tab", "Tab", "Enter");
+		// timepickerPopover.$("#submit").click();
 
 		// assert
 		assert.strictEqual(changeResult.getProperty("value"), "1", "Change fired as expected");
