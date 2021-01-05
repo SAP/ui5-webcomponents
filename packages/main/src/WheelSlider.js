@@ -232,6 +232,7 @@ class WheelSlider extends UI5Element {
 			const onlyDigitsValue = itemHeightValue.replace("rem", "");
 			return Number(onlyDigitsValue) || defaultSize;
 		}
+
 		return defaultSize;
 	}
 
