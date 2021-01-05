@@ -1058,6 +1058,7 @@ class Input extends UI5Element {
 
 		return {
 			"input": {
+				"ariaRoledescription": this._inputAccInfo && this._inputAccInfo.ariaRoledescription || undefined,
 				"ariaDescribedBy": ariaDescribedBy || undefined,
 				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
 				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,

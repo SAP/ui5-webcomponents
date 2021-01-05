@@ -8,8 +8,10 @@ describe("Date Picker Tests", () => {
 
 	it("input renders", () => {
 		datepicker.id = "#dp";
+
 		assert.ok(datepicker.input.isDisplayedInViewport(), "input is rendered");
 		assert.ok(datepicker.innerInput.isDisplayedInViewport(), "inner input is rendered");
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-roledescription"), "Date Type", "aria-roledescription attribute is added.");
 	});
 
 	it("input receives value", () => {
