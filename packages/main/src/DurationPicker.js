@@ -201,6 +201,10 @@ class DurationPicker extends TimePickerBase {
 		return this.isValid(this.value) ? this._toFullFormat(this.value) : "00:00:00";
 	}
 
+	get _timeSelectionValue() {
+		return this._effectiveValue;
+	}
+
 	/**
 	 * @override
 	 */

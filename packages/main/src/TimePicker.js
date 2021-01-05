@@ -129,6 +129,17 @@ class TimePicker extends TimePickerBase {
 	get _placeholder() {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
 	}
+
+	/**
+	 * Currently selected date represented as JavaScript Date instance
+	 *
+	 * @readonly
+	 * @type { Date }
+	 * @public
+	 */
+	get dateValue() {
+		return this.getFormat().parse(this._effectiveValue);
+	}
 }
 
 TimePicker.define();

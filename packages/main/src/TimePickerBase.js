@@ -192,7 +192,6 @@ class TimePickerBase extends UI5Element {
 
 	constructor() {
 		super();
-		this.tempValue = null;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -214,6 +213,10 @@ class TimePickerBase extends UI5Element {
 
 	get _effectiveValue() {
 		return this.value;
+	}
+
+	get _timeSelectionValue() {
+		return this.tempValue;
 	}
 
 	onTimeSelectionChange(event) {
@@ -251,8 +254,9 @@ class TimePickerBase extends UI5Element {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 
-		this.value = "";
+		this.value = ""; // Do not remove! DurationPicker use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
 		this.value = value;
+		this.tempValue = value; // if the picker is open, sync it
 		this._updateValueState(); // Change the value state to Error/None, but only if needed
 		events.forEach(event => {
 			this.fireEvent(event, { value, valid });
@@ -293,6 +297,7 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 */
 	async openPicker() {
+		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
 		const responsivePopover = await this._getPopover();
 		responsivePopover.open(this);
 		this._isPickerOpen = true;
@@ -357,17 +362,6 @@ class TimePickerBase extends UI5Element {
 		}
 	}
 
-	/**
-	 * Currently selected date represented as JavaScript Date instance
-	 *
-	 * @readonly
-	 * @type { Date }
-	 * @public
-	 */
-	get dateValue() {
-		return this.getFormat().parse(this._effectiveValue);
-	}
-
 	get _isPattern() {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
@@ -418,7 +412,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	_modifyValueBy(amount, unit) {
-		const date = this.dateValue;
+		const date = this.getFormat().parse(this._effectiveValue);
 		if (!date) {
 			return;
 		}
