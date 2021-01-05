@@ -114,6 +114,9 @@ const metadata = {
 	},
 };
 
+const CELL_SIZE_COMPACT = 2;
+const CELL_SIZE_COZY = 2.875;
+
 /**
  * @class
  *
@@ -155,7 +158,6 @@ class WheelSlider extends UI5Element {
 	constructor() {
 		super();
 		this._currentElementIndex = 0;
-		this._itemCellHeight = 0;
 		this._itemsToShow = [];
 		this._scroller = new ScrollEnablement(this);
 		this._scroller.attachEvent("scroll", this._updateScrolling.bind(this));
@@ -174,7 +176,6 @@ class WheelSlider extends UI5Element {
 		}
 
 		this._buildItemsToShow();
-		this._updateItemCellHeight();
 	}
 
 	static get dependencies() {
@@ -222,18 +223,20 @@ class WheelSlider extends UI5Element {
 		this.fireEvent("collapse", {});
 	}
 
-	_updateItemCellHeight() {
+	get _itemCellHeight() {
+		const defaultSize = this.isCompact ? CELL_SIZE_COMPACT : CELL_SIZE_COZY;
+
 		if (this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length) {
 			const itemComputedStyle = getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item"));
 			const itemHeightValue = itemComputedStyle.getPropertyValue("--_ui5_wheelslider_item_height");
 			const onlyDigitsValue = itemHeightValue.replace("rem", "");
-
-			this._itemCellHeight = Number(onlyDigitsValue);
+			return Number(onlyDigitsValue) || defaultSize;
 		}
+		return defaultSize;
 	}
 
 	_updateScrolling() {
-		const sizeOfOneElementInPixels = this._itemCellHeight * 16,
+		const cellSizeInPx = this._itemCellHeight * 16,
 			scrollWhere = this._scroller.scrollContainer.scrollTop;
 		let offsetIndex;
 
@@ -241,7 +244,7 @@ class WheelSlider extends UI5Element {
 			return;
 		}
 
-		offsetIndex = Math.round(scrollWhere / sizeOfOneElementInPixels);
+		offsetIndex = Math.round(scrollWhere / cellSizeInPx);
 
 		if (this.value === this._itemsToShow[offsetIndex]) {
 			return;
@@ -282,11 +285,8 @@ class WheelSlider extends UI5Element {
 	_selectElementByIndex(currentIndex) {
 		let index = currentIndex;
 		const itemsCount = this._itemsToShow.length;
-		const sizeOfCellInCompactInRem = 2;
-		const sizeOfCellInCozyInRem = 2.875;
-		const sizeOfCellInCompactInPixels = sizeOfCellInCompactInRem * 16;
-		const sizeOfCellInCozyInPixels = sizeOfCellInCozyInRem * 16;
-		const scrollBy = this.isCompact ? sizeOfCellInCompactInPixels * index : sizeOfCellInCozyInPixels * index;
+		const cellSizeInPx = this._itemCellHeight * 16;
+		const scrollBy = cellSizeInPx * index;
 
 		if (this.cyclic) {
 			index = this._handleArrayBorderReached(index);

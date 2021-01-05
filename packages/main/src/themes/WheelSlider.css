@@ -113,7 +113,7 @@
 	padding-top: calc(var(--_ui5_wheelslider_item_height) * 2);
 }
 
-.ui5-wheelslider-root.ui5-phone[expanded] .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
+:host([expanded]) .ui5-wheelslider-root.ui5-phone .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
 	list-style-type: none;
 	top: 0;
 	padding-top: calc(var(--_ui5_wheelslider_item_height) * 4);
@@ -186,7 +186,7 @@
 	margin-top: var(--_ui5_wheelslider_selection_frame_margin_top);
 }
 
-.ui5-wheelslider-root.ui5-phone[expanded] .ui5-wheelslider-inner .ui5-wheelslider-selection-frame {
+:host([expanded]) .ui5-wheelslider-root.ui5-phone .ui5-wheelslider-inner .ui5-wheelslider-selection-frame {
 	margin-top: var(--_ui5_wheelslider_mobile_selection_frame_margin_top);
 }
 
