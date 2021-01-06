@@ -342,6 +342,12 @@ class DatePicker extends DateComponentBase {
 	}
 
 	onBeforeRendering() {
+		["minDate", "maxDate"].forEach(prop => {
+			if (this[prop] && !this.isValid(this[prop])) {
+				console.warn(`Invalid value for property "${prop}": ${this[prop]} is not compatible with the configured format pattern: "${this._displayFormat}"`); // eslint-disable-line
+			}
+		});
+
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
