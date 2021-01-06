@@ -94,7 +94,7 @@ class CalendarHeader extends UI5Element {
 
 	onBeforeRendering() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
-		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType });
+		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
 		const localDate = new Date(this.timestamp * 1000);
 		const calendarDate = CalendarDate.fromTimestamp(localDate.getTime(), this.primaryCalendarType);
 
