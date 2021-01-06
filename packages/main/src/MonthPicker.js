@@ -105,7 +105,10 @@ class MonthPicker extends CalendarPart {
 			tempDate.setMonth(i);
 			timestamp = tempDate.valueOf() / 1000;
 
-			const isSelected = this.selectedDates.some(d => d === timestamp);
+			const isSelected = this.selectedDates.some(itemTimestamp => {
+				const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
+				return date.getYear() === tempDate.getYear() && date.getMonth() === tempDate.getMonth();
+			});
 			const isFocused = tempDate.getMonth() === calendarDate.getMonth();
 			const isDisabled = this._isOutOfSelectableRange(tempDate, minDate, maxDate);
 
