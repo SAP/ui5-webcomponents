@@ -243,7 +243,7 @@ class Popup extends UI5Element {
 		});
 	}
 
-	_onRootFocusOut(e) {
+	_onkeydown(e) {
 		if (e.target === this._root && isTabPrevious(e)) {
 			e.preventDefault();
 		}
