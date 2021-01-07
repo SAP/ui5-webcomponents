@@ -266,6 +266,8 @@ class Popup extends UI5Element {
 
 		if (firstFocusable) {
 			firstFocusable.focus();
+		} else {
+			this._root.focus();
 		}
 	}
 
@@ -278,6 +280,8 @@ class Popup extends UI5Element {
 
 		if (lastFocusable) {
 			lastFocusable.focus();
+		} else {
+			this._root.focus();
 		}
 	}
 
@@ -299,7 +303,8 @@ class Popup extends UI5Element {
 
 		const element = this.getRootNode().getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)
-			|| await getFirstFocusableElement(this);
+			|| await getFirstFocusableElement(this)
+			|| this._root; // in case of no focusable content focus the root
 
 		if (element) {
 			element.focus();
@@ -486,6 +491,10 @@ class Popup extends UI5Element {
 		return this.ariaLabel || undefined;
 	}
 
+	get _root() {
+		return this.shadowRoot.querySelector(".ui5-popup-root");
+	}
+
 	get dir() {
 		return getRTL() ? "rtl" : "ltr";
 	}
@@ -502,8 +511,12 @@ class Popup extends UI5Element {
 
 	get classes() {
 		return {
-			root: {},
-			content: {},
+			root: {
+				"ui5-popup-root": true,
+			},
+			content: {
+				"ui5-popup-content": true,
+			},
 		};
 	}
 }
