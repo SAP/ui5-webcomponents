@@ -1,9 +1,20 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
-import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
+import { createThemePropertiesStyleTag, getThemePropertiesStyleTag, removeThemePropertiesStyleTag } from "./ThemePropertiesStyleTag.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
+import { getSharedResourcePolicy } from "../SharedResources.js";
+import SharedResourceType from "../types/SharedResourceType.js";
+import SharedResourceReusePolicy from "../types/SharedResourceReusePolicy.js";
+import {
+	getCurrentRuntimeIndex,
+	getRuntime,
+	compareCurrentRuntimeWith,
+	runtimeWarningsEnabled,
+	logDisableRuntimeWarningsInstructions,
+} from "../Runtimes.js";
+import Logger from "../util/Logger.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
 
@@ -12,20 +23,81 @@ const isThemeBaseRegistered = () => {
 	return registeredPackages.has(BASE_THEME_PACKAGE);
 };
 
+/**
+ * Determines whether the theme properties for this package/theme combination should be inserted in DOM.
+ *
+ * @param packageName
+ * @param theme
+ * @returns {boolean}
+ */
+const shouldApplyThemeProperties = (packageName, theme) => {
+	const policy = getSharedResourcePolicy(SharedResourceType.ThemeProperties); // shared resource policy for theme properties
+
+	const styleElement = getThemePropertiesStyleTag(packageName);
+
+	// No style element created yet -> apply
+	if (!styleElement) {
+		return true;
+	}
+
+	const styleElementTheme = styleElement.getAttribute("data-ui5-theme");
+	const styleElementRuntimeIndex = styleElement.getAttribute("data-ui5-runtime-index");
+
+	// There is a tag, but it does not have data-ui5-runtime-index, indicating that it was created before runtimeing and reuse policies were introduced - assume existing behavior (apply)
+	if (!styleElementTheme || !styleElementRuntimeIndex) {
+		return true;
+	}
+
+	// The tag is for a different theme -> apply
+	if (styleElementTheme !== theme) {
+		return true;
+	}
+
+	const comparison = compareCurrentRuntimeWith(styleElementRuntimeIndex);
+	const logger = new Logger();
+	const currentRuntime = getRuntime();
+	const otherRuntime = getRuntime(styleElementRuntimeIndex);
+
+	// Always reuse policy - reuse the existing theme properties, do not apply the new ones
+	if (policy === SharedResourceReusePolicy.Always) {
+		if (runtimeWarningsEnabled() && comparison > 0) {
+			logger.append(`Runtime ${currentRuntime.descriptor} will not update theme properties for ${packageName} for ${theme} although they are created by an older runtime (${otherRuntime.descriptor}), because Shared resources reuse policy is set to "Always reuse"`);
+			logger.line(`If not intended, consider changing the policy to OnlyNewer`);
+			logDisableRuntimeWarningsInstructions(logger);
+			logger.console("warn");
+		}
+		return false;
+	}
+
+	// Never reuse policy - apply the new theme properties
+	if (policy === SharedResourceReusePolicy.Never) {
+		if (runtimeWarningsEnabled() && comparison < 0) {
+			logger.append(`Runtime ${currentRuntime.descriptor} will update theme properties for ${packageName} for ${theme} although they are created by a newer runtime (${otherRuntime.descriptor}), because Shared resources reuse policy is set to "Never reuse"`);
+			logger.line(`If not intended, consider changing the policy to OnlyNewer`);
+			logDisableRuntimeWarningsInstructions(logger);
+			logger.console("warn");
+		}
+
+		return true;
+	}
+
+	// OnlyNewer reuse policy - apply the new theme properties only if of a newer runtime (comparison with the style's runtime returns a positive number).
+	return comparison > 0;
+};
+
 const loadThemeBase = async theme => {
 	if (!isThemeBaseRegistered()) {
 		return;
 	}
 
-	const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
-	createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE);
+	if (shouldApplyThemeProperties(BASE_THEME_PACKAGE, theme)) {
+		const cssText = await getThemeProperties(BASE_THEME_PACKAGE, theme);
+		createThemePropertiesStyleTag(cssText, BASE_THEME_PACKAGE, theme, getCurrentRuntimeIndex());
+	}
 };
 
 const deleteThemeBase = () => {
-	const styleElement = document.head.querySelector(`style[data-ui5-theme-properties="${BASE_THEME_PACKAGE}"]`);
-	if (styleElement) {
-		styleElement.parentElement.removeChild(styleElement);
-	}
+	removeThemePropertiesStyleTag(BASE_THEME_PACKAGE);
 };
 
 const loadComponentPackages = async theme => {
@@ -35,8 +107,10 @@ const loadComponentPackages = async theme => {
 			return;
 		}
 
-		const cssText = await getThemeProperties(packageName, theme);
-		createThemePropertiesStyleTag(cssText, packageName);
+		if (shouldApplyThemeProperties(packageName, theme)) {
+			const cssText = await getThemeProperties(packageName, theme);
+			createThemePropertiesStyleTag(cssText, packageName, theme, getCurrentRuntimeIndex());
+		}
 	});
 };
 
