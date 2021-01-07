@@ -20,6 +20,7 @@
     overflow: hidden;
     max-height: 94vh;
     max-width: 90vw;
+    outline: none;
 }
 
 @media screen and (-ms-high-contrast: active) {

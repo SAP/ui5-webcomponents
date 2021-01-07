@@ -371,6 +371,12 @@
 	<br>
 	<br>
 
+	<ui5-button id="firstBtn">First button</ui5-button>
+	<ui5-button id="secondBtn">Second button</ui5-button>
+	<ui5-popover id="popNoFocusableContent" placement-type="Bottom">Sample text for the ui5-popover</ui5-popover>
+
+	<br>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.openBy(btn);
@@ -450,6 +456,16 @@
 		});
 		btnOpenXRight.addEventListener("click", function (event) {
 			popXRight.openBy(targetOpener2);
+		});
+
+		firstBtn.addEventListener("click", (event) => {
+			popNoFocusableContent.innerHTML = "First button is clicked";
+			popNoFocusableContent.openBy(event.target);
+		});
+
+		secondBtn.addEventListener("click", (event) => {
+			popNoFocusableContent.innerHTML = "Second button is clicked";
+			popNoFocusableContent.openBy(event.target);
 		});
 	</script>
 </body>
