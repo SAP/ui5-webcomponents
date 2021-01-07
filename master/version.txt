@@ -1,13 +1,5 @@
-commit 59497eede076d398559d136ee2855699473722f9
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Jan 4 11:07:44 2021 +0200
+commit bf8caaf2eb71156e6bbda3c1492022519fe25bf7
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Thu Jan 7 18:35:23 2021 +0200
 
-    fix(ui5-select): correct role and screen reader speech out (#2587)
-    
-    - Role of the ui5-select is changed to combobox which change the speech output near to the default behavior.
-    - The issue where role="button" can't be used with aria-required / required attribute is fixed.
-    - Overwriting the aria-label speech output with aria-labelledby is fixed.
-    
-    Fixes: #2485
-    Fixes: #2339
-    Fixes: #2142
+    fix(ui5-popup): correct focus when there is no focusable content (#2583)
