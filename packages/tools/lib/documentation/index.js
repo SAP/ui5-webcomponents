@@ -70,7 +70,6 @@ const calculateAPI = component => {
 	if (entriesAPI.indexOf(component.basename) !== -1) {
 		return component;
 	}
-
 	const entities = ["properties", "slots", "events", "methods", "cssVariables"];
 
 	// Initialize all entities with [] if necessary, and remove undefined things, and only leave public things
