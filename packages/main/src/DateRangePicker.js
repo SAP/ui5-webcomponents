@@ -202,14 +202,14 @@ class DateRangePicker extends DatePicker {
 		let newValue;
 
 		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date -> change it and keep the seoond date
-			const firstDateModified = modifyDateBy(new Date(this._firstDateTimestamp * 1000), amount, unit, this._minDate.toUTCJSDate(), this._maxDate.toUTCJSDate());
+			const firstDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
 			const newFirstDateTimestamp = firstDateModified.valueOf() / 1000;
 			if (newFirstDateTimestamp > this._lastDateTimestamp) { // dates flipped -> move the caret to the same position but on the last date
 				caretPos += Math.ceil(this.value.length / 2);
 			}
 			newValue = this._buildValue(newFirstDateTimestamp, this._lastDateTimestamp); // the value will be normalized so we don't try to order them here
 		} else {
-			const lastDateModified = modifyDateBy(new Date(this._lastDateTimestamp * 1000), amount, unit, this._minDate.toUTCJSDate(), this._maxDate.toUTCJSDate());
+			const lastDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
 			const newLastDateTimestamp = lastDateModified.valueOf() / 1000;
 			newValue = this._buildValue(this._firstDateTimestamp, newLastDateTimestamp); // the value will be normalized so we don't try to order them here
 			if (newLastDateTimestamp < this._firstDateTimestamp) { // dates flipped -> move the caret to the same position but on the first date
