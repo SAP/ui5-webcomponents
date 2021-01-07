@@ -6,7 +6,7 @@ import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import {
-	ACC_CTR_TYPE_TREEITEM,
+	TREE_ITEM_ARIA_LABEL,
 	TREE_ITEM_EXPAND_NODE,
 	TREE_ITEM_COLLAPSE_NODE,
 	LIST_ITEM_SELECTED,
@@ -258,7 +258,7 @@ class TreeListItem extends ListItem {
 	}
 
 	get ariaLabelText() {
-		let text = this.i18nBundle.getText(ACC_CTR_TYPE_TREEITEM);
+		let text = this.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
 
 		if (this.selected) {
 			text += ` ${this.i18nBundle.getText(LIST_ITEM_SELECTED)}`;
