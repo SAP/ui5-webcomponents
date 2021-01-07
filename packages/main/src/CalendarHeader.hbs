@@ -6,7 +6,6 @@
 		id="{{_id}}-btnPrev"
 		class="{{classes.prevButton}}"
 		@mousedown={{onPrevButtonClick}}
-		data-sap-cal-head-button="Prev"
 		title="{{_prevButtonText}}"
 	>
 		<ui5-icon class="ui5-calheader-arrowicon" name="slim-arrow-left"></ui5-icon>
@@ -14,9 +13,7 @@
 
 	<div class="ui5-calheader-midcontainer">
 		<div
-			id="{{_id}}-btn1"
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
-			style="width: auto;"
 			?hidden="{{isMonthButtonHidden}}"
 			tabindex="0"
 			@click={{onMonthButtonClick}}
@@ -26,9 +23,7 @@
 		</div>
 
 		<div
-			id="{{_id}}-btn2"
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
-			style="width: auto;"
 			tabindex="0"
 			@click={{onYearButtonClick}}
 			@keydown={{onYearButtonKeyDown}}
@@ -38,10 +33,9 @@
 	</div>
 
 	<div
+		id="{{_id}}-btnNext"
 		class="{{classes.nextButton}}"
 		@mousedown={{onNextButtonClick}}
-		id="{{_id}}-btnNext"
-		data-sap-cal-head-button="Next"
 		title={{_nextButtonText}}
 	>
 		<ui5-icon class="ui5-calheader-arrowicon" name="slim-arrow-right"></ui5-icon>

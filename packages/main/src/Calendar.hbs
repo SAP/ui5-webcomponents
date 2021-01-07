@@ -48,7 +48,7 @@
 		></ui5-yearpicker>
 	</div>
 
-	<!-- Positioned absolutely above the content, but this DOM order ensures tab order -->
+	<!-- Positioned above the content due to flex-direction:column-reverse, but physically here for tab order to work -->
 	<ui5-calendar-header
 			id="{{_id}}-head"
 			.primaryCalendarType="{{_primaryCalendarType}}"

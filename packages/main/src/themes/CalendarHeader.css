@@ -1,17 +1,14 @@
 :host {
 	display: block;
 	width: 100%;
+	height: 100%;
 }
 
 .ui5-calheader-root {
 	display: flex;
-    height: 100%;
+	height: 100%;
 	padding: var(--_ui5_calendar_header_padding);
 	box-sizing: border-box;
-}
-
-.ui5-calheader-root [ui5-button] {
-	height: 100%;
 }
 
 .ui5-calheader-arrowbtn {
@@ -81,6 +78,7 @@
 }
 
 .ui5-calheader-middlebtn {
+	width: auto;
 	font-family: "72override", var(--sapFontFamily);
 	flex: var(--_ui5_calendar_header_middle_button_flex);
 	position: relative;
