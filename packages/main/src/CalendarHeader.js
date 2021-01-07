@@ -27,7 +27,7 @@ const metadata = {
 		/**
 		 * Already normalized by Calendar
 		 * @type {Integer}
-		 * @private
+		 * @public
 		 */
 		timestamp: {
 			type: Integer,
@@ -36,19 +36,21 @@ const metadata = {
 		/**
 		 * Already normalized by Calendar
 		 * @type {CalendarType}
-		 * @private
+		 * @public
 		 */
 		primaryCalendarType: {
 			type: CalendarType,
 		},
 
-		_isNextButtonDisabled: {
+		isNextButtonDisabled: {
 			type: Boolean,
 		},
-		_isPrevButtonDisabled: {
+
+		isPrevButtonDisabled: {
 			type: Boolean,
 		},
-		_isMonthButtonHidden: {
+
+		isMonthButtonHidden: {
 			type: Boolean,
 		},
 	},
@@ -81,14 +83,12 @@ class CalendarHeader extends UI5Element {
 		return [Button, Icon];
 	}
 
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
+	}
+
 	constructor() {
 		super();
-		this._btnPrev = {};
-		this._btnPrev.icon = "slim-arrow-left";
-
-		this._btnNext = {};
-		this._btnNext.icon = "slim-arrow-right";
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -100,61 +100,51 @@ class CalendarHeader extends UI5Element {
 
 		this._monthButtonText = localeData.getMonths("wide", this.primaryCalendarType)[calendarDate.getMonth()];
 		this._yearButtonText = yearFormat.format(localDate, true);
-
-		this._btnPrev.classes = "ui5-calheader-arrowbtn";
-		this._btnNext.classes = "ui5-calheader-arrowbtn";
-
-		if (this._isNextButtonDisabled) {
-			this._btnNext.classes += " ui5-calheader-arrowbtn-disabled";
-		}
-
-		if (this._isPrevButtonDisabled) {
-			this._btnPrev.classes += " ui5-calheader-arrowbtn-disabled";
-		}
+		this._prevButtonText = this.i18nBundle.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
+		this._nextButtonText = this.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON);
 	}
 
-	_handlePrevPress(event) {
+	onPrevButtonClick(event) {
 		this.fireEvent("previous-press", event);
 	}
 
-	_handleNextPress(event) {
+	onNextButtonClick(event) {
 		this.fireEvent("next-press", event);
 	}
 
-	_showMonthPicker(event) {
+	onMonthButtonClick(event) {
 		this.fireEvent("show-month-press", event);
 	}
 
-	_showYearPicker(event) {
+	onMonthButtonKeyDown(event) {
+		if (isSpace(event) || isEnter(event)) {
+			event.preventDefault();
+			this.fireEvent("show-month-press", event);
+		}
+	}
+
+	onYearButtonClick(event) {
 		this.fireEvent("show-year-press", event);
 	}
 
-	_onkeydown(event) {
+	onYearButtonKeyDown(event) {
 		if (isSpace(event) || isEnter(event)) {
-			const showPickerButton = event.target.getAttribute("data-sap-show-picker");
-
-			if (showPickerButton) {
-				this[`_show${showPickerButton}Picker`]();
-			}
-		}
-	}
-
-	_onMidContainerKeyDown(event) {
-		if (isSpace(event)) {
 			event.preventDefault();
+			this.fireEvent("show-year-press", event);
 		}
 	}
 
-	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
-	}
-
-	get _prevButtonText() {
-		return this.i18nBundle.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
-	}
-
-	get _nextButtonText() {
-		return this.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON);
+	get classes() {
+		return {
+			prevButton: {
+				"ui5-calheader-arrowbtn": true,
+				"ui5-calheader-arrowbtn-disabled": this._isPrevButtonDisabled,
+			},
+			nextButton: {
+				"ui5-calheader-arrowbtn": true,
+				"ui5-calheader-arrowbtn-disabled": this._isNextButtonDisabled,
+			},
+		};
 	}
 }
 

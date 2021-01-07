@@ -1,34 +1,26 @@
 <div
 	class="ui5-calheader-root"
 	dir="{{effectiveDir}}"
-	@keydown={{_onkeydown}}
 >
 	<div
 		id="{{_id}}-btnPrev"
-		class="{{_btnPrev.classes}}"
-		@mousedown={{_handlePrevPress}}
+		class="{{classes.prevButton}}"
+		@mousedown={{onPrevButtonClick}}
 		data-sap-cal-head-button="Prev"
 		title="{{_prevButtonText}}"
 	>
-		<ui5-icon
-			class="ui5-calheader-arrowicon"
-			name="{{_btnPrev.icon}}"
-		>
-		</ui5-icon>
+		<ui5-icon class="ui5-calheader-arrowicon" name="slim-arrow-left"></ui5-icon>
 	</div>
 
-	<div
-		class="ui5-calheader-midcontainer"
-		@keydown="{{_onMidContainerKeyDown}}"
-	>
+	<div class="ui5-calheader-midcontainer">
 		<div
 			id="{{_id}}-btn1"
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			style="width: auto;"
-			?hidden="{{_isMonthButtonHidden}}"
+			?hidden="{{isMonthButtonHidden}}"
 			tabindex="0"
-			@click={{_showMonthPicker}}
-			data-sap-show-picker="Month"
+			@click={{onMonthButtonClick}}
+			@keydown={{onMonthButtonKeyDown}}
 		>
 			{{_monthButtonText}}
 		</div>
@@ -38,24 +30,20 @@
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			style="width: auto;"
 			tabindex="0"
-			@click={{_showYearPicker}}
-			data-sap-show-picker="Year"
+			@click={{onYearButtonClick}}
+			@keydown={{onYearButtonKeyDown}}
 		>
 			{{_yearButtonText}}
 		</div>
 	</div>
 
 	<div
-		class="{{_btnNext.classes}}"
-		@mousedown={{_handleNextPress}}
+		class="{{classes.nextButton}}"
+		@mousedown={{onNextButtonClick}}
 		id="{{_id}}-btnNext"
 		data-sap-cal-head-button="Next"
 		title={{_nextButtonText}}
 	>
-		<ui5-icon
-			class="ui5-calheader-arrowicon"
-			name="{{_btnNext.icon}}"
-		>
-		</ui5-icon>
+		<ui5-icon class="ui5-calheader-arrowicon" name="slim-arrow-right"></ui5-icon>
     </div>
 </div>
