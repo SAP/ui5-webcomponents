@@ -3,7 +3,7 @@
 	dir="{{effectiveDir}}"
 >
 	<div
-		id="{{_id}}-btnPrev"
+		data-ui5-cal-header-btn-prev
 		class="{{classes.prevButton}}"
 		@mousedown={{onPrevButtonClick}}
 		title="{{_prevButtonText}}"
@@ -13,6 +13,7 @@
 
 	<div class="ui5-calheader-midcontainer">
 		<div
+			data-ui5-cal-header-btn-month
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			?hidden="{{isMonthButtonHidden}}"
 			tabindex="0"
@@ -23,6 +24,7 @@
 		</div>
 
 		<div
+			data-ui5-cal-header-btn-year
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			tabindex="0"
 			@click={{onYearButtonClick}}
@@ -33,7 +35,7 @@
 	</div>
 
 	<div
-		id="{{_id}}-btnNext"
+		data-ui5-cal-header-btn-next
 		class="{{classes.nextButton}}"
 		@mousedown={{onNextButtonClick}}
 		title={{_nextButtonText}}

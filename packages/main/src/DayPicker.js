@@ -169,7 +169,6 @@ class DayPicker extends CalendarPart {
 		}
 
 		this._weeks = [];
-		this._weekNumbers = [];
 
 		const firstDayOfWeek = this._getFirstDayOfWeek();
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);

@@ -11,7 +11,7 @@ describe("Calendar general interaction", () => {
 
 	it("Year is set in the header", () => {
 		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const yearButton = calendarHeader.shadow$(`[data-sap-show-picker="Year"]`);
+		const yearButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`);
 		const headerText = parseInt(yearButton.getText());
 		const currentYear = new Date().getFullYear();
 
@@ -25,7 +25,7 @@ describe("Calendar general interaction", () => {
 		});
 
 		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const monthButton = calendarHeader.shadow$(`[data-sap-show-picker="Month"]`);
+		const monthButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`);
 		const monthText = monthButton.getText();
 		const currentMonth = new Date().getMonth();
 
@@ -39,8 +39,8 @@ describe("Calendar general interaction", () => {
 		const dayPicker = calendar.shadow$("ui5-daypicker");
 		const header  = calendar.shadow$("ui5-calendar-header");
 		const currentDayItem = dayPicker.shadow$(`div[data-sap-timestamp="974851200"]`);
-		const monthButton = header.shadow$(`[data-sap-show-picker="Month"]`);
-		const yearButton = header.shadow$(`[data-sap-show-picker="Year"]`);
+		const monthButton = header.shadow$(`[data-ui5-cal-header-btn-month]`);
+		const yearButton = header.shadow$(`[data-ui5-cal-header-btn-year]`);
 
 		toggleButton.click();
 		toggleButton.click();
@@ -67,7 +67,7 @@ describe("Calendar general interaction", () => {
 		const yearPicker = calendar.shadow$("ui5-yearpicker");
 		const YEAR = 1997;
 		calendar.setAttribute("timestamp", Date.UTC(YEAR) / 1000);
-		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Year"]`).click();
+		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
 		const focusedItemTimestamp = yearPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
 		assert.ok(new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear() === 1997, "The focused year is 1997");
 	});
@@ -76,7 +76,7 @@ describe("Calendar general interaction", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
-		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Year"]`).click();
+		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
 		const focusedItem = calendar.shadow$("ui5-yearpicker").shadow$(`[data-sap-timestamp="973036800"]`);
 
 		assert.ok(focusedItem.isFocusedDeep(), "Current year element is the active element");
@@ -87,7 +87,7 @@ describe("Calendar general interaction", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
-		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Month"]`).click();
+		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-month]`).click();
 		const focusedItem = calendar.shadow$("ui5-monthpicker").shadow$(`[data-sap-timestamp="973036800"]`);
 
 		assert.ok(focusedItem.isFocusedDeep(), "Current month element is the active element");
@@ -178,7 +178,7 @@ describe("Calendar general interaction", () => {
 		browser.keys(["F4"]);
 		browser.keys('PageUp');
 
-		assert.ok(calendarHeader.shadow$(".ui5-calheader-middlebtn").getAttribute("hidden"), "The button for month is hidden");
+		assert.ok(calendarHeader.shadow$("[data-ui5-cal-header-btn-month]").getAttribute("hidden"), "The button for month is hidden");
 		browser.keys("Space");
 	});
 
