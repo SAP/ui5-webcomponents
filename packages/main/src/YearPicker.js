@@ -64,7 +64,7 @@ const ROW_SIZE = 4; // Years per row (5 rows of 4 years each)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.YearPicker
- * @extends sap.ui.webcomponents.main.CalendarPart
+ * @extends CalendarPart
  * @tagname ui5-yearpicker
  * @public
  */

@@ -303,7 +303,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DatePicker
- * @extends sap.ui.webcomponents.main.DateComponentBase
+ * @extends DateComponentBase
  * @tagname ui5-date-picker
  * @public
  */

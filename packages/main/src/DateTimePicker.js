@@ -69,6 +69,9 @@ const metadata = {
 			type: Object,
 		},
 
+		/**
+		 * @private
+		 */
 		_currentTimeSlider: {
 			type: String,
 			defaultValue: "hours",
@@ -220,24 +223,6 @@ class DateTimePicker extends DatePicker {
 		await super.openPicker(options);
 		this._currentTimeSlider = "hours";
 		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
-	}
-
-	/**
-	 * Closes the picker.
-	 * @public
-	 */
-	closePicker() {
-		return super.closePicker(); // in order to be displayed in the DateTimePicker API reference
-	}
-
-	/**
-	 * Checks if a value is valid against the current date/time format.
-	 *
-	 * @param {string} value A value to be tested against the current date/time format
-	 * @public
-	 */
-	isValid(value = "") {
-		return super.isValid(value); // in order to be displayed in the DateTimePicker API reference
 	}
 
 	/**

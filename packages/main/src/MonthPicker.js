@@ -64,7 +64,7 @@ const ROW_SIZE = 3; // Months per row (4 rows of 3 months each)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MonthPicker
- * @extends sap.ui.webcomponents.main.CalendarPart
+ * @extends CalendarPart
  * @tagname ui5-monthpicker
  * @public
  */

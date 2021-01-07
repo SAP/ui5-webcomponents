@@ -96,6 +96,9 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * @private
+		 */
 		_isPickerOpen: {
 			type: Boolean,
 			noAttribute: true,

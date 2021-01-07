@@ -8,7 +8,7 @@ import DateComponentBase from "./DateComponentBase.js";
  * @public
  */
 const metadata = {
-	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
+	properties: /** @lends  sap.ui.webcomponents.main.CalendarPart.prototype */ {
 		/**
 		 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
 		 * <b>Node:</b> Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
@@ -42,7 +42,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.CalendarPart
- * @extends sap.ui.webcomponents.main.DateComponentBase
+ * @extends DateComponentBase
  * @public
  */
 class CalendarPart extends DateComponentBase {

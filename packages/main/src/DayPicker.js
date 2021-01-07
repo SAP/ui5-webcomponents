@@ -135,7 +135,7 @@ const DAYS_IN_WEEK = 7;
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DayPicker
- * @extends sap.ui.webcomponents.main.CalendarPart
+ * @extends CalendarPart
  * @tagname ui5-daypicker
  * @public
  */
