@@ -1,18 +1,5 @@
-commit 20de5ae0c59230d749c4fa4c1f70b12ceaee9fb1
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jan 8 11:54:29 2021 +0200
+commit 3e684b478fb508a87f0af29f917d94e58352ffe9
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jan 8 12:05:46 2021 +0200
 
-    feat(ui5-li-notification*): full-fill accessibility spec (#2578)
-    
-    We identified gaps in the accessibility implementation, that this change aims to address as follows:
-    **NotificationListItem**
-    - More Button: added aria-label="More"
-    - Close Button: added aria-label="Close"
-    **NotificationListGroupItem**
-    - Invisible text reading: added "read" or "unread", based on the "read" property.
-    - Root: added aria-expanded="true"/"false", based on the "collapsed" property
-    - More Button: added aria-label="More"
-    - Close Button: added aria-label="Close All"
-    - Toggle Button added title="Collapse Group" ("Expand Group") and aria-label="Collapse Group" ("Expand Group") - based on the "collapsed" property
-    **NotificationListGroupItem**
-    - new property "read" (previously available in the NotificationListItem only)
+    feat: refactoring and new features for pickers (#2598)

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+
+		<script>
+			delete Document.prototype.adoptedStyleSheets;
+		</script>
+		<style>
+			html,body {
+				height: 100%;
+			}
+		</style>
+
+		
+		
+		
+<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	</head>
+	<body style="background-color: var(--sapBackgroundColor);">
+		<ui5-time-selection id="timepicker" format-pattern="HH:mm:ss"></ui5-time-selection>
+		<br><br>
+		<ui5-time-selection id="timepicker2" format-pattern="hh:mm:ss" value=""></ui5-time-selection>
+		<br><br>
+		<ui5-time-selection id="timepicker3" format-pattern="hh:mm:ss a"></ui5-time-selection>
+		<br><br>
+		<ui5-time-selection id="timepicker4" format-pattern="HH:mm" value="12:05"></ui5-time-selection>
+		<br><br>
+		<ui5-time-selection id="timepicker5" format-pattern="hh:mm:ss" value="12:00:01"></ui5-time-selection>
+
+	</body>
+</html>

@@ -2754,18 +2754,6 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          _layoutsConfiguration
-                            <br>
-                            <code>_layouts-configuration</code>
-                        </div>
-                        <div class="cell api-table-content-cell">Object</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Allows the user to replace the whole layouts configuration
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           accessibilityTexts
                             <br>
                             <code>accessibility-texts</code>
@@ -2779,7 +2767,7 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           columnLayout
                             (readonly)
@@ -2792,7 +2780,7 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                             Returns the current column layout, based on both the <code>layout</code> property and the screen size. <br><br> <b>For example:</b> ["67%", "33%", 0], ["100%", 0, 0], ["25%", "50%", "25%"], etc, where the numbers represents the width of the start, middle and end columns.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           endColumnVisible
                             (readonly)
@@ -2805,7 +2793,7 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                             Returns if the <code>end</code> column is visible.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           layout
                             <br>
@@ -2816,7 +2804,7 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                             Defines the columns layout and their proportion. <br><br> <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 900px, two columns between 900px and 1280px and three columns for sizes bigger than 1280px. <br><br> Available options are: <ul> <li><code>OneColumn</code></li> <li><code>TwoColumnsStartExpanded</code></li> <li><code>TwoColumnsMidExpanded</code></li> <li><code>ThreeColumnsMidExpanded</code></li> <li><code>ThreeColumnsEndExpanded</code></li> <li><code>ThreeColumnsStartExpandedEndHidden</code></li> <li><code>ThreeColumnsMidExpandedEndHidden</code></li> <li><code>MidColumnFullScreen</code></li> <li><code>EndColumnFullScreen</code></li> </ul> <br><br> <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns in 67%/33% proportion.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           midColumnVisible
                             (readonly)
@@ -2829,7 +2817,7 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                             Returns if the <code>middle</code> column is visible.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           noArrows
                             <br>
@@ -2841,7 +2829,7 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                             Defines the visibility of the arrows, used for expanding and shrinking the columns.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           startColumnVisible
                             (readonly)
@@ -2854,7 +2842,7 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                             Returns if the <code>start</code> column is visible.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           visibleColumns
                             (readonly)

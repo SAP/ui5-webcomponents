@@ -25,6 +25,12 @@
 <script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
                     
 
+	<style>
+		section {
+			margin-bottom: 3rem;
+		}
+	</style>
+
 </head>
 <body style="background-color: var(--sapBackgroundColor);">
 
@@ -44,6 +50,10 @@
 	</section>
 
 	<section>
+		<ui5-calendar data-ui5-compact-size></ui5-calendar>
+	</section>
+
+	<section>
 		<ui5-calendar id="calendar2" primary-calendar-type='Islamic'></ui5-calendar>
 	</section>
 	<section>
@@ -59,7 +69,7 @@
 	const textArea = document.getElementById("textArea");
 
 	select.addEventListener("ui5-change", function(event) {
-		calendar1.setAttribute("selection", event.detail.selectedOption.textContent)
+		calendar1.setAttribute("selection-mode", event.detail.selectedOption.textContent)
 	});
 
 	toggleButton.addEventListener("click", function(event) {
