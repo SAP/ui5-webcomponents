@@ -168,6 +168,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Calendar
  * @extends CalendarPart
  * @tagname ui5-calendar
+ * @appenddocs CalendarDate
  * @public
  * @since 1.0.0-rc.11
  */

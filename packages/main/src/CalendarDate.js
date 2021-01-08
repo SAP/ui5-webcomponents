@@ -8,7 +8,7 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.CalendarDate.prototype */ {
 
 		/**
-		 * Defines a calendar date
+		 * The date as a formatted string according to the `formatPattern` property of the `ui5-calendar` that hosts the `ui5-date`
 		 *
 		 * @type {string}
 		 * @public
