@@ -1,9 +1,16 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
+import {
+	TREE_ITEM_ARIA_LABEL,
+	TREE_ITEM_EXPAND_NODE,
+	TREE_ITEM_COLLAPSE_NODE,
+	LIST_ITEM_SELECTED,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import TreeListItemTemplate from "./generated/templates/TreeListItemTemplate.lit.js";
@@ -16,6 +23,7 @@ import treeListItemCss from "./generated/themes/TreeListItem.css.js";
  */
 const metadata = {
 	tag: "ui5-li-tree",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 
 		/**
@@ -175,6 +183,12 @@ class TreeListItem extends ListItem {
 		];
 	}
 
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	onBeforeRendering() {
 		this.actionable = false;
 	}
@@ -214,6 +228,7 @@ class TreeListItem extends ListItem {
 			role: "treeitem",
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
+			listItemAriaLabel: this.ariaLabelText,
 		};
 	}
 
@@ -240,6 +255,24 @@ class TreeListItem extends ListItem {
 				this.fireEvent("step-out", { item: this });
 			}
 		}
+	}
+
+	get ariaLabelText() {
+		let text = this.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+
+		if (this.selected) {
+			text += ` ${this.i18nBundle.getText(LIST_ITEM_SELECTED)}`;
+		}
+
+		return text;
+	}
+
+	get iconAccessibleName() {
+		return this.expanded ? this.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : this.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

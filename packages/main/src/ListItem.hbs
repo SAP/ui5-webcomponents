@@ -15,6 +15,7 @@
 	role="{{_accInfo.role}}"
 	aria-expanded="{{_accInfo.ariaExpanded}}"
 	aria-level="{{_accInfo.ariaLevel}}"
+	aria-labelledby="{{_id}}-invisibleText {{_id}}-content"
 	style="list-style-type: none;"
 >
 		{{> listItemPreContent}}
@@ -43,6 +44,8 @@
 		{{#if placeSelectionElementAfter}}
 			{{> selectionElement}}
 		{{/if}}
+
+		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{_accInfo.listItemAriaLabel}}</span>
 </li>
 
 {{#*inline "listItemPreContent"}}{{/inline}}
