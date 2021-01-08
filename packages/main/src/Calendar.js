@@ -3,6 +3,7 @@ import {
 	isF4,
 	isF4Shift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import CalendarDate from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
@@ -71,6 +72,14 @@ const metadata = {
 
 		_nextButtonDisabled: {
 			type: Boolean,
+		},
+	},
+	managedSlots: true,
+	slots: {
+		"default": {
+			propertyName: "dates",
+			type: HTMLElement,
+			invalidateOnChildChange: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
@@ -175,6 +184,33 @@ class Calendar extends CalendarPart {
 		return calendarCSS;
 	}
 
+	/**
+	 * Returns an array of UTC timestamps, representing the selected dates
+	 * @public
+	 * @returns {*}
+	 */
+	get selectedDates() {
+		return this.dates.map(date => {
+			const value = date.value;
+			return value && !!this.getFormat().parse(value) ? this._getTimeStampFromString(value) / 1000 : undefined;
+		}).filter(date => !!date);
+	}
+
+	/**
+	 * Creates instances of <code>ui5-date</code> inside this <code>ui5-calendar</code> with values, equal to the provided UTC timestamps
+	 * @param selectedDates Array of UTC timestamps
+	 */
+	set selectedDates(selectedDates) {
+		this.dates.forEach(date => {
+			this.removeChild(date);
+		});
+		selectedDates.forEach(timestamp => {
+			const date = document.createElement("ui5-date");
+			date.value = this.getFormat().format(new Date(timestamp * 1000));
+			this.appendChild(date);
+		});
+	}
+
 	async onAfterRendering() {
 		await RenderScheduler.whenFinished(); // Await for the current picker to render and then ask if it has previous/next pages
 		this._previousButtonDisabled = !this._currentPickerDOM._hasPreviousPage();
@@ -239,8 +275,10 @@ class Calendar extends CalendarPart {
 		const selectedDates = event.detail.dates;
 
 		this.timestamp = timestamp;
-		this.selectedDates = selectedDates;
-		this.fireEvent("selected-dates-change", { timestamp, dates: [...selectedDates] });
+		const defaultPrevented = !this.fireEvent("selected-dates-change", { timestamp, dates: [...selectedDates] });
+		if (!defaultPrevented) {
+			this.selectedDates = selectedDates;
+		}
 	}
 
 	onSelectedMonthChange(event) {
@@ -269,6 +307,7 @@ class Calendar extends CalendarPart {
 
 	static get dependencies() {
 		return [
+			CalendarDate,
 			CalendarHeader,
 			DayPicker,
 			MonthPicker,

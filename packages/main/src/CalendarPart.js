@@ -18,17 +18,6 @@ const metadata = {
 		timestamp: {
 			type: Integer,
 		},
-
-		/**
-		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
-		 * @type {Array}
-		 * @public
-		 */
-		selectedDates: {
-			type: Integer,
-			multiple: true,
-			compareValues: true,
-		},
 	},
 };
 
