@@ -1,5 +1,15 @@
-commit 3e684b478fb508a87f0af29f917d94e58352ffe9
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jan 8 12:05:46 2021 +0200
+commit 4663b917263c19cff6fc97aa7dcdcb8e8058b915
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Fri Jan 8 12:39:55 2021 +0200
 
-    feat: refactoring and new features for pickers (#2598)
+    feat(ui5-tree): implement acc spec  (#2636)
+    
+    Changes:
+    - Tooltip for the expand/collapse icon is added
+    - Tree item is now announced
+    - Selected state is now announced
+    - Announced level is fixed
+    - Translation for LIST_ITEM_SELECTED is fixed
+    - Tree view is now read out once.
+    
+    Fixes #2465
