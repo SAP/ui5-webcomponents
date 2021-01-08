@@ -5,8 +5,8 @@ describe("Duration Picker general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/DurationPicker.html");
 
 	it("Tests opening and closing of popover", () => {
-		const durationPicker = browser.$("#duration-picker1")
-		const duratationPickerIcon = durationPicker.shadow$(".ui5-duration-picker-input-icon-button");
+		const durationPicker = browser.$("#duration-picker1");
+		const duratationPickerIcon = durationPicker.shadow$(".ui5-time-picker-input-icon-button");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#duration-picker1");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
@@ -22,30 +22,31 @@ describe("Duration Picker general interaction", () => {
 	});
 
 	it("Tests max-value", () => {
-		const durationPicker = browser.$("#duration-picker4")
-		const duratationPickerIcon = durationPicker.shadow$(".ui5-duration-picker-input-icon-button");
+		const durationPicker = browser.$("#duration-picker4");
+		const duratationPickerIcon = durationPicker.shadow$(".ui5-time-picker-input-icon-button");
 
 		// act
 		duratationPickerIcon.click();
 
 		// assert - the custom max-value
 		assert.strictEqual(durationPicker.getProperty("value"), durationPicker.getProperty("maxValue") ,
-			"The value and the max-vaoue are equal.");
-		assert.strictEqual(durationPicker.getProperty("_maxValue")[0], "05", "max value is read correctly");
-		assert.strictEqual(durationPicker.getProperty("_maxValue")[1], "10", "max value is read correctly");
-		assert.strictEqual(durationPicker.getProperty("_maxValue")[2], "08", "max value is read correctly");
+			"The value and the max-value are equal.");
+		assert.strictEqual(durationPicker.getProperty("maxHours"), 5, "max hours value is read correctly");
+		assert.strictEqual(durationPicker.getProperty("maxMinutes"), 10, "max minutes value is read correctly");
+		assert.strictEqual(durationPicker.getProperty("maxSeconds"), 8, "max seconds value is read correctly");
 	});
 
 	it("Tests seconds-step property", () => {
 		const durationPicker = browser.$("#duration-picker6");
 
 		assert.strictEqual(durationPicker.getProperty("value"), "05:10:00", "The initial value is taking in consideration the seconds-step property");
-		
+
 		durationPicker.click();
+		durationPicker.click(); // On click it's all selected, so lose the selection not to delete everything with backspace
 		durationPicker.keys("Backspace");
 		durationPicker.keys("2");
 		durationPicker.keys("Enter");
-		
+
 		assert.strictEqual(durationPicker.getProperty("value"), "05:10:00", "Editing the value is taking in consideration the seconds-step property");
 	});
 
@@ -53,12 +54,13 @@ describe("Duration Picker general interaction", () => {
 		const durationPicker = browser.$("#duration-picker7");
 
 		assert.strictEqual(durationPicker.getProperty("value"), "05:10", "The initial value is taking in consideration the minutes-step property");
-		
+
 		durationPicker.click();
+		durationPicker.click(); // On click it's all selected, so lose the selection not to delete everything with backspace
 		durationPicker.keys("Backspace");
 		durationPicker.keys("2");
 		durationPicker.keys("Enter");
-		
+
 		assert.strictEqual(durationPicker.getProperty("value"), "05:10", "Editing the value is taking in consideration the minutes-step property");
 	});
 
@@ -81,16 +83,16 @@ describe("Duration Picker general interaction", () => {
 	});
 
 	it("Tests default max-value", () => {
-		const durationPicker = browser.$("#duration-default")
-		const duratationPickerIcon = durationPicker.shadow$(".ui5-duration-picker-input-icon-button");
+		const durationPicker = browser.$("#duration-default");
+		const duratationPickerIcon = durationPicker.shadow$(".ui5-time-picker-input-icon-button");
 
 		// act
 		duratationPickerIcon.click();
 
 		// assert - the default max-value
-		assert.strictEqual(durationPicker.getProperty("_maxValue")[0], "23", "max value is read correctly");
-		assert.strictEqual(durationPicker.getProperty("_maxValue")[1], "59", "max value is read correctly");
-		assert.strictEqual(durationPicker.getProperty("_maxValue")[2], "59", "max value is read correctly");
+		assert.strictEqual(durationPicker.getProperty("maxHours"), 23, "max value is read correctly");
+		assert.strictEqual(durationPicker.getProperty("maxMinutes"), 59, "max value is read correctly");
+		assert.strictEqual(durationPicker.getProperty("maxSeconds"), 59, "max value is read correctly");
 
 		// close picker
 		duratationPickerIcon.click();

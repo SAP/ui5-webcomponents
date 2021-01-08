@@ -61,28 +61,40 @@ const appendCSSVarsAPI = entry => {
 	return entry;
 }
 
-const calculateAPI = entry => {
-	if (entriesAPI.indexOf(entry.basename) !== -1) {
-		return entry;
+const componentHasEntityItem = (component, entity, name) => {
+	return component[entity].some(x => x && x.name === name);
+};
+const removeEmpty = arr => arr.filter(x => x);
+
+const calculateAPI = component => {
+	if (entriesAPI.indexOf(component.basename) !== -1) {
+		return component;
+	}
+	const entities = ["properties", "slots", "events", "methods", "cssVariables"];
+
+	// Initialize all entities with [] if necessary, and remove undefined things, and only leave public things
+	entities.forEach(entity => {
+		component[entity] = removeEmpty(component[entity] || []).filter(x => x.visibility === "public");
+	});
+
+	component = appendCSSVarsAPI(component);
+
+	let parent = getComponentByName(component.extends);
+	if (parent) {
+		let parentComponent = calculateAPI(parent);
+		entities.forEach(entity => {
+			parentComponent[entity].forEach( x => {
+				if (!componentHasEntityItem(component, entity, x.name)) {
+					component[entity].push(x);
+				}
+			});
+		});
 	}
 
-	let parent = getComponentByName(entry.extends) || {};
+	entriesAPI.push(component.basename);
 
-	entry = appendCSSVarsAPI(entry);
-	parent = appendCSSVarsAPI(parent);
-
-	parent = { ...{ properties: [], events: [], slots: [], cssVariables: [] }, ...parent };
-
-	// extend component documentation
-	entry.properties = [...(entry.properties || []), ...(parent.properties || [])];
-	entry.events = [...(entry.events || []), ...(parent.events || [])];
-	entry.slots = [...(entry.slots || []), ...(parent.slots || [])];
-	entry.cssVariables = [...(entry.cssVariables || []), ...(parent.cssVariables || [])];
-
-	entriesAPI.push(entry.basename);
-
-	return entry;
-}
+	return component;
+};
 
 const appendAdditionalEntriesAPI = entry => {
 	if (entry.appenddocs) {

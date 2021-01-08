@@ -5,26 +5,17 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import { getMinCalendarDate, getMaxCalendarDate } from "./util/DateTime.js";
+import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 
 /**
  * @public
  */
 const metadata = {
-	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
-		/**
-		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
-		 * @type {Integer}
-		 * @public
-		 */
-		timestamp: {
-			type: Integer,
-		},
-
+	languageAware: true,
+	properties: /** @lends  sap.ui.webcomponents.main.DateComponentBase.prototype */ {
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
@@ -69,34 +60,25 @@ const metadata = {
 		formatPattern: {
 			type: String,
 		},
-
-		/**
-		 * Defines the selected dates as UTC timestamps.
-		 * @type {Array}
-		 * @public
-		 */
-		selectedDates: {
-			type: Integer,
-			multiple: true,
-		},
 	},
 };
 
 /**
- * Base picker component.
- *
  * @class
  *
- * Abstract class for Calendar, DayPicker, MonthPicker and YearPicker
+ * Abstract class that provides common functionality for date-related components (day picker, month picker, year picker, calendar, date picker, date range picker, date time picker)
+ * This includes:
+ *  - "languageAware: true" metadata setting, CLDR fetch and i18n initialization
+ *  - common properties (primaryCalendar, minDate, maxDate and formatPattern) declaration and methods that operate on them
+ *  - additional common methods
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.PickerBase
+ * @alias sap.ui.webcomponents.main.DateComponentBase
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-monthpicker
  * @public
  */
-class PickerBase extends UI5Element {
+class DateComponentBase extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -107,28 +89,7 @@ class PickerBase extends UI5Element {
 
 	constructor() {
 		super();
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
-	get _timestamp() {
-		return this.timestamp !== undefined ? this.timestamp : Math.floor(new Date().getTime() / 1000);
-	}
-
-	get _localDate() {
-		return new Date(this._timestamp * 1000);
-	}
-
-	get _calendarDate() {
-		return CalendarDate.fromTimestamp(this._localDate.getTime(), this._primaryCalendarType);
-	}
-
-	get _month() {
-		return this._calendarDate.getMonth();
-	}
-
-	get _year() {
-		return this._calendarDate.getYear();
 	}
 
 	get _primaryCalendarType() {
@@ -136,33 +97,39 @@ class PickerBase extends UI5Element {
 		return this.primaryCalendarType || getCalendarType() || localeData.getPreferredCalendarType();
 	}
 
+	get _minDate() {
+		return this.minDate && this.getFormat().parse(this.minDate) ? this._getCalendarDateFromString(this.minDate) : getMinCalendarDate(this._primaryCalendarType);
+	}
+
+	get _maxDate() {
+		return this.maxDate && this.getFormat().parse(this.maxDate) ? this._getCalendarDateFromString(this.maxDate) : getMaxCalendarDate(this._primaryCalendarType);
+	}
+
+	get _formatPattern() {
+		return this.formatPattern || "medium"; // get from config
+	}
+
 	get _isPattern() {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
-	get _maxDate() {
-		return this.maxDate ? this._getTimeStampFromString(this.maxDate) : this._getMaxCalendarDate();
-	}
-
-	get _minDate() {
-		return this.minDate ? this._getTimeStampFromString(this.minDate) : this._getMinCalendarDate();
+	_getCalendarDateFromString(value) {
+		const jsDate = this.getFormat().parse(value);
+		if (jsDate) {
+			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
+		}
 	}
 
 	_getTimeStampFromString(value) {
-		const jsDate = this.getFormat().parse(value);
-		if (jsDate) {
-			const calDate = CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
+		const calDate = this._getCalendarDateFromString(value);
+		if (calDate) {
 			return calDate.toUTCJSDate().valueOf();
 		}
-		return undefined;
 	}
 
-	_getMinCalendarDate() {
-		return getMinCalendarDate(this._primaryCalendarType);
-	}
-
-	_getMaxCalendarDate() {
-		return getMaxCalendarDate(this._primaryCalendarType);
+	_getStringFromTimestamp(timestamp) {
+		const localDate = new Date(timestamp);
+		return this.getFormat().format(localDate, true);
 	}
 
 	getFormat() {
@@ -181,15 +148,6 @@ class PickerBase extends UI5Element {
 		return dateFormat;
 	}
 
-	get _formatPattern() {
-		return this.formatPattern || "medium"; // get from config
-	}
-
-	getTimestampFromDom(domNode) {
-		const oMonthDomRef = domNode.getAttribute("data-sap-timestamp");
-		return parseInt(oMonthDomRef);
-	}
-
 	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
@@ -198,4 +156,4 @@ class PickerBase extends UI5Element {
 	}
 }
 
-export default PickerBase;
+export default DateComponentBase;

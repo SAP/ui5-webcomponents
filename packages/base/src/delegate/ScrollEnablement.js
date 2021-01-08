@@ -42,7 +42,30 @@ class ScrollEnablement extends EventProvider {
 		return this._container;
 	}
 
-	scrollTo(left, top) {
+	/**
+	 * Scrolls the container to the left/top position, retrying retryCount times, if the container is not yet painted
+	 *
+	 * @param left
+	 * @param top
+	 * @param retryCount
+	 * @param retryInterval
+	 * @returns {Promise<void>} resolved when scrolled successfully
+	 */
+	async scrollTo(left, top, retryCount = 0, retryInterval = 0) {
+		let containerPainted = this.scrollContainer.clientHeight > 0 && this.scrollContainer.clientWidth > 0;
+
+		/* eslint-disable no-loop-func, no-await-in-loop */
+		while (!containerPainted && retryCount > 0) {
+			await new Promise(resolve => {
+				setTimeout(() => {
+					containerPainted = this.scrollContainer.clientHeight > 0 && this.scrollContainer.clientWidth > 0;
+					retryCount--;
+					resolve();
+				}, retryInterval);
+			});
+		}
+		/* eslint-disable no-loop-func, no-await-in-loop */
+
 		this._container.scrollLeft = left;
 		this._container.scrollTop = top;
 	}

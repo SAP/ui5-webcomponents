@@ -6,8 +6,6 @@ import {
 	isRight,
 	isHome,
 	isEnd,
-	isPageUp,
-	isPageDown,
 } from "../Keys.js";
 import getActiveElement from "../util/getActiveElement.js";
 
@@ -23,7 +21,6 @@ import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
  *  - Up/down
  *  - Left/right
  *  - Home/End
- *  - PageUp/PageDown
  *
  * Usage:
  * 1) Use the "getItemsCallback" constructor property to pass a callback to ItemNavigation, which, whenever called, will return the list of items to navigate among.
@@ -57,11 +54,9 @@ class ItemNavigation extends EventProvider {
 	 *  - currentIndex: the index of the item that will be initially selected (from which navigation will begin)
 	 *  - navigationMode (Auto|Horizontal|Vertical): whether the items are displayed horizontally (Horizontal), vertically (Vertical) or as a matrix (Auto) meaning the user can navigate in both directions (up/down and left/right)
 	 *  - rowSize: tells how many items per row there are when the items are not rendered as a flat list but rather as a matrix. Relevant for navigationMode=Auto
-	 *  - behavior (Static|Cycling|Paging): tells what to do when trying to navigate beyond the first and last items
+	 *  - behavior (Static|Cycling): tells what to do when trying to navigate beyond the first and last items
 	 *    Static means that nothing happens if the user tries to navigate beyond the first/last item.
 	 *    Cycling means that when the user navigates beyond the last item they go to the first and vice versa.
-	 *    Paging means that when the urse navigates beyond the first/last item, a new "page" of items appears (as commonly observed with calendars for example)
-	 *  - pageSize: tells how many items the user skips by using the PageUp/PageDown keys
 	 *  - getItemsCallback: function that, when called, returns an array with all items the user can navigate among
 	 *  - affectedPropertiesNames: a list of metadata properties on the root component which, upon user navigation, will be reassigned by address thus causing the root component to invalidate
 	 */
@@ -76,8 +71,6 @@ class ItemNavigation extends EventProvider {
 		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
 		this.verticalNavigationOn = autoNavigation || navigationMode === NavigationMode.Vertical;
 
-		this.pageSize = options.pageSize;
-
 		if (options.affectedPropertiesNames) {
 			this.affectedPropertiesNames = options.affectedPropertiesNames;
 		}
@@ -85,10 +78,6 @@ class ItemNavigation extends EventProvider {
 		if (options.getItemsCallback) {
 			this._getItems = options.getItemsCallback;
 		}
-
-		const trueFunction = () => true;
-		this._hasNextPage = typeof options.hasNextPageCallback === "function" ? options.hasNextPageCallback : trueFunction;
-		this._hasPreviousPage = typeof options.hasPreviousPageCallback === "function" ? options.hasPreviousPageCallback : trueFunction;
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
@@ -113,9 +102,9 @@ class ItemNavigation extends EventProvider {
 
 	async _onKeyPress(event) {
 		if (this.currentIndex >= this._getItems().length) {
-			this.onOverflowBottomEdge(event);
+			this.onOverflowBottomEdge();
 		} else if (this.currentIndex < 0) {
-			this.onOverflowTopEdge(event);
+			this.onOverflowTopEdge();
 		}
 
 		event.preventDefault();
@@ -124,7 +113,6 @@ class ItemNavigation extends EventProvider {
 
 		this.update();
 		this.focusCurrent();
-		this.fireEvent(ItemNavigation.AFTER_FOCUS);
 	}
 
 	onkeydown(event) {
@@ -150,14 +138,6 @@ class ItemNavigation extends EventProvider {
 
 		if (isEnd(event)) {
 			return this._handleEnd(event);
-		}
-
-		if (isPageUp(event)) {
-			return this._handlePageUp(event);
-		}
-
-		if (isPageDown(event)) {
-			return this._handlePageDown(event);
 		}
 	}
 
@@ -201,20 +181,6 @@ class ItemNavigation extends EventProvider {
 		if (this._canNavigate()) {
 			const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
 			this.currentIndex += (homeEndRange - 1 - this.currentIndex % homeEndRange); // eslint-disable-line
-			this._onKeyPress(event);
-		}
-	}
-
-	_handlePageUp(event) {
-		if (this._canNavigate()) {
-			this.currentIndex -= this.pageSize;
-			this._onKeyPress(event);
-		}
-	}
-
-	_handlePageDown(event) {
-		if (this._canNavigate()) {
-			this.currentIndex += this.pageSize;
 			this._onKeyPress(event);
 		}
 	}
@@ -323,71 +289,25 @@ class ItemNavigation extends EventProvider {
 
 	onOverflowBottomEdge(event) {
 		const items = this._getItems();
-		const offset = (this.currentIndex - items.length) % this.rowSize;
 
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
 			this.currentIndex = 0;
 			return;
 		}
 
-		if (this.behavior === ItemNavigationBehavior.Paging) {
-			this._handleNextPage();
-		} else {
-			this.currentIndex = items.length - 1;
-		}
-
-		this.fireEvent(ItemNavigation.BORDER_REACH, {
-			start: false,
-			end: true,
-			originalEvent: event,
-			offset,
-		});
+		this.currentIndex = items.length - 1;
 	}
 
 	onOverflowTopEdge(event) {
 		const items = this._getItems();
-		const offsetRight = (this.currentIndex + this.rowSize) % this.rowSize;
-		const offset = offsetRight < 0 ? (this.rowSize + offsetRight) : offsetRight;
 
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
 			this.currentIndex = items.length - 1;
 			return;
 		}
 
-		if (this.behavior === ItemNavigationBehavior.Paging) {
-			this._handlePrevPage();
-		} else {
-			this.currentIndex = 0;
-		}
-
-		this.fireEvent(ItemNavigation.BORDER_REACH, {
-			start: true,
-			end: false,
-			originalEvent: event,
-			offset,
-		});
-	}
-
-	_handleNextPage() {
-		const items = this._getItems();
-
-		if (!this._hasNextPage()) {
-			this.currentIndex = items.length - 1;
-		} else {
-			this.currentIndex -= this.pageSize;
-		}
-	}
-
-	_handlePrevPage() {
-		if (!this._hasPreviousPage()) {
-			this.currentIndex = 0;
-		} else {
-			this.currentIndex = this.pageSize + this.currentIndex;
-		}
+		this.currentIndex = 0;
 	}
 }
-
-ItemNavigation.BORDER_REACH = "_borderReach";
-ItemNavigation.AFTER_FOCUS = "_afterFocus";
 
 export default ItemNavigation;
