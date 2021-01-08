@@ -19,6 +19,8 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import {
 	CAROUSEL_OF_TEXT,
 	CAROUSEL_DOT_TEXT,
+	CAROUSEL_PREVIOUS_ARROW_TEXT,
+	CAROUSEL_NEXT_ARROW_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
@@ -504,6 +506,14 @@ class Carousel extends UI5Element {
 
 	get ariaActiveDescendant() {
 		return this.content.length ? `${this._id}-carousel-item-${this.selectedIndex + 1}` : undefined;
+	}
+
+	get nextPageText() {
+		return this.i18nBundle.getText(CAROUSEL_NEXT_ARROW_TEXT);
+	}
+
+	get previousPageText() {
+		return this.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
 	}
 
 	static get dependencies() {
