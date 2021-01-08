@@ -1,6 +1,8 @@
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
@@ -387,13 +389,32 @@ class DateTimePicker extends DatePicker {
 		}
 	}
 
+
+	/**
+	 * @override
+	 */
+	_modifyDateValue(amount, unit) {
+		if (!this.dateValue) {
+			return;
+		}
+
+		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, this._minDate, this._maxDate);
+		const modifiedLocalDate = modifiedDate.toLocalJSDate();
+		modifiedLocalDate.setHours(this.dateValue.getHours());
+		modifiedLocalDate.setMinutes(this.dateValue.getMinutes());
+		modifiedLocalDate.setSeconds(this.dateValue.getSeconds());
+
+		const newValue = this.formatValue(modifiedLocalDate);
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
+	}
+
 	async getPicker() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
 
 	getSelectedDateTime() {
-		const selectedDate = new Date(this._effectiveCalendarSelectedDates[0] * 1000);
+		const selectedDate = CalendarDate.fromTimestamp(this._effectiveCalendarSelectedDates[0] * 1000).toLocalJSDate();
 		const selectedTime = this.getFormat().parse(this._effectiveTimeValue);
 		selectedDate.setHours(selectedTime.getHours());
 		selectedDate.setMinutes(selectedTime.getMinutes());

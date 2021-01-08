@@ -129,7 +129,7 @@ class DateComponentBase extends UI5Element {
 
 	_getStringFromTimestamp(timestamp) {
 		const localDate = new Date(timestamp);
-		return this.getFormat().format(localDate);
+		return this.getFormat().format(localDate, true);
 	}
 
 	getFormat() {
