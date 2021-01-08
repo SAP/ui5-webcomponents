@@ -1,4 +1,5 @@
 import RenderScheduler from "../RenderScheduler.js";
+import { fireDirectionChange } from "./directionChange.js";
 
 /**
  * Re-renders all RTL-aware UI5 Elements.
@@ -7,7 +8,9 @@ import RenderScheduler from "../RenderScheduler.js";
  *
  * @returns {Promise<void>}
  */
-const applyDirection = () => {
+const applyDirection = async () => {
+	const listenersResults = fireDirectionChange();
+	await Promise.all(listenersResults);
 	RenderScheduler.reRenderAllUI5Elements({ rtlAware: true });
 	return RenderScheduler.whenFinished();
 };
