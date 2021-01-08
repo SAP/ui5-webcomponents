@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
+
+
+### Bug Fixes
+
+* **ui5-dialog:** apply initial focus after rendering ([#2551](https://github.com/SAP/ui5-webcomponents/issues/2551)) ([dba0265](https://github.com/SAP/ui5-webcomponents/commit/dba0265)), closes [#2537](https://github.com/SAP/ui5-webcomponents/issues/2537)
+
+
+### Features
+
+* **framework:** Change child-parent invalidation API ([#2541](https://github.com/SAP/ui5-webcomponents/issues/2541)) ([a1a3f80](https://github.com/SAP/ui5-webcomponents/commit/a1a3f80))
+* **ui5-calendar:** introduce new component. ([#2424](https://github.com/SAP/ui5-webcomponents/issues/2424)) ([5470e23](https://github.com/SAP/ui5-webcomponents/commit/5470e23)), closes [#1730](https://github.com/SAP/ui5-webcomponents/issues/1730)
+
+
+
+
+
 # [1.0.0-rc.10](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.9...v1.0.0-rc.10) (2020-11-12)
 
 

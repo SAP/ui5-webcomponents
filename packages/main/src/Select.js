@@ -243,6 +243,15 @@ const metadata = {
  * Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys
  * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
  * <br>
+ *
+ * <h3>Stable DOM Refs</h3>
+ *
+ * In the context of <code>ui5-select</code>, you can provide a custom stable DOM ref for:
+ * <ul>
+ * <li>Every <code>ui5-option</code> that you provide.
+ * Example: <code><ui5-option stable-dom-ref="option1"></ui5-option></code></li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/Select";</code>
  * <br>
@@ -311,6 +320,7 @@ class Select extends UI5Element {
 
 	_onfocusout() {
 		this.focused = false;
+		this.itemSelectionAnnounce();
 	}
 
 	get _isPickerOpen() {
@@ -361,6 +371,7 @@ class Select extends UI5Element {
 				value: opt.value,
 				textContent: opt.textContent,
 				id: opt._id,
+				stableDomRef: opt.stableDomRef,
 			};
 		});
 
@@ -478,6 +489,7 @@ class Select extends UI5Element {
 
 	_handleArrowNavigation(event, shouldFireEvent) {
 		let nextIndex = -1;
+		const currentIndex = this._selectedIndex;
 		const isDownKey = isDown(event);
 		const isUpKey = isUp(event);
 
@@ -492,6 +504,10 @@ class Select extends UI5Element {
 			this.options[this._selectedIndex].selected = false;
 			this.options[nextIndex].selected = true;
 			this._selectedIndex = nextIndex === -1 ? this._selectedIndex : nextIndex;
+
+			if (currentIndex !== this._selectedIndex) {
+				this.itemSelectionAnnounce();
+			}
 
 			if (shouldFireEvent) {
 				this._fireChangeEvent(this.options[nextIndex]);
@@ -625,6 +641,16 @@ class Select extends UI5Element {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	itemSelectionAnnounce() {
+		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
+
+		if (this.focused && !this._isPickerOpen && this._currentlySelectedOption) {
+			invisibleText.textContent = this._currentlySelectedOption.textContent;
+		} else {
+			invisibleText.textContent = "";
+		}
 	}
 
 	async openValueStatePopover() {

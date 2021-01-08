@@ -205,7 +205,7 @@ const metadata = {
 
 		/**
 		 * Defines the filter type of the <code>ui5-multi-combobox</code>.
-		 * Available options are: <code>StartsWithPerTerm</code>, <code>None</code>.
+		 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code>, <code>Contains</code> and <code>None</code>.
 		 *
 		 * @type {string}
 		 * @defaultvalue "StartsWithPerTerm"
