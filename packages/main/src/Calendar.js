@@ -201,12 +201,14 @@ class Calendar extends CalendarPart {
 	 * @param selectedDates Array of UTC timestamps
 	 */
 	set selectedDates(selectedDates) {
+		// Remove all existing dates
 		this.dates.forEach(date => {
 			this.removeChild(date);
 		});
+		// Create tags for the new dates
 		selectedDates.forEach(timestamp => {
 			const date = document.createElement("ui5-date");
-			date.value = this.getFormat().format(new Date(timestamp * 1000));
+			date.value = this.getFormat().format(new Date(timestamp * 1000), true); // Format as UTC
 			this.appendChild(date);
 		});
 	}
