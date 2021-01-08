@@ -1,5 +1,7 @@
-commit bf8caaf2eb71156e6bbda3c1492022519fe25bf7
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Thu Jan 7 18:35:23 2021 +0200
+commit 943e4ce52792ceac2c832ecd1a9d61e1b5114ffc
+Author: GerganaKremenska <gergana.kremenska@sap.com>
+Date:   Fri Jan 8 09:10:21 2021 +0200
 
-    fix(ui5-popup): correct focus when there is no focusable content (#2583)
+    fix(ui5-tabcontainer): overflow menu button is added a title (#2639)
+    
+    Fixes: #2607
