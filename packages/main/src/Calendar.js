@@ -75,7 +75,14 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: {
+	slots: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
+		/**
+		 * Defines the selected date or dates (depending on the <code>selectionMode</code> property) for this calendar as instances of <code>ui5-date</code>
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
 		"default": {
 			propertyName: "dates",
 			type: HTMLElement,
@@ -185,23 +192,14 @@ class Calendar extends CalendarPart {
 		return calendarCSS;
 	}
 
-	/**
-	 * Returns an array of UTC timestamps, representing the selected dates
-	 * @public
-	 * @returns {*}
-	 */
-	get selectedDates() {
+	get _selectedDatesTimestamps() {
 		return this.dates.map(date => {
 			const value = date.value;
 			return value && !!this.getFormat().parse(value) ? this._getTimeStampFromString(value) / 1000 : undefined;
 		}).filter(date => !!date);
 	}
 
-	/**
-	 * Creates instances of <code>ui5-date</code> inside this <code>ui5-calendar</code> with values, equal to the provided UTC timestamps
-	 * @param selectedDates Array of UTC timestamps
-	 */
-	set selectedDates(selectedDates) {
+	_setSelectedDates(selectedDates) {
 		// Remove all existing dates
 		this.dates.forEach(date => {
 			this.removeChild(date);
@@ -280,7 +278,7 @@ class Calendar extends CalendarPart {
 		this.timestamp = timestamp;
 		const defaultPrevented = !this.fireEvent("selected-dates-change", { timestamp, dates: [...selectedDates] });
 		if (!defaultPrevented) {
-			this.selectedDates = selectedDates;
+			this._setSelectedDates(selectedDates);
 		}
 	}
 
@@ -306,6 +304,25 @@ class Calendar extends CalendarPart {
 		if (isF4Shift(event) && this._currentPicker === "day") {
 			this._currentPicker = "year";
 		}
+	}
+
+	/**
+	 * Returns an array of UTC timestamps, representing the selected dates.
+	 * @protected
+	 * @deprecated
+	 */
+	get selectedDates() {
+		return this._selectedDatesTimestamps;
+	}
+
+	/**
+	 * Creates instances of <code>ui5-date</code> inside this <code>ui5-calendar</code> with values, equal to the provided UTC timestamps
+	 * @protected
+	 * @deprecated
+	 * @param selectedDates Array of UTC timestamps
+	 */
+	set selectedDates(selectedDates) {
+		this._setSelectedDates(selectedDates);
 	}
 
 	static get dependencies() {
