@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+The release includes all the commits from [RC.11](https://github.com/SAP/ui5-webcomponents/releases/tag/v1.0.0-rc.11)
+# [0.29.0](https://github.com/SAP/ui5-webcomponents/compare/v0.29.0) (2021-01-08)
+
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
 # [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
 
 ### New components
