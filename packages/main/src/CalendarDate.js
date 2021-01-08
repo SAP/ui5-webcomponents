@@ -5,7 +5,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 */
 const metadata = {
 	tag: "ui5-date",
-	managedSlots: true,
 	properties: /** @lends  sap.ui.webcomponents.main.CalendarDate.prototype */ {
 
 		/**
