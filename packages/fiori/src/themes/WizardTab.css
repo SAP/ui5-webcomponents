@@ -1,3 +1,10 @@
+:host(:not([hidden])) {
+	/* Well known worakround to allow shrinking inside flex containers 
+	 * and shrinking is needed so the texts trucnate properly.
+	 */
+	min-width: 1px;
+}
+
 /* Selected (active) step */
 :host([selected]:not([disabled])) .ui5-wiz-step-icon-circle {
 	background: var(--_ui5_wiz_tab_selected_bg);
@@ -56,6 +63,7 @@
 
 .ui5-wiz-step-root:focus .ui5-wiz-step-main {
 	outline: var(--_ui5_wiz_tab_focus_outline);
+	outline-offset: 1px;
 }
 
 /* Icon */
@@ -67,9 +75,7 @@
 	width: 2rem;
 	height: 2rem;
 	margin: 0 0.1875rem;
-	line-height: 2;
-	border-width: 1px;
-	border-style: solid;
+	line-height: 1.625rem;
 	border-radius: 50%;
 	background: var(--sapObjectHeader_Background);
 	border: var(--_ui5_wiz_tab_border);
@@ -97,7 +103,7 @@
 	padding: 0 0.5rem 0 0.1875rem;
 	max-height: 3rem;
 	overflow: hidden;
-	background: #fff;
+	background: var(--sapObjectHeader_Background);
 }
 
 .ui5-wiz-step-heading,
@@ -145,6 +151,7 @@ ui5-wizard-tab .ui5-wiz-step-main {
 }
 
 :host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-root {
+	display: inline;
 	position: absolute;
 	top: 0;
 }

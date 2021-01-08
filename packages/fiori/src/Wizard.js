@@ -30,10 +30,10 @@ import WizardPopoverCss from "./generated/themes/WizardPopover.css.js";
 const MIN_STEP_WIDTH_NO_TITLE = 64;
 const MIN_STEP_WIDTH_WITH_TITLE = 200;
 
-const EXPANDED_STEP_CLASS = "data-ui5-wizard-expanded-tab";
-const AFTER_EXPANDED_STEP_CLASS = "data-ui5-wizard-expanded-tab-next";
-const AFTER_CURRENT_STEP_CLASS = "data-ui5-wizard-after-current-tab";
-const BEFORE_EXPANDED_STEP_CLASS = "data-ui5-wizard-expanded-tab-prev";
+const EXPANDED_STEP_ATTRIBUTE = "data-ui5-wizard-expanded-tab";
+const AFTER_EXPANDED_STEP_ATTRIBUTE = "data-ui5-wizard-expanded-tab-next";
+const AFTER_CURRENT_STEP_ATTRIBUTE = "data-ui5-wizard-after-current-tab";
+const BEFORE_EXPANDED_STEP_ATTRIBUTE = "data-ui5-wizard-expanded-tab-prev";
 
 /**
  * @public
@@ -213,6 +213,16 @@ class Wizard extends UI5Element {
 
 	static get render() {
 		return litRender;
+	}
+
+	get classes() {
+		return {
+			popover: {
+				"ui5-wizard-responsive-popover": true,
+				"ui5-wizard-popover": !isPhone(),
+				"ui5-wizard-dialog": isPhone(),
+			},
+		};
 	}
 
 	static get styles() {
@@ -404,6 +414,10 @@ class Wizard extends UI5Element {
 		}
 	}
 
+	/**
+	 * Updates the expanded attribute for each ui5-wizard-tab based on the ui5-wizard width
+	 * @private
+	 */
 	_adjustHeaderOverflow() {
 		let counter = 0;
 		let isForward = true;
@@ -418,51 +432,60 @@ class Wizard extends UI5Element {
 		}
 
 		[].forEach.call(tabs, (step, index) => {
-			step.setAttribute(EXPANDED_STEP_CLASS, false);
-			step.setAttribute(BEFORE_EXPANDED_STEP_CLASS, false);
-			step.setAttribute(AFTER_EXPANDED_STEP_CLASS, false);
+			step.setAttribute(EXPANDED_STEP_ATTRIBUTE, false);
+			step.setAttribute(BEFORE_EXPANDED_STEP_ATTRIBUTE, false);
+			step.setAttribute(AFTER_EXPANDED_STEP_ATTRIBUTE, false);
 
+			// Add "data-ui5-wizard-after-current-tab" to all tabs after the current one
 			if (index > iCurrStep) {
-				tabs[index].setAttribute(AFTER_CURRENT_STEP_CLASS, true);
+				tabs[index].setAttribute(AFTER_CURRENT_STEP_ATTRIBUTE, true);
 			} else {
-				tabs[index].removeAttribute(AFTER_CURRENT_STEP_CLASS);
+				tabs[index].removeAttribute(AFTER_CURRENT_STEP_ATTRIBUTE);
 			}
 		});
 
+		// Add "data-ui5-wizard-expanded-tab" to the current step
 		if (tabs[iCurrStep]) {
-			tabs[iCurrStep].setAttribute(EXPANDED_STEP_CLASS, true);
+			tabs[iCurrStep].setAttribute(EXPANDED_STEP_ATTRIBUTE, true);
 		}
 
+		// Set the "data-ui5-wizard-expanded-tab" to the steps that are expanded
+		// The algorithm is as follows:
+		// 1. A step towards the end is expanded
+		// 	1.2. If there are no available steps towards the end a step towards the beginning is expanded
+		// 2. A step towards the beginning is expanded
+		// 	2.2. If there are no available steps towards the beginning a step towards the end is expanded
 		for (let i = 1; i < iStepsToShow; i++) {
 			if (isForward) {
 				counter += 1;
 			}
 
 			if (isForward && tabs[iCurrStep + counter]) {
-				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP_CLASS, true);
+				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP_ATTRIBUTE, true);
 				isForward = !isForward;
 			} else if (!isForward && tabs[iCurrStep - counter]) {
-				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP_CLASS, true);
+				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP_ATTRIBUTE, true);
 				isForward = !isForward;
 			} else if (tabs[iCurrStep + counter + 1]) {
 				counter += 1;
-				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP_CLASS, true);
+				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP_ATTRIBUTE, true);
 				isForward = true;
 			} else if (tabs[iCurrStep - counter]) {
-				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP_CLASS, true);
+				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP_ATTRIBUTE, true);
 				counter += 1;
 				isForward = false;
 			}
 		}
 
-		// mark the topmost steps of both groups (in the beginning and the end)
+		// mark the topmost steps of both groups (in the beginning and the end),
+		// using the "data-ui5-wizard-after-current-tab" and "data-ui5-wizard-expanded-tab-prev" attributes
 		for (let i = 0; i < tabs.length; i++) {
-			if (tabs[i].getAttribute(EXPANDED_STEP_CLASS) === "true" && tabs[i - 1] && tabs[i - 1].getAttribute(EXPANDED_STEP_CLASS) === "false") {
-				tabs[i - 1].setAttribute(BEFORE_EXPANDED_STEP_CLASS, true);
+			if (tabs[i].getAttribute(EXPANDED_STEP_ATTRIBUTE) === "true" && tabs[i - 1] && tabs[i - 1].getAttribute(EXPANDED_STEP_ATTRIBUTE) === "false") {
+				tabs[i - 1].setAttribute(BEFORE_EXPANDED_STEP_ATTRIBUTE, true);
 			}
 
-			if (tabs[i].getAttribute(EXPANDED_STEP_CLASS) === "false" && tabs[i - 1] && tabs[i - 1].getAttribute(EXPANDED_STEP_CLASS) === "true") {
-				tabs[i].setAttribute(AFTER_EXPANDED_STEP_CLASS, true);
+			if (tabs[i].getAttribute(EXPANDED_STEP_ATTRIBUTE) === "false" && tabs[i - 1] && tabs[i - 1].getAttribute(EXPANDED_STEP_ATTRIBUTE) === "true") {
+				tabs[i].setAttribute(AFTER_EXPANDED_STEP_ATTRIBUTE, true);
 				break;
 			}
 		}
@@ -471,13 +494,13 @@ class Wizard extends UI5Element {
 	_isGroupAtStart(selectedStep) {
 		const iStepNumber = this.stepsInHeaderDOM.indexOf(selectedStep);
 
-		return selectedStep.getAttribute(EXPANDED_STEP_CLASS) === "false" && selectedStep.getAttribute(BEFORE_EXPANDED_STEP_CLASS) === "true" && iStepNumber > 0;
+		return selectedStep.getAttribute(EXPANDED_STEP_ATTRIBUTE) === "false" && selectedStep.getAttribute(BEFORE_EXPANDED_STEP_ATTRIBUTE) === "true" && iStepNumber > 0;
 	}
 
 	_isGroupAtEnd(selectedStep) {
 		const iStepNumber = this.stepsInHeaderDOM.indexOf(selectedStep);
 
-		return selectedStep.getAttribute(EXPANDED_STEP_CLASS) === "false" && selectedStep.getAttribute(AFTER_EXPANDED_STEP_CLASS) === "true" && (iStepNumber + 1 < this.steps.length);
+		return selectedStep.getAttribute(EXPANDED_STEP_ATTRIBUTE) === "false" && selectedStep.getAttribute(AFTER_EXPANDED_STEP_ATTRIBUTE) === "true" && (iStepNumber + 1 < this.steps.length);
 	}
 
 	async _showPopover(oDomTarget, bAtStart) {
@@ -560,7 +583,7 @@ class Wizard extends UI5Element {
 		const stepRefId = stepInHeader.getAttribute("data-ui5-content-ref-id");
 		const selectedStep = this.selectedStep;
 		const stepToSelect = this.getStepByRefId(stepRefId);
-		const bExpanded = stepInHeader.getAttribute(EXPANDED_STEP_CLASS) === "true";
+		const bExpanded = stepInHeader.getAttribute(EXPANDED_STEP_ATTRIBUTE) === "true";
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 
 		// If the currently selected (active) step is clicked,
