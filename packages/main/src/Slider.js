@@ -252,6 +252,10 @@ class Slider extends SliderBase {
 		};
 	}
 
+	get _sliderHandle() {
+		return this.shadowRoot.querySelector(".ui5-slider-handle");
+	}
+
 	get labelItems() {
 		return this._labelItems;
 	}

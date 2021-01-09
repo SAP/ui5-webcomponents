@@ -199,7 +199,6 @@ describe("Accessibility: Testing focus", () => {
 		});
 
 		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
-		assert.strictEqual(slider.getProperty("focused"), true, "Slider state is focused");
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
 	});
 
@@ -214,7 +213,6 @@ describe("Accessibility: Testing focus", () => {
 		});
 
 		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
-		assert.strictEqual(slider.getProperty("focused"), true, "Slider is focused");
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
 	});
 
@@ -229,7 +227,6 @@ describe("Accessibility: Testing focus", () => {
 		});
 
 		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
-		assert.strictEqual(slider.getProperty("focused"), true, "Slider is focused");
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
 	});
 });
