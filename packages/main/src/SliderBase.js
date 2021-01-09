@@ -100,13 +100,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		/**
-		 * Indicates if the elements is on focus
-		 * @private
-		 */
-		focused: {
-			type: Boolean,
-		},
 
 		/**
 		 * @private
@@ -240,6 +233,10 @@ class SliderBase extends UI5Element {
 		};
 	}
 
+	onEnterDOM() {
+		ResizeHandler.register(this, this._resizeHandler);
+	}
+
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResize);
 	}
@@ -291,7 +288,7 @@ class SliderBase extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (this.disabled) {
+		if (this.disabled || this._effectiveStep === 0) {
 			return;
 		}
 
@@ -359,10 +356,12 @@ class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * This method is reserved for derived classes for managing the focus between the component's inner elements
+	 * Manages the focus between the component's inner elements
 	 * @protected
 	 */
-	focusInnerElement() {}
+	focusInnerElement() {
+		this.focus();
+	}
 
 	/**
 	 * Handle the responsiveness of the Slider's UI elements when resizing
