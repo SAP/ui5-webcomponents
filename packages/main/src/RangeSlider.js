@@ -5,7 +5,6 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SliderBase from "./SliderBase.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
 
@@ -103,14 +102,6 @@ class RangeSlider extends SliderBase {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	onEnterDOM() {
-		this._sliderStartHandle = this.shadowRoot.querySelector(".ui5-slider-handle--start");
-		this._sliderEndHandle = this.shadowRoot.querySelector(".ui5-slider-handle--end");
-		this._sliderProgress = this.shadowRoot.querySelector(".ui5-slider-progress");
-
-		ResizeHandler.register(this, this._resizeHandler);
-	}
-
 	get tooltipStartValue() {
 		const stepPrecision = this.constructor._getDecimalPrecisionOfNumber(this._effectiveStep);
 		return this.startValue.toFixed(stepPrecision);
@@ -142,8 +133,6 @@ class RangeSlider extends SliderBase {
 	}
 
 	_onfocusin(event) {
-		this.focused = true;
-
 		// If this is the initial focusin of the component save its initial
 		// value properties so they could be restored on ESC key press
 		if (!this._getInitialValue("endValue")) {
@@ -168,7 +157,6 @@ class RangeSlider extends SliderBase {
 		if (this._isFocusing()) {
 			this._preventFocusOut();
 		} else {
-			this.focused = false;
 			this._setAffectedValue(null);
 			this._setInitialValue("startValue", null);
 			this._setInitialValue("endValue", null);
@@ -219,7 +207,7 @@ class RangeSlider extends SliderBase {
 		}
 
 		// Update a single value if one of the handles is focused or the range if not already at min or max
-		if (affectedValue && !this._inCurrentRange) {
+		if (affectedValue && !this._isPressInCurrentRange) {
 			const newValue = this.constructor.clipValue(newValueOffset + this[affectedValue], min, max);
 			this.update(affectedValue, newValue, null);
 		} else if ((newValueOffset < 0 && this.startValue > min) || (newValueOffset > 0 && this.endValue < max)) {
@@ -236,17 +224,19 @@ class RangeSlider extends SliderBase {
 	 * @private
 	 */
 	_setAffectedValueByFocusedElement() {
-		if (this.shadowRoot.activeElement === this._sliderStartHandle) {
+		if (this.shadowRoot.activeElement === this._startHandle) {
 			this._setAffectedValue("startValue");
 		}
 
-		if (this.shadowRoot.activeElement === this._sliderEndHandle) {
+		if (this.shadowRoot.activeElement === this._endHandle) {
 			this._setAffectedValue("endValue");
 		}
 
-		if (this.shadowRoot.activeElement === this._sliderProgress) {
-			this._inCurrentRange = true;
+		if (this.shadowRoot.activeElement === this._progressBar) {
+			this._setAffectedValue(null);
 		}
+
+		this._setIsPressInCurrentRange(!this._getAffectedValue);
 	}
 
 	/**
@@ -301,7 +291,7 @@ class RangeSlider extends SliderBase {
 		this._saveInteractionStartData(event, newValue);
 
 		// Do not yet update the RangeSlider if press is in range or over a handle.
-		if (this._inCurrentRange || this._handeIsPressed) {
+		if (this._isPressInCurrentRange || this._handeIsPressed) {
 			this._handeIsPressed = false;
 			return;
 		}
@@ -328,8 +318,6 @@ class RangeSlider extends SliderBase {
 		this._startValueAtBeginningOfAction = this.startValue;
 		this._endValueAtBeginningOfAction = this.endValue;
 
-		// Check if the new value is in the current select range of values
-		this._inCurrentRange = newValue > this._startValueAtBeginningOfAction && newValue < this._endValueAtBeginningOfAction;
 		// Save the initial press point coordinates (position)
 		this._initialPageXPosition = this.constructor.getPageXValueFromEvent(event);
 		// Which element of the Range Slider is pressed and which value property to be modified on further interaction
@@ -353,7 +341,7 @@ class RangeSlider extends SliderBase {
 		}
 
 		// Update UI and state when dragging a single Range Slider handle
-		if (!this._inCurrentRange) {
+		if (!this._isPressInCurrentRange) {
 			this._updateValueOnHandleDrag(event);
 			return;
 		}
@@ -400,7 +388,7 @@ class RangeSlider extends SliderBase {
 
 		this._startValueAtBeginningOfAction = null;
 		this._endValueAtBeginningOfAction = null;
-		this._inCurrentRange = null;
+		this._setIsPressInCurrentRange(false);
 
 		this.handleUpBase();
 	}
@@ -431,7 +419,6 @@ class RangeSlider extends SliderBase {
 
 		// Remove the flag for value in current range if the press action is over one of the handles
 		if (inHandleEndDom || inHandleStartDom) {
-			this._inCurrentRange = false;
 			this._handeIsPressed = true;
 		}
 
@@ -444,6 +431,10 @@ class RangeSlider extends SliderBase {
 		if (inHandleStartDom || value < this.startValue) {
 			this._setAffectedValue("startValue");
 		}
+
+		// Flag if press is in the current select range
+		const isNewValueInCurrentRange = value > this._startValueAtBeginningOfAction && value < this._endValueAtBeginningOfAction;
+		this._setIsPressInCurrentRange(!(this._getAffectedValue() || this._handeIsPressed) ? isNewValueInCurrentRange : false);
 	}
 
 	/**
@@ -466,6 +457,20 @@ class RangeSlider extends SliderBase {
 
 	_getAffectedValue() {
 		return this._valueAffected;
+	}
+
+	/**
+	 * Flag if press action is made on the currently selected range of values
+	 *
+	 * @param {Boolean} isPressInCurrentRange Did the current press action occur in the current range (between the two handles)
+	 * @private
+	 */
+	_setIsPressInCurrentRange(isPressInCurrentRange) {
+		this._isPressInCurrentRange = isPressInCurrentRange;
+	}
+
+	_isPressInCurrentRange() {
+		return this._isPressInCurrentRange;
 	}
 
 	/**
@@ -497,16 +502,16 @@ class RangeSlider extends SliderBase {
 		const isReversed = this._areValuesReversed();
 		const affectedValue = this._getAffectedValue();
 
-		if (this._inCurrentRange || !affectedValue) {
-			this._sliderProgress.focus();
+		if (this._isPressInCurrentRange || !affectedValue) {
+			this._progressBar.focus();
 		}
 
 		if ((affectedValue === "startValue" && !isReversed) || (affectedValue === "endValue" && isReversed)) {
-			this._sliderStartHandle.focus();
+			this._startHandle.focus();
 		}
 
 		if ((affectedValue === "endValue" && !isReversed) || (affectedValue === "startValue" && isReversed)) {
-			this._sliderEndHandle.focus();
+			this._endHandle.focus();
 		}
 	}
 
@@ -660,6 +665,18 @@ class RangeSlider extends SliderBase {
 
 	 _areValuesReversed() {
 		return this._reversedValues;
+	}
+
+	get _startHandle() {
+		return this.shadowRoot.querySelector(".ui5-slider-handle--start");
+	}
+
+	get _endHandle() {
+		return this.shadowRoot.querySelector(".ui5-slider-handle--end");
+	}
+
+	get _progressBar() {
+		return this.shadowRoot.querySelector(".ui5-slider-progress");
 	}
 
 	get tabIndexProgress() {

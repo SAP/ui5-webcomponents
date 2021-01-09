@@ -1,8 +1,9 @@
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SliderBase from "./SliderBase.js";
+
+// Template
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
 
 /**
@@ -86,11 +87,6 @@ class Slider extends SliderBase {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	onEnterDOM() {
-		this._sliderHandle = this.shadowRoot.querySelector(".ui5-slider-handle");
-		ResizeHandler.register(this, this._resizeHandler);
-	}
-
 	/**
 	 *
 	 * Check if the previously saved state is outdated. That would mean
@@ -140,18 +136,12 @@ class Slider extends SliderBase {
 		}
 	}
 
-	focusInnerElement() {
-		this._sliderHandle.focus();
-	}
-
 	_onfocusin(event) {
 		// Set initial value if one is not set previously on focus in.
 		// It will be restored if ESC key is pressed.
 		if (this._getInitialValue("value") === null) {
 			this._setInitialValue("value", this.value);
 		}
-
-		this.focused = true;
 	}
 
 	_onfocusout(event) {
@@ -164,7 +154,6 @@ class Slider extends SliderBase {
 
 		// Reset focus state and the stored Slider's initial
 		// value that was saved when it was first focused in
-		this.focused = false;
 		this._setInitialValue("value", null);
 	}
 
@@ -261,6 +250,10 @@ class Slider extends SliderBase {
 				"visibility": `${this._tooltipVisibility}`,
 			},
 		};
+	}
+
+	get _sliderHandle() {
+		return this.shadowRoot.querySelector(".ui5-slider-handle");
 	}
 
 	get labelItems() {

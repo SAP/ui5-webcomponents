@@ -264,7 +264,7 @@ describe("Testing events", () => {
 
 
 describe("Accessibility: Testing focus", () => {
-	it("Click anywhere in the  Range Slider should focus the closest handle and set the 'focused' property to true", () => {
+	it("Click anywhere in the  Range Slider should focus the closest handle", () => {
 		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
 
 		const rangeSlider = browser.$("#basic-range-slider");
@@ -277,8 +277,6 @@ describe("Accessibility: Testing focus", () => {
 			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
 		});
 
-		assert.strictEqual(rangeSlider.isFocused(), true, "RangeSlider component is focused");
-		assert.strictEqual(rangeSlider.getProperty("focused"), true, "RangeSlider state is focused");
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderEndHandle.getAttribute("class"), "RangeSlider second handle has the shadowDom focus");
 
 		rangeSlider.setProperty("startValue", 30);
@@ -291,7 +289,7 @@ describe("Accessibility: Testing focus", () => {
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderStartHandle.getAttribute("class"), "RangeSlider second handle has the shadowDom focus");
 	});
 
-	it("Click currently selected range should focus it and set the 'focused' property to true", () => {
+	it("Click currently selected range should focus it", () => {
 		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
 
 		const rangeSlider = browser.$("#basic-range-slider");
@@ -304,8 +302,6 @@ describe("Accessibility: Testing focus", () => {
 			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
 		});
 
-		assert.strictEqual(rangeSlider.isFocused(), true, "RangeSlider component is focused");
-		assert.strictEqual(rangeSlider.getProperty("focused"), true, "RangeSlider state is focused");
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderSelection.getAttribute("class"), "RangeSlider progress bar has the shadowDom focus");
 	});
 
@@ -323,7 +319,6 @@ describe("Accessibility: Testing focus", () => {
 		});
 
 		assert.strictEqual(rangeSlider.isFocused(), true, "Range Slider component is focused");
-		assert.strictEqual(rangeSlider.getProperty("focused"), true, "Range Slider is focused");
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderSelection.getAttribute("class"), "Range Slider progress tracker has the shadowDom focus");
 	});
 	
@@ -365,10 +360,8 @@ describe("Accessibility: Testing focus", () => {
 		});
 
 		assert.strictEqual(currentRangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
-		assert.strictEqual(currentRangeSlider.getProperty("focused"), false, "First RangeSlider state is not focused");
 
 		assert.strictEqual(nextRangeSlider.isFocused(), true, "Next RangeSlider is focused");
-		assert.strictEqual(nextRangeSlider.getProperty("focused"), true, "Next RangeSlider's state is focused");
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderSelection.getAttribute("class"), "Next Range Slider second handle has the shadowDom focus");
 	});
 
@@ -384,10 +377,8 @@ describe("Accessibility: Testing focus", () => {
 		});
 
 		assert.strictEqual(currentRangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
-		assert.strictEqual(currentRangeSlider.getProperty("focused"), false, "First RangeSlider state is not focused");
 
 		assert.strictEqual(previousRangeSlider.isFocused(), true, "Slider component is focused");
-		assert.strictEqual(previousRangeSlider.getProperty("focused"), true, "Slider is focused");
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), previousRangeSliderEndHandle.getAttribute("class"), "Previous Range Slider second handle now has the shadowDom focus");
 	});
 
@@ -423,7 +414,6 @@ describe("Accessibility: Testing focus", () => {
 		browser.keys(["Shift", "Tab"]);
 
 		assert.strictEqual(rangeSlider.isFocused(), false, "First RangeSlider component is now not focused");
-		assert.strictEqual(rangeSlider.getProperty("focused"), false, "First RangeSlider state is not focused");
 	});
 
 	it("When one handle come across the other and the values are swapped the focus must be switched between the handles", () => {
