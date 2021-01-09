@@ -186,7 +186,7 @@ describe("Testing events", () => {
 });
 
 describe("Accessibility: Testing focus", () => {
-	it("Click anywhere in the Slider should focus the Slider's handle and set the 'focused' property to true", () => {
+	it("Click anywhere in the Slider should focus the Slider's handle", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Slider.html");
 
 		const slider = browser.$("#basic-slider");
