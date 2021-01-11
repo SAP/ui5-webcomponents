@@ -1,9 +1,10 @@
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import {
 	isF4,
 	isF4Shift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import CalendarDate from "./CalendarDate.js";
+import * as CalendarDateComponent from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
@@ -274,9 +275,13 @@ class Calendar extends CalendarPart {
 	onSelectedDatesChange(event) {
 		const timestamp = event.detail.timestamp;
 		const selectedDates = event.detail.dates;
+		const datesValues = selectedDates.map(ts => {
+			const calendarDate = CalendarDate.fromTimestamp(ts * 1000, this._primaryCalendarType);
+			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
+		});
 
 		this.timestamp = timestamp;
-		const defaultPrevented = !this.fireEvent("selected-dates-change", { timestamp, dates: [...selectedDates] });
+		const defaultPrevented = !this.fireEvent("selected-dates-change", { timestamp, dates: [...selectedDates], values: datesValues }, true);
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
@@ -327,7 +332,7 @@ class Calendar extends CalendarPart {
 
 	static get dependencies() {
 		return [
-			CalendarDate,
+			CalendarDateComponent.default,
 			CalendarHeader,
 			DayPicker,
 			MonthPicker,

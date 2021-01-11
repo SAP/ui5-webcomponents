@@ -44,14 +44,18 @@
 		primary-calendar-type="{{_primaryCalendarType}}"
 		format-pattern="{{_formatPattern}}"
 		timestamp="{{_calendarTimestamp}}"
-		.selectedDates={{_calendarSelectedDates}}
 		.selectionMode="{{_calendarSelectionMode}}"
 		.minDate="{{minDate}}"
 		.maxDate="{{maxDate}}"
 		@ui5-selected-dates-change="{{onSelectedDatesChange}}"
 		?hide-week-numbers="{{hideWeekNumbers}}"
 		._currentPicker="{{_calendarCurrentPicker}}"
-	></ui5-calendar>
+	>
+		{{#each _calendarSelectedDates}}
+			<ui5-date value="{{this}}"></ui5-date>
+		{{/each}}
+		<ui5-date value="{{_calendarDateValue}}"></ui5-date>
+	</ui5-calendar>
 {{/inline}}
 
 {{#*inline "footer"}}{{/inline}}
