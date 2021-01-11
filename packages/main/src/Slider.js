@@ -1,5 +1,6 @@
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 
 // Template
@@ -82,6 +83,7 @@ class Slider extends SliderBase {
 	constructor() {
 		super();
 		this._stateStorage.value = null;
+		this._setInitialValue("value", null);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -121,12 +123,40 @@ class Slider extends SliderBase {
 		const newValue = this.handleDownBase(event);
 		this._valueOnInteractionStart = this.value;
 
+		// Set initial value if one is not set previously on focus in.
+		// It will be restored if ESC key is pressed.
+		if (this._getInitialValue("value") === null) {
+			this._setInitialValue("value", this.value);
+		}
+
 		// Do not yet update the Slider if press is over a handle. It will be updated if the user drags the mouse.
 		if (!this._isHandlePressed(this.constructor.getPageXValueFromEvent(event))) {
 			this._updateHandleAndProgress(newValue);
 			this.updateValue("value", newValue);
 		}
 	}
+
+	_onfocusin(event) {
+		// Set initial value if one is not set previously on focus in.
+		// It will be restored if ESC key is pressed.
+		if (this._getInitialValue("value") === null) {
+			this._setInitialValue("value", this.value);
+		}
+	}
+
+	_onfocusout(event) {
+		// Prevent focusout when the focus is getting set within the slider internal
+		// element (on the handle), before the Slider' customElement itself is finished focusing
+		if (this._isFocusing()) {
+			this._preventFocusOut();
+			return;
+		}
+
+		// Reset focus state and the stored Slider's initial
+		// value that was saved when it was first focused in
+		this._setInitialValue("value", null);
+	}
+
 
 	/**
 	 * Called when the user moves the slider
@@ -166,9 +196,7 @@ class Slider extends SliderBase {
 	 * @private
 	 */
 	_isHandlePressed(clientX) {
-		const sliderHandle = this.shadowRoot.querySelector(".ui5-slider-handle");
-		const sliderHandleDomRect = sliderHandle.getBoundingClientRect();
-
+		const sliderHandleDomRect = this._sliderHandle.getBoundingClientRect();
 		return clientX >= sliderHandleDomRect.left && clientX <= sliderHandleDomRect.right;
 	}
 
@@ -185,6 +213,18 @@ class Slider extends SliderBase {
 		this._progressPercentage = (newValue - min) / (max - min);
 		// How many pixels from the left end of the slider will be the placed the affected  by the user action handle
 		this._handlePositionFromStart = this._progressPercentage * 100;
+	}
+
+	_handleActionKeyPress(event) {
+		const min = this._effectiveMin;
+		const max = this._effectiveMax;
+		const currentValue = this.value;
+		const newValue = isEscape(event) ? this._getInitialValue("value") : this.constructor.clipValue(this._handleActionKeyPressBase(event, "value") + currentValue, min, max);
+
+		if (newValue !== currentValue) {
+			this._updateHandleAndProgress(newValue);
+			this.updateValue("value", newValue);
+		}
 	}
 
 	get styles() {
@@ -212,6 +252,10 @@ class Slider extends SliderBase {
 		};
 	}
 
+	get _sliderHandle() {
+		return this.shadowRoot.querySelector(".ui5-slider-handle");
+	}
+
 	get labelItems() {
 		return this._labelItems;
 	}
@@ -219,6 +263,10 @@ class Slider extends SliderBase {
 	get tooltipValue() {
 		const stepPrecision = this.constructor._getDecimalPrecisionOfNumber(this._effectiveStep);
 		return this.value.toFixed(stepPrecision);
+	}
+
+	get tabIndexProgress() {
+		return "-1";
 	}
 
 	static async onDefine() {
