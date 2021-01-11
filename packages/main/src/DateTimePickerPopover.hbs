@@ -19,15 +19,18 @@
 			id="{{_id}}-calendar"
 			primary-calendar-type="{{_primaryCalendarType}}"
 			format-pattern="{{_formatPattern}}"
-			timestamp="{{_effectiveCalendarTimestamp}}"
-			.selectedDates={{_effectiveCalendarSelectedDates}}
+			timestamp="{{_calendarTimestamp}}"
 			.selectionMode="{{_calendarSelectionMode}}"
 			.minDate="{{minDate}}"
 			.maxDate="{{maxDate}}"
 			@ui5-selected-dates-change="{{onSelectedDatesChange}}"
 			?hide-week-numbers="{{hideWeekNumbers}}"
 			._currentPicker="{{_calendarCurrentPicker}}"
-		></ui5-calendar>
+		>
+			{{#each _calendarSelectedDates}}
+				<ui5-date value="{{this}}"></ui5-date>
+			{{/each}}
+		</ui5-calendar>
 
 		{{#unless phone}}
 			<span class="ui5-dt-picker-separator"></span>
@@ -36,7 +39,7 @@
 		<ui5-time-selection
 				id="{{_id}}-time-sel"
 				class="ui5-dt-time {{classes.dateTimeView}}"
-				value="{{_effectiveTimeValue}}"
+				value="{{_timeSelectionValue}}"
 				format-pattern="{{_formatPattern}}"
 				._currentSlider="{{_currentTimeSlider}}"
 				@ui5-change="{{onTimeSelectionChange}}"
