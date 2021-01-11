@@ -121,6 +121,15 @@ const metadata = {
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
+		/**
+		 * Defines the step content.
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		"default": {
+			type: Node,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
 	},
