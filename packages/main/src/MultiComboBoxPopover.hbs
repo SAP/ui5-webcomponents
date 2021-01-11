@@ -69,6 +69,7 @@
 		{{#each _filteredItems}}
 				<ui5-li
 					type="{{../_listItemsType}}"
+					info={{this.additionalText}}
 					?selected={{this.selected}}
 					data-ui5-token-id="{{this._id}}"
 					data-ui5-stable="{{this.stableDomRef}}"
