@@ -181,7 +181,12 @@ const metadata = {
 class AvatarGroup extends UI5Element {
 	constructor() {
 		super();
-		this._itemNavigation = new ItemNavigation(this);
+
+		this._itemNavigation = new ItemNavigation(this, {
+			getItemsCallback: () => {
+				return this._isGroup ? [] : this.items.slice(0, this._hiddenStartIndex);
+			},
+		});
 
 		this._colorIndex = 0;
 		this._hiddenItems = 0;
@@ -289,12 +294,6 @@ class AvatarGroup extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this._isGroup) {
-			this._itemNavigation.getItemsCallback = () => [];
-		} else {
-			this._itemNavigation.getItemsCallback = () => this.items.slice(0, this._hiddenStartIndex);
-		}
-
 		this._prepareAvatars();
 	}
 

@@ -10,6 +10,7 @@ import "../../thirdparty/Object.entries.js";
 // Array
 import "../../thirdparty/Array.prototype.fill.js";
 import "../../thirdparty/Array.prototype.find.js";
+import "../../thirdparty/Array.prototype.findIndex.js";
 import "../../thirdparty/Array.prototype.includes.js";
 
 // Map

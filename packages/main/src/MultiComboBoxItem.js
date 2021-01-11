@@ -13,6 +13,15 @@ const metadata = {
 		 * @public
 		 */
 		selected: { type: Boolean },
+
+		/**
+		 * Defines the stable selector that you can use via getStableDomRef method.
+		 * @public
+		 * @since 1.0.0-rc.11
+		 */
+		stableDomRef: {
+			type: String,
+		},
 	},
 };
 

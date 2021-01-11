@@ -56,6 +56,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the <code>notification</code> is new or has been already read.
+		 * <br><br>
+		 * <b>Note:</b> if set to <code>false</code> the <code>heading</code> has bold font,
+		 * if set to true - it has a normal font.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		read: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines if a busy indicator would be displayed over the item.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -71,7 +84,7 @@ const metadata = {
 		/**
 		 * Defines the actions, displayed in the top-right area.
 		 * <br><br>
-		 * <b>Note:</b> use the <code>ui5-notification-overflow-action</code> component.
+		 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 		 *
 		 * @type {HTMLElement}
 		 * @slot
@@ -104,7 +117,7 @@ const metadata = {
  * @extends ListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
- * @appenddocs NotificationOverflowAction
+ * @appenddocs NotificationAction
  * @public
  */
 class NotificationListItemBase extends ListItemBase {

@@ -16,6 +16,7 @@ import {
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
@@ -939,6 +940,14 @@ class Input extends UI5Element {
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
+		return this.nativeInput;
+	}
+
+	/**
+	 * Returns a reference to the native input element
+	 * @protected
+	 */
+	get nativeInput() {
 		return this.getDomRef().querySelector(`input`);
 	}
 
@@ -1173,6 +1182,23 @@ class Input extends UI5Element {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	/**
+	 * Returns the caret position inside the native input
+	 * @protected
+	 */
+	getCaretPosition() {
+		return getCaretPosition(this.nativeInput);
+	}
+
+	/**
+	 * Sets the caret to a certain position inside the native input
+	 * @protected
+	 * @param pos
+	 */
+	setCaretPosition(pos) {
+		setCaretPosition(this.nativeInput, pos);
 	}
 
 	static get dependencies() {
