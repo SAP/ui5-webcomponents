@@ -1,7 +1,9 @@
-commit 4d713d507f4b0bcbb4947b2ecf31c479bfa29927
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Mon Jan 11 16:38:04 2021 +0800
+commit 7742590d15ab71e5b87f597101f52abb56f2d4dd
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jan 11 10:45:30 2021 +0200
 
-    chore: translation delivery (#2649)
+    feat(ui5-multi-combobox): support two column layout for items (#2642)
     
-    Change-Id: Ic8c3d3107a06bb4406c78005ace6cbfad64d0668
+    Enables two-column layout items in the MultiComboBox. The MultiComboBoxItem already inherits the additionalText property from the ComboBoxItem, but never used it. The property is visible in the API reference and misleading users that can have two-column layout in the MultiComboBox as well. The change just uses the property in the template and forwards it to the physically rendered list item.
+    
+    FIXES: #2637

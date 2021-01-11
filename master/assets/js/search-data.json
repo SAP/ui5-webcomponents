@@ -569,7 +569,7 @@
   "82": {
     "id": "82",
     "title": "Multi Combo Box",
-    "content": "&lt;!DOCTYPE html&gt; MultiComboBox test page Predefined value Validating input and predefined value --&gt; Validating input and placeholder disabled and placeholder value state success value state information Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. value state warning value state error readonly MultiComboBox with items MultiComboBox with validation MultiComboBox n more &lt;/br&gt; MultiComboBox with validation Fired event: Parameters Count: Event call count: Reset fields MultiComboBox in Compact",
+    "content": "&lt;!DOCTYPE html&gt; MultiComboBox test page Predefined value Validating input and predefined value --&gt; Validating input and placeholder disabled and placeholder value state success value state information Information message. This is a Link. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3. value state warning value state error readonly MultiComboBox with items MultiComboBox with validation MultiComboBox n more &lt;/br&gt; MultiComboBox with validation Fired event: Parameters Count: Event call count: Reset fields MultiComboBox in Compact Two-column items &lt;/body&gt; &lt;/html&gt;",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/MultiComboBox/",
     "relUrl": "/playground/main/pages/MultiComboBox/"
   },
