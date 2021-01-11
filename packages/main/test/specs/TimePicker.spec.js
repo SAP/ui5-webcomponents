@@ -21,10 +21,11 @@ describe("TimePicker general interaction", () => {
 		// act
 		timepicker.setProperty("value", "11:12:13");
 		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		// browser.pause(500);
 
-		const hoursSliderValue = timepickerPopover.$(".ui5-time-picker-hours-wheelslider").getValue();
-		const minutesSliderValue = timepickerPopover.$(".ui5-time-picker-minutes-wheelslider").getValue();
-		const secondsSliderValue = timepickerPopover.$(".ui5-time-picker-seconds-wheelslider").getValue();
+		const hoursSliderValue = timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getValue();
+		const minutesSliderValue = timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).getValue();
+		const secondsSliderValue = timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).getValue();
 
 		// assert
 		assert.strictEqual(hoursSliderValue, "11", "Hours are equal");
@@ -35,14 +36,29 @@ describe("TimePicker general interaction", () => {
 	it("tests sliders submit value", () => {
 		const timepicker = browser.$("#timepicker");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#timepicker");
-		const timepickerPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const picker = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		// act
-		timepickerPopover.setProperty("opened", true);
-		timepickerPopover.$(".ui5-time-picker-hours-wheelslider").setProperty("value","14");
-		timepickerPopover.$(".ui5-time-picker-minutes-wheelslider").setProperty("value","15");
-		timepickerPopover.$(".ui5-time-picker-seconds-wheelslider").setProperty("value","16");
-		timepickerPopover.$("#submit").click();
+		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		browser.keys("Escape");
+		timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+
+		// picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown"); // select 00
+		for (let i=1; i<= 14; i++) browser.keys("ArrowDown"); // Select 14
+
+		// picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("Tab");
+		browser.keys("PageDown");// select 00
+		for (let i=1; i<= 15; i++) browser.keys("ArrowDown"); // Select 15
+
+		// picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("Tab");
+		browser.keys("PageDown");// select 00
+		for (let i=1; i<= 16; i++) browser.keys("ArrowDown"); // Select 16
+
+		browser.keys("Tab"); // Move to submit
+		browser.keys("Enter"); // Enter on submit
 
 		const textValue = timepicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(textValue.substring(0,2), "14", "Hours are equal");
@@ -53,8 +69,8 @@ describe("TimePicker general interaction", () => {
 		const timepicker = browser.$("#timepicker");
 
 		timepicker.click();
-		timepicker.keys("123123123");
-		timepicker.keys("Enter");
+		browser.keys("123123123");
+		browser.keys("Enter");
 
 		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("valueState"), "Error", "The value state is on error");
 	});
@@ -87,7 +103,11 @@ describe("TimePicker general interaction", () => {
 
 		// act - submit value after changing time
 		icon.click();
-		timepickerPopover.$(".ui5-time-picker-hours-wheelslider").setProperty("value", "10");
+
+		timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("PageDown"); // select 00
+		for (let i=1; i<= 10; i++) browser.keys("ArrowDown"); // Select 10
+
 		timepickerPopover.$("#submit").click();
 
 		// assert
@@ -102,8 +122,9 @@ describe("TimePicker general interaction", () => {
 
 		// act - submit value after changing time
 		icon.click();
-		timepickerPopover.$(".ui5-time-picker-hours-wheelslider").setProperty("value", "11");
-		timepickerPopover.$("#submit").click();
+		timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
+		browser.keys("ArrowDown"); // select 11
+		timepickerPopover.$("#submit").click(); // click submit (the other test tests Enter, this one tests click)
 
 		// assert
 		assert.strictEqual(changeResult.getProperty("value"), "2", "Change fired as expected");
@@ -116,7 +137,7 @@ describe("TimePicker general interaction", () => {
 		// act
 		timepicker.click();
 		while(timepicker.shadow$("ui5-input").getProperty("value") !== ""){
-			timepicker.keys("Backspace");
+			browser.keys("Backspace");
 		}
 		button.click();
 
@@ -129,45 +150,45 @@ describe("TimePicker general interaction", () => {
 
 		// act
 		timepicker.click();
-		timepicker.keys(['Shift', 'PageUp']);
-		timepicker.keys('Shift');
+		browser.keys(['Shift', 'PageUp']);
+		browser.keys('Shift');
 
 		// assert
 		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:01:01", "The value of minutes is +1");
 		// act
 		timepicker.click();
-		timepicker.keys(['Shift', 'PageDown']);
-		timepicker.keys('Shift');
+		browser.keys(['Shift', 'PageDown']);
+		browser.keys('Shift');
 
 		// assert
 		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:01", "The value of minutes is -1");
 
 		// act
 		timepicker.click();
-		timepicker.keys('PageUp');
+		browser.keys('PageUp');
 
 		// assert
 		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "01:00:01", "The value of hours is +1");
 		// act
 		timepicker.click();
-		timepicker.keys('PageDown');
+		browser.keys('PageDown');
 
 		// assert
 		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:01", "The value of hours is -1");
 
 		// act
 		timepicker.click();
-		timepicker.keys(['Shift', 'Control', 'PageUp']);
-		timepicker.keys('Shift');
-		timepicker.keys('Control');
+		browser.keys(['Shift', 'Control', 'PageUp']);
+		browser.keys('Shift');
+		browser.keys('Control');
 
 		// assert
 		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:02", "The value of seconds is +1");
 		// act
 		timepicker.click();
-		timepicker.keys(['Shift', 'Control', 'PageDown']);
-		timepicker.keys('Shift');
-		timepicker.keys('Control');
+		browser.keys(['Shift', 'Control', 'PageDown']);
+		browser.keys('Shift');
+		browser.keys('Control');
 
 		// assert
 		assert.strictEqual(timepicker.shadow$("ui5-input").getProperty("value"), "12:00:01", "The value of seconds is -1");

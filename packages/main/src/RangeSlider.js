@@ -102,6 +102,10 @@ class RangeSlider extends SliderBase {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
+	onEnterDOM() {
+		ResizeHandler.register(this, this._resizeHandler);
+	}
+
 	get tooltipStartValue() {
 		const stepPrecision = this.constructor._getDecimalPrecisionOfNumber(this._effectiveStep);
 		return this.startValue.toFixed(stepPrecision);
