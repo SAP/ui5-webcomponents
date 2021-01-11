@@ -1,15 +1,7 @@
-commit 4663b917263c19cff6fc97aa7dcdcb8e8058b915
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Fri Jan 8 12:39:55 2021 +0200
+commit 4d713d507f4b0bcbb4947b2ecf31c479bfa29927
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Mon Jan 11 16:38:04 2021 +0800
 
-    feat(ui5-tree): implement acc spec  (#2636)
+    chore: translation delivery (#2649)
     
-    Changes:
-    - Tooltip for the expand/collapse icon is added
-    - Tree item is now announced
-    - Selected state is now announced
-    - Announced level is fixed
-    - Translation for LIST_ITEM_SELECTED is fixed
-    - Tree view is now read out once.
-    
-    Fixes #2465
+    Change-Id: Ic8c3d3107a06bb4406c78005ace6cbfad64d0668
