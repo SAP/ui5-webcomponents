@@ -433,7 +433,7 @@ class RangeSlider extends SliderBase {
 		}
 
 		// Flag if press is in the current select range
-		const isNewValueInCurrentRange = value > this._startValueAtBeginningOfAction && value < this._endValueAtBeginningOfAction;
+		const isNewValueInCurrentRange = value >= this._startValueAtBeginningOfAction && value <= this._endValueAtBeginningOfAction;
 		this._setIsPressInCurrentRange(!(this._getAffectedValue() || this._handeIsPressed) ? isNewValueInCurrentRange : false);
 	}
 
