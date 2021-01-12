@@ -1,5 +1,35 @@
-commit 7b78c16275cfa5a1697bfa7bc6e171d9f5a97ad9
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Mon Jan 11 16:46:06 2021 +0200
+commit 01cd6f9c0651a07fc628ae1ea17423de5c71579b
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Jan 12 08:13:55 2021 +0200
 
-    feat(ui5-slider): focus and keyboard handling implementation (#2614)
+    feat(ui5-wizard): improve progress navigator responsiveness (#2590)
+    
+    * [WIP] ui5-wizard: improve progress navigator responsiveness
+    
+    * feat(ui5-wizard): responsive behaviour
+    
+    * ui5-wizard: selection-change fired as expected
+    
+    * ui5-wizard: minor enhancements
+    
+    * ui5-wizard: CSS adjustments
+    
+    * ui5-wizard: CSS adjustments
+    
+    * [WIP] ui5-wizard: improve progress navigator responsiveness
+    
+    * feat(ui5-wizard): responsive behaviour
+    
+    * ui5-wizard: selection-change fired as expected
+    
+    * ui5-wizard: minor enhancements
+    
+    * ui5-wizard: CSS adjustments
+    
+    * css improvements
+    
+    * ui5-wizard: IE fix and other minor adjustments
+    
+    * ui5-wizard: attributes names changed
+    
+    Co-authored-by: Martin Hristov <martin.r.hristov@gmail.com>
