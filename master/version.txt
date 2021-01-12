@@ -1,5 +1,5 @@
-commit b4f836a9865bc5105920150e785c78856b37a406
+commit 6602fba7ea31d363cad447eb6d439ea309ced37f
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jan 12 09:21:40 2021 +0200
+Date:   Tue Jan 12 12:43:12 2021 +0200
 
-    feat(framework): Create attachDirectionChange function (#2646)
+    feat(ui5-calendar): Declarative dates support added (#2648)
