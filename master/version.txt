@@ -1,5 +1,7 @@
-commit 57820dd680e77fd8cf127e0eb2cef31ce69c88aa
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Jan 12 13:57:30 2021 +0200
+commit ff247f06ddc65194c9e98cfed98bf966bb27c785
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jan 12 14:29:50 2021 +0200
 
-    fix(ui5-multi-combobox): fix livechange behaviour (#2656)
+    fix(ui5-li-notification-group): align priority icon (#2584)
+    
+    Now the priority icon of the NotificationListGroupItem and the children items are aligned.
