@@ -35,6 +35,6 @@ class TabContainerTabsPlacement extends DataType {
 	}
 }
 
-TabContainerTabsPlacement.generateTypeAcessors(TabContainerTabsPlacements);
+TabContainerTabsPlacement.generateTypeAccessors(TabContainerTabsPlacements);
 
 export default TabContainerTabsPlacement;

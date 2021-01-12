@@ -3,6 +3,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
+import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "./popup-utils/PopupUtils.js";
@@ -242,15 +243,9 @@ class Popup extends UI5Element {
 		});
 	}
 
-	/**
-	 * Focus trapping
-	 * @private
-	 */
-	forwardToFirst() {
-		const firstFocusable = getFirstFocusableElement(this);
-
-		if (firstFocusable) {
-			firstFocusable.focus();
+	_onkeydown(e) {
+		if (e.target === this._root && isTabPrevious(e)) {
+			e.preventDefault();
 		}
 	}
 
@@ -258,11 +253,27 @@ class Popup extends UI5Element {
 	 * Focus trapping
 	 * @private
 	 */
-	forwardToLast() {
-		const lastFocusable = getLastFocusableElement(this);
+	async forwardToFirst() {
+		const firstFocusable = await getFirstFocusableElement(this);
+
+		if (firstFocusable) {
+			firstFocusable.focus();
+		} else {
+			this._root.focus();
+		}
+	}
+
+	/**
+	 * Focus trapping
+	 * @private
+	 */
+	async forwardToLast() {
+		const lastFocusable = await getLastFocusableElement(this);
 
 		if (lastFocusable) {
 			lastFocusable.focus();
+		} else {
+			this._root.focus();
 		}
 	}
 
@@ -270,8 +281,8 @@ class Popup extends UI5Element {
 	 * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
 	 * @protected
 	 */
-	applyInitialFocus() {
-		this.applyFocus();
+	async applyInitialFocus() {
+		await this.applyFocus();
 	}
 
 	/**
@@ -279,10 +290,13 @@ class Popup extends UI5Element {
 	 * or the first focusable element otherwise.
 	 * @public
 	 */
-	applyFocus() {
+	async applyFocus() {
+		await this._waitForDomRef();
+
 		const element = this.getRootNode().getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)
-			|| getFirstFocusableElement(this);
+			|| await getFirstFocusableElement(this)
+			|| this._root; // in case of no focusable content focus the root
 
 		if (element) {
 			element.focus();
@@ -466,6 +480,10 @@ class Popup extends UI5Element {
 		return this.ariaLabel || undefined;
 	}
 
+	get _root() {
+		return this.shadowRoot.querySelector(".ui5-popup-root");
+	}
+
 	get dir() {
 		return getRTL() ? "rtl" : "ltr";
 	}
@@ -482,8 +500,12 @@ class Popup extends UI5Element {
 
 	get classes() {
 		return {
-			root: {},
-			content: {},
+			root: {
+				"ui5-popup-root": true,
+			},
+			content: {
+				"ui5-popup-content": true,
+			},
 		};
 	}
 }

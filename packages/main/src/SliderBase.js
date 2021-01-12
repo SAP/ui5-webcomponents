@@ -4,7 +4,9 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-
+import {
+	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
 // Styles
@@ -97,6 +99,8 @@ const metadata = {
 		disabled: {
 			type: Boolean,
 		},
+
+
 		/**
 		 * @private
 		 */
@@ -110,18 +114,10 @@ const metadata = {
 		_hiddenTickmarks: {
 			type: Boolean,
 		},
-	},
-	slots: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */ {
-		/**
-		 * Defines the text of the <code>slider</code>.
-		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-		 *
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: Node,
+		_tabIndex: {
+			type: String,
+			defaultValue: "0",
+			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */ {
@@ -205,6 +201,26 @@ class SliderBase extends UI5Element {
 		};
 	}
 
+	static get ACTION_KEYS() {
+		return [
+			isLeft,
+			isRight,
+			isUp,
+			isDown,
+			isLeftCtrl,
+			isRightCtrl,
+			isUpCtrl,
+			isDownCtrl,
+			isPlus,
+			isMinus,
+			isHome,
+			isEnd,
+			isPageUp,
+			isPageDown,
+			isEscape,
+		];
+	}
+
 	static get MIN_SPACE_BETWEEN_TICKMARKS() {
 		return 8;
 	}
@@ -259,6 +275,95 @@ class SliderBase extends UI5Element {
 	}
 
 	/**
+	 * Sets initial value when the component is focused in, can be restored with ESC key
+	 *
+	 * @private
+	 */
+	_setInitialValue(valueType, value) {
+		this[`_${valueType}Initial`] = value;
+	}
+
+	_getInitialValue(valueType) {
+		return this[`_${valueType}Initial`];
+	}
+
+	_onkeydown(event) {
+		if (this.disabled || this._effectiveStep === 0) {
+			return;
+		}
+
+		if (SliderBase._isActionKey(event)) {
+			event.preventDefault();
+
+			this._isUserInteraction = true;
+			this._handleActionKeyPress(event);
+		}
+	}
+
+	_onkeyup(event) {
+		if (this.disabled) {
+			return;
+		}
+
+		this._isUserInteraction = false;
+	}
+
+	/**
+	 * Flags if an inner element is currently being focused
+	 *
+	 * @private
+	 */
+	_preserveFocus(isFocusing) {
+		this._isInnerElementFocusing = isFocusing;
+	}
+
+	/**
+	 * Return if an inside element within the component is currently being focused
+	 *
+	 * @private
+	 */
+	_isFocusing() {
+		return this._isInnerElementFocusing;
+	}
+
+	/**
+	 * Prevent focus out when inner element within the component is currently being in process of focusing in.
+	 * In theory this can be achieved either if the shadow root is focusable and 'delegatesFocus' attribute of
+	 * the .attachShadow() customElement method is set to true, or if we forward it manually.
+
+	 * As we use lit-element as base of our core UI5 element class that 'delegatesFocus' property is not set to 'true' and
+	 * we have to manage the focus here. If at some point in the future this changes, the focus delegating logic could be
+	 * removed as it will become redundant.
+	 *
+	 * When we manually set the focus on mouseDown to the first focusable element inside the shadowDom,
+	 * that inner focus (shadowRoot.activeElement) is set a moment before the global document.activeElement
+	 * is set to the customElement (ui5-slider) causing a 'race condition'.
+	 *
+	 * In order for a element within the shadowRoot to be focused, the global document.activeElement MUST be the parent
+	 * customElement of the shadow root, in our case the ui5-slider component. Because of that after our focusin of the handle,
+	 * a focusout event fired by the browser immidiatly after, resetting the focus. Focus out must be manually prevented
+	 * in both initial focusing and switching the focus between inner elements of the component cases.
+
+	 * Note: If we set the focus to the handle with a timeout or a bit later in time, on a mouseup or click event it will
+	 * work fine and we will avoid the described race condition as our host customElement will be already finished focusing.
+	 * However, that does not work for us as we need the focus to be set to the handle exactly on mousedown,
+	 * because of the nature of the component and its available drag interactions.
+	 *
+	 * @private
+	 */
+	_preventFocusOut() {
+		this.focusInnerElement();
+	}
+
+	/**
+	 * Manages the focus between the component's inner elements
+	 * @protected
+	 */
+	focusInnerElement() {
+		this.focus();
+	}
+
+	/**
 	 * Handle the responsiveness of the Slider's UI elements when resizing
 	 *
 	 * @private
@@ -287,7 +392,6 @@ class SliderBase extends UI5Element {
 		if (this.labelInterval <= 0 || this._hiddenTickmarks) {
 			return;
 		}
-
 
 		// Check if there are any overlapping labels.
 		// If so - only the first and the last one should be visible
@@ -322,7 +426,22 @@ class SliderBase extends UI5Element {
 		SliderBase.UP_EVENTS.forEach(upEventType => window.addEventListener(upEventType, this._upHandler));
 		window.addEventListener(this._moveEventType, this._moveHandler);
 
+		this._handleFocusOnMouseDown(event);
 		return newValue;
+	}
+
+	/**
+	 * Forward the focus to an inner inner part within the component on press
+	 *
+	 * @private
+	 */
+	_handleFocusOnMouseDown(event) {
+		const focusedElement = this.shadowRoot.activeElement;
+
+		if (!focusedElement || focusedElement !== event.target) {
+			this._preserveFocus(true);
+			this.focusInnerElement();
+		}
 	}
 
 	/**
@@ -341,6 +460,7 @@ class SliderBase extends UI5Element {
 
 		this._moveEventType = null;
 		this._isUserInteraction = false;
+		this._preserveFocus(false);
 	}
 
 	/**
@@ -355,6 +475,15 @@ class SliderBase extends UI5Element {
 		if (this._isUserInteraction) {
 			this.fireEvent("input");
 		}
+	}
+
+	/**
+	 * Goes through the key shortcuts available for the component and returns 'true' if the event is triggered by one.
+	 *
+	 * @private
+	 */
+	static _isActionKey(event) {
+		return this.ACTION_KEYS.some(actionKey => actionKey(event));
 	}
 
 	/**
@@ -609,8 +738,41 @@ class SliderBase extends UI5Element {
 		}
 	}
 
-	get _labels() {
-		return this._labelValues || [];
+	_handleActionKeyPressBase(event, affectedValue) {
+		const isUpAction = SliderBase._isIncreaseValueAction(event);
+		const isBigStep = SliderBase._isBigStepAction(event);
+
+		const currentValue = this[affectedValue];
+		const min = this._effectiveMin;
+		const max = this._effectiveMax;
+
+		// If the action key corresponds to a long step and the slider has more than 10 normal steps,
+		// make a jump of 1/10th of the Slider's length, otherwise just use the normal step property.
+		let step = this._effectiveStep;
+		step = isBigStep && ((max - min) / step > 10) ? (max - min) / 10 : step;
+
+
+		if (isEnd(event)) {
+			return max - currentValue;
+		}
+
+		if (isHome(event)) {
+			return (currentValue - min) * -1;
+		}
+
+		return isUpAction ? step : step * -1;
+	}
+
+	static _isDecreaseValueAction(event) {
+		return isDown(event) || isDownCtrl(event) || isLeft(event) || isLeftCtrl(event) || isMinus(event) || isPageDown(event);
+	}
+
+	static _isIncreaseValueAction(event) {
+		return isUp(event) || isUpCtrl(event) || isRight(event) || isRightCtrl(event) || isPlus(event) || isPageUp(event);
+	}
+
+	static _isBigStepAction(event) {
+		return isDownCtrl(event) || isUpCtrl(event) || isLeftCtrl(event) || isRightCtrl(event) || isPageUp(event) || isPageDown(event);
 	}
 
 	/**
@@ -644,6 +806,10 @@ class SliderBase extends UI5Element {
 		}
 	}
 
+	get _labels() {
+		return this._labelValues || [];
+	}
+
 	/**
 	 * Normalizes a new <code>step</code> property value.
 	 * If tickmarks are enabled recreates them according to it.
@@ -670,6 +836,10 @@ class SliderBase extends UI5Element {
 
 	get _effectiveMax() {
 		return Math.max(this.min, this.max);
+	}
+
+	get tabIndex() {
+		return this.disabled ? "-1" : this._tabIndex;
 	}
 }
 

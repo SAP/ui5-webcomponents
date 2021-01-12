@@ -150,7 +150,7 @@
 </section>
 
 <script>
-	const products = {
+	var products = {
 		"ProductCollection": [
 			{
 				"ProductId": "HT-1000",
@@ -397,7 +397,7 @@
 		]
 	}
 
-	let html = '';
+	var html = '';
 	products.ProductCollection.forEach(function(product, index) {
 		html += '<ui5-table-row >'
 						+ '<ui5-table-cell>'
@@ -436,5 +436,323 @@
 		document.getElementById("tbl").stickyColumnHeader = !document.getElementById("tbl").stickyColumnHeader
 	});
 </script>
+
+<section>
+	<h3>Table "Load more"</h3>
+	<div class="snippet">
+		<ui5-table id="myTbl" has-more load-more-subtext="[4 / 8]">
+			<ui5-table-column id="column-1" slot="columns" width="350px">
+				<ui5-label>Product</ui5-label>
+			</ui5-table-column>
+	
+			<ui5-table-column id="column-2" slot="columns" min-width="800" popin-text="Supplier">
+				<ui5-label>Supplier</ui5-label>
+			</ui5-table-column>
+	
+			<ui5-table-column id="column-3" slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
+				<div class="column-content">
+					<ui5-label>Dimensions</ui5-label>
+				</div>
+			</ui5-table-column>
+	
+			<ui5-table-column id="column-4" slot="columns" min-width="600" popin-text="Weight" demand-popin>
+				<ui5-label>Weight</ui5-label>
+			</ui5-table-column>
+	
+			<ui5-table-column id="column-5" slot="columns">
+				<ui5-label>Price</ui5-label>
+			</ui5-table-column>
+		</ui5-table>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-table id="tbl" has-more load-more-subtext="[4 / 8]">
+	<ui5-table-column id="column-1" slot="columns" width="350px">
+		<ui5-label>Product</ui5-label>
+	</ui5-table-column>
+
+	...
+</ui5-table>
+
+<script>
+	tbl.addEventListener("load-more", function() {
+		rowsToLoad.forEach(() => {
+			tbl.appendChild(document.createElement('ui5-table-row'));
+		});
+	});
+</script>
+	</xmp></pre>
+
+	<script>
+		// Growing Table
+		var products2 = {
+			"ProductCollection": [
+				{
+					"ProductId": "HT-1000",
+					"Category": "Laptops",
+					"MainCategory": "Computer Systems",
+					"TaxTarifCode": "1",
+					"SupplierName": "Very Best Screens",
+					"WeightMeasure": 4.2,
+					"WeightUnit": "KG",
+					"Description": "Notebook Basic 15 with 2,80 GHz quad core, 15\" LCD, 4 GB DDR3 RAM, 500 GB Hard Disc, Windows 8 Pro",
+					"Name": "Notebook Basic 15",
+					"DateOfSale": "2017-03-26",
+					"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1000.jpg",
+					"Status": "Available",
+					"Quantity": 10,
+					"UoM": "PC",
+					"CurrencyCode": "EUR",
+					"Price": 956,
+					"Width": 30,
+					"Depth": 18,
+					"Height": 3,
+					"DimUnit": "cm"
+				},
+				{
+					"ProductId": "HT-1001",
+					"Category": "Laptops",
+					"MainCategory": "Computer Systems",
+					"TaxTarifCode": "1",
+					"SupplierName": "Very Best Screens",
+					"WeightMeasure": 4.5,
+					"WeightUnit": "KG",
+					"Description": "Notebook Basic 17 with 2,80 GHz quad core, 17\" LCD, 4 GB DDR3 RAM, 500 GB Hard Disc, Windows 8 Pro",
+					"Name": "Notebook Basic 17",
+					"DateOfSale": "2017-04-17",
+					"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1001.jpg",
+					"Status": "Available",
+					"Quantity": 20,
+					"UoM": "PC",
+					"CurrencyCode": "EUR",
+					"Price": 1249,
+					"Width": 29,
+					"Depth": 17,
+					"Height": 3.1,
+					"DimUnit": "cm"
+				},
+				{
+					"ProductId": "HT-1002",
+					"Category": "Laptops",
+					"MainCategory": "Computer Systems",
+					"TaxTarifCode": "1",
+					"SupplierName": "Very Best Screens",
+					"WeightMeasure": 4.2,
+					"WeightUnit": "KG",
+					"Description": "Notebook Basic 18 with 2,80 GHz quad core, 18\" LCD, 8 GB DDR3 RAM, 1000 GB Hard Disc, Windows 8 Pro",
+					"Name": "Notebook Basic 18",
+					"DateOfSale": "2017-01-07",
+					"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1002.jpg",
+					"Status": "Available",
+					"Quantity": 10,
+					"UoM": "PC",
+					"CurrencyCode": "EUR",
+					"Price": 1570,
+					"Width": 28,
+					"Depth": 19,
+					"Height": 2.5,
+					"DimUnit": "cm"
+				},
+				{
+					"ProductId": "HT-1003",
+					"Category": "Laptops",
+					"MainCategory": "Computer Systems",
+					"TaxTarifCode": "1",
+					"SupplierName": "Smartcards",
+					"WeightMeasure": 4.2,
+					"WeightUnit": "KG",
+					"Description": "Notebook Basic 19 with 2,80 GHz quad core, 19\" LCD, 8 GB DDR3 RAM, 1000 GB Hard Disc, Windows 8 Pro",
+					"Name": "Notebook Basic 19",
+					"DateOfSale": "2017-04-09",
+					"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1003.jpg",
+					"Status": "Available",
+					"Quantity": 15,
+					"UoM": "PC",
+					"CurrencyCode": "EUR",
+					"Price": 1650,
+					"Width": 32,
+					"Depth": 21,
+					"Height": 4,
+					"DimUnit": "cm"
+				},
+				{
+					"ProductId": "HT-1007",
+					"Category": "Accessories",
+					"MainCategory": "Computer Components",
+					"TaxTarifCode": "1",
+					"SupplierName": "Technocom",
+					"WeightMeasure": 0.2,
+					"WeightUnit": "KG",
+					"Description": "Digital Organizer with State-of-the-Art Storage Encryption",
+					"Name": "ITelO Vault",
+					"DateOfSale": "2017-05-17",
+					"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1007.jpg",
+					"Status": "Available",
+					"Quantity": 15,
+					"UoM": "PC",
+					"CurrencyCode": "EUR",
+					"Price": 299,
+					"Width": 32,
+					"Depth": 22,
+					"Height": 3,
+					"DimUnit": "cm"
+				},
+				{
+					"ProductId": "HT-1010",
+					"Category": "Accessories",
+					"MainCategory": "Computer Systems",
+					"TaxTarifCode": "1",
+					"SupplierName": "Very Best Screens",
+					"WeightMeasure": 4.3,
+					"WeightUnit": "KG",
+					"Description": "Notebook Professional 15 with 2,80 GHz quad core, 15\" Multitouch LCD, 8 GB DDR3 RAM, 500 GB SSD - DVD-Writer (DVD-R/+R/-RW/-RAM),Windows 8 Pro",
+					"Name": "Notebook Professional 15",
+					"DateOfSale": "2017-02-22",
+					"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1010.jpg",
+					"Status": "Available",
+					"Quantity": 16,
+					"UoM": "PC",
+					"CurrencyCode": "EUR",
+					"Price": 1999,
+					"Width": 33,
+					"Depth": 20,
+					"Height": 3,
+					"DimUnit": "cm"
+				},
+				{
+					"ProductId": "HT-1011",
+					"Category": "Laptops",
+					"MainCategory": "Computer Systems",
+					"TaxTarifCode": "1",
+					"SupplierName": "Very Best Screens",
+					"WeightMeasure": 4.1,
+					"WeightUnit": "KG",
+					"Description": "Notebook Professional 17 with 2,80 GHz quad core, 17\" Multitouch LCD, 8 GB DDR3 RAM, 500 GB SSD - DVD-Writer (DVD-R/+R/-RW/-RAM),Windows 8 Pro",
+					"Name": "Notebook Professional 17",
+					"DateOfSale": "2017-01-02",
+					"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1011.jpg",
+					"Status": "Available",
+					"Quantity": 17,
+					"UoM": "PC",
+					"CurrencyCode": "EUR",
+					"Price": 2299,
+					"Width": 33,
+					"Depth": 23,
+					"Height": 2,
+					"DimUnit": "cm"
+				},
+				{
+					"ProductId": "HT-1020",
+					"Category": "Accessories",
+					"MainCategory": "Computer Components",
+					"TaxTarifCode": "1",
+					"SupplierName": "Technocom",
+					"WeightMeasure": 0.16,
+					"WeightUnit": "KG",
+					"Description": "Digital Organizer with State-of-the-Art Encryption for Storage and Network Communications",
+					"Name": "ITelO Vault Net",
+					"DateOfSale": "2017-05-08",
+					"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1020.jpg",
+					"Status": "Available",
+					"Quantity": 14,
+					"UoM": "PC",
+					"CurrencyCode": "EUR",
+					"Price": 459,
+					"Width": 10,
+					"Depth": 1.8,
+					"Height": 17,
+					"DimUnit": "cm"
+				},
+				{
+					"ProductId": "HT-1021",
+					"Category": "Accessories",
+					"MainCategory": "Computer Components",
+					"TaxTarifCode": "1",
+					"SupplierName": "Technocom",
+					"WeightMeasure": 0.18,
+					"WeightUnit": "KG",
+					"Description": "Digital Organizer with State-of-the-Art Encryption for Storage and Secure Stellite Link",
+					"Name": "ITelO Vault SAT",
+					"DateOfSale": "2017-06-30",
+					"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1021.jpg",
+					"Status": "Available",
+					"Quantity": 50,
+					"UoM": "PC",
+					"CurrencyCode": "EUR",
+					"Price": 149,
+					"Width": 11,
+					"Depth": 1.7,
+					"Height": 18,
+					"DimUnit": "cm"
+				},
+				{
+					"ProductId": "HT-1022",
+					"Category": "Accessories",
+					"MainCategory": "Computer Components",
+					"TaxTarifCode": "1",
+					"SupplierName": "Technocom",
+					"WeightMeasure": 0.2,
+					"WeightUnit": "KG",
+					"Description": "32 GB Digital Assistant with high-resolution color screen",
+					"Name": "Comfort Easy",
+					"DateOfSale": "2017-03-02",
+					"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1022.jpg",
+					"Status": "Available",
+					"Quantity": 30,
+					"UoM": "PC",
+					"CurrencyCode": "EUR",
+					"Price": 1679,
+					"Width": 84,
+					"Depth": 1.5,
+					"Height": 14,
+					"DimUnit": "cm"
+				},
+				{
+					"ProductId": "HT-1023",
+					"Category": "Accessories",
+					"MainCategory": "Computer Components",
+					"TaxTarifCode": "1",
+					"SupplierName": "Technocom",
+					"WeightMeasure": 0.8,
+					"WeightUnit": "KG",
+					"Description": "64 GB Digital Assistant with high-resolution color screen and synthesized voice output",
+					"Name": "Comfort Senior",
+					"DateOfSale": "2017-02-25",
+					"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1023.jpg",
+					"Status": "Available",
+					"Quantity": 24,
+					"UoM": "PC",
+					"CurrencyCode": "EUR",
+					"Price": 512,
+					"Width": 80,
+					"Depth": 1.6,
+					"Height": 13,
+					"DimUnit": "cm"
+				}
+			]
+		};
+		var growingTable = document.getElementById("myTbl");
+		var loadMoreTracker = 1;
+		var ROWS = 4;
+
+		function init(rows) {
+			var result = '';
+			products2.ProductCollection.slice(0, ROWS).forEach(function (product, index, arr) {
+				var test = "<ui5-table-row  id=roll-".concat(index, ">\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<div class=\"double-line-content\">\n\t\t\t\t\t\t\t\t\t<ui5-label>\n\t\t\t\t\t\t\t\t\t\t<b>").concat(product.Name, "</b>\n\t\t\t\t\t\t\t\t\t</ui5-label>\n\t\t\t\t\t\t\t\t\t<ui5-label style=\"margin-top: 0.5rem\">").concat(product.ProductId, "</ui5-label>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.SupplierName, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >").concat(product.Width, " x ").concat(product.Depth, " x ").concat(product.Height, " ").concat(product.DimUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label style=\"color: #2b7c2b\" class=\"middle\">\n\t\t\t\t\t\t\t\t\t<b>").concat(product.WeightMeasure, "</b> ").concat(product.WeightUnit, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t\t<ui5-table-cell>\n\t\t\t\t\t\t\t\t<ui5-label class=\"middle\" >\n\t\t\t\t\t\t\t\t\t<b>").concat(product.Price, "</b> ").concat(product.CurrencyCode, "</ui5-label>\n\t\t\t\t\t\t\t</ui5-table-cell>\n\n\t\t\t\t\t\t</ui5-table-row>");
+				result += test;
+			});
+
+			growingTable.insertAdjacentHTML('beforeend', result);
+		}
+
+		function loadMore() {
+			init(ROWS);
+			growingTable.removeAttribute("has-more");
+		}
+
+		growingTable.addEventListener("load-more", loadMore);
+		init(ROWS);
+	</script>
+</section>
+
 
 <!-- JSDoc marker -->

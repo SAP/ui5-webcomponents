@@ -52,18 +52,9 @@ describe("Date Picker Tests", () => {
 		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
-	it("Can focus the input after open", () => {
-		datepicker.id = "#dp1";
-		datepicker.openPicker({ focusInput: true });
-		const a = datepicker.innerInput.isFocusedDeep();
-
-		console.log(datepicker.innerInput.isFocusedDeep());
-		assert.ok(a, "inner input is focused");
-	});
-
 	it("Value State Message", () => {
 		datepicker.id = "#dp17"
-		datepicker.root.click();
+		datepicker.input.click();
 
 		const inputStaticAreaItem = datepicker.inputStaticAreaItem;
 		const popover = inputStaticAreaItem.shadow$("ui5-popover");
@@ -86,6 +77,18 @@ describe("Date Picker Tests", () => {
 
 		assert.equal(datepicker.input.getProperty("readonly"), true, "input has readonly set");
 		assert.ok(!datepicker.hasIcon(), "icon is not displayed");
+	});
+
+	it("required", () => {
+		datepicker.id = "#dp-required";
+
+		assert.ok(datepicker.input.getProperty("required"), "input has required set");
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-required"), "true", "Aria-required attribute is set correctly.");
+
+		datepicker.root.removeAttribute("required");
+
+		assert.notOk(datepicker.input.getProperty("required"), "required property is not set");
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-required"), "false", "Aria-required attribute is set correctly.");
 	});
 
 	it("placeholder", () => {
@@ -130,8 +133,8 @@ describe("Date Picker Tests", () => {
 	it("focusout fires change", () => {
 		datepicker.id = "#dp5";
 
-		datepicker.root.click();
-		datepicker.innerInput.setValue("Jan 6, 2015");
+		datepicker.input.click();
+		datepicker.root.keys("Jan 1, 1999");
 		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
 		assert.equal(browser.$("#lbl").getHTML(false), "1", 'change has fired once');
@@ -144,7 +147,7 @@ describe("Date Picker Tests", () => {
 		const timestamp_8_Jan_2015 = timestamp_6_Jan_2015 + 2 * 24 * 60 * 60;
 
 		//type in the input
-		datepicker.innerInput.setValue("Jan 6, 2015");
+		datepicker.root.setProperty("value", "Jan 6, 2015");
 
 		//open picker
 		datepicker.valueHelpIcon.click();
@@ -202,12 +205,12 @@ describe("Date Picker Tests", () => {
 		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg");
 		datepicker.id = "#dp7_1";
 
-		datepicker.innerInput.setValue("фев 6, 2019");
+		datepicker.root.setProperty("value", "фев 6, 2019");
 		datepicker.valueHelpIcon.click();
 
 		const firstDisplayedDate = datepicker.getFirstDisplayedDate();
 
-		assert.ok(firstDisplayedDate.getProperty("id").indexOf("1548633600") > -1, "28 Jan is the first displayed date for Feb 2019")
+		assert.ok(firstDisplayedDate.getAttribute("data-sap-timestamp").indexOf("1548633600") > -1, "28 Jan is the first displayed date for Feb 2019")
 
 		const calendarDate_3_Feb_2019 = datepicker.getPickerDate(1549152000);
 
@@ -219,14 +222,14 @@ describe("Date Picker Tests", () => {
 
 		datepicker.id = "#dp7_2";
 
-		datepicker.innerInput.setValue("Jan 30, 2019");
+		datepicker.root.setProperty("value", "Jan 30, 2019");
 		datepicker.valueHelpIcon.click();
 		datepicker.btnNext.click();
 
 		const firstDisplayedDate = datepicker.getFirstDisplayedDate();
 
 		// first displayed date should be Jan 27, 2019, so this is February
-		assert.ok(firstDisplayedDate.getProperty("id").indexOf("1548547200") > -1, "Feb is the displayed month");
+		assert.ok(firstDisplayedDate.getAttribute("data-sap-timestamp").indexOf("1548547200") > -1, "Feb is the displayed month");
 	});
 
 	it("picker stays open on input click", () => {
@@ -353,7 +356,7 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click()
 		browser.keys("F4");
 
-		assert.notOk(datepicker.calendar.getProperty("_monthPicker")._hidden, "Month picker is open");
+		assert.notOk(datepicker.calendar.shadow$("ui5-monthpicker")._hidden, "Month picker is open");
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
 
@@ -363,7 +366,7 @@ describe("Date Picker Tests", () => {
 		datepicker.valueHelpIcon.click()
 		browser.keys(['Shift', 'F4']);
 
-		assert.notOk(datepicker.calendar.getProperty("_yearPicker")._hidden, "Year picker is open");
+		assert.notOk(datepicker.calendar.shadow$("ui5-yearpicker")._hidden, "Year picker is open");
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
 
@@ -374,7 +377,7 @@ describe("Date Picker Tests", () => {
 		browser.keys(['Shift', 'F4']);
 		browser.keys('F4');
 
-		assert.notOk(datepicker.calendar.getProperty("_monthPicker")._hidden, "Year picker is open");
+		assert.notOk(datepicker.calendar.shadow$("ui5-monthpicker")._hidden, "Year picker is open");
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
 
@@ -386,7 +389,7 @@ describe("Date Picker Tests", () => {
 		browser.keys('F4');
 		browser.keys(['Shift', 'F4']);
 
-		assert.notOk(datepicker.calendar.getProperty("_yearPicker")._hidden, "Year picker is open");
+		assert.notOk(datepicker.calendar.shadow$("ui5-yearpicker")._hidden, "Year picker is open");
 		datepicker.valueHelpIcon.click(); // close the datepicker
 	});
 
@@ -408,40 +411,36 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Dec 31, 9999");
+		datepicker.root.setProperty("value", "Dec 31, 9999");
 		datepicker.valueHelpIcon.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 	});
 
 	it("daypicker extreme values min", () => {
-		var _1Jan0001 = "-62135596800";
+		var _31Dec0000 = "-62135683200";
 
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0001");
+		datepicker.root.setProperty("value", "Jan 1, 0001");
 		datepicker.valueHelpIcon.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_31Dec0000) > -1, "Jan 1, 0001 is the second displayed date");
 	});
 
 	it("daypicker prev extreme values min", () => {
-		var _1Jan0001 = "-62135596800";
+		var _31Dec0000 = "-62135683200";
 
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Feb 1, 0001");
+		datepicker.root.setProperty("value", "Feb 1, 0001");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnPrev.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
-
-		datepicker.btnPrev.click();
-
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_31Dec0000) > -1, "Jan 1, 0001 is the second displayed date");
 	});
 
 	it("daypicker next extreme values max", () => {
@@ -450,30 +449,22 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Nov 31, 9999");
+		datepicker.root.setProperty("value", "Nov 30, 9999");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnNext.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
-
-		datepicker.btnNext.click();
-
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getAttribute("data-sap-timestamp").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 	});
 
 	it("monthpicker next extreme values max", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Dec 31, 9998");
+		datepicker.root.setProperty("value", "Dec 31, 9998");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnMonth.click();
-		datepicker.btnNext.click();
-
-		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("9999") > -1, "year button's text is correct");
-
 		datepicker.btnNext.click();
 
 		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("9999") > -1, "year button's text is correct");
@@ -483,14 +474,10 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0002");
+		datepicker.root.setProperty("value", "Jan 1, 0002");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnMonth.click();
-		datepicker.btnPrev.click();
-
-		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("0001") > -1, "year button's text is correct");
-
 		datepicker.btnPrev.click();
 
 		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("0001") > -1, "year button's text is correct");
@@ -500,7 +487,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Dec 31, 9995");
+		datepicker.root.setProperty("value", "Dec 31, 9995");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -512,7 +499,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0003");
+		datepicker.root.setProperty("value", "Jan 1, 0003");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -524,16 +511,12 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0012");
+		datepicker.root.setProperty("value", "Jan 1, 0012");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
 
 		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0002") > -1, "First year in the year picker is correct");
-
-		datepicker.btnPrev.click();
-
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
 
 		datepicker.btnPrev.click();
 
@@ -544,16 +527,12 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Dec 31, 9986");
+		datepicker.root.setProperty("value", "Dec 31, 9986");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
 
 		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9976") > -1, "First year in the year picker is correct");
-
-		datepicker.btnNext.click();
-
-		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9980") > -1, "First year in the year picker is correct");
 
 		datepicker.btnNext.click();
 
@@ -564,7 +543,7 @@ describe("Date Picker Tests", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Dec 31, 9986");
+		datepicker.root.setProperty("value", "Dec 31, 9986");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
@@ -578,19 +557,26 @@ describe("Date Picker Tests", () => {
 		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9976") > -1, "First year in the year picker is correct");
 	});
 
-	it("yearpicker click extreme values min", () => {
+	it("yearpicker click extreme values min above 10", () => {
 		datepicker.open();
 		datepicker.id = "#dp12";
 
-		datepicker.innerInput.setValue("Jan 1, 0012");
+		datepicker.root.setProperty("value", "Jan 1, 0012");
 		datepicker.valueHelpIcon.click();
 
 		datepicker.btnYear.click();
 
 		var thirdYear = datepicker.getDisplayedYear(2);
 		assert.ok(thirdYear.getProperty("innerHTML").indexOf("0004") > -1, "Third year in the year picker is correct");
+	});
 
-		thirdYear.click();
+	it("yearpicker click extreme values min below 10", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.root.setProperty("value", "Jan 1, 0004");
+		datepicker.valueHelpIcon.click();
+
 		datepicker.btnYear.click();
 
 		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
@@ -623,7 +609,7 @@ describe("Date Picker Tests", () => {
 	it("Going under the minimum date changes value state", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.root.click();
+		datepicker.input.click();
 		datepicker.root.keys("Jan 1, 1999");
 		datepicker.root.keys("Enter");
 
@@ -636,7 +622,7 @@ describe("Date Picker Tests", () => {
 	it("Going over the maximum date changes value state", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.root.click();
+		datepicker.input.click();
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
@@ -653,7 +639,7 @@ describe("Date Picker Tests", () => {
 	it("Maximum or minimum date changes value state to none", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.root.click();
+		datepicker.input.click();
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
@@ -663,7 +649,7 @@ describe("Date Picker Tests", () => {
 
 		assert.equal(datepicker.input.getProperty("valueState"), "None", "value state of the input is valid");
 
-		datepicker.root.click();
+		datepicker.input.click();
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
@@ -680,25 +666,26 @@ describe("Date Picker Tests", () => {
 	it("Years are disabled when out of range", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.root.click();
+		datepicker.input.click();
 		while(datepicker.root.getValue() !== ""){
 			datepicker.root.keys("Backspace");
 		}
 		datepicker.root.keys("Jan 8, 2100");
 		datepicker.root.keys("Enter");
 
-		datepicker.openPicker({ focusInput: false });
+		datepicker.openPicker();
 
 		datepicker.btnYear.click();
 		assert.ok(datepicker.getDisplayedYear(11).hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
 		datepicker.root.keys("ArrowRight");
-		assert.ok(datepicker.getDisplayedYear(0).isFocusedDeep(), "Years out of range can not be reached with keyboard");
+		assert.ok(datepicker.getDisplayedYear(10).isFocusedDeep(), "Focus remained on year 2100");
+		assert.ok(!datepicker.getDisplayedYear(11).isFocusedDeep(), "Years out of range (2101) can not be reached with keyboard");
 	});
 
 	it("Months are disabled when out of range", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.openPicker({ focusInput: false });
+		datepicker.openPicker();
 
 		datepicker.btnMonth.click();
 		assert.ok(datepicker.getDisplayedMonth(10).hasClass("ui5-mp-item--disabled"), "Months out of range are disabled");
@@ -711,7 +698,7 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp33";
 
 		datepicker.root.keys("Escape");
-		datepicker.openPicker({ focusInput: false });
+		datepicker.openPicker();
 
 		assert.ok(datepicker.getDisplayedDay(15).hasClass("ui5-dp-item--disabled"), "Days out of range are disabled");
 	});
@@ -721,7 +708,7 @@ describe("Date Picker Tests", () => {
 		datepicker.root.keys("Escape");
 
 		datepicker.id = "#dp34";
-		datepicker.openPicker({ focusInput: false });
+		datepicker.openPicker();
 		assert.ok(datepicker.getDisplayedDay(14).isFocusedDeep(), "Days out of range are disabled");
 	});
 
@@ -729,7 +716,7 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp33";
 
 		datepicker.root.keys("Escape");
-		datepicker.openPicker({ focusInput: false });
+		datepicker.openPicker();
 
 		assert.equal(datepicker.getDisplayedDay(9).hasClass("ui5-dp-item--disabled"), false , "Min date is included");
 		assert.equal(datepicker.getDisplayedDay(11).hasClass("ui5-dp-item--disabled"), false, "Max date is included");
@@ -769,14 +756,14 @@ describe("Date Picker Tests", () => {
 
 		assert.strictEqual(monthpickerContent.getAttribute("role"), "grid", "Calendar root have correct role attribute");
 		assert.strictEqual(monthpickerContent.getAttribute("aria-roledescription"), "Calendar", "Calendar root have correct roledescription")
-		
+
 	});
 
 	it("DayPicker content wrapped", ()=>{
 		datepicker.id = "#dp19";
 		datepicker.open();
 		let arr = datepicker.getDayPickerContent();
-		
+
 		arr.forEach(function(el){
 			assert.strictEqual(el.getAttribute("role"), "row", "Content wrapper has correct role");
 		});
@@ -786,10 +773,10 @@ describe("Date Picker Tests", () => {
 		// browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		// datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		// datepicker.id = "#dp13";
-		// datepicker.openPicker({ focusInput: true });
+		// datepicker.openPicker();
 		// datepicker.root.keys("May 3, 2100");
 		// datepicker.root.keys("Enter");
-		
+
 		// const content = Array.from(datepicker.getDayPickerDayNames());
 		// const dayName = ["Week number", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		// content.forEach((element,index) => {
@@ -802,7 +789,7 @@ describe("Date Picker Tests", () => {
 		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
-		datepicker.openPicker({ focusInput: true });
+		datepicker.openPicker();
 		datepicker.root.keys("May 3, 2100");
 		datepicker.root.keys("Enter");
 
@@ -823,9 +810,10 @@ describe("Date Picker Tests", () => {
 		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
-		datepicker.openPicker({ focusInput: true });
-		datepicker.root.keys("May 3, 2100");
-		datepicker.root.keys("Enter");
+		datepicker.openPicker();
+		datepicker.input.click();
+		browser.keys("May 3, 2100");
+		browser.keys("Enter");
 
 		const data = Array.from(datepicker.getDayPickerDatesRow(2));
 		assert.strictEqual(data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");
@@ -838,7 +826,7 @@ describe("Date Picker Tests", () => {
 		const EXPECTED_ARIA_LABEL = "Hello World";
 
 		datepicker.id = "#dpAriaLabel";
-		
+
 		assert.strictEqual(datepicker.innerInput.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
 			"The aria-label is correct.")
 	});
@@ -854,8 +842,8 @@ describe("Date Picker Tests", () => {
 
 	it("Page up/down increments/decrements the day value", () => {
 		datepicker.id = "#dp1";
-		datepicker.innerInput.setValue("Jan 1, 2000");
-		datepicker.root.click();
+		datepicker.root.setProperty("value", "Jan 1, 2000");
+		datepicker.input.click();
 
 		browser.keys('PageDown');
 
@@ -874,8 +862,8 @@ describe("Date Picker Tests", () => {
 
 	it("Shift + Page up/down increments/decrements the month value", () => {
 		datepicker.id = "#dp1";
-		datepicker.innerInput.setValue("Jan 1, 2000");
-		datepicker.root.click();
+		datepicker.root.setProperty("value", "Jan 1, 2000");
+		datepicker.input.click();
 
 		browser.keys(['Shift', 'PageDown']);
 
@@ -894,8 +882,8 @@ describe("Date Picker Tests", () => {
 
 	it("Ctrl + Shift + Page up/down increments/decrements the year value", () => {
 		datepicker.id = "#dp1";
-		datepicker.innerInput.setValue("Jan 1, 2000");
-		datepicker.root.click();
+		datepicker.root.setProperty("value", "Jan 1, 2000");
+		datepicker.input.click();
 
 		browser.keys(['Control', 'Shift', 'PageDown']);
 
@@ -910,5 +898,22 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(date.getDate(), 1, "Correct day value");
 		assert.strictEqual(date.getMonth(), 0, "Correct month value");
 		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
+	});
+
+	it("Keyboard navigation works when there are disabled dates in the calendar grid", () => {
+		datepicker.id = "#dp33";
+		datepicker.innerInput.click();
+		browser.keys("Jan 1, 2000");
+
+		datepicker.valueHelpIcon.click();
+
+		browser.keys("ArrowDown");
+
+		assert.ok(datepicker.getDisplayedDay(13).isFocusedDeep(), "Successfully navigated");
+
+		browser.keys("Escape");
+		datepicker.innerInput.click();
+		browser.keys(["Control", "A"]);
+		browser.keys("Backspace");
 	});
 });

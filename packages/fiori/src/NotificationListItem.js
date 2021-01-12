@@ -58,19 +58,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the <code>notification</code> is new or has been already read.
-		 * <br><br>
-		 * <b>Note:</b> if set to <code>false</code> the <code>heading</code> has bold font,
-		 * if set to true - it has a normal font.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		read: {
-			type: Boolean,
-		},
-
-		/**
 		 * Defines the state of the <code>heading</code> and <code>description</code>,
 		 * if less or more information is displayed.
 		 * @private
@@ -152,7 +139,7 @@ const metadata = {
  * <li>display a <code>Close</code> button</li>
  * <li>can control whether the <code>heading</code> and <code>description</code> should wrap or truncate
  * and display a <code>ShowMore</code> button to switch between less and more information</li>
- * <li>add custom actions by using the <code>ui5-notification-overflow-action</code> component</li>
+ * <li>add custom actions by using the <code>ui5-notification-action</code> component</li>
  * </ul>
  *
  * <h3>Usage</h3>
@@ -162,13 +149,13 @@ const metadata = {
  *
  * <code>import @ui5/webcomponents/dist/NotificationListItem.js";</code>
  * <br>
- * <code>import @ui5/webcomponents/dist/NotificationOverflowAction.js";</code> (optional)
+ * <code>import @ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListItem
  * @extends NotificationListItemBase
  * @tagname ui5-li-notification
- * @appenddocs NotificationOverflowAction
+ * @appenddocs NotificationAction
  * @since 1.0.0-rc.8
  * @public
  */
@@ -236,11 +223,11 @@ class NotificationListItem extends NotificationListItemBase {
 		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
 	}
 
-	get overflowBtnTitle() {
+	get overflowBtnAccessibleName() {
 		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
 	}
 
-	get closeBtnTitle() {
+	get closeBtnAccessibleName() {
 		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
 	}
 
@@ -257,7 +244,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get headingDOM() {
-		return this.shadowRoot.querySelector(".ui5-nli-title");
+		return this.shadowRoot.querySelector(".ui5-nli-heading");
 	}
 
 	get headingHeight() {

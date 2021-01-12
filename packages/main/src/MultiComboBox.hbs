@@ -38,7 +38,6 @@
 		placeholder="{{placeholder}}"
 		?disabled={{disabled}}
 		?readonly={{readonly}}
-		?required={{required}}
 		value-state="{{valueState}}"
 		@input="{{_inputLiveChange}}"
 		@change={{_inputChange}}
@@ -53,6 +52,7 @@
 		aria-autocomplete="both"
 		aria-labelledby="{{_id}}-hiddenText-nMore"
 		aria-describedby="{{valueStateTextId}}"
+		aria-required="{{required}}"
 	/>
 
 	{{#if icon}}

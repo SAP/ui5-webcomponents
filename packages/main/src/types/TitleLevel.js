@@ -63,6 +63,6 @@ class TitleLevel extends DataType {
 	}
 }
 
-TitleLevel.generateTypeAcessors(TitleLevels);
+TitleLevel.generateTypeAccessors(TitleLevels);
 
 export default TitleLevel;

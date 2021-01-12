@@ -1,5 +1,4 @@
 :host(:not([hidden])) {
-	display: inline-block;
 	/* Well known worakround to allow shrinking inside flex containers 
 	 * and shrinking is needed so the texts trucnate properly.
 	 */
@@ -48,17 +47,14 @@
 	display: flex;
 	align-items: center;
 	flex-direction: row;
-	padding: 0 .5rem;
 	font-size: var(--sapFontSize);
 	font-family: var(--sapFontFamily);
 	outline: none;
 }
 
 .ui5-wiz-step-main {
-	display: flex;
-	align-items: center;
-	flex-direction: row;
-	min-width: 2rem;
+	text-align: center;
+	white-space: nowrap;
 }
 
 :host(:not([disabled])) .ui5-wiz-step-main {
@@ -67,21 +63,23 @@
 
 .ui5-wiz-step-root:focus .ui5-wiz-step-main {
 	outline: var(--_ui5_wiz_tab_focus_outline);
+	outline-offset: 1px;
 }
 
 /* Icon */
 .ui5-wiz-step-icon-circle {
-	position: relative;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: middle;
+	text-align: center;
 	width: 2rem;
-	min-width: 2rem;
 	height: 2rem;
+	margin: 0 0.1875rem;
+	line-height: 1.625rem;
+	border-radius: 50%;
 	background: var(--sapObjectHeader_Background);
 	border: var(--_ui5_wiz_tab_border);
-	border-radius: 50%;
-	pointer-events: none;
+	position: relative;
 }
 
 .ui5-wiz-step-icon {
@@ -89,6 +87,7 @@
 	height: 1rem;
 	color: var(--_ui5_wiz_tab_icon_color);
 	pointer-events: none;
+	vertical-align: middle;
 }
 
 /* Texts when no icon set */
@@ -98,9 +97,13 @@
 
 /* Heading and Subheading */
 .ui5-wiz-step-texts {
-	display: flex;
-	flex-direction: column;
-	padding: 0 .5rem;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: left;
+	padding: 0 0.5rem 0 0.1875rem;
+	max-height: 3rem;
+	overflow: hidden;
+	background: var(--sapObjectHeader_Background);
 }
 
 .ui5-wiz-step-heading,
@@ -109,6 +112,14 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+}
+
+:host([data-ui5-wizard-expanded-tab-prev="true"]) .ui5-wiz-step-heading,
+:host([data-ui5-wizard-expanded-tab-prev="true"]) .ui5-wiz-step-subheading,
+:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-texts,
+:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-heading,
+:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-subheading {
+	display: none;
 }
 
 .ui5-wiz-step-subheading {
@@ -123,6 +134,7 @@
 	border-bottom-style: solid;
 	height: 1px;
 	flex-grow: 1;
+	margin-right: .25rem;
 }
 
 :host([active-separator]) .ui5-wiz-step-hr {
@@ -136,4 +148,18 @@
 /* Workaround for IE to make the focus outline visible */
 ui5-wizard-tab .ui5-wiz-step-main {
 	pointer-events: none;
+}
+
+:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-root {
+	display: inline;
+	position: absolute;
+	top: 0;
+}
+
+:host([data-ui5-wizard-after-current-tab="true"]) .ui5-wiz-step-root {
+	right: 0;
+}
+
+:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-hr {
+	display: none;
 }

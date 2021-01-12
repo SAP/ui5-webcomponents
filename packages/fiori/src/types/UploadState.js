@@ -51,6 +51,6 @@ class UploadState extends DataType {
 	}
 }
 
-UploadState.generateTypeAcessors(UploadStates);
+UploadState.generateTypeAccessors(UploadStates);
 
 export default UploadState;

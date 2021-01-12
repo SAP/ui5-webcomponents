@@ -72,6 +72,6 @@ class ListMode extends DataType {
 	}
 }
 
-ListMode.generateTypeAcessors(ListModes);
+ListMode.generateTypeAccessors(ListModes);
 
 export default ListMode;

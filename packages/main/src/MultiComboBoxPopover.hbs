@@ -30,7 +30,6 @@
 						.value="{{value}}"
 						inner-input
 						placeholder="{{placeholder}}"
-						?required={{required}}
 						value-state="{{valueState}}"
 						@input="{{_inputLiveChange}}"
 						@change={{_inputChange}}
@@ -68,7 +67,15 @@
 
 	<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 		{{#each _filteredItems}}
-				<ui5-li type="{{../_listItemsType}}" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.text}}</ui5-li>
+				<ui5-li
+					type="{{../_listItemsType}}"
+					info={{this.additionalText}}
+					?selected={{this.selected}}
+					data-ui5-token-id="{{this._id}}"
+					data-ui5-stable="{{this.stableDomRef}}"
+				>
+					{{this.text}}
+				</ui5-li>
 		{{/each}}
 	</ui5-list>
 
