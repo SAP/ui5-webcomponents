@@ -1,0 +1,16 @@
+.ui5-wizard-responsive-popover {
+	box-shadow: var(--sapContent_Shadow1);
+}
+.ui5-wizard-responsive-popover-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.ui5-wizard-popover .ui5-wizard-responsive-popover-list [ui5-button] {
+	width: 200px;
+}
+
+.ui5-wizard-dialog .ui5-wizard-responsive-popover-list [ui5-button] {
+	width: 100%;
+}

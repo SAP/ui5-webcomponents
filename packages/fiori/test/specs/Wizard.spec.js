@@ -56,9 +56,9 @@ describe("Wizard general interaction", () => {
 
 		// assert - that first step in the content and in the header are  selected
 		assert.strictEqual(step1.getAttribute("selected"), "true",
-			"First step in the content is not selected.");
+			"First step in the content is selected.");
 		assert.strictEqual(step1InHeader.getAttribute("selected"), "true",
-			"First step  in the header not is selected.");
+			"First step in the header is selected.");
 		assert.strictEqual(step1.getAttribute("disabled"), null,
 			"First step is enabled.");
 		assert.strictEqual(step1InHeader.getAttribute("disabled"), null,
