@@ -92,14 +92,19 @@ const metadata = {
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
-		 * Fired when the selected dates changed.
+		 * Fired when the selected dates change.
+		 * <b>Note:</b> If you call <code>preventDefault()</code> for this event, <code>ui5-calendar</code> will not
+		 * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
+		 *
 		 * @event sap.ui.webcomponents.main.Calendar#selected-dates-change
-		 * @param {Array} dates The selected dates timestamps
+		 * @param {Array} values The selected dates
+		 * @param {Array} dates The selected dates as UTC timestamps
 		 * @public
 		 */
 		"selected-dates-change": {
 			detail: {
 				dates: { type: Array },
+				values: { type: Array },
 			},
 		},
 	},
@@ -110,7 +115,14 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-calendar</code> can be used stand alone to display the years, months, weeks and days
+ * The <code>ui5-calendar</code> component allows users to select one or more dates.
+ * <br><br>
+ * Currently selected dates are represented with instances of <code>ui5-date</code> as
+ * children of the <code>ui5-calendar</code>. The value property of each <code>ui5-date</code> must be a
+ * date string, correctly formatted according to the <code>ui5-calendar</code>'s <code>formatPattern</code> property.
+ * Whenever the user changes the date selection, <code>ui5-calendar</code> will automatically create/remove instances
+ * of <code>ui5-date</code> in itself, unless you prevent this behavior by calling <code>preventDefault()</code> for the
+ * <code>selected-dates-change</code> event. This is useful if you want to control the selected dates externally.
  * <br><br>
  *
  * <h3>Usage</h3>
@@ -122,7 +134,7 @@ const metadata = {
  * <li>Pressing over an year inside the years view</li>
  * </ul>
  * <br>
- * The user can comfirm a date selection by pressing over a date inside the days view.
+ * The user can confirm a date selection by pressing over a date inside the days view.
  * <br><br>
  *
  * <h3>Keyboard Handling</h3>
@@ -193,6 +205,9 @@ class Calendar extends CalendarPart {
 		return calendarCSS;
 	}
 
+	/**
+	 * @private
+	 */
 	get _selectedDatesTimestamps() {
 		return this.dates.map(date => {
 			const value = date.value;
@@ -200,6 +215,9 @@ class Calendar extends CalendarPart {
 		}).filter(date => !!date);
 	}
 
+	/**
+	 * @private
+	 */
 	_setSelectedDates(selectedDates) {
 		// Remove all existing dates
 		this.dates.forEach(date => {
