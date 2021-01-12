@@ -21,6 +21,7 @@ import {
 	isPageDownShift,
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
@@ -42,6 +43,17 @@ import dayPickerCSS from "./generated/themes/DayPicker.css.js";
 const metadata = {
 	tag: "ui5-daypicker",
 	properties: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
+		/**
+		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
+		 * @type {Array}
+		 * @public
+		 */
+		selectedDates: {
+			type: Integer,
+			multiple: true,
+			compareValues: true,
+		},
+
 		/**
 		 * Defines the type of selection used in the day picker component.
 		 * Accepted property values are:<br>
