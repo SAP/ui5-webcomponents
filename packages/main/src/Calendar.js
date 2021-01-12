@@ -219,15 +219,19 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	_setSelectedDates(selectedDates) {
-		// Remove all existing dates
-		this.dates.forEach(date => {
-			this.removeChild(date);
+		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(new Date(timestamp * 1000), true)); // Format as UTC
+		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
+
+		// Remove all elements for dates that are no longer selected
+		this.dates.filter(dateElement => !selectedValues.includes(dateElement.value)).forEach(dateElement => {
+			this.removeChild(dateElement);
 		});
-		// Create tags for the new dates
-		selectedDates.forEach(timestamp => {
-			const date = document.createElement("ui5-date");
-			date.value = this.getFormat().format(new Date(timestamp * 1000), true); // Format as UTC
-			this.appendChild(date);
+
+		// Create tags for the selected dates that don't already exist in DOM
+		selectedValues.filter(value => !valuesInDOM.includes(value)).forEach(value => {
+			const dateElement = document.createElement("ui5-date");
+			dateElement.value = value;
+			this.appendChild(dateElement);
 		});
 	}
 
