@@ -1,5 +1,9 @@
-commit 32dd0ef01bab4b5002163c805f7a11dc0242c4ba
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jan 12 15:23:32 2021 +0200
+commit 849d0521886d0b5441af8dac0c6ea6fafb397852
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Tue Jan 12 19:29:08 2021 +0200
 
-    fix(ui5-calendar): Today date is propertly calculated no matter what timezone (#2660)
+    fix(ui5-tree): accessibility improvements (#2671)
+    
+    Added new aria-posinset and aria-setsize attributes to each element. Now, screen reader will know the count of the items on the same level and the position of the current active item.
+    
+    Fixes: #2553
