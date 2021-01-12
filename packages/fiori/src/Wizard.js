@@ -7,6 +7,8 @@ import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
+import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 
 // Texts
 import {
@@ -20,7 +22,18 @@ import WizardStep from "./WizardStep.js";
 
 // Template and Styles
 import WizardTemplate from "./generated/templates/WizardTemplate.lit.js";
+import WizardPopoverTemplate from "./generated/templates/WizardPopoverTemplate.lit.js";
 import WizardCss from "./generated/themes/Wizard.css.js";
+import WizardPopoverCss from "./generated/themes/WizardPopover.css.js";
+
+
+const MIN_STEP_WIDTH_NO_TITLE = 64;
+const MIN_STEP_WIDTH_WITH_TITLE = 200;
+
+const EXPANDED_STEP = "data-ui5-wizard-expanded-tab";
+const AFTER_EXPANDED_STEP = "data-ui5-wizard-expanded-tab-next";
+const AFTER_CURRENT_STEP = "data-ui5-wizard-after-current-tab";
+const BEFORE_EXPANDED_STEP = "data-ui5-wizard-expanded-tab-prev";
 
 /**
  * @public
@@ -47,6 +60,11 @@ const metadata = {
 		 */
 		width: {
 			type: Float,
+		},
+
+		_groupedTabs: {
+			type: String,
+			multiple: true,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
@@ -165,6 +183,9 @@ class Wizard extends UI5Element {
 		// e.g. the steps' starting point.
 		this.stepScrollOffsets = [];
 
+		// Stores references to the grouped steps.
+		this._groupedTabs = [];
+
 		// Keeps track of the selected step index.
 		this.selectedStepIndex = 0;
 
@@ -194,8 +215,22 @@ class Wizard extends UI5Element {
 		return litRender;
 	}
 
+	get classes() {
+		return {
+			popover: {
+				"ui5-wizard-responsive-popover": true,
+				"ui5-wizard-popover": !isPhone(),
+				"ui5-wizard-dialog": isPhone(),
+			},
+		};
+	}
+
 	static get styles() {
 		return WizardCss;
+	}
+
+	static get staticAreaStyles() {
+		return WizardPopoverCss;
 	}
 
 	static get template() {
@@ -203,7 +238,12 @@ class Wizard extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [WizardTab, WizardStep];
+		return [
+			WizardTab,
+			WizardStep,
+			ResponsivePopover,
+			Button,
+		];
 	}
 
 	static async onDefine() {
@@ -220,6 +260,10 @@ class Wizard extends UI5Element {
 
 	static get CONTENT_TOP_OFFSET() {
 		return 80;
+	}
+
+	static get staticAreaTemplate() {
+		return WizardPopoverTemplate;
 	}
 
 	onEnterDOM() {
@@ -364,6 +408,145 @@ class Wizard extends UI5Element {
 	 */
 	onResize() {
 		this.width = this.getBoundingClientRect().width;
+
+		if (this.responsivePopover && this.responsivePopover.opened) {
+			this._closeRespPopover();
+		}
+	}
+
+	/**
+	 * Updates the expanded attribute for each ui5-wizard-tab based on the ui5-wizard width
+	 * @private
+	 */
+	_adjustHeaderOverflow() {
+		let counter = 0;
+		let isForward = true;
+		const iWidth = this.width;
+		const iCurrStep = this.getSelectedStepIndex();
+		const iStepsToShow = this.steps.length ? Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) : Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
+
+		const tabs = this.shadowRoot.querySelectorAll("ui5-wizard-tab");
+
+		if (!tabs.length) {
+			return;
+		}
+
+		[].forEach.call(tabs, (step, index) => {
+			step.setAttribute(EXPANDED_STEP, false);
+			step.setAttribute(BEFORE_EXPANDED_STEP, false);
+			step.setAttribute(AFTER_EXPANDED_STEP, false);
+
+			// Add "data-ui5-wizard-after-current-tab" to all tabs after the current one
+			if (index > iCurrStep) {
+				tabs[index].setAttribute(AFTER_CURRENT_STEP, true);
+			} else {
+				tabs[index].removeAttribute(AFTER_CURRENT_STEP);
+			}
+		});
+
+		// Add "data-ui5-wizard-expanded-tab" to the current step
+		if (tabs[iCurrStep]) {
+			tabs[iCurrStep].setAttribute(EXPANDED_STEP, true);
+		}
+
+		// Set the "data-ui5-wizard-expanded-tab" to the steps that are expanded
+		// The algorithm is as follows:
+		// 1. A step towards the end is expanded
+		// 	1.2. If there are no available steps towards the end a step towards the beginning is expanded
+		// 2. A step towards the beginning is expanded
+		// 	2.2. If there are no available steps towards the beginning a step towards the end is expanded
+		for (let i = 1; i < iStepsToShow; i++) {
+			if (isForward) {
+				counter += 1;
+			}
+
+			if (isForward && tabs[iCurrStep + counter]) {
+				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP, true);
+				isForward = !isForward;
+			} else if (!isForward && tabs[iCurrStep - counter]) {
+				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP, true);
+				isForward = !isForward;
+			} else if (tabs[iCurrStep + counter + 1]) {
+				counter += 1;
+				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP, true);
+				isForward = true;
+			} else if (tabs[iCurrStep - counter]) {
+				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP, true);
+				counter += 1;
+				isForward = false;
+			}
+		}
+
+		// mark the topmost steps of both groups (in the beginning and the end),
+		// using the "data-ui5-wizard-after-current-tab" and "data-ui5-wizard-expanded-tab-prev" attributes
+		for (let i = 0; i < tabs.length; i++) {
+			if (tabs[i].getAttribute(EXPANDED_STEP) === "true" && tabs[i - 1] && tabs[i - 1].getAttribute(EXPANDED_STEP) === "false") {
+				tabs[i - 1].setAttribute(BEFORE_EXPANDED_STEP, true);
+			}
+
+			if (tabs[i].getAttribute(EXPANDED_STEP) === "false" && tabs[i - 1] && tabs[i - 1].getAttribute(EXPANDED_STEP) === "true") {
+				tabs[i].setAttribute(AFTER_EXPANDED_STEP, true);
+				break;
+			}
+		}
+	}
+
+	_isGroupAtStart(selectedStep) {
+		const iStepNumber = this.stepsInHeaderDOM.indexOf(selectedStep);
+
+		return selectedStep.getAttribute(EXPANDED_STEP) === "false" && selectedStep.getAttribute(BEFORE_EXPANDED_STEP) === "true" && iStepNumber > 0;
+	}
+
+	_isGroupAtEnd(selectedStep) {
+		const iStepNumber = this.stepsInHeaderDOM.indexOf(selectedStep);
+
+		return selectedStep.getAttribute(EXPANDED_STEP) === "false" && selectedStep.getAttribute(AFTER_EXPANDED_STEP) === "true" && (iStepNumber + 1 < this.steps.length);
+	}
+
+	async _showPopover(oDomTarget, bAtStart) {
+		const tabs = Array.from(this.shadowRoot.querySelectorAll("ui5-wizard-tab"));
+		this._groupedTabs = [];
+
+		const iFromStep = bAtStart ? 0 : this.stepsInHeaderDOM.indexOf(oDomTarget);
+		const iToStep = bAtStart ? this.stepsInHeaderDOM.indexOf(oDomTarget) : tabs.length - 1;
+
+		for (let i = iFromStep; i <= iToStep; i++) {
+			this._groupedTabs.push(tabs[i]);
+		}
+
+		this.responsivePopover = await this._respPopover();
+		this.responsivePopover.open(oDomTarget);
+	}
+
+	async _onGroupedTabClick(event) {
+		if (this._isGroupAtStart(event.target)) {
+			return this._showPopover(event.target, true);
+		}
+
+		if (this._isGroupAtEnd(event.target)) {
+			return this._showPopover(event.target, false);
+		}
+	}
+
+	_onOverflowStepButtonClick(event) {
+		const tabs = Array.from(this.shadowRoot.querySelectorAll("ui5-wizard-tab"));
+		const stepRefId = event.target.getAttribute("data-ui5-header-tab-ref-id");
+		const stepToSelect = this.slottedSteps[stepRefId - 1];
+		const selectedStep = this.selectedStep;
+		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
+
+		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex);
+		this._closeRespPopover();
+		tabs[newlySelectedIndex].focus();
+	}
+
+	_closeRespPopover() {
+		this.responsivePopover.close();
+	}
+
+	async _respPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector(`.ui5-wizard-responsive-popover`);
 	}
 
 	/**
@@ -400,6 +583,8 @@ class Wizard extends UI5Element {
 		const stepRefId = stepInHeader.getAttribute("data-ui5-content-ref-id");
 		const selectedStep = this.selectedStep;
 		const stepToSelect = this.getStepByRefId(stepRefId);
+		const bExpanded = stepInHeader.getAttribute(EXPANDED_STEP) === "true";
+		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 
 		// If the currently selected (active) step is clicked,
 		// just scroll to its starting point and stop.
@@ -408,9 +593,10 @@ class Wizard extends UI5Element {
 			return;
 		}
 
-		// Change selection and fire "selection-change".
-		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
-		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex);
+		if (bExpanded || (!bExpanded && (newlySelectedIndex === 0 || newlySelectedIndex === this.steps.length - 1))) {
+			// Change selection and fire "selection-change".
+			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex);
+		}
 	}
 
 	get _stepsInHeader() {
@@ -503,22 +689,25 @@ class Wizard extends UI5Element {
 	getStepsInfo() {
 		const lastEnabledStepIndex = this.getLastEnabledStepIndex();
 		const stepsCount = this.stepsCount;
+		const selectedStepIndex = this.getSelectedStepIndex();
+		let inintialZIndex = this.steps.length + 10;
+
+		this._adjustHeaderOverflow();
 
 		return this.steps.map((step, idx) => {
 			const pos = idx + 1;
 
-			// Hide separator if:
-			// (1) its size is under the phone breakpoint
-			// (2) it's the last step and it's not a branching one
-			const hideSeparator = this.phoneMode || ((idx === stepsCount - 1) && !step.branching);
+			// Hide separator if it's the last step and it's not a branching one
+			const hideSeparator = (idx === stepsCount - 1) && !step.branching;
 
 			// Calculate the step's aria-roledectioption: "1. heading" or "Step 1".
 			const roleDescription = step.heading ? `${pos}. ${step.heading}` : `${this.navStepDefaultHeading} ${pos}`;
+			const isAfterCurrent = (idx > selectedStepIndex);
 
 			return {
 				icon: step.icon,
-				heading: this.phoneMode ? "" : step.heading,
-				subheading: this.phoneMode ? "" : step.subheading,
+				heading: step.heading,
+				subheading: step.subheading,
 				number: pos,
 				selected: step.selected,
 				disabled: step.disabled,
@@ -531,6 +720,7 @@ class Wizard extends UI5Element {
 				ariaLabel: getEffectiveAriaLabelText(step),
 				refStepId: step._id,
 				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
+				styles: `z-index: ${isAfterCurrent ? --inintialZIndex : 1}`,
 			};
 		});
 	}
@@ -643,10 +833,10 @@ class Wizard extends UI5Element {
 	 *
 	 * @param {HTMLElement} selectedStep the old step
 	 * @param {HTMLElement} stepToSelect the step to be selected
-	 * @param {Integer} selectedStepIndex the index of the newly selected step
+	 * @param {Integer} stepToSelectIndex the index of the newly selected step
 	 * @private
 	 */
-	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, selectedStepIndex) {
+	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex) {
 		if (selectedStep && stepToSelect) {
 			selectedStep.selected = false;
 			stepToSelect.selected = true;
@@ -656,7 +846,7 @@ class Wizard extends UI5Element {
 				previouslySelectedStep: selectedStep,
 			});
 
-			this.selectedStepIndex = selectedStepIndex;
+			this.selectedStepIndex = stepToSelectIndex;
 		}
 	}
 
