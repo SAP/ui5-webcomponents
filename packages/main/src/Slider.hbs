@@ -1,7 +1,13 @@
 {{>include "./SliderBase.hbs"}}
 
 {{#*inline "handles"}}
-	<div class="ui5-slider-handle" style="{{styles.handle}}">
+	<div class="ui5-slider-handle"
+		style="{{styles.handle}}"
+		tabindex="{{tabIndex}}"
+		@focusout="{{_onfocusout}}"
+		@focusin="{{_onfocusin}}"
+		data-sap-focus-ref
+	>
 		{{#if showTooltip}}
 			<div class="ui5-slider-tooltip" style="{{styles.tooltip}}">
 				<span class="ui5-slider-tooltip-value">{{tooltipValue}}</span>

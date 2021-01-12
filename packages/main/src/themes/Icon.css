@@ -22,11 +22,6 @@
 	outline: 1px dotted var(--sapContent_FocusColor);
 }
 
-:host(:not([dir="ltr"])) .ui5-icon-root[dir=rtl] {
-	transform: scale(-1, -1);
-	transform-origin: center;
-}
-
 .ui5-icon-root {
 	display:flex;
 	outline: none;

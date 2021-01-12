@@ -11,11 +11,15 @@ import NotificationListItemBase from "./NotificationListItemBase.js";
 import {
 	NOTIFICATION_LIST_GROUP_ITEM_TXT,
 	NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT,
+	NOTIFICATION_LIST_ITEM_READ,
+	NOTIFICATION_LIST_ITEM_UNREAD,
 	NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT,
 	NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT,
 	NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT,
 	NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE,
-	NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE,
+	NOTIFICATION_LIST_GROUP_ITEM_CLOSE_BTN_TITLE,
+	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE,
+	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -161,12 +165,20 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return this.items.length;
 	}
 
-	get overflowBtnTitle() {
+	get overflowBtnAccessibleName() {
 		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
 	}
 
-	get closeBtnTitle() {
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
+	get closeBtnAccessibleName() {
+		return this.i18nBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_CLOSE_BTN_TITLE);
+	}
+
+	get toggleBtnAccessibleName() {
+		if (this.collapsed) {
+			return this.i18nBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE);
+		}
+
+		return this.i18nBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE);
 	}
 
 	get priorityText() {
@@ -186,12 +198,24 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	get accInvisibleText() {
-		const groupTxt = this.i18nBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TXT);
-		const counterTxt = this.i18nBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT);
-		const counter = this.showCounter ? `${counterTxt} ${this.itemsCount}` : "";
-		const priorityText = this.priorityText;
+		return `${this.groupText} ${this.readText} ${this.priorityText} ${this.counterText}`;
+	}
 
-		return `${groupTxt} ${priorityText} ${counter}`;
+	get readText() {
+		if (this.read) {
+			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_READ);
+		}
+
+		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
+	}
+
+	get groupText() {
+		return this.i18nBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TXT);
+	}
+
+	get counterText() {
+		const text = this.i18nBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT);
+		return this.showCounter ? `${text} ${this.itemsCount}` : "";
 	}
 
 	get ariaLabelledBy() {
@@ -205,6 +229,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		ids.push(`${id}-invisibleText`);
 
 		return ids.join(" ");
+	}
+
+	get ariaExpanded() {
+		return !this.collapsed;
 	}
 
 	/**

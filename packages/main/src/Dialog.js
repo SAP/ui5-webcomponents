@@ -203,17 +203,6 @@ class Dialog extends Popup {
 		return "flex";
 	}
 
-	get classes() {
-		return {
-			root: {
-				"ui5-popup-root": true,
-			},
-			content: {
-				"ui5-popup-content": true,
-			},
-		};
-	}
-
 	show() {
 		super.show();
 		this._center();

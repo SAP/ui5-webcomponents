@@ -221,4 +221,20 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 2, "2 tokens are visible");
 		});
 	});
+
+	describe("keyboard handling", () => {
+		browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
+
+		it ("tests two-column layout", () => {
+			const mcb = $("#mcb-two-column-layout");
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mcb-two-column-layout");
+			const icon = mcb.shadow$("[input-icon]");
+			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const listItem = popover.$("ui5-list").$$("ui5-li")[0];
+
+			icon.click();
+			assert.strictEqual(listItem.shadow$(".ui5-li-info").getText(), "DZ", "Additional item text should be displayed");
+			icon.click();
+		});
+	});
 });

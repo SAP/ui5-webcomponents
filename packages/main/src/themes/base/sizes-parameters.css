@@ -1,7 +1,12 @@
 :root {
+	/* Calendar */
+	--_ui5_calendar_height: 24.5rem;
+	--_ui5_calendar_width: 20.5rem;
+	--_ui5_calendar_padding: 0.75rem;
 	--_ui5_calendar_header_height: 3rem;
 	--_ui5_calendar_header_arrow_button_width: 2.5rem;
 	--_ui5_calendar_header_padding: 0.25rem 0;
+
 	--_ui5_checkbox_root_side_padding: .6875rem;
 	--_ui5_checkbox_icon_size: 1rem;
 	--_ui5_custom_list_item_height: 3rem;
@@ -93,9 +98,14 @@
 	--_ui5_button_base_padding: 0.4375rem;
 	--_ui5_button_base_min_width: 2rem;
 	--_ui5_button_icon_font_size: 1rem;
+
+	/* Calendar */
+	--_ui5_calendar_height: 18rem;
+	--_ui5_calendar_width: 17.75rem;
+	--_ui5_calendar_padding: 0.5rem;
 	--_ui5_calendar_header_height: 2rem;
-	--_ui5_calendar_header_padding: 0;
 	--_ui5_calendar_header_arrow_button_width: 2rem;
+	--_ui5_calendar_header_padding: 0;
 
 	/* CheckBox */
 	--_ui5_checkbox_root_side_padding: var(--_ui5_checkbox_wrapped_focus_padding);

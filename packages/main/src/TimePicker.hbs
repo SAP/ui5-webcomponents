@@ -1,4 +1,4 @@
-<div id="{{this._id}}" class="ui5-time-picker-root" @keydown="{{_ontimepickerkeydown}}">
+<div id="{{this._id}}" class="ui5-time-picker-root" @keydown="{{_onkeydown}}">
 	<ui5-input
 			id="{{_id}}-inner"
 			value="{{value}}"
@@ -19,7 +19,7 @@
 	{{#unless readonly}}
 		<ui5-icon
 			slot="icon"
-			name="time-entry-request"
+			name="{{openIconName}}"
 			tabindex="-1"
 			show-tooltip
 			@click="{{togglePicker}}"

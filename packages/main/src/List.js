@@ -196,7 +196,7 @@ const metadata = {
 		 * @defaultvalue "listbox"
 		 * @since 1.0.0-rc.9
 		 */
-		role: {
+		accRole: {
 			type: String,
 			defaultValue: "listbox",
 		},
