@@ -33,6 +33,9 @@ registerIcon(name, { pathData, ltr, accData, collection });
 
 export default { pathData, accData };`;
 
+const svgTemplate = (pathData) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+	<path d="${pathData}"/>
+</svg>`;
 
 const createIcons = (file) => {
 	const json = JSON.parse(fs.readFileSync(file));
@@ -46,6 +49,7 @@ const createIcons = (file) => {
 		const content = acc ? accTemplate(name, pathData, ltr, acc, json.collection) : template(name, pathData, ltr, json.collection);
 
 		fs.writeFileSync(path.join(destDir, `${name}.js`), content);
+		fs.writeFileSync(path.join(destDir, `${name}.svg`), svgTemplate(pathData));
 	}
 };
 
