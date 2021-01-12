@@ -18,7 +18,8 @@
 				design="Transparent"
 				@click="{{_onBtnOverflowClick}}"
 				class="ui5-nli-overflow-btn"
-				title="{{overflowBtnTitle}}"
+				title="{{overflowBtnAccessibleName}}"
+				aria-label="{{overflowBtnAccessibleName}}"
 			></ui5-button>
 		{{else}}
 			{{#each standardActions}}
@@ -40,14 +41,15 @@
 				icon="decline"
 				design="Transparent"
 				@click="{{_onBtnCloseClick}}"
-				title="{{closeBtnTitle}}"
+				title="{{closeBtnAccessibleName}}"
+				aria-label="{{closeBtnAccessibleName}}"
 				close-btn
 			></ui5-button>
 		{{/if}}
 	</div>
 
 	<div class="ui5-nli-content {{classes.content}}">
-		<div class="ui5-nli-heading">
+		<div class="ui5-nli-heading-wrapper">
 			{{#if hasPriority}}
 				<ui5-icon
 					class="ui5-prio-icon ui5-prio-icon--{{priorityIcon}}"
@@ -55,7 +57,7 @@
 				</ui5-icon>
 			{{/if}}
 
-			<div id="{{_id}}-heading" class="ui5-nli-title" part="heading">
+			<div id="{{_id}}-heading" class="ui5-nli-heading" part="heading">
 				{{heading}}
 			</div>
 		</div>

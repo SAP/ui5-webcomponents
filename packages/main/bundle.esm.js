@@ -81,6 +81,7 @@ import TableColumn from "./dist/TableColumn.js";
 import TableRow from "./dist/TableRow.js";
 import TableCell from "./dist/TableCell.js";
 import TextArea from "./dist/TextArea.js";
+import TimeSelection from "./dist/TimeSelection.js";
 import TimePicker from "./dist/TimePicker.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";
@@ -106,6 +107,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
+import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/directionChange.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 
 const testAssets = {
@@ -124,6 +126,7 @@ const testAssets = {
 	},
 	getLocaleData,
 	applyDirection,
+	attachDirectionChange,
 	ResizeHandler,
 	addCustomCSS,
 	attachThemeLoaded,

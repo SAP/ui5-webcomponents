@@ -185,21 +185,190 @@ describe("Testing events", () => {
 	});
 });
 
-describe("Testing resize handling and RTL support", () => {
-	it("Testing RTL support", () => {
+describe("Accessibility: Testing focus", () => {
+	it("Click anywhere in the Slider should focus the Slider's handle", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Slider.html");
+
 		const slider = browser.$("#basic-slider");
 		const sliderHandle = slider.shadow$(".ui5-slider-handle");
 
-		slider.setAttribute("dir", "rtl");
-		slider.setProperty("min", 0);
-		slider.setProperty("max", 10);
-		slider.setProperty("step", 1);
+		slider.click();
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
+	});
+
+	it("Tab should focus the Slider and move the visible focus outline to the slider's handle", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+
+		browser.keys("Tab");
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-slider-with-tooltip").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
+	});
+
+	it("Shift+Tab should focus the previous Slider and move the visible focus outline to the previous slider's handle", () => {
+		const slider = browser.$("#basic-slider");
+		const sliderHandle = slider.shadow$(".ui5-slider-handle");
+
+		browser.keys(["Shift", "Tab"]);
+
+		const innerFocusedElement = browser.execute(() => {
+			return document.getElementById("basic-slider").shadowRoot.activeElement;
+		});
+
+		assert.strictEqual(slider.isFocused(), true, "Slider component is focused");
+		assert.strictEqual($(innerFocusedElement).getAttribute("class"), sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
+	});
+});
+
+
+describe("Accessibility: Testing keyboard handling", () => {
+	it("Right arrow should increase the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider");
+
 		slider.setProperty("value", 0);
+		browser.keys("ArrowRight");
+
+		assert.strictEqual(slider.getProperty("value"), 1, "Value is increased");
+	});
+
+	it("Left arrow should decrease the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider");
+
+		browser.keys("ArrowLeft");
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+	});
+
+	it("Up arrow should increase the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider");
+
+		browser.keys("ArrowUp");
+		assert.strictEqual(slider.getProperty("value"), 1, "Value is increased");
+	});
+
+	it("Down arrow should increase the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider");
+
+		browser.keys("ArrowDown");
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+	});
+
+	it("Ctrl + Right arrow should increase the value of the slider with a big increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys("Tab");
+		browser.keys(["Control", "ArrowRight"]);
+
+		assert.strictEqual(slider.getProperty("value"), 2, "Value is increased");
+	});
+
+	it("Ctrl + Left arrow should decrease the value of the slider with a big increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys(["Control", "ArrowLeft"]);
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+	});
+
+	it("Ctrl + Up arrow should increase the value of the slider with a big increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys(["Control", "ArrowUp"]);
+		assert.strictEqual(slider.getProperty("value"), 2, "Value is increased");
+	});
+
+	it("Ctrl + Down arrow should increase the value of the slider with a big increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys(["Control", "ArrowDown"]);
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+	});
+
+	it("PageUp should increase the value of the slider with a big increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys("PageUp");
+		assert.strictEqual(slider.getProperty("value"), 2, "Value is increased");
+	});
+
+	it("PageDown should decrease the value of the slider with a big increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys("PageDown");
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+	});
+
+	it("A '+' key press should increase the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys("+");
+		assert.strictEqual(slider.getProperty("value"), 1, "Value is increased");
+	});
+
+	it("A '-' key press should decrease the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys("-");
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+	});
+
+	it("A numpad '+' key press should increase the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+		const numpadAdd = "\uE025";
+
+		browser.keys(numpadAdd);
+		assert.strictEqual(slider.getProperty("value"), 1, "Value is increased");
+	});
+
+	it("A numpad '-' key press should decrease the value of the slider with a small increment step", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+		const numpadSubtract = "\uE027";
+
+		browser.keys(numpadSubtract);
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
+	});	
+
+	it("An 'End' key press should increase the value of the slider to its max", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys("End");
+		assert.strictEqual(slider.getProperty("value"), 20, "Value is decreased");
+	});
+
+	it("A 'Home' key press should set the value of the slider to its minimum", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		browser.keys("Home");
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is increased");
+	});
+
+	it("A 'Esc' key press should return the value of the slider at its initial point at the time of its focusing", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+
+		slider.setProperty("value", 12);
+
+		browser.keys("Escape");
+		assert.strictEqual(slider.getProperty("value"), 0, "Value is increased");
+	});
+});
+
+describe("Testing resize handling and RTL support", () => {
+	it("Testing RTL support", () => {
+		const slider = browser.$("#basic-slider-rtl");
+		const sliderHandle = slider.shadow$(".ui5-slider-handle");
 
 		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 0%;", "Initially if no value is set, the Slider handle is at the right of the Slider");
 
 		slider.setProperty("value", 3);
-
 		assert.strictEqual(sliderHandle.getAttribute("style"), "right: 30%;", "Slider handle should be 30% from the right");
 
 		slider.click();

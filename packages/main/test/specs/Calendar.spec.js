@@ -11,17 +11,11 @@ describe("Calendar general interaction", () => {
 
 	it("Year is set in the header", () => {
 		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const headerText = parseInt(calendarHeader.getAttribute("year-text"));
+		const yearButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`);
+		const headerText = parseInt(yearButton.getText());
 		const currentYear = new Date().getFullYear();
 
 		assert.equal(headerText, currentYear, "Year is set in the header");
-	});
-
-	it("Default year is the current year", () => {
-		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const calendarYear = parseInt(calendarHeader.getAttribute("year-text"));
-
-		assert.strictEqual(calendarYear, new Date().getFullYear(), "Default year is correct");
 	});
 
 	it("Month is set in the header", () => {
@@ -31,30 +25,11 @@ describe("Calendar general interaction", () => {
 		});
 
 		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const monthText = calendarHeader.getAttribute("month-text");
+		const monthButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`);
+		const monthText = monthButton.getText();
 		const currentMonth = new Date().getMonth();
 
-		assert.strictEqual(monthText.toString(), monthMap.get(currentMonth), "Month is set in the header");
-	});
-
-	it("Default month is the current year", () => {
-		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const monthMap = new Map();
-		["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].forEach((month, index) => {
-			monthMap.set(index, month);
-		});
-		const calendarMonth = calendarHeader.getAttribute("month-text");
-
-		assert.strictEqual(calendarMonth, monthMap.get(new Date().getMonth()), "Default month is correct");
-	});
-
-	it("timestamp is propagated to the content part", () => {
-		const calendar = browser.$("#calendar1");
-		const TIMESTAMP = 1;
-
-		calendar.setProperty("timestamp", TIMESTAMP);
-
-		assert.strictEqual(calendar.getProperty("timestamp"), TIMESTAMP);
+		assert.strictEqual(monthText, monthMap.get(currentMonth), "Month is set in the header");
 	});
 
 	it("Focus goes into the current day item of the day picker", () => {
@@ -64,8 +39,8 @@ describe("Calendar general interaction", () => {
 		const dayPicker = calendar.shadow$("ui5-daypicker");
 		const header  = calendar.shadow$("ui5-calendar-header");
 		const currentDayItem = dayPicker.shadow$(`div[data-sap-timestamp="974851200"]`);
-		const monthButton = header.shadow$(`[data-sap-show-picker="Month"]`);
-		const yearButton = header.shadow$(`[data-sap-show-picker="Year"]`);
+		const monthButton = header.shadow$(`[data-ui5-cal-header-btn-month]`);
+		const yearButton = header.shadow$(`[data-ui5-cal-header-btn-year]`);
 
 		toggleButton.click();
 		toggleButton.click();
@@ -86,44 +61,46 @@ describe("Calendar general interaction", () => {
 		assert.ok(currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
 	});
 
-	it("Calendar sets the selected year when yearpicker is opened", () => {
+	it("Calendar focuses the selected year when yearpicker is opened", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		const yearPicker = calendar.shadow$("ui5-yearpicker");
 		const YEAR = 1997;
 		calendar.setAttribute("timestamp", Date.UTC(YEAR) / 1000);
-		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Year"]`).click();
-		assert.strictEqual(yearPicker.getProperty("_selectedYear"), YEAR, "Year is set");
-
-		calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="852076800"]`).click();
+		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
+		const focusedItemTimestamp = yearPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
+		assert.ok(new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear() === 1997, "The focused year is 1997");
 	});
 
 	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
-		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Year"]`).click();
-		const focusedItem = calendar.shadow$("ui5-yearpicker").shadow$(`[data-sap-timestamp="946684800"]`);
+		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
+		const focusedItem = calendar.shadow$("ui5-yearpicker").shadow$(`[data-sap-timestamp="973036800"]`);
 
-		assert.ok(focusedItem.isFocusedDeep(), "Current year element is the acrive element");
-		assert.notOk(focusedItem.hasClass("ui5-mp-item--selected"), "Current year is not selected");
-		focusedItem.click();
+		assert.ok(focusedItem.isFocusedDeep(), "Current year element is the active element");
+		assert.notOk(focusedItem.hasClass("ui5-yp-item--selected"), "Current year is not selected");
 	});
 
 	it("Calendar doesn't mark month as selected when there are no selected dates", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
-		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-sap-show-picker="Month"]`).click();
+		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-month]`).click();
 		const focusedItem = calendar.shadow$("ui5-monthpicker").shadow$(`[data-sap-timestamp="973036800"]`);
 
-		assert.ok(focusedItem.isFocusedDeep(), "Current month element is the acrive element");
+		assert.ok(focusedItem.isFocusedDeep(), "Current month element is the active element");
 		assert.notOk(focusedItem.hasClass("ui5-mp-item--selected"), "Current month is not selected");
-		focusedItem.click();
 	});
 
 	it("Page up/down increments/decrements the month value", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
+
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 
-		calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-days-names-container").click();
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys('PageUp');
 
 		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(2000, 9, 1, 0, 0, 0)));
@@ -137,7 +114,7 @@ describe("Calendar general interaction", () => {
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 
-		calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-days-names-container").click();
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys(['Shift', 'PageUp']);
 
 		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1999, 10, 1, 0, 0, 0)));
@@ -151,7 +128,7 @@ describe("Calendar general interaction", () => {
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 
-		calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-days-names-container").click();
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys(['Control', 'Shift', 'PageUp']);
 
 		assert.deepEqual(new Date(calendar.getProperty("timestamp") * 1000), new Date(Date.UTC(1990, 10, 1, 0, 0, 0)));
@@ -165,6 +142,7 @@ describe("Calendar general interaction", () => {
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
 
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys(["F4"]);
 		browser.keys('PageUp');
 
@@ -176,9 +154,11 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Page up/down increments/decrements the year range in the year picker", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
 
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys(['Shift', 'F4']);
 		browser.keys('PageUp');
 
@@ -190,26 +170,22 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("When month picker is shown the month button is hidden", () => {
-		const calendarHeader = browser.$("#calendar1").shadow$("ui5-calendar-header");
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+		const calendar = browser.$("#calendar1");
+		const calendarHeader = calendar.shadow$("ui5-calendar-header");
 
+		calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		browser.keys(["F4"]);
 		browser.keys('PageUp');
 
-		assert.ok(calendarHeader.shadow$(".ui5-calheader-middlebtn").getAttribute("hidden"), "The button for month is hidden");
+		assert.ok(calendarHeader.shadow$("[data-ui5-cal-header-btn-month]").getAttribute("hidden"), "The button for month is hidden");
 		browser.keys("Space");
 	});
 
 	it("Calendar with 'Multiple' selection type", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
-		calendar.setAttribute("selection", "Multiple");
-		let selectedDates = browser.execute(() => document.getElementById("calendar1").selectedDates );
-
-		// deselect previously selected dates
-		selectedDates.forEach(timestamp => {
-			const dateDOM = calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="${timestamp}"]`);
-			dateDOM.click();
-		});
-
+		calendar.setAttribute("selection-mode", "Multiple");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
 
 		const dates = [
@@ -223,15 +199,16 @@ describe("Calendar general interaction", () => {
 			assert.ok(date.hasClass("ui5-dp-item--selected"), `${date.getAttribute("data-sap-timestamp")} is selected`);
 		});
 
-		selectedDates = browser.execute(() => document.getElementById("calendar1").selectedDates );
+		const selectedDates = calendar.getProperty("selectedDates");
 
 		assert.deepEqual(selectedDates, [971136000, 971222400, 971308800], "Change event is fired with proper data");
 	});
 
 	it("Keyboard navigation works properly, when calendar selection type is set to 'Multiple'", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const toggleButton = browser.$("#weekNumbersButton");
 		const calendar = browser.$("#calendar1");
-		calendar.setAttribute("selection", "Multiple");
+		calendar.setAttribute("selection-mode", "Multiple");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
 
 		toggleButton.click();
@@ -248,9 +225,10 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar with 'Range' selection type", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
-		calendar.setAttribute("selection", "Range");
+		calendar.setAttribute("selection-mode", "Range");
 
 		const dates = [
 			calendar.shadow$("ui5-daypicker").shadow$(`[data-sap-timestamp="971740800"]`),
@@ -265,7 +243,7 @@ describe("Calendar general interaction", () => {
 		assert.ok(dates[1].hasClass("ui5-dp-item--selected-between"), `${dates[1].getAttribute("data-sap-timestamp")} is selected between`);
 		assert.ok(dates[2].hasClass("ui5-dp-item--selected"), `${dates[2].getAttribute("data-sap-timestamp")} is selected`);
 
-		const selectedDates = browser.execute(() => document.getElementById("calendar1").selectedDates );
+		const selectedDates = calendar.getProperty("selectedDates");
 
 		assert.deepEqual(selectedDates, [971740800, 971913600], "Change event is fired with proper data");
 	});

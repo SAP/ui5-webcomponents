@@ -320,6 +320,7 @@ class Select extends UI5Element {
 
 	_onfocusout() {
 		this.focused = false;
+		this.itemSelectionAnnounce();
 	}
 
 	get _isPickerOpen() {
@@ -488,6 +489,7 @@ class Select extends UI5Element {
 
 	_handleArrowNavigation(event, shouldFireEvent) {
 		let nextIndex = -1;
+		const currentIndex = this._selectedIndex;
 		const isDownKey = isDown(event);
 		const isUpKey = isUp(event);
 
@@ -502,6 +504,10 @@ class Select extends UI5Element {
 			this.options[this._selectedIndex].selected = false;
 			this.options[nextIndex].selected = true;
 			this._selectedIndex = nextIndex === -1 ? this._selectedIndex : nextIndex;
+
+			if (currentIndex !== this._selectedIndex) {
+				this.itemSelectionAnnounce();
+			}
 
 			if (shouldFireEvent) {
 				this._fireChangeEvent(this.options[nextIndex]);
@@ -635,6 +641,16 @@ class Select extends UI5Element {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	itemSelectionAnnounce() {
+		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
+
+		if (this.focused && !this._isPickerOpen && this._currentlySelectedOption) {
+			invisibleText.textContent = this._currentlySelectedOption.textContent;
+		} else {
+			invisibleText.textContent = "";
+		}
 	}
 
 	async openValueStatePopover() {

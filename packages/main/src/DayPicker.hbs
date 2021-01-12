@@ -3,41 +3,41 @@
 	style="{{styles.wrapper}}"
 	@keydown={{_onkeydown}}
 	@keyup={{_onkeyup}}
-	@mousedown={{_onmousedown}}
-	@mouseup={{_onmouseup}}
+	@click={{_onclick}}
+	@mouseover={{_onmouseover}}
+	@focusin={{_onfocusin}}
 >
-	
+
 	<div id="{{_id}}-content" class="ui5-dp-content" role="grid" aria-roledescription="Calendar">
 		<div role="row" class="ui5-dp-days-names-container">
 			{{#each _dayNames}}
 				<div
-					id={{this.id}}
 					role="columnheader"
 					aria-label="{{this.name}}"
-					class="{{this.classes}}">
+					class="{{this.classes}}"
+				>
 					{{this.ultraShortName}}
 				</div>
 			{{/each}}
 		</div>
 		{{#each _weeks}}
 			{{#if this.length}}
-				<div style="display: flex;" role="row"  @mouseover="{{../_onitemmouseover}}">
+				<div style="display: flex;" role="row">
 					{{#each this}}
 						{{#if this.timestamp}}
 							<div
-								id="{{this.id}}"
 								tabindex="{{this._tabIndex}}"
+								?data-sap-focus-ref="{{this.focusRef}}"
 								data-sap-timestamp="{{this.timestamp}}"
-								data-sap-index="{{this._index}}"
 								role="gridcell"
-								aria-selected="{{this.selected}}"
+								aria-selected="{{this.ariaSelected}}"
 								aria-label="{{this.ariaLabel}}"
 								aria-disabled="{{this.ariaDisabled}}"
 								class="{{this.classes}}">
 									<span
 										class="ui5-dp-daytext"
 										data-sap-timestamp="{{this.timestamp}}"
-										data-sap-index="{{this._index}}">
+									>
 											{{this.iDay}}
 									</span>
 							</div>
