@@ -1,7 +1,5 @@
-commit ff247f06ddc65194c9e98cfed98bf966bb27c785
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jan 12 14:29:50 2021 +0200
+commit 32dd0ef01bab4b5002163c805f7a11dc0242c4ba
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Jan 12 15:23:32 2021 +0200
 
-    fix(ui5-li-notification-group): align priority icon (#2584)
-    
-    Now the priority icon of the NotificationListGroupItem and the children items are aligned.
+    fix(ui5-calendar): Today date is propertly calculated no matter what timezone (#2660)
