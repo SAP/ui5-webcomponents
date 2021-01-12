@@ -1,7 +1,7 @@
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
-import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
+import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
@@ -104,7 +104,7 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	get _calendarTimestamp() {
-		return this._firstDateTimestamp || getRoundedTimestamp();
+		return this._firstDateTimestamp || getTodayUTCTimestamp(this._primaryCalendarType);
 	}
 
 	/**
