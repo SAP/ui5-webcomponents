@@ -1,35 +1,5 @@
-commit 01cd6f9c0651a07fc628ae1ea17423de5c71579b
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Jan 12 08:13:55 2021 +0200
+commit b4f836a9865bc5105920150e785c78856b37a406
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Jan 12 09:21:40 2021 +0200
 
-    feat(ui5-wizard): improve progress navigator responsiveness (#2590)
-    
-    * [WIP] ui5-wizard: improve progress navigator responsiveness
-    
-    * feat(ui5-wizard): responsive behaviour
-    
-    * ui5-wizard: selection-change fired as expected
-    
-    * ui5-wizard: minor enhancements
-    
-    * ui5-wizard: CSS adjustments
-    
-    * ui5-wizard: CSS adjustments
-    
-    * [WIP] ui5-wizard: improve progress navigator responsiveness
-    
-    * feat(ui5-wizard): responsive behaviour
-    
-    * ui5-wizard: selection-change fired as expected
-    
-    * ui5-wizard: minor enhancements
-    
-    * ui5-wizard: CSS adjustments
-    
-    * css improvements
-    
-    * ui5-wizard: IE fix and other minor adjustments
-    
-    * ui5-wizard: attributes names changed
-    
-    Co-authored-by: Martin Hristov <martin.r.hristov@gmail.com>
+    feat(framework): Create attachDirectionChange function (#2646)
