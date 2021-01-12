@@ -1,5 +1,5 @@
-commit 5b79982e122b2a87a34f2f2ce91edb81f19b26c7
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Jan 12 13:24:27 2021 +0200
+commit 57820dd680e77fd8cf127e0eb2cef31ce69c88aa
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Jan 12 13:57:30 2021 +0200
 
-    feat(icons): add icon assets as .svg files (#2657)
+    fix(ui5-multi-combobox): fix livechange behaviour (#2656)
