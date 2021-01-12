@@ -1,5 +1,5 @@
-commit 6602fba7ea31d363cad447eb6d439ea309ced37f
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jan 12 12:43:12 2021 +0200
+commit 5b79982e122b2a87a34f2f2ce91edb81f19b26c7
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Jan 12 13:24:27 2021 +0200
 
-    feat(ui5-calendar): Declarative dates support added (#2648)
+    feat(icons): add icon assets as .svg files (#2657)
