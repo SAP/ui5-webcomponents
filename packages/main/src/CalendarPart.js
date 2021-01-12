@@ -13,7 +13,7 @@ const metadata = {
 		 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
 		 * <b>Node:</b> Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
 		 * @type {Integer}
-		 * @public
+		 * @protected
 		 */
 		timestamp: {
 			type: Integer,
