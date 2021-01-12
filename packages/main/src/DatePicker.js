@@ -2,6 +2,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
+import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
@@ -373,14 +374,12 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	get _calendarTimestamp() {
-		let millisecondsUTC;
 		if (this.value && this._checkValueValidity(this.value)) {
-			millisecondsUTC = this.dateValueUTC.getTime();
-		} else {
-			millisecondsUTC = new Date().getTime();
+			const millisecondsUTC = this.dateValueUTC.getTime();
+			return getRoundedTimestamp(millisecondsUTC);
 		}
 
-		return getRoundedTimestamp(millisecondsUTC);
+		return getTodayUTCTimestamp(this._primaryCalendarType);
 	}
 
 	/**
