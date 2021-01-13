@@ -395,8 +395,8 @@ class Popover extends Popup {
 		this.style.visibility = "hidden";
 		this.style.display = "block";
 
-		return new Promise(function (resolve) {
-			window.requestAnimationFrame(function () {
+		return new Promise((resolve) => {
+			window.requestAnimationFrame(() => {
 				rect = this.getBoundingClientRect();
 
 				width = rect.width;
@@ -406,8 +406,8 @@ class Popover extends Popup {
 				this.style.visibility = "visible";
 
 				resolve({ width, height });
-			}.bind(this));
-		}.bind(this));
+			});
+		});
 	}
 
 	get contentDOM() {
