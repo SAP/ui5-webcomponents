@@ -1,9 +1,9 @@
-commit 849d0521886d0b5441af8dac0c6ea6fafb397852
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Tue Jan 12 19:29:08 2021 +0200
+commit c48bfe75ff7b49b1f37b7eeda599c9f8f1adf10e
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jan 13 10:01:39 2021 +0200
 
-    fix(ui5-tree): accessibility improvements (#2671)
+    fix(ui5-upload-collection): wrap noDataText/Desc text (#2674)
     
-    Added new aria-posinset and aria-setsize attributes to each element. Now, screen reader will know the count of the items on the same level and the position of the current active item.
+    Now the noDataText and noDateDescription texts will wrap upon overflow. Prior to this change the texts truncate.
     
-    Fixes: #2553
+    FIXES: #2672
