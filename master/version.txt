@@ -1,9 +1,9 @@
-commit c48bfe75ff7b49b1f37b7eeda599c9f8f1adf10e
+commit ba706764617d821a7488d59127ceaea1a7476b1a
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jan 13 10:01:39 2021 +0200
+Date:   Wed Jan 13 10:17:09 2021 +0200
 
-    fix(ui5-upload-collection): wrap noDataText/Desc text (#2674)
+    chore: remove obsolete code (#2675)
     
-    Now the noDataText and noDateDescription texts will wrap upon overflow. Prior to this change the texts truncate.
+    Clean up leftover from the "focusInput" functionality option removal within two date-time components.
     
-    FIXES: #2672
+    FIXES: #2495
