@@ -376,6 +376,13 @@
 	<ui5-popover id="popNoFocusableContent" placement-type="Bottom">Sample text for the ui5-popover</ui5-popover>
 
 	<br>
+	<br>
+
+	<div style="height: 6rem; text-align: center;">
+		<ui5-button id="btnOpenDynamic" icon="overflow"></ui5-button>
+	</div>
+
+	<br>
 
 	<script>
 		btn.addEventListener("click", function (event) {
@@ -466,6 +473,16 @@
 		secondBtn.addEventListener("click", (event) => {
 			popNoFocusableContent.innerHTML = "Second button is clicked";
 			popNoFocusableContent.openBy(event.target);
+		});
+
+		btnOpenDynamic.addEventListener("click", function () {
+			var popover = document.createElement("ui5-popover");
+			popover.setAttribute("placement-type", "Bottom");
+			popover.innerText = "This is a dynamically created popover.";
+
+			document.body.appendChild(popover);
+
+			popover.openBy(btnOpenDynamic);
 		});
 	</script>
 </body>

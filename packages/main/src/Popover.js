@@ -336,9 +336,10 @@ class Popover extends Popup {
 		this.show();
 	}
 
-	show() {
+	async show() {
 		let placement;
-		const popoverSize = this.popoverSize;
+		const popoverSize = await this._popoverSize;
+
 		const openerRect = this._opener.getBoundingClientRect();
 
 		if (this.shouldCloseDueToNoOpener(openerRect) && this.isFocusWithin()) {
@@ -379,7 +380,7 @@ class Popover extends Popup {
 		}
 	}
 
-	get popoverSize() {
+	get _popoverSize() {
 		let width,
 			height;
 		let rect = this.getBoundingClientRect();
@@ -388,21 +389,25 @@ class Popover extends Popup {
 			width = rect.width;
 			height = rect.height;
 
-			return { width, height };
+			return Promise.resolve({ width, height });
 		}
 
 		this.style.visibility = "hidden";
 		this.style.display = "block";
 
-		rect = this.getBoundingClientRect();
+		return new Promise(function (resolve) {
+			window.requestAnimationFrame(function () {
+				rect = this.getBoundingClientRect();
 
-		width = rect.width;
-		height = rect.height;
+				width = rect.width;
+				height = rect.height;
 
-		this.hide();
-		this.style.visibility = "visible";
+				this.hide();
+				this.style.visibility = "visible";
 
-		return { width, height };
+				resolve({ width, height });
+			}.bind(this));
+		}.bind(this));
 	}
 
 	get contentDOM() {
@@ -595,6 +600,7 @@ class Popover extends Popup {
 		switch (this.horizontalAlign) {
 		case PopoverHorizontalAlign.Center:
 		case PopoverHorizontalAlign.Stretch:
+
 			left = targetRect.left - (popoverSize.width - targetRect.width) / 2;
 			break;
 		case PopoverHorizontalAlign.Left:
