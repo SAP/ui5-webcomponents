@@ -461,10 +461,6 @@ class Select extends UI5Element {
 		this._toggleRespPopover();
 	}
 
-	getFocusDomRef() {
-		return this.shadowRoot.querySelector(`#${this.__id}-label`);
-	}
-
 	/**
 	 * The user used arrow up/down on the list
 	 * @private
