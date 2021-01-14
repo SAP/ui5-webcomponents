@@ -3,7 +3,6 @@ import insertFontFace from "./FontFace.js";
 import insertSystemCSSVars from "./SystemCSSVars.js";
 import { getTheme } from "./config/Theme.js";
 import applyTheme from "./theming/applyTheme.js";
-import whenPolyfillLoaded from "./compatibility/whenPolyfillLoaded.js";
 import { getFeature } from "./FeaturesRegistry.js";
 
 let bootPromise;
@@ -15,6 +14,7 @@ const boot = () => {
 
 	bootPromise = new Promise(async resolve => {
 		const OpenUI5Support = getFeature("OpenUI5Support");
+		const LegacyBrowsersSupport = getFeature("LegacyBrowsersSupport");
 		if (OpenUI5Support) {
 			await OpenUI5Support.init();
 		}
@@ -24,7 +24,9 @@ const boot = () => {
 		OpenUI5Support && OpenUI5Support.attachListeners();
 		insertFontFace();
 		insertSystemCSSVars();
-		await whenPolyfillLoaded();
+		if (LegacyBrowsersSupport) {
+			await LegacyBrowsersSupport.whenPolyfillLoaded();
+		}
 		resolve();
 	});
 

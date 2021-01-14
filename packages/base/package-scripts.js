@@ -12,20 +12,19 @@ const scripts = {
 	prepare: "nps clean copy generateAssetParameters",
 	build: {
 		default: "nps lint prepare build.bundle",
-		bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
+		bundle: "rollup --config config/rollup.config.js --environment",
 	},
 	copy: {
-		default: "nps copy.src copy.test copy.webcomponents-polyfill",
+		default: "nps copy.src copy.test",
 		src: "copy-and-watch \"src/**/*.js\" dist/",
 		test: "copy-and-watch \"test/**/*.*\" dist/test-resources",
-		"webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
 	},
 	generateAssetParameters: `node "${assetParametersScript}"`,
 	watch: {
 		default: 'concurrently "nps watch.test" "nps watch.src" "nps watch.bundle"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
 		test: 'nps "copy.test --watch --skip-initial-copy"',
-		bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV",
+		bundle: "rollup --config config/rollup.config.js -w --environment DEV",
 	},
 	dev: 'concurrently "nps serve" "nps watch"',
 	start: "nps prepare dev",

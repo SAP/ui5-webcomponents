@@ -10,7 +10,6 @@ import DOMObserver from "./compatibility/DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import { getRTL } from "./config/RTL.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
-import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import Integer from "./types/Integer.js";
 import Float from "./types/Float.js";
@@ -19,6 +18,9 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
+import { getFeature } from "./FeaturesRegistry.js";
+
+const LegacyBrowsersSupport = getFeature("LegacyBrowsersSupport");
 
 let autoId = 0;
 
@@ -628,8 +630,8 @@ class UI5Element extends HTMLElement {
 		const renderResult = executeTemplate(this.constructor.template, this);
 
 		// IE11, Edge
-		if (window.ShadyDOM) {
-			createComponentStyleTag(this.constructor);
+		if (window.ShadyDOM && LegacyBrowsersSupport) {
+			LegacyBrowsersSupport.createComponentStyleTag(this.constructor);
 		}
 
 		// Chrome

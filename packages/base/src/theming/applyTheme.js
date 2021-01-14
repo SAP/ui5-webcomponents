@@ -1,7 +1,6 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
 import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
-import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
 
@@ -74,8 +73,9 @@ const applyTheme = async theme => {
 	await loadComponentPackages(packagesTheme);
 
 	// When changing the theme, run the ponyfill immediately
-	if (ponyfillNeeded()) {
-		runPonyfill();
+	const LegacyBrowsersSupport = getFeature("LegacyBrowsersSupport");
+	if (LegacyBrowsersSupport && LegacyBrowsersSupport.ponyfillNeeded()) {
+		LegacyBrowsersSupport.runPonyfill();
 	}
 
 	fireThemeLoaded(theme);

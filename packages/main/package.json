@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@ui5/webcomponents-base": "0.28.0",
+    "@ui5/webcomponents-compatibility": "0.28.0",
     "@ui5/webcomponents-icons": "1.0.0-rc.11",
     "@ui5/webcomponents-localization": "0.28.0",
     "@ui5/webcomponents-theme-base": "1.0.0-rc.11"

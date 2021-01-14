@@ -1,8 +1,8 @@
-import createStyleInHead from "../util/createStyleInHead.js";
-import getEffectiveStyle from "./getEffectiveStyle.js";
+import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
+import getEffectiveStyle from "@ui5/webcomponents-base/dist/theming/getEffectiveStyle.js";
+import { attachCustomCSSChange } from "@ui5/webcomponents-base/dist/theming/CustomStyle.js";
 import adaptCSSForIE from "./adaptCSSForIE.js";
 import { ponyfillNeeded, schedulePonyfill } from "./CSSVarsPonyfill.js";
-import { attachCustomCSSChange } from "./CustomStyle.js";
 
 const IEStyleSet = new Set();
 
