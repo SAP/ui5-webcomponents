@@ -2,6 +2,9 @@ import { getStaticAreaInstance, removeStaticArea } from "./StaticArea.js";
 import RenderScheduler from "./RenderScheduler.js";
 import getStylesString from "./theming/getStylesString.js";
 import executeTemplate from "./renderer/executeTemplate.js";
+import { getFeature } from "./FeaturesRegistry.js";
+
+const Legacy = getFeature("LegacyBrowsersSupport");
 
 /**
  * @class
@@ -24,7 +27,7 @@ class StaticAreaItem {
 	 */
 	_updateFragment() {
 		const renderResult = executeTemplate(this.ui5ElementContext.constructor.staticAreaTemplate, this.ui5ElementContext),
-			stylesToAdd = window.ShadyDOM ? false : getStylesString(this.ui5ElementContext.constructor.staticAreaStyles);
+			stylesToAdd = Legacy && Legacy.isLegacyBrowser() ? false : getStylesString(this.ui5ElementContext.constructor.staticAreaStyles);
 
 		if (!this.staticAreaItemDomRef) {
 			// Initial rendering of fragment

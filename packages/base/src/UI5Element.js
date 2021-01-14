@@ -20,7 +20,7 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import { getFeature } from "./FeaturesRegistry.js";
 
-const LegacyBrowsersSupport = getFeature("LegacyBrowsersSupport");
+const Legacy = getFeature("LegacyBrowsersSupport");
 
 let autoId = 0;
 
@@ -628,10 +628,11 @@ class UI5Element extends HTMLElement {
 
 		let styleToPrepend;
 		const renderResult = executeTemplate(this.constructor.template, this);
+		const isLegacyBrowser = Legacy && Legacy.isLegacyBrowser();
 
 		// IE11, Edge
-		if (window.ShadyDOM && LegacyBrowsersSupport) {
-			LegacyBrowsersSupport.createComponentStyleTag(this.constructor);
+		if (isLegacyBrowser) {
+			Legacy.createComponentStyleTag(this.constructor);
 		}
 
 		// Chrome
@@ -640,7 +641,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		// FF, Safari
-		if (!document.adoptedStyleSheets && !window.ShadyDOM) {
+		if (!document.adoptedStyleSheets && !isLegacyBrowser) {
 			styleToPrepend = getEffectiveStyle(this.constructor);
 		}
 
