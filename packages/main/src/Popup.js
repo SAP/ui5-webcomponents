@@ -321,7 +321,7 @@ class Popup extends UI5Element {
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
 	 * @public
 	 */
-	open(preventInitialFocus) {
+	async open(preventInitialFocus) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
 		if (prevented) {
 			return;
@@ -337,10 +337,11 @@ class Popup extends UI5Element {
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
 		this._focusedElementBeforeOpen = getFocusedElement();
-		this.show();
+
+		await this.show();
 
 		if (!this._disableInitialFocus && !preventInitialFocus) {
-			this.applyInitialFocus();
+			await this.applyInitialFocus();
 		}
 
 		this._addOpenedPopup();
@@ -415,7 +416,7 @@ class Popup extends UI5Element {
 	 * Sets "block" display to the popup. The property can be overriden by derivatives of Popup.
 	 * @protected
 	 */
-	show() {
+	async show() {
 		this.style.display = this._displayProp;
 	}
 

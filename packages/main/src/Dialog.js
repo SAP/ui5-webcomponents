@@ -203,8 +203,8 @@ class Dialog extends Popup {
 		return "flex";
 	}
 
-	show() {
-		super.show();
+	async show() {
+		await super.show();
 		this._center();
 	}
 

@@ -277,14 +277,14 @@ class Popover extends Popup {
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
 	 */
-	openBy(opener, preventInitialFocus = false) {
+	async openBy(opener, preventInitialFocus = false) {
 		if (!opener || this.opened) {
 			return;
 		}
 
 		this._opener = opener;
 
-		super.open(preventInitialFocus);
+		await super.open(preventInitialFocus);
 	}
 
 	/**
@@ -357,7 +357,7 @@ class Popover extends Popup {
 		}
 
 		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
-			super.show();
+			await super.show();
 			this.style.width = this._width;
 			return;
 		}
@@ -373,7 +373,7 @@ class Popover extends Popup {
 
 		this.style.left = `${popoverOnLeftBorder ? Popover.MIN_OFFSET : this._left}px`;
 		this.style.top = `${popoverOnTopBorder ? Popover.MIN_OFFSET : this._top}px`;
-		super.show();
+		await super.show();
 
 		if (stretching && this._width) {
 			this.style.width = this._width;

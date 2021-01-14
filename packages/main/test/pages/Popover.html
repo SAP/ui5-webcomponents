@@ -476,9 +476,12 @@
 		});
 
 		btnOpenDynamic.addEventListener("click", function () {
-			var popover = document.createElement("ui5-popover");
+			var popover = document.createElement("ui5-popover"),
+				button = document.createElement("ui5-button");
+
+			button.innerText = "Focusable element";
+			popover.appendChild(button);
 			popover.setAttribute("placement-type", "Bottom");
-			popover.innerText = "This is a dynamically created popover.";
 
 			document.body.appendChild(popover);
 
