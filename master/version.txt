@@ -1,9 +1,5 @@
-commit ba706764617d821a7488d59127ceaea1a7476b1a
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jan 13 10:17:09 2021 +0200
+commit 792bac202fa436f561c058100a0bc87781c434f4
+Author: Theo Sun <theo.sun@outlook.com>
+Date:   Thu Jan 14 16:34:14 2021 +0800
 
-    chore: remove obsolete code (#2675)
-    
-    Clean up leftover from the "focusInput" functionality option removal within two date-time components.
-    
-    FIXES: #2495
+    fix(docs): mis-spelling in react tutorial (#2681)
