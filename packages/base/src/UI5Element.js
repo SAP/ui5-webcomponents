@@ -6,7 +6,7 @@ import executeTemplate from "./renderer/executeTemplate.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
-import DOMObserver from "./compatibility/DOMObserver.js";
+import DOMObserver from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import { getRTL } from "./config/RTL.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
@@ -197,14 +197,14 @@ class UI5Element extends HTMLElement {
 			subtree: canSlotText,
 			characterData: canSlotText,
 		};
-		DOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
+		(Legacy ? Legacy.DOMObserver : DOMObserver).observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
 	}
 
 	/**
 	 * @private
 	 */
 	_stopObservingDOMChildren() {
-		DOMObserver.unobserveDOMNode(this);
+		(Legacy ? Legacy.DOMObserver : DOMObserver).unobserveDOMNode(this);
 	}
 
 	/**

@@ -2,6 +2,7 @@ import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.j
 
 import isLegacyBrowser from "./isLegacyBrowser.js";
 import whenPolyfillLoaded from "./whenPolyfillLoaded.js";
+import DOMObserver from "./DOMObserver.js";
 import adaptCSSForIE from "./theming/adaptCSSForIE.js";
 import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import {
@@ -13,6 +14,7 @@ import {
 registerFeature("LegacyBrowsersSupport", {
 	isLegacyBrowser,
 	whenPolyfillLoaded,
+	DOMObserver,
 	adaptCSSForIE,
 	createComponentStyleTag,
 	ponyfillNeeded,
