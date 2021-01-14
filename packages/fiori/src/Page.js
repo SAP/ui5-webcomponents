@@ -20,7 +20,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.Page.prototype */ {
 
 		/**
-         * This property is used to set the background color of a page. When a list is placed inside a page, the value "List" should be used to display a gray background. "Standard", with the default background color, is used if not specified.
+         * This property is used to set the background color of the <code>ui-page</code>. When a list is placed inside the page, the value "List" should be used to display a gray background. "Standard", with the default background color, is used if not specified.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -39,8 +39,8 @@ const metadata = {
 		},
 
 		/**
-         * Enable vertical scrolling of page contents. Page headers and footers are fixed and do not scroll.
-         * If set to false, there will be no vertical scrolling at all.
+         * Disables vertical scrolling of page contents. Page headers and footers are fixed and do not scroll.
+         * If set to true, there will be no vertical scrolling at all.
          *
 		 * @type {Boolean}
 		 * @defaultvalue false
@@ -88,7 +88,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the header HTML Element.
+		 * Defines the content HTML Element.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -170,12 +170,20 @@ class Page extends UI5Element {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
+	get _contentBottom() {
+		return !this.floatingFooter && !this.hideFooter ? "2.75rem" : "0";
+	}
+
+	get _contentPaddingBottom() {
+		return this.floatingFooter && !this.hideFooter ? "3.5rem" : "0";
+	}
+
 	get classes() {
 		return {
 			footer: {
 				"ui5-page-floating-footer-root": this.floatingFooter,
-				"ui5-page-show-footer": !this.hideFooter && this.floatingFooter,
-				"ui5-page-hide-footer": this.hideFooter,
+				"ui5-page-show-floating-footer": !this.hideFooter && this.floatingFooter,
+				"ui5-page-hide-floating-footer": this.hideFooter && this.floatingFooter,
 			},
 		};
 	}
@@ -183,7 +191,12 @@ class Page extends UI5Element {
 	get styles() {
 		return {
 			content: {
+				"padding-bottom": this.footer.length && this._contentPaddingBottom,
+				"bottom": this.footer.length && this._contentBottom,
 				"overflow": this.disableScrolling ? "hidden" : "auto",
+			},
+			footer: {
+				"display": this.hideFooter && !this.floatingFooter ? "none" : "block",
 			},
 		};
 	}

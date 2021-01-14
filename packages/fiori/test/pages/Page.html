@@ -23,44 +23,17 @@
 			padding: 0;
 			margin: 0;
 		}
-
-		/* copied some styles of the bar for the sake of the example */
-		.ui5-bar {
-			color: #666;
-			background-color: #eff4f9;
-			filter: none;
-			background-image: none;
-			display: block;
-			width: 100%;
-			position: relative;
-			height: 3rem;
-			line-height: 3rem;
-			text-align: center;
-			text-shadow: 0 0 0.125rem #fff;
-			box-shadow: inset 0 -0.0625rem #d1e0ee;
-		}
-
-		.ui5-bar-floating-footer {
-			border-top-width: 0;
-			box-shadow: 0 0 0 0.0625rem rgba(0,0,0,0.42), 0 0.125rem 0.5rem 0 rgba(0,0,0,0.3);
-			background-color: #fff;
-			border-top: 1px solid #d9d9d9;
-			height: 2.5rem;
-			right: 0;
-			color: #32363a;
-			padding: 0 0.5rem 0 0.25rem;
-			display: flex;
-			align-items: center;
-			box-sizing: border-box;
-		}
-
 	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);"></body>
 	<ui5-page id="page" backgroundDesign="List" floating-footer show-footer>
 		<div slot="header">
-			<div class="ui5-bar">Title</div>
+			<ui5-bar design="Header">
+				<ui5-button icon="home" title="Go home" slot="startContent"></ui5-button>
+				<ui5-label slot="middleContent">Title</ui5-label>
+				<ui5-button icon="action-settings" title="Go to settings" slot="endContent"></ui5-button>
+			</ui5-bar>
 		</div>
 
 		<div>
@@ -74,9 +47,12 @@
 			</span>
 		</div>
 		<div slot="footer">
-			<div class="ui5-bar-floating-footer">
-				This is a floating footer.
-			</div>
+			<ui5-bar design="FloatingFooter">
+				<ui5-icon name="home" slot="startContent"></ui5-icon>
+				<ui5-button design="Positive" slot="endContent">Agree</ui5-button>
+				<ui5-button design="Negative" slot="endContent">Decline</ui5-button>
+				<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
+			</ui5-bar>
 		</div>
 	</ui5-page>
 	<script>

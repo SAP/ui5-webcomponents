@@ -2,19 +2,15 @@
     <header
         class="ui5-page-header-root"
         id="ui5-page-header">
-		<div style="height: 3rem;">
-			<slot name="header"></slot>
-		</div>
+		<slot name="header"></slot>
     </header>
 
     <section class="ui5-page-content-root" style="{{styles.content}}">
         <slot></slot>
     </section>
 
-	<footer class="ui5-page-footer-root {{classes.footer}}">
-		<div style="height: 2.5rem">
-			<slot name="footer"></slot>
-		</div>
+	<footer class="ui5-page-footer-root {{classes.footer}}" style="{{styles.footer}}">
+		<slot name="footer"></slot>
 	</footer>
 </div>
 

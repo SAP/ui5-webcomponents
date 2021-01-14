@@ -21,7 +21,7 @@
     position: absolute;
     will-change: scroll-position;
     width: 100%;
-    top: 3rem;
+    top: 2.75rem;
     bottom: 0;
     box-sizing: border-box;
 }
@@ -38,23 +38,16 @@
     left: 0.5rem;
     right: 0.5rem;
     width: auto;
-    transition: bottom 0.4s;
-}
-
-.ui5-page-show-footer {
+    opacity: 1;
     bottom: 0.5rem;
 }
 
-.ui5-page-hide-footer {
-    bottom: -10rem;
+.ui5-page-show-floating-footer {
+    animation: bounceShow 0.35s forwards ease-in-out;
 }
 
-:host([floating-footer]:not([hide-footer])) .ui5-page-content-root {
-    padding-bottom: 3.5rem;
-}
-
-:host(:not([floating-footer]):not([hide-footer])) .ui5-page-content-root {
-    bottom: 2.5rem;
+.ui5-page-hide-floating-footer {
+    animation: bounceHide 0.35s forwards ease-in-out;
 }
 
 /* BackgroundDesign */
@@ -71,5 +64,27 @@
 }
 
 :host([backgroundDesign="List"]) .ui5-page-root {
-    background-color: var(--sapGroup_ContentBackground);
+    background-color: var(--_ui5_page_list_bg);
+}
+
+/* Footer animation */
+@keyframes bounceShow {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes bounceHide {
+    0% {
+        transform: translateY(-5%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
 }

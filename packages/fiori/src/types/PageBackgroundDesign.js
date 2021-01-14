@@ -56,6 +56,6 @@ class PageBackgroundDesign extends DataType {
 	}
 }
 
-PageBackgroundDesign.generateTypeAcessors(PageBackgroundDesigns);
+PageBackgroundDesign.generateTypeAccessors(PageBackgroundDesigns);
 
 export default PageBackgroundDesign;
