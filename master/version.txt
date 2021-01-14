@@ -1,5 +1,7 @@
-commit 792bac202fa436f561c058100a0bc87781c434f4
-Author: Theo Sun <theo.sun@outlook.com>
-Date:   Thu Jan 14 16:34:14 2021 +0800
+commit c59d8a8e425b81bc2f02873cb65fde95ceb42556
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Jan 14 19:13:48 2021 +0800
 
-    fix(docs): mis-spelling in react tutorial (#2681)
+    chore: translation delivery (#2683)
+    
+    Change-Id: Ic4467d75ab5070bbe4e64bc7db37fb3318170dd4
