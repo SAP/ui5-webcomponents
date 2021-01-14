@@ -349,9 +349,11 @@ const walkTree = (el, level, callback) => {
 };
 
 const buildTree = (el, level, result) => {
-	el.items.forEach(item => {
+	el.items.forEach((item, index) => {
 		const listItem = {
 			treeItem: item,
+			size: el.items.length,
+			posinset: index + 1,
 			level,
 		};
 

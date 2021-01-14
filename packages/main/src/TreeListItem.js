@@ -91,6 +91,26 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * @private
+		 * @since 1.0.0-rc.11
+		 */
+		_setsize: {
+			type: Integer,
+			defaultValue: 1,
+			noAttribute: true,
+		},
+
+		/**
+		 * @private
+		 * @since 1.0.0-rc.11
+		 */
+		_posinset: {
+			type: Integer,
+			defaultValue: 1,
+			noAttribute: true,
+		},
+
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 		/**
@@ -228,6 +248,8 @@ class TreeListItem extends ListItem {
 			role: "treeitem",
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
+			posinset: this._posinset,
+			setsize: this._setsize,
 			listItemAriaLabel: this.ariaLabelText,
 		};
 	}
