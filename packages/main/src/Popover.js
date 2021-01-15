@@ -283,6 +283,7 @@ class Popover extends Popup {
 		}
 
 		this._opener = opener;
+		this._openerRect = opener.getBoundingClientRect()
 
 		await super.open(preventInitialFocus);
 	}
@@ -340,14 +341,17 @@ class Popover extends Popup {
 		let placement;
 		const popoverSize = await this._popoverSize;
 
-		const openerRect = this._opener.getBoundingClientRect();
+		if (this.isOpen()) {
+			// update opener rect if it was changed during the popover is opened
+			this._openerRect = this._opener.getBoundingClientRect();
+		}
 
-		if (this.shouldCloseDueToNoOpener(openerRect) && this.isFocusWithin()) {
+		if (this.shouldCloseDueToNoOpener(this._openerRect) && this.isFocusWithin()) {
 			// reuse the old placement as the opener is not available,
 			// but keep the popover open as the focus is within
 			placement = this._oldPlacement;
 		} else {
-			placement = this.calcPlacement(openerRect, popoverSize);
+			placement = this.calcPlacement(this._openerRect, popoverSize);
 		}
 
 		const stretching = this.horizontalAlign === PopoverHorizontalAlign.Stretch;
