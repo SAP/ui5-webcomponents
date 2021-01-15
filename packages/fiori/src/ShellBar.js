@@ -188,9 +188,8 @@ const metadata = {
 		 * You can pass <code>ui5-avatar</code> to set the profile image/icon.
 		 * If no profile slot is set - profile will be excluded from actions.
 		 *
-		 * Note: We recommend not using <code>size</code> attribute of <code>ui5-avatar</code> is not suggested to be used
-		 * when the <code>ui5-avatar</code> is in <code>slot="profile"</code> because it should have specific
-		 * sizes by design in the context of <code>ui5-shellbar</code>
+		 * Note: We recommend not using the <code>size</code> attribute of <code>ui5-avatar</code> because
+		 * it should have specific size by design in the context of <code>ui5-shellbar</code> profile.
 		 * @type {HTMLElement}
 		 * @slot
 		 * @since 1.0.0-rc.6
