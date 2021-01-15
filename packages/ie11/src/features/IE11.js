@@ -35,8 +35,15 @@ import "../thirdparty/fetch.js";
 // async - await
 import "regenerator-runtime/runtime.js";
 
-// Plus all polyfills needed for Edge are also needed for IE11
-import "./Edge.js";
+// URLSearchParams
+import "url-search-params-polyfill/index.js";
+
+// "pseudo mutation observer" fix for nodeValue
+import "../patchNodeValue.js";
+
+// Register the "LegacyInterface" feature
+import "../LegacyInterface.js";
+
 
 window.CSSVarsPonyfill = {
 	cssVars,

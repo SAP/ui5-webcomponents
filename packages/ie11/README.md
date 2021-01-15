@@ -1,13 +1,11 @@
 ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/master/docs/images/UI5_logo_wide.png)
 
-# UI5 Web Components - Compatibility
+# UI5 Web Components - IE11
 
 [![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-Contains the base files for all Web Components, most notably `@ui5/webcomponents-base/dist/UI5Element.js`.
-
-For a complete list of all app development related public module imports from the `base` package, click [here](../../docs/Public%20Module%20Imports.md#base):
+Contains polyfills and adapter code for Internet Explorer 11
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)

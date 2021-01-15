@@ -2,10 +2,9 @@ const scripts = {
 	clean: "rimraf dist",
 	lint: "eslint . --config config/.eslintrc.js",
 	copy: `copy-and-watch "src/**/*.js" dist/`,
-	build: {
-		"default": "path-exists dist/ || nps build.all",
-		all: "nps lint clean copy",
-	},
+	build: "nps lint clean copy",
+	watch: `nps "copy --watch --skip-initial-copy"`,
+	start: "nps watch",
 };
 
 

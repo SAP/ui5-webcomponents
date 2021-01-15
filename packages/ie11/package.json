@@ -1,7 +1,7 @@
 {
-  "name": "@ui5/webcomponents-compatibility",
+  "name": "@ui5/webcomponents-ie11",
   "version": "0.28.0",
-  "description": "UI5 Web Components: webcomponents.compatibility",
+  "description": "UI5 Web Components: webcomponents.ie11",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "module": "index.js",
@@ -13,7 +13,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/SAP/ui5-webcomponents.git",
-    "directory": "packages/compatibility"
+    "directory": "packages/ie11"
   },
   "scripts": {
     "clean": "nps clean",
@@ -31,7 +31,6 @@
     "@ui5/webcomponents-tools": "1.0.0-rc.11",
     "copy-and-watch": "^0.1.4",
     "eslint": "^5.13.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "path-exists-cli": "^1.0.0"
+    "eslint-config-airbnb-base": "^13.1.0"
   }
 }
