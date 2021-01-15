@@ -65,6 +65,11 @@
 	box-sizing: border-box;
 }
 
+.ui5-nli-heading-wrapper {
+	display: flex;
+	flex-direction: row;
+}
+
 .ui5-nli-heading {
 	display: flex;
 	margin-bottom: 0.25rem;

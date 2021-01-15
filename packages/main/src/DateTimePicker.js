@@ -215,14 +215,10 @@ class DateTimePicker extends DatePicker {
 
 	/**
 	 * Opens the picker.
-	 *
-	 * @param {object} options A JSON object with additional configuration.<br>
-	 * <code>{ focusInput: true }</code> By default, the focus goes in the picker after opening it.
-	 * Specify this option to focus the input field.
 	 * @public
 	 */
-	async openPicker(options) {
-		await super.openPicker(options);
+	async openPicker() {
+		await super.openPicker();
 		this._currentTimeSlider = "hours";
 		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
 	}

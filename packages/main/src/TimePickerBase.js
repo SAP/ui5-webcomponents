@@ -295,8 +295,6 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * Opens the picker.
-	 * <code>{ focusInput: true }</code> By default, the focus goes in the picker after opening it.
-	 * Specify this option to focus the input field.
 	 * @public
 	 */
 	async openPicker() {
