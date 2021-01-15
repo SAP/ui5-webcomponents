@@ -18,11 +18,7 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import { getFeature } from "./FeaturesRegistry.js";
-import isLegacyBrowser from "./isLegacyBrowser.js";
-
-const LegacyBrowsersSupport = getFeature("LegacyBrowsersSupport");
-const effectiveDOMObserver = isLegacyBrowser() ? LegacyBrowsersSupport.DOMObserver : DOMObserver;
+import { isLegacyBrowser, LegacyDOMObserver, onLegacyComponentRender } from "./LegacyBrowsersAdapter.js";
 
 let autoId = 0;
 
@@ -199,14 +195,14 @@ class UI5Element extends HTMLElement {
 			subtree: canSlotText,
 			characterData: canSlotText,
 		};
-		effectiveDOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
+		(LegacyDOMObserver || DOMObserver).observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
 	}
 
 	/**
 	 * @private
 	 */
 	_stopObservingDOMChildren() {
-		effectiveDOMObserver.unobserveDOMNode(this);
+		(LegacyDOMObserver || DOMObserver).unobserveDOMNode(this);
 	}
 
 	/**
@@ -603,9 +599,7 @@ class UI5Element extends HTMLElement {
 		this._changedState = [];
 
 		// Update shadow root and static area item
-		if (LegacyBrowsersSupport) {
-			LegacyBrowsersSupport.onComponentRender(this);
-		}
+		onLegacyComponentRender(this);
 		if (this.constructor._needsShadowDOM()) {
 			this._updateShadowRoot();
 		}

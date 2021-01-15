@@ -4,15 +4,13 @@ import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/SVGIc
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { isLegacyBrowser } from "@ui5/webcomponents-base/dist/LegacyBrowsersAdapter.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
-
-const Legacy = getFeature("LegacyBrowsersSupport");
 
 /**
  * @public
@@ -241,7 +239,7 @@ class Icon extends UI5Element {
 	}
 
 	static createGlobalStyle() {
-		if (!Legacy || !Legacy.isLegacyBrowser()) {
+		if (!isLegacyBrowser()) {
 			return;
 		}
 		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
@@ -251,7 +249,7 @@ class Icon extends UI5Element {
 	}
 
 	static removeGlobalStyle() {
-		if (!Legacy || !Legacy.isLegacyBrowser()) {
+		if (!isLegacyBrowser()) {
 			return;
 		}
 		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);

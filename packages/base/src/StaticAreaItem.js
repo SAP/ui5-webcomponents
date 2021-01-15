@@ -2,7 +2,7 @@ import { getStaticAreaInstance, removeStaticArea } from "./StaticArea.js";
 import RenderScheduler from "./RenderScheduler.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import executeTemplate from "./renderer/executeTemplate.js";
-import isLegacyBrowser from "./isLegacyBrowser.js";
+import { isLegacyBrowser } from "./LegacyBrowsersAdapter.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 
 /**

@@ -1,4 +1,4 @@
-import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
+import { isLegacyBrowser } from "@ui5/webcomponents-base/dist/LegacyBrowsersAdapter.js";
 import Button from "./Button.js";
 import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
 

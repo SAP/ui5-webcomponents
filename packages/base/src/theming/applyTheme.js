@@ -3,8 +3,8 @@ import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
+import { onLegacyApplyTheme } from "../LegacyBrowsersAdapter.js";
 
-const LegacyBrowsersSupport = getFeature("LegacyBrowsersSupport");
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
 
 const isThemeBaseRegistered = () => {
@@ -73,9 +73,7 @@ const applyTheme = async theme => {
 	const packagesTheme = isThemeRegistered(theme) ? theme : extTheme && extTheme.baseThemeName;
 	await loadComponentPackages(packagesTheme);
 
-	if (LegacyBrowsersSupport) {
-		LegacyBrowsersSupport.onApplyTheme();
-	}
+	onLegacyApplyTheme();
 
 	fireThemeLoaded(theme);
 };

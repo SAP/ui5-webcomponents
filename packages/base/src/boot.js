@@ -4,6 +4,7 @@ import insertSystemCSSVars from "./SystemCSSVars.js";
 import { getTheme } from "./config/Theme.js";
 import applyTheme from "./theming/applyTheme.js";
 import { getFeature } from "./FeaturesRegistry.js";
+import { onLegacyBoot } from "./LegacyBrowsersAdapter.js";
 
 let bootPromise;
 
@@ -14,7 +15,6 @@ const boot = () => {
 
 	bootPromise = new Promise(async resolve => {
 		const OpenUI5Support = getFeature("OpenUI5Support");
-		const LegacyBrowsersSupport = getFeature("LegacyBrowsersSupport");
 		if (OpenUI5Support) {
 			await OpenUI5Support.init();
 		}
@@ -24,9 +24,8 @@ const boot = () => {
 		OpenUI5Support && OpenUI5Support.attachListeners();
 		insertFontFace();
 		insertSystemCSSVars();
-		if (LegacyBrowsersSupport) {
-			await LegacyBrowsersSupport.onBoot();
-		}
+		await onLegacyBoot();
+
 		resolve();
 	});
 

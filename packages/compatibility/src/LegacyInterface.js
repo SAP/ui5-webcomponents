@@ -27,7 +27,7 @@ const onComponentRender = component => {
 	}
 };
 
-registerFeature("LegacyBrowsersSupport", {
+registerFeature("LegacyInterface", {
 	isLegacyBrowser,
 	DOMObserver,
 	onBoot,
