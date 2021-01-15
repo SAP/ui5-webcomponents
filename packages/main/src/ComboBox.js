@@ -607,7 +607,7 @@ class ComboBox extends UI5Element {
 
 	_keydown(event) {
 		const isArrowKey = isDown(event) || isUp(event);
-		this._autocomplete = !(isBackSpace(event) || isDelete(event));
+		this._autocomplete = !(isBackSpace(event) || isDelete(event) || isEnter(event));
 
 		if (isArrowKey) {
 			this.handleArrowKeyPress(event);
