@@ -1,5 +1,9 @@
-commit a442dbf5655831bf40b5614e84a637cf5112bb8c
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Jan 15 14:03:19 2021 +0200
+commit 53418fb46723e7e9231f29581b082392f8217d79
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri Jan 15 16:11:02 2021 +0200
 
-    removed the aria-disabled attribute and left only the native one (#2690)
+    fix(ui5-select): fix popover opening (#2687)
+    
+    When the accessibility refactoring of was done the focus reference was changed. The click event should focus the correct element so the internal rules which controls the visibility of value state could pass.
+    
+    Fixes: #2682
