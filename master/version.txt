@@ -1,5 +1,5 @@
-commit b3361237b2263673b3375ace6c0b6a26ed06b932
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jan 15 10:36:05 2021 +0200
+commit a442dbf5655831bf40b5614e84a637cf5112bb8c
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Jan 15 14:03:19 2021 +0200
 
-    chore: Upgrade Chromedriver to 87 (#2678)
+    removed the aria-disabled attribute and left only the native one (#2690)
