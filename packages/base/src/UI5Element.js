@@ -19,8 +19,10 @@ import isSlot from "./util/isSlot.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import { getFeature } from "./FeaturesRegistry.js";
+import isLegacyBrowser from "./isLegacyBrowser.js";
 
-const Legacy = getFeature("LegacyBrowsersSupport");
+const LegacyBrowsersSupport = getFeature("LegacyBrowsersSupport");
+const effectiveDOMObserver = isLegacyBrowser() ? LegacyBrowsersSupport.DOMObserver : DOMObserver;
 
 let autoId = 0;
 
@@ -197,14 +199,14 @@ class UI5Element extends HTMLElement {
 			subtree: canSlotText,
 			characterData: canSlotText,
 		};
-		(Legacy ? Legacy.DOMObserver : DOMObserver).observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
+		effectiveDOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
 	}
 
 	/**
 	 * @private
 	 */
 	_stopObservingDOMChildren() {
-		(Legacy ? Legacy.DOMObserver : DOMObserver).unobserveDOMNode(this);
+		effectiveDOMObserver.unobserveDOMNode(this);
 	}
 
 	/**
@@ -601,7 +603,12 @@ class UI5Element extends HTMLElement {
 		this._changedState = [];
 
 		// Update shadow root and static area item
-		this._updateShadowRoot();
+		if (LegacyBrowsersSupport) {
+			LegacyBrowsersSupport.onComponentRender(this);
+		}
+		if (this.constructor._needsShadowDOM()) {
+			this._updateShadowRoot();
+		}
 		if (this._shouldUpdateFragment()) {
 			this.staticAreaItem._updateFragment(this);
 			this.staticAreaItemDomRef = this.staticAreaItem.staticAreaItemDomRef.shadowRoot;
@@ -622,26 +629,12 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateShadowRoot() {
-		if (!this.constructor._needsShadowDOM()) {
-			return;
-		}
-
 		let styleToPrepend;
 		const renderResult = executeTemplate(this.constructor.template, this);
-		const isLegacyBrowser = Legacy && Legacy.isLegacyBrowser();
 
-		// IE11, Edge
-		if (isLegacyBrowser) {
-			Legacy.createComponentStyleTag(this.constructor);
-		}
-
-		// Chrome
-		if (document.adoptedStyleSheets) {
+		if (document.adoptedStyleSheets) { // Chrome
 			this.shadowRoot.adoptedStyleSheets = getConstructableStyle(this.constructor);
-		}
-
-		// FF, Safari
-		if (!document.adoptedStyleSheets && !isLegacyBrowser) {
+		} else if (!isLegacyBrowser()) { // FF, Safari
 			styleToPrepend = getEffectiveStyle(this.constructor);
 		}
 

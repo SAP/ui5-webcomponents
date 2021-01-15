@@ -4,6 +4,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -12,7 +13,7 @@ import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPH
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
-import buttonLegacyCss from "./generated/themes/ButtonLegacy.css.js";
+import buttonLegacyCss from "./generated/themes/Button.legacy.css.js";
 
 let isGlobalHandlerAttached = false;
 let activeButton = null;
@@ -287,7 +288,7 @@ class Button extends UI5Element {
 	}
 
 	static get styles() {
-		return [buttonCss, buttonLegacyCss];
+		return [buttonCss, isLegacyBrowser() ? buttonLegacyCss : undefined];
 	}
 
 	static get render() {

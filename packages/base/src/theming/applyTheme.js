@@ -4,6 +4,7 @@ import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
 
+const LegacyBrowsersSupport = getFeature("LegacyBrowsersSupport");
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
 
 const isThemeBaseRegistered = () => {
@@ -72,10 +73,8 @@ const applyTheme = async theme => {
 	const packagesTheme = isThemeRegistered(theme) ? theme : extTheme && extTheme.baseThemeName;
 	await loadComponentPackages(packagesTheme);
 
-	// When changing the theme, run the ponyfill immediately
-	const LegacyBrowsersSupport = getFeature("LegacyBrowsersSupport");
-	if (LegacyBrowsersSupport && LegacyBrowsersSupport.ponyfillNeeded()) {
-		LegacyBrowsersSupport.runPonyfill();
+	if (LegacyBrowsersSupport) {
+		LegacyBrowsersSupport.onApplyTheme();
 	}
 
 	fireThemeLoaded(theme);

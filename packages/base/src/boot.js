@@ -25,7 +25,7 @@ const boot = () => {
 		insertFontFace();
 		insertSystemCSSVars();
 		if (LegacyBrowsersSupport) {
-			await LegacyBrowsersSupport.whenPolyfillLoaded();
+			await LegacyBrowsersSupport.onBoot();
 		}
 		resolve();
 	});

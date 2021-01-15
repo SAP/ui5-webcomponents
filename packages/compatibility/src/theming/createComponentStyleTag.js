@@ -2,7 +2,7 @@ import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHe
 import getEffectiveStyle from "@ui5/webcomponents-base/dist/theming/getEffectiveStyle.js";
 import { attachCustomCSSChange } from "@ui5/webcomponents-base/dist/theming/CustomStyle.js";
 import adaptCSSForIE from "./adaptCSSForIE.js";
-import { ponyfillNeeded, schedulePonyfill } from "./CSSVarsPonyfill.js";
+import { schedulePonyfill } from "./CSSVarsPonyfill.js";
 
 const IEStyleSet = new Set();
 
@@ -44,9 +44,8 @@ const createComponentStyleTag = ElementClass => {
 	createStyleInHead(cssContent, {
 		"data-ui5-element-styles": tag,
 	});
-	if (ponyfillNeeded()) {
-		schedulePonyfill();
-	}
+
+	schedulePonyfill();
 
 	IEStyleSet.add(tag);
 };

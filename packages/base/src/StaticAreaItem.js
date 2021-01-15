@@ -1,10 +1,9 @@
 import { getStaticAreaInstance, removeStaticArea } from "./StaticArea.js";
 import RenderScheduler from "./RenderScheduler.js";
-import getStylesString from "./theming/getStylesString.js";
+import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import executeTemplate from "./renderer/executeTemplate.js";
-import { getFeature } from "./FeaturesRegistry.js";
-
-const Legacy = getFeature("LegacyBrowsersSupport");
+import isLegacyBrowser from "./isLegacyBrowser.js";
+import getConstructableStyle from "./theming/getConstructableStyle.js";
 
 /**
  * @class
@@ -23,25 +22,45 @@ class StaticAreaItem {
 	}
 
 	/**
+	 * @private
+	 */
+	_createStaticAreaItem() {
+		if (this.staticAreaItemDomRef) {
+			return;
+		}
+
+		// Initial rendering of fragment
+		this.staticAreaItemDomRef = document.createElement("ui5-static-area-item");
+		this.staticAreaItemDomRef.attachShadow({ mode: "open" });
+		this.staticAreaItemDomRef.classList.add(this.ui5ElementContext._id); // used for getting the popover in the tests
+
+		getStaticAreaInstance().appendChild(this.staticAreaItemDomRef);
+		this._rendered = true;
+	}
+
+	/**
+	 * @private
+	 */
+	_updateStaticAreaItemShadowRoot() {
+		const renderResult = executeTemplate(this.ui5ElementContext.constructor.staticAreaTemplate, this.ui5ElementContext);
+		let stylesToPrepend;
+
+		if (document.adoptedStyleSheets) { // Chrome
+			this.staticAreaItemDomRef.shadowRoot.adoptedStyleSheets = getConstructableStyle(this.ui5ElementContext.constructor, true);
+		} else if (!isLegacyBrowser()) { // FF, Safari
+			stylesToPrepend = getEffectiveStyle(this.ui5ElementContext.constructor, true);
+		}
+
+		this.ui5ElementContext.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToPrepend, { eventContext: this.ui5ElementContext });
+	}
+
+	/**
 	 * @protected
 	 */
 	_updateFragment() {
-		const renderResult = executeTemplate(this.ui5ElementContext.constructor.staticAreaTemplate, this.ui5ElementContext),
-			stylesToAdd = Legacy && Legacy.isLegacyBrowser() ? false : getStylesString(this.ui5ElementContext.constructor.staticAreaStyles);
-
-		if (!this.staticAreaItemDomRef) {
-			// Initial rendering of fragment
-
-			this.staticAreaItemDomRef = document.createElement("ui5-static-area-item");
-			this.staticAreaItemDomRef.attachShadow({ mode: "open" });
-			this.staticAreaItemDomRef.classList.add(this.ui5ElementContext._id); // used for getting the popover in the tests
-
-			getStaticAreaInstance().appendChild(this.staticAreaItemDomRef);
-			this._rendered = true;
-		}
-
+		this._createStaticAreaItem();
 		this._updateContentDensity(this.ui5ElementContext.isCompact);
-		this.ui5ElementContext.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
+		this._updateStaticAreaItemShadowRoot();
 	}
 
 	/**

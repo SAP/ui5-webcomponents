@@ -22,18 +22,20 @@ const cleanPonyfillMetadata = (rootElement = document.head) => {
 };
 
 const runPonyfill = () => {
-	ponyfillTimer = undefined;
+	if (ponyfillNeeded()) {
+		ponyfillTimer = undefined;
 
-	cleanPonyfillMetadata();
-	window.CSSVarsPonyfill.cssVars({
-		rootElement: document.head,
-		variables: isCompact() ? getCompactModeVars() : {},
-		silent: true,
-	});
+		cleanPonyfillMetadata();
+		window.CSSVarsPonyfill.cssVars({
+			rootElement: document.head,
+			variables: isCompact() ? getCompactModeVars() : {},
+			silent: true,
+		});
+	}
 };
 
 const schedulePonyfill = () => {
-	if (!ponyfillTimer) {
+	if (!ponyfillTimer && ponyfillNeeded()) {
 		ponyfillTimer = window.setTimeout(runPonyfill, 0);
 	}
 };
@@ -62,7 +64,6 @@ const getCompactModeVars = () => {
 };
 
 export {
-	ponyfillNeeded,
 	runPonyfill,
 	schedulePonyfill,
 };
