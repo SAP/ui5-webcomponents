@@ -12,7 +12,7 @@ const scripts = {
 	prepare: "nps clean copy generateAssetParameters",
 	build: {
 		default: "nps lint prepare build.bundle",
-		bundle: "rollup --config config/rollup.config.js --environment",
+		bundle: "rollup --config config/rollup.config.js",
 	},
 	copy: {
 		default: "nps copy.src copy.test",
