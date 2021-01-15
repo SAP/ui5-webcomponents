@@ -456,6 +456,11 @@ class Select extends UI5Element {
 		this._toggleRespPopover();
 	}
 
+	_onclick(event) {
+		this.getFocusDomRef().focus();
+		this._toggleRespPopover();
+	}
+
 	/**
 	 * The user used arrow up/down on the list
 	 * @private
