@@ -1,9 +1,5 @@
-commit 53418fb46723e7e9231f29581b082392f8217d79
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Jan 15 16:11:02 2021 +0200
+commit a10acc82746c5acbb4874629da61b9a800eb0752
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Fri Jan 15 16:36:31 2021 +0200
 
-    fix(ui5-select): fix popover opening (#2687)
-    
-    When the accessibility refactoring of was done the focus reference was changed. The click event should focus the correct element so the internal rules which controls the visibility of value state could pass.
-    
-    Fixes: #2682
+    fix(ui5-combobox): fix behaviour when enter is clicked
