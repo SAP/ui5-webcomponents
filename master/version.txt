@@ -1,7 +1,5 @@
-commit c59d8a8e425b81bc2f02873cb65fde95ceb42556
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Jan 14 19:13:48 2021 +0800
+commit b3361237b2263673b3375ace6c0b6a26ed06b932
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jan 15 10:36:05 2021 +0200
 
-    chore: translation delivery (#2683)
-    
-    Change-Id: Ic4467d75ab5070bbe4e64bc7db37fb3318170dd4
+    chore: Upgrade Chromedriver to 87 (#2678)
