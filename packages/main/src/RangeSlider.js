@@ -232,11 +232,11 @@ class RangeSlider extends SliderBase {
 	 */
 	_setAffectedValueByFocusedElement() {
 		if (this.shadowRoot.activeElement === this._startHandle) {
-			this._setAffectedValue(this.VALUES.start);
+			this._setAffectedValue(RangeSlider.VALUES.start);
 		}
 
 		if (this.shadowRoot.activeElement === this._endHandle) {
-			this._setAffectedValue(this.VALUES.end);
+			this._setAffectedValue(RangeSlider.VALUES.end);
 		}
 
 		if (this.shadowRoot.activeElement === this._progressBar) {
@@ -431,12 +431,12 @@ class RangeSlider extends SliderBase {
 
 		// Return that handle that is closer to the press point
 		if (inHandleEndDom || value > this.endValue) {
-			this._setAffectedValue(this.VALUES.end);
+			this._setAffectedValue(RangeSlider.VALUES.end);
 		}
 
 		// If one of the handle is pressed return that one
 		if (inHandleStartDom || value < this.startValue) {
-			this._setAffectedValue(this.VALUES.start);
+			this._setAffectedValue(RangeSlider.VALUES.start);
 		}
 
 		// Flag if press is in the current select range
@@ -513,11 +513,11 @@ class RangeSlider extends SliderBase {
 			this._progressBar.focus();
 		}
 
-		if ((affectedValue === this.VALUES.start && !isReversed) || (affectedValue === this.VALUES.end && isReversed)) {
+		if ((affectedValue === RangeSlider.VALUES.start && !isReversed) || (affectedValue === RangeSlider.VALUES.end && isReversed)) {
 			this._startHandle.focus();
 		}
 
-		if ((affectedValue === this.VALUES.end && !isReversed) || (affectedValue === this.VALUES.start && isReversed)) {
+		if ((affectedValue === RangeSlider.VALUES.end && !isReversed) || (affectedValue === RangeSlider.VALUES.start && isReversed)) {
 			this._endHandle.focus();
 		}
 	}
@@ -610,10 +610,10 @@ class RangeSlider extends SliderBase {
 		// The value according to which we update the UI can be either the startValue
 		// or the endValue property. It is determined in _getClosestHandle()
 		// depending on to which handle is closer the user interaction.
-		if (affectedValue === this.VALUES.start) {
+		if (affectedValue === RangeSlider.VALUES.start) {
 			this._selectedRange = (prevEndValue - newValue) / (max - min);
 			this._firstHandlePositionFromStart = ((newValue - min) / (max - min)) * 100;
-		} else if (affectedValue === this.VALUES.end) {
+		} else if (affectedValue === RangeSlider.VALUES.end) {
 			this._selectedRange = ((newValue - prevStartValue)) / (max - min);
 			this._secondHandlePositionFromStart = (newValue - min) / (max - min) * 100;
 		} else {
@@ -639,7 +639,7 @@ class RangeSlider extends SliderBase {
 	_swapValues() {
 		const affectedValue = this._getAffectedValue();
 
-		if (affectedValue === this.VALUES.start && this.startValue > this.endValue) {
+		if (affectedValue === RangeSlider.VALUES.start && this.startValue > this.endValue) {
 			const prevEndValue = this.endValue;
 			this.endValue = this.startValue;
 			this.startValue = prevEndValue;
@@ -648,7 +648,7 @@ class RangeSlider extends SliderBase {
 			this.focusInnerElement();
 		}
 
-		if (affectedValue === this.VALUES.end && this.endValue < this.startValue) {
+		if (affectedValue === RangeSlider.VALUES.end && this.endValue < this.startValue) {
 			const prevStartValue = this.startValue;
 			this.startValue = this.endValue;
 			this.endValue = prevStartValue;
