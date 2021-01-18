@@ -1,5 +1,5 @@
-commit 3b2bd8c01b35c4a70fee2c326c706cc3b297d621
-Author: Marco Beier <marco-beier@t-online.de>
-Date:   Mon Jan 18 09:49:29 2021 +0100
+commit cf8f4de594176016a1e62d133904df7947e012df
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Jan 18 11:12:28 2021 +0200
 
-    fix(docs): playground logo is now shown & typo is fixed
+    docs(ui5-shellbar): profile slot description improvement (#2691)
