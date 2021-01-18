@@ -1,4 +1,4 @@
-const observers = new WeakMap();
+const observers = new WeakMap(); // We want just one observer per node, store them here -> DOM nodes are keys
 
 /**
  * Default implementation with MutationObserver for browsers with native support
@@ -16,10 +16,18 @@ let _destroyObserver = observer => {
 	observer.disconnect();
 };
 
+/**
+ * Allows to create an alternative DOM observer implementation
+ * @param createFn
+ */
 const setCreateObserverCallback = createFn => {
 	_createObserver = createFn;
 };
 
+/**
+ * Allows to create an alternative DOM observer implementation
+ * @param destroyFn
+ */
 const setDestroyObserverCallback = destroyFn => {
 	_destroyObserver = destroyFn;
 };
