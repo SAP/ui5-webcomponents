@@ -62,6 +62,7 @@
 	outline: none;
 	font-size: inherit;
 	font-family: inherit;
+	text-align: inherit;
 }
 
 [inner-input][inner-input-with-icon] {
@@ -197,4 +198,11 @@
 */
 ::slotted([ui5-icon][slot="icon"]) {
 	padding: var(--_ui5_input_icon_padding);
+}
+
+/* Chrome, Safari, Edge, Opera */
+[inner-input]::-webkit-outer-spin-button,
+[inner-input]::-webkit-inner-spin-button {
+  -webkit-appearance: inherit;
+  margin: inherit;
 }
