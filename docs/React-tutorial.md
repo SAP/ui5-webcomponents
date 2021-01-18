@@ -63,7 +63,7 @@ class Home extends Component {
 }
 ```
 
-### Bolean Properties Binding
+### Boolean Properties Binding
 
 For boolean properties like ```collapsed```  in ```ui5-panel```, instead of setting true or false, you have to take care of the presence of the property. Here is an example:
 

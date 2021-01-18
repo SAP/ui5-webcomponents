@@ -1,8 +1,10 @@
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import {
 	isF4,
 	isF4Shift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import * as CalendarDateComponent from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
@@ -73,16 +75,36 @@ const metadata = {
 			type: Boolean,
 		},
 	},
+	managedSlots: true,
+	slots: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
+		/**
+		 * Defines the selected date or dates (depending on the <code>selectionMode</code> property) for this calendar as instances of <code>ui5-date</code>
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		"default": {
+			propertyName: "dates",
+			type: HTMLElement,
+			invalidateOnChildChange: true,
+		},
+	},
 	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
-		 * Fired when the selected dates changed.
+		 * Fired when the selected dates change.
+		 * <b>Note:</b> If you call <code>preventDefault()</code> for this event, <code>ui5-calendar</code> will not
+		 * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
+		 *
 		 * @event sap.ui.webcomponents.main.Calendar#selected-dates-change
-		 * @param {Array} dates The selected dates timestamps
+		 * @param {Array} values The selected dates
+		 * @param {Array} dates The selected dates as UTC timestamps
 		 * @public
 		 */
 		"selected-dates-change": {
 			detail: {
 				dates: { type: Array },
+				values: { type: Array },
 			},
 		},
 	},
@@ -93,7 +115,14 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-calendar</code> can be used stand alone to display the years, months, weeks and days
+ * The <code>ui5-calendar</code> component allows users to select one or more dates.
+ * <br><br>
+ * Currently selected dates are represented with instances of <code>ui5-date</code> as
+ * children of the <code>ui5-calendar</code>. The value property of each <code>ui5-date</code> must be a
+ * date string, correctly formatted according to the <code>ui5-calendar</code>'s <code>formatPattern</code> property.
+ * Whenever the user changes the date selection, <code>ui5-calendar</code> will automatically create/remove instances
+ * of <code>ui5-date</code> in itself, unless you prevent this behavior by calling <code>preventDefault()</code> for the
+ * <code>selected-dates-change</code> event. This is useful if you want to control the selected dates externally.
  * <br><br>
  *
  * <h3>Usage</h3>
@@ -105,7 +134,7 @@ const metadata = {
  * <li>Pressing over an year inside the years view</li>
  * </ul>
  * <br>
- * The user can comfirm a date selection by pressing over a date inside the days view.
+ * The user can confirm a date selection by pressing over a date inside the days view.
  * <br><br>
  *
  * <h3>Keyboard Handling</h3>
@@ -159,6 +188,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Calendar
  * @extends CalendarPart
  * @tagname ui5-calendar
+ * @appenddocs CalendarDate
  * @public
  * @since 1.0.0-rc.11
  */
@@ -173,6 +203,36 @@ class Calendar extends CalendarPart {
 
 	static get styles() {
 		return calendarCSS;
+	}
+
+	/**
+	 * @private
+	 */
+	get _selectedDatesTimestamps() {
+		return this.dates.map(date => {
+			const value = date.value;
+			return value && !!this.getFormat().parse(value) ? this._getTimeStampFromString(value) / 1000 : undefined;
+		}).filter(date => !!date);
+	}
+
+	/**
+	 * @private
+	 */
+	_setSelectedDates(selectedDates) {
+		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(new Date(timestamp * 1000), true)); // Format as UTC
+		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
+
+		// Remove all elements for dates that are no longer selected
+		this.dates.filter(dateElement => !selectedValues.includes(dateElement.value)).forEach(dateElement => {
+			this.removeChild(dateElement);
+		});
+
+		// Create tags for the selected dates that don't already exist in DOM
+		selectedValues.filter(value => !valuesInDOM.includes(value)).forEach(value => {
+			const dateElement = document.createElement("ui5-date");
+			dateElement.value = value;
+			this.appendChild(dateElement);
+		});
 	}
 
 	async onAfterRendering() {
@@ -237,10 +297,16 @@ class Calendar extends CalendarPart {
 	onSelectedDatesChange(event) {
 		const timestamp = event.detail.timestamp;
 		const selectedDates = event.detail.dates;
+		const datesValues = selectedDates.map(ts => {
+			const calendarDate = CalendarDate.fromTimestamp(ts * 1000, this._primaryCalendarType);
+			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
+		});
 
 		this.timestamp = timestamp;
-		this.selectedDates = selectedDates;
-		this.fireEvent("selected-dates-change", { timestamp, dates: [...selectedDates] });
+		const defaultPrevented = !this.fireEvent("selected-dates-change", { timestamp, dates: [...selectedDates], values: datesValues }, true);
+		if (!defaultPrevented) {
+			this._setSelectedDates(selectedDates);
+		}
 	}
 
 	onSelectedMonthChange(event) {
@@ -267,8 +333,28 @@ class Calendar extends CalendarPart {
 		}
 	}
 
+	/**
+	 * Returns an array of UTC timestamps, representing the selected dates.
+	 * @protected
+	 * @deprecated
+	 */
+	get selectedDates() {
+		return this._selectedDatesTimestamps;
+	}
+
+	/**
+	 * Creates instances of <code>ui5-date</code> inside this <code>ui5-calendar</code> with values, equal to the provided UTC timestamps
+	 * @protected
+	 * @deprecated
+	 * @param selectedDates Array of UTC timestamps
+	 */
+	set selectedDates(selectedDates) {
+		this._setSelectedDates(selectedDates);
+	}
+
 	static get dependencies() {
 		return [
+			CalendarDateComponent.default,
 			CalendarHeader,
 			DayPicker,
 			MonthPicker,

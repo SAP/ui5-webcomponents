@@ -2,6 +2,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
+import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
@@ -23,6 +24,7 @@ import Icon from "./Icon.js";
 import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
+import * as CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
@@ -372,14 +374,12 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	get _calendarTimestamp() {
-		let millisecondsUTC;
 		if (this.value && this._checkValueValidity(this.value)) {
-			millisecondsUTC = this.dateValueUTC.getTime();
-		} else {
-			millisecondsUTC = new Date().getTime();
+			const millisecondsUTC = this.dateValueUTC.getTime();
+			return getRoundedTimestamp(millisecondsUTC);
 		}
 
-		return getRoundedTimestamp(millisecondsUTC);
+		return getTodayUTCTimestamp(this._primaryCalendarType);
 	}
 
 	/**
@@ -388,12 +388,8 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	get _calendarSelectedDates() {
-		if (!this.value) {
-			return [];
-		}
-
-		if (this._checkValueValidity(this.value)) {
-			return [getRoundedTimestamp(this.dateValueUTC.getTime())];
+		if (this.value && this._checkValueValidity(this.value)) {
+			return [this.value];
 		}
 
 		return [];
@@ -640,9 +636,8 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	onSelectedDatesChange(event) {
-		const timestamp = event.detail.dates && event.detail.dates[0];
-		const calendarDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
-		const newValue = this.getFormat().format(calendarDate.toUTCJSDate(), true);
+		event.preventDefault();
+		const newValue = event.detail.values && event.detail.values[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
 		this._focusInputAfterClose = true;
@@ -728,6 +723,7 @@ class DatePicker extends DateComponentBase {
 			Icon,
 			ResponsivePopover,
 			Calendar,
+			CalendarDateComponent.default,
 			Input,
 			Button,
 		];
