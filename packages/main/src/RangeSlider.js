@@ -95,6 +95,13 @@ class RangeSlider extends SliderBase {
 		return RangeSliderTemplate;
 	}
 
+	static get VALUES() {
+		return {
+			start: "startValue",
+			end: "endValue",
+		};
+	}
+
 	constructor() {
 		super();
 		this._stateStorage.startValue = null;
@@ -171,7 +178,7 @@ class RangeSlider extends SliderBase {
 	* @private
 	*/
 	_onkeyup(event) {
-		SliderBase.prototype._onkeyup.call(this, event);
+		super._onkeyup(event);
 
 		this._swapValues();
 		this._setAffectedValue(null);
@@ -225,11 +232,11 @@ class RangeSlider extends SliderBase {
 	 */
 	_setAffectedValueByFocusedElement() {
 		if (this.shadowRoot.activeElement === this._startHandle) {
-			this._setAffectedValue("startValue");
+			this._setAffectedValue(this.VALUES.start);
 		}
 
 		if (this.shadowRoot.activeElement === this._endHandle) {
-			this._setAffectedValue("endValue");
+			this._setAffectedValue(this.VALUES.end);
 		}
 
 		if (this.shadowRoot.activeElement === this._progressBar) {
@@ -424,12 +431,12 @@ class RangeSlider extends SliderBase {
 
 		// Return that handle that is closer to the press point
 		if (inHandleEndDom || value > this.endValue) {
-			this._setAffectedValue("endValue");
+			this._setAffectedValue(this.VALUES.end);
 		}
 
 		// If one of the handle is pressed return that one
 		if (inHandleStartDom || value < this.startValue) {
-			this._setAffectedValue("startValue");
+			this._setAffectedValue(this.VALUES.start);
 		}
 
 		// Flag if press is in the current select range
@@ -506,11 +513,11 @@ class RangeSlider extends SliderBase {
 			this._progressBar.focus();
 		}
 
-		if ((affectedValue === "startValue" && !isReversed) || (affectedValue === "endValue" && isReversed)) {
+		if ((affectedValue === this.VALUES.start && !isReversed) || (affectedValue === this.VALUES.end && isReversed)) {
 			this._startHandle.focus();
 		}
 
-		if ((affectedValue === "endValue" && !isReversed) || (affectedValue === "startValue" && isReversed)) {
+		if ((affectedValue === this.VALUES.end && !isReversed) || (affectedValue === this.VALUES.start && isReversed)) {
 			this._endHandle.focus();
 		}
 	}
@@ -603,10 +610,10 @@ class RangeSlider extends SliderBase {
 		// The value according to which we update the UI can be either the startValue
 		// or the endValue property. It is determined in _getClosestHandle()
 		// depending on to which handle is closer the user interaction.
-		if (affectedValue === "startValue") {
+		if (affectedValue === this.VALUES.start) {
 			this._selectedRange = (prevEndValue - newValue) / (max - min);
 			this._firstHandlePositionFromStart = ((newValue - min) / (max - min)) * 100;
-		} else if (affectedValue === "endValue") {
+		} else if (affectedValue === this.VALUES.end) {
 			this._selectedRange = ((newValue - prevStartValue)) / (max - min);
 			this._secondHandlePositionFromStart = (newValue - min) / (max - min) * 100;
 		} else {
@@ -632,7 +639,7 @@ class RangeSlider extends SliderBase {
 	_swapValues() {
 		const affectedValue = this._getAffectedValue();
 
-		if (affectedValue === "startValue" && this.startValue > this.endValue) {
+		if (affectedValue === this.VALUES.start && this.startValue > this.endValue) {
 			const prevEndValue = this.endValue;
 			this.endValue = this.startValue;
 			this.startValue = prevEndValue;
@@ -641,7 +648,7 @@ class RangeSlider extends SliderBase {
 			this.focusInnerElement();
 		}
 
-		if (affectedValue === "endValue" && this.endValue < this.startValue) {
+		if (affectedValue === this.VALUES.end && this.endValue < this.startValue) {
 			const prevStartValue = this.startValue;
 			this.startValue = this.endValue;
 			this.endValue = prevStartValue;
@@ -668,15 +675,15 @@ class RangeSlider extends SliderBase {
 	}
 
 	get _startHandle() {
-		return this.shadowRoot.querySelector(".ui5-slider-handle--start");
+		return this.getDomRef().querySelector(".ui5-slider-handle--start");
 	}
 
 	get _endHandle() {
-		return this.shadowRoot.querySelector(".ui5-slider-handle--end");
+		return this.getDomRef().querySelector(".ui5-slider-handle--end");
 	}
 
 	get _progressBar() {
-		return this.shadowRoot.querySelector(".ui5-slider-progress");
+		return this.getDomRef().querySelector(".ui5-slider-progress");
 	}
 
 	get tabIndexProgress() {
