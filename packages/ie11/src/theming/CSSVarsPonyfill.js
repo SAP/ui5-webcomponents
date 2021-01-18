@@ -1,7 +1,5 @@
 let ponyfillTimer;
 
-const ponyfillNeeded = () => !!window.CSSVarsPonyfill;
-
 /**
  * Removes the "data-cssvars-group" attribute for all element styles and their respective out nodes.
  * CSSVarsPonyfill has internal counters for "group" and "job" and running several instances of the ponyfill may lead to issues, since these counters are not shared
@@ -22,20 +20,18 @@ const cleanPonyfillMetadata = (rootElement = document.head) => {
 };
 
 const runPonyfill = () => {
-	if (ponyfillNeeded()) {
-		ponyfillTimer = undefined;
+	ponyfillTimer = undefined;
 
-		cleanPonyfillMetadata();
-		window.CSSVarsPonyfill.cssVars({
-			rootElement: document.head,
-			variables: isCompact() ? getCompactModeVars() : {},
-			silent: true,
-		});
-	}
+	cleanPonyfillMetadata();
+	window.CSSVarsPonyfill.cssVars({
+		rootElement: document.head,
+		variables: isCompact() ? getCompactModeVars() : {},
+		silent: true,
+	});
 };
 
 const schedulePonyfill = () => {
-	if (!ponyfillTimer && ponyfillNeeded()) {
+	if (!ponyfillTimer) {
 		ponyfillTimer = window.setTimeout(runPonyfill, 0);
 	}
 };
