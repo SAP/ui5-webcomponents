@@ -19,6 +19,14 @@ import {
 	isPageUpShift,
 	isPageDownShift,
 	isEscape,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl,
+	isShow,
+	isF4,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
@@ -105,6 +113,7 @@ const metadata = {
 		/**
 		 * Defines whether the <code>ui5-step-input</code> is required.
 		 *
+		 * @since 1.0.0-rc.9
 		 * @type {Boolean}
 		 * @defaultvalue false
 		 * @public
@@ -182,12 +191,21 @@ const metadata = {
 		valuePrecision: {
 			type: Integer,
 			defaultValue: 0,
+		 * Determines the text alignment of the <code>ui5-step-input</code>.
+		 *
+		* @defaultvalue "left"
+		* @public
+		*/
+		align: {
+			type: String,
+			defaultValue: "left",
 		},
 
 		/**
 		 * Defines the aria-label attribute for the <code>ui5-step-input</code>.
 		 *
 		 * @type {String}
+		 * @since 1.0.0-rc.9
 		 * @private
 		 * @defaultvalue ""
 		 */
@@ -201,6 +219,7 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
+		 * @since 1.0.0-rc.9
 		 */
 		ariaLabelledby: {
 			type: String,
@@ -264,6 +283,8 @@ const metadata = {
 			noAttribute: true,
 			defaultValue: false,
 		},
+		},
+
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
 		/**
@@ -275,6 +296,7 @@ const metadata = {
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the <code>ui5-step-input</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement}
+		 * @since 1.0.0-rc.7
 		 * @slot
 		 * @public
 		 */
@@ -298,6 +320,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+<<<<<<< HEAD
  * The <code>ui5-step-input</code> consists of an input field and buttons with icons to increase/decrease the value
  * with the predefined step.
  *
@@ -328,6 +351,9 @@ const metadata = {
  * <li>To enter dates and times. In this case, use date/time related components instead.</li>
  * </ul>
  *
+ *
+ * <h3>Usage</h3>
+ *
  * For the <code>ui5-step-input</code>
  * <h3>ES6 Module Import</h3>
  *
@@ -338,6 +364,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.StepInput
  * @extends UI5Element
  * @tagname ui5-step-input
+<<<<<<< HEAD
  * @since 1.0.0-rc.12
  * @public
  */
@@ -354,6 +381,9 @@ class StepInput extends UI5Element {
 		this.INITIAL_SPEED = 120; // milliseconds
 	}
 
+ * @public
+ */
+class StepInput extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -362,6 +392,12 @@ class StepInput extends UI5Element {
 		return litRender;
 	}
 
+	constructor() {
+		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+>>>>>>> 6820c3858 (StepInput Initial Demo)
 	static get styles() {
 		return StepInputCss;
 	}
@@ -386,6 +422,12 @@ class StepInput extends UI5Element {
 	}
 
 	// icons-related
+
+	static async onDefine() {
+		await Promise.resolve([
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
+	}
 
 	get decIconTitle() {
 		return this.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE);
@@ -546,6 +588,89 @@ class StepInput extends UI5Element {
 
 	_onkeydown(event) {
 		let preventDefault = true;
+	get type() {
+		return InputType.Number;
+	}
+
+	get _placeholder() {
+		return this.placeholder + " ";
+	}
+
+	get _decIconInteractive() {
+		return !this._decIconDisabled;
+	}
+
+	get _incIconInteractive() {
+		return !this._incIconDisabled;
+	}
+
+	_onfocusin() {
+		this._getInputOuter().setAttribute("focused", "");
+	}
+
+	_onfocusout() {
+		this._getInputOuter().removeAttribute("focused");
+	}
+
+	_getInput() {
+		return this.shadowRoot.querySelector("[ui5-input]");
+	}
+
+	_getInputOuter() {
+		return this.shadowRoot.querySelector(".ui5-step-input-input");
+	}
+
+	_validate() {
+		if (!isNaN(this.min) && this.value < this.min) {
+			this.valueState = ValueState.Error;
+			this._decIconDisabled = true;
+		} else if (!isNaN(this.max) && this.value > this.max) {
+			this.valueState = ValueState.Error;
+			this._incIconDisabled = true;
+		} else {
+			this.valueState = ValueState.None;
+			this._decIconDisabled = false;
+			this._incIconDisabled = false;
+		}
+	}
+
+	_modifyValue(modifier, fireChangeEvent) {
+		this.value = this.value + modifier;
+		this._validate();
+		this._getInput().value = this.value;
+		this._getInputOuter().setAttribute("focused", "");
+		if (fireChangeEvent) {
+			this.fireEvent('change', { value: this.value });
+		}
+	}
+
+	_incValue() {
+		if (!this.disabled && !this.readonly) {
+			this._modifyValue(this.step, true);
+		}
+	}
+
+	_decValue() {
+		if (!this.disabled && !this.readonly) {
+			this._modifyValue(-this.step, true);
+		}
+	}
+
+	/**
+	 * The ui5-input "submit" event handler - fire change event when the user presses enter
+	 * @protected
+	 */
+	_onInputSubmit(event) {}
+
+	/**
+	 * The ui5-input "change" event handler - fire change event when the user focuses out of the input
+	 * @protected
+	 */
+	_onInputChange(event) {
+		//this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
+	}
+
+	_onkeydown(event) {
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -638,6 +763,18 @@ class StepInput extends UI5Element {
 			this._resetSpin();
 			this._fireChangeEvent();
 		}
+			this._modifyValue(this.step);
+		} else if (isDown(event)) {
+			this._modifyValue(-this.step);
+		}
+	}
+
+
+	static get dependencies() {
+		return [
+			Icon,
+			Input,
+		];
 	}
 
 }

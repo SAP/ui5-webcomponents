@@ -33,6 +33,9 @@
 			placeholder="{{placeholder}}"
 			type="{{type}}"
 			value="{{_valuePrecisioned}}"
+			placeholder="{{_placeholder}}"
+			type="{{type}}"
+			value="{{value}}"
 			?disabled="{{disabled}}"
 			?required="{{required}}"
 			?readonly="{{readonly}}"
@@ -47,6 +50,13 @@
 	</ui5-input>
 
 	<!-- Increment Icon -->
+			text-align="{{align}}"
+			._inputAccInfo ="{{accInfo}}"
+			@ui5-change="{{_onInputChange}}"
+			@ui5-submit="{{_onInputSubmit}}"
+	>
+	</ui5-input>
+
 	<div
 		class="ui5-step-icon ui5-step-inc"
 		title="{{incIconTitle}}"
@@ -63,6 +73,8 @@
 			@mouseout="{{_resetSpinOut}}"
 			input-icon
 			?clickable="{{_incIconClickable}}"
+			@click="{{_incValue}}"
+			input-icon
 		></ui5-icon>
 	</div>
 

@@ -68,6 +68,7 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+	text-align: inherit;
 }
 
 [inner-input][inner-input-with-icon] {
