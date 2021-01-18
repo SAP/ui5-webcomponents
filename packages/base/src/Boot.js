@@ -10,23 +10,13 @@ let bootPromise;
 const eventProvider = new EventProvider();
 
 /**
- * Attach a callback that will be executed before the framework has booted
+ * Attach a callback that will be executed on boot
  * @public
  * @param listener
  */
-const attachBeforeBoot = listener => {
-	eventProvider.attachEvent("beforeBoot", listener);
+const attachBootTask = listener => {
+	eventProvider.attachEvent("boot", listener);
 };
-
-/**
- * Detach a callback that was passed with "attachBeforeBoot"
- * @public
- * @param listener
- */
-const detachBeforeBoot = listener => {
-	eventProvider.detachEvent("beforeBoot", listener);
-};
-
 
 const boot = () => {
 	if (bootPromise) {
@@ -44,7 +34,7 @@ const boot = () => {
 		OpenUI5Support && OpenUI5Support.attachListeners();
 		insertFontFace();
 		insertSystemCSSVars();
-		await Promise.all(eventProvider.fireEvent("beforeBoot"));
+		await Promise.all(eventProvider.fireEvent("boot"));
 
 		resolve();
 	});
@@ -54,6 +44,5 @@ const boot = () => {
 
 export {
 	boot,
-	attachBeforeBoot,
-	detachBeforeBoot,
+	attachBootTask,
 };
