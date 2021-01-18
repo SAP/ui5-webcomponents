@@ -20,7 +20,7 @@ The name that you give to your package will be used by the UI5 Web Components to
 ## Step 2 - add the UI5 Web Components packages as dependencies
 
 With `npm`:
- - `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools @ui5/webcomponents-ie11`
+ - `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
  - `npm i --save-dev chromedriver`
  - (Optional) `npm i --save @ui5/webcomponents-ie11`
 

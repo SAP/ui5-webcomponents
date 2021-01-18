@@ -13,7 +13,7 @@ import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPH
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
-import buttonLegacyCss from "./generated/themes/Button.legacy.css.js";
+import buttonIECss from "./generated/themes/Button.ie11.css.js";
 
 let isGlobalHandlerAttached = false;
 let activeButton = null;
@@ -288,7 +288,7 @@ class Button extends UI5Element {
 	}
 
 	static get styles() {
-		return [buttonCss, isLegacyBrowser() ? buttonLegacyCss : undefined];
+		return [buttonCss, isLegacyBrowser() ? buttonIECss : undefined];
 	}
 
 	static get render() {

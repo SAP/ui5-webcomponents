@@ -1,3 +1,23 @@
+[ui5-togglebutton][focused] {
+    outline: none;
+}
+
+[ui5-togglebutton][focused] .ui5-button-root {
+    position: relative;
+}
+
+[ui5-togglebutton][focused] .ui5-button-root::after {
+    content: "";
+    position: absolute;
+    border-width: 1px;
+    border-style: dotted;
+    border-color: var(--_ui5_button_focus_color);
+    top: var(--_ui5_button_focus_offset);
+    bottom: var(--_ui5_button_focus_offset);
+    left: var(--_ui5_button_focus_offset);
+    right: var(--_ui5_button_focus_offset);
+}
+
 [ui5-togglebutton][active] .ui5-button-root::after {
     border-color: var(--sapContent_ContrastFocusColor);
 }

@@ -4,7 +4,7 @@ import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit
 
 // Styles
 import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
-import toggleBtnLegacyCss from "./generated/themes/ToggleButton.legacy.css.js";
+import toggleBtnIECss from "./generated/themes/ToggleButton.ie11.css.js";
 
 /**
  * @public
@@ -60,7 +60,7 @@ class ToggleButton extends Button {
 	}
 
 	static get styles() {
-		return [Button.styles, toggleBtnCss, isLegacyBrowser() ? toggleBtnLegacyCss : undefined];
+		return [Button.styles, toggleBtnCss, isLegacyBrowser() ? toggleBtnIECss : undefined];
 	}
 
 	_onclick() {
