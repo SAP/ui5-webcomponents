@@ -1,8 +1,10 @@
+import EventProvider from "./EventProvider.js";
 import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 import { isRtlAware } from "./locale/RTLAwareRegistry.js";
 
 const registeredElements = new Set();
+const eventProvider = new EventProvider();
 
 // Queue for invalidated web components
 const invalidatedWebComponents = new RenderQueue();
@@ -43,6 +45,7 @@ class RenderScheduler {
 	 * @param webComponent
 	 */
 	static renderImmediately(webComponent) {
+		eventProvider.fireEvent("beforeComponentRender", webComponent);
 		webComponent._render();
 	}
 
@@ -65,7 +68,7 @@ class RenderScheduler {
 					// Render all components in the queue
 
 					// console.log(`--------------------RENDER TASK START------------------------------`); // eslint-disable-line
-					invalidatedWebComponents.process(component => component._render());
+					invalidatedWebComponents.process(RenderScheduler.renderImmediately);
 					// console.log(`--------------------RENDER TASK END------------------------------`); // eslint-disable-line
 
 					// Resolve the promise so that callers of renderDeferred can continue
@@ -163,6 +166,14 @@ class RenderScheduler {
 				RenderScheduler.renderDeferred(element);
 			}
 		});
+	}
+
+	static attachBeforeComponentRender(listener) {
+		eventProvider.attachEvent("beforeComponentRender", listener);
+	}
+
+	static detachBeforeComponentRender(listener) {
+		eventProvider.detachEvent("beforeComponentRender", listener);
 	}
 }
 

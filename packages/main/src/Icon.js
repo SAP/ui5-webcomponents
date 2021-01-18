@@ -4,7 +4,7 @@ import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/SVGIc
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isLegacyBrowser } from "@ui5/webcomponents-base/dist/LegacyBrowsersAdapter.js";
+import hasNativeSupport from "@ui5/webcomponents-base/dist/hasNativeSupport.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
@@ -239,7 +239,7 @@ class Icon extends UI5Element {
 	}
 
 	static createGlobalStyle() {
-		if (!isLegacyBrowser()) {
+		if (hasNativeSupport()) {
 			return;
 		}
 		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
@@ -249,7 +249,7 @@ class Icon extends UI5Element {
 	}
 
 	static removeGlobalStyle() {
-		if (!isLegacyBrowser()) {
+		if (hasNativeSupport()) {
 			return;
 		}
 		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);

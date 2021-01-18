@@ -1,5 +1,5 @@
 import merge from "./thirdparty/merge.js";
-import boot from "./boot.js";
+import { boot } from "./Boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import EventProvider from "./EventProvider.js";
 import executeTemplate from "./renderer/executeTemplate.js";
@@ -18,12 +18,7 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import {
-	isLegacyBrowser,
-	onLegacyComponentRender,
-	legacyObserveDOMNode,
-	legacyUnobserveDOMNode,
-} from "./LegacyBrowsersAdapter.js";
+import hasNativeSupport from "./hasNativeSupport.js";
 
 let autoId = 0;
 
@@ -200,14 +195,14 @@ class UI5Element extends HTMLElement {
 			subtree: canSlotText,
 			characterData: canSlotText,
 		};
-		(legacyObserveDOMNode || observeDOMNode)(this, this._processChildren.bind(this), mutationObserverOptions);
+		observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
 	}
 
 	/**
 	 * @private
 	 */
 	_stopObservingDOMChildren() {
-		(legacyUnobserveDOMNode || unobserveDOMNode)(this);
+		unobserveDOMNode(this);
 	}
 
 	/**
@@ -604,7 +599,6 @@ class UI5Element extends HTMLElement {
 		this._changedState = [];
 
 		// Update shadow root and static area item
-		onLegacyComponentRender(this);
 		if (this.constructor._needsShadowDOM()) {
 			this._updateShadowRoot();
 		}
@@ -633,7 +627,7 @@ class UI5Element extends HTMLElement {
 
 		if (document.adoptedStyleSheets) { // Chrome
 			this.shadowRoot.adoptedStyleSheets = getConstructableStyle(this.constructor);
-		} else if (!isLegacyBrowser()) { // FF, Safari
+		} else if (hasNativeSupport()) { // FF, Safari
 			styleToPrepend = getEffectiveStyle(this.constructor);
 		}
 

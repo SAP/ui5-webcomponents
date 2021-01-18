@@ -1,9 +1,8 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
 import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
-import { fireThemeLoaded } from "./ThemeLoaded.js";
+import { fireThemeLoaded, fireBeforeThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
-import { onLegacyApplyTheme } from "../LegacyBrowsersAdapter.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theme-base";
 
@@ -73,7 +72,7 @@ const applyTheme = async theme => {
 	const packagesTheme = isThemeRegistered(theme) ? theme : extTheme && extTheme.baseThemeName;
 	await loadComponentPackages(packagesTheme);
 
-	onLegacyApplyTheme();
+	fireBeforeThemeLoaded(theme);
 
 	fireThemeLoaded(theme);
 };

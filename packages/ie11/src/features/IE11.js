@@ -41,8 +41,8 @@ import "url-search-params-polyfill/index.js";
 // "pseudo mutation observer" fix for nodeValue
 import "../patchNodeValue.js";
 
-// Register the "LegacyInterface" feature
-import "../LegacyInterface.js";
+// Hook with the framework
+import "../integrate.js";
 
 
 window.CSSVarsPonyfill = {

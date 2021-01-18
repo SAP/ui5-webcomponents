@@ -7,19 +7,10 @@
 
 Contains polyfills and adapter code for Internet Explorer 11
 
-This package exposes an interface for seamlessly integrating Internet Explorer 11 support into the other packages.
-It registers a feature called `LegacyInterface`. This features is transparently registered if the application imported one of:
+This package transparently integrates Internet Explorer 11 support whenever any of these features is imported:
  - `import "@ui5/webcomponents-ie11/dist/features/IE11.js";`
  - `import "@ui5/webcomponents-ie11/dist/features/IE11WithWebComponentsPolyfill.js";`
-
-The `LegacyInterface` feature provides an object with the following functions:
- - `isLegacyBrowser`: tells if IE11 is the current runtime (if ShadyDOM is used)
- - `onBoot`: (`async`) await for this hook once, when the framework boots
- - `onApplyTheme`: call this hook once per theme change
- - `onComponentRender`: call this hook once per component render
- - `observeDOMNode`: call this function to track a DOM node for changes
- - `unobserveDOMNode`: call this function to stop tracking a DOM node for changes  
-
+ 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)

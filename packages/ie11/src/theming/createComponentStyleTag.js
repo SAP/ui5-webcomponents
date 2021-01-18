@@ -19,12 +19,14 @@ const getStaticStyle = ElementClass => {
 	return componentStaticStyles;
 };
 
-/**
- * Creates the needed CSS for a web component class in the head tag
- * Note: IE11, Edge
- * @param ElementClass
- */
-const createComponentStyleTag = ElementClass => {
+
+const createComponentStyleTag = component => {
+	const ElementClass = component.constructor;
+
+	if (!ElementClass._needsShadowDOM() && !ElementClass._needsStaticArea()) {
+		return;
+	}
+
 	const tag = ElementClass.getMetadata().getTag();
 	const pureTag = ElementClass.getMetadata().getPureTag();
 	if (IEStyleSet.has(tag)) {
