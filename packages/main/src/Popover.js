@@ -283,7 +283,7 @@ class Popover extends Popup {
 		}
 
 		this._opener = opener;
-		this._openerRect = opener.getBoundingClientRect()
+		this._openerRect = opener.getBoundingClientRect();
 
 		await super.open(preventInitialFocus);
 	}
