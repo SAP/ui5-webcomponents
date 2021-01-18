@@ -1,6 +1,6 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import whenPolyfillLoaded from "./whenPolyfillLoaded.js";
-import DOMObserver from "./DOMObserver.js";
+import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import { runPonyfill } from "./theming/CSSVarsPonyfill.js";
 
@@ -29,8 +29,9 @@ const onComponentRender = component => {
 
 registerFeature("LegacyInterface", {
 	isLegacyBrowser,
-	DOMObserver,
 	onBoot,
 	onApplyTheme,
 	onComponentRender,
+	observeDOMNode,
+	unobserveDOMNode,
 });

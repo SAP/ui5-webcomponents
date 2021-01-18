@@ -6,7 +6,7 @@ import executeTemplate from "./renderer/executeTemplate.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
-import DOMObserver from "./DOMObserver.js";
+import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import { getRTL } from "./config/RTL.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
@@ -18,7 +18,12 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import { isLegacyBrowser, LegacyDOMObserver, onLegacyComponentRender } from "./LegacyBrowsersAdapter.js";
+import {
+	isLegacyBrowser,
+	onLegacyComponentRender,
+	legacyObserveDOMNode,
+	legacyUnobserveDOMNode,
+} from "./LegacyBrowsersAdapter.js";
 
 let autoId = 0;
 
@@ -195,14 +200,14 @@ class UI5Element extends HTMLElement {
 			subtree: canSlotText,
 			characterData: canSlotText,
 		};
-		(LegacyDOMObserver || DOMObserver).observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
+		(legacyObserveDOMNode || observeDOMNode)(this, this._processChildren.bind(this), mutationObserverOptions);
 	}
 
 	/**
 	 * @private
 	 */
 	_stopObservingDOMChildren() {
-		(LegacyDOMObserver || DOMObserver).unobserveDOMNode(this);
+		(legacyUnobserveDOMNode || unobserveDOMNode)(this);
 	}
 
 	/**

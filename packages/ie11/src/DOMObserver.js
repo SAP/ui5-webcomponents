@@ -2,30 +2,26 @@
 const observers = new WeakMap();
 
 /**
- * Implements universal DOM node observation methods.
+ * @param node
+ * @param callback
  */
-class DOMObserver {
-	/**
-	 * @param node
-	 * @param callback
-	 */
-	static observeDOMNode(node, callback) {
-		const observerObject = window.ShadyDOM.observeChildren(node, callback);
-		observers.set(node, observerObject);
-	}
+const observeDOMNode = (node, callback) => {
+	const observerObject = window.ShadyDOM.observeChildren(node, callback);
+	observers.set(node, observerObject);
+};
 
-	/**
-	 * @param node
-	 */
-	static unobserveDOMNode(node) {
-		const observerObject = observers.get(node);
-		if (!observerObject) {
-			return;
-		}
-
+/**
+ * @param node
+ */
+const unobserveDOMNode = node => {
+	const observerObject = observers.get(node);
+	if (observerObject) {
 		window.ShadyDOM.unobserveChildren(observerObject);
 		observers.delete(node);
 	}
-}
+};
 
-export default DOMObserver;
+export {
+	observeDOMNode,
+	unobserveDOMNode,
+};
