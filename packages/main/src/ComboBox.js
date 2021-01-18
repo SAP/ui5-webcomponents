@@ -391,7 +391,7 @@ class ComboBox extends UI5Element {
 	onBeforeRendering() {
 		let domValue;
 
-		if (this._initialRendering) {
+		if (this._initialRendering || !this._isValueChangedByInteraction()) {
 			domValue = this.value;
 			this._filteredItems = this.items;
 		} else {
@@ -443,6 +443,12 @@ class ComboBox extends UI5Element {
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 		this.storeResponsivePopoverWidth();
+
+		// Reset the interaction flag only after any scheduled re-renderings called in this method are done,
+		// avoid resetting the indicator before the calculations caused by the the user action are finished
+		setTimeout(() => {
+			this._setValueChangedByInteraction(false);
+		});
 	}
 
 	shouldClosePopover() {
@@ -608,6 +614,7 @@ class ComboBox extends UI5Element {
 	_keydown(event) {
 		const isArrowKey = isDown(event) || isUp(event);
 		this._autocomplete = !(isBackSpace(event) || isDelete(event));
+		this._setValueChangedByInteraction(true);
 
 		if (isArrowKey) {
 			this.handleArrowKeyPress(event);
@@ -709,12 +716,21 @@ class ComboBox extends UI5Element {
 			return item;
 		});
 
+		this._setValueChangedByInteraction(true);
 		this._inputChange();
 		this._closeRespPopover();
 	}
 
 	_onItemFocus(event) {
 		this._itemFocused = true;
+	}
+
+	_isValueChangedByInteraction() {
+		return this._isChangedByInteraction;
+	}
+
+	_setValueChangedByInteraction(isValueChangedByInteraction) {
+		this._isChangedByInteraction = isValueChangedByInteraction;
 	}
 
 	get _headerTitleText() {

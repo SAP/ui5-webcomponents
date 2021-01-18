@@ -325,5 +325,14 @@ describe("General interaction", () => {
 
 		arrow.click();
 		assert.strictEqual(listItem.shadow$(".ui5-li-info").getText(), "DZ", "Additional item text should be displayed");
+	});	
+
+	it ("Tests setValue() update programatically (via JS, not by user interaction)", () => {
+		const combo = $("#combo2");
+		const input = combo.shadow$("#ui5-combobox-input");
+
+		combo.setProperty("value", "Value is set instantly");
+
+		assert.strictEqual(input.getAttribute("value"), "Value is set instantly", "Value is updated in realtime when set with direct property update");
 	});
 });
