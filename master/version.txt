@@ -1,5 +1,5 @@
-commit a10acc82746c5acbb4874629da61b9a800eb0752
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Fri Jan 15 16:36:31 2021 +0200
+commit 3b2bd8c01b35c4a70fee2c326c706cc3b297d621
+Author: Marco Beier <marco-beier@t-online.de>
+Date:   Mon Jan 18 09:49:29 2021 +0100
 
-    fix(ui5-combobox): fix behaviour when enter is clicked
+    fix(docs): playground logo is now shown & typo is fixed
