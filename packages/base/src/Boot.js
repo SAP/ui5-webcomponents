@@ -14,7 +14,7 @@ const eventProvider = new EventProvider();
  * @public
  * @param listener
  */
-const attachBootTask = listener => {
+const attachBoot = listener => {
 	eventProvider.attachEvent("boot", listener);
 };
 
@@ -44,5 +44,5 @@ const boot = () => {
 
 export {
 	boot,
-	attachBootTask,
+	attachBoot,
 };

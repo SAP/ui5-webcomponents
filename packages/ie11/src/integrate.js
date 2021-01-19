@@ -1,4 +1,4 @@
-import { attachBootTask } from "@ui5/webcomponents-base/dist/Boot.js";
+import { attachBoot } from "@ui5/webcomponents-base/dist/Boot.js";
 import { attachThemeLoaded } from "@ui5/webcomponents-base/dist/theming/ThemeLoaded.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { setCreateObserverCallback, setDestroyObserverCallback } from "@ui5/webcomponents-base/dist/DOMObserver.js";
@@ -7,7 +7,7 @@ import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import { runPonyfill } from "./theming/CSSVarsPonyfill.js";
 
 // Execute once on boot
-attachBootTask(whenPolyfillLoaded);
+attachBoot(whenPolyfillLoaded);
 
 // Execute on each theme application
 attachThemeLoaded(runPonyfill);
