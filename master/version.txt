@@ -1,5 +1,5 @@
-commit cf8f4de594176016a1e62d133904df7947e012df
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Jan 18 11:12:28 2021 +0200
+commit bb7c9525ae5c53801e7d905d87fe2bf9a27e2fd4
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Jan 19 14:14:25 2021 +0200
 
-    docs(ui5-shellbar): profile slot description improvement (#2691)
+    fix(ui5-upload-collection-item): fix title behaviour on small screens (#2699)
