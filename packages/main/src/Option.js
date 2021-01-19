@@ -19,6 +19,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether <code>ui5-option</code> is in disabled state.
+		 * <br><br>
+		 * <b>Note:</b> A disabled <code>ui5-option</code> is noninteractive.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		disabled: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the <code>icon</code> source URI.
 		 * <br><br>
 		 * <b>Note:</b>

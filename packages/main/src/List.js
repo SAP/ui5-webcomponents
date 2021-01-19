@@ -411,7 +411,7 @@ class List extends UI5Element {
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, {
 			navigationMode: NavigationMode.Vertical,
-			getItemsCallback: () => this.getSlottedNodes("items"),
+			getItemsCallback: () => this.getEnabledItems(),
 		});
 	}
 
@@ -490,6 +490,10 @@ class List extends UI5Element {
 
 	getSelectedItems() {
 		return this.getSlottedNodes("items").filter(item => item.selected);
+	}
+
+	getEnabledItems() {
+		return this.getSlottedNodes("items").filter(item => !item.disabled);
 	}
 
 	getFirstSelectedItem() {
