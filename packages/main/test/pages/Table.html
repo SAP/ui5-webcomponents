@@ -147,7 +147,7 @@
 	</table>
 
 
-	<ui5-table class="no-data-table" id="tableNoData" no-data-text="No Data" show-no-data>
+	<ui5-table class="no-data-table" id="tableNoData" no-data-text="No Data" show-no-data busy>
 		<ui5-table-column id="column-1" slot="columns">
 			<div class="column-content">
 				<ui5-label>Product</ui5-label>
@@ -2883,7 +2883,7 @@
 		});
 
 		table.addEventListener("popinChange", function (e) {
-			tableLable.textContent = `Number of poppedColumns: ${e.detail.poppedColumns.length}`;
+			tableLable.textContent = "Number of poppedColumns: " + e.detail.poppedColumns.length;
 		});
 
 		testRowClick.addEventListener("rowClick", function (e) {

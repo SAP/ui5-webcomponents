@@ -5,6 +5,10 @@
 	width: 100%;
 }
 
+.ui5-table-root {
+	position: relative;
+}
+
 table {
 	width: 100%;
 	border-spacing: 0;
@@ -50,4 +54,25 @@ tr {
 
 .ui5-table-end-row {
 	height: 0px;
+}
+
+:host([busy]) .ui5-table-busy-row {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	outline: none;
+}
+
+:host([busy]) .ui5-table-busy-ind {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+:host([busy]) .ui5-table-load-more-row {
+	opacity: 0.72;
 }

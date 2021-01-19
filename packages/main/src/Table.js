@@ -214,6 +214,14 @@ const metadata = {
 		_columnHeader: {
 			type: Object,
 		},
+
+		/**
+		 * Defines if the entire table is in view port.
+		 * @private
+		 */
+		_inViewport: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 		/**
@@ -366,6 +374,8 @@ class Table extends UI5Element {
 		if (this.growsOnScroll) {
 			this.observeTableEnd();
 		}
+
+		this.checkTableInViewport();
 	}
 
 	onEnterDOM() {
@@ -439,6 +449,15 @@ class Table extends UI5Element {
 		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
 	}
 
+	handleResize(event) {
+		this.checkTableInViewport();
+		this.popinContent(event);
+	}
+
+	checkTableInViewport() {
+		this._inViewport = this.isInViewport();
+	}
+
 	popinContent(_event) {
 		const clientRect = this.getDomRef().getBoundingClientRect();
 		const tableWidth = clientRect.width;
@@ -505,6 +524,14 @@ class Table extends UI5Element {
 		return this.growingIntersectionObserver;
 	}
 
+	get styles() {
+		return {
+			busy: {
+				position: this.busyIndPosition,
+			},
+		};
+	}
+
 	get growsWithButton() {
 		if (isIE()) {
 			// On IE fallback to "More" button, even if growing of type "Scroll" is set.
@@ -532,6 +559,24 @@ class Table extends UI5Element {
 
 	get tableEndDOM() {
 		return this.shadowRoot.querySelector(".ui5-table-end-marker");
+	}
+
+	get busyIndPosition() {
+		if (isIE()) {
+			return "absolute";
+		}
+
+		return this._inViewport ? "absolute" : "sticky";
+	}
+
+	isInViewport() {
+		const rect = this.getDomRef().getBoundingClientRect();
+
+		return (
+			rect.top >= 0 && rect.left >= 0
+				&& rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+				&& rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+		);
 	}
 }
 

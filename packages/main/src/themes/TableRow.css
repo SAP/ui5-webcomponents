@@ -3,7 +3,7 @@
 }
 
 :host([_busy]) .ui5-table-row-root {
-	opacity: 0.6;
+	opacity: 0.72;
 	pointer-events: none;
 }
 
