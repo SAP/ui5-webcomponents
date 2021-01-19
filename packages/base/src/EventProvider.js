@@ -61,8 +61,8 @@ class EventProvider {
 	 * @param data optional data to pass to each event listener
 	 * @returns {Array} an array with the results of all event listeners
 	 */
-	async fireEventAsync(eventName, data) {
-		return await Promise.all(this.fireEvent(eventName, data));
+	fireEventAsync(eventName, data) {
+		return Promise.all(this.fireEvent(eventName, data));
 	}
 
 	isHandlerAttached(eventName, fnFunction) {
