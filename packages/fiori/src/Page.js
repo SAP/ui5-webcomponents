@@ -20,7 +20,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.Page.prototype */ {
 
 		/**
-         * This property is used to set the background color of the <code>ui-page</code>. When a list is placed inside the page, the value "List" should be used to display a gray background. "Standard", with the default background color, is used if not specified.
+         * This property is used to set the background color of the <code>ui5-page</code>. When a list is placed inside the page, the value "List" should be used to display a gray background. "Standard", with the default background color, is used if not specified.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -141,7 +141,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.Page
  * @extends UI5Element
  * @tagname ui5-page
- * @since 1.0.0-rc.11
+ * @since 1.0.0-rc.12
  * @public
  */
 class Page extends UI5Element {
@@ -176,16 +176,6 @@ class Page extends UI5Element {
 
 	get _contentPaddingBottom() {
 		return this.floatingFooter && !this.hideFooter ? "3.5rem" : "0";
-	}
-
-	get classes() {
-		return {
-			footer: {
-				"ui5-page-floating-footer-root": this.floatingFooter,
-				"ui5-page-show-floating-footer": !this.hideFooter && this.floatingFooter,
-				"ui5-page-hide-floating-footer": this.hideFooter && this.floatingFooter,
-			},
-		};
 	}
 
 	get styles() {

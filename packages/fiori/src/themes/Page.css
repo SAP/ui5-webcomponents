@@ -34,7 +34,7 @@
     width: 100%;
 }
 
-.ui5-page-floating-footer-root {
+:host([floating-footer]) .ui5-page-footer-root {
     left: 0.5rem;
     right: 0.5rem;
     width: auto;
@@ -42,11 +42,11 @@
     bottom: 0.5rem;
 }
 
-.ui5-page-show-floating-footer {
+:host([floating-footer]:not([hide-footer])) .ui5-page-footer-root {
     animation: bounceShow 0.35s forwards ease-in-out;
 }
 
-.ui5-page-hide-floating-footer {
+:host([floating-footer][hide-footer]) .ui5-page-footer-root {
     animation: bounceHide 0.35s forwards ease-in-out;
 }
 
