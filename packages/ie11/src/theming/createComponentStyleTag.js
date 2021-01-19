@@ -10,16 +10,6 @@ attachCustomCSSChange(tag => {
 	IEStyleSet.delete(tag);
 });
 
-const getStaticStyle = ElementClass => {
-	let componentStaticStyles = ElementClass.staticAreaStyles;
-	if (Array.isArray(componentStaticStyles)) {
-		componentStaticStyles = componentStaticStyles.join(" ");
-	}
-
-	return componentStaticStyles;
-};
-
-
 const createComponentStyleTag = component => {
 	const ElementClass = component.constructor;
 
@@ -37,7 +27,7 @@ const createComponentStyleTag = component => {
 	cssContent = adaptCSSForIE(cssContent, tag, pureTag);
 
 	// Append static CSS, if any, for IE
-	let staticCssContent = getStaticStyle(ElementClass);
+	let staticCssContent = getEffectiveStyle(ElementClass, true);
 	if (staticCssContent) {
 		staticCssContent = adaptCSSForIE(staticCssContent, "ui5-static-area-item");
 		cssContent = `${cssContent} ${staticCssContent}`;
