@@ -342,7 +342,7 @@ class Popover extends Popup {
 		const popoverSize = await this._popoverSize;
 
 		if (this.isOpen()) {
-			// update opener rect if it was changed during the popover is opened
+			// update opener rect if it was changed during the popover being opened
 			this._openerRect = this._opener.getBoundingClientRect();
 		}
 
