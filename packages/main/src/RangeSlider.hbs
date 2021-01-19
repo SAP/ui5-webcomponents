@@ -1,14 +1,62 @@
 {{>include "./SliderBase.hbs"}}
 
+<span id="{{_id}}-sliderDesc" class="ui5-hidden-text">{{_ariaLabelledByText}}</span>
+<span id="{{_id}}-leftHandleDesc" class="ui5-hidden-text">{{_ariaLeftHandleText}}</span>
+<span id="{{_id}}-rightHandleDesc" class="ui5-hidden-text">{{_ariaRightHandleText}}</span>
+
+{{#*inline "progressbar"}}
+	<div class="ui5-slider-progress-container">
+		<div class="ui5-slider-progress"
+			style="{{styles.progress}}"
+			@focusout="{{_onfocusout}}"
+			@focusin="{{_onfocusin}}"
+			role="slider"
+			tabindex="0"
+			aria-orientation="horizontal"
+			aria-valuemin="{{min}}"
+			aria-valuemax="{{max}}"
+			aria-valuetext="From {{startValue}} to {{endValue}}"
+			aria-labelledby="{{_id}}-sliderDesc"
+			aria-disabled="{{_ariaDisabled}}"
+		></div>
+	</div>
+{{/inline}}
+
 {{#*inline "handles"}}
-	<div class="ui5-slider-handle ui5-slider-handle--start" style="{{styles.startHandle}}" tabindex="{{tabIndex}}" @focusout="{{_onfocusout}}" @focusin="{{_onfocusin}}">
+	<div class="ui5-slider-handle ui5-slider-handle--start"
+		style="{{styles.startHandle}}"
+		@focusin="{{_onfocusin}}"
+		@focusout="{{_onfocusout}}"
+		role="slider"
+		tabindex="0"
+		aria-orientation="horizontal"
+		aria-valuemin="{{min}}"
+		aria-valuemax="{{max}}"
+		aria-valuenow="{{startValue}}"
+		aria-labelledby="{{_id}}-leftHandleDesc"
+		aria-disabled="{{_ariaDisabled}}"
+	>
 		{{#if showTooltip}}
 			<div class="ui5-slider-tooltip ui5-slider-tooltip--start" style="{{styles.tooltip}}">
 				<span class="ui5-slider-tooltip-value">{{tooltipStartValue}}</span>
 			</div>
 		{{/if}}
 	</div>
+<<<<<<< HEAD
 	<div class="ui5-slider-handle ui5-slider-handle--end" style="{{styles.endHandle}}" tabindex="{{tabIndex}}" @focusout="{{_onfocusout}}" @focusin="{{_onfocusin}}">
+=======
+	<div class="ui5-slider-handle ui5-slider-handle--end"
+		style="{{styles.endHandle}}"
+		role="slider"
+		tabindex="0"
+		aria-orientation="horizontal"
+		aria-valuemin="{{min}}"
+		aria-valuemax="{{max}}"
+		aria-valuenow="{{endValue}}"
+		aria-labelledby="{{_id}}-rightHandleDesc"
+		aria-disabled="{{_ariaDisabled}}"
+	>
+>>>>>>> initial commit
 		{{#if showTooltip}}
 			<div class="ui5-slider-tooltip ui5-slider-tooltip--end" style="{{styles.tooltip}}">
 				<span class="ui5-slider-tooltip-value">{{tooltipEndValue}}</span>
