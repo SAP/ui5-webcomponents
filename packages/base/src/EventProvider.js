@@ -36,7 +36,6 @@ class EventProvider {
 
 	/**
 	 * Fires an event and returns the results of all event listeners as an array.
-	 * Example: If listeners return promises, you can: await fireEvent("myEvent") to know when all listeners have finished.
 	 *
 	 * @param eventName the event to fire
 	 * @param data optional data to pass to each event listener
@@ -53,6 +52,17 @@ class EventProvider {
 		return eventListeners.map(event => {
 			return event["function"].call(this, data); // eslint-disable-line
 		});
+	}
+
+	/**
+	 * Fires an event, awaits for all listeners' results to have resolved, and returns the results as an array.
+	 *
+	 * @param eventName the event to fire
+	 * @param data optional data to pass to each event listener
+	 * @returns {Array} an array with the results of all event listeners
+	 */
+	async fireEventAsync(eventName, data) {
+		return await Promise.all(this.fireEvent(eventName, data));
 	}
 
 	isHandlerAttached(eventName, fnFunction) {

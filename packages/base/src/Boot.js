@@ -34,7 +34,7 @@ const boot = () => {
 		OpenUI5Support && OpenUI5Support.attachListeners();
 		insertFontFace();
 		insertSystemCSSVars();
-		await Promise.all(eventProvider.fireEvent("boot"));
+		await eventProvider.fireEventAsync("boot");
 
 		resolve();
 	});
