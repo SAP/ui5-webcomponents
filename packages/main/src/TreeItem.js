@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 /**
  * @public
@@ -65,6 +66,30 @@ const metadata = {
 		 */
 		icon: {
 			type: String,
+		},
+
+		/**
+		 * Defines the <code>info</code>, displayed in the end of the tree item.
+		 * @type {string}
+		 * @public
+		 * @since 1.0.0-rc.11
+		 */
+		info: {
+			type: String,
+		},
+
+		/**
+		 * Defines the state of the <code>info</code>.
+		 * <br>
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @public
+		 * @since 1.0.0-rc.11
+		 */
+		infoState: {
+			type: ValueState,
+			defaultValue: ValueState.None,
 		},
 	},
 	managedSlots: true,

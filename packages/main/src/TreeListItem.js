@@ -39,6 +39,16 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the <code>info</code>, displayed in the end of the tree item.
+		 * @type {string}
+		 * @public
+		 * @since 1.0.0-rc.11
+		 */
+		info: {
+			type: String,
+		},
+
+		/**
 		 * If set, an icon will be displayed before the text of the tree list item.
 		 *
 		 * @public

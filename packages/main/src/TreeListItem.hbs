@@ -21,6 +21,10 @@
 	{{#if _showTitle}}
 		<div part="title" class="ui5-li-title"><slot></slot></div>
 	{{/if}}
+
+	{{#if info}}
+		<span part="info" class="ui5-li-info">{{info}}</span>
+	{{/if}}
 {{/inline}}
 
 {{#*inline "imageBegin"}}{{/inline}}
