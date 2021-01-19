@@ -37,6 +37,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether <code>ui5-li</code> is in disabled state.
+		 * <br><br>
+		 * <b>Note:</b> A disabled <code>ui5-li</code> is noninteractive.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @protected
+		 */
+		disabled: {
+			type: Boolean,
+		},
+
+		/**
 		 * Indicates if the element is on focus
 		 * @private
 		 */
@@ -73,6 +85,12 @@ class ListItemBase extends UI5Element {
 
 	static get styles() {
 		return styles;
+	}
+
+	onBeforeRendering() {
+		if (this.disabled) {
+			this.focused = false;
+		}
 	}
 
 	_onfocusin(event) {
@@ -143,9 +161,23 @@ class ListItemBase extends UI5Element {
 		return {
 			main: {
 				"ui5-li-root": true,
-				"ui5-li--focusable": true,
+				"ui5-li--focusable": !this.disabled,
 			},
 		};
+	}
+
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
+	}
+
+	get tabIndex() {
+		if (this.disabled) {
+			return -1;
+		}
+		if (this.selected) {
+			return 0;
+		}
+		return this._tabIndex;
 	}
 }
 
