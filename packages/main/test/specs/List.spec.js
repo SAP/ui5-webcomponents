@@ -304,6 +304,7 @@ describe("List Tests", () => {
 		assert.strictEqual(input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
 	});
 
+<<<<<<< HEAD
 	it("Popover with List opens without errors", () => {
 		const btnPopupOpener = $("#btnOpenPopup");
 		const btnInListHeader = $("#btnInHeader");
@@ -312,6 +313,8 @@ describe("List Tests", () => {
 		assert.strictEqual(btnInListHeader.isFocused(), true, "The List header btn is focused.");
 	});
 
+=======
+>>>>>>> e0b1e180 (feat(ui5-select): Support for disabled options)
 	it('focusable list-items are correctly disabled', () => {
 		const item2 = $('#basicList ui5-li:nth-child(2)');
 
