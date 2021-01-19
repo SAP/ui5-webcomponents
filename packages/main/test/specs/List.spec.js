@@ -301,4 +301,32 @@ describe("List Tests", () => {
 
 		assert.strictEqual(input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
 	});
+
+	it('focusable list-items are correctly disabled', () => {
+		const item2 = $('#basicList ui5-li:nth-child(2)'),
+			item3 = $('#basicList ui5-li:nth-child(3)');
+
+		// focus the second item
+		item2.click();
+
+		// disable the second item
+		browser.execute(() => {
+			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
+		});
+
+		assert.strictEqual(item2.getProperty("focused"), false, "disabled item is no longer focused");
+		assert.strictEqual(item2.shadow$('li').getProperty("tabIndex"), -1, "disabled item is no longer focusable");
+		assert.strictEqual(item2.shadow$('li').getAttribute("class"),"ui5-li-root", "disabled item no longer styled as focusable");
+		assert.strictEqual(item3.shadow$('li').getProperty("tabIndex"), 0, "the next enabled item is made focusable");
+	});
+
+	it('disabled list-items are skipped on navigation', () => {
+		const item1 = $('#basicList ui5-li:nth-child(1)'),
+			item3 = $('#basicList ui5-li:nth-child(3)');
+		item1.click();
+
+		item1.keys("ArrowDown");
+
+		assert.strictEqual(item3.getProperty("focused"), true, "disabled item is skipped");
+	});
 });
