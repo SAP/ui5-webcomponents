@@ -4,6 +4,13 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import SliderBase from "./SliderBase.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
 
+// Texts
+import {
+	RANGE_SLIDER_ARIA_DESCRIPTION,
+	RANGE_SLIDER_LEFT_HANDLE_DESCRIPTION,
+	RANGE_SLIDER_RIGHT_HANDLE_DESCRIPTION,
+} from "./generated/i18n/i18n-defaults.js";
+
 /**
  * @public
  */
@@ -110,6 +117,26 @@ class RangeSlider extends SliderBase {
 	get tooltipEndValue() {
 		const stepPrecision = this.constructor._getDecimalPrecisionOfNumber(this._effectiveStep);
 		return this.endValue.toFixed(stepPrecision);
+	}
+
+	get _ariaDisabled() {
+		return this.disabled || undefined;
+	}
+
+	get _ariaLabelledByText() {
+		return this.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION);
+	}
+
+	get _ariaLeftHandleText() {
+		const isRTL = this.effectiveDir === "rtl";
+
+		return !isRTL ? this.i18nBundle.getText(RANGE_SLIDER_LEFT_HANDLE_DESCRIPTION) : this.i18nBundle.getText(RANGE_SLIDER_RIGHT_HANDLE_DESCRIPTION);
+	}
+
+	get _ariaRightHandleText() {
+		const isRTL = this.effectiveDir === "rtl";
+
+		return !isRTL ? this.i18nBundle.getText(RANGE_SLIDER_RIGHT_HANDLE_DESCRIPTION) : this.i18nBundle.getText(RANGE_SLIDER_LEFT_HANDLE_DESCRIPTION);
 	}
 
 	/**

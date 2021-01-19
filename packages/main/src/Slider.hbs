@@ -1,9 +1,29 @@
 {{>include "./SliderBase.hbs"}}
 
+<span id="{{_id}}-sliderDesc" class="ui5-hidden-text">{{ariaLabelledByText}}</span>
+
+{{#*inline "progressbar"}}
+	<div class="ui5-slider-progress-container" aria-hidden="true">
+		<div class="ui5-slider-progress"
+			style="{{styles.progress}}"
+			@focusout="{{_onfocusout}}"
+			@focusin="{{_onfocusin}}"
+			tabindex="-1"
+		></div>
+	</div>
+{{/inline}}
+
 {{#*inline "handles"}}
 	<div class="ui5-slider-handle"
-		style="{{styles.handle}}"
+		role="slider"
 		tabindex="{{tabIndex}}"
+		aria-orientation="horizontal"
+		aria-valuemin="{{min}}"
+		aria-valuemax="{{max}}"
+		aria-valuenow="{{value}}"
+		aria-labelledby="{{_id}}-sliderDesc"
+		aria-disabled="{{_ariaDisabled}}"
+		style="{{styles.handle}}"
 		@focusout="{{_onfocusout}}"
 		@focusin="{{_onfocusin}}"
 		data-sap-focus-ref
