@@ -164,6 +164,7 @@ class ListItemBase extends UI5Element {
 	get ariaDisabled() {
 		return this.disabled ? "true" : undefined;
 	}
+<<<<<<< HEAD
 
 	get tabIndex() {
 		if (this.disabled) {
@@ -174,6 +175,8 @@ class ListItemBase extends UI5Element {
 		}
 		return this._tabIndex;
 	}
+=======
+>>>>>>> 208a2fbc (feat(ui5-select): Support for disabled options)
 }
 
 export default ListItemBase;

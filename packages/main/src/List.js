@@ -51,6 +51,9 @@ const metadata = {
 		"default": {
 			propertyName: "items",
 			type: HTMLElement,
+			invalidateOnChildChange: {
+				properties: ["disabled"],
+			},
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
