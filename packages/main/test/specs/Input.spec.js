@@ -372,7 +372,7 @@ describe("Input general interaction", () => {
 		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
 	});
 
-	it("Should open suggestions popover when ui5-input is the fisrt focusable element within a dialog", () => {
+	it("Should open suggestions popover when ui5-input is the first focusable element within a dialog", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 		const input = $("#inputInDialog");
 		const button = browser.$("#btnOpenDialog");
