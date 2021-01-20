@@ -195,7 +195,7 @@ class RangeSlider extends SliderBase {
 
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
-		const affectedValue = this._getAffectedValue();
+		const affectedValue = this._valueAffected;
 
 		// If home/end key is pressed and no single handle is focused the active element
 		// is the range selection - update both start and end values. Otherwise, if 'home'
@@ -304,7 +304,7 @@ class RangeSlider extends SliderBase {
 		}
 
 		// Update Slider UI and internal state
-		this.update(this._getAffectedValue(), newValue, null);
+		this.update(this._valueAffected, newValue, null);
 	}
 
 
@@ -364,7 +364,7 @@ class RangeSlider extends SliderBase {
 	 */
 	_updateValueOnHandleDrag(event) {
 		const newValue = this.constructor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
-		this.update(this._getAffectedValue(), newValue, null);
+		this.update(this._valueAffected, newValue, null);
 	}
 
 	/**
@@ -441,7 +441,7 @@ class RangeSlider extends SliderBase {
 
 		// Flag if press is in the current select range
 		const isNewValueInCurrentRange = value >= this._startValueAtBeginningOfAction && value <= this._endValueAtBeginningOfAction;
-		this._setIsPressInCurrentRange(!(this._getAffectedValue() || this._handeIsPressed) ? isNewValueInCurrentRange : false);
+		this._setIsPressInCurrentRange(!(this._valueAffected || this._handeIsPressed) ? isNewValueInCurrentRange : false);
 	}
 
 	/**
@@ -462,10 +462,6 @@ class RangeSlider extends SliderBase {
 		}
 	}
 
-	_getAffectedValue() {
-		return this._valueAffected;
-	}
-
 	/**
 	 * Flag if press action is made on the currently selected range of values
 	 *
@@ -474,10 +470,6 @@ class RangeSlider extends SliderBase {
 	 */
 	_setIsPressInCurrentRange(isPressInCurrentRange) {
 		this._isPressInCurrentRange = isPressInCurrentRange;
-	}
-
-	_isPressInCurrentRange() {
-		return this._isPressInCurrentRange;
 	}
 
 	/**
@@ -507,7 +499,7 @@ class RangeSlider extends SliderBase {
 	 */
 	focusInnerElement() {
 		const isReversed = this._areValuesReversed();
-		const affectedValue = this._getAffectedValue();
+		const affectedValue = this._valueAffected;
 
 		if (this._isPressInCurrentRange || !affectedValue) {
 			this._progressBar.focus();
@@ -605,7 +597,7 @@ class RangeSlider extends SliderBase {
 		const min = this._effectiveMin;
 		const prevStartValue = this.getStoredPropertyState("startValue");
 		const prevEndValue = this.getStoredPropertyState("endValue");
-		const affectedValue = this._getAffectedValue();
+		const affectedValue = this._valueAffected;
 
 		// The value according to which we update the UI can be either the startValue
 		// or the endValue property. It is determined in _getClosestHandle()
@@ -637,7 +629,7 @@ class RangeSlider extends SliderBase {
 	 * @private
 	 */
 	_swapValues() {
-		const affectedValue = this._getAffectedValue();
+		const affectedValue = this._valueAffected;
 
 		if (affectedValue === RangeSlider.VALUES.start && this.startValue > this.endValue) {
 			const prevEndValue = this.endValue;
