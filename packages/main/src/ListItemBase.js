@@ -88,9 +88,9 @@ class ListItemBase extends UI5Element {
 		return styles;
 	}
 
-	onBeforeRendering() {
-		if (this.disabled) {
-			this.focused = false;
+	onAfterRendering() {
+		if (this.disabled && this.focused) {
+			this.blur();
 		}
 	}
 

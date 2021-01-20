@@ -68,7 +68,6 @@
 
 :host([disabled]) {
     opacity: var(--_ui5-listitembase_disabled_opacity);
-    cursor: default;
     pointer-events: none;
 }
 

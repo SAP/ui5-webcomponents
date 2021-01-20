@@ -136,7 +136,6 @@ class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering(...params) {
-		super.onBeforeRendering(...params);
 		this.actionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
 	}
 
