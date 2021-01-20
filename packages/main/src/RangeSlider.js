@@ -243,7 +243,7 @@ class RangeSlider extends SliderBase {
 			this._setAffectedValue(null);
 		}
 
-		this._setIsPressInCurrentRange(!this._getAffectedValue);
+		this._setIsPressInCurrentRange(!this._valueAffected);
 	}
 
 	/**
