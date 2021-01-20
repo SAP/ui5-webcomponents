@@ -35,7 +35,6 @@
 
 .ui5-li-root-tree {
     padding-left: 0;
-    position: relative;
 }
 
 :host([selected][has-border]:not([level="1"])),
@@ -108,15 +107,15 @@
 	color: var(--sapNeutralTextColor);
 	font-size: 0.875rem;
 	min-width: 6rem;
-    max-width: 40%;
-    white-space: nowrap;
+	max-width: 40%;
+	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 .ui5-li-wrapper {
-    display:flex;
-    justify-content:space-between;
-    width: 100%;
+	display:flex;
+	justify-content:space-between;
+	width: 100%;
 }
 
 [dir="rtl"] .ui5-li-info {
