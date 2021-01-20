@@ -18,13 +18,13 @@
 {{/inline}}
 
 {{#*inline "listItemContent"}}
-	<div class="ui5-li-wrapper">
+	<div class="ui5-li-tree-text-wrapper">
 		{{#if _showTitle}}
 			<div part="title" class="ui5-li-title"><slot></slot></div>
 		{{/if}}
 
 		{{#if info}}
-			<span part="info" class="ui5-li-info">{{info}}</span>
+			<span part="info" class="ui5-li-tree-info">{{info}}</span>
 		{{/if}}
 	</div>
 {{/inline}}

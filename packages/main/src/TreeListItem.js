@@ -76,7 +76,7 @@ const metadata = {
 		 * Defines the <code>info</code>, displayed in the end of the tree item.
 		 * @type {string}
 		 * @public
-		 * @since 1.0.0-rc.11
+		 * @since 1.0.0-rc.12
 		 */
 		info: {
 			type: String,
@@ -89,7 +89,7 @@ const metadata = {
 		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
-		 * @since 1.0.0-rc.11
+		 * @since 1.0.0-rc.12
 		 */
 		infoState: {
 			type: ValueState,
