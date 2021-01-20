@@ -15,9 +15,6 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 
-// ESM bundle targets Edge + browsers with native support
-import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
-
 // CLDR
 import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocaleData.js";
 

@@ -1,16 +1,15 @@
 import merge from "./thirdparty/merge.js";
-import boot from "./boot.js";
+import { boot } from "./Boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import EventProvider from "./EventProvider.js";
 import executeTemplate from "./renderer/executeTemplate.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
-import DOMObserver from "./compatibility/DOMObserver.js";
+import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import { getRTL } from "./config/RTL.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
-import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import Integer from "./types/Integer.js";
 import Float from "./types/Float.js";
@@ -19,6 +18,7 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
+import isLegacyBrowser from "./isLegacyBrowser.js";
 
 let autoId = 0;
 
@@ -195,14 +195,14 @@ class UI5Element extends HTMLElement {
 			subtree: canSlotText,
 			characterData: canSlotText,
 		};
-		DOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
+		observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
 	}
 
 	/**
 	 * @private
 	 */
 	_stopObservingDOMChildren() {
-		DOMObserver.unobserveDOMNode(this);
+		unobserveDOMNode(this);
 	}
 
 	/**
@@ -599,7 +599,9 @@ class UI5Element extends HTMLElement {
 		this._changedState = [];
 
 		// Update shadow root and static area item
-		this._updateShadowRoot();
+		if (this.constructor._needsShadowDOM()) {
+			this._updateShadowRoot();
+		}
 		if (this._shouldUpdateFragment()) {
 			this.staticAreaItem._updateFragment(this);
 			this.staticAreaItemDomRef = this.staticAreaItem.staticAreaItemDomRef.shadowRoot;
@@ -620,25 +622,12 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateShadowRoot() {
-		if (!this.constructor._needsShadowDOM()) {
-			return;
-		}
-
 		let styleToPrepend;
 		const renderResult = executeTemplate(this.constructor.template, this);
 
-		// IE11, Edge
-		if (window.ShadyDOM) {
-			createComponentStyleTag(this.constructor);
-		}
-
-		// Chrome
-		if (document.adoptedStyleSheets) {
+		if (document.adoptedStyleSheets) { // Chrome
 			this.shadowRoot.adoptedStyleSheets = getConstructableStyle(this.constructor);
-		}
-
-		// FF, Safari
-		if (!document.adoptedStyleSheets && !window.ShadyDOM) {
+		} else if (!isLegacyBrowser()) { // FF, Safari
 			styleToPrepend = getEffectiveStyle(this.constructor);
 		}
 
