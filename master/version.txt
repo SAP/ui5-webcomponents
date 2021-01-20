@@ -1,5 +1,9 @@
-commit 8c71ca4cc0f7541a6f2246ca42efeb25a6fc3de6
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Wed Jan 20 15:00:39 2021 +0200
+commit 1f07d50b1b81fa8680cd21997cb0f129142f51b7
+Author: yanaminkova <32466553+yanaminkova@users.noreply.github.com>
+Date:   Wed Jan 20 18:50:40 2021 +0200
 
-    feat(ui5-range-slider): focus and keyboard handling implementation (#2620)
+    feat(ui5-tree-item): implement info/infoState attributes (#2711)
+    
+    Info and infoState attributes are added to ui5-tree-item.
+    
+    Fixes: #2633
