@@ -246,7 +246,6 @@ class MultiInput extends Input {
 		if (event.target === inputDomRef) {
 			await super._onfocusin(event);
 		}
-
 	}
 
 	shouldOpenSuggestions() {
