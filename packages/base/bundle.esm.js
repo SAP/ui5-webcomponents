@@ -1,7 +1,6 @@
 import { registerThemeProperties } from "./dist/AssetRegistry.js";
 
-// ESM bundle targets Edge + browsers with native support
-import "./dist/features/browsersupport/Edge.js";
+// ESM bundle targets browsers with native support
 import "./dist/features/OpenUI5Support.js";
 
 // Test components

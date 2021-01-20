@@ -1,6 +1,3 @@
-// ESM bundle targets Edge + browsers with native support
-import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
-
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 
