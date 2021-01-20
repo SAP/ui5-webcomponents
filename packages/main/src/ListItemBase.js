@@ -43,6 +43,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @protected
+		 * @since 1.0.0-rc.12
 		 */
 		disabled: {
 			type: Boolean,
