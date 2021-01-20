@@ -10,6 +10,7 @@
     position: relative;
     z-index: 0;
     box-sizing: border-box;
+    background-color: inherit;
 }
 
 .ui5-page-header-root {
@@ -51,19 +52,19 @@
 }
 
 /* BackgroundDesign */
-:host([backgroundDesign="Standard"]) .ui5-page-root {
+:host([backgroundDesign="Standard"]) {
 	background-color: var(--sapBackgroundColor);
 }
 
-:host([backgroundDesign="Solid"]) .ui5-page-root {
+:host([backgroundDesign="Solid"]) {
 	background-color: var(--sapBackgroundColor);
 }
 
-:host([backgroundDesign="Transparent"]) .ui5-page-root {
+:host([backgroundDesign="Transparent"]) {
     background-color: transparent;
 }
 
-:host([backgroundDesign="List"]) .ui5-page-root {
+:host([backgroundDesign="List"]) {
     background-color: var(--_ui5_page_list_bg);
 }
 
