@@ -1,5 +1,5 @@
-commit 1d3b37e1ebf4d2abd2ed5c4c79bbbcd6eb0e0e21
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jan 20 14:24:11 2021 +0200
+commit 8c71ca4cc0f7541a6f2246ca42efeb25a6fc3de6
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Wed Jan 20 15:00:39 2021 +0200
 
-    feat: create @ui5/webcomponents-ie11 package (#2686)
+    feat(ui5-range-slider): focus and keyboard handling implementation (#2620)
