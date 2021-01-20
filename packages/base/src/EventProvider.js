@@ -55,11 +55,11 @@ class EventProvider {
 	}
 
 	/**
-	 * Fires an event, awaits for all listeners' results to have resolved, and returns the results as an array.
+	 * Fires an event and returns a promise that will resolve once all listeners have resolved.
 	 *
 	 * @param eventName the event to fire
 	 * @param data optional data to pass to each event listener
-	 * @returns {Array} an array with the results of all event listeners
+	 * @returns {Promise} a promise that will resolve when all listeners have resolved
 	 */
 	fireEventAsync(eventName, data) {
 		return Promise.all(this.fireEvent(eventName, data));

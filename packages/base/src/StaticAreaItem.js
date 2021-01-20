@@ -2,7 +2,7 @@ import { getStaticAreaInstance, removeStaticArea } from "./StaticArea.js";
 import RenderScheduler from "./RenderScheduler.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import executeTemplate from "./renderer/executeTemplate.js";
-import hasNativeSupport from "./hasNativeSupport.js";
+import isLegacyBrowser from "./isLegacyBrowser.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 
 /**
@@ -47,7 +47,7 @@ class StaticAreaItem {
 
 		if (document.adoptedStyleSheets) { // Chrome
 			this.staticAreaItemDomRef.shadowRoot.adoptedStyleSheets = getConstructableStyle(this.ui5ElementContext.constructor, true);
-		} else if (hasNativeSupport()) { // FF, Safari
+		} else if (!isLegacyBrowser()) { // FF, Safari
 			stylesToPrepend = getEffectiveStyle(this.ui5ElementContext.constructor, true);
 		}
 

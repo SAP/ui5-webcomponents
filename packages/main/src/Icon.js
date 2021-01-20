@@ -4,7 +4,7 @@ import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/SVGIc
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import hasNativeSupport from "@ui5/webcomponents-base/dist/hasNativeSupport.js";
+import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
@@ -239,22 +239,20 @@ class Icon extends UI5Element {
 	}
 
 	static createGlobalStyle() {
-		if (hasNativeSupport()) {
-			return;
-		}
-		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
-		if (!styleElement) {
-			createStyleInHead(`ui5-icon { display: none !important; }`, { "data-ui5-icon-global": "" });
+		if (isLegacyBrowser()) {
+			const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
+			if (!styleElement) {
+				createStyleInHead(`ui5-icon { display: none !important; }`, { "data-ui5-icon-global": "" });
+			}
 		}
 	}
 
 	static removeGlobalStyle() {
-		if (hasNativeSupport()) {
-			return;
-		}
-		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
-		if (styleElement) {
-			document.head.removeChild(styleElement);
+		if (isLegacyBrowser()) {
+			const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
+			if (styleElement) {
+				document.head.removeChild(styleElement);
+			}
 		}
 	}
 

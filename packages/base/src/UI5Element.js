@@ -18,7 +18,7 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import hasNativeSupport from "./hasNativeSupport.js";
+import isLegacyBrowser from "./isLegacyBrowser.js";
 
 let autoId = 0;
 
@@ -627,7 +627,7 @@ class UI5Element extends HTMLElement {
 
 		if (document.adoptedStyleSheets) { // Chrome
 			this.shadowRoot.adoptedStyleSheets = getConstructableStyle(this.constructor);
-		} else if (hasNativeSupport()) { // FF, Safari
+		} else if (!isLegacyBrowser()) { // FF, Safari
 			styleToPrepend = getEffectiveStyle(this.constructor);
 		}
 

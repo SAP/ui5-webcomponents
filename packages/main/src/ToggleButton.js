@@ -1,4 +1,4 @@
-import hasNativeSupport from "@ui5/webcomponents-base/dist/hasNativeSupport.js";
+import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import Button from "./Button.js";
 import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
 
@@ -60,7 +60,7 @@ class ToggleButton extends Button {
 	}
 
 	static get styles() {
-		return [Button.styles, toggleBtnCss, hasNativeSupport() ? undefined : toggleBtnIECss];
+		return [Button.styles, toggleBtnCss, isLegacyBrowser() && toggleBtnIECss];
 	}
 
 	_onclick() {
