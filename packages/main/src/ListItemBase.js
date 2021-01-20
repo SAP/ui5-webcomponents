@@ -88,12 +88,6 @@ class ListItemBase extends UI5Element {
 		return styles;
 	}
 
-	onAfterRendering() {
-		if (this.disabled && this.focused) {
-			this.blur();
-		}
-	}
-
 	_onfocusin(event) {
 		if (event.isMarked === "button" || event.isMarked === "link") {
 			return;

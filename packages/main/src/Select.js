@@ -309,8 +309,11 @@ class Select extends UI5Element {
 	onAfterRendering() {
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 
-		if (this._isPickerOpen && !this._listWidth) {
-			this._listWidth = this.responsivePopover.offsetWidth;
+		if (this._isPickerOpen) {
+			this._applyFocusAfterOpen();
+			if (!this._listWidth) {
+				this._listWidth = this.responsivePopover.offsetWidth;
+			}
 		}
 	}
 
