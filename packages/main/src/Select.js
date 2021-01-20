@@ -310,11 +310,19 @@ class Select extends UI5Element {
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 
 		if (this._isPickerOpen) {
-			this._applyFocusAfterOpen();
 			if (!this._listWidth) {
 				this._listWidth = this.responsivePopover.offsetWidth;
 			}
+			if (this._isFocusInsidePicker()) {
+				this._applyFocusAfterOpen();
+			}
 		}
+	}
+
+	_isFocusInsidePicker() {
+		return document.activeElement
+			&& this.staticAreaItemDomRef
+			&& document.activeElement.shadowRoot === this.staticAreaItemDomRef;
 	}
 
 	_onfocusin() {

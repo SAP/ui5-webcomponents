@@ -313,7 +313,6 @@ describe("List Tests", () => {
 			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
 		});
 
-		assert.strictEqual(item2.getProperty("focused"), false, "disabled item is no longer focused");
 		assert.strictEqual(item2.shadow$('li').getProperty("tabIndex"), -1, "disabled item is no longer focusable");
 		assert.strictEqual(item2.shadow$('li').getAttribute("class"),"ui5-li-root", "disabled item no longer styled as focusable");
 	});
