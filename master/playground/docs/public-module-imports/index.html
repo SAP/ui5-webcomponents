@@ -2789,20 +2789,14 @@ Apart from i18n assets, the above import also provides the JSON, containing all 
 all UI5 Web Components.</p>
 
 <p><a name="oldbrowsersupport"></a></p>
-<h3 id="1-old-browser-support-edge-ie11">1. Old browser support (Edge, IE11)</h3>
+<h3 id="1-old-browser-support--ie11">1. Old browser support ( IE11)</h3>
 
 <p>Most modern browsers  - <strong>Chrome, Firefox, Safari, Edge (Chromium-based)</strong>, support Web Components natively.</p>
 
-<p>If your app needs to be able to run additionally on the old <strong>Edge (EdgeHTML-based)</strong>, you should import the following module:</p>
+<p>If your app needs to run on <strong>IE11</strong>, you should import:</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/browsersupport/Edge.js</span><span class="dl">"</span><span class="p">;</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-ie11/dist/features/IE11.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
-
-<p>And if your app needs to run on both <strong>Edge</strong> and <strong>IE11</strong>, you should instead import:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/browsersupport/IE11.js</span><span class="dl">"</span><span class="p">;</span>
-</code></pre></div></div>
-<p>(this also includes Edge support).</p>
 
 <p>In addition, you should load the official Web Components polyfill in your index file, as described
 <a href="https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs">here</a>.</p>
@@ -2819,41 +2813,14 @@ but should be imported separately.</p>
 
 <p>Finally, there is an alternative to the <code class="highlighter-rouge">IE11.js</code> import:</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/browsersupport/IE11WithWebComponentsPolyfill.js</span><span class="dl">"</span><span class="p">;</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-ie11/dist/features/IE11WithWebComponentsPolyfill.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p>that includes the Web Components Polyfill too, so you don’t have to import it manually.</p>
 
-<p>This may be useful in certain use cases when your app has polyfills of its own and you need to guarantee the order of exectution.</p>
+<p>This may be useful in certain use cases when your app has polyfills of its own and you need to guarantee the order of execution.</p>
 
 <p>The three old browser support options are summarized below:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th><code class="highlighter-rouge">Edge.js</code></th>
-      <th><code class="highlighter-rouge">IE11.js</code></th>
-      <th><code class="highlighter-rouge">IE11WithWebComponentsPolyfill.js</code></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Browsers supported</td>
-      <td>Edge</td>
-      <td>Edge &amp; IE11</td>
-      <td>Edge &amp; IE11</td>
-    </tr>
-    <tr>
-      <td>Includes Web Components Polyfill</td>
-      <td>No*</td>
-      <td>No*</td>
-      <td>Yes</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><code class="highlighter-rouge">* You must include the Web Components Polyfill manually</code></p>
 
 <p><a name="theming"></a></p>
 <h3 id="2-theming">2. Theming</h3>
