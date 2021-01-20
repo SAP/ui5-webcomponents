@@ -109,11 +109,14 @@
 	font-size: 0.875rem;
 	min-width: 6rem;
     max-width: 40%;
-    position: absolute;
-    right: 0;
     white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+.ui5-li-wrapper {
+    display:flex;
+    justify-content:space-between;
+    width: 100%;
 }
 
 [dir="rtl"] .ui5-li-info {

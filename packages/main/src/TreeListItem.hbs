@@ -18,13 +18,15 @@
 {{/inline}}
 
 {{#*inline "listItemContent"}}
-	{{#if _showTitle}}
-		<div part="title" class="ui5-li-title"><slot></slot></div>
-	{{/if}}
+	<div class="ui5-li-wrapper">
+		{{#if _showTitle}}
+			<div part="title" class="ui5-li-title"><slot></slot></div>
+		{{/if}}
 
-	{{#if info}}
-		<span part="info" class="ui5-li-info">{{info}}</span>
-	{{/if}}
+		{{#if info}}
+			<span part="info" class="ui5-li-info">{{info}}</span>
+		{{/if}}
+	</div>
 {{/inline}}
 
 {{#*inline "imageBegin"}}{{/inline}}

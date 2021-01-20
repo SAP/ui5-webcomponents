@@ -1,6 +1,7 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -39,16 +40,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>info</code>, displayed in the end of the tree item.
-		 * @type {string}
-		 * @public
-		 * @since 1.0.0-rc.11
-		 */
-		info: {
-			type: String,
-		},
-
-		/**
 		 * If set, an icon will be displayed before the text of the tree list item.
 		 *
 		 * @public
@@ -79,6 +70,30 @@ const metadata = {
 		 */
 		expanded: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the <code>info</code>, displayed in the end of the tree item.
+		 * @type {string}
+		 * @public
+		 * @since 1.0.0-rc.11
+		 */
+		info: {
+			type: String,
+		},
+
+		/**
+		 * Defines the state of the <code>info</code>.
+		 * <br>
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @public
+		 * @since 1.0.0-rc.11
+		 */
+		infoState: {
+			type: ValueState,
+			defaultValue: ValueState.None,
 		},
 
 		/**
