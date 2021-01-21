@@ -11,8 +11,8 @@ import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.j
 // Texts
 import {
 	RANGE_SLIDER_ARIA_DESCRIPTION,
-	RANGE_SLIDER_LEFT_HANDLE_DESCRIPTION,
-	RANGE_SLIDER_RIGHT_HANDLE_DESCRIPTION,
+	RANGE_SLIDER_START_HANDLE_DESCRIPTION,
+	RANGE_SLIDER_END_HANDLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -134,16 +134,32 @@ class RangeSlider extends SliderBase {
 		return this.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION);
 	}
 
-	get _ariaLeftHandleText() {
+	get _ariaStartHandleText() {
 		const isRTL = this.effectiveDir === "rtl";
+		const isReversed = this._areValuesReversed();
+		let startHandleText;
 
-		return !isRTL ? this.i18nBundle.getText(RANGE_SLIDER_LEFT_HANDLE_DESCRIPTION) : this.i18nBundle.getText(RANGE_SLIDER_RIGHT_HANDLE_DESCRIPTION);
+		if ((isRTL && !isReversed) || (!isRTL && isReversed)) {
+			startHandleText = this.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
+		} else {
+			startHandleText = this.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
+		}
+
+		return startHandleText;
 	}
 
-	get _ariaRightHandleText() {
+	get _ariaEndHandleText() {
 		const isRTL = this.effectiveDir === "rtl";
+		const isReversed = this._areValuesReversed();
+		let endHandleText;
 
-		return !isRTL ? this.i18nBundle.getText(RANGE_SLIDER_RIGHT_HANDLE_DESCRIPTION) : this.i18nBundle.getText(RANGE_SLIDER_LEFT_HANDLE_DESCRIPTION);
+		if ((isRTL && !isReversed) || (!isRTL && isReversed)) {
+			endHandleText = this.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
+		} else {
+			endHandleText = this.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
+		}
+
+		return endHandleText;
 	}
 
 	/**
