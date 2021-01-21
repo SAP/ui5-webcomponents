@@ -158,8 +158,8 @@ class UI5Element extends HTMLElement {
 			}
 		}
 
-		if (this.staticAreaItem) {
-			getSingletonElementInstance("ui5-static-area").removeChild(this.staticAreaItem);
+		if (this.staticAreaItem && this.staticAreaItem.parentElement) {
+			this.staticAreaItem.parentElement.removeChild(this.staticAreaItem);
 		}
 
 		RenderScheduler.cancelRender(this);
@@ -858,6 +858,8 @@ class UI5Element extends HTMLElement {
 		if (!this.staticAreaItem) {
 			this.staticAreaItem = document.createElement("ui5-static-area-item");
 			this.staticAreaItem.setOwnerElement(this);
+		}
+		if (!this.staticAreaItem.parentElement) {
 			getSingletonElementInstance("ui5-static-area").appendChild(this.staticAreaItem);
 		}
 
