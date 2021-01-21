@@ -47,7 +47,9 @@
 		{{/if}}
 	</div>
 
-	<div class="ui5-list-busy-row">
-		<ui5-busyindicator ?active="{{busy}}" size="Medium" class="ui5-list-busy-ind"></ui5-busyindicator>
-	</div>
+	{{#if busy}}
+		<div class="ui5-list-busy-row">
+			<ui5-busyindicator active size="Medium" class="ui5-list-busy-ind"></ui5-busyindicator>
+		</div>
+	{{/if}}
 </div>
