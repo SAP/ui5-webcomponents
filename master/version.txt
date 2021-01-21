@@ -1,9 +1,7 @@
-commit 1f07d50b1b81fa8680cd21997cb0f129142f51b7
-Author: yanaminkova <32466553+yanaminkova@users.noreply.github.com>
-Date:   Wed Jan 20 18:50:40 2021 +0200
+commit fe76278fbe118ffc12f156fba72bc69d6d881f4b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jan 21 07:01:21 2021 +0200
 
-    feat(ui5-tree-item): implement info/infoState attributes (#2711)
+    fix(ui5-list): remove busy indicator dom (#2712)
     
-    Info and infoState attributes are added to ui5-tree-item.
-    
-    Fixes: #2633
+    Follow up of #2684 where the placement of the busy has been fixed. With this change we make sure the busy ind DOM is not even rendered when the List is not busy. And, aims to fix the issue with components such as the ComboBox, Select and Input, that uses the List internally, would display additional space after the last list item.
