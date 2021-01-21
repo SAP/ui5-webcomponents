@@ -8,6 +8,8 @@
 	<div class="ui5-slider-progress-container">
 		<div class="ui5-slider-progress"
 			style="{{styles.progress}}"
+			@focusin="{{_onfocusin}}"
+			@focusout="{{_onfocusout}}"
 			role="slider"
 			tabindex="0"
 			aria-orientation="horizontal"
