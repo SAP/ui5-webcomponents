@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.1](https://github.com/SAP/ui5-webcomponents/compare/v0.29.0...v0.29.1) (2021-01-21)
+
+
+### Bug Fixes
+
+* **ui5-upload-collection:** wrap noDataText/Desc text ([#2674](https://github.com/SAP/ui5-webcomponents/issues/2674)) ([ef901d2](https://github.com/SAP/ui5-webcomponents/commit/ef901d2)), closes [#2672](https://github.com/SAP/ui5-webcomponents/issues/2672)
+* **ui5-upload-collection-item:** fix title behaviour on small screens ([#2699](https://github.com/SAP/ui5-webcomponents/issues/2699)) ([205b5cb](https://github.com/SAP/ui5-webcomponents/commit/205b5cb))
+
+
+### Features
+
+* **ui5-wizard:** improve progress navigator responsiveness ([#2590](https://github.com/SAP/ui5-webcomponents/issues/2590)) ([9cf2e14](https://github.com/SAP/ui5-webcomponents/commit/9cf2e14))
+
+
+
+
+
 # [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
 
 

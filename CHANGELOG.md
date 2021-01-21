@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.1](https://github.com/SAP/ui5-webcomponents/compare/v0.29.0...v0.29.1) (2021-01-21)
+
+
+### Bug Fixes
+
+* **ui5-list:** remove busy indicator DOM ([#2712](https://github.com/SAP/ui5-webcomponents/issues/2712)) ([90e998c](https://github.com/SAP/ui5-webcomponents/commit/90e998c))
+* **ui5-list:** show busy indicator over the list ([#2684](https://github.com/SAP/ui5-webcomponents/issues/2684)) ([b8b7974](https://github.com/SAP/ui5-webcomponents/commit/b8b7974))
+* **ui5-select:** correct role and screen reader speech out ([#2587](https://github.com/SAP/ui5-webcomponents/issues/2587)) ([6b21952](https://github.com/SAP/ui5-webcomponents/commit/6b21952)), closes [#2485](https://github.com/SAP/ui5-webcomponents/issues/2485) [#2339](https://github.com/SAP/ui5-webcomponents/issues/2339) [#2142](https://github.com/SAP/ui5-webcomponents/issues/2142)
+* **ui5-tree:** add aria-posinset and aria-setsize to improve A11y ([#2671](https://github.com/SAP/ui5-webcomponents/issues/2671)) ([46c02b9](https://github.com/SAP/ui5-webcomponents/commit/46c02b9)), closes [#2553](https://github.com/SAP/ui5-webcomponents/issues/2553)
+* **ui5-upload-collection:** wrap noDataText/Desc text ([#2674](https://github.com/SAP/ui5-webcomponents/issues/2674)) ([ef901d2](https://github.com/SAP/ui5-webcomponents/commit/ef901d2)), closes [#2672](https://github.com/SAP/ui5-webcomponents/issues/2672)
+* **ui5-upload-collection-item:** truncate title on small screens ([#2699](https://github.com/SAP/ui5-webcomponents/issues/2699)) ([205b5cb](https://github.com/SAP/ui5-webcomponents/commit/205b5cb))
+
+
+### Features
+
+* **ui5-tree:** implement acc spec  ([#2636](https://github.com/SAP/ui5-webcomponents/issues/2636)) ([25a6f99](https://github.com/SAP/ui5-webcomponents/commit/25a6f99)), closes [#2465](https://github.com/SAP/ui5-webcomponents/issues/2465)
+* **ui5-tree-item:** implement info and infoState ([#2711](https://github.com/SAP/ui5-webcomponents/issues/2711)) ([9e1af17](https://github.com/SAP/ui5-webcomponents/commit/9e1af17)), closes [#2633](https://github.com/SAP/ui5-webcomponents/issues/2633)
+* **ui5-wizard:** improve progress navigator responsiveness ([#2590](https://github.com/SAP/ui5-webcomponents/issues/2590)) ([9cf2e14](https://github.com/SAP/ui5-webcomponents/commit/9cf2e14))
+
+
+
+
+
 The release includes all the commits from [RC.11](https://github.com/SAP/ui5-webcomponents/releases/tag/v1.0.0-rc.11)
 # [0.29.0](https://github.com/SAP/ui5-webcomponents/compare/v0.29.0) (2021-01-08)
 

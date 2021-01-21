@@ -1,0 +1,23 @@
+{
+	"packages": [
+		"packages/tools",
+		"packages/base",
+		"packages/localization",
+		"packages/themes-base",
+		"packages/icons",
+		"packages/icons-tnt",
+		"packages/main",
+		"packages/fiori"
+	],
+	"version": "0.29.1",
+	"command": {
+		"publish": {
+			"conventionalCommits": true
+		},
+		"version": {
+			"message": "chore(release): publish %s"
+		}
+	},
+	"npmClient": "yarn",
+	"useWorkspaces": true
+}
