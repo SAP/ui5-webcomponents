@@ -1,4 +1,3 @@
-import { getStaticAreaInstance, removeStaticArea } from "./StaticArea.js";
 import RenderScheduler from "./RenderScheduler.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import executeTemplate from "./renderer/executeTemplate.js";
@@ -6,98 +5,67 @@ import isLegacyBrowser from "./isLegacyBrowser.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 
 /**
+ *
  * @class
  * @author SAP SE
  * @private
- * Defines and takes care of ui5-static-are-item items
  */
-class StaticAreaItem {
-	constructor(_ui5ElementContext) {
-		this.ui5ElementContext = _ui5ElementContext;
+class StaticAreaItem extends HTMLElement {
+	constructor() {
+		super();
 		this._rendered = false;
-	}
-
-	isRendered() {
-		return this._rendered;
+		this.attachShadow({ mode: "open" });
 	}
 
 	/**
-	 * @private
+	 * @protected
+	 * @param ownerElement The UI5Element instance that owns this static area item
 	 */
-	_createStaticAreaItem() {
-		if (this.staticAreaItemDomRef) {
-			return;
+	setOwnerElement(ownerElement) {
+		this.ownerElement = ownerElement;
+		this.classList.add(this.ownerElement._id); // used for getting the popover in the tests
+	}
+
+	/**
+	 * Updates the shadow root of the static area item with the latest state, if rendered
+	 * @protected
+	 */
+	update() {
+		if (this._rendered) {
+			this._updateContentDensity();
+			this._updateShadowRoot();
 		}
-
-		// Initial rendering of fragment
-		this.staticAreaItemDomRef = document.createElement("ui5-static-area-item");
-		this.staticAreaItemDomRef.attachShadow({ mode: "open" });
-		this.staticAreaItemDomRef.classList.add(this.ui5ElementContext._id); // used for getting the popover in the tests
-
-		getStaticAreaInstance().appendChild(this.staticAreaItemDomRef);
-		this._rendered = true;
 	}
 
 	/**
+	 * Sets the correct content density based on the owner element's state
 	 * @private
 	 */
-	_updateStaticAreaItemShadowRoot() {
-		const renderResult = executeTemplate(this.ui5ElementContext.constructor.staticAreaTemplate, this.ui5ElementContext);
+	_updateContentDensity() {
+		if (this.ownerElement.isCompact) {
+			this.classList.add("sapUiSizeCompact");
+			this.classList.add("ui5-content-density-compact");
+		} else {
+			this.classList.remove("sapUiSizeCompact");
+			this.classList.remove("ui5-content-density-compact");
+		}
+	}
+
+	/**
+	 * Renders the template in the shadow root of the static area item
+	 * @private
+	 */
+	_updateShadowRoot() {
+		const renderResult = executeTemplate(this.ownerElement.constructor.staticAreaTemplate, this.ownerElement);
 		let stylesToPrepend;
 
 		if (document.adoptedStyleSheets) { // Chrome
-			this.staticAreaItemDomRef.shadowRoot.adoptedStyleSheets = getConstructableStyle(this.ui5ElementContext.constructor, true);
+			this.shadowRoot.adoptedStyleSheets = getConstructableStyle(this.ownerElement.constructor, true);
 		} else if (!isLegacyBrowser()) { // FF, Safari
-			stylesToPrepend = getEffectiveStyle(this.ui5ElementContext.constructor, true);
+			stylesToPrepend = getEffectiveStyle(this.ownerElement.constructor, true);
 		}
 
-		this.ui5ElementContext.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToPrepend, { eventContext: this.ui5ElementContext });
-	}
-
-	/**
-	 * @protected
-	 */
-	_updateFragment() {
-		this._createStaticAreaItem();
-		this._updateContentDensity(this.ui5ElementContext.isCompact);
-		this._updateStaticAreaItemShadowRoot();
-	}
-
-	/**
-	 * @protected
-	 */
-	_removeFragmentFromStaticArea() {
-		if (!this.staticAreaItemDomRef) {
-			return;
-		}
-
-		const staticArea = getStaticAreaInstance();
-
-		staticArea.removeChild(this.staticAreaItemDomRef);
-
-		this.staticAreaItemDomRef = null;
-
-		// remove static area
-		if (staticArea.childElementCount < 1) {
-			removeStaticArea();
-		}
-	}
-
-	/**
-	 * @protected
-	 */
-	_updateContentDensity(isCompact) {
-		if (!this.staticAreaItemDomRef) {
-			return;
-		}
-
-		if (isCompact) {
-			this.staticAreaItemDomRef.classList.add("sapUiSizeCompact");
-			this.staticAreaItemDomRef.classList.add("ui5-content-density-compact");
-		} else {
-			this.staticAreaItemDomRef.classList.remove("sapUiSizeCompact");
-			this.staticAreaItemDomRef.classList.remove("ui5-content-density-compact");
-		}
+		this.ownerElement.constructor.render(renderResult, this.shadowRoot, stylesToPrepend, { eventContext: this.ownerElement });
 	}
 
 	/**
@@ -105,26 +73,27 @@ class StaticAreaItem {
 	 * Returns reference to the DOM element where the current fragment is added.
 	 */
 	async getDomRef() {
-		if (!this._rendered || !this.staticAreaItemDomRef) {
-			this._updateFragment();
+		this._updateContentDensity();
+		if (!this._rendered) {
+			this._rendered = true;
+			this._updateShadowRoot();
 		}
 		await RenderScheduler.whenDOMUpdated(); // Wait for the content of the ui5-static-area-item to be rendered
-		return this.staticAreaItemDomRef && this.staticAreaItemDomRef.shadowRoot;
-	}
-}
-
-class StaticAreaItemElement extends HTMLElement {
-	constructor() {
-		super();
+		return this.shadowRoot;
 	}
 
-	get isUI5Element() {
-		return true;
+	/**
+	 * @protected
+	 * @param refName
+	 * @returns {Element}
+	 */
+	getStableDomRef(refName) {
+		return this.shadowRoot.querySelector(`[data-ui5-stable=${refName}]`);
 	}
 }
 
 if (!customElements.get("ui5-static-area-item")) {
-	customElements.define("ui5-static-area-item", StaticAreaItemElement);
+	customElements.define("ui5-static-area-item", StaticAreaItem);
 }
 
 export default StaticAreaItem;

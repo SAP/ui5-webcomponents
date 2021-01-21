@@ -3,7 +3,8 @@ import { boot } from "./Boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import EventProvider from "./EventProvider.js";
 import executeTemplate from "./renderer/executeTemplate.js";
-import StaticAreaItem from "./StaticAreaItem.js";
+import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
+import "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
@@ -78,7 +79,10 @@ class UI5Element extends HTMLElement {
 
 		this._initializeState();
 		this._upgradeAllProperties();
-		this._initializeContainers();
+
+		if (this.constructor._needsShadowDOM()) {
+			this.attachShadow({ mode: "open" });
+		}
 	}
 
 	/**
@@ -93,24 +97,6 @@ class UI5Element extends HTMLElement {
 		}
 
 		return this.__id;
-	}
-
-	/**
-	 * @private
-	 */
-	_initializeContainers() {
-		const needsShadowDOM = this.constructor._needsShadowDOM();
-		const needsStaticArea = this.constructor._needsStaticArea();
-
-		// Init Shadow Root
-		if (needsShadowDOM) {
-			this.attachShadow({ mode: "open" });
-		}
-
-		// Init StaticAreaItem only if needed
-		if (needsStaticArea) {
-			this.staticAreaItem = new StaticAreaItem(this);
-		}
 	}
 
 	/**
@@ -154,7 +140,6 @@ class UI5Element extends HTMLElement {
 	 */
 	disconnectedCallback() {
 		const needsShadowDOM = this.constructor._needsShadowDOM();
-		const needsStaticArea = this.constructor._needsStaticArea();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
 		this._inDOM = false;
@@ -173,8 +158,8 @@ class UI5Element extends HTMLElement {
 			}
 		}
 
-		if (needsStaticArea) {
-			this.staticAreaItem._removeFragmentFromStaticArea();
+		if (this.staticAreaItem) {
+			getSingletonElementInstance("ui5-static-area").removeChild(this.staticAreaItem);
 		}
 
 		RenderScheduler.cancelRender(this);
@@ -602,9 +587,8 @@ class UI5Element extends HTMLElement {
 		if (this.constructor._needsShadowDOM()) {
 			this._updateShadowRoot();
 		}
-		if (this._shouldUpdateFragment()) {
-			this.staticAreaItem._updateFragment(this);
-			this.staticAreaItemDomRef = this.staticAreaItem.staticAreaItemDomRef.shadowRoot;
+		if (this.staticAreaItem) {
+			this.staticAreaItem.update();
 		}
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
@@ -698,10 +682,8 @@ class UI5Element extends HTMLElement {
 	 * @param {String} refName Defines the name of the stable DOM ref
 	 */
 	getStableDomRef(refName) {
-		const staticAreaResult = this.staticAreaItemDomRef && this.staticAreaItemDomRef.querySelector(`[data-ui5-stable=${refName}]`);
-
-		return staticAreaResult
-		|| this.getDomRef().querySelector(`[data-ui5-stable=${refName}]`);
+		const staticAreaResult = this.staticAreaItem && this.staticAreaItem.getStableDomRef(refName);
+		return staticAreaResult || this.getDomRef().querySelector(`[data-ui5-stable=${refName}]`);
 	}
 
 	/**
@@ -821,12 +803,6 @@ class UI5Element extends HTMLElement {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	updateStaticAreaItemContentDensity() {
-		if (this.staticAreaItem) {
-			this.staticAreaItem._updateContentDensity(this.isCompact);
-		}
-	}
-
 	/**
 	 * Used to duck-type UI5 elements without using instanceof
 	 * @returns {boolean}
@@ -871,22 +847,22 @@ class UI5Element extends HTMLElement {
 		return !!this.template;
 	}
 
-	_shouldUpdateFragment() {
-		return this.constructor._needsStaticArea() && this.staticAreaItem.isRendered();
-	}
-
-	/**
-	 * @private
-	 */
-	static _needsStaticArea() {
-		return typeof this.staticAreaTemplate === "function";
-	}
-
 	/**
 	 * @public
 	 */
-	getStaticAreaItemDomRef() {
-		return this.staticAreaItem.getDomRef();
+	async getStaticAreaItemDomRef() {
+		if (!this.constructor.staticAreaTemplate) {
+			throw new Error("This component does not use the static area");
+		}
+
+		if (!this.staticAreaItem) {
+			this.staticAreaItem = document.createElement("ui5-static-area-item");
+			this.staticAreaItem.setOwnerElement(this);
+			getSingletonElementInstance("ui5-static-area").appendChild(this.staticAreaItem);
+		}
+
+		const ref = await this.staticAreaItem.getDomRef();
+		return ref;
 	}
 
 	/**
