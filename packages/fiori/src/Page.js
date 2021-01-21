@@ -20,13 +20,15 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.Page.prototype */ {
 
 		/**
-         * This property is used to set the background color of the <code>ui5-page</code>. When a list is placed inside the page, the value "List" should be used to display a gray background. "Standard", with the default background color, is used if not specified.
+		 * Defines the background color of the <code>ui5-page</code>.
+		 * <br><br>
+		 * <b>Note:</b> When a ui5-list is placed inside the page, we recommend using “List” to ensure better color contrast.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
 		 * <li><code>List</code></li>
 		 * <li><code>Solid</code></li>
-		 * <li><code>Standard</code></li>
+		 * <li><code>Standard</code></li> (default)
 		 * <li><code>Transparent</code></li>
 		 * <ul>
 		 * @type {PageBackgroundDesign}
@@ -39,7 +41,7 @@ const metadata = {
 		},
 
 		/**
-         * Disables vertical scrolling of page contents. Page headers and footers are fixed and do not scroll.
+         * Disables vertical scrolling of page content.
          * If set to true, there will be no vertical scrolling at all.
          *
 		 * @type {Boolean}
@@ -51,9 +53,9 @@ const metadata = {
 		},
 
 		/**
-         * Decides whether the footer can float.
-         * When set to true, the footer is not fixed below the content area anymore, but rather floats over it with a slight offset from the bottom.
-         *
+		 * Defines if the footer should float over the content.
+		 * <br><br>
+		 * <b>Note:</b> When set to true the footer floats over the content with a slight offset from the bottom, otherwise it is fixed at the very bottom of the page.
 		 * @type {Boolean}
 		 * @defaultvalue true
 		 * @public
@@ -63,7 +65,7 @@ const metadata = {
 		},
 
 		/**
-         * Decides whether the footer would be visible.
+         * Defines the footer visibility.
          *
 		 * @type {Boolean}
 		 * @defaultvalue false
