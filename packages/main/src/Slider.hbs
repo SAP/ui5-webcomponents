@@ -15,17 +15,17 @@
 
 {{#*inline "handles"}}
 	<div class="ui5-slider-handle"
+		style="{{styles.handle}}"
+		@focusout="{{_onfocusout}}"
+		@focusin="{{_onfocusin}}"
 		role="slider"
-		tabindex="{{tabIndex}}"
+		tabindex="0"
 		aria-orientation="horizontal"
 		aria-valuemin="{{min}}"
 		aria-valuemax="{{max}}"
 		aria-valuenow="{{value}}"
 		aria-labelledby="{{_id}}-sliderDesc"
 		aria-disabled="{{_ariaDisabled}}"
-		style="{{styles.handle}}"
-		@focusout="{{_onfocusout}}"
-		@focusin="{{_onfocusin}}"
 		data-sap-focus-ref
 	>
 		{{#if showTooltip}}
