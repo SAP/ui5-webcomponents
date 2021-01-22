@@ -1,7 +1,9 @@
-commit 1ec9a43c44d6e1fa43e8f2276b3667d5cb85786c
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Fri Jan 22 16:13:18 2021 +0800
+commit 014c9859af8712cc7f9055825a95184c94d0f5be
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri Jan 22 12:55:54 2021 +0200
 
-    chore: translation delivery (#2715)
+    fix(ui5-input): Obsolete accessibility API removed (#2721)
     
-    Change-Id: Iefccf8ccac86e1add8d1bcc0cc8a98ad988b2f0d
+    The API is deleted, since it is never used.
+    
+    Fixes: #2605
