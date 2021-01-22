@@ -831,7 +831,7 @@ class UI5Element extends HTMLElement {
 	/**
 	 * @public
 	 */
-	async getStaticAreaItemDomRef() {
+	getStaticAreaItemDomRef() {
 		if (!this.constructor.staticAreaTemplate) {
 			throw new Error("This component does not use the static area");
 		}
@@ -844,8 +844,7 @@ class UI5Element extends HTMLElement {
 			getSingletonElementInstance("ui5-static-area").appendChild(this.staticAreaItem);
 		}
 
-		const ref = await this.staticAreaItem.getDomRef();
-		return ref;
+		return this.staticAreaItem.getDomRef();
 	}
 
 	/**
