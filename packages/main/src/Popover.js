@@ -399,7 +399,7 @@ class Popover extends Popup {
 		this.style.visibility = "hidden";
 		this.style.display = "block";
 
-		return new Promise((resolve) => {
+		return new Promise(resolve => {
 			window.requestAnimationFrame(() => {
 				rect = this.getBoundingClientRect();
 
