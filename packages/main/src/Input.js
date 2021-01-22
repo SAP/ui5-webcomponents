@@ -332,10 +332,6 @@ const metadata = {
 			type: Object,
 		},
 
-		_wrapperAccInfo: {
-			type: Object,
-		},
-
 		_inputWidth: {
 			type: Integer,
 		},
