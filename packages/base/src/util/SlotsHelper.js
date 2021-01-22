@@ -20,7 +20,7 @@ const getSlotName = node => {
 	return "default";
 };
 
-const isSlot = el => el instanceof HTMLElement && el.localName === "slot";
+const isSlot = el => el && el instanceof HTMLElement && el.localName === "slot";
 
 const getSlottedElements = el => {
 	if (isSlot(el)) {
