@@ -586,12 +586,14 @@ class List extends UI5Element {
 
 	isForwardElement(node) {
 		const nodeId = node.id;
+		const afterElement = this.getAfterElement();
+		const beforeElement = this.getBeforeElement();
 
-		if (this._id === nodeId || this.getBeforeElement().id === nodeId) {
+		if (this._id === nodeId || (beforeElement && beforeElement.id === nodeId)) {
 			return true;
 		}
 
-		return this.getAfterElement().id === nodeId;
+		return afterElement && afterElement.id === nodeId;
 	}
 
 	onItemFocused(event) {
