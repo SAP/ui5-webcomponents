@@ -15,8 +15,8 @@
 	position: relative;
 }
 
-:host(:not([value-state]):not([readonly]):hover),
-:host([value-state=None]:not([readonly]):hover) {
+:host(:not([value-state]):not([readonly]):not([disabled]):hover),
+:host([value-state=None]:not([readonly]):not([disabled]):hover) {
     background-color: var(--sapField_Hover_Background);
     border: 1px solid var(--sapField_Hover_BorderColor);
 }
@@ -37,7 +37,7 @@
 	z-index: 2;
 }
 
-:host([value-state=Error]:not([readonly]))::after {
+:host([value-state=Error]:not([readonly]):not([disabled]))::after {
     border-color: var(--sapField_InvalidColor);
 }
 
@@ -45,7 +45,7 @@
     border-width: var(--_ui5_input_state_border_width);
 }
 
-:host([value-state=Error]:not([readonly])) .ui5-step-input-input {
+:host([value-state=Error]:not([readonly]):not([disabled])) .ui5-step-input-input {
     background-color: var(--sapField_InvalidBackground);
 }
 
@@ -82,6 +82,11 @@
 	z-index: 1;
 }
 
+:host .ui5-step-icon[focused] {
+	border: none;
+	outline: none;
+}
+
 :host .ui5-step-icon.ui5-step-dec {
 	left: 0;
 }
@@ -90,8 +95,14 @@
 	right: 0;
 }
 
-:host .ui5-step-input-input[focused] {
-	outline: none;
+:host .ui5-step-icon:not([interactive]) {
+	opacity: 0.5;
+}
+
+:host .ui5-step-icon:not([interactive]) *:hover,
+:host .ui5-step-icon:not([interactive]) *:active {
+	background-color: var(--sapField_Background);
+	color: var(--sapContent_IconColor);
 }
 
 :host .ui5-step-input-input[focused]::after {
@@ -107,13 +118,12 @@
 	z-index: 2;
 }
 
-:host([value-state=Error]:not([readonly])) .ui5-step-input-input[focused]::after {
+:host([value-state=Error]:not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
 	top: 0.125rem;
 	right: 0.0625rem;
 	bottom: 0.125rem;
 	left: 0.0625rem;
 }
-
 
 /* Chrome, Safari, Edge, Opera */
 :host .ui5-step-input-input::-webkit-outer-spin-button,

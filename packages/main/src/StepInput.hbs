@@ -5,11 +5,11 @@
 	@keydown="{{_onkeydown}}"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
-
 >
 	<div
 		class="ui5-step-icon ui5-step-dec"
 		title="{{decIconTitle}}"
+		?interactive="{{_decIconInteractive}}"
 	>
 		<ui5-icon
 			id="{{_id}}-dec"
@@ -17,7 +17,8 @@
 			tabindex="-1"
 			accessible-name="{{decIconTitle}}"
 			?interactive="{{_decIconInteractive}}"
-		@click="{{_decValue}}"
+			?defocused="{{_disableFocus}}"
+			@click="{{_decValue}}"
 			input-icon
 		></ui5-icon>
 	</div>
@@ -28,23 +29,24 @@
 			class="ui5-step-input-input"
 			placeholder="{{_placeholder}}"
 			type="{{type}}"
-			value="{{value}}"
+			value="{{_valuePrecisioned}}"
 			?disabled="{{disabled}}"
 			?required="{{required}}"
 			?readonly="{{readonly}}"
 			value-state="{{valueState}}"
 			data-sap-focus-ref
-			text-align="{{align}}"
+			text-align="{{textAlign}}"
 			._inputAccInfo ="{{accInfo}}"
 			@ui5-change="{{_onInputChange}}"
-			@ui5-submit="{{_onInputSubmit}}"
+			@ui5-submit="{{_onInputChange}}"
+			@focusout="{{_onInputChange}}"
 	>
 	</ui5-input>
-
 
 	<div
 		class="ui5-step-icon ui5-step-inc"
 		title="{{incIconTitle}}"
+		?interactive="{{_incIconInteractive}}"
 	>
 		<ui5-icon
 			id="{{_id}}-inc"
@@ -52,7 +54,9 @@
 			tabindex="-1"
 			accessible-name="{{incIconTitle}}"
 			?interactive="{{_incIconInteractive}}"
-		@click="{{_incValue}}"
+			@click="{{_incValue}}"
+			@mousedown="{{_onmousedown}}"
+			@mouseup="{{_onmouseup}}"
 			input-icon
 		></ui5-icon>
 	</div>

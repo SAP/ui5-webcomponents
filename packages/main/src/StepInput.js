@@ -3,20 +3,22 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import StepInputTemplate from "./generated/templates/StepInputTemplate.lit.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	isUp,
 	isDown,
-	isPageUp,
-	isPageDown,
+	isUpCtrl,
+	isDownCtrl,
+	isUpShift,
+	isDownShift,
+	isUpShiftCtrl,
+	isDownShiftCtrl,
 	isPageUpShift,
 	isPageDownShift,
-	isPageUpShiftCtrl,
-	isPageDownShiftCtrl,
-	isShow,
-	isF4,
+	isEscape,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
@@ -174,12 +176,25 @@ const metadata = {
 		/**
 		 * Determines the text alignment of the <code>ui5-step-input</code>.
 		 *
-		* @defaultvalue "left"
-		* @public
-		*/
-		align: {
+		 * @type {string}
+		 * @defaultvalue "left"
+		 * @public
+		 */
+		textAlign: {
 			type: String,
 			defaultValue: "left",
+		},
+
+		/**
+		 * Determines the number of digits after the decimal point of the <code>ui5-step-input</code>.
+		 *
+		 * @type {Integer}
+		 * @defaultvalue 0
+		 * @public
+		 */
+		valuePrecision: {
+			type: Integer,
+			defaultValue: 0,
 		},
 
 		/**
@@ -214,6 +229,14 @@ const metadata = {
 		_incIconDisabled: {
 			type: Boolean,
 		},
+
+		_focused: {
+			type: Boolean,
+		},
+
+		_previousValue: {
+			type: Float,
+		}
 
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
@@ -322,19 +345,23 @@ class StepInput extends UI5Element {
 	}
 
 	get _decIconInteractive() {
-		return !this._decIconDisabled;
+		return !this._decIconDisabled && !this.readonly && !this.disabled;
 	}
 
 	get _incIconInteractive() {
-		return !this._incIconDisabled;
+		return !this._incIconDisabled && !this.readonly && !this.disabled;
 	}
 
-	_onfocusin() {
-		this._getInputOuter().setAttribute("focused", "");
+	get _isFocused() {
+		return this._focused;
 	}
 
-	_onfocusout() {
-		this._getInputOuter().removeAttribute("focused");
+	get _disableFocus() {
+		return false;
+	}
+
+	get _valuePrecisioned() {
+		return this.value.toFixed(this.valuePrecision);
 	}
 
 	_getInput() {
@@ -345,65 +372,139 @@ class StepInput extends UI5Element {
 		return this.shadowRoot.querySelector(".ui5-step-input-input");
 	}
 
+	_buttonsState() {
+		this._decIconDisabled = !isNaN(this.min) && this.value <= this.min ? true : false;
+		this._incIconDisabled = !isNaN(this.max) && this.value >= this.max ? true : false;
+	}
+
 	_validate() {
-		if (!isNaN(this.min) && this.value < this.min) {
-			this.valueState = ValueState.Error;
-			this._decIconDisabled = true;
-		} else if (!isNaN(this.max) && this.value > this.max) {
-			this.valueState = ValueState.Error;
-			this._incIconDisabled = true;
-		} else {
-			this.valueState = ValueState.None;
-			this._decIconDisabled = false;
-			this._incIconDisabled = false;
-		}
+		this.valueState = (	(!isNaN(this.min) && this.value < this.min) ||
+							(!isNaN(this.max) && this.value > this.max)) ?
+							ValueState.Error : ValueState.None;
+	}
+
+	_preciseValue(value) {
+		let pow = Math.pow(10, this.valuePrecision);
+		return Math.round(value*pow)/pow;
+	}
+
+	_fireChangeEvent() {
+		console.warn('Fire "change" event with value: ' + this.value);
+		this._previousValue = this.value;
+		this.fireEvent('change', { value: this.value });
 	}
 
 	_modifyValue(modifier, fireChangeEvent) {
-		this.value = this.value + modifier;
-		this._validate();
-		this._getInput().value = this.value;
-		this._getInputOuter().setAttribute("focused", "");
-		if (fireChangeEvent) {
-			this.fireEvent('change', { value: this.value });
+		let value;
+		this.value = this._preciseValue(parseFloat(this._getInput().value));
+		value = this.value + modifier; // USE sumValues from UI5 StepInput here
+		if (!isNaN(this.min) && value < this.min) {
+			value = this.min;
+		}
+		if (!isNaN(this.max) && value > this.max) {
+			value = this.max;
+		}
+		value = this._preciseValue(value);
+		if (value !== this.value) {
+			this.value = value;
+			this._validate();
+			this._buttonsState();
+			this._focused = true;
+			this._getInputOuter().setAttribute("focused", "");
+			if (fireChangeEvent) {
+				this._fireChangeEvent();
+			} else {
+				this._getInput().focus();
+			}
 		}
 	}
 
-	_incValue() {
-		if (!this.disabled && !this.readonly) {
+	_spinValue() {
+	}
+
+	_incValue(event) {
+		if (this._incIconInteractive && event.isTrusted && !this.disabled && !this.readonly) {
 			this._modifyValue(this.step, true);
+			this._previousValue = this.value;
 		}
 	}
 
-	_decValue() {
-		if (!this.disabled && !this.readonly) {
+	_decValue(event) {
+		if (this._decIconInteractive && event.isTrusted && !this.disabled && !this.readonly) {
 			this._modifyValue(-this.step, true);
+			this._previousValue = this.value;
 		}
 	}
 
-	/**
-	 * The ui5-input "submit" event handler - fire change event when the user presses enter
-	 * @protected
-	 */
-	_onInputSubmit(event) {}
+	_valueMin() {
+		if (this.min !== undefined) {
+			return this.min;
+		} else {
+			false;
+		}
+	}
 
 	/**
 	 * The ui5-input "change" event handler - fire change event when the user focuses out of the input
 	 * @protected
 	 */
 	_onInputChange(event) {
-		//this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
+		let inputValue = this._preciseValue(parseFloat(this._getInput().value));
+		if (this.value !== this._previousValue || this.value !== inputValue) {
+			this.value = inputValue;
+			this._validate();
+			this._buttonsState();
+			this._fireChangeEvent();
+		}
+	}
+
+	_onmousedown() {
+		// need this in order to implement SPIN functionality
+	}
+
+	_onmouseup() {
+		// need this in order to implement SPIN functionality
+	}
+
+	_onfocusin() {
+		this._focused = true;
+		this._validate();
+		this._buttonsState();
+	}
+
+	_onfocusout() {
+		this._focused = false;
+		this._validate();
+		this._buttonsState();
 	}
 
 	_onkeydown(event) {
+		let preventDefault = true;
 		if (this.disabled || this.readonly) {
 			return;
 		}
 
 		if (isUp(event)) {
+			// step up
 			this._modifyValue(this.step);
 		} else if (isDown(event)) {
+			// step down
 			this._modifyValue(-this.step);
+		} else if (isEscape(event)) {
+			// return previous value
+			this.value = this._previousValue;
+			this._getInput().value = this.value.toFixed(this.valuePrecision);
+		} else if (!isNaN(this.max) && (isPageUpShift(event) || isUpShiftCtrl(event))) {
+			// step to max
+			this._modifyValue(this.max - this.value);
+		} else if (!isNaN(this.min) && (isPageDownShift(event) || isDownShiftCtrl(event))) {
+			//step to min
+			this._modifyValue(this.min - this.value);
+		} else if (!isUpCtrl(event) && !isDownCtrl(event) && !isUpShift(event) && !isDownShift(event)) {
+			preventDefault = false;
+		}
+		if (preventDefault) {
+			event.preventDefault();
 		}
 	}
 
