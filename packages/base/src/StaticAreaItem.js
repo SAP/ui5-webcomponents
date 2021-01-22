@@ -1,8 +1,5 @@
+import updateShadowRoot from "./updateShadowRoot.js";
 import RenderScheduler from "./RenderScheduler.js";
-import getEffectiveStyle from "./theming/getEffectiveStyle.js";
-import executeTemplate from "./renderer/executeTemplate.js";
-import isLegacyBrowser from "./isLegacyBrowser.js";
-import getConstructableStyle from "./theming/getConstructableStyle.js";
 
 /**
  *
@@ -33,7 +30,7 @@ class StaticAreaItem extends HTMLElement {
 	update() {
 		if (this._rendered) {
 			this._updateContentDensity();
-			this._updateShadowRoot();
+			updateShadowRoot(this.ownerElement, true);
 		}
 	}
 
@@ -52,23 +49,6 @@ class StaticAreaItem extends HTMLElement {
 	}
 
 	/**
-	 * Renders the template in the shadow root of the static area item
-	 * @private
-	 */
-	_updateShadowRoot() {
-		const renderResult = executeTemplate(this.ownerElement.constructor.staticAreaTemplate, this.ownerElement);
-		let stylesToPrepend;
-
-		if (document.adoptedStyleSheets) { // Chrome
-			this.shadowRoot.adoptedStyleSheets = getConstructableStyle(this.ownerElement.constructor, true);
-		} else if (!isLegacyBrowser()) { // FF, Safari
-			stylesToPrepend = getEffectiveStyle(this.ownerElement.constructor, true);
-		}
-
-		this.ownerElement.constructor.render(renderResult, this.shadowRoot, stylesToPrepend, { eventContext: this.ownerElement });
-	}
-
-	/**
 	 * @protected
 	 * Returns reference to the DOM element where the current fragment is added.
 	 */
@@ -76,7 +56,7 @@ class StaticAreaItem extends HTMLElement {
 		this._updateContentDensity();
 		if (!this._rendered) {
 			this._rendered = true;
-			this._updateShadowRoot();
+			updateShadowRoot(this.ownerElement, true);
 		}
 		await RenderScheduler.whenDOMUpdated(); // Wait for the content of the ui5-static-area-item to be rendered
 		return this.shadowRoot;

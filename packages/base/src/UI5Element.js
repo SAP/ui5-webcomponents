@@ -2,16 +2,14 @@ import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import EventProvider from "./EventProvider.js";
-import executeTemplate from "./renderer/executeTemplate.js";
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 import "./StaticAreaItem.js";
+import updateShadowRoot from "./updateShadowRoot.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import { getRTL } from "./config/RTL.js";
-import getConstructableStyle from "./theming/getConstructableStyle.js";
-import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import Integer from "./types/Integer.js";
 import Float from "./types/Float.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
@@ -19,7 +17,6 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import isSlot from "./util/isSlot.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import isLegacyBrowser from "./isLegacyBrowser.js";
 
 let autoId = 0;
 
@@ -585,7 +582,7 @@ class UI5Element extends HTMLElement {
 
 		// Update shadow root and static area item
 		if (this.constructor._needsShadowDOM()) {
-			this._updateShadowRoot();
+			updateShadowRoot(this);
 		}
 		if (this.staticAreaItem) {
 			this.staticAreaItem.update();
@@ -600,22 +597,6 @@ class UI5Element extends HTMLElement {
 		if (typeof this.onAfterRendering === "function") {
 			this.onAfterRendering();
 		}
-	}
-
-	/**
-	 * @private
-	 */
-	_updateShadowRoot() {
-		let styleToPrepend;
-		const renderResult = executeTemplate(this.constructor.template, this);
-
-		if (document.adoptedStyleSheets) { // Chrome
-			this.shadowRoot.adoptedStyleSheets = getConstructableStyle(this.constructor);
-		} else if (!isLegacyBrowser()) { // FF, Safari
-			styleToPrepend = getEffectiveStyle(this.constructor);
-		}
-
-		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, { eventContext: this });
 	}
 
 	/**
