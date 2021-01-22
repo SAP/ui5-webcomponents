@@ -304,6 +304,14 @@ describe("List Tests", () => {
 		assert.strictEqual(input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
 	});
 
+	it("Popover with List opens without errors", () => {
+		const btnPopupOpener = $("#btnOpenPopup");
+		const btnInListHeader = $("#btnInHeader");
+
+		btnPopupOpener.click();
+		assert.strictEqual(btnInListHeader.isFocused(), true, "The List header btn is focused.");
+	});
+
 	it('focusable list-items are correctly disabled', () => {
 		const item2 = $('#basicList ui5-li:nth-child(2)');
 
