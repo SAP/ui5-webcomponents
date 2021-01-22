@@ -1,7 +1,7 @@
 import DataType from "./types/DataType.js";
 import isDescendantOf from "./util/isDescendantOf.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
-import isSlot from "./util/isSlot.js";
+import { getSlottedElements } from "./util/SlotsHelper.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScope.js";
 
 /**
@@ -255,20 +255,7 @@ const validateSingleProperty = (value, propData) => {
 };
 
 const validateSingleSlot = (value, slotData) => {
-	if (value === null) {
-		return value;
-	}
-
-	const getSlottedNodes = el => {
-		if (isSlot(el)) {
-			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
-		}
-
-		return [el];
-	};
-
-	const slottedNodes = getSlottedNodes(value);
-	slottedNodes.forEach(el => {
+	value && getSlottedElements(value).forEach(el => {
 		if (!(el instanceof slotData.type)) {
 			throw new Error(`${el} is not of type ${slotData.type}`);
 		}
