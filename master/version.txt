@@ -1,9 +1,5 @@
-commit b36e54eed1b45936930db6b13023fc27a3d1a38d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jan 22 14:07:16 2021 +0200
+commit aeed733f1ec657af8ccc490bb6c0c800020a401a
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri Jan 22 15:06:17 2021 +0200
 
-    fix(ui5-list): fix JS error on focusin (#2720)
-    
-    Fixe a JS error that used to thrown upon "focusin" when non-existing DOM elements have been accessed. Those DOM elements are not rendered when there are no list items, which is the example in the referenced issue.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2717
+    fix(ui5-multi-combobox): The initial focus is set on the ui5-dialog (#2702)
