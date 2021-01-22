@@ -1,5 +1,5 @@
-commit aeed733f1ec657af8ccc490bb6c0c800020a401a
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Fri Jan 22 15:06:17 2021 +0200
+commit f089872186268c5f92f48078c2190c46df1dbb85
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jan 22 17:06:41 2021 +0200
 
-    fix(ui5-multi-combobox): The initial focus is set on the ui5-dialog (#2702)
+    refactor(framework): Simplify ui5-static-area-item (#2716)
