@@ -1,7 +1,7 @@
-commit fe76278fbe118ffc12f156fba72bc69d6d881f4b
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jan 21 07:01:21 2021 +0200
+commit 1ec9a43c44d6e1fa43e8f2276b3667d5cb85786c
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Fri Jan 22 16:13:18 2021 +0800
 
-    fix(ui5-list): remove busy indicator dom (#2712)
+    chore: translation delivery (#2715)
     
-    Follow up of #2684 where the placement of the busy has been fixed. With this change we make sure the busy ind DOM is not even rendered when the List is not busy. And, aims to fix the issue with components such as the ComboBox, Select and Input, that uses the List internally, would display additional space after the last list item.
+    Change-Id: Iefccf8ccac86e1add8d1bcc0cc8a98ad988b2f0d
