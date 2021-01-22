@@ -1,9 +1,9 @@
-commit 014c9859af8712cc7f9055825a95184c94d0f5be
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Fri Jan 22 12:55:54 2021 +0200
+commit b36e54eed1b45936930db6b13023fc27a3d1a38d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jan 22 14:07:16 2021 +0200
 
-    fix(ui5-input): Obsolete accessibility API removed (#2721)
+    fix(ui5-list): fix JS error on focusin (#2720)
     
-    The API is deleted, since it is never used.
+    Fixe a JS error that used to thrown upon "focusin" when non-existing DOM elements have been accessed. Those DOM elements are not rendered when there are no list items, which is the example in the referenced issue.
     
-    Fixes: #2605
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2717
