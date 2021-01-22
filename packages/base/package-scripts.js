@@ -18,7 +18,7 @@ const scripts = {
 		default: "nps copy.src copy.test copy.webcomponents-polyfill",
 		src: "copy-and-watch \"src/**/*.js\" dist/",
 		test: "copy-and-watch \"test/**/*.*\" dist/test-resources",
-		"webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
+		"webcomponents-polyfill": "",
 	},
 	generateAssetParameters: `node "${assetParametersScript}"`,
 	watch: {

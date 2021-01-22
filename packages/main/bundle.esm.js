@@ -35,7 +35,8 @@ registerI18nBundle("@ui5/webcomponents", {
 */
 
 // asset helpers (needs correct json as url in rollup.config.js)
-import "./dist/Assets.js";
+// import "./dist/Assets.js";
+import "./dist/Assets-dynamic.js";
 
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";

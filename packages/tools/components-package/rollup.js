@@ -5,6 +5,7 @@ const { babel } = require("@rollup/plugin-babel");
 const { nodeResolve } = require("@rollup/plugin-node-resolve");
 const url = require("@rollup/plugin-url");
 const { terser } = require("rollup-plugin-terser");
+const json = require("@rollup/plugin-json");
 const notify = require('rollup-plugin-notify');
 const filesize = require('rollup-plugin-filesize');
 const livereload = require('rollup-plugin-livereload');
@@ -38,8 +39,17 @@ const getPlugins = ({ transpile }) => {
 
 	plugins.push(ui5DevImportCheckerPlugin());
 
+	plugins.push(json({
+		include: [
+			/.*assets\/.*messagebundle.*\.json/
+		]
+	}));
+
 	plugins.push(url({
 		limit: 0,
+		exclude: [
+			/.*assets\/.*messagebundle.*\.json/
+		],
 		include: [
 			/.*assets\/.*\.json/
 		],
@@ -131,7 +141,7 @@ const getES5Config = (input = "bundle.es5.js") => {
 let config = getES6Config();
 
 if (process.env.ES5_BUILD) {
-	config = config.concat(getES5Config());
+	// config = config.concat(getES5Config());
 }
 
 if (process.env.SCOPE) {

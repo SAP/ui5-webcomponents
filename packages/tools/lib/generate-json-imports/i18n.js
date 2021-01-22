@@ -28,8 +28,22 @@ const languagesKeysString = languages.map(key => `${key},`).join("\n\t");
 // Actual imports for json assets
 const assetsImportsString = languages.map(key => `import ${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");
 
+// // Resulting file content
+// content = `import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+
+// const allEntriesInlined = Object.entries(bundleMap).every(([_key, value]) => typeof (value) === "object");
+
+// if (allEntriesInlined) {
+// 	console.warn(\`Inefficient bundling detected: consider bundling i18n imports as URLs instead of inlining them.
+// See rollup-plugin-url or webpack file-loader for more information.
+// Suggested pattern: "assets\\\\\\/.*\\\\\\.json"\`);
+// }
+
+// registerI18nBundle("${packageName}", bundleMap);
+// `;
+
 // Resulting file content
-content = `import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+content = `import { registerLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 
 ${assetsImportsString}
 
@@ -37,17 +51,20 @@ const bundleMap = {
 	${languagesKeysString}
 };
 
-const allEntriesInlined = Object.entries(bundleMap).every(([_key, value]) => typeof (value) === "object");
-
-if (allEntriesInlined) {
-	console.warn(\`Inefficient bundling detected: consider bundling i18n imports as URLs instead of inlining them.
-See rollup-plugin-url or webpack file-loader for more information.
-Suggested pattern: "assets\\\\\\/.*\\\\\\.json"\`);
+const fetchMessageBundle = async (localeId) => {
+	if (typeof bundleMap[localeId] === "object") {
+		// inlined from build
+		throw new Error("inlined JSON not supported with static assets, use dynamic assets or configure JSON imports as URLs")
+	}
+	return (await fetch(bundleMap[localeId])).json()
 }
 
-registerI18nBundle("${packageName}", bundleMap);
+const localeIds = new Set([${languagesKeysString}]);
+
+registerLoader("${packageName}", fetchMessageBundle, localeIds);
 `;
 }
+
 
 mkdirp.sync(path.dirname(outputFile));
 fs.writeFileSync(outputFile, content);

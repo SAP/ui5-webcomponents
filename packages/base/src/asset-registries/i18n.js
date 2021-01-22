@@ -1,15 +1,19 @@
-import { getFeature } from "../FeaturesRegistry.js";
 import getLocale from "../locale/getLocale.js";
 import { attachLanguageChange } from "../locale/languageChange.js";
-import { fetchTextOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
-import { getEffectiveAssetPath } from "../util/EffectiveAssetPath.js";
 import { getUseDefaultLanguage } from "../config/Language.js";
 
 const bundleData = new Map();
-const bundleURLs = new Map();
+const bundlePromises = new Map();
+const loaders = new Map();
+const availableLocales = new Map();
+
+const registerLoader = (packageName, loader, localeIds) => {
+	loaders.set(packageName, loader);
+	availableLocales.set(packageName, localeIds);
+};
 
 /**
  * Sets a map with texts and ID the are related to.
@@ -36,8 +40,20 @@ const getI18nBundleData = packageName => {
  * @public
  */
 const registerI18nBundle = (packageName, bundle) => {
-	const oldBundle = bundleURLs.get(packageName) || {};
-	bundleURLs.set(packageName, Object.assign({}, oldBundle, bundle));
+	// const oldBundle = bundleURLs.get(packageName) || {};
+	// bundleURLs.set(packageName, Object.assign({}, oldBundle, bundle));
+};
+
+// load bundle over the network once
+const loadMessageBundleOnce = async (packageName, localeId) => {
+	const loadMessageBundle = loaders.get(packageName);
+
+	const bundleKey = `${packageName}/${localeId}`;
+	if (!bundlePromises.get(bundleKey)) {
+		bundlePromises.set(bundleKey, loadMessageBundle(localeId));
+	}
+
+	return bundlePromises.get(bundleKey);
 };
 
 /**
@@ -50,9 +66,7 @@ const registerI18nBundle = (packageName, bundle) => {
  * @public
  */
 const fetchI18nBundle = async packageName => {
-	const bundlesForPackage = bundleURLs.get(packageName);
-
-	if (!bundlesForPackage) {
+	if (!loaders.has(packageName)) {
 		console.warn(`Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
 		` You need to import ${packageName}/dist/Assets.js with a build tool that supports JSON imports.`); /* eslint-disable-line */
 		return;
@@ -60,40 +74,43 @@ const fetchI18nBundle = async packageName => {
 
 	const language = getLocale().getLanguage();
 	const region = getLocale().getRegion();
-	const useDefaultLanguage = getUseDefaultLanguage();
 	let localeId = normalizeLocale(language + (region ? `-${region}` : ``));
 
-	while (localeId !== DEFAULT_LANGUAGE && !bundlesForPackage[localeId]) {
+	while (localeId !== DEFAULT_LANGUAGE && !availableLocales.get(packageName).has(localeId)) {
 		localeId = nextFallbackLocale(localeId);
 	}
 
+	const useDefaultLanguage = getUseDefaultLanguage();
 	if (useDefaultLanguage && localeId === DEFAULT_LANGUAGE) {
 		setI18nBundleData(packageName, null); // reset for the default language (if data was set for a previous language)
 		return;
 	}
 
-	const bundleURL = bundlesForPackage[localeId];
-
-	if (typeof bundleURL === "object") { // inlined from build
-		setI18nBundleData(packageName, bundleURL);
-		return;
-	}
-
-	const content = await fetchTextOnce(getEffectiveAssetPath(bundleURL));
-	let parser;
-	if (content.startsWith("{")) {
-		parser = JSON.parse;
-	} else {
-		const PropertiesFormatSupport = getFeature("PropertiesFormatSupport");
-		if (!PropertiesFormatSupport) {
-			throw new Error(`In order to support .properties files, please: import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";`);
-		}
-		parser = PropertiesFormatSupport.parser;
-	}
-
-	const data = parser(content);
-
+	const data = await loadMessageBundleOnce(packageName, localeId);
 	setI18nBundleData(packageName, data);
+
+	// const bundleURL = bundlesForPackage[localeId];
+
+	// if (typeof bundleURL === "object") { // inlined from build
+	// 	setI18nBundleData(packageName, bundleURL);
+	// 	return;
+	// }
+
+	// const content = await fetchTextOnce(getEffectiveAssetPath(bundleURL));
+	// let parser;
+	// if (content.startsWith("{")) {
+	// 	parser = JSON.parse;
+	// } else {
+	// 	const PropertiesFormatSupport = getFeature("PropertiesFormatSupport");
+	// 	if (!PropertiesFormatSupport) {
+	// 		throw new Error(`In order to support .properties files, please: import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";`);
+	// 	}
+	// 	parser = PropertiesFormatSupport.parser;
+	// }
+
+	// const data = parser(content);
+
+	// setI18nBundleData(packageName, data);
 };
 
 // When the language changes dynamically (the user calls setLanguage), re-fetch all previously fetched bundles
@@ -103,8 +120,8 @@ attachLanguageChange(() => {
 });
 
 export {
+	registerLoader,
 	fetchI18nBundle,
 	registerI18nBundle,
-	setI18nBundleData,
 	getI18nBundleData,
 };
