@@ -7,6 +7,7 @@ import {
 	isPageUp,
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import getEffectiveContentDensity from "@ui5/webcomponents-base/dist/util/getEffectiveContentDensity.js";
 import "@ui5/webcomponents-icons/dist/navigation-up-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
@@ -224,7 +225,7 @@ class WheelSlider extends UI5Element {
 	}
 
 	get _itemCellHeight() {
-		const defaultSize = this.isCompact ? CELL_SIZE_COMPACT : CELL_SIZE_COZY;
+		const defaultSize = getEffectiveContentDensity(this) === "compact" ? CELL_SIZE_COMPACT : CELL_SIZE_COZY;
 
 		if (this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length) {
 			const itemComputedStyle = getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item"));

@@ -14,6 +14,50 @@ class UI5ElementMetadata {
 		this.metadata = metadata;
 	}
 
+	getInitialState() {
+		if (Object.prototype.hasOwnProperty.call(this, "_initialState")) {
+			return this._initialState;
+		}
+
+		const initialState = {};
+		const slotsAreManaged = this.slotsAreManaged();
+
+		// Initialize properties
+		const props = this.getProperties();
+		for (const propName in props) { // eslint-disable-line
+			const propType = props[propName].type;
+			const propDefaultValue = props[propName].defaultValue;
+
+			if (propType === Boolean) {
+				initialState[propName] = false;
+
+				if (propDefaultValue !== undefined) {
+					console.warn("The 'defaultValue' metadata key is ignored for all booleans properties, they would be initialized with 'false' by default"); // eslint-disable-line
+				}
+			} else if (props[propName].multiple) {
+				initialState[propName] = [];
+			} else if (propType === Object) {
+				initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
+			} else if (propType === String) {
+				initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : "";
+			} else {
+				initialState[propName] = propDefaultValue;
+			}
+		}
+
+		// Initialize slots
+		if (slotsAreManaged) {
+			const slots = this.getSlots();
+			for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+				const propertyName = slotData.propertyName || slotName;
+				initialState[propertyName] = [];
+			}
+		}
+
+		this._initialState = initialState;
+		return initialState;
+	}
+
 	/**
 	 * Only intended for use by UI5Element.js
 	 * @protected

@@ -332,10 +332,6 @@ const metadata = {
 			type: Object,
 		},
 
-		_wrapperAccInfo: {
-			type: Object,
-		},
-
 		_inputWidth: {
 			type: Integer,
 		},
@@ -658,11 +654,7 @@ class Input extends UI5Element {
 	}
 
 	async _onfocusin(event) {
-		const inputDomRef = await this.getInputDOMRef();
-
-		if (event.target !== inputDomRef) {
-			return;
-		}
+		await this.getInputDOMRef();
 
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;

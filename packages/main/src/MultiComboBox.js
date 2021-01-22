@@ -692,6 +692,11 @@ class MultiComboBox extends UI5Element {
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
+
+		if (isPhone() && this.allItemsPopover && this.allItemsPopover.opened) {
+			// Set initial focus to the dialog
+			this.allItemsPopover.focus();
+		}
 	}
 
 	async onAfterRendering() {
