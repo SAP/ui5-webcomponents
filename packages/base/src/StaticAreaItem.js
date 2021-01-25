@@ -1,5 +1,6 @@
 import updateShadowRoot from "./updateShadowRoot.js";
 import RenderScheduler from "./RenderScheduler.js";
+import getEffectiveContentDensity from "./util/getEffectiveContentDensity.js";
 
 /**
  *
@@ -39,7 +40,7 @@ class StaticAreaItem extends HTMLElement {
 	 * @private
 	 */
 	_updateContentDensity() {
-		if (this.ownerElement.isCompact) {
+		if (getEffectiveContentDensity(this.ownerElement) === "compact") {
 			this.classList.add("sapUiSizeCompact");
 			this.classList.add("ui5-content-density-compact");
 		} else {
