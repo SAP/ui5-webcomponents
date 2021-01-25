@@ -118,6 +118,12 @@
 	<h3> 'change' event result</h3>
 	<ui5-input id="inputResult"></ui5-input>
 
+	<h3> Test 'paste' event</h3>
+	<ui5-input id="inputPasteEvent" placeholder="Paste something ..."></ui5-input>
+
+	<h3> 'paste' event result</h3>
+	<ui5-input id="inputPasteResult"></ui5-input>
+
 	<h3> 'suggestionItemSelect' event result on group item</h3>
 	<ui5-input id="inputResultGrouping"></ui5-input>
 
@@ -305,6 +311,8 @@
 		var input1 = document.getElementById('input1');
 		var input2 = document.getElementById('input2');
 		var inputResult = document.getElementById('inputResult');
+		var inputPasteEvent = document.getElementById('inputPasteEvent');
+		var inputPasteResult = document.getElementById('inputPasteResult');
 		var inputResultGrouping = document.getElementById('inputResultGrouping');
 		var inputLiveChangeResult = document.getElementById('inputLiveChangeResult');
 		var label = document.getElementById('myLabel');
@@ -369,6 +377,7 @@
 			labelSubmit.innerHTML = "Event [submit] :: " + event.target.value;
 		});
 
+		var pasteCounter = 0;
 		var changeCounter = 0;
 		var inputCounter = 0;
 		var suggestionSelectedCounter = 0;
@@ -376,6 +385,11 @@
 		input1.addEventListener("ui5-change", function (event) {
 			changeCounter += 1;
 			inputResult.value = changeCounter;
+		});
+
+		inputPasteEvent.addEventListener("ui5-paste", function (event) {
+			pasteCounter += 1;
+			inputPasteResult.value = pasteCounter;
 		});
 
 		input2.addEventListener("ui5-input", function (event) {

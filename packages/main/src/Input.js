@@ -522,6 +522,7 @@ class Input extends UI5Element {
 		// all sementic events
 		this.EVENT_SUBMIT = "submit";
 		this.EVENT_CHANGE = "change";
+		this.EVENT_PASTE = "paste";
 		this.EVENT_INPUT = "input";
 		this.EVENT_SUGGESTION_ITEM_SELECT = "suggestion-item-select";
 
@@ -703,6 +704,10 @@ class Input extends UI5Element {
 
 	_handleChange(event) {
 		this.fireEvent(this.EVENT_CHANGE);
+	}
+
+	_handlePaste(event) {
+		this.fireEvent(this.EVENT_PASTE);
 	}
 
 	_scroll(event) {
