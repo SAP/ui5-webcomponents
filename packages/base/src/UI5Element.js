@@ -9,12 +9,12 @@ import RenderScheduler from "./RenderScheduler.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
-import { getRTL } from "./config/RTL.js";
+import getEffectiveDir from "./locale/getEffectiveDir.js";
 import Integer from "./types/Integer.js";
 import Float from "./types/Float.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
-import isSlot from "./util/isSlot.js";
+import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 
@@ -22,9 +22,6 @@ let autoId = 0;
 
 const elementTimeouts = new Map();
 const uniqueDependenciesCache = new Map();
-
-const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
-const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
 
 /**
  * Triggers re-rendering of a UI5Element instance due to state change.
@@ -222,7 +219,7 @@ class UI5Element extends HTMLElement {
 
 		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
-			const slotName = this.constructor._getSlotName(child);
+			const slotName = getSlotName(child);
 			const slotData = slotsMap[slotName];
 
 			// Check if the slotName is supported
@@ -446,8 +443,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_initializeState() {
-		const defaultState = this.constructor._getDefaultState();
-		this._state = Object.assign({}, defaultState);
+		this._state = Object.assign({}, this.constructor.getMetadata().getInitialState());
 	}
 
 	/**
@@ -702,8 +698,6 @@ class UI5Element extends HTMLElement {
 	}
 
 	_fireEvent(name, data, cancelable = false, bubbles = true) {
-		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
-
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
 			detail: data,
 			composed: false,
@@ -711,14 +705,14 @@ class UI5Element extends HTMLElement {
 			cancelable,
 		});
 
-		// This will be false if the compat event is prevented
-		compatEventResult = this.dispatchEvent(noConflictEvent);
+		// This will be false if the no-conflict event is prevented
+		const noConflictEventResult = this.dispatchEvent(noConflictEvent);
 
 		if (skipOriginalEvent(name)) {
-			return compatEventResult;
+			return noConflictEventResult;
 		}
 
-		const customEvent = new CustomEvent(name, {
+		const normalEvent = new CustomEvent(name, {
 			detail: data,
 			composed: false,
 			bubbles,
@@ -726,10 +720,10 @@ class UI5Element extends HTMLElement {
 		});
 
 		// This will be false if the normal event is prevented
-		const normalEventResult = this.dispatchEvent(customEvent);
+		const normalEventResult = this.dispatchEvent(normalEvent);
 
 		// Return false if any of the two events was prevented (its result was false).
-		return normalEventResult && compatEventResult;
+		return normalEventResult && noConflictEventResult;
 	}
 
 	/**
@@ -738,18 +732,7 @@ class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	getSlottedNodes(slotName) {
-		const reducer = (acc, curr) => {
-			if (!isSlot(curr)) {
-				return acc.concat([curr]);
-			}
-			return acc.concat(curr.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement));
-		};
-
-		return this[slotName].reduce(reducer, []);
-	}
-
-	get isCompact() {
-		return getComputedStyle(this).getPropertyValue(GLOBAL_CONTENT_DENSITY_CSS_VAR) === "compact";
+		return getSlottedElementsList(this[slotName]);
 	}
 
 	/**
@@ -761,27 +744,7 @@ class UI5Element extends HTMLElement {
 	 */
 	get effectiveDir() {
 		markAsRtlAware(this.constructor); // if a UI5 Element calls this method, it's considered to be rtl-aware
-
-		const doc = window.document;
-		const dirValues = ["ltr", "rtl"]; // exclude "auto" and "" from all calculations
-		const locallyAppliedDir = getComputedStyle(this).getPropertyValue(GLOBAL_DIR_CSS_VAR);
-
-		// In that order, inspect the CSS Var (for modern browsers), the element itself, html and body (for IE fallback)
-		if (dirValues.includes(locallyAppliedDir)) {
-			return locallyAppliedDir;
-		}
-		if (dirValues.includes(this.dir)) {
-			return this.dir;
-		}
-		if (dirValues.includes(doc.documentElement.dir)) {
-			return doc.documentElement.dir;
-		}
-		if (dirValues.includes(doc.body.dir)) {
-			return doc.body.dir;
-		}
-
-		// Finally, check the configuration for explicitly set RTL or language-implied RTL
-		return getRTL() ? "rtl" : undefined;
+		return getEffectiveDir(this);
 	}
 
 	/**
@@ -799,26 +762,6 @@ class UI5Element extends HTMLElement {
 	 */
 	static get observedAttributes() {
 		return this.getMetadata().getAttributesList();
-	}
-
-	/**
-	 * @private
-	 */
-	static _getSlotName(child) {
-		// Text nodes can only go to the default slot
-		if (!(child instanceof HTMLElement)) {
-			return "default";
-		}
-
-		// Discover the slot based on the real slot name (f.e. footer => footer, or content-32 => content)
-		const slot = child.getAttribute("slot");
-		if (slot) {
-			const match = slot.match(/^(.+?)-\d+$/);
-			return match ? match[1] : slot;
-		}
-
-		// Use default slot as a fallback
-		return "default";
 	}
 
 	/**
@@ -845,54 +788,6 @@ class UI5Element extends HTMLElement {
 		}
 
 		return this.staticAreaItem.getDomRef();
-	}
-
-	/**
-	 * @private
-	 */
-	static _getDefaultState() {
-		if (Object.prototype.hasOwnProperty.call(this, "_defaultState")) {
-			return this._defaultState;
-		}
-
-		const MetadataClass = this.getMetadata();
-		const defaultState = {};
-		const slotsAreManaged = MetadataClass.slotsAreManaged();
-
-		// Initialize properties
-		const props = MetadataClass.getProperties();
-		for (const propName in props) { // eslint-disable-line
-			const propType = props[propName].type;
-			const propDefaultValue = props[propName].defaultValue;
-
-			if (propType === Boolean) {
-				defaultState[propName] = false;
-
-				if (propDefaultValue !== undefined) {
-					console.warn("The 'defaultValue' metadata key is ignored for all booleans properties, they would be initialized with 'false' by default"); // eslint-disable-line
-				}
-			} else if (props[propName].multiple) {
-				defaultState[propName] = [];
-			} else if (propType === Object) {
-				defaultState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
-			} else if (propType === String) {
-				defaultState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : "";
-			} else {
-				defaultState[propName] = propDefaultValue;
-			}
-		}
-
-		// Initialize slots
-		if (slotsAreManaged) {
-			const slots = MetadataClass.getSlots();
-			for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
-				const propertyName = slotData.propertyName || slotName;
-				defaultState[propertyName] = [];
-			}
-		}
-
-		this._defaultState = defaultState;
-		return defaultState;
 	}
 
 	/**
