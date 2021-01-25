@@ -22,11 +22,13 @@
 			{{/if}}
 		{{/if}}
 
-		{{> progressbar}}
+		{{> progressBar}}
 
 		{{> handles}}
 	</div>
 </div>
 
-{{#*inline "progressbar"}}{{/inline}}
+<span id="{{_id}}-sliderDesc" class="ui5-hidden-text">{{_ariaLabelledByText}}</span>
+
+{{#*inline "progressBar"}}{{/inline}}
 {{#*inline "handles"}}{{/inline}}

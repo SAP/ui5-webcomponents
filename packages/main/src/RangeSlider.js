@@ -134,32 +134,20 @@ class RangeSlider extends SliderBase {
 		return this.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION);
 	}
 
-	get _ariaStartHandleText() {
+	get _ariaHandlesText() {
 		const isRTL = this.effectiveDir === "rtl";
 		const isReversed = this._areValuesReversed();
-		let startHandleText;
+		const ariaHandlesText = {};
 
 		if ((isRTL && !isReversed) || (!isRTL && isReversed)) {
-			startHandleText = this.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
+			ariaHandlesText.startHandleText = this.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
+			ariaHandlesText.endHandleText = this.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
 		} else {
-			startHandleText = this.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
+			ariaHandlesText.startHandleText = this.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
+			ariaHandlesText.endHandleText = this.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
 		}
 
-		return startHandleText;
-	}
-
-	get _ariaEndHandleText() {
-		const isRTL = this.effectiveDir === "rtl";
-		const isReversed = this._areValuesReversed();
-		let endHandleText;
-
-		if ((isRTL && !isReversed) || (!isRTL && isReversed)) {
-			endHandleText = this.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
-		} else {
-			endHandleText = this.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
-		}
-
-		return endHandleText;
+		return ariaHandlesText;
 	}
 
 	/**

@@ -274,7 +274,7 @@ class Slider extends SliderBase {
 		return this.disabled || undefined;
 	}
 
-	get ariaLabelledByText() {
+	get _ariaLabelledByText() {
 		return this.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION);
 	}
 

@@ -1,10 +1,9 @@
 {{>include "./SliderBase.hbs"}}
 
-<span id="{{_id}}-sliderDesc" class="ui5-hidden-text">{{_ariaLabelledByText}}</span>
-<span id="{{_id}}-startHandleDesc" class="ui5-hidden-text">{{_ariaStartHandleText}}</span>
-<span id="{{_id}}-endHandleDesc" class="ui5-hidden-text">{{_ariaEndHandleText}}</span>
+<span id="{{_id}}-startHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.startHandleText}}</span>
+<span id="{{_id}}-endHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.endHandleText}}</span>
 
-{{#*inline "progressbar"}}
+{{#*inline "progressBar"}}
 	<div class="ui5-slider-progress-container">
 		<div class="ui5-slider-progress"
 			style="{{styles.progress}}"
