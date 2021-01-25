@@ -698,15 +698,15 @@ class RangeSlider extends SliderBase {
 	}
 
 	get _startHandle() {
-		return this.getDomRef().querySelector(".ui5-slider-handle--start");
+		return this.shadowRoot.querySelector(".ui5-slider-handle--start");
 	}
 
 	get _endHandle() {
-		return this.getDomRef().querySelector(".ui5-slider-handle--end");
+		return this.shadowRoot.querySelector(".ui5-slider-handle--end");
 	}
 
 	get _progressBar() {
-		return this.getDomRef().querySelector(".ui5-slider-progress");
+		return this.shadowRoot.querySelector(".ui5-slider-progress");
 	}
 
 	get styles() {
