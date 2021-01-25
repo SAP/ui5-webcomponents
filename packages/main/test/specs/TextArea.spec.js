@@ -133,6 +133,19 @@ describe("when enabled", () => {
 		assert.strictEqual(changeResult.getValue(), "2", "change is called twice");
 	});
 
+	it("fires paste", () => {
+		const textAreaPaste = $("#textarea-paste");
+		const pasteResult = $("#pasteResult");
+
+		textAreaPaste.click();
+		textAreaPaste.keys(["a", "b"]);
+		textAreaPaste.keys(["Shift", "ArrowLeft", "ArrowLeft"]); // Select the text
+		textAreaPaste.keys(["Meta", "x"]); // Cut
+		textAreaPaste.keys(["Meta", "v"]); // Paste
+
+		assert.strictEqual(pasteResult.getValue(), "1", "paste event is called");
+	});
+
 	it("fires input", () => {
 		const textarea = $("#textarea-input");
 		const inputResult = $("#inputResult");

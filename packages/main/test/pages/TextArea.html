@@ -163,6 +163,14 @@
 	</section>
 
 	<section class="group">
+		<ui5-title>Text Area: paste event</ui5-title>
+		<ui5-textarea id="textarea-paste" class="fixed-width fixed-height" placeholder="Test paste event"></ui5-textarea>
+	</section>
+	<section class="group">
+		<ui5-input id="pasteResult" class="fixed-width"></ui5-input>
+	</section>
+
+	<section class="group">
 		<ui5-title>Text Area: input event</ui5-title>
 		<ui5-textarea id="textarea-input" class="fixed-width fixed-height" placeholder="Test input event"></ui5-textarea>
 	</section>
@@ -207,11 +215,17 @@
 
 	<script>
 		var changeCounter = 0;
+		var pasteCounter = 0;
 		var inputCounter = 0;
 
 		document.getElementById('textarea-change').addEventListener("ui5-change", function (event) {
 			changeCounter += 1;
 			document.getElementById('changeResult').value = changeCounter;
+		});
+
+		document.getElementById('textarea-paste').addEventListener("ui5-paste", function (event) {
+			pasteCounter += 1;
+			document.getElementById('pasteResult').value = pasteCounter;
 		});
 
 		document.getElementById('textarea-input').addEventListener("ui5-input", function (event) {

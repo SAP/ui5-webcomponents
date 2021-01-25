@@ -430,6 +430,10 @@ class TextArea extends UI5Element {
 		this.fireEvent("change", {});
 	}
 
+	_onpaste() {
+		this.fireEvent("paste", {});
+	}
+
 	_oninput(event) {
 		const nativeTextArea = this.getInputDomRef();
 
