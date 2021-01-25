@@ -1,5 +1,5 @@
-commit f089872186268c5f92f48078c2190c46df1dbb85
+commit 2624c7e6ac6fafd8dce4761c13e416be3cb4defd
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jan 22 17:06:41 2021 +0200
+Date:   Mon Jan 25 17:10:24 2021 +0200
 
-    refactor(framework): Simplify ui5-static-area-item (#2716)
+    refactor(framework): Reorder base code (#2722)
