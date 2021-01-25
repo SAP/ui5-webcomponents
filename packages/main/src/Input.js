@@ -1076,6 +1076,9 @@ class Input extends UI5Element {
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
 				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this),
+				"min": this._inputAccInfo.min,
+				"max": this._inputAccInfo.max,
+				"step": this.type === InputType.Number ? (this._inputAccInfo.step || "any") : undefined,
 			},
 		};
 	}

@@ -3,6 +3,7 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
+	width: 100%;
 }
 
 :host {
@@ -50,8 +51,8 @@
 }
 
 :host .ui5-step-input-input {
-	width: auto;
-	min-width: inherit;
+	width: 100%;
+	min-width: 50%;
 	color: inherit;
 	background-color: inherit;
 	border: 1px solid transparent;
@@ -109,20 +110,20 @@
 	position: absolute;
 	content: "";
 	border: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
-	top: 0.0625rem;
-	right: 0;
-	bottom: 0.0625rem;
-	left: 0;
+	top: 1px;
+	right: 1px;
+	bottom: 1px;
+	left: 1px;
 	outline: none;
 	pointer-events: none;
 	z-index: 2;
 }
 
 :host([value-state=Error]:not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
-	top: 0.125rem;
-	right: 0.0625rem;
-	bottom: 0.125rem;
-	left: 0.0625rem;
+	top: 2px;
+	right: 2px;
+	bottom: 2px;
+	left: 2px;
 }
 
 /* Chrome, Safari, Edge, Opera */

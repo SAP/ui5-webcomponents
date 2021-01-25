@@ -19,6 +19,7 @@
 			?interactive="{{_decIconInteractive}}"
 			?defocused="{{_disableFocus}}"
 			@click="{{_decValue}}"
+			@focusout="{{_onButtonFocusOut}}"
 			input-icon
 		></ui5-icon>
 	</div>
@@ -39,7 +40,8 @@
 			._inputAccInfo ="{{accInfo}}"
 			@ui5-change="{{_onInputChange}}"
 			@ui5-submit="{{_onInputChange}}"
-			@focusout="{{_onInputChange}}"
+			@focusout="{{_onInputFocusOut}}"
+			@focusin="{{_onInputFocusIn}}"
 	>
 	</ui5-input>
 
@@ -54,9 +56,9 @@
 			tabindex="-1"
 			accessible-name="{{incIconTitle}}"
 			?interactive="{{_incIconInteractive}}"
+			?defocused="{{_disableFocus}}"
 			@click="{{_incValue}}"
-			@mousedown="{{_onmousedown}}"
-			@mouseup="{{_onmouseup}}"
+			@focusout="{{_onButtonFocusOut}}"
 			input-icon
 		></ui5-icon>
 	</div>

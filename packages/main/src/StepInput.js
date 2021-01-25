@@ -224,19 +224,28 @@ const metadata = {
 
 		_decIconDisabled: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_incIconDisabled: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_focused: {
 			type: Boolean,
+			noAttribute: true,
+		},
+
+		_inputFocused: {
+			type: Boolean,
+			noAttribute: true,
 		},
 
 		_previousValue: {
 			type: Float,
-		}
+			noAttribute: true,
+		},
 
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
@@ -289,17 +298,18 @@ const metadata = {
  * @public
  */
 class StepInput extends UI5Element {
+
+	constructor() {
+		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
 
 	static get render() {
 		return litRender;
-	}
-
-	constructor() {
-		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get styles() {
@@ -364,6 +374,31 @@ class StepInput extends UI5Element {
 		return this.value.toFixed(this.valuePrecision);
 	}
 
+	get accInfo() {
+		return {
+			min: isNaN(this.min) ? undefined : this.min,
+			max: isNaN(this.max) ? undefined : this.max,
+			step: this.step,
+		};
+	}
+
+	_onButtonFocusOut() {
+		setTimeout(function() {
+			if (!this._inputFocused) {
+				this._getInputOuter().removeAttribute("focused");
+			}
+		}.bind(this), 0);
+	}
+
+	_onInputFocusIn() {
+		this._inputFocused = true;
+	}
+
+	_onInputFocusOut() {
+		this._inputFocused = false;
+		this._onInputChange();
+	}
+
 	_getInput() {
 		return this.shadowRoot.querySelector("[ui5-input]");
 	}
@@ -397,7 +432,7 @@ class StepInput extends UI5Element {
 	_modifyValue(modifier, fireChangeEvent) {
 		let value;
 		this.value = this._preciseValue(parseFloat(this._getInput().value));
-		value = this.value + modifier; // USE sumValues from UI5 StepInput here
+		value = this.value + modifier;
 		if (!isNaN(this.min) && value < this.min) {
 			value = this.min;
 		}
@@ -419,9 +454,6 @@ class StepInput extends UI5Element {
 		}
 	}
 
-	_spinValue() {
-	}
-
 	_incValue(event) {
 		if (this._incIconInteractive && event.isTrusted && !this.disabled && !this.readonly) {
 			this._modifyValue(this.step, true);
@@ -433,14 +465,6 @@ class StepInput extends UI5Element {
 		if (this._decIconInteractive && event.isTrusted && !this.disabled && !this.readonly) {
 			this._modifyValue(-this.step, true);
 			this._previousValue = this.value;
-		}
-	}
-
-	_valueMin() {
-		if (this.min !== undefined) {
-			return this.min;
-		} else {
-			false;
 		}
 	}
 
@@ -458,24 +482,14 @@ class StepInput extends UI5Element {
 		}
 	}
 
-	_onmousedown() {
-		// need this in order to implement SPIN functionality
-	}
-
-	_onmouseup() {
-		// need this in order to implement SPIN functionality
-	}
-
 	_onfocusin() {
 		this._focused = true;
 		this._validate();
-		this._buttonsState();
 	}
 
 	_onfocusout() {
 		this._focused = false;
 		this._validate();
-		this._buttonsState();
 	}
 
 	_onkeydown(event) {
@@ -508,6 +522,9 @@ class StepInput extends UI5Element {
 		}
 	}
 
+	onBeforeRendering() {
+		this._buttonsState();
+	}
 
 	static get dependencies() {
 		return [
