@@ -706,7 +706,7 @@ class Input extends UI5Element {
 		this.fireEvent(this.EVENT_CHANGE);
 	}
 
-	_handlePaste(event) {
+	_handlePaste() {
 		this.fireEvent(this.EVENT_PASTE);
 	}
 

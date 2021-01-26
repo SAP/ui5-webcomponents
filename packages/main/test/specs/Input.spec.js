@@ -93,19 +93,6 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "2", "change is called twice");
 	});
 
-	it("fires paste", () => {
-		const inputPasteEvent = $("#inputPasteEvent").shadow$("input");
-		const inputPasteResult = $("#inputPasteResult").shadow$("input");
-
-		inputPasteEvent.click();
-		inputPasteEvent.keys(["a", "b"]);
-		inputPasteEvent.keys(["Shift", "ArrowLeft", "ArrowLeft"]); // Select the text
-		inputPasteEvent.keys(["Ctrl", "x"]); // Cut
-		inputPasteEvent.keys(["Ctrl", "v"]); // Paste
-
-		assert.strictEqual(inputPasteResult.getValue(), "1", "paste event is called");
-	});
-
 	it("fires input", () => {
 		const input2 = $("#input2").shadow$("input");
 		const inputLiveChangeResult = $("#inputLiveChangeResult").shadow$("input");
