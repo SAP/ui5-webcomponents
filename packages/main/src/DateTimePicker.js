@@ -215,14 +215,10 @@ class DateTimePicker extends DatePicker {
 
 	/**
 	 * Opens the picker.
-	 *
-	 * @param {object} options A JSON object with additional configuration.<br>
-	 * <code>{ focusInput: true }</code> By default, the focus goes in the picker after opening it.
-	 * Specify this option to focus the input field.
 	 * @public
 	 */
-	async openPicker(options) {
-		await super.openPicker(options);
+	async openPicker() {
+		await super.openPicker();
 		this._currentTimeSlider = "hours";
 		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
 	}
@@ -251,15 +247,15 @@ class DateTimePicker extends DatePicker {
 		return fallback ? localeData.getCombinedDateTimePattern("medium", "medium", this._primaryCalendarType) : this.formatPattern;
 	}
 
-	get _effectiveCalendarTimestamp() {
-		return this._previewValues.calendarTimestamp ? this._previewValues.calendarTimestamp : this._calendarTimestamp;
+	get _calendarTimestamp() {
+		return this._previewValues.calendarTimestamp ? this._previewValues.calendarTimestamp : super._calendarTimestamp;
 	}
 
-	get _effectiveCalendarSelectedDates() {
-		return this._previewValues.calendarSelectedDate ? [this._previewValues.calendarSelectedDate] : this._calendarSelectedDates;
+	get _calendarSelectedDates() {
+		return this._previewValues.calendarValue ? [this._previewValues.calendarValue] : super._calendarSelectedDates;
 	}
 
-	get _effectiveTimeValue() {
+	get _timeSelectionValue() {
 		return this._previewValues.timeSelectionValue ? this._previewValues.timeSelectionValue : this.value;
 	}
 
@@ -315,10 +311,12 @@ class DateTimePicker extends DatePicker {
 	 * @override
 	 */
 	onSelectedDatesChange(event) {
+		event.preventDefault();
+
 		this._previewValues = {
 			...this._previewValues,
 			calendarTimestamp: event.detail.timestamp,
-			calendarSelectedDate: event.detail.dates[0],
+			calendarValue: event.detail.values[0],
 		};
 	}
 
@@ -347,7 +345,7 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get _submitDisabled() {
-		return !this._effectiveCalendarSelectedDates || !this._effectiveCalendarSelectedDates.length;
+		return !this._calendarSelectedDates || !this._calendarSelectedDates.length;
 	}
 
 	/**
@@ -414,8 +412,8 @@ class DateTimePicker extends DatePicker {
 	}
 
 	getSelectedDateTime() {
-		const selectedDate = CalendarDate.fromTimestamp(this._effectiveCalendarSelectedDates[0] * 1000).toLocalJSDate();
-		const selectedTime = this.getFormat().parse(this._effectiveTimeValue);
+		const selectedDate = this.getFormat().parse(this._calendarSelectedDates[0]);
+		const selectedTime = this.getFormat().parse(this._timeSelectionValue);
 		selectedDate.setHours(selectedTime.getHours());
 		selectedDate.setMinutes(selectedTime.getMinutes());
 		selectedDate.setSeconds(selectedTime.getSeconds());

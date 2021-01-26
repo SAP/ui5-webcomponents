@@ -33,8 +33,7 @@ const setLanguage = async newLanguage => {
 
 	language = newLanguage;
 
-	const listenersResults = fireLanguageChange(newLanguage);
-	await Promise.all(listenersResults);
+	await fireLanguageChange(newLanguage);
 	RenderScheduler.reRenderAllUI5Elements({ languageAware: true });
 	return RenderScheduler.whenFinished();
 };

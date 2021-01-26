@@ -468,7 +468,7 @@ class MultiComboBox extends UI5Element {
 			- value of the host and the internal input should be differnt in case of actual input
 			- input is called when a key is pressed => keyup should not be called yet
 		*/
-		const skipFiring = (this._inputDom.value === this.value) && isIE && !this._keyDown && !!this.placeholder;
+		const skipFiring = (this._inputDom.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
 
 		if (skipFiring) {
 			event.preventDefault();
@@ -692,6 +692,11 @@ class MultiComboBox extends UI5Element {
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
+
+		if (isPhone() && this.allItemsPopover && this.allItemsPopover.opened) {
+			// Set initial focus to the dialog
+			this.allItemsPopover.focus();
+		}
 	}
 
 	async onAfterRendering() {

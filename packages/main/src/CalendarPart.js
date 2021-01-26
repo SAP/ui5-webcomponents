@@ -1,7 +1,7 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
-import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
+import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import DateComponentBase from "./DateComponentBase.js";
 
 /**
@@ -13,21 +13,10 @@ const metadata = {
 		 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
 		 * <b>Node:</b> Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
 		 * @type {Integer}
-		 * @public
+		 * @protected
 		 */
 		timestamp: {
 			type: Integer,
-		},
-
-		/**
-		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
-		 * @type {Array}
-		 * @public
-		 */
-		selectedDates: {
-			type: Integer,
-			multiple: true,
-			compareValues: true,
 		},
 	},
 };
@@ -63,7 +52,7 @@ class CalendarPart extends DateComponentBase {
 	 * @protected
 	 */
 	get _timestamp() {
-		let timestamp = this.timestamp !== undefined ? this.timestamp : getRoundedTimestamp();
+		let timestamp = this.timestamp !== undefined ? this.timestamp : getTodayUTCTimestamp(this._primaryCalendarType);
 		if (timestamp < this._minTimestamp || timestamp > this._maxTimestamp) {
 			timestamp = this._minTimestamp;
 		}

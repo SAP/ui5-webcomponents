@@ -1,7 +1,7 @@
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
-import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
+import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
@@ -23,6 +23,14 @@ const metadata = {
 		delimiter: {
 			type: String,
 			defaultValue: "-",
+		},
+
+		/**
+		 * The first date in the range during selection (this is a temporary value, not the first date in the value range)
+		 * @private
+		 */
+		_tempValue: {
+			type: String,
 		},
 	},
 };
@@ -96,7 +104,7 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	get _calendarTimestamp() {
-		return this._firstDateTimestamp || getRoundedTimestamp();
+		return this._firstDateTimestamp || getTodayUTCTimestamp(this._primaryCalendarType);
 	}
 
 	/**
@@ -104,7 +112,13 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	get _calendarSelectedDates() {
-		return [this._firstDateTimestamp, this._lastDateTimestamp].filter(date => !!date);
+		if (this._tempValue) {
+			return [this._tempValue];
+		}
+		if (this.value && this._checkValueValidity(this.value)) {
+			return this._splitValueByDelimiter(this.value);
+		}
+		return [];
 	}
 
 	/**
@@ -178,13 +192,21 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	onSelectedDatesChange(event) {
-		const selectedDates = event.detail.dates;
-		if (selectedDates.length !== 2) { // Do nothing until the user selects 2 dates, we don't change any state at all for one date
+		event.preventDefault(); // never let the calendar update its own dates, the parent component controls them
+		const values = event.detail.values;
+
+		if (values.length === 0) {
 			return;
 		}
 
-		const newValue = this._buildValue(...selectedDates); // the value will be normalized so we don't need to order them here
+		if (values.length === 1) { // Do nothing until the user selects 2 dates, we don't change any state at all for one date
+			this._tempValue = values[0];
+			return;
+		}
+
+		const newValue = this._buildValue(...event.detail.dates); // the value will be normalized so we don't need to order them here
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
+		this._tempValue = "";
 		this._focusInputAfterClose = true;
 		this.closePicker();
 	}

@@ -15,7 +15,6 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 // Styles
 import listCss from "./generated/themes/List.css.js";
 
-const BUSYINDICATOR_HEIGHT = 48; // px
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 /**
@@ -389,10 +388,6 @@ class List extends UI5Element {
 		return !this.hasData && this.noDataText;
 	}
 
-	get showBusy() {
-		return this.busy || this.infiniteScroll;
-	}
-
 	get isMultiSelect() {
 		return this.mode === ListMode.MultiSelect;
 	}
@@ -591,12 +586,14 @@ class List extends UI5Element {
 
 	isForwardElement(node) {
 		const nodeId = node.id;
+		const afterElement = this.getAfterElement();
+		const beforeElement = this.getBeforeElement();
 
-		if (this._id === nodeId || this.getBeforeElement().id === nodeId) {
+		if (this._id === nodeId || (beforeElement && beforeElement.id === nodeId)) {
 			return true;
 		}
 
-		return this.getAfterElement().id === nodeId;
+		return afterElement && afterElement.id === nodeId;
 	}
 
 	onItemFocused(event) {
@@ -763,7 +760,7 @@ class List extends UI5Element {
 		}
 		this.previousScrollPosition = scrollTop;
 
-		if (scrollHeight - BUSYINDICATOR_HEIGHT <= height + scrollTop) {
+		if (scrollHeight <= height + scrollTop) {
 			this.fireEvent("load-more");
 		}
 	}

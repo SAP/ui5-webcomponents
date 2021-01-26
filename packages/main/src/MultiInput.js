@@ -237,6 +237,17 @@ class MultiInput extends Input {
 		}
 	}
 
+	/**
+	 * @override
+	 */
+	async _onfocusin(event) {
+		const inputDomRef = await this.getInputDOMRef();
+
+		if (event.target === inputDomRef) {
+			await super._onfocusin(event);
+		}
+	}
+
 	shouldOpenSuggestions() {
 		const parent = super.shouldOpenSuggestions();
 		const valueHelpPressed = this._valueHelpIconPressed;

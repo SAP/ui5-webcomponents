@@ -14,6 +14,7 @@ import {
 	isPageUp,
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarPart from "./CalendarPart.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
@@ -24,6 +25,17 @@ import styles from "./generated/themes/MonthPicker.css.js";
 const metadata = {
 	tag: "ui5-monthpicker",
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
+		/**
+		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
+		 * @type {Array}
+		 * @public
+		 */
+		selectedDates: {
+			type: Integer,
+			multiple: true,
+			compareValues: true,
+		},
+
 		_months: {
 			type: Object,
 			multiple: true,

@@ -103,7 +103,7 @@ Safari | Native
 Edge | Native
 IE 11 | With Polyfill
 
-If your app needs to support **IE11** or **legacy Edge**, please follow the [instructions](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md#1-old-browser-support-edge-ie11).
+If your app needs to support **IE11**, please follow the [instructions](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md#1-old-browser-support-ie11).
 
 ## Project structure, development and build
 
@@ -128,6 +128,7 @@ Project | NPM Package | Description
 `base` | [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base) | The UI5 Web Components framework itself
 `theme-base` | [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base) | Theming assets (the default theme and additional accessibility themes)
 `localization` | [UI5 Web Components Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization) | `i18n` functionality and `CLDR` assets
+`ie11` | [UI5 Web Components IE11](https://www.npmjs.com/package/@ui5/webcomponents-ie11) | Internet Explorer 11 polyfills and adapter code
 `playground` | N/A | The playground application
 
 ### How to run the project locally:
