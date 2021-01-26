@@ -874,7 +874,7 @@ class MultiComboBox extends UI5Element {
 				"width": `${this._listWidth}px`,
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"padding": "0 1rem",
-				"line-height": "2.725rem",
+				"line-height": "2.5rem",
 			},
 			popoverHeader: {
 				"width": `${this._inputWidth}px`,

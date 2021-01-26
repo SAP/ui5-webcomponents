@@ -815,7 +815,7 @@ class ComboBox extends UI5Element {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
 				"padding": "0 1rem",
-				"line-height": "2.725rem",
+				"line-height": "2.5rem",
 			},
 		};
 	}
