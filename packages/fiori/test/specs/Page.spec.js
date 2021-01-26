@@ -5,11 +5,14 @@ describe("Page general interaction", () => {
 
 	it("tests initial rendering", () => {
         const page = browser.$("#page");
+        const header = page.shadow$(".ui5-page-header-root");
+        const content = page.shadow$(".ui5-page-content-root");
+        const footer = page.shadow$(".ui5-page-footer-root");
 
         assert.ok(page.isExisting(), "The component should have a shadow root.");
-        assert.ok(page.shadow$(".ui5-page-header-root"), "Header should be rendered.");
-        assert.ok(page.shadow$(".ui5-page-content-root"), "Content should be rendered.");
-        assert.ok(page.shadow$(".ui5-page-footer-root"), "Footer should be rendered.");
+        assert.ok(header.isExisting(), "Header should be rendered.");
+        assert.ok(content.isExisting(), "Content should be rendered.");
+        assert.ok(footer.isExisting(), "Footer should be rendered.");
     });
 
 	it("tests footer visibility", () => {
