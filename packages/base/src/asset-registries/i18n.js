@@ -10,8 +10,18 @@ const bundlePromises = new Map();
 const loaders = new Map();
 const availableLocales = new Map();
 
+/**
+ *
+ * @param {string} packageName for which package this loader can fetch data
+ * @param {function} loader async function that will be passed a localeId and should return a JSON object
+ * @param {Set} localeIds Set of locale IDs that this loader can handle
+ */
 const registerLoader = (packageName, loader, localeIds) => {
-	loaders.set(packageName, loader);
+	// register loader by key
+	for (let localeId of localeIds.values()) {
+		const bundleKey = `${packageName}/${localeId}`;
+		loaders.set(bundleKey, loader);
+	}
 	availableLocales.set(packageName, localeIds);
 };
 
@@ -46,9 +56,9 @@ const registerI18nBundle = (packageName, bundle) => {
 
 // load bundle over the network once
 const loadMessageBundleOnce = async (packageName, localeId) => {
-	const loadMessageBundle = loaders.get(packageName);
-
 	const bundleKey = `${packageName}/${localeId}`;
+	const loadMessageBundle = loaders.get(bundleKey);
+
 	if (!bundlePromises.get(bundleKey)) {
 		bundlePromises.set(bundleKey, loadMessageBundle(localeId));
 	}
@@ -66,11 +76,11 @@ const loadMessageBundleOnce = async (packageName, localeId) => {
  * @public
  */
 const fetchI18nBundle = async packageName => {
-	if (!loaders.has(packageName)) {
-		console.warn(`Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
-		` You need to import ${packageName}/dist/Assets.js with a build tool that supports JSON imports.`); /* eslint-disable-line */
-		return;
-	}
+	// if (!loaders.has(packageName)) {
+	// 	console.warn(`Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
+	// 	` You need to import ${packageName}/dist/Assets.js with a build tool that supports JSON imports.`); /* eslint-disable-line */
+	// 	return;
+	// }
 
 	const language = getLocale().getLanguage();
 	const region = getLocale().getRegion();
