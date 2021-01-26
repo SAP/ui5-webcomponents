@@ -1,0 +1,25 @@
+.ui5-cp-swatch {
+	height: var(--_ui5_color-palette-swatch-height);
+	width: var(--_ui5_color-palette-swatch-height);
+	border: 1px solid var(--sapContent_ForegroundBorderColor);
+	border-radius: 0.25rem;
+	display: inline-block;
+	margin: var(--_ui5_color-palette-swatch-margin);
+}
+
+.ui5-cp-swatch:hover {
+	height: var(--_ui5_color-palette-swatch-hover-height);
+	width: var(--_ui5_color-palette-swatch-hover-height);
+	margin: var(--_ui5_color-palette-swatch-hover-margin);
+}
+
+.ui5-cp-swatch-row {
+	display: flex;
+	padding: 0.3125rem 0.6875rem;
+	justify-content: flex-start;
+}
+
+.ui5-cp-swatch-container {
+	display: flex;
+	flex-flow: column wrap;
+}

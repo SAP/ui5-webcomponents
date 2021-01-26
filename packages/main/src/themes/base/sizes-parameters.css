@@ -117,6 +117,10 @@
 	--_ui5_checkbox_inner_width_height: var(--_ui5_checkbox_compact_inner_size);
 	--_ui5_checkbox_icon_size: .75rem;
 
+	/* ColorPalette */
+	--_ui5_color-palette-swatch-height: 1.25rem;
+	--_ui5_color-palette-swatch-container-padding: 0.1875rem 0.8125rem;
+	--_ui5_color-palette-swatch-hover-height: 1.65rem;
 
 	/* Custom List Item */
 	--_ui5_custom_list_item_height: 2rem;

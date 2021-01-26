@@ -1,0 +1,23 @@
+<div class="ui5-cp-swatch-container" 
+	@click={{_onclick}}
+	@keyup={{_onkeyup}}
+	role="region"
+	aria-label="{{colorContainerLabel}}">
+	{{#each colorsArray}}
+		<div class="ui5-cp-swatch-row">
+			{{#each this}}
+				<div
+					id="color-swatch-{{this.id}}"
+					class="ui5-cp-swatch"
+					style="background-color: {{this.value}}"
+					value="{{this.value}}"
+					tabindex="0"
+					role="button"
+					aria-label="Color {{this.id}}: {{this.value}}"
+					title="Color {{this.id}}: {{this.value}}"
+				>
+				</div>
+			{{/each}}
+		</div>
+	{{/each}}
+</div>
