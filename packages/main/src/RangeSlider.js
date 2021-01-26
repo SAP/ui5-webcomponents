@@ -8,6 +8,13 @@ import {
 import SliderBase from "./SliderBase.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
 
+// Texts
+import {
+	RANGE_SLIDER_ARIA_DESCRIPTION,
+	RANGE_SLIDER_START_HANDLE_DESCRIPTION,
+	RANGE_SLIDER_END_HANDLE_DESCRIPTION,
+} from "./generated/i18n/i18n-defaults.js";
+
 /**
  * @public
  */
@@ -117,6 +124,30 @@ class RangeSlider extends SliderBase {
 	get tooltipEndValue() {
 		const stepPrecision = this.constructor._getDecimalPrecisionOfNumber(this._effectiveStep);
 		return this.endValue.toFixed(stepPrecision);
+	}
+
+	get _ariaDisabled() {
+		return this.disabled || undefined;
+	}
+
+	get _ariaLabelledByText() {
+		return this.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION);
+	}
+
+	get _ariaHandlesText() {
+		const isRTL = this.effectiveDir === "rtl";
+		const isReversed = this._areValuesReversed();
+		const ariaHandlesText = {};
+
+		if ((isRTL && !isReversed) || (!isRTL && isReversed)) {
+			ariaHandlesText.startHandleText = this.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
+			ariaHandlesText.endHandleText = this.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
+		} else {
+			ariaHandlesText.startHandleText = this.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
+			ariaHandlesText.endHandleText = this.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
+		}
+
+		return ariaHandlesText;
 	}
 
 	/**
@@ -667,19 +698,15 @@ class RangeSlider extends SliderBase {
 	}
 
 	get _startHandle() {
-		return this.getDomRef().querySelector(".ui5-slider-handle--start");
+		return this.shadowRoot.querySelector(".ui5-slider-handle--start");
 	}
 
 	get _endHandle() {
-		return this.getDomRef().querySelector(".ui5-slider-handle--end");
+		return this.shadowRoot.querySelector(".ui5-slider-handle--end");
 	}
 
 	get _progressBar() {
-		return this.getDomRef().querySelector(".ui5-slider-progress");
-	}
-
-	get tabIndexProgress() {
-		return this.tabIndex;
+		return this.shadowRoot.querySelector(".ui5-slider-progress");
 	}
 
 	get styles() {
