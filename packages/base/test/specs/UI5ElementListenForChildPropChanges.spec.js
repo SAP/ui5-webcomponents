@@ -1,5 +1,4 @@
 const assert = require("chai").assert;
-const whenFinished = window["sap-ui-webcomponents-bundle"].whenFinished();
 
 describe("Metadata slot invalidateOnChildChange works", () => {
 	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
@@ -18,7 +17,7 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 
 			child.prop1 = "a"; // child1(default slot) prop1 -> invalidates
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(parentInvalidated);
 		});
@@ -40,7 +39,7 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 
 			child.prop2 = "b"; // child1(default slot) prop 2 -> does not
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(parentInvalidated);
 		});
@@ -64,7 +63,7 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 			child.prop2 = "c";
 			child.prop3 = "c";
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(parentInvalidatedCount);
 		});

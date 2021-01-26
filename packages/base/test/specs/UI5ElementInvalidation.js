@@ -1,5 +1,4 @@
 const assert = require("chai").assert;
-const whenFinished = window["sap-ui-webcomponents-bundle"].whenFinished();
 
 describe("Invalidation works", () => {
 	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
@@ -20,7 +19,7 @@ describe("Invalidation works", () => {
 			el.strProp = "new value";
 			el.boolProp = true;
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(invalidations);
 		});
@@ -35,7 +34,7 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.strProp = text;
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			let invalidations = 0;
 
@@ -45,7 +44,7 @@ describe("Invalidation works", () => {
 
 			el.strProp = text;
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(invalidations);
 		});
@@ -61,7 +60,7 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.objectProp = obj;
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			let invalidations = 0;
 
@@ -71,7 +70,7 @@ describe("Invalidation works", () => {
 
 			el.objectProp = otherObj;
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(invalidations);
 		});
@@ -87,7 +86,7 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.multiProp = arr;
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			let invalidations = 0;
 
@@ -97,7 +96,7 @@ describe("Invalidation works", () => {
 
 			el.multiProp = otherArr;
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(invalidations);
 		});
@@ -121,7 +120,7 @@ describe("Invalidation works", () => {
 			const div = document.createElement("div");
 			el.appendChild(div);
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(invalidated);
 		});
@@ -137,7 +136,7 @@ describe("Invalidation works", () => {
 			const div = document.createElement("div");
 			el.appendChild(div);
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			let invalidated = false;
 
@@ -147,7 +146,7 @@ describe("Invalidation works", () => {
 
 			el.removeChild(div);
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(invalidated);
 		});
@@ -161,7 +160,7 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.textContent = "test";
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			// Number of invalidations may vary with children/slots count, so just check for invalidation
 			let invalidated = false;
@@ -172,7 +171,7 @@ describe("Invalidation works", () => {
 
 			el.textContent = "test2";
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(invalidated);
 		});
@@ -186,7 +185,7 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.textContent = "test";
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			// Number of invalidations may vary with children/slots count, so just check for invalidation
 			let invalidated = false;
@@ -197,7 +196,7 @@ describe("Invalidation works", () => {
 
 			el.childNodes[0].nodeValue = "test2";
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(invalidated);
 		});
@@ -229,7 +228,7 @@ describe("Invalidation works", () => {
 			el.strProp = "new";
 			el.strProp = "newer";
 
-			await whenFinished();
+			await window["sap-ui-webcomponents-bundle"].whenFinished();
 
 			return done(operations);
 		});
