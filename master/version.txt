@@ -1,5 +1,7 @@
-commit 2624c7e6ac6fafd8dce4761c13e416be3cb4defd
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jan 25 17:10:24 2021 +0200
+commit cb76cf4f2e8ec91297054df654db702eec9eb51c
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Tue Jan 26 10:32:23 2021 +0200
 
-    refactor(framework): Reorder base code (#2722)
+    feat(ui5-slider, ui5-range-slider): implement a11y spec (#2714)
+    
+    FIXES: #2513
