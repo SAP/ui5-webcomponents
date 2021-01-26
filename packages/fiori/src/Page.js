@@ -185,10 +185,6 @@ class Page extends UI5Element {
 			content: {
 				"padding-bottom": this.footer.length && this._contentPaddingBottom,
 				"bottom": this.footer.length && this._contentBottom,
-				"overflow": this.disableScrolling ? "hidden" : "auto",
-			},
-			footer: {
-				"display": this.hideFooter && !this.floatingFooter ? "none" : "block",
 			},
 		};
 	}

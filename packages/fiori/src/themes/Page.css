@@ -35,12 +35,20 @@
     width: 100%;
 }
 
+:host([disable-scrolling]) .ui5-page-content-root {
+    overflow: hidden;
+}
+
 :host([floating-footer]) .ui5-page-footer-root {
     left: 0.5rem;
     right: 0.5rem;
     width: auto;
     opacity: 1;
     bottom: 0.5rem;
+}
+
+:host([hide-footer]:not([floating-footer])) .ui5-page-footer-root {
+    display: none;
 }
 
 :host([floating-footer]:not([hide-footer])) .ui5-page-footer-root {
