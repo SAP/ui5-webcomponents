@@ -5,13 +5,7 @@ import EventProvider from "./EventProvider.js";
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 import "./StaticAreaItem.js";
 import updateShadowRoot from "./updateShadowRoot.js";
-import {
-	renderDeferred,
-	renderImmediately,
-	cancelRender,
-	register,
-	deregister,
-} from "./Render.js";
+import { renderDeferred, renderImmediately, cancelRender } from "./Render.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
@@ -125,7 +119,6 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		register(this);
 		renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve();
 		this._fullyConnected = true;
@@ -149,7 +142,6 @@ class UI5Element extends HTMLElement {
 		}
 
 		if (needsShadowDOM) {
-			deregister(this);
 			if (this._fullyConnected) {
 				if (typeof this.onExitDOM === "function") {
 					this.onExitDOM();

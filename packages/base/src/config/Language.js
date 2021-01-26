@@ -3,7 +3,7 @@ import {
 	getUseDefaultLanguage as getConfiguredUseDefaultLanguage,
 } from "../InitialConfiguration.js";
 import { fireLanguageChange } from "../locale/languageChange.js";
-import { reRenderAllUI5Elements, whenFinished } from "../Render.js";
+import { reRenderAllUI5Elements } from "../Render.js";
 
 let language;
 let useDefaultLanguage;
@@ -34,8 +34,7 @@ const setLanguage = async newLanguage => {
 	language = newLanguage;
 
 	await fireLanguageChange(newLanguage);
-	reRenderAllUI5Elements({ languageAware: true });
-	return whenFinished();
+	await reRenderAllUI5Elements({ languageAware: true });
 };
 
 /**

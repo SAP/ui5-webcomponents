@@ -32,22 +32,24 @@ const renderDeferred = async webComponent => {
 };
 
 /**
- * Renders a component synchronously
+ * Renders a component synchronously and adds it to the registry of rendered components
  *
  * @param webComponent
  */
 const renderImmediately = webComponent => {
 	eventProvider.fireEvent("beforeComponentRender", webComponent);
+	registeredElements.add(webComponent);
 	webComponent._render();
 };
 
 /**
- * Cancels the rendering of a component, added to the queue with renderDeferred
+ * Cancels the rendering of a component, if awaiting to be rendered, and removes it from the registry of rendered components
  *
  * @param webComponent
  */
 const cancelRender = webComponent => {
 	invalidatedWebComponents.remove(webComponent);
+	registeredElements.delete(webComponent);
 };
 
 /**
@@ -127,19 +129,11 @@ const _resolveTaskPromise = () => {
 	}
 };
 
-const register = element => {
-	registeredElements.add(element);
-};
-
-const deregister = element => {
-	registeredElements.delete(element);
-};
-
 /**
  * Re-renders all UI5 Elements on the page, with the option to specify filters to rerender only some components.
  *
  * Usage:
- * reRenderAllUI5Elements() -> rerenders all components
+ * reRenderAllUI5Elements() -> re-renders all components
  * reRenderAllUI5Elements({tag: "ui5-button"}) -> re-renders only instances of ui5-button
  * reRenderAllUI5Elements({rtlAware: true}) -> re-renders only rtlAware components
  * reRenderAllUI5Elements({languageAware: true}) -> re-renders only languageAware components
@@ -148,8 +142,9 @@ const deregister = element => {
  *
  * @public
  * @param {Object|undefined} filters - Object with keys that can be "rtlAware" or "languageAware"
+ * @returns {Promise<void>}
  */
-const reRenderAllUI5Elements = filters => {
+const reRenderAllUI5Elements = async filters => {
 	registeredElements.forEach(element => {
 		const tag = element.constructor.getMetadata().getTag();
 		const rtlAware = isRtlAware(element.constructor);
@@ -158,6 +153,7 @@ const reRenderAllUI5Elements = filters => {
 			renderDeferred(element);
 		}
 	});
+	await whenFinished();
 };
 
 const attachBeforeComponentRender = listener => {
@@ -173,8 +169,6 @@ export {
 	renderImmediately,
 	cancelRender,
 	whenFinished,
-	register,
-	deregister,
 	reRenderAllUI5Elements,
 	attachBeforeComponentRender,
 	detachBeforeComponentRender,

@@ -25,7 +25,7 @@ const addCustomCSS = (tag, css) => {
 	customCSSFor[tag].push(css);
 	fireCustomCSSChange(tag);
 
-	reRenderAllUI5Elements({ tag });
+	return reRenderAllUI5Elements({ tag });
 };
 
 const getCustomCSS = tag => {
