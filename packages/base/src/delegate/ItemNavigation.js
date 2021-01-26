@@ -1,4 +1,4 @@
-import RenderScheduler from "../RenderScheduler.js";
+import { whenFinished } from "../Render.js";
 import {
 	isDown,
 	isUp,
@@ -109,7 +109,7 @@ class ItemNavigation extends EventProvider {
 
 		event.preventDefault();
 
-		await RenderScheduler.whenFinished();
+		await whenFinished();
 
 		this.update();
 		this.focusCurrent();

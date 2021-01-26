@@ -1,4 +1,4 @@
-import RenderScheduler from "../RenderScheduler.js";
+import { reRenderAllUI5Elements } from "../Render.js";
 import EventProvider from "../EventProvider.js";
 
 const eventProvider = new EventProvider();
@@ -25,7 +25,7 @@ const addCustomCSS = (tag, css) => {
 	customCSSFor[tag].push(css);
 	fireCustomCSSChange(tag);
 
-	RenderScheduler.reRenderAllUI5Elements({ tag });
+	reRenderAllUI5Elements({ tag });
 };
 
 const getCustomCSS = tag => {

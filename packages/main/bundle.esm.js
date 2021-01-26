@@ -91,8 +91,7 @@ import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 
 // used in test pages
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
-window.RenderScheduler = RenderScheduler;
+import { whenFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
 
@@ -129,6 +128,7 @@ const testAssets = {
 	attachThemeLoaded,
 	detachThemeLoaded,
 	getIconNames,
+	whenFinished,
 };
 
 window["sap-ui-webcomponents-bundle"] = testAssets;

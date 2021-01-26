@@ -1,5 +1,5 @@
 // used in test pages
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { whenFinished } from "@ui5/webcomponents-base/dist/Render.js";
 
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
@@ -15,8 +15,8 @@ import "./dist/Assets.js";
 // Import your web components here from the dist/ directory
 import "./dist/INIT_PACKAGE_VAR_CLASS_NAME.js";
 
-window.RenderScheduler = RenderScheduler;
 window["sap-ui-webcomponents-bundle"] = {
+	whenFinished,
 	configuration: {
 		getAnimationMode,
 		getLanguage,
