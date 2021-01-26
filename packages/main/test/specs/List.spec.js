@@ -311,4 +311,35 @@ describe("List Tests", () => {
 		btnPopupOpener.click();
 		assert.strictEqual(btnInListHeader.isFocused(), true, "The List header btn is focused.");
 	});
+
+	it('focusable list-items are correctly disabled', () => {
+		const item2 = $('#basicList ui5-li:nth-child(2)');
+
+		// focus the second item
+		item2.click();
+
+		// disable the second item
+		browser.execute(() => {
+			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
+		});
+
+		assert.strictEqual(item2.shadow$('li').getProperty("tabIndex"), -1, "disabled item is no longer focusable");
+		assert.strictEqual(item2.shadow$('li').getAttribute("class"),"ui5-li-root", "disabled item no longer styled as focusable");
+	});
+
+	it('disabled list-items are skipped on navigation', () => {
+		const item1 = $('#basicList ui5-li:nth-child(1)'),
+			item3 = $('#basicList ui5-li:nth-child(3)');
+
+		// ensure the second item is disabled
+		browser.execute(() => {
+			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
+		});
+
+		// navigate from the first item to the next focusable item
+		item1.click();
+		item1.keys("ArrowDown");
+
+		assert.strictEqual(item3.getProperty("focused"), true, "disabled item is skipped");
+	});
 });
