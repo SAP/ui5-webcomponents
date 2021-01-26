@@ -16,7 +16,7 @@ th {
 }
 
 :host([first]) th {
-	padding-left: 1rem;
+	/* padding-left: 1rem; */
 }
 
 :host([sticky]) th {

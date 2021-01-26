@@ -27,3 +27,7 @@ td {
 :host([popined]) td {
 	padding-left: 0;
 }
+
+::slotted(*) {
+	color: inherit;
+}

@@ -1,13 +1,21 @@
 <table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table">
 	<thead>
 		<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" tabindex="{{_columnHeader._tabIndex}}" style="height: 48px" @click="{{_onColumnHeaderClick}}">
+			{{#if isMultiSelect}}
+				<td class="ui5-table-select-all-column">
+					<ui5-checkbox>
+
+					</ui5-checkbox>
+				</td>
+			{{/if}}
+
 			{{#each visibleColumns}}
 				<slot name="{{this._individualSlot}}"></slot>
 			{{/each}}
 		</tr>
 	</thead>
 
-	<tbody>
+	<tbody @click={{_onclick}}>
 		{{#each rows}}
 			<slot name="{{this._individualSlot}}"></slot>
 		{{/each}}

@@ -47,3 +47,13 @@ tr {
 :host([_no-data-displayed]) {
 	border-bottom: 1px solid var(--sapList_TableGroupHeaderBorderColor);
 }
+
+.ui5-table-select-all-column {
+	width: 4rem;
+	text-align: center;
+	background: var(--sapList_HeaderBackground);
+}
+
+.ui5-table-select-all-column ui5-checkbox {
+	/* background: var(--sapList_HeaderBackground); */
+}

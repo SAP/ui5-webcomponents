@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
+import TableMode from "./types/TableMode.js";
 
 // Styles
 import styles from "./generated/themes/TableRow.css.js";
@@ -28,6 +29,15 @@ const metadata = {
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
+		mode: {
+			type: TableMode,
+			defaultValue: TableMode.None,
+		},
+
+		selected: {
+			type: Boolean,
+		},
+
 		_columnsInfo: {
 			type: Object,
 			multiple: true,
@@ -181,6 +191,10 @@ class TableRow extends UI5Element {
 
 	getNormilzedTextContent(textContent) {
 		return textContent.replace(/[\n\r\t]/g, "").trim();
+	}
+
+	get isMultiSelect() {
+		return this.mode === "MultiSelect";
 	}
 }
 

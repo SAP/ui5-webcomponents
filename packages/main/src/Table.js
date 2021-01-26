@@ -5,6 +5,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import TableMode from "./types/TableMode.js";
 
 // Texts
 import { TABLE_LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
@@ -154,6 +155,11 @@ const metadata = {
 		 */
 		stickyColumnHeader: {
 			type: Boolean,
+		},
+
+		mode: {
+			type: TableMode,
+			defaultValue: TableMode.None,
 		},
 
 		_hiddenColumns: {
@@ -308,6 +314,8 @@ class Table extends UI5Element {
 
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
+
+			row.mode = this.mode;
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
@@ -357,6 +365,50 @@ class Table extends UI5Element {
 
 	_onLoadMoreClick() {
 		this.fireEvent("load-more");
+	}
+
+	_onclick(event) {
+		const mappings = {
+			"SingleSelect": "_handleSingleSelect",
+			"MultiSelect": "_handleMultiSelect",
+		}
+
+		this[mappings[this.mode]](event);
+	}
+
+	_handleSingleSelect(event) {
+		this.fireEvent("selection-change", {
+			selectedRows: [ this.getRowParent(event.target) ],
+			previouslySelectedRows: [],
+		});
+	}
+
+	_handleMultiSelect(event) {
+		const row = this.getRowParent(event.target);
+		const previouslySelectedRows = this.rows.filter(row => row.selected);
+
+		row.selected = !row.selected;
+
+		const selectedRows = this.rows.filter(row => row.selected);
+
+		this.fireEvent("selection-change", {
+			selectedRows: selectedRows,
+			previouslySelectedRows: previouslySelectedRows,
+		});
+	}
+
+	getRowParent(child) {
+		if (child.hasAttribute("ui5-table-row")) {
+			return child;
+		}
+
+		let parent = child.parentElement;
+
+		if (parent && parent.hasAttribute("ui5-table-row")) {
+			return parent;
+		}
+
+		this.getRowParent(parent);
 	}
 
 	getColumnHeader() {
@@ -427,6 +479,10 @@ class Table extends UI5Element {
 		}
 
 		return `${this._id}-showMore-text`;
+	}
+
+	get isMultiSelect() {
+		return this.mode === "MultiSelect";
 	}
 }
 

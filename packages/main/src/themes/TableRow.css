@@ -30,3 +30,38 @@
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 }
+
+.ui5-table-multi-select-cell {
+	padding: .5rem .25rem;
+	box-sizing: border-box;
+	width: 4rem;
+	text-align: center;
+}
+
+:host([mode="SingleSelect"]) .ui5-table-row-root,
+:host([mode="MultiSelect"]) .ui5-table-row-root {
+	cursor: pointer;
+}
+
+:host([mode="SingleSelect"]) .ui5-table-row-root:hover,
+:host([mode="MultiSelect"]) .ui5-table-row-root:hover {
+	background-color: var(--sapList_Hover_Background);
+}
+
+:host([mode="SingleSelect"]) .ui5-table-row-root:active,
+:host([mode="MultiSelect"]) .ui5-table-row-root:active {
+	background-color: var(--sapList_Active_Background);
+	color: var(--sapList_Active_TextColor);
+}
+
+:host([mode="SingleSelect"]) ::slotted(ui5-table-cell) {
+	color: inherit;
+}
+
+:host([selected]) .ui5-table-row-root {
+	background: var(--sapList_SelectionBackgroundColor);
+}
+
+:host([selected]) .ui5-table-row-root:hover {
+	background: var(--sapList_Hover_SelectionBackground);
+}
