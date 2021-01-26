@@ -100,8 +100,8 @@ describe("Input general interaction", () => {
 		inputPasteEvent.click();
 		inputPasteEvent.keys(["a", "b"]);
 		inputPasteEvent.keys(["Shift", "ArrowLeft", "ArrowLeft"]); // Select the text
-		inputPasteEvent.keys(["Control", "x"]); // Cut
-		inputPasteEvent.keys(["Control", "v"]); // Paste
+		inputPasteEvent.keys(["Ctrl", "x"]); // Cut
+		inputPasteEvent.keys(["Ctrl", "v"]); // Paste
 
 		assert.strictEqual(inputPasteResult.getValue(), "1", "paste event is called");
 	});
