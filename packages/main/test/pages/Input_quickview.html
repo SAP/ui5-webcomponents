@@ -99,7 +99,6 @@
 		 * QuickviewCard Sample #1
 		 */
 		var focusQuickView = false;
-		const whenFinished = window["sap-ui-webcomponents-bundle"].whenFinished;
 
 		/*
 		 * Open quickviewCard on suggestion-item-preview
@@ -134,7 +133,7 @@
 
 			if (combination) {
 				focusQuickView = true;
-				await whenFinished();
+				await window["sap-ui-webcomponents-bundle"].whenFinished();
 				quickViewCard.applyFocus();
 			}
 		});
@@ -146,7 +145,7 @@
 			const esc = event.detail.escPressed;
 
 			if (esc) {
-				await whenFinished();
+				await window["sap-ui-webcomponents-bundle"].whenFinished();
 				inputPreview.focus();
 			}
 		});
@@ -171,7 +170,7 @@
 
 			if (combination) {
 				focusQuickView2 = true;
-				await whenFinished();
+				await window["sap-ui-webcomponents-bundle"].whenFinished();
 				quickViewCard2.applyFocus();
 			}
 
@@ -194,7 +193,7 @@
 			const esc = event.detail.escPressed;
 
 			if (esc) {
-				await whenFinished();
+				await window["sap-ui-webcomponents-bundle"].whenFinished();
 				inputPreview2.focus();
 			}
 		});
