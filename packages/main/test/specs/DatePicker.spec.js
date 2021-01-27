@@ -11,7 +11,7 @@ describe("Date Picker Tests", () => {
 
 		assert.ok(datepicker.input.isDisplayedInViewport(), "input is rendered");
 		assert.ok(datepicker.innerInput.isDisplayedInViewport(), "inner input is rendered");
-		assert.strictEqual(datepicker.innerInput.getAttribute("aria-roledescription"), "Date Type", "aria-roledescription attribute is added.");
+		assert.strictEqual(datepicker.innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
 	});
 
 	it("input receives value", () => {
