@@ -1,14 +1,5 @@
-commit bd09e17f5e00d5fda6bbe43838466759cb0c3d0e
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Tue Jan 26 16:36:04 2021 +0200
+commit 418034e2dc429d4391942a60876653d62471199d
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Jan 27 16:37:10 2021 +0800
 
-    feat(ui5-page): Initial implementation (#2685)
-    
-    The component has the following features:
-    - slots for header, content (should be put in the middle) and footer
-    - property to make it scrollable or not scrollable
-    - both the header and footer are visible while scrolling the content
-    - floatingFooter - property to support "floating footer"- the footer should not take space, but the page should add more padding to the scrolling content, so that when scrolling to the very bottom of the content the content does not underlay the footer.
-    - hideFooter
-    
-    FIXES: #2433
+    Translation Delivery (#2734)
