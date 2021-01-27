@@ -257,6 +257,17 @@ class Tokenizer extends UI5Element {
 		this.contentDom.scrollLeft = 0;
 	}
 
+	/**
+	 * Scrolls the container of the tokens to its beginning.
+	 * This method is used by MultiInput and MultiComboBox.
+	 * @private
+	 */
+	scrollToEnd() {
+		if (this.contentDom && this.contentDom.scrollWidth) {
+			this.contentDom.scrollLeft = this.contentDom.scrollWidth;
+		}
+	}
+
 	async closeMorePopover() {
 		const popover = await this.getPopover();
 
