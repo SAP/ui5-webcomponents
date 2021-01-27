@@ -872,9 +872,8 @@ class MultiComboBox extends UI5Element {
 		return {
 			popoverValueStateMessage: {
 				"width": `${this._listWidth}px`,
-				"min-height": "2.5rem",
-				"padding": "0.5625rem 1rem",
 				"display": this._listWidth === 0 ? "none" : "inline-block",
+				"padding": "0.9125rem 1rem",
 			},
 			popoverHeader: {
 				"width": `${this._inputWidth}px`,

@@ -814,7 +814,7 @@ class ComboBox extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
-				"padding": "0.5625rem 1rem",
+				"padding": "0.9125rem 1rem",
 			},
 		};
 	}
