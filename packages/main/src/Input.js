@@ -694,12 +694,9 @@ class Input extends UI5Element {
 	}
 
 	/**
-	 * Fire 'change' event only if its triggered by focusout. Otherwise, when triggered
-	 * by press of the 'enter' key - it is fired manually in fireEventByAction() method
-	 * in order to be dispatched before the 'submit' event.
-	 *
-	 * Note: At this point the focused property is still not updated so the
-	 * 'document.activeElement' reference must be used.
+	 * Fire 'change' event only if its triggered by focusout. Otherwise, when
+	 * by press of the 'enter' key - it is fired in fireEventByAction() method
+	 * triggered in order to be dispatched before the 'submit' event.
 	 *
 	 * @private
 	 */
