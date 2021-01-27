@@ -1,9 +1,8 @@
-commit b2c770ab5a5498f102a7dc5b6e4c6b102b93e105
+commit af64f354e786749354b9ea255c14e99f2fd4a854
 Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Wed Jan 27 16:07:01 2021 +0200
+Date:   Wed Jan 27 21:14:30 2021 +0200
 
-    fix(ui5-combobox, ui5-multicombobox): center ValueState text (#2733)
+    fix(ui5-input) center ValueState text (#2738)
     
-    ValueState text is now vertically centered in the Popover's header.
-    
-    Fixes: #2274
+    ValueState text is now vertically centered in the ResponsivePopover
+    header of the suggestions.
