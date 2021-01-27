@@ -103,10 +103,9 @@ describe("Input general interaction", () => {
 		input1.keys("b");
 		input1.keys("c");
 
-		// Click somewhere else to focus out - should fire change event.
 		inputResult.keys("Enter");
 
-		assert.strictEqual(inputResult.getValue(), "ChangeSubmit", "change is before submit");
+		assert.strictEqual(inputResult.getValue(), "ChangeSubmit", "'change' is before 'submit'");
 	});
 
 	it("fires input", () => {
