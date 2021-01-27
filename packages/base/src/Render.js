@@ -6,8 +6,7 @@ import { isRtlAware } from "./locale/RTLAwareRegistry.js";
 const registeredElements = new Set();
 const eventProvider = new EventProvider();
 
-// Queue for invalidated web components
-const invalidatedWebComponents = new RenderQueue();
+const invalidatedWebComponents = new RenderQueue(); // Queue for invalidated web components
 
 let renderTaskPromise,
 	renderTaskPromiseResolve;
