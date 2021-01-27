@@ -137,7 +137,7 @@ const metadata = {
 		 * and the component will fallback to <code>growing="Button"</code>.
 		 * @type {TableGrowingMode}
 		 * @defaultvalue "None"
-		 * @since 1.0.0-rc.11
+		 * @since 1.0.0-rc.12
 		 * @public
 		 */
 		growing: {
@@ -153,7 +153,7 @@ const metadata = {
 		 * and busy indicator is displayed at the bottom of the table.
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @since 1.0.0-rc.11
+		 * @since 1.0.0-rc.12
 		 * @public
 		*/
 		busy: {
