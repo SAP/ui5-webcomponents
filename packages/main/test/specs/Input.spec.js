@@ -93,6 +93,24 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "2", "change is called twice");
 	});
 
+	it("fires change before 'submit' when ENTER is pressed", () => {
+		const input1 = $("#inputChangeSubmit").shadow$("input");
+		const inputResult = $("#inputChangeSubmitResult").shadow$("input");
+
+		let eventsFired = [];
+
+		// Start typing.
+		input1.click();
+		input1.keys("a");
+		input1.keys("b");
+		input1.keys("c");
+
+		// Click somewhere else to focus out - should fire change event.
+		inputResult.keys("Enter");
+
+		assert.strictEqual(inputResult.getValue(), "ChangeSubmit", "change is before submit");
+	});
+
 	it("fires input", () => {
 		const input2 = $("#input2").shadow$("input");
 		const inputLiveChangeResult = $("#inputLiveChangeResult").shadow$("input");

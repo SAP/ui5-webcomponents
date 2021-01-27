@@ -693,8 +693,20 @@ class Input extends UI5Element {
 		}
 	}
 
+	/**
+	 * Fire 'change' event only if its triggered by focusout. Otherwise, when triggered
+	 * by press of the 'enter' key - it is fired manually in fireEventByAction() method
+	 * in order to be dispatched before the 'submit' event.
+	 *
+	 * Note: At this point the focused property is still not updated so the
+	 * 'document.activeElement' reference must be used.
+	 *
+	 * @private
+	 */
 	_handleChange(event) {
-		this.fireEvent(this.EVENT_CHANGE);
+		if (document.activeElement !== this) {
+			this.fireEvent(this.EVENT_CHANGE);
+		}
 	}
 
 	_scroll(event) {
@@ -906,7 +918,11 @@ class Input extends UI5Element {
 			return;
 		}
 
+		// Explicitly fire 'change' event before the 'submit' one.
+		// The native 'change' event is being dispatched after this code,
+		// execution, but it should be fired before the 'submit' event.
 		if (isSubmit) { // submit
+			this.fireEvent(this.EVENT_CHANGE);
 			this.fireEvent(this.EVENT_SUBMIT);
 		}
 

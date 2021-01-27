@@ -134,6 +134,11 @@
 	<h3> Input test change result</h3>
 	<ui5-input id="inputChangeResult"></ui5-input>
 
+	<h3> Input test change is fired before submit on enter</h3>
+	<ui5-input id="inputChangeSubmit">	</ui5-input>
+	<h3> Input test change result</h3>
+	<ui5-input id="inputChangeSubmitResult"></ui5-input>
+
 	<h3>Input test ESC</h3>
 	<ui5-input id="myInputEsc"show-suggestions style="width: 100%">
 		<ui5-suggestion-item text="Chromium"></ui5-suggestion-item>
@@ -326,6 +331,8 @@
 		var labelChange = document.getElementById('myLabelChange');
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
 		var labelSubmit = document.getElementById('myLabelSubmit');
+		var inputChangeSubmit = document.getElementById('inputChangeSubmit');
+		var inputChangeSubmitResult = document.getElementById('inputChangeSubmitResult');
 
 		var suggestionSelectedCounterWithGrouping = 0;
 
@@ -416,6 +423,15 @@
 		scrollInput.addEventListener("ui5-suggestion-scroll", function (event) {
 			scrollResult.value = event.detail.scrollTop;
 			console.log("scroll", { scrolltop: event.detail.scrollTop, container: event.detail.scrollContainer });
+		});
+
+		inputChangeSubmit.addEventListener("ui5-change", function() {
+
+			inputChangeSubmitResult.value = inputChangeSubmitResult.value + "Change"
+		});
+
+		inputChangeSubmit.addEventListener("ui5-submit", function() {
+			inputChangeSubmitResult.value = inputChangeSubmitResult.value + "Submit"
 		});
 	</script>
 </body>
