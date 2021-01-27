@@ -97,8 +97,6 @@ describe("Input general interaction", () => {
 		const input1 = $("#inputChangeSubmit").shadow$("input");
 		const inputResult = $("#inputChangeSubmitResult").shadow$("input");
 
-		let eventsFired = [];
-
 		// Start typing.
 		input1.click();
 		input1.keys("a");
