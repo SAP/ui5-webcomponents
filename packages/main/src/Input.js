@@ -704,8 +704,10 @@ class Input extends UI5Element {
 	 * @private
 	 */
 	_handleChange(event) {
-		if (document.activeElement !== this) {
+		if (!this._isChangeFired) {
 			this.fireEvent(this.EVENT_CHANGE);
+		} else {
+			this._isChangeFired = false;
 		}
 	}
 
@@ -922,7 +924,7 @@ class Input extends UI5Element {
 		// The native 'change' event is being dispatched after this code,
 		// execution, but it should be fired before the 'submit' event.
 		if (isSubmit) { // submit
-			this.fireEvent(this.EVENT_CHANGE);
+			this._isChangeFired = this.fireEvent(this.EVENT_CHANGE);
 			this.fireEvent(this.EVENT_SUBMIT);
 		}
 
