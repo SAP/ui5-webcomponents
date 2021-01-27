@@ -694,17 +694,17 @@ class Input extends UI5Element {
 	}
 
 	/**
-	 * Fire 'change' event only if its triggered by focusout. Otherwise, when
-	 * by press of the 'enter' key - it is fired in fireEventByAction() method
-	 * triggered in order to be dispatched before the 'submit' event.
+	 * Fire only 'change' event if it is triggered by focusout.
+	 * Otherwise, fire a "submit" event also.
 	 *
 	 * @private
 	 */
 	_handleChange(event) {
-		if (!this._isChangeFired) {
-			this.fireEvent(this.EVENT_CHANGE);
-		} else {
-			this._isChangeFired = false;
+		this.fireEvent(this.EVENT_CHANGE);
+
+		if (this._isSubmit) {
+			this.fireEvent(this.EVENT_SUBMIT);
+			this._isSubmit = false;
 		}
 	}
 
@@ -892,7 +892,6 @@ class Input extends UI5Element {
 		}
 
 		const inputValue = await this.getInputValue();
-		const isSubmit = action === this.ACTION_ENTER;
 		const isUserInput = action === this.ACTION_USER_INPUT;
 
 		const input = await this.getInputDOMRef();
@@ -901,6 +900,7 @@ class Input extends UI5Element {
 		this.value = inputValue;
 		this.highlightValue = inputValue;
 		this.valueBeforeItemPreview = inputValue;
+		this._isSubmit = action === this.ACTION_ENTER;
 
 		if (isSafari()) {
 			// When setting the value by hand, Safari moves the cursor when typing in the middle of the text (See #1761)
@@ -917,17 +917,9 @@ class Input extends UI5Element {
 			return;
 		}
 
-		// Explicitly fire 'change' event before the 'submit' one.
-		// The native 'change' event is being dispatched after this code,
-		// execution, but it should be fired before the 'submit' event.
-		if (isSubmit) { // submit
-			this._isChangeFired = this.fireEvent(this.EVENT_CHANGE);
-			this.fireEvent(this.EVENT_SUBMIT);
-		}
-
 		// In IE, pressing the ENTER does not fire change
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
-		if (isIE() && isSubmit && valueChanged) {
+		if (isIE() && this._isSubmit && valueChanged) {
 			this.fireEvent(this.EVENT_CHANGE);
 		}
 	}
