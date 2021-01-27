@@ -70,7 +70,7 @@
 	--_ui5_textarea_padding: 0.5625rem 0.6875rem;
 
 	/* Responsive Popover */
-	--_ui5-responnsive_popover_header_height: 2.75rem;
+	--_ui5-responsive_popover_header_height: 2.75rem;
 
 	/* Side Navigation */
 	--ui5_side_navigation_item_height: 2.75rem;
@@ -210,7 +210,7 @@
 	--_ui5_radiobutton_min_width: var(--_ui5_radiobutton_min_width_compact);
 
 	/* Responsive Popover */
-	--_ui5-responnsive_popover_header_height: 2.5rem;
+	--_ui5-responsive_popover_header_height: 2.5rem;
 
 	/* Side Navigation */
 	--ui5_side_navigation_item_height: 2rem;
