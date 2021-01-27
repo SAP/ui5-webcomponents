@@ -1,5 +1,9 @@
-commit 418034e2dc429d4391942a60876653d62471199d
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Jan 27 16:37:10 2021 +0800
+commit b2c770ab5a5498f102a7dc5b6e4c6b102b93e105
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Wed Jan 27 16:07:01 2021 +0200
 
-    Translation Delivery (#2734)
+    fix(ui5-combobox, ui5-multicombobox): center ValueState text (#2733)
+    
+    ValueState text is now vertically centered in the Popover's header.
+    
+    Fixes: #2274
