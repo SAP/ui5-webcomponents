@@ -1104,7 +1104,7 @@ class Input extends UI5Element {
 	get styles() {
 		return {
 			popoverHeader: {
-				"max-width": `${this._inputWidth}px`
+				"max-width": `${this._inputWidth}px`,
 			},
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
