@@ -26,13 +26,7 @@ const registerLoader = (packageName, loader, localeIds) => {
 	})
 };
 
-/**
- * Sets a map with texts and ID the are related to.
- * @param {string} packageName package ID that the i18n bundle will be related to
- * @param {Object} data an object with string locales as keys and text translataions as values
- * @public
- */
-const setI18nBundleData = (packageName, data) => {
+const _setI18nBundleData = (packageName, data) => {
 	bundleData.set(packageName, data);
 };
 
@@ -52,8 +46,6 @@ const getI18nBundleData = packageName => {
  */
 const registerI18nBundle = (packageName, bundle) => {
 	throw new Error("This method has been removed. Use `registerLoader` instead.");
-	// const oldBundle = bundleURLs.get(packageName) || {};
-	// bundleURLs.set(packageName, Object.assign({}, oldBundle, bundle));
 };
 
 const _hasLoader = (packageName, localeId) => {
@@ -62,7 +54,7 @@ const _hasLoader = (packageName, localeId) => {
 }
 
 // load bundle over the network once
-const loadMessageBundleOnce = async (packageName, localeId) => {
+const _loadMessageBundleOnce = async (packageName, localeId) => {
 	const bundleKey = `${packageName}/${localeId}`;
 	const loadMessageBundle = loaders.get(bundleKey);
 
@@ -106,12 +98,12 @@ const fetchI18nBundle = async packageName => {
 
 	const useDefaultLanguage = getUseDefaultLanguage();
 	if (useDefaultLanguage && localeId === DEFAULT_LANGUAGE) {
-		setI18nBundleData(packageName, null); // reset for the default language (if data was set for a previous language)
+		_setI18nBundleData(packageName, null); // reset for the default language (if data was set for a previous language)
 		return;
 	}
 
-	const data = await loadMessageBundleOnce(packageName, localeId);
-	setI18nBundleData(packageName, data);
+	const data = await _loadMessageBundleOnce(packageName, localeId);
+	_setI18nBundleData(packageName, data);
 };
 
 // When the language changes dynamically (the user calls setLanguage), re-fetch all previously fetched bundles
