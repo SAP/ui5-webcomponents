@@ -45,7 +45,7 @@ const fetchMessageBundle = async (localeId) => {
 	return (await fetch(bundleMap[localeId])).json()
 }
 
-const localeIds = new Set([${languagesKeysString}]);
+const localeIds = [${languagesKeysString}];
 
 registerLoader("${packageName}", fetchMessageBundle, localeIds);
 `;

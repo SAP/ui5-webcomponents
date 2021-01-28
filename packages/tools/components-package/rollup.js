@@ -51,7 +51,8 @@ const getPlugins = ({ transpile }) => {
 			/.*assets\/.*messagebundle.*\.json/
 		],
 		include: [
-			/.*assets\/.*\.json/
+			/.*assets\/.*\.json/,
+			/.*\.properties/,
 		],
 		emitFiles: true,
 		fileName: "[name].[hash][extname]",

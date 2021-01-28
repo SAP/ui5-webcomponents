@@ -13,6 +13,7 @@ const getEffectiveAssetPath = assetName => {
 	return assetName;
 };
 
+// eslint-disable-next-line
 export {
 	getEffectiveAssetPath,
 };

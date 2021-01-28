@@ -38,7 +38,7 @@ ${assetsImportsString}
 	}
 }
 
-const localeIds = new Set([${languagesKeysString}]);
+const localeIds = [${languagesKeysString}];
 
 registerLoader("${packageName}", fetchMessageBundle, localeIds);
 `;

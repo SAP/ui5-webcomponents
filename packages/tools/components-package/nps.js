@@ -11,7 +11,7 @@ const getScripts = (options) => {
 
 	const scripts = {
 		clean: "rimraf dist",
-		lint: "eslint . --config config/.eslintrc.js",
+		lint: "",
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
 		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
 		build: {
@@ -41,14 +41,16 @@ const getScripts = (options) => {
 			}
 		},
 		copy: {
-			default: "nps copy.src copy.test copy.webcomponents-polyfill",
+			default: "nps copy.src copy.props copy.test copy.webcomponents-polyfill",
 			src: `node "${LIB}/copy-and-watch/index.js" "src/**/*.js" dist/`,
+			props: `node "${LIB}/copy-and-watch/index.js" "src/**/*.properties" dist/`,
 			test: `node "${LIB}/copy-and-watch/index.js" "test/**/*.*" dist/test-resources`,
 			"webcomponents-polyfill": `node "${LIB}/copy-and-watch/index.js" "${polyfillPath}" dist/webcomponentsjs/`,
 		},
 		watch: {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
+			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			test: 'nps "copy.test --watch --safe --skip-initial-copy"',
 			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,DEPLOY_PUBLIC_PATH:/resources/",
 			styles: {
@@ -83,7 +85,7 @@ const getScripts = (options) => {
 				replace: `node "${LIB}/scoping/scope-test-pages.js" dist/test-resources/scoped demo`,
 			},
 			dev: 'concurrently "nps serve" "nps scope.watch"',
-			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps scope.bundle" "nps watch.styles"',
+			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.props" "nps scope.bundle" "nps watch.styles"',
 			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,SCOPE"
 		}
 	};

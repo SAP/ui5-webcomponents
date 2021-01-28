@@ -5,24 +5,25 @@ import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 import { getUseDefaultLanguage } from "../config/Language.js";
 
+// contains package names for which the warning has been shown
+let warningShown = new Set();
+
 const bundleData = new Map();
 const bundlePromises = new Map();
 const loaders = new Map();
-const availableLocales = new Map();
 
 /**
  *
  * @param {string} packageName for which package this loader can fetch data
  * @param {function} loader async function that will be passed a localeId and should return a JSON object
- * @param {Set} localeIds Set of locale IDs that this loader can handle
+ * @param {Array} localeIds Array of locale IDs that this loader can handle
  */
 const registerLoader = (packageName, loader, localeIds) => {
 	// register loader by key
-	for (let localeId of localeIds.values()) {
+	localeIds.forEach(localeId => {
 		const bundleKey = `${packageName}/${localeId}`;
 		loaders.set(bundleKey, loader);
-	}
-	availableLocales.set(packageName, localeIds);
+	})
 };
 
 /**
@@ -50,9 +51,15 @@ const getI18nBundleData = packageName => {
  * @public
  */
 const registerI18nBundle = (packageName, bundle) => {
+	throw new Error("This method has been removed. Use `registerLoader` instead.");
 	// const oldBundle = bundleURLs.get(packageName) || {};
 	// bundleURLs.set(packageName, Object.assign({}, oldBundle, bundle));
 };
+
+const _hasLoader = (packageName, localeId) => {
+	const bundleKey = `${packageName}/${localeId}`;
+	return loaders.has(bundleKey);
+}
 
 // load bundle over the network once
 const loadMessageBundleOnce = async (packageName, localeId) => {
@@ -66,6 +73,14 @@ const loadMessageBundleOnce = async (packageName, localeId) => {
 	return bundlePromises.get(bundleKey);
 };
 
+const _showAssetsWarningOnce = (packageName) => {
+	if (!warningShown.has(packageName)) {
+		console.warn(`Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
+		` Add \`import "${packageName}/dist/Assets-dynamic.js"\` in your bundle and make sure your build tool supports dynamic imports and JSON imports. See section "Assets" in the documentation for more information.`); /* eslint-disable-line */
+		warningShown.add(packageName);
+	}
+}
+
 /**
  * This method preforms the asynchronous task of fetching the actual text resources. It will fetch
  * each text resource over the network once (even for multiple calls to the same method).
@@ -76,17 +91,16 @@ const loadMessageBundleOnce = async (packageName, localeId) => {
  * @public
  */
 const fetchI18nBundle = async packageName => {
-	// if (!loaders.has(packageName)) {
-	// 	console.warn(`Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
-	// 	` You need to import ${packageName}/dist/Assets.js with a build tool that supports JSON imports.`); /* eslint-disable-line */
-	// 	return;
-	// }
+	if (!loaders.size) {
+		_showAssetsWarningOnce(packageName);
+		return;
+	}
 
 	const language = getLocale().getLanguage();
 	const region = getLocale().getRegion();
 	let localeId = normalizeLocale(language + (region ? `-${region}` : ``));
 
-	while (localeId !== DEFAULT_LANGUAGE && !availableLocales.get(packageName).has(localeId)) {
+	while (localeId !== DEFAULT_LANGUAGE && !_hasLoader(packageName, localeId)) {
 		localeId = nextFallbackLocale(localeId);
 	}
 
@@ -98,29 +112,6 @@ const fetchI18nBundle = async packageName => {
 
 	const data = await loadMessageBundleOnce(packageName, localeId);
 	setI18nBundleData(packageName, data);
-
-	// const bundleURL = bundlesForPackage[localeId];
-
-	// if (typeof bundleURL === "object") { // inlined from build
-	// 	setI18nBundleData(packageName, bundleURL);
-	// 	return;
-	// }
-
-	// const content = await fetchTextOnce(getEffectiveAssetPath(bundleURL));
-	// let parser;
-	// if (content.startsWith("{")) {
-	// 	parser = JSON.parse;
-	// } else {
-	// 	const PropertiesFormatSupport = getFeature("PropertiesFormatSupport");
-	// 	if (!PropertiesFormatSupport) {
-	// 		throw new Error(`In order to support .properties files, please: import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";`);
-	// 	}
-	// 	parser = PropertiesFormatSupport.parser;
-	// }
-
-	// const data = parser(content);
-
-	// setI18nBundleData(packageName, data);
 };
 
 // When the language changes dynamically (the user calls setLanguage), re-fetch all previously fetched bundles

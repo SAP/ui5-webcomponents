@@ -8,7 +8,7 @@ const assetParametersScript = resolve.sync("@ui5/webcomponents-base/lib/generate
 
 const scripts = {
 	clean: "rimraf dist",
-	lint: "eslint . --config config/.eslintrc.js",
+	lint: "",
 	prepare: "nps clean copy generateAssetParameters",
 	build: {
 		default: "nps lint prepare build.bundle",
