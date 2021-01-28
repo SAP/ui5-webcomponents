@@ -26,7 +26,6 @@
 :host([wrap][text]) .ui5-checkbox-root {
 	min-height: auto;
 	box-sizing: border-box;
-	align-items: flex-start;
 	padding-top: var(--_ui5_checkbox_root_side_padding);
 	padding-bottom: var(--_ui5_checkbox_root_side_padding);
 }
