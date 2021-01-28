@@ -18,7 +18,7 @@ import {
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
+import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -590,13 +590,13 @@ class DatePicker extends DateComponentBase {
 
 	get accInfo() {
 		return {
-			"ariaDescribedBy": `${this._id}-date`,
+			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
 			"role": "combobox",
 			"ariaOwns": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
-			"ariaDescription": this.dateAriaDescription,
+			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
 	}
@@ -610,7 +610,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(DATEPICKER_DATE_ACC_TEXT);
+		return this.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
 	}
 
 	/**
