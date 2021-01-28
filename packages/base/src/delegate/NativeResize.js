@@ -1,45 +1,43 @@
-class NativeResize {
-	static initialize() {
-		NativeResize.resizeObserver = new window.ResizeObserver(entries => {
-			// call attached callbacks
-			entries.forEach(entry => {
-				const callbacks = NativeResize.observedObjects.get(entry.target);
+let resizeObserver;
+const observedElements = new Map();
 
-				callbacks.forEach(el => el());
+const getResizeObserver = () => {
+	if (!resizeObserver) {
+		resizeObserver = new window.ResizeObserver(entries => {
+			entries.forEach(entry => {
+				const callbacks = observedElements.get(entry.target);
+				callbacks.forEach(callback => callback());
 			});
 		});
+	}
+	return resizeObserver;
+};
 
-		NativeResize.observedObjects = new Map();
+const nativeObserve = (element, callback) => {
+	const callbacks = observedElements.get(element) || [];
+
+	// if no callbacks have been added for this element - start observing it
+	if (!callbacks.length) {
+		getResizeObserver().observe(element);
 	}
 
-	static attachListener(ref, callback) {
-		const observedDOMs = NativeResize.observedObjects;
-		const callbacks = observedDOMs.get(ref) || [];
+	// save the callbacks in an array
+	observedElements.set(element, [...callbacks, callback]);
+};
 
-		// if no callbacks has been added for this ref - start observing it
-		if (!callbacks.length) {
-			NativeResize.resizeObserver.observe(ref);
-		}
-
-		// save the callbacks in an array
-		observedDOMs.set(ref, [...callbacks, callback]);
+const nativeUnobserve = (element, callback) => {
+	const callbacks = observedElements.get(element) || [];
+	if (callbacks.length === 0) {
+		return;
 	}
 
-	static detachListener(ref, callback) {
-		const callbacks = NativeResize.observedObjects.get(ref) || [];
-		const filteredCallbacks = callbacks.filter(fn => fn !== callback);
-
-		if (!callbacks.length || (callbacks.length === filteredCallbacks.length && callbacks.length !== 0)) {
-			return;
-		}
-
-		NativeResize.observedObjects.set(ref, filteredCallbacks);
-
-		if (!filteredCallbacks.length) {
-			NativeResize.resizeObserver.unobserve(ref);
-			NativeResize.observedObjects.delete(ref);
-		}
+	const filteredCallbacks = callbacks.filter(fn => fn !== callback);
+	if (filteredCallbacks.length === 0) {
+		getResizeObserver().unobserve(element);
+		observedElements.delete(element);
+	} else {
+		observedElements.set(element, filteredCallbacks);
 	}
-}
+};
 
-export default NativeResize;
+export { nativeObserve, nativeUnobserve };
