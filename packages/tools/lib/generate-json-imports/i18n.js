@@ -24,6 +24,7 @@ if (languages.length === 0) {
 
 // Keys for the array
 const languagesKeysString = languages.map(key => `${key},`).join("\n\t");
+const languagesKeysStringArray = languages.map(key => `"${key}",`).join("\n\t");
 
 // Actual imports for json assets
 const assetsImportsString = languages.map(key => `import ${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");
@@ -45,7 +46,7 @@ const fetchMessageBundle = async (localeId) => {
 	return (await fetch(bundleMap[localeId])).json()
 }
 
-const localeIds = [${languagesKeysString}];
+const localeIds = [${languagesKeysStringArray}];
 
 registerLoader("${packageName}", fetchMessageBundle, localeIds);
 `;
