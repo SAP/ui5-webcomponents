@@ -1,8 +1,10 @@
-commit af64f354e786749354b9ea255c14e99f2fd4a854
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Wed Jan 27 21:14:30 2021 +0200
+commit 70e326949b7ebd754315969a6f9be88ee8de2f77
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Thu Jan 28 10:33:06 2021 +0200
 
-    fix(ui5-input) center ValueState text (#2738)
+    fix(ui5-date-picker): input type is now conveyed (#2628)
     
-    ValueState text is now vertically centered in the ResponsivePopover
-    header of the suggestions.
+    The component input type is recognised by the screen reader,
+    with the help of 'aria-roledescription' attribute.
+    
+    Fixes #2604
