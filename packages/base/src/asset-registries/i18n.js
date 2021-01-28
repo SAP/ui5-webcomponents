@@ -75,7 +75,7 @@ const loadMessageBundleOnce = async (packageName, localeId) => {
 
 const _showAssetsWarningOnce = (packageName) => {
 	if (!warningShown.has(packageName)) {
-		console.warn(`Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
+		console.warn(`[${packageName}]: Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
 		` Add \`import "${packageName}/dist/Assets-dynamic.js"\` in your bundle and make sure your build tool supports dynamic imports and JSON imports. See section "Assets" in the documentation for more information.`); /* eslint-disable-line */
 		warningShown.add(packageName);
 	}
