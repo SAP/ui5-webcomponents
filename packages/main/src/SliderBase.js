@@ -114,11 +114,6 @@ const metadata = {
 		_hiddenTickmarks: {
 			type: Boolean,
 		},
-		_tabIndex: {
-			type: String,
-			defaultValue: "0",
-			noAttribute: true,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */ {
 		/**
@@ -839,7 +834,7 @@ class SliderBase extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.disabled ? "-1" : this._tabIndex;
+		return this.disabled ? "-1" : "0";
 	}
 }
 

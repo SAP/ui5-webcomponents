@@ -14,6 +14,7 @@ const components = [];
 const newComponents = [
 	"Bar",
 	"Calendar",
+	"Page",
 	"RangeSlider",
 	"Slider",
 	"AvatarGroup",

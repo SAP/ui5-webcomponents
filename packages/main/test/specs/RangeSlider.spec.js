@@ -97,7 +97,7 @@ describe("Testing Range Slider interactions", () => {
 		rangeSlider.setProperty("endValue", 30);
 
 		rangeSlider.dragAndDrop({ x: -500, y: 1 });
-		
+
 		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "startValue should be 0 as the selected range has reached the start of the Range Slider");
 		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "endValue should be 21 and no less, the initially selected range should be preserved");
 
@@ -203,7 +203,7 @@ describe("Properties synchronization and normalization", () => {
 		rangeSlider.setProperty("endValue", 300);
 
 		assert.strictEqual(rangeSlider.getProperty("endValue"), 200, "value prop should always be lower than the max value");
-	
+
 		rangeSlider.setProperty("startValue", 99);
 
 		assert.strictEqual(rangeSlider.getProperty("startValue"), 100, "value prop should always be greater than the min value");
@@ -220,7 +220,7 @@ describe("Properties synchronization and normalization", () => {
 
 		assert.strictEqual(rangeSlider.getProperty("startValue"), 14, "startValue should not be stepped to the next step (15)");
 		assert.strictEqual(rangeSlider.getProperty("endValue"), 24, "endValue should not be stepped to the next step (25)");
-	});	
+	});
 
 	it("If the step property or the labelInterval are changed, the tickmarks and labels must be updated also", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
@@ -234,7 +234,7 @@ describe("Properties synchronization and normalization", () => {
 		rangeSlider.setProperty("step", 2);
 
 		assert.strictEqual(rangeSlider.getProperty("_labels").length, 11, "Labels must be 12 - 1 for every 2 tickmarks (and 4 current value points)");
-		
+
 		rangeSlider.setProperty("labelInterval", 4);
 
 		assert.strictEqual(rangeSlider.getProperty("_labels").length, 6, "Labels must be 6 - 1 for every 4 tickmarks (and 8 current value points)");
@@ -263,7 +263,66 @@ describe("Testing events", () => {
 });
 
 
-describe("Accessibility: Testing focus", () => {
+describe("Accessibility", () => {
+	it("Aria attributes of the progress bar are set correctly", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks");
+		const rangeSliderProgressBar = rangeSlider.shadow$(".ui5-slider-progress");
+		const rangeSliderId = rangeSlider.getProperty("_id");
+
+		assert.strictEqual(rangeSliderProgressBar.getAttribute("aria-labelledby"),
+			`${rangeSliderId}-sliderDesc`, "aria-labelledby is set correctly");
+		assert.strictEqual(rangeSliderProgressBar.getAttribute("aria-valuemin"),
+			`${rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
+		assert.strictEqual(rangeSliderProgressBar.getAttribute("aria-valuemax"),
+			`${rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
+		assert.strictEqual(rangeSliderProgressBar.getAttribute("aria-valuetext"),
+			`From ${rangeSlider.getProperty("startValue")} to ${rangeSlider.getProperty("endValue")}`, "aria-valuetext is set correctly");
+	});
+
+	it("Aria attributes of the start handle are set correctly", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const rangeSliderId = rangeSlider.getProperty("_id");
+
+		assert.strictEqual(startHandle.getAttribute("aria-labelledby"),
+			`${rangeSliderId}-startHandleDesc`, "aria-labelledby is set correctly");
+		assert.strictEqual(startHandle.getAttribute("aria-valuemin"),
+			`${rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
+		assert.strictEqual(startHandle.getAttribute("aria-valuemax"),
+			`${rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
+		assert.strictEqual(startHandle.getAttribute("aria-valuenow"),
+			`${rangeSlider.getProperty("startValue")}`, "aria-valuenow is set correctly");
+	});
+
+	it("Aria attributes of the end handle are set correctly", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks");
+		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
+		const rangeSliderId = rangeSlider.getProperty("_id");
+
+		assert.strictEqual(endHandle.getAttribute("aria-labelledby"),
+			`${rangeSliderId}-endHandleDesc`, "aria-labelledby is set correctly");
+		assert.strictEqual(endHandle.getAttribute("aria-valuemin"),
+			`${rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
+		assert.strictEqual(endHandle.getAttribute("aria-valuemax"),
+			`${rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
+		assert.strictEqual(endHandle.getAttribute("aria-valuenow"),
+			`${rangeSlider.getProperty("endValue")}`, "aria-valuenow is set correctly");
+	});
+
+	it("Aria-labelledby text is mapped correctly when values are swapped", () => {
+		const rangeSlider = browser.$("#range-slider-tickmarks");
+		const rangeSliderId = rangeSlider.getProperty("_id");
+		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
+		const rangeSliderStartHandleSpan = rangeSlider.shadow$(`#${rangeSliderId}-startHandleDesc`);
+		const rangeSliderEndHandleSpan = rangeSlider.shadow$(`#${rangeSliderId}-endHandleDesc`);
+
+		rangeSlider.setProperty("endValue", 9);
+		startHandle.dragAndDrop({ x: 100, y: 1 });
+
+		assert.strictEqual(rangeSliderStartHandleSpan.getText(), "Left handle", "Start Handle text is correct after swap");
+		assert.strictEqual(rangeSliderEndHandleSpan.getText(), "Right handle", "End Handle text is correct after swap");
+	});
+
 	it("Click anywhere in the  Range Slider should focus the closest handle", () => {
 		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
 
@@ -321,7 +380,7 @@ describe("Accessibility: Testing focus", () => {
 		assert.strictEqual(rangeSlider.isFocused(), true, "Range Slider component is focused");
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), rangeSliderSelection.getAttribute("class"), "Range Slider progress tracker has the shadowDom focus");
 	});
-	
+
 	it("When progress bar has the focus, 'Tab' should move the focus to the first handle", () => {
 		const rangeSlider = browser.$("#basic-range-slider");
 		const rangeSliderStartHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
