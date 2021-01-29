@@ -17,7 +17,7 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 
 			child.prop1 = "a"; // child1(default slot) prop1 -> invalidates
 
-			await window["sap-ui-webcomponents-bundle"].whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(parentInvalidated);
 		});
@@ -39,7 +39,7 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 
 			child.prop2 = "b"; // child1(default slot) prop 2 -> does not
 
-			await window["sap-ui-webcomponents-bundle"].whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(parentInvalidated);
 		});
@@ -63,7 +63,7 @@ describe("Metadata slot invalidateOnChildChange works", () => {
 			child.prop2 = "c";
 			child.prop3 = "c";
 
-			await window["sap-ui-webcomponents-bundle"].whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(parentInvalidatedCount);
 		});

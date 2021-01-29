@@ -1,5 +1,5 @@
 import updateShadowRoot from "./updateShadowRoot.js";
-import { whenFinished } from "./Render.js";
+import { renderFinished } from "./Render.js";
 import getEffectiveContentDensity from "./util/getEffectiveContentDensity.js";
 
 /**
@@ -59,7 +59,7 @@ class StaticAreaItem extends HTMLElement {
 			this._rendered = true;
 			updateShadowRoot(this.ownerElement, true);
 		}
-		await whenFinished(); // Wait for the content of the ui5-static-area-item to be rendered
+		await renderFinished(); // Wait for the content of the ui5-static-area-item to be rendered
 		return this.shadowRoot;
 	}
 

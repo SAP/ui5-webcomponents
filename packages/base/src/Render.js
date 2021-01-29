@@ -110,7 +110,7 @@ const whenAllCustomElementsAreDefined = () => {
 	return Promise.all(definedPromises);
 };
 
-const whenFinished = async () => {
+const renderFinished = async () => {
 	await whenAllCustomElementsAreDefined();
 	await whenDOMUpdated();
 };
@@ -152,7 +152,7 @@ const reRenderAllUI5Elements = async filters => {
 			renderDeferred(element);
 		}
 	});
-	await whenFinished();
+	await renderFinished();
 };
 
 const attachBeforeComponentRender = listener => {
@@ -167,7 +167,7 @@ export {
 	renderDeferred,
 	renderImmediately,
 	cancelRender,
-	whenFinished,
+	renderFinished,
 	reRenderAllUI5Elements,
 	attachBeforeComponentRender,
 	detachBeforeComponentRender,

@@ -1,5 +1,5 @@
 // used in test pages
-import { whenFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
@@ -16,7 +16,7 @@ import "./dist/Assets.js";
 import "./dist/INIT_PACKAGE_VAR_CLASS_NAME.js";
 
 window["sap-ui-webcomponents-bundle"] = {
-	whenFinished,
+	renderFinished,
 	configuration: {
 		getAnimationMode,
 		getLanguage,

@@ -1,7 +1,7 @@
 import {
 	renderDeferred,
 	renderImmediately,
-	whenFinished,
+	renderFinished,
 } from "./Render.js";
 
 /**
@@ -16,6 +16,7 @@ class RenderScheduler {
 	 * @deprecated Use renderDeferred from the Render.js module instead
 	 */
 	static async renderDeferred(webComponent) {
+		console.log("RenderScheduler.renderDeferred is deprecated, please use renderDeferred, exported by Render.js instead"); // eslint-disable-line
 		await renderDeferred(webComponent);
 	}
 
@@ -26,15 +27,17 @@ class RenderScheduler {
 	 * @deprecated Use renderImmediately from the Render.js module instead
 	 */
 	static renderImmediately(webComponent) {
+		console.log("RenderScheduler.renderImmediately is deprecated, please use renderImmediately, exported by Render.js instead"); // eslint-disable-line
 		return renderImmediately(webComponent);
 	}
 
 	/**
-	 * @deprecated Use whenFinished from the Render.js module instead
+	 * @deprecated Use renderFinished from the Render.js module instead
 	 * @returns {Promise<void>}
 	 */
 	static async whenFinished() {
-		await whenFinished();
+		console.log("RenderScheduler.whenFinished is deprecated, please use renderFinished, exported by Render.js instead"); // eslint-disable-line
+		await renderFinished();
 	}
 }
 

@@ -1,4 +1,4 @@
-import { whenFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
@@ -156,7 +156,7 @@ class DateRangePicker extends DatePicker {
 	async _onInputSubmit(event) {
 		const input = this._getInput();
 		const caretPos = input.getCaretPosition();
-		await whenFinished();
+		await renderFinished();
 		input.setCaretPosition(caretPos); // Return the caret on the previous position after rendering
 	}
 
@@ -240,7 +240,7 @@ class DateRangePicker extends DatePicker {
 		}
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
-		await whenFinished();
+		await renderFinished();
 		input.setCaretPosition(caretPos); // Return the caret to the previous (or the adjusted, if dates flipped) position after rendering
 	}
 

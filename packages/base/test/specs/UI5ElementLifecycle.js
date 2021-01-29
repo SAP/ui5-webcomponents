@@ -20,7 +20,7 @@ describe("Lifecycle works", () => {
 			});
 
 			document.body.appendChild(el);
-			await window["sap-ui-webcomponents-bundle"].whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(calledCallbacks);
 		});
@@ -40,7 +40,7 @@ describe("Lifecycle works", () => {
 			const el = document.createElement("ui5-test-generic");
 			document.body.appendChild(el);
 
-			await window["sap-ui-webcomponents-bundle"].whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			el.strProp = "some string";
 
@@ -52,7 +52,7 @@ describe("Lifecycle works", () => {
 				};
 			});
 
-			await window["sap-ui-webcomponents-bundle"].whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(calledCallbacks);
 		});
@@ -80,11 +80,11 @@ describe("Lifecycle works", () => {
 
 			document.body.appendChild(el);
 
-			await window["sap-ui-webcomponents-bundle"].whenFinished(); // Must wait, otherwise onExitDOM won't be called
+			await window["sap-ui-webcomponents-bundle"].renderFinished(); // Must wait, otherwise onExitDOM won't be called
 
 			document.body.removeChild(el);
 
-			await window["sap-ui-webcomponents-bundle"].whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(calledCallbacks);
 		});

@@ -1,4 +1,4 @@
-import { whenFinished } from "../Render.js";
+import { renderFinished } from "../Render.js";
 import {
 	isDown,
 	isUp,
@@ -109,7 +109,7 @@ class ItemNavigation extends EventProvider {
 
 		event.preventDefault();
 
-		await whenFinished();
+		await renderFinished();
 
 		this.update();
 		this.focusCurrent();

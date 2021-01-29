@@ -133,7 +133,7 @@
 
 			if (combination) {
 				focusQuickView = true;
-				await window["sap-ui-webcomponents-bundle"].whenFinished();
+				await window["sap-ui-webcomponents-bundle"].renderFinished();
 				quickViewCard.applyFocus();
 			}
 		});
@@ -145,7 +145,7 @@
 			const esc = event.detail.escPressed;
 
 			if (esc) {
-				await window["sap-ui-webcomponents-bundle"].whenFinished();
+				await window["sap-ui-webcomponents-bundle"].renderFinished();
 				inputPreview.focus();
 			}
 		});
@@ -170,7 +170,7 @@
 
 			if (combination) {
 				focusQuickView2 = true;
-				await window["sap-ui-webcomponents-bundle"].whenFinished();
+				await window["sap-ui-webcomponents-bundle"].renderFinished();
 				quickViewCard2.applyFocus();
 			}
 
@@ -193,7 +193,7 @@
 			const esc = event.detail.escPressed;
 
 			if (esc) {
-				await window["sap-ui-webcomponents-bundle"].whenFinished();
+				await window["sap-ui-webcomponents-bundle"].renderFinished();
 				inputPreview2.focus();
 			}
 		});

@@ -64,9 +64,9 @@
 
 	everything.addEventListener("click", async () => {
 		createAll();
-		await window["sap-ui-webcomponents-bundle"].whenFinished();
+		await window["sap-ui-webcomponents-bundle"].renderFinished();
 		await openAll();
-		await window["sap-ui-webcomponents-bundle"].whenFinished();
+		await window["sap-ui-webcomponents-bundle"].renderFinished();
 		destroyAll();
 	});
 
