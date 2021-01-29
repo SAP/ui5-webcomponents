@@ -23,7 +23,7 @@ import {
 	VALUE_STATE_WARNING,
 	VALUE_STATE_INFORMATION,
 	INPUT_SUGGESTIONS_TITLE,
-	ICON_ACCESSIBLE_NAME,
+	SELECT_OPTIONS,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -722,7 +722,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get _iconAccessibleNameText() {
-		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
+		return this.i18nBundle.getText(SELECT_OPTIONS);
 	}
 
 	get inner() {
