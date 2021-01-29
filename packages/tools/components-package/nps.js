@@ -28,10 +28,9 @@ const getScripts = (options) => {
 				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
 			},
 			jsonImports: {
-				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n build.jsonImports.i18nDynamic",
+				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
-				i18nDynamic: `node "${LIB}/generate-json-imports/i18n-dynamic.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
 			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
 			samples: {

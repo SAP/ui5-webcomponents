@@ -43,6 +43,7 @@ const getPlugins = ({ transpile }) => {
 		include: [
 			/.*assets\/.*messagebundle.*\.json/,
 			/.*icons.*\.json/,
+			/.*parameters.*\.json/,
 		]
 	}));
 
@@ -51,6 +52,7 @@ const getPlugins = ({ transpile }) => {
 		exclude: [
 			/.*assets\/.*messagebundle.*\.json/,
 			/.*icons.*\.json/,
+			/.*parameters.*\.json/,
 		],
 		include: [
 			/.*assets\/.*\.json/,
