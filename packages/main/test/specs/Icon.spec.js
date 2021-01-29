@@ -14,31 +14,31 @@ describe("Icon general interaction", () => {
 			"Built-in tooltip is correct");
 	});
 
-  it("Tests if clicked event is thrown for interactive icons", () => {
-	const iconRoot = browser.$("#interactive-icon").shadow$(".ui5-icon-root");
-	const input = browser.$("#click-event");
+	it("Tests if clicked event is thrown for interactive icons", () => {
+		const iconRoot = browser.$("#interactive-icon").shadow$(".ui5-icon-root");
+		const input = browser.$("#click-event");
 
-	iconRoot.click();
-	assert.strictEqual(input.getAttribute("value"), "1", "Mouse click throws event");
+		iconRoot.click();
+		assert.strictEqual(input.getAttribute("value"), "1", "Mouse click throws event");
 
-	iconRoot.keys("Enter");
-	assert.strictEqual(input.getAttribute("value"), "2", "Enter throws event");
+		iconRoot.keys("Enter");
+		assert.strictEqual(input.getAttribute("value"), "2", "Enter throws event");
 
-	iconRoot.keys("Space");
-	assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
-  });
-  
-  it("Tests if clicked event is not thrown for non interactive icons", () => {
-	const iconRoot = browser.$("#non-interactive-icon");
-	const input = browser.$("#click-event");
+		iconRoot.keys("Space");
+		assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
+	});
 
-	iconRoot.click();
-	assert.strictEqual(input.getAttribute("value"), "3", "Mouse click throws event");
+	it("Tests if clicked event is not thrown for non interactive icons", () => {
+		const iconRoot = browser.$("#non-interactive-icon");
+		const input = browser.$("#click-event");
 
-	iconRoot.keys("Enter");
-	assert.strictEqual(input.getAttribute("value"), "3", "Enter throws event");
+		iconRoot.click();
+		assert.strictEqual(input.getAttribute("value"), "3", "Mouse click throws event");
 
-	iconRoot.keys("Space");
-	assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
+		iconRoot.keys("Enter");
+		assert.strictEqual(input.getAttribute("value"), "3", "Enter throws event");
+
+		iconRoot.keys("Space");
+		assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
 	});
 });
