@@ -1,7 +1,7 @@
 import testAssets from "@ui5/webcomponents/bundle.esm.js";
 
 // FIORI assets
-import "./dist/Assets.js";
+import "./dist/Assets-dynamic.js";
 
 // FIORI features
 import "./dist/features/CoPilotAnimation.js";
