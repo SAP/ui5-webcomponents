@@ -1,5 +1,5 @@
-commit ef35f84adaceca672f476f4b8252ade7bb1c6f52
+commit 8aff2ee7a27aa453e27b9076c7e0e09f40cf27e1
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jan 29 08:52:02 2021 +0200
+Date:   Fri Jan 29 13:51:58 2021 +0200
 
-    fix(ui5-li-notification): It is now possible to not have a description (#2744)
+    refactor(framework): Move CustomResize code to the ie11 package (#2743)
