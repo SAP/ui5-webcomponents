@@ -160,7 +160,7 @@ const metadata = {
 class Icon extends UI5Element {
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-icons");
 	}
 
 	static get metadata() {
@@ -181,7 +181,7 @@ class Icon extends UI5Element {
 
 	static async onDefine() {
 		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
-		await fetchI18nBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents-icons");
 	}
 
 	_onfocusin(event) {
