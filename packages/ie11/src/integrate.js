@@ -2,7 +2,7 @@ import { attachBoot } from "@ui5/webcomponents-base/dist/Boot.js";
 import { attachThemeLoaded } from "@ui5/webcomponents-base/dist/theming/ThemeLoaded.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { setCreateObserverCallback, setDestroyObserverCallback } from "@ui5/webcomponents-base/dist/DOMObserver.js";
-import { setResizeHandlerObserveCallback, setResizeHandlerUnobserveCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { setResizeHandlerObserveFn, setResizeHandlerUnobserveFn } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import whenPolyfillLoaded from "./whenPolyfillLoaded.js";
 import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import { runPonyfill } from "./theming/CSSVarsPonyfill.js";
@@ -22,5 +22,5 @@ setCreateObserverCallback(window.ShadyDOM.observeChildren);
 setDestroyObserverCallback(window.ShadyDOM.unobserveChildren);
 
 // Set the custom Resize observer implementation for observe/unobserve
-setResizeHandlerObserveCallback(customObserve);
-setResizeHandlerUnobserveCallback(customUnobserve);
+setResizeHandlerObserveFn(customObserve);
+setResizeHandlerUnobserveFn(customUnobserve);
