@@ -1,10 +1,5 @@
-commit 70e326949b7ebd754315969a6f9be88ee8de2f77
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Thu Jan 28 10:33:06 2021 +0200
+commit ef35f84adaceca672f476f4b8252ade7bb1c6f52
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jan 29 08:52:02 2021 +0200
 
-    fix(ui5-date-picker): input type is now conveyed (#2628)
-    
-    The component input type is recognised by the screen reader,
-    with the help of 'aria-roledescription' attribute.
-    
-    Fixes #2604
+    fix(ui5-li-notification): It is now possible to not have a description (#2744)
