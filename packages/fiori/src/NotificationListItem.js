@@ -401,7 +401,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		const headingWouldOverflow = this.headingHeight > this._headingOverflowHeight;
-		const descWouldOverflow = this.descriptionHeight > this._descOverflowHeight;
+		const descWouldOverflow = this.hasDesc && this.descriptionHeight > this._descOverflowHeight;
 		const overflows = headingWouldOverflow || descWouldOverflow;
 
 		if (this._showMorePressed && overflows) {
@@ -411,7 +411,7 @@ class NotificationListItem extends NotificationListItemBase {
 
 		if (this.headingOverflows || this.descriptionOverflows) {
 			this._headingOverflowHeight = this.headingHeight;
-			this._descOverflowHeight = this.descriptionHeight;
+			this._descOverflowHeight = this.hasDesc ? this.descriptionHeight : 0;
 			this._showMore = true;
 			return;
 		}
