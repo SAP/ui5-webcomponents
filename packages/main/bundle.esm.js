@@ -15,9 +15,6 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 
-// ESM bundle targets Edge + browsers with native support
-import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
-
 // CLDR
 import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocaleData.js";
 
@@ -94,8 +91,7 @@ import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 
 // used in test pages
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
-window.RenderScheduler = RenderScheduler;
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
 
@@ -132,6 +128,7 @@ const testAssets = {
 	attachThemeLoaded,
 	detachThemeLoaded,
 	getIconNames,
+	renderFinished,
 };
 
 window["sap-ui-webcomponents-bundle"] = testAssets;

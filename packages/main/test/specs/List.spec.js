@@ -7,9 +7,11 @@ describe("List Tests", () => {
 	});
 
 	it("List is rendered", () => {
-		const list = browser.$("ui5-list").shadow$(".ui5-list-root");
+		const list = browser.$("#infiniteScrollEx").shadow$(".ui5-list-root");
+		const busyInd = browser.$("#infiniteScrollEx").shadow$(".ui5-list-busy-row");
 
-		assert.ok(list, "List is rendered");
+		assert.ok(list.isExisting(), "List is rendered");
+		assert.notOk(busyInd.isExisting(), "Busy indicator is not rendered, when List is not busy");
 	});
 
 	it("itemPress and selectionChange events are fired in Single selection", () => {
@@ -300,5 +302,13 @@ describe("List Tests", () => {
 		browser.keys("Space");
 
 		assert.strictEqual(input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
+	});
+
+	it("Popover with List opens without errors", () => {
+		const btnPopupOpener = $("#btnOpenPopup");
+		const btnInListHeader = $("#btnInHeader");
+
+		btnPopupOpener.click();
+		assert.strictEqual(btnInListHeader.isFocused(), true, "The List header btn is focused.");
 	});
 });

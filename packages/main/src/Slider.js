@@ -6,6 +6,11 @@ import SliderBase from "./SliderBase.js";
 // Template
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
 
+// Texts
+import {
+	SLIDER_ARIA_DESCRIPTION,
+} from "./generated/i18n/i18n-defaults.js";
+
 /**
  * @public
  */
@@ -265,8 +270,12 @@ class Slider extends SliderBase {
 		return this.value.toFixed(stepPrecision);
 	}
 
-	get tabIndexProgress() {
-		return "-1";
+	get _ariaDisabled() {
+		return this.disabled || undefined;
+	}
+
+	get _ariaLabelledByText() {
+		return this.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION);
 	}
 
 	static async onDefine() {

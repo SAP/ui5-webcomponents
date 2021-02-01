@@ -371,4 +371,19 @@ describe("Input general interaction", () => {
 		assert.notOk(inputPopover.isDisplayedInViewport(), "The inpuit popover is closed as it lost the focus.");
 		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
 	});
+
+	it("Should open suggestions popover when ui5-input is the first focusable element within a dialog", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
+		const input = $("#inputInDialog");
+		const button = browser.$("#btnOpenDialog");
+
+		//act
+		button.click();
+
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputInDialog");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		//assert
+		assert.ok(popover.isDisplayedInViewport(), "The popover is visible");
+	});
 });

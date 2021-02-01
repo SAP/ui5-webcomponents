@@ -204,22 +204,15 @@ The `base` package provides not only the UI5 Web Components framework, but also 
 all UI5 Web Components.
 
 <a name="oldbrowsersupport"></a>
-### 1. Old browser support (Edge, IE11)
+### 1. Old browser support ( IE11)
 
 Most modern browsers  - **Chrome, Firefox, Safari, Edge (Chromium-based)**, support Web Components natively.
 
-If your app needs to be able to run additionally on the old **Edge (EdgeHTML-based)**, you should import the following module:
+If your app needs to run on **IE11**, you should import:
 
 ```js
-import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
+import "@ui5/webcomponents-ie11/dist/features/IE11.js";
 ```
-
-And if your app needs to run on both **Edge** and **IE11**, you should instead import:
-
-```js
-import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";
-```
-(this also includes Edge support).
 
 In addition, you should load the official Web Components polyfill in your index file, as described
 [here](https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs).
@@ -238,21 +231,14 @@ As shown in the example above, it's recommended to load the Web Components Polyf
 Finally, there is an alternative to the `IE11.js` import:
 
 ```js
-import "@ui5/webcomponents-base/dist/features/browsersupport/IE11WithWebComponentsPolyfill.js";
+import "@ui5/webcomponents-ie11/dist/features/IE11WithWebComponentsPolyfill.js";
 ```
 
 that includes the Web Components Polyfill too, so you don't have to import it manually.
 
-This may be useful in certain use cases when your app has polyfills of its own and you need to guarantee the order of exectution.
+This may be useful in certain use cases when your app has polyfills of its own and you need to guarantee the order of execution.
 
 The three old browser support options are summarized below:
-
-| |`Edge.js` | `IE11.js` | `IE11WithWebComponentsPolyfill.js` |
-|---|----------|-----------|------------------------------------|
-|Browsers supported| Edge | Edge & IE11 | Edge & IE11 |
-|Includes Web Components Polyfill | No* | No* | Yes|
-
-`* You must include the Web Components Polyfill manually`
 
 <a name="theming"></a>
 ### 2. Theming

@@ -35,7 +35,7 @@ import {
 	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
 	INPUT_SUGGESTIONS_TITLE,
-	ICON_ACCESSIBLE_NAME,
+	SELECT_OPTIONS,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -692,6 +692,11 @@ class MultiComboBox extends UI5Element {
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
+
+		if (isPhone() && this.allItemsPopover && this.allItemsPopover.opened) {
+			// Set initial focus to the dialog
+			this.allItemsPopover.focus();
+		}
 	}
 
 	async onAfterRendering() {
@@ -840,7 +845,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _iconAccessibleNameText() {
-		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
+		return this.i18nBundle.getText(SELECT_OPTIONS);
 	}
 
 	get _dialogOkButton() {
@@ -867,9 +872,8 @@ class MultiComboBox extends UI5Element {
 		return {
 			popoverValueStateMessage: {
 				"width": `${this._listWidth}px`,
-				"min-height": "2.5rem",
-				"padding": "0.5625rem 1rem",
 				"display": this._listWidth === 0 ? "none" : "inline-block",
+				"padding": "0.9125rem 1rem",
 			},
 			popoverHeader: {
 				"width": `${this._inputWidth}px`,
