@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE, isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -571,9 +571,8 @@ class Input extends UI5Element {
 				preventFocusRestore: !this.hasSuggestionItemSelected,
 			});
 
-			RenderScheduler.whenFinished().then(async () => {
-				this._listWidth = await this.Suggestions._getListWidth();
-			});
+			await renderFinished();
+			this._listWidth = await this.Suggestions._getListWidth();
 
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input

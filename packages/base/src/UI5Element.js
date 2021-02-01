@@ -5,7 +5,7 @@ import EventProvider from "./EventProvider.js";
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 import "./StaticAreaItem.js";
 import updateShadowRoot from "./updateShadowRoot.js";
-import RenderScheduler from "./RenderScheduler.js";
+import { renderDeferred, renderImmediately, cancelRender } from "./Render.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
@@ -40,7 +40,7 @@ function _invalidate(changeInfo) {
 	this.onInvalidation(changeInfo);
 
 	this._changedState.push(changeInfo);
-	RenderScheduler.renderDeferred(this);
+	renderDeferred(this);
 	this._eventProvider.fireEvent("change", { ...changeInfo, target: this });
 }
 
@@ -119,8 +119,7 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		RenderScheduler.register(this);
-		RenderScheduler.renderImmediately(this);
+		renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve();
 		this._fullyConnected = true;
 		if (typeof this.onEnterDOM === "function") {
@@ -143,7 +142,6 @@ class UI5Element extends HTMLElement {
 		}
 
 		if (needsShadowDOM) {
-			RenderScheduler.deregister(this);
 			if (this._fullyConnected) {
 				if (typeof this.onExitDOM === "function") {
 					this.onExitDOM();
@@ -156,7 +154,7 @@ class UI5Element extends HTMLElement {
 			this.staticAreaItem.parentElement.removeChild(this.staticAreaItem);
 		}
 
-		RenderScheduler.cancelRender(this);
+		cancelRender(this);
 	}
 
 	/**
@@ -532,7 +530,7 @@ class UI5Element extends HTMLElement {
 	onInvalidation(changeInfo) {}
 
 	/**
-	 * Do not call this method directly, only intended to be called by RenderScheduler.js
+	 * Do not call this method directly, only intended to be called by js
 	 * @protected
 	 */
 	_render() {
