@@ -1,16 +1,14 @@
-import { fetchJsonOnce } from "../util/FetchHelper.js";
 import { attachLanguageChange } from "../locale/languageChange.js";
 import getLocale from "../locale/getLocale.js";
-import { getFeature } from "../FeaturesRegistry.js";
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.js";
-import { getEffectiveAssetPath } from "../util/EffectiveAssetPath.js";
 
 const resources = new Map();
-const cldrData = {};
-const cldrUrls = {};
+const loaders = new Map();
+const cldrPromises = new Map();
 
 // externally configurable mapping function for resolving (localeId -> URL)
 // default implementation - ui5 CDN
+// TODO loop SUPPORTED_LOCALES and add loader
 let cldrMappingFn = locale => `https://ui5.sap.com/1.60.2/resources/sap/ui/core/cldr/${locale}.json`;
 
 const M_ISO639_OLD_TO_NEW = {
@@ -50,22 +48,12 @@ const calcLocale = (language, region, script) => {
 	return localeId;
 };
 
-
-const resolveMissingMappings = () => {
-	if (!cldrMappingFn) {
-		return;
-	}
-
-	const missingLocales = SUPPORTED_LOCALES.filter(locale => !cldrData[locale] && !cldrUrls[locale]);
-	missingLocales.forEach(locale => {
-		cldrUrls[locale] = cldrMappingFn(locale);
-	});
-};
-
+// internal set data
 const registerModuleContent = (moduleName, content) => {
 	resources.set(moduleName, content);
 };
 
+// external getSync
 const getModuleContent = moduleName => {
 	const moduleContent = resources.get(moduleName);
 	if (moduleContent) {
@@ -80,43 +68,35 @@ const getModuleContent = moduleName => {
 	throw new Error(`Unknown module ${moduleName}`);
 };
 
+// load bundle over the network once
+const _loadCldrOnce = async (localeId) => {
+	const loadCldr = loaders.get(localeId);
+
+	if (!cldrPromises.get(localeId)) {
+		cldrPromises.set(localeId, loadCldr(localeId));
+	}
+
+	return cldrPromises.get(localeId);
+};
+
+// external getAsync
 const fetchCldr = async (language, region, script) => {
-	resolveMissingMappings();
 	const localeId = calcLocale(language, region, script);
 
-	let cldrObj = cldrData[localeId];
-	const url = cldrUrls[localeId];
+	// TODO make loader
+	// const OpenUI5Support = getFeature("OpenUI5Support");
+	// if (!cldrObj && OpenUI5Support) {
+	// 	cldrObj = OpenUI5Support.getLocaleDataObject();
+	// }
 
-	const OpenUI5Support = getFeature("OpenUI5Support");
-	if (!cldrObj && OpenUI5Support) {
-		cldrObj = OpenUI5Support.getLocaleDataObject();
-	}
-
-	if (cldrObj) {
-		// inlined from build or fetched independently
-		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrObj);
-	} else if (url) {
-		// fetch it
-		const cldrContent = await fetchJsonOnce(getEffectiveAssetPath(url));
-		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrContent);
-	}
+	// fetch it
+	const cldrContent = await _loadCldrOnce(localeId);
+	registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrContent);
 };
 
-const registerCldr = (locale, url) => {
-	cldrUrls[locale] = url;
-};
-
-const setCldrData = (locale, data) => {
-	cldrData[locale] = data;
-};
-
-const getCldrData = locale => {
-	return cldrData[locale];
-};
-
-const _registerMappingFunction = mappingFn => {
-	cldrMappingFn = mappingFn;
-};
+const registerLoader = (localeId, loader) => {
+	loaders.set(localeId, loader);
+}
 
 // When the language changes dynamically (the user calls setLanguage),
 // re-fetch the required CDRD data.
@@ -126,10 +106,7 @@ attachLanguageChange(() => {
 });
 
 export {
+	registerLoader,
 	fetchCldr,
-	registerCldr,
-	setCldrData,
-	getCldrData,
 	getModuleContent,
-	_registerMappingFunction,
 };

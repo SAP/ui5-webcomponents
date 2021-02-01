@@ -7,7 +7,7 @@ const allLocales = assets.locales.all;
 const imports = allLocales.map(locale => `import ${locale} from "../assets/cldr/${locale}.json";`).join("\n");
 const localesKeys = allLocales.join(",");
 
-const content = `import { registerCldr, setCldrData } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
+const content = `import { registerLoader } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 
 ${imports}
 
@@ -23,14 +23,11 @@ See rollup-plugin-url or webpack file-loader for more information.
 Suggested pattern: "assets\\\\\\/.*\\\\\\.json"\`);
 }
 
+const fetchCldrJson = async (localeId) => {
+	return (await fetch(cldrData[localeId])).json();
+}
 
-Object.entries(cldrData).forEach(([key, value]) => {
-	if (typeof (value) === "object") {
-		setCldrData(key, value);
-	} else {
-		registerCldr(key, value);
-	}
-});
+Object.keys(cldrData).forEach(localeId => registerLoader(localeId, fetchCldrJson));
 `;
 
 mkdirp.sync("dist/generated/json-imports/");
