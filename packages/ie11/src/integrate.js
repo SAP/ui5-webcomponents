@@ -1,6 +1,6 @@
 import { attachBoot } from "@ui5/webcomponents-base/dist/Boot.js";
 import { attachThemeLoaded } from "@ui5/webcomponents-base/dist/theming/ThemeLoaded.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { attachBeforeComponentRender } from "@ui5/webcomponents-base/dist/Render.js";
 import { setCreateObserverCallback, setDestroyObserverCallback } from "@ui5/webcomponents-base/dist/DOMObserver.js";
 import { setResizeHandlerObserveFn, setResizeHandlerUnobserveFn } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import whenPolyfillLoaded from "./whenPolyfillLoaded.js";
@@ -15,7 +15,7 @@ attachBoot(whenPolyfillLoaded);
 attachThemeLoaded(runPonyfill);
 
 // Execute on each component render
-RenderScheduler.attachBeforeComponentRender(createComponentStyleTag);
+attachBeforeComponentRender(createComponentStyleTag);
 
 // Set the custom DOM observer implementation for observe/unobserve
 setCreateObserverCallback(window.ShadyDOM.observeChildren);

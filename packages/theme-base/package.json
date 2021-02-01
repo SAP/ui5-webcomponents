@@ -29,7 +29,7 @@
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.11",
     "chokidar-cli": "^2.0.0",
-    "chromedriver": "87.0.5",
+    "chromedriver": "88.0.0",
     "copy-and-watch": "^0.1.4",
     "cssnano": "^4.1.10",
     "glob": "^7.1.3",
