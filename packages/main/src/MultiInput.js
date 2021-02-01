@@ -5,6 +5,7 @@ import {
 	isLeft,
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
@@ -264,6 +265,32 @@ class MultiInput extends Input {
 
 	get tokenizer() {
 		return this.shadowRoot.querySelector("[ui5-tokenizer]");
+	}
+
+	get _tokensCountText() {
+		if (!this.tokenizer) {
+			return;
+		}
+		return this.tokenizer._tokensCountText();
+	}
+
+	get _tokensCountTextId() {
+		return `${this._id}-hiddenText-nMore`;
+	}
+
+	get accInfo() {
+		const ariaDescribedBy = `${this._tokensCountTextId} ${this.suggestionsTextId} ${this.valueStateTextId} ${this.suggestionsCount}`.trim();
+		return {
+			"input": {
+				...super.accInfo.input,
+				"ariaRoledescription": this.ariaRoleDescription,
+				"ariaDescribedBy": ariaDescribedBy,
+			},
+		};
+	}
+
+	get ariaRoleDescription() {
+		return this.i18nBundle.getText(MULTIINPUT_ROLEDESCRIPTION_TEXT);
 	}
 
 	static get dependencies() {

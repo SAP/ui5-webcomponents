@@ -221,4 +221,76 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 2, "2 tokens are visible");
 		});
 	});
+
+	describe("keyboard handling", () => {
+		browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
+
+		it ("tests two-column layout", () => {
+			const mcb = $("#mcb-two-column-layout");
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mcb-two-column-layout");
+			const icon = mcb.shadow$("[input-icon]");
+			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const listItem = popover.$("ui5-list").$$("ui5-li")[0];
+
+			icon.click();
+			assert.strictEqual(listItem.shadow$(".ui5-li-info").getText(), "DZ", "Additional item text should be displayed");
+			icon.click();
+		});
+	});
+
+	describe("ARIA attributes", () => {
+		browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
+
+		it ("aria-describedby value according to the tokens count and the value state", () => {
+			const mcb = $("#mcb-error");
+			const innerInput = mcb.shadow$("input");
+			const invisibleText = mcb.shadow$(".ui5-hidden-text");
+			let tokens = mcb.shadow$$(".ui5-multi-combobox-token");
+			const tokensCountITextId = `${mcb.getProperty("_id")}-hiddenText-nMore`;
+			const valuestateITextId = `${mcb.getProperty("_id")}-valueStateDesc`;
+			const ariaDescribedBy = `${tokensCountITextId} ${valuestateITextId}`;
+
+			assert.strictEqual(tokens.length, 3, "should have three tokens");
+			assert.strictEqual(innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby has a reference for the value state and the tokens count");
+		});
+
+		it ("aria-describedby value according to the tokens count", () => {
+			const mcb = $("#mcb-compact");
+			const innerInput = mcb.shadow$("input");
+			const invisibleText = mcb.shadow$(".ui5-hidden-text");
+			const inivisbleTextId = invisibleText.getProperty("id");
+			let tokens = mcb.shadow$$(".ui5-multi-combobox-token");
+			let resourceBundleText = null;
+	
+			assert.strictEqual(tokens.length, 2, "should have two tokens");
+			assert.strictEqual(innerInput.getAttribute("aria-describedby"), inivisbleTextId, "aria-describedby reference is correct");
+			assert.strictEqual(invisibleText.getText(), "Contains 2 tokens", "aria-describedby text is correct");
+	
+			mcb.scrollIntoView();
+			innerInput.click();
+			innerInput.keys("Backspace");
+			innerInput.keys("Backspace");
+
+			tokens = mcb.shadow$$(".ui5-multi-combobox-token");
+	
+			resourceBundleText = browser.execute(() => {
+				const mcb = document.getElementById("mcb-compact");
+				return mcb.i18nBundle.getText("TOKENIZER_ARIA_CONTAIN_ONE_TOKEN");
+			});
+			
+			assert.strictEqual(tokens.length, 1, "should have one token");
+			assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
+
+			innerInput.keys("Backspace");
+
+			tokens = mcb.shadow$$(".ui5-multi-combobox-token");
+			resourceBundleText = browser.execute(() => {
+				const mcb = document.getElementById("mcb-compact");
+				return mcb.i18nBundle.getText("TOKENIZER_ARIA_CONTAIN_TOKEN");
+			});
+
+			assert.strictEqual(tokens.length, 0, "should not have tokens");
+			assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
+		});
+	});
 });
