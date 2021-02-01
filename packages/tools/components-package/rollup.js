@@ -41,21 +41,16 @@ const getPlugins = ({ transpile }) => {
 
 	plugins.push(json({
 		include: [
-			/.*assets\/.*messagebundle.*\.json/,
-			/.*icons.*\.json/,
-			/.*parameters.*\.json/,
+			/.*assets\/.*\.json/,
 		]
 	}));
 
 	plugins.push(url({
 		limit: 0,
 		exclude: [
-			/.*assets\/.*messagebundle.*\.json/,
-			/.*icons.*\.json/,
-			/.*parameters.*\.json/,
+			/.*assets\/.*\.json/,
 		],
 		include: [
-			/.*assets\/.*\.json/,
 			/.*\.properties/,
 		],
 		emitFiles: true,

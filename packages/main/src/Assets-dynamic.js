@@ -1,4 +1,4 @@
-import "@ui5/webcomponents-localization/dist/Assets.js"; // CLDR
+import "@ui5/webcomponents-localization/dist/Assets-dynamic.js"; // CLDR
 import "@ui5/webcomponents-theme-base/dist/Assets-dynamic.js"; // Theming
 
 // own main package assets
