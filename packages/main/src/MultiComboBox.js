@@ -31,9 +31,6 @@ import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
-	TOKENIZER_ARIA_CONTAIN_TOKEN,
-	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
-	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
@@ -752,20 +749,6 @@ class MultiComboBox extends UI5Element {
 		return this.shadowRoot.querySelector("[ui5-tokenizer]");
 	}
 
-	get nMoreCountText() {
-		const iTokenCount = this._getSelectedItems().length;
-
-		if (iTokenCount === 0) {
-			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
-		}
-
-		if (iTokenCount === 1) {
-			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
-		}
-
-		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
-	}
-
 	inputFocusIn() {
 		if (!isPhone()) {
 			this.focused = true;
@@ -812,6 +795,21 @@ class MultiComboBox extends UI5Element {
 
 	get valueStateMessageText() {
 		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
+	}
+
+	get _tokensCountText() {
+		if (!this._tokenizer) {
+			return;
+		}
+		return this._tokenizer._tokensCountText();
+	}
+
+	get _tokensCountTextId() {
+		return `${this._id}-hiddenText-nMore`;
+	}
+
+	get ariaDescribedByText() {
+		return this.valueStateTextId ? `${this._tokensCountTextId} ${this.valueStateTextId}` : `${this._tokensCountTextId}`;
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
