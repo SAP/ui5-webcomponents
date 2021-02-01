@@ -137,8 +137,8 @@
 
 
 	<ui5-multi-combobox>
-		<ui5-li>Hello</ui5-li>
-		<ui5-li>World</ui5-li>
+		<ui5-cb-item text="Hello"></ui5-cb-item>
+		<ui5-cb-item text="World"></ui5-cb-item>
 	</ui5-multi-combobox>
 
 	<br>
@@ -481,6 +481,7 @@
 
 			button.textContent = "Focusable element";
 			popover.appendChild(button);
+			popover.setAttribute("id", "dynamic-popover");
 			popover.setAttribute("placement-type", "Bottom");
 
 			document.body.appendChild(popover);

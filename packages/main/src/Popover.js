@@ -1,4 +1,5 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popup from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
@@ -250,6 +251,12 @@ const metadata = {
  * @public
  */
 class Popover extends Popup {
+	constructor() {
+		super();
+
+		this._handleResize = this.handleResize.bind(this);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -264,6 +271,14 @@ class Popover extends Popup {
 
 	static get MIN_OFFSET() {
 		return 10; // px
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResize);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResize);
 	}
 
 	isOpenerClicked(event) {
@@ -333,13 +348,24 @@ class Popover extends Popup {
 			&& openerRect.right === 0;
 	}
 
+	handleResize() {
+		if (this.opened) {
+			this.reposition();
+		}
+	}
+
 	reposition() {
 		this.show();
 	}
 
-	async show() {
+	show() {
 		let placement;
-		const popoverSize = await this._popoverSize;
+		const popoverSize = this.getPopoverSize();
+
+		if (popoverSize.width === 0 || popoverSize.height === 0) {
+			// size can not be determined properly at this point, popover will be shown with the next reposition
+			return;
+		}
 
 		if (this.isOpen()) {
 			// update opener rect if it was changed during the popover being opened
@@ -361,7 +387,7 @@ class Popover extends Popup {
 		}
 
 		if (this._oldPlacement && (this._oldPlacement.left === placement.left) && (this._oldPlacement.top === placement.top) && stretching) {
-			await super.show();
+			super.show();
 			this.style.width = this._width;
 			return;
 		}
@@ -377,14 +403,14 @@ class Popover extends Popup {
 
 		this.style.left = `${popoverOnLeftBorder ? Popover.MIN_OFFSET : this._left}px`;
 		this.style.top = `${popoverOnTopBorder ? Popover.MIN_OFFSET : this._top}px`;
-		await super.show();
+		super.show();
 
 		if (stretching && this._width) {
 			this.style.width = this._width;
 		}
 	}
 
-	get _popoverSize() {
+	getPopoverSize() {
 		let width,
 			height;
 		let rect = this.getBoundingClientRect();
@@ -393,25 +419,19 @@ class Popover extends Popup {
 			width = rect.width;
 			height = rect.height;
 
-			return Promise.resolve({ width, height });
+			return { width, height };
 		}
 
-		this.style.visibility = "hidden";
 		this.style.display = "block";
+		this.style.top = "-10000px";
+		this.style.left = "-10000px";
 
-		return new Promise(resolve => {
-			window.requestAnimationFrame(() => {
-				rect = this.getBoundingClientRect();
+		rect = this.getBoundingClientRect();
 
-				width = rect.width;
-				height = rect.height;
+		width = rect.width;
+		height = rect.height;
 
-				this.hide();
-				this.style.visibility = "visible";
-
-				resolve({ width, height });
-			});
-		});
+		return { width, height };
 	}
 
 	get contentDOM() {

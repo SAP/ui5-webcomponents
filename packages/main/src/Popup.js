@@ -1,3 +1,4 @@
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -338,15 +339,17 @@ class Popup extends UI5Element {
 		this.style.zIndex = this._zIndex;
 		this._focusedElementBeforeOpen = getFocusedElement();
 
-		await this.show();
+		this.show();
 
 		if (!this._disableInitialFocus && !preventInitialFocus) {
-			await this.applyInitialFocus();
+			this.applyInitialFocus();
 		}
 
 		this._addOpenedPopup();
 
 		this.opened = true;
+
+		await renderFinished();
 		this.fireEvent("after-open", {}, false, false);
 	}
 
@@ -416,7 +419,7 @@ class Popup extends UI5Element {
 	 * Sets "block" display to the popup. The property can be overriden by derivatives of Popup.
 	 * @protected
 	 */
-	async show() {
+	show() {
 		this.style.display = this._displayProp;
 	}
 
