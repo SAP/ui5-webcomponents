@@ -411,7 +411,7 @@ class List extends UI5Element {
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, {
 			navigationMode: NavigationMode.Vertical,
-			getItemsCallback: () => this.getSlottedNodes("items"),
+			getItemsCallback: () => this.getEnabledItems(),
 		});
 	}
 
@@ -492,18 +492,8 @@ class List extends UI5Element {
 		return this.getSlottedNodes("items").filter(item => item.selected);
 	}
 
-	getFirstSelectedItem() {
-		const slottedItems = this.getSlottedNodes("items");
-		let firstSelectedItem = null;
-
-		for (let i = 0; i < slottedItems.length; i++) {
-			if (slottedItems[i].selected) {
-				firstSelectedItem = slottedItems[i];
-				break;
-			}
-		}
-
-		return firstSelectedItem;
+	getEnabledItems() {
+		return this.getSlottedNodes("items").filter(item => !item.disabled);
 	}
 
 	_onkeydown(event) {
@@ -531,7 +521,7 @@ class List extends UI5Element {
 		}
 
 		if (lastTabbableEl === target) {
-			if (this.getFirstSelectedItem()) {
+			if (this.getFirstItem(x => x.selected && !x.disabled)) {
 				this.focusFirstSelectedItem();
 			} else if (this.getPreviouslyFocusedItem()) {
 				this.focusPreviouslyFocusedItem();
@@ -561,7 +551,7 @@ class List extends UI5Element {
 		// The focus arrives in the List for the first time.
 		// If there is selected item - focus it or focus the first item.
 		if (!this.getPreviouslyFocusedItem()) {
-			if (this.getFirstSelectedItem()) {
+			if (this.getFirstItem(x => x.selected && !x.disabled)) {
 				this.focusFirstSelectedItem();
 			} else {
 				this.focusFirstItem();
@@ -574,7 +564,7 @@ class List extends UI5Element {
 		// The focus returns to the List,
 		// focus the first selected item or the previously focused element.
 		if (!this.getForwardingFocus()) {
-			if (this.getFirstSelectedItem()) {
+			if (this.getFirstItem(x => x.selected && !x.disabled)) {
 				this.focusFirstSelectedItem();
 			} else {
 				this.focusPreviouslyFocusedItem();
@@ -665,7 +655,8 @@ class List extends UI5Element {
 	}
 
 	focusFirstItem() {
-		const firstItem = this.getFirstItem();
+		// only enabled items are focusable
+		const firstItem = this.getFirstItem(x => !x.disabled);
 
 		if (firstItem) {
 			firstItem.focus();
@@ -681,7 +672,8 @@ class List extends UI5Element {
 	}
 
 	focusFirstSelectedItem() {
-		const firstSelectedItem = this.getFirstSelectedItem();
+		// only enabled items are focusable
+		const firstSelectedItem = this.getFirstItem(x => x.selected && !x.disabled);
 
 		if (firstSelectedItem) {
 			firstSelectedItem.focus();
@@ -716,9 +708,22 @@ class List extends UI5Element {
 		return this._previouslyFocusedItem;
 	}
 
-	getFirstItem() {
+	getFirstItem(filter) {
 		const slottedItems = this.getSlottedNodes("items");
-		return !!slottedItems.length && slottedItems[0];
+		let firstItem = null;
+
+		if (!filter) {
+			return !!slottedItems.length && slottedItems[0];
+		}
+
+		for (let i = 0; i < slottedItems.length; i++) {
+			if (filter(slottedItems[i])) {
+				firstItem = slottedItems[i];
+				break;
+			}
+		}
+
+		return firstItem;
 	}
 
 	getAfterElement() {
