@@ -208,6 +208,16 @@
 	<div class="sample-container">
 		<h1>Tokens</h1>
 
+		<h1 class="sample-container-title">Multi Input without tokens</h1>
+		<ui5-multi-input id="no-tokens"></ui5-multi-input>
+		<br>
+		<br>
+
+		<ui5-button id="add-tokens">Add more tokens</ui5-button>
+
+		<br>
+		<br>
+
 		<h1 class="sample-container-title">Multi Input with 1 token</h1>
 		<ui5-multi-input id="single-token">
 			<ui5-token slot="tokens" text="Amet"></ui5-token>
@@ -300,6 +310,10 @@
 		var addTokenToMI = function (token, id) {
 			document.getElementById(id).appendChild(token);
 		}
+
+		document.getElementById("add-tokens").addEventListener("click", function(event) {
+			addTokenToMI(createTokenFromText("test"), "no-tokens");
+		});
 
 		document.getElementById("add-to-single").addEventListener("click", function(event) {
 			addTokenToMI(createTokenFromText("test"), "single-token");

@@ -1,11 +1,5 @@
-commit 9f027f1394a9e8dbec472e397edd6782d03ffcb0
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Mon Feb 1 10:24:53 2021 +0200
+commit 2e7b968d7c9f4a41923eb772d17c8e7dde53d18a
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Mon Feb 1 16:45:27 2021 +0200
 
-    fix(ui5-checkbox): vertical misalignment when wrap is true (#2747)
-    
-    * fix(ui5-checkbox): vertical misalignment when wrap is true
-    
-    - redundant CSS styling is removed which was causing the issue
-    
-    * CheckBox inner is now aligned properly
+    feat(ui5-multi-input): Implement accessibility specifications (#2761)
