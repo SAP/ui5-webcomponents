@@ -1,7 +1,5 @@
-commit d8ea0232698481438ba01e4606de0cead98d216b
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Mon Feb 1 13:50:49 2021 +0800
+commit bc78857efaeb17f632f69047555875780d9555c3
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Feb 1 08:40:52 2021 +0200
 
-    chore: translation delivery (#2754)
-    
-    Change-Id: Ic88d3db31feab3150d732a5d226caf8c6d005e9d
+    refactor(framework): Deprecate RenderScheduler in favor of Render.js (#2728)
