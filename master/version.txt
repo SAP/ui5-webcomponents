@@ -1,5 +1,7 @@
-commit 8aff2ee7a27aa453e27b9076c7e0e09f40cf27e1
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jan 29 13:51:58 2021 +0200
+commit d8ea0232698481438ba01e4606de0cead98d216b
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Mon Feb 1 13:50:49 2021 +0800
 
-    refactor(framework): Move CustomResize code to the ie11 package (#2743)
+    chore: translation delivery (#2754)
+    
+    Change-Id: Ic88d3db31feab3150d732a5d226caf8c6d005e9d
