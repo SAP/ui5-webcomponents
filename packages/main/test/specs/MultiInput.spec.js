@@ -124,3 +124,63 @@ describe("MultiInput general interaction", () => {
 		assert.strictEqual(mi.$$("ui5-token").length, 1, "a token is added after selection");
 	});
 });
+
+describe("ARIA attributes", () => {
+	it ("aria-describedby value according to the tokens count", () => {
+		const mi = $("#no-tokens");
+		const innerInput = mi.shadow$("input");
+		const btn = $("#add-tokens");
+		const invisibleText = mi.shadow$(".ui5-hidden-text");
+		const inivisbleTextId = invisibleText.getProperty("id");
+		let resourceBundleText = null;
+
+		resourceBundleText = browser.execute(() => {
+			const mi = document.getElementById("no-tokens");
+			return mi.i18nBundle.getText("TOKENIZER_ARIA_CONTAIN_TOKEN");
+		});
+
+		assert.strictEqual(mi.$$("ui5-token").length, 0, "should not have tokens");
+		assert.strictEqual(innerInput.getAttribute("aria-describedby"), inivisbleTextId, "aria-describedby reference is correct");
+		assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
+
+		$("#add-tokens").scrollIntoView();
+		btn.click();
+
+		resourceBundleText = browser.execute(() => {
+			const mi = document.getElementById("no-tokens");
+			return mi.i18nBundle.getText("TOKENIZER_ARIA_CONTAIN_ONE_TOKEN");
+		});
+
+		assert.strictEqual(mi.$$("ui5-token").length, 1, "should have one token");
+		assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
+
+		btn.click();
+		assert.strictEqual(mi.$$("ui5-token").length, 2, "should have two tokens");
+		assert.strictEqual(invisibleText.getText(), "Contains 2 tokens", "aria-describedby text is correct");
+	});
+
+	it ("aria-describedby value according to the tokens and suggestions count", () => {
+		const mi = $("#suggestion-token");
+		const innerInput = mi.shadow$("input");
+		const tokensCountITextId = `${mi.getProperty("_id")}-hiddenText-nMore`;
+		const suggestionsITextId = `${mi.getProperty("_id")}-suggestionsText`;
+		const suggestionsCountITextId = `${mi.getProperty("_id")}-suggestionsCount`;
+		const ariaDescribedBy = `${tokensCountITextId} ${suggestionsITextId}  ${suggestionsCountITextId}`;
+
+		$("#suggestion-token").scrollIntoView();
+		innerInput.click();
+		innerInput.keys("a");
+		innerInput.keys("ArrowDown");
+		innerInput.keys("Enter");
+
+		assert.strictEqual(innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby attribute contains multiple references");
+	});
+
+	it ("aria-roledescription is set properly", () => {
+		const mi = $("#no-tokens");
+		const innerInput = mi.shadow$("input");
+
+		assert.strictEqual(innerInput.getAttribute("aria-roledescription"), "Multi Value Input", "aria-roledescription value is correct");
+	});
+});
+
