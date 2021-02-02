@@ -203,45 +203,8 @@ Apart from i18n assets, the above import also provides the JSON, containing all 
 The `base` package provides not only the UI5 Web Components framework, but also some features, relevant to
 all UI5 Web Components.
 
-<a name="oldbrowsersupport"></a>
-### 1. Old browser support ( IE11)
-
-Most modern browsers  - **Chrome, Firefox, Safari, Edge (Chromium-based)**, support Web Components natively.
-
-If your app needs to run on **IE11**, you should import:
-
-```js
-import "@ui5/webcomponents-ie11/dist/features/IE11.js";
-```
-
-In addition, you should load the official Web Components polyfill in your index file, as described
-[here](https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs).
-
-Please note that the aforementioned <code>webcomponents-loader.js</code> is not shipped as part of UI5 Web Components,
-but should be imported separately.
-
-Example:
-```html
-<script src="path/to/your/copy/of/webcomponents-loader.js"></script>
-<script src="path/to/your/javasacript/app.js" type="module"></script>
-```
-
-As shown in the example above, it's recommended to load the Web Components Polyfill first, and the web components next.
-
-Finally, there is an alternative to the `IE11.js` import:
-
-```js
-import "@ui5/webcomponents-ie11/dist/features/IE11WithWebComponentsPolyfill.js";
-```
-
-that includes the Web Components Polyfill too, so you don't have to import it manually.
-
-This may be useful in certain use cases when your app has polyfills of its own and you need to guarantee the order of execution.
-
-The three old browser support options are summarized below:
-
 <a name="theming"></a>
-### 2. Theming
+### 1. Theming
 
 UI5 Web Components ship with the default theme only out of the box.
 
@@ -288,7 +251,7 @@ For more general information on assets, click [here](https://sap.github.io/ui5-w
 Find out how you can bundle your themes more efficiently [here](Assets.md#bundling).
 
 <a name="internationalization"></a>
-### 3. Internationalization
+### 2. Internationalization
 
 The `base` project provides i18n support. 
 
@@ -316,7 +279,7 @@ For more general information on assets, click [here](https://sap.github.io/ui5-w
 
 Find out how you can bundle your i18n texts more efficiently [here](Assets.md#bundling).
 
-### 4. Advanced calendar types
+### 3. Advanced calendar types
 
 ```js
 import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";
@@ -331,7 +294,7 @@ In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with
 (by setting its `primaryCalendarType` property), you should import one or more of the modules above.
 
 <a name="config"></a>
-### 5. Configuration
+### 4. Configuration
 
 ```js
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
@@ -344,7 +307,7 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 
 For more details, please check [Configuration](https://sap.github.io/ui5-webcomponents/playground/docs/configuration/).
 
-### 6. OpenUI5 integration
+### 5. OpenUI5 integration
 
 ```js
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
@@ -363,11 +326,7 @@ When you import the above module:
 Therefore, if you intend to run both frameworks in the same browser window,
 it is highly recommended to enable OpenUI5 support and benefit from these optimizations.
 
-*Note:* In general the order in which OpenUI5 and UI5 Web Components are loaded does not matter.
-However, if your app needs to support Internet Explorer 11, either load OpenUI5 first, or load
-UI5 Web Components deferred.
-
-### 7. Support for registering `i18n` resources in `.properties` format
+### 6. Support for registering `i18n` resources in `.properties` format
 
 ```js
 import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
@@ -392,7 +351,7 @@ registerI18nBundle("@ui5/webcomponents", {
 });
 ```
 
-### 8. Custom elements scoping
+### 7. Custom elements scoping
 
 ```js
 import { setCustomElementsScopingSuffix, setCustomElementsScopingRules } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
