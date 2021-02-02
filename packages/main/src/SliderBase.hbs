@@ -22,8 +22,15 @@
 			{{/if}}
 		{{/if}}
 
-		<div class="ui5-slider-progress-container">
-			<div class="ui5-slider-progress" style="{{styles.progress}}" @focusout="{{_onfocusout}}" @focusin="{{_onfocusin}}" tabindex="{{tabIndexProgress}}"></div>
+		<div class="ui5-slider-progress-container" part="progress-container">
+			<div
+				class="ui5-slider-progress"
+				style="{{styles.progress}}"
+				@focusout="{{_onfocusout}}"
+				@focusin="{{_onfocusin}}"
+				tabindex="{{tabIndexProgress}}"
+				part="slider-progress"
+			></div>
 		</div>
 		{{> handles}}
 	</div>

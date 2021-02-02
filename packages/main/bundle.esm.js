@@ -48,6 +48,7 @@ import Button from "./dist/Button.js";
 import Card from "./dist/Card.js";
 import Carousel from "./dist/Carousel.js";
 import CheckBox from "./dist/CheckBox.js";
+import ColorPicker from "./dist/ColorPicker.js";
 import ComboBox from "./dist/ComboBox.js";
 import DatePicker from "./dist/DatePicker.js";
 import DateRangePicker from "./dist/DateRangePicker.js";
