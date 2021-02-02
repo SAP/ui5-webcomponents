@@ -632,10 +632,10 @@ class ComboBox extends UI5Element {
 	}
 
 	_closeRespPopover(event) {
-		if (isPhone() && event && event.target.classList.contains("ui5-responsive-popover-close-btn") && this._selectedItem) {
-			this.value = this._selectedItem;
-			this.filterValue = this._selectedItem;
-			this._tempValue = this._selectedItem;
+		if (isPhone() && event && event.target.classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
+			this.value = this._selectedItemText;
+			this.filterValue = this._selectedItemText;
+			this._tempValue = this._selectedItemText;
 		}
 
 		this.responsivePopover.close();
@@ -699,7 +699,7 @@ class ComboBox extends UI5Element {
 		const listItem = event.detail.item;
 
 		this._tempValue = listItem.mappedItem.text;
-		this._selectedItem = listItem.mappedItem.text;
+		this._selectedItemText = listItem.mappedItem.text;
 		this.filterValue = this._tempValue;
 
 		if (!listItem.mappedItem.selected) {
