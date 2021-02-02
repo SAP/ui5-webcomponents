@@ -18,12 +18,10 @@ const loaders = new Map();
  * @param {function} loader async function that will be passed a localeId and should return a JSON object
  * @param {Array} localeIds Array of locale IDs that this loader can handle
  */
-const registerLoader = (packageName, loader, localeIds) => {
+const registerLoader = (packageName, localeId, loader) => {
 	// register loader by key
-	localeIds.forEach(localeId => {
-		const bundleKey = `${packageName}/${localeId}`;
-		loaders.set(bundleKey, loader);
-	})
+	const bundleKey = `${packageName}/${localeId}`;
+	loaders.set(bundleKey, loader);
 };
 
 const _setI18nBundleData = (packageName, data) => {

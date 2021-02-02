@@ -49,8 +49,10 @@ const fetchMessageBundle = async (localeId) => {
 
 const localeIds = [${languagesKeysStringArray}];
 
-registerLoader("${packageName}", fetchMessageBundle, localeIds);
-	`;
+localeIds.forEach(localeId => {
+	registerLoader("${packageName}", localeId, fetchMessageBundle);
+});
+`;
 
 	// Actual imports for json assets
 	const dynamicImportsString = languages.map(key => `		case "${key}": return (await import("../assets/i18n/messagebundle_${key}.json")).default;`).join("\n");
@@ -67,7 +69,9 @@ registerLoader("${packageName}", fetchMessageBundle, localeIds);
 
 	const localeIds = [${languagesKeysStringArray}];
 
-	registerLoader("${packageName}", fetchMessageBundle, localeIds);
+	localeIds.forEach(localeId => {
+		registerLoader("${packageName}", localeId, fetchMessageBundle);
+	});
 	`;
 
 

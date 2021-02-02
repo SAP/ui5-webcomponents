@@ -44,7 +44,8 @@ const loadThemeProperties = async (themeName) => {
 	return (await fetch(themeUrlsByName[themeName])).json();
 }
 
-registerThemePropertiesLoader("${packageName}", loadThemeProperties, ${availableThemesArray});
+${availableThemesArray}
+  .forEach(themeName => registerThemePropertiesLoader("${packageName}", themeName, loadThemeProperties));
 `;
 
 
@@ -58,7 +59,8 @@ ${dynamicImportLines}
 	}
 }
 
-registerThemePropertiesLoader("${packageName}", loadThemeProperties, ${availableThemesArray});
+${availableThemesArray}
+  .forEach(themeName => registerThemePropertiesLoader("${packageName}", themeName, loadThemeProperties));
 `;
 
 mkdirp.sync(path.dirname(outputFile));

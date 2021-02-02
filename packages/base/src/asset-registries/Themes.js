@@ -30,12 +30,10 @@ const registerThemeProperties = (packageName, themeName, style) => {
 	registeredThemes.add(themeName);
 };
 
-const registerThemePropertiesLoader = (packageName, loader, availableThemes) => {
+const registerThemePropertiesLoader = (packageName, themeName, loader) => {
 	loaders.set(packageName, loader);
 	registeredPackages.add(packageName);
-	availableThemes.forEach(themeName => {
-		registeredThemes.add(themeName);
-	});
+	registeredThemes.add(themeName);
 }
 
 const getThemeProperties = async (packageName, themeName) => {

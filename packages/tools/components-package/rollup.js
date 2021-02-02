@@ -47,10 +47,8 @@ const getPlugins = ({ transpile }) => {
 
 	plugins.push(url({
 		limit: 0,
-		exclude: [
-			/.*assets\/.*\.json/,
-		],
 		include: [
+			// /.*assets\/.*\.json/,
 			/.*\.properties/,
 		],
 		emitFiles: true,
