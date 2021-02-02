@@ -2825,42 +2825,8 @@ Apart from i18n assets, the above import also provides the JSON, containing all 
 <p>The <code class="highlighter-rouge">base</code> package provides not only the UI5 Web Components framework, but also some features, relevant to
 all UI5 Web Components.</p>
 
-<p><a name="oldbrowsersupport"></a></p>
-<h3 id="1-old-browser-support--ie11">1. Old browser support ( IE11)</h3>
-
-<p>Most modern browsers  - <strong>Chrome, Firefox, Safari, Edge (Chromium-based)</strong>, support Web Components natively.</p>
-
-<p>If your app needs to run on <strong>IE11</strong>, you should import:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-ie11/dist/features/IE11.js</span><span class="dl">"</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>In addition, you should load the official Web Components polyfill in your index file, as described
-<a href="https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs">here</a>.</p>
-
-<p>Please note that the aforementioned <code>webcomponents-loader.js</code> is not shipped as part of UI5 Web Components,
-but should be imported separately.</p>
-
-<p>Example:</p>
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"path/to/your/copy/of/webcomponents-loader.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"path/to/your/javasacript/app.js"</span> <span class="na">type=</span><span class="s">"module"</span><span class="nt">&gt;&lt;/script&gt;</span>
-</code></pre></div></div>
-
-<p>As shown in the example above, it’s recommended to load the Web Components Polyfill first, and the web components next.</p>
-
-<p>Finally, there is an alternative to the <code class="highlighter-rouge">IE11.js</code> import:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-ie11/dist/features/IE11WithWebComponentsPolyfill.js</span><span class="dl">"</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>that includes the Web Components Polyfill too, so you don’t have to import it manually.</p>
-
-<p>This may be useful in certain use cases when your app has polyfills of its own and you need to guarantee the order of execution.</p>
-
-<p>The three old browser support options are summarized below:</p>
-
 <p><a name="theming"></a></p>
-<h3 id="2-theming">2. Theming</h3>
+<h3 id="1-theming">1. Theming</h3>
 
 <p>UI5 Web Components ship with the default theme only out of the box.</p>
 
@@ -2902,7 +2868,7 @@ but should be imported separately.</p>
 <p>Find out how you can bundle your themes more efficiently <a href="Assets.md#bundling">here</a>.</p>
 
 <p><a name="internationalization"></a></p>
-<h3 id="3-internationalization">3. Internationalization</h3>
+<h3 id="2-internationalization">2. Internationalization</h3>
 
 <p>The <code class="highlighter-rouge">base</code> project provides i18n support.</p>
 
@@ -2928,7 +2894,7 @@ All texts are in English by default. In order to get support for other languages
 
 <p>Find out how you can bundle your i18n texts more efficiently <a href="Assets.md#bundling">here</a>.</p>
 
-<h3 id="4-advanced-calendar-types">4. Advanced calendar types</h3>
+<h3 id="3-advanced-calendar-types">3. Advanced calendar types</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-localization/dist/features/calendar/Islamic.js</span><span class="dl">"</span><span class="p">;</span>
@@ -2942,7 +2908,7 @@ All texts are in English by default. In order to get support for other languages
 (by setting its <code class="highlighter-rouge">primaryCalendarType</code> property), you should import one or more of the modules above.</p>
 
 <p><a name="config"></a></p>
-<h3 id="5-configuration">5. Configuration</h3>
+<h3 id="4-configuration">4. Configuration</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">getTheme</span><span class="p">,</span> <span class="nx">setTheme</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Theme.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getNoConflict</span><span class="p">,</span> <span class="nx">setNoConflict</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/NoConflict.js</span><span class="dl">"</span><span class="p">;</span>
@@ -2954,7 +2920,7 @@ All texts are in English by default. In order to get support for other languages
 
 <p>For more details, please check <a href="https://sap.github.io/ui5-webcomponents/playground/docs/configuration/">Configuration</a>.</p>
 
-<h3 id="6-openui5-integration">6. OpenUI5 integration</h3>
+<h3 id="5-openui5-integration">5. OpenUI5 integration</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/OpenUI5Support.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
@@ -2974,11 +2940,7 @@ from OpenUI5 configuration and resources.</p>
 <p>Therefore, if you intend to run both frameworks in the same browser window,
 it is highly recommended to enable OpenUI5 support and benefit from these optimizations.</p>
 
-<p><em>Note:</em> In general the order in which OpenUI5 and UI5 Web Components are loaded does not matter.
-However, if your app needs to support Internet Explorer 11, either load OpenUI5 first, or load
-UI5 Web Components deferred.</p>
-
-<h3 id="7-support-for-registering-i18n-resources-in-properties-format">7. Support for registering <code class="highlighter-rouge">i18n</code> resources in <code class="highlighter-rouge">.properties</code> format</h3>
+<h3 id="6-support-for-registering-i18n-resources-in-properties-format">6. Support for registering <code class="highlighter-rouge">i18n</code> resources in <code class="highlighter-rouge">.properties</code> format</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
@@ -3000,7 +2962,7 @@ UI5 Web Components deferred.</p>
 <span class="p">});</span>
 </code></pre></div></div>
 
-<h3 id="8-custom-elements-scoping">8. Custom elements scoping</h3>
+<h3 id="7-custom-elements-scoping">7. Custom elements scoping</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">setCustomElementsScopingSuffix</span><span class="p">,</span> <span class="nx">setCustomElementsScopingRules</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/CustomElementsScope.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>

@@ -1,5 +1,5 @@
-commit 2e7b968d7c9f4a41923eb772d17c8e7dde53d18a
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Mon Feb 1 16:45:27 2021 +0200
+commit c924f58fe87339530a4bea63a811dd07b053b77d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Feb 2 11:44:35 2021 +0200
 
-    feat(ui5-multi-input): Implement accessibility specifications (#2761)
+    chore: Deprecate Internet Explorer 11 (#2767)
