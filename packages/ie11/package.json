@@ -1,0 +1,36 @@
+{
+  "name": "@ui5/webcomponents-ie11",
+  "version": "0.28.0",
+  "description": "UI5 Web Components: webcomponents.ie11",
+  "author": "SAP SE (https://www.sap.com)",
+  "license": "Apache-2.0",
+  "module": "index.js",
+  "keywords": [
+    "openui5",
+    "sapui5",
+    "ui5"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/ie11"
+  },
+  "scripts": {
+    "clean": "nps clean",
+    "lint": "nps lint",
+    "build": "nps build",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "@ui5/webcomponents-base": "0.28.0",
+    "css-vars-ponyfill": "^2.1.2",
+    "regenerator-runtime": "0.12.1",
+    "url-search-params-polyfill": "^5.0.0"
+  },
+  "devDependencies": {
+    "@ui5/webcomponents-tools": "1.0.0-rc.11",
+    "copy-and-watch": "^0.1.4",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0"
+  }
+}

@@ -309,8 +309,14 @@ class Select extends UI5Element {
 	onAfterRendering() {
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 
-		if (this._isPickerOpen && !this._listWidth) {
-			this._listWidth = this.responsivePopover.offsetWidth;
+		if (this._isPickerOpen) {
+			if (!this._listWidth) {
+				this._listWidth = this.responsivePopover.offsetWidth;
+			}
+			if (this.responsivePopover.querySelector("ui5-li[focused]:not([selected]")) {
+				// selection changed programmatically => apply focus to the newly selected item
+				this._applyFocusAfterOpen();
+			}
 		}
 	}
 
@@ -357,16 +363,21 @@ class Select extends UI5Element {
 	}
 
 	_syncSelection() {
-		let lastSelectedOptionIndex = -1;
+		let lastSelectedOptionIndex = -1,
+			firstEnabledOptionIndex = -1;
 		const opts = this.options.map((opt, index) => {
 			if (opt.selected) {
 				lastSelectedOptionIndex = index;
+			}
+			if (!opt.disabled && (firstEnabledOptionIndex === -1)) {
+				firstEnabledOptionIndex = index;
 			}
 
 			opt.selected = false;
 
 			return {
 				selected: false,
+				disabled: opt.disabled,
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
@@ -375,7 +386,7 @@ class Select extends UI5Element {
 			};
 		});
 
-		if (lastSelectedOptionIndex > -1) {
+		if (lastSelectedOptionIndex > -1 && !opts[lastSelectedOptionIndex].disabled) {
 			opts[lastSelectedOptionIndex].selected = true;
 			this.options[lastSelectedOptionIndex].selected = true;
 			this._text = opts[lastSelectedOptionIndex].textContent;
@@ -383,13 +394,12 @@ class Select extends UI5Element {
 		} else {
 			this._text = "";
 			this._selectedIndex = -1;
-		}
-
-		if (lastSelectedOptionIndex === -1 && opts[0]) {
-			opts[0].selected = true;
-			this.options[0].selected = true;
-			this._selectedIndex = 0;
-			this._text = this.options[0].textContent;
+			if (opts[firstEnabledOptionIndex]) {
+				opts[firstEnabledOptionIndex].selected = true;
+				this.options[firstEnabledOptionIndex].selected = true;
+				this._selectedIndex = firstEnabledOptionIndex;
+				this._text = this.options[firstEnabledOptionIndex].textContent;
+			}
 		}
 
 		this._syncedOptions = opts;
