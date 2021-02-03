@@ -2,16 +2,12 @@
     color: var(--_ui5_tc_headerItem_color);
     cursor: pointer;
     flex-shrink: 0;
-    margin: 0 1rem;
+    padding: 0 1rem;
     font-size: var(--sapFontSmallSize);
     text-shadow: var(--sapContent_TextShadow);
     position: relative;
     display: inline-flex;
     align-items: center;
-}
-
-.ui5-tab-strip-item:last-child {
-    margin-right: 0;
 }
 
 .ui5-tab-strip-itemContent {
@@ -248,9 +244,6 @@
 }
 
 /*** RTL ***/
-[dir=rtl] .ui5-tab-strip-item:last-child {
-    margin-left: 0;
-}
 
 [dir=rtl] .ui5-tab-strip-item-semanticIcon::before {
     margin-left: 0.25rem;

@@ -523,6 +523,9 @@ class TabContainer extends UI5Element {
 				"ui5-tc__header": true,
 				"ui5-tc__header--scrollable": this._scrollable,
 			},
+			headerInnerContainer: {
+				"ui5-tc__headerInnerContainer": true,
+			},
 			headerScrollContainer: {
 				"ui-tc__headerScrollContainer": true,
 			},
