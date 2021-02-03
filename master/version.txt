@@ -1,7 +1,7 @@
-commit 7f0bd6adce86a45525f8ebe2437cd5762d9cbaf8
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Wed Feb 3 17:14:18 2021 +0200
+commit 83d09ddcd1b3823f76d9f6ec98bae4212d3c8b9e
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Feb 3 17:39:22 2021 +0200
 
-    fix(ui5-popover, ui5-dialog): do not render empty headers (#2770)
+    docs: remove IE logo from Playgrund (#2773)
     
-    Fixes: #2694
+    Remove statement for IE support and its logo
