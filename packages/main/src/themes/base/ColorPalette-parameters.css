@@ -1,7 +1,11 @@
 :root {
 	--_ui5_color-palette-swatch-height: 1.75rem;
-	--_ui5_color-palette-swatch-container-padding: 0.3125rem 0.6875rem;
+	--_ui5_color-palette-swatch-container-sides-padding: 0.3125rem;
+	--_ui5_color-palette-swatch-container-rows-padding: 0.6875rem;
+	--_ui5_color-palette-swatch-focus-height: 1.5rem;
+	--_ui5_color-palette-swatch-container-padding: var(--_ui5_color-palette-swatch-container-sides-padding) var(--_ui5_color-palette-swatch-container-rows-padding);
 	--_ui5_color-palette-swatch-hover-height: 2.25rem;
 	--_ui5_color-palette-swatch-margin: calc(var(--_ui5_color-palette-swatch-hover-height) - var(--_ui5_color-palette-swatch-height));
 	--_ui5_color-palette-swatch-hover-margin: calc(var(--_ui5_color-palette-swatch-margin) / 2);
+	--_ui5_color-palette-row-width: calc(var(--_ui5_color-palette-swatch-container-sides-padding) * 2 * 5 + var(--_ui5_color-palette-swatch-hover-height) * 5)
 }

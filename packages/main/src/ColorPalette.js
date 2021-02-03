@@ -1,14 +1,18 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import ColorPaletteEntry from "./ColorPaletteEntry.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
+import ColorPaletteEntry from "./ColorPaletteEntry.js";
+import {
+	COLORPALETTE_CONTAINER_LABEL,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import ColorPaletteCss from "./generated/themes/ColorPalette.css.js";
@@ -25,8 +29,8 @@ const metadata = {
 		 * @public
 		 */
 		value: {
-			type: CSSColor
-		 }
+			type: CSSColor,
+		 },
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
@@ -39,15 +43,15 @@ const metadata = {
 			type: HTMLElement,
 			invalidateOnChildChange: true,
 		},
-	},	
+	},
 	events: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		change: {
 			details: {
-			   color: {
-				   type: "String"
-				}
-			}
-		 }
+				color: {
+					type: "String",
+				},
+			},
+		 },
 	},
 };
 
@@ -69,6 +73,8 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ColorPalette
  * @extends UI5Element
  * @tagname ui5-color-palette
+ * @since 1.0.0-rc.12
+ * @appenddocs ColorPaletteEntry
  * @public
  */
 class ColorPalette extends UI5Element {
@@ -93,26 +99,17 @@ class ColorPalette extends UI5Element {
 	}
 
 	static async onDefine() {
-
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
 		super();
-	}
-
-	onBeforeRendering() {
-		this._colorsArray = this.colors;
-	}
-
-	onAfterRendering() {
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => Array.from(this.getDomRef().getElementsByClassName("ui5-cp-swatch")),
+			getItemsCallback: () => this.colors.slice(0, 15),
 			rowSize: 5,
 			behavior: ItemNavigationBehavior.Cyclic,
 		});
-
-		this._itemNavigation.onOverflowBottomEdge = this.onOverflowBottomEdge;
-		this._itemNavigation.onOverflowTopEdge = this.onOverflowTopEdge;
 	}
 
 	selectColor(target) {
@@ -126,37 +123,12 @@ class ColorPalette extends UI5Element {
 		});
 	}
 
-	onOverflowBottomEdge(event) {
-		const newIndex = this.currentIndex % this.rowSize;
-		this.currentIndex = newIndex + 1 >= this.rowSize ? 0 : newIndex + 1;
-
-		return;
-	}
-
-	onOverflowTopEdge(event) {
-		const items = this._getItems();
-		const firstIndex = -5;
-		let rowsMultiplier;
-
-		if(this.currentIndex === firstIndex) {
-			rowsMultiplier = Math.floor((items.length + (this.rowSize + 2)) / this.rowSize);
-		} else {
-			rowsMultiplier = Math.floor((items.length + (this.rowSize + this.currentIndex + 2)) / this.rowSize);
-		}
-
-		const newIndex = this.currentIndex + rowsMultiplier * this.rowSize;
-
-		this.currentIndex = newIndex - 1;
-
-		return;
-	}
-
 	_onclick(event) {
 		const target = event.target;
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (target.classList.contains("ui5-cp-swatch")){
+		if (target.classList.contains("ui5-cp-swatch")) {
 			this.selectColor(target);
 		}
 	}
@@ -171,27 +143,8 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
-
-	get colorsArray() {
-		const elementsPerRow = 5;
-		const maxAllowedColors = 15;
-		const rowsArray = this._colorsArray.slice(0, maxAllowedColors).reduce((resultArray, item, index) => { 
-			const chunkIndex = Math.floor(index / elementsPerRow);
-
-			if(!resultArray[chunkIndex]) {
-			  resultArray[chunkIndex] = [];
-			}
-
-			resultArray[chunkIndex].push({ value: item.value, id: index });
-
-			return resultArray;
-		}, []);
-
-		return rowsArray;
-	}
-
 	get colorContainerLabel() {
-		return "labelinho";
+		return this.i18nBundle.getText(COLORPALETTE_CONTAINER_LABEL);
 	}
 
 	get colorLabel() {
