@@ -1,13 +1,7 @@
-commit fa03eae8b0835bbb9c7eb686715c9e75d4116893
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Feb 3 17:49:24 2021 +0800
+commit 7f0bd6adce86a45525f8ebe2437cd5762d9cbaf8
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Wed Feb 3 17:14:18 2021 +0200
 
-    Translation Delivery (#2772)
+    fix(ui5-popover, ui5-dialog): do not render empty headers (#2770)
     
-    * chore: translation delivery
-    
-    Change-Id: I99ee72d8ddfcfa8ea3a7d295d8fedcd984900e57
-    
-    * chore: translation delivery
-    
-    Change-Id: I89000ab96f6b595b72302612ee0a9a7af630c53f
+    Fixes: #2694
