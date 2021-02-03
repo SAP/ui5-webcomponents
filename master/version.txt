@@ -1,5 +1,13 @@
-commit c924f58fe87339530a4bea63a811dd07b053b77d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Feb 2 11:44:35 2021 +0200
+commit fa03eae8b0835bbb9c7eb686715c9e75d4116893
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Feb 3 17:49:24 2021 +0800
 
-    chore: Deprecate Internet Explorer 11 (#2767)
+    Translation Delivery (#2772)
+    
+    * chore: translation delivery
+    
+    Change-Id: I99ee72d8ddfcfa8ea3a7d295d8fedcd984900e57
+    
+    * chore: translation delivery
+    
+    Change-Id: I89000ab96f6b595b72302612ee0a9a7af630c53f
