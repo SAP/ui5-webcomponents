@@ -2,4 +2,5 @@
 	display: flex;
 	width: var(--_ui5_color-palette-row-width);
 	flex-flow: wrap;
+	height: var(--_ui5_color-palette-row-height);
 }

@@ -124,6 +124,8 @@
 	--_ui5_color-palette-swatch-container-rows-padding: 0.8125rem;
 	--_ui5_color-palette-swatch-hover-height: 1.65rem;
 	--_ui5_color-palette-swatch-hover-margin: 0.3125rem;
+	--_ui5_color-palette-row-width: 12rem;
+	--_ui5_color-palette-row-height: 7.25rem;
 
 	/* Custom List Item */
 	--_ui5_custom_list_item_height: 2rem;

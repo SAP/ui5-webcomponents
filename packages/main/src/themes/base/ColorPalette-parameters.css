@@ -7,5 +7,6 @@
 	--_ui5_color-palette-swatch-hover-height: 2.25rem;
 	--_ui5_color-palette-swatch-margin: calc(var(--_ui5_color-palette-swatch-hover-height) - var(--_ui5_color-palette-swatch-height));
 	--_ui5_color-palette-swatch-hover-margin: calc(var(--_ui5_color-palette-swatch-margin) / 2);
-	--_ui5_color-palette-row-width: calc(var(--_ui5_color-palette-swatch-container-sides-padding) * 2 * 5 + var(--_ui5_color-palette-swatch-hover-height) * 5)
+	--_ui5_color-palette-row-width: 14.375rem;
+	--_ui5_color-palette-row-height: 9.5rem;
 }
