@@ -2,6 +2,12 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
+import {
+	getRGBColor,
+	HSLToRGB,
+	HEXToRGB,
+	RGBToHSL,
+} from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
 import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
 import Input from "./Input.js";
 import Slider from "./Slider.js";
@@ -26,7 +32,7 @@ const metadata = {
 		 */
 		color: {
 			type: String,
-			defaultValue: "rgba(255, 0, 0, 1)",
+			defaultValue: "rgba(255, 255, 255, 1)",
 		},
 
 		/**
@@ -37,7 +43,7 @@ const metadata = {
 		 */
 		hex: {
 			type: String,
-			defaultValue: "000000",
+			defaultValue: "ffffff",
 		},
 
 		/**
@@ -96,7 +102,7 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
+ * Enables the user to select a color & transparency.
  *
  * <h3>Usage</h3>
  *
@@ -107,7 +113,7 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @since 1.0.0-rc12
+ * @since 1.0.0-rc.12
  * @alias sap.ui.webcomponents.main.ColorPicker
  * @extends UI5Element
  * @tagname ui5-color-picker
@@ -141,30 +147,29 @@ class ColorPicker extends UI5Element {
 	constructor() {
 		super();
 
-		// Top Left corner
+		// Bottom Right corner
 		this._selectedCoordinates = {
-			x: -6.5,
-			y: -6.5,
+			x: 256 - 6.5,
+			y: 256 - 6.5,
 		};
 
-		// Default color is red
+		// Default main color is red
 		this._mainColor = {
 			r: 255,
 			g: 0,
 			b: 0,
 		};
 
-		this._color = {
-			r: 0,
-			g: 0,
-			b: 0,
-		};
+		this.selectedHue = 0;
 
 		this.mouseDown = false;
 	}
 
 	onBeforeRendering() {
-		this.color = `rgba(${this._color.r}, ${this._color.g}, ${this._color.b}, ${this._alpha})`;
+		// we have the color & _mainColor properties here
+		this._color = getRGBColor(this.color);
+		this._setHex();
+		this._setValues();
 		this.style.setProperty("--ui5_Color_Picker_Progress_Container_Color", this.color);
 	}
 
@@ -225,7 +230,7 @@ class ColorPicker extends UI5Element {
 	}
 
 	_handleHueInput(event) {
-		this._hue = event.target.value;
+		this.selectedHue = event.target.value;
 		this._setMainColor(this._hue);
 	}
 
@@ -238,30 +243,28 @@ class ColorPicker extends UI5Element {
 			this._wrongHEX = true;
 		} else {
 			this._wrongHEX = false;
-			this._color = this._hexToRGB(this.hex);
-			this._setValuesFromHEX();
+			this._setColor(HEXToRGB(this.hex));
 		}
 	}
 
 	_handleRGBInputsChange(event) {
-		const targetValue = parseInt(event.target.value);
-
+		const targetValue = parseInt(event.target.value) || 0;
+		let tempColor;
 		switch (event.target.id) {
 		case "red":
-			this._color = Object.assign({ }, this._color, { r: targetValue });
+			tempColor = Object.assign({ }, this._color, { r: targetValue });
 			break;
 
 		case "green":
-			this._color = Object.assign({ }, this._color, { g: targetValue });
+			tempColor = Object.assign({ }, this._color, { g: targetValue });
 			break;
 
 		case "blue":
-			this._color = Object.assign({ }, this._color, { b: targetValue });
+			tempColor = Object.assign({ }, this._color, { b: targetValue });
 			break;
 		}
 
-		this._setHex();
-		this._setValuesFromHEX();
+		this._setColor(tempColor);
 	}
 
 	_setMainColor(hueValue) {
@@ -315,11 +318,13 @@ class ColorPicker extends UI5Element {
 			y: y - 6.5, // Center the coordinates, because of the height of the circle
 		};
 
-		this._setColor(x, y);
-		this._setHex();
+		const tempColor = this._calculateColorFromCoordinates(x, y);
+		if (tempColor) {
+			this._setColor(HSLToRGB(tempColor));
+		}
 	}
 
-	_setColor(x, y) {
+	_calculateColorFromCoordinates(x, y) {
 		// By using the selected coordinates(x = Lightness, y = Saturation) and hue(selected from the hue slider)
 		// and HSL format, the color will be parsed to RGB
 
@@ -332,143 +337,21 @@ class ColorPicker extends UI5Element {
 			return;
 		}
 
-		this._color = this._HSLToRGB({ h, s, l });
-	}
-
-	_HSLToRGB(color = {
-		h: undefined,
-		s: undefined,
-		l: undefined,
-	}) {
-		// Formula taken from https://www.rapidtables.com/convert/color/hsl-to-rgb.html
-		const C = (1 - Math.abs((2 * color.l) - 1)) * color.s,
-			X = C * (1 - Math.abs(((color.h / 60) % 2) - 1)),
-			m = color.l - C / 2;
-
-		let tempColor = {};
-		switch (Math.round(color.h / 60)) {
-		// 0 ≤ H < 60
-		case 0:
-			tempColor = {
-				r: C,
-				g: X,
-				b: 0,
-			};
-			break;
-
-		// 60 ≤ H < 120
-		case 1:
-			tempColor = {
-				r: X,
-				g: C,
-				b: 0,
-			};
-			break;
-
-		// 120 ≤ H < 180
-		case 2:
-			tempColor = {
-				r: 0,
-				g: C,
-				b: X,
-			};
-			break;
-
-		// 180 ≤ H < 240
-		case 3:
-			tempColor = {
-				r: 0,
-				g: X,
-				b: C,
-			};
-			break;
-
-		// 240 ≤ H < 300
-		case 4:
-			tempColor = {
-				r: X,
-				g: 0,
-				b: C,
-			};
-			break;
-
-		// 300 ≤ H < 360
-		default:
-			tempColor = {
-				r: C,
-				g: 0,
-				b: X,
-			};
-			break;
-		}
-
-		return {
-			r: Math.floor((tempColor.r + m) * 255),
-			g: Math.floor((tempColor.g + m) * 255),
-			b: Math.floor((tempColor.b + m) * 255),
-		};
-	}
-
-	_hexToRGB(hex) {
-		// Please make sure you pass a valid 6 digit hex color
-		// In the implementation of this method we assume that the hex argument is a 6 digit valid hex color
-
-		const rgbValues = {
-			r: hex.substr(0, 2),
-			g: hex.substr(2, 2),
-			b: hex.substr(4, 2),
-		};
-
-		const rgbKeys = Object.keys(rgbValues);
-
-		rgbKeys.forEach(key => {
-			rgbValues[key] = parseInt(rgbValues[key], 16);
-		});
-
-		return rgbValues;
-	}
-
-	_RGBToHSL(color = {
-		r: undefined,
-		g: undefined,
-		b: undefined,
-	}) {
-		const R = color.r / 255,
-			G = color.g / 255,
-			B = color.b / 255,
-			max = Math.max(R, G, B),
-			min = Math.min(R, G, B),
-			delta = max - min;
-
-		let h,
-			s;
-
-		// Hue calculation
-		if (delta === 0) {
-			h = 0;
-		} else if (max === R) {
-			h = 60 * (((G - B) / delta) % 6);
-		} else if (max === G) {
-			h = 60 * (((B - R) / delta) + 2);
-		} else if (max === B) {
-			h = 60 * (((R - G) / delta) + 4);
-		}
-
-		// Lightness calculation
-		const l = (max + min) / 2;
-
-		// Saturation calculation
-		if (delta === 0) {
-			s = 0;
-		} else {
-			s = delta / (1 - Math.abs(2 * l - 1));
-		}
-
 		return {
 			h,
 			s,
 			l,
 		};
+	}
+
+	_setColor(color = {
+		r: undefined,
+		g: undefined,
+		b: undefined,
+	}) {
+		this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
+
+		this.fireEvent("change");
 	}
 
 	_setHex() {
@@ -489,13 +372,20 @@ class ColorPicker extends UI5Element {
 		this.hex = red + green + blue;
 	}
 
-	_setValuesFromHEX() {
-		const hslColours = this._RGBToHSL(this._color);
+	_setValues() {
+		const hslColours = RGBToHSL(this._color);
 		this._selectedCoordinates = {
 			x: ((Math.round(hslColours.l * 100) * 2.56)) - 6.5, // Center the coordinates, because of the width of the circle
 			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - 6.5, // Center the coordinates, because of the height of the circle
 		};
-		this._hue = Math.round(hslColours.h * 4.25);
+
+		if (this.selectedHue) {
+			this._hue = this.selectedHue;
+			this.selectedHue = undefined;
+		} else {
+			this._hue = Math.round(hslColours.h * 4.25);
+		}
+
 		this._setMainColor(this._hue);
 	}
 

@@ -24,6 +24,26 @@
 </head>
 <body style="background-color: var(--sapBackgroundColor);">
 
-	<ui5-color-picker></ui5-color-picker>
+	<ui5-color-picker id="cp1"></ui5-color-picker>
 
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<ui5-color-picker id="change-event"></ui5-color-picker>
+
+	<ui5-input id="color-input"></ui5-input>
+
+	<script>
+		var colorPicker = document.querySelector("#change-event"),
+			colorLabel = document.querySelector("#color-input");
+
+		colorPicker.addEventListener("change", function(event) {
+			colorLabel.value = event.target.color;
+		});
+	</script>
 </html>
