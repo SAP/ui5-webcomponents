@@ -1,7 +1,7 @@
-commit 83d09ddcd1b3823f76d9f6ec98bae4212d3c8b9e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 3 17:39:22 2021 +0200
+commit eff2e74b9573e004c4a47c7ce3a9597626254168
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Feb 4 18:31:51 2021 +0800
 
-    docs: remove IE logo from Playgrund (#2773)
+    chore: translation delivery (#2776)
     
-    Remove statement for IE support and its logo
+    Change-Id: I39d73ab35ba1ef3974a36f1254f09282b57d7bdb
