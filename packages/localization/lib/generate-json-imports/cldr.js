@@ -9,7 +9,7 @@ const caseImports = allLocales.map(locale => `\t\tcase "${locale}": return (awai
 const localesKeys = allLocales.join(",");
 const localesKeysStrArray = allLocales.map(_ => `"${_}"`).join(",");
 
-const contentStatic = `import { registerLoader } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
+const contentStatic = `import { registerLocaleDataLoader } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 
 ${imports}
 
@@ -29,10 +29,10 @@ const fetchCldrJson = async (localeId) => {
 	return (await fetch(cldrData[localeId])).json();
 }
 
-Object.keys(cldrData).forEach(localeId => registerLoader(localeId, fetchCldrJson));
+Object.keys(cldrData).forEach(localeId => registerLocaleDataLoader(localeId, fetchCldrJson));
 `;
 
-const contentDynamic = `import { registerLoader } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
+const contentDynamic = `import { registerLocaleDataLoader } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 
 const availableLocales = [${localesKeysStrArray}];
 
@@ -43,7 +43,7 @@ ${caseImports}
 	}
 }
 
-availableLocales.forEach(localeId => registerLoader(localeId, importCldrJson));
+availableLocales.forEach(localeId => registerLocaleDataLoader(localeId, importCldrJson));
 `;
 
 mkdirp.sync("dist/generated/json-imports/");

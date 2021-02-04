@@ -1,4 +1,4 @@
-import { registerThemeProperties } from "./dist/AssetRegistry.js";
+import { registerThemeProperties } from "./dist/asset-registries/Themes.js";
 
 // ESM bundle targets Edge + browsers with native support
 import "./dist/features/browsersupport/Edge.js";

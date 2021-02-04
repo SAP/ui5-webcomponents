@@ -8,11 +8,11 @@ import "./generated/json-imports/i18n-dynamic.js";
 
 
 import bg from "./i18n/messagebundle_bg.properties";
-import { registerLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
 
-registerLoader("@ui5/webcomponents", "bg", async (localeId) => {
+registerI18nLoader("@ui5/webcomponents", "bg", async (localeId) => {
     if (localeId === "bg") {
         const props = await (await fetch(bg)).text();
         const PropertiesFormatSupport = getFeature("PropertiesFormatSupport");

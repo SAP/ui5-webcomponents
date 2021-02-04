@@ -94,7 +94,7 @@ const fetchCldr = async (language, region, script) => {
 	registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrContent);
 };
 
-const registerLoader = (localeId, loader) => {
+const registerLocaleDataLoader = (localeId, loader) => {
 	loaders.set(localeId, loader);
 }
 
@@ -106,7 +106,7 @@ attachLanguageChange(() => {
 });
 
 export {
-	registerLoader,
+	registerLocaleDataLoader,
 	fetchCldr,
 	getModuleContent,
 };

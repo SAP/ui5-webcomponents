@@ -18,7 +18,7 @@ const loaders = new Map();
  * @param {function} loader async function that will be passed a localeId and should return a JSON object
  * @param {Array} localeIds Array of locale IDs that this loader can handle
  */
-const registerLoader = (packageName, localeId, loader) => {
+const registerI18nLoader = (packageName, localeId, loader) => {
 	// register loader by key
 	const bundleKey = `${packageName}/${localeId}`;
 	loaders.set(bundleKey, loader);
@@ -43,7 +43,7 @@ const getI18nBundleData = packageName => {
  * @public
  */
 const registerI18nBundle = (packageName, bundle) => {
-	throw new Error("This method has been removed. Use `registerLoader` instead.");
+	throw new Error("This method has been removed. Use `registerI18nLoader` instead.");
 };
 
 const _hasLoader = (packageName, localeId) => {
@@ -111,7 +111,7 @@ attachLanguageChange(() => {
 });
 
 export {
-	registerLoader,
+	registerI18nLoader,
 	fetchI18nBundle,
 	registerI18nBundle,
 	getI18nBundleData,
