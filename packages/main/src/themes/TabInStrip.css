@@ -24,13 +24,13 @@
     content: "";
     position: absolute;
     width: 100%;
-    bottom: 0;
+    bottom: 1px;
     left: 0;
     border-bottom: var(--_ui5_tc_headerItemContent_border_bottom);
 }
 
 .ui5-tab-strip-item--selected .ui5-tab-strip-item-icon-outer::after {
-    bottom: -0.8rem;
+    bottom: -12px;
 }
 
 .ui5-tab-strip-item--disabled {
