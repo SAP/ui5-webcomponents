@@ -1,4 +1,3 @@
-import { renderFinished } from "../Render.js";
 import {
 	isDown,
 	isUp,
@@ -92,97 +91,100 @@ class ItemNavigation extends EventProvider {
 		});
 	}
 
-	_horizontalNavigationOn() {
-		return this.horizontalNavigationOn;
-	}
+	onkeydown(event) {
+		if (!this._canNavigate()) {
+			return;
+		}
 
-	_verticalNavigationOn() {
-		return this.verticalNavigationOn;
-	}
-
-	async _onKeyPress(event) {
-		if (this.currentIndex >= this._getItems().length) {
-			this.onOverflowBottomEdge();
-		} else if (this.currentIndex < 0) {
-			this.onOverflowTopEdge();
+		if (isUp(event) && this.verticalNavigationOn) {
+			this._handleUp();
+		} else if (isDown(event) && this.verticalNavigationOn) {
+			this._handleDown();
+		} else if (isLeft(event) && this.horizontalNavigationOn) {
+			this._handleLeft();
+		} else if (isRight(event) && this.horizontalNavigationOn) {
+			this._handleRight();
+		} else if (isHome(event)) {
+			this._handleHome();
+		} else if (isEnd(event)) {
+			this._handleEnd();
+		} else {
+			return; // if none of the supported keys is pressed, we don't want to prevent the event or update the item navigation
 		}
 
 		event.preventDefault();
-
-		await renderFinished();
-
 		this.update();
-		this.focusCurrent();
 	}
 
-	onkeydown(event) {
-		if (isUp(event) && this._verticalNavigationOn()) {
-			return this._handleUp(event);
-		}
-
-		if (isDown(event) && this._verticalNavigationOn()) {
-			return this._handleDown(event);
-		}
-
-		if (isLeft(event) && this._horizontalNavigationOn()) {
-			return this._handleLeft(event);
-		}
-
-		if (isRight(event) && this._horizontalNavigationOn()) {
-			return this._handleRight(event);
-		}
-
-		if (isHome(event)) {
-			return this._handleHome(event);
-		}
-
-		if (isEnd(event)) {
-			return this._handleEnd(event);
-		}
-	}
-
-	_handleUp(event) {
-		if (this._canNavigate()) {
+	_handleUp() {
+		const itemsLength = this._getItems().length;
+		if (this.currentIndex - this.rowSize >= 0) { // no border reached, just decrease the index by a row
 			this.currentIndex -= this.rowSize;
-			this._onKeyPress(event);
+			return;
+		}
+
+		if (this.behavior === ItemNavigationBehavior.Cyclic) { // if cyclic, go to the **last** item in the **previous** column
+			const firstItemInThisColumnIndex = this.currentIndex % this.rowSize;
+			const firstItemInPreviousColumnIndex = firstItemInThisColumnIndex === 0 ? this.rowSize - 1 : firstItemInThisColumnIndex - 1; // find the first item in the previous column (if the current column is the first column -> move to the last column)
+			const rows = Math.ceil(itemsLength / this.rowSize); // how many rows there are (even if incomplete, f.e. for 14 items and rowSize=4 -> 4 rows total, although only 2 items on the last row)
+			let lastItemInPreviousColumnIndex = firstItemInPreviousColumnIndex + (rows - 1) * this.rowSize; // multiply rows by columns, and add the column's first item's index
+			if (lastItemInPreviousColumnIndex > itemsLength - 1) { // for incomplete rows, use the previous row's last item, as for them the last item is missing
+				lastItemInPreviousColumnIndex -= this.rowSize;
+			}
+			this.currentIndex = lastItemInPreviousColumnIndex;
+		} else { // not cyclic, so just go to the first item
+			this.currentIndex = 0;
 		}
 	}
 
-	_handleDown(event) {
-		if (this._canNavigate()) {
+	_handleDown() {
+		const itemsLength = this._getItems().length;
+		if (this.currentIndex + this.rowSize < itemsLength) { // no border reached, just increase the index by a row
 			this.currentIndex += this.rowSize;
-			this._onKeyPress(event);
+			return;
+		}
+
+		if (this.behavior === ItemNavigationBehavior.Cyclic) { // if cyclic, go to the **first** item in the **next** column
+			const firstItemInThisColumnIndex = this.currentIndex % this.rowSize; // find the first item in the current column first
+			const firstItemInNextColumnIndex = (firstItemInThisColumnIndex + 1) % this.rowSize; // to get the first item in the next column, just increase the index by 1. The modulo by rows is for the case when we are at the last column
+			this.currentIndex = firstItemInNextColumnIndex;
+		} else { // not cyclic, so just go to the last item
+			this.currentIndex = itemsLength - 1;
 		}
 	}
 
-	_handleLeft(event) {
-		if (this._canNavigate()) {
+	_handleLeft() {
+		const itemsLength = this._getItems().length;
+		if (this.currentIndex > 0) {
 			this.currentIndex -= 1;
-			this._onKeyPress(event);
+			return;
+		}
+
+		if (this.behavior === ItemNavigationBehavior.Cyclic) { // go to the first item in the next column
+			this.currentIndex = itemsLength - 1;
 		}
 	}
 
-	_handleRight(event) {
-		if (this._canNavigate()) {
+	_handleRight() {
+		const itemsLength = this._getItems().length;
+		if (this.currentIndex < itemsLength - 1) {
 			this.currentIndex += 1;
-			this._onKeyPress(event);
+			return;
+		}
+
+		if (this.behavior === ItemNavigationBehavior.Cyclic) { // go to the first item in the next column
+			this.currentIndex = 0;
 		}
 	}
 
-	_handleHome(event) {
-		if (this._canNavigate()) {
-			const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
-			this.currentIndex -= this.currentIndex % homeEndRange;
-			this._onKeyPress(event);
-		}
+	_handleHome() {
+		const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
+		this.currentIndex -= this.currentIndex % homeEndRange;
 	}
 
-	_handleEnd(event) {
-		if (this._canNavigate()) {
-			const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
-			this.currentIndex += (homeEndRange - 1 - this.currentIndex % homeEndRange); // eslint-disable-line
-			this._onKeyPress(event);
-		}
+	_handleEnd() {
+		const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
+		this.currentIndex += (homeEndRange - 1 - this.currentIndex % homeEndRange); // eslint-disable-line
 	}
 
 	/**
@@ -216,11 +218,12 @@ class ItemNavigation extends EventProvider {
 				this.rootWebComponent[propName] = Array.isArray(prop) ? [...prop] : { ...prop };
 			});
 		}
+
+		this.focusCurrent();
 	}
 
 	/**
-	 * @public
-	 * @deprecated
+	 * @private
 	 */
 	focusCurrent() {
 		const currentItem = this._getCurrentItem();
@@ -285,28 +288,6 @@ class ItemNavigation extends EventProvider {
 	 */
 	set current(val) {
 		this.currentIndex = val;
-	}
-
-	onOverflowBottomEdge(event) {
-		const items = this._getItems();
-
-		if (this.behavior === ItemNavigationBehavior.Cyclic) {
-			this.currentIndex = 0;
-			return;
-		}
-
-		this.currentIndex = items.length - 1;
-	}
-
-	onOverflowTopEdge(event) {
-		const items = this._getItems();
-
-		if (this.behavior === ItemNavigationBehavior.Cyclic) {
-			this.currentIndex = items.length - 1;
-			return;
-		}
-
-		this.currentIndex = 0;
 	}
 }
 
