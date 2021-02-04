@@ -161,6 +161,12 @@ const metadata = {
 		wrap: {
 			type: Boolean,
 		},
+
+		_tabIndex: {
+			type: String,
+			defaultValue: "-1",
+			noAttribute: true,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
@@ -395,7 +401,7 @@ class RadioButton extends UI5Element {
 		}
 
 		if (this.name) {
-			return this.selected ? "0" : "-1";
+			return this._tabIndex;
 		}
 
 		return tabindex || "0";

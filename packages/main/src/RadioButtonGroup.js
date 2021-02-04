@@ -23,6 +23,8 @@ class RadioButtonGroup {
 		} else {
 			this.createGroup(radioBtn, groupName);
 		}
+
+		this.updateTabOrder(groupName);
 	}
 
 	static removeFromGroup(radioBtn, groupName) {
@@ -48,6 +50,8 @@ class RadioButtonGroup {
 		if (!group.length) {
 			this.removeGroup(groupName);
 		}
+
+		this.updateTabOrder(groupName);
 	}
 
 	static createGroup(radioBtn, groupName) {
@@ -72,6 +76,32 @@ class RadioButtonGroup {
 		this.updateSelectionInGroup(nextItemToSelect, groupName);
 	}
 
+	static updateTabOrder(groupName) {
+		if (!this.hasGroup(groupName)) {
+			return;
+		}
+
+		const group = this.getGroup(groupName);
+
+		if (group.some(radioBtn => radioBtn.selected)) {
+			group.forEach(radioBtn => {
+				if (radioBtn.selected) {
+					radioBtn._tabIndex = "0";
+				} else {
+					radioBtn._tabIndex = "-1";
+				}
+			});
+		} else {
+			group.filter(radioBtn => !radioBtn.disabled).forEach((radioBtn, idx) => {
+				if (idx === 0) {
+					radioBtn._tabIndex = "0";
+				} else {
+					radioBtn._tabIndex = "-1";
+				}
+			});
+		}
+	}
+
 	static selectPreviousItem(item, groupName) {
 		const group = this.getGroup(groupName),
 			groupLength = group.length,
@@ -88,6 +118,7 @@ class RadioButtonGroup {
 
 	static selectItem(item, groupName) {
 		this.updateSelectionInGroup(item, groupName);
+		this.updateTabOrder(groupName);
 	}
 
 	static updateSelectionInGroup(radioBtnToSelect, groupName) {
@@ -161,6 +192,8 @@ class RadioButtonGroup {
 		} else if (radioBtn === selectedRadio) {
 			this.selectedRadios.set(groupName, null);
 		}
+
+		this.updateTabOrder(groupName);
 	}
 
 	static get groups() {

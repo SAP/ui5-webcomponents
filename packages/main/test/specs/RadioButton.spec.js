@@ -56,7 +56,7 @@ describe("RadioButton general interaction", () => {
 	});
 
 	it("tests radio buttons selection within group with ARROW-RIGHT key", () => {
-		const field = browser.$("#field");
+		const field = browser.$("#tabField");
 		const radioButtonPreviouslySelected = browser.$("#groupRb1");
 		const radioButtonToBeSelected = browser.$("#groupRb3");
 
@@ -79,6 +79,9 @@ describe("RadioButton general interaction", () => {
 
 		assert.ok(!radioButtonPreviouslySelected.getProperty("selected"), "Previously selected item has been de-selected.");
 		assert.ok(radioButtonToBeSelected.getProperty("selected"), "Pressing ArrowLeft selects the next (not disabled) radio in the group.");
+	});
+
+	it("tests tabIndex within group", () => {
 	});
 
 	it("tests radio buttons selection within group by clicking", () => {
