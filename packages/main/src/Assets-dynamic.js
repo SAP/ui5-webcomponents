@@ -12,10 +12,10 @@ import { registerLoader } from "@ui5/webcomponents-base/dist/asset-registries/i1
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
 
-registerLoader("@ui5/webcomponents", async (localeId) => {
+registerLoader("@ui5/webcomponents", "bg", async (localeId) => {
     if (localeId === "bg") {
         const props = await (await fetch(bg)).text();
         const PropertiesFormatSupport = getFeature("PropertiesFormatSupport");
         return PropertiesFormatSupport.parser(props);
     }
-}, ["bg"]);
+});
