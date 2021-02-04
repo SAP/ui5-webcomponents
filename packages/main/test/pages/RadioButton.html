@@ -27,21 +27,29 @@
 	<ui5-title level="H1">Radios within a group</ui5-title><br>
 	<div class="radio-section">
 		<ui5-title>Group1 - None pre-selection</ui5-title>
-		<ui5-radiobutton text="Male" name="test"></ui5-radiobutton>
-		<ui5-radiobutton text="Female" name="test"></ui5-radiobutton>
+		<ui5-radiobutton id="testRbtn" text="N/A" disabled name="test"></ui5-radiobutton>
+		<ui5-radiobutton id="testRbtn1" text="Male" name="test"></ui5-radiobutton>
+		<ui5-radiobutton id="testRbtn2"text="Female" name="test"></ui5-radiobutton>
 	</div>
 
 	<section class="radio-section">
 		<ui5-title>Group 2</ui5-title>
-		<ui5-input id="tabField"></ui5-input>
-		<ui5-radiobutton id="groupRb1" name="a" selected text="Option A long long should shrink long long text text text text text text text text"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb2" name="a" disabled text="Option C"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRbReadOnly" name="a" readonly text="Option E"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb3" name="a" text="Option D"></ui5-radiobutton>
+		<ui5-radiobutton id="testRbtn11" name="test2" selected text="Selected A"></ui5-radiobutton>
+		<ui5-radiobutton id="testRbtn12" name="test2" disabled text="Disabled B"></ui5-radiobutton>
+		<ui5-radiobutton id="testRbtn13" name="test2" text="Standard C"></ui5-radiobutton>
 	</section>
 
 	<section class="radio-section">
 		<ui5-title>Group 3</ui5-title>
+		<ui5-input id="tabField"></ui5-input>
+		<ui5-radiobutton id="groupRb1" name="a" selected text="Option A long long should shrink long long text text text text text text text text"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb2" name="a" disabled text="Option C"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb3" name="a" text="Option D"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRbReadOnly" name="a" readonly text="Option E"></ui5-radiobutton>
+	</section>
+
+	<section class="radio-section">
+		<ui5-title>Group 4</ui5-title>
 		<ui5-radiobutton id="groupRb4" name="b" selected text="Option A long long should shrink long long text text text text text text text text"></ui5-radiobutton>
 		<ui5-radiobutton id="groupRb5" name="b" disabled text="Option C"></ui5-radiobutton>
 		<ui5-radiobutton id="groupRb6" name="b" text="Option D"></ui5-radiobutton>
