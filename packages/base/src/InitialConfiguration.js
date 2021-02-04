@@ -11,6 +11,7 @@ let initialConfig = {
 	language: null,
 	calendarType: null,
 	noConflict: false, // no URL
+	bubblingEvents: false,
 	formatSettings: {},
 	useDefaultLanguage: false,
 	assetsPath: "",
@@ -50,6 +51,11 @@ const getUseDefaultLanguage = () => {
 const getNoConflict = () => {
 	initConfiguration();
 	return initialConfig.noConflict;
+};
+
+const getBubblingEvents = () => {
+	initConfiguration();
+	return initialConfig.bubblingEvents;
 };
 
 const getCalendarType = () => {
@@ -144,6 +150,7 @@ export {
 	getLanguage,
 	getUseDefaultLanguage,
 	getNoConflict,
+	getBubblingEvents,
 	getCalendarType,
 	getFormatSettings,
 	getAssetsPath,

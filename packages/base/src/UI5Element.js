@@ -17,6 +17,7 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
+import { getBubblingEvents } from "./config/BubblingEvents.js";
 
 let autoId = 0;
 
@@ -698,7 +699,7 @@ class UI5Element extends HTMLElement {
 	_fireEvent(name, data, cancelable = false, bubbles = true) {
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
 			detail: data,
-			composed: false,
+			composed: getBubblingEvents(),
 			bubbles,
 			cancelable,
 		});
@@ -712,7 +713,7 @@ class UI5Element extends HTMLElement {
 
 		const normalEvent = new CustomEvent(name, {
 			detail: data,
-			composed: false,
+			composed: getBubblingEvents(),
 			bubbles,
 			cancelable,
 		});
