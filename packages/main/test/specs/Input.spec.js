@@ -247,7 +247,7 @@ describe("Input general interaction", () => {
 		suggestionsInput.keys("Enter");
 		browser.pause(300);
 
-		assert.ok(respPopover.getProperty("opened"), "Popover with valueStateMessage should be opened.");
+		assert.ok(respPopover.getProperty("opened"), "Popover should not be closed after trying to select a group header.");
 		assert.strictEqual(suggestionsInput.getValue(), "", "Group item is not selected");
 		assert.strictEqual(inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
