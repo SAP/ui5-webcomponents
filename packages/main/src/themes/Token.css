@@ -48,9 +48,8 @@
 	height: 100%;
 	width: 100%;
 	cursor: default;
-	padding-left: 0.3125rem;
-	padding-top: 0.25rem;
-	padding-bottom: 0.25rem;
+	padding: 0.25rem 0;
+	padding-inline-start: 0.3125rem;
 	box-sizing: border-box;
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
