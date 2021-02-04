@@ -30,7 +30,7 @@
 }
 
 .ui5-tab-strip-item--selected .ui5-tab-strip-item-icon-outer::after {
-    bottom: -12px;
+    bottom: -0.75rem;
 }
 
 .ui5-tab-strip-item--disabled {
