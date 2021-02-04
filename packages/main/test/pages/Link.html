@@ -43,6 +43,7 @@
 	</div>
 
 	<div class="group">
+		<h2>Link with no href or target</h2><ui5-input id="nohrefCounter" value="0"></ui5-input>
 		<ui5-link id="empty-link-1" class="samples-big-margin-right">Link with no href</ui5-link>
 		<ui5-link id="empty-link-2" class="samples-big-margin-right">Link with no target</ui5-link>
 	</div>
@@ -90,11 +91,17 @@
 		var link = document.querySelector("#link");
 		var linkClickPreventDefault = document.querySelector("#link-click-prevent-default");
 		var input = document.querySelector("#helper-input");
+		var emptyLink = document.querySelector("#empty-link-1");
+		var counter = 0;
 
 		[link, disLink].forEach(function(element) {
 			element.addEventListener("click", function(event) {
 				input.value = parseInt(input.value) + 1;
 			});
+		});
+
+		emptyLink.addEventListener("click", function(event) {
+			nohrefCounter.value = ++counter;
 		});
 
 		linkClickPreventDefault.addEventListener("click", function(event) {

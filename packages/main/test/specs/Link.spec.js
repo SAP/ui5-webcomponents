@@ -11,9 +11,13 @@ describe("General API", () => {
 
 	it("tests href attributes", () => {
 		const link = browser.$("#empty-link-1");
+		const input = browser.$("#nohrefCounter");
 		const HREF_ATTRIBUTE = "https://www.sap.com/index.html";
 
 		assert.notOk(link.getAttribute("href"), "Render without 'href' by default");
+
+		link.click();
+		assert.strictEqual(input.getValue(), "1", "Click is fired.");
 
 		link.setAttribute("href", HREF_ATTRIBUTE);
 		assert.strictEqual(link.getAttribute("href"), HREF_ATTRIBUTE, "The href attribute is changed.");
@@ -46,7 +50,6 @@ describe("General API", () => {
 		});
 
 		assert.strictEqual(input.getValue(), "0", "Click should not be fired and value of input should not be changed.");
-
 	});
 
 	it("disabled link should not be enabled", () => {
