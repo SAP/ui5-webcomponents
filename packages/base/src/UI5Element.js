@@ -780,10 +780,17 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * @private
+	 */
+	static _needsStaticArea() {
+		return !!this.staticAreaTemplate;
+	}
+
+	/**
 	 * @public
 	 */
 	getStaticAreaItemDomRef() {
-		if (!this.constructor.staticAreaTemplate) {
+		if (!this.constructor._needsStaticArea()) {
 			throw new Error("This component does not use the static area");
 		}
 
