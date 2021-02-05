@@ -30,7 +30,10 @@
 :host([value-state=Success]:not([readonly]):not([disabled]))::after,
 :host([value-state=Error]:not([readonly]):not([disabled]))::after,
 :host([value-state=None]:not([readonly]):not([disabled]))::after,
+
+:host([value-state=Success]:not([readonly]):not([disabled]))::after,
 :host([value-state=Error]:not([readonly]):not([disabled]))::after,
+:host([value-state=None]:not([readonly]):not([disabled]))::after,
 :host([value-state=Information]:not([readonly]):not([disabled]))::after,
 :host([value-state=Warning]:not([readonly]):not([disabled]))::after {
 	position: absolute;
@@ -81,6 +84,7 @@
 
 :host .ui5-step-input-input {
 	width: 100%;
+<<<<<<< HEAD
 	z-index: 2;
 }
 
@@ -178,6 +182,11 @@
 	outline: none;
 }
 
+
+:host .ui5-step-input-input[focused] {
+	outline: none;
+}
+
 :host([value-state]:not([value-state=None]):not([value-state=Success]):not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
 	top: 2px;
 	right: 1px;
@@ -204,6 +213,7 @@
 }
 
 /* Disable spin buttons in Chrome, Safari, Edge, Opera */
+<<<<<<< HEAD
 
 :host([value-state=Error]:not([readonly])) .ui5-step-input-input[focused]::after {
 	top: 0.125rem;

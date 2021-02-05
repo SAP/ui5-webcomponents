@@ -113,7 +113,6 @@ const metadata = {
 		/**
 		 * Defines whether the <code>ui5-step-input</code> is required.
 		 *
-		 * @since 1.0.0-rc.9
 		 * @type {Boolean}
 		 * @defaultvalue false
 		 * @public
@@ -205,7 +204,6 @@ const metadata = {
 		 * Defines the aria-label attribute for the <code>ui5-step-input</code>.
 		 *
 		 * @type {String}
-		 * @since 1.0.0-rc.9
 		 * @private
 		 * @defaultvalue ""
 		 */
@@ -219,7 +217,6 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
-		 * @since 1.0.0-rc.9
 		 */
 		ariaLabelledby: {
 			type: String,
@@ -283,7 +280,6 @@ const metadata = {
 			noAttribute: true,
 			defaultValue: false,
 		},
-		},
 
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
@@ -296,7 +292,6 @@ const metadata = {
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the <code>ui5-step-input</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement}
-		 * @since 1.0.0-rc.7
 		 * @slot
 		 * @public
 		 */
@@ -320,7 +315,6 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
-<<<<<<< HEAD
  * The <code>ui5-step-input</code> consists of an input field and buttons with icons to increase/decrease the value
  * with the predefined step.
  *
@@ -354,6 +348,27 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
+ * The default step is 1 but the app developer can set a different one.
+ *
+ * App developers can set a maximum and minimum value for the <code>StepInput</code>.
+ * The increase/decrease button and the up/down keyboard navigation become disabled when
+ * the value reaches the max/min or a new value is entered from the input which is greater/less than the max/min.
+ *
+ * <i>When to use</i>
+ * <ul>
+ * <li>To adjust amounts, quantities, or other values quickly.</li>
+ * <li>To adjust values for a specific step.</li>
+ * </ul>
+ *
+ * <i>When not to use</i>
+ * <ul>
+ * <li>To enter a static number (for example, postal code, phone number, or ID). In this case,
+ * use the regular <code>ui5-input</code> instead.</li>
+ * <li>To display a value that rarely needs to be adjusted and does not pertain to a particular step.
+ * In this case, use the regular <code>ui5-input</code> instead.</li>
+ * <li>To enter dates and times. In this case, use date/time related components instead.</li>
+ * </ul>
+ *
  * For the <code>ui5-step-input</code>
  * <h3>ES6 Module Import</h3>
  *
@@ -364,7 +379,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.StepInput
  * @extends UI5Element
  * @tagname ui5-step-input
-<<<<<<< HEAD
  * @since 1.0.0-rc.12
  * @public
  */
@@ -397,7 +411,6 @@ class StepInput extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
->>>>>>> 6820c3858 (StepInput Initial Demo)
 	static get styles() {
 		return StepInputCss;
 	}
@@ -424,10 +437,14 @@ class StepInput extends UI5Element {
 	// icons-related
 
 	static async onDefine() {
-		await Promise.resolve([
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
+
+	get type() {
+		return InputType.Number;
+	}
+
+	// icons-related
 
 	get decIconTitle() {
 		return this.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE);
