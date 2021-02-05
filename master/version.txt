@@ -1,7 +1,11 @@
-commit eff2e74b9573e004c4a47c7ce3a9597626254168
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Feb 4 18:31:51 2021 +0800
+commit 87520c26393ed3498f78d39f94091b0a487296d2
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Feb 5 10:02:24 2021 +0200
 
-    chore: translation delivery (#2776)
+    feat(ui5-table): add growing on scroll (#2593)
     
-    Change-Id: I39d73ab35ba1ef3974a36f1254f09282b57d7bdb
+    Adds growing capability to the Table upon user scroll (previously possible through "More" button - see the PR #2589). With this feature, the "load-more" event will be fired when the user scrolls to the table's end.
+    
+    FIXES: #2570
+    
+    BREAKING_CHANGES: "has-more" removed, use "growing" instead; "load-more-text" has been renamed to more-text; "load-more-subtext" has been renamed to "more-subtext"
