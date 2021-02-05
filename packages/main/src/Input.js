@@ -1176,7 +1176,11 @@ class Input extends UI5Element {
 		return isPhone();
 	}
 
-	get _getPlaceholder() {
+	/**
+	 * Returns the placeholder value.
+	 * @protected
+	 */
+	get _placeholder() {
 		return this.placeholder;
 	}
 

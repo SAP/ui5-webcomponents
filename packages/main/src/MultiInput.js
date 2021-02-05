@@ -278,7 +278,11 @@ class MultiInput extends Input {
 		return `${this._id}-hiddenText-nMore`;
 	}
 
-	get _getPlaceholder() {
+	/**
+	 * Returns the placeholder value when there are no tokens.
+	 * @protected
+	 */
+	get _placeholder() {
 		if (this.tokenizer && this.tokenizer._tokens.length) {
 			return "";
 		}
