@@ -876,7 +876,7 @@ const _getCurrentRange = (name, width = window.innerWidth) => {
 		}
 	}
 
-	return query.names[i];
+	return querySet.names[i];
 };
 
 const _setMedia = () => {
