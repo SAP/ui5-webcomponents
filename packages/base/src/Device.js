@@ -851,7 +851,7 @@ const _initRangeSet = (name, borders, names) => {
 /**
  * Returns information about the current active range of the range set with the given name.
  *
- * If the optional parameter <code>iWidth</code> is given, the active range will be determined for that width,
+ * If the optional parameter <code>width</code> is given, the active range will be determined for that width,
  * otherwise it is determined for the current window size.
  *
  * @param {string} name The name of the range set. The range set must be initialized beforehand ({@link Device.media.initRangeSet})

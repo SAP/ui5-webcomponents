@@ -136,19 +136,19 @@
 
 /*** Responsive paddings ***/
 
-:host([size="S"]) .ui5-tc__header {
+:host([media-range="S"]) .ui5-tc__header {
 	padding: 0;
 }
 
-:host([size="S"]) .ui5-tc__content {
+:host([media-range="S"]) .ui5-tc__content {
 	padding: 1rem;
 }
 
-:host([size="XL"]) .ui5-tc__header {
+:host([media-range="XL"]) .ui5-tc__header {
 	padding: 0 2rem;
 }
 
-:host([size="XL"]) .ui5-tc__content {
+:host([media-range="XL"]) .ui5-tc__content {
 	padding: 1rem 3rem;
 }
 

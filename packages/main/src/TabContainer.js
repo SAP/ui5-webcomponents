@@ -161,7 +161,7 @@ const metadata = {
 		 * @type {string}
 		 * @private
 		 */
-		size: {
+		mediaRange: {
 			type: String,
 		},
 
@@ -509,7 +509,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_updateMediaRange() {
-		this.size = getMedia().getCurrentRange(TC_RANGE_SET, this.getDomRef().offsetWidth);
+		this.mediaRange = getMedia().getCurrentRange(TC_RANGE_SET, this.getDomRef().offsetWidth);
 	}
 
 	_getHeader() {
