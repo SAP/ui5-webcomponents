@@ -939,7 +939,11 @@ class Input extends UI5Element {
 	 * @protected
 	 */
 	get nativeInput() {
-		return this.getDomRef().querySelector(`input`);
+		return this.getDomRef() && this.getDomRef().querySelector(`input`);
+	}
+
+	get nativeInputWidth() {
+		return this.nativeInput && this.nativeInput.offsetWidth;
 	}
 
 	getLabelableElementId() {
@@ -1113,6 +1117,9 @@ class Input extends UI5Element {
 			},
 			suggestionsPopover: {
 				"max-width": `${this._inputWidth}px`,
+			},
+			innerInput: {
+				padding: this.nativeInputWidth < 48 ? "0" : undefined,
 			},
 		};
 	}
