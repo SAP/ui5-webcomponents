@@ -86,15 +86,9 @@ class RadioButtonGroup {
 
 		group.filter(radioBtn => !radioBtn.disabled).forEach((radioBtn, idx) => {
 			if (hasSelectedRadio) {
-				if (radioBtn.selected) {
-					radioBtn._tabIndex = "0";
-				} else {
-					radioBtn._tabIndex = "-1";
-				}
-			} else if (idx === 0) {
-				radioBtn._tabIndex = "0";
+				radioBtn._tabIndex = radioBtn.selected ? "0" : "-1";
 			} else {
-				radioBtn._tabIndex = "-1";
+				radioBtn._tabIndex = idx === 0 ? "0" : "-1";
 			}
 		});
 	}
