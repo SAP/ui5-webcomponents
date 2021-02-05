@@ -519,6 +519,14 @@ class MultiComboBox extends UI5Element {
 		this.fireSelectionChange();
 	}
 
+	get _getPlaceholder() {
+		if (this._tokenizer && this._tokenizer.tokens.length) {
+			return "";
+		}
+
+		return this.placeholder;
+	}
+
 	_handleLeft() {
 		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
 
