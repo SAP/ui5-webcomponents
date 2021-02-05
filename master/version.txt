@@ -1,11 +1,7 @@
-commit 87520c26393ed3498f78d39f94091b0a487296d2
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 5 10:02:24 2021 +0200
+commit d769a0d0446b62719da8b9c13452a02c644c0851
+Author: Martotko <16964129+Martotko@users.noreply.github.com>
+Date:   Fri Feb 5 11:41:55 2021 +0200
 
-    feat(ui5-table): add growing on scroll (#2593)
+    fix(ui5-multicombobox): Placeholder with tokens hidden (#2785)
     
-    Adds growing capability to the Table upon user scroll (previously possible through "More" button - see the PR #2589). With this feature, the "load-more" event will be fired when the user scrolls to the table's end.
-    
-    FIXES: #2570
-    
-    BREAKING_CHANGES: "has-more" removed, use "growing" instead; "load-more-text" has been renamed to more-text; "load-more-subtext" has been renamed to "more-subtext"
+    Fixes: #2261
