@@ -114,6 +114,7 @@ class ItemNavigation extends EventProvider {
 
 		event.preventDefault();
 		this.update();
+		this.focusCurrent();
 	}
 
 	_handleUp() {
@@ -218,8 +219,6 @@ class ItemNavigation extends EventProvider {
 				this.rootWebComponent[propName] = Array.isArray(prop) ? [...prop] : { ...prop };
 			});
 		}
-
-		this.focusCurrent();
 	}
 
 	/**
