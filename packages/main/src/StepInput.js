@@ -105,7 +105,6 @@ const metadata = {
 		/**
 		 * Defines whether the <code>ui5-step-input</code> is required.
 		 *
-		 * @since 1.0.0-rc.9
 		 * @type {Boolean}
 		 * @defaultvalue false
 		 * @public
@@ -174,18 +173,6 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the text alignment of the <code>ui5-step-input</code>.
-		 *
-		 * @type {string}
-		 * @defaultvalue "left"
-		 * @public
-		 */
-		textAlign: {
-			type: String,
-			defaultValue: "left",
-		},
-
-		/**
 		 * Determines the number of digits after the decimal point of the <code>ui5-step-input</code>.
 		 *
 		 * @type {Integer}
@@ -201,7 +188,6 @@ const metadata = {
 		 * Defines the aria-label attribute for the <code>ui5-step-input</code>.
 		 *
 		 * @type {String}
-		 * @since 1.0.0-rc.9
 		 * @private
 		 * @defaultvalue ""
 		 */
@@ -215,7 +201,6 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
-		 * @since 1.0.0-rc.9
 		 */
 		ariaLabelledby: {
 			type: String,
@@ -247,6 +232,38 @@ const metadata = {
 			noAttribute: true,
 		},
 
+		_previousValueState: {
+			type: String,
+			noAttribute: true,
+			defaultValue: "",
+		},
+
+		_waitTimeout: {
+			type: Float,
+			noAttribute: true,
+		},
+
+		_speed: {
+			type: Float,
+			noAttribute: true,
+		},
+
+		_btnDown: {
+			type: Boolean,
+			noAttribute: true,
+			defaultValue: false,
+		},
+
+		_spinTimeoutId: {
+			type: Integer,
+			noAttribute: true,
+		},
+
+		_spinStarted: {
+			type: Boolean,
+			noAttribute: true,
+			defaultValue: false,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
 		/**
@@ -258,7 +275,6 @@ const metadata = {
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the <code>ui5-step-input</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement}
-		 * @since 1.0.0-rc.7
 		 * @slot
 		 * @public
 		 */
@@ -282,8 +298,35 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The <code>ui5-step-input</code> consists of an input field and buttons with icons to increase/decrease the value
+ * with the predefined step.
+ *
+ * The user can change the value of the component by pressing the increase/decrease buttons,
+ * by typing a number directly, by using the keyboard up/down and page up/down,
+ * or by using the mouse scroll wheel. Decimal values are supported.
  *
  * <h3>Usage</h3>
+ *
+ * The default step is 1 but the app developer can set a different one.
+ *
+ * App developers can set a maximum and minimum value for the <code>StepInput</code>.
+ * The increase/decrease button and the up/down keyboard navigation become disabled when
+ * the value reaches the max/min or a new value is entered from the input which is greater/less than the max/min.
+ *
+ * <i>When to use</i>
+ * <ul>
+ * <li>To adjust amounts, quantities, or other values quickly.</li>
+ * <li>To adjust values for a specific step.</li>
+ * </ul>
+ *
+ * <i>When not to use</i>
+ * <ul>
+ * <li>To enter a static number (for example, postal code, phone number, or ID). In this case,
+ * use the regular <code>ui5-input</code> instead.</li>
+ * <li>To display a value that rarely needs to be adjusted and does not pertain to a particular step.
+ * In this case, use the regular <code>ui5-input</code> instead.</li>
+ * <li>To enter dates and times. In this case, use date/time related components instead.</li>
+ * </ul>
  *
  * For the <code>ui5-step-input</code>
  * <h3>ES6 Module Import</h3>
@@ -295,6 +338,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.StepInput
  * @extends UI5Element
  * @tagname ui5-step-input
+ * @since 1.0.0-rc.12
  * @public
  */
 class StepInput extends UI5Element {
@@ -302,6 +346,12 @@ class StepInput extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
+		// spin variables
+		this.INITIAL_WAIT_TIMEOUT = 500; // milliseconds
+		this.ACCELERATION = 0.8;
+		this.MIN_WAIT_TIMEOUT = 50; // milliseconds
+		this.INITIAL_SPEED = 120; // milliseconds
 	}
 
 	static get metadata() {
@@ -321,14 +371,21 @@ class StepInput extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [];
+		return [
+			Icon,
+			Input,
+		];
 	}
 
 	static async onDefine() {
-		await Promise.resolve([
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
+
+	get type() {
+		return InputType.Number;
+	}
+
+	// icons-related
 
 	get decIconTitle() {
 		return this.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE);
@@ -346,19 +403,11 @@ class StepInput extends UI5Element {
 		return "add";
 	}
 
-	get type() {
-		return InputType.Number;
-	}
-
-	get _placeholder() {
-		return this.placeholder + " ";
-	}
-
-	get _decIconInteractive() {
+	get _decIconClickable() {
 		return !this._decIconDisabled && !this.readonly && !this.disabled;
 	}
 
-	get _incIconInteractive() {
+	get _incIconClickable() {
 		return !this._incIconDisabled && !this.readonly && !this.disabled;
 	}
 
@@ -366,15 +415,11 @@ class StepInput extends UI5Element {
 		return this._focused;
 	}
 
-	get _disableFocus() {
-		return false;
-	}
-
 	get _valuePrecisioned() {
 		return this.value.toFixed(this.valuePrecision);
 	}
 
-	get accInfo() {
+	get inputAttributes() {
 		return {
 			min: isNaN(this.min) ? undefined : this.min,
 			max: isNaN(this.max) ? undefined : this.max,
@@ -382,10 +427,22 @@ class StepInput extends UI5Element {
 		};
 	}
 
+	onBeforeRendering() {
+		this._buttonsState();
+	}
+
+	get input() {
+		return this.shadowRoot.querySelector("[ui5-input]");
+	}
+
+	get inputOuter() {
+		return this.shadowRoot.querySelector(".ui5-step-input-input");
+	}
+
 	_onButtonFocusOut() {
 		setTimeout(function() {
 			if (!this._inputFocused) {
-				this._getInputOuter().removeAttribute("focused");
+				this.inputOuter.removeAttribute("focused");
 			}
 		}.bind(this), 0);
 	}
@@ -399,23 +456,18 @@ class StepInput extends UI5Element {
 		this._onInputChange();
 	}
 
-	_getInput() {
-		return this.shadowRoot.querySelector("[ui5-input]");
-	}
-
-	_getInputOuter() {
-		return this.shadowRoot.querySelector(".ui5-step-input-input");
-	}
-
 	_buttonsState() {
 		this._decIconDisabled = !isNaN(this.min) && this.value <= this.min ? true : false;
 		this._incIconDisabled = !isNaN(this.max) && this.value >= this.max ? true : false;
 	}
 
 	_validate() {
+		if (this._previousValueState === "") {
+			this._previousValueState = this.valueState !== "" ? this.valueState : ValueState.None;
+		}
 		this.valueState = (	(!isNaN(this.min) && this.value < this.min) ||
 							(!isNaN(this.max) && this.value > this.max)) ?
-							ValueState.Error : ValueState.None;
+							ValueState.Error : this._previousValueState;
 	}
 
 	_preciseValue(value) {
@@ -424,14 +476,20 @@ class StepInput extends UI5Element {
 	}
 
 	_fireChangeEvent() {
-		console.warn('Fire "change" event with value: ' + this.value);
 		this._previousValue = this.value;
 		this.fireEvent('change', { value: this.value });
 	}
 
+	/**
+	 * Value modifier - modifies the value of the component, validates the new value and enables/disables increment and
+	 * decrement buttons according to the value and min/max values (if set). Fires <code>change</code> event when requested
+	 *
+	 * @param {Float} modifier modifies the value of the component with the given modifier (positive or negative)
+	 * @param {Boolean} fireChangeEvent if <code>true</code>, fires <code>change</code> event when the value is changed
+	 */
 	_modifyValue(modifier, fireChangeEvent) {
 		let value;
-		this.value = this._preciseValue(parseFloat(this._getInput().value));
+		this.value = this._preciseValue(parseFloat(this.input.value));
 		value = this.value + modifier;
 		if (!isNaN(this.min) && value < this.min) {
 			value = this.min;
@@ -445,36 +503,32 @@ class StepInput extends UI5Element {
 			this._validate();
 			this._buttonsState();
 			this._focused = true;
-			this._getInputOuter().setAttribute("focused", "");
+			this.inputOuter.setAttribute("focused", "");
 			if (fireChangeEvent) {
 				this._fireChangeEvent();
 			} else {
-				this._getInput().focus();
+				this.input.focus();
 			}
 		}
 	}
 
 	_incValue(event) {
-		if (this._incIconInteractive && event.isTrusted && !this.disabled && !this.readonly) {
+		if (this._incIconClickable && event.isTrusted && !this.disabled && !this.readonly) {
 			this._modifyValue(this.step, true);
 			this._previousValue = this.value;
 		}
 	}
 
 	_decValue(event) {
-		if (this._decIconInteractive && event.isTrusted && !this.disabled && !this.readonly) {
+		if (this._decIconClickable && event.isTrusted && !this.disabled && !this.readonly) {
 			this._modifyValue(-this.step, true);
 			this._previousValue = this.value;
 		}
 	}
 
-	/**
-	 * The ui5-input "change" event handler - fire change event when the user focuses out of the input
-	 * @protected
-	 */
 	_onInputChange(event) {
-		let inputValue = this._preciseValue(parseFloat(this._getInput().value));
-		if (this.value !== this._previousValue || this.value !== inputValue) {
+		let inputValue = this._preciseValue(parseFloat(this.input.value));
+		if ((!isNaN(this._previousValue) && this.value !== this._previousValue) || this.value !== inputValue) {
 			this.value = inputValue;
 			this._validate();
 			this._buttonsState();
@@ -484,12 +538,10 @@ class StepInput extends UI5Element {
 
 	_onfocusin() {
 		this._focused = true;
-		this._validate();
 	}
 
 	_onfocusout() {
 		this._focused = false;
-		this._validate();
 	}
 
 	_onkeydown(event) {
@@ -507,7 +559,7 @@ class StepInput extends UI5Element {
 		} else if (isEscape(event)) {
 			// return previous value
 			this.value = this._previousValue;
-			this._getInput().value = this.value.toFixed(this.valuePrecision);
+			this.input.value = this.value.toFixed(this.valuePrecision);
 		} else if (!isNaN(this.max) && (isPageUpShift(event) || isUpShiftCtrl(event))) {
 			// step to max
 			this._modifyValue(this.max - this.value);
@@ -522,15 +574,70 @@ class StepInput extends UI5Element {
 		}
 	}
 
-	onBeforeRendering() {
-		this._buttonsState();
+	_decSpin() {
+		if (!this._decIconDisabled) {
+			this._spinValue(false, true);
+		}
 	}
 
-	static get dependencies() {
-		return [
-			Icon,
-			Input,
-		];
+	_incSpin() {
+		if (!this._incIconDisabled) {
+			this._spinValue(true, true);
+		}
+	}
+
+	/**
+	 * Calculates the time which should be waited until _spinValue function is called.
+	 */
+	_calcWaitTimeout() {
+		this._speed *= this.ACCELERATION;
+		this._waitTimeout = ((this._waitTimeout - this._speed) < this.MIN_WAIT_TIMEOUT ? this.MIN_WAIT_TIMEOUT : (this._waitTimeout - this._speed));
+		return this._waitTimeout;
+	}
+
+	/**
+	 * Called when the increment or decrement button is pressed and held to set new value.
+	 * @param {boolean} increment - is this the increment button or not so the values should be spin accordingly up or down
+	 * @param {boolean} resetVariables - whether to reset the spin-related variables or not
+	 */
+	_spinValue(increment, resetVariables) {
+		if (resetVariables) {
+			this._waitTimeout = this.INITIAL_WAIT_TIMEOUT;
+			this._speed = this.INITIAL_SPEED;
+			this._btnDown = true;
+		}
+		this._spinTimeoutId = setTimeout(function () {
+			if (this._btnDown) {
+				this._spinStarted = true;
+				this._modifyValue(increment ? this.step : -this.step);
+				this._buttonsState();
+				if ((!this._incIconDisabled && increment) || (!this._decIconDisabled && !increment)) {
+					this._spinValue(increment);
+				} else {
+					this._resetSpin();
+					this._fireChangeEvent();
+				}
+			}
+		}.bind(this), this._calcWaitTimeout());
+	}
+
+	/**
+	* Resets spin process
+	*/
+	_resetSpin() {
+		clearTimeout(this._spinTimeoutId);
+		this._btnDown = false;
+		this._spinStarted = false;
+	}
+
+	/**
+	* Resets spin process when mouse outs + or - buttons
+	*/
+	_resetSpinOut() {
+		if (this._btnDown) {
+			this._resetSpin();
+			this._fireChangeEvent();
+		}
 	}
 
 }

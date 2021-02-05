@@ -32,36 +32,139 @@
 		.sapUiTheme-sap_fiori3 body {
 			background: #f7f7f7;
 		}
+
+		h3 {
+			-webkit-touch-callout: none; /* iOS Safari */
+			-webkit-user-select: none; /* Safari */
+			-khtml-user-select: none; /* Konqueror HTML */
+			-moz-user-select: none; /* Old versions of Firefox */
+			-ms-user-select: none; /* Internet Explorer/Edge */
+			user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+		}
 	</style>
 </head>
 <body style="background-color: var(--sapBackgroundColor);">
-	<div style='width:250px;margin-top: 30px'>
 
-		<ui5-step-input id="ui5-step-input-1"
+	<h3> StepInput</h3>
+	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
+
+	<div>
+		<h3>StepInput in Cozy</h3>
+		<ui5-step-input id="step-input-cozy"
 			placeholder="Enter number"
-			text-align="right"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div class="sapUiSizeCompact">
+		<h3>StepInput in Compact</h3>
+		<ui5-step-input id="step-input-compact"
+			placeholder="Enter number"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput in with min=0, max=10 and step=1</h3>
+		<ui5-step-input id="step-input-minmax"
+			placeholder="Enter number"
 			min="0"
 			max="10"
 			step="1"
-			value-precision="0"
-			title="Number">
-		</ui5-step-input>
-
+			style="text-align: right; width: 250px"
+		/>
 	</div>
 
-	<div style='width:250px;margin-top: 30px'>
-
-		<ui5-step-input id="ui5-step-input-1"
+	<div>
+		<h3>StepInput in with min=0, max=10, step=0.05 and valuePrecision=2</h3>
+		<ui5-step-input id="step-input-precision"
 			placeholder="Enter number"
-			text-align="right"
 			min="0"
 			max="10"
 			step="0.05"
-			value="5"
 			value-precision="2"
-			title="Number">
-		</ui5-step-input>
-
+			style="text-align: center; width: 250px"
+		/>
 	</div>
+
+	<div>
+		<h3>Disabled StepInput</h3>
+		<ui5-step-input id="step-input-disabled"
+			placeholder="Enter number"
+			style="text-align: right; width: 250px"
+			disabled
+		/>
+	</div>
+
+	<div>
+		<h3>Readonly StepInput</h3>
+		<ui5-step-input id="step-input-readonly"
+			placeholder="Enter number"
+			style="text-align: right; width: 250px"
+			readonly
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput with valueState=None</h3>
+		<ui5-step-input id="step-input-none"
+			placeholder="Enter number"
+			value-state="None"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput with valueState=Success</h3>
+		<ui5-step-input id="step-input-success"
+			placeholder="Enter number"
+			value-state="Success"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput with valueState=Information</h3>
+		<ui5-step-input id="step-input-information"
+			placeholder="Enter number"
+			value-state="Information"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput with valueState=Warning</h3>
+		<ui5-step-input id="step-input-warning"
+			placeholder="Enter number"
+			value-state="Warning"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput with valueState=Error</h3>
+		<ui5-step-input id="step-input-error"
+			placeholder="Enter number"
+			value-state="Error"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<script>
+		var labelChange = document.getElementById('myLabelChange');
+		var siCozy = document.getElementById('step-input-cozy');
+		var siCompact = document.getElementById('step-input-compact');
+		var siMinMax = document.getElementById('step-input-minmax');
+		var siPrecision = document.getElementById('step-input-precision');
+		var displayChange = function (event) {
+			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.detail.value;
+		}
+
+		siCozy.addEventListener('ui5-change', displayChange);
+		siCompact.addEventListener('ui5-change', displayChange);
+		siMinMax.addEventListener('ui5-change', displayChange);
+		siPrecision.addEventListener('ui5-change', displayChange);
+	</script>
+
 </body>
 </html>
