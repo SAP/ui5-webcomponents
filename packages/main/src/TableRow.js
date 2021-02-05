@@ -36,6 +36,9 @@ const metadata = {
 			type: String,
 			defaultValue: "-1",
 		},
+		_busy: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		"row-click": {},
