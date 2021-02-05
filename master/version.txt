@@ -1,7 +1,5 @@
-commit d769a0d0446b62719da8b9c13452a02c644c0851
-Author: Martotko <16964129+Martotko@users.noreply.github.com>
-Date:   Fri Feb 5 11:41:55 2021 +0200
+commit ae6c7ad895dafa443adbd1551cb3f1e9ce0336f2
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Feb 5 15:20:24 2021 +0200
 
-    fix(ui5-multicombobox): Placeholder with tokens hidden (#2785)
-    
-    Fixes: #2261
+    refactor(ui5-multi-input): Fix DOM structure (#2790)
