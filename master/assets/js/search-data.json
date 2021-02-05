@@ -751,7 +751,7 @@
   "108": {
     "id": "108",
     "title": "Radio Button",
-    "content": "&lt;!DOCTYPE html&gt; ui5-radiobutton ui5-radiobutton &gt; ui5-radiobutton in group ui5-radiobutton in group Group of states &lt;ui5-radiobutton id=&quot;groupRb9&quot;text=&quot;Error&quot; value-state=&quot;Error&quot; selected name=&quot;GroupB&quot;&gt;&lt;/ui5-radiobutton&gt; ui5-radiobutton states&lt;/p&gt; *Params - for compact add &#39;ui5-content-density-compact&#39; class to any dom element - for belize use &#39;sap-ui-theme=sap_belize&#39;",
+    "content": "&lt;!DOCTYPE html&gt; ui5-radiobutton Radios within a group Group1 - None pre-selection &lt;ui5-radiobutton id=&quot;testRbtn2&quot;text=&quot;Female&quot; name=&quot;test&quot;&gt;&lt;/ui5-radiobutton&gt; Group 2 Group 3 Group 4 Group 4 - Value states N/A 0 &lt;ui5-radiobutton id=&quot;groupRb9&quot;text=&quot;Error&quot; value-state=&quot;Error&quot; selected name=&quot;GroupB&quot;&gt;&lt;/ui5-radiobutton&gt; Standalone Radios Not Grouped &gt; *Params - for compact add &#39;ui5-content-density-compact&#39; class to any dom element - for belize use &#39;sap-ui-theme=sap_belize&#39;",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/RadioButton/",
     "relUrl": "/playground/main/pages/RadioButton/"
   },

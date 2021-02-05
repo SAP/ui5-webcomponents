@@ -1,5 +1,11 @@
-commit ae6c7ad895dafa443adbd1551cb3f1e9ce0336f2
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Feb 5 15:20:24 2021 +0200
+commit d6a7b81ac9ea48355c7a8036f676deba0eb59e10
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Feb 5 15:34:27 2021 +0200
 
-    refactor(ui5-multi-input): Fix DOM structure (#2790)
+    fix(ui5-radiobutton): fix tab order within group (#2783)
+    
+    We used to set tabindex="0" to the selected item and tabindex="-1" to the rest, which works fine in all cases, besides the one reported in the issue - when the application wants to define a group without preselected item. In this case, all the radio buttons in the group have tabindex="-1" and as a result the group is not accessible via the keyboard.
+    Now, we calculate the tabindex for each item on every important action, such as: selection of item within the group, creating a new group, adding an item to the group or removal an item from the group. The logic considers the use-case from the issue as well - If the group does not have a selected item, the first (not disabled) item would have tabindex="0".
+    In openui5, this is handled by the sap.m.RadioButtonGroup control, here it is implemented within the RadioButtonGroup util class.
+    
+    FIXES: #2774
