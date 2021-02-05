@@ -856,7 +856,7 @@ const _initRangeSet = (name, borders, names) => {
  *
  * @param {string} name The name of the range set. The range set must be initialized beforehand ({@link Device.media.initRangeSet})
  * @param {int} [width] An optional width, based on which the range should be determined;
- *             If <code>iwWidth</code> is not a number, the window size will be used.
+ *             If <code>width</code> is not a number, the window size will be used.
  * @returns {string} The name of the current active interval of the range set.
  *
  * @name Device.media.getCurrentRange
