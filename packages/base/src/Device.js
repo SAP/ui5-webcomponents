@@ -805,7 +805,7 @@ const isMobile = () => {
 	return Device.browser.mobile;
 };
 
-//******** Match Media ********
+//* ******* Match Media ********
 
 /**
  * API for screen width changes.
@@ -843,9 +843,9 @@ const isMobile = () => {
  */
 const _initRangeSet = (name, borders, names) => {
 	Device.media._querySets[name] = {
-		borders: borders,
-		names: names
-	}
+		borders,
+		names,
+	};
 };
 
 /**
@@ -864,13 +864,14 @@ const _initRangeSet = (name, borders, names) => {
  * @public
  */
 const _getCurrentRange = (name, width = window.innerWidth) => {
-	let querySet = Device.media._querySets[name];
+	const querySet = Device.media._querySets[name];
+	let i = 0;
 
 	if (!querySet) {
 		return null;
 	}
 
-	for (var i = 0; i < querySet.borders.length; i++) {
+	for (i; i < querySet.borders.length; i++) {
 		if (width < querySet.borders[i]) {
 			return querySet.names[i];
 		}
@@ -883,7 +884,7 @@ const _setMedia = () => {
 	Device.media = {
 		_querySets: {},
 		initRangeSet: _initRangeSet,
-		getCurrentRange: _getCurrentRange
+		getCurrentRange: _getCurrentRange,
 	};
 };
 
