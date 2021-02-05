@@ -27,6 +27,20 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(resultIdx.getText(), SELECTED_TAB_INDEX, "Tab index is retrieved correctly.");
 	});
 
+	it("tests custom media ranges", () => {
+		browser.setWindowSize(520, 1080);
+		assert.strictEqual($("#tabContainerIconOnly").getAttribute("media-range"), "S", "media-range=S");
+
+		browser.setWindowSize(650, 1080);
+		assert.strictEqual($("#tabContainerIconOnly").getAttribute("media-range"), "M", "media-range=M");
+
+		browser.setWindowSize(1350, 1080);
+		assert.strictEqual($("#tabContainerIconOnly").getAttribute("media-range"), "L", "media-range=L");
+
+		browser.setWindowSize(1650, 1080);
+		assert.strictEqual($("#tabContainerIconOnly").getAttribute("media-range"), "XL", "media-range=XL");
+	});
+
 	it("scroll works on iconsOnly TabContainer", () => {
 		browser.setWindowSize(520, 1080);
 
