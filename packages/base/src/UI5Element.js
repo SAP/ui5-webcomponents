@@ -17,6 +17,7 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
+import isLegacyBrowser from "./isLegacyBrowser.js";
 
 let autoId = 0;
 
@@ -623,8 +624,17 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
+		this._assertShadowRootStructure();
+
 		return this.shadowRoot.children.length === 1
 			? this.shadowRoot.children[0] : this.shadowRoot.children[1];
+	}
+
+	_assertShadowRootStructure() {
+		const expectedChildrenCount = document.adoptedStyleSheets || isLegacyBrowser() ? 1 : 2;
+		if (this.shadowRoot.children.length !== expectedChildrenCount) {
+			console.warn(`The shadow DOM for ${this.constructor.getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`); // eslint-disable-line
+		}
 	}
 
 	/**
@@ -770,10 +780,17 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * @private
+	 */
+	static _needsStaticArea() {
+		return !!this.staticAreaTemplate;
+	}
+
+	/**
 	 * @public
 	 */
 	getStaticAreaItemDomRef() {
-		if (!this.constructor.staticAreaTemplate) {
+		if (!this.constructor._needsStaticArea()) {
 			throw new Error("This component does not use the static area");
 		}
 
