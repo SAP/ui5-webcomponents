@@ -1,6 +1,7 @@
 {{>include "./Input.hbs"}}
-	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
+
 {{#*inline "preContent"}}
+	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
 	<ui5-tokenizer
 		class="ui5-multi-input-tokenizer"
 		.morePopoverOpener={{this}}
