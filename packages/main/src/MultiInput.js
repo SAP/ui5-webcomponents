@@ -278,6 +278,14 @@ class MultiInput extends Input {
 		return `${this._id}-hiddenText-nMore`;
 	}
 
+	get _getPlaceholder() {
+		if (this.tokenizer && this.tokenizer._tokens.length) {
+			return "";
+		}
+
+		return this.placeholder;
+	}
+
 	get accInfo() {
 		const ariaDescribedBy = `${this._tokensCountTextId} ${this.suggestionsTextId} ${this.valueStateTextId} ${this.suggestionsCount}`.trim();
 		return {

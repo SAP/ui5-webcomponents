@@ -1176,6 +1176,10 @@ class Input extends UI5Element {
 		return isPhone();
 	}
 
+	get _getPlaceholder() {
+		return this.placeholder;
+	}
+
 	/**
 	 * Returns the caret position inside the native input
 	 * @protected
