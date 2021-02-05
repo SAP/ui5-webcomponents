@@ -89,6 +89,7 @@
 [inner-input]::-webkit-input-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 2px;
 }
 
 :host([disabled]) [inner-input]::-moz-placeholder {
@@ -100,6 +101,7 @@
 [inner-input]::-moz-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 2px;
 }
 
 :host([disabled]) [inner-input]:-ms-input-placeholder {
@@ -111,6 +113,7 @@
 [inner-input]:-ms-input-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 2px;
 }
 
 .ui5-input-content {

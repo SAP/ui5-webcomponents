@@ -332,6 +332,14 @@ const metadata = {
 			type: Object,
 		},
 
+		_wrapperAccInfo: {
+			type: Object,
+		},
+
+		_inputInnerAttributes: {
+			type: Object,
+		},
+
 		_inputWidth: {
 			type: Integer,
 		},
@@ -1068,9 +1076,16 @@ class Input extends UI5Element {
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
 				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this),
-				"min": this._inputAccInfo.min,
-				"max": this._inputAccInfo.max,
-				"step": this.type === InputType.Number ? (this._inputAccInfo.step || "any") : undefined,
+			},
+		};
+	}
+
+	get inputAttributes() {
+		return {
+			"input": {
+				"min": this.type === InputType.Number ? this._inputInnerAttributes.min : undefined,
+				"max": this.type === InputType.Number ? this._inputInnerAttributes.max : undefined,
+				"step": this.type === InputType.Number ? (this._inputInnerAttributes.step || "any") : undefined,
 			},
 		};
 	}
