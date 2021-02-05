@@ -2,9 +2,11 @@ import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/confi
 // setAssetsPath("/my-resources/");
 
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming";
+/*
 attachThemeLoaded(theme => {
 	console.log("Theme load complete: ", theme);
 });
+*/
 
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
