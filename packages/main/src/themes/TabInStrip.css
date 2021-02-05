@@ -29,7 +29,8 @@
     border-bottom: var(--_ui5_tc_headerItemContent_border_bottom);
 }
 
-.ui5-tab-strip-item--selected.ui5-tab-strip-item--textOnly .ui5-tab-strip-itemContent::after {
+.ui5-tab-strip-item--selected.ui5-tab-strip-item--textOnly .ui5-tab-strip-itemContent::after,
+.ui5-tab-strip-item--selected.ui5-tab-strip-item--mixedMode .ui5-tab-strip-itemContent::after {
     left: 1rem;
     right: 1rem;
 }
