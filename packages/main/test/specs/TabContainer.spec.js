@@ -30,8 +30,8 @@ describe("TabContainer general interaction", () => {
 	it("scroll works on iconsOnly TabContainer", () => {
 		browser.setWindowSize(520, 1080);
 
-		const arrowLeft = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowLeft");
-		const arrowRight = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowRight");
+		const arrowLeft = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowLeft ui5-button");
+		const arrowRight = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowRight ui5-button");
 
 		assert.ok(!arrowLeft.isDisplayed(), "'Left Arrow' should be initially hidden");
 		assert.ok(arrowRight.isDisplayed(), "'Right Arrow' should be initially shown");
@@ -51,11 +51,11 @@ describe("TabContainer general interaction", () => {
 	it("scroll works on textOnly TabContainer", () => {
 		browser.setWindowSize(520, 1080);
 
-		let arrowLeft = browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowLeft");
-		let arrowRight = browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowRight");
+		let arrowLeft = browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowLeft  ui5-button");
+		let arrowRight = browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowRight  ui5-button");
 
-		assert.ok(!arrowLeft.shadow$("svg").isDisplayed(), "'Left Arrow' should be initially hidden");
-		assert.ok(arrowRight.shadow$("svg").isDisplayed(), "'Right Arrow' should be initially shown");
+		assert.ok(!arrowLeft.isDisplayed(), "'Left Arrow' should be initially hidden");
+		assert.ok(arrowRight.isDisplayed(), "'Right Arrow' should be initially shown");
 
 		arrowRight.click();
 		browser.pause(1000); // TODO: wait for animation finish. Remove when solved on framework level
