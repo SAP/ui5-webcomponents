@@ -8,6 +8,7 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getMedia } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -28,6 +29,8 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import TabLayout from "./types/TabLayout.js";
+
+const TC_RANGE_SET = "TCRangeSet";
 
 const SCROLL_STEP = 128;
 
@@ -150,6 +153,16 @@ const metadata = {
 		tabLayout: {
 			type: String,
 			defaultValue: TabLayout.Standard,
+		},
+
+		/**
+		 * Defines the current media query size.
+		 *
+		 * @type {string}
+		 * @private
+		 */
+		size: {
+			type: String,
 		},
 
 		_selectedTab: {
@@ -275,7 +288,9 @@ class TabContainer extends UI5Element {
 	constructor() {
 		super();
 
-		this._handleHeaderResize = this._handleHeaderResize.bind(this);
+		getMedia().initRangeSet(TC_RANGE_SET, [600, 1024, 1440], ["S", "M", "L", "XL"]);
+
+		this._handleResize = this._handleResize.bind(this);
 
 		// Init ScrollEnablement
 		this._scrollEnablement = new ScrollEnablement(this);
@@ -313,11 +328,11 @@ class TabContainer extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this._getHeader(), this._handleHeaderResize);
+		ResizeHandler.register(this._getHeader(), this._handleResize);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this._getHeader(), this._handleHeaderResize);
+		ResizeHandler.deregister(this._getHeader(), this._handleResize);
 	}
 
 	_onHeaderClick(event) {
@@ -471,8 +486,9 @@ class TabContainer extends UI5Element {
 			.then(_ => this._updateScrolling());
 	}
 
-	_handleHeaderResize() {
+	_handleResize() {
 		this._updateScrolling();
+		this._updateMediaRange();
 	}
 
 	async _closeRespPopover() {
@@ -490,6 +506,10 @@ class TabContainer extends UI5Element {
 		if (!this._scrollable) {
 			this._closeRespPopover();
 		}
+	}
+
+	_updateMediaRange() {
+		this.size = getMedia().getCurrentRange(TC_RANGE_SET, this.getDomRef().offsetWidth);
 	}
 
 	_getHeader() {
