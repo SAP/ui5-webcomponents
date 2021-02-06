@@ -1195,6 +1195,14 @@ class Input extends UI5Element {
 	}
 
 	/**
+	 * Returns the placeholder value.
+	 * @protected
+	 */
+	get _placeholder() {
+		return this.placeholder;
+	}
+
+	/**
 	 * Returns the caret position inside the native input
 	 * @protected
 	 */
