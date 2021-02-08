@@ -43,6 +43,10 @@
 			text-shadow: 0 0 0.125rem #ffffff;
 			font-family: "72", Arial, Helvetica, sans-serif;
 		}
+
+		#tabContainerNoContentPadding::part(content) {
+			padding: 3rem;
+		}
 	</style>
 </head>
 
@@ -363,50 +367,50 @@
 	</section>
 
 
-    <section>
-        <h2>tabs-placement=Bottom</h2>
-        <ui5-tabcontainer show-overflow tabs-placement="Bottom">
-            <ui5-tab icon="sap-icon://card" selected>
-                <ui5-button>Button 11</ui5-button>
-                <ui5-button>Button 12</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://employee">
-                <ui5-button>Button 3</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://employee">
-                <ui5-button>Button 3</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://menu2">
-                <ui5-button>Button 2</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://menu2">
-                <ui5-button>Button 2</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://employee">
-                <ui5-button>Button 3</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://employee">
-                <ui5-button>Button 3</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://employee">
-                <ui5-button>Button 3</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://employee">
-                <ui5-button>Button 3</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://employee">
-                <ui5-button>Button 3</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://employee">
-                <ui5-button>Button 3</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://menu2">
-                <ui5-button>Button 2</ui5-button>
-            </ui5-tab>
-            <ui5-tab icon="sap-icon://employee">
-                <ui5-button>Button 3</ui5-button>
-            </ui5-tab>
-        </ui5-tabcontainer>
+	<section>
+		<h2>tabs-placement=Bottom</h2>
+		<ui5-tabcontainer show-overflow tabs-placement="Bottom">
+			<ui5-tab icon="sap-icon://card" selected>
+				<ui5-button>Button 11</ui5-button>
+				<ui5-button>Button 12</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu2">
+				<ui5-button>Button 2</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu2">
+				<ui5-button>Button 2</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu2">
+				<ui5-button>Button 2</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
 	</section>
 	
 	<section>
@@ -431,6 +435,20 @@
 		</ui5-tabcontainer>
 	</section>
 
+	<section>
+		<ui5-tabcontainer id="tabContainerNoContentPadding">
+			<ui5-tab icon="sap-icon://card" selected>
+				<ui5-button>Button 11</ui5-button>
+				<ui5-button>Button 12</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</section>
 	<script>
 		document.getElementById("tabContainer1").addEventListener("ui5-tabSelect", function (event) {
 			result.innerHTML = event.detail.tab.text;
