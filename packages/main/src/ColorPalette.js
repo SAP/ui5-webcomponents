@@ -35,7 +35,7 @@ const metadata = {
 		 entries: {
 			type: Object,
 			multiple: true,
-		 }
+		 },
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
@@ -54,7 +54,7 @@ const metadata = {
 		change: {
 			details: {
 				color: {
-					type: "String",
+					type: "CSSColor",
 				},
 			},
 		 },
@@ -119,9 +119,9 @@ class ColorPalette extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.colors.forEach((item, index) => { 
+		this.colors.forEach((item, index) => {
 			item.index = index + 1;
-			this.entries.push({item, index})
+			this.entries.push({ item, index });
 		});
 	}
 
@@ -137,9 +137,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onclick(event) {
-		const target = event.target;
-
-		this.selectColor(target);
+		this.selectColor(event.target);
 	}
 
 	_onkeyup(event) {
@@ -155,10 +153,6 @@ class ColorPalette extends UI5Element {
 
 	get colorContainerLabel() {
 		return this.i18nBundle.getText(COLORPALETTE_CONTAINER_LABEL);
-	}
-
-	get colorLabel() {
-		return "color";
 	}
 }
 

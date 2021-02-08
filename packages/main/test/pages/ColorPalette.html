@@ -51,7 +51,9 @@
 		<ui5-color-palette-entry value="#5480e7"></ui5-color-palette-entry>
 		<ui5-color-palette-entry value="#ff6699"></ui5-color-palette-entry>
 	</ui5-color-palette>
-
+	<br>
+	<ui5-input id="changeResult" value="Nothing selected"></ui5-input>
+	<br>
 	<ui5-button id="colorPaletteBtn" >Open ColorPalette</ui5-button> <br/>
 	<ui5-responsive-popover id="respPopover">
 		<div id="respPopoverHeader" slot="header">
@@ -82,6 +84,9 @@
 		</div>
 	</ui5-responsive-popover>
 	<script>
+		cp1.addEventListener("change", function(event) {
+			changeResult.value = event.detail.color;
+		});
 		colorPaletteBtn.addEventListener("click", function(event) {
 			respPopover.open(colorPaletteBtn);
 		});

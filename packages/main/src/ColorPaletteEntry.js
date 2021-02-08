@@ -3,6 +3,9 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ColorPaletteEntryTemplate from "./generated/templates/ColorPaletteEntryTemplate.lit.js";
+import {
+	COLORPALETTE_COLOR_LABEL,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import ColorPaletteEntryCss from "./generated/themes/ColorPaletteEntry.css.js";
@@ -43,7 +46,7 @@ const metadata = {
 
 		index: {
 			type: String,
-		}
+		},
 	},
 	slots: {
 	},
@@ -95,7 +98,7 @@ class ColorPaletteEntry extends UI5Element {
 	}
 
 	get colorLabel() {
-		return "Color";
+		return this.i18nBundle.getText(COLORPALETTE_COLOR_LABEL);
 	}
 }
 

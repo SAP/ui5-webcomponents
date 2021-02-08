@@ -56,8 +56,8 @@ exports.config = {
 		'goog:chromeOptions': {
 			// to run chrome headless the following flags are required
 			// (see https://developers.google.com/web/updates/2017/04/headless-chrome)
-			// args: ['--headless', '--disable-gpu'],
-			args: ['--disable-gpu'],
+			args: ['--headless', '--disable-gpu'],
+			// args: ['--disable-gpu'],
 		}
 	}],
 	//
@@ -228,7 +228,7 @@ exports.config = {
 		];
 		if (waitFor.includes(commandName)) {
 			browser.executeAsync(function (done) {
-				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+				window.RenderScheduler.whenFinished().then(done);
 			});
 		}
 	},
@@ -304,7 +304,7 @@ exports.config = {
 		];
 		if (waitFor.includes(commandName)) {
 			browser.executeAsync(function (done) {
-				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+				window.RenderScheduler.whenFinished().then(done);
 			});
 		}
 	},
