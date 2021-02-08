@@ -50,7 +50,7 @@
 
 .ui5-tokenizer-more-text {
 	display: inline-block;
-	margin-inline-start: .25rem;
+	margin-left: .25rem;
 	cursor: pointer;
 	white-space: nowrap;
 	font-size: var(--sapFontSize);
@@ -62,5 +62,17 @@
 }
 
 ::slotted([ui5-token]) {
-	margin-inline-start: .25rem;
+	margin-left: .25rem;
+}
+
+/* RTL */
+
+[dir="rtl"] .ui5-tokenizer-more-text  {
+	margin-right: .25rem;
+	margin-left: 0;
+}
+
+[dir=rtl] ::slotted([ui5-token]) {
+	margin-right: .25rem;
+	margin-left: 0;
 }
