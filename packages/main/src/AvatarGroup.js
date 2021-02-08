@@ -103,7 +103,7 @@ const metadata = {
 		 * Defines the items of the <code>ui5-avatar-group</code>. Use the <code>ui5-avatar</code> component as an item.
 		 * <br><br>
 		 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
-		 * Moreover, if you use "Square" shape, there will be visual inconsistency
+		 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
 		 * as the built-in overflow action has "Circle" shape.
 		 * @type {HTMLElement[]}
 		 * @slot
