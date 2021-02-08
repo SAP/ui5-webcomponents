@@ -12,7 +12,7 @@
 	width: var(--_ui5_color-palette-swatch-focus-height);
 	height: var(--_ui5_color-palette-swatch-focus-height);
 	margin: 2px;
-	position: fixed;
+	position: absolute;
 	outline: rgb(0, 0, 0) dotted 0.0625rem;
 }
 

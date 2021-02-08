@@ -43,7 +43,11 @@ const metadata = {
 			defaultValue: "-1",
 			noAttribute: true,
 		},
-
+		/**
+		 * Defines the index of the entry inside of the ColorPalette.
+		 * @public
+		 * @type {String}
+		 */
 		index: {
 			type: String,
 		},

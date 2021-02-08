@@ -25,20 +25,27 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
+		 *
+		 * The selected color.
 		 * @type {CSSColor}
 		 * @public
 		 */
 		value: {
 			type: CSSColor,
 		 },
-
-		 entries: {
+		/**
+		 * The colors grouped in object with their indexes.
+		 * @type {CSSColor}
+		 * @private
+		 */
+		entries: {
 			type: Object,
 			multiple: true,
 		 },
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
+		 * Defines the <code>ui5-color-palette-entry</code> items.
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -51,6 +58,12 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
+		/**
+		 * Fired when the user selects a color.
+		 *
+		 * @event
+		 * @public
+		 */
 		change: {
 			details: {
 				color: {
@@ -65,9 +78,11 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
+ * The ColorPalette provides the users with a range of predefined colors.
+ * You can set them by using the ColorPaletteEntry items as slots.
  *
  * <h3>Usage</h3>
+ * The palette is intended for users, who don't want to check and remember the different values of the colors .
  *
  * For the <code>ui5-color-palette</code>
  * <h3>ES6 Module Import</h3>
