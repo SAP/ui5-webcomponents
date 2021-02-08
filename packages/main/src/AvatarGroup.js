@@ -100,7 +100,11 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
 		/**
-		 * Defines the items of the <code>ui5-avatar-group</code>.
+		 * Defines the items of the <code>ui5-avatar-group</code>. Use the <code>ui5-avatar</code> component as an item.
+		 * <br><br>
+		 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
+		 * Moreover, if you use "Square" shape, there will be visual inconsistency
+		 * as the built-in overflow action has "Circle" shape.
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -120,7 +124,7 @@ const metadata = {
 		* @public
 		* @since 1.0.0-rc.11
 		*/
-	   click: {
+		click: {
 			detail: {
 				targetRef: { type: HTMLElement },
 				overflowButtonClicked: { type: Boolean },
