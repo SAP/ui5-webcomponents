@@ -1,7 +1,10 @@
-commit 679dae355c7a94fc464d2ead45042ed1ed78b23a
-Author: Martotko <16964129+Martotko@users.noreply.github.com>
-Date:   Sat Feb 6 08:30:46 2021 +0200
+commit 5a872b0bbaac333f6125e842443a3e69a04c0368
+Author: Alexandar Mitsev <alexandar.mitsev@sap.com>
+Date:   Mon Feb 8 13:57:24 2021 +0200
 
-    fix(ui5-multiinput): hide placeholder when tokens (#2789)
+    fix(ui5-popover): correctly position a popover if dynamically created (#2679)
     
-    Fixes: #2261
+    Now when a popover is dynamically created it is shown only after its size can be determined.
+    This prevents its position to flicker on opening.
+    
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1755
