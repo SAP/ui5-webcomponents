@@ -127,6 +127,17 @@ describe("Dialog general interaction", () => {
 
 		closeButton.click();
 	});
+
+	it("test dialog overlay when dialog isn't open", () => {
+		const isBlockLayerHidden = browser.executeAsync(async (done) => {
+			const dialog = document.getElementById("dialog");
+			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
+
+			done(staticAreaItemDomRef.querySelector(".ui5-block-layer").hasAttribute("hidden"));
+		});
+
+		assert.ok(isBlockLayerHidden, "the block layer is hidden");
+	});
 });
 
 
