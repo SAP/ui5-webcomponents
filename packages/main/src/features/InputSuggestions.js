@@ -167,6 +167,10 @@ class Suggestions {
 			return;
 		}
 
+		if (item.group) {
+			return;
+		}
+
 		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
 		item.selected = false;
 		this.close();

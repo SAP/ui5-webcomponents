@@ -66,6 +66,11 @@
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
+:host([disabled]) {
+    opacity: var(--_ui5-listitembase_disabled_opacity);
+    pointer-events: none;
+}
+
 .ui5-li-content {
 	max-width: 100%;
 	min-height: 1px; /* IE specific: fixes vertical centering with flex  */

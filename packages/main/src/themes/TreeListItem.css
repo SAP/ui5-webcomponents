@@ -83,3 +83,38 @@
 :host([active][actionable]) .ui5-li-tree-toggle-icon {
     color: var(--sapList_Active_TextColor);
 }
+
+/* [ui5-li]: infoState */
+:host([info-state="Warning"]) .ui5-li-tree-info {
+	color: var(--sapCriticalTextColor);
+}
+
+:host([info-state="Success"]) .ui5-li-tree-info {
+	color: var(--sapPositiveTextColor);
+}
+
+:host([info-state="Error"]) .ui5-li-tree-info {
+	color: var(--sapNegativeTextColor);
+}
+
+:host([info-state="Information"]) .ui5-li-tree-info {
+	color: var(--sapInformativeTextColor);
+}
+
+/* [ui5-li]: info */
+.ui5-li-tree-info {
+	margin: 0 0.25rem;
+	color: var(--sapNeutralTextColor);
+	font-size: 0.875rem;
+	min-width: 6rem;
+	max-width: 40%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ui5-li-tree-text-wrapper {
+	display:flex;
+	justify-content:space-between;
+	width: 100%;
+}

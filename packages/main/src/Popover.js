@@ -659,7 +659,7 @@ class Popover extends Popup {
 	 * Hook for descendants to hide header.
 	 */
 	get _displayHeader() {
-		return true;
+		return this.header.length || this.headerText;
 	}
 
 	/**
