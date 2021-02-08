@@ -95,9 +95,9 @@ const fetchCldr = async (language, region, script) => {
 		const cldrContent = await _loadCldrOnce(localeId);
 		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrContent);
 	} catch (e) {
-		if (!reportedErrors.has(e)) {
-			reportedErrors.add(e);
-			console.error(e);
+		if (!reportedErrors.has(e.message)) {
+			reportedErrors.add(e.message);
+			console.error(e.message);
 		}
 	}
 };

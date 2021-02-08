@@ -56,7 +56,7 @@ const getThemeProperties = async (packageName, themeName) => {
 	try {
 		data = await loader(themeName);
 	} catch (e) {
-		console.error(packageName, e);
+		console.error(packageName, e.message);
 		return;
 	}
 	const themeProps = data._ || data;

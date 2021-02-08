@@ -16,7 +16,7 @@ const registerIconLoader = async (collectionName, loader) => {
 		fillRegistry(iconData);
 		resolveFn();
 	} catch (e) {
-		console.error(e);
+		console.error(e.message);
 	}
 }
 

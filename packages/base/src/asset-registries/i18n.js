@@ -105,9 +105,9 @@ const fetchI18nBundle = async packageName => {
 		const data = await _loadMessageBundleOnce(packageName, localeId);
 		_setI18nBundleData(packageName, data);
 	} catch (e) {
-		if (!reportedErrors.has(e)) {
-			reportedErrors.add(e);
-			console.error(e);
+		if (!reportedErrors.has(e.message)) {
+			reportedErrors.add(e.message);
+			console.error(e.message);
 		}
 	}
 };

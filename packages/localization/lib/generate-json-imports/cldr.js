@@ -17,15 +17,11 @@ const cldrData = {
 	${localesKeys}
 };
 
-const allEntriesInlined = Object.entries(cldrData).every(([_key, value]) => typeof (value) === "object");
-
-if (allEntriesInlined) {
-	console.warn(\`Inefficient bundling detected: consider bundling CLDR imports as URLs instead of inlining them.
-See rollup-plugin-url or webpack file-loader for more information.
-Suggested pattern: "assets\\\\\\/.*\\\\\\.json"\`);
-}
-
 const fetchCldrJson = async (localeId) => {
+	if (typeof cldrData[localeId] === "object") {
+		// inlined from build
+		throw new Error("[LocaleData] Inlined JSON not supported with static imports of assets. Use dynamic imports of assets or configure JSON imports as URLs")
+	}
 	return (await fetch(cldrData[localeId])).json();
 }
 

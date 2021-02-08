@@ -3,9 +3,9 @@ import { registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registrie
 import SAPIconsTNTUrl from "../generated/assets/SAP-icons-TNT.json";
 
 const loadIconsBundle = async () => {
-	if (typeof SAPIconsUrl === "object") {
+	if (typeof SAPIconsTNTUrl === "object") {
 		// inlined from build
-		throw new Error("inlined JSON not supported with static assets, use dynamic assets or configure JSON imports as URLs");
+		throw new Error("[icons-tnt] Inlined JSON not supported with static imports of assets. Use dynamic imports of assets or configure JSON imports as URLs");
 	}
 	return (await fetch(SAPIconsTNTUrl)).json();
 }

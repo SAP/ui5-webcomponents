@@ -20,7 +20,6 @@ const themesOnFileSystem = dirs.map(dir => {
 const packageName = JSON.parse(fs.readFileSync("package.json")).name;
 
 const importLines = themesOnFileSystem.map(theme => `import ${theme} from "../assets/themes/${theme}/parameters-bundle.css.json";`).join("\n");
-const isInlinedCondition = themesOnFileSystem.map(theme => `isInlined(${theme})`).join(" || ");
 const themeUrlsByName = "{\n" + themesOnFileSystem.join(",\n") + "\n}";
 const availableThemesArray = `[${themesOnFileSystem.map(theme => `"${theme}"`).join(", ")}]`;
 const dynamicImportLines = themesOnFileSystem.map(theme => `\t\tcase "${theme}": return (await import("../assets/themes/${theme}/parameters-bundle.css.json")).default;`).join("\n");
@@ -34,13 +33,11 @@ ${importLines}
 const themeUrlsByName = ${themeUrlsByName};
 const isInlined = obj => typeof (obj) === "object";
 
-if (${isInlinedCondition}) {
-	console.warn(\`Inefficient bundling detected: consider bundling theme properties imports as URLs instead of inlining them.
-See rollup-plugin-url or webpack file-loader for more information.
-Suggested pattern: "assets\\\\\\/.*\\\\\\.json"\`);
-}
-
 const loadThemeProperties = async (themeName) => {
+	if (typeof themeUrlsByName[themeName] === "object") {
+		// inlined from build
+		throw new Error("[themes] Inlined JSON not supported with static imports of assets. Use dynamic imports of assets or configure JSON imports as URLs");
+	}
 	return (await fetch(themeUrlsByName[themeName])).json();
 }
 
