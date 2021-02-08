@@ -1,7 +1,12 @@
 <div class="ui5-cp-swatch-container" 
-	@click={{_onclick}}
-	@keyup={{_onkeyup}}
 	role="region"
 	aria-label="{{colorContainerLabel}}">
-	<slot ></slot>
+	{{#each entries}}
+		<slot
+			name="{{this.item._individualSlot}}"
+			@click={{../_onclick}}
+			@keyup={{../_onkeyup}}
+			index="{{index}}">
+		</slot>
+	{{/each}}
 </div>

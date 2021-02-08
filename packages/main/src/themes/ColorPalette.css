@@ -1,6 +1,7 @@
 .ui5-cp-swatch-container {
 	display: flex;
-	width: var(--_ui5_color-palette-row-width);
+	max-width: var(--_ui5_color-palette-row-width);
 	flex-flow: wrap;
-	height: var(--_ui5_color-palette-row-height);
+	max-height: var(--_ui5_color-palette-row-height);
+	overflow: hidden;
 }

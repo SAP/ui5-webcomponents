@@ -31,16 +31,19 @@ const metadata = {
 		stableDomRef: {
 			type: String,
 		},
-
+		/**
+		 * Defines the tab-index of the element, helper information for the ItemNavigation.
+		 * @private
+		 */
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
 			noAttribute: true,
 		},
 
-		number: {
-			type: Number,
-		},
+		index: {
+			type: String,
+		}
 	},
 	slots: {
 	},
@@ -52,13 +55,13 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-color-palette</code> component defines the content of an color in the <code>ui5-color-palette</code>.
+ * The <code>ui5-color-palette-entry</code> component defines the content of an color in the <code>ui5-color-palette</code>.
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ColorPaletteEntry
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-color-palette
+ * @tagname ui5-color-palette-entry
  * @since 1.0.0-rc.12
  * @public
  */
@@ -88,12 +91,11 @@ class ColorPaletteEntry extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	get value() {
-		return this.value;
+	onBeforeRendering() {
 	}
 
 	get colorLabel() {
-		return "color";
+		return "Color";
 	}
 }
 

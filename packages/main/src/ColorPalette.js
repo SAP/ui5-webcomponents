@@ -31,6 +31,11 @@ const metadata = {
 		value: {
 			type: CSSColor,
 		 },
+
+		 entries: {
+			type: Object,
+			multiple: true,
+		 }
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
@@ -42,6 +47,7 @@ const metadata = {
 			propertyName: "colors",
 			type: HTMLElement,
 			invalidateOnChildChange: true,
+			individualSlots: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
@@ -112,11 +118,18 @@ class ColorPalette extends UI5Element {
 		});
 	}
 
+	onBeforeRendering() {
+		this.colors.forEach((item, index) => { 
+			item.index = index + 1;
+			this.entries.push({item, index})
+		});
+	}
+
 	selectColor(target) {
-		target.focus();
+		target.getDomRef().focus();
 		this._itemNavigation.update(target);
 
-		this.value = target.getAttribute("value");
+		this.value = target.value;
 
 		this.fireEvent("change", {
 			color: this.value,
@@ -125,16 +138,13 @@ class ColorPalette extends UI5Element {
 
 	_onclick(event) {
 		const target = event.target;
-		event.preventDefault();
-		event.stopPropagation();
 
-		if (target.classList.contains("ui5-cp-swatch")) {
-			this.selectColor(target);
-		}
+		this.selectColor(target);
 	}
 
 	_onkeyup(event) {
 		const target = event.target;
+
 		event.preventDefault();
 		event.stopPropagation();
 
