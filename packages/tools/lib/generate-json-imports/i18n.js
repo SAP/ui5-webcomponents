@@ -5,8 +5,8 @@ const mkdirp = require("mkdirp");
 const packageName = JSON.parse(fs.readFileSync("package.json")).name;
 
 const inputFolder = path.normalize(process.argv[2]);
-const outputFile = path.normalize(`${process.argv[3]}/i18n.js`);
-const outputFileDynamic = path.normalize(`${process.argv[3]}/i18n-dynamic.js`);
+const outputFile = path.normalize(`${process.argv[3]}/i18n-static.js`);
+const outputFileDynamic = path.normalize(`${process.argv[3]}/i18n.js`);
 
 // All languages present in the file system
 const files = fs.readdirSync(inputFolder);

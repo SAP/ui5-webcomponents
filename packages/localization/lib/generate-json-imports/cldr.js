@@ -47,5 +47,5 @@ availableLocales.forEach(localeId => registerLocaleDataLoader(localeId, importCl
 `;
 
 mkdirp.sync("dist/generated/json-imports/");
-fs.writeFileSync("dist/generated/json-imports/LocaleData.js", contentStatic);
-fs.writeFileSync("dist/generated/json-imports/LocaleData-dynamic.js", contentDynamic);
+fs.writeFileSync("dist/generated/json-imports/LocaleData-static.js", contentStatic);
+fs.writeFileSync("dist/generated/json-imports/LocaleData.js", contentDynamic);

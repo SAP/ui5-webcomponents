@@ -4,8 +4,8 @@ const mkdirp = require("mkdirp");
 const assets = require("../../assets-meta.js");
 
 const inputFolder = path.normalize(process.argv[2]);
-const outputFile = path.normalize(`${process.argv[3]}/Themes.js`);
-const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes-dynamic.js`);
+const outputFile = path.normalize(`${process.argv[3]}/Themes-static.js`);
+const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.js`);
 
 // All supported optional themes
 const optionalThemes = assets.themes.all.filter(theme => theme !== assets.themes.default);
