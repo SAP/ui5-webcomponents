@@ -5,6 +5,7 @@ import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.
 const resources = new Map();
 const loaders = new Map();
 const cldrPromises = new Map();
+const reportedErrors = new Set();
 
 // externally configurable mapping function for resolving (localeId -> URL)
 // default implementation - ui5 CDN
@@ -90,8 +91,15 @@ const fetchCldr = async (language, region, script) => {
 	// }
 
 	// fetch it
-	const cldrContent = await _loadCldrOnce(localeId);
-	registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrContent);
+	try {
+		const cldrContent = await _loadCldrOnce(localeId);
+		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrContent);
+	} catch (e) {
+		if (!reportedErrors.has(e)) {
+			reportedErrors.add(e);
+			console.error(e);
+		}
+	}
 };
 
 const registerLocaleDataLoader = (localeId, loader) => {

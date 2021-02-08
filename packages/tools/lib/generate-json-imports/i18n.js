@@ -67,10 +67,17 @@ localeIds.forEach(localeId => {
 		}
 	}
 
+	const importAndCheck = async (localeId) => {
+		const data = await importMessageBundle(localeId);
+		if (typeof data === "string" && data.endsWith(".json")) {
+			throw new Error(\`[i18n] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build or use 'import ".../Assets-static.js"'. Check the \"Assets\" documentation for more information.\`);
+		}
+	}
+
 	const localeIds = [${languagesKeysStringArray}];
 
 	localeIds.forEach(localeId => {
-		registerI18nLoader("${packageName}", localeId, importMessageBundle);
+		registerI18nLoader("${packageName}", localeId, importAndCheck);
 	});
 	`;
 

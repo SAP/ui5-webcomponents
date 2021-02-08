@@ -43,7 +43,14 @@ ${caseImports}
 	}
 }
 
-availableLocales.forEach(localeId => registerLocaleDataLoader(localeId, importCldrJson));
+const importAndCheck = async (localeId) => {
+	const data = await importCldrJson(localeId);
+	if (typeof data === "string" && data.endsWith(".json")) {
+        throw new Error(\`[LocaleData] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build or use 'import ".../Assets-static.js"'. Check the \"Assets\" documentation for more information.\`);
+    }
+}
+
+availableLocales.forEach(localeId => registerLocaleDataLoader(localeId, importAndCheck));
 `;
 
 mkdirp.sync("dist/generated/json-imports/");

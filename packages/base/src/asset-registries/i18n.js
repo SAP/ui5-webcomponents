@@ -7,6 +7,7 @@ import { getUseDefaultLanguage } from "../config/Language.js";
 
 // contains package names for which the warning has been shown
 let warningShown = new Set();
+const reportedErrors = new Set();
 
 const bundleData = new Map();
 const bundlePromises = new Map();
@@ -100,8 +101,15 @@ const fetchI18nBundle = async packageName => {
 		return;
 	}
 
-	const data = await _loadMessageBundleOnce(packageName, localeId);
-	_setI18nBundleData(packageName, data);
+	try {
+		const data = await _loadMessageBundleOnce(packageName, localeId);
+		_setI18nBundleData(packageName, data);
+	} catch (e) {
+		if (!reportedErrors.has(e)) {
+			reportedErrors.add(e);
+			console.error(e);
+		}
+	}
 };
 
 // When the language changes dynamically (the user calls setLanguage), re-fetch all previously fetched bundles

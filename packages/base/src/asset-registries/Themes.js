@@ -52,7 +52,13 @@ const getThemeProperties = async (packageName, themeName) => {
 	if (!loader) {
 		// no themes for package
 	}
-	const data = await loader(themeName);
+	let data;
+	try {
+		data = await loader(themeName);
+	} catch (e) {
+		console.error(packageName, e);
+		return;
+	}
 	const themeProps = data._ || data;
 
 	themeStyles.set(`${packageName}_${themeName}`, themeProps);

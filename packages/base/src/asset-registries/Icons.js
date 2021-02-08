@@ -11,9 +11,13 @@ const registerIconLoader = async (collectionName, loader) => {
 	});
 	registerCollectionPromise(collectionName, collectionFetched);
 
-	const iconData = await loader();
-	fillRegistry(iconData);
-	resolveFn();
+	try {
+		const iconData = await loader();
+		fillRegistry(iconData);
+		resolveFn();
+	} catch (e) {
+		console.error(e);
+	}
 }
 
 const fillRegistry = bundleData => {

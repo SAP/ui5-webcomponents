@@ -39,16 +39,16 @@ const getPlugins = ({ transpile }) => {
 
 	plugins.push(ui5DevImportCheckerPlugin());
 
-	plugins.push(json({
-		include: [
-			/.*assets\/.*\.json/,
-		]
-	}));
+	// plugins.push(json({
+	// 	include: [
+	// 		/.*assets\/.*\.json/,
+	// 	]
+	// }));
 
 	plugins.push(url({
 		limit: 0,
 		include: [
-			// /.*assets\/.*\.json/,
+			/.*assets\/.*\.json/,
 			/.*\.properties/,
 		],
 		emitFiles: true,
