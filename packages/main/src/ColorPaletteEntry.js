@@ -18,7 +18,9 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends  sap.ui.webcomponents.main.ColorPaletteEntry.prototype */ {
 		/**
-		 * Defines the value of the <code>ui5-color-palette</code> inside an HTML Form element when this <code>ui5-color-palette-entry</code> is presented.
+		 * Defines the value of the <code>ui5-color-palette-entry</code>.
+		 * <br><br>
+		 * <b>Note:</b> The value should me valid CSS color.
 		 *
 		 * @type {CSSColor}
 		 * @public
@@ -45,7 +47,7 @@ const metadata = {
 		},
 		/**
 		 * Defines the index of the entry inside of the ColorPalette.
-		 * @public
+		 * @private
 		 * @type {String}
 		 */
 		index: {
@@ -96,9 +98,6 @@ class ColorPaletteEntry extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
-	onBeforeRendering() {
 	}
 
 	get colorLabel() {

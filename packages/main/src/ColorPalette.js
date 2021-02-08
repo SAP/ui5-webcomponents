@@ -63,6 +63,7 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
+		 * @param details
 		 */
 		change: {
 			details: {
@@ -134,10 +135,11 @@ class ColorPalette extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.colors.forEach((item, index) => {
-			item.index = index + 1;
-			this.entries.push({ item, index });
-		});
+		if (!this.entries.length) {
+			this.colors.forEach((item, index) => {
+				item.index = index + 1;
+			});
+		}
 	}
 
 	selectColor(target) {
@@ -156,14 +158,20 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onkeyup(event) {
-		const target = event.target;
-
-		event.preventDefault();
-		event.stopPropagation();
-
-		if (isEnter(event) || isSpace(event)) {
-			this.selectColor(target);
+		if (isSpace(event)) {
+			event.preventDefault();
+			this.selectColor(event.target);
 		}
+	}
+
+	_onkeydown(event) {
+		if (isEnter(event)) {
+			this.selectColor(event.target);
+		}
+	}
+
+	get colors() {
+		return this.colors.slice(0, 15);
 	}
 
 	get colorContainerLabel() {
