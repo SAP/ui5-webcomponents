@@ -7,11 +7,6 @@ const loaders = new Map();
 const cldrPromises = new Map();
 const reportedErrors = new Set();
 
-// externally configurable mapping function for resolving (localeId -> URL)
-// default implementation - ui5 CDN
-// TODO loop SUPPORTED_LOCALES and add loader
-let cldrMappingFn = locale => `https://ui5.sap.com/1.60.2/resources/sap/ui/core/cldr/${locale}.json`;
-
 const M_ISO639_OLD_TO_NEW = {
 	"iw": "he",
 	"ji": "yi",
@@ -105,6 +100,13 @@ const fetchCldr = async (language, region, script) => {
 const registerLocaleDataLoader = (localeId, loader) => {
 	loaders.set(localeId, loader);
 }
+
+// register default loader from ui5 CDN
+SUPPORTED_LOCALES.forEach(localeId => {
+	registerLocaleDataLoader(localeId, async (runtimeLocaleId) => {
+		return (await fetch(`https://ui5.sap.com/1.60.2/resources/sap/ui/core/cldr/${runtimeLocaleId}.json`)).json();
+	});
+});
 
 // When the language changes dynamically (the user calls setLanguage),
 // re-fetch the required CDRD data.
