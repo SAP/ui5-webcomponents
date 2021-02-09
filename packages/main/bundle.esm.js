@@ -23,16 +23,20 @@ import "@ui5/webcomponents-icons/dist/Assets-static.js";
 import "@ui5/webcomponents-icons-tnt/dist/Assets-static.js";
 
 /* Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
-import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
-import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
-registerI18nBundle("@ui5/webcomponents", {
-	bg: "./lang/messagebundle_bg.properties",
-	fr: "./lang/fr.json",
+import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+import parseProperties from "@ui5/webcomponents-base/dist/util/parseProperties";
+const bg = "alabala";
+registerI18nLoader("@ui5/webcomponents", "bg", async (localeId) => {
+	const props = await (await fetch(bg)).text();
+	return parseProperties(props);
+});
+registerI18nLoader("@ui5/webcomponents", "fr", async (localeId) => {
+	return await (await fetch("fr")).json();
 });
 */
 
 // asset helpers (needs correct json as url in rollup.config.js)
-import "./dist/Assets-static.js";
+import "./dist/Assets.js";
 
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";

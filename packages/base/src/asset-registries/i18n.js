@@ -42,6 +42,7 @@ const getI18nBundleData = packageName => {
  * @param {Object} bundle an object with string locales as keys and the URLs (in .json or .properties format - see the note above) where the corresponding locale can be fetched from, f.e {"en": "path/en.json", ...}
  *
  * @public
+ * @deprecated
  */
 const registerI18nBundle = (packageName, bundle) => {
 	throw new Error("This method has been removed. Use `registerI18nLoader` instead.");

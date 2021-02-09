@@ -25,7 +25,6 @@ window.isIE = isIE; // attached to the window object for testing purposes
 window.registerThemeProperties = registerThemeProperties;
 
 // i18n
-import "./dist/features/PropertiesFormatSupport.js";
 import { registerI18nBundle, fetchI18nBundle, getI18nBundle } from "./dist/i18nBundle.js";
 
 // Note: keep in sync with rollup.config value for IIFE
