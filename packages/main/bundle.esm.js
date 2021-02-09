@@ -15,10 +15,6 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 // CLDR
 import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocaleData.js";
 
-// Icons
-import "@ui5/webcomponents-icons/dist/Assets-static.js";
-import "@ui5/webcomponents-icons-tnt/dist/Assets-static.js";
-
 /* Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
 import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 import parseProperties from "@ui5/webcomponents-base/dist/util/parseProperties";
@@ -34,6 +30,10 @@ registerI18nLoader("@ui5/webcomponents", "fr", async (localeId) => {
 
 // asset helpers (needs correct json as url in rollup.config.js)
 import "./dist/Assets.js";
+
+// Icons
+import "@ui5/webcomponents-icons/dist/Assets.js";
+import "@ui5/webcomponents-icons-tnt/dist/Assets.js";
 
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
