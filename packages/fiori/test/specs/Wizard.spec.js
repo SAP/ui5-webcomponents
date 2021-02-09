@@ -150,6 +150,29 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(step2InHeader.getAttribute("disabled"), null, "Second step in header is enabled.");
 
 		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "4",
-			"Event selection-change fired 4rd time due to scrolling.");
+			"Event selection-change fired 4th time due to scrolling.");
+	});
+
+	it("tests dynamically increase step size and move to next step", () => {
+		const wiz = browser.$("#wizTest");
+		const sw = browser.$("#sw");
+		const btnToStep2 = browser.$("#toStep22");
+		const btnToStep3 = browser.$("#toStep3");
+		const step3 = browser.$("#st3");
+		const step3InHeader = wiz.shadow$(`[data-ui5-index="3"]`);
+		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
+
+		btnToStep3.click(); // click to enable step 3
+		btnToStep2.click(); // click to get back to step 2
+		sw.click(); // click to dynamically expand content in step 2
+		step3.scrollIntoView(); // scroll to step 3
+		browser.pause(500);
+
+		assert.strictEqual(step3.getAttribute("selected"), "true",
+			"Third step in the content is selected.");
+		assert.strictEqual(step3InHeader.getAttribute("selected"), "true",
+			"Third step in the header is selected.");
+		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "5",
+			"Event selection-change fired once for 5th time due to scrolling.");
 	});
 });
