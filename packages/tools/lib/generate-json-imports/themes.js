@@ -61,6 +61,7 @@ const loadAndCheck = async (themeName) => {
 	if (typeof data === "string" && data.endsWith(".json")) {
 		throw new Error(\`[themes] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build or use 'import ".../Assets-static.js"'. Check the \"Assets\" documentation for more information.\`);
 	}
+	return data;
 }
 
 ${availableThemesArray}
