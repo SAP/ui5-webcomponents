@@ -882,7 +882,7 @@ class MultiComboBox extends UI5Element {
 				"padding": "0.9125rem 1rem",
 			},
 			popoverHeader: {
-				"width": `${this._inputWidth}px`,
+				"max-width": `${this._inputWidth}px`,
 			},
 		};
 	}
