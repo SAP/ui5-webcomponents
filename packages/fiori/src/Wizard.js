@@ -422,8 +422,8 @@ class Wizard extends UI5Element {
 	}
 
 	attachStepsResizeObserver() {
-		this.detachStepsResizeObserver();
 		this.stepsDOM.forEach(stepDOM => {
+			ResizeHandler.deregister(stepDOM, this._onStepResize);
 			ResizeHandler.register(stepDOM, this._onStepResize);
 		});
 	}

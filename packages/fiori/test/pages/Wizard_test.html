@@ -126,6 +126,7 @@
 					</div>
 				</div>
 
+				<ui5-button id="toStep22" design="Emphasized">Step 2</ui5-button>
 				<ui5-button id="toStep4" design="Emphasized">Step 4</ui5-button>
 			</ui5-wizard-step>
 
@@ -307,19 +308,20 @@
 		toStep2.addEventListener("click", function () {
 			deselectAll();
 			setStep(1);
-			toStep2.setAttribute("hidden", true);
+		});
+		toStep22.addEventListener("click", function () {
+			deselectAll();
+			setStep(1);
 		});
 
 		toStep3.addEventListener("click", function () {
 			deselectAll();
 			setStep(2);
-			toStep3.setAttribute("hidden", true);
 		});
 
 		toStep4.addEventListener("click", function () {
 			deselectAll();
 			setStep(3);
-			toStep4.setAttribute("hidden", true);
 		});
 
 		function deselectAll() {
