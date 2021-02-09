@@ -64,3 +64,15 @@
 ::slotted([ui5-token]) {
 	margin-left: .25rem;
 }
+
+/* RTL */
+
+[dir="rtl"] .ui5-tokenizer-more-text  {
+	margin-right: .25rem;
+	margin-left: 0;
+}
+
+[dir=rtl] ::slotted([ui5-token]) {
+	margin-right: .25rem;
+	margin-left: 0;
+}
