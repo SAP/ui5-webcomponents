@@ -1,9 +1,5 @@
-import { fetchJsonOnce, fetchTextOnce } from "../util/FetchHelper.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
-import getFileExtension from "../util/getFileExtension.js";
-import { getEffectiveAssetPath } from "../util/EffectiveAssetPath.js";
 
-const themeURLs = new Map();
 const themeStyles = new Map();
 const loaders = new Map();
 const registeredPackages = new Set();
@@ -34,7 +30,7 @@ const registerThemePropertiesLoader = (packageName, themeName, loader) => {
 	loaders.set(packageName, loader);
 	registeredPackages.add(packageName);
 	registeredThemes.add(themeName);
-}
+};
 
 const getThemeProperties = async (packageName, themeName) => {
 	const style = themeStyles.get(`${packageName}_${themeName}`);
@@ -56,23 +52,13 @@ const getThemeProperties = async (packageName, themeName) => {
 	try {
 		data = await loader(themeName);
 	} catch (e) {
-		console.error(packageName, e.message);
+		console.error(packageName, e.message); /* eslint-disable-line */
 		return;
 	}
 	const themeProps = data._ || data;
 
 	themeStyles.set(`${packageName}_${themeName}`, themeProps);
 	return themeProps;
-};
-
-const fetchThemeProperties = async (packageName, themeName) => {
-	const url = themeURLs.get(`${packageName}_${themeName}`);
-
-	if (!url) {
-		throw new Error(`You have to import the ${packageName}/dist/Assets.js module to switch to additional themes`);
-	}
-
-	return getFileExtension(url) === ".css" ? fetchTextOnce(url) : fetchJsonOnce(getEffectiveAssetPath(url));
 };
 
 const getRegisteredPackages = () => {

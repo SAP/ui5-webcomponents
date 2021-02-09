@@ -19,9 +19,9 @@ const registerIconLoader = async (collectionName, loader) => {
 		fillRegistry(iconData);
 		resolveFn();
 	} catch (e) {
-		console.error(e.message);
+		console.error(e.message); /* eslint-disable-line */
 	}
-}
+};
 
 const fillRegistry = bundleData => {
 	Object.keys(bundleData.data).forEach(iconName => {

@@ -65,7 +65,7 @@ const getModuleContent = moduleName => {
 };
 
 // load bundle over the network once
-const _loadCldrOnce = async (localeId) => {
+const _loadCldrOnce = async localeId => {
 	const loadCldr = loaders.get(localeId);
 
 	if (!cldrPromises.get(localeId)) {
@@ -79,7 +79,7 @@ const _loadCldrOnce = async (localeId) => {
 const fetchCldr = async (language, region, script) => {
 	const localeId = calcLocale(language, region, script);
 
-	// TODO make loader
+	// t o d o make loader
 	// const OpenUI5Support = getFeature("OpenUI5Support");
 	// if (!cldrObj && OpenUI5Support) {
 	// 	cldrObj = OpenUI5Support.getLocaleDataObject();
@@ -92,18 +92,18 @@ const fetchCldr = async (language, region, script) => {
 	} catch (e) {
 		if (!reportedErrors.has(e.message)) {
 			reportedErrors.add(e.message);
-			console.error(e.message);
+			console.error(e.message); /* eslint-disable-line */
 		}
 	}
 };
 
 const registerLocaleDataLoader = (localeId, loader) => {
 	loaders.set(localeId, loader);
-}
+};
 
 // register default loader from ui5 CDN
 SUPPORTED_LOCALES.forEach(localeId => {
-	registerLocaleDataLoader(localeId, async (runtimeLocaleId) => {
+	registerLocaleDataLoader(localeId, async runtimeLocaleId => {
 		return (await fetch(`https://ui5.sap.com/1.60.2/resources/sap/ui/core/cldr/${runtimeLocaleId}.json`)).json();
 	});
 });

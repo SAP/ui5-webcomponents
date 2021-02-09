@@ -6,7 +6,7 @@ import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 import { getUseDefaultLanguage } from "../config/Language.js";
 
 // contains package names for which the warning has been shown
-let warningShown = new Set();
+const warningShown = new Set();
 const reportedErrors = new Set();
 
 const bundleData = new Map();
@@ -51,7 +51,7 @@ const registerI18nBundle = (packageName, bundle) => {
 const _hasLoader = (packageName, localeId) => {
 	const bundleKey = `${packageName}/${localeId}`;
 	return loaders.has(bundleKey);
-}
+};
 
 // load bundle over the network once
 const _loadMessageBundleOnce = async (packageName, localeId) => {
@@ -65,13 +65,13 @@ const _loadMessageBundleOnce = async (packageName, localeId) => {
 	return bundlePromises.get(bundleKey);
 };
 
-const _showAssetsWarningOnce = (packageName) => {
+const _showAssetsWarningOnce = packageName => {
 	if (!warningShown.has(packageName)) {
 		console.warn(`[${packageName}]: Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
 		` Add \`import "${packageName}/dist/Assets-dynamic.js"\` in your bundle and make sure your build tool supports dynamic imports and JSON imports. See section "Assets" in the documentation for more information.`); /* eslint-disable-line */
 		warningShown.add(packageName);
 	}
-}
+};
 
 /**
  * This method preforms the asynchronous task of fetching the actual text resources. It will fetch
@@ -108,7 +108,7 @@ const fetchI18nBundle = async packageName => {
 	} catch (e) {
 		if (!reportedErrors.has(e.message)) {
 			reportedErrors.add(e.message);
-			console.error(e.message);
+			console.error(e.message); /* eslint-disable-line */
 		}
 	}
 };
