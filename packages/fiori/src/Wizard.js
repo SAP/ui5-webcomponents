@@ -628,7 +628,7 @@ class Wizard extends UI5Element {
 
 		return contentHeight;
 	}
-	
+
 	get stepsDOM() {
 		return Array.from(this.shadowRoot.querySelectorAll(".ui5-wiz-content-item"));
 	}
