@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.2](https://github.com/SAP/ui5-webcomponents/compare/v0.29.1...v0.29.2) (2021-02-09)
+
+
+### Bug Fixes
+
+* **ui5-wizard:** observe content height changes ([#2801](https://github.com/SAP/ui5-webcomponents/issues/2801)) ([b7ce6f2](https://github.com/SAP/ui5-webcomponents/commit/b7ce6f2))
+
+
+### Features
+
+* **ui5-table:** add growing on scroll ([#2593](https://github.com/SAP/ui5-webcomponents/issues/2593)) ([410b59e](https://github.com/SAP/ui5-webcomponents/commit/410b59e)), closes [#2589](https://github.com/SAP/ui5-webcomponents/issues/2589) [#2570](https://github.com/SAP/ui5-webcomponents/issues/2570)
+
+
+
+
+
 ## [0.29.1](https://github.com/SAP/ui5-webcomponents/compare/v0.29.0...v0.29.1) (2021-01-21)
 
 

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.2](https://github.com/SAP/ui5-webcomponents/compare/v0.29.1...v0.29.2) (2021-02-09)
+
+
+### Bug Fixes
+
+* **ui5-input:** focus is handled properly ([#2670](https://github.com/SAP/ui5-webcomponents/issues/2670)) ([558cfd4](https://github.com/SAP/ui5-webcomponents/commit/558cfd4))
+* **ui5-multi-input:** fix appearance in RTL ([#2782](https://github.com/SAP/ui5-webcomponents/issues/2782)) ([03bf9ec](https://github.com/SAP/ui5-webcomponents/commit/03bf9ec)), closes [#2749](https://github.com/SAP/ui5-webcomponents/issues/2749)
+* **ui5-popover:** correctly position a popover if dynamically created ([#2679](https://github.com/SAP/ui5-webcomponents/issues/2679)) ([fea0010](https://github.com/SAP/ui5-webcomponents/commit/fea0010))
+* **ui5-radiobutton:** fix tab order within group ([#2783](https://github.com/SAP/ui5-webcomponents/issues/2783)) ([6ca5a97](https://github.com/SAP/ui5-webcomponents/commit/6ca5a97)), closes [#2774](https://github.com/SAP/ui5-webcomponents/issues/2774)
+
+
+### Features
+
+* **ui5-multi-input:** Implement accessibility specifications ([#2761](https://github.com/SAP/ui5-webcomponents/issues/2761)) ([f21cbc9](https://github.com/SAP/ui5-webcomponents/commit/f21cbc9))
+* **ui5-table:** add growing on scroll ([#2593](https://github.com/SAP/ui5-webcomponents/issues/2593)) ([410b59e](https://github.com/SAP/ui5-webcomponents/commit/410b59e)), closes [#2589](https://github.com/SAP/ui5-webcomponents/issues/2589) [#2570](https://github.com/SAP/ui5-webcomponents/issues/2570)
+
+
+
+
+
 ## [0.29.1](https://github.com/SAP/ui5-webcomponents/compare/v0.29.0...v0.29.1) (2021-01-21)
 
 
