@@ -364,7 +364,7 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	storeStepScrollOffsets() {
-		this.stepScrollOffsets = this.slottedSteps.map((step, idx) => {
+		this.stepScrollOffsets = this.slottedSteps.map(step => {
 			const contentItem = this.getStepWrapperByRefId(step._id);
 			return contentItem.offsetTop + contentItem.offsetHeight - Wizard.CONTENT_TOP_OFFSET;
 		});
