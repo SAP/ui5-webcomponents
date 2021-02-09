@@ -1,10 +1,9 @@
-commit 5a872b0bbaac333f6125e842443a3e69a04c0368
-Author: Alexandar Mitsev <alexandar.mitsev@sap.com>
-Date:   Mon Feb 8 13:57:24 2021 +0200
+commit ab83ac9cb3d52227eb6071df04f9c1607b770e29
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Feb 9 15:21:48 2021 +0200
 
-    fix(ui5-popover): correctly position a popover if dynamically created (#2679)
+    docs(ui5-avatar-group): comment on the avatars' shape (#2798)
     
-    Now when a popover is dynamically created it is shown only after its size can be determined.
-    This prevents its position to flicker on opening.
+    Make clear that the avatars with "Circle" shape is the one Fiori 3 suggests and meant to be used.
     
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1755
+    FIXES: #2612
