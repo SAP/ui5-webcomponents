@@ -77,8 +77,5 @@
     "packages/ie11",
     "packages/tools",
     "packages/playground"
-  ],
-  "dependencies": {
-    "chromedriver": "^88.0.0"
-  }
+  ]
 }
