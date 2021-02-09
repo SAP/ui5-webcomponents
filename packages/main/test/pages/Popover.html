@@ -137,8 +137,8 @@
 
 
 	<ui5-multi-combobox>
-		<ui5-li>Hello</ui5-li>
-		<ui5-li>World</ui5-li>
+		<ui5-cb-item text="Hello"></ui5-cb-item>
+		<ui5-cb-item text="World"></ui5-cb-item>
 	</ui5-multi-combobox>
 
 	<br>
@@ -376,6 +376,13 @@
 	<ui5-popover id="popNoFocusableContent" placement-type="Bottom">Sample text for the ui5-popover</ui5-popover>
 
 	<br>
+	<br>
+
+	<div style="height: 6rem; text-align: center;">
+		<ui5-button id="btnOpenDynamic" icon="overflow"></ui5-button>
+	</div>
+
+	<br>
 
 	<ui5-button id="btnOpenPopoverWithDiv">Open Popover with div Inside</ui5-button>
 
@@ -467,19 +474,34 @@
 			popXRight.openBy(targetOpener2);
 		});
 
-		firstBtn.addEventListener("click", (event) => {
+		firstBtn.addEventListener("click", function (event) {
 			popNoFocusableContent.innerHTML = "First button is clicked";
 			popNoFocusableContent.openBy(event.target);
 		});
 
-		secondBtn.addEventListener("click", (event) => {
+		secondBtn.addEventListener("click", function (event) {
 			popNoFocusableContent.innerHTML = "Second button is clicked";
 			popNoFocusableContent.openBy(event.target);
+		});
+
+		btnOpenDynamic.addEventListener("click", function () {
+			var popover = document.createElement("ui5-popover"),
+				button = document.createElement("ui5-button");
+
+			button.textContent = "Focusable element";
+			popover.appendChild(button);
+			popover.setAttribute("id", "dynamic-popover");
+			popover.setAttribute("placement-type", "Bottom");
+
+			document.body.appendChild(popover);
+
+			popover.openBy(btnOpenDynamic);
 		});
 
 		btnOpenPopoverWithDiv.addEventListener("click", (event) => {
 			popWithDiv.openBy(event.target);
 		});
+
 	</script>
 </body>
 
