@@ -46,16 +46,16 @@ const getPlugins = ({ transpile }) => {
 		]
 	}));
 
-	plugins.push(url({
-		limit: 0,
-		include: [
-			// uncomment when testing static resources
-			// /.*assets\/.*\.json/,
-		],
-		emitFiles: true,
-		fileName: "[name].[hash][extname]",
-		publicPath,
-	}));
+	// uncomment when testing static resources
+	// plugins.push(url({
+	// 	limit: 0,
+	// 	include: [
+	// 		// /.*assets\/.*\.json/,
+	// 	],
+	// 	emitFiles: true,
+	// 	fileName: "[name].[hash][extname]",
+	// 	publicPath,
+	// }));
 
 	if (transpile) {
 		plugins.push(babel({
