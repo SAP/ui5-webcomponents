@@ -56,7 +56,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the elements is open
+		 * Indicates if the element is open
 		 * @private
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -205,6 +205,19 @@ class Popup extends UI5Element {
 
 	static get staticAreaStyles() {
 		return staticAreaStyles;
+	}
+
+	onEnterDOM() {
+		if (!this.isOpen()) {
+			this._blockLayerHidden = true;
+		}
+	}
+
+	onExitDOM() {
+		if (this.isOpen()) {
+			Popup.unblockBodyScrolling();
+			this._removeOpenedPopup();
+		}
 	}
 
 	get _displayProp() {
@@ -430,13 +443,6 @@ class Popup extends UI5Element {
 	 */
 	hide() {
 		this.style.display = "none";
-	}
-
-	onExitDOM() {
-		if (this.isOpen()) {
-			Popup.unblockBodyScrolling();
-			this._removeOpenedPopup();
-		}
 	}
 
 	/**
