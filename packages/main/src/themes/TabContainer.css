@@ -28,6 +28,7 @@
 
 .ui5-tc__headerInnerContainer {
 	position: relative;
+	flex: 1 1 100%;
 	min-width: 0; /* fixes chrome flex issue */
 }
 
@@ -42,7 +43,7 @@
 .ui-tc__headerScrollContainer {
 	box-sizing: border-box;
 	overflow: hidden;
-	flex: 1;
+	flex: 1 1 100%;
 }
 
 .ui5-tc__headerList {
