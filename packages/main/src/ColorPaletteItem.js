@@ -18,9 +18,9 @@ const metadata = {
 	managedSlots: true,
 	properties: /** @lends  sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
 		/**
-		 * Defines the value of the <code>ui5-color-palette-item</code>.
+		 * Defines the value of the <code>ui5-color-palette-item</code> color.
 		 * <br><br>
-		 * <b>Note:</b> The value should me valid CSS color.
+		 * <b>Note:</b> The value should be a valid CSS color.
 		 *
 		 * @type {CSSColor}
 		 * @public
@@ -64,7 +64,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-color-palette-item</code> component defines the content of an color in the <code>ui5-color-palette</code>.
+ * The <code>ui5-color-palette-item</code> component represents a color in the the <code>ui5-color-palette</code>.
  *
  * @constructor
  * @author SAP SE
