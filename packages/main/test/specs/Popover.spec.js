@@ -250,6 +250,20 @@ describe("Popover general interaction", () => {
 
 		assert.ok(activeElementId, popoverId, "Popover remains focused");
 	});
+
+	it("tests focus when content, which can't be focused is clicked", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+
+		const popoverId = "popWithDiv";
+
+		$("#btnOpenPopoverWithDiv").click();
+
+		$("#divContent").click();
+
+		let activeElementId = $(browser.getActiveElement()).getAttribute("id");
+
+		assert.strictEqual(activeElementId, popoverId, "Popover is focused");
+	});
 });
 
 describe("Acc", () => {
