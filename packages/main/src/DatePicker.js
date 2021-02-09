@@ -2,6 +2,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
+import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
@@ -17,7 +18,7 @@ import {
 import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
+import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -373,14 +374,12 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	get _calendarTimestamp() {
-		let millisecondsUTC;
 		if (this.value && this._checkValueValidity(this.value)) {
-			millisecondsUTC = this.dateValueUTC.getTime();
-		} else {
-			millisecondsUTC = new Date().getTime();
+			const millisecondsUTC = this.dateValueUTC.getTime();
+			return getRoundedTimestamp(millisecondsUTC);
 		}
 
-		return getRoundedTimestamp(millisecondsUTC);
+		return getTodayUTCTimestamp(this._primaryCalendarType);
 	}
 
 	/**
@@ -591,13 +590,13 @@ class DatePicker extends DateComponentBase {
 
 	get accInfo() {
 		return {
-			"ariaDescribedBy": `${this._id}-date`,
+			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
 			"role": "combobox",
 			"ariaOwns": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
-			"ariaDescription": this.dateAriaDescription,
+			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
 	}
@@ -611,7 +610,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	get dateAriaDescription() {
-		return this.i18nBundle.getText(DATEPICKER_DATE_ACC_TEXT);
+		return this.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
 	}
 
 	/**

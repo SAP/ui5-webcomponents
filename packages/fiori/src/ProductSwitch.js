@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -64,6 +65,7 @@ class ProductSwitch extends UI5Element {
 
 		this._itemNavigation = new ItemNavigation(this, {
 			rowSize: 4,
+			behavior: ItemNavigationBehavior.Cyclic,
 			getItemsCallback: () => this.items,
 		});
 	}

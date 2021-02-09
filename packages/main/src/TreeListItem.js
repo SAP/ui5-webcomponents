@@ -1,6 +1,7 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -72,6 +73,30 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the <code>info</code>, displayed in the end of the tree item.
+		 * @type {string}
+		 * @public
+		 * @since 1.0.0-rc.12
+		 */
+		info: {
+			type: String,
+		},
+
+		/**
+		 * Defines the state of the <code>info</code>.
+		 * <br>
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @public
+		 * @since 1.0.0-rc.12
+		 */
+		infoState: {
+			type: ValueState,
+			defaultValue: ValueState.None,
+		},
+
+		/**
 		 * Defines whether the toggle button is shown at the end, rather than at the beginning of the item
 		 *
 		 * @protected
@@ -89,6 +114,26 @@ const metadata = {
 		 */
 		_minimal: {
 			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 * @since 1.0.0-rc.11
+		 */
+		_setsize: {
+			type: Integer,
+			defaultValue: 1,
+			noAttribute: true,
+		},
+
+		/**
+		 * @private
+		 * @since 1.0.0-rc.11
+		 */
+		_posinset: {
+			type: Integer,
+			defaultValue: 1,
+			noAttribute: true,
 		},
 
 	},
@@ -228,6 +273,8 @@ class TreeListItem extends ListItem {
 			role: "treeitem",
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
+			posinset: this._posinset,
+			setsize: this._setsize,
 			listItemAriaLabel: this.ariaLabelText,
 		};
 	}

@@ -81,6 +81,10 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> Consider using the <code>ui5-avatar</code> to display icons, initials or images.
+		 * <br>
+		 * <b>Note:</b>In order to be complaint with the UX guidlines and for best experience,
+		 * we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
+		 * you can set its <code>size</code><code> property to <code>XS</code> to get the required size - <code><ui5-avatar size="XS"></code>.
 		 *
 		 * @type {HTMLElement}
 		 * @slot
@@ -397,7 +401,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		const headingWouldOverflow = this.headingHeight > this._headingOverflowHeight;
-		const descWouldOverflow = this.descriptionHeight > this._descOverflowHeight;
+		const descWouldOverflow = this.hasDesc && this.descriptionHeight > this._descOverflowHeight;
 		const overflows = headingWouldOverflow || descWouldOverflow;
 
 		if (this._showMorePressed && overflows) {
@@ -407,7 +411,7 @@ class NotificationListItem extends NotificationListItemBase {
 
 		if (this.headingOverflows || this.descriptionOverflows) {
 			this._headingOverflowHeight = this.headingHeight;
-			this._descOverflowHeight = this.descriptionHeight;
+			this._descOverflowHeight = this.hasDesc ? this.descriptionHeight : 0;
 			this._showMore = true;
 			return;
 		}

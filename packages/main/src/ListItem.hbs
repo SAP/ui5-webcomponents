@@ -1,5 +1,5 @@
 <li
-	tabindex="{{_tabIndex}}"
+	tabindex="{{tabIndex}}"
 	class="{{classes.main}}"
 	dir="{{effectiveDir}}"
 	@focusin="{{_onfocusin}}"
@@ -15,7 +15,10 @@
 	role="{{_accInfo.role}}"
 	aria-expanded="{{_accInfo.ariaExpanded}}"
 	aria-level="{{_accInfo.ariaLevel}}"
+	aria-posinset="{{_accInfo.posinset}}"
+	aria-setsize="{{_accInfo.setsize}}"
 	aria-labelledby="{{_id}}-invisibleText {{_id}}-content"
+	aria-disabled="{{ariaDisabled}}"
 	style="list-style-type: none;"
 >
 		{{> listItemPreContent}}

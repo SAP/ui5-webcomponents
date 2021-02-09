@@ -287,7 +287,7 @@
 			var value = event.detail.selectedOption.textContent;
 
 			visualizationList.mode = modes[value];
-			visualizationList.headerText = visualizationList.headerText.replace(/\(.+\)/, `(Current mode: ${value})`);
+			visualizationList.headerText = visualizationList.headerText.replace(/\(.+\)/, "(Current mode: " + value + ")");
 		});
 
 		var getItems = function getItems(items) {
@@ -383,7 +383,8 @@
 		var itemsLoadedTotal = 0;
 		var itemsToLoad = 5;
 		var loadedCount = 0;
-		infiniteScrollEx.addEventListener("loadMore", function(e) {
+
+		infiniteScrollEx.addEventListener("ui5-load-more", function(e) {
 			var el = infiniteScrollEx;
 			el.busy = true;
 
@@ -391,7 +392,7 @@
 				insertItems(el, 3);
 				el.busy = false;
 				result.textContent = (++loadedCount) + " times " + (itemsLoadedTotal += itemsToLoad);
-			}, 200);
+			}, 1000);
 		});
 
 	</script>
