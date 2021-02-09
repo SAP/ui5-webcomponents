@@ -33,15 +33,6 @@ const metadata = {
 		value: {
 			type: CSSColor,
 		 },
-		/**
-		 * The colors grouped in object with their indexes.
-		 * @type {CSSColor}
-		 * @private
-		 */
-		entries: {
-			type: Object,
-			multiple: true,
-		 },
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
@@ -135,11 +126,9 @@ class ColorPalette extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (!this.entries.length) {
-			this.displayedColors.forEach((item, index) => {
-				item.index = index + 1;
-			});
-		}
+		this.displayedColors.forEach((item, index) => {
+			item.index = index + 1;
+		});
 	}
 
 	selectColor(item) {
