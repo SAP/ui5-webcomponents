@@ -1,9 +1,10 @@
-commit ab83ac9cb3d52227eb6071df04f9c1607b770e29
+commit b4cbc43ba37fb69bcb30d32751aa21448ff65000
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 9 15:21:48 2021 +0200
+Date:   Tue Feb 9 17:23:21 2021 +0200
 
-    docs(ui5-avatar-group): comment on the avatars' shape (#2798)
+    fix(ui5-wizard): observe content height changes (#2801)
     
-    Make clear that the avatars with "Circle" shape is the one Fiori 3 suggests and meant to be used.
+    Issue: When the step content size is changed runtime, step selection might go wrong as the steps' scroll positions are out of sync - the wizard works with the old ones.
+    Solution: Observe steps and update state to store steps' scroll positions.
     
-    FIXES: #2612
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2784
