@@ -9,7 +9,7 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
-import ColorPaletteEntry from "./ColorPaletteEntry.js";
+import ColorPaletteItem from "./ColorPaletteItem.js";
 import {
 	COLORPALETTE_CONTAINER_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
@@ -45,7 +45,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
-		 * Defines the <code>ui5-color-palette-entry</code> items.
+		 * Defines the <code>ui5-color-palette-item</code> items.
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -63,12 +63,12 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
-		 * @param details
+		 * @param {String} color the selected color
 		 */
 		change: {
 			details: {
 				color: {
-					type: "CSSColor",
+					type: "String",
 				},
 			},
 		 },
@@ -80,7 +80,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The ColorPalette provides the users with a range of predefined colors.
- * You can set them by using the ColorPaletteEntry items as slots.
+ * You can set them by using the ColorPaletteItem items as slots.
  *
  * <h3>Usage</h3>
  * The palette is intended for users, who don't want to check and remember the different values of the colors .
@@ -96,7 +96,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-color-palette
  * @since 1.0.0-rc.12
- * @appenddocs ColorPaletteEntry
+ * @appenddocs ColorPaletteItem
  * @public
  */
 class ColorPalette extends UI5Element {
@@ -117,7 +117,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [ColorPaletteEntry];
+		return [ColorPaletteItem];
 	}
 
 	static async onDefine() {
@@ -128,7 +128,7 @@ class ColorPalette extends UI5Element {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this.colors.slice(0, 15),
+			getItemsCallback: () => this.displayedColors,
 			rowSize: 5,
 			behavior: ItemNavigationBehavior.Cyclic,
 		});
@@ -136,17 +136,17 @@ class ColorPalette extends UI5Element {
 
 	onBeforeRendering() {
 		if (!this.entries.length) {
-			this.colors.forEach((item, index) => {
+			this.displayedColors.forEach((item, index) => {
 				item.index = index + 1;
 			});
 		}
 	}
 
-	selectColor(target) {
-		target.getDomRef().focus();
-		this._itemNavigation.update(target);
+	selectColor(item) {
+		item.focus();
+		this._itemNavigation.update(item);
 
-		this.value = target.value;
+		this.value = item.value;
 
 		this.fireEvent("change", {
 			color: this.value,
@@ -170,8 +170,8 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
-	get colors() {
-		return this.colors.slice(0, 15);
+	get displayedColors() {
+		return this.colors.filter(item => item.value).slice(0, 15);
 	}
 
 	get colorContainerLabel() {

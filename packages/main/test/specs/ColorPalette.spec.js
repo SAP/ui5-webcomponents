@@ -6,7 +6,7 @@ describe("ColorPalette interactions", () => {
 	it("Test if selecting element works", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
 		const colorPalette = browser.$("#cp1");
-		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-entry]");
+		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
 
 		colorPaletteEntries[0].click();
 
@@ -16,7 +16,7 @@ describe("ColorPalette interactions", () => {
 	it("Test if keyboard navigation on elements works", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
 		const colorPalette = browser.$("#cp1");
-		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-entry]");
+		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
 		const swatch = colorPaletteEntries[0];
 
 		swatch.click();
@@ -30,7 +30,7 @@ describe("ColorPalette interactions", () => {
 	it("Test if keyboard navigation on elements works", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
 		const colorPalette = browser.$("#cp1");
-		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-entry]");
+		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
 		const swatch = colorPaletteEntries[0];
 
 		swatch.click();
@@ -46,7 +46,7 @@ describe("ColorPalette interactions", () => {
 	it("Test if keyboard navigation on elements works", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
 		const colorPalette = browser.$("#cp1");
-		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-entry]");
+		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
 		const swatch = colorPaletteEntries[0];
 
 		swatch.click();
@@ -60,7 +60,7 @@ describe("ColorPalette interactions", () => {
 	it("Test if keyboard navigation on elements works", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
 		const colorPalette = browser.$("#cp1");
-		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-entry]");
+		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
 		const swatch = colorPaletteEntries[9];
 
 		swatch.click();
