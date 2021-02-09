@@ -590,7 +590,7 @@ class List extends UI5Element {
 	onItemFocused(event) {
 		const target = event.target;
 
-		this._itemNavigation.update(target);
+		this._itemNavigation.setCurrentItem(target);
 		this.fireEvent("item-focused", { item: target });
 
 		if (this.mode === ListMode.SingleSelectAuto) {

@@ -398,7 +398,7 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	onStepInHeaderFocused(event) {
-		this._itemNavigation.update(event.target);
+		this._itemNavigation.setCurrentItem(event.target);
 	}
 
 	/**
