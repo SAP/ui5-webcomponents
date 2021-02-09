@@ -35,7 +35,7 @@
 }
 
 :host([readonly]) .ui5-token--wrapper {
-	padding-right: 0.375rem;
+	padding-right: 0.3125rem;
 }
 
 :host([selected]) .ui5-token--wrapper:focus {
@@ -85,12 +85,7 @@
 }
 
 /* RTL */
-:host .ui5-token--wrapper[dir="rtl"] {
+:host(:not([readonly])) .ui5-token--wrapper[dir="rtl"] {
 	padding-right: var(--_ui5_token_wrapper_right_padding);
 	padding-left: var(--_ui5_token_wrapper_left_padding);
-}
-
-:host([readonly]) .ui5-token--wrapper[dir="rtl"] {
-	padding-right: 0;
-	padding-left: 0.375rem;
 }
