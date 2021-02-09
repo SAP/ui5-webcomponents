@@ -425,7 +425,7 @@ describe("'change' event firing", () => {
 
 });
 
-describe("Accessibility-related parameters", () => {
+describe("Accessibility related parameters", () => {
 
 	it("'step', 'min' and 'max' attributes presence", () => {
 		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
