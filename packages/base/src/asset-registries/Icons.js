@@ -1,5 +1,8 @@
 import { registerIcon, registerCollectionPromise } from "../SVGIconRegistry.js";
 
+/**
+ * @deprecated
+ */
 const registerIconBundle = async (collectionName, bundleData) => {
 	throw new Error("This method has been removed. Use `registerIconLoader` instead.");
 };
