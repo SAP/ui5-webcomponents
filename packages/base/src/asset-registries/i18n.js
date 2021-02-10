@@ -54,7 +54,7 @@ const _hasLoader = (packageName, localeId) => {
 };
 
 // load bundle over the network once
-const _loadMessageBundleOnce = async (packageName, localeId) => {
+const _loadMessageBundleOnce = (packageName, localeId) => {
 	const bundleKey = `${packageName}/${localeId}`;
 	const loadMessageBundle = loaders.get(bundleKey);
 
