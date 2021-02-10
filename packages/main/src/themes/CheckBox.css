@@ -38,7 +38,6 @@
 
 :host([wrap][text]) .ui5-checkbox-root .ui5-checkbox-label {
 	word-break: break-all;
-	align-self: center;
 }
 
 :host([wrap]) .ui5-checkbox-root:focus::before {

@@ -14,14 +14,13 @@
 			?disabled="{{disabled}}"
 			?readonly="{{_readonly}}"
 			.value="{{value}}"
-			placeholder="{{_placeholder}}"
+			placeholder="{{placeholder}}"
 			maxlength="{{maxlength}}"
 			role="{{accInfo.input.role}}"
 			aria-owns="{{accInfo.input.ariaOwns}}"
 			?aria-invalid="{{accInfo.input.ariaInvalid}}"
 			aria-haspopup="{{accInfo.input.ariaHasPopup}}"
 			aria-describedby="{{accInfo.input.ariaDescribedBy}}"
-			aria-roledescription="{{accInfo.input.ariaRoledescription}}"
 			aria-autocomplete="{{accInfo.input.ariaAutoComplete}}"
 			aria-expanded="{{accInfo.input.ariaExpanded}}"
 			aria-label="{{accInfo.input.ariaLabel}}"
@@ -63,6 +62,7 @@
 
 	<slot name="formSupport"></slot>
 </div>
+
 
 {{#*inline "preContent"}}{{/inline}}
 {{#*inline "postContent"}}{{/inline}}

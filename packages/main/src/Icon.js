@@ -4,7 +4,6 @@ import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/SVGIc
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
@@ -160,7 +159,7 @@ const metadata = {
 class Icon extends UI5Element {
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-icons");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -181,7 +180,7 @@ class Icon extends UI5Element {
 
 	static async onDefine() {
 		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
-		await fetchI18nBundle("@ui5/webcomponents-icons");
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	_onfocusin(event) {
@@ -239,20 +238,22 @@ class Icon extends UI5Element {
 	}
 
 	static createGlobalStyle() {
-		if (isLegacyBrowser()) {
-			const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
-			if (!styleElement) {
-				createStyleInHead(`ui5-icon { display: none !important; }`, { "data-ui5-icon-global": "" });
-			}
+		if (!window.ShadyDOM) {
+			return;
+		}
+		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
+		if (!styleElement) {
+			createStyleInHead(`ui5-icon { display: none !important; }`, { "data-ui5-icon-global": "" });
 		}
 	}
 
 	static removeGlobalStyle() {
-		if (isLegacyBrowser()) {
-			const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
-			if (styleElement) {
-				document.head.removeChild(styleElement);
-			}
+		if (!window.ShadyDOM) {
+			return;
+		}
+		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
+		if (styleElement) {
+			document.head.removeChild(styleElement);
 		}
 	}
 

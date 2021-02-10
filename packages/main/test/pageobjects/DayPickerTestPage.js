@@ -5,7 +5,7 @@ class DayPickerTestHelper {
 
 	get dayPickerRoot() {
 		return browser.executeAsync(async (id, done) => {
-			await window["sap-ui-webcomponents-bundle"].renderFinished();
+			await window.RenderScheduler.whenFinished();
 
 			const el = document.getElementById(id)
 				.shadowRoot.querySelector(".ui5-dp-root");

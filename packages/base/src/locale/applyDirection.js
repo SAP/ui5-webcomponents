@@ -1,4 +1,4 @@
-import { reRenderAllUI5Elements } from "../Render.js";
+import RenderScheduler from "../RenderScheduler.js";
 import { fireDirectionChange } from "./directionChange.js";
 
 /**
@@ -11,7 +11,8 @@ import { fireDirectionChange } from "./directionChange.js";
 const applyDirection = async () => {
 	const listenersResults = fireDirectionChange();
 	await Promise.all(listenersResults);
-	await reRenderAllUI5Elements({ rtlAware: true });
+	RenderScheduler.reRenderAllUI5Elements({ rtlAware: true });
+	return RenderScheduler.whenFinished();
 };
 
 export default applyDirection;

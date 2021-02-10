@@ -23,7 +23,7 @@ import {
 	VALUE_STATE_WARNING,
 	VALUE_STATE_INFORMATION,
 	INPUT_SUGGESTIONS_TITLE,
-	SELECT_OPTIONS,
+	ICON_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -654,7 +654,7 @@ class ComboBox extends UI5Element {
 			this._tempValue = current;
 		}
 
-		if (matchingItems.length && (selectionValue !== this._tempValue && this.value !== this._tempValue)) {
+		if (matchingItems.length && (selectionValue !== this._tempValue)) {
 			setTimeout(() => {
 				this.inner.setSelectionRange(selectionValue.length, this._tempValue.length);
 			}, 0);
@@ -722,7 +722,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get _iconAccessibleNameText() {
-		return this.i18nBundle.getText(SELECT_OPTIONS);
+		return this.i18nBundle.getText(ICON_ACCESSIBLE_NAME);
 	}
 
 	get inner() {
@@ -814,7 +814,7 @@ class ComboBox extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
-				"padding": "0.9125rem 1rem",
+				"padding": "0.5625rem 1rem",
 			},
 		};
 	}

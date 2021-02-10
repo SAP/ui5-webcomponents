@@ -1,5 +1,5 @@
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import {
 	isF4,
 	isF4Shift,
@@ -236,7 +236,7 @@ class Calendar extends CalendarPart {
 	}
 
 	async onAfterRendering() {
-		await renderFinished(); // Await for the current picker to render and then ask if it has previous/next pages
+		await RenderScheduler.whenFinished(); // Await for the current picker to render and then ask if it has previous/next pages
 		this._previousButtonDisabled = !this._currentPickerDOM._hasPreviousPage();
 		this._nextButtonDisabled = !this._currentPickerDOM._hasNextPage();
 	}

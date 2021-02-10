@@ -92,7 +92,7 @@ const getES6Config = (input = "bundle.esm.js") => {
 			sourcemap: true
 		},
 		moduleContext: (id) => {
-			if (typeof id === "string" && id.includes("url-search-params-polyfill")) {
+			if (id.includes("url-search-params-polyfill")) {
 				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
 				return "window";
 			}
@@ -130,7 +130,7 @@ const getES5Config = (input = "bundle.es5.js") => {
 
 let config = getES6Config();
 
-if (process.env.ES5_BUILD && fs.existsSync("bundle.es5.js")) {
+if (process.env.ES5_BUILD) {
 	config = config.concat(getES5Config());
 }
 

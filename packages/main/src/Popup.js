@@ -1,4 +1,3 @@
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -322,7 +321,7 @@ class Popup extends UI5Element {
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
 	 * @public
 	 */
-	async open(preventInitialFocus) {
+	open(preventInitialFocus) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
 		if (prevented) {
 			return;
@@ -338,7 +337,6 @@ class Popup extends UI5Element {
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
 		this._focusedElementBeforeOpen = getFocusedElement();
-
 		this.show();
 
 		if (!this._disableInitialFocus && !preventInitialFocus) {
@@ -348,8 +346,6 @@ class Popup extends UI5Element {
 		this._addOpenedPopup();
 
 		this.opened = true;
-
-		await renderFinished();
 		this.fireEvent("after-open", {}, false, false);
 	}
 

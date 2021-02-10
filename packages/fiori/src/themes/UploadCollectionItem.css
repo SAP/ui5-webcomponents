@@ -41,8 +41,6 @@
 }
 
 .ui5-uci-content-and-progress {
-	max-width: 100%;
-	min-width: 0;
 	display: flex;
 	flex: 1 1 auto;
 }
@@ -50,20 +48,16 @@
 .ui5-uci-content {
 	flex: 1 1 auto;
 	margin-right: .5rem;
-	width: 100%;
 	min-width: 0; /* fixes chrome overflow issue */
 }
 
 .ui5-uci-file-name {
-	width: 100%;
 	display: block;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontLargeSize);
 	color: var(--sapTextColor);
 	margin-bottom: 0.25rem;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
+	white-space: pre-wrap;
 }
 
 [ui5-link].ui5-uci-file-name {

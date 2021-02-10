@@ -234,6 +234,10 @@ class Link extends UI5Element {
 		return (this.disabled || !this.textContent.length) ? "-1" : "0";
 	}
 
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
+	}
+
 	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
 	}

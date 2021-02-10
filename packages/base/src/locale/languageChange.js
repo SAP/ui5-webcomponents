@@ -12,7 +12,7 @@ const detachLanguageChange = listener => {
 };
 
 const fireLanguageChange = lang => {
-	return eventProvider.fireEventAsync(LANG_CHANGE, lang);
+	return eventProvider.fireEvent(LANG_CHANGE, lang);
 };
 
 export {

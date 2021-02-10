@@ -24,12 +24,15 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
-    "lit-html": "^1.0.0"
+    "css-vars-ponyfill": "^2.1.2",
+    "lit-html": "^1.0.0",
+    "regenerator-runtime": "0.12.1",
+    "url-search-params-polyfill": "^5.0.0"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.11",
     "array-uniq": "^2.0.0",
-    "chromedriver": "88.0.0",
+    "chromedriver": "latest",
     "copy-and-watch": "^0.1.4",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",

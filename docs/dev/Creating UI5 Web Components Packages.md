@@ -22,12 +22,10 @@ The name that you give to your package will be used by the UI5 Web Components to
 With `npm`:
  - `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
  - `npm i --save-dev chromedriver`
- - (Optional) `npm i --save @ui5/webcomponents-ie11`
 
 or with `yarn`:
  - `yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
  - `yarn add -D chromedriver` 
- - (Optional) `yarn add @ui5/webcomponents-ie11`
 
 These three `@ui5/` packages will serve as foundation for your own package and web components.
 
@@ -36,13 +34,10 @@ Package | Description
 `@ui5/webcomponents-base` | Base classes and Framework
 `@ui5/webcomponents-theme-base` | Base theming assets
 `@ui5/webcomponents-tools` | Build and configuration assets
-`@ui5/webcomponents-ie11` | (Optional) Internet Explorer 11 polyfills and adapter code
 
 *Note:* `chromedriver` is a peer dependency of `@ui5/webcomponents-tools` so that you get to choose the exact version, 
 if necessary. This is useful if, for example, you manually update Chrome on your system and you'd prefer to not have
 a fixed `chromedriver` version packaged with `@ui5/webcomponents-tools`. 
-
-*Note:* `@ui5/webcomponents-ie11` is optional and should not be installed unless you need Internet Explorer 11 support.
 
 ## Step 3 - run the package initialization script
 
@@ -131,7 +126,7 @@ File | Purpose
 .eslintignore | Excludes the `dist/` and `test/` directories from static code scans
 package-scripts.js | An [nps](https://www.npmjs.com/package/nps) package scripts configuration file
 bundle.esm.js | Entry point for the ES6 bundle, used for development and tests. Intended for modern browsers.
-bundle.es5.js | Entry point for the ES5 bundle, used for development and tests. Intended for IE11 only. Delete this file if you don't need IE11 support.
+bundle.es5.js | Entry point for the ES5 bundle, used for development and tests. Intended for IE11 only.
 
 You'll likely only need to change `bundle.esm.js` to import your new components there.
 

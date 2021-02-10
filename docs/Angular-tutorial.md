@@ -136,11 +136,6 @@ If you need your application to run on Internet Explorer 11, there are some addi
 *Note* These steps have been tested with Angular 7. For other versions of Angular, there might be some differences.
 
 1. Install all needed dependencies:
-
-```bash
-npm install @ui5/webcomponents-ie11 --save
-```
-
 ```bash
 npm install --save @angular-builders/custom-webpack@7.5 @angular-builders/dev-server@7.3 @babel/core @babel/preset-env babel-loader
 ```
@@ -210,7 +205,7 @@ module.exports = {
 
 4. Add the following import ```to app.module.ts``` file:
 ```js
-import "@ui5/webcomponents-ie11/dist/features/IE11WithWebComponentsPolyfill.js";
+import "@ui5/webcomponents-base/dist/features/browsersupport/IE11WithWebComponentsPolyfill.js";
 ```
 
 *Note*: The ```IE11WithWebComponentsPolyfill.js``` file includes the official webcomponents polyfill, so you don’t have to import it by yourself. (This file was released in our latest @next version. It will be shipped with our next stable release rc.6, so until then it would be available only with the @next tag)

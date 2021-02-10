@@ -203,10 +203,6 @@ class Dialog extends Popup {
 		return "flex";
 	}
 
-	get _displayHeader() {
-		return this.header.length || this.headerText;
-	}
-
 	show() {
 		super.show();
 		this._center();

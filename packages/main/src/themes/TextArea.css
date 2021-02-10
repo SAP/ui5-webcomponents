@@ -13,9 +13,6 @@
 	border-color: var(--sapField_BorderColor);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
 	box-sizing: border-box;
-	line-height: 1.4;
-	letter-spacing: normal;
-	word-spacing: normal;
 }
 
 :host([disabled]) {
@@ -60,6 +57,7 @@
 	height: 100%;
 	margin: 0;
 	padding: var(--_ui5_textarea_padding);
+	line-height: 1.4;
 	box-sizing: border-box;
 	color: inherit;
 	font-size: inherit;
@@ -74,9 +72,6 @@
 	background-color: var(--sapField_Background);
 	border-width: 1px;
 	border-style: solid;
-	line-height: inherit;
-	letter-spacing: inherit;
-	word-spacing: inherit;
 }
 
 :host([growing]) .ui5-textarea-root {

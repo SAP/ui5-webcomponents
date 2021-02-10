@@ -4,7 +4,7 @@ import { attachCustomCSSChange } from "./CustomStyle.js";
 const constructableStyleMap = new Map();
 
 attachCustomCSSChange(tag => {
-	constructableStyleMap.delete(`${tag}_normal`); // there is custom CSS only for the component itself, not for its static area part
+	constructableStyleMap.delete(tag);
 });
 
 /**
@@ -13,18 +13,17 @@ attachCustomCSSChange(tag => {
  * @param ElementClass
  * @returns {*}
  */
-const getConstructableStyle = (ElementClass, forStaticArea = false) => {
+const getConstructableStyle = ElementClass => {
 	const tag = ElementClass.getMetadata().getTag();
-	const key = `${tag}_${forStaticArea ? "static" : "normal"}`;
 
-	if (!constructableStyleMap.has(key)) {
-		const styleContent = getEffectiveStyle(ElementClass, forStaticArea);
+	if (!constructableStyleMap.has(tag)) {
+		const styleContent = getEffectiveStyle(ElementClass);
 		const style = new CSSStyleSheet();
 		style.replaceSync(styleContent);
-		constructableStyleMap.set(key, [style]);
+		constructableStyleMap.set(tag, [style]);
 	}
 
-	return constructableStyleMap.get(key);
+	return constructableStyleMap.get(tag);
 };
 
 export default getConstructableStyle;

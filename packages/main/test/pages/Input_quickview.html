@@ -57,7 +57,7 @@
 	</div>
 
 	<h1> Test Quick View sample</h1>
-
+	
 	<ui5-input id="inputPreview2" show-suggestions style="width: 200px">
 		<ui5-suggestion-item class="suggestionItem" text="Laptop Lenovo"></ui5-suggestion-item>
 		<ui5-suggestion-item class="suggestionItem" text="HP Monitor 24"></ui5-suggestion-item>
@@ -95,22 +95,22 @@
 	</ui5-popover>
 
 	<script>
-		/*
+		/* 
 		 * QuickviewCard Sample #1
 		 */
 		var focusQuickView = false;
 
-		/*
+		/* 
 		 * Open quickviewCard on suggestion-item-preview
 		 */
 		inputPreview.addEventListener("suggestion-item-preview", function (event) {
 			const targetRef = event.detail.targetRef;
 
 			quickViewCard.close();
-			quickViewCard.openBy(targetRef, true /* preventInitialFocus */);
+			quickViewCard.openBy(targetRef, true /* preventInitialFocus */); 
 		});
 
-		/*
+		/* 
 		 * Toggle quickviewCard on mouseover/mouseout
 		 */
 		 [].slice.call(document.querySelectorAll("#inputPreview .suggestionItem")).forEach(function(el) {
@@ -125,7 +125,7 @@
 			});
 		});
 
-		/*
+		/* 
 		 * Focus quickviewCard on [ctrl + shift + 1]
 		 */
 		inputPreview.addEventListener("keyup", async event => {
@@ -133,24 +133,24 @@
 
 			if (combination) {
 				focusQuickView = true;
-				await window["sap-ui-webcomponents-bundle"].renderFinished();
+				await RenderScheduler.whenFinished();
 				quickViewCard.applyFocus();
 			}
 		});
 
-		/*
+		/* 
 		 * Restore the focus to the input on ESC
 		 */
 		quickViewCard.addEventListener("before-close", async event => {
 			const esc = event.detail.escPressed;
 
 			if (esc) {
-				await window["sap-ui-webcomponents-bundle"].renderFinished();
+				await RenderScheduler.whenFinished();
 				inputPreview.focus();
 			}
 		});
 
-		/*
+		/* 
 		 * QuickviewCard Test markup
 		 */
 		var focusQuickView2 = false;
@@ -170,7 +170,7 @@
 
 			if (combination) {
 				focusQuickView2 = true;
-				await window["sap-ui-webcomponents-bundle"].renderFinished();
+				await RenderScheduler.whenFinished();
 				quickViewCard2.applyFocus();
 			}
 
@@ -193,7 +193,7 @@
 			const esc = event.detail.escPressed;
 
 			if (esc) {
-				await window["sap-ui-webcomponents-bundle"].renderFinished();
+				await RenderScheduler.whenFinished();
 				inputPreview2.focus();
 			}
 		});

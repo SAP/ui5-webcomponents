@@ -3,12 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
-import TableGrowingMode from "./types/TableGrowingMode.js";
-import BusyIndicator from "./BusyIndicator.js";
 
 // Texts
 import { TABLE_LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
@@ -18,8 +14,6 @@ import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/Table.css.js";
-
-const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 /**
  * @public
@@ -76,35 +70,35 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text that will be displayed inside the <code>More</code> button at the bottom of the table,
+		 * Defines the text that will be displayed inside the additional row at the bottom of the table,
 		 * meant for loading more rows upon press.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> If not specified a built-in text will be displayed.
 		 * <br>
-		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
+		 * <b>Note:</b> This property takes effect if <code>hasMore</code> is set.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.11
 		 * @public
 		 */
-		moreText: {
+		loadMoreText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the subtext that will be displayed under the <code>moreText</code>.
+		 * Defines the subtext that will be displayed under the <code>loadMoreText</code>.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
+		 * <b>Note:</b> This property takes effect if <code>hasMore</code> is set.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.11
 		 * @public
 		 */
-		moreSubtext: {
+		loadMoreSubtext: {
 			type: String,
 		},
 
@@ -120,43 +114,15 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the table will have growing capability either by pressing a <code>More</code> button,
-		 * or via user scroll. In both cases <code>load-more</code> event is fired.
-		 * <br><br>
+		 * Defines if additonal row will be displayed at the bottom of the table.
+		 * Pressing on the row will fire the <code>load-more</code> event.
 		 *
-		 * Available options:
-		 * <br><br>
-		 * <code>Button</code> - Shows a <code>More</code> button at the bottom of the table, pressing of which triggers the <code>load-more</code> event.
-		 * <br>
-		 * <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the table;
-		 * <br>
-		 * <code>None</code> (default) - The growing is off.
-		 * <br><br>
-		 *
-		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
-		 * and the component will fallback to <code>growing="Button"</code>.
-		 * @type {TableGrowingMode}
-		 * @defaultvalue "None"
-		 * @since 1.0.0-rc.12
-		 * @public
-		 */
-		growing: {
-			type: TableGrowingMode,
-			defaultvalue: TableGrowingMode.None,
-		},
-
-		/**
-		 * Defines if the table is in busy state.
-		 * <b>
-		 *
-		 * In this state the component's opacity is reduced
-		 * and busy indicator is displayed at the bottom of the table.
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @since 1.0.0-rc.12
+		 * @since 1.0.0-rc.11
 		 * @public
-		*/
-		busy: {
+		 */
+		hasMore: {
 			type: Boolean,
 		},
 
@@ -200,7 +166,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the active state of the <code>More</code> button.
+		 * Defines the active state of the "load more" row.
 		 * @private
 		 */
 		_loadMoreActive: {
@@ -213,14 +179,6 @@ const metadata = {
 		 */
 		_columnHeader: {
 			type: Object,
-		},
-
-		/**
-		 * Defines if the entire table is in view port.
-		 * @private
-		 */
-		_inViewport: {
-			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
@@ -252,10 +210,8 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when the user presses the <code>More</code> button or scrolls to the table's end.
+		 * Fired when the user presses the <code>showMore</code> row of the table.
 		 * <br><br>
-		 *
-		 * <b>Note:</b> The event will be fired if <code>growing</code> is set to <code>Button</code> or <code>Scroll</code>.
 		 * @event sap.ui.webcomponents.main.Table#load-more
 		 * @public
 		 * @since 1.0.0-rc.11
@@ -314,10 +270,6 @@ class Table extends UI5Element {
 		return TableTemplate;
 	}
 
-	static get dependencies() {
-		return [BusyIndicator];
-	}
-
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
@@ -342,8 +294,6 @@ class Table extends UI5Element {
 		this._handleResize = this.popinContent.bind(this);
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-
-		this.tableEndObserved = false;
 	}
 
 	onBeforeRendering() {
@@ -356,7 +306,6 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
-			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
 		});
@@ -370,30 +319,12 @@ class Table extends UI5Element {
 		this.visibleColumnsCount = this.visibleColumns.length;
 	}
 
-	onAfterRendering() {
-		if (this.growsOnScroll) {
-			this.observeTableEnd();
-		}
-
-		this.checkTableInViewport();
-	}
-
 	onEnterDOM() {
-		if (!isIE()) {
-			this.growingIntersectionObserver = this.getIntersectionObserver();
-		}
-
 		ResizeHandler.register(this.getDomRef(), this._handleResize);
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
-
-		if (!isIE()) {
-			this.growingIntersectionObserver.disconnect();
-			this.growingIntersectionObserver = null;
-			this.tableEndObserved = false;
-		}
 	}
 
 	onRowFocused(event) {
@@ -428,34 +359,8 @@ class Table extends UI5Element {
 		this.fireEvent("load-more");
 	}
 
-	observeTableEnd() {
-		if (!this.tableEndObserved) {
-			this.getIntersectionObserver().observe(this.tableEndDOM);
-			this.tableEndObserved = true;
-		}
-	}
-
-	onInteresection(entries) {
-		if (entries.some(entry => entry.isIntersecting)) {
-			debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
-		}
-	}
-
-	loadMore() {
-		this.fireEvent("load-more");
-	}
-
 	getColumnHeader() {
 		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
-	}
-
-	handleResize(event) {
-		this.checkTableInViewport();
-		this.popinContent(event);
-	}
-
-	checkTableInViewport() {
-		this._inViewport = this.isInViewport();
 	}
 
 	popinContent(_event) {
@@ -512,41 +417,8 @@ class Table extends UI5Element {
 		}, this);
 	}
 
-	getIntersectionObserver() {
-		if (!this.growingIntersectionObserver) {
-			this.growingIntersectionObserver = new IntersectionObserver(this.onInteresection.bind(this), {
-				root: document,
-				rootMargin: "0px",
-				threshold: 1.0,
-			});
-		}
-
-		return this.growingIntersectionObserver;
-	}
-
-	get styles() {
-		return {
-			busy: {
-				position: this.busyIndPosition,
-			},
-		};
-	}
-
-	get growsWithButton() {
-		if (isIE()) {
-			// On IE fallback to "More" button, even if growing of type "Scroll" is set.
-			return this.growing === TableGrowingMode.Button || this.growing === TableGrowingMode.Scroll;
-		}
-
-		return this.growing === TableGrowingMode.Button;
-	}
-
-	get growsOnScroll() {
-		return !isIE() && this.growing === TableGrowingMode.Scroll;
-	}
-
-	get _moreText() {
-		return this.moreText || this.i18nBundle.getText(TABLE_LOAD_MORE_TEXT);
+	get _loadMoreText() {
+		return this.loadMoreText || this.i18nBundle.getText(TABLE_LOAD_MORE_TEXT);
 	}
 
 	get loadMoreAriaLabelledBy() {
@@ -555,28 +427,6 @@ class Table extends UI5Element {
 		}
 
 		return `${this._id}-showMore-text`;
-	}
-
-	get tableEndDOM() {
-		return this.shadowRoot.querySelector(".ui5-table-end-marker");
-	}
-
-	get busyIndPosition() {
-		if (isIE()) {
-			return "absolute";
-		}
-
-		return this._inViewport ? "absolute" : "sticky";
-	}
-
-	isInViewport() {
-		const rect = this.getDomRef().getBoundingClientRect();
-
-		return (
-			rect.top >= 0 && rect.left >= 0
-				&& rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-				&& rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-		);
 	}
 }
 

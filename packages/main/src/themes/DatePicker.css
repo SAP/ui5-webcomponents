@@ -3,9 +3,6 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
-	line-height: normal;
-	letter-spacing: normal;
-	word-spacing: normal;
 }
 
 :host {
@@ -18,7 +15,4 @@
 	min-width: inherit;
 	color: inherit;
 	background-color: inherit;
-	line-height: inherit;
-	letter-spacing: inherit;
-	word-spacing: inherit;
 }

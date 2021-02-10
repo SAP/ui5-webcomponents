@@ -33,11 +33,10 @@
     "@ui5/webcomponents": "1.0.0-rc.11",
     "@ui5/webcomponents-base": "0.28.0",
     "@ui5/webcomponents-icons": "1.0.0-rc.11",
-    "@ui5/webcomponents-ie11": "0.28.0",
     "@ui5/webcomponents-theme-base": "1.0.0-rc.11"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.11",
-    "chromedriver": "88.0.0"
+    "chromedriver": "latest"
   }
 }

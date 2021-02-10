@@ -2,54 +2,53 @@
 	class="ui5-list-root"
 	@focusin="{{_onfocusin}}"
 	@keydown="{{_onkeydown}}"
+	@scroll="{{_onScroll}}"
 >
-	<div class="ui5-list-scroll-container" @scroll="{{_onScroll}}">
-		<!-- header -->
-		{{#if header.length}}
-			<slot name="header" />
+	<!-- header -->
+	{{#if header.length}}
+		<slot name="header" />
+	{{/if}}
+	{{#if shouldRenderH1}}
+		<header id="{{headerID}}" class="ui5-list-header">
+			{{headerText}}
+		</header>
+	{{/if}}
+
+	{{#if hasData}}
+		<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
+	{{/if}}
+
+	<ul id="{{_id}}-listUl"
+		class="ui5-list-ul"
+		role="{{accRole}}"
+		aria-label="{{ariaLabelТxt}}"
+		aria-labelledby="{{ariaLabelledBy}}"
+		aria-multiselectable="{{isMultiSelect}}"
+	>
+		<slot></slot>
+
+		{{#if showNoDataText}}
+			<li id="{{_id}}-nodata" class="ui5-list-nodata" tabindex="{{noDataTabIndex}}" style="list-style-type: none;">
+				<div id="{{_id}}-nodata-text" class="ui5-list-nodata-text">
+					{{noDataText}}
+				</div>
+			</li>
 		{{/if}}
-		{{#if shouldRenderH1}}
-			<header id="{{headerID}}" class="ui5-list-header">
-				{{headerText}}
-			</header>
-		{{/if}}
+	</ul>
 
-		{{#if hasData}}
-			<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
-		{{/if}}
+	{{#if footerText}}
+		<footer id="{{_id}}-footer" class="ui5-list-footer">
+			{{footerText}}
+		</footer>
+	{{/if}}
 
-		<ul id="{{_id}}-listUl"
-			class="ui5-list-ul"
-			role="{{accRole}}"
-			aria-label="{{ariaLabelТxt}}"
-			aria-labelledby="{{ariaLabelledBy}}"
-			aria-multiselectable="{{isMultiSelect}}"
-		>
-			<slot></slot>
-
-			{{#if showNoDataText}}
-				<li id="{{_id}}-nodata" class="ui5-list-nodata" tabindex="{{noDataTabIndex}}" style="list-style-type: none;">
-					<div id="{{_id}}-nodata-text" class="ui5-list-nodata-text">
-						{{noDataText}}
-					</div>
-				</li>
-			{{/if}}
-		</ul>
-
-		{{#if footerText}}
-			<footer id="{{_id}}-footer" class="ui5-list-footer">
-				{{footerText}}
-			</footer>
-		{{/if}}
-
-		{{#if hasData}}
-			<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>
-		{{/if}}
-	</div>
-
-	{{#if busy}}
+	{{#if showBusy}}
 		<div class="ui5-list-busy-row">
-			<ui5-busyindicator active size="Medium" class="ui5-list-busy-ind"></ui5-busyindicator>
+			<ui5-busyindicator ?active="{{busy}}" size="Medium" class="ui5-list-busy-ind"></ui5-busyindicator>
 		</div>
+	{{/if}}
+
+	{{#if hasData}}
+		<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>
 	{{/if}}
 </div>

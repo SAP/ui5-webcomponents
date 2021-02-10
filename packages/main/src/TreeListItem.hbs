@@ -18,15 +18,9 @@
 {{/inline}}
 
 {{#*inline "listItemContent"}}
-	<div class="ui5-li-tree-text-wrapper">
-		{{#if _showTitle}}
-			<div part="title" class="ui5-li-title"><slot></slot></div>
-		{{/if}}
-
-		{{#if info}}
-			<span part="info" class="ui5-li-tree-info">{{info}}</span>
-		{{/if}}
-	</div>
+	{{#if _showTitle}}
+		<div part="title" class="ui5-li-title"><slot></slot></div>
+	{{/if}}
 {{/inline}}
 
 {{#*inline "imageBegin"}}{{/inline}}

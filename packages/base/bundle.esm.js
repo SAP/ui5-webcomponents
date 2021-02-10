@@ -1,6 +1,7 @@
 import { registerThemeProperties } from "./dist/AssetRegistry.js";
 
-// ESM bundle targets browsers with native support
+// ESM bundle targets Edge + browsers with native support
+import "./dist/features/browsersupport/Edge.js";
 import "./dist/features/OpenUI5Support.js";
 
 // Test components
@@ -15,7 +16,8 @@ import "./dist/test-resources/elements/GenericExt.js";
 import "./dist/test-resources/assets/Themes.js";
 
 // used in test pages
-import { renderFinished } from "./dist/Render.js";
+import RenderScheduler from "./dist/RenderScheduler.js";
+window.RenderScheduler = RenderScheduler;
 import { isIE } from "./dist/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
 
@@ -51,5 +53,4 @@ window["sap-ui-webcomponents-bundle"] = {
 	registerI18nBundle,
 	fetchI18nBundle,
 	getI18nBundle,
-	renderFinished,
 };

@@ -1,6 +1,6 @@
 const getStylesString = styles => {
 	if (Array.isArray(styles)) {
-		return flatten(styles.filter(style => !!style)).join(" ");
+		return flatten(styles).join(" ");
 	}
 
 	return styles;

@@ -1,5 +1,3 @@
-@import "./InvisibleTextStyles.css";
-
 :host([disabled]) {
 	opacity: var(--_ui5_slider_disabled_opacity);
 	cursor: default;
@@ -51,11 +49,6 @@
 	position: relative;
 }
 
-.ui5-slider-progress:focus {
-	outline: var(--_ui5_slider_progress_outline);
-	outline-offset: var(--_ui5_slider_progress_outline_offset);
-}
-
 .ui5-slider-tickmarks {
 	color: var(--_ui5_slider_tickmark_color);
 	position: absolute;
@@ -76,13 +69,13 @@
 	width: var(--_ui5_slider_handle_width);
 }
 
-.ui5-slider-handle--start, .ui5-slider-handle--end {
-	background: var(--_ui5_range_slider_handle_background);
-}
-
 .ui5-slider-handle:focus {
 	outline: var(--_ui5_slider_handle_outline);
 	outline-offset: var(--_ui5_slider_handle_outline_offset);
+}
+
+.ui5-slider-handle--start, .ui5-slider-handle--end {
+	background: var(--_ui5_range_slider_handle_background);
 }
 
 [dir="rtl"] .ui5-slider-handle {

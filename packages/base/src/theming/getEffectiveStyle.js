@@ -4,27 +4,20 @@ import getStylesString from "./getStylesString.js";
 const effectiveStyleMap = new Map();
 
 attachCustomCSSChange(tag => {
-	effectiveStyleMap.delete(`${tag}_normal`); // there is custom CSS only for the component itself, not for its static area part
+	effectiveStyleMap.delete(tag);
 });
 
-const getEffectiveStyle = (ElementClass, forStaticArea = false) => {
+const getEffectiveStyle = ElementClass => {
 	const tag = ElementClass.getMetadata().getTag();
-	const key = `${tag}_${forStaticArea ? "static" : "normal"}`;
 
-	if (!effectiveStyleMap.has(key)) {
-		let effectiveStyle;
-
-		if (forStaticArea) {
-			effectiveStyle = getStylesString(ElementClass.staticAreaStyles);
-		} else {
-			const customStyle = getCustomCSS(tag) || "";
-			const builtInStyles = getStylesString(ElementClass.styles);
-			effectiveStyle = `${builtInStyles} ${customStyle}`;
-		}
-		effectiveStyleMap.set(key, effectiveStyle);
+	if (!effectiveStyleMap.has(tag)) {
+		const customStyle = getCustomCSS(tag) || "";
+		const builtInStyles = getStylesString(ElementClass.styles);
+		const effectiveStyle = `${builtInStyles} ${customStyle}`;
+		effectiveStyleMap.set(tag, effectiveStyle);
 	}
 
-	return effectiveStyleMap.get(key);
+	return effectiveStyleMap.get(tag);
 };
 
 export default getEffectiveStyle;

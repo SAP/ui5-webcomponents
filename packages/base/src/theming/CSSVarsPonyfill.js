@@ -1,5 +1,7 @@
 let ponyfillTimer;
 
+const ponyfillNeeded = () => !!window.CSSVarsPonyfill;
+
 /**
  * Removes the "data-cssvars-group" attribute for all element styles and their respective out nodes.
  * CSSVarsPonyfill has internal counters for "group" and "job" and running several instances of the ponyfill may lead to issues, since these counters are not shared
@@ -60,6 +62,7 @@ const getCompactModeVars = () => {
 };
 
 export {
+	ponyfillNeeded,
 	runPonyfill,
 	schedulePonyfill,
 };

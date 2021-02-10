@@ -239,15 +239,11 @@ describe("Input general interaction", () => {
 	it("handles group suggestion item via keyboard", () => {
 		const suggestionsInput = $("#myInputGrouping").shadow$("input");
 		const inputResult = $("#inputResultGrouping").shadow$("input");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#myInputGrouping");
-		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		suggestionsInput.click();
 		suggestionsInput.keys("ArrowDown");
 		suggestionsInput.keys("Enter");
-		browser.pause(300);
 
-		assert.ok(respPopover.getProperty("opened"), "Popover should not be closed after trying to select a group header.");
 		assert.strictEqual(suggestionsInput.getValue(), "", "Group item is not selected");
 		assert.strictEqual(inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
@@ -374,20 +370,5 @@ describe("Input general interaction", () => {
 		// assert
 		assert.notOk(inputPopover.isDisplayedInViewport(), "The inpuit popover is closed as it lost the focus.");
 		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
-	});
-
-	it("Should open suggestions popover when ui5-input is the first focusable element within a dialog", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Input.html");
-		const input = $("#inputInDialog");
-		const button = browser.$("#btnOpenDialog");
-
-		//act
-		button.click();
-
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputInDialog");
-		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-
-		//assert
-		assert.ok(popover.isDisplayedInViewport(), "The popover is visible");
 	});
 });

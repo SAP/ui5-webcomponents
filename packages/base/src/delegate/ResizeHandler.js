@@ -1,106 +1,65 @@
-let resizeObserver;
-const observedElements = new Map();
+import NativeResize from "./NativeResize.js";
+import CustomResize from "./CustomResize.js";
 
-const getResizeObserver = () => {
-	if (!resizeObserver) {
-		resizeObserver = new window.ResizeObserver(entries => {
-			entries.forEach(entry => {
-				const callbacks = observedElements.get(entry.target);
-				callbacks.forEach(callback => callback());
-			});
-		});
-	}
-	return resizeObserver;
-};
-
-let observe = (element, callback) => {
-	const callbacks = observedElements.get(element) || [];
-
-	// if no callbacks have been added for this element - start observing it
-	if (!callbacks.length) {
-		getResizeObserver().observe(element);
-	}
-
-	// save the callbacks in an array
-	observedElements.set(element, [...callbacks, callback]);
-};
-
-let unobserve = (element, callback) => {
-	const callbacks = observedElements.get(element) || [];
-	if (callbacks.length === 0) {
-		return;
-	}
-
-	const filteredCallbacks = callbacks.filter(fn => fn !== callback);
-	if (filteredCallbacks.length === 0) {
-		getResizeObserver().unobserve(element);
-		observedElements.delete(element);
-	} else {
-		observedElements.set(element, filteredCallbacks);
-	}
-};
-
-/**
- * Allows to register/deregister resize observers for a DOM element
- *
- * @public
- * @class
-  */
 class ResizeHandler {
-	/**
-	 * @static
-	 * @public
-	 * @param {*} element UI5 Web Component or DOM Element to be observed
-	 * @param {*} callback Callback to be executed
-	 */
-	static register(element, callback) {
-		if (element.isUI5Element) {
-			element = element.getDomRef();
-		}
-
-		if (element instanceof HTMLElement) {
-			observe(element, callback);
-		} else {
-			console.warn("Cannot register ResizeHandler for element", element); // eslint-disable-line
-		}
+	static initialize() {
+		ResizeHandler.Implementation = window.ResizeObserver ? NativeResize : CustomResize;
+		ResizeHandler.Implementation.initialize();
 	}
 
 	/**
 	 * @static
-	 * @public
-	 * @param {*} element UI5 Web Component or DOM Element to be unobserved
-	 * @param {*} callback Callback to be removed
+	 * @private
+	 * @param {*} ref Reference to be observed
+	 * @param {*} callback Callback to be executed
+	 * @memberof ResizeHandler
 	 */
-	static deregister(element, callback) {
-		if (element.isUI5Element) {
-			element = element.getDomRef();
+	static attachListener(ref, callback) {
+		ResizeHandler.Implementation.attachListener.call(ResizeHandler.Implementation, ref, callback);
+	}
+
+	/**
+	 * @static
+	 * @private
+	 * @param {*} ref Reference to be unobserved
+	 * @memberof ResizeHandler
+	 */
+	static detachListener(ref, callback) {
+		ResizeHandler.Implementation.detachListener.call(ResizeHandler.Implementation, ref, callback);
+	}
+
+
+	/**
+	 * @static
+	 * @public
+	 * @param {*} ref Reference to a UI5 Web Component or DOM Element to be observed
+	 * @param {*} callback Callback to be executed
+	 * @memberof ResizeHandler
+	 */
+	static register(ref, callback) {
+		if (ref.isUI5Element) {
+			ref = ref.getDomRef();
 		}
 
-		if (element instanceof HTMLElement) {
-			unobserve(element, callback);
-		} else {
-			console.warn("Cannot deregister ResizeHandler for element", element); // eslint-disable-line
+		ResizeHandler.attachListener(ref, callback);
+	}
+
+
+	/**
+	 * @static
+	 * @public
+	 * @param {*} ref Reference to UI5 Web Component or DOM Element to be unobserved
+	 * @memberof ResizeHandler
+	 */
+	static deregister(ref, callback) {
+		if (ref.isUI5Element) {
+			ref = ref.getDomRef();
 		}
+
+		ResizeHandler.detachListener(ref, callback);
 	}
 }
 
-/**
- * Set a function to be executed whenever a DOM node needs to be observed for size change.
- * @public
- * @param fn
- */
-const setResizeHandlerObserveFn = fn => {
-	observe = fn;
-};
-
-/**
- * Set a function to be executed whenever a DOM node needs to no longer be observed for size changes
- * @public
- * @param fn
- */
-const setResizeHandlerUnobserveFn = fn => {
-	unobserve = fn;
-};
+ResizeHandler.initialize();
 
 export default ResizeHandler;
-export { setResizeHandlerObserveFn, setResizeHandlerUnobserveFn };

@@ -1,6 +1,6 @@
 <div class="ui5-multi-combobox-root"
 >
-	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
+	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{nMoreCountText}}</span>
 
 	{{#if hasValueState}}
 		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
@@ -35,7 +35,7 @@
 	<input id="ui5-multi-combobox-input"
 		.value="{{value}}"
 		inner-input
-		placeholder={{_getPlaceholder}}
+		placeholder="{{placeholder}}"
 		?disabled={{disabled}}
 		?readonly={{readonly}}
 		value-state="{{valueState}}"
@@ -50,7 +50,8 @@
 		aria-haspopup="listbox"
 		aria-expanded="{{open}}"
 		aria-autocomplete="both"
-		aria-describedby="{{ariaDescribedByText}}"
+		aria-labelledby="{{_id}}-hiddenText-nMore"
+		aria-describedby="{{valueStateTextId}}"
 		aria-required="{{required}}"
 	/>
 

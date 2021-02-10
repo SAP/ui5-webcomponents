@@ -12,26 +12,12 @@
 	border-bottom: 0;
 }
 
-:host([busy]) {
-	opacity: 0.72;
-}
-
-:host([busy]) .ui5-list-busy-row {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-}
-
 .ui5-list-root {
 	width: 100%;
 	height: 100%;
 	position: relative;
 	box-sizing: border-box;
-}
-
-.ui5-list-scroll-container {
 	overflow: auto;
-	height: 100%;
 }
 
 .ui5-list-ul {
@@ -98,4 +84,11 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+.ui5-list-busy-row {
+	display: flex;
+	align-items: center;
+	height: var(--_ui5_list_busy_row_height);
+	justify-content: center;
 }

@@ -163,7 +163,7 @@ class ResponsivePopover extends Popover {
 	}
 
 	get _displayHeader() {
-		return (this._isPhone || !this.contentOnlyOnDesktop) && super._displayHeader;
+		return this._isPhone || !this.contentOnlyOnDesktop;
 	}
 
 	get _displayFooter() {

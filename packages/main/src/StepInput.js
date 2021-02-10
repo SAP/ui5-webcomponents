@@ -429,9 +429,6 @@ class StepInput extends UI5Element {
 
 	onBeforeRendering() {
 		this._buttonsState();
-		if (this._previousValue === undefined) {
-			this._previousValue = this.value;
-		}
 	}
 
 	get input() {
@@ -531,8 +528,8 @@ class StepInput extends UI5Element {
 
 	_onInputChange(event) {
 		let inputValue = this._preciseValue(parseFloat(this.input.value));
-		if (this.value !== this._previousValue || this.value !== inputValue) {
-		this.value = inputValue;
+		if ((!isNaN(this._previousValue) && this.value !== this._previousValue) || this.value !== inputValue) {
+			this.value = inputValue;
 			this._validate();
 			this._buttonsState();
 			this._fireChangeEvent();

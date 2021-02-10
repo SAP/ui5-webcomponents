@@ -16,9 +16,6 @@
 	border: 1px solid var(--sapField_BorderColor);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
 	box-sizing: border-box;
-	line-height: normal;
-	letter-spacing: normal;
-	word-spacing: normal;
 }
 
 :host([focused]) {
@@ -56,6 +53,7 @@
 	font-style: inherit;
 	-webkit-appearance: none;
 	-moz-appearance: textfield;
+	line-height: normal;
 	padding: var(--_ui5_input_inner_padding);
 	box-sizing: border-box;
 	min-width: 3rem;
@@ -64,9 +62,6 @@
 	outline: none;
 	font-size: inherit;
 	font-family: inherit;
-	line-height: inherit;
-	letter-spacing: inherit;
-	word-spacing: inherit;
 	text-align: inherit;
 }
 

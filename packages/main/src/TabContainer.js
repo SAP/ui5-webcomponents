@@ -454,6 +454,7 @@ class TabContainer extends UI5Element {
 		}
 
 		this.responsivePopover = await this._respPopover();
+		this.updateStaticAreaItemContentDensity();
 		if (this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		} else {

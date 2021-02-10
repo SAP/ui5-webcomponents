@@ -1,6 +1,7 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
 import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
+import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
 
@@ -71,6 +72,11 @@ const applyTheme = async theme => {
 	// Always load component packages properties. For non-registered themes, try with the base theme, if any
 	const packagesTheme = isThemeRegistered(theme) ? theme : extTheme && extTheme.baseThemeName;
 	await loadComponentPackages(packagesTheme);
+
+	// When changing the theme, run the ponyfill immediately
+	if (ponyfillNeeded()) {
+		runPonyfill();
+	}
 
 	fireThemeLoaded(theme);
 };

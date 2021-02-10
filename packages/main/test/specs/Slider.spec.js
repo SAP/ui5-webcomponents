@@ -96,7 +96,7 @@ describe("Properties synchronization and normalization", () => {
 		slider.setProperty("step", 2);
 
 		assert.strictEqual(slider.getProperty("_labels").length, 11, "Labels must be 12 - 1 for every 2 tickmarks (and 4 current value points)");
-
+		
 		slider.setProperty("labelInterval", 4);
 
 		assert.strictEqual(slider.getProperty("_labels").length, 6, "Labels must be 6 - 1 for every 4 tickmarks (and 8 current value points)");
@@ -185,22 +185,7 @@ describe("Testing events", () => {
 	});
 });
 
-describe("Accessibility", () => {
-	it("Aria attributes are set correctly", () => {
-		const slider = browser.$("#basic-slider");
-		const sliderHandle = slider.shadow$(".ui5-slider-handle");
-		const sliderId = slider.getProperty("_id");
-
-		assert.strictEqual(sliderHandle.getAttribute("aria-labelledby"),
-			`${sliderId}-sliderDesc`, "aria-labelledby is set correctly");
-		assert.strictEqual(sliderHandle.getAttribute("aria-valuemin"),
-			`${slider.getProperty("min")}`, "aria-valuemin is set correctly");
-		assert.strictEqual(sliderHandle.getAttribute("aria-valuemax"),
-			`${slider.getProperty("max")}`, "aria-valuemax is set correctly");
-		assert.strictEqual(sliderHandle.getAttribute("aria-valuenow"),
-			`${slider.getProperty("value")}`, "aria-valuenow is set correctly");
-	});
-
+describe("Accessibility: Testing focus", () => {
 	it("Click anywhere in the Slider should focus the Slider's handle", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Slider.html");
 
@@ -350,7 +335,7 @@ describe("Accessibility: Testing keyboard handling", () => {
 
 		browser.keys(numpadSubtract);
 		assert.strictEqual(slider.getProperty("value"), 0, "Value is decreased");
-	});
+	});	
 
 	it("An 'End' key press should increase the value of the slider to its max", () => {
 		const slider = browser.$("#basic-slider-with-tooltip");

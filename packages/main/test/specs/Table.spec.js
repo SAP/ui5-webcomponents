@@ -66,7 +66,7 @@ describe("Table general interaction", () => {
 			"The aria-label value is correct.");
 	});
 
-	describe("Growing Table on 'More' button press", () => {
+	describe("Growing Table", () => {
 		it("tests the 'load-more' event", () => {
 			browser.url("http://localhost:8080/test-resources/pages/TableLoadMore.html");
 
@@ -90,24 +90,6 @@ describe("Table general interaction", () => {
 			// assert
 			assert.strictEqual(inputResult.getProperty("value"), "3", 
 				"The load-more is fired 3rd time.");
-		});
-	});
-
-	describe("Growing Table on Scroll", () => {
-		it("tests the 'load-more' event", () => {
-			browser.url("http://localhost:8080/test-resources/pages/TableGrowingWithScroll.html");
-
-			const inputResult = browser.$("#inputLoadMoreCounter");
-			const btnScroll = browser.$("#btnScroll");
-
-			// act
-			btnScroll.click();
-
-			browser.pause(500);
-
-			// assert
-			assert.strictEqual(inputResult.getProperty("value"), "1", 
-				"The load-more is fired.");
 		});
 	});
 });

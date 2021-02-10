@@ -5,7 +5,6 @@ import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/Tabbab
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -16,6 +15,7 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 // Styles
 import listCss from "./generated/themes/List.css.js";
 
+const BUSYINDICATOR_HEIGHT = 48; // px
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 /**
@@ -389,6 +389,10 @@ class List extends UI5Element {
 		return !this.hasData && this.noDataText;
 	}
 
+	get showBusy() {
+		return this.busy || this.infiniteScroll;
+	}
+
 	get isMultiSelect() {
 		return this.mode === ListMode.MultiSelect;
 	}
@@ -412,7 +416,7 @@ class List extends UI5Element {
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, {
 			navigationMode: NavigationMode.Vertical,
-			getItemsCallback: () => this.getEnabledItems(),
+			getItemsCallback: () => this.getSlottedNodes("items"),
 		});
 	}
 
@@ -493,8 +497,18 @@ class List extends UI5Element {
 		return this.getSlottedNodes("items").filter(item => item.selected);
 	}
 
-	getEnabledItems() {
-		return this.getSlottedNodes("items").filter(item => !item.disabled);
+	getFirstSelectedItem() {
+		const slottedItems = this.getSlottedNodes("items");
+		let firstSelectedItem = null;
+
+		for (let i = 0; i < slottedItems.length; i++) {
+			if (slottedItems[i].selected) {
+				firstSelectedItem = slottedItems[i];
+				break;
+			}
+		}
+
+		return firstSelectedItem;
 	}
 
 	_onkeydown(event) {
@@ -522,7 +536,7 @@ class List extends UI5Element {
 		}
 
 		if (lastTabbableEl === target) {
-			if (this.getFirstItem(x => x.selected && !x.disabled)) {
+			if (this.getFirstSelectedItem()) {
 				this.focusFirstSelectedItem();
 			} else if (this.getPreviouslyFocusedItem()) {
 				this.focusPreviouslyFocusedItem();
@@ -539,7 +553,7 @@ class List extends UI5Element {
 		if (!this.infiniteScroll) {
 			return;
 		}
-		debounce(this.loadMore.bind(this, event.target), INFINITE_SCROLL_DEBOUNCE_RATE);
+		this.debounce(this.loadMore.bind(this, event.target), INFINITE_SCROLL_DEBOUNCE_RATE);
 	}
 
 	_onfocusin(event) {
@@ -552,7 +566,7 @@ class List extends UI5Element {
 		// The focus arrives in the List for the first time.
 		// If there is selected item - focus it or focus the first item.
 		if (!this.getPreviouslyFocusedItem()) {
-			if (this.getFirstItem(x => x.selected && !x.disabled)) {
+			if (this.getFirstSelectedItem()) {
 				this.focusFirstSelectedItem();
 			} else {
 				this.focusFirstItem();
@@ -565,7 +579,7 @@ class List extends UI5Element {
 		// The focus returns to the List,
 		// focus the first selected item or the previously focused element.
 		if (!this.getForwardingFocus()) {
-			if (this.getFirstItem(x => x.selected && !x.disabled)) {
+			if (this.getFirstSelectedItem()) {
 				this.focusFirstSelectedItem();
 			} else {
 				this.focusPreviouslyFocusedItem();
@@ -577,14 +591,12 @@ class List extends UI5Element {
 
 	isForwardElement(node) {
 		const nodeId = node.id;
-		const afterElement = this.getAfterElement();
-		const beforeElement = this.getBeforeElement();
 
-		if (this._id === nodeId || (beforeElement && beforeElement.id === nodeId)) {
+		if (this._id === nodeId || this.getBeforeElement().id === nodeId) {
 			return true;
 		}
 
-		return afterElement && afterElement.id === nodeId;
+		return this.getAfterElement().id === nodeId;
 	}
 
 	onItemFocused(event) {
@@ -656,8 +668,7 @@ class List extends UI5Element {
 	}
 
 	focusFirstItem() {
-		// only enabled items are focusable
-		const firstItem = this.getFirstItem(x => !x.disabled);
+		const firstItem = this.getFirstItem();
 
 		if (firstItem) {
 			firstItem.focus();
@@ -673,8 +684,7 @@ class List extends UI5Element {
 	}
 
 	focusFirstSelectedItem() {
-		// only enabled items are focusable
-		const firstSelectedItem = this.getFirstItem(x => x.selected && !x.disabled);
+		const firstSelectedItem = this.getFirstSelectedItem();
 
 		if (firstSelectedItem) {
 			firstSelectedItem.focus();
@@ -709,22 +719,9 @@ class List extends UI5Element {
 		return this._previouslyFocusedItem;
 	}
 
-	getFirstItem(filter) {
+	getFirstItem() {
 		const slottedItems = this.getSlottedNodes("items");
-		let firstItem = null;
-
-		if (!filter) {
-			return !!slottedItems.length && slottedItems[0];
-		}
-
-		for (let i = 0; i < slottedItems.length; i++) {
-			if (filter(slottedItems[i])) {
-				firstItem = slottedItems[i];
-				break;
-			}
-		}
-
-		return firstItem;
+		return !!slottedItems.length && slottedItems[0];
 	}
 
 	getAfterElement() {
@@ -766,9 +763,17 @@ class List extends UI5Element {
 		}
 		this.previousScrollPosition = scrollTop;
 
-		if (scrollHeight <= height + scrollTop) {
+		if (scrollHeight - BUSYINDICATOR_HEIGHT <= height + scrollTop) {
 			this.fireEvent("load-more");
 		}
+	}
+
+	debounce(fn, delay) {
+		clearTimeout(this.debounceInterval);
+		this.debounceInterval = setTimeout(() => {
+			this.debounceInterval = null;
+			fn();
+		}, delay);
 	}
 
 	static get dependencies() {

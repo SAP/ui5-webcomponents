@@ -1,10 +1,8 @@
-import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import Button from "./Button.js";
 import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
 
 // Styles
 import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
-import toggleBtnIECss from "./generated/themes/ToggleButton.ie11.css.js";
 
 /**
  * @public
@@ -60,7 +58,7 @@ class ToggleButton extends Button {
 	}
 
 	static get styles() {
-		return [Button.styles, toggleBtnCss, isLegacyBrowser() && toggleBtnIECss];
+		return [Button.styles, toggleBtnCss];
 	}
 
 	_onclick() {

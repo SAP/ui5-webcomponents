@@ -1,9 +1,7 @@
 const assert = require("chai").assert;
 
 describe("Select general interaction", () => {
-	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Select.html");
-	});
+	browser.url("http://localhost:8080/test-resources/pages/Select.html");
 
 	it("fires change on selection", () => {
 		const select = $("#mySelect");
@@ -122,7 +120,7 @@ describe("Select general interaction", () => {
 		const selectText = select.shadow$(".ui5-select-label-root");
 
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Arrow Up should change selected item");
-
+		
 		const focusedElementId = browser.execute(() => {
 			return document.activeElement.id;
 		});
@@ -143,7 +141,7 @@ describe("Select general interaction", () => {
 		const selectText = select.shadow$(".ui5-select-label-root");
 
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Arrow Down should change selected item");
-
+		
 		const focusedElementId = browser.execute(() => {
 			return document.activeElement.id;
 		});
@@ -339,19 +337,5 @@ describe("Select general interaction", () => {
 			"The aria-label is correctly set internally.");
 		assert.strictEqual(select2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
 			"The aria-label is correctly set internally.");
-	});
-
-	it('selected options are correctly disabled', () => {
-		const option2 = $('#mySelect5 ui5-option:nth-child(2)'),
-			option3 = $('#mySelect5 ui5-option:nth-child(3)');
-
-		assert.strictEqual(option2.getProperty("selected"), true, "Second option is initially selected.");
-
-		// act
-		option2.setProperty("disabled", true);
-
-		// verify
-		assert.strictEqual(option2.getProperty("selected"), false, "Disabled option is no longer selected.");
-		assert.strictEqual(option3.getProperty("selected"), true, "The next enabled option is selected.");
 	});
 });
