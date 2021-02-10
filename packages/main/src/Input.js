@@ -336,7 +336,7 @@ const metadata = {
 			type: Object,
 		},
 
-		_inputInnerAttributes: {
+		_nativeInputAttributes: {
 			type: Object,
 		},
 
@@ -1080,13 +1080,11 @@ class Input extends UI5Element {
 		};
 	}
 
-	get inputAttributes() {
+	get nativeInputAttributes() {
 		return {
-			"input": {
-				"min": this.type === InputType.Number ? this._inputInnerAttributes.min : undefined,
-				"max": this.type === InputType.Number ? this._inputInnerAttributes.max : undefined,
-				"step": this.type === InputType.Number ? (this._inputInnerAttributes.step || "any") : undefined,
-			},
+			"min": this.type === InputType.Number ? this._nativeInputAttributes.min : undefined,
+			"max": this.type === InputType.Number ? this._nativeInputAttributes.max : undefined,
+			"step": this.type === InputType.Number ? (this._nativeInputAttributes.step || "any") : undefined,
 		};
 	}
 

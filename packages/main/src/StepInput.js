@@ -1,12 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import StepInputTemplate from "./generated/templates/StepInputTemplate.lit.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	isUp,
 	isDown,
@@ -20,6 +12,13 @@ import {
 	isPageDownShift,
 	isEscape,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import Float from "@ui5/webcomponents-base/dist/types/Float.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import StepInputTemplate from "./generated/templates/StepInputTemplate.lit.js";
+import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
 import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
 
@@ -251,7 +250,6 @@ const metadata = {
 		_btnDown: {
 			type: Boolean,
 			noAttribute: true,
-			defaultValue: false,
 		},
 
 		_spinTimeoutId: {
@@ -262,7 +260,6 @@ const metadata = {
 		_spinStarted: {
 			type: Boolean,
 			noAttribute: true,
-			defaultValue: false,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
@@ -292,6 +289,12 @@ const metadata = {
 		change: {},
 	},
 };
+
+// Spin variables
+const INITIAL_WAIT_TIMEOUT = 500; // milliseconds
+const ACCELERATION = 0.8;
+const MIN_WAIT_TIMEOUT = 50; // milliseconds
+const INITIAL_SPEED = 120; // milliseconds
 
 /**
  * @class
@@ -342,20 +345,9 @@ const metadata = {
  * @public
  */
 class StepInput extends UI5Element {
-
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-
-		// spin variables
-		this.INITIAL_WAIT_TIMEOUT = 500; // milliseconds
-		this.ACCELERATION = 0.8;
-		this.MIN_WAIT_TIMEOUT = 50; // milliseconds
-		this.INITIAL_SPEED = 120; // milliseconds
-
-		if (this._previousValue === undefined) {
-			this._previousValue = this.value;
-		}
 	}
 
 	static get metadata() {
@@ -425,14 +417,17 @@ class StepInput extends UI5Element {
 
 	get inputAttributes() {
 		return {
-			min: isNaN(this.min) ? undefined : this.min,
-			max: isNaN(this.max) ? undefined : this.max,
+			min: this.min === undefined ? undefined : this.min,
+			max: this.max === undefined ? undefined : this.max,
 			step: this.step,
 		};
 	}
 
 	onBeforeRendering() {
-		this._buttonsState();
+		this._setButtonState();
+		if (this._previousValue === undefined) {
+			this._previousValue = this.value;
+		}
 	}
 
 	get input() {
@@ -444,11 +439,11 @@ class StepInput extends UI5Element {
 	}
 
 	_onButtonFocusOut() {
-		setTimeout(function() {
+		setTimeout(() => {
 			if (!this._inputFocused) {
 				this.inputOuter.removeAttribute("focused");
 			}
-		}.bind(this), 0);
+		}, 0);
 	}
 
 	_onInputFocusIn() {
@@ -460,28 +455,28 @@ class StepInput extends UI5Element {
 		this._onInputChange();
 	}
 
-	_buttonsState() {
-		this._decIconDisabled = !isNaN(this.min) && this.value <= this.min ? true : false;
-		this._incIconDisabled = !isNaN(this.max) && this.value >= this.max ? true : false;
+	_setButtonState() {
+		this._decIconDisabled = this.min !== undefined && this.value <= this.min;
+		this._incIconDisabled = this.max !== undefined && this.value >= this.max;
 	}
 
 	_validate() {
 		if (this._previousValueState === "") {
 			this._previousValueState = this.valueState !== "" ? this.valueState : ValueState.None;
 		}
-		this.valueState = (	(!isNaN(this.min) && this.value < this.min) ||
-							(!isNaN(this.max) && this.value > this.max)) ?
-							ValueState.Error : this._previousValueState;
+		this.valueState = ((this.min !== undefined && this.value < this.min)
+			|| (this.max !== undefined && this.value > this.max))
+			? ValueState.Error : this._previousValueState;
 	}
 
 	_preciseValue(value) {
-		let pow = Math.pow(10, this.valuePrecision);
-		return Math.round(value*pow)/pow;
+		const pow = 10 ** this.valuePrecision;
+		return Math.round(value * pow) / pow;
 	}
 
 	_fireChangeEvent() {
 		this._previousValue = this.value;
-		this.fireEvent('change', { value: this.value });
+		this.fireEvent("change", { value: this.value });
 	}
 
 	/**
@@ -495,17 +490,17 @@ class StepInput extends UI5Element {
 		let value;
 		this.value = this._preciseValue(parseFloat(this.input.value));
 		value = this.value + modifier;
-		if (!isNaN(this.min) && value < this.min) {
+		if (this.min !== undefined && value < this.min) {
 			value = this.min;
 		}
-		if (!isNaN(this.max) && value > this.max) {
+		if (this.max !== undefined && value > this.max) {
 			value = this.max;
 		}
 		value = this._preciseValue(value);
 		if (value !== this.value) {
 			this.value = value;
 			this._validate();
-			this._buttonsState();
+			this._setButtonState();
 			this._focused = true;
 			this.inputOuter.setAttribute("focused", "");
 			if (fireChangeEvent) {
@@ -531,11 +526,11 @@ class StepInput extends UI5Element {
 	}
 
 	_onInputChange(event) {
-		let inputValue = this._preciseValue(parseFloat(this.input.value));
+		const inputValue = this._preciseValue(parseFloat(this.input.value));
 		if (this.value !== this._previousValue || this.value !== inputValue) {
-		this.value = inputValue;
+			this.value = inputValue;
 			this._validate();
-			this._buttonsState();
+			this._setButtonState();
 			this._fireChangeEvent();
 		}
 	}
@@ -564,11 +559,11 @@ class StepInput extends UI5Element {
 			// return previous value
 			this.value = this._previousValue;
 			this.input.value = this.value.toFixed(this.valuePrecision);
-		} else if (!isNaN(this.max) && (isPageUpShift(event) || isUpShiftCtrl(event))) {
+		} else if (this.max !== undefined && (isPageUpShift(event) || isUpShiftCtrl(event))) {
 			// step to max
 			this._modifyValue(this.max - this.value);
-		} else if (!isNaN(this.min) && (isPageDownShift(event) || isDownShiftCtrl(event))) {
-			//step to min
+		} else if (this.min !== undefined && (isPageDownShift(event) || isDownShiftCtrl(event))) {
+			// step to min
 			this._modifyValue(this.min - this.value);
 		} else if (!isUpCtrl(event) && !isDownCtrl(event) && !isUpShift(event) && !isDownShift(event)) {
 			preventDefault = false;
@@ -594,8 +589,8 @@ class StepInput extends UI5Element {
 	 * Calculates the time which should be waited until _spinValue function is called.
 	 */
 	_calcWaitTimeout() {
-		this._speed *= this.ACCELERATION;
-		this._waitTimeout = ((this._waitTimeout - this._speed) < this.MIN_WAIT_TIMEOUT ? this.MIN_WAIT_TIMEOUT : (this._waitTimeout - this._speed));
+		this._speed *= ACCELERATION;
+		this._waitTimeout = ((this._waitTimeout - this._speed) < MIN_WAIT_TIMEOUT ? MIN_WAIT_TIMEOUT : (this._waitTimeout - this._speed));
 		return this._waitTimeout;
 	}
 
@@ -606,15 +601,15 @@ class StepInput extends UI5Element {
 	 */
 	_spinValue(increment, resetVariables) {
 		if (resetVariables) {
-			this._waitTimeout = this.INITIAL_WAIT_TIMEOUT;
-			this._speed = this.INITIAL_SPEED;
+			this._waitTimeout = INITIAL_WAIT_TIMEOUT;
+			this._speed = INITIAL_SPEED;
 			this._btnDown = true;
 		}
-		this._spinTimeoutId = setTimeout(function () {
+		this._spinTimeoutId = setTimeout(() => {
 			if (this._btnDown) {
 				this._spinStarted = true;
 				this._modifyValue(increment ? this.step : -this.step);
-				this._buttonsState();
+				this._setButtonState();
 				if ((!this._incIconDisabled && increment) || (!this._decIconDisabled && !increment)) {
 					this._spinValue(increment);
 				} else {
@@ -622,7 +617,7 @@ class StepInput extends UI5Element {
 					this._fireChangeEvent();
 				}
 			}
-		}.bind(this), this._calcWaitTimeout());
+		}, this._calcWaitTimeout());
 	}
 
 	/**
@@ -643,9 +638,7 @@ class StepInput extends UI5Element {
 			this._fireChangeEvent();
 		}
 	}
-
 }
-
 StepInput.define();
 
 export default StepInput;
