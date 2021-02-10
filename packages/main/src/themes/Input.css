@@ -59,6 +59,7 @@
 	-moz-appearance: textfield;
 	padding: var(--_ui5_input_inner_padding);
 	box-sizing: border-box;
+	min-width: inherit;
 	width: 100%;
 	text-align: inherit;
 	text-overflow: ellipsis;
