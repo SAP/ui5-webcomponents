@@ -143,7 +143,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onclick(event) {
-		if(event.target.localName === "ui5-color-palette-item") {
+		if (event.target.localName === "ui5-color-palette-item") {
 			this.selectColor(event.target);
 		}
 	}
