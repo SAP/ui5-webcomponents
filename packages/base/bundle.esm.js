@@ -23,7 +23,7 @@ window.isIE = isIE; // attached to the window object for testing purposes
 window.registerThemePropertiesLoader = registerThemePropertiesLoader;
 
 // i18n
-import { registerI18nBundle, fetchI18nBundle, getI18nBundle } from "./dist/i18nBundle.js";
+import { registerI18nLoader, fetchI18nBundle, getI18nBundle } from "./dist/i18nBundle.js";
 
 // Note: keep in sync with rollup.config value for IIFE
 import { getAnimationMode } from "./dist/config/AnimationMode.js";
@@ -47,7 +47,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		getFirstDayOfWeek,
 	},
 	getIconNames,
-	registerI18nBundle,
+	registerI18nLoader,
 	fetchI18nBundle,
 	getI18nBundle,
 	renderFinished,
