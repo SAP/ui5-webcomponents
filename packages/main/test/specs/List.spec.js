@@ -7,9 +7,11 @@ describe("List Tests", () => {
 	});
 
 	it("List is rendered", () => {
-		const list = browser.$("ui5-list").shadow$(".ui5-list-root");
+		const list = browser.$("#infiniteScrollEx").shadow$(".ui5-list-root");
+		const busyInd = browser.$("#infiniteScrollEx").shadow$(".ui5-list-busy-row");
 
-		assert.ok(list, "List is rendered");
+		assert.ok(list.isExisting(), "List is rendered");
+		assert.notOk(busyInd.isExisting(), "Busy indicator is not rendered, when List is not busy");
 	});
 
 	it("itemPress and selectionChange events are fired in Single selection", () => {
@@ -300,5 +302,44 @@ describe("List Tests", () => {
 		browser.keys("Space");
 
 		assert.strictEqual(input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
+	});
+
+	it("Popover with List opens without errors", () => {
+		const btnPopupOpener = $("#btnOpenPopup");
+		const btnInListHeader = $("#btnInHeader");
+
+		btnPopupOpener.click();
+		assert.strictEqual(btnInListHeader.isFocused(), true, "The List header btn is focused.");
+	});
+
+	it('focusable list-items are correctly disabled', () => {
+		const item2 = $('#basicList ui5-li:nth-child(2)');
+
+		// focus the second item
+		item2.click();
+
+		// disable the second item
+		browser.execute(() => {
+			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
+		});
+
+		assert.strictEqual(item2.shadow$('li').getProperty("tabIndex"), -1, "disabled item is no longer focusable");
+		assert.strictEqual(item2.shadow$('li').getAttribute("class"),"ui5-li-root", "disabled item no longer styled as focusable");
+	});
+
+	it('disabled list-items are skipped on navigation', () => {
+		const item1 = $('#basicList ui5-li:nth-child(1)'),
+			item3 = $('#basicList ui5-li:nth-child(3)');
+
+		// ensure the second item is disabled
+		browser.execute(() => {
+			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
+		});
+
+		// navigate from the first item to the next focusable item
+		item1.click();
+		item1.keys("ArrowDown");
+
+		assert.strictEqual(item3.getProperty("focused"), true, "disabled item is skipped");
 	});
 });

@@ -2,6 +2,11 @@
 	display: contents;
 }
 
+:host([_busy]) .ui5-table-row-root {
+	opacity: 0.72;
+	pointer-events: none;
+}
+
 .ui5-table-row-root {
 	background-color: var(--sapList_Background);
 	border-top: 1px solid var(--sapList_BorderColor);

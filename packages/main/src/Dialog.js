@@ -203,6 +203,10 @@ class Dialog extends Popup {
 		return "flex";
 	}
 
+	get _displayHeader() {
+		return this.header.length || this.headerText;
+	}
+
 	show() {
 		super.show();
 		this._center();
@@ -219,11 +223,15 @@ class Dialog extends Popup {
 	}
 
 	onEnterDOM() {
+		super.onEnterDOM();
+
 		ResizeHandler.register(this, this._screenResizeHandler);
 		ResizeHandler.register(document.body, this._screenResizeHandler);
 	}
 
 	onExitDOM() {
+		super.onExitDOM();
+
 		ResizeHandler.deregister(this, this._screenResizeHandler);
 		ResizeHandler.deregister(document.body, this._screenResizeHandler);
 	}

@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE, isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -571,9 +571,8 @@ class Input extends UI5Element {
 				preventFocusRestore: !this.hasSuggestionItemSelected,
 			});
 
-			RenderScheduler.whenFinished().then(async () => {
-				this._listWidth = await this.Suggestions._getListWidth();
-			});
+			await renderFinished();
+			this._listWidth = await this.Suggestions._getListWidth();
 
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
@@ -662,11 +661,7 @@ class Input extends UI5Element {
 	}
 
 	async _onfocusin(event) {
-		const inputDomRef = await this.getInputDOMRef();
-
-		if (event.target !== inputDomRef) {
-			return;
-		}
+		await this.getInputDOMRef();
 
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
@@ -1071,6 +1066,7 @@ class Input extends UI5Element {
 
 		return {
 			"input": {
+				"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
 				"ariaDescribedBy": ariaDescribedBy || undefined,
 				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
 				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
@@ -1126,12 +1122,12 @@ class Input extends UI5Element {
 	get styles() {
 		return {
 			popoverHeader: {
-				"width": `${this._inputWidth}px`,
+				"max-width": `${this._inputWidth}px`,
 			},
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
-				"padding": "0.5625rem 1rem",
+				"padding": "0.925rem 1rem",
 			},
 			suggestionsPopover: {
 				"max-width": `${this._inputWidth}px`,
@@ -1196,6 +1192,14 @@ class Input extends UI5Element {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	/**
+	 * Returns the placeholder value.
+	 * @protected
+	 */
+	get _placeholder() {
+		return this.placeholder;
 	}
 
 	/**

@@ -3,7 +3,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import ToggleButton from "./ToggleButton.js";
@@ -143,7 +143,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	async measureButtonsWidth() {
-		await RenderScheduler.whenDOMUpdated();
+		await renderFinished();
 		this.prepareToMeasureButtons();
 
 		this.widths = this.buttons.map(button => {

@@ -41,7 +41,7 @@
 	--_ui5_year_picker_item_height: 3rem;
 	--_ui5_tokenizer_root_padding: 0.1875rem;
 	--_ui5_token_height: 1.625rem;
-	--_ui5_token_icon_size: 1rem;
+	--_ui5_token_icon_size: .75rem;
 	--_ui5_token_icon_padding: 0.25rem 0.5rem;
 	--_ui5_token_wrapper_right_padding: 0.3125rem;
 	--_ui5_token_wrapper_left_padding: 0;
@@ -70,7 +70,7 @@
 	--_ui5_textarea_padding: 0.5625rem 0.6875rem;
 
 	/* Responsive Popover */
-	--_ui5-responnsive_popover_header_height: 2.75rem;
+	--_ui5-responsive_popover_header_height: 2.75rem;
 
 	/* Side Navigation */
 	--ui5_side_navigation_item_height: 2.75rem;
@@ -210,7 +210,7 @@
 	--_ui5_radiobutton_min_width: var(--_ui5_radiobutton_min_width_compact);
 
 	/* Responsive Popover */
-	--_ui5-responnsive_popover_header_height: 2.5rem;
+	--_ui5-responsive_popover_header_height: 2.5rem;
 
 	/* Side Navigation */
 	--ui5_side_navigation_item_height: 2rem;

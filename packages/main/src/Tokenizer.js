@@ -13,7 +13,14 @@ import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
-import { MULTIINPUT_SHOW_MORE_TOKENS, TOKENIZER_ARIA_LABEL, TOKENIZER_POPOVER_REMOVE } from "./generated/i18n/i18n-defaults.js";
+import {
+	MULTIINPUT_SHOW_MORE_TOKENS,
+	TOKENIZER_ARIA_LABEL,
+	TOKENIZER_POPOVER_REMOVE,
+	TOKENIZER_ARIA_CONTAIN_TOKEN,
+	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
+	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/Tokenizer.css.js";
@@ -289,12 +296,14 @@ class Tokenizer extends UI5Element {
 		}
 
 		return this._getTokens().filter(token => {
+			const isRTL = this.effectiveDir === "rtl";
+			const elementEnd = isRTL ? "left" : "right";
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenLeft = tokenRect.left + tokenRect.width;
-			const parentLeft = parentRect.left + parentRect.width;
+			const tokenEnd = tokenRect[elementEnd];
+			const parentEnd = parentRect[elementEnd];
 
-			token.overflows = (tokenLeft > parentLeft) && !this.expanded;
+			token.overflows = isRTL ? ((tokenEnd < parentEnd) && !this.expanded) : ((tokenEnd > parentEnd) && !this.expanded);
 
 			return token.overflows;
 		});
@@ -351,6 +360,20 @@ class Tokenizer extends UI5Element {
 				"justify-content": "left",
 			},
 		};
+	}
+
+	_tokensCountText() {
+		const iTokenCount = this._getTokens().length;
+
+		if (iTokenCount === 0) {
+			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
+		}
+
+		if (iTokenCount === 1) {
+			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+		}
+
+		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
 	}
 
 	static get dependencies() {
