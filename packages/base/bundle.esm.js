@@ -1,4 +1,4 @@
-import { registerThemeProperties } from "./dist/asset-registries/Themes.js";
+import { registerThemePropertiesLoader } from "./dist/AssetRegistry.js";
 
 // ESM bundle targets browsers with native support
 import "./dist/features/OpenUI5Support.js";
