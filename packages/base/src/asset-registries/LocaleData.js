@@ -1,8 +1,9 @@
 import { attachLanguageChange } from "../locale/languageChange.js";
 import getLocale from "../locale/getLocale.js";
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.js";
+import { getFeature } from "../FeaturesRegistry.js";
 
-const resources = new Map();
+const localeDataMap = new Map();
 const loaders = new Map();
 const cldrPromises = new Map();
 const reportedErrors = new Set();
@@ -45,27 +46,22 @@ const calcLocale = (language, region, script) => {
 };
 
 // internal set data
-const registerModuleContent = (moduleName, content) => {
-	resources.set(moduleName, content);
+const setLocaleData = (localeId, content) => {
+	localeDataMap.set(localeId, content);
 };
 
 // external getSync
-const getModuleContent = moduleName => {
-	const moduleContent = resources.get(moduleName);
-	if (moduleContent) {
-		return moduleContent;
+const getLocaleData = localeId => {
+	const content = localeDataMap.get(localeId);
+	if (!content) {
+		throw new Error(`CLDR data for locale ${localeId} is not loaded!`);
 	}
 
-	const missingModule = moduleName.match(/sap\/ui\/core\/cldr\/(\w+)\.json/);
-	if (missingModule) {
-		throw new Error(`CLDR data for locale ${missingModule[1]} is not loaded!`);
-	}
-
-	throw new Error(`Unknown module ${moduleName}`);
+	return content;
 };
 
 // load bundle over the network once
-const _loadCldrOnce = async localeId => {
+const _loadCldrOnce = localeId => {
 	const loadCldr = loaders.get(localeId);
 
 	if (!cldrPromises.get(localeId)) {
@@ -79,16 +75,21 @@ const _loadCldrOnce = async localeId => {
 const fetchCldr = async (language, region, script) => {
 	const localeId = calcLocale(language, region, script);
 
-	// t o d o make loader
-	// const OpenUI5Support = getFeature("OpenUI5Support");
-	// if (!cldrObj && OpenUI5Support) {
-	// 	cldrObj = OpenUI5Support.getLocaleDataObject();
-	// }
+	// reuse OpenUI5 CLDR if present
+	const OpenUI5Support = getFeature("OpenUI5Support");
+	if (OpenUI5Support) {
+		const cldrContent = OpenUI5Support.getLocaleDataObject();
+		if (cldrContent) {
+			// only if openui5 actually returned valid content
+			setLocaleData(localeId, cldrContent);
+			return;
+		}
+	}
 
 	// fetch it
 	try {
 		const cldrContent = await _loadCldrOnce(localeId);
-		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrContent);
+		setLocaleData(localeId, cldrContent);
 	} catch (e) {
 		if (!reportedErrors.has(e.message)) {
 			reportedErrors.add(e.message);
@@ -116,5 +117,5 @@ attachLanguageChange(() => {
 export {
 	registerLocaleDataLoader,
 	fetchCldr,
-	getModuleContent,
+	getLocaleData,
 };
