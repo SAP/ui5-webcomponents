@@ -17,12 +17,12 @@ describe("ColorPalette interactions", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
 		const colorPalette = browser.$("#cp1");
 		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
-		const swatch = colorPaletteEntries[0];
+		const item = colorPaletteEntries[0];
 
-		swatch.click();
+		item.click();
 
-		swatch.keys("ArrowRight");
-		swatch.keys("Space");
+		item.keys("ArrowRight");
+		item.keys("Space");
 
 		assert.strictEqual(colorPalette.getProperty("value"), "pink", "Check if selected value is pink");
 	});
@@ -31,12 +31,12 @@ describe("ColorPalette interactions", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
 		const colorPalette = browser.$("#cp1");
 		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
-		const swatch = colorPaletteEntries[0];
+		const item = colorPaletteEntries[0];
 
-		swatch.click();
+		item.click();
 
-		swatch.keys("ArrowLeft");
-		swatch.keys("Space");
+		item.keys("ArrowLeft");
+		item.keys("Space");
 
 		colorPalette.keys("Space");
 
@@ -47,12 +47,12 @@ describe("ColorPalette interactions", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
 		const colorPalette = browser.$("#cp1");
 		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
-		const swatch = colorPaletteEntries[0];
+		const item = colorPaletteEntries[0];
 
-		swatch.click();
+		item.click();
 
-		swatch.keys("ArrowUp");
-		swatch.keys("Space");
+		item.keys("ArrowUp");
+		item.keys("Space");
 
 		assert.strictEqual(colorPalette.getProperty("value"), "orange", "Check if selected value is orange");
 	});
@@ -61,12 +61,12 @@ describe("ColorPalette interactions", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
 		const colorPalette = browser.$("#cp1");
 		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
-		const swatch = colorPaletteEntries[9];
+		const item = colorPaletteEntries[9];
 
-		swatch.click();
+		item.click();
 
-		swatch.keys("ArrowDown");
-		swatch.keys("Space");
+		item.keys("ArrowDown");
+		item.keys("Space");
 
 		assert.strictEqual(colorPalette.getProperty("value"), "darkblue", "Check if selected value is darkblue");
 	});

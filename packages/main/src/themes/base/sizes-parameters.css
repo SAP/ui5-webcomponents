@@ -118,12 +118,12 @@
 	--_ui5_checkbox_icon_size: .75rem;
 
 	/* ColorPalette */
-	--_ui5_color-palette-swatch-height: 1.25rem;
-	--_ui5_color-palette-swatch-focus-height: 1rem;
-	--_ui5_color-palette-swatch-container-sides-padding: 0.1875rem;
-	--_ui5_color-palette-swatch-container-rows-padding: 0.8125rem;
-	--_ui5_color-palette-swatch-hover-height: 1.65rem;
-	--_ui5_color-palette-swatch-hover-margin: 0.3125rem;
+	--_ui5_color-palette-item-height: 1.25rem;
+	--_ui5_color-palette-item-focus-height: 1rem;
+	--_ui5_color-palette-item-container-sides-padding: 0.1875rem;
+	--_ui5_color-palette-item-container-rows-padding: 0.8125rem;
+	--_ui5_color-palette-item-hover-height: 1.65rem;
+	--_ui5_color-palette-item-hover-margin: 0.3125rem;
 	--_ui5_color-palette-row-width: 12rem;
 	--_ui5_color-palette-row-height: 7.25rem;
 
