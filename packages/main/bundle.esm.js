@@ -15,18 +15,19 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 // CLDR
 import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocaleData.js";
 
-/* Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
-import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
-import parseProperties from "@ui5/webcomponents-base/dist/util/parseProperties";
-const bg = "alabala";
-registerI18nLoader("@ui5/webcomponents", "bg", async (localeId) => {
-	const props = await (await fetch(bg)).text();
-	return parseProperties(props);
-});
-registerI18nLoader("@ui5/webcomponents", "fr", async (localeId) => {
-	return await (await fetch("fr")).json();
-});
-*/
+// Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
+// import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+// import parse from "@ui5/webcomponents-base/dist/PropertiesFileFormat.js";
+
+// const bg = "https://ui5.sap.com/resources/sap/ui/core/messagebundle_bg.properties";
+// registerI18nLoader("@ui5/webcomponents", "bg", async (localeId) => {
+// 	const props = await (await fetch(bg)).text();
+// 	return parse(props);;
+// });
+// registerI18nLoader("@ui5/webcomponents", "fr", async (localeId) => {
+// 	return await (await fetch("fr")).json();
+// });
+
 
 // asset helpers (needs correct json plugin in rollup.config.js)
 import "./dist/Assets.js";
