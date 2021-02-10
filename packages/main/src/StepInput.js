@@ -352,6 +352,10 @@ class StepInput extends UI5Element {
 		this.ACCELERATION = 0.8;
 		this.MIN_WAIT_TIMEOUT = 50; // milliseconds
 		this.INITIAL_SPEED = 120; // milliseconds
+
+		if (this._previousValue === undefined) {
+			this._previousValue = this.value;
+		}
 	}
 
 	static get metadata() {
@@ -528,8 +532,8 @@ class StepInput extends UI5Element {
 
 	_onInputChange(event) {
 		let inputValue = this._preciseValue(parseFloat(this.input.value));
-		if ((!isNaN(this._previousValue) && this.value !== this._previousValue) || this.value !== inputValue) {
-			this.value = inputValue;
+		if (this.value !== this._previousValue || this.value !== inputValue) {
+		this.value = inputValue;
 			this._validate();
 			this._buttonsState();
 			this._fireChangeEvent();

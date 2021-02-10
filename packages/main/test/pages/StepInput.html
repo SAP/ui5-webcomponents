@@ -14,11 +14,6 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script
-	src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
-	crossorigin="anonymous"></script>
-
 	<script data-id="sap-ui-config" type="application/json">
 		{
 			"rtl": false,
@@ -50,7 +45,7 @@
 
 	<div>
 		<h3>StepInput in Cozy</h3>
-		<ui5-step-input id="step-input-cozy"
+		<ui5-step-input id="stepInputCozy"
 			placeholder="Enter number"
 			style="text-align: right; width: 250px"
 		/>
@@ -58,7 +53,7 @@
 
 	<div class="sapUiSizeCompact">
 		<h3>StepInput in Compact</h3>
-		<ui5-step-input id="step-input-compact"
+		<ui5-step-input id="stepInputCompact"
 			placeholder="Enter number"
 			style="text-align: right; width: 250px"
 		/>
@@ -66,7 +61,7 @@
 
 	<div>
 		<h3>StepInput in with min=0, max=10 and step=1</h3>
-		<ui5-step-input id="step-input-minmax"
+		<ui5-step-input id="stepInputMinMax"
 			placeholder="Enter number"
 			min="0"
 			max="10"
@@ -77,7 +72,7 @@
 
 	<div>
 		<h3>StepInput in with min=0, max=10, step=0.05 and valuePrecision=2</h3>
-		<ui5-step-input id="step-input-precision"
+		<ui5-step-input id="stepInputPrecision"
 			placeholder="Enter number"
 			min="0"
 			max="10"
@@ -89,7 +84,7 @@
 
 	<div>
 		<h3>Disabled StepInput</h3>
-		<ui5-step-input id="step-input-disabled"
+		<ui5-step-input id="stepInputDisabled"
 			placeholder="Enter number"
 			style="text-align: right; width: 250px"
 			disabled
@@ -98,7 +93,7 @@
 
 	<div>
 		<h3>Readonly StepInput</h3>
-		<ui5-step-input id="step-input-readonly"
+		<ui5-step-input id="stepInputReadOnly"
 			placeholder="Enter number"
 			style="text-align: right; width: 250px"
 			readonly
@@ -107,7 +102,7 @@
 
 	<div>
 		<h3>StepInput with valueState=None</h3>
-		<ui5-step-input id="step-input-none"
+		<ui5-step-input id="stepInputNone"
 			placeholder="Enter number"
 			value-state="None"
 			style="text-align: right; width: 250px"
@@ -116,7 +111,7 @@
 
 	<div>
 		<h3>StepInput with valueState=Success</h3>
-		<ui5-step-input id="step-input-success"
+		<ui5-step-input id="stepInputSuccess"
 			placeholder="Enter number"
 			value-state="Success"
 			style="text-align: right; width: 250px"
@@ -125,7 +120,7 @@
 
 	<div>
 		<h3>StepInput with valueState=Information</h3>
-		<ui5-step-input id="step-input-information"
+		<ui5-step-input id="stepInputInformation"
 			placeholder="Enter number"
 			value-state="Information"
 			style="text-align: right; width: 250px"
@@ -134,7 +129,7 @@
 
 	<div>
 		<h3>StepInput with valueState=Warning</h3>
-		<ui5-step-input id="step-input-warning"
+		<ui5-step-input id="stepInputWarning"
 			placeholder="Enter number"
 			value-state="Warning"
 			style="text-align: right; width: 250px"
@@ -143,21 +138,28 @@
 
 	<div>
 		<h3>StepInput with valueState=Error</h3>
-		<ui5-step-input id="step-input-error"
+		<ui5-step-input id="stepInputError"
 			placeholder="Enter number"
 			value-state="Error"
 			style="text-align: right; width: 250px"
 		/>
 	</div>
 
+	<h3> 'change' event result</h3>
+	<ui5-input id="changeResult"></ui5-input>
+
 	<script>
 		var labelChange = document.getElementById('myLabelChange');
-		var siCozy = document.getElementById('step-input-cozy');
-		var siCompact = document.getElementById('step-input-compact');
-		var siMinMax = document.getElementById('step-input-minmax');
-		var siPrecision = document.getElementById('step-input-precision');
+		var siCozy = document.getElementById('stepInputCozy');
+		var siCompact = document.getElementById('stepInputCompact');
+		var siMinMax = document.getElementById('stepInputMinMax');
+		var siPrecision = document.getElementById('stepInputPrecision');
+		var changeResult = document.getElementById('changeResult');
+		var changeCount = 0;
 		var displayChange = function (event) {
 			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.detail.value;
+			changeCount++;
+			changeResult.value = changeCount;
 		}
 
 		siCozy.addEventListener('ui5-change', displayChange);
