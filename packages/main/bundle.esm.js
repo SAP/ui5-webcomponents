@@ -28,7 +28,7 @@ registerI18nLoader("@ui5/webcomponents", "fr", async (localeId) => {
 });
 */
 
-// asset helpers (needs correct json as url in rollup.config.js)
+// asset helpers (needs correct json plugin in rollup.config.js)
 import "./dist/Assets.js";
 
 // Icons

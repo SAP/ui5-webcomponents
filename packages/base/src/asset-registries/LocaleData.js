@@ -101,11 +101,9 @@ const registerLocaleDataLoader = (localeId, loader) => {
 	loaders.set(localeId, loader);
 };
 
-// register default loader from ui5 CDN
-SUPPORTED_LOCALES.forEach(localeId => {
-	registerLocaleDataLoader(localeId, async runtimeLocaleId => {
-		return (await fetch(`https://ui5.sap.com/1.60.2/resources/sap/ui/core/cldr/${runtimeLocaleId}.json`)).json();
-	});
+// register default loader for "en" from ui5 CDN (dev workflow without assets)
+registerLocaleDataLoader("en", async runtimeLocaleId => {
+	return (await fetch(`https://ui5.sap.com/1.60.2/resources/sap/ui/core/cldr/en.json`)).json();
 });
 
 // When the language changes dynamically (the user calls setLanguage),
