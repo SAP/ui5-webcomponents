@@ -20,7 +20,7 @@ import { isIE } from "./dist/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
 
 // used for tests - to register a custom theme
-window.registerThemeProperties = registerThemeProperties;
+window.registerThemePropertiesLoader = registerThemePropertiesLoader;
 
 // i18n
 import { registerI18nBundle, fetchI18nBundle, getI18nBundle } from "./dist/i18nBundle.js";

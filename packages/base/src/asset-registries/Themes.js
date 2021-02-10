@@ -18,16 +18,14 @@ const registeredThemes = new Set();
  * @param packageName - the NPM package for which CSS Vars are registered
  * @param themeName - the theme which the CSS Vars implement
  * @param style - the style content directly
+ * @deprecated
  */
-const registerThemeProperties = (packageName, themeName, style) => {
-	// pure string, including empty string
-	themeStyles.set(`${packageName}_${themeName}`, style);
-	registeredPackages.add(packageName);
-	registeredThemes.add(themeName);
+const registerThemeProperties = (_packageName, _themeName, _style) => {
+	throw new Error("`registerThemeProperties` has been depracated. Use `registerThemePropertiesLoader` instead.");
 };
 
 const registerThemePropertiesLoader = (packageName, themeName, loader) => {
-	loaders.set(packageName, loader);
+	loaders.set(`${packageName}/${themeName}`, loader);
 	registeredPackages.add(packageName);
 	registeredThemes.add(themeName);
 };
@@ -44,9 +42,11 @@ const getThemeProperties = async (packageName, themeName) => {
 		return themeStyles.get(`${packageName}_${DEFAULT_THEME}`);
 	}
 
-	const loader = loaders.get(packageName);
+	const loader = loaders.get(`${packageName}/${themeName}`);
 	if (!loader) {
 		// no themes for package
+		console.error(`Theme [${themeName}] not registered for package [${pacakgeName}]`); /* eslint-disable-line */
+		return;
 	}
 	let data;
 	try {
