@@ -1,7 +1,5 @@
-commit 772424efe09309017425867dacc60d2ec2a702ed
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Thu Feb 11 08:25:30 2021 +0200
+commit d31a793c04646553d4e43c9a4413773d4455670b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Feb 11 13:10:15 2021 +0200
 
-    feat(ui5-color-palette): initial implementation (#2731)
-    
-    Implementation of new component called color palette. The control presents a set of colors that you define, from which the user can select.
+    docs(ui5-bar): change package name (#2807)
