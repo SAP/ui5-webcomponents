@@ -44,6 +44,11 @@
 			@focusout="{{_onInputFocusOut}}"
 			@focusin="{{_onInputFocusIn}}"
 	>
+
+		{{#if valueStateMessage.length}}
+			<slot name="valueStateMessage" slot="valueStateMessage" style="width: 100%"></slot>
+		{{/if}}
+
 	</ui5-input>
 
 	<!-- Increment Icon -->

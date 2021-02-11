@@ -4,10 +4,12 @@
 	}
 </style>
 
-<header>
-	<h2 class="control-header">Step Input</h2>
+<header class="component-heading">
+	<h2 class="control-header">StepInput</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
 </header>
-
 <div class="component-package">@ui5/webcomponents</div>
 
 <div class="control-tag">&lt;ui5-step-input&gt;</div>
@@ -38,9 +40,9 @@
 		</div>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-step-input class="samples-margin samples-responsive-margin-bottom" value="5"></ui5-step-input>
-<ui5-step-input class="samples-margin samples-responsive-margin-bottom" value="5" style="text-align: center"></ui5-step-input>
-<ui5-step-input class="samples-margin samples-responsive-margin-bottom" value="5" style="text-align: right"></ui5-step-input>
+<ui5-step-input value="5"></ui5-step-input>
+<ui5-step-input value="5" style="text-align: center"></ui5-step-input>
+<ui5-step-input value="5" style="text-align: right"></ui5-step-input>
 	</xmp></pre>
 </section>
 
@@ -54,9 +56,9 @@
 		</div>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-step-input class="samples-margin samples-responsive-margin-bottom" value="5" min="0" max="10" step="1"></ui5-step-input>
-<ui5-step-input class="samples-margin samples-responsive-margin-bottom" value="0" min="-100" max="100" step="10"></ui5-step-input>
-<ui5-step-input class="samples-margin samples-responsive-margin-bottom" value="10" min="0" max="20" step="0.5" value-precision="1"></ui5-step-input>
+<ui5-step-input value="5" min="0" max="10" step="1"></ui5-step-input>
+<ui5-step-input value="0" min="-100" max="100" step="10"></ui5-step-input>
+<ui5-step-input value="10" min="0" max="20" step="0.5" value-precision="1"></ui5-step-input>
 	</xmp></pre>
 </section>
 
@@ -89,7 +91,7 @@
 		</div>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-label class="samples-big-margin-right" for="myStepInput" required show-colon>Number</ui5-label>
+<ui5-label for="myStepInput" required show-colon>Number</ui5-label>
 <ui5-step-input id="myStepInput" placeholder="Enter your Number" required></ui5-step-input>
 	</xmp></pre>
 </section>

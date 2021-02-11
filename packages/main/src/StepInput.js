@@ -35,6 +35,7 @@ import StepInputCss from "./generated/themes/StepInput.css.js";
  */
 const metadata = {
 	tag: "ui5-step-input",
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
 		/**
 		 * Defines a value of the <code>ui5-step-input</code>.
@@ -303,7 +304,7 @@ const INITIAL_SPEED = 120; // milliseconds
  *
  * The <code>ui5-step-input</code> consists of an input field and buttons with icons to increase/decrease the value
  * with the predefined step.
- *
+ * <br><br>
  * The user can change the value of the component by pressing the increase/decrease buttons,
  * by typing a number directly, by using the keyboard up/down and page up/down,
  * or by using the mouse scroll wheel. Decimal values are supported.
@@ -315,7 +316,7 @@ const INITIAL_SPEED = 120; // milliseconds
  * App developers can set a maximum and minimum value for the <code>StepInput</code>.
  * The increase/decrease button and the up/down keyboard navigation become disabled when
  * the value reaches the max/min or a new value is entered from the input which is greater/less than the max/min.
- *
+ * <br><br>
  * <i>When to use</i>
  * <ul>
  * <li>To adjust amounts, quantities, or other values quickly.</li>
