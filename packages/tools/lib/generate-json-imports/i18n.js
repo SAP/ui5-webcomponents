@@ -72,6 +72,7 @@ localeIds.forEach(localeId => {
 		if (typeof data === "string" && data.endsWith(".json")) {
 			throw new Error(\`[i18n] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build or use 'import ".../Assets-static.js"'. Check the \"Assets\" documentation for more information.\`);
 		}
+		return data;
 	}
 
 	const localeIds = [${languagesKeysStringArray}];
