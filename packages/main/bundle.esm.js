@@ -2,9 +2,11 @@ import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/confi
 // setAssetsPath("/my-resources/");
 
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming";
+/*
 attachThemeLoaded(theme => {
 	console.log("Theme load complete: ", theme);
 });
+*/
 
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
@@ -45,6 +47,8 @@ import Button from "./dist/Button.js";
 import Card from "./dist/Card.js";
 import Carousel from "./dist/Carousel.js";
 import CheckBox from "./dist/CheckBox.js";
+import ColorPalette from "./dist/ColorPalette.js";
+import ColorPaletteItem from "./dist/ColorPaletteItem.js";
 import ColorPicker from "./dist/ColorPicker.js";
 import ComboBox from "./dist/ComboBox.js";
 import DatePicker from "./dist/DatePicker.js";

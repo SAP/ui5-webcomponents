@@ -1104,7 +1104,7 @@ class Input extends UI5Element {
 	get styles() {
 		return {
 			popoverHeader: {
-				"width": `${this._inputWidth}px`,
+				"max-width": `${this._inputWidth}px`,
 			},
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
@@ -1174,6 +1174,14 @@ class Input extends UI5Element {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	/**
+	 * Returns the placeholder value.
+	 * @protected
+	 */
+	get _placeholder() {
+		return this.placeholder;
 	}
 
 	/**

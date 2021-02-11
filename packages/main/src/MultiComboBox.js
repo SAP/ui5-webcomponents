@@ -81,9 +81,9 @@ const metadata = {
 		* @public
 		* @since 1.0.0-rc.9
 		*/
-	   icon: {
-		   type: HTMLElement,
-	   },
+		icon: {
+			type: HTMLElement,
+		},
 
 		/**
 		 * Defines the value state message that will be displayed as pop up under the <code>ui5-multi-combobox</code>.
@@ -398,6 +398,7 @@ class MultiComboBox extends UI5Element {
 		super();
 
 		this._filteredItems = [];
+		this.selectedValues = [];
 		this._inputLastValue = "";
 		this._deleting = false;
 		this._validationTimeout = null;
@@ -514,6 +515,14 @@ class MultiComboBox extends UI5Element {
 		this._deleting = true;
 
 		this.fireSelectionChange();
+	}
+
+	get _getPlaceholder() {
+		if (this._tokenizer && this._tokenizer.tokens.length) {
+			return "";
+		}
+
+		return this.placeholder;
 	}
 
 	_handleLeft() {
@@ -874,7 +883,7 @@ class MultiComboBox extends UI5Element {
 				"padding": "0.9125rem 1rem",
 			},
 			popoverHeader: {
-				"width": `${this._inputWidth}px`,
+				"max-width": `${this._inputWidth}px`,
 			},
 		};
 	}
