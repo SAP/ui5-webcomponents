@@ -1,10 +1,7 @@
-commit b4cbc43ba37fb69bcb30d32751aa21448ff65000
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 9 17:23:21 2021 +0200
+commit 772424efe09309017425867dacc60d2ec2a702ed
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Thu Feb 11 08:25:30 2021 +0200
 
-    fix(ui5-wizard): observe content height changes (#2801)
+    feat(ui5-color-palette): initial implementation (#2731)
     
-    Issue: When the step content size is changed runtime, step selection might go wrong as the steps' scroll positions are out of sync - the wizard works with the old ones.
-    Solution: Observe steps and update state to store steps' scroll positions.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2784
+    Implementation of new component called color palette. The control presents a set of colors that you define, from which the user can select.
