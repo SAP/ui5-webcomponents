@@ -1,4 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
@@ -173,6 +175,72 @@ class ColorPicker extends UI5Element {
 		this.style.setProperty("--ui5_Color_Picker_Progress_Container_Color", this.color);
 	}
 
+	async onAfterRendering() {
+		if (isIE()) {
+			await renderFinished();
+			this._applySliderStyles();
+		}
+	}
+
+	_applySliderStyles() {
+		const hueSlider = this.getDomRef().querySelector(".ui5-color-picker-hue-slider").shadowRoot,
+			alphaSlider = this.getDomRef().querySelector(".ui5-color-picker-alpha-slider").shadowRoot;
+
+		if (hueSlider.children.length === 0 || alphaSlider.children.length === 0) {
+			return;
+		}
+
+		// ui5-slider::part(slider-handle)
+		hueSlider.querySelector(".ui5-slider-handle").style.width = "11px";
+		hueSlider.querySelector(".ui5-slider-handle").style.height = "1.25rem";
+		hueSlider.querySelector(".ui5-slider-handle").style.background = "transparent";
+		hueSlider.querySelector(".ui5-slider-handle").style.marginLeft = "-2px";
+		hueSlider.querySelector(".ui5-slider-handle").style.marginTop = "1px";
+
+		alphaSlider.querySelector(".ui5-slider-handle").style.width = "11px";
+		alphaSlider.querySelector(".ui5-slider-handle").style.height = "1.25rem";
+		alphaSlider.querySelector(".ui5-slider-handle").style.background = "transparent";
+		alphaSlider.querySelector(".ui5-slider-handle").style.marginLeft = "-2px";
+		alphaSlider.querySelector(".ui5-slider-handle").style.marginTop = "1px";
+
+		// ui5-slider::part(slider-handle)::after
+		// Skipped because it is pseudo element
+
+		// ui5-slider::part(progress-container)
+		hueSlider.querySelector(".ui5-slider-progress-container").style.width = "calc(100% + 11px)";
+		hueSlider.querySelector(".ui5-slider-progress-container").style.height = "18px";
+		hueSlider.querySelector(".ui5-slider-progress-container").style.position = "absolute";
+		hueSlider.querySelector(".ui5-slider-progress-container").style.marginTop = "-10px";
+		hueSlider.querySelector(".ui5-slider-progress-container").style.borderRadius = "0";
+		hueSlider.querySelector(".ui5-slider-progress-container").style.border = "1px solid #89919a";
+
+		alphaSlider.querySelector(".ui5-slider-progress-container").style.width = "calc(100% + 11px)";
+		alphaSlider.querySelector(".ui5-slider-progress-container").style.height = "18px";
+		alphaSlider.querySelector(".ui5-slider-progress-container").style.position = "absolute";
+		alphaSlider.querySelector(".ui5-slider-progress-container").style.marginTop = "-10px";
+		alphaSlider.querySelector(".ui5-slider-progress-container").style.borderRadius = "0";
+		alphaSlider.querySelector(".ui5-slider-progress-container").style.border = "1px solid #89919a";
+
+		// ui5-slider.ui5-color-picker-hue-slider::part(progress-container)
+		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundSize = "100%";
+		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-webkit-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
+		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-moz-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
+		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-ms-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
+		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
+		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundColor = "none";
+
+		// ui5-slider.ui5-color-picker-alpha-slider::part(progress-container)
+		alphaSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-webkit-linear-gradient(left, #fff, #979797)";
+		alphaSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-moz-linear-gradient(left, #fff, #979797)";
+		alphaSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-ms-linear-gradient(left, #fff, #979797)";
+		alphaSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "linear-gradient(left, #fff, #979797)";
+		alphaSlider.querySelector(".ui5-slider-progress-container").style.backgroundColor = "none";
+
+		// ui5-slider::part(slider-progress)
+		hueSlider.querySelector(".ui5-slider-progress").style.background = "Transparent";
+		alphaSlider.querySelector(".ui5-slider-progress").style.background = "Transparent";
+	}
+
 	_handleMouseDown(event) {
 		this.mouseDown = true;
 		this.mouseIn = true;
@@ -329,8 +397,10 @@ class ColorPicker extends UI5Element {
 		// and HSL format, the color will be parsed to RGB
 
 		const h = Math.round(this._hue / 4.25), // 0 ≤ H < 360
-			s = 1 - +(Math.round((y / 256) + "e+2")  + "e-2"), // 0 ≤ S ≤ 1
-			l = +(Math.round((x / 256) + "e+2")  + "e-2"); // 0 ≤ V ≤ 1
+			// 0 ≤ S ≤ 1
+			s = 1 - +(Math.round((y / 256) + "e+2") + "e-2"), // eslint-disable-line
+			// 0 ≤ V ≤ 1
+			l = +(Math.round((x / 256) + "e+2") + "e-2"); // eslint-disable-line
 
 		if (!s || !l) {
 			// The event is finished out of the main color section
