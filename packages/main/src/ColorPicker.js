@@ -329,8 +329,8 @@ class ColorPicker extends UI5Element {
 		// and HSL format, the color will be parsed to RGB
 
 		const h = Math.round(this._hue / 4.25), // 0 ≤ H < 360
-			s = 1 - (Math.round(((y / 256) + Number.EPSILON) * 100) / 100), // 0 ≤ S ≤ 1
-			l = Math.round(((x / 256) + Number.EPSILON) * 100) / 100; // 0 ≤ V ≤ 1
+			s = 1 - +(Math.round((y / 256) + "e+2")  + "e-2"), // 0 ≤ S ≤ 1
+			l = +(Math.round((x / 256) + "e+2")  + "e-2"); // 0 ≤ V ≤ 1
 
 		if (!s || !l) {
 			// The event is finished out of the main color section
