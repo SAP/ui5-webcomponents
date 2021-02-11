@@ -243,6 +243,19 @@ class Popup extends UI5Element {
 		});
 	}
 
+	_onkeydown(e) {
+		if (e.target === this._root && isTabPrevious(e)) {
+			e.preventDefault();
+		}
+	}
+
+	_onfocusout(e) {
+		// relatedTarget is the element, which will get focus. If no such element exists, focus the root
+		if (!e.relatedTarget) {
+			this._root.focus();
+		}
+	}
+
 	/**
 	 * Focus trapping
 	 * @private
