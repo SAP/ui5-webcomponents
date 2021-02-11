@@ -43,14 +43,15 @@ const getPlugins = ({ transpile }) => {
 	plugins.push(json({
 		include: [
 			/.*assets\/.*\.json/,
-		]
+		],
+		namedExports: false,
 	}));
 
 	// uncomment when testing static resources
 	// plugins.push(url({
 	// 	limit: 0,
 	// 	include: [
-	// 		// /.*assets\/.*\.json/,
+	// 		/.*assets\/.*\.json/,
 	// 	],
 	// 	emitFiles: true,
 	// 	fileName: "[name].[hash][extname]",
