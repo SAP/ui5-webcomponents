@@ -384,6 +384,15 @@
 
 	<br>
 
+	<ui5-button id="btnOpenPopoverWithDiv">Open Popover with div Inside</ui5-button>
+
+	<ui5-popover id="popWithDiv" header-text="Newsletter subscription" modal>
+		<div id="divContent">I'm a div, which can't get focus. Click me and see where focus goes.</div>
+		<div slot="footer" class="popover-footer">
+			<ui5-button design="Emphasized">Subscribe</ui5-button>
+		</div>
+	</ui5-popover>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.openBy(btn);
@@ -488,6 +497,11 @@
 
 			popover.openBy(btnOpenDynamic);
 		});
+
+		btnOpenPopoverWithDiv.addEventListener("click", function (event) {
+			popWithDiv.openBy(event.target);
+		});
+
 	</script>
 </body>
 
