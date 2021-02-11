@@ -10,4 +10,4 @@ const loadIconsBundle = async () => {
 	return (await fetch(SAPIconsTNTUrl)).json();
 }
 
-registerIconLoader("SAP-icons-TNT", loadIconsBundle);
+registerIconLoader("tnt", loadIconsBundle);

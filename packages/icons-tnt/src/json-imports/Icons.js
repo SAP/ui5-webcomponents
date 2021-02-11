@@ -8,4 +8,4 @@ const loadIconsBundle = async () => {
     return iconData;
 }
 
-registerIconLoader("SAP-icons-TNT", loadIconsBundle);
+registerIconLoader("tnt", loadIconsBundle);

@@ -33,7 +33,7 @@ import { getTheme, setTheme } from "./dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
 import { getRTL } from "./dist/config/RTL.js";
 import { getFirstDayOfWeek } from "./dist/config/FormatSettings.js";
-import { getRegisteredNames as getIconNames } from  "./dist/SVGIconRegistry.js"
+import { _getRegisteredNames as getIconNames } from  "./dist/asset-registries/Icons.js"
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
