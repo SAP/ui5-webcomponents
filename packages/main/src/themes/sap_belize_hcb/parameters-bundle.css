@@ -6,6 +6,7 @@
 @import "./Carousel-parameters.css";
 @import "./Card-parameters.css";
 @import "./CheckBox-parameters.css";
+@import "../base/ColorPalette-parameters.css";
 @import "./DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
 @import "./Dialog-parameters.css";
