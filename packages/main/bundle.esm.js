@@ -2,11 +2,6 @@ import { getAssetsPath, setAssetsPath } from "@ui5/webcomponents-base/dist/confi
 // setAssetsPath("/my-resources/");
 
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming";
-/*
-attachThemeLoaded(theme => {
-	console.log("Theme load complete: ", theme);
-});
-*/
 
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
@@ -20,21 +15,26 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 // CLDR
 import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocaleData.js";
 
+// Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
+// import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+// import parse from "@ui5/webcomponents-base/dist/PropertiesFileFormat.js";
+
+// const bg = "https://ui5.sap.com/resources/sap/ui/core/messagebundle_bg.properties";
+// registerI18nLoader("@ui5/webcomponents", "bg", async (localeId) => {
+// 	const props = await (await fetch(bg)).text();
+// 	return parse(props);;
+// });
+// registerI18nLoader("@ui5/webcomponents", "fr", async (localeId) => {
+// 	return await (await fetch("fr")).json();
+// });
+
+
+// asset helpers (needs correct json plugin in rollup.config.js)
+import "./dist/Assets.js";
+
 // Icons
 import "@ui5/webcomponents-icons/dist/Assets.js";
 import "@ui5/webcomponents-icons-tnt/dist/Assets.js";
-
-/* Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
-import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
-import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
-registerI18nBundle("@ui5/webcomponents", {
-	bg: "./lang/messagebundle_bg.properties",
-	fr: "./lang/fr.json",
-});
-*/
-
-// asset helpers (needs correct json as url in rollup.config.js)
-import "./dist/Assets.js";
 
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
@@ -105,7 +105,7 @@ import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/La
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
-import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import { _getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/directionChange.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";

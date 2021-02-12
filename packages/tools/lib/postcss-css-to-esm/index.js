@@ -7,13 +7,13 @@ const assets = require("../../assets-meta.js");
 const DEFAULT_THEME = assets.themes.default;
 
 const getDefaultThemeCode = packageName => {
-	return `import { registerThemeProperties } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+	return `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 
 import defaultThemeBase from "@ui5/webcomponents-theme-base/dist/generated/themes/${DEFAULT_THEME}/parameters-bundle.css.js";
 import defaultTheme from "./${DEFAULT_THEME}/parameters-bundle.css.js";
 
-registerThemeProperties("@ui5/webcomponents-theme-base", "${DEFAULT_THEME}", defaultThemeBase);
-registerThemeProperties("${packageName}", "${DEFAULT_THEME}", defaultTheme);
+registerThemePropertiesLoader("@ui5/webcomponents-theme-base", "${DEFAULT_THEME}", () => defaultThemeBase);
+registerThemePropertiesLoader("${packageName}", "${DEFAULT_THEME}", () => defaultTheme);
 `;
 };
 
