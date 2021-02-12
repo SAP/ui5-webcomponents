@@ -1,4 +1,4 @@
-import { registerThemeProperties } from "./dist/AssetRegistry.js";
+import { registerThemePropertiesLoader } from "./dist/AssetRegistry.js";
 
 // ESM bundle targets browsers with native support
 import "./dist/features/OpenUI5Support.js";
@@ -20,11 +20,10 @@ import { isIE } from "./dist/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
 
 // used for tests - to register a custom theme
-window.registerThemeProperties = registerThemeProperties;
+window.registerThemePropertiesLoader = registerThemePropertiesLoader;
 
 // i18n
-import "./dist/features/PropertiesFormatSupport.js";
-import { registerI18nBundle, fetchI18nBundle, getI18nBundle } from "./dist/i18nBundle.js";
+import { registerI18nLoader, fetchI18nBundle, getI18nBundle } from "./dist/i18nBundle.js";
 
 // Note: keep in sync with rollup.config value for IIFE
 import { getAnimationMode } from "./dist/config/AnimationMode.js";
@@ -34,7 +33,7 @@ import { getTheme, setTheme } from "./dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
 import { getRTL } from "./dist/config/RTL.js";
 import { getFirstDayOfWeek } from "./dist/config/FormatSettings.js";
-import { getRegisteredNames as getIconNames } from  "./dist/SVGIconRegistry.js"
+import { _getRegisteredNames as getIconNames } from  "./dist/asset-registries/Icons.js"
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
@@ -48,7 +47,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		getFirstDayOfWeek,
 	},
 	getIconNames,
-	registerI18nBundle,
+	registerI18nLoader,
 	fetchI18nBundle,
 	getI18nBundle,
 	renderFinished,
