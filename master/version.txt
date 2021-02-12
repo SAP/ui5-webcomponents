@@ -1,7 +1,5 @@
-commit 691c2e40793410569de1609794bbe18275b22334
-Author: Martotko <16964129+Martotko@users.noreply.github.com>
-Date:   Fri Feb 12 16:07:40 2021 +0200
+commit c0969aac859299468650b4253b98a8739e14ef14
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Feb 12 17:01:58 2021 +0200
 
-    fix(ui5-combobox): User action cancelled when clicking "X" on mobile (#2742)
-    
-    Fixes: #2449
+    refactor(framework): ItemNavigation public API clarified (#2813)
