@@ -14,7 +14,7 @@
 .ui5-wiz-content {
 	position: relative;
 	overflow: auto;
-	height: 100%;
+	height: calc(100% - 4rem); /* the navigation height is 4rem */
 	box-sizing: border-box;
 	background: var(--sapBackgroundColor);
 }

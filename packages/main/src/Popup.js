@@ -56,7 +56,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the elements is open
+		 * Indicates if the element is open
 		 * @private
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -207,6 +207,19 @@ class Popup extends UI5Element {
 		return staticAreaStyles;
 	}
 
+	onEnterDOM() {
+		if (!this.isOpen()) {
+			this._blockLayerHidden = true;
+		}
+	}
+
+	onExitDOM() {
+		if (this.isOpen()) {
+			Popup.unblockBodyScrolling();
+			this._removeOpenedPopup();
+		}
+	}
+
 	get _displayProp() {
 		return "block";
 	}
@@ -247,6 +260,13 @@ class Popup extends UI5Element {
 	_onkeydown(e) {
 		if (e.target === this._root && isTabPrevious(e)) {
 			e.preventDefault();
+		}
+	}
+
+	_onfocusout(e) {
+		// relatedTarget is the element, which will get focus. If no such element exists, focus the root
+		if (!e.relatedTarget) {
+			this._root.focus();
 		}
 	}
 
@@ -430,13 +450,6 @@ class Popup extends UI5Element {
 	 */
 	hide() {
 		this.style.display = "none";
-	}
-
-	onExitDOM() {
-		if (this.isOpen()) {
-			Popup.unblockBodyScrolling();
-			this._removeOpenedPopup();
-		}
 	}
 
 	/**

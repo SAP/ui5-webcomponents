@@ -251,6 +251,18 @@ describe("Popover general interaction", () => {
 		assert.ok(activeElementId, popoverId, "Popover remains focused");
 	});
 
+	it("tests focus when content, which can't be focused is clicked", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+
+		$("#btnOpenPopoverWithDiv").click();
+		$("#divContent").click();
+
+		const popoverId = "popWithDiv";
+		const activeElementId = $(browser.getActiveElement()).getAttribute("id");
+
+		assert.strictEqual(activeElementId, popoverId, "Popover is focused");
+	});
+
 	it("tests that dynamically created popover is opened", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
 
