@@ -1,0 +1,13 @@
+<div class="ui5-cp-item-container" 
+	role="region"
+	aria-label="{{colorContainerLabel}}"
+	@click={{_onclick}}
+	@keyup={{_onkeyup}}
+	@keydown={{_onkeydown}}>
+	{{#each this.displayedColors}}
+		<slot
+			name="{{this._individualSlot}}"
+		>
+		</slot>
+	{{/each}}
+</div>

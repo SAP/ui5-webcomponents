@@ -250,6 +250,36 @@ describe("Popover general interaction", () => {
 
 		assert.ok(activeElementId, popoverId, "Popover remains focused");
 	});
+
+	it("tests focus when content, which can't be focused is clicked", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+
+		$("#btnOpenPopoverWithDiv").click();
+		$("#divContent").click();
+
+		const popoverId = "popWithDiv";
+		const activeElementId = $(browser.getActiveElement()).getAttribute("id");
+
+		assert.strictEqual(activeElementId, popoverId, "Popover is focused");
+	});
+
+	it("tests that dynamically created popover is opened", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+
+		const btnOpenDynamic = $("#btnOpenDynamic");
+		btnOpenDynamic.click();
+		const popover = $('#dynamic-popover');
+
+		browser.waitUntil(
+			() => popover.getCSSProperty("top").parsed.value > 0 && popover.getCSSProperty("left").parsed.value > 0,
+			{
+				timeout: 500,
+				timeoutMsg: "popover was not opened after a timeout"
+			}
+		);
+
+		assert.ok(true, "popover is opened");
+	});
 });
 
 describe("Acc", () => {

@@ -1,0 +1,11 @@
+:host(:not([hidden])) {
+	display: inline-block;
+}
+
+.ui5-cp-item-container {
+	display: flex;
+	max-width: var(--_ui5_color-palette-row-width);
+	flex-flow: wrap;
+	max-height: var(--_ui5_color-palette-row-height);
+	overflow: hidden;
+}

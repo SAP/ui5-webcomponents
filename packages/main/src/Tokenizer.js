@@ -296,12 +296,14 @@ class Tokenizer extends UI5Element {
 		}
 
 		return this._getTokens().filter(token => {
+			const isRTL = this.effectiveDir === "rtl";
+			const elementEnd = isRTL ? "left" : "right";
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenLeft = tokenRect.left + tokenRect.width;
-			const parentLeft = parentRect.left + parentRect.width;
+			const tokenEnd = tokenRect[elementEnd];
+			const parentEnd = parentRect[elementEnd];
 
-			token.overflows = (tokenLeft > parentLeft) && !this.expanded;
+			token.overflows = isRTL ? ((tokenEnd < parentEnd) && !this.expanded) : ((tokenEnd > parentEnd) && !this.expanded);
 
 			return token.overflows;
 		});
