@@ -1,5 +1,7 @@
-commit d31a793c04646553d4e43c9a4413773d4455670b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Feb 11 13:10:15 2021 +0200
+commit 46e38fb1add4bd0ab38ac18a05c7faf080f880bb
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Feb 12 11:35:26 2021 +0200
 
-    docs(ui5-bar): change package name (#2807)
+    feat: add dynamic imports for .json assets (#2740)
+    
+    Change the default way asset discovery and loading works from static ES6 imports of .json files to dynamic ES6 imports of .json files.
