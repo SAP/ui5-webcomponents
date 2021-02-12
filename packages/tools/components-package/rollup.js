@@ -30,8 +30,8 @@ const getPlugins = ({ transpile }) => {
 
 	if (!process.env.DEV) {
 		plugins.push(filesize({
-			render : function (options, bundle, { minSize, gzipSize, brotliSize, bundleSize }){
-				return gzipSize;
+			render : function (options, bundle, { minSize, gzipSize, brotliSize, bundleSize, fileName }){
+				return fileName.padEnd(35) + " " + minSize + " / gzipped: " + gzipSize
 			}
 		}));
 	}
