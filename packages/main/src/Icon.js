@@ -2,7 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundleData, fetchI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
@@ -113,6 +114,13 @@ const metadata = {
 		invalid: {
 			type: Boolean,
 		},
+
+		/**
+		 * @private
+		 */
+		accessibleNameText: {
+			type: String,
+		},
 	},
 	events: {
 		/**
@@ -158,11 +166,6 @@ const metadata = {
  * @public
  */
 class Icon extends UI5Element {
-	constructor() {
-		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-icons");
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -181,7 +184,6 @@ class Icon extends UI5Element {
 
 	static async onDefine() {
 		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
-		await fetchI18nBundle("@ui5/webcomponents-icons");
 	}
 
 	_onfocusin(event) {
@@ -284,18 +286,21 @@ class Icon extends UI5Element {
 		this.pathData = iconData.pathData;
 		this.accData = iconData.accData;
 		this.ltr = iconData.ltr;
+		this.packageName = iconData.packageName;
+
+		if (this.accessibleName) {
+			this.accessibleNameText = this.accessibleName;
+		} else {
+			if (!getI18nBundleData(this.packageName)) {
+				await fetchI18nBundle(this.packageName);
+			}
+			const i18nBundle = getI18nBundle(this.packageName);
+			this.accessibleNameText = i18nBundle.getText(this.accData) || undefined;
+		}
 	}
 
 	get hasIconTooltip() {
 		return this.showTooltip && this.accessibleNameText;
-	}
-
-	get accessibleNameText() {
-		if (this.accessibleName) {
-			return this.accessibleName;
-		}
-
-		return this.i18nBundle.getText(this.accData) || undefined;
 	}
 
 	async onEnterDOM() {
