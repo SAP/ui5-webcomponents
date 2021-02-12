@@ -481,7 +481,7 @@ class Select extends UI5Element {
 		this._select(selectedItemIndex);
 	}
 
-	async _applyFocusAfterOpen() {
+	_applyFocusAfterOpen() {
 		if (!this._currentlySelectedOption) {
 			return;
 		}
@@ -491,8 +491,7 @@ class Select extends UI5Element {
 			return;
 		}
 
-		const list = this.responsivePopover.querySelector("[ui5-list]");
-		list.focusItem(li);
+		this.responsivePopover.querySelector("[ui5-list]").focusItem(li);
 	}
 
 	_handlePickerKeydown(event) {
