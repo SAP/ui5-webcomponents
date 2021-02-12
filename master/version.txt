@@ -1,12 +1,7 @@
-commit a9913c350f9ad439247d22fc69b0bc3ad793db27
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Feb 12 14:40:00 2021 +0200
+commit 691c2e40793410569de1609794bbe18275b22334
+Author: Martotko <16964129+Martotko@users.noreply.github.com>
+Date:   Fri Feb 12 16:07:40 2021 +0200
 
-    test: fix failing test on mac (#2814)
+    fix(ui5-combobox): User action cancelled when clicking "X" on mobile (#2742)
     
-    - DateRangePicker test is using CTRL-A to reset
-    the state from the previous test.
-    - This fails on mac, so a quick fix is to
-    reopen the page to get a clean state.
-    - A follow-up fix will use a separate component so that tests do not
-    depend on the state of the previous test
+    Fixes: #2449
