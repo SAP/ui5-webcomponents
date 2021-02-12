@@ -118,7 +118,7 @@ const metadata = {
 		/**
 		 * @private
 		 */
-		accessibleNameText: {
+		effectiveAccessibleName: {
 			type: String,
 		},
 	},
@@ -237,7 +237,7 @@ class Icon extends UI5Element {
 			return "button";
 		}
 
-		return this.accessibleNameText ? "img" : "presentation";
+		return this.effectiveAccessibleName ? "img" : "presentation";
 	}
 
 	static createGlobalStyle() {
@@ -289,18 +289,18 @@ class Icon extends UI5Element {
 		this.packageName = iconData.packageName;
 
 		if (this.accessibleName) {
-			this.accessibleNameText = this.accessibleName;
+			this.effectiveAccessibleName = this.accessibleName;
 		} else {
 			if (!getI18nBundleData(this.packageName)) {
 				await fetchI18nBundle(this.packageName);
 			}
 			const i18nBundle = getI18nBundle(this.packageName);
-			this.accessibleNameText = i18nBundle.getText(this.accData) || undefined;
+			this.effectiveAccessibleName = i18nBundle.getText(this.accData) || undefined;
 		}
 	}
 
 	get hasIconTooltip() {
-		return this.showTooltip && this.accessibleNameText;
+		return this.showTooltip && this.effectiveAccessibleName;
 	}
 
 	async onEnterDOM() {
