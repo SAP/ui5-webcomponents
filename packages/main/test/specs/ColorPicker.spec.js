@@ -4,7 +4,7 @@ const assert = require("chai").assert;
 describe("Color Picker general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/ColorPicker.html");
 
-	it("tests button's text rendering", () => {
+	it("tests color picker rendering", () => {
 		const circle = browser.$("#cp1").shadow$(".ui5-color-picker-circle");
 
 		assert.ok(circle, "Circle is rendered");
@@ -20,7 +20,7 @@ describe("Color Picker general interaction", () => {
 		browser.keys("0");
 		browser.keys("Tab");
 
-		assert.strictEqual(input.getProperty("value"), "rgba(255, 0, 255, 1)", "icon is not present");
+		assert.strictEqual(input.getProperty("value"), "rgba(255, 0, 255, 1)", "Change event is fired");
 	});
 
 });

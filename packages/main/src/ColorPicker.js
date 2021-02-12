@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -33,7 +34,7 @@ const metadata = {
 		 * @public
 		 */
 		color: {
-			type: String,
+			type: CSSColor,
 			defaultValue: "rgba(255, 255, 255, 1)",
 		},
 
@@ -41,7 +42,7 @@ const metadata = {
 		 * Defines the HEX code of the currently selected color
 		 * *Note*: If Alpha(transperancy) is set it is not included in this property. Use <code>color</code> property.
 		 * @type {String}
-		 * @public
+		 * @private
 		 */
 		hex: {
 			type: String,
@@ -190,51 +191,56 @@ class ColorPicker extends UI5Element {
 			return;
 		}
 
-		// ui5-slider::part(slider-handle)
-		hueSlider.querySelector(".ui5-slider-handle").style.width = "11px";
-		hueSlider.querySelector(".ui5-slider-handle").style.height = "1.25rem";
-		hueSlider.querySelector(".ui5-slider-handle").style.background = "transparent";
-		hueSlider.querySelector(".ui5-slider-handle").style.marginLeft = "-2px";
-		hueSlider.querySelector(".ui5-slider-handle").style.marginTop = "1px";
+		const hueProgressSlider = hueSlider.querySelector(".ui5-slider-progress-container"),
+			hueHandle = hueSlider.querySelector(".ui5-slider-handle"),
+			alphaProgressSlider = alphaSlider.querySelector(".ui5-slider-progress-container"),
+			alphaHandle = alphaSlider.querySelector(".ui5-slider-handle");
 
-		alphaSlider.querySelector(".ui5-slider-handle").style.width = "11px";
-		alphaSlider.querySelector(".ui5-slider-handle").style.height = "1.25rem";
-		alphaSlider.querySelector(".ui5-slider-handle").style.background = "transparent";
-		alphaSlider.querySelector(".ui5-slider-handle").style.marginLeft = "-2px";
-		alphaSlider.querySelector(".ui5-slider-handle").style.marginTop = "1px";
+		// ui5-slider::part(slider-handle)
+		hueHandle.style.width = "11px";
+		hueHandle.style.height = "1.25rem";
+		hueHandle.style.background = "transparent";
+		hueHandle.style.marginLeft = "-2px";
+		hueHandle.style.marginTop = "1px";
+
+		alphaHandle.style.width = "11px";
+		alphaHandle.style.height = "1.25rem";
+		alphaHandle.style.background = "transparent";
+		alphaHandle.style.marginLeft = "-2px";
+		alphaHandle.style.marginTop = "1px";
 
 		// ui5-slider::part(slider-handle)::after
 		// Skipped because it is pseudo element
 
 		// ui5-slider::part(progress-container)
-		hueSlider.querySelector(".ui5-slider-progress-container").style.width = "calc(100% + 11px)";
-		hueSlider.querySelector(".ui5-slider-progress-container").style.height = "18px";
-		hueSlider.querySelector(".ui5-slider-progress-container").style.position = "absolute";
-		hueSlider.querySelector(".ui5-slider-progress-container").style.marginTop = "-10px";
-		hueSlider.querySelector(".ui5-slider-progress-container").style.borderRadius = "0";
-		hueSlider.querySelector(".ui5-slider-progress-container").style.border = "1px solid #89919a";
+		hueProgressSlider.style.width = "calc(100% + 11px)";
+		hueProgressSlider.style.height = "18px";
+		hueProgressSlider.style.position = "absolute";
+		hueProgressSlider.style.marginTop = "-10px";
+		hueProgressSlider.style.borderRadius = "0";
+		hueProgressSlider.style.border = "1px solid #89919a";
 
-		alphaSlider.querySelector(".ui5-slider-progress-container").style.width = "calc(100% + 11px)";
-		alphaSlider.querySelector(".ui5-slider-progress-container").style.height = "18px";
-		alphaSlider.querySelector(".ui5-slider-progress-container").style.position = "absolute";
-		alphaSlider.querySelector(".ui5-slider-progress-container").style.marginTop = "-10px";
-		alphaSlider.querySelector(".ui5-slider-progress-container").style.borderRadius = "0";
-		alphaSlider.querySelector(".ui5-slider-progress-container").style.border = "1px solid #89919a";
+		alphaProgressSlider.style.width = "calc(100% + 11px)";
+		alphaProgressSlider.style.height = "18px";
+		alphaProgressSlider.style.position = "absolute";
+		alphaProgressSlider.style.marginTop = "-10px";
+		alphaProgressSlider.style.borderRadius = "0";
+		alphaProgressSlider.style.border = "1px solid #89919a";
 
 		// ui5-slider.ui5-color-picker-hue-slider::part(progress-container)
-		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundSize = "100%";
-		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-webkit-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
-		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-moz-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
-		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-ms-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
-		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
-		hueSlider.querySelector(".ui5-slider-progress-container").style.backgroundColor = "none";
+		hueProgressSlider.style.backgroundSize = "100%";
+		hueProgressSlider.style.backgroundImage = "-webkit-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
+		hueProgressSlider.style.backgroundImage = "-moz-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
+		hueProgressSlider.style.backgroundImage = "-ms-linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
+		hueProgressSlider.style.backgroundImage = "linear-gradient(left, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)";
+		hueProgressSlider.style.backgroundColor = "none";
 
 		// ui5-slider.ui5-color-picker-alpha-slider::part(progress-container)
-		alphaSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-webkit-linear-gradient(left, #fff, #979797)";
-		alphaSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-moz-linear-gradient(left, #fff, #979797)";
-		alphaSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "-ms-linear-gradient(left, #fff, #979797)";
-		alphaSlider.querySelector(".ui5-slider-progress-container").style.backgroundImage = "linear-gradient(left, #fff, #979797)";
-		alphaSlider.querySelector(".ui5-slider-progress-container").style.backgroundColor = "none";
+		alphaProgressSlider.style.backgroundImage = "-webkit-linear-gradient(left, #fff, #979797)";
+		alphaProgressSlider.style.backgroundImage = "-moz-linear-gradient(left, #fff, #979797)";
+		alphaProgressSlider.style.backgroundImage = "-ms-linear-gradient(left, #fff, #979797)";
+		alphaProgressSlider.style.backgroundImage = "linear-gradient(left, #fff, #979797)";
+		alphaProgressSlider.style.backgroundColor = "none";
 
 		// ui5-slider::part(slider-progress)
 		hueSlider.querySelector(".ui5-slider-progress").style.background = "Transparent";
