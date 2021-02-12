@@ -8,7 +8,6 @@ import {
 } from "../Keys.js";
 import getActiveElement from "../util/getActiveElement.js";
 
-import EventProvider from "../EventProvider.js";
 import NavigationMode from "../types/NavigationMode.js";
 import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
 
@@ -38,14 +37,14 @@ import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
  * If the items are Objects with "id" and "_tabIndex" however, it is the developer's responsibility to apply these and the easiest way is to have the root component invalidated by ItemNavigation.
  * To do so, set the "affectedPropertiesNames" constructor property to point to one or more of the root component's properties that need refreshing when "_tabIndex" is changed deeply.
  *
- * 2) Call the "update" method of ItemNavigation whenever you want to change the current item.
+ * 2) Call the "setCurrentItem" method of ItemNavigation whenever you want to change the current item.
  * This is most commonly required if the user for example clicks on an item and thus selects it directly.
- * Pass as the only argument to "update" the item that becomes current (must be one of the items, returned by "getItemsCallback").
+ * Pass as the only argument to "setCurrentItem" the item that becomes current (must be one of the items, returned by "getItemsCallback").
  *
  * @class
  * @public
  */
-class ItemNavigation extends EventProvider {
+class ItemNavigation {
 	/**
 	 *
 	 * @param rootWebComponent the component to operate on (component that slots or contains within its shadow root the items the user navigates among)
@@ -60,49 +59,84 @@ class ItemNavigation extends EventProvider {
 	 *  - affectedPropertiesNames: a list of metadata properties on the root component which, upon user navigation, will be reassigned by address thus causing the root component to invalidate
 	 */
 	constructor(rootWebComponent, options = {}) {
-		super();
+		this._setRootComponent(rootWebComponent);
+		this._initOptions(options);
+	}
 
-		this.currentIndex = options.currentIndex || 0;
-		this.rowSize = options.rowSize || 1;
-		this.behavior = options.behavior || ItemNavigationBehavior.Static;
-		const navigationMode = options.navigationMode;
-		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
-		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
-		this.verticalNavigationOn = autoNavigation || navigationMode === NavigationMode.Vertical;
-
-		if (options.affectedPropertiesNames) {
-			this.affectedPropertiesNames = options.affectedPropertiesNames;
+	_setRootComponent(rootWebComponent) {
+		if (!rootWebComponent.isUI5Element) {
+			throw new Error("The root web component must be a UI5 Element instance");
 		}
-
-		if (options.getItemsCallback) {
-			this._getItems = options.getItemsCallback;
-		}
-
 		this.rootWebComponent = rootWebComponent;
-		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
+		this.rootWebComponent.addEventListener("keydown", this._onkeydown.bind(this));
 		this.rootWebComponent._onComponentStateFinalized = () => {
 			this._init();
 		};
 	}
 
+	_initOptions(options) {
+		if (typeof options.getItemsCallback !== "function") {
+			throw new Error("getItemsCallback is required");
+		}
+
+		this._getItems = options.getItemsCallback;
+		this._currentIndex = options.currentIndex || 0;
+		this._rowSize = options.rowSize || 1;
+		this._behavior = options.behavior || ItemNavigationBehavior.Static;
+		this._navigationMode = options.navigationMode || NavigationMode.Auto;
+		this._affectedPropertiesNames = options.affectedPropertiesNames || [];
+	}
+
+	/**
+	 * Call this method to set a new "current" (selected) item in the item navigation
+	 * Note: the item passed to this function must be one of the items, returned by the getItemsCallback function
+	 *
+	 * @public
+	 * @param current the new selected item
+	 */
+	setCurrentItem(current) {
+		const currentItemIndex = this._getItems().indexOf(current);
+
+		if (currentItemIndex === -1) {
+			console.warn(`The provided item is not managed by ItemNavigation`, current); // eslint-disable-line
+			return;
+		}
+
+		this._currentIndex = currentItemIndex;
+		this._applyTabIndex();
+	}
+
+	/**
+	 * Call this method to dynamically change the row size
+	 *
+	 * @public
+	 * @param newRowSize
+	 */
+	setRowSize(newRowSize) {
+		this._rowSize = newRowSize;
+	}
+
 	_init() {
 		this._getItems().forEach((item, idx) => {
-			item._tabIndex = (idx === this.currentIndex) ? "0" : "-1";
+			item._tabIndex = (idx === this._currentIndex) ? "0" : "-1";
 		});
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (!this._canNavigate()) {
 			return;
 		}
 
-		if (isUp(event) && this.verticalNavigationOn) {
+		const horizontalNavigationOn = this._navigationMode === NavigationMode.Horizontal || this._navigationMode === NavigationMode.Auto;
+		const verticalNavigationOn = this._navigationMode === NavigationMode.Vertical || this._navigationMode === NavigationMode.Auto;
+
+		if (isUp(event) && verticalNavigationOn) {
 			this._handleUp();
-		} else if (isDown(event) && this.verticalNavigationOn) {
+		} else if (isDown(event) && verticalNavigationOn) {
 			this._handleDown();
-		} else if (isLeft(event) && this.horizontalNavigationOn) {
+		} else if (isLeft(event) && horizontalNavigationOn) {
 			this._handleLeft();
-		} else if (isRight(event) && this.horizontalNavigationOn) {
+		} else if (isRight(event) && horizontalNavigationOn) {
 			this._handleRight();
 		} else if (isHome(event)) {
 			this._handleHome();
@@ -113,118 +147,94 @@ class ItemNavigation extends EventProvider {
 		}
 
 		event.preventDefault();
-		this.update();
-		this.focusCurrent();
+		this._applyTabIndex();
+		this._focusCurrentItem();
 	}
 
 	_handleUp() {
 		const itemsLength = this._getItems().length;
-		if (this.currentIndex - this.rowSize >= 0) { // no border reached, just decrease the index by a row
-			this.currentIndex -= this.rowSize;
+		if (this._currentIndex - this._rowSize >= 0) { // no border reached, just decrease the index by a row
+			this._currentIndex -= this._rowSize;
 			return;
 		}
 
-		if (this.behavior === ItemNavigationBehavior.Cyclic) { // if cyclic, go to the **last** item in the **previous** column
-			const firstItemInThisColumnIndex = this.currentIndex % this.rowSize;
-			const firstItemInPreviousColumnIndex = firstItemInThisColumnIndex === 0 ? this.rowSize - 1 : firstItemInThisColumnIndex - 1; // find the first item in the previous column (if the current column is the first column -> move to the last column)
-			const rows = Math.ceil(itemsLength / this.rowSize); // how many rows there are (even if incomplete, f.e. for 14 items and rowSize=4 -> 4 rows total, although only 2 items on the last row)
-			let lastItemInPreviousColumnIndex = firstItemInPreviousColumnIndex + (rows - 1) * this.rowSize; // multiply rows by columns, and add the column's first item's index
+		if (this._behavior === ItemNavigationBehavior.Cyclic) { // if cyclic, go to the **last** item in the **previous** column
+			const firstItemInThisColumnIndex = this._currentIndex % this._rowSize;
+			const firstItemInPreviousColumnIndex = firstItemInThisColumnIndex === 0 ? this._rowSize - 1 : firstItemInThisColumnIndex - 1; // find the first item in the previous column (if the current column is the first column -> move to the last column)
+			const rows = Math.ceil(itemsLength / this._rowSize); // how many rows there are (even if incomplete, f.e. for 14 items and _rowSize=4 -> 4 rows total, although only 2 items on the last row)
+			let lastItemInPreviousColumnIndex = firstItemInPreviousColumnIndex + (rows - 1) * this._rowSize; // multiply rows by columns, and add the column's first item's index
 			if (lastItemInPreviousColumnIndex > itemsLength - 1) { // for incomplete rows, use the previous row's last item, as for them the last item is missing
-				lastItemInPreviousColumnIndex -= this.rowSize;
+				lastItemInPreviousColumnIndex -= this._rowSize;
 			}
-			this.currentIndex = lastItemInPreviousColumnIndex;
+			this._currentIndex = lastItemInPreviousColumnIndex;
 		} else { // not cyclic, so just go to the first item
-			this.currentIndex = 0;
+			this._currentIndex = 0;
 		}
 	}
 
 	_handleDown() {
 		const itemsLength = this._getItems().length;
-		if (this.currentIndex + this.rowSize < itemsLength) { // no border reached, just increase the index by a row
-			this.currentIndex += this.rowSize;
+		if (this._currentIndex + this._rowSize < itemsLength) { // no border reached, just increase the index by a row
+			this._currentIndex += this._rowSize;
 			return;
 		}
 
-		if (this.behavior === ItemNavigationBehavior.Cyclic) { // if cyclic, go to the **first** item in the **next** column
-			const firstItemInThisColumnIndex = this.currentIndex % this.rowSize; // find the first item in the current column first
-			const firstItemInNextColumnIndex = (firstItemInThisColumnIndex + 1) % this.rowSize; // to get the first item in the next column, just increase the index by 1. The modulo by rows is for the case when we are at the last column
-			this.currentIndex = firstItemInNextColumnIndex;
+		if (this._behavior === ItemNavigationBehavior.Cyclic) { // if cyclic, go to the **first** item in the **next** column
+			const firstItemInThisColumnIndex = this._currentIndex % this._rowSize; // find the first item in the current column first
+			const firstItemInNextColumnIndex = (firstItemInThisColumnIndex + 1) % this._rowSize; // to get the first item in the next column, just increase the index by 1. The modulo by rows is for the case when we are at the last column
+			this._currentIndex = firstItemInNextColumnIndex;
 		} else { // not cyclic, so just go to the last item
-			this.currentIndex = itemsLength - 1;
+			this._currentIndex = itemsLength - 1;
 		}
 	}
 
 	_handleLeft() {
 		const itemsLength = this._getItems().length;
-		if (this.currentIndex > 0) {
-			this.currentIndex -= 1;
+		if (this._currentIndex > 0) {
+			this._currentIndex -= 1;
 			return;
 		}
 
-		if (this.behavior === ItemNavigationBehavior.Cyclic) { // go to the first item in the next column
-			this.currentIndex = itemsLength - 1;
+		if (this._behavior === ItemNavigationBehavior.Cyclic) { // go to the first item in the next column
+			this._currentIndex = itemsLength - 1;
 		}
 	}
 
 	_handleRight() {
 		const itemsLength = this._getItems().length;
-		if (this.currentIndex < itemsLength - 1) {
-			this.currentIndex += 1;
+		if (this._currentIndex < itemsLength - 1) {
+			this._currentIndex += 1;
 			return;
 		}
 
-		if (this.behavior === ItemNavigationBehavior.Cyclic) { // go to the first item in the next column
-			this.currentIndex = 0;
+		if (this._behavior === ItemNavigationBehavior.Cyclic) { // go to the first item in the next column
+			this._currentIndex = 0;
 		}
 	}
 
 	_handleHome() {
-		const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
-		this.currentIndex -= this.currentIndex % homeEndRange;
+		const homeEndRange = this._rowSize > 1 ? this._rowSize : this._getItems().length;
+		this._currentIndex -= this._currentIndex % homeEndRange;
 	}
 
 	_handleEnd() {
-		const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
-		this.currentIndex += (homeEndRange - 1 - this.currentIndex % homeEndRange); // eslint-disable-line
+		const homeEndRange = this._rowSize > 1 ? this._rowSize : this._getItems().length;
+		this._currentIndex += (homeEndRange - 1 - this._currentIndex % homeEndRange); // eslint-disable-line
 	}
 
-	/**
-	 * Call this method to set a new "current" (selected) item in the item navigation
-	 * Note: the item passed to this function must be one of the items, returned by the getItemsCallback function
-	 *
-	 * @public
-	 * @param current the new selected item
-	 */
-	update(current) {
-		const origItems = this._getItems();
-
-		if (current) {
-			this.currentIndex = this._getItems().indexOf(current);
-		}
-
-		if (!origItems[this.currentIndex]
-			|| (origItems[this.currentIndex]._tabIndex && origItems[this.currentIndex]._tabIndex === "0")) {
-			return;
-		}
-
-		const items = origItems.slice(0);
-
+	_applyTabIndex() {
+		const items = this._getItems();
 		for (let i = 0; i < items.length; i++) {
-			items[i]._tabIndex = (i === this.currentIndex ? "0" : "-1");
+			items[i]._tabIndex = i === this._currentIndex ? "0" : "-1";
 		}
 
-		if (Array.isArray(this.affectedPropertiesNames)) {
-			this.affectedPropertiesNames.forEach(propName => {
-				const prop = this.rootWebComponent[propName];
-				this.rootWebComponent[propName] = Array.isArray(prop) ? [...prop] : { ...prop };
-			});
-		}
+		this._affectedPropertiesNames.forEach(propName => {
+			const prop = this.rootWebComponent[propName];
+			this.rootWebComponent[propName] = Array.isArray(prop) ? [...prop] : { ...prop };
+		});
 	}
 
-	/**
-	 * @private
-	 */
-	focusCurrent() {
+	_focusCurrentItem() {
 		const currentItem = this._getCurrentItem();
 		if (currentItem) {
 			currentItem.focus();
@@ -246,15 +256,15 @@ class ItemNavigation extends EventProvider {
 		}
 
 		// normalize the index
-		while (this.currentIndex >= items.length) {
-			this.currentIndex -= this.rowSize;
+		while (this._currentIndex >= items.length) {
+			this._currentIndex -= this._rowSize;
 		}
 
-		if (this.currentIndex < 0) {
-			this.currentIndex = 0;
+		if (this._currentIndex < 0) {
+			this._currentIndex = 0;
 		}
 
-		const currentItem = items[this.currentIndex];
+		const currentItem = items[this._currentIndex];
 
 		if (!currentItem) {
 			return;
@@ -269,24 +279,6 @@ class ItemNavigation extends EventProvider {
 		}
 
 		return this.rootWebComponent.getDomRef().querySelector(`#${currentItem.id}`);
-	}
-
-	/**
-	 * Set to callback that returns the list of items to navigate among
-	 * @public
-	 * @param callback a function that returns an array of items to navigate among
-	 */
-	set getItemsCallback(callback) {
-		this._getItems = callback;
-	}
-
-	/**
-	 * @public
-	 * @deprecated
-	 * @param val
-	 */
-	set current(val) {
-		this.currentIndex = val;
 	}
 }
 

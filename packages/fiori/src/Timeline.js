@@ -94,7 +94,7 @@ class Timeline extends UI5Element {
 	_onfocusin(event) {
 		const target = event.target;
 
-		this._itemNavigation.update(target);
+		this._itemNavigation.setCurrentItem(target);
 	}
 }
 
