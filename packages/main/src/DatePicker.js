@@ -298,6 +298,29 @@ const metadata = {
  * <li>[SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one</li>
  * </ul>
  *
+ * <h3>Calendar types</h3>
+ * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.
+ * By default the Gregorian Calendar is used. In order to use the Buddhist, Islamic, Japanese or Persian calendar,
+ * you need to set the <code>primaryCalendarType</code> property and import one or more of the following modules:
+ * <br><br>
+ *
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";</code>
+ * <br><br>
+ *
+ * Or, you can use the global configuration and set the <code>calendarType</code> key:
+ * <br>
+ * <pre><code>&lt;script data-id="sap-ui-config" type="application/json"&gt;
+ * {
+ *	"calendarType": "Japanese"
+ * }
+ * &lt;/script&gt;
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/DatePicker";</code>
