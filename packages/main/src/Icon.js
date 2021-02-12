@@ -120,6 +120,7 @@ const metadata = {
 		 */
 		effectiveAccessibleName: {
 			type: String,
+			noAttribute: true,
 		},
 	},
 	events: {
@@ -290,7 +291,7 @@ class Icon extends UI5Element {
 
 		if (this.accessibleName) {
 			this.effectiveAccessibleName = this.accessibleName;
-		} else {
+		} else if (this.accData) {
 			if (!getI18nBundleData(this.packageName)) {
 				await fetchI18nBundle(this.packageName);
 			}
