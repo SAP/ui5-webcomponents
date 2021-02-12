@@ -38,6 +38,7 @@
 			?readonly="{{readonly}}"
 			value-state="{{valueState}}"
 			data-sap-focus-ref
+			._inputAccInfo ="{{accInfo}}"
 			._nativeInputAttributes="{{inputAttributes}}"
 			@ui5-change="{{_onInputChange}}"
 			@ui5-submit="{{_onInputChange}}"
@@ -46,7 +47,7 @@
 	>
 
 		{{#if valueStateMessage.length}}
-			<slot name="valueStateMessage" slot="valueStateMessage" style="width: 100%"></slot>
+			<slot name="valueStateMessage" slot="valueStateMessage"></slot>
 		{{/if}}
 
 	</ui5-input>

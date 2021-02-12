@@ -427,7 +427,7 @@ describe("'change' event firing", () => {
 
 describe("Accessibility related parameters", () => {
 
-	it("'step', 'min' and 'max' attributes presence", () => {
+	it("'step', 'min', 'max', 'aria-required' and 'aria-label' attributes presence", () => {
 		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
 		const siCozy = $("#stepInputCozy");
 		const siInner = siCozy.shadow$('.ui5-step-input-input').shadow$("input");
@@ -437,10 +437,14 @@ describe("Accessibility related parameters", () => {
 		siCozy.setProperty("min", -10);
 		assert.strictEqual(siInner.getAttribute("max"), "", "'step' attribute doesn't exist");
 		siCozy.setProperty("max", 20);
+		siCozy.setProperty("required", true);
+		siCozy.setProperty("ariaLabel", "test-aria-label");
 
 		assert.strictEqual(siInner.getAttribute("step"), "5", "'step' attribute exists and has correct value 5");
-		assert.strictEqual(siInner.getAttribute("min"), "-10", "'step' attribute exists and has correct value -10");
-		assert.strictEqual(siInner.getAttribute("max"), "20", "'step' attribute exists and has correct value 20");
+		assert.strictEqual(siInner.getAttribute("min"), "-10", "'min' attribute exists and has correct value -10");
+		assert.strictEqual(siInner.getAttribute("max"), "20", "'max' attribute exists and has correct value 20");
+		assert.strictEqual(siInner.getAttribute("aria-required"), "true", "'required' attribute exists");
+		assert.strictEqual(siInner.getAttribute("aria-label"), "test-aria-label", "'aria-label' attribute exists and has correct value 'test-aria-label'");
 	});
 
 });

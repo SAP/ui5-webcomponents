@@ -14,6 +14,8 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -416,6 +418,13 @@ class StepInput extends UI5Element {
 		return this.value.toFixed(this.valuePrecision);
 	}
 
+	get accInfo() {
+		return {
+			"ariaRequired": this.required,
+			"ariaLabel": getEffectiveAriaLabelText(this),
+		};
+	}
+
 	get inputAttributes() {
 		return {
 			min: this.min === undefined ? undefined : this.min,
@@ -428,6 +437,13 @@ class StepInput extends UI5Element {
 		this._setButtonState();
 		if (this._previousValue === undefined) {
 			this._previousValue = this.value;
+		}
+
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this);
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
