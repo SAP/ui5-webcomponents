@@ -1,5 +1,8 @@
-commit c0969aac859299468650b4253b98a8739e14ef14
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Feb 12 17:01:58 2021 +0200
+commit 23ff62d258561977c65e359c4ab03f5bb8e15b0c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Feb 15 09:30:32 2021 +0200
 
-    refactor(framework): ItemNavigation public API clarified (#2813)
+    docs: document calendarType usage (#2812)
+    
+    When the users read the DatePicker/Calendar API reference it does not clear how to use different calendar types - Buddhist, Japanese, etc.
+    FIXES: #2792

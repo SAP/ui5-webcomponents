@@ -2479,6 +2479,17 @@ The user can navigate to a particular date by: <br> <ul> <li>Pressing over a mon
 
 <h3>Keyboard Handling</h3> The <code>ui5-calendar</code> provides advanced keyboard handling. When a picker is showed and focused the user can use the following keyboard shortcuts in order to perform a navigation: <br> - Day picker: <br> <ul> <li>[F4] - Shows month picker</li> <li>[SHIFT] + [F4] - Shows year picker</li> <li>[PAGEUP] - Navigate to the previous month</li> <li>[PAGEDOWN] - Navigate to the next month</li> <li>[SHIFT] + [PAGEUP] - Navigate to the previous year</li> <li>[SHIFT] + [PAGEDOWN] - Navigate to the next year</li> <li>[CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards</li> <li>[CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards</li> <li>[HOME] - Navigate to the first day of the week <li>[END] - Navigate to the last day of the week <li>[CTRL] + [HOME] - Navigate to the first day of the month <li>[CTRL] + [END] - Navigate to the last day of the month </ul> <br> - Month picker: <br> <ul> <li>[PAGEUP] - Navigate to the previous month</li> <li>[PAGEDOWN] - Navigate to the next month</li> <li>[HOME] - Navigate to the first month of the current row <li>[END] - Navigate to the last month of the current row <li>[CTRL] + [HOME] - Navigate to the first month of the current year <li>[CTRL] + [END] - Navigate to the last month of the year </ul> <br> - Year picker: <br> <ul> <li>[PAGEUP] - Navigate to the previous year range</li> <li>[PAGEDOWN] - Navigate the next year range</li> <li>[HOME] - Navigate to the first year of the current row <li>[END] - Navigate to the last year of the current row <li>[CTRL] + [HOME] - Navigate to the first year of the current year range <li>[CTRL] + [END] - Navigate to the last year of the current year range </ul> <br>
 
+<h3>Calendar types</h3> The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian. By default the Gregorian Calendar is used. In order to use the Buddhist, Islamic, Japanese or Persian calendar, you need to set the <code>primaryCalendarType</code> property and import one or more of the following modules: <br><br>
+
+<code>import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";</code> <br> <code>import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";</code> <br> <code>import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";</code> <br> <code>import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";</code> <br><br>
+
+Or, you can use the global configuration and set the <code>calendarType</code> key: <br> <pre><code>&lt;script data-id="sap-ui-config" type="application/json"&gt;
+{
+	"calendarType": "Japanese"
+}
+&lt;/script&gt;
+
+
 <h3>ES6 Module Import</h3>
 
 <code>import "@ui5/webcomponents/dist/Calendar";</code>
