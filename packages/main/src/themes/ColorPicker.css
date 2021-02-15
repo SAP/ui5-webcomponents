@@ -156,4 +156,5 @@ ui5-slider::part(slider-progress) {
 .ui5-color-picker-rgb-input {
     width: 2.5rem;
     min-width: 2.5rem;
+    text-align: center;
 }
