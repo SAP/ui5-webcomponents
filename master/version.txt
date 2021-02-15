@@ -1,8 +1,8 @@
-commit 23ff62d258561977c65e359c4ab03f5bb8e15b0c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Feb 15 09:30:32 2021 +0200
+commit 5fc108df359edf9ea60531d90c3222579eb29b6a
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Mon Feb 15 12:10:56 2021 +0200
 
-    docs: document calendarType usage (#2812)
+    chore: imrpove bundle size reporting (#2815)
     
-    When the users read the DatePicker/Calendar API reference it does not clear how to use different calendar types - Buddhist, Japanese, etc.
-    FIXES: #2792
+    dynamic imports of assets introduce many new bundles, this change
+    improves the output
