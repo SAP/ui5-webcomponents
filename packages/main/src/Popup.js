@@ -1,4 +1,4 @@
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -337,7 +337,7 @@ class Popup extends UI5Element {
 
 		this.opened = true;
 
-		await renderFinished();
+		await RenderScheduler.whenFinished();
 		this.fireEvent("after-open", {}, false, false);
 	}
 
