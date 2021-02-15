@@ -45,7 +45,7 @@ const getThemeProperties = async (packageName, themeName) => {
 	const loader = loaders.get(`${packageName}/${themeName}`);
 	if (!loader) {
 		// no themes for package
-		console.error(`Theme [${themeName}] not registered for package [${pacakgeName}]`); /* eslint-disable-line */
+		console.error(`Theme [${themeName}] not registered for package [${packageName}]`); /* eslint-disable-line */
 		return;
 	}
 	let data;
