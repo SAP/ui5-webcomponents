@@ -29,7 +29,7 @@ const metadata = {
 		/**
 		 * Defines the currently selected color of the <code>ui5-color-picker</code>.
 		 * *Note*:  If you need to have initially set color, or change the color programmatically, use this property
-		 * *Important*: Use RGBA format when modifying this property.
+		 * *Important*: Use HEX, RGB, RGBA, HSV, or a CSS color name when modifying this property.
 		 * @type {String}
 		 * @public
 		 */
