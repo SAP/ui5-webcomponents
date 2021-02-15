@@ -334,7 +334,6 @@ class Select extends UI5Element {
 	}
 
 	async _respPopover() {
-		this._iconPressed = true;
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector("[ui5-responsive-popover]");
 	}
@@ -350,6 +349,7 @@ class Select extends UI5Element {
 	}
 
 	async _toggleRespPopover() {
+		this._iconPressed = true;
 		this.responsivePopover = await this._respPopover();
 		if (this.disabled) {
 			return;
@@ -487,9 +487,11 @@ class Select extends UI5Element {
 		}
 
 		const li = this.responsivePopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
+		if (!li) {
+			return;
+		}
 
-		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
-		li && li.focus();
+		this.responsivePopover.querySelector("[ui5-list]").focusItem(li);
 	}
 
 	_handlePickerKeydown(event) {

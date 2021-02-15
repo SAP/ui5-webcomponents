@@ -380,7 +380,7 @@ class TabContainer extends UI5Element {
 				item.selected = selected;
 
 				if (selected) {
-					this._itemNavigation.update(item);
+					this._itemNavigation.setCurrentItem(item);
 				}
 			}
 		}, this);

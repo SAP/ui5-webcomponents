@@ -15,6 +15,12 @@ const mEscapes = {
 	"\\t": "\t",
 };
 
+/**
+ * Parses a .properties format
+ * @param {string} sText the contents a of a .properties file
+ * @returns a object with key/value pairs parsed from the .properties file format
+ * @public
+ */
 const parseProperties = sText => {
 	const properties = {},
 		aLines = sText.split(rLines);

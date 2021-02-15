@@ -133,7 +133,7 @@ class ColorPalette extends UI5Element {
 
 	selectColor(item) {
 		item.focus();
-		this._itemNavigation.update(item);
+		this._itemNavigation.setCurrentItem(item);
 
 		this.value = item.value;
 
