@@ -397,12 +397,12 @@ class Table extends UI5Element {
 	}
 
 	onRowFocused(event) {
-		this._itemNavigation.update(event.target);
+		this._itemNavigation.setCurrentItem(event.target);
 	}
 
 	_onColumnHeaderClick(event) {
 		this.getColumnHeader().focus();
-		this._itemNavigation.update(this._columnHeader);
+		this._itemNavigation.setCurrentItem(this._columnHeader);
 	}
 
 	_onLoadMoreKeydown(event) {

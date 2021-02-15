@@ -590,7 +590,7 @@ class List extends UI5Element {
 	onItemFocused(event) {
 		const target = event.target;
 
-		this._itemNavigation.update(target);
+		this._itemNavigation.setCurrentItem(target);
 		this.fireEvent("item-focused", { item: target });
 
 		if (this.mode === ListMode.SingleSelectAuto) {
@@ -681,7 +681,13 @@ class List extends UI5Element {
 		}
 	}
 
+	/**
+	 * Focuses a list item and sets its tabindex to "0" via the ItemNavigation
+	 * @protected
+	 * @param item
+	 */
 	focusItem(item) {
+		this._itemNavigation.setCurrentItem(item);
 		item.focus();
 	}
 

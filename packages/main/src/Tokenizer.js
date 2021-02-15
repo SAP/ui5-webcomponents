@@ -212,7 +212,7 @@ class Tokenizer extends UI5Element {
 			nextTokenIndex = deletedTokenIndex === this._getVisibleTokens().length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
 		}
 		const nextToken = this._getVisibleTokens()[nextTokenIndex]; // if the last item was deleted this will be undefined
-		this._itemNav.update(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
+		this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
 
 		if (nextToken) {
 			setTimeout(() => {
@@ -242,7 +242,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	_onmousedown(event) {
-		this._itemNav.update(event.target);
+		this._itemNav.setCurrentItem(event.target);
 	}
 
 	_handleTokenSelection(event) {
@@ -296,12 +296,14 @@ class Tokenizer extends UI5Element {
 		}
 
 		return this._getTokens().filter(token => {
+			const isRTL = this.effectiveDir === "rtl";
+			const elementEnd = isRTL ? "left" : "right";
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenLeft = tokenRect.left + tokenRect.width;
-			const parentLeft = parentRect.left + parentRect.width;
+			const tokenEnd = tokenRect[elementEnd];
+			const parentEnd = parentRect[elementEnd];
 
-			token.overflows = (tokenLeft > parentLeft) && !this.expanded;
+			token.overflows = isRTL ? ((tokenEnd < parentEnd) && !this.expanded) : ((tokenEnd > parentEnd) && !this.expanded);
 
 			return token.overflows;
 		});
@@ -372,6 +374,19 @@ class Tokenizer extends UI5Element {
 		}
 
 		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
+	}
+
+	/**
+	 * @protected
+	 */
+	_focusLastToken() {
+		if (this.tokens.length === 0) {
+			return;
+		}
+
+		const lastToken = this.tokens[this.tokens.length - 1];
+		lastToken.focus();
+		this._itemNav.setCurrentItem(lastToken);
 	}
 
 	static get dependencies() {

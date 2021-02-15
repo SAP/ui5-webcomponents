@@ -81,9 +81,9 @@ const metadata = {
 		* @public
 		* @since 1.0.0-rc.9
 		*/
-	   icon: {
-		   type: HTMLElement,
-	   },
+		icon: {
+			type: HTMLElement,
+		},
 
 		/**
 		 * Defines the value state message that will be displayed as pop up under the <code>ui5-multi-combobox</code>.
@@ -398,6 +398,7 @@ class MultiComboBox extends UI5Element {
 		super();
 
 		this._filteredItems = [];
+		this.selectedValues = [];
 		this._inputLastValue = "";
 		this._deleting = false;
 		this._validationTimeout = null;
@@ -528,26 +529,14 @@ class MultiComboBox extends UI5Element {
 		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
 
 		if (cursorPosition === 0) {
-			this._focusLastToken();
+			this._tokenizer._focusLastToken();
 		}
-	}
-
-	_focusLastToken() {
-		const lastTokenIndex = this._tokenizer.tokens.length - 1;
-
-		if (lastTokenIndex < 0) {
-			return;
-		}
-
-		this._tokenizer.tokens[lastTokenIndex].focus();
-		this._tokenizer._itemNav.currentIndex = lastTokenIndex;
 	}
 
 	_tokenizerFocusOut(event) {
 		this._tokenizerFocused = false;
 
-		const tokenizer = this.shadowRoot.querySelector("[ui5-tokenizer]");
-		const tokensCount = tokenizer.tokens.length - 1;
+		const tokensCount = this._tokenizer.tokens.length - 1;
 
 		if (!event.relatedTarget || event.relatedTarget.localName !== "ui5-token") {
 			this._tokenizer.tokens.forEach(token => { token.selected = false; });
@@ -587,14 +576,15 @@ class MultiComboBox extends UI5Element {
 		if (isDown(event) && this.allItemsPopover.opened && this.items.length) {
 			event.preventDefault();
 			await this._getList();
-			this.list._itemNavigation.current = 0;
-			this.list.items[0].focus();
+			const firstListItem = this.list.items[0];
+			this.list._itemNavigation.setCurrentItem(firstListItem);
+			firstListItem.focus();
 		}
 
 		if (isBackSpace(event) && event.target.value === "") {
 			event.preventDefault();
 
-			this._focusLastToken();
+			this._tokenizer._focusLastToken();
 		}
 
 		this._keyDown = true;
@@ -882,7 +872,7 @@ class MultiComboBox extends UI5Element {
 				"padding": "0.9125rem 1rem",
 			},
 			popoverHeader: {
-				"width": `${this._inputWidth}px`,
+				"max-width": `${this._inputWidth}px`,
 			},
 		};
 	}

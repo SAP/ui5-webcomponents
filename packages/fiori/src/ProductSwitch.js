@@ -111,18 +111,18 @@ class ProductSwitch extends UI5Element {
 		const documentWidth = document.body.clientWidth;
 
 		if (documentWidth <= this.constructor.ROW_MIN_WIDTH.ONE_COLUMN) {
-			this._itemNavigation.rowSize = 1;
+			this._itemNavigation.setRowSize(1);
 		} else if (documentWidth <= this.constructor.ROW_MIN_WIDTH.THREE_COLUMN || this.items.length <= 6) {
-			this._itemNavigation.rowSize = 3;
+			this._itemNavigation.setRowSize(3);
 		} else {
-			this._itemNavigation.rowSize = 4;
+			this._itemNavigation.setRowSize(4);
 		}
 	}
 
 	_onfocusin(event) {
 		const target = event.target;
 
-		this._itemNavigation.update(target);
+		this._itemNavigation.setCurrentItem(target);
 	}
 }
 

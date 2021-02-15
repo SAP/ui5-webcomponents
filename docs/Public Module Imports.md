@@ -30,6 +30,8 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Card                     | `ui5-card`           | `import "@ui5/webcomponents/dist/Card.js";`                |
 | Carousel                 | `ui5-carousel`       | `import "@ui5/webcomponents/dist/Carousel.js";`            |
 | Checkbox                 | `ui5-checkbox`       | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
+| Color Palette            | `ui5-color-palette`  | `import "@ui5/webcomponents/dist/ColorPalette.js";`        |
+| Color Palette Item       | `ui5-color-palette-item`  | comes with `ui5-color-palette`                        |
 | ComboBox                 | `ui5-combobox`       | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
 | ComboBox Item            | `ui5-cb-item`        | comes with `ui5-combobox`                                  |
 | Date Picker              | `ui5-date-picker`     | `import "@ui5/webcomponents/dist/DatePicker.js";`         |

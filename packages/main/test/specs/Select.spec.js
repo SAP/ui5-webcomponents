@@ -54,6 +54,7 @@ describe("Select general interaction", () => {
 
 		assert.strictEqual(inputResult.getProperty("value"), "3", "Fired change event is called once more.");
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
+		
 	});
 
 	it("changes selection while closed with Arrow Up/Down", () => {

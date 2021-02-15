@@ -188,7 +188,7 @@ class MultiInput extends Input {
 		if (isBackSpace(event) && event.target.value === "") {
 			event.preventDefault();
 
-			this._focusLastToken();
+			this.tokenizer._focusLastToken();
 		}
 
 		if (isShow(event)) {
@@ -212,19 +212,8 @@ class MultiInput extends Input {
 		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
 
 		if (cursorPosition === 0) {
-			this._focusLastToken();
+			this.tokenizer._focusLastToken();
 		}
-	}
-
-	_focusLastToken() {
-		const lastTokenIndex = this.tokenizer._tokens.length - 1;
-
-		if (lastTokenIndex < 0) {
-			return;
-		}
-
-		this.tokenizer._itemNav.currentIndex = lastTokenIndex;
-		this.tokenizer._tokens[lastTokenIndex].focus();
 	}
 
 	_onfocusout(event) {
@@ -276,6 +265,18 @@ class MultiInput extends Input {
 
 	get _tokensCountTextId() {
 		return `${this._id}-hiddenText-nMore`;
+	}
+
+	/**
+	 * Returns the placeholder value when there are no tokens.
+	 * @protected
+	 */
+	get _placeholder() {
+		if (this.tokenizer && this.tokenizer._tokens.length) {
+			return "";
+		}
+
+		return this.placeholder;
 	}
 
 	get accInfo() {

@@ -1,3 +1,4 @@
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -55,7 +56,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the elements is open
+		 * Indicates if the element is open
 		 * @private
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -206,6 +207,19 @@ class Popup extends UI5Element {
 		return staticAreaStyles;
 	}
 
+	onEnterDOM() {
+		if (!this.isOpen()) {
+			this._blockLayerHidden = true;
+		}
+	}
+
+	onExitDOM() {
+		if (this.isOpen()) {
+			Popup.unblockBodyScrolling();
+			this._removeOpenedPopup();
+		}
+	}
+
 	get _displayProp() {
 		return "block";
 	}
@@ -246,6 +260,13 @@ class Popup extends UI5Element {
 	_onkeydown(e) {
 		if (e.target === this._root && isTabPrevious(e)) {
 			e.preventDefault();
+		}
+	}
+
+	_onfocusout(e) {
+		// relatedTarget is the element, which will get focus. If no such element exists, focus the root
+		if (!e.relatedTarget) {
+			this._root.focus();
 		}
 	}
 
@@ -321,7 +342,7 @@ class Popup extends UI5Element {
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
 	 * @public
 	 */
-	open(preventInitialFocus) {
+	async open(preventInitialFocus) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
 		if (prevented) {
 			return;
@@ -337,6 +358,7 @@ class Popup extends UI5Element {
 		this._zIndex = getNextZIndex();
 		this.style.zIndex = this._zIndex;
 		this._focusedElementBeforeOpen = getFocusedElement();
+
 		this.show();
 
 		if (!this._disableInitialFocus && !preventInitialFocus) {
@@ -346,6 +368,8 @@ class Popup extends UI5Element {
 		this._addOpenedPopup();
 
 		this.opened = true;
+
+		await renderFinished();
 		this.fireEvent("after-open", {}, false, false);
 	}
 
@@ -426,13 +450,6 @@ class Popup extends UI5Element {
 	 */
 	hide() {
 		this.style.display = "none";
-	}
-
-	onExitDOM() {
-		if (this.isOpen()) {
-			Popup.unblockBodyScrolling();
-			this._removeOpenedPopup();
-		}
 	}
 
 	/**
