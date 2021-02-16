@@ -311,6 +311,16 @@
 		</ui5-input>
 	</ui5-dialog>
 
+	<h3>Short Input With Centered Text</h3>
+	<ui5-input class="short" value="244"></ui5-input>
+	<style>
+		.short {
+			width: 2.5rem;
+			min-width: 2.5rem;
+			text-align: center;
+		}
+	</style>
+
 	<script>
 		btnOpenDialog.addEventListener("click", function () {
 			dialog.open();

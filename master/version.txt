@@ -1,8 +1,7 @@
-commit 5fc108df359edf9ea60531d90c3222579eb29b6a
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Mon Feb 15 12:10:56 2021 +0200
+commit 768962712130b9f50c206eae9e71a73315684ed2
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Feb 17 00:56:08 2021 +0800
 
-    chore: imrpove bundle size reporting (#2815)
+    chore: translation delivery (#2822)
     
-    dynamic imports of assets introduce many new bundles, this change
-    improves the output
+    Change-Id: I6ca1755ab63395ca6a32fb88cc8fecc44c6b0dfa
