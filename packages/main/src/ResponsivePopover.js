@@ -1,4 +1,6 @@
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
 import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import Popover from "./Popover.js";
@@ -75,6 +77,11 @@ const metadata = {
  * @public
  */
 class ResponsivePopover extends Popover {
+	constructor() {
+		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -82,11 +89,20 @@ class ResponsivePopover extends Popover {
 	static get styles() {
 		return [Popover.styles, ResponsivePopoverCss];
 	}
-
+	
+	get dialogClasses() {
+		return {
+			header: {
+				"ui5-responsive-popover-header": true,
+				"ui5-responsive-popover-header-no-title": !this.headerText,
+			}
+		}
+	}
+	
 	static get template() {
 		return ResponsivePopoverTemplate;
 	}
-
+	
 	static get dependencies() {
 		return [
 			Button,
@@ -170,6 +186,10 @@ class ResponsivePopover extends Popover {
 		return this._isPhone || !this.contentOnlyOnDesktop;
 	}
 
+	get _closeDialogAriaLabel() {
+		return this.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
+	}
+
 	_afterDialogOpen(event) {
 		this.opened = true;
 		this._propagateDialogEvent(event);
@@ -184,6 +204,10 @@ class ResponsivePopover extends Popover {
 		const type = event.type.replace("ui5-", "");
 
 		this.fireEvent(type, event.detail);
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

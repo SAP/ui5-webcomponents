@@ -26,7 +26,9 @@
 }
 
 .ui5-responsive-popover-header-text {
-	display: flex;
-	align-items: center;
 	width: calc(100% - var(--_ui5_button_base_min_width));
+}
+
+.ui5-responsive-popover-header-no-title {
+	justify-content: flex-end;
 }
