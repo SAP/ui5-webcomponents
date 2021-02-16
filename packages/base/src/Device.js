@@ -1,5 +1,5 @@
 const ua = navigator.userAgent;
-const supportsTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+const touch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 const ie = /(msie|trident)/i.test(ua);
 const chrome = !ie && /(Chrome|CriOS)/.test(ua);
 const safari = !ie && !chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(ua);
@@ -49,7 +49,7 @@ const detectTablet = () => {
 		return;
 	}
 
-	if (supportsTouch) {
+	if (touch) {
 		if (isWindows8OrAbove()) {
 			tablet = true;
 			return;
@@ -72,17 +72,18 @@ const detectTablet = () => {
 	tablet = (ie && ua.indexOf("Touch") !== -1) || (android && !androidPhone);
 };
 
+const supportsTouch = () => touch;
 const isIE = () => ie;
 const isSafari = () => safari;
 
 const isTablet = () => {
 	detectTablet();
-	return (supportsTouch || isWindows8OrAbove()) && tablet;
+	return (touch || isWindows8OrAbove()) && tablet;
 };
 
 const isPhone = () => {
 	detectTablet();
-	return supportsTouch && !tablet;
+	return touch && !tablet;
 };
 
 const isDesktop = () => {
@@ -90,6 +91,7 @@ const isDesktop = () => {
 };
 
 export {
+	supportsTouch,
 	isIE,
 	isSafari,
 	isPhone,
