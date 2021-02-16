@@ -268,23 +268,23 @@ describe("MultiComboBox general interaction", () => {
 			const inivisbleTextId = invisibleText.getProperty("id");
 			let tokens = mcb.shadow$$(".ui5-multi-combobox-token");
 			let resourceBundleText = null;
-	
+
 			assert.strictEqual(tokens.length, 2, "should have two tokens");
 			assert.strictEqual(innerInput.getAttribute("aria-describedby"), inivisbleTextId, "aria-describedby reference is correct");
 			assert.strictEqual(invisibleText.getText(), "Contains 2 tokens", "aria-describedby text is correct");
-	
+
 			mcb.scrollIntoView();
 			innerInput.click();
 			innerInput.keys("Backspace");
 			innerInput.keys("Backspace");
 
 			tokens = mcb.shadow$$(".ui5-multi-combobox-token");
-	
+
 			resourceBundleText = browser.execute(() => {
 				const mcb = document.getElementById("mcb-compact");
-				return mcb.i18nBundle.getText("TOKENIZER_ARIA_CONTAIN_ONE_TOKEN");
+				return mcb.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
 			});
-			
+
 			assert.strictEqual(tokens.length, 1, "should have one token");
 			assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
 
@@ -293,7 +293,7 @@ describe("MultiComboBox general interaction", () => {
 			tokens = mcb.shadow$$(".ui5-multi-combobox-token");
 			resourceBundleText = browser.execute(() => {
 				const mcb = document.getElementById("mcb-compact");
-				return mcb.i18nBundle.getText("TOKENIZER_ARIA_CONTAIN_TOKEN");
+				return mcb.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN);
 			});
 
 			assert.strictEqual(tokens.length, 0, "should not have tokens");

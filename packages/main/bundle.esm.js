@@ -22,7 +22,7 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 // const bg = "https://ui5.sap.com/resources/sap/ui/core/messagebundle_bg.properties";
 // registerI18nLoader("@ui5/webcomponents", "bg", async (localeId) => {
 // 	const props = await (await fetch(bg)).text();
-// 	return parse(props);;
+// 	return parse(props);
 // });
 // registerI18nLoader("@ui5/webcomponents", "fr", async (localeId) => {
 // 	return await (await fetch("fr")).json();
@@ -109,6 +109,7 @@ import { _getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/di
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/directionChange.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import * as defaultTexts from "./dist/generated/i18n/i18n-defaults.js";
 
 const testAssets = {
 	configuration : {
@@ -133,6 +134,7 @@ const testAssets = {
 	detachThemeLoaded,
 	getIconNames,
 	renderFinished,
+	defaultTexts,
 };
 
 window["sap-ui-webcomponents-bundle"] = testAssets;

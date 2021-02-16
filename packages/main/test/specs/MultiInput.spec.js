@@ -144,7 +144,7 @@ describe("ARIA attributes", () => {
 
 		resourceBundleText = browser.execute(() => {
 			const mi = document.getElementById("no-tokens");
-			return mi.i18nBundle.getText("TOKENIZER_ARIA_CONTAIN_TOKEN");
+			return mi.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN);
 		});
 
 		assert.strictEqual(mi.$$("ui5-token").length, 0, "should not have tokens");
@@ -156,7 +156,7 @@ describe("ARIA attributes", () => {
 
 		resourceBundleText = browser.execute(() => {
 			const mi = document.getElementById("no-tokens");
-			return mi.i18nBundle.getText("TOKENIZER_ARIA_CONTAIN_ONE_TOKEN");
+			return mi.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
 		});
 
 		assert.strictEqual(mi.$$("ui5-token").length, 1, "should have one token");
