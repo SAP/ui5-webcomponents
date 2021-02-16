@@ -316,8 +316,13 @@ class ColorPicker extends UI5Element {
 	}
 
 	_handleHEXChange(event) {
-		const newValue = event.target.value.toLowerCase();
+		let newValue = event.target.value.toLowerCase();
 		const hexRegex = new RegExp("^[<0-9 abcdef]+$");
+
+		// Shorthand Syntax
+		if (newValue.length === 3) {
+			newValue = `${newValue[0]}${newValue[0]}${newValue[1]}${newValue[1]}${newValue[2]}${newValue[2]}`;
+		}
 
 		this.hex = newValue;
 		if (newValue.length !== 6 || !hexRegex.test(newValue)) {
