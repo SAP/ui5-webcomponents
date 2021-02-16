@@ -73,7 +73,6 @@ const detectTablet = () => {
 };
 
 const isIE = () => ie;
-
 const isSafari = () => safari;
 
 const isTablet = () => {
@@ -94,5 +93,6 @@ export {
 	isIE,
 	isSafari,
 	isPhone,
+	isTablet,
 	isDesktop,
 };
