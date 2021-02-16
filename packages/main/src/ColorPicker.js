@@ -47,6 +47,7 @@ const metadata = {
 		hex: {
 			type: String,
 			defaultValue: "ffffff",
+			noAttribute: true,
 		},
 
 		/**
@@ -97,6 +98,12 @@ const metadata = {
 		//
 	},
 	events: /** @lends sap.ui.webcomponents.main.ColorPicker.prototype */ {
+		/**
+		 * Fired when the the selected color is changed
+		 *
+		 * @event
+		 * @public
+		 */
 		change: {},
 	},
 };
