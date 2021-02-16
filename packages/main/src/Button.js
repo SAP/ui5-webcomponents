@@ -378,7 +378,10 @@ class Button extends UI5Element {
 	}
 
 	get isIconOnly() {
-		return !Array.from(this.childNodes).filter(node => node.nodeType !== Node.COMMENT_NODE).length;
+		return !Array.from(this.childNodes).filter(node =>{
+		    return node.nodeType !== Node.COMMENT_NODE
+            && ( node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0)
+        }).length;
 	}
 
 	get accInfo() {
