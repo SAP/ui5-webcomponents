@@ -71,7 +71,7 @@ const _getCurrentRange = (name, width = window.innerWidth) => {
  * @name MediaRange.RANGESETS
  * @public
  */
-var RANGESETS = {
+const RANGESETS = {
 	/**
 	 * A 4-step range set (S-M-L-XL).
 	 *
@@ -86,7 +86,7 @@ var RANGESETS = {
 	 * @name MediaRange.RANGESETS.RANGE_4STEPS
 	 * @public
 	 */
-	RANGE_4STEPS: "4Step"
+	RANGE_4STEPS: "4Step",
 };
 
 /**
@@ -97,7 +97,7 @@ var RANGESETS = {
  */
 
 const MediaRange = {
-	RANGESETS: RANGESETS,
+	RANGESETS,
 	_querySets: {},
 	initRangeSet: _initRangeSet,
 	getCurrentRange: _getCurrentRange,
