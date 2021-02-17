@@ -3,7 +3,7 @@ import { attachLanguageChange } from "../locale/languageChange.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
-import { getUseDefaultLanguage } from "../config/Language.js";
+import { getFetchDefaultLanguage } from "../config/Language.js";
 
 // contains package names for which the warning has been shown
 const warningShown = new Set();
@@ -84,14 +84,15 @@ const fetchI18nBundle = async packageName => {
 		localeId = nextFallbackLocale(localeId);
 	}
 
-	if (!_hasLoader(packageName, localeId)) {
-		_showAssetsWarningOnce(packageName);
+	// use default language unless configured to always fetch it from the network
+	const fetchDefaultLanguage = getFetchDefaultLanguage();
+	if (localeId === DEFAULT_LANGUAGE && !fetchDefaultLanguage) {
+		_setI18nBundleData(packageName, null); // reset for the default language (if data was set for a previous language)
 		return;
 	}
 
-	const useDefaultLanguage = getUseDefaultLanguage();
-	if (useDefaultLanguage && localeId === DEFAULT_LANGUAGE) {
-		_setI18nBundleData(packageName, null); // reset for the default language (if data was set for a previous language)
+	if (!_hasLoader(packageName, localeId)) {
+		_showAssetsWarningOnce(packageName);
 		return;
 	}
 
