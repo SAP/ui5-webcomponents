@@ -288,8 +288,6 @@ class TabContainer extends UI5Element {
 	constructor() {
 		super();
 
-		MediaRange.initRangeSet(TC_RANGE_SET, [600, 1024, 1440], ["S", "M", "L", "XL"]);
-
 		this._handleResize = this._handleResize.bind(this);
 
 		// Init ScrollEnablement
@@ -509,7 +507,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_updateMediaRange() {
-		this.mediaRange = MediaRange.getCurrentRange(TC_RANGE_SET, this.getDomRef().offsetWidth);
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
 	}
 
 	_getHeader() {
