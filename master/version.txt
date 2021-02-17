@@ -1,13 +1,5 @@
-commit 43973427c9eb275c01ff3f3d8eb6086096388042
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Feb 17 16:01:34 2021 +0800
+commit dc5f140c837fb8c00aad804a5c0ac7b0919ec939
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Feb 17 13:20:05 2021 +0200
 
-    Translation Delivery (#2826)
-    
-    * chore: translation delivery
-    
-    Change-Id: I8d5ce5a7e9cb47a3dbd4ec0c484d72426af5554f
-    
-    * chore: translation delivery
-    
-    Change-Id: I320619cd807576bea7966b94aa724e9512813086
+    refactor: prefer usage of inlined language (#2820)

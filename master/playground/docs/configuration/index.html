@@ -2372,74 +2372,16 @@
 
 <p>There are several configuration settings that affect all UI5 Web Components globally.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Setting</th>
-      <th>Values</th>
-      <th>Default value</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="#theme">theme</a></td>
-      <td>sap_fiori_3, sap_fiori_3_dark, sap_fiori_3_hcb, sap_fiori_3_hcw, sap_belize, sap_belize_hcb, sap_belize_hcw</td>
-      <td>sap_fiori_3</td>
-      <td>Visual theme</td>
-    </tr>
-    <tr>
-      <td>language</td>
-      <td>en, de, es, etc…</td>
-      <td>en</td>
-      <td>Language to be used for translatable texts</td>
-    </tr>
-    <tr>
-      <td><a href="#rtl">RTL</a> (<strong>deprecated since 1.0.0-rc.8</strong>)</td>
-      <td>true, false</td>
-      <td>false</td>
-      <td>When true, sets global text direction to right-to-left</td>
-    </tr>
-    <tr>
-      <td><a href="#animationMode">animationMode</a></td>
-      <td>full, basic, minimal, none</td>
-      <td>full</td>
-      <td>Defines different animation scenarios or levels</td>
-    </tr>
-    <tr>
-      <td>calendarType</td>
-      <td>Gregorian, Islamic, Buddhist, Japanese, Persian</td>
-      <td>Gregorian</td>
-      <td>Default calendar type for date-related web components</td>
-    </tr>
-    <tr>
-      <td><a href="#noConflict">noConflict</a></td>
-      <td>true, false</td>
-      <td>false</td>
-      <td>When set to true, all events will be fired with a “ui5-“ prefix only</td>
-    </tr>
-    <tr>
-      <td><a href="#formatSettings">formatSettings</a></td>
-      <td>See the <a href="#formatSettings">Format settings</a> section below</td>
-      <td>Empty object</td>
-      <td>Allows to override locale-specific configuration</td>
-    </tr>
-    <tr>
-      <td><a href="#assetsPath">assetsPath</a></td>
-      <td>See the <a href="#assetsPath">Assets path</a> section below</td>
-      <td>Empty string</td>
-      <td>Allows to set the assets path at runtime</td>
-    </tr>
-  </tbody>
-</table>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>               Setting                    |                                                   Values                                                    | Default value |                                                                                   Description --------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- [theme](#theme)                               | sap_fiori_3, sap_fiori_3_dark, sap_fiori_3_hcb, sap_fiori_3_hcw, sap_belize, sap_belize_hcb, sap_belize_hcw | sap_fiori_3   | Visual theme language                                      | en, de, es, etc...                                                                                          | en            | Language to be used for translatable texts [animationMode](#animationMode)               | full, basic, minimal, none                                                                                  | full          | Defines different animation scenarios or levels calendarType                                  | Gregorian, Islamic, Buddhist, Japanese, Persian                                                             | Gregorian     | Default calendar type for date-related web components [noConflict](#noConflict)                     | true, false                                                                                                 | false         | When set to true, all events will be fired with a "ui5-" prefix only [formatSettings](#formatSettings)             | See the [Format settings](#formatSettings) section below                                                    | Empty object  | Allows to override locale-specific configuration [assetsPath](#assetsPath)                     | See the [Assets path](#assetsPath) section below                                                            | Empty string  | Allows to set the assets path at runtime [fetchDefaultLanguage](#fetchDefaultLanguage) | true, false                                                                                                 | false         | The default language is inlined at build time and will be used. Change this to `true` if you want the i18n to be always fetched from the network even for the default language.
+</code></pre></div></div>
 
 <h3 id="content-density">Content Density</h3>
 
 <p>UI5 Web Components contain different content densities for certain controls that allow your app to adapt to the device in question, allowing you to display larger controls for touch-enabled devices, and a smaller more compact design for devices that are operated by mouse. Cosy size is the default density for all components. Compact size could be set by adding a class <code class="highlighter-rouge">ui5-content-density-compact</code> to an html element. It cascades all the way down and enforces compact density (smaller margins/paddings, smaller touch areas, etc).</p>
 
-<p><a name="theme"></a></p>
 <h3 id="theme">Theme</h3>
-<p>The <code class="highlighter-rouge">theme</code> setting values above are the technical names of our themes.</p>
+<p><a name="theme"></a>
+The <code class="highlighter-rouge">theme</code> setting values above are the technical names of our themes.</p>
 <ul>
   <li>The <code class="highlighter-rouge">sap_fiori_3</code> is known as <code class="highlighter-rouge">Quartz Light</code> and it`s the default theme.</li>
   <li>The <code class="highlighter-rouge">sap_fiori_3_dark</code> is known as <code class="highlighter-rouge">Quartz Dark</code>.</li>
@@ -2467,8 +2409,8 @@
 <span class="nx">applyDirection</span><span class="p">();</span>
 </code></pre></div></div>
 
-<p><a name="animationMode"></a></p>
 <h3 id="animation-mode">Animation Mode</h3>
+<p><a name="animationMode"></a></p>
 
 <p>Animation modes allow to specify different animation scenarios or levels.</p>
 <ul>
@@ -2506,8 +2448,8 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
  You can still use them by listening to <code class="highlighter-rouge">ui5-selection-change</code> and <code class="highlighter-rouge">ui5-header-click</code>, but the names <code class="highlighter-rouge">selection-change</code> and <code class="highlighter-rouge">header-click</code> will be
  free for use by other UI components and libraries without name collision.</p>
 
-<p><a name="formatSettings"></a></p>
 <h3 id="format-settings">Format settings</h3>
+<p><a name="formatSettings"></a></p>
 
 <p>For example, to force the first day of week to Sunday, no matter the locale:</p>
 
@@ -2537,8 +2479,8 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
   </tbody>
 </table>
 
-<p><a name="assetsPath"></a></p>
 <h3 id="assets-path">Assets path</h3>
+<p><a name="assetsPath"></a></p>
 
 <p>This configuration setting allows to set the path where asset files (most commonly <code class="highlighter-rouge">.json</code> ) that are to be fetched at runtime, are located. These are:</p>
 <ul>
@@ -2555,6 +2497,23 @@ necessary to be able to pass the right directory at runtime, most commonly insid
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">data-ui5-config</span> <span class="na">type=</span><span class="s">"application/json"</span><span class="nt">&gt;</span>
 <span class="p">{</span>
 	<span class="dl">"</span><span class="s2">assetsPath</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/my/custom/assets/path</span><span class="dl">"</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<h3 id="fetching-the-default-language">Fetching the default language</h3>
+<p><a name="fetchDefaultLanguage"></a></p>
+
+<p>All texts used by components are inlined during build time so that components look and feel normally when prototyping. The inlined text is decided at build time (<code class="highlighter-rouge">en</code> unless configured otherwise).</p>
+
+<p>Since the default language is inlined, it makes no sense to fetch it again from the network along with the normal assets for other locales, so the default behaviour is to use the inlined text.</p>
+
+<p>If for some reason it is necessary to fetch the default language text from the network as well, use this setting.</p>
+
+<p>Example:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">data-ui5-config</span> <span class="na">type=</span><span class="s">"application/json"</span><span class="nt">&gt;</span>
+<span class="p">{</span>
+	<span class="dl">"</span><span class="s2">fetchDefaultLanguage</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">}</span>
 <span class="nt">&lt;/script&gt;</span>
 </code></pre></div></div>
