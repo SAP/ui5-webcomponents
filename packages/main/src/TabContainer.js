@@ -8,7 +8,7 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getMedia } from "@ui5/webcomponents-base/dist/Device.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -288,7 +288,7 @@ class TabContainer extends UI5Element {
 	constructor() {
 		super();
 
-		getMedia().initRangeSet(TC_RANGE_SET, [600, 1024, 1440], ["S", "M", "L", "XL"]);
+		MediaRange.initRangeSet(TC_RANGE_SET, [600, 1024, 1440], ["S", "M", "L", "XL"]);
 
 		this._handleResize = this._handleResize.bind(this);
 
@@ -509,7 +509,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_updateMediaRange() {
-		this.mediaRange = getMedia().getCurrentRange(TC_RANGE_SET, this.getDomRef().offsetWidth);
+		this.mediaRange = MediaRange.getCurrentRange(TC_RANGE_SET, this.getDomRef().offsetWidth);
 	}
 
 	_getHeader() {
