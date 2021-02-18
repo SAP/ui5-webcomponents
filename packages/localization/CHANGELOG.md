@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.12](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.11...v1.0.0-rc.12) (2021-02-18)
+
+
+### Bug Fixes
+
+* **ui5-calendar:** Today date is now timezone aware ([#2660](https://github.com/SAP/ui5-webcomponents/issues/2660)) ([32dd0ef](https://github.com/SAP/ui5-webcomponents/commit/32dd0ef))
+
+
+
+
 # [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization
