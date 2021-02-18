@@ -332,10 +332,6 @@ const metadata = {
 			type: Object,
 		},
 
-		_wrapperAccInfo: {
-			type: Object,
-		},
-
 		_nativeInputAttributes: {
 			type: Object,
 		},
