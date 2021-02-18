@@ -1,5 +1,5 @@
-commit dc5f140c837fb8c00aad804a5c0ac7b0919ec939
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Feb 17 13:20:05 2021 +0200
+commit 6a70e5a1bc10f2a1df054d1c383729ec805d25b2
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Feb 18 10:57:28 2021 +0200
 
-    refactor: prefer usage of inlined language (#2820)
+    feat(ui5-color-picker): initial implementation (#2769)
