@@ -167,8 +167,13 @@ const getRGBColor = color => {
 	}
 
 	// HEX
-	if (color.indexOf("#") > -1) {
-		color = color.slice(1, color.length);
+	if (color.indexOf("#") === 0) {
+		// Shorthand Syntax
+		if (color.length === 4) {
+			color = `${color[1]}${color[1]}${color[2]}${color[2]}${color[3]}${color[3]}`;
+		} else {
+			color = color.slice(1, color.length);
+		}
 	}
 
 	// Css Color
