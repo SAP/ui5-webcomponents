@@ -2,6 +2,6 @@
 	position: absolute;
 	clip: rect(1px,1px,1px,1px);
 	user-select: none;
-	left: 0;
-	top: 0;
+	left: -10rem;
+	top: -10rem;
 }
