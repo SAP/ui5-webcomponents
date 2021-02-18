@@ -1,12 +1,5 @@
-commit 3fb02f3f43e99faa819e9d14f3ad7158d26c97aa
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Thu Feb 18 11:40:49 2021 +0200
+commit d89ad9ae3ff3c9e1ce8526a806cc802c2d87ea93
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Feb 18 13:16:51 2021 +0200
 
-    fix(ui5-responsive-popover): accessibility improvements (#2823)
-    
-    - When the header-text attribute is not provided, the Dialog (on mobile)
-      does not render an empty title element
-    - header-text attribute results in a title with level H2
-    - Added aria-label to the "Close dialog" button
-    
-    Fixes: #2787
+    chore: release 1.0.0-rc.12 (#2831)
