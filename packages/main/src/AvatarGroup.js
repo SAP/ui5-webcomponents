@@ -2,10 +2,21 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
+
 import {
 	isEnter,
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+
+import {
+	AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL,
+	AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL,
+	AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL,
+	AVATAR_GROUP_ARIA_LABEL_GROUP,
+	AVATAR_GROUP_MOVE,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.js";
@@ -87,6 +98,35 @@ const metadata = {
 		avatarSize: {
 			type: String,
 			defaultValue: AvatarSize.S,
+		},
+
+		/**
+		 * Defines the aria-haspopup value of the <code>ui5-avatar-group</code> on:
+		 * <br><br>
+		 * <ul>
+		 * <li> the whole container when <code>type</code> property is <code>Group</code></li>
+		 * <li> the default "More" overflow button when <code>type</code> is <code>Individual</code></li>
+		 * <ul>
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 *
+		 * <li> None - the aria-haspopup attribute will not be rendered.</li>
+		 * <li> Menu - Indicates the popup is a menu.</li>
+		 * <li> Listbox - Indicates the popup is a listbox.</li>
+		 * <li> Tree - Indicates the popup is a tree.</li>
+		 * <li> Grid - Indicates the popup is a grid.</li>
+		 * <li> Dialog - Indicates the popup is a dialog.</li>
+		 *
+		 * <ul>
+		 * @type {AriaHasPopup}
+		 * @defaultValue "None"
+		 * @since 1.0.0-rc.15
+		 * @public
+		 */
+		ariaHaspopup: {
+			type: AriaHasPopup,
+			defaultValue: AriaHasPopup.None,
 		},
 
 		/**
@@ -217,6 +257,8 @@ class AvatarGroup extends UI5Element {
 		this._colorIndex = 0;
 		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -239,6 +281,10 @@ class AvatarGroup extends UI5Element {
 		return [
 			Button,
 		];
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	/**
@@ -265,6 +311,45 @@ class AvatarGroup extends UI5Element {
 
 	get _customOverflowButton() {
 		return this.overflowButton.length ? this.overflowButton[0] : undefined;
+	}
+
+	get _ariaLabelText() {
+		const hiddenItemsCount = this.hiddenItems.length;
+		const typeLabelKey = this._isGroup ? AVATAR_GROUP_ARIA_LABEL_GROUP : AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL;
+
+		// avatar type label
+		let text = this.i18nBundle.getText(typeLabelKey);
+
+		// add displayed-hidden avatars label
+		text += ` ${this.i18nBundle.getText(AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL, [this._itemsCount - hiddenItemsCount], [hiddenItemsCount])}`;
+
+		if (this._isGroup) {
+			// the container role is "button", add the message for complete list activation
+			text += ` ${this.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL)}`;
+		} else {
+			// the container role is "group", add the "how to navigate" message
+			text += ` ${this.i18nBundle.getText(AVATAR_GROUP_MOVE)}`;
+		}
+
+		return text;
+	}
+
+	get _overflowButtonAriaLabelText() {
+		return this._isGroup ? undefined : this.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL);
+	}
+
+	get _ariaHasPopup() {
+		return this._isGroup ? this._getAriaHasPopup() : undefined;
+	}
+
+	get _overflowButtonAccInfo() {
+		return {
+			ariaHaspopup: this._isGroup ? undefined : this._getAriaHasPopup(),
+		};
+	}
+
+	get _role() {
+		return this._isGroup ? "button" : "group";
 	}
 
 	get _hiddenStartIndex() {
@@ -503,6 +588,14 @@ class AvatarGroup extends UI5Element {
 		if (shouldFireEvent) {
 			this.fireEvent("overflow");
 		}
+	}
+
+	_getAriaHasPopup() {
+		if (this.ariaHaspopup === AriaHasPopup.None) {
+			return;
+		}
+
+		return this.ariaHaspopup.toLowerCase();
 	}
 }
 

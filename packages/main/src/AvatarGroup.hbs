@@ -7,13 +7,22 @@
 		tabindex="{{_groupTabIndex}}"
 		@click="{{_onClick}}"
 		@ui5-click="{{_onUI5Click}}"
+		aria-label="{{_ariaLabelText}}"
+		role="{{_role}}"
+		aria-haspopup="{{_ariaHasPopup}}"
 	>
 		<slot></slot>
 
 		{{#if _customOverflowButton}}
 			<slot name="overflowButton"></slot>
 		{{else}}
-			<ui5-button ?hidden="{{_overflowBtnHidden}}" ?non-interactive={{_isGroup}} class="ui5-avatar-group-overflow-btn">
+			<ui5-button 
+				._buttonAccInfo="{{_overflowButtonAccInfo}}" 
+				aria-label="{{_overflowButtonAriaLabelText}}"
+				?hidden="{{_overflowBtnHidden}}"
+				?non-interactive={{_isGroup}}
+				class="ui5-avatar-group-overflow-btn"
+			>
 				{{_overflowButtonText}}
 			</ui5-button>
 		{{/if}}

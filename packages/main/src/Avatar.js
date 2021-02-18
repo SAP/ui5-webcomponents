@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import encodeCSS from "@ui5/webcomponents-base/dist/util/encodeCSS.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 // Template
@@ -196,6 +197,30 @@ const metadata = {
 			type: String,
 		},
 
+		/**
+		 * Defines the aria-haspopup value of the <code>ui5-avatar</code> when <code>interactive</code> property is <code>true</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 *
+		 * <li><code> None - the aria-haspopup attribute will not be rendered.</li>
+		 * <li><code> Menu - Indicates the popup is a menu.</li>
+		 * <li><code> Listbox - Indicates the popup is a listbox.</li>
+		 * <li><code> Tree - Indicates the popup is a tree.</li>
+		 * <li><code> Grid - Indicates the popup is a grid.</li>
+		 * <li><code> Dialog - Indicates the popup is a dialog.</li>
+		 *
+		 * <ul>
+		 * @type {AriaHasPopup}
+		 * @defaultValue "None"
+		 * @since 1.0.0-rc.15
+		 * @public
+		 */
+		ariaHaspopup: {
+			type: AriaHasPopup,
+			defaultValue: AriaHasPopup.None,
+		},
+
 		_tabIndex: {
 			type: String,
 			noAttribute: true,
@@ -297,6 +322,14 @@ class Avatar extends UI5Element {
 		return this.getAttribute("background-color") || this._backgroundColor;
 	}
 
+	get _role() {
+		return this.interactive ? "button" : undefined;
+	}
+
+	get _ariaHasPopup() {
+		return this._getAriaHasPopup();
+	}
+
 	get validInitials() {
 		const validInitials = /^[a-zA-Z]{1,2}$/;
 
@@ -359,6 +392,14 @@ class Avatar extends UI5Element {
 		if (this.interactive) {
 			this.focused = true;
 		}
+	}
+
+	_getAriaHasPopup() {
+		if (!this.interactive || this.ariaHaspopup === AriaHasPopup.None) {
+			return;
+		}
+
+		return this.ariaHaspopup.toLowerCase();
 	}
 }
 

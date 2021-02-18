@@ -87,3 +87,30 @@ describe("Avatar", () => {
 		assert.strictEqual(input.getAttribute("value"), "1", "Mouse click throws event");
 	});
 });
+
+describe("ARIA attributes", () => {
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Avatar.html`);
+	});
+
+	it ("role set correctly", () => {
+		const avatar = $("#myInteractiveAvatar");;
+		const avatarRoot = avatar.shadow$(".ui5-avatar-root");
+
+		assert.strictEqual(avatarRoot.getAttribute("role"), "button", "should have role button for interactive avatar");
+	});
+
+	it ("aria-haspopup is correct for interactive avatar", () => {
+		const avatar = $("#myInteractiveAvatar");;
+		const ariaHasPopup = avatar.getProperty("_ariaHasPopup");
+
+		assert.strictEqual(ariaHasPopup, "menu", "should have aria-haspopup set");
+	});
+
+	it ("aria-haspopup is correct for non-interactive avatar", () => {
+		const avatar = $("#non-interactive-avatar");;
+		const ariaHasPopup = avatar.getProperty("_ariaHasPopup");
+
+		assert.notExists(ariaHasPopup, "should not have aria-haspopup set");
+	});
+});
