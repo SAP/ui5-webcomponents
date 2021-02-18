@@ -6,12 +6,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # [1.0.0-rc.12](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.11...v1.0.0-rc.12) (2021-02-18)
 
 ### New package
-**framework:** * create @ui5/webcomponents-ie11 package ([#2686](https://github.com/SAP/ui5-webcomponents/issues/2686)) ([1d3b37e](https://github.com/SAP/ui5-webcomponents/commit/1d3b37e))
+**framework:** * introduce @ui5/webcomponents-ie11 package ([#2686](https://github.com/SAP/ui5-webcomponents/issues/2686)) ([1d3b37e](https://github.com/SAP/ui5-webcomponents/commit/1d3b37e))
 
 ### New Components
 
-* **ui5-color-palette:** initial implementation ([#2731](https://github.com/SAP/ui5-webcomponents/issues/2731)) ([772424e](https://github.com/SAP/ui5-webcomponents/commit/772424e))
-* **ui5-page:** Initial implementation ([#2685](https://github.com/SAP/ui5-webcomponents/issues/2685)) ([bd09e17](https://github.com/SAP/ui5-webcomponents/commit/bd09e17)), closes [#2433](https://github.com/SAP/ui5-webcomponents/issues/2433)
+* **ui5-color-palette:** introduce new component ([#2731](https://github.com/SAP/ui5-webcomponents/issues/2731)) ([772424e](https://github.com/SAP/ui5-webcomponents/commit/772424e))
+* **ui5-page:** introduce new component ([#2685](https://github.com/SAP/ui5-webcomponents/issues/2685)) ([bd09e17](https://github.com/SAP/ui5-webcomponents/commit/bd09e17)), closes [#2433](https://github.com/SAP/ui5-webcomponents/issues/2433)
 
 
 ### Bug Fixes
@@ -36,13 +36,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ui5-li-notification:** now possible to not have a description ([#2744](https://github.com/SAP/ui5-webcomponents/issues/2744)) ([ef35f84](https://github.com/SAP/ui5-webcomponents/commit/ef35f84))
 * **ui5-li-notification-group:** align priority icon ([#2584](https://github.com/SAP/ui5-webcomponents/issues/2584)) ([ff247f0](https://github.com/SAP/ui5-webcomponents/commit/ff247f0))
 * **ui5-list:** fix JS error on focusin ([#2720](https://github.com/SAP/ui5-webcomponents/issues/2720)) ([b36e54e](https://github.com/SAP/ui5-webcomponents/commit/b36e54e))
-* **ui5-list:** remove busy indicator dom ([#2712](https://github.com/SAP/ui5-webcomponents/issues/2712)) ([fe76278](https://github.com/SAP/ui5-webcomponents/commit/fe76278))
+* **ui5-list:** remove busy indicator DOM ([#2712](https://github.com/SAP/ui5-webcomponents/issues/2712)) ([fe76278](https://github.com/SAP/ui5-webcomponents/commit/fe76278))
 * **ui5-list:** show busy indicator over the list ([#2684](https://github.com/SAP/ui5-webcomponents/issues/2684)) ([ad56eaa](https://github.com/SAP/ui5-webcomponents/commit/ad56eaa))
 * **ui5-multi-combobox:** fix livechange behaviour ([#2656](https://github.com/SAP/ui5-webcomponents/issues/2656)) ([57820dd](https://github.com/SAP/ui5-webcomponents/commit/57820dd))
 * **ui5-multi-combobox:** The initial focus is set on the ui5-dialog ([#2702](https://github.com/SAP/ui5-webcomponents/issues/2702)) ([aeed733](https://github.com/SAP/ui5-webcomponents/commit/aeed733))
 * **ui5-multi-input:** fix appearance in RTL ([#2782](https://github.com/SAP/ui5-webcomponents/issues/2782)) ([e842f23](https://github.com/SAP/ui5-webcomponents/commit/e842f23)), closes [#2749](https://github.com/SAP/ui5-webcomponents/issues/2749)
-* **ui5-multicombobox:** Placeholder with tokens hidden ([#2785](https://github.com/SAP/ui5-webcomponents/issues/2785)) ([d769a0d](https://github.com/SAP/ui5-webcomponents/commit/d769a0d)), closes [#2261](https://github.com/SAP/ui5-webcomponents/issues/2261)
-* **ui5-multiinput:** hide placeholder when tokens ([#2789](https://github.com/SAP/ui5-webcomponents/issues/2789)) ([679dae3](https://github.com/SAP/ui5-webcomponents/commit/679dae3)), closes [#2261](https://github.com/SAP/ui5-webcomponents/issues/2261)
+* **ui5-multicombobox:** hide placeholder when tokens are present ([#2785](https://github.com/SAP/ui5-webcomponents/issues/2785)) ([d769a0d](https://github.com/SAP/ui5-webcomponents/commit/d769a0d)), closes [#2261](https://github.com/SAP/ui5-webcomponents/issues/2261)
+* **ui5-multiinput:** hide placeholder when tokens are present ([#2789](https://github.com/SAP/ui5-webcomponents/issues/2789)) ([679dae3](https://github.com/SAP/ui5-webcomponents/commit/679dae3)), closes [#2261](https://github.com/SAP/ui5-webcomponents/issues/2261)
 * **ui5-popover:** correctly position a popover if dynamically created ([#2679](https://github.com/SAP/ui5-webcomponents/issues/2679)) ([5a872b0](https://github.com/SAP/ui5-webcomponents/commit/5a872b0))
 * **ui5-popover, ui5-dialog:** do not render empty headers ([#2770](https://github.com/SAP/ui5-webcomponents/issues/2770)) ([7f0bd6a](https://github.com/SAP/ui5-webcomponents/commit/7f0bd6a)), closes [#2694](https://github.com/SAP/ui5-webcomponents/issues/2694)
 * **ui5-popup:** correct focus when there is no focusable content ([#2583](https://github.com/SAP/ui5-webcomponents/issues/2583)) ([bf8caaf](https://github.com/SAP/ui5-webcomponents/commit/bf8caaf))
