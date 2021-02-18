@@ -30,6 +30,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Card                     | `ui5-card`           | `import "@ui5/webcomponents/dist/Card.js";`                |
 | Carousel                 | `ui5-carousel`       | `import "@ui5/webcomponents/dist/Carousel.js";`            |
 | Checkbox                 | `ui5-checkbox`       | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
+| Color Picker             | `ui5-color-picker`   | `import "@ui5/webcomponents/dist/ColorPicker.js";`         |
 | Color Palette            | `ui5-color-palette`  | `import "@ui5/webcomponents/dist/ColorPalette.js";`        |
 | Color Palette Item       | `ui5-color-palette-item`  | comes with `ui5-color-palette`                        |
 | ComboBox                 | `ui5-combobox`       | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
@@ -140,6 +141,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Side Navigation Sub Item     | `ui5-side-navigation-sub-item`     | `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";`     |
 | Shell Bar                    | `ui5-shellbar`                     | `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`                  |
 | Shell Bar Item               | `ui5-shellbar-item`                | `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`              |
+| Page                         | `ui5-page`                         | `import "@ui5/webcomponents-fiori/dist/Page.js";`                      |
 | Product Switch               | `ui5-product-switch`               | `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`             |
 | Product Switch Item          | `ui5-product-switch-item`          | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`         |
 | Notification List Item       | `ui5-li-notifcation`               | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`       |
