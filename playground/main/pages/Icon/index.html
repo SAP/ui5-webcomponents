@@ -58,35 +58,15 @@
 	<br />
 
 	<ui5-date-picker style="margin-top: 10px" placeholder="test" value="Value State None">
-		<ui5-icon
-			slot="icon"
-			name="add-employee"
-			tabindex="-1"
-		></ui5-icon>
 	</ui5-date-picker>
 
 	<ui5-date-picker style="margin-top: 10px" value-state="Success" value="Value State Success">
-		<ui5-icon
-			slot="icon"
-			name="add-employee"
-			tabindex="-1"
-		></ui5-icon>
 	</ui5-date-picker>
 
 	<ui5-date-picker style="margin-top: 10px" value-state="Warning" value="Value State Warning">
-		<ui5-icon
-			slot="icon"
-			name="add-employee"
-			tabindex="-1"
-		></ui5-icon>
 	</ui5-date-picker>
 
 	<ui5-date-picker style="margin-top: 10px" value-state="Error" value="Value State Error">
-		<ui5-icon
-			slot="icon"
-			name="add-employee"
-			tabindex="-1"
-		></ui5-icon>
 	</ui5-date-picker>
 
 	<br/><br/>
@@ -102,6 +82,12 @@
 	<ui5-icon name="overflow" style="border:1px solid red;"></ui5-icon>
 	<br>
 	<br>
+
+	<ui5-title>Some icons can display default tooltip</ui5-title>
+	<br>
+	<ui5-icon id="iconWithTooltip" name="save" show-tooltip></ui5-icon>
+	<ui5-icon name="overflow" show-tooltip></ui5-icon>
+	<ui5-icon name="settings" show-tooltip></ui5-icon>
 
 	<script>
 		var icon = document.getElementById("interactive-icon"),

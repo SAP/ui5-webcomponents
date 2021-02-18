@@ -7,7 +7,7 @@
 	<title>DatePicker test page</title>
 
 	<script>
-		delete Document.prototype.adoptedStyleSheets;
+		// delete Document.prototype.adoptedStyleSheets;
 	</script>
 
 	
@@ -131,6 +131,11 @@
 			</div>
 		</section>
 
+		<section>
+			<h3>DatePicker with properties given in the wrong format</h3>
+			<ui5-date-picker min-date="1/1/2021" max-date="31/1/2021" value="5/1/2021"></ui5-date-picker>
+		</section>
+
 	</div>
 	<script>
 		var dp = document.getElementById('dp5');
@@ -158,22 +163,6 @@
 			$('#startDate').val($('#ui5-datepicker--startDate').val());
 			$('#startDate').trigger('change');
 		}));
-
-		$('#ui5-datepicker--startDate').dblclick(function(e) {
-			var dp = $('#ui5-datepicker--startDate')[0];
-			if (dp.getSemanticTargetInfo(e).isInput) {
-				dp.value = dp.normalizeValue("today");
-				dp.closePicker();
-			}
-		});
-
-		$('#ui5-datepicker--startDate').click(function(e) {
-			var dp = $('#ui5-datepicker--startDate')[0];
-			if (!dp.isOpen() && dp.getSemanticTargetInfo(e).isInput) {
-				dp.setAttribute('value-state', 'None');
-				dp.openPicker({ focusInput: true });
-			}
-		});
 
 		var dp11 = document.getElementById('dp11');
 

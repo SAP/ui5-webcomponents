@@ -111,7 +111,7 @@
 		<span>Validating input and placeholder </span>
 
 		<br>
-		<ui5-multi-combobox placeholder="Some initial text">
+		<ui5-multi-combobox id="mcb-with-placeholder" placeholder="Some initial text">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
@@ -175,7 +175,7 @@
 		<span>value state error </span>
 
 		<br>
-		<ui5-multi-combobox allow-custom-values placeholder="Some initial text"
+		<ui5-multi-combobox id="mcb-error" allow-custom-values placeholder="Some initial text"
 			value-state="Error">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
@@ -274,14 +274,30 @@
 	<section class="ui5-content-density-compact">
 		<h3>MultiComboBox in Compact</h3>
 		<div>
-			<ui5-multi-combobox placeholder="Some initial text">
-				<ui5-mcb-item text="Cosy"></ui5-mcb-item>
-				<ui5-mcb-item text="Compact"></ui5-mcb-item>
+			<ui5-multi-combobox id="mcb-compact" placeholder="Some initial text">
+				<ui5-mcb-item text="Cosy" selected></ui5-mcb-item>
+				<ui5-mcb-item text="Compact" selected></ui5-mcb-item>
 				<ui5-mcb-item text="Condensed"></ui5-mcb-item>
 				<ui5-mcb-item text="Longest word in the world"></ui5-mcb-item>
 			</ui5-multi-combobox>
 		</div>
 	</section>
+
+	<div class="demo-section">
+		<ui5-label>Two-column items </ui5-label>
+		<br/>
+		<ui5-multi-combobox id="mcb-two-column-layout" style="width: 360px;">
+			<ui5-mcb-item text="Algeria" additional-text="DZ"></ui5-mcb-item>
+			<ui5-mcb-item text="Argentina" additional-text="AR"></ui5-mcb-item>
+			<ui5-mcb-item text="Australia" additional-text="AU"></ui5-mcb-item>
+			<ui5-mcb-item text="Austria" additional-text="AT"></ui5-mcb-item>
+			<ui5-mcb-item text="Bahrain" additional-text="BH"></ui5-mcb-item>
+			<ui5-mcb-item text="Belgium" additional-text="BE"></ui5-mcb-item>
+			<ui5-mcb-item text="Brazil" additional-text="BR"></ui5-mcb-item>
+			<ui5-mcb-item text="Bulgaria" additional-text="BG"></ui5-mcb-item>
+			<ui5-mcb-item text="Canada" additional-text="CA"></ui5-mcb-item>
+			<ui5-mcb-item text="Chile" additional-text="CL"></ui5-mcb-item>
+		</ui5-multi-combobox>
 
 	<script>
 		var eventNameInput = document.getElementById("events-input");

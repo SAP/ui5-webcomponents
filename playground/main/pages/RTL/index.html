@@ -82,6 +82,12 @@
 	<ui5-date-picker></ui5-date-picker>
 	<script>
 
+		setTimeout(function() {
+			window['sap-ui-webcomponents-bundle'].attachDirectionChange(function() {
+				console.log("Direction changed");
+			});
+		}, 1000);
+
 		// Utility function to change RTL and apply the changes
 		function setDir(dir) {
 			document.body.dir = dir;
