@@ -11,6 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### New Components
 
 * **ui5-color-palette:** introduce new component ([#2731](https://github.com/SAP/ui5-webcomponents/issues/2731)) ([772424e](https://github.com/SAP/ui5-webcomponents/commit/772424e))
+* **ui5-color-picker:** introduce new component ([#2769](https://github.com/SAP/ui5-webcomponents/issues/2769)) ([6a70e5a](https://github.com/SAP/ui5-webcomponents/commit/6a70e5a))
 * **ui5-page:** introduce new component ([#2685](https://github.com/SAP/ui5-webcomponents/issues/2685)) ([bd09e17](https://github.com/SAP/ui5-webcomponents/commit/bd09e17)), closes [#2433](https://github.com/SAP/ui5-webcomponents/issues/2433)
 
 

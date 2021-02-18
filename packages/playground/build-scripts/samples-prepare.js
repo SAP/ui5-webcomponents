@@ -12,13 +12,9 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-	"Bar",
-	"Calendar",
 	"ColorPalette",
+	"ColorPicker",
 	"Page",
-	"RangeSlider",
-	"Slider",
-	"AvatarGroup",
 ];
 
 packages.forEach(package => {
