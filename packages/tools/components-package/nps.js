@@ -15,7 +15,7 @@ const getScripts = (options) => {
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
 		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
 		build: {
-			default: "nps build.samples",
+			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
 			styles: {
 				default: "nps build.styles.themes build.styles.components",
