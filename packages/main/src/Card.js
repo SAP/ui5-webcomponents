@@ -29,7 +29,7 @@ const metadata = {
 		/**
 		 * Defines the content of the <code>ui5-card</code>.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot content
 		 * @public
 		 */
 		"default": {

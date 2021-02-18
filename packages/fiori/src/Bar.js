@@ -29,6 +29,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
+		 * Defines the content at the start of the bar
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -37,6 +38,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 		/**
+		 * Defines the content in the middle of the bar
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -45,6 +47,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 		/**
+		 * Defines the content at the end of the bar
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public

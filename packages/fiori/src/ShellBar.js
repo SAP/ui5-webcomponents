@@ -175,7 +175,7 @@ const metadata = {
 		 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot items
 		 * @public
 		 */
 		"default": {

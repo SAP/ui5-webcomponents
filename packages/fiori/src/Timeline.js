@@ -21,7 +21,7 @@ const metadata = {
 		 * Determines the content of the <code>ui5-timeline</code>.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot items
 		 * @public
 		 */
 		"default": {

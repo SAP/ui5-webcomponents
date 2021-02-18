@@ -18,7 +18,7 @@ const metadata = {
 		 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot cells
 		 * @public
 		 */
 		"default": {

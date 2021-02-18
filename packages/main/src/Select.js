@@ -63,7 +63,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot options
 		 * @public
 		 */
 		"default": {

@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.types.BarDesign.prototype
+ * @lends sap.ui.webcomponents.fiori.types.BarDesign.prototype
  * @public
  */
 const BarTypes = {
@@ -39,7 +39,7 @@ const BarTypes = {
  * Different types of Bar.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.BarDesign
+ * @alias sap.ui.webcomponents.fiori.types.BarDesign
  * @public
  * @enum {string}
  */

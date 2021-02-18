@@ -64,7 +64,7 @@ const metadata = {
 		 * usually <code>ui5-li-notification</code> items.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot items
 		 * @public
 		 */
 		"default": {

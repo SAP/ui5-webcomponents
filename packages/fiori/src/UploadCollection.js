@@ -105,7 +105,7 @@ const metadata = {
 		 * <br><b>Note:</b> Use <code>ui5-upload-collection-item</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot items
 		 * @public
 		 */
 		"default": {
