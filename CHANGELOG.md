@@ -79,6 +79,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ### BREAKING CHANGES
+
+* **framework:** introduce dynamic imports for .json assets ([#2740](https://github.com/SAP/ui5-webcomponents/issues/2740)) ([46e38fb](https://github.com/SAP/ui5-webcomponents/commit/46e38fb))
+
+The method **registerI18nBundle** of the @ui5/webcomponents-base/asset-registries/i18n.js module is deprecated in favour of **registerI18nLoader**.
+
+The framework no longer tries to convert .properties files internally and the PropertiesFormatSupport feature is removed. This has to be done by a custom loader using the **@ui5/webcomponents-base/dist/PropertiesFileFormat.js** module.
+
 * **framework:** deprecate RenderScheduler in favor of Render.js ([#2728](https://github.com/SAP/ui5-webcomponents/issues/2728)) ([bc78857](https://github.com/SAP/ui5-webcomponents/commit/bc78857))
 
 `RenderScheduler.js` deprecated. The file will be deleted in a future release. If you were using some of its methods, import these methods from the new `Render.js` module. For example, if you were using:
