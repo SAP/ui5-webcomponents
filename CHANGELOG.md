@@ -5,6 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.0.0-rc.12](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.11...v1.0.0-rc.12) (2021-02-18)
 
+### New package
+**framework:** * create @ui5/webcomponents-ie11 package ([#2686](https://github.com/SAP/ui5-webcomponents/issues/2686)) ([1d3b37e](https://github.com/SAP/ui5-webcomponents/commit/1d3b37e))
+
 ### New Components
 
 * **ui5-color-palette:** initial implementation ([#2731](https://github.com/SAP/ui5-webcomponents/issues/2731)) ([772424e](https://github.com/SAP/ui5-webcomponents/commit/772424e))
@@ -75,8 +78,73 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **framework:** distrobure icon assets as .svg files ([#2657](https://github.com/SAP/ui5-webcomponents/issues/2657)) ([5b79982](https://github.com/SAP/ui5-webcomponents/commit/5b79982))
 
 
+### BREAKING CHANGES
+* **framework:** deprecate RenderScheduler in favor of Render.js ([#2728](https://github.com/SAP/ui5-webcomponents/issues/2728)) ([bc78857](https://github.com/SAP/ui5-webcomponents/commit/bc78857))
+
+`RenderScheduler.js` deprecated. The file will be deleted in a future release. If you were using some of its methods, import these methods from the new `Render.js` module. For example, if you were using:
+ ```js 
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+RenderScheduler.renderImmediately(myComponent);
+RenderScheduler.renderDeferred(myComponent);
+await RenderScheduler.whenFinished();
+```
+change to:
+```js
+import { renderFinished, renderImmediately, renderDeferred } from "@ui5/webcomponents-base/dist/Render.js";
+renderImmediately(myComponent);
+renderDeferred(myComponent);
+await renderFinished();
+```
+`whenFinished` from `RenderScheduler.js` renamed to `renderFinished` and now exported by `Render.js`. For usage, see the previous example
+
+* **framework:** create @ui5/webcomponents-ie11 package ([#2686](https://github.com/SAP/ui5-webcomponents/issues/2686)) ([1d3b37e](https://github.com/SAP/ui5-webcomponents/commit/1d3b37e))
+
+**The legacy browser support is now moved to new ie11 package**. If you used them before add **@ui5/webcomponents-ie11** as a dependency to your project:
+
+`npm i @ui5/webcomponents-ie11 --save`
+
+or
+
+`yarn add @ui5/webcomponents-ie11`
+
+Change the following public imports:
+
+`import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";`
+
+to
+
+`import "@ui5/webcomponents-ie11/dist/features/IE11.js";`
 
 
+and
+
+`import "@ui5/webcomponents-base/dist/features/browsersupport/IE11WithWebComponentsPolyfill.js";`
+
+to
+
+`import "@ui5/webcomponents-ie11/dist/features/IE11WithWebComponentsPolyfill.js";`
+
+
+**The Legacy Edge browser is no longer supported with the ES6 bundle**, therefore the following import has been removed:
+
+`import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";`
+
+Legacy Edge is still supported with the ES5 bundle. If your app needs to support Legacy Edge, treat it as IE11 and transpile the code to ES5 as you would for IE11.
+
+* **ui5-calendar:** Add declarative dates support added ([#2648](https://github.com/SAP/ui5-webcomponents/issues/2648)) ([6602fba](https://github.com/SAP/ui5-webcomponents/commit/6602fba))
+
+The property **selectedDates** is deprecated for **ui5-calendar**. Instead of setting **selectedDates** as an array of UTC timestamps, please provide instances of **ui5-date** as children of the **ui5-calendar**. Instead of reading the **selectedDates** property to find out which dates the user selected, please read the children of the **ui5-calendar** (instances of **ui5-date** with **value** property).
+
+* **ui5-calendar:** new features for pickers ([#2598](https://github.com/SAP/ui5-webcomponents/issues/2598)) ([3e684b4](https://github.com/SAP/ui5-webcomponents/commit/3e684b4))
+
+The **selection** property of **ui5-calendar** and **ui5-daypicker** has been renamed to **selectionMode**.
+
+
+* **ui5-table:** add growing on scroll ([#2593](https://github.com/SAP/ui5-webcomponents/issues/2593)) ([87520c2](https://github.com/SAP/ui5-webcomponents/commit/87520c2)), closes [#2589](https://github.com/SAP/ui5-webcomponents/issues/2589) [#2570](https://github.com/SAP/ui5-webcomponents/issues/2570)
+
+The property **hasMore** removed, use **growing** instead.
+The **loadMoreText** has been renamed to **moreText**.
+The **loadMoreSubtext** has been renamed to **moreSubtext**
 # [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
 
 ### New components
