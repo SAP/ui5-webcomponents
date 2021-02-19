@@ -3,7 +3,7 @@
 	--_ui5_button_base_min_compact_width: 2rem;
 	--_ui5_button_base_height: 2.5rem;
 	--_ui5_button_compact_height: 1.625rem;
-	--_ui5_button_border_radius: 0.2rem;
+	--_ui5_button_border_radius: var(--sapButton_BorderCornerRadius);
 	--_ui5_button_base_padding: 0.6875rem;
 	--_ui5_button_compact_padding: 0.4375rem;
 	--_ui5_button_base_icon_only_padding: 0.5625rem;
