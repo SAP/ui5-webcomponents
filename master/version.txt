@@ -1,5 +1,5 @@
-commit 8869d2ec1b44441c05a9921f48f768615b173271
+commit 404c2bfeb31cbaea7431c668fbac00384813d23e
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Feb 19 14:02:52 2021 +0200
+Date:   Fri Feb 19 14:25:49 2021 +0200
 
-    refactor(framework): Simplify Device.js (#2821)
+    chore: fix JSDoc for several types (#2842)
