@@ -47,3 +47,12 @@ tr {
 :host([_no-data-displayed]) {
 	border-bottom: 1px solid var(--sapList_TableGroupHeaderBorderColor);
 }
+
+.ui5-table-select-all-column {
+	width: var(--ui5_table_multiselect_column_width);
+	text-align: center;
+}
+
+th {
+	background: var(--sapList_HeaderBackground);
+}

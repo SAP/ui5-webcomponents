@@ -172,6 +172,7 @@
   "--sapList_SelectionBorderColor",
   "--sapList_TableGroupHeaderBorderColor",
   "--sapList_TableGroupHeaderTextColor",
+  "--sapList_TextColor",
   "--sapNegativeColor",
   "--sapNegativeElementColor",
   "--sapNegativeTextColor",

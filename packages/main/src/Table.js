@@ -5,6 +5,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import TableMode from "@ui5/webcomponents-base/dist/types/TableMode.js";
 
 // Texts
 import { TABLE_LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
@@ -156,6 +157,17 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the mode of the component (None, SingleSelect, MultiSelect).
+		 * @type {TableMode}
+		 * @defaultvalue "None"
+		 * @public
+		 */
+		mode: {
+			type: TableMode,
+			defaultValue: TableMode.None,
+		},
+
 		_hiddenColumns: {
 			type: Object,
 			multiple: true,
@@ -217,6 +229,22 @@ const metadata = {
 		 * @since 1.0.0-rc.11
 		 */
 		"load-more": {},
+
+		/**
+		 * Fired when selection is changed by user interaction
+		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+		 *
+		 * @event sap.ui.webcomponents.main.Table#selection-change
+		 * @param {Array} selectedRows An array of the selected items.
+		 * @param {Array} previouslySelectedRows An array of the previously selected items.
+		 * @public
+		 */
+		"selection-change": {
+			detail: {
+				selectedRows: { type: Array },
+				previouslySelectedRows: { type: Array },
+			},
+		},
 	},
 };
 
@@ -294,6 +322,8 @@ class Table extends UI5Element {
 		this._handleResize = this.popinContent.bind(this);
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this.addEventListener("selection-requested", this._handleMultiSelect.bind(this));
+		this.addEventListener("row-click", this._handleSingleSelect.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -308,6 +338,7 @@ class Table extends UI5Element {
 
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
+			row.mode = this.mode;
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
@@ -359,6 +390,67 @@ class Table extends UI5Element {
 		this.fireEvent("load-more");
 	}
 
+	_handleSingleSelect(event) {
+		const row = this.getRowParent(event.target);
+		if (this.mode === "SingleSelect" && !row.selected) {
+			const previouslySelectedRows = this.rows.filter(item => item.selected);
+			this.rows.forEach(item => {
+				if (item.selected) {
+					item.selected = false;
+				}
+			});
+			row.selected = true;
+			this.fireEvent("selection-change", {
+				selectedRows: [row],
+				previouslySelectedRows,
+			});
+		}
+	}
+
+	_handleMultiSelect(event) {
+		const row = this.getRowParent(event.target);
+		const previouslySelectedRows = this.rows.filter(item => item.selected);
+
+		row.selected = !row.selected;
+
+		const selectedRows = this.rows.filter(item => item.selected);
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	_selectAll(event) {
+		const bAllSelected = event.target.checked;
+		const previouslySelectedRows = this.rows.filter(row => row.selected);
+
+		this.rows.forEach(row => {
+			row.selected = bAllSelected;
+		});
+
+		const selectedRows = bAllSelected ? this.rows : [];
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	getRowParent(child) {
+		const parent = child.parentElement;
+
+		if (child.hasAttribute("ui5-table-row")) {
+			return child;
+		}
+
+		if (parent && parent.hasAttribute("ui5-table-row")) {
+			return parent;
+		}
+
+		this.getRowParent(parent);
+	}
+
 	getColumnHeader() {
 		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
 	}
@@ -383,7 +475,9 @@ class Table extends UI5Element {
 		});
 
 		if (visibleColumnsIndexes.length) {
-			this.columns[visibleColumnsIndexes[0]].first = true;
+			if (!this.isMultiSelect) {
+				this.columns[visibleColumnsIndexes[0]].first = true;
+			}
 			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
 		}
 
@@ -427,6 +521,10 @@ class Table extends UI5Element {
 		}
 
 		return `${this._id}-showMore-text`;
+	}
+
+	get isMultiSelect() {
+		return this.mode === "MultiSelect";
 	}
 }
 
