@@ -1,9 +1,5 @@
-commit a5aafdef29ae8c161ff6a97ae50680f0c90dc65b
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 19 12:00:19 2021 +0200
+commit 8869d2ec1b44441c05a9921f48f768615b173271
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Feb 19 14:02:52 2021 +0200
 
-    fix(ui5-button): use base CSS param for border-radius (#2840)
-    
-    There is a standard CSS variable --sapButton_BorderCornerRadius meant to be used for the Button's border-radius. It is 0.25rem in Fiori3 and 0.375rem in HCB and HCW themes. In terms of metrics nothing changes, we use the same values, but now we allow customization via the ThemeDesigner as we apply standard CSS variable.
-    
-    FIXES: #2830
+    refactor(framework): Simplify Device.js (#2821)
