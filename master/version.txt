@@ -1,5 +1,13 @@
-commit 83a193a55f6634365e36cb713af0101ff2cf4e41
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 19 15:48:53 2021 +0200
+commit bd39b333cf1bd0daa3efc1579d5dbb9438bd8f90
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Fri Feb 19 23:37:32 2021 +0800
 
-    chore: comment failing tests (#2847)
+    Translation Delivery (#2843)
+    
+    * chore: translation delivery
+    
+    Change-Id: Ib3b5a58002084d35f1b5cb8a713302876e4a6fc4
+    
+    * chore: translation delivery
+    
+    Change-Id: I076017bb165ff4027035bf4d0dea6fa64de7c8ac
