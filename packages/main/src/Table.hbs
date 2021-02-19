@@ -7,12 +7,12 @@
 		<thead>
 			<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" tabindex="{{_columnHeader._tabIndex}}" style="height: 48px" @click="{{_onColumnHeaderClick}}">
 				{{#if isMultiSelect}}
-				<th class="ui5-table-select-all-column">
-					<ui5-checkbox 
-						@change="{{_selectAll}}"
-					>
-					</ui5-checkbox>
-				</th>
+					<th class="ui5-table-select-all-column">
+						<ui5-checkbox 
+							@change="{{_selectAll}}"
+						>
+						</ui5-checkbox>
+					</th>
 				{{/if}}
 
 				{{#each visibleColumns}}
@@ -23,6 +23,9 @@
 
 		<tbody>
 			{{#each rows}}
+			{{/if}}
+
+			{{#each visibleColumns}}
 				<slot name="{{this._individualSlot}}"></slot>
 			{{/each}}
 
