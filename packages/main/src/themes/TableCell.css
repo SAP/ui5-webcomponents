@@ -9,21 +9,21 @@
 }
 
 td {
-	padding: .5rem .25rem;
+	padding: inherit;
 	box-sizing: border-box;
 	word-break: break-word;
+	vertical-align: middle;
 }
 
-:host([first-in-row]) td,
 .ui5-table-popin-row td {
 	padding-left: 1rem;
 
 }
 
-:host([first-in-row]) td {
-	padding-left: 1rem;
-}
-
 :host([popined]) td {
 	padding-left: 0;
+}
+
+::slotted(*) {
+	color: inherit;
 }

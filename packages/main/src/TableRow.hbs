@@ -8,6 +8,17 @@
 	part="row"
 	role="row"
 >
+
+	{{#if isMultiSelect}}
+		<td class="ui5-table-multi-select-cell">
+			<ui5-checkbox
+				@change="{{_handleMultiSelection}}"
+				?checked="{{this.selected}}"
+			>
+			</ui5-checkbox>
+		</td>
+	{{/if}}
+
 	{{#if shouldPopin}}
 		{{#each visibleCells}}
 			<slot name="{{this._individualSlot}}"></slot>

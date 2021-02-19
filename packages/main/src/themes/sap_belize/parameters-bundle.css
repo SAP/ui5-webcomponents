@@ -25,7 +25,7 @@
 @import "../base/Select-parameters.css";
 @import "../base/Switch-parameters.css";
 @import "./TabContainer-parameters.css";
-@import "../base/Table-parameters.css";
+@import "./Table-parameters.css";
 @import "../base/TableRow-parameters.css";
 @import "../base/TableLoadMoreRow-parameters.css";
 @import "../base/TextArea-parameters.css";

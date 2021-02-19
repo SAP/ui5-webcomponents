@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import TableMode from "@ui5/webcomponents-base/dist/types/TableMode.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 
@@ -28,6 +29,26 @@ const metadata = {
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
+		/**
+		 * Defines the mode of the row (None, SingleSelect, MultiSelect).
+		 * @type {TableMode}
+		 * @defaultvalue "None"
+		 * @private
+		 */
+		mode: {
+			type: TableMode,
+			defaultValue: TableMode.None,
+		},
+		/**
+		 * Defines the row's selected state.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+		 */
+		selected: {
+			type: Boolean,
+		},
 		_columnsInfo: {
 			type: Object,
 			multiple: true,
@@ -43,6 +64,13 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		"row-click": {},
 		_focused: {},
+		/**
+		 * Fired on selection change of a row in MultiSelect mode.
+		 *
+		 * @event sap.ui.webcomponents.main.TableRow#selection-requested
+		 * @private
+		 */
+		"selection-requested": {},
 	},
 };
 
@@ -97,6 +125,10 @@ class TableRow extends UI5Element {
 		this.fireEvent("row-click", { row: this });
 	}
 
+	_handleMultiSelection() {
+		this.fireEvent("selection-requested", { row: this });
+	}
+
 	_getActiveElementTagName() {
 		return document.activeElement.localName.toLocaleLowerCase();
 	}
@@ -133,7 +165,6 @@ class TableRow extends UI5Element {
 
 			if (info.visible) {
 				this.visibleCells.push(cell);
-				cell.firstInRow = (index === 0);
 				cell.popined = false;
 			} else if (info.demandPopin) {
 				const popinHeaderClass = this.popinCells.length === 0 ? "popin-header" : "";
@@ -166,6 +197,10 @@ class TableRow extends UI5Element {
 			const cellText = this.getCellText(cell);
 			return `${columText} ${cellText}`;
 		}).join(" ");
+	}
+
+	get isMultiSelect() {
+		return this.mode === "MultiSelect";
 	}
 
 	getCellText(cell) {
