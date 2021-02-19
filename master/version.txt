@@ -1,13 +1,5 @@
-commit 4f4afc7a86e5eb07fc0a4b6d0d7d85c71deb5d7f
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Feb 18 20:11:04 2021 +0800
+commit 263fb8b8591ac2f704a40c5bf2945e8e4c5afb10
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Feb 19 08:21:43 2021 +0200
 
-    Translation Delivery (#2832)
-    
-    * chore: translation delivery
-    
-    Change-Id: I5118db57b3b0a316f2d273a72892b4f40e5649ee
-    
-    * Update messagebundle_en.properties
-    
-    Co-authored-by: ilhan orhan <ilhan.myumyun@sap.com>
+    chore: fix and improve JSDoc (#2834)
