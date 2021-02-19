@@ -279,8 +279,8 @@ const metadata = {
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
 		 * @event sap.ui.webcomponents.main.Table#selection-change
-		 * @param {Array} selectedRows An array of the selected items.
-		 * @param {Array} previouslySelectedRows An array of the previously selected items.
+		 * @param {Array} selectedRows An array of the selected rows.
+		 * @param {Array} previouslySelectedRows An array of the previously selected rows.
 		 * @public
 		 */
 		"selection-change": {
