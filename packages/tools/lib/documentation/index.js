@@ -10,8 +10,13 @@ const Handlebars = require('handlebars/dist/handlebars.min.js');
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
+const beautify = require("json-beautify");
 
-const api = JSON.parse(fs.readFileSync(path.normalize(process.argv[2])));
+
+const apiJSONPath = path.normalize(process.argv[2]);
+const api = JSON.parse(fs.readFileSync(apiJSONPath));
+
+fs.writeFileSync(apiJSONPath, beautify(api, null, 2, 100));
 
 const entries = api['symbols'];
 const compiledHandlebars = Handlebars.compile(template);

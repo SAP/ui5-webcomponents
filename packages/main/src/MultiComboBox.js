@@ -64,7 +64,7 @@ const metadata = {
 		 * <br> <br>
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot items
 		 * @public
 		 */
 		"default": {

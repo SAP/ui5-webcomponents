@@ -107,7 +107,7 @@ const metadata = {
 		 * <b>Note:</b> Use <code>ui5-tree-item</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot items
 		 * @public
 		 */
 		"default": {

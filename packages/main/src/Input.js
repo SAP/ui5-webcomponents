@@ -87,7 +87,7 @@ const metadata = {
 		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot suggestionItems
 		 * @public
 		 */
 		"default": {

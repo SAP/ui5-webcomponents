@@ -49,7 +49,7 @@ const metadata = {
 		 *
 		 * @type {HTMLElement[]}
 		 * @public
-		 * @slot
+		 * @slot items
 		 */
 		"default": {
 			propertyName: "items",

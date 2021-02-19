@@ -2060,9 +2060,11 @@ exports.defineTags = function(dictionary) {
 	});
 
 	dictionary.defineTag('slot', {
-		mustNotHaveValue: true,
 		onTagged: function(doclet, tag) {
 			doclet.slot = true;
+			if (tag.value) {
+				doclet.propertyName = tag.value;
+			}
 		}
 	});
 

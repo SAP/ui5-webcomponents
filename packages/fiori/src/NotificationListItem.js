@@ -97,7 +97,7 @@ const metadata = {
 		/**
 		 * Defines the elements, dipalyed in the footer of the of the <code>ui5-li-notification</code>.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot footnotes
 		 * @public
 		 */
 		footnotes: {
@@ -111,10 +111,10 @@ const metadata = {
 		 * usually a description of the notification.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
-		 * @slot
+		 * @slot description
 		 * @public
 		 */
 		"default": {

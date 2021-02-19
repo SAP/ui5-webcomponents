@@ -31,7 +31,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-togglebutton</code> for the intended design.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot buttons
 		 * @public
 		 */
 		"default": {

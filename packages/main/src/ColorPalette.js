@@ -38,7 +38,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-color-palette-item</code> items.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot colors
 		 * @public
 		 */
 		"default": {
