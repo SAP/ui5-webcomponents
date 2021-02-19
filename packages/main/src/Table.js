@@ -35,7 +35,7 @@ const metadata = {
 		 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot rows
 		 * @public
 		 */
 		"default": {

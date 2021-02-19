@@ -93,7 +93,7 @@ const metadata = {
 		 * Defines the content HTML Element.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot content
 		 * @public
 		 */
 		"default": {

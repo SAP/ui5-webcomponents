@@ -99,7 +99,7 @@ const metadata = {
 		 * Defines the items of this <code>ui5-tree-item</code>.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot items
 		 * @public
 		 */
 		"default": {

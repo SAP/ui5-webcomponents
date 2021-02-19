@@ -84,7 +84,7 @@ const metadata = {
 		 *
 		 * @type {HTMLElement[]}
 		 * @public
-		 * @slot
+		 * @slot steps
 		 */
 		"default": {
 			propertyName: "steps",

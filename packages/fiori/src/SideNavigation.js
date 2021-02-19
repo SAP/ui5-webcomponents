@@ -43,7 +43,7 @@ const metadata = {
 		 * inside the items.
 		 *
 		 * @public
-		 * @slot
+		 * @slot items
 		 */
 		"default": {
 			propertyName: "items",

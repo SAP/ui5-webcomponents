@@ -106,7 +106,7 @@ const metadata = {
 		 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
 		 * as the built-in overflow action has "Circle" shape.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot items
 		 * @public
 		 */
 		"default": {

@@ -29,7 +29,7 @@ const metadata = {
 		 * Defines the items of the <code>ui5-product-switch</code>.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot items
 		 * @public
 		 */
 		"default": {

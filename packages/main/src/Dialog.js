@@ -15,7 +15,7 @@ import dialogCSS from "./generated/themes/Dialog.css.js";
  */
 const metadata = {
 	tag: "ui5-dialog",
-	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+	slots: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header HTML Element.
 		 *

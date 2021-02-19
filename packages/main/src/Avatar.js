@@ -100,7 +100,7 @@ const metadata = {
 		 * @public
 		 */
 		shape: {
-			type: String,
+			type: AvatarShape,
 			defaultValue: AvatarShape.Circle,
 		},
 
@@ -120,7 +120,7 @@ const metadata = {
 		 * @public
 		 */
 		size: {
-			type: String,
+			type: AvatarSize,
 			defaultValue: AvatarSize.S,
 		},
 
@@ -145,7 +145,7 @@ const metadata = {
 		 * @public
 		 */
 		imageFitType: {
-			type: String,
+			type: AvatarFitType,
 			defaultValue: AvatarFitType.Cover,
 		},
 
@@ -171,7 +171,7 @@ const metadata = {
 		 * @public
 		 */
 		backgroundColor: {
-			type: String,
+			type: AvatarBackgroundColor,
 			defaultValue: AvatarBackgroundColor.Accent6,
 		},
 

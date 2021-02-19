@@ -8,14 +8,14 @@ const CarouselArrowsPlacementTypes = {
 	/**
 	 * Carousel arrows are placed on the sides of the current Carousel page.
 	 * @public
-	 * @type {Default}
+	 * @type {Content}
 	 */
 	Content: "Content",
 
 	/**
 	 * Carousel arrows are placed on the sides of the page indicator of the Carousel.
 	 * @public
-	 * @type {Positive}
+	 * @type {Navigation}
 	 */
 	Navigation: "Navigation",
 };
