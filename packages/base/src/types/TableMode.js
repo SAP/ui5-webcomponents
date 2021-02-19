@@ -13,14 +13,14 @@ const TableModes = {
 	None: "None",
 
 	/**
-	 * Single selection mode (only one list item can be selected).
+	 * Single selection mode (only one table row can be selected).
 	 * @public
 	 * @type {SingleSelect}
 	 */
 	SingleSelect: "SingleSelect",
 
 	/**
-	 * Multi selection mode (more than one list item can be selected).
+	 * Multi selection mode (more than one table row can be selected).
 	 * @public
 	 * @type {MultiSelect}
 	 */
@@ -29,7 +29,7 @@ const TableModes = {
 
 /**
  * @class
- * Defines the type of <code>ui5-list</code>.
+ * Defines the type of <code>ui5-table</code>.
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.types.TableMode
