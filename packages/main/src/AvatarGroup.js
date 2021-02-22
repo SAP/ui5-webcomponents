@@ -59,7 +59,7 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Group</code></li>
 		 * <li><code>Individual</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarGroupType}
 		 * @defaultValue "Group"
 		 * @public
@@ -79,7 +79,7 @@ const metadata = {
 		 * <li><code>M</code></li>
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarSize}
 		 * @defaultValue "S"
 		 * @public

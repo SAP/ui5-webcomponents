@@ -30,7 +30,7 @@ const metadata = {
 		 * <li><code>Solid</code></li>
 		 * <li><code>Standard</code></li> (default)
 		 * <li><code>Transparent</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {PageBackgroundDesign}
 		 * @defaultvalue "Standard"
 		 * @public
