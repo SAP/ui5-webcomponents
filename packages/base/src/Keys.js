@@ -127,6 +127,14 @@ const isUpCtrl = event => (event.key ? (event.key === "ArrowUp" || event.key ===
 
 const isDownCtrl = event => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, false, false);
 
+const isUpShift = event => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, false, false, true);
+
+const isDownShift = event => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, false, false, true);
+
+const isUpShiftCtrl = event => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, true, false, true);
+
+const isDownShiftCtrl = event => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, false, true);
+
 const isHome = event => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && !hasModifierKeys(event);
 
 const isEnd = event => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && !hasModifierKeys(event);
@@ -198,6 +206,10 @@ export {
 	isRightCtrl,
 	isUpCtrl,
 	isDownCtrl,
+	isUpShift,
+	isDownShift,
+	isUpShiftCtrl,
+	isDownShiftCtrl,
 	isHome,
 	isEnd,
 	isPlus,

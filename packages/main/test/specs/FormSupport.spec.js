@@ -21,7 +21,7 @@ describe("Form support", () => {
 		submitButton.click();
 
 		const formWasSubmitted = browser.execute(() => {
-			const expectedFormData = "?input=ok&ta=ok&dp=Apr+10%2C+2019&cb=on&radio=b";
+			const expectedFormData = "?input=ok&ta=ok&dp=Apr+10%2C+2019&cb=on&radio=b&si=5";
 			return location.href.endsWith(expectedFormData);
 		});
 		assert.ok(formWasSubmitted, "For was submitted and URL changed");
