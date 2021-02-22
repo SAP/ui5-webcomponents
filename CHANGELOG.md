@@ -1,3 +1,12 @@
+
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [0.31.0](https://github.com/SAP/ui5-webcomponents/releases/tag/v0.31.0) (2021-02-22)
+
+The release includes all the commits from [RC12](https://github.com/SAP/ui5-webcomponents/releases/tag/v1.0.0-rc.12)
 # Change Log
 
 All notable changes to this project will be documented in this file.
