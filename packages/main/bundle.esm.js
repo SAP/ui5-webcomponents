@@ -38,6 +38,7 @@ import "@ui5/webcomponents-icons-tnt/dist/Assets.js";
 
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
+import "./dist/features/ColorPaletteMoreColors.js";
 
 import Avatar from "./dist/Avatar.js";
 import AvatarGroup from "./dist/AvatarGroup.js";
