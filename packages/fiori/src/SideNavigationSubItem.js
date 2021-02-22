@@ -44,7 +44,7 @@ const metadata = {
 		},
 	},
 
-	events: {
+	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
 		/**
 		 * @public
 		 * @event

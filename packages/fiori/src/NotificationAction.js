@@ -61,9 +61,9 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: {
+	slots: /** @lends  sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
 	},
-	events: {
+	events: /** @lends  sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
 		click: {},
 	},
 };
