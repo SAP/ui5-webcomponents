@@ -70,7 +70,7 @@ const metadata = {
 		},
 	},
 
-	events: {
+	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
 		/**
 		 * @public
 		 * @event

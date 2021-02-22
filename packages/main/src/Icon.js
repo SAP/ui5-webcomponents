@@ -123,7 +123,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
 		/**
 		 * Fired on mouseup, space and enter if icon is interactive
 		 * @private
