@@ -67,6 +67,7 @@ import ResponsivePopover from "./dist/ResponsivePopover.js";
 import SegmentedButton from "./dist/SegmentedButton.js";
 import Select from "./dist/Select.js";
 import Slider from "./dist/Slider.js";
+import StepInput from "./dist/StepInput.js";
 import RangeSlider from "./dist/RangeSlider.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";

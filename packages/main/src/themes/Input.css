@@ -62,6 +62,10 @@
 	outline: none;
 	font-size: inherit;
 	font-family: inherit;
+	line-height: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+	text-align: inherit;
 }
 
 [inner-input][inner-input-with-icon] {
@@ -83,6 +87,7 @@
 [inner-input]::-webkit-input-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 0.125rem;
 }
 
 :host([disabled]) [inner-input]::-moz-placeholder {
@@ -94,6 +99,7 @@
 [inner-input]::-moz-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 0.125rem;
 }
 
 :host([disabled]) [inner-input]:-ms-input-placeholder {
@@ -105,6 +111,7 @@
 [inner-input]:-ms-input-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 0.125rem;
 }
 
 .ui5-input-content {
@@ -197,4 +204,11 @@
 */
 ::slotted([ui5-icon][slot="icon"]) {
 	padding: var(--_ui5_input_icon_padding);
+}
+
+/* Chrome, Safari, Edge, Opera */
+[inner-input]::-webkit-outer-spin-button,
+[inner-input]::-webkit-inner-spin-button {
+  -webkit-appearance: inherit;
+  margin: inherit;
 }

@@ -33,7 +33,9 @@
 			@focusin={{innerFocusIn}}
 			data-sap-no-tab-ref
 			data-sap-focus-ref
-			step="{{step}}"
+			step="{{nativeInputAttributes.step}}"
+			min="{{nativeInputAttributes.min}}"
+			max="{{nativeInputAttributes.max}}"
 		/>
 		{{#if icon.length}}
 			<div class="ui5-input-icon-root">
