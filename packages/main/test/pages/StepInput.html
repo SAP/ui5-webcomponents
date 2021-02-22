@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>StepInput test page</title>
+
+	<script>
+		delete Document.prototype.adoptedStyleSheets;
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"rtl": false,
+			"formatSettings": {
+                "firstDayOfWeek": 0
+            }
+		}
+	</script>
+
+	<style>
+		.sapUiTheme-sap_fiori3 body {
+			background: #f7f7f7;
+		}
+
+		h3 {
+			-webkit-touch-callout: none; /* iOS Safari */
+			-webkit-user-select: none; /* Safari */
+			-khtml-user-select: none; /* Konqueror HTML */
+			-moz-user-select: none; /* Old versions of Firefox */
+			-ms-user-select: none; /* Internet Explorer/Edge */
+			user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+		}
+	</style>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+
+	<h3> StepInput</h3>
+	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
+
+	<div>
+		<h3>StepInput in Cozy</h3>
+		<ui5-step-input id="stepInputCozy"
+			placeholder="Enter number"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div class="sapUiSizeCompact">
+		<h3>StepInput in Compact</h3>
+		<ui5-step-input id="stepInputCompact"
+			placeholder="Enter number"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput in with min=0, max=10 and step=1</h3>
+		<ui5-step-input id="stepInputMinMax"
+			placeholder="Enter number"
+			min="0"
+			max="10"
+			step="1"
+			style="text-align: right; width: 250px"
+		>
+			<div slot="valueStateMessage" style="display: block">Wrong Value</div>
+		</ui5-step-input>
+	</div>
+
+	<div>
+		<h3>StepInput in with min=0, max=10, step=0.05 and valuePrecision=2</h3>
+		<ui5-step-input id="stepInputPrecision"
+			placeholder="Enter number"
+			min="0"
+			max="10"
+			step="0.05"
+			value-precision="2"
+			style="text-align: center; width: 250px"
+			>
+			<div slot="valueStateMessage" style="display: block">Wrong Value</div>
+		</ui5-step-input>
+	</div>
+
+	<div>
+		<h3>Disabled StepInput</h3>
+		<ui5-step-input id="stepInputDisabled"
+			placeholder="Enter number"
+			style="text-align: right; width: 250px"
+			disabled
+		/>
+	</div>
+
+	<div>
+		<h3>Readonly StepInput</h3>
+		<ui5-step-input id="stepInputReadOnly"
+			placeholder="Enter number"
+			style="text-align: right; width: 250px"
+			readonly
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput with valueState=None</h3>
+		<ui5-step-input id="stepInputNone"
+			placeholder="Enter number"
+			value-state="None"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput with valueState=Success</h3>
+		<ui5-step-input id="stepInputSuccess"
+			placeholder="Enter number"
+			value-state="Success"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput with valueState=Information</h3>
+		<ui5-step-input id="stepInputInformation"
+			placeholder="Enter number"
+			value-state="Information"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput with valueState=Warning</h3>
+		<ui5-step-input id="stepInputWarning"
+			placeholder="Enter number"
+			value-state="Warning"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<div>
+		<h3>StepInput with valueState=Error</h3>
+		<ui5-step-input id="stepInputError"
+			placeholder="Enter number"
+			value-state="Error"
+			style="text-align: right; width: 250px"
+		/>
+	</div>
+
+	<h3> 'change' event result</h3>
+	<ui5-input id="changeResult"></ui5-input>
+
+	<script>
+		var labelChange = document.getElementById('myLabelChange');
+		var siCozy = document.getElementById('stepInputCozy');
+		var siCompact = document.getElementById('stepInputCompact');
+		var siMinMax = document.getElementById('stepInputMinMax');
+		var siPrecision = document.getElementById('stepInputPrecision');
+		var changeResult = document.getElementById('changeResult');
+		var changeCount = 0;
+		var displayChange = function (event) {
+			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.detail.value;
+			changeCount++;
+			changeResult.value = changeCount;
+		}
+
+		siCozy.addEventListener('ui5-change', displayChange);
+		siCompact.addEventListener('ui5-change', displayChange);
+		siMinMax.addEventListener('ui5-change', displayChange);
+		siPrecision.addEventListener('ui5-change', displayChange);
+	</script>
+
+</body>
+</html>

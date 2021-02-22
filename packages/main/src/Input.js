@@ -332,6 +332,10 @@ const metadata = {
 			type: Object,
 		},
 
+		_nativeInputAttributes: {
+			type: Object,
+		},
+
 		_inputWidth: {
 			type: Integer,
 		},
@@ -1073,6 +1077,14 @@ class Input extends UI5Element {
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
 				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this),
 			},
+		};
+	}
+
+	get nativeInputAttributes() {
+		return {
+			"min": this.type === InputType.Number ? this._nativeInputAttributes.min : undefined,
+			"max": this.type === InputType.Number ? this._nativeInputAttributes.max : undefined,
+			"step": this.type === InputType.Number ? (this._nativeInputAttributes.step || "any") : undefined,
 		};
 	}
 
