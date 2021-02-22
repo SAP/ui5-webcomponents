@@ -1,5 +1,5 @@
-commit 98024d58b871dc7bfccb83c5ecf7d7b9184d9834
+commit cdc734d855d4fdda30f3a290f32d2a58f3075e53
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Feb 22 11:47:37 2021 +0200
+Date:   Mon Feb 22 13:08:48 2021 +0200
 
-    chore: fix documentation ul tags (#2850)
+    chore: fix JSDoc prototype entry for properties/slots/events (#2852)
