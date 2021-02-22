@@ -31,7 +31,7 @@ const metadata = {
 		 * <br>
 		 * For further responsive design options, see <code>demandPopin</code> property.
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultvalue Infinity
 		 * @public
 		 */
