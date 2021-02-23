@@ -11,6 +11,7 @@ import {
 	isPageUpShift,
 	isPageDownShift,
 	isEscape,
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -563,6 +564,11 @@ class StepInput extends UI5Element {
 	_onkeydown(event) {
 		let preventDefault = true;
 		if (this.disabled || this.readonly) {
+			return;
+		}
+
+		if (isEnter(event)) {
+			this._onInputChange();
 			return;
 		}
 
