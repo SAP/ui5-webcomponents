@@ -1,5 +1,5 @@
 /**
- * Interface for components that may be slotted for components wherever an avatar is expected such as <code>ui5-avatar-group</code>
+ * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
  *
  * @name sap.ui.webcomponents.main.IAvatar
  * @interface
