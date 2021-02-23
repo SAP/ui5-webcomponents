@@ -42,6 +42,7 @@ const metadata = {
 		 * for the top-level items, and the <code>ui5-side-navigation-sub-item</code> component for second-level items, nested
 		 * inside the items.
 		 *
+		 * @type {HTMLElement[]}
 		 * @public
 		 * @slot items
 		 */
@@ -57,6 +58,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The header is displayed when the component is expanded - the property <code>collapsed</code> is false;
 		 *
+		 * @type {HTMLElement[]}
 		 * @public
 		 * @since 1.0.0-rc.11
 		 * @slot
@@ -71,6 +73,7 @@ const metadata = {
 		 *
 		 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 		 *
+		 * @type {HTMLElement[]}
 		 * @public
 		 * @slot
 		 */
