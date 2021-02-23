@@ -81,3 +81,7 @@
 :host ::slotted(ui5-table-cell) {
 	padding: .5rem .25rem;
 }
+
+:host ::slotted(ui5-table-cell:first-child) {
+	padding-left: 1rem;
+}

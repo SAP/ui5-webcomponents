@@ -97,6 +97,112 @@
 		</xmp></pre>
 	</section>
 
+	<section class="table-example">
+		<h3>Table in SingleSelect mode</h3>
+		<div class="snippet flex-column">
+			<ui5-table class="demo-table" id="singleSelectTbl" mode="SingleSelect">
+				<!-- Columns -->
+				<ui5-table-column slot="columns">
+					<span>Product</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Supplier</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Dimensions</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Weight</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns" >
+					<span>Price</span>
+				</ui5-table-column>
+			</ui5-table>
+		</div>
+	
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-table class="demo-table" id="singleSelectTable">
+	<!-- Columns -->
+	<ui5-table-column slot="columns">
+		<span>Product</span>
+	</ui5-table-column>
+
+	<ui5-table-column slot="columns">
+		<span>Supplier</span>
+	</ui5-table-column>
+
+	<ui5-table-column slot="columns">
+		<span>Dimensions</span>
+	</ui5-table-column>
+
+	<ui5-table-column slot="columns">
+		<span>Weight</span>
+	</ui5-table-column>
+
+	<ui5-table-column slot="columns">
+		<span>Price</span>
+	</ui5-table-column>		
+</ui5-table>
+	</xmp></pre>
+</section>
+
+	<section class="table-example">
+		<h3>Table in MultiSelect mode</h3>
+		<div class="snippet flex-column">
+			<ui5-table class="demo-table" id="multiSelectTbl" mode="MultiSelect">
+				<!-- Columns -->
+				<ui5-table-column slot="columns">
+					<span>Product</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Supplier</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Dimensions</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Weight</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns" >
+					<span>Price</span>
+				</ui5-table-column>
+			</ui5-table>
+		</div>
+	
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-table class="demo-table" id="multiSelectTable">
+	<!-- Columns -->
+	<ui5-table-column slot="columns">
+		<span>Product</span>
+	</ui5-table-column>
+
+	<ui5-table-column slot="columns">
+		<span>Supplier</span>
+	</ui5-table-column>
+
+	<ui5-table-column slot="columns">
+		<span>Dimensions</span>
+	</ui5-table-column>
+
+	<ui5-table-column slot="columns">
+		<span>Weight</span>
+	</ui5-table-column>
+
+	<ui5-table-column slot="columns">
+		<span>Price</span>
+	</ui5-table-column>		
+</ui5-table>
+	</xmp></pre>
+</section>
+
 	<section>
 		<h3>Table with No Data</h3>
 		<div class="snippet flex-column">
@@ -430,6 +536,8 @@
 					+ '</ui5-table-row>';
 	});
 	document.getElementById("tbl").insertAdjacentHTML('beforeend', html);
+	document.getElementById("singleSelectTbl").insertAdjacentHTML('beforeend', html);
+	document.getElementById("multiSelectTbl").insertAdjacentHTML('beforeend', html);
 
 
 	document.getElementById("toggleSticky").addEventListener("click", function(event) {

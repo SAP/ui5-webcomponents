@@ -44,7 +44,8 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @private
+		 * @since 1.0.0-rc.13
+		 * @public
 		 */
 		selected: {
 			type: Boolean,
@@ -188,7 +189,11 @@ class TableRow extends UI5Element {
 	}
 
 	get visibleCellsCount() {
-		return this.visibleCells.length;
+		if (this.isMultiSelect) {
+			return this.visibleCells.length + 1;
+		} else {
+			return this.visibleCells.length;
+		}
 	}
 
 	get ariaLabelText() {

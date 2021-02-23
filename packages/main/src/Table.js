@@ -195,6 +195,7 @@ const metadata = {
 		 * Defines the mode of the component (None, SingleSelect, MultiSelect).
 		 * @type {TableMode}
 		 * @defaultvalue "None"
+		 * @since 1.0.0-rc.13
 		 * @public
 		 */
 		mode: {
@@ -496,10 +497,17 @@ class Table extends UI5Element {
 	_handleMultiSelect(event) {
 		const row = this.getRowParent(event.target);
 		const previouslySelectedRows = this.rows.filter(item => item.selected);
+		const selectAllCheckbox = this.getDomRef().querySelector(".ui5-table-select-all-checkbox");
 
 		row.selected = !row.selected;
 
 		const selectedRows = this.rows.filter(item => item.selected);
+
+		if (selectedRows.length === this.rows.length) {
+			selectAllCheckbox.checked = true;
+		} else {
+			selectAllCheckbox.checked = false;
+		}
 
 		this.fireEvent("selection-change", {
 			selectedRows,

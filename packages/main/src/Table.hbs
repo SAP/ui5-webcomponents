@@ -8,7 +8,7 @@
 			<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" tabindex="{{_columnHeader._tabIndex}}" style="height: 48px" @click="{{_onColumnHeaderClick}}">
 				{{#if isMultiSelect}}
 					<th class="ui5-table-select-all-column">
-						<ui5-checkbox 
+						<ui5-checkbox class="ui5-table-select-all-checkbox"
 							@change="{{_selectAll}}"
 						>
 						</ui5-checkbox>
