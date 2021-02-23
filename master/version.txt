@@ -1,5 +1,5 @@
-commit 9f8786d5a051a53f9819f927e4637ec64426c49e
+commit b0db3f0cd7c79b5ebdb79c85c2d96cd438034df9
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Feb 23 14:52:12 2021 +0200
+Date:   Tue Feb 23 16:02:45 2021 +0200
 
-    chore: add @type to all public entities (#2859)
+    chore: Introduce the notion of interfaces for the purpose of JSDoc (#2861)
