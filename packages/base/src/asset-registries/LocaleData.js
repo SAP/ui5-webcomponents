@@ -18,7 +18,7 @@ const M_ISO639_OLD_TO_NEW = {
 
 const _showAssetsWarningOnce = localeId => {
 	if (!warningShown) {
-		console.warn(`[LocaleData] Supported locale "${localeId}" not configured, add import for "<packagename>/dist/Assets.js";`); /* eslint-disable-line */
+		console.warn(`[LocaleData] Supported locale "${localeId}" not configured, import the "Assets.js" module from the webcomponents package you are using.`); /* eslint-disable-line */
 		warningShown = true;
 	}
 };
