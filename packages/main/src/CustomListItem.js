@@ -38,6 +38,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.CustomListItem
  * @extends ListItem
  * @tagname ui5-li-custom
+ * @implements sap.ui.webcomponents.main.IListItem
  * @public
  */
 class CustomListItem extends ListItem {

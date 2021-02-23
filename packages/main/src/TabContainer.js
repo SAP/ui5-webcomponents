@@ -47,7 +47,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.ITab[]}
 		 * @public
 		 * @slot items
 		 */
@@ -64,7 +64,7 @@ const metadata = {
 		/**
 		 * Defines the button which will open the overflow menu. If nothing is provided to this slot, the default button will be used.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IButton}
 		 * @public
 		 * @slot
 		 * @since 1.0.0-rc.9

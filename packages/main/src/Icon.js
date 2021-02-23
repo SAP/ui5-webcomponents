@@ -164,6 +164,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Icon
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-icon
+ * @implements sap.ui.webcomponents.main.IIcon
  * @public
  */
 class Icon extends UI5Element {

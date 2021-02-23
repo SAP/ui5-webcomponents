@@ -31,6 +31,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.CalendarDate
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-date
+ * @implements sap.ui.webcomponents.main.ICalendarDate
  * @public
  */
 class CalendarDate extends UI5Element {

@@ -82,7 +82,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use the available <code>ui5-wizard-step</code> component.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.fiori.IWizardStep[]}
 		 * @public
 		 * @slot steps
 		 */

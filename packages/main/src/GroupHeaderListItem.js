@@ -44,6 +44,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.GroupHeaderListItem
  * @extends ListItemBase
  * @tagname ui5-li-groupheader
+ * @implements sap.ui.webcomponents.main.IListItem
  * @public
  */
 class GroupHeaderListItem extends ListItemBase {
