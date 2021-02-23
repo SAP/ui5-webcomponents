@@ -7,12 +7,20 @@ const localeDataMap = new Map();
 const loaders = new Map();
 const cldrPromises = new Map();
 const reportedErrors = new Set();
+let warningShown = false;
 
 const M_ISO639_OLD_TO_NEW = {
 	"iw": "he",
 	"ji": "yi",
 	"in": "id",
 	"sh": "sr",
+};
+
+const _showAssetsWarningOnce = localeId => {
+	if (!warningShown) {
+		console.warn(`[LocaleData] Supported locale "${localeId}" not configured, import the "Assets.js" module from the webcomponents package you are using.`); /* eslint-disable-line */
+		warningShown = true;
+	}
 };
 
 const calcLocale = (language, region, script) => {
@@ -33,16 +41,32 @@ const calcLocale = (language, region, script) => {
 
 	// try language + region
 	let localeId = `${language}_${region}`;
-	if (!SUPPORTED_LOCALES.includes(localeId)) {
-		// fallback to language only
-		localeId = language;
-	}
-	if (!SUPPORTED_LOCALES.includes(localeId)) {
-		// fallback to english
-		localeId = DEFAULT_LOCALE;
+	if (SUPPORTED_LOCALES.includes(localeId)) {
+		if (loaders.has(localeId)) {
+			// supported and has loader
+			return localeId;
+		}
+
+		// supported, no loader - fallback to default and warn
+		_showAssetsWarningOnce(localeId);
+		return DEFAULT_LOCALE;
 	}
 
-	return localeId;
+	// not supported, try language only
+	localeId = language;
+	if (SUPPORTED_LOCALES.includes(localeId)) {
+		if (loaders.has(localeId)) {
+			// supported and has loader
+			return localeId;
+		}
+
+		// supported, no loader - fallback to default and warn
+		_showAssetsWarningOnce(localeId);
+		return DEFAULT_LOCALE;
+	}
+
+	// not supported - fallback to default locale
+	return DEFAULT_LOCALE;
 };
 
 // internal set data
@@ -52,6 +76,11 @@ const setLocaleData = (localeId, content) => {
 
 // external getSync
 const getLocaleData = localeId => {
+	// if there is no loader, the default fallback was fetched and a warning was given - use default locale instead
+	if (!loaders.has(localeId)) {
+		localeId = DEFAULT_LOCALE;
+	}
+
 	const content = localeDataMap.get(localeId);
 	if (!content) {
 		throw new Error(`CLDR data for locale ${localeId} is not loaded!`);
