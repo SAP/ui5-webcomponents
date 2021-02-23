@@ -1,5 +1,7 @@
-commit 9558bba15dd25d3023d3eb6667c39bd932443ba0
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Feb 22 16:22:22 2021 +0200
+commit 19392ff6d5438912e7af7ec6005cb0d4ce80d638
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Tue Feb 23 13:17:53 2021 +0200
 
-    chore: fix several property types (#2854)
+    feat(ui5-tabcontainer): support responsive paddings (#2775)
+    
+    Fixes: #2539
