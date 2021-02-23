@@ -228,7 +228,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get showMoreColors() {
-		return this.moreColors && this.moreColorsFeature
+		return this.moreColors && this.moreColorsFeature;
 	}
 
 	async _getDialog() {
