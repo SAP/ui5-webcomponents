@@ -54,9 +54,10 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
 	},
-	events: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {},
+	events: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
+	},
 };
 
 /**

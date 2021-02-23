@@ -124,9 +124,9 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: {
+	slots: /** @lends  sap.ui.webcomponents.main.SuggestionItem.prototype */ {
 	},
-	events: {
+	events: /** @lends  sap.ui.webcomponents.main.SuggestionItem.prototype */ {
 	},
 };
 

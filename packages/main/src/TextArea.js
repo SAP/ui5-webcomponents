@@ -128,7 +128,7 @@ const metadata = {
 		 * <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li>
 		 * </ul>
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -140,7 +140,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of characters that the <code>value</code> can have.
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultValue null
 		 * @public
 		 */
@@ -181,7 +181,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of lines that the Web Component can grow.
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */

@@ -141,7 +141,7 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Standard</code></li>
 		 * <li><code>Inline</code></li>
-		 * <ul>
+		 * </ul>
 		 *
 		 * @type {TabLayout}
 		 * @defaultvalue "Standard"
@@ -188,7 +188,7 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.main.TabContainer#tab-select
 		 * @param {HTMLElement} tab The selected <code>tab</code>.
-		 * @param {Number} tabIndex The selected <code>tab</code> index.
+		 * @param {Integer} tabIndex The selected <code>tab</code> index.
 		 * @public
 		 */
 		"tab-select": {
@@ -223,7 +223,7 @@ const metadata = {
  * Example: <code><ui5-tab stable-dom-ref="in-stock"></ui5-tab></code></li>
  * </ul>
  *
- * <h3>ES6 import</h3>
+ * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/TabContainer";</code>
  * <br>
