@@ -1,7 +1,5 @@
-commit 19392ff6d5438912e7af7ec6005cb0d4ce80d638
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Tue Feb 23 13:17:53 2021 +0200
+commit 9f8786d5a051a53f9819f927e4637ec64426c49e
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Feb 23 14:52:12 2021 +0200
 
-    feat(ui5-tabcontainer): support responsive paddings (#2775)
-    
-    Fixes: #2539
+    chore: add @type to all public entities (#2859)
