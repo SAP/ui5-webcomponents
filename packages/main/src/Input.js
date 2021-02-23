@@ -86,7 +86,7 @@ const metadata = {
 		 * <br>
 		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
 		 * @slot suggestionItems
 		 * @public
 		 */

@@ -62,6 +62,15 @@ const IIcon = "sap.ui.webcomponents.main.IIcon";
 const IInput = "sap.ui.webcomponents.main.IInput";
 
 /**
+ * Interface for components that represent a suggestion item, usable in <code>ui5-input</code>
+ *
+ * @name sap.ui.webcomponents.main.IInputSuggestionItem
+ * @interface
+ * @public
+ */
+const IInputSuggestionItem = "sap.ui.webcomponents.main.IInputSuggestionItem";
+
+/**
  * Interface for components that may be slotted inside a <code>ui5-list</code> as items
  *
  * @name sap.ui.webcomponents.main.IListItem
@@ -150,6 +159,7 @@ export {
 	IComboBoxItem,
 	IIcon,
 	IInput,
+	IInputSuggestionItem,
 	IListItem,
 	IMultiComboBoxItem,
 	ISelectOption,
