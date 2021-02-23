@@ -101,6 +101,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.TableColumn
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-column
+ * @implements sap.ui.webcomponents.main.ITableColumn
  * @public
  */
 class TableColumn extends UI5Element {

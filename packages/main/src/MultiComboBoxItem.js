@@ -35,6 +35,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.MultiComboBoxItem
  * @extends ComboBoxItem
  * @tagname ui5-mcb-item
+ * @implements sap.ui.webcomponents.main.IMultiComboBoxItem
  * @public
  */
 class MultiComboBoxItem extends ComboBoxItem {

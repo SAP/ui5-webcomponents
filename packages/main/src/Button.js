@@ -280,6 +280,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Button
  * @extends UI5Element
  * @tagname ui5-button
+ * @implements sap.ui.webcomponents.main.IButton
  * @public
  */
 class Button extends UI5Element {

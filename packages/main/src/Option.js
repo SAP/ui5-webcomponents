@@ -96,6 +96,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Option
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-option
+ * @implements sap.ui.webcomponents.main.ISelectOption
  * @public
  */
 class Option extends UI5Element {

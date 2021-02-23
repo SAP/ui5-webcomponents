@@ -74,7 +74,7 @@ const metadata = {
 		 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
 		 * Accepts <code>ui5-icon</code>
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
 		 * @public
 		 * @since 1.0.0-rc.9
@@ -127,6 +127,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-token
  * @since 1.0.0-rc.9
+ * @implements sap.ui.webcomponents.main.IToken
  * @public
  */
 class Token extends UI5Element {

@@ -236,6 +236,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-avatar
  * @since 1.0.0-rc.6
+ * @implements sap.ui.webcomponents.main.IAvatar
  * @public
  */
 class Avatar extends UI5Element {

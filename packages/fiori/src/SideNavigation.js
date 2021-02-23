@@ -44,6 +44,7 @@ const metadata = {
 		 *
 		 * @type {HTMLElement[]}
 		 * @public
+		 * @type {sap.ui.webcomponents.fiori.ISideNavigationItem[]}
 		 * @slot items
 		 */
 		"default": {
@@ -60,6 +61,7 @@ const metadata = {
 		 *
 		 * @type {HTMLElement[]}
 		 * @public
+		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.11
 		 * @slot
 		 */
@@ -75,6 +77,7 @@ const metadata = {
 		 *
 		 * @type {HTMLElement[]}
 		 * @public
+		 * @type {sap.ui.webcomponents.fiori.ISideNavigationItem[]}
 		 * @slot
 		 */
 		fixedItems: {

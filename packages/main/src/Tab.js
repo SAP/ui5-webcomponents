@@ -145,6 +145,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Tab
  * @extends UI5Element
  * @tagname ui5-tab
+ * @implements sap.ui.webcomponents.main.ITab
  * @public
  */
 class Tab extends UI5Element {
