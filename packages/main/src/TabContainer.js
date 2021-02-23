@@ -30,8 +30,6 @@ import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import TabLayout from "./types/TabLayout.js";
 
-const TC_RANGE_SET = "TCRangeSet";
-
 const SCROLL_STEP = 128;
 
 const tabStyles = [];

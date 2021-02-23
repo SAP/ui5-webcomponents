@@ -1,3 +1,5 @@
+const querySets = {};
+
 /**
  * Initializes a screen width media query range set.
  *
@@ -26,7 +28,7 @@
  * @public
  */
 const _initRangeSet = (name, borders, names) => {
-	MediaRange._querySets[name] = {
+	querySets[name] = {
 		borders,
 		names,
 	};
@@ -48,7 +50,7 @@ const _initRangeSet = (name, borders, names) => {
  * @public
  */
 const _getCurrentRange = (name, width = window.innerWidth) => {
-	const querySet = MediaRange._querySets[name];
+	const querySet = querySets[name];
 	let i = 0;
 
 	if (!querySet) {
@@ -98,7 +100,6 @@ const RANGESETS = {
 
 const MediaRange = {
 	RANGESETS,
-	_querySets: {},
 	initRangeSet: _initRangeSet,
 	getCurrentRange: _getCurrentRange,
 };
