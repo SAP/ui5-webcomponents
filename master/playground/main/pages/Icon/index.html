@@ -41,6 +41,16 @@
 	<ui5-icon name="add-employee" class="icon-red icon-small"></ui5-icon>
 	<ui5-icon show-tooltip name="message-error"></ui5-icon>
 
+	<h3>Interactive Icon</h3>
+	<ui5-icon
+		id="myInteractiveIcon"
+		interactive
+		name="add-equipment"
+		style="width: 50px; height: 50px">
+	</ui5-icon>
+	<br>
+	<ui5-input id="click-event-2"></ui5-input>
+
 	<br>
 	<ui5-icon name="add-employee"></ui5-icon>
 	<br>
@@ -93,7 +103,9 @@
 		var icon = document.getElementById("interactive-icon"),
 			nonInteractiveIcon = document.getElementById("non-interactive-icon"),
 			input = document.getElementById("click-event"),
+			input2 = document.getElementById("click-event-2"),
 			inputValue = 0;
+			inputValue2 = 0;
 
 		icon.addEventListener("ui5-click", function() {
 			input.value = ++inputValue;
@@ -101,6 +113,10 @@
 
 		nonInteractiveIcon.addEventListener("ui5-click", function() {
 			input.value = ++inputValue;
+		});
+
+		myInteractiveIcon.addEventListener("click", function() {
+			input2.value = ++inputValue2;
 		});
 	</script>
 

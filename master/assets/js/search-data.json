@@ -443,7 +443,7 @@
   "64": {
     "id": "64",
     "title": "Icon",
-    "content": "&lt;!DOCTYPE html&gt; Icon --&gt; Some icons can display default tooltip All icons Icons in ltr Icons in RTL, but not mirrored Icons in LTR Icons in RTL and mirrored",
+    "content": "&lt;!DOCTYPE html&gt; Icon Interactive Icon --&gt; Some icons can display default tooltip All icons Icons in ltr Icons in RTL, but not mirrored Icons in LTR Icons in RTL and mirrored",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Icon/",
     "relUrl": "/playground/main/pages/Icon/"
   },

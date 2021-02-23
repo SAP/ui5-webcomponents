@@ -1,5 +1,10 @@
-commit b0db3f0cd7c79b5ebdb79c85c2d96cd438034df9
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Feb 23 16:02:45 2021 +0200
+commit 6fd6a5ec9db42ef37595e67ec8b96f72e974ed34
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Feb 23 16:48:00 2021 +0200
 
-    chore: Introduce the notion of interfaces for the purpose of JSDoc (#2861)
+    fix(ui5-icon): fix click event fired twice (#2858)
+    
+    We used to fire a custom event, but did not stop the native one and end up with firing two "click" events.
+    Now, the native one is stopped properly (we need to fire the custom one, so the noConflict ui5-click is also fired). Also, one additional fix has been performed - the content no longer scrolls when the SPACE key is pressed over "interactive" icon.
+    
+    FIXES: #2857
