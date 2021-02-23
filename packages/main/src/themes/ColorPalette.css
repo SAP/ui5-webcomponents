@@ -17,7 +17,7 @@
 
 .ui5-cp-separator {
 	height: 0.0625rem;
-    background: var(--sapContent_ForegroundBorderColor);
+	background: var(--sapToolbar_SeparatorColor);
 }
 
 .ui5-cp-more-colors {

@@ -30,6 +30,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
 		 * Defines whether the user can choose a custom color from a color picker
+		 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
 		 * @type {Boolean}
 		 * @public
 		 * @since 1.0.0-rc.12
@@ -130,7 +131,9 @@ class ColorPalette extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [ColorPaletteItem].concat(this.moreColorsFeature ? this.moreColorsFeature.dependencies : []);
+		const moreColorsFeature = getFeature("ColorPaletteMoreColors");
+
+		return [ColorPaletteItem].concat(moreColorsFeature ? moreColorsFeature.dependencies : []);
 	}
 
 	static async onDefine() {
@@ -196,13 +199,13 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
-	async chooseCustomColor(event) {
+	async _chooseCustomColor() {
 		const colorPicker = await this.getColorPicker();
 		this._setColor(colorPicker.color);
-		this.closeDialog();
+		this._closeDialog();
 	}
 
-	async closeDialog() {
+	async _closeDialog() {
 		const dialog = await this._getDialog();
 		dialog.close();
 	}
@@ -222,6 +225,10 @@ class ColorPalette extends UI5Element {
 
 	get colorPaleteMoreColorsText() {
 		return this.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT);
+	}
+
+	get showMoreColors() {
+		return this.moreColors && this.moreColorsFeature
 	}
 
 	async _getDialog() {
