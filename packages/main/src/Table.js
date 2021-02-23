@@ -51,7 +51,6 @@ const metadata = {
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
-		 * @ui5wctype {IListItem}
 		 * @public
 		 */
 		columns: {
