@@ -219,13 +219,18 @@
 		<ui5-icon slot="icon" name="decline" style="padding-left: 8px; padding-right: 8px"></ui5-icon>
 	</ui5-input>
 
+	<h3> Input firing submit event and submit action on 'ENTER' in a form</h3>
+	<form id="submit-form">
+		<ui5-input id="submit-input" name="my-submit-input" placeholder="Type something and press 'ENTER' ..."></ui5-input>
+	</form>
+
 	<h3> Test scroll pos</h3>
 	<ui5-input id="scrollInput" show-suggestions>
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
 		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
+		<ui5-li>Compact</ui5-li>	
 		<ui5-li>Condensed</ui5-li>
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
@@ -317,6 +322,23 @@
 	</style>
 
 	<script>
+		document.getElementById("submit-input").addEventListener("keypress", function(event) {
+			if (event.key === 'Enter') {
+				var formToSubmit = document.getElementById("submit-form");
+				var submitEvent = new Event('submit');
+
+				// The submit method of the form won't trigger
+				// a submit event by itself, dispatch it manually
+				formToSubmit.dispatchEvent(submitEvent);
+				formToSubmit.submit();
+			}
+		});
+
+		document.getElementById("submit-form").addEventListener("submit", function(event) {
+			event.preventDefault();
+			alert("Submitted");
+		});
+
 		btnOpenDialog.addEventListener("click", function () {
 			dialog.open();
 		});
