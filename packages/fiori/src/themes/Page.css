@@ -60,12 +60,8 @@
 }
 
 /* BackgroundDesign */
-:host([background-design="Standard"]) {
-	background-color: var(--sapBackgroundColor);
-}
-
 :host([background-design="Solid"]) {
-	background-color: var(--sapBackgroundColor);
+    background-color: var(--sapBackgroundColor);
 }
 
 :host([background-design="Transparent"]) {
