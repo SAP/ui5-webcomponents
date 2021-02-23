@@ -8,6 +8,7 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -152,6 +153,16 @@ const metadata = {
 			defaultValue: TabLayout.Standard,
 		},
 
+		/**
+		 * Defines the current media query size.
+		 *
+		 * @type {string}
+		 * @private
+		 */
+		mediaRange: {
+			type: String,
+		},
+
 		_selectedTab: {
 			type: Object,
 		},
@@ -275,7 +286,7 @@ class TabContainer extends UI5Element {
 	constructor() {
 		super();
 
-		this._handleHeaderResize = this._handleHeaderResize.bind(this);
+		this._handleResize = this._handleResize.bind(this);
 
 		// Init ScrollEnablement
 		this._scrollEnablement = new ScrollEnablement(this);
@@ -313,11 +324,11 @@ class TabContainer extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this._getHeader(), this._handleHeaderResize);
+		ResizeHandler.register(this._getHeader(), this._handleResize);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this._getHeader(), this._handleHeaderResize);
+		ResizeHandler.deregister(this._getHeader(), this._handleResize);
 	}
 
 	_onHeaderClick(event) {
@@ -471,8 +482,9 @@ class TabContainer extends UI5Element {
 			.then(_ => this._updateScrolling());
 	}
 
-	_handleHeaderResize() {
+	_handleResize() {
 		this._updateScrolling();
+		this._updateMediaRange();
 	}
 
 	async _closeRespPopover() {
@@ -490,6 +502,10 @@ class TabContainer extends UI5Element {
 		if (!this._scrollable) {
 			this._closeRespPopover();
 		}
+	}
+
+	_updateMediaRange() {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
 	}
 
 	_getHeader() {
@@ -522,6 +538,9 @@ class TabContainer extends UI5Element {
 			header: {
 				"ui5-tc__header": true,
 				"ui5-tc__header--scrollable": this._scrollable,
+			},
+			headerInnerContainer: {
+				"ui5-tc__headerInnerContainer": true,
 			},
 			headerScrollContainer: {
 				"ui-tc__headerScrollContainer": true,
