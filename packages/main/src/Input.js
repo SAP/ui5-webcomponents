@@ -721,7 +721,7 @@ class Input extends UI5Element {
 
 		this.suggestionSelectionCanceled = false;
 
-		if (this.value && this.type === InputType.Number && !this.isBackSpacePressed() && !inputDomRef.value) {
+		if (this.value && this.type === InputType.Number && !this._backspaceKeyDown && !inputDomRef.value) {
 			// For input with type="Number", if the delimiter is entered second time, the inner input is firing event with empty value
 			return;
 		}
@@ -956,10 +956,6 @@ class Input extends UI5Element {
 
 	get nativeInputWidth() {
 		return this.nativeInput && this.nativeInput.offsetWidth;
-	}
-
-	isBackSpacePressed() {
-		return this._backspaceKeyDown;
 	}
 
 	getLabelableElementId() {
