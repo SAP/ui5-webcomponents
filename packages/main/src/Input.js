@@ -519,6 +519,9 @@ class Input extends UI5Element {
 		// The value that should be highlited.
 		this.highlightValue = "";
 
+		// Indicates, if the user pressed the BACKSPACE key.
+		this._backspaceKeyDown = false;
+
 		// all sementic events
 		this.EVENT_SUBMIT = "submit";
 		this.EVENT_CHANGE = "change";
@@ -605,6 +608,10 @@ class Input extends UI5Element {
 			return this._handleEscape(event);
 		}
 
+		if (isBackSpace(event)) {
+			this._backspaceKeyDown = true;
+		}
+
 		if (this.showSuggestions) {
 			this.Suggestions._deselectItems();
 		}
@@ -614,6 +621,7 @@ class Input extends UI5Element {
 
 	_onkeyup(event) {
 		this._keyDown = false;
+		this._backspaceKeyDown = false;
 	}
 
 	/* Event handling */
@@ -713,7 +721,7 @@ class Input extends UI5Element {
 
 		this.suggestionSelectionCanceled = false;
 
-		if (this.value && this.type === InputType.Number && !isBackSpace(event) && !inputDomRef.value) {
+		if (this.value && this.type === InputType.Number && !this.isBackSpacePressed() && !inputDomRef.value) {
 			// For input with type="Number", if the delimiter is entered second time, the inner input is firing event with empty value
 			return;
 		}
@@ -948,6 +956,10 @@ class Input extends UI5Element {
 
 	get nativeInputWidth() {
 		return this.nativeInput && this.nativeInput.offsetWidth;
+	}
+
+	isBackSpacePressed() {
+		return this._backspaceKeyDown;
 	}
 
 	getLabelableElementId() {

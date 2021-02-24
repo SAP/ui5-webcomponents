@@ -158,6 +158,18 @@ describe("Input general interaction", () => {
 		input.keys("Enter");
 	});
 
+	it("tests value removal when Input type is 'Number'", () => {
+		const input = browser.$("#input-number3");
+		const btn = browser.$("#input-number3-focusout");
+
+		// Press Backspace and focus out the 
+		input.click();
+		input.keys("Backspace");
+		btn.click();
+
+		assert.strictEqual(input.getProperty("value"), "", "Input's value is removed");
+	});
+
 	it("handles suggestions", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 
