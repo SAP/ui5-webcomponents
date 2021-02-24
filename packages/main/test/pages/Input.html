@@ -230,7 +230,7 @@
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
 		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>	
+		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
@@ -326,11 +326,17 @@
 			if (event.key === 'Enter') {
 				var formToSubmit = document.getElementById("submit-form");
 				var submitEvent = new Event('submit');
+				
+				/* The old way - supported by all browsers:
+				The submit method of the form won't trigger
+				a submit event by itself, dispatch it manually */
 
-				// The submit method of the form won't trigger
-				// a submit event by itself, dispatch it manually
-				formToSubmit.dispatchEvent(submitEvent);
-				formToSubmit.submit();
+				// formToSubmit.dispatchEvent(submitEvent);
+				// formToSubmit.submit();
+
+				// Fires submit event and submits
+				// No MS IE11 & Safari support yet
+				formToSubmit.requestSubmit()
 			}
 		});
 
