@@ -29,6 +29,7 @@ const metadata = {
 		 */
 		"default": {
 			type: HTMLElement,
+			propertyName: "content",
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
