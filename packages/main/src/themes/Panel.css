@@ -27,6 +27,10 @@
 	border-bottom: 1px solid transparent;
 }
 
+.ui5-panel-header-icon {
+	color: var(--sapContent_IconColor);
+}
+
 .ui5-panel-header-button-animated {
 	transition: transform 0.4s ease-out;
 }
