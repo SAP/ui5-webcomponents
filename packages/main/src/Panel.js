@@ -377,7 +377,7 @@ class Panel extends UI5Element {
 	}
 
 	get effectiveAccessibleName() {
-		return typeof accessibleName === "string" && accessibleName.length ? accessibleName : undefined;
+		return typeof this.accessibleName === "string" && this.accessibleName.length ? this.accessibleName : undefined;
 	}
 
 	get accInfo() {
