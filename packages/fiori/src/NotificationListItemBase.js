@@ -86,7 +86,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 		 *
-		 * @type {HTMLElement}
+		 * @type {sap.ui.webcomponents.fiori.INotificationAction[]}
 		 * @slot
 		 * @public
 		 */

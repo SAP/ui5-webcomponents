@@ -53,7 +53,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the <code>ui5-input</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
 		 * @public
 		 */
@@ -86,7 +86,7 @@ const metadata = {
 		 * <br>
 		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
 		 * @slot suggestionItems
 		 * @public
 		 */

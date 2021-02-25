@@ -31,6 +31,7 @@ const metadata = {
 
 		/**
 		 * Defines the stable selector that you can use via getStableDomRef method.
+		 * @type {String}
 		 * @public
 		 */
 		stableDomRef: {
@@ -73,6 +74,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-color-palette-item
  * @since 1.0.0-rc.12
+ * @implements sap.ui.webcomponents.main.IColorPaletteItem
  * @public
  */
 class ColorPaletteItem extends UI5Element {

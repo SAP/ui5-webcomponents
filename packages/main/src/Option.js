@@ -60,6 +60,7 @@ const metadata = {
 		/**
 		 * Defines the stable selector that you can use via getStableDomRef method.
 		 * @public
+		 * @type {string}
 		 * @since 1.0.0-rc.11
 		 */
 		stableDomRef: {
@@ -95,6 +96,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Option
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-option
+ * @implements sap.ui.webcomponents.main.ISelectOption
  * @public
  */
 class Option extends UI5Element {

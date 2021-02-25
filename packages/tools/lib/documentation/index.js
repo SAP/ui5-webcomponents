@@ -124,6 +124,11 @@ const generateSamplePage = entry => {
 	} catch (err) { }
 
 	if (content) {
+		entry.slots.forEach(slotData => {
+			if (!slotData.type.startsWith("Node") && !slotData.type.startsWith("HTMLElement")) { // interface -> don't show in documentation
+				slotData.type = "HTMLElement" + (slotData.type.endsWith("[]") ? "[]" : "");
+			}
+		});
 		const APIReference = compiledHandlebars(entry).replace(/\[\]/g, " [0..n]");
 		const EntitySince = compiledSinceTemplate(entry).replace(/\[\]/g, " [0..n]");
 

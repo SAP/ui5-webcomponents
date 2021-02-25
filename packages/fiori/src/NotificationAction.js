@@ -78,6 +78,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.NotificationAction
  * @extends UI5Element
  * @tagname ui5-notification-action
+ * @implements sap.ui.webcomponents.fiori.INotificationAction
  * @public
  */
 class NotificationAction extends UI5Element {
