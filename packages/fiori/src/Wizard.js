@@ -59,7 +59,7 @@ const metadata = {
 		 * Defines the width of the <code>ui5-wizard</code>.
 		 * @private
 		 */
-		width: {
+		_width: {
 			type: Float,
 		},
 
@@ -413,7 +413,7 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	onStepResize() {
-		this.width = this.getBoundingClientRect().width;
+		this._width = this.getBoundingClientRect().width;
 		this.contentHeight = this.getContentHeight();
 
 		if (this.responsivePopover && this.responsivePopover.opened) {
@@ -441,7 +441,7 @@ class Wizard extends UI5Element {
 	_adjustHeaderOverflow() {
 		let counter = 0;
 		let isForward = true;
-		const iWidth = this.width;
+		const iWidth = this._width;
 		const iCurrStep = this.getSelectedStepIndex();
 		const iStepsToShow = this.steps.length ? Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) : Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
 
@@ -699,7 +699,7 @@ class Wizard extends UI5Element {
 			return true;
 		}
 
-		return this.width <= Wizard.PHONE_BREAKPOINT;
+		return this._width <= Wizard.PHONE_BREAKPOINT;
 	}
 
 	get navAriaRoleDescription() {

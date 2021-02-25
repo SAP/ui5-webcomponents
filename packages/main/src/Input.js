@@ -464,6 +464,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
  * @appenddocs SuggestionItem
+ * @implements sap.ui.webcomponents.main.IInput
  * @public
  */
 class Input extends UI5Element {
