@@ -376,7 +376,7 @@ class Panel extends UI5Element {
 		return this.accessibleRole.toLowerCase();
 	}
 
-	get accessibleName() {
+	get effectiveAccessibleName() {
 		return typeof accessibleName === "string" && accessibleName.length ? accessibleName : undefined;
 	}
 
@@ -386,7 +386,7 @@ class Panel extends UI5Element {
 				"ariaExpanded": this.expanded,
 				"ariaControls": `${this._id}-content`,
 				"title": this.toggleButtonTitle,
-				"ariaLabelButton": !this.nonFocusableButton && this.useAccessibleNameForToggleButton ? this.accessibleName : undefined,
+				"ariaLabelButton": !this.nonFocusableButton && this.useAccessibleNameForToggleButton ? this.effectiveAccessibleName : undefined,
 			},
 			"ariaExpanded": this.nonFixedInternalHeader ? this.expanded : undefined,
 			"ariaControls": this.nonFixedInternalHeader ? `${this._id}-content` : undefined,
