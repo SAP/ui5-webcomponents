@@ -1,10 +1,5 @@
-commit 6fd6a5ec9db42ef37595e67ec8b96f72e974ed34
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 23 16:48:00 2021 +0200
+commit a6267416866914d44a853ed23cb36686d11b6a2b
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Feb 25 16:27:02 2021 +0200
 
-    fix(ui5-icon): fix click event fired twice (#2858)
-    
-    We used to fire a custom event, but did not stop the native one and end up with firing two "click" events.
-    Now, the native one is stopped properly (we need to fire the custom one, so the noConflict ui5-click is also fired). Also, one additional fix has been performed - the content no longer scrolls when the SPACE key is pressed over "interactive" icon.
-    
-    FIXES: #2857
+    chore: minor JSDoc fixes (#2871)
