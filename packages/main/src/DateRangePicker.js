@@ -249,7 +249,18 @@ class DateRangePicker extends DatePicker {
 	}
 
 	_splitValueByDelimiter(value) {
-		return value.split(this._effectiveDelimiter).map(date => date.trim()); // just split by delimiter and trim spaces
+		let valuesArray = [];
+
+		if (this.getFormat().oFormatOptions.pattern.indexOf(this.delimiter) >= 0) {
+			const midIndex = Math.round(value.length / 2);
+
+			valuesArray[0] = value.slice(0, midIndex).replaceAll(this.delimiter,"").trim();
+			valuesArray[1] = value.slice(midIndex, value.length).replaceAll(this.delimiter,"").trim();
+		} else {
+			valuesArray = value.split(this._effectiveDelimiter).map(date => date.trim()); // just split by delimiter and trim spaces;
+		}
+
+		return valuesArray;
 	}
 
 	/**
