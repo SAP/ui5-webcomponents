@@ -59,7 +59,7 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Group</code></li>
 		 * <li><code>Individual</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarGroupType}
 		 * @defaultValue "Group"
 		 * @public
@@ -79,7 +79,7 @@ const metadata = {
 		 * <li><code>M</code></li>
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarSize}
 		 * @defaultValue "S"
 		 * @public
@@ -105,7 +105,7 @@ const metadata = {
 		 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
 		 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
 		 * as the built-in overflow action has "Circle" shape.
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IAvatar[]}
 		 * @slot items
 		 * @public
 		 */

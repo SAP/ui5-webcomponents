@@ -53,7 +53,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the <code>ui5-input</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
 		 * @public
 		 */
@@ -86,7 +86,7 @@ const metadata = {
 		 * <br>
 		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
 		 * @slot suggestionItems
 		 * @public
 		 */
@@ -329,6 +329,10 @@ const metadata = {
 		},
 
 		_inputAccInfo: {
+			type: Object,
+		},
+
+		_nativeInputAttributes: {
 			type: Object,
 		},
 
@@ -1073,6 +1077,14 @@ class Input extends UI5Element {
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
 				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this),
 			},
+		};
+	}
+
+	get nativeInputAttributes() {
+		return {
+			"min": this.type === InputType.Number ? this._nativeInputAttributes.min : undefined,
+			"max": this.type === InputType.Number ? this._nativeInputAttributes.max : undefined,
+			"step": this.type === InputType.Number ? (this._nativeInputAttributes.step || "any") : undefined,
 		};
 	}
 

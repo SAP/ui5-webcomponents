@@ -241,7 +241,7 @@ const metadata = {
 		 * &lt;/ui5-combobox>
 		 * <br> <br>
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IComboBoxItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -271,7 +271,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the input field.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
 		 * @public
 		 * @since 1.0.0-rc.9

@@ -104,7 +104,7 @@ const metadata = {
 		 * Defines the items of the <code>ui5-upload-collection</code>.
 		 * <br><b>Note:</b> Use <code>ui5-upload-collection-item</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.fiori.IUploadCollectionItem[]}
 		 * @slot items
 		 * @public
 		 */

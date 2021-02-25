@@ -44,6 +44,7 @@ const metadata = {
 		/**
 		 * Defines the stable selector that you can use via getStableDomRef method.
 		 * @public
+		 * @type {string}
 		 * @since 1.0.0-rc.8
 		 */
 		stableDomRef: {
@@ -79,6 +80,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.ShellBarItem
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-shellbar-item
+ * @implements sap.ui.webcomponents.fiori.IShellBarItem
  * @public
  */
 class ShellBarItem extends UI5Element {

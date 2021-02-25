@@ -80,7 +80,7 @@ const metadata = {
 		/**
 		 * Defines the selected date or dates (depending on the <code>selectionMode</code> property) for this calendar as instances of <code>ui5-date</code>
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.ICalendarDate[]}
 		 * @slot dates
 		 * @public
 		 */

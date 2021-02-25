@@ -169,7 +169,7 @@ const metadata = {
 			type: Object,
 		},
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
 		 * Fired when the ui5-panel is expanded/collapsed by user interaction.

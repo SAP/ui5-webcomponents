@@ -50,7 +50,7 @@ const metadata = {
 		 * &lt;/ui5-multi-input>
 		 * <br> <br>
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IToken[]}
 		 * @slot
 		 * @public
 		 */

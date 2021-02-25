@@ -234,6 +234,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-upload-collection-item
  * @public
+ * @implements sap.ui.webcomponents.fiori.IUploadCollectionItem
  * @since 1.0.0-rc.7
  */
 class UploadCollectionItem extends ListItem {

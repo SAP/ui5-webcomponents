@@ -70,4 +70,29 @@ describe("ColorPalette interactions", () => {
 
 		assert.strictEqual(colorPalette.getProperty("value"), "darkblue", "Check if selected value is darkblue");
 	});
+
+	it("Tests more-colors functionality", () => {
+		const colorPalette = browser.$("#cp3");
+		const colorPaletteMoreColorsButton = colorPalette.shadow$(".ui5-cp-more-colors");
+
+		colorPaletteMoreColorsButton.click();
+
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#cp3");
+		const colorPicker = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-color-picker");
+
+		assert.ok(colorPicker, "Color picker is rendered");
+
+		colorPicker.setProperty("color", "#fafafa");
+
+		// The initial focus is on the HEX input
+		browser.keys("Tab"); // Red
+		browser.keys("Tab"); // Green
+		browser.keys("Tab"); // Blue
+		browser.keys("Tab"); // Alpha
+		browser.keys("Tab"); // Ok Button
+
+		browser.keys("Enter"); // Close the dialog & change the value of the color palette
+
+		assert.strictEqual(colorPalette.getProperty("value"), "#fafafa", "Custom color is selected from the color picker");
+	})
 });
