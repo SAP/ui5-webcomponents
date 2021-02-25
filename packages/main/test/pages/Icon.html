@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -24,190 +25,19 @@
 		section {
 			border: dashed 2px red;
 		}
+
+		.hiddenIcon {
+			display: none;
+		}
 	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
+	<ui5-icon style="width: 50px; height: 50px;" name="add-equipment"></ui5-icon> => работи
+	<ui5-icon style="width: 50px; height: 50px; display:none;" name="add-equipment"></ui5-icon> => работи
+	<ui5-icon style="width: 50px; height: 50px;" hidden name="add-equipment"></ui5-icon> => работи
 
-	<ui5-icon title="add equipment" style="width: 50px; height: 50px; border: 1px solid red;" id="myIcon" show-tooltip accessible-name="Hello SVG Icon" name="add-equipment"></ui5-icon>
-	<ui5-icon name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
-	<ui5-icon name="add-equipment" class="icon-blue icon-small"></ui5-icon>
-	<ui5-icon name="add-employee" class="icon-red"></ui5-icon>
-	<ui5-icon name="add-employee" class="icon-red icon-medium"></ui5-icon>
-	<ui5-icon name="add-employee" class="icon-red icon-small"></ui5-icon>
-	<ui5-icon show-tooltip name="message-error"></ui5-icon>
-
-	<h3>Interactive Icon</h3>
-	<ui5-icon
-		id="myInteractiveIcon"
-		interactive
-		name="add-equipment"
-		style="width: 50px; height: 50px">
-	</ui5-icon>
-	<br>
-	<ui5-input id="click-event-2"></ui5-input>
-
-	<br>
-	<ui5-icon name="add-employee"></ui5-icon>
-	<br>
-	<ui5-icon style="width: 1rem; height: 1rem;" name="add-employee"></ui5-icon>
-	<ui5-icon style="width: 2rem; height: 2rem;" name="factory"></ui5-icon>
-	<br>
-
-	<ui5-button icon="add-equipment"></ui5-button>
-	<div id="content"></div>
-	<ui5-icon name="appointment-2"></ui5-icon>
-	<ui5-icon name="appointment-2"></ui5-icon>
-	<ui5-icon name="appointment-2"></ui5-icon>
-	<ui5-icon name="appointment-2"></ui5-icon> -->
-
-	<br />
-
-	<ui5-date-picker style="margin-top: 10px" placeholder="test" value="Value State None">
-	</ui5-date-picker>
-
-	<ui5-date-picker style="margin-top: 10px" value-state="Success" value="Value State Success">
-	</ui5-date-picker>
-
-	<ui5-date-picker style="margin-top: 10px" value-state="Warning" value="Value State Warning">
-	</ui5-date-picker>
-
-	<ui5-date-picker style="margin-top: 10px" value-state="Error" value="Value State Error">
-	</ui5-date-picker>
-
-	<br/><br/>
-
-	<ui5-icon id="interactive-icon" name="add-equipment" class="icon-blue icon-medium" interactive></ui5-icon>
-	<ui5-icon id="non-interactive-icon" name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
-	<ui5-input id="click-event" value="0"></ui5-input>
-
-	<br/>
-	<br/>
-
-	<ui5-button icon="overflow"></ui5-button>
-	<ui5-icon name="overflow" style="border:1px solid red;"></ui5-icon>
-	<br>
-	<br>
-
-	<ui5-title>Some icons can display default tooltip</ui5-title>
-	<br>
-	<ui5-icon id="iconWithTooltip" name="save" show-tooltip></ui5-icon>
-	<ui5-icon name="overflow" show-tooltip></ui5-icon>
-	<ui5-icon name="settings" show-tooltip></ui5-icon>
-
-	<script>
-		var icon = document.getElementById("interactive-icon"),
-			nonInteractiveIcon = document.getElementById("non-interactive-icon"),
-			input = document.getElementById("click-event"),
-			input2 = document.getElementById("click-event-2"),
-			inputValue = 0;
-			inputValue2 = 0;
-
-		icon.addEventListener("ui5-click", function() {
-			input.value = ++inputValue;
-		});
-
-		nonInteractiveIcon.addEventListener("ui5-click", function() {
-			input.value = ++inputValue;
-		});
-
-		myInteractiveIcon.addEventListener("click", function() {
-			input2.value = ++inputValue2;
-		});
-	</script>
-
-	<script type="module">
-		(async () => {
-			var iconNames = await window["sap-ui-webcomponents-bundle"].getIconNames();
-			iconNames.forEach(iconName => {
-				var icon = document.createElement("ui5-icon");
-				icon.name = iconName;
-				allIcons.appendChild(icon);
-			});
-		})();
-	</script>
-
-	<script nomodule>
-		window["sap-ui-webcomponents-bundle"].getIconNames().then(function(iconNames) {
-			iconNames.forEach(function(iconName) {
-				var icon = document.createElement("ui5-icon");
-				icon.name = iconName;
-				allIcons.appendChild(icon);
-			});
-		});
-	</script>
-
-
-	<section id="allIcons">
-		<h3>All icons</h3>
-	</section>
-
-	<section class="sectionLTR1" dir="ltr">
-		<h3>Icons in ltr</h3>
-		<ui5-icon name="accept"></ui5-icon>
-		<ui5-icon name="sales-document"></ui5-icon>
-		<ui5-icon name="sales-notification"></ui5-icon>
-		<ui5-icon name="search"></ui5-icon>
-		<ui5-icon name="simple-payment"></ui5-icon>
-		<ui5-icon name="sound-loud"></ui5-icon>
-		<ui5-icon name="sound-off"></ui5-icon>
-		<ui5-icon name="sound"></ui5-icon>
-		<ui5-icon name="sys-help"></ui5-icon>
-		<ui5-icon name="text-align-justified"></ui5-icon>
-		<ui5-icon name="text-align-center"></ui5-icon>
-		<ui5-icon name="text-align-left"></ui5-icon>
-		<ui5-icon name="text-align-right"></ui5-icon>
-		<ui5-icon name="text-formatting"></ui5-icon>
-		<ui5-icon name="line-chart-time-axis"></ui5-icon>
-		<br>
-		<ui5-checkbox checked></ui5-checkbox>
-	</section>
-
-	<section class="sectionRTLNotMirrored" dir="rtl">
-		<h3>Icons in RTL, but not mirrored</h3>
-		<ui5-icon name="accept"></ui5-icon>
-		<ui5-icon name="sales-document"></ui5-icon>
-		<ui5-icon name="sales-notification"></ui5-icon>
-		<ui5-icon name="search"></ui5-icon>
-		<ui5-icon name="simple-payment"></ui5-icon>
-		<ui5-icon name="sound-loud"></ui5-icon>
-		<ui5-icon name="sound-off"></ui5-icon>
-		<ui5-icon name="sound"></ui5-icon>
-		<ui5-icon name="sys-help"></ui5-icon>
-		<ui5-icon name="text-align-justified"></ui5-icon>
-		<ui5-icon name="text-align-center"></ui5-icon>
-		<ui5-icon name="text-align-left"></ui5-icon>
-		<ui5-icon name="text-align-right"></ui5-icon>
-		<ui5-icon name="text-formatting"></ui5-icon>
-		<ui5-icon name="line-chart-time-axis"></ui5-icon>
-		<br>
-		<ui5-checkbox checked></ui5-checkbox>
-	</section>
-
-	<section class="sectionLTR2" dir="ltr">
-		<h3>Icons in LTR</h3>
-		<ui5-icon name="slim-arrow-left"></ui5-icon>
-		<ui5-icon name="slim-arrow-right"></ui5-icon>
-		<ui5-icon name="media-play"></ui5-icon>
-		<ui5-icon name="media-reverse"></ui5-icon>
-		<ui5-icon name="nav-back"></ui5-icon>
-		<ui5-icon name="trend-down"></ui5-icon>
-		<ui5-icon name="trend-up"></ui5-icon>
-		<ui5-icon name="undo"></ui5-icon>
-		<ui5-icon name="step"></ui5-icon>
-	</section>
-
-	<section class="sectionRTLMirrored" dir="rtl">
-		<h3>Icons in RTL and mirrored</h3>
-		<ui5-icon name="slim-arrow-left"></ui5-icon>
-		<ui5-icon name="slim-arrow-right"></ui5-icon>
-		<ui5-icon name="media-play"></ui5-icon>
-		<ui5-icon name="media-reverse"></ui5-icon>
-		<ui5-icon name="nav-back"></ui5-icon>
-		<ui5-icon name="trend-down"></ui5-icon>
-		<ui5-icon name="trend-up"></ui5-icon>
-		<ui5-icon name="undo"></ui5-icon>
-		<ui5-icon name="step"></ui5-icon>
-	</section>
+	<ui5-icon class="hiddenIcon" slot="icon" name="decline" /> => не работи
 </body>
+
 </html>
