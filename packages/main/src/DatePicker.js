@@ -743,7 +743,7 @@ class DatePicker extends UI5Element {
 		if (this.isValid(this.value)) {
 			return this.value;
 		}
-		return this.getFormat().format(new Date());
+		return this.getFormat().format(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType).toUTCJSDate());
 	}
 
 	get calendar() {
