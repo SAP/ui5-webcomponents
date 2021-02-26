@@ -251,11 +251,11 @@ class DateRangePicker extends DatePicker {
 	_splitValueByDelimiter(value) {
 		let valuesArray = [];
 
-		if (this.getFormat().oFormatOptions.pattern.indexOf(this.delimiter) >= 0) {
+		if (this.getFormat().oFormatOptions.pattern.indexOf(this._effectiveDelimiter) >= 0) {
 			const midIndex = Math.round(value.length / 2);
 
-			valuesArray[0] = value.slice(0, midIndex).replaceAll(this.delimiter,"").trim();
-			valuesArray[1] = value.slice(midIndex, value.length).replaceAll(this.delimiter,"").trim();
+			valuesArray[0] = value.slice(0, midIndex).split(this._effectiveDelimiter).join("").trim();
+			valuesArray[1] = value.slice(midIndex, value.length).split(this._effectiveDelimiter).join("").trim();
 		} else {
 			valuesArray = value.split(this._effectiveDelimiter).map(date => date.trim()); // just split by delimiter and trim spaces;
 		}
