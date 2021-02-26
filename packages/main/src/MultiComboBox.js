@@ -428,11 +428,11 @@ class MultiComboBox extends UI5Element {
 	}
 
 	togglePopover() {
-		this._toggleRespPopover();
-
 		if (!isPhone()) {
 			this._inputDom.focus();
 		}
+
+		this._toggleRespPopover();
 	}
 
 	filterSelectedItems(event) {
