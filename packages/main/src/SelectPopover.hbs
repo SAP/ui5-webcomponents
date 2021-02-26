@@ -5,7 +5,7 @@
 		content-only-on-desktop
 		placement-type="Bottom"
 		horizontal-align="Left"
-		@ui5-after-open="{{_applyFocusAfterOpen}}"
+		@ui5-after-open="{{_afterOpen}}"
 		@ui5-before-open="{{_beforeOpen}}"
 		@ui5-after-close="{{_afterClose}}"
 		@keydown="{{_onkeydown}}"
@@ -41,8 +41,7 @@
 		<ui5-list
 			mode="SingleSelectAuto"
 			separators="None"
-			@keydown="{{_handlePickerKeydown}}"
-			@ui5-selection-change="{{_handleSelectionChange}}"
+			@mousedown="{{_itemMousedown}}"
 			@ui5-item-press="{{_handleItemPress}}"
 		>
 			{{#each _syncedOptions}}
@@ -50,6 +49,7 @@
 					id="{{this.id}}-li"
 					icon="{{this.icon}}"
 					?selected="{{this.selected}}"
+					?focused="{{this.focused}}"
 					?disabled="{{this.disabled}}"
 					?aria-selected="{{this.selected}}"
 					data-ui5-stable="{{this.stableDomRef}}"

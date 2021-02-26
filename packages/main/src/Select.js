@@ -388,6 +388,7 @@ class Select extends UI5Element {
 
 			return {
 				selected: false,
+				focused: false,
 				disabled: opt.disabled,
 				icon: opt.icon,
 				value: opt.value,
@@ -399,7 +400,9 @@ class Select extends UI5Element {
 
 		if (lastSelectedOptionIndex > -1 && !opts[lastSelectedOptionIndex].disabled) {
 			opts[lastSelectedOptionIndex].selected = true;
+			opts[lastSelectedOptionIndex].focused = true;
 			this.options[lastSelectedOptionIndex].selected = true;
+			this.options[lastSelectedOptionIndex].focused = true;
 			this._text = opts[lastSelectedOptionIndex].textContent;
 			this._selectedIndex = lastSelectedOptionIndex;
 		} else {
@@ -407,7 +410,9 @@ class Select extends UI5Element {
 			this._selectedIndex = -1;
 			if (opts[firstEnabledOptionIndex]) {
 				opts[firstEnabledOptionIndex].selected = true;
+				opts[firstEnabledOptionIndex].focused = true;
 				this.options[firstEnabledOptionIndex].selected = true;
+				this.options[firstEnabledOptionIndex].focused = true;
 				this._selectedIndex = firstEnabledOptionIndex;
 				this._text = this.options[firstEnabledOptionIndex].textContent;
 			}
@@ -444,14 +449,24 @@ class Select extends UI5Element {
 			event.preventDefault();
 		}
 
-		if (!this._isPickerOpen) {
-			this._handleArrowNavigation(event, true);
+		if (isEscape(event) && this._isPickerOpen) {
+			this._escapePressed = true;
 		}
+
+		if (isEnter(event)) {
+			this._handleSelectionChange();
+		}
+
+		this._handleArrowNavigation(event, true);
 	}
 
 	_onkeyup(event) {
-		if (isSpace(event) && !this._isPickerOpen) {
-			this._toggleRespPopover();
+		if (isSpace(event)) {
+			if (this._isPickerOpen) {
+				this._handleSelectionChange();
+			} else {
+				this._toggleRespPopover();
+			}
 		}
 	}
 
@@ -472,9 +487,13 @@ class Select extends UI5Element {
 	_handleItemPress(event) {
 		const item = event.detail.item;
 		const selectedItemIndex = this._getSelectedItemIndex(item);
-		this._select(selectedItemIndex);
 
-		this._toggleRespPopover();
+		this._handleSelectionChange(selectedItemIndex);
+	}
+
+	_itemMousedown(event) {
+		// prevent actual focus of items
+		event.preventDefault();
 	}
 
 	_onclick(event) {
@@ -483,13 +502,13 @@ class Select extends UI5Element {
 	}
 
 	/**
-	 * The user used arrow up/down on the list
+	 * The user selected an item with Enter or Space
 	 * @private
 	 */
-	_handleSelectionChange(event) {
-		const item = event.detail.selectedItems[0];
-		const selectedItemIndex = this._getSelectedItemIndex(item);
-		this._select(selectedItemIndex);
+	_handleSelectionChange(index = this._selectedIndex) {
+		this._select(index);
+
+		this._toggleRespPopover();
 	}
 
 	_applyFocusAfterOpen() {
@@ -502,17 +521,7 @@ class Select extends UI5Element {
 			return;
 		}
 
-		this.responsivePopover.querySelector("[ui5-list]").focusItem(li);
-	}
-
-	_handlePickerKeydown(event) {
-		if (isEscape(event) && this._isPickerOpen) {
-			this._escapePressed = true;
-		}
-
-		if (isEnter(event) || isSpace(event)) {
-			this._shouldClosePopover = true;
-		}
+		li.focused = true; // focus applied only visually
 	}
 
 	_handleArrowNavigation(event, shouldFireEvent) {
@@ -530,14 +539,22 @@ class Select extends UI5Element {
 			}
 
 			this.options[this._selectedIndex].selected = false;
+			this.options[this._selectedIndex].focused = false;
+
 			this.options[nextIndex].selected = true;
+			this.options[nextIndex].focused = true;
+
 			this._selectedIndex = nextIndex === -1 ? this._selectedIndex : nextIndex;
 
 			if (currentIndex !== this._selectedIndex) {
+				// Announce new item even if picker is opened. 
+				// The aria-activedescendents attribute can't be used,
+				// because listitem elements are in different shadow dom
 				this.itemSelectionAnnounce();
 			}
 
-			if (shouldFireEvent) {
+			if (shouldFireEvent && !this._isPickerOpen) {
+				// arrow pressed on closed picker - do selection change
 				this._fireChangeEvent(this.options[nextIndex]);
 			}
 		}
@@ -556,7 +573,13 @@ class Select extends UI5Element {
 		this._lastSelectedOption = this.options[this._selectedIndex];
 	}
 
+	_afterOpen() {
+		this.opened = true;
+		this._applyFocusAfterOpen()
+	}
+
 	_afterClose() {
+		this.opened = false;
 		this._iconPressed = false;
 		this._listWidth = 0;
 
@@ -674,7 +697,7 @@ class Select extends UI5Element {
 	itemSelectionAnnounce() {
 		const invisibleText = this.shadowRoot.querySelector(`#${this._id}-selectionText`);
 
-		if (this.focused && !this._isPickerOpen && this._currentlySelectedOption) {
+		if (this.focused && this._currentlySelectedOption) {
 			invisibleText.textContent = this._currentlySelectedOption.textContent;
 		} else {
 			invisibleText.textContent = "";
