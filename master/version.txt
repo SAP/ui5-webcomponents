@@ -1,10 +1,5 @@
-commit 20ab7c2bb4dfe4c2e5cabffdf61961e1a727796c
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Feb 26 10:28:03 2021 +0200
+commit 17cb7583961c1a5afecc10a6581b55b132ba15f0
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Feb 26 10:46:56 2021 +0200
 
-    fix(ui5-icon): work of applied styles (#2872)
-    
-    Issue: Processed CSS code for IE11 makes selectors too strong and developers are not able to change the display CSS property with CSS class. The selector (ui5-icon:not([hidden])) 1 has 10 points for pseudo element and 1 points for the tag name which results in 11 points.
-    Solution: Rework selectors to make them weaker - 10 points.
-    
-    Fixes: #2839
+    feat: add new supported languages (#2869)
