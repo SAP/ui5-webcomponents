@@ -1,5 +1,6 @@
 import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
 import customListItemCss from "./generated/themes/CustomListItem.css.js";
@@ -54,7 +55,9 @@ class CustomListItem extends ListItem {
 	}
 
 	_onkeydown(event) {
-		if (!this.focused) {
+		const isTab = isTabNext(event) || isTabPrevious(event);
+
+		if (!isTab && !this.focused) {
 			return;
 		}
 
@@ -62,7 +65,9 @@ class CustomListItem extends ListItem {
 	}
 
 	_onkeyup(event) {
-		if (!this.focused) {
+		const isTab = isTabNext(event) || isTabPrevious(event);
+
+		if (!isTab && !this.focused) {
 			return;
 		}
 
