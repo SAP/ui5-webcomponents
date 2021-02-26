@@ -1,9 +1,5 @@
-commit 583f5f07478d410e2e92a57f8c57d20f5d5f20dd
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Feb 26 12:48:50 2021 +0200
+commit 70bbfbb6661cecb5f13a57cbc356c83ffd8afe49
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Feb 26 16:54:15 2021 +0200
 
-    fix(ui5-li-custom): keyboard handling improvement (#2870)
-    
-    Key up and key down events should be prevented when the focus is on child element of the ui5-li-custom. Exception is made for the case where Tab key is pressed so the logic about item navigation from the extended class to be executed.
-    
-    Fixes: #2849
+    fix(framework): adapt ie11 package for usage in modern browsers (#2878)
