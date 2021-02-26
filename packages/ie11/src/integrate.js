@@ -18,8 +18,10 @@ attachThemeLoaded(runPonyfill);
 attachBeforeComponentRender(createComponentStyleTag);
 
 // Set the custom DOM observer implementation for observe/unobserve
-setCreateObserverCallback(window.ShadyDOM.observeChildren);
-setDestroyObserverCallback(window.ShadyDOM.unobserveChildren);
+const observeChildrenMethod = window.ShadyDOM ? window.ShadyDOM.observeChildren : undefined;
+const unobserveChildrenMethod = window.ShadyDOM ? window.ShadyDOM.unobserveChildren : undefined;
+setCreateObserverCallback(observeChildrenMethod);
+setDestroyObserverCallback(unobserveChildrenMethod);
 
 // Set the custom Resize observer implementation for observe/unobserve
 setResizeHandlerObserveFn(customObserve);
