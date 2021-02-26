@@ -1,5 +1,5 @@
-commit 17cb7583961c1a5afecc10a6581b55b132ba15f0
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Feb 26 10:46:56 2021 +0200
+commit 76ef62cf1a9bde8519733b258c2a35f8d6477fa8
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Fri Feb 26 11:02:45 2021 +0200
 
-    feat: add new supported languages (#2869)
+    fix(ui5-multi-combobox): correct focus handling when picker is opened via icon (#2868)
