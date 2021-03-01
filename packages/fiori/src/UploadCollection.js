@@ -73,7 +73,7 @@ const metadata = {
 
 		/**
 		 * By default there will be drag and drop overlay shown over the <code>ui5-upload-collection</code> when files
-		 * are dragged. If you don't intend to use drag and drop, add this attribute.
+		 * are dragged. If you don't intend to use drag and drop, set this property.
 		 * <br><br>
 		 * <b>Note:</b> It is up to the application developer to add handler for <code>drop</code> event and handle it.
 		 * <code>ui5-upload-collection</code> only shows an overlay.
@@ -141,7 +141,7 @@ const metadata = {
 		 * Fired when the Delete button of any item is pressed.
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
-		 * when the <code>ui5-upload-collection</code> <code>mode</code> attribute is set to <code>Delete</code>.
+		 * when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
 		 * @event sap.ui.webcomponents.fiori.UploadCollection#file-deleted
 		 * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
 		 * @public
