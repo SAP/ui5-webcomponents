@@ -175,4 +175,39 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "5",
 			"Event selection-change fired once for 5th time due to scrolling.");
 	});
+
+	it("tests no scrolling to selected step, if the selection was not changed", ()=>{
+		browser.url("http://localhost:8081/test-resources/pages/Wizard_test.html");
+
+		const wizard = browser.$("#wizTest");
+		const wizardContentDOM = wizard.shadow$(".ui5-wiz-content");
+		const btnToStep2 = browser.$("#toStep2");
+
+		// (1) - go to step 2
+		btnToStep2.click();
+
+		// (2) - scroll a bit upwards to get back to step 1 (at least its bottom part)
+		btnToStep2.scrollIntoView();
+
+		// (3) store the scroll position after scrolling upwards
+		const scrolPosBefore = browser.execute((wizardContentDOM) => {
+			return wizardContentDOM.scrollTop
+		}, wizardContentDOM);
+
+		// (4) simulate re-rendering
+		browser.execute((wizard) => {
+			wizard.onAfterRendering();
+		}, wizard);
+
+		// (5) store the scroll position after re-rendering
+		const scrolPosAfter = browser.execute((wizardContentDOM) => {
+			return wizardContentDOM.scrollTop
+		}, wizardContentDOM);
+
+		// assert - The Wizard did not scroll to the very top of the step 1
+		assert.strictEqual(scrolPosBefore, scrolPosAfter,
+			"No scrolling occures after re-rendering when the selected step remains the same.");
+
+		browser.pause(5000);
+	});
 });
