@@ -424,7 +424,7 @@ class UploadCollectionItem extends ListItem {
 	get disableDeleteButton() {
 		return this.noDelete;
 	}
- 
+
 	get _fileNameWithoutExtension() {
 		return this.fileName.substring(0, this.fileName.length - this._fileExtension.length);
 	}
