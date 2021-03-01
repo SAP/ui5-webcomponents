@@ -1,5 +1,5 @@
-commit 70bbfbb6661cecb5f13a57cbc356c83ffd8afe49
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Feb 26 16:54:15 2021 +0200
+commit 35de38c24fea80bca00940c51b5eb9c07b2978b5
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Mon Mar 1 14:24:11 2021 +0200
 
-    fix(framework): adapt ie11 package for usage in modern browsers (#2878)
+    fix(ui5-upload-collection): add tooltip to edit button (#2886)
