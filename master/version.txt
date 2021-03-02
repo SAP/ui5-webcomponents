@@ -1,10 +1,5 @@
-commit b10ee4ccdd0bc38cb52460881f8b7c81248d1139
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 2 11:54:46 2021 +0200
+commit c9f86a7daf550a7895234bc74e6d279bdc2be601
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Tue Mar 2 15:45:06 2021 +0200
 
-    fix(ui5-page): correct background-design styles (#2862)
-    
-    The styles used to rely on the property name backgroundDesign, which is not correct as in the DOM we use the attribute name background-design. In addition, the "Standard" background design is removed, because it's the same as "Solid".
-    As a result the background Design default value is changed from "Standard" to "Solid".
-    
-    BREAKING_CHANGE: The backgroundDesign default value is changed from "Standard" to "Solid".
+    fix(ui5-label): text-align works with wrap property (#2889)
