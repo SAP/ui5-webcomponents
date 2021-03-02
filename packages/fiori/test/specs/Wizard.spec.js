@@ -207,7 +207,5 @@ describe("Wizard general interaction", () => {
 		// assert - The Wizard did not scroll to the very top of the step 1
 		assert.strictEqual(scrolPosBefore, scrolPosAfter,
 			"No scrolling occures after re-rendering when the selected step remains the same.");
-
-		browser.pause(5000);
 	});
 });
