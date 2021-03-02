@@ -1,9 +1,9 @@
-commit c967c6ccd0df90c9ec91d5d38dccf2a272f9b0ce
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 2 10:20:53 2021 +0200
+commit 9e409e6caaabe9491dd9512a7a1446e51a17387f
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Tue Mar 2 10:32:26 2021 +0200
 
-    fix(ui5-wizard): use CSS vars for navigation bg-color (#2892)
+    fix(ui5-input): remove the 'submit' event (#2855)
     
-    We introduced a small degradation with the following [PR](https://github.com/SAP/ui5-webcomponents/pull/2590), using a fixed color, instead of CSS var. Now, the Wizard navigation looks fine in all themes:
+    The 'submit' event fired from the ui5-input component is now removed as it is an event of the 'form' element and not of the input ones. From now on, the submit (event) must be triggered manually when enter key is pressed.
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2877
+    BREAKING CHANGE: the 'submit' event is now removed. The 'submit' functionality must be added with a custom code - listen for the standard "keydown" event and check if ENTER is pressed to submit a form, containing the input component.

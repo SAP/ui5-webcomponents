@@ -2894,13 +2894,6 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                       </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">submit</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when user presses Enter key on the <code>ui5-input</code>. <br><br> <b>Note:</b> The event is fired independent of whether there was a change before or not. If change was performed, the event is fired after the change event. The event is also fired when an item of the select list is selected by pressing Enter.
-                        </div>
-                      </div>
-            
-                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">suggestion-item-preview</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when the user navigates to a suggestion item via the ARROW keys, as a preview, before the final selection.
@@ -2920,7 +2913,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> The DOM ref of the suggestion item.</div>
                           </div>
                         </tr>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">suggestion-item-select</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
@@ -2933,7 +2926,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> The selected item</div>
                           </div>
                         </tr>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">suggestion-scroll</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                         Fired when the user scrolls the suggestion popover.
