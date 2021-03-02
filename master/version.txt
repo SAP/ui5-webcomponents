@@ -1,9 +1,10 @@
-commit 9e409e6caaabe9491dd9512a7a1446e51a17387f
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Tue Mar 2 10:32:26 2021 +0200
+commit b10ee4ccdd0bc38cb52460881f8b7c81248d1139
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 2 11:54:46 2021 +0200
 
-    fix(ui5-input): remove the 'submit' event (#2855)
+    fix(ui5-page): correct background-design styles (#2862)
     
-    The 'submit' event fired from the ui5-input component is now removed as it is an event of the 'form' element and not of the input ones. From now on, the submit (event) must be triggered manually when enter key is pressed.
+    The styles used to rely on the property name backgroundDesign, which is not correct as in the DOM we use the attribute name background-design. In addition, the "Standard" background design is removed, because it's the same as "Solid".
+    As a result the background Design default value is changed from "Standard" to "Solid".
     
-    BREAKING CHANGE: the 'submit' event is now removed. The 'submit' functionality must be added with a custom code - listen for the standard "keydown" event and check if ENTER is pressed to submit a form, containing the input component.
+    BREAKING_CHANGE: The backgroundDesign default value is changed from "Standard" to "Solid".
