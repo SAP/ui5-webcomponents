@@ -257,6 +257,7 @@ const metadata = {
 		 *
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBar#notifications-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
@@ -284,6 +285,7 @@ const metadata = {
 		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBar#product-switch-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */

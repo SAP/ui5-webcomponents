@@ -140,6 +140,7 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.main.Tree#item-toggle
 		 * @param {HTMLElement} item the toggled item.
+		 * @allowPreventDefault
 		 * @public
 		 */
 		"item-toggle": {
