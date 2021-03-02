@@ -68,7 +68,7 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	background: #fff;
+	background-color: var(--sapObjectHeader_Background);
 	font-size: .875rem;
 	box-shadow: var(--sapContent_HeaderShadow);
 	outline: none;
