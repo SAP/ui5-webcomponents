@@ -26,6 +26,14 @@ describe("Button general interaction", () => {
 		assert.strictEqual(btnImage.isDisplayed(), true, "Btn image is rendered");
 	});
 
+    it("tests button's icon only rendering", () => {
+        const oButtonIconOnlyComment = browser.$("#icon-only-comment");
+        const oButtonIconOnlyBlankText = browser.$("#icon-only-blank-text");
+
+        assert.strictEqual(oButtonIconOnlyComment.getAttribute("icon-only"), "", "Button comment has attribute icon-only");
+        assert.strictEqual(oButtonIconOnlyBlankText.getAttribute("icon-only"), "", "Button blank text has attribute icon-only");
+    });
+
 	it("tests click event", () => {
 		const button = browser.$("#button1");
 		const field = browser.$("#click-counter");
@@ -92,5 +100,5 @@ describe("Button general interaction", () => {
 		button.removeAttribute("aria-expanded");
 
 		assert.strictEqual(innerButton.getAttribute("aria-expanded"), null, "Attribute is reflected");
-	})
+	});
 });
