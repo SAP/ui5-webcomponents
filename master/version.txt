@@ -1,5 +1,5 @@
-commit 35de38c24fea80bca00940c51b5eb9c07b2978b5
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Mon Mar 1 14:24:11 2021 +0200
+commit 05fc06e43abd5983972eb7dc87fd1b06e5b8d990
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Mar 2 08:59:35 2021 +0200
 
-    fix(ui5-upload-collection): add tooltip to edit button (#2886)
+    fix: ensure locales don't use reserved JS names (#2885)
