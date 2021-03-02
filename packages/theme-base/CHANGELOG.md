@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.5](https://github.com/SAP/ui5-webcomponents/compare/v0.29.4...v0.29.5) (2021-03-02)
+
+
+### Bug Fixes
+
+* **ui5-datepicker:** Today date takes the timezone into consideration ([42ee417](https://github.com/SAP/ui5-webcomponents/commit/42ee417))
+
+
+### Features
+
+* **ui5-panel:** implement accessibleName ([#2860](https://github.com/SAP/ui5-webcomponents/issues/2860)) ([3ccf7ad](https://github.com/SAP/ui5-webcomponents/commit/3ccf7ad))
+
+
+
+
+
 ## [0.29.2](https://github.com/SAP/ui5-webcomponents/compare/v0.29.1...v0.29.2) (2021-02-09)
 
 **Note:** Version bump only for package @ui5/webcomponents-theme-base

@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.5](https://github.com/SAP/ui5-webcomponents/compare/v0.29.4...v0.29.5) (2021-03-02)
+
+
+### Bug Fixes
+
+* **ui5-checkbox:** set aria-hidden attribute ([#2828](https://github.com/SAP/ui5-webcomponents/issues/2828)) ([0858466](https://github.com/SAP/ui5-webcomponents/commit/0858466)), closes [#2786](https://github.com/SAP/ui5-webcomponents/issues/2786)
+* **ui5-datepicker:** Today date takes the timezone into consideration ([42ee417](https://github.com/SAP/ui5-webcomponents/commit/42ee417))
+* **ui5-icon:** fix click event fired twice ([#2858](https://github.com/SAP/ui5-webcomponents/issues/2858)) ([7d9e409](https://github.com/SAP/ui5-webcomponents/commit/7d9e409)), closes [#2857](https://github.com/SAP/ui5-webcomponents/issues/2857)
+* **ui5-icon:** work of applied styles ([#2872](https://github.com/SAP/ui5-webcomponents/issues/2872)) ([c65291e](https://github.com/SAP/ui5-webcomponents/commit/c65291e)), closes [#2839](https://github.com/SAP/ui5-webcomponents/issues/2839)
+* **ui5-li-custom:** keyboard handling improvement ([#2870](https://github.com/SAP/ui5-webcomponents/issues/2870)) ([586bfa4](https://github.com/SAP/ui5-webcomponents/commit/586bfa4)), closes [#2849](https://github.com/SAP/ui5-webcomponents/issues/2849)
+* **ui5-popover, ui5-dialog:** do not render empty headers ([#2770](https://github.com/SAP/ui5-webcomponents/issues/2770)) ([bb4be7f](https://github.com/SAP/ui5-webcomponents/commit/bb4be7f)), closes [#2694](https://github.com/SAP/ui5-webcomponents/issues/2694)
+* **ui5-popup:** prevent focus on elements below block layer ([#2800](https://github.com/SAP/ui5-webcomponents/issues/2800)) ([2ad3f4b](https://github.com/SAP/ui5-webcomponents/commit/2ad3f4b)), closes [#2626](https://github.com/SAP/ui5-webcomponents/issues/2626)
+
+
+### Features
+
+* **ui5-panel:** implement accessibleName ([#2860](https://github.com/SAP/ui5-webcomponents/issues/2860)) ([3ccf7ad](https://github.com/SAP/ui5-webcomponents/commit/3ccf7ad))
+* **ui5-step-input:** inintial implementation ([#2804](https://github.com/SAP/ui5-webcomponents/issues/2804)) ([00dcf47](https://github.com/SAP/ui5-webcomponents/commit/00dcf47)), closes [#2640](https://github.com/SAP/ui5-webcomponents/issues/2640)
+
+
+
+
+
 ## [0.29.2](https://github.com/SAP/ui5-webcomponents/compare/v0.29.1...v0.29.2) (2021-02-09)
 
 

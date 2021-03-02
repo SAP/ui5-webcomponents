@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.5](https://github.com/SAP/ui5-webcomponents/compare/v0.29.4...v0.29.5) (2021-03-02)
+
+
+### Features
+
+* **ui5-step-input:** inintial implementation ([#2804](https://github.com/SAP/ui5-webcomponents/issues/2804)) ([00dcf47](https://github.com/SAP/ui5-webcomponents/commit/00dcf47)), closes [#2640](https://github.com/SAP/ui5-webcomponents/issues/2640)
+
+
+
+
+
 ## [0.29.2](https://github.com/SAP/ui5-webcomponents/compare/v0.29.1...v0.29.2) (2021-02-09)
 
 
