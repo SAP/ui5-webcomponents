@@ -1,5 +1,9 @@
-commit 05fc06e43abd5983972eb7dc87fd1b06e5b8d990
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Mar 2 08:59:35 2021 +0200
+commit c967c6ccd0df90c9ec91d5d38dccf2a272f9b0ce
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 2 10:20:53 2021 +0200
 
-    fix: ensure locales don't use reserved JS names (#2885)
+    fix(ui5-wizard): use CSS vars for navigation bg-color (#2892)
+    
+    We introduced a small degradation with the following [PR](https://github.com/SAP/ui5-webcomponents/pull/2590), using a fixed color, instead of CSS var. Now, the Wizard navigation looks fine in all themes:
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2877
