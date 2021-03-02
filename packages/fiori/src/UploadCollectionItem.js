@@ -422,8 +422,8 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * @override
 	 */
-	get modeDelete() {
-		return !this.noDelete && super.modeDelete;
+	get disableDeleteButton() {
+		return this.noDelete;
 	}
 
 	get _fileNameWithoutExtension() {
