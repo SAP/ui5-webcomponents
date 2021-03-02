@@ -195,8 +195,11 @@ class Wizard extends UI5Element {
 		// Stores references to the grouped steps.
 		this._groupedTabs = [];
 
-		// Keeps track of the selected step index.
+		// Keeps track of the currently selected step index.
 		this.selectedStepIndex = 0;
+
+		// Keeps track of the previously selected step index.
+		this.previouslySelectedStepIndex = 0;
 
 		// Indicates that selection will be changed
 		// due to user click.
@@ -285,8 +288,13 @@ class Wizard extends UI5Element {
 
 	onAfterRendering() {
 		this.storeStepScrollOffsets();
-		this.scrollToSelectedStep();
+
+		if (this.previouslySelectedStepIndex !== this.selectedStepIndex) {
+			this.scrollToSelectedStep();
+		}
+
 		this.attachStepsResizeObserver();
+		this.previouslySelectedStepIndex = this.selectedStepIndex;
 	}
 
 	/**
