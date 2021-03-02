@@ -277,14 +277,15 @@ describe("MultiComboBox general interaction", () => {
 
 		it ("aria-describedby value according to the tokens count", () => {
 			const mcb = $("#mcb-compact");
+
+			mcb.scrollIntoView();
+			browser.pause(500);
+
 			const innerInput = mcb.shadow$("input");
 			const invisibleText = mcb.shadow$(".ui5-hidden-text");
 			const inivisbleTextId = invisibleText.getProperty("id");
 			let tokens = mcb.shadow$$(".ui5-multi-combobox-token");
 			let resourceBundleText = null;
-
-			mcb.scrollIntoView();
-			browser.pause(500)
 
 			assert.strictEqual(tokens.length, 2, "should have two tokens");
 			assert.strictEqual(innerInput.getAttribute("aria-describedby"), inivisbleTextId, "aria-describedby reference is correct");
