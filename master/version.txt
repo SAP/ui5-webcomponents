@@ -1,5 +1,5 @@
-commit c9f86a7daf550a7895234bc74e6d279bdc2be601
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Tue Mar 2 15:45:06 2021 +0200
+commit ee74047fc3787c613779d6a9a0e00c25e2375528
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Mar 3 14:22:07 2021 +0200
 
-    fix(ui5-label): text-align works with wrap property (#2889)
+    chore: Set @allowPreventDefault metadata for events (#2898)
