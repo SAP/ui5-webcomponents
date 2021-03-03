@@ -97,6 +97,7 @@ const metadata = {
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-open
+		 * @allowPreventDefault
 		 */
 		"before-open": {},
 
@@ -113,6 +114,7 @@ const metadata = {
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-close
+		 * @allowPreventDefault
 		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
 		"before-close": {
