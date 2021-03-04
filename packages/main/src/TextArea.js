@@ -401,7 +401,6 @@ class TextArea extends UI5Element {
 			// this should be complex calc between line height and paddings - TODO: make it stable
 			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
 		}
-		debugger;
 
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
