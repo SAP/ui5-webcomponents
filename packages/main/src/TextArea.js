@@ -292,6 +292,17 @@ const metadata = {
 		valueStateMessage: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
@@ -390,6 +401,7 @@ class TextArea extends UI5Element {
 			// this should be complex calc between line height and paddings - TODO: make it stable
 			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
 		}
+		debugger;
 
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
