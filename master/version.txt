@@ -1,5 +1,5 @@
-commit ee74047fc3787c613779d6a9a0e00c25e2375528
+commit e04f70f50d0866586e2f611f60862d2734c2aec3
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 3 14:22:07 2021 +0200
+Date:   Fri Mar 5 09:10:20 2021 +0200
 
-    chore: Set @allowPreventDefault metadata for events (#2898)
+    chore(framework): Register all themes (#2908)
