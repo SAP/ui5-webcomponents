@@ -57,6 +57,7 @@ const metadata = {
 		 * Fired, when the item is pressed.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBarItem#item-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */

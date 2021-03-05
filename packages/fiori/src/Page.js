@@ -43,7 +43,7 @@ const metadata = {
 		 * Disables vertical scrolling of page content.
 		 * If set to true, there will be no vertical scrolling at all.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -55,7 +55,7 @@ const metadata = {
 		 * Defines if the footer should float over the content.
 		 * <br><br>
 		 * <b>Note:</b> When set to true the footer floats over the content with a slight offset from the bottom, otherwise it is fixed at the very bottom of the page.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue true
 		 * @public
 		 */
@@ -66,7 +66,7 @@ const metadata = {
 		/**
 		 * Defines the footer visibility.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */

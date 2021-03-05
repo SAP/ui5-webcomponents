@@ -31,7 +31,7 @@ const metadata = {
 		/**
 		 * Defines whether the user can choose a custom color from a color picker
 		 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @public
 		 * @since 1.0.0-rc.12
 		 */
@@ -74,7 +74,7 @@ const metadata = {
 		change: {
 			details: {
 				color: {
-					type: "String",
+					type: String,
 				},
 			},
 		 },

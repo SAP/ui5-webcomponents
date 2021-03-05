@@ -150,7 +150,7 @@ const metadata = {
 		 * Defines whether the <code>ui5-select</code> is required.
 		 *
 		 * @since 1.0.0-rc.9
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */

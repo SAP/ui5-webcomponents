@@ -91,8 +91,10 @@ const metadata = {
 		 * @public
 		 */
 		"selection-change": {
-			item: {
-				type: HTMLElement,
+			detail: {
+				item: {
+					type: HTMLElement,
+				},
 			},
 		},
 	},

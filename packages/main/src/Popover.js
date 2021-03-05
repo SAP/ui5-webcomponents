@@ -291,6 +291,8 @@ class Popover extends Popup {
 	 * @param {HTMLElement} opener the element that the popover is opened by
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
+	 * @async
+	 * @returns {Promise} Resolved when the popover is open
 	 */
 	async openBy(opener, preventInitialFocus = false) {
 		if (!opener || this.opened) {

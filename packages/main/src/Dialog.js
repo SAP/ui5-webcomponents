@@ -183,6 +183,18 @@ class Dialog extends Popup {
 		return [PopupsCommonCss, dialogCSS];
 	}
 
+	/**
+	 * Opens the dialog
+	 *
+	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
+	 * @async
+	 * @returns {Promise} Resolves when the popup is open
+	 * @public
+	 */
+	async open(preventInitialFocus) {
+		await super.open(preventInitialFocus);
+	}
+
 	get isModal() { // Required by Popup.js
 		return true;
 	}

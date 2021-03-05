@@ -745,7 +745,7 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns all items that will be placed in the right of the bar as icons / dom elements.
-	 * @param {Boolean} showOverflowButton Determines if overflow button should be visible (not overflowing)
+	 * @param {boolean} showOverflowButton Determines if overflow button should be visible (not overflowing)
 	 */
 	_getAllItems(showOverflowButton) {
 		let domOrder = -1;
