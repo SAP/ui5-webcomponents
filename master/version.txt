@@ -1,5 +1,9 @@
-commit 6480f32f5e5227d3b9a400bd868b0825148cd594
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Mar 5 11:48:21 2021 +0200
+commit 0a074c90e61450d9036e7ecdb555eb894c2aefbf
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Fri Mar 5 18:17:30 2021 +0200
 
-    docs: Improve methods documentation (#2913)
+    fix(ui5-select): incorrect value color is now fixed (#2914)
+    
+    Select's label color fixed
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2803
