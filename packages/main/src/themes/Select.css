@@ -36,6 +36,6 @@
 	cursor: pointer;
 }
 
-:host([opened]) {
+:host([value-state]:not([value-state="None"])[focused][opened]) {
 	outline: none;
 }
