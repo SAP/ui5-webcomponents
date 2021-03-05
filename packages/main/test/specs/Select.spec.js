@@ -122,7 +122,7 @@ describe("Select general interaction", () => {
 		assert.strictEqual(selectionText.getHTML(false), "", "Selection announcement text should be cleared on focusout");
 
 		assert.strictEqual(inputResult.getProperty("value"), "3", "Change event should have fired twice");
-	}).timeout(999999);
+	});
 
 	it("changes selection on Tab", () => {
 		const select = browser.$("#keyboardHandling");
