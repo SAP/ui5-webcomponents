@@ -760,7 +760,7 @@ class Input extends UI5Element {
 
 	/**
 	 * Checks if the value state popover is open.
-	 * @returns {Boolean} true if the popover is open, false otherwise
+	 * @returns {boolean} true if the popover is open, false otherwise
 	 * @public
 	 */
 	isOpen() {

@@ -108,7 +108,7 @@ const metadata = {
 		/**
 		 * Defines whether the <code>ui5-step-input</code> is required.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -502,7 +502,7 @@ class StepInput extends UI5Element {
 	 * decrement buttons according to the value and min/max values (if set). Fires <code>change</code> event when requested
 	 *
 	 * @param {Float} modifier modifies the value of the component with the given modifier (positive or negative)
-	 * @param {Boolean} fireChangeEvent if <code>true</code>, fires <code>change</code> event when the value is changed
+	 * @param {boolean} fireChangeEvent if <code>true</code>, fires <code>change</code> event when the value is changed
 	 */
 	_modifyValue(modifier, fireChangeEvent) {
 		let value;
