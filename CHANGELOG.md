@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.6](https://github.com/SAP/ui5-webcomponents/compare/v0.29.5...v0.29.6) (2021-05-02)
+
+### Bug Fixes
+
+* **ui5-popup:** correct focus when there is no focusable content ([#2583](https://github.com/SAP/ui5-webcomponents/issues/2583)) ([bf8caaf](https://github.com/SAP/ui5-webcomponents/commit/bf8caaf)), closes [#2556](https://github.com/SAP/ui5-webcomponents/issues/2556])
+
+
 ## [0.29.5](https://github.com/SAP/ui5-webcomponents/compare/v0.29.4...v0.29.5) (2021-03-02)
 
 
@@ -74,10 +81,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 The release includes all the commits from [RC.11](https://github.com/SAP/ui5-webcomponents/releases/tag/v1.0.0-rc.11)
 # [0.29.0](https://github.com/SAP/ui5-webcomponents/compare/v0.29.0) (2021-01-08)
 
-# Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 # [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
 
