@@ -188,7 +188,7 @@ class Dialog extends Popup {
 	 *
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
 	 * @async
-	 * @returns {Promise} Resolves when the popup is open
+	 * @returns {Promise} Resolves when the dialog is open
 	 * @public
 	 */
 	async open(preventInitialFocus) {
