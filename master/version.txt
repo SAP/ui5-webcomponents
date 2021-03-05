@@ -1,5 +1,5 @@
-commit e04f70f50d0866586e2f611f60862d2734c2aec3
+commit 6480f32f5e5227d3b9a400bd868b0825148cd594
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Mar 5 09:10:20 2021 +0200
+Date:   Fri Mar 5 11:48:21 2021 +0200
 
-    chore(framework): Register all themes (#2908)
+    docs: Improve methods documentation (#2913)
