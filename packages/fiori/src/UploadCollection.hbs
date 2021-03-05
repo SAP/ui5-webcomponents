@@ -1,4 +1,8 @@
-<div class="ui5-uc-root" @drop="{{_ondrop}}">
+<div
+	class="ui5-uc-root"
+	role="region"
+	aria-roledescription="{{_roleDescription}}"
+	@drop="{{_ondrop}}">
 	<div class="ui5-uc-header">
 		<slot name="header"></slot>
 	</div>
