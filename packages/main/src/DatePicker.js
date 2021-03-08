@@ -479,17 +479,20 @@ class DatePicker extends DateComponentBase {
 
 		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, this._minDate, this._maxDate);
 		const newValue = this.formatValue(modifiedDate.toUTCJSDate());
-		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"], true);
 	}
 
-	_updateValueAndFireEvents(value, normalizeValue, events) {
+	_updateValueAndFireEvents(value, normalizeValue, events, shouldChangeValueState) {
 		const valid = this._checkValueValidity(value);
 		if (valid && normalizeValue) {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
-
+		
 		this.value = value;
-		this._updateValueState(); // Change the value state to Error/None, but only if needed
+
+		if (shouldChangeValueState) {
+			this._updateValueState(); // Change the value state to Error/None, but only if needed
+		}
 		events.forEach(event => {
 			this.fireEvent(event, { value, valid });
 		});
@@ -524,7 +527,7 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	_onInputChange(event) {
-		this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
+		this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"], true);
 	}
 
 	/**
@@ -532,7 +535,7 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	async _onInputInput(event) {
-		this._updateValueAndFireEvents(event.target.value, false, ["input"]);
+		this._updateValueAndFireEvents(event.target.value, false, ["input"], false);
 	}
 
 	/**
@@ -673,7 +676,7 @@ class DatePicker extends DateComponentBase {
 	onSelectedDatesChange(event) {
 		event.preventDefault();
 		const newValue = event.detail.values && event.detail.values[0];
-		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"], true);
 
 		this._focusInputAfterClose = true;
 		this.closePicker();

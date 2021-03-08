@@ -917,4 +917,16 @@ describe("Date Picker Tests", () => {
 		browser.keys(["Control", "A"]);
 		browser.keys("Backspace");
 	});
+
+	it("Value state changes only on submit", () => {
+		datepicker.id = "#dp33";
+		datepicker.innerInput.click();
+		browser.keys("somereallylongtextthatshouldcheckifwevalidateoninput");
+
+		assert.equal(datepicker.input.getProperty("valueState"), "None", "value state of the input is valid");
+
+		browser.keys("Enter");
+
+		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
+	});
 });
