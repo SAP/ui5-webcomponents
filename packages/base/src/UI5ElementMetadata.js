@@ -1,4 +1,6 @@
 import DataType from "./types/DataType.js";
+import Integer from "./types/Integer.js";
+import Float from "./types/Float.js";
 import isDescendantOf from "./util/isDescendantOf.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
 import { getSlottedElements } from "./util/SlotsHelper.js";
@@ -283,6 +285,10 @@ class UI5ElementMetadata {
 
 const validateSingleProperty = (value, propData) => {
 	const propertyType = propData.type;
+
+	if ([Integer, Float].includes(propertyType) && typeof value === "string") { // Allow passing strings that contain a number to Integer and Float types
+		value = Number(value);
+	}
 
 	if (propertyType === Boolean) {
 		return typeof value === "boolean" ? value : false;
