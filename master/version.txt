@@ -1,9 +1,10 @@
-commit 0a074c90e61450d9036e7ecdb555eb894c2aefbf
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Fri Mar 5 18:17:30 2021 +0200
+commit 3ef7619b20372f8dbd26fe2cf3d5ea4958c375a5
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Mar 8 10:53:18 2021 +0200
 
-    fix(ui5-select): incorrect value color is now fixed (#2914)
+    docs: describe formSupport slot (#2909)
     
-    Select's label color fixed
+    When some of the components such as FileUploader, Checkbox, Select are used with "name" attribute and FormSupport is enabled, the insertion of the native input with slot="formSupport" throws t warnings as the slot is unknown to component's metadata.
+    Minor fix: when the Select has no options, the code that tries to get the value from the selected option used to fail.
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2803
+    FIXES: #2902
