@@ -542,9 +542,24 @@ class Popover extends Popup {
 
 		this._maxContentHeight = maxContentHeight;
 
-		const arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
-		const arrowTranslateX = isVertical && arrowXCentered ? targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2 : 0;
-		const arrowTranslateY = !isVertical ? targetRect.top + targetRect.height / 2 - top - popoverSize.height / 2 : 0;
+		let arrowXCentered = (this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch);
+		if (this.horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
+			arrowXCentered = true;
+		}
+
+		if (this.horizontalAlign === PopoverHorizontalAlign.Left && left + popoverSize.width >= targetRect.left + targetRect.width) {
+			arrowXCentered = true;
+		}
+
+		let arrowTranslateX = 0;
+		if (isVertical && arrowXCentered) {
+			arrowTranslateX = targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2;
+		}
+
+		let arrowTranslateY = 0;
+		if (!isVertical) {
+			arrowTranslateY = targetRect.top + targetRect.height / 2 - top - popoverSize.height / 2;
+		}
 
 		if (this._left === undefined || Math.abs(this._left - left) > 1.5) {
 			this._left = Math.round(left);

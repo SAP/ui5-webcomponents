@@ -368,6 +368,15 @@
 		</div>
 	</ui5-popover>
 
+	<div style="text-align: right;">
+		<p>Right-aligned Popover, wider than button, arrow should be centered on the button</p>
+		<ui5-button id="btnOpenXRightWide">Open</ui5-button>
+	</div>
+
+	<ui5-popover id="popXRightWide" placement-type="Bottom" horizontal-align="Right">
+		Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni architecto tenetur quia nam reprehenderit quas eveniet possimus similique quisquam culpa distinctio ex doloremque molestiae maxime sed harum, in exercitationem! Incidunt?
+	</ui5-popover>
+
 	<br>
 	<br>
 
@@ -500,6 +509,14 @@
 
 		btnOpenPopoverWithDiv.addEventListener("click", function (event) {
 			popWithDiv.openBy(event.target);
+		});
+
+		btnRightEdge.addEventListener("click", function () {
+			popoverRightEdge.openBy(btnRightEdge);
+		});
+
+		btnOpenXRightWide.addEventListener("click", function () {
+			popXRightWide.openBy(btnOpenXRightWide);
 		});
 
 	</script>
