@@ -1,5 +1,5 @@
-commit 92691b2964030c33bb03313c278c9272ef713deb
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Mar 8 14:47:34 2021 +0200
+commit 6db9f09a02bc4fbbcec9964e42a72c4de705098e
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Tue Mar 9 14:36:01 2021 +0200
 
-    ui5-multicombobox: fix failing test (#2890)
+    fix(ui5-upload-collection): add region and roledescription to root element (#2915)
