@@ -89,10 +89,14 @@ const metadata = {
 			defaultValue: AvatarSize.S,
 		},
 
+		overflowButtonText: {
+			type: String,
+		},
+
 		/**
 		 * @private
 		 */
-		_overflowButtonText: {
+		_btnText: {
 			type: String,
 			noAttribute: true,
 		},
@@ -246,7 +250,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get _overflowBtnHidden() {
-		return this._hiddenItems === 0;
+		return this._hiddenItems === 0 && !this.overflowButtonText;
 	}
 
 	get _isGroup() {
@@ -262,7 +266,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get _overflowButtonTabIndex() {
-		return this._isGroup ? "-1" : false;
+		return this._isGroup ? true : false;
 	}
 
 	get _overflowButton() {
@@ -457,7 +461,11 @@ class AvatarGroup extends UI5Element {
 			item.hidden = index >= this._hiddenStartIndex;
 		});
 
-		this._overflowButtonText = `+${hiddenItems > 99 ? 99 : hiddenItems}`;
+		this._btnText = `+${hiddenItems > 99 ? 99 : hiddenItems}`;
+	}
+
+	get correctBtnText() {
+		return this.overflowButtonText ? this.overflowButtonText : this._btnText;
 	}
 }
 
