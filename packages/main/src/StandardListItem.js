@@ -98,7 +98,7 @@ const metadata = {
 		/**
 		 * Defines the text of the <code>ui5-li</code>.
 		 * <br><br>
-		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -123,6 +123,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.StandardListItem
  * @extends ListItem
  * @tagname ui5-li
+ * @implements sap.ui.webcomponents.main.IListItem
  * @public
  */
 class StandardListItem extends ListItem {

@@ -60,19 +60,15 @@
 }
 
 /* BackgroundDesign */
-:host([backgroundDesign="Standard"]) {
-	background-color: var(--sapBackgroundColor);
+:host([background-design="Solid"]) {
+    background-color: var(--sapBackgroundColor);
 }
 
-:host([backgroundDesign="Solid"]) {
-	background-color: var(--sapBackgroundColor);
-}
-
-:host([backgroundDesign="Transparent"]) {
+:host([background-design="Transparent"]) {
     background-color: transparent;
 }
 
-:host([backgroundDesign="List"]) {
+:host([background-design="List"]) {
     background-color: var(--_ui5_page_list_bg);
 }
 

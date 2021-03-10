@@ -496,7 +496,7 @@ class RangeSlider extends SliderBase {
 	/**
 	 * Flag if press action is made on the currently selected range of values
 	 *
-	 * @param {Boolean} isPressInCurrentRange Did the current press action occur in the current range (between the two handles)
+	 * @param {boolean} isPressInCurrentRange Did the current press action occur in the current range (between the two handles)
 	 * @private
 	 */
 	_setIsPressInCurrentRange(isPressInCurrentRange) {

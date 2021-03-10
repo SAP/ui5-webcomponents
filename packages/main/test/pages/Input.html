@@ -18,7 +18,6 @@
 	<h3> Input with suggestions: type 'a'</h3>
 	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
 
 	<div>
@@ -220,6 +219,11 @@
 		<ui5-icon slot="icon" name="decline" style="padding-left: 8px; padding-right: 8px"></ui5-icon>
 	</ui5-input>
 
+	<h3> Input firing submit event and submit action on 'ENTER' in a form</h3>
+	<form id="submit-form">
+		<ui5-input id="submit-input" name="my-submit-input" placeholder="Type something and press 'ENTER' ..."></ui5-input>
+	</form>
+
 	<h3> Test scroll pos</h3>
 	<ui5-input id="scrollInput" show-suggestions>
 		<ui5-li>Cozy</ui5-li>
@@ -307,7 +311,40 @@
 		</ui5-input>
 	</ui5-dialog>
 
+	<h3>Short Input With Centered Text</h3>
+	<ui5-input class="short" value="244"></ui5-input>
+	<style>
+		.short {
+			width: 2.5rem;
+			min-width: 2.5rem;
+			text-align: center;
+		}
+	</style>
+
 	<script>
+		document.getElementById("submit-input").addEventListener("keypress", function(event) {
+			if (event.key === 'Enter') {
+				var formToSubmit = document.getElementById("submit-form");
+				var submitEvent = new Event('submit');
+				
+				/* The old way - supported by all browsers:
+				The submit method of the form won't trigger
+				a submit event by itself, dispatch it manually */
+
+				// formToSubmit.dispatchEvent(submitEvent);
+				// formToSubmit.submit();
+
+				// Fires submit event and submits
+				// No MS IE11 & Safari support yet
+				formToSubmit.requestSubmit()
+			}
+		});
+
+		document.getElementById("submit-form").addEventListener("submit", function(event) {
+			event.preventDefault();
+			alert("Submitted");
+		});
+
 		btnOpenDialog.addEventListener("click", function () {
 			dialog.open();
 		});
@@ -325,7 +362,6 @@
 		var label = document.getElementById('myLabel');
 		var labelChange = document.getElementById('myLabelChange');
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
-		var labelSubmit = document.getElementById('myLabelSubmit');
 
 		var suggestionSelectedCounterWithGrouping = 0;
 
@@ -380,10 +416,6 @@
 			labelChange.innerHTML = "Event [change] :: " + event.target.value;
 		});
 
-		input.addEventListener("ui5-submit", function (event) {
-			labelSubmit.innerHTML = "Event [submit] :: " + event.target.value;
-		});
-
 		var changeCounter = 0;
 		var inputCounter = 0;
 		var suggestionSelectedCounter = 0;
@@ -406,9 +438,6 @@
 
 		var inputChangeResultCounter = 0;
 
-		inputChange.addEventListener("ui5-submit", function (event) {
-			inputChange.value = "Changed via API";
-		});
 		inputChange.addEventListener("ui5-change", function (event) {
 			inputChangeResult.value = ++inputChangeResultCounter;
 		});

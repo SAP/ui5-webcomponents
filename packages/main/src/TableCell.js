@@ -61,6 +61,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.TableCell
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-cell
+ * @implements sap.ui.webcomponents.main.ITableCell
  * @public
  */
 class TableCell extends UI5Element {

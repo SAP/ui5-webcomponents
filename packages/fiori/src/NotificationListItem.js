@@ -86,7 +86,7 @@ const metadata = {
 		 * we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
 		 * you can set its <code>size</code><code> property to <code>XS</code> to get the required size - <code><ui5-avatar size="XS"></code>.
 		 *
-		 * @type {HTMLElement}
+		 * @type {sap.ui.webcomponents.main.IAvatar}
 		 * @slot
 		 * @public
 		 */
@@ -97,7 +97,7 @@ const metadata = {
 		/**
 		 * Defines the elements, dipalyed in the footer of the of the <code>ui5-li-notification</code>.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot footnotes
 		 * @public
 		 */
 		footnotes: {
@@ -111,10 +111,10 @@ const metadata = {
 		 * usually a description of the notification.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
-		 * @slot
+		 * @slot description
 		 * @public
 		 */
 		"default": {
@@ -161,6 +161,7 @@ const metadata = {
  * @tagname ui5-li-notification
  * @appenddocs NotificationAction
  * @since 1.0.0-rc.8
+ * @implements sap.ui.webcomponents.fiori.INotificationListItem, sap.ui.webcomponents.main.IListItem
  * @public
  */
 class NotificationListItem extends NotificationListItemBase {

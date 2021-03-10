@@ -2838,6 +2838,9 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 				if (member.slot) {
 					tag("property");
 					attrib("name", member.name);
+					if (member.propertyName) {
+						attrib("propertyName", member.propertyName);
+					}
 					if (member.__ui5.module && member.__ui5.module !== symbol.__ui5.module) {
 						attrib("module", member.__ui5.module);
 						attrib("export", undefined, '', true);
@@ -2878,6 +2881,9 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 				if ( member.__ui5.module && member.__ui5.module !== symbol.__ui5.module ) {
 					attrib("module", member.__ui5.module);
 					attrib("export", undefined, '', true);
+				}
+				if (member.allowPreventDefault) {
+					attrib("allowPreventDefault", true);
 				}
 				attrib("visibility", visibility(member), 'public');
 				if ( member.scope === 'static' ) {

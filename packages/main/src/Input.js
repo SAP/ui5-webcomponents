@@ -53,7 +53,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the <code>ui5-input</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
 		 * @public
 		 */
@@ -86,8 +86,8 @@ const metadata = {
 		 * <br>
 		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
+		 * @slot suggestionItems
 		 * @public
 		 */
 		"default": {
@@ -332,6 +332,10 @@ const metadata = {
 			type: Object,
 		},
 
+		_nativeInputAttributes: {
+			type: Object,
+		},
+
 		_inputWidth: {
 			type: Integer,
 		},
@@ -367,18 +371,6 @@ const metadata = {
 		 * @public
 		 */
 		input: {},
-
-		/**
-		 * Fired when user presses Enter key on the <code>ui5-input</code>.
-		 * <br><br>
-		 * <b>Note:</b> The event is fired independent of whether there was a change before or not.
-		 * If change was performed, the event is fired after the change event.
-		 * The event is also fired when an item of the select list is selected by pressing Enter.
-		 *
-		 * @event
-		 * @public
-		 */
-		submit: {},
 
 		/**
 		 * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
@@ -460,6 +452,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
  * @appenddocs SuggestionItem
+ * @implements sap.ui.webcomponents.main.IInput
  * @public
  */
 class Input extends UI5Element {
@@ -516,7 +509,6 @@ class Input extends UI5Element {
 		this.highlightValue = "";
 
 		// all sementic events
-		this.EVENT_SUBMIT = "submit";
 		this.EVENT_CHANGE = "change";
 		this.EVENT_INPUT = "input";
 		this.EVENT_SUGGESTION_ITEM_SELECT = "suggestion-item-select";
@@ -768,7 +760,7 @@ class Input extends UI5Element {
 
 	/**
 	 * Checks if the value state popover is open.
-	 * @returns {Boolean} true if the popover is open, false otherwise
+	 * @returns {boolean} true if the popover is open, false otherwise
 	 * @public
 	 */
 	isOpen() {
@@ -880,7 +872,6 @@ class Input extends UI5Element {
 		}
 
 		const inputValue = await this.getInputValue();
-		const isSubmit = action === this.ACTION_ENTER;
 		const isUserInput = action === this.ACTION_USER_INPUT;
 
 		const input = await this.getInputDOMRef();
@@ -905,13 +896,9 @@ class Input extends UI5Element {
 			return;
 		}
 
-		if (isSubmit) { // submit
-			this.fireEvent(this.EVENT_SUBMIT);
-		}
-
 		// In IE, pressing the ENTER does not fire change
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
-		if (isIE() && isSubmit && valueChanged) {
+		if (isIE() && action === this.ACTION_ENTER && valueChanged) {
 			this.fireEvent(this.EVENT_CHANGE);
 		}
 	}
@@ -939,7 +926,11 @@ class Input extends UI5Element {
 	 * @protected
 	 */
 	get nativeInput() {
-		return this.getDomRef().querySelector(`input`);
+		return this.getDomRef() && this.getDomRef().querySelector(`input`);
+	}
+
+	get nativeInputWidth() {
+		return this.nativeInput && this.nativeInput.offsetWidth;
 	}
 
 	getLabelableElementId() {
@@ -1072,6 +1063,14 @@ class Input extends UI5Element {
 		};
 	}
 
+	get nativeInputAttributes() {
+		return {
+			"min": this.type === InputType.Number ? this._nativeInputAttributes.min : undefined,
+			"max": this.type === InputType.Number ? this._nativeInputAttributes.max : undefined,
+			"step": this.type === InputType.Number ? (this._nativeInputAttributes.step || "any") : undefined,
+		};
+	}
+
 	get ariaValueStateHiddenText() {
 		if (!this.hasValueStateMessage) {
 			return;
@@ -1113,6 +1112,9 @@ class Input extends UI5Element {
 			},
 			suggestionsPopover: {
 				"max-width": `${this._inputWidth}px`,
+			},
+			innerInput: {
+				padding: this.nativeInputWidth < 48 ? "0" : undefined,
 			},
 		};
 	}

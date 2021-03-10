@@ -34,8 +34,8 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.ITableRow[]}
+		 * @slot rows
 		 * @public
 		 */
 		"default": {
@@ -49,7 +49,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.ITableColumn[]}
 		 * @slot
 		 * @public
 		 */
@@ -397,12 +397,12 @@ class Table extends UI5Element {
 	}
 
 	onRowFocused(event) {
-		this._itemNavigation.update(event.target);
+		this._itemNavigation.setCurrentItem(event.target);
 	}
 
 	_onColumnHeaderClick(event) {
 		this.getColumnHeader().focus();
-		this._itemNavigation.update(this._columnHeader);
+		this._itemNavigation.setCurrentItem(this._columnHeader);
 	}
 
 	_onLoadMoreKeydown(event) {

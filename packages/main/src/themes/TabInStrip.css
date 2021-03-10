@@ -2,16 +2,12 @@
     color: var(--_ui5_tc_headerItem_color);
     cursor: pointer;
     flex-shrink: 0;
-    margin: 0 1rem;
+    padding: 0 1rem;
     font-size: var(--sapFontSmallSize);
     text-shadow: var(--sapContent_TextShadow);
     position: relative;
     display: inline-flex;
     align-items: center;
-}
-
-.ui5-tab-strip-item:last-child {
-    margin-right: 0;
 }
 
 .ui5-tab-strip-itemContent {
@@ -27,14 +23,20 @@
 .ui5-tab-strip-item--selected .ui5-tab-strip-item-icon-outer::after {
     content: "";
     position: absolute;
-    width: 100%;
-    bottom: 0;
+    bottom: 1px;
     left: 0;
+    right: 0;
     border-bottom: var(--_ui5_tc_headerItemContent_border_bottom);
 }
 
+.ui5-tab-strip-item--selected.ui5-tab-strip-item--textOnly .ui5-tab-strip-itemContent::after,
+.ui5-tab-strip-item--selected.ui5-tab-strip-item--mixedMode .ui5-tab-strip-itemContent::after {
+    left: 1rem;
+    right: 1rem;
+}
+
 .ui5-tab-strip-item--selected .ui5-tab-strip-item-icon-outer::after {
-    bottom: -0.8rem;
+    bottom: -0.75rem;
 }
 
 .ui5-tab-strip-item--disabled {
@@ -248,9 +250,6 @@
 }
 
 /*** RTL ***/
-[dir=rtl] .ui5-tab-strip-item:last-child {
-    margin-left: 0;
-}
 
 [dir=rtl] .ui5-tab-strip-item-semanticIcon::before {
     margin-left: 0.25rem;

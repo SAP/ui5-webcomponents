@@ -22,7 +22,7 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 // const bg = "https://ui5.sap.com/resources/sap/ui/core/messagebundle_bg.properties";
 // registerI18nLoader("@ui5/webcomponents", "bg", async (localeId) => {
 // 	const props = await (await fetch(bg)).text();
-// 	return parse(props);;
+// 	return parse(props);
 // });
 // registerI18nLoader("@ui5/webcomponents", "fr", async (localeId) => {
 // 	return await (await fetch("fr")).json();
@@ -38,6 +38,7 @@ import "@ui5/webcomponents-icons-tnt/dist/Assets.js";
 
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
+import "./dist/features/ColorPaletteMoreColors.js";
 
 import Avatar from "./dist/Avatar.js";
 import AvatarGroup from "./dist/AvatarGroup.js";
@@ -49,6 +50,7 @@ import Carousel from "./dist/Carousel.js";
 import CheckBox from "./dist/CheckBox.js";
 import ColorPalette from "./dist/ColorPalette.js";
 import ColorPaletteItem from "./dist/ColorPaletteItem.js";
+import ColorPicker from "./dist/ColorPicker.js";
 import ComboBox from "./dist/ComboBox.js";
 import DatePicker from "./dist/DatePicker.js";
 import DateRangePicker from "./dist/DateRangePicker.js";
@@ -68,6 +70,7 @@ import ResponsivePopover from "./dist/ResponsivePopover.js";
 import SegmentedButton from "./dist/SegmentedButton.js";
 import Select from "./dist/Select.js";
 import Slider from "./dist/Slider.js";
+import StepInput from "./dist/StepInput.js";
 import RangeSlider from "./dist/RangeSlider.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
@@ -109,6 +112,7 @@ import { _getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/di
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/directionChange.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import * as defaultTexts from "./dist/generated/i18n/i18n-defaults.js";
 
 const testAssets = {
 	configuration : {
@@ -133,6 +137,7 @@ const testAssets = {
 	detachThemeLoaded,
 	getIconNames,
 	renderFinished,
+	defaultTexts,
 };
 
 window["sap-ui-webcomponents-bundle"] = testAssets;

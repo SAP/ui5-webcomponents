@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.12](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.11...v1.0.0-rc.12) (2021-02-18)
+
+
+### Bug Fixes
+
+* **ui5-li-notification:** it is now possible to not have a description ([#2744](https://github.com/SAP/ui5-webcomponents/issues/2744)) ([ef35f84](https://github.com/SAP/ui5-webcomponents/commit/ef35f84))
+* **ui5-li-notification-group:** align priority icon ([#2584](https://github.com/SAP/ui5-webcomponents/issues/2584)) ([ff247f0](https://github.com/SAP/ui5-webcomponents/commit/ff247f0))
+* **ui5-upload-collection:** wrap noDataText/Desc text ([#2674](https://github.com/SAP/ui5-webcomponents/issues/2674)) ([c48bfe7](https://github.com/SAP/ui5-webcomponents/commit/c48bfe7)), closes [#2672](https://github.com/SAP/ui5-webcomponents/issues/2672)
+* **ui5-upload-collection-item:** fix title behaviour on small screens ([#2699](https://github.com/SAP/ui5-webcomponents/issues/2699)) ([bb7c952](https://github.com/SAP/ui5-webcomponents/commit/bb7c952))
+* **ui5-wizard:** observe content height changes ([#2801](https://github.com/SAP/ui5-webcomponents/issues/2801)) ([b4cbc43](https://github.com/SAP/ui5-webcomponents/commit/b4cbc43))
+
+
+### Features
+
+* **ui5-li-notification*:** full-fill accessibility spec ([#2578](https://github.com/SAP/ui5-webcomponents/issues/2578)) ([20de5ae](https://github.com/SAP/ui5-webcomponents/commit/20de5ae))
+* **ui5-page:** Initial implementation ([#2685](https://github.com/SAP/ui5-webcomponents/issues/2685)) ([bd09e17](https://github.com/SAP/ui5-webcomponents/commit/bd09e17)), closes [#2433](https://github.com/SAP/ui5-webcomponents/issues/2433)
+* **ui5-wizard:** improve progress navigator responsiveness ([#2590](https://github.com/SAP/ui5-webcomponents/issues/2590)) ([01cd6f9](https://github.com/SAP/ui5-webcomponents/commit/01cd6f9))
+
+
+
+
 # [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
 
 

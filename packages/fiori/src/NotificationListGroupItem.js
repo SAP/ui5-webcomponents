@@ -63,8 +63,8 @@ const metadata = {
 		 * Defines the items of the <code>ui5-li-notification-group</code>,
 		 * usually <code>ui5-li-notification</code> items.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.fiori.INotificationListItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
@@ -116,6 +116,7 @@ const metadata = {
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
  * @appenddocs NotificationAction
+ * @implements sap.ui.webcomponents.main.IListItem
  * @public
  */
 class NotificationListGroupItem extends NotificationListItemBase {

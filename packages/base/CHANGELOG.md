@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.12](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.11...v1.0.0-rc.12) (2021-02-18)
+
+
+### Bug Fixes
+
+* **theming:** fix error message ([#2818](https://github.com/SAP/ui5-webcomponents/issues/2818)) ([7a0732a](https://github.com/SAP/ui5-webcomponents/commit/7a0732a))
+* **i18n:** ui5-icon i18n works for all packages ([#2816](https://github.com/SAP/ui5-webcomponents/issues/2816)) ([91e16a1](https://github.com/SAP/ui5-webcomponents/commit/91e16a1))
+
+### Features
+
+* **framework:** add dynamic imports for .json assets ([#2740](https://github.com/SAP/ui5-webcomponents/issues/2740)) ([46e38fb](https://github.com/SAP/ui5-webcomponents/commit/46e38fb))
+* **framework:** Create attachDirectionChange function ([#2646](https://github.com/SAP/ui5-webcomponents/issues/2646)) ([b4f836a](https://github.com/SAP/ui5-webcomponents/commit/b4f836a))
+* **framework:** ItemNavigation cyclic behavior implemented for multiple rows ([#2780](https://github.com/SAP/ui5-webcomponents/issues/2780)) ([b7ad1ea](https://github.com/SAP/ui5-webcomponents/commit/b7ad1ea))
+
+
+
+
 # [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
 
 

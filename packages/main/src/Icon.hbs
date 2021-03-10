@@ -6,7 +6,7 @@
 	role="{{role}}"
 	focusable="false"
 	preserveAspectRatio="xMidYMid meet"
-	aria-label="{{accessibleNameText}}"
+	aria-label="{{effectiveAccessibleName}}"
 	xmlns="http://www.w3.org/2000/svg"
 	@focusin={{_onfocusin}}
 	@focusout={{_onfocusout}}
@@ -15,7 +15,7 @@
 	@click={{_onclick}}
 >
 	{{#if hasIconTooltip}}
-		<title id="{{_id}}-tooltip">{{accessibleNameText}}</title>
+		<title id="{{_id}}-tooltip">{{effectiveAccessibleName}}</title>
 	{{/if}}
 
 	<g role="presentation">

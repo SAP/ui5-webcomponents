@@ -13,6 +13,7 @@ import {
 	UPLOADCOLLECTION_NO_DATA_DESCRIPTION,
 	UPLOADCOLLECTION_DRAG_FILE_INDICATOR,
 	UPLOADCOLLECTION_DROP_FILE_INDICATOR,
+	UPLOADCOLLECTION_ARIA_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import {
 	attachBodyDnDHandler,
@@ -73,7 +74,7 @@ const metadata = {
 
 		/**
 		 * By default there will be drag and drop overlay shown over the <code>ui5-upload-collection</code> when files
-		 * are dragged. If you don't intend to use drag and drop, set this property to <code>true</code>
+		 * are dragged. If you don't intend to use drag and drop, set this property.
 		 * <br><br>
 		 * <b>Note:</b> It is up to the application developer to add handler for <code>drop</code> event and handle it.
 		 * <code>ui5-upload-collection</code> only shows an overlay.
@@ -104,8 +105,8 @@ const metadata = {
 		 * Defines the items of the <code>ui5-upload-collection</code>.
 		 * <br><b>Note:</b> Use <code>ui5-upload-collection-item</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.fiori.IUploadCollectionItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
@@ -329,6 +330,10 @@ class UploadCollection extends UI5Element {
 
 	get _noDataDescription() {
 		return this.noDataDescription || this.i18nBundle.getText(UPLOADCOLLECTION_NO_DATA_DESCRIPTION);
+	}
+
+	get _roleDescription() {
+		return this.i18nBundle.getText(UPLOADCOLLECTION_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get _dndOverlayText() {

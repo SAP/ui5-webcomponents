@@ -241,8 +241,8 @@ const metadata = {
 		 * &lt;/ui5-combobox>
 		 * <br> <br>
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.IComboBoxItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
@@ -271,7 +271,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the input field.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
 		 * @public
 		 * @since 1.0.0-rc.9
@@ -468,6 +468,11 @@ class ComboBox extends UI5Element {
 
 	_afterOpenPopover() {
 		this._iconPressed = true;
+
+		if (isPhone() && this.value) {
+			this.filterValue = this.value
+		}
+
 		this._clearFocus();
 	}
 
@@ -631,7 +636,13 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	_closeRespPopover() {
+	_closeRespPopover(event) {
+		if (isPhone() && event && event.target.classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
+			this.value = this._selectedItemText;
+			this.filterValue = this._selectedItemText;
+			this._tempValue = this._selectedItemText;
+		}
+
 		this.responsivePopover.close();
 	}
 
@@ -693,6 +704,7 @@ class ComboBox extends UI5Element {
 		const listItem = event.detail.item;
 
 		this._tempValue = listItem.mappedItem.text;
+		this._selectedItemText = listItem.mappedItem.text;
 		this.filterValue = this._tempValue;
 
 		if (!listItem.mappedItem.selected) {

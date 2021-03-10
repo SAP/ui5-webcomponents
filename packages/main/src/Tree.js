@@ -106,8 +106,8 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-tree-item</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.ITreeItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
@@ -140,6 +140,7 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.main.Tree#item-toggle
 		 * @param {HTMLElement} item the toggled item.
+		 * @allowPreventDefault
 		 * @public
 		 */
 		"item-toggle": {

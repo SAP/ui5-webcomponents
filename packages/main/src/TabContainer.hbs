@@ -7,30 +7,41 @@
 	{{/if}}
 
 	<div class="{{classes.header}}" id="{{_id}}-header">
-		<ui5-icon @click="{{_onHeaderBackArrowClick}}" class="{{classes.headerBackArrow}}" name="slim-arrow-left" tabindex="-1" accessible-name="{{previousIconACCName}}" show-tooltip></ui5-icon>
-
-		<!-- tab items -->
-		<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
-			<ul
-				role="tablist"
-				class="{{classes.headerList}}"
-				@click="{{_onHeaderClick}}"
-				@keydown="{{_onHeaderKeyDown}}"
-				@keyup="{{_onHeaderKeyUp}}"
-			>
-				{{#each items}}
-					{{#unless this.isSeparator}}
-						{{this.stripPresentation}}
-					{{/unless}}
-					{{#if this.isSeparator}}
-						<li id="{{this._id}}" role="separator" class="{{../classes.separator}}" style="list-style-type: none;"></li>
-					{{/if}}
-				{{/each}}
-			</ul>
+		<div class="{{classes.headerInnerContainer}}">
+			<div class="{{classes.headerBackArrow}}">
+				<ui5-button @click="{{_onHeaderBackArrowClick}}"
+							icon="slim-arrow-left"
+							design="Transparent"
+							tabindex="-1"
+							title="{{previousIconACCName}}"></ui5-button>
+			</div>
+			<!-- tab items -->
+			<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
+				<ul
+					role="tablist"
+					class="{{classes.headerList}}"
+					@click="{{_onHeaderClick}}"
+					@keydown="{{_onHeaderKeyDown}}"
+					@keyup="{{_onHeaderKeyUp}}"
+				>
+					{{#each items}}
+						{{#unless this.isSeparator}}
+							{{this.stripPresentation}}
+						{{/unless}}
+						{{#if this.isSeparator}}
+							<li id="{{this._id}}" role="separator" class="{{../classes.separator}}" style="list-style-type: none;"></li>
+						{{/if}}
+					{{/each}}
+				</ul>
+			</div>
+			<div class="{{classes.headerForwardArrow}}">
+			<ui5-button @click="{{_onHeaderForwardArrowClick}}"
+						icon="slim-arrow-right"
+						design="Transparent"
+						tabindex="-1"
+						title="{{nextIconACCName}}"></ui5-button>
 		</div>
-
-		<ui5-icon @click="{{_onHeaderForwardArrowClick}}" class="{{classes.headerForwardArrow}}" name="slim-arrow-right" tabindex="-1" accessible-name="{{nextIconACCName}}" show-tooltip></ui5-icon>
-
+		</div>
 		<!-- overflow button -->
 		{{#if shouldShowOverflow}}
 			<div
@@ -43,9 +54,9 @@
 					<ui5-button
 						icon="{{overflowMenuIcon}}"
 						design="Transparent"
+						tabindex="-1"
 						title="{{overflowMenuTitle}}"
-						aria-haspopup="true"
-					></ui5-button>
+						aria-haspopup="true"></ui5-button>
 				{{/if}}
 			</div>
 		{{/if}}

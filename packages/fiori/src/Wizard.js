@@ -59,7 +59,7 @@ const metadata = {
 		 * Defines the width of the <code>ui5-wizard</code>.
 		 * @private
 		 */
-		width: {
+		_width: {
 			type: Float,
 		},
 
@@ -82,9 +82,9 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use the available <code>ui5-wizard-step</code> component.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.fiori.IWizardStep[]}
 		 * @public
-		 * @slot
+		 * @slot steps
 		 */
 		"default": {
 			propertyName: "steps",
@@ -195,8 +195,11 @@ class Wizard extends UI5Element {
 		// Stores references to the grouped steps.
 		this._groupedTabs = [];
 
-		// Keeps track of the selected step index.
+		// Keeps track of the currently selected step index.
 		this.selectedStepIndex = 0;
+
+		// Keeps track of the previously selected step index.
+		this.previouslySelectedStepIndex = 0;
 
 		// Indicates that selection will be changed
 		// due to user click.
@@ -285,8 +288,13 @@ class Wizard extends UI5Element {
 
 	onAfterRendering() {
 		this.storeStepScrollOffsets();
-		this.scrollToSelectedStep();
+
+		if (this.previouslySelectedStepIndex !== this.selectedStepIndex) {
+			this.scrollToSelectedStep();
+		}
+
 		this.attachStepsResizeObserver();
+		this.previouslySelectedStepIndex = this.selectedStepIndex;
 	}
 
 	/**
@@ -403,7 +411,7 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	onStepInHeaderFocused(event) {
-		this._itemNavigation.update(event.target);
+		this._itemNavigation.setCurrentItem(event.target);
 	}
 
 	/**
@@ -413,7 +421,7 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	onStepResize() {
-		this.width = this.getBoundingClientRect().width;
+		this._width = this.getBoundingClientRect().width;
 		this.contentHeight = this.getContentHeight();
 
 		if (this.responsivePopover && this.responsivePopover.opened) {
@@ -441,7 +449,7 @@ class Wizard extends UI5Element {
 	_adjustHeaderOverflow() {
 		let counter = 0;
 		let isForward = true;
-		const iWidth = this.width;
+		const iWidth = this._width;
 		const iCurrStep = this.getSelectedStepIndex();
 		const iStepsToShow = this.steps.length ? Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) : Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
 
@@ -699,7 +707,7 @@ class Wizard extends UI5Element {
 			return true;
 		}
 
-		return this.width <= Wizard.PHONE_BREAKPOINT;
+		return this._width <= Wizard.PHONE_BREAKPOINT;
 	}
 
 	get navAriaRoleDescription() {

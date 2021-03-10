@@ -30,8 +30,8 @@ const metadata = {
 		 * <b>Note:</b> Multiple buttons are allowed.
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-togglebutton</code> for the intended design.
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.IButton[]}
+		 * @slot buttons
 		 * @public
 		 */
 		"default": {
@@ -187,7 +187,7 @@ class SegmentedButton extends UI5Element {
 		}
 
 		this._selectedButton.pressed = true;
-		this._itemNavigation.update(this._selectedButton);
+		this._itemNavigation.setCurrentItem(this._selectedButton);
 
 		return this;
 	}
@@ -196,7 +196,7 @@ class SegmentedButton extends UI5Element {
 		// If the component was previously focused,
 		// update the ItemNavigation to sync butons` tabindex values
 		if (this.hasPreviouslyFocusedItem) {
-			this._itemNavigation.update(event.target);
+			this._itemNavigation.setCurrentItem(event.target);
 			return;
 		}
 
@@ -204,7 +204,7 @@ class SegmentedButton extends UI5Element {
 		// focus the selected item if such present
 		if (this.selectedButton) {
 			this.selectedButton.focus();
-			this._itemNavigation.update(this._selectedButton);
+			this._itemNavigation.setCurrentItem(this._selectedButton);
 			this.hasPreviouslyFocusedItem = true;
 		}
 	}

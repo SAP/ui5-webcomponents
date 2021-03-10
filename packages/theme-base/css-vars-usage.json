@@ -26,6 +26,7 @@
   "--sapButton_Active_TextColor",
   "--sapButton_Background",
   "--sapButton_BorderColor",
+  "--sapButton_BorderCornerRadius",
   "--sapButton_Emphasized_Active_Background",
   "--sapButton_Emphasized_Active_BorderColor",
   "--sapButton_Emphasized_Background",
@@ -207,6 +208,7 @@
   "--sapTile_SeparatorColor",
   "--sapTile_TextColor",
   "--sapTile_TitleTextColor",
+  "--sapToolbar_SeparatorColor",
   "--sapWarningBackground",
   "--sapWarningBorderColor"
 ]

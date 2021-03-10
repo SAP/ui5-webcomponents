@@ -80,8 +80,8 @@ const metadata = {
 		/**
 		 * Defines the selected date or dates (depending on the <code>selectionMode</code> property) for this calendar as instances of <code>ui5-date</code>
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.ICalendarDate[]}
+		 * @slot dates
 		 * @public
 		 */
 		"default": {
@@ -97,6 +97,7 @@ const metadata = {
 		 * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
 		 *
 		 * @event sap.ui.webcomponents.main.Calendar#selected-dates-change
+		 * @allowPreventDefault
 		 * @param {Array} values The selected dates
 		 * @param {Array} dates The selected dates as UTC timestamps
 		 * @public
@@ -178,6 +179,30 @@ const metadata = {
  * <li>[CTRL] + [END] - Navigate to the last year of the current year range
  * </ul>
  * <br>
+ *
+* <h3>Calendar types</h3>
+ * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.
+ * By default the Gregorian Calendar is used. In order to use the Buddhist, Islamic, Japanese or Persian calendar,
+ * you need to set the <code>primaryCalendarType</code> property and import one or more of the following modules:
+ * <br><br>
+ *
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";</code>
+ * <br><br>
+ *
+ * Or, you can use the global configuration and set the <code>calendarType</code> key:
+ * <br>
+ * <pre><code>&lt;script data-id="sap-ui-config" type="application/json"&gt;
+ * {
+ *	"calendarType": "Japanese"
+ * }
+ * &lt;/script&gt;
+ *
  *
  * <h3>ES6 Module Import</h3>
  *

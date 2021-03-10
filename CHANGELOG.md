@@ -3,6 +3,156 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.12](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.11...v1.0.0-rc.12) (2021-02-18)
+
+### New package
+**framework:** * introduce @ui5/webcomponents-ie11 package ([#2686](https://github.com/SAP/ui5-webcomponents/issues/2686)) ([1d3b37e](https://github.com/SAP/ui5-webcomponents/commit/1d3b37e))
+
+### New Components
+
+* **ui5-color-palette:** introduce new component ([#2731](https://github.com/SAP/ui5-webcomponents/issues/2731)) ([772424e](https://github.com/SAP/ui5-webcomponents/commit/772424e))
+* **ui5-color-picker:** introduce new component ([#2769](https://github.com/SAP/ui5-webcomponents/issues/2769)) ([6a70e5a](https://github.com/SAP/ui5-webcomponents/commit/6a70e5a))
+* **ui5-page:** introduce new component ([#2685](https://github.com/SAP/ui5-webcomponents/issues/2685)) ([bd09e17](https://github.com/SAP/ui5-webcomponents/commit/bd09e17)), closes [#2433](https://github.com/SAP/ui5-webcomponents/issues/2433)
+
+
+### Bug Fixes
+
+
+* **ui5-avatar:** correct icon color ([#2658](https://github.com/SAP/ui5-webcomponents/issues/2658)) ([5a85687](https://github.com/SAP/ui5-webcomponents/commit/5a85687)), closes [#2555](https://github.com/SAP/ui5-webcomponents/issues/2555)
+* **ui5-calendar:** Today date is propertly calculated no matter what timezone ([#2660](https://github.com/SAP/ui5-webcomponents/issues/2660)) ([32dd0ef](https://github.com/SAP/ui5-webcomponents/commit/32dd0ef))
+* **ui5-checkbox:** set "aria-hidden" to inner input ([#2828](https://github.com/SAP/ui5-webcomponents/issues/2828)) ([d237401](https://github.com/SAP/ui5-webcomponents/commit/d237401)), closes [#2786](https://github.com/SAP/ui5-webcomponents/issues/2786)
+* **ui5-checkbox:** fix vertical aignment when "wrap" is true ([#2747](https://github.com/SAP/ui5-webcomponents/issues/2747)) ([9f027f1](https://github.com/SAP/ui5-webcomponents/commit/9f027f1))
+* **ui5-combobox:** fix behaviour when "Enter: is clicked ([a10acc8](https://github.com/SAP/ui5-webcomponents/commit/a10acc8))
+* **ui5-combobox:** cancel user action when pressing "X" on mobile ([#2742](https://github.com/SAP/ui5-webcomponents/issues/2742)) ([691c2e4](https://github.com/SAP/ui5-webcomponents/commit/691c2e4)), closes [#2449](https://github.com/SAP/ui5-webcomponents/issues/2449)
+* **ui5-combobox, ui5-multicombobox:** center value state text ([#2733](https://github.com/SAP/ui5-webcomponents/issues/2733)) ([b2c770a](https://github.com/SAP/ui5-webcomponents/commit/b2c770a)), closes [#2274](https://github.com/SAP/ui5-webcomponents/issues/2274)
+* **ui5-date-picker:** input type is now conveyed ([#2628](https://github.com/SAP/ui5-webcomponents/issues/2628)) ([70e3269](https://github.com/SAP/ui5-webcomponents/commit/70e3269)), closes [#2604](https://github.com/SAP/ui5-webcomponents/issues/2604)
+* **ui5-icon:** alignment issue in Safari ([#2746](https://github.com/SAP/ui5-webcomponents/issues/2746)) ([daa51e7](https://github.com/SAP/ui5-webcomponents/commit/daa51e7))
+* **ui5-icon:** remove vertical icon flip in RTL ([#2645](https://github.com/SAP/ui5-webcomponents/issues/2645)) ([0120960](https://github.com/SAP/ui5-webcomponents/commit/0120960)), closes [#2644](https://github.com/SAP/ui5-webcomponents/issues/2644)
+* **ui5-icon:** ui5-icon i18n works for all packages ([#2816](https://github.com/SAP/ui5-webcomponents/issues/2816)) ([91e16a1](https://github.com/SAP/ui5-webcomponents/commit/91e16a1))
+* **ui5-input:** enable centering of text ([#2788](https://github.com/SAP/ui5-webcomponents/issues/2788)) ([bd1bd6e](https://github.com/SAP/ui5-webcomponents/commit/bd1bd6e))
+* **ui5-input:** focus is handled properly ([#2670](https://github.com/SAP/ui5-webcomponents/issues/2670)) ([2c033aa](https://github.com/SAP/ui5-webcomponents/commit/2c033aa))
+* **ui5-input:** Obsolete accessibility API removed ([#2721](https://github.com/SAP/ui5-webcomponents/issues/2721)) ([014c985](https://github.com/SAP/ui5-webcomponents/commit/014c985)), closes [#2605](https://github.com/SAP/ui5-webcomponents/issues/2605)
+* **ui5-input:** prevent selection of suggestion group item ([#2777](https://github.com/SAP/ui5-webcomponents/issues/2777)) ([6cc458b](https://github.com/SAP/ui5-webcomponents/commit/6cc458b)), closes [#2255](https://github.com/SAP/ui5-webcomponents/issues/2255)
+* **ui5-input:** fix value state message width ([#2736](https://github.com/SAP/ui5-webcomponents/issues/2736)) ([1e8082d](https://github.com/SAP/ui5-webcomponents/commit/1e8082d))
+* **ui5-li-notification:** now possible to not have a description ([#2744](https://github.com/SAP/ui5-webcomponents/issues/2744)) ([ef35f84](https://github.com/SAP/ui5-webcomponents/commit/ef35f84))
+* **ui5-li-notification-group:** align priority icon ([#2584](https://github.com/SAP/ui5-webcomponents/issues/2584)) ([ff247f0](https://github.com/SAP/ui5-webcomponents/commit/ff247f0))
+* **ui5-list:** fix JS error on focusin ([#2720](https://github.com/SAP/ui5-webcomponents/issues/2720)) ([b36e54e](https://github.com/SAP/ui5-webcomponents/commit/b36e54e))
+* **ui5-list:** remove busy indicator DOM ([#2712](https://github.com/SAP/ui5-webcomponents/issues/2712)) ([fe76278](https://github.com/SAP/ui5-webcomponents/commit/fe76278))
+* **ui5-list:** show busy indicator over the list ([#2684](https://github.com/SAP/ui5-webcomponents/issues/2684)) ([ad56eaa](https://github.com/SAP/ui5-webcomponents/commit/ad56eaa))
+* **ui5-multi-combobox:** fix livechange behaviour ([#2656](https://github.com/SAP/ui5-webcomponents/issues/2656)) ([57820dd](https://github.com/SAP/ui5-webcomponents/commit/57820dd))
+* **ui5-multi-combobox:** The initial focus is set on the ui5-dialog ([#2702](https://github.com/SAP/ui5-webcomponents/issues/2702)) ([aeed733](https://github.com/SAP/ui5-webcomponents/commit/aeed733))
+* **ui5-multi-input:** fix appearance in RTL ([#2782](https://github.com/SAP/ui5-webcomponents/issues/2782)) ([e842f23](https://github.com/SAP/ui5-webcomponents/commit/e842f23)), closes [#2749](https://github.com/SAP/ui5-webcomponents/issues/2749)
+* **ui5-multicombobox:** hide placeholder when tokens are present ([#2785](https://github.com/SAP/ui5-webcomponents/issues/2785)) ([d769a0d](https://github.com/SAP/ui5-webcomponents/commit/d769a0d)), closes [#2261](https://github.com/SAP/ui5-webcomponents/issues/2261)
+* **ui5-multiinput:** hide placeholder when tokens are present ([#2789](https://github.com/SAP/ui5-webcomponents/issues/2789)) ([679dae3](https://github.com/SAP/ui5-webcomponents/commit/679dae3)), closes [#2261](https://github.com/SAP/ui5-webcomponents/issues/2261)
+* **ui5-popover:** correctly position a popover if dynamically created ([#2679](https://github.com/SAP/ui5-webcomponents/issues/2679)) ([5a872b0](https://github.com/SAP/ui5-webcomponents/commit/5a872b0))
+* **ui5-popover, ui5-dialog:** do not render empty headers ([#2770](https://github.com/SAP/ui5-webcomponents/issues/2770)) ([7f0bd6a](https://github.com/SAP/ui5-webcomponents/commit/7f0bd6a)), closes [#2694](https://github.com/SAP/ui5-webcomponents/issues/2694)
+* **ui5-popup:** correct focus when there is no focusable content ([#2583](https://github.com/SAP/ui5-webcomponents/issues/2583)) ([bf8caaf](https://github.com/SAP/ui5-webcomponents/commit/bf8caaf))
+* **ui5-popup:** prevent focus on elements below block layer ([#2800](https://github.com/SAP/ui5-webcomponents/issues/2800)) ([f2f3889](https://github.com/SAP/ui5-webcomponents/commit/f2f3889)), closes [#2626](https://github.com/SAP/ui5-webcomponents/issues/2626)
+* **ui5-popup): fix(ui5-popup:** hide block layer if popup is closed ([#2799](https://github.com/SAP/ui5-webcomponents/issues/2799)) ([6f82e42](https://github.com/SAP/ui5-webcomponents/commit/6f82e42)), closes [#2696](https://github.com/SAP/ui5-webcomponents/issues/2696)
+* **ui5-radiobutton:** fix tab order within group ([#2783](https://github.com/SAP/ui5-webcomponents/issues/2783)) ([d6a7b81](https://github.com/SAP/ui5-webcomponents/commit/d6a7b81)), closes [#2774](https://github.com/SAP/ui5-webcomponents/issues/2774)
+* **ui5-select:** correct role and screen reader speech out ([#2587](https://github.com/SAP/ui5-webcomponents/issues/2587)) ([59497ee](https://github.com/SAP/ui5-webcomponents/commit/59497ee)), closes [#2485](https://github.com/SAP/ui5-webcomponents/issues/2485) [#2339](https://github.com/SAP/ui5-webcomponents/issues/2339) [#2142](https://github.com/SAP/ui5-webcomponents/issues/2142)
+* **ui5-select:** fix popover opening ([#2687](https://github.com/SAP/ui5-webcomponents/issues/2687)) ([53418fb](https://github.com/SAP/ui5-webcomponents/commit/53418fb)), closes [#2682](https://github.com/SAP/ui5-webcomponents/issues/2682)
+* **ui5-tabcontainer:** overflow menu button is added a title ([#2639](https://github.com/SAP/ui5-webcomponents/issues/2639)) ([943e4ce](https://github.com/SAP/ui5-webcomponents/commit/943e4ce)), closes [#2607](https://github.com/SAP/ui5-webcomponents/issues/2607)
+* **ui5-tree:** accessibility improvements ([#2671](https://github.com/SAP/ui5-webcomponents/issues/2671)) ([849d052](https://github.com/SAP/ui5-webcomponents/commit/849d052)), closes [#2553](https://github.com/SAP/ui5-webcomponents/issues/2553)
+* **ui5-upload-collection:** wrap noDataText/Desc text ([#2674](https://github.com/SAP/ui5-webcomponents/issues/2674)) ([c48bfe7](https://github.com/SAP/ui5-webcomponents/commit/c48bfe7)), closes [#2672](https://github.com/SAP/ui5-webcomponents/issues/2672)
+* **ui5-upload-collection-item:** fix title behaviour on small screens ([#2699](https://github.com/SAP/ui5-webcomponents/issues/2699)) ([bb7c952](https://github.com/SAP/ui5-webcomponents/commit/bb7c952))
+* **ui5-wizard:** observe content height changes ([#2801](https://github.com/SAP/ui5-webcomponents/issues/2801)) ([b4cbc43](https://github.com/SAP/ui5-webcomponents/commit/b4cbc43))
+* **theming:** fix error message log ([#2818](https://github.com/SAP/ui5-webcomponents/issues/2818)) ([7a0732a](https://github.com/SAP/ui5-webcomponents/commit/7a0732a))
+
+### Features
+
+* **ui5-calendar:** Add declarative dates support added ([#2648](https://github.com/SAP/ui5-webcomponents/issues/2648)) ([6602fba](https://github.com/SAP/ui5-webcomponents/commit/6602fba))
+* **ui5-li-notification*:** full-fill accessibility spec ([#2578](https://github.com/SAP/ui5-webcomponents/issues/2578)) ([20de5ae](https://github.com/SAP/ui5-webcomponents/commit/20de5ae))
+* **ui5-multi-combobox:** support two column layout for items ([#2642](https://github.com/SAP/ui5-webcomponents/issues/2642)) ([7742590](https://github.com/SAP/ui5-webcomponents/commit/7742590)), closes [#2637](https://github.com/SAP/ui5-webcomponents/issues/2637)
+* **ui5-multi-input:** Implement accessibility specifications ([#2761](https://github.com/SAP/ui5-webcomponents/issues/2761)) ([2e7b968](https://github.com/SAP/ui5-webcomponents/commit/2e7b968))
+* **ui5-range-slider:** focus and keyboard handling implementation ([#2620](https://github.com/SAP/ui5-webcomponents/issues/2620)) ([8c71ca4](https://github.com/SAP/ui5-webcomponents/commit/8c71ca4))
+* **ui5-select:** add support for disabled select options ([#2730](https://github.com/SAP/ui5-webcomponents/issues/2730)) ([e903164](https://github.com/SAP/ui5-webcomponents/commit/e903164)), closes [#2559](https://github.com/SAP/ui5-webcomponents/issues/2559)
+* **ui5-slider:** focus and keyboard handling implementation ([#2614](https://github.com/SAP/ui5-webcomponents/issues/2614)) ([7b78c16](https://github.com/SAP/ui5-webcomponents/commit/7b78c16))
+* **ui5-slider, ui5-range-slider:** implement a11y spec ([#2714](https://github.com/SAP/ui5-webcomponents/issues/2714)) ([cb76cf4](https://github.com/SAP/ui5-webcomponents/commit/cb76cf4)), closes [#2513](https://github.com/SAP/ui5-webcomponents/issues/2513)
+* **ui5-table:** add growing on scroll ([#2593](https://github.com/SAP/ui5-webcomponents/issues/2593)) ([87520c2](https://github.com/SAP/ui5-webcomponents/commit/87520c2)), closes [#2589](https://github.com/SAP/ui5-webcomponents/issues/2589) [#2570](https://github.com/SAP/ui5-webcomponents/issues/2570)
+* **ui5-tree-item:** implement info/infoState attributes ([#2711](https://github.com/SAP/ui5-webcomponents/issues/2711)) ([1f07d50](https://github.com/SAP/ui5-webcomponents/commit/1f07d50)), closes [#2633](https://github.com/SAP/ui5-webcomponents/issues/2633)
+* **ui5-wizard:** improve progress navigator responsiveness ([#2590](https://github.com/SAP/ui5-webcomponents/issues/2590)) ([01cd6f9](https://github.com/SAP/ui5-webcomponents/commit/01cd6f9))
+* **ui5-calendar:** new features for pickers ([#2598](https://github.com/SAP/ui5-webcomponents/issues/2598)) ([3e684b4](https://github.com/SAP/ui5-webcomponents/commit/3e684b4))
+* **framework:** introduce dynamic imports for .json assets ([#2740](https://github.com/SAP/ui5-webcomponents/issues/2740)) ([46e38fb](https://github.com/SAP/ui5-webcomponents/commit/46e38fb))
+* **framework:** introduce attachDirectionChange function ([#2646](https://github.com/SAP/ui5-webcomponents/issues/2646)) ([b4f836a](https://github.com/SAP/ui5-webcomponents/commit/b4f836a))
+* **framework:** implement ItemNavigation cyclic behavior for multiple rows ([#2780](https://github.com/SAP/ui5-webcomponents/issues/2780)) ([b7ad1ea](https://github.com/SAP/ui5-webcomponents/commit/b7ad1ea))
+* **framework:** distrobure icon assets as .svg files ([#2657](https://github.com/SAP/ui5-webcomponents/issues/2657)) ([5b79982](https://github.com/SAP/ui5-webcomponents/commit/5b79982))
+
+
+### BREAKING CHANGES
+
+* **framework:** introduce dynamic imports for .json assets ([#2740](https://github.com/SAP/ui5-webcomponents/issues/2740)) ([46e38fb](https://github.com/SAP/ui5-webcomponents/commit/46e38fb))
+
+The method **registerI18nBundle** of the @ui5/webcomponents-base/asset-registries/i18n.js module is deprecated in favour of **registerI18nLoader**.
+
+The framework no longer tries to convert .properties files internally and the PropertiesFormatSupport feature is removed. This has to be done by a custom loader using the **@ui5/webcomponents-base/dist/PropertiesFileFormat.js** module.
+
+* **framework:** deprecate RenderScheduler in favor of Render.js ([#2728](https://github.com/SAP/ui5-webcomponents/issues/2728)) ([bc78857](https://github.com/SAP/ui5-webcomponents/commit/bc78857))
+
+`RenderScheduler.js` deprecated. The file will be deleted in a future release. If you were using some of its methods, import these methods from the new `Render.js` module. For example, if you were using:
+ ```js 
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+RenderScheduler.renderImmediately(myComponent);
+RenderScheduler.renderDeferred(myComponent);
+await RenderScheduler.whenFinished();
+```
+change to:
+```js
+import { renderFinished, renderImmediately, renderDeferred } from "@ui5/webcomponents-base/dist/Render.js";
+renderImmediately(myComponent);
+renderDeferred(myComponent);
+await renderFinished();
+```
+`whenFinished` from `RenderScheduler.js` renamed to `renderFinished` and now exported by `Render.js`. For usage, see the previous example
+
+* **framework:** create @ui5/webcomponents-ie11 package ([#2686](https://github.com/SAP/ui5-webcomponents/issues/2686)) ([1d3b37e](https://github.com/SAP/ui5-webcomponents/commit/1d3b37e))
+
+**The legacy browser support is now moved to new ie11 package**. If you used them before add **@ui5/webcomponents-ie11** as a dependency to your project:
+
+`npm i @ui5/webcomponents-ie11 --save`
+
+or
+
+`yarn add @ui5/webcomponents-ie11`
+
+Change the following public imports:
+
+`import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";`
+
+to
+
+`import "@ui5/webcomponents-ie11/dist/features/IE11.js";`
+
+
+and
+
+`import "@ui5/webcomponents-base/dist/features/browsersupport/IE11WithWebComponentsPolyfill.js";`
+
+to
+
+`import "@ui5/webcomponents-ie11/dist/features/IE11WithWebComponentsPolyfill.js";`
+
+
+**The Legacy Edge browser is no longer supported with the ES6 bundle**, therefore the following import has been removed:
+
+`import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";`
+
+Legacy Edge is still supported with the ES5 bundle. If your app needs to support Legacy Edge, treat it as IE11 and transpile the code to ES5 as you would for IE11.
+
+* **ui5-calendar:** Add declarative dates support added ([#2648](https://github.com/SAP/ui5-webcomponents/issues/2648)) ([6602fba](https://github.com/SAP/ui5-webcomponents/commit/6602fba))
+
+The property **selectedDates** is deprecated for **ui5-calendar**. Instead of setting **selectedDates** as an array of UTC timestamps, please provide instances of **ui5-date** as children of the **ui5-calendar**. Instead of reading the **selectedDates** property to find out which dates the user selected, please read the children of the **ui5-calendar** (instances of **ui5-date** with **value** property).
+
+* **ui5-calendar:** new features for pickers ([#2598](https://github.com/SAP/ui5-webcomponents/issues/2598)) ([3e684b4](https://github.com/SAP/ui5-webcomponents/commit/3e684b4))
+
+The **selection** property of **ui5-calendar** and **ui5-daypicker** has been renamed to **selectionMode**.
+
+
+* **ui5-table:** add growing on scroll ([#2593](https://github.com/SAP/ui5-webcomponents/issues/2593)) ([87520c2](https://github.com/SAP/ui5-webcomponents/commit/87520c2)), closes [#2589](https://github.com/SAP/ui5-webcomponents/issues/2589) [#2570](https://github.com/SAP/ui5-webcomponents/issues/2570)
+
+The property **hasMore** removed, use **growing** instead.
+The **loadMoreText** has been renamed to **moreText**.
+The **loadMoreSubtext** has been renamed to **moreSubtext**
 # [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
 
 ### New components

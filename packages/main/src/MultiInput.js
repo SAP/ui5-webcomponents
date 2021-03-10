@@ -50,7 +50,7 @@ const metadata = {
 		 * &lt;/ui5-multi-input>
 		 * <br> <br>
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IToken[]}
 		 * @slot
 		 * @public
 		 */
@@ -188,7 +188,7 @@ class MultiInput extends Input {
 		if (isBackSpace(event) && event.target.value === "") {
 			event.preventDefault();
 
-			this._focusLastToken();
+			this.tokenizer._focusLastToken();
 		}
 
 		if (isShow(event)) {
@@ -212,19 +212,8 @@ class MultiInput extends Input {
 		const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
 
 		if (cursorPosition === 0) {
-			this._focusLastToken();
+			this.tokenizer._focusLastToken();
 		}
-	}
-
-	_focusLastToken() {
-		const lastTokenIndex = this.tokenizer._tokens.length - 1;
-
-		if (lastTokenIndex < 0) {
-			return;
-		}
-
-		this.tokenizer._itemNav.currentIndex = lastTokenIndex;
-		this.tokenizer._tokens[lastTokenIndex].focus();
 	}
 
 	_onfocusout(event) {

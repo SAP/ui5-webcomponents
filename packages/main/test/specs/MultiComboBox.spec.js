@@ -16,7 +16,6 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(!popover.getProperty("opened"), "Popover should close");
 		});
 
-		/*
 		it("Checks focus state", () => {
 			const mcb = browser.$("#multi1");
 			const input = mcb.shadow$("#ui5-multi-combobox-input");
@@ -35,7 +34,6 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.ok(mcb.getProperty("focused"), "MultiComboBox should be focused again.");
 		});
-		*/
 
 		it("MultiComboBox open property is set correctly", () => {
 			const mcb = browser.$("#multi1");
@@ -111,6 +109,21 @@ describe("MultiComboBox general interaction", () => {
 			resetBtn.click();
 		});
 
+		it("When popover is opened via icon and item is selected/deselected, focus should return to the MultiComboBox", () => {
+			const icon = browser.$("#mcb-success").shadow$("[input-icon]");
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mcb-success")
+			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const firstItem = popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+
+			icon.click();
+
+			assert.strictEqual(popover.getProperty("opened"), true, "The popover should be opened");
+
+			firstItem.click();
+
+			assert.ok(browser.$("#mcb-success").getProperty("focused"), "MultiComboBox should be focused.");
+		});
+
 		it("Opens all items popover when start typing and filters items", () => {
 			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input");
 			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mcb")
@@ -173,6 +186,7 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(popover.getProperty("opened"), false, "When the content is clicked, the popover should close");
 			assert.strictEqual(input.getValue(), "", "When the content is clicked, the value should be removed");
+			assert.ok(browser.$("#another-mcb").getProperty("focused"), "MultiComboBox should be focused.");
 		});
 
 		it("When item's checkbox is clicked, the popover should not be closed and the value in the input should be kept", () => {
@@ -263,28 +277,31 @@ describe("MultiComboBox general interaction", () => {
 
 		it ("aria-describedby value according to the tokens count", () => {
 			const mcb = $("#mcb-compact");
+
+			mcb.scrollIntoView();
+			browser.pause(500);
+
 			const innerInput = mcb.shadow$("input");
 			const invisibleText = mcb.shadow$(".ui5-hidden-text");
 			const inivisbleTextId = invisibleText.getProperty("id");
 			let tokens = mcb.shadow$$(".ui5-multi-combobox-token");
 			let resourceBundleText = null;
-	
+
 			assert.strictEqual(tokens.length, 2, "should have two tokens");
 			assert.strictEqual(innerInput.getAttribute("aria-describedby"), inivisbleTextId, "aria-describedby reference is correct");
 			assert.strictEqual(invisibleText.getText(), "Contains 2 tokens", "aria-describedby text is correct");
-	
-			mcb.scrollIntoView();
+
 			innerInput.click();
 			innerInput.keys("Backspace");
 			innerInput.keys("Backspace");
 
 			tokens = mcb.shadow$$(".ui5-multi-combobox-token");
-	
+
 			resourceBundleText = browser.execute(() => {
 				const mcb = document.getElementById("mcb-compact");
-				return mcb.i18nBundle.getText("TOKENIZER_ARIA_CONTAIN_ONE_TOKEN");
+				return mcb.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
 			});
-			
+
 			assert.strictEqual(tokens.length, 1, "should have one token");
 			assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
 
@@ -293,7 +310,7 @@ describe("MultiComboBox general interaction", () => {
 			tokens = mcb.shadow$$(".ui5-multi-combobox-token");
 			resourceBundleText = browser.execute(() => {
 				const mcb = document.getElementById("mcb-compact");
-				return mcb.i18nBundle.getText("TOKENIZER_ARIA_CONTAIN_TOKEN");
+				return mcb.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN);
 			});
 
 			assert.strictEqual(tokens.length, 0, "should not have tokens");

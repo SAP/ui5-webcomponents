@@ -2,6 +2,7 @@
 	data-sap-ui-fastnavgroup="true"
 	class="ui5-panel-root"
 	role="{{accRole}}"
+	aria-label="{{effectiveAccessibleName}}"
 >
 	<!-- header: either header or h1 with header text -->
 	<div
@@ -13,21 +14,25 @@
 		role="{{accInfo.role}}"
 		aria-expanded="{{accInfo.ariaExpanded}}"
 		aria-controls="{{accInfo.ariaControls}}"
-		aria-label="{{accInfo.ariaLabel}}"
 		aria-labelledby="{{accInfo.ariaLabelledby}}"
 	>
 		{{#unless fixed}}
 			<div class="ui5-panel-header-button-root">
-				<ui5-button
-					design="Transparent"
-					class="ui5-panel-header-button {{classes.headerBtn}}"
-					icon="slim-arrow-right"
-					?non-focusable="{{nonFocusableButton}}"
-					@click="{{_toggleButtonClick}}"
-					._buttonAccInfo="{{accInfo.button}}"
-					aria-label="{{accInfo.ariaLabelButton}}"
-					aria-labelledby="{{accInfo.ariaLabelledbyButton}}"
-				></ui5-button>
+				{{#if _hasHeader}}
+					<ui5-button
+						design="Transparent"
+						class="ui5-panel-header-button {{classes.headerBtn}}"
+						icon="slim-arrow-right"
+						@click="{{_toggleButtonClick}}"
+						._buttonAccInfo="{{accInfo.button}}"
+						aria-label="{{accInfo.button.ariaLabelButton}}"
+					></ui5-button>
+				{{else}}
+					<ui5-icon
+						class="ui5-panel-header-button ui5-panel-header-icon {{classes.headerBtn}}"
+						name="slim-arrow-right"
+					></ui5-icon>
+				{{/if}}
 			</div>
 		{{/unless}}
 
@@ -39,15 +44,11 @@
 				role="heading"
 				aria-level="{{headerAriaLevel}}"
 				class="ui5-panel-header-title"
-				aria-labelledby="{{_id}}-headerText"
 			>
 				{{headerText}}
 			</div>
 		{{/if}}
 	</div>
-
-	<div id="aria-labelledby-texts"></div>
-	<span id="{{_id}}-headerText" class="ui5-hidden-text">{{headerAriaLabelledByText}}</span>
 
 	<!-- content area -->
 	<div class="ui5-panel-content" id="{{_id}}-content" tabindex="-1" style="{{styles.content}}">

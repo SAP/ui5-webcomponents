@@ -128,7 +128,7 @@ const metadata = {
 		 * <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li>
 		 * </ul>
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -140,7 +140,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of characters that the <code>value</code> can have.
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultValue null
 		 * @public
 		 */
@@ -181,7 +181,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of lines that the Web Component can grow.
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -290,6 +290,17 @@ const metadata = {
 		 * @public
 		 */
 		valueStateMessage: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
 			type: HTMLElement,
 		},
 	},

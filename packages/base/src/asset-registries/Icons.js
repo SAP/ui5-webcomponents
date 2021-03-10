@@ -36,18 +36,24 @@ const _fillRegistry = bundleData => {
 			ltr: iconData.ltr,
 			accData: iconData.acc,
 			collection: bundleData.collection,
+			packageName: bundleData.packageName,
 		 });
 	});
 };
 
 // set
-const registerIcon = (name, { pathData, ltr, accData, collection } = {}) => { // eslint-disable-line
+const registerIcon = (name, { pathData, ltr, accData, collection, packageName } = {}) => { // eslint-disable-line
 	if (!collection) {
 		collection = DEFAULT_COLLECTION;
 	}
 
 	const key = `${collection}/${name}`;
-	registry.set(key, { pathData, ltr, accData });
+	registry.set(key, {
+		pathData,
+		ltr,
+		accData,
+		packageName,
+	});
 };
 
 const _parseName = name => {

@@ -43,7 +43,8 @@ const metadata = {
 		 * inside the items.
 		 *
 		 * @public
-		 * @slot
+		 * @type {sap.ui.webcomponents.fiori.ISideNavigationItem[]}
+		 * @slot items
 		 */
 		"default": {
 			propertyName: "items",
@@ -58,6 +59,7 @@ const metadata = {
 		 * <b>Note:</b> The header is displayed when the component is expanded - the property <code>collapsed</code> is false;
 		 *
 		 * @public
+		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.11
 		 * @slot
 		 */
@@ -72,6 +74,7 @@ const metadata = {
 		 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 		 *
 		 * @public
+		 * @type {sap.ui.webcomponents.fiori.ISideNavigationItem[]}
 		 * @slot
 		 */
 		fixedItems: {
@@ -88,8 +91,10 @@ const metadata = {
 		 * @public
 		 */
 		"selection-change": {
-			item: {
-				type: HTMLElement,
+			detail: {
+				item: {
+					type: HTMLElement,
+				},
 			},
 		},
 	},

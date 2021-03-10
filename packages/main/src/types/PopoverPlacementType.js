@@ -22,7 +22,7 @@ const PopoverPlacementTypes = {
 	/**
 	 * Popover will be placed at the top of the reference element.
 	 * @public
-	 * @type {Bottom}
+	 * @type {Top}
 	 */
 	Top: "Top",
 

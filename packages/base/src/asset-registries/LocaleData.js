@@ -16,9 +16,9 @@ const M_ISO639_OLD_TO_NEW = {
 	"sh": "sr",
 };
 
-const _showAssetsWarningOnce = (localeId) => {
+const _showAssetsWarningOnce = localeId => {
 	if (!warningShown) {
-		console.warn(`[LocaleData] Supported locale "${localeId}" not configured, add import for "<packagename>/dist/Assets.js";`); /* eslint-disable-line */
+		console.warn(`[LocaleData] Supported locale "${localeId}" not configured, import the "Assets.js" module from the webcomponents package you are using.`); /* eslint-disable-line */
 		warningShown = true;
 	}
 };
@@ -45,11 +45,11 @@ const calcLocale = (language, region, script) => {
 		if (loaders.has(localeId)) {
 			// supported and has loader
 			return localeId;
-		} else {
-			// supported, no loader - fallback to default and warn
-			_showAssetsWarningOnce(localeId);
-			return DEFAULT_LOCALE;
 		}
+
+		// supported, no loader - fallback to default and warn
+		_showAssetsWarningOnce(localeId);
+		return DEFAULT_LOCALE;
 	}
 
 	// not supported, try language only
@@ -58,11 +58,11 @@ const calcLocale = (language, region, script) => {
 		if (loaders.has(localeId)) {
 			// supported and has loader
 			return localeId;
-		} else {
-			// supported, no loader - fallback to default and warn
-			_showAssetsWarningOnce(localeId);
-			return DEFAULT_LOCALE;
 		}
+
+		// supported, no loader - fallback to default and warn
+		_showAssetsWarningOnce(localeId);
+		return DEFAULT_LOCALE;
 	}
 
 	// not supported - fallback to default locale

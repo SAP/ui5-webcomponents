@@ -37,7 +37,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Badge.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-badge</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -50,7 +50,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
 		 * @public
 		 */

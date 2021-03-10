@@ -8,6 +8,7 @@
 
 		<input id="{{_id}}-inner"
 			class="ui5-input-inner"
+			style="{{styles.innerInput}}"
 			type="{{inputType}}"
 			inner-input
 			?inner-input-with-icon="{{icon.length}}"
@@ -34,7 +35,9 @@
 			@focusin={{innerFocusIn}}
 			data-sap-no-tab-ref
 			data-sap-focus-ref
-			step="{{step}}"
+			step="{{nativeInputAttributes.step}}"
+			min="{{nativeInputAttributes.min}}"
+			max="{{nativeInputAttributes.max}}"
 		/>
 		{{#if icon.length}}
 			<div class="ui5-input-icon-root">

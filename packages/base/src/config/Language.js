@@ -1,12 +1,12 @@
 import {
 	getLanguage as getConfiguredLanguage,
-	getUseDefaultLanguage as getConfiguredUseDefaultLanguage,
+	getFetchDefaultLanguage as getConfiguredFetchDefaultLanguage,
 } from "../InitialConfiguration.js";
 import { fireLanguageChange } from "../locale/languageChange.js";
 import { reRenderAllUI5Elements } from "../Render.js";
 
 let language;
-let useDefaultLanguage;
+let fetchDefaultLanguage;
 
 /**
  * Returns the currently configured language, or the browser language as a fallback
@@ -38,31 +38,31 @@ const setLanguage = async newLanguage => {
 };
 
 /**
- * Defines if the default language, that is inlined, should be used,
- * instead of fetching the language over the network.
- * <b>Note:</b> By default the language will be fetched.
+ * Defines if the default language, that is inlined, should be
+ * fetched over the network instead of using the inlined one.
+ * <b>Note:</b> By default the language will not be fetched.
  *
- * @param {Boolean} useDefaultLanguage
+ * @param {Boolean} fetchDefaultLanguage
  */
-const setUseDefaultLanguage = useDefaultLang => {
-	useDefaultLanguage = useDefaultLang;
+const setFetchDefaultLanguage = fetchDefaultLang => {
+	fetchDefaultLanguage = fetchDefaultLang;
 };
 
 /**
- * Returns if the default language, that is inlined, should be used.
+ * Returns if the default language, that is inlined, should be fetched over the network.
  * @returns {Boolean}
  */
-const getUseDefaultLanguage = () => {
-	if (useDefaultLanguage === undefined) {
-		setUseDefaultLanguage(getConfiguredUseDefaultLanguage());
+const getFetchDefaultLanguage = () => {
+	if (fetchDefaultLanguage === undefined) {
+		setFetchDefaultLanguage(getConfiguredFetchDefaultLanguage());
 	}
 
-	return useDefaultLanguage;
+	return fetchDefaultLanguage;
 };
 
 export {
 	getLanguage,
 	setLanguage,
-	setUseDefaultLanguage,
-	getUseDefaultLanguage,
+	setFetchDefaultLanguage,
+	getFetchDefaultLanguage,
 };

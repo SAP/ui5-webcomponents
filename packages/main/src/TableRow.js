@@ -17,8 +17,8 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.ITableCell[]}
+		 * @slot cells
 		 * @public
 		 */
 		"default": {
@@ -58,6 +58,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.TableRow
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-row
+ * @implements sap.ui.webcomponents.main.ITableRow
  * @public
  */
 class TableRow extends UI5Element {

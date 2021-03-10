@@ -810,10 +810,11 @@ describe("Date Picker Tests", () => {
 		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
-		datepicker.openPicker();
 		datepicker.input.click();
 		browser.keys("May 3, 2100");
 		browser.keys("Enter");
+		// open picker after accepting the date
+		datepicker.openPicker();
 
 		const data = Array.from(datepicker.getDayPickerDatesRow(2));
 		assert.strictEqual(data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");

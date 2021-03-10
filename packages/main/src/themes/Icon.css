@@ -1,5 +1,5 @@
-:host(:not([hidden])) {
-	display: inline-block;
+:host([hidden]) {
+	display: none;
 }
 
 :host([invalid]) {
@@ -11,6 +11,7 @@
 }
 
 :host {
+	display: inline-block;
 	width: 1rem;
 	height: 1rem;
 	color: var(--sapContent_NonInteractiveIconColor);

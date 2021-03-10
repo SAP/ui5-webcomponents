@@ -15,7 +15,7 @@ import dialogCSS from "./generated/themes/Dialog.css.js";
  */
 const metadata = {
 	tag: "ui5-dialog",
-	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+	slots: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header HTML Element.
 		 *
@@ -181,6 +181,18 @@ class Dialog extends Popup {
 
 	static get styles() {
 		return [PopupsCommonCss, dialogCSS];
+	}
+
+	/**
+	 * Opens the dialog
+	 *
+	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
+	 * @async
+	 * @returns {Promise} Resolves when the dialog is open
+	 * @public
+	 */
+	async open(preventInitialFocus) {
+		await super.open(preventInitialFocus);
 	}
 
 	get isModal() { // Required by Popup.js

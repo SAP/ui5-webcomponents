@@ -44,7 +44,7 @@ const metadata = {
 		},
 	},
 
-	events: {
+	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
 		/**
 		 * @public
 		 * @event
@@ -74,6 +74,7 @@ const metadata = {
  * @tagname ui5-side-navigation-sub-item
  * @public
  * @since 1.0.0-rc.8
+ * @implements sap.ui.webcomponents.fiori.ISideNavigationSubItem
  */
 class SideNavigationSubItem extends UI5Element {
 	static get metadata() {

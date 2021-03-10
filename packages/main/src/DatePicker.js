@@ -82,7 +82,7 @@ const metadata = {
 		 * Defines whether the <code>ui5-date-picker</code> is required.
 		 *
 		 * @since 1.0.0-rc.9
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -222,6 +222,17 @@ const metadata = {
 		valueStateMessage: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
 	},
 
 	events: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
@@ -297,6 +308,29 @@ const metadata = {
  * <li>[SHIFT] + [PAGEUP] - Increments the corresponding month by one</li>
  * <li>[SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one</li>
  * </ul>
+ *
+ * <h3>Calendar types</h3>
+ * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.
+ * By default the Gregorian Calendar is used. In order to use the Buddhist, Islamic, Japanese or Persian calendar,
+ * you need to set the <code>primaryCalendarType</code> property and import one or more of the following modules:
+ * <br><br>
+ *
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";</code>
+ * <br><br>
+ *
+ * Or, you can use the global configuration and set the <code>calendarType</code> key:
+ * <br>
+ * <pre><code>&lt;script data-id="sap-ui-config" type="application/json"&gt;
+ * {
+ *	"calendarType": "Japanese"
+ * }
+ * &lt;/script&gt;
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -532,8 +566,9 @@ class DatePicker extends DateComponentBase {
 	}
 
 	/**
-	 * Checks if a date is in range between minimum and maximum date.
-	 * @param {object} value
+	 * Checks if a date is between the minimum and maximum date.
+	 * @param {string} value
+	 * @returns {boolean}
 	 * @public
 	 */
 	isInValidRange(value = "") {
@@ -648,6 +683,7 @@ class DatePicker extends DateComponentBase {
 	 * Formats a Java Script date object into a string representing a locale date
 	 * according to the <code>formatPattern</code> property of the DatePicker instance
 	 * @param {object} oDate A Java Script date object to be formatted as string
+	 * @returns {string} The date as string
 	 * @public
 	 */
 	formatValue(oDate) {
@@ -665,6 +701,8 @@ class DatePicker extends DateComponentBase {
 	/**
 	 * Opens the picker.
 	 * @public
+	 * @async
+	 * @returns {Promise} Resolves when the picker is open
 	 */
 	async openPicker() {
 		this._isPickerOpen = true;
@@ -684,7 +722,7 @@ class DatePicker extends DateComponentBase {
 
 	/**
 	 * Checks if the picker is open.
-	 * @returns {Boolean} true if the picker is open, false otherwise
+	 * @returns {boolean} true if the picker is open, false otherwise
 	 * @public
 	 */
 	isOpen() {

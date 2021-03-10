@@ -70,7 +70,7 @@ const metadata = {
 		},
 	},
 
-	events: {
+	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
 		/**
 		 * @public
 		 * @event
@@ -85,9 +85,9 @@ const metadata = {
 		/**
 		 * If you wish to nest menus, you can pass inner menu items to the default slot.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.fiori.ISideNavigationSubItem[]}
 		 * @public
-		 * @slot
+		 * @slot items
 		 */
 		"default": {
 			propertyName: "items",
@@ -116,6 +116,7 @@ const metadata = {
  * @tagname ui5-side-navigation-item
  * @public
  * @since 1.0.0-rc.8
+ * @implements sap.ui.webcomponents.fiori.ISideNavigationItem
  */
 class SideNavigationItem extends UI5Element {
 	static get metadata() {
