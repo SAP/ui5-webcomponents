@@ -19,6 +19,7 @@
     "clean": "nps clean",
     "lint": "nps lint",
     "build": "nps build",
+    "hash": "nps hash",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {

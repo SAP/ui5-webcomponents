@@ -2,3 +2,4 @@
 lib
 dist
 src/thirdparty
+package-scripts.js
