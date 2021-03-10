@@ -13,7 +13,7 @@ const UP_TO_DATE = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`
 const scripts = {
 	clean: "rimraf dist && rimraf hash.txt",
 	lint: "eslint . --config config/.eslintrc.js",
-	prepare: `${UP_TO_DATE} || nps clean copy generateAssetParameters`,
+	prepare: "nps clean copy generateAssetParameters",
 	build: {
 		default: `${UP_TO_DATE} || nps lint prepare build.bundle hash`,
 		bundle: "rollup --config config/rollup.config.js",
