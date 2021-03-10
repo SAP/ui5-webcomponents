@@ -18,7 +18,7 @@ Currently our npm packages follow the scheme:
 `@ui5/<PACKAGE_NAME>/dist/Assets.js`
 (for the module that provides the assets)
 
-All JS build tools support importing JSON modules (via plugins or by default), by inlining them in a jS module that exports the acutual content. In order to avoid inlinding all 40+ languages and ending up with a huge bundle, the `Assets.js` file exposes the assets with dynamic imports. This way, application build tools can do the following two thigns:
+All JS build tools support importing JSON modules (via plugins like `@rollup/plugin-json` or by default like webpack), by inlining them in a JS module that exports the acutual content. In order to avoid inlinding all 40+ languages and ending up with a huge bundle, the `Assets.js` file exposes the assets with dynamic imports. This way, application build tools can do the following two things:
 - include the necessary JSON data (inlined in JS) in the build output folder
 - leave dynamic imports to only load the necessary one at runtime (since the ui5 webcomponents framework will see the runtime location inside the dynamic import).
 
