@@ -2417,7 +2417,7 @@
 <p>This is a comprehensive list of public module imports by package, intended for <em>App development</em>, i.e. consumption
 of the UI5 Web Components.</p>
 
-<p>Modules, intended purely for developing your own UI5 Web Components, 
+<p>Modules, intended purely for developing your own UI5 Web Components,
 are therefore not listed here.</p>
 
 <p>Table of contents:</p>
@@ -2480,11 +2480,6 @@ are therefore not listed here.</p>
       <td>Checkbox</td>
       <td><code class="highlighter-rouge">ui5-checkbox</code></td>
       <td><code class="highlighter-rouge">import "@ui5/webcomponents/dist/CheckBox.js";</code></td>
-    </tr>
-    <tr>
-      <td>Color Picker</td>
-      <td><code class="highlighter-rouge">ui5-color-picker</code></td>
-      <td><code class="highlighter-rouge">import "@ui5/webcomponents/dist/ColorPicker.js";</code></td>
     </tr>
     <tr>
       <td>Color Palette</td>
@@ -2702,8 +2697,8 @@ are therefore not listed here.</p>
 
 <h3 id="3-additional-features">3. Additional features</h3>
 
-<p><a name="inputsuggestions"></a></p>
 <h4 id="31-input-suggestions">3.1 Input Suggestions</h4>
+<p><a name="inputsuggestions"></a></p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/features/InputSuggestions.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
@@ -2716,8 +2711,8 @@ Since input suggestions may not always be needed, they do not come as part of th
 <p>To enable the functionality, import the above module into your app. This will also automatically import <code class="highlighter-rouge">ui5-suggestion-item</code>
 for your convenience.</p>
 
-<p><a name="formsupport"></a></p>
 <h4 id="32-form-support">3.2 Form Support</h4>
+<p><a name="formsupport"></a></p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/features/InputElementsFormSupport.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
@@ -2744,10 +2739,10 @@ any standard HTML input element would be.</p>
 
 <p>In addition, the <code class="highlighter-rouge">ui5-button</code> element will be able to submit the closest <code class="highlighter-rouge">form</code> it’s placed in, provided you set its <code class="highlighter-rouge">submits</code> attribute.</p>
 
-<p><a name="fiori"></a></p>
 <h2 id="fiori-package-ui5webcomponents-fiori">Fiori package (<code class="highlighter-rouge">@ui5/webcomponents-fiori</code>)</h2>
+<p><a name="fiori"></a></p>
 
-<p>The <code class="highlighter-rouge">fiori</code> package provides essential building blocks, necessary to implement the Fiori UX concept, 
+<p>The <code class="highlighter-rouge">fiori</code> package provides essential building blocks, necessary to implement the Fiori UX concept,
 such as a common header (<code class="highlighter-rouge">ShellBar</code>).</p>
 
 <p>For API documentation and samples, please check the <a href="https://sap.github.io/ui5-webcomponents/playground/">UI5 Web Components Playground</a>.</p>
@@ -2792,11 +2787,6 @@ such as a common header (<code class="highlighter-rouge">ShellBar</code>).</p>
       <td>Shell Bar Item</td>
       <td><code class="highlighter-rouge">ui5-shellbar-item</code></td>
       <td><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";</code></td>
-    </tr>
-    <tr>
-      <td>Page</td>
-      <td><code class="highlighter-rouge">ui5-page</code></td>
-      <td><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/Page.js";</code></td>
     </tr>
     <tr>
       <td>Product Switch</td>
@@ -2869,16 +2859,16 @@ such as a common header (<code class="highlighter-rouge">ShellBar</code>).</p>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">`import "@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js";`</span>
 </code></pre></div></div>
 
-<p>By default the <code class="highlighter-rouge">ui5-shellbar</code> Co-pilot button ships with a simple animation for better performance. 
+<p>By default the <code class="highlighter-rouge">ui5-shellbar</code> Co-pilot button ships with a simple animation for better performance.
 Importing the module above enables the detailed but more resource intensive animation instead.</p>
 
-<p><a name="icons"></a></p>
 <h2 id="icons-package-ui5webcomponents-icons">Icons package (<code class="highlighter-rouge">@ui5/webcomponents-icons</code>)</h2>
+<p><a name="icons"></a></p>
 
 <p>The <code class="highlighter-rouge">icons</code> package provides assets for the rich <code class="highlighter-rouge">SAP-icons</code> icon collection.</p>
 
 <p><em>Note:</em> The <code class="highlighter-rouge">@ui5/webcomponents-icons</code> package does not provide any web components per se, but rather icon assets,
-usable by other web components such as <code class="highlighter-rouge">ui5-icon</code>. You could import all icons, but it’s recommended to import 
+usable by other web components such as <code class="highlighter-rouge">ui5-icon</code>. You could import all icons, but it’s recommended to import
 just the ones that your app will actually use.</p>
 
 <h3 id="1-individual-icon-imports">1. Individual icon imports</h3>
@@ -2918,18 +2908,18 @@ just the ones that your app will actually use.</p>
 
 <p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/Assets.js";</code></p>
 
-<p><em>Note:</em> 
+<p><em>Note:</em>
 Apart from i18n assets, the above import also provides the JSON, containing all icons definitions (~115KB zipped).
 <strong>Therefore, if you use an icon which you did not import individually, the JSON will be fetched.</strong></p>
 
-<p><a name="base"></a></p>
 <h2 id="base-package-ui5webcomponents-base">Base package (<code class="highlighter-rouge">@ui5/webcomponents-base</code>)</h2>
 
-<p>The <code class="highlighter-rouge">base</code> package provides not only the UI5 Web Components framework, but also some features, relevant to
+<p><a name="base"></a>
+The <code class="highlighter-rouge">base</code> package provides not only the UI5 Web Components framework, but also some features, relevant to
 all UI5 Web Components.</p>
 
-<p><a name="theming"></a></p>
 <h3 id="1-theming">1. Theming</h3>
+<p><a name="theming"></a></p>
 
 <p>UI5 Web Components ship with the default theme only out of the box.</p>
 
@@ -2970,8 +2960,8 @@ all UI5 Web Components.</p>
 
 <p>Find out how you can bundle your themes more efficiently <a href="Assets.md#bundling">here</a>.</p>
 
-<p><a name="internationalization"></a></p>
 <h3 id="2-internationalization">2. Internationalization</h3>
+<p><a name="internationalization"></a></p>
 
 <p>The <code class="highlighter-rouge">base</code> project provides i18n support.</p>
 
@@ -3010,8 +3000,8 @@ All texts are in English by default. In order to get support for other languages
 <p>In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with this web component
 (by setting its <code class="highlighter-rouge">primaryCalendarType</code> property), you should import one or more of the modules above.</p>
 
-<p><a name="config"></a></p>
 <h3 id="4-configuration">4. Configuration</h3>
+<p><a name="config"></a></p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">getTheme</span><span class="p">,</span> <span class="nx">setTheme</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Theme.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getNoConflict</span><span class="p">,</span> <span class="nx">setNoConflict</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/NoConflict.js</span><span class="dl">"</span><span class="p">;</span>
@@ -3043,29 +3033,7 @@ from OpenUI5 configuration and resources.</p>
 <p>Therefore, if you intend to run both frameworks in the same browser window,
 it is highly recommended to enable OpenUI5 support and benefit from these optimizations.</p>
 
-<h3 id="6-support-for-registering-i18n-resources-in-properties-format">6. Support for registering <code class="highlighter-rouge">i18n</code> resources in <code class="highlighter-rouge">.properties</code> format</h3>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js</span><span class="dl">"</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>By default, all <code class="highlighter-rouge">i18n</code> resources are in <code class="highlighter-rouge">JSON</code> format. Registering such a resource does not require any additional code:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/asset-registries/i18n.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="nx">registerI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
-	<span class="na">fr</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./lang/fr.json</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
-</code></pre></div></div>
-
-<p>However, in order to use <code class="highlighter-rouge">.properties</code> files for <code class="highlighter-rouge">i18n</code> registration, you must also import this feature.</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/asset-registries/i18n.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="nx">registerI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
-	<span class="na">bg</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./lang/messagebundle_bg.properties</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
-</code></pre></div></div>
-
-<h3 id="7-custom-elements-scoping">7. Custom elements scoping</h3>
+<h3 id="6-custom-elements-scoping">6. Custom elements scoping</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">setCustomElementsScopingSuffix</span><span class="p">,</span> <span class="nx">setCustomElementsScopingRules</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/CustomElementsScope.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>

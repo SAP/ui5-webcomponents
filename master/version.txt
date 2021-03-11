@@ -1,5 +1,5 @@
-commit 6db9f09a02bc4fbbcec9964e42a72c4de705098e
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Tue Mar 9 14:36:01 2021 +0200
+commit c60d74ae174893ea8a3fec94a04d530b658e120b
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Thu Mar 11 13:46:51 2021 +0200
 
-    fix(ui5-upload-collection): add region and roledescription to root element (#2915)
+    chore: add documentation for dynamic imports change (#2829)

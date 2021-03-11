@@ -2414,10 +2414,17 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="assets-and-json-module-imports">Assets and JSON module imports</h1>
 
-<p>UI5 Web Components aim to be feature rich and with a minimal code footprint at the same time. In order to achieve this, 
-most UI5 Web Components packages ship their assets as <code class="highlighter-rouge">.json</code> files while also providing a public module import for them.</p>
+<ol>
+  <li>UI5 web components need non-code assets for their entrprise-ready features (i18n texts, themes, etc.)</li>
+  <li>These assets need to be known at runtime, but the actual bundle is created by applications.</li>
+  <li>The application has to “link” the assets from their node_modules location to their runtime location and make them known to the UI5 webcomponents framework.</li>
+</ol>
 
-<p>The assets in question could be i18n texts, icons, additional themes parameters, CLDR, etc…</p>
+<p>The easiest way to enable applications for such “linking” is to express the dependency from the code of the web components to the actual asset files in terms of ES6 imports. In our case, the assets are in <code class="highlighter-rouge">.json</code> format, so using ES6 imports for the <code class="highlighter-rouge">.json</code> files is a way to “show” applicaitons what assets are needed.</p>
+
+<p>Since JSON module imports are not standard browser functionality yet (spec work is in progress), a build tool is necessary and the assets imports are not imported automatically from the components in order to make them work without a build tool for rapid prototyping.</p>
+
+<p>The assets are still required for productive usage so a separate import is necessary as well.</p>
 
 <p>Currently our npm packages follow the scheme:</p>
 
@@ -2427,8 +2434,14 @@ most UI5 Web Components packages ship their assets as <code class="highlighter-r
 <p><code class="highlighter-rouge">@ui5/&lt;PACKAGE_NAME&gt;/dist/Assets.js</code>
 (for the module that provides the assets)</p>
 
-<p><a name="packages"></a></p>
+<p>All JS build tools support importing JSON modules (via plugins like <code class="highlighter-rouge">@rollup/plugin-json</code> or by default like webpack), by inlining them in a JS module that exports the acutual content. In order to avoid inlinding all 40+ languages and ending up with a huge bundle, the <code class="highlighter-rouge">Assets.js</code> file exposes the assets with dynamic imports. This way, application build tools can do the following two things:</p>
+<ul>
+  <li>include the necessary JSON data (inlined in JS) in the build output folder</li>
+  <li>leave dynamic imports to only load the necessary one at runtime (since the ui5 webcomponents framework will see the runtime location inside the dynamic import).</li>
+</ul>
+
 <h2 id="packages">Packages</h2>
+<p><a name="packages"></a></p>
 
 <h3 id="localization-package"><code class="highlighter-rouge">localization</code> package</h3>
 
@@ -2450,7 +2463,7 @@ but rather from the package(s) containing the actual Web Components you’ll be 
 
 <h3 id="main-package"><code class="highlighter-rouge">main</code> package</h3>
 
-<p>The <code class="highlighter-rouge">main</code> package’s <code class="highlighter-rouge">Assets.js</code> import provides package-specific additional theming parameters and i18n assets. 
+<p>The <code class="highlighter-rouge">main</code> package’s <code class="highlighter-rouge">Assets.js</code> import provides package-specific additional theming parameters and i18n assets.
 All assets from the <code class="highlighter-rouge">base</code> and <code class="highlighter-rouge">theme-base</code> packages are also imported automatically so you don’t have to worry about them.</p>
 
 <p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/Assets.js";</code></p>
@@ -2470,48 +2483,8 @@ package are also imported since the <code class="highlighter-rouge">fiori</code>
 
 <p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/add.js</code>”;`</p>
 
-<p>However, sometimes it makes sense to import all icons, hence the <code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/Assets.js";</code> JSON import. 
+<p>However, sometimes it makes sense to import all icons, hence the <code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/Assets.js";</code> JSON import.
 Along with the icons, it also includes all translatable texts.</p>
-
-<p><a name="bundling"></a></p>
-<h2 id="efficient-asset-bundling">Efficient asset bundling</h2>
-
-<p>You may notice that <code class="highlighter-rouge">Assets.js</code> imports, such as:</p>
-
-<p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/Assets.js"</code></p>
-
-<p>will produce warning messages in the browser’s console, such as for example:</p>
-<blockquote>
-  <p>Inefficient bundling detected: consider bundling i18n/theme properties imports as URLs instead of inlining them.
-See rollup-plugin-url or webpack file-loader for more information.
-Suggested pattern: “assets\/.*.json”</p>
-</blockquote>
-
-<p>What this means is that it’s recommended to instruct your source code bundling software
-(some of the most popular being Webpack and Rollup) not to include all the asset files or theming related files
-(files that match the <code>assets\/.*\.json</code> pattern) in your applications’ JavaScript bundle,
-but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.</p>
-
-<p><a href="https://github.com/webpack-contrib/file-loader">How to do it with Webpack</a></p>
-
-<p><a href="https://github.com/rollup/rollup-plugin-url">How to do it with Rollup</a></p>
-
-<p>Rollup example:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">url</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rollup-plugin-url</span><span class="dl">"</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="nx">plugins</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">url</span><span class="p">({</span>
-	<span class="na">limit</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-	<span class="na">include</span><span class="p">:</span> <span class="p">[</span>
-		<span class="sr">/.*assets</span><span class="se">\/</span><span class="sr">.*</span><span class="se">\.</span><span class="sr">json/</span><span class="p">,</span>
-	<span class="p">],</span>
-	<span class="na">emitFiles</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-	<span class="na">fileName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">[name].[hash][extname]</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">publicPath</span><span class="p">:</span> <span class="nx">YOUR_APPLICATION_PUBLIC_PATH</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">/resources/</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">}));</span>
-</code></pre></div></div>
-
-<p>Please note that the code above is just sample snippet, and will not work on its own.</p>
 
 
 <footer class="footer-wrapper">

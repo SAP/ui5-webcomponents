@@ -2423,117 +2423,111 @@ but for apps as well.</p>
 
 <p>This tutorial will demonstrate how you can use the UI5 Web Components <code class="highlighter-rouge">i18n</code> functionality for the purpose of your apps.</p>
 
-<ol>
-  <li>
-    <p>Start by creating some <code class="highlighter-rouge">i18n</code> resources in a directory that can be served, for example:</p>
+<h3 id="1-start-by-creating-some-i18n-resources-in-a-directory-that-can-be-served-for-example">1. Start by creating some <code class="highlighter-rouge">i18n</code> resources in a directory that can be served, for example:</h3>
 
-    <table>
-      <thead>
-        <tr>
-          <th>File</th>
-          <th>Content</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code class="highlighter-rouge">assets/messagebundle_de.properties</code></td>
-          <td><code class="highlighter-rouge">PLEASE_WAIT=Bitte warten</code></td>
-        </tr>
-        <tr>
-          <td><code class="highlighter-rouge">assets/messagebundle_fr.properties</code></td>
-          <td><code class="highlighter-rouge">PLEASE_WAIT=Patientez.</code></td>
-        </tr>
-        <tr>
-          <td><code class="highlighter-rouge">assets/messagebundle_es.properties</code></td>
-          <td><code class="highlighter-rouge">PLEASE_WAIT=Espere</code></td>
-        </tr>
-        <tr>
-          <td><code class="highlighter-rouge">assets/messagebundle_en.properties</code></td>
-          <td><code class="highlighter-rouge">PLEASE_WAIT=Please wait</code></td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
-  <li>
-    <p>Import the following <code class="highlighter-rouge">i18n</code>-related modules to your app:</p>
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">assets/messagebundle_de.properties</code></td>
+      <td><code class="highlighter-rouge">PLEASE_WAIT=Bitte warten</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">assets/messagebundle_fr.properties</code></td>
+      <td><code class="highlighter-rouge">PLEASE_WAIT=Patientez.</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">assets/messagebundle_es.properties</code></td>
+      <td><code class="highlighter-rouge">PLEASE_WAIT=Espere</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">assets/messagebundle_en.properties</code></td>
+      <td><code class="highlighter-rouge">PLEASE_WAIT=Please wait</code></td>
+    </tr>
+  </tbody>
+</table>
 
-    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js</span><span class="dl">"</span><span class="p">;</span>
- <span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nBundle</span><span class="p">,</span> <span class="nx">fetchI18nBundle</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
-</code></pre></div>    </div>
+<h3 id="2-import-the-following-i18n-related-modules-to-your-app">2. Import the following <code class="highlighter-rouge">i18n</code>-related modules to your app:</h3>
 
-    <p>The first one provides support for <code class="highlighter-rouge">.properties</code> files, as used in the example and the second one - the functions
- that will allow you to take advantage of the <code class="highlighter-rouge">i18n</code> functionality.</p>
-  </li>
-  <li>
-    <p>Register your message bundles:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">parse</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/PropertiesFileFormat.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nLoader</span><span class="p">,</span> <span class="nx">fetchI18nBundle</span><span class="p">,</span> <span class="nx">getI18nBundle</span>  <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/asset-registries/i18n.js</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
 
-    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">registerI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
-     <span class="na">de</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_de.properties</span><span class="dl">"</span><span class="p">,</span>
-     <span class="na">es</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_es.properties</span><span class="dl">"</span><span class="p">,</span>
-     <span class="na">fr</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_fr.properties</span><span class="dl">"</span><span class="p">,</span>
-     <span class="na">en</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_en.properties</span><span class="dl">"</span><span class="p">,</span>
- <span class="p">});</span>
-</code></pre></div>    </div>
+<p>The first one provides support for <code class="highlighter-rouge">.properties</code> files, as used in the example and the second one - the functions
+that will allow you to take advantage of the <code class="highlighter-rouge">i18n</code> functionality.</p>
 
-    <p>The first argument is an ID that will be used to reference this message bundle and the second, an object,
- providing the URLs where the <code class="highlighter-rouge">i18n</code> assets can be found.</p>
+<h3 id="3-register-a-loader-function-that-can-retrieve-and-process-the-actual-content-of-your-message-bundles">3. Register a loader function that can retrieve and process the actual content of your message bundles:</h3>
 
-    <p><em>Note:</em> This is just asset registration, no data will be fetched at that point.</p>
-  </li>
-  <li>
-    <p>Fetch the texts for the current language:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">en</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">fr</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">de</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">es</span><span class="dl">"</span><span class="p">];</span>
+<span class="nx">supportedLocales</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">localeToRegister</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="nx">registerI18nLoader</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">,</span> <span class="nx">localeToRegister</span><span class="p">,</span> <span class="k">async</span> <span class="p">(</span><span class="nx">localeId</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+		<span class="kd">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="k">await</span> <span class="p">(</span><span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="s2">`./assets/messagebundle_</span><span class="p">${</span><span class="nx">localeId</span><span class="p">}</span><span class="s2">.properties`</span><span class="p">)).</span><span class="nx">text</span><span class="p">();</span>
+		<span class="k">return</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+	<span class="p">});</span>
+<span class="p">};</span>
+</code></pre></div></div>
 
-    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">await</span> <span class="nx">fetchI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
-</code></pre></div>    </div>
+<p>The first argument to <code class="highlighter-rouge">resisterI18nLoader</code> is an ID that will be used to reference this message bundle, the second is the locale this loader can load and the third is is a function that can load (and process) the content for the specified package/locale combination.</p>
 
-    <p>This will fetch the appropriate texts for the currently configured language.</p>
-  </li>
-  <li>
-    <p>Get and use the bundle</p>
+<p><em>Note:</em> For more assets, a loop is used to register a loader for each package/locale combination. The same loader function can be registered and its parameter can be used to distinguish which locale resource is requested.</p>
 
-    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">const</span> <span class="nx">bundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
- <span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">);</span>
- <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait</span><span class="p">);</span>
-</code></pre></div>    </div>
+<p><em>Note:</em> This step takes care of registering assets only, no data will be fetched at this point.</p>
 
-    <p>You can pass multiple additional values to <code class="highlighter-rouge">getText</code> for texts with placeholders, for example:</p>
+<h3 id="4-tell-the-framework-to-fetch-the-texts-for-the-current-language">4. Tell the framework to fetch the texts for the current language:</h3>
 
-    <p>If your text looks like this:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">await</span> <span class="nx">fetchI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
+</code></pre></div></div>
 
-    <p><code class="highlighter-rouge">CAROUSEL_DOT_TEXT=Item {0} of {1} displayed</code></p>
+<p>This will fetch the appropriate texts for the currently configured language.</p>
 
-    <p>you can call <code class="highlighter-rouge">getText</code> like this:</p>
+<h3 id="5-get-and-use-the-bundle">5. Get and use the bundle</h3>
 
-    <p><code class="highlighter-rouge">bundle.getText("CAROUSEL_DOT_TEXT", 5, 20);</code></p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">bundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait</span><span class="p">);</span>
+</code></pre></div></div>
 
-    <p>which will finally result in, for example:</p>
+<p>You can pass multiple additional values to <code class="highlighter-rouge">getText</code> for texts with placeholders, for example:</p>
 
-    <p><code class="highlighter-rouge">Item 5 of 20 displayed</code>.</p>
-  </li>
-  <li>
-    <p>Test your page using different languages, f.e. set <code class="highlighter-rouge">?sap-ui-language=de</code> in the URL or change the configuration.</p>
-  </li>
-</ol>
+<p>If your text looks like this:</p>
+
+<p><code class="highlighter-rouge">CAROUSEL_DOT_TEXT=Item {0} of {1} displayed</code></p>
+
+<p>you can call <code class="highlighter-rouge">getText</code> like this:</p>
+
+<p><code class="highlighter-rouge">bundle.getText("CAROUSEL_DOT_TEXT", 5, 20);</code></p>
+
+<p>which will finally result in, for example:</p>
+
+<p><code class="highlighter-rouge">Item 5 of 20 displayed</code>.</p>
+
+<h3 id="6-test-your-page-using-different-languages-fe-set-sap-ui-languagede-in-the-url-or-change-the-configuration">6. Test your page using different languages, f.e. set <code class="highlighter-rouge">?sap-ui-language=de</code> in the URL or change the configuration.</h3>
 
 <h2 id="summary">Summary</h2>
 
 <p>The whole code would look like this:</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nBundle</span><span class="p">,</span> <span class="nx">fetchI18nBundle</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">parse</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/PropertiesFileFormat.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nLoader</span><span class="p">,</span> <span class="nx">fetchI18nBundle</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
 
-<span class="nx">registerI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
-	<span class="na">de</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_de.properties</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">es</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_es.properties</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">fr</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_fr.properties</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">en</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./assets/messagebundle_en.properties</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">});</span>
+<span class="kd">const</span> <span class="nx">supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">en</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">fr</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">de</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">es</span><span class="dl">"</span><span class="p">];</span>
+<span class="nx">supportedLocales</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">localeToRegister</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="nx">registerI18nLoader</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">,</span> <span class="nx">localeToRegister</span><span class="p">,</span> <span class="k">async</span> <span class="p">(</span><span class="nx">localeId</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+		<span class="kd">const</span> <span class="nx">props</span> <span class="o">=</span> <span class="k">await</span> <span class="p">(</span><span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="s2">`./assets/messagebundle_</span><span class="p">${</span><span class="nx">localeId</span><span class="p">}</span><span class="s2">.properties`</span><span class="p">)).</span><span class="nx">text</span><span class="p">();</span>
+		<span class="k">return</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+	<span class="p">});</span>
+<span class="p">};</span>
 
 <span class="k">await</span> <span class="nx">fetchI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundle</span> <span class="o">=</span> <span class="nx">getI18nBundle</span><span class="p">(</span><span class="dl">"</span><span class="s2">myApp</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">);</span>	
+<span class="kd">const</span> <span class="nx">pleaseWait</span> <span class="o">=</span> <span class="nx">bundle</span><span class="p">.</span><span class="nx">getText</span><span class="p">(</span><span class="dl">"</span><span class="s2">PLEASE_WAIT</span><span class="dl">"</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait</span><span class="p">);</span>
 </code></pre></div></div>
 
@@ -2546,9 +2540,9 @@ get a reference to the bundle and call the <code class="highlighter-rouge">getTe
   <li>You can skip the <code class="highlighter-rouge">.properties</code> format support import</li>
 </ul>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js</span><span class="dl">"</span><span class="p">;</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="k">await</span> <span class="p">(</span><span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="s2">`./assets/messagebundle_</span><span class="p">${</span><span class="nx">localeId</span><span class="p">}</span><span class="s2">.json`</span><span class="p">)).</span><span class="nx">json</span><span class="p">();</span>
 </code></pre></div></div>
-<p>and provide the data directly in <code class="highlighter-rouge">.json</code> format, if you want to load a little bit less code in the runtime.</p>
+<p>and return the data directly in <code class="highlighter-rouge">.json</code> format, if you want to load a little bit less code in the runtime.</p>
 
 <table>
   <thead>
