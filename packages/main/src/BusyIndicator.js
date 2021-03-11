@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import Label from "./Label.js";
@@ -110,14 +111,6 @@ class BusyIndicator extends UI5Element {
 		this._preventHandler = this._preventEvent.bind(this);
 	}
 
-	onBeforeRendering() {
-		if (this.active) {
-			this.tabIndex = -1;
-		} else {
-			this.removeAttribute("tabindex");
-		}
-	}
-
 	onEnterDOM() {
 		this.addEventListener("keyup", this._preventHandler, {
 			capture: true,
@@ -171,8 +164,32 @@ class BusyIndicator extends UI5Element {
 	}
 
 	_preventEvent(event) {
-		if (this.active) {
-			event.stopImmediatePropagation();
+		if (!this.active) {
+			return;
+		}
+
+		event.stopImmediatePropagation();
+
+		// Special handling for "tab" keydown: redirect to outer element before or after this
+		if (event.type === "keydown" && (isTabNext(event) || isTabPrevious(event))) {
+			const tabbable = isTabPrevious(event) ? this.shadowRoot.querySelector(".first-tabbable") : this.shadowRoot.querySelector(".last-tabbable")
+
+			tabbable.setAttribute("tabindex", -1);
+			this._focusingOuterElement = true;
+			console.warn("focus outer el", tabbable)
+			tabbable.focus();
+			this._focusingOuterElement = false;
+			tabbable.setAttribute("tabindex", 0);
+		}
+	}
+
+	/**
+	 * Moves focus to the busy indicator
+	 */
+	_ontabbablefocusin() {
+		if (!this._focusingOuterElement) {
+			this.shadowRoot.querySelector(".ui5-busyindicator-dynamic-content").focus();
+			console.error("move focus to busy area")
 		}
 	}
 }
