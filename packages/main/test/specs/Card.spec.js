@@ -1,7 +1,8 @@
-const assert = require('chai').assert;
+const assert = require("chai").assert;
+const PORT = require("./port");
 
 describe("Card general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Card.html");
+	browser.url(`http://localhost:${PORT}/test-resources/pages/Card.html`);
 
 	it("tests initial rendering", () => {
 		const card = browser.$("#card");

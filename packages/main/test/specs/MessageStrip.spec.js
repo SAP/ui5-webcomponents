@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./port");
+
 
 describe("MessageStrip general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/MessageStrip.html");
+	browser.url(`http://localhost:${PORT}/test-resources/pages/MessageStrip.html`);
 
 	it("tests close event", () => {
 

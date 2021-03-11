@@ -1,4 +1,6 @@
 const assert = require("chai").assert;
+const PORT = require("./port");
+
 
 const getValidatedValue = (pi) => {
 	return browser.execute((pi) => {
@@ -7,7 +9,7 @@ const getValidatedValue = (pi) => {
 };
 
 describe("API", () => {
-	browser.url("http://localhost:8080/test-resources/pages/ProgressIndicator.html");
+	browser.url(`http://localhost:${PORT}/test-resources/pages/ProgressIndicator.html`);
 
 	it("tests value validation", () => {
 		const progressIndicator = $("#test-progress-indicator");

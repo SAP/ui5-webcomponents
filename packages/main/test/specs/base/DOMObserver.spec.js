@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
+const  PORT = require("../port");
+
 
 describe("DOMObserver", () => {
-	browser.url("http://localhost:8080/test-resources/pages/base/DOMObserver.html");
+	browser.url(`http://localhost:${PORT}/test-resources/pages/base/DOMObserver.html`);
 
 	it("insertion order still fires DOMObserver", () => {
 

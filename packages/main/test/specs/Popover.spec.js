@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./port");
+
 
 describe("Attributes propagation", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
 	it("Header text attribute is propagated", () => {
 		const popover = $("#pop");
@@ -29,7 +31,7 @@ describe("Attributes propagation", () => {
 });
 
 describe("Popover general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
 	it("tests popover toggling", () => {
 		const btnOpenPopover = $("#btn");
@@ -173,7 +175,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests focus trapping using TAB", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
 		const btn = $("#btn");
 		const ff = $("#first-focusable");
@@ -205,7 +207,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests focus trapping using SHIFT TAB", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
 		const btn = $("#btn");
 		const ff = $("#first-focusable");
@@ -233,7 +235,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests focus when there is no focusable content", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
 		const firstBtn = $("#firstBtn");
 		const popoverId = "popNoFocusableContent";
@@ -252,7 +254,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests focus when content, which can't be focused is clicked", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
 		$("#btnOpenPopoverWithDiv").click();
 		$("#divContent").click();
@@ -264,7 +266,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests that dynamically created popover is opened", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
 		const btnOpenDynamic = $("#btnOpenDynamic");
 		btnOpenDynamic.click();
@@ -283,7 +285,7 @@ describe("Popover general interaction", () => {
 });
 
 describe("Acc", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
 	it("tests aria-labelledby and aria-label", () => {
 		const popover = browser.$("ui5-popover");

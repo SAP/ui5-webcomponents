@@ -1,9 +1,11 @@
 const assert = require("chai").assert;
+const PORT = require("./port");
+
 
 describe("Eventing", () => {
 
 	it("Default prevented", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Eventing.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Eventing.html`);
 
 		const innerLink = browser.$("#defaultPreventedLink");
 		innerLink.click();
@@ -15,7 +17,7 @@ describe("Eventing", () => {
 	});
 
 	it("Default not prevented", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Eventing.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Eventing.html`);
 
 		const innerLink = browser.$("#normalLink");
 		innerLink.click();

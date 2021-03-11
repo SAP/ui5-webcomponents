@@ -1,9 +1,11 @@
 const assert = require("chai").assert;
+const PORT = require("./port");
+
 
 describe("Attributes propagation", () => {
 
 	it("'placeholder' attribute is propagated properly", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siCozy = $("#stepInputCozy");
 		const sExpected = "New placeholder text";
 
@@ -14,7 +16,7 @@ describe("Attributes propagation", () => {
 	});
 
 	it("'min' attribute is propagated properly", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siCozy = $("#stepInputCozy");
 		const sExpected = "0";
 
@@ -25,7 +27,7 @@ describe("Attributes propagation", () => {
 	});
 
 	it("'max' attribute is propagated properly", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siCozy = $("#stepInputCozy");
 		const sExpected = "10";
 
@@ -36,7 +38,7 @@ describe("Attributes propagation", () => {
 	});
 
 	it("'step' attribute is propagated properly", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siCozy = $("#stepInputCozy");
 		const sExpected = "2";
 
@@ -47,17 +49,17 @@ describe("Attributes propagation", () => {
 	});
 
 	it("'disabled' attribute is propagated properly", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		assert.ok(browser.$("#stepInputDisabled").shadow$('.ui5-step-input-input').shadow$("input").getAttribute("disabled"), "The 'disabled' property was propagated");
 	});
 
 	it("'redonly' attribute is propagated properly", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		assert.ok(browser.$("#stepInputReadOnly").shadow$('.ui5-step-input-input').shadow$("input").getAttribute("readonly"), "The 'readonly' property was propagated");
 	});
 
 	it("'value' attribute is propagated properly", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const sExpectedValue = "5";
 
 		browser.execute(() => {
@@ -72,7 +74,7 @@ describe("Attributes propagation", () => {
 describe("Keyboard interactions", () => {
 
 	it("'ArrowUp' increases the value if it is less than 'max'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const initValue = siMinMax.getProperty("value");
 
@@ -89,7 +91,7 @@ describe("Keyboard interactions", () => {
 	});
 
 	it("'ArrowUp' does not increase the value if it is greater than 'max'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const maxValue = siMinMax.getProperty("max");
 
@@ -104,7 +106,7 @@ describe("Keyboard interactions", () => {
 	});
 
 	it("'ArrowDown' decreases the value if it is greater than 'min'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const maxValue = siMinMax.getProperty("max");
 		const minValue = siMinMax.getProperty("min");
@@ -124,7 +126,7 @@ describe("Keyboard interactions", () => {
 	});
 
 	it("'ArrowDown' does not decrease the value if it is less than 'min'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const maxValue = siMinMax.getProperty("max");
 		const minValue = siMinMax.getProperty("min");
@@ -140,7 +142,7 @@ describe("Keyboard interactions", () => {
 	});
 
 	it("'Shift+PageUp' sets the value to the 'max'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const maxValue = siMinMax.getProperty("max");
 
@@ -151,7 +153,7 @@ describe("Keyboard interactions", () => {
 	});
 
 	it("'Shift+PageDown' sets the value to the 'min'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const maxValue = siMinMax.getProperty("max");
 		const minValue = siMinMax.getProperty("min");
@@ -165,7 +167,7 @@ describe("Keyboard interactions", () => {
 	});
 
 	it("'Ctrl+Shift+ArrowUp' sets the value to the 'max'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const maxValue = siMinMax.getProperty("max");
 
@@ -176,7 +178,7 @@ describe("Keyboard interactions", () => {
 	});
 
 	it("'Ctrl+Shift+ArrowDown' sets the value to the 'min'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const maxValue = siMinMax.getProperty("max");
 		const minValue = siMinMax.getProperty("min");
@@ -190,7 +192,7 @@ describe("Keyboard interactions", () => {
 	});
 
 	it("'Escape' restores the previous value", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const initValue = siMinMax.getProperty("value");
 
@@ -206,7 +208,7 @@ describe("Keyboard interactions", () => {
 	});
 
 	it("Manual input changes the value", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 
 		// focus the step input field
@@ -221,7 +223,7 @@ describe("Keyboard interactions", () => {
 describe("Inc/Dec buttons interactions", () => {
 
 	it("'Increase' button increases the value if it is less than 'max'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const incButton = siMinMax.shadow$(".ui5-step-inc");
 		const initValue = siMinMax.getProperty("value");
@@ -236,7 +238,7 @@ describe("Inc/Dec buttons interactions", () => {
 	});
 
 	it("'Increase' button does not increase the value if it is greater than 'max'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const incButton = siMinMax.shadow$(".ui5-step-inc");
 		const initValue = siMinMax.getProperty("value");
@@ -251,7 +253,7 @@ describe("Inc/Dec buttons interactions", () => {
 	});
 
 	it("'Decrease' button decreases the value if it is greater than 'min'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const decButton = siMinMax.shadow$(".ui5-step-dec");
 		const maxValue = siMinMax.getProperty("max");
@@ -269,7 +271,7 @@ describe("Inc/Dec buttons interactions", () => {
 	});
 
 	it("'Decrease' button does not decrease the value if it is less than 'min'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const decButton = siMinMax.shadow$(".ui5-step-dec");
 		const minValue = siMinMax.getProperty("min");
@@ -287,7 +289,7 @@ describe("Inc/Dec buttons interactions", () => {
 describe("'change' event firing", () => {
 
 	it("'Increase' and 'Decrease' buttons should fire 'change' event on each click only if value is between 'min' and 'max'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const incButton = siMinMax.shadow$(".ui5-step-inc");
 		const decButton = siMinMax.shadow$(".ui5-step-dec");
@@ -333,7 +335,7 @@ describe("'change' event firing", () => {
 	});
 
 	it("'change' event should not be fired when 'ArrowUp'/'ArrowDown' are pressed without 'Enter' after that", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const changeResult = $("#changeResult");
 
@@ -351,7 +353,7 @@ describe("'change' event firing", () => {
 	});
 
 	it("'change' event should not be fired when previous value is restored with 'Escape'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const changeResult = $("#changeResult");
 
@@ -367,7 +369,7 @@ describe("'change' event firing", () => {
 	});
 
 	it("'change' event should be fired when 'ArrowUp'/'ArrowDown' are pressed with 'Enter' after that", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const changeResult = $("#changeResult");
 
@@ -387,7 +389,7 @@ describe("'change' event firing", () => {
 	});
 
 	it("'change' event should be fired after manual entry and 'Enter' pressed after that", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siMinMax = $("#stepInputMinMax");
 		const changeResult = $("#changeResult");
 
@@ -404,7 +406,7 @@ describe("'change' event firing", () => {
 	});
 
 	it("'change' event should be fired after focus out", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siCozy = $("#stepInputCozy");
 		const siMinMax = $("#stepInputMinMax");
 		const changeResult = $("#changeResult");
@@ -428,7 +430,7 @@ describe("'change' event firing", () => {
 describe("Accessibility related parameters", () => {
 
 	it("'step', 'min', 'max', 'aria-required' and 'aria-label' attributes presence", () => {
-		browser.url("http://localhost:8080/test-resources/pages/StepInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/StepInput.html`);
 		const siCozy = $("#stepInputCozy");
 		const siInner = siCozy.shadow$('.ui5-step-input-input').shadow$("input");
 

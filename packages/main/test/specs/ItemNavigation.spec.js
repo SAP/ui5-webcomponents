@@ -1,8 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./port");
+
 
 describe("Item Navigation Tests", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/ItemNavigation.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ItemNavigation.html`);
 	});
 
 	it("focus does not cycle", () => {

@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./port");
+
 
 describe("DateRangePicker general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/DateRangePicker.html");
+	browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
 
 	it("Custom Validation Error", () => {
 		const daterangepicker = browser.$("#daterange-picker3");
@@ -14,7 +16,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Custom Validation None", () => {
-		browser.url("http://localhost:8080/test-resources/pages/DateRangePicker.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
 		const daterangepicker = browser.$("#daterange-picker3");
 
 		daterangepicker.click();
@@ -39,7 +41,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("firstDateValue and lastDateValue getter", () => {
-		browser.url("http://localhost:8080/test-resources/pages/DateRangePicker.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
 		const daterangepicker = browser.$("#daterange-picker4");
 
 		daterangepicker.click();
@@ -149,7 +151,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Enter keyboard key confirms the date range in the input field", () => {
-		browser.url("http://localhost:8080/test-resources/pages/DateRangePicker.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
 		const dateRangePicker = browser.$("#daterange-picker5");
 		dateRangePicker.click();
 
@@ -160,7 +162,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Focus out of the input field confirms the date range", () => {
-		browser.url("http://localhost:8080/test-resources/pages/DateRangePicker.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
 		const dateRangePicker = browser.$("#daterange-picker5");
 		dateRangePicker.click();
 		browser.keys("Jul 17, 2020 @ Jul 16, 2020");

@@ -1,10 +1,12 @@
 const assert = require("chai").assert;
+const PORT = require("./port");
+
 
 describe("ColorPalette interactions", () => {
-	browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
+	browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
 
 	it("Test if selecting element works", () => {
-		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
 		const colorPalette = browser.$("#cp1");
 		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
 
@@ -14,7 +16,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", () => {
-		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
 		const colorPalette = browser.$("#cp1");
 		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -28,7 +30,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", () => {
-		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
 		const colorPalette = browser.$("#cp1");
 		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -44,7 +46,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", () => {
-		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
 		const colorPalette = browser.$("#cp1");
 		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -58,7 +60,7 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", () => {
-		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPalette.html`);
 		const colorPalette = browser.$("#cp1");
 		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[9];
