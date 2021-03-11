@@ -70,6 +70,15 @@ const metadata = {
 			defaultValue: AvatarGroupType.Group,
 		},
 
+		/**
+	 	 * Defines the total avatar count of the <code>AvatarGroup</code>.
+		 * <br>
+		 * <b>Note:</b> The property will take effect only if its value is larger than number of <code>ui5-avatar</code>
+		 * added in the <code>AvatarGroup</code>
+		 * @type {AvatarGroupType}
+		 * @defaultValue "Group"
+		 * @public
+		 */
 		totalAvatarsCount: {
 			type: Integer,
 		},
@@ -99,6 +108,7 @@ const metadata = {
 		 */
 		_effectiveText: {
 			type: String,
+			defaultValue: 0,
 			noAttribute: true,
 		}
 	},
@@ -249,8 +259,12 @@ class AvatarGroup extends UI5Element {
 		return this._itemsCount - this._hiddenItems;
 	}
 
+	get _useTotalAvatarsCount() {
+		return this.totalAvatarsCount && this.totalAvatarsCount > this._itemsCount;
+	}
+
 	get _overflowBtnHidden() {
-		return this._hiddenItems === 0 && !this.totalAvatarsCount;
+		return this._hiddenItems === 0 && !this._useTotalAvatarsCount;
 	}
 
 	get _isGroup() {
@@ -376,7 +390,7 @@ class AvatarGroup extends UI5Element {
 
 			// last avatar should not be offset only when there is no totalAvatarsCount as it
 			// breaks the container width and focus styles are no set correctly
-			if (index !== this._itemsCount - 1 || this.totalAvatarsCount) {
+			if (index !== this._itemsCount - 1 || this._useTotalAvatarsCount) {
 				// based on RTL margin left or right is set to avatars
 				avatar.style[`margin-${RTL ? "left" : "right"}`] = offsets[avatar._effectiveSize][this.type];
 			}
@@ -434,7 +448,7 @@ class AvatarGroup extends UI5Element {
 			// used to determine whether the following items will fit the container or not
 			let totalWidth = this._getWidthToItem(item) + item.offsetWidth;
 
-			if (index !== this._itemsCount - 1 || this.totalAvatarsCount) {
+			if (index !== this._itemsCount - 1 || this._useTotalAvatarsCount) {
 				totalWidth += this._overflowButtonEffectiveWidth;
 			}
 
@@ -471,7 +485,11 @@ class AvatarGroup extends UI5Element {
 	}
 
 	validateEffectiveText() {
-		let hiddenItemsCount = this.totalAvatarsCount - this._itemsCount + this._hiddenItems;
+		let hiddenItemsCount = this._hiddenItems;
+
+		if (this._useTotalAvatarsCount) {
+			hiddenItemsCount += this.totalAvatarsCount - this._itemsCount
+		}
 
 		this._effectiveText =  hiddenItemsCount > 99 ? "+99" : `+${hiddenItemsCount}`;
 	}
