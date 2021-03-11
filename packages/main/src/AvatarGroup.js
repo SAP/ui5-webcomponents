@@ -12,6 +12,7 @@ import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.j
 // Styles
 import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Button from "./Button.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
@@ -69,6 +70,10 @@ const metadata = {
 			defaultValue: AvatarGroupType.Group,
 		},
 
+		totalAvatarsCount: {
+			type: Integer,
+		},
+
 		/**
 		 * Defines predefined size of the <code>ui5-avatar</code>.
 		 * <br><br>
@@ -92,11 +97,10 @@ const metadata = {
 		/**
 		 * @private
 		 */
-		_overflowButtonText: {
+		_effectiveText: {
 			type: String,
 			noAttribute: true,
-		},
-
+		}
 	},
 	slots: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
 		/**
@@ -246,7 +250,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get _overflowBtnHidden() {
-		return this._hiddenItems === 0;
+		return this._hiddenItems === 0 && !this.totalAvatarsCount;
 	}
 
 	get _isGroup() {
@@ -259,10 +263,6 @@ class AvatarGroup extends UI5Element {
 
 	get _groupTabIndex() {
 		return this._isGroup ? "0" : "-1";
-	}
-
-	get _overflowButtonTabIndex() {
-		return this._isGroup ? "-1" : false;
 	}
 
 	get _overflowButton() {
@@ -374,8 +374,9 @@ class AvatarGroup extends UI5Element {
 				avatar.setAttribute("_size", this.avatarSize);
 			}
 
-			// last avatar should not be offset as it breaks the container width and focus styles are no set correctly
-			if (index !== this._itemsCount - 1) {
+			// last avatar should not be offset only when there is no totalAvatarsCount as it
+			// breaks the container width and focus styles are no set correctly
+			if (index !== this._itemsCount - 1 || this.totalAvatarsCount) {
 				// based on RTL margin left or right is set to avatars
 				avatar.style[`margin-${RTL ? "left" : "right"}`] = offsets[avatar._effectiveSize][this.type];
 			}
@@ -384,7 +385,12 @@ class AvatarGroup extends UI5Element {
 
 	_onfocusin(event) {
 		const target = event.target;
-		this._itemNavigation.setCurrentItem(target);
+
+		if (this._isGroup) {
+			this.getFocusDomRef().focus();
+		} else {
+			this._itemNavigation.setCurrentItem(target);
+		}
 	}
 
 	/**
@@ -428,7 +434,7 @@ class AvatarGroup extends UI5Element {
 			// used to determine whether the following items will fit the container or not
 			let totalWidth = this._getWidthToItem(item) + item.offsetWidth;
 
-			if (index !== this._itemsCount - 1) {
+			if (index !== this._itemsCount - 1 || this.totalAvatarsCount) {
 				totalWidth += this._overflowButtonEffectiveWidth;
 			}
 
@@ -457,7 +463,17 @@ class AvatarGroup extends UI5Element {
 			item.hidden = index >= this._hiddenStartIndex;
 		});
 
-		this._overflowButtonText = `+${hiddenItems > 99 ? 99 : hiddenItems}`;
+		this.validateEffectiveText()
+	}
+
+	get isGroupType() {
+		return this.type === AvatarGroupType.Group;
+	}
+
+	validateEffectiveText() {
+		let hiddenItemsCount = this.totalAvatarsCount - this._itemsCount + this._hiddenItems;
+
+		this._effectiveText =  hiddenItemsCount > 99 ? "+99" : `+${hiddenItemsCount}`;
 	}
 }
 

@@ -61,7 +61,7 @@
 	line-height: inherit;
 }
 
-:host(:not([active]):hover),
+:host(:not([active]):not([non-interactive]):hover),
 :host(:not([hidden]).ui5_hovered) {
 	background: var(--sapButton_Hover_Background);
 }
