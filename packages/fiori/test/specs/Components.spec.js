@@ -1,4 +1,5 @@
 const assert = require("chai").assert;
+const PORT = require("./port");
 
 const assertBooleanProperty = (el, prop) => {
 	assert.strictEqual(el.getProperty(prop), false, "the value should be false by default.");
@@ -9,7 +10,7 @@ const assertHidden = component => {
 }
 
 describe("General assertions", () => {
-	browser.url("http://localhost:8081/test-resources/pages/Components.html");
+	browser.url(`http://localhost:${PORT}/test-resources/pages/Components.html`);
 
 	it("tests components with 'hidden' property are not visible", () => {
 		[

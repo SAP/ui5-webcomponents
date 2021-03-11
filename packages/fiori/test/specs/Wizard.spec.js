@@ -1,7 +1,8 @@
 const assert = require("chai").assert;
+const PORT = require("./port");
 
 describe("Wizard general interaction", () => {
-	browser.url("http://localhost:8081/test-resources/pages/Wizard_test.html");
+	browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
 
 	it("test initial selection", () => {
 		const wiz = browser.$("#wizTest");
@@ -25,7 +26,7 @@ describe("Wizard general interaction", () => {
 
 		// act - the click handler calls the API
 		btnToStep2.click();
-		
+
 		// assert - that first step in the content and in the header are not selected
 		assert.strictEqual(step1.getAttribute("selected"), null,
 			"First step in the content is not selected.");
@@ -92,7 +93,7 @@ describe("Wizard general interaction", () => {
 		// assert - that first step in the content and in the header are not selected
 		assert.strictEqual(step1.getAttribute("selected"), null, "First step in the content is not selected.");
 		assert.strictEqual(step1InHeader.getAttribute("selected"), null, "First step  in the header not is selected.");
-		
+
 		// assert - that second step in the content and in the header are properly selected
 		assert.strictEqual(step2.getAttribute("selected"), "true",
 			"Second step in the content is selected.");
@@ -177,7 +178,7 @@ describe("Wizard general interaction", () => {
 	});
 
 	it("tests no scrolling to selected step, if the selection was not changed", ()=>{
-		browser.url("http://localhost:8081/test-resources/pages/Wizard_test.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
 
 		const wizard = browser.$("#wizTest");
 		const wizardContentDOM = wizard.shadow$(".ui5-wiz-content");
