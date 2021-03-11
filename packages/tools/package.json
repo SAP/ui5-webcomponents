@@ -40,6 +40,7 @@
     "chai": "^4.2.0",
     "chokidar-cli": "^2.0.0",
     "clean-css": "^4.2.1",
+    "colors": "^1.4.0",
     "command-line-args": "^5.1.1",
     "concurrently": "^5.0.0",
     "cross-env": "^5.2.0",

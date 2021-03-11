@@ -9,8 +9,11 @@ const json = require("@rollup/plugin-json");
 const notify = require('rollup-plugin-notify');
 const filesize = require('rollup-plugin-filesize');
 const livereload = require('rollup-plugin-livereload');
+const colors = require('colors/safe');
 
-const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
+const packageFile = JSON.parse(fs.readFileSync("./package.json"));
+const packageName = packageFile.name;
+const ui5Info = packageFile.ui5 || {};
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
 
 function ui5DevImportCheckerPlugin() {
@@ -20,6 +23,18 @@ function ui5DevImportCheckerPlugin() {
 			const re = new RegExp(`^import.*"${packageName}/`);
 			if (re.test(code)) {
 				throw new Error(`illegal import in ${file}`);
+			}
+		}
+	};
+}
+
+function ui5DevReadyMessagePlugin({ packageName, port }) {
+	return {
+		name: "ui5-dev-message-ready-plugin",
+		generateBundle: () => {
+			console.log(colors.blue(colors.bold(packageName) + ` successfully built!`));
+			if (port) {
+				console.log(colors.blue(`Navigate to: ` + colors.bold(`http://localhost:${port}/test-resources/pages/`)));
 			}
 		}
 	};
@@ -86,6 +101,13 @@ const getPlugins = ({ transpile }) => {
 				"dist/**/*.html",
 				"dist/**/*.json",
 			]
+		}));
+	}
+
+	if (process.env.DEV) {
+		plugins.push(ui5DevReadyMessagePlugin({
+			packageName,
+			port: ui5Info.port,
 		}));
 	}
 
