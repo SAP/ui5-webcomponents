@@ -68,6 +68,9 @@
     "rimraf": "^2.6.2",
     "wsrun": "^3.6.4"
   },
+  "resolutions": {
+    "**/caniuse-lite": "^1.0.30001198"
+  },
   "workspaces": [
     "packages/theme-base",
     "packages/base",

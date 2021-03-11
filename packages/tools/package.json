@@ -37,6 +37,7 @@
     "@wdio/spec-reporter": "^6.0.16",
     "@wdio/sync": "^6.1.0",
     "@webcomponents/webcomponentsjs": "^2.4.0",
+    "caniuse-lite": "^1.0.30001198",
     "chai": "^4.2.0",
     "chokidar-cli": "^2.0.0",
     "clean-css": "^4.2.1",
