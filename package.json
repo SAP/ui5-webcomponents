@@ -33,7 +33,7 @@
     "prepare:fiori": "cd packages/fiori && nps prepare",
     "scopePrepare:main": "cd packages/main && nps scope.prepare",
     "scopePrepare:fiori": "cd packages/fiori && nps scope.prepare",
-    "dev:base": "cd packages/base && nps watch",
+    "dev:base": "cd packages/base && nps dev",
     "dev:ie11": "cd packages/ie11 && nps watch",
     "dev:localization": "cd packages/localization && nps watch",
     "dev:main": "cd packages/main && nps dev",

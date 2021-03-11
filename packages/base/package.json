@@ -2,6 +2,9 @@
   "name": "@ui5/webcomponents-base",
   "version": "0.30.0",
   "description": "UI5 Web Components: webcomponents.base",
+  "ui5": {
+    "port": "9191"
+  },
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "module": "index.js",

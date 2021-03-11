@@ -44,10 +44,10 @@ const getScripts = (options) => {
 		},
 		copy: {
 			default: "nps copy.src copy.props copy.test copy.webcomponents-polyfill",
-			src: `node "${LIB}/copy-and-watch/index.js" "src/**/*.js" dist/`,
-			props: `node "${LIB}/copy-and-watch/index.js" "src/**/*.properties" dist/`,
-			test: `node "${LIB}/copy-and-watch/index.js" "test/**/*.*" dist/test-resources`,
-			"webcomponents-polyfill": `node "${LIB}/copy-and-watch/index.js" "${polyfillPath}" dist/webcomponentsjs/`,
+			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
+			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
+			test: `node "${LIB}/copy-and-watch/index.js" --silent "test/**/*.*" dist/test-resources`,
+			"webcomponents-polyfill": `node "${LIB}/copy-and-watch/index.js" --silent "${polyfillPath}" dist/webcomponentsjs/`,
 		},
 		watch: {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
@@ -67,7 +67,7 @@ const getScripts = (options) => {
 		start: "nps prepare dev",
 		serve: {
 			default: "nps serve.prepare serve.run",
-			prepare: `node "${LIB}/copy-and-watch/index.js" "${serveConfig}" dist/`,
+			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "${serveConfig}" dist/`,
 			run: `serve --no-clipboard -l ${port} dist`,
 		},
 		test: {
@@ -83,7 +83,7 @@ const getScripts = (options) => {
 			testPages: {
 				default: "nps scope.testPages.clean scope.testPages.copy scope.testPages.replace",
 				clean: "rimraf dist/test-resources/pages/scoped",
-				copy: `node "${LIB}/copy-and-watch/index.js" "dist/test-resources/pages/**/*" dist/test-resources/scoped`,
+				copy: `node "${LIB}/copy-and-watch/index.js" --silent "dist/test-resources/pages/**/*" dist/test-resources/scoped`,
 				replace: `node "${LIB}/scoping/scope-test-pages.js" dist/test-resources/scoped demo`,
 			},
 			dev: 'concurrently "nps serve" "nps scope.watch"',

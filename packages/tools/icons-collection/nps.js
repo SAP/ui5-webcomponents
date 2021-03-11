@@ -13,8 +13,8 @@ const getScripts = (options) => {
 		clean: "rimraf dist && rimraf hash.txt",
 		copy: {
 			default: "nps copy.json-imports copy.icon-collection",
-			"json-imports": `node "${LIB}/copy-and-watch/index.js" "src/**/*.js" dist/`,
-			"icon-collection": `node "${LIB}/copy-and-watch/index.js" "src/*.json" dist/generated/assets/`
+			"json-imports": `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
+			"icon-collection": `node "${LIB}/copy-and-watch/index.js" --silent "src/*.json" dist/generated/assets/`
 		},
 		build: {
 			default: `${UP_TO_DATE} || nps clean copy build.i18n build.icons build.jsonImports hash`,
