@@ -71,9 +71,10 @@ const metadata = {
 		 * Defines the focused state of the <code>ui5-option</code>.
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @since 1.0.0-rc.13
 		 * @private
 		 */
-		focused: {
+		_focused: {
 			type: Boolean,
 		},
 	},

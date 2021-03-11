@@ -400,9 +400,9 @@ class Select extends UI5Element {
 
 		if (lastSelectedOptionIndex > -1 && !opts[lastSelectedOptionIndex].disabled) {
 			opts[lastSelectedOptionIndex].selected = true;
-			opts[lastSelectedOptionIndex].focused = true;
+			opts[lastSelectedOptionIndex]._focused = true;
 			this.options[lastSelectedOptionIndex].selected = true;
-			this.options[lastSelectedOptionIndex].focused = true;
+			this.options[lastSelectedOptionIndex]._focused = true;
 			this._text = opts[lastSelectedOptionIndex].textContent;
 			this._selectedIndex = lastSelectedOptionIndex;
 		} else {
@@ -410,9 +410,9 @@ class Select extends UI5Element {
 			this._selectedIndex = -1;
 			if (opts[firstEnabledOptionIndex]) {
 				opts[firstEnabledOptionIndex].selected = true;
-				opts[firstEnabledOptionIndex].focused = true;
+				opts[firstEnabledOptionIndex]._focused = true;
 				this.options[firstEnabledOptionIndex].selected = true;
-				this.options[firstEnabledOptionIndex].focused = true;
+				this.options[firstEnabledOptionIndex]._focused = true;
 				this._selectedIndex = firstEnabledOptionIndex;
 				this._text = this.options[firstEnabledOptionIndex].textContent;
 			}
@@ -539,10 +539,10 @@ class Select extends UI5Element {
 			}
 
 			this.options[this._selectedIndex].selected = false;
-			this.options[this._selectedIndex].focused = false;
+			this.options[this._selectedIndex]._focused = false;
 
 			this.options[nextIndex].selected = true;
-			this.options[nextIndex].focused = true;
+			this.options[nextIndex]._focused = true;
 
 			this._selectedIndex = nextIndex === -1 ? this._selectedIndex : nextIndex;
 
