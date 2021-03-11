@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const process = require("process");
-const { hashElement } = require('folder-hash');
-const config = require("./config");
+const { hashElement } = require('./folder-hash-customized/index.js');
+const config = require("./config.js");
 
 const inputDir = path.normalize(process.argv[2]);
 const outputFileName = path.normalize(process.argv[3]);
