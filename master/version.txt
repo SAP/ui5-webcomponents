@@ -1,5 +1,5 @@
-commit c60d74ae174893ea8a3fec94a04d530b658e120b
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Mar 11 13:46:51 2021 +0200
+commit 569685f3e3c61d1fdebcde1b9303dc7b36aecd76
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Mar 11 15:52:07 2021 +0200
 
-    chore: add documentation for dynamic imports change (#2829)
+    docs: fix broken link in faq (#2931)
