@@ -71,10 +71,13 @@ const metadata = {
 		},
 
 		/**
-	 	 * Defines the total avatar count of the <code>AvatarGroup</code>.
+	 	 * Defines the total number of avatars that logically belong to this ui5-avatar-group.
+		 * If not given, the total number of slotted ui5-avatar elements will be used.
 		 * <br>
-		 * <b>Note:</b> The property will take effect only if its value is larger than number of <code>ui5-avatar</code>
-		 * added in the <code>AvatarGroup</code>
+		 * <b>Note:</b> Use this property if there is a large number of items, represented by
+		 * the ui5-avatar-group, and you'd rather not load them all in DOM due to performance reasons.
+		 * In such a scenario, just slot a few ui5-avatar instances and set this property
+		 * to reflect their true total number.
 		 * @type {AvatarGroupType}
 		 * @defaultValue "Group"
 		 * @public
@@ -104,13 +107,13 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the number of hidden avatars.
 		 * @private
 		 */
-		_effectiveText: {
-			type: String,
+		_hiddenItems: {
+			type: Integer,
 			defaultValue: 0,
-			noAttribute: true,
-		}
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
 		/**
@@ -207,7 +210,6 @@ class AvatarGroup extends UI5Element {
 		});
 
 		this._colorIndex = 0;
-		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
 	}
 
@@ -259,12 +261,12 @@ class AvatarGroup extends UI5Element {
 		return this._itemsCount - this._hiddenItems;
 	}
 
-	get _useTotalAvatarsCount() {
+	get _shouldUseTotalAvatarsCount() {
 		return this.totalAvatarsCount && this.totalAvatarsCount > this._itemsCount;
 	}
 
 	get _overflowBtnHidden() {
-		return this._hiddenItems === 0 && !this._useTotalAvatarsCount;
+		return this._hiddenItems === 0 && !this._shouldUseTotalAvatarsCount;
 	}
 
 	get _isGroup() {
@@ -390,7 +392,7 @@ class AvatarGroup extends UI5Element {
 
 			// last avatar should not be offset only when there is no totalAvatarsCount as it
 			// breaks the container width and focus styles are no set correctly
-			if (index !== this._itemsCount - 1 || this._useTotalAvatarsCount) {
+			if (index !== this._itemsCount - 1 || this._shouldUseTotalAvatarsCount) {
 				// based on RTL margin left or right is set to avatars
 				avatar.style[`margin-${RTL ? "left" : "right"}`] = offsets[avatar._effectiveSize][this.type];
 			}
@@ -448,7 +450,7 @@ class AvatarGroup extends UI5Element {
 			// used to determine whether the following items will fit the container or not
 			let totalWidth = this._getWidthToItem(item) + item.offsetWidth;
 
-			if (index !== this._itemsCount - 1 || this._useTotalAvatarsCount) {
+			if (index !== this._itemsCount - 1 || this._shouldUseTotalAvatarsCount) {
 				totalWidth += this._overflowButtonEffectiveWidth;
 			}
 
@@ -476,22 +478,20 @@ class AvatarGroup extends UI5Element {
 		this.items.forEach((item, index) => {
 			item.hidden = index >= this._hiddenStartIndex;
 		});
-
-		this.validateEffectiveText()
 	}
 
 	get isGroupType() {
 		return this.type === AvatarGroupType.Group;
 	}
 
-	validateEffectiveText() {
+	get _effectiveText() {
 		let hiddenItemsCount = this._hiddenItems;
 
-		if (this._useTotalAvatarsCount) {
+		if (this._shouldUseTotalAvatarsCount) {
 			hiddenItemsCount += this.totalAvatarsCount - this._itemsCount
 		}
 
-		this._effectiveText =  hiddenItemsCount > 99 ? "+99" : `+${hiddenItemsCount}`;
+		return hiddenItemsCount > 99 ? "+99" : `+${hiddenItemsCount}`;
 	}
 }
 
