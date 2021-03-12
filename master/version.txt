@@ -1,7 +1,7 @@
-commit ad7adc5fd90b5e6cdc00f5c013e95ece2719dd57
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 12 17:39:33 2021 +0200
+commit cc4ab195b343692ad1628ea4400d784d0fbd361c
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri Mar 12 19:04:34 2021 +0200
 
-    fix(ui5-calendar): re-render header on lang change (#2939)
+    chore(ui5-button): new nonInteractive property (#2942)
     
-    The CalendarHeader is not language aware, because unlike the Calendar, DatePicker and the rest Date* components, the CalendarHeader is not derived by DateComponentBase class (which is language aware) and thus never re-renders on language change, triggered by the setLanguage API - the week days get translated, but the month text in the CalendarHeader - not.
+    Added new nonInteractive private property which removes hover, active states and it can't be accessed thought Tab key and mouse.
