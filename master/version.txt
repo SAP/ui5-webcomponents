@@ -1,5 +1,7 @@
-commit 569685f3e3c61d1fdebcde1b9303dc7b36aecd76
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Mar 11 15:52:07 2021 +0200
+commit ad7adc5fd90b5e6cdc00f5c013e95ece2719dd57
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Mar 12 17:39:33 2021 +0200
 
-    docs: fix broken link in faq (#2931)
+    fix(ui5-calendar): re-render header on lang change (#2939)
+    
+    The CalendarHeader is not language aware, because unlike the Calendar, DatePicker and the rest Date* components, the CalendarHeader is not derived by DateComponentBase class (which is language aware) and thus never re-renders on language change, triggered by the setLanguage API - the week days get translated, but the month text in the CalendarHeader - not.

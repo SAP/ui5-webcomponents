@@ -282,7 +282,7 @@
   "41": {
     "id": "41",
     "title": "Date Range Picker",
-    "content": "&lt;!DOCTYPE html&gt; DateRangePicker test page 0 daterange-picker with delimiter @ daterange-picker with format pattern dd/MM/yyyy daterange-picker with minDate 01/09/2019 and maxDate 01/11/2019 daterange-picker in Compact DateRange Picker with one date selected as first &amp; last",
+    "content": "&lt;!DOCTYPE html&gt; DateRangePicker test page 0 daterange-picker with delimiter @ daterange-picker with format pattern dd/MM/yyyy daterange-picker with minDate 01/09/2019 and maxDate 01/11/2019 daterange-picker in Compact daterange-picker with format pattern yyyy-MM-ddy DateRange Picker with one date selected as first &amp; last",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/DateRangePicker/",
     "relUrl": "/playground/main/pages/DateRangePicker/"
   },
