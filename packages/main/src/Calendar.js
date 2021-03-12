@@ -785,7 +785,7 @@ class Calendar extends PickerBase {
 	 * @public
 	 */
 	isInValidRange(value = "") {
-		const pickedDate = CalendarDate.fromTimestamp(value).toLocalJSDate(),
+		const pickedDate = CalendarDate.fromLocalJSDate(new Date(value), this._primaryCalendarType).toUTCJSDate(),
 			minDate = this._minDate && new Date(this._minDate),
 			maxDate = this._maxDate && new Date(this._maxDate);
 

@@ -464,7 +464,7 @@ class DatePicker extends UI5Element {
 	}
 
 	findFirstFocusableDay(daypicker) {
-		const today = new Date();
+		const today = CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType).toUTCJSDate();
 		if (!this.isInValidRange(today.getTime())) {
 			const focusableItems = Array.from(daypicker.shadowRoot.querySelectorAll(".ui5-dp-item"));
 			return focusableItems.filter(x => !x.classList.contains("ui5-dp-item--disabled"))[0];
@@ -706,7 +706,7 @@ class DatePicker extends UI5Element {
 			return true;
 		}
 
-		const pickedDate = new Date(value),
+		const pickedDate = CalendarDate.fromLocalJSDate(new Date(value), this._primaryCalendarType).toUTCJSDate(),
 			minDate = new Date(this._minDate),
 			maxDate = new Date(this._maxDate);
 
