@@ -9,6 +9,7 @@
 				aria-valuemin="0"
 				aria-valuemax="100"
 				aria-valuetext="Busy"
+				aria-labelledby="{{_id}}-label"
 			>
 				<div class="ui5-busyindicator-circle circle-animation-0"></div>
 				<div class="ui5-busyindicator-circle circle-animation-1"></div>
@@ -16,7 +17,7 @@
 			</div>
 		{{/if}}
 		{{#if text}}
-			<ui5-label class="ui5-busyindicator-text">
+			<ui5-label id="{{_id}}-label" class="ui5-busyindicator-text">
 				{{text}}
 			</ui5-label>
 		{{/if}}
