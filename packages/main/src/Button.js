@@ -195,7 +195,7 @@ const metadata = {
 		 * Indicates if the element if focusable
 		 * @private
 		 */
-		nonInteractive: {
+		nonFocusable: {
 			type: Boolean,
 		},
 
@@ -333,9 +333,6 @@ class Button extends UI5Element {
 	}
 
 	_onclick(event) {
-		if (this.nonInteractive) {
-			return;
-		}
 		event.isMarked = "button";
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
@@ -344,9 +341,6 @@ class Button extends UI5Element {
 	}
 
 	_onmousedown(event) {
-		if (this.nonInteractive) {
-			return;
-		}
 		event.isMarked = "button";
 		this.active = true;
 		activeButton = this; // eslint-disable-line
@@ -371,18 +365,11 @@ class Button extends UI5Element {
 	}
 
 	_onfocusout(_event) {
-		if (this.nonInteractive) {
-			return;
-		}
 		this.active = false;
 		this.focused = false;
 	}
 
 	_onfocusin(event) {
-		if (this.nonInteractive) {
-			return;
-		}
-
 		event.isMarked = "button";
 		this.focused = true;
 	}
@@ -430,7 +417,7 @@ class Button extends UI5Element {
 			return tabindex;
 		}
 
-		return this.nonInteractive ? "-1" : this._tabIndex;
+		return this.nonFocusable ? "-1" : this._tabIndex;
 	}
 
 	get showIconTooltip() {
