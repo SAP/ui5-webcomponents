@@ -174,7 +174,7 @@ describe("DateRangePicker general interaction", () => {
 		const daterangepicker = browser.$("#daterange-picker6");
 
 		daterangepicker.click();
-		daterangepicker.keys("09-09-2020 - 10-10-2020");
+		daterangepicker.keys("2020-09-09 - 2020-10-10");
 		daterangepicker.keys("Enter");
 
 		assert.strictEqual(daterangepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is on none");
