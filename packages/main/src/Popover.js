@@ -529,9 +529,7 @@ class Popover extends Popup {
 
 		let maxContentHeight = Math.round(maxHeight);
 
-		const hasHeader = this.header.length || this.headerText;
-
-		if (hasHeader) {
+		if (this._displayHeader) {
 			const headerDomRef = this.shadowRoot.querySelector(".ui5-popup-header-root")
 				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
 
@@ -542,7 +540,33 @@ class Popover extends Popup {
 
 		this._maxContentHeight = maxContentHeight;
 
-		let arrowXCentered = (this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch);
+		let arrowPos = this.getArrowPosition();
+
+		if (this._left === undefined || Math.abs(this._left - left) > 1.5) {
+			this._left = Math.round(left);
+		}
+
+		if (this._top === undefined || Math.abs(this._top - top) > 1.5) {
+			this._top = Math.round(top);
+		}
+
+		return {
+			arrowX: arrowPos.x,
+			arrowY: arrowPos.y,
+			top: this._top,
+			left: this._left,
+			placementType,
+		};
+	}
+
+	/**
+	 * Calculates the position for the arrow.
+	 * @private
+	 * @returns {{x: number, y: number}} Arrow's coordinates
+	 */
+	getArrowPosition() {
+		let arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
+
 		if (this.horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
 			arrowXCentered = true;
 		}
@@ -561,20 +585,9 @@ class Popover extends Popup {
 			arrowTranslateY = targetRect.top + targetRect.height / 2 - top - popoverSize.height / 2;
 		}
 
-		if (this._left === undefined || Math.abs(this._left - left) > 1.5) {
-			this._left = Math.round(left);
-		}
-
-		if (this._top === undefined || Math.abs(this._top - top) > 1.5) {
-			this._top = Math.round(top);
-		}
-
 		return {
-			arrowX: Math.round(arrowTranslateX),
-			arrowY: Math.round(arrowTranslateY),
-			top: this._top,
-			left: this._left,
-			placementType,
+			x: Math.round(arrowTranslateX),
+			y: Math.round(arrowTranslateY),
 		};
 	}
 
