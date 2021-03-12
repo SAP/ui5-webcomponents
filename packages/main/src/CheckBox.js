@@ -174,7 +174,7 @@ const metadata = {
 		formSupport: {
 			type: HTMLElement,
 		},
-	}
+	},
 };
 
 /**
