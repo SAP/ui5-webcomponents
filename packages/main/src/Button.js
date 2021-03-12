@@ -8,7 +8,7 @@ import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
-import { isMobile, isCombi } from "../../core/dist/sap/ui/Device.js";
+import { isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
@@ -309,18 +309,21 @@ class Button extends UI5Element {
 		return [Icon];
 	}
 
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
+	}
+
 	constructor() {
 		super();
-		this._isMobile = isMobile() || isCombi();
+		this._isMobile = isPhone() || isTablet();
 
 		this._deactivate = () => {
-<<<<<<< HEAD
-			if (this.active && (!isMobile() || isCombi())) {
+			if (this.active && (!isPhone() || isTablet())) {
 				this.active = false;
-=======
+			}
+
 			if (activeButton) {
 				activeButton.active = false;
->>>>>>> master
 			}
 		};
 
@@ -445,7 +448,6 @@ class Button extends UI5Element {
 		return this.nonFocusable ? "-1" : this._tabIndex;
 	}
 
-<<<<<<< HEAD
 	get classes() {
 		return {
 			main: {
@@ -455,12 +457,6 @@ class Button extends UI5Element {
 		};
 	}
 
-	static async define(...params) {
-		await Promise.all([
-			Icon.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
-=======
 	get showIconTooltip() {
 		return this.iconOnly && !this.title;
 	}
@@ -473,7 +469,6 @@ class Button extends UI5Element {
 			},
 		};
 	}
->>>>>>> master
 
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
