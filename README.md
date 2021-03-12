@@ -12,13 +12,13 @@
  - Suitable for building anything from **static web sites** to **complex web applications**.
  - Usable with any current or future **web development framework** (React, Angular, Vue, etc...).
  - Implement the [SAP Fiori design](https://experience.sap.com/fiori-design/) and follow the [SAP Fiori Design Guidelines](https://experience.sap.com/fiori-design-web/) for a consistent UX.
- - Created and maintained by [SAP](https://sap.com) as part of the [UI5](https://openui5.org/) product family.   
+ - Created and maintained by [SAP](https://sap.com) as part of the [UI5](https://openui5.org/) product family.
 
 ## Why use web components?
 
  - **Future-proof**: being *web standards*, they are compatible with any version of any web development framework.
- - **Encapsulated**: the HTML/CSS in the *shadow DOM* are protected from interference by the web page and vice versa, making them stable in any environment and suitable not only for apps, but also for *libraries and micro-frontends*.  
- - **Elegant**: being *custom HTML elements*, they hide implementation complexity behind a single HTML tag, making them easily usable with the standard DOM APIs. 
+ - **Encapsulated**: the HTML/CSS in the *shadow DOM* are protected from interference by the web page and vice versa, making them stable in any environment and suitable not only for apps, but also for *libraries and micro-frontends*.
+ - **Elegant**: being *custom HTML elements*, they hide implementation complexity behind a single HTML tag, making them easily usable with the standard DOM APIs.
 
 ## Where can I see them in action?
 - [Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
@@ -57,7 +57,7 @@ UI5 remains what it is: the best choice for…
 
 ### UI5 Web Components for React
 
-[UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) is a wrapper implementation around 
+[UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) is a wrapper implementation around
 UI5 Web Components which makes using them in React even more comfortable. The current version of React (`react 16`) has some
 shortcomings when it comes to handling Custom Elements, namely the binding of `boolean` attributes as well as adding event listeners to custom event names like `selection-change`. With the help of UI5 Web Components for React, you can use the UI5 Web Components in React as if they were native React components. In addition to that, this library is also offering TypeScript definitions for all components, some complex layout components built on top of UI5 Web Components as well as Charting Components.
 
@@ -81,7 +81,7 @@ shortcomings when it comes to handling Custom Elements, namely the binding of `b
 	```html
 	<ui5-button>Hello world!</ui5-button>
 	```
-	
+
 	For more on using UI5 Web Components, click [here](./docs/How%20To%20Use.md).
 
 *Note*: For a full list of the UI5 Web Components (and the respective NPM modules that ship them), see [Public module imports](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md).
@@ -110,7 +110,7 @@ This section might be of interest to you mainly if you need to run or build the 
 - [Node.js](https://nodejs.org/) (**version 12 or higher**)
 - [Yarn](https://yarnpkg.com/en)
 
-**Note:** The UI5 Web Components project is set up with the [Yarn](https://yarnpkg.com/) node package manager. 
+**Note:** The UI5 Web Components project is set up with the [Yarn](https://yarnpkg.com/) node package manager.
 This is because it offers functionality that the otherwise preferred [npm](https://www.npmjs.com/) package manager is currently lacking. Namely, the [workspace](https://yarnpkg.com/lang/en/docs/workspaces/) setting which is currently used in the [UI5 Web Components (mono-)repository](https://github.com/SAP/ui5-webcomponents). Note that npm [might add](https://github.com/npm/npm/pull/15900#issuecomment-315335381) this feature in the future.
 
 ### Structure
@@ -169,15 +169,8 @@ yarn build # to build the project
 Afterwards, you can find the build output in the `dist` folder of the corresponding package folder.
 For example, to find the Button component (that belongs to the `main` package), look inside the `packages/main/dist` folder.
 
-**Note:** Before building the project you can also set the `DEPLOY_PUBLIC_PATH` environment variable to specify the path where non-bundled assets will be fetched from, for example:
-
-```
-DEPLOY_PUBLIC_PATH=/my/resources/ yarn build
-```
-(for Windows: `DEPLOY_PUBLIC_PATH="\/my\/resources\/" yarn build`)
-
 ## Limitations
-None as of 1.0.0-rc.8 
+None as of 1.0.0-rc.8
 
 ## Known Issues
 No major bugs known. To report an issue or view the currently open issues, click [here](https://github.com/SAP/ui5-webcomponents/issues).

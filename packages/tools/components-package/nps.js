@@ -4,7 +4,7 @@ const process = require("process");
 const LIB = path.join(__dirname, `../lib/`);
 const serveConfig = path.join(__dirname, `serve.json`);
 const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
-const polyfillPath = path.join(polyfillDir, "/**/*.*");
+const polyfillPath = path.join(polyfillDir, "{*.js,*.map,*.md,bundles/**/*.*}");
 
 const noIE = !!process.env.NO_IE;
 
