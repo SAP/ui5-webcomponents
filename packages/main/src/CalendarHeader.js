@@ -22,6 +22,7 @@ import styles from "./generated/themes/CalendarHeader.css.js";
 
 const metadata = {
 	tag: "ui5-calendar-header",
+	languageAware: true,
 	properties: {
 		/**
 		 * Already normalized by Calendar
