@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
@@ -15,8 +15,7 @@
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	<script
 	src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -34,21 +33,21 @@
 	</style>
 </head>
 
-<body style="background-color: black">
+<body style="background-color: var(--sapBackgroundColor);">
 	<ui5-button class="margin">Default</ui5-button>
 
 	<ui5-input class="margin"></ui5-input>
 
 
-	<ui5-datepicker id="qqq" value-state="Error" placeholder="Enter Date..." class="margin"></ui5-datepicker>
-	<ui5-datepicker id="qqq" value-state="Warning" placeholder="Enter Date..." class="margin"></ui5-datepicker>
+	<ui5-date-picker id="qqq" value-state="Error" placeholder="Enter Date..." class="margin"></ui5-date-picker>
+	<ui5-date-picker id="qqq" value-state="Warning" placeholder="Enter Date..." class="margin"></ui5-date-picker>
 
 
 	<ui5-calendar class="margin" ></ui5-calendar>
 
 
 	<script>
-		document.getElementById("qqq").addEventListener("change", event => { console.log('change') });
+		document.getElementById("qqq").addEventListener("change", function(event) { console.log('change') });
 	</script>
 </body>
 </html>

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var sideNav = document.getElementById("side-nav");
 	var mainContent = document.getElementById("main-content");
 	var Configuration = window["sap-ui-webcomponents-bundle"].configuration;
-	var COMPACT = Configuration.getCompactSize();
+	var COMPACT_CLASS = "ui5-content-density-compact";
 	var RTL = Configuration.getRTL();
 	var THEME = Configuration.getTheme();
 	var HCB = "sap_belize_hcb";
@@ -14,13 +14,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var btnCompact = document.getElementById("btnCompact");
 	var btnTheme = document.getElementById("btnTheme");
 	var btnLightDark = document.getElementById("btnLightDark");
-
-
-	if (THEME === HCB) {
-		document.body.style.backgroundColor = "#333";
-	} else {
-		document.body.style.backgroundColor = "#fff";
-	}
 
 	if (RTL) {
 		document.body.setAttribute("dir", "rtl");
@@ -46,51 +39,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		mainContent.style.marginLeft= "0";
 	}
 
-	function buildParam(compact, rtl, theme) {
-		return "kitchen.html?sap-ui-theme=" + theme + "&sap-ui-compactSize=" + !!compact + "&sap-ui-rtl=" + !!rtl;
+	function buildURL(compact, rtl, theme) {
+		var currentURL = window.location.href;
+		var params = ".html?sap-ui-theme=" + theme + "&sap-ui-rtl=" + !!rtl;
+		return currentURL.slice(0, currentURL.indexOf(".html")) + params;
 	}
 
 	btnRTL.pressed = !!RTL;
-	btnCompact.pressed = !!COMPACT;
 	btnTheme.pressed = !!(THEME === HCB);
 	btnLightDark.pressed = !!(THEME === FIORI3_DARK);
 
 	btnRTL.addEventListener('click', function(e) {
-		var param = buildParam(btnCompact.pressed, e.target.pressed, THEME);
-		var currentURL = window.location.href;
-		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
-
-		window.location.href = newURL;
+		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, THEME);
 	}, false);
 
 	btnCompact.addEventListener('click', function(e) {
-		var param = buildParam(e.target.pressed, btnRTL.pressed, THEME);
-		var currentURL = window.location.href;
-		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
+		if (document.body.className.includes(COMPACT_CLASS)) {
+			return document.body.className = "";
+		}
 
-		window.location.href = newURL;
+		document.body.className += COMPACT_CLASS;
 	}, false);
 
 	btnTheme.addEventListener('click', function(e) {
 		var theme = e.target.pressed ? HCB : FIORI3;
-		Configuration.setTheme(theme);
-
-		if (theme === HCB) {
-			document.body.style.backgroundColor = "#333";
-		} else {
-			document.body.style.backgroundColor = "#fff";
-		}
+		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, theme);
 	}, false);
 
 	btnLightDark.addEventListener('click', function(e) {
 		var theme = e.target.pressed ? FIORI3_DARK : FIORI3;
-		Configuration.setTheme(theme);
-
-		if (theme === FIORI3_DARK) {
-			document.body.style.backgroundColor = "#333";
-		} else {
-			document.body.style.backgroundColor = "#fff";
-		}
+		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, theme);
 	}, false);
 
 	menuBtn.addEventListener('click', function(event) {
@@ -202,6 +180,61 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			li.id = item.key;
 			li.textContent = item.text;
 			input.appendChild(li);
+		});
+	});
+
+
+	// Tree
+	document.getElementById("tree").addEventListener("itemClick", function(event) {
+		console.log("Item clicked: ", event.detail.item);
+	});
+
+	document.getElementById("tree").addEventListener("itemToggle", function(event) {
+		console.log("Item toggled: ", event.detail.item);
+	});
+
+	document.getElementById("tree").addEventListener("itemDelete", function(event) {
+		console.log("Item delete button pressed: ", event.detail.item);
+		var node = event.detail.item;
+		node.parentElement.removeChild(node);
+	});
+
+	document.getElementById("tree").addEventListener("selectionChange", function(event) {
+		console.log("Selection changed from: ", event.detail.previouslySelectedItems, "to: ", event.detail.selectedItems);
+	});
+
+	document.getElementById("modeSelect").addEventListener("change", function(event) {
+		var newMode = event.detail.selectedOption.textContent;
+		var tree = document.getElementById("tree");
+		tree.mode = newMode;
+	});
+
+	document.getElementById("expandAll").addEventListener("click", function(event) {
+		var trees = Array.prototype.slice.call(document.getElementsByTagName("ui5-tree"));
+		var tree = document.getElementById("tree");
+		tree.walk(function(node) {
+			node.expanded = true;
+		});
+	});
+
+	document.getElementById("collapseAll").addEventListener("click", function(event) {
+		var tree = document.getElementById("tree");
+		tree.walk(function(node) {
+			node.expanded = false;
+		});
+	});
+
+	document.getElementById("expandLevel1").addEventListener("click", function(event) {
+		var tree = document.getElementById("tree");
+		tree.walk(function(node, level) {
+			node.expanded = (level === 1);
+		});
+	});
+
+	document.getElementById("expandLevel2").addEventListener("click", function(event) {
+		var tree = document.getElementById("tree");
+		tree.walk(function(node, level) {
+			node.expanded = (level <= 2);
 		});
 	});
 });

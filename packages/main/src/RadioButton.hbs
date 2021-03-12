@@ -6,7 +6,7 @@
 	aria-labelledby="{{ariaLabelledBy}}"
 	aria-describedby="{{ariaDescribedBy}}"
 	tabindex="{{tabIndex}}"
-	dir="{{rtl}}"
+	dir="{{effectiveDir}}"
 	@click="{{_onclick}}"
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
@@ -14,14 +14,14 @@
 
 	<div class='ui5-radio-inner {{classes.inner}}'>
 		<svg class="ui5-radio-svg" focusable="false" aria-hidden="true">
-			<circle class="ui5-radio-svg-outer" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rOuter}}" stroke-width="{{strokeWidth}}" fill="none" />
-			<circle class="ui5-radio-svg-inner" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rInner}}" stroke-width="10" />
+			<circle class="ui5-radio-svg-outer" cx="50%" cy="50%" r="50%" />
+			<circle class="ui5-radio-svg-inner" cx="50%" cy="50%" r="22%" />
 		</svg>
  		<input type='radio' ?checked="{{selected}}" ?readonly="{{readonly}}" ?disabled="{{disabled}}" name="{{name}}" data-sap-no-tab-ref/>
 	</div>
 
-	{{#if _label.text}}
-		<ui5-label id="{{_id}}-label" class="labelInRadioButton" for="{{_id}}">{{_label.text}}</ui5-label>
+	{{#if text}}
+		<ui5-label id="{{_id}}-label" class="ui5-radio-label" for="{{_id}}" ?wrap="{{wrap}}">{{text}}</ui5-label>
 	{{/if}}
 
 	{{#if hasValueState}}

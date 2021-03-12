@@ -10,8 +10,13 @@ const Handlebars = require('handlebars/dist/handlebars.min.js');
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
+const beautify = require("json-beautify");
 
-const api = JSON.parse(fs.readFileSync(path.normalize(process.argv[2])));
+
+const apiJSONPath = path.normalize(process.argv[2]);
+const api = JSON.parse(fs.readFileSync(apiJSONPath));
+
+fs.writeFileSync(apiJSONPath, beautify(api, null, 2, 100));
 
 const entries = api['symbols'];
 const compiledHandlebars = Handlebars.compile(template);
@@ -52,7 +57,7 @@ Handlebars.registerPartial('events', eventsTemplate);
 Handlebars.registerPartial('methods', methodsTemplate);
 Handlebars.registerPartial('cssVariables', cssVariablesTemplate);
 
-mkdirp(`dist/test-resources/api`);
+mkdirp.sync(`dist/test-resources/api`);
 
 let entriesAPI = [];
 
@@ -61,28 +66,40 @@ const appendCSSVarsAPI = entry => {
 	return entry;
 }
 
-const calculateAPI = entry => {
-	if (entriesAPI.indexOf(entry.basename) !== -1) {
-		return entry;
+const componentHasEntityItem = (component, entity, name) => {
+	return component[entity].some(x => x && x.name === name);
+};
+const removeEmpty = arr => arr.filter(x => x);
+
+const calculateAPI = component => {
+	if (entriesAPI.indexOf(component.basename) !== -1) {
+		return component;
+	}
+	const entities = ["properties", "slots", "events", "methods", "cssVariables"];
+
+	// Initialize all entities with [] if necessary, and remove undefined things, and only leave public things
+	entities.forEach(entity => {
+		component[entity] = removeEmpty(component[entity] || []).filter(x => x.visibility === "public");
+	});
+
+	component = appendCSSVarsAPI(component);
+
+	let parent = getComponentByName(component.extends);
+	if (parent) {
+		let parentComponent = calculateAPI(parent);
+		entities.forEach(entity => {
+			parentComponent[entity].forEach( x => {
+				if (!componentHasEntityItem(component, entity, x.name)) {
+					component[entity].push(x);
+				}
+			});
+		});
 	}
 
-	let parent = getComponentByName(entry.extends) || {};
+	entriesAPI.push(component.basename);
 
-	entry = appendCSSVarsAPI(entry);
-	parent = appendCSSVarsAPI(parent);
-
-	parent = { ...{ properties: [], events: [], slots: [], cssVariables: [] }, ...parent };
-
-	// extend component documentation
-	entry.properties = [...(entry.properties || []), ...(parent.properties || [])];
-	entry.events = [...(entry.events || []), ...(parent.events || [])];
-	entry.slots = [...(entry.slots || []), ...(parent.slots || [])];
-	entry.cssVariables = [...(entry.cssVariables || []), ...(parent.cssVariables || [])];
-
-	entriesAPI.push(entry.basename);
-
-	return entry;
-}
+	return component;
+};
 
 const appendAdditionalEntriesAPI = entry => {
 	if (entry.appenddocs) {
@@ -107,6 +124,11 @@ const generateSamplePage = entry => {
 	} catch (err) { }
 
 	if (content) {
+		entry.slots.forEach(slotData => {
+			if (!slotData.type.startsWith("Node") && !slotData.type.startsWith("HTMLElement")) { // interface -> don't show in documentation
+				slotData.type = "HTMLElement" + (slotData.type.endsWith("[]") ? "[]" : "");
+			}
+		});
 		const APIReference = compiledHandlebars(entry).replace(/\[\]/g, " [0..n]");
 		const EntitySince = compiledSinceTemplate(entry).replace(/\[\]/g, " [0..n]");
 

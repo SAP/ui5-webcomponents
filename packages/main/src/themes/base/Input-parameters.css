@@ -1,18 +1,20 @@
 :root {
+	--_ui5_input_width: 13.125rem;
 	--_ui5_input_height: 2.5rem;
 	--_ui5_input_compact_height: 1.625rem;
 	--_ui5_input_wrapper_border_radius: 0;
 	--_ui5_input_state_border_width: 0.125rem;
+	--_ui5-input-information_border_width: 0.125rem;
 	--_ui5_input_error_font_weight: normal;
 	--_ui5_input_focus_border_width: 1px;
 	--_ui5_input_error_warning_border_style: solid;
-	--_ui5_input_error_warning_font_style: normal;
-	--_ui5_input_disabled_color: var(--sapUiContentDisabledTextColor);
+	--_ui5_input_error_warning_font_style: inherit;
+	--_ui5_input_disabled_color: var(--sapContent_DisabledTextColor);
 	--_ui5_input_disabled_font_weight: normal;
-	--_ui5_input_disabled_border_color: var(--sapUiFieldBorderColor);
-	--_ui5_input_disabled_background: var(--sapUiFieldBackground);
+	--_ui5_input_disabled_border_color: var(--sapField_BorderColor);
+	--_ui5_input_disabled_background: var(--sapField_Background);
 	--_ui5_input_icon_padding: 0.625rem .6875rem;
-	--sap_wc_input_disabled_opacity: 0.5;
-	--sap_wc_input_icon_min_width: 2.375rem;
-	--sap_wc_input_compact_min_width: 2rem;
+	--_ui5_input_disabled_opacity: 0.5;
+	--_ui5_input_icon_min_width: 2.375rem;
+	--_ui5_input_compact_min_width: 2rem;
 }

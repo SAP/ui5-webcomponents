@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-icons",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.12",
   "description": "UI5 Web Components: webcomponents.SAP-icons",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "clean": "wc-dev clean",
-    "build": "wc-dev build"
+    "build": "wc-dev build",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
@@ -20,9 +21,10 @@
     "directory": "packages/icons"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "0.17.0"
+    "@ui5/webcomponents-base": "0.30.0"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.4"
+    "@ui5/webcomponents-tools": "1.0.0-rc.12",
+    "chromedriver": "88.0.0"
   }
 }

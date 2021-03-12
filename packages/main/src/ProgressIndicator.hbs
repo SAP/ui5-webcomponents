@@ -1,0 +1,29 @@
+<div class="ui5-progress-indicator-root {{classes.root}}"
+     dir="{{effectiveDir}}"
+     role="progressbar"
+     aria-valuemin="0"
+     aria-valuenow="{{validatedValue}}"
+     aria-valuemax="100"
+     aria-valuetext="{{valueStateText}}"
+     aria-disabled="{{_ariaDisabled}}"
+>
+    <div class="ui5-progress-indicator-bar" style="{{styles.bar}}">
+        {{#unless showValueInRemainingBar}}
+           {{> valueLabel}}
+        {{/unless}}
+    </div>
+    <div class="ui5-progress-indicator-remaining-bar">
+        {{#if showValueInRemainingBar}}
+           {{> valueLabel}}
+        {{/if}}
+    </div>
+</div>
+
+{{#*inline "valueLabel"}}
+    {{#if showIcon}}
+        <ui5-icon name="{{valueStateIcon}}" class="ui5-progress-indicator-icon"></ui5-icon>
+    {{/if}}
+    {{#unless hideValue}}
+        <span class="ui5-progress-indicator-value">{{validatedValue}}%</span>
+    {{/unless}}
+{{/inline}}

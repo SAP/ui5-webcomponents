@@ -43,7 +43,7 @@ fs.readdir(documentationPath, (err, files) => {
 layout: docs
 title: ${currentDocName}
 parent: Documentation
-permalink: /playground/docs/${currentDocName.toLowerCase().replace(new RegExp(" ", "g"), "-")}
+permalink: /playground/docs/${currentDocName.toLowerCase().replace(new RegExp(" ", "g"), "-")}/
 nav_order: ${index}
 ---
 `,

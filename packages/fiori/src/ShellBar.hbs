@@ -1,6 +1,9 @@
 <div
 	class="{{classes.wrapper}}"
-	dir="{{rtl}}"
+	dir="{{effectiveDir}}"
+	role="banner"
+	aria-label="{{_shellbarText}}"
+	part="root"
 >
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-left">
 
@@ -8,14 +11,36 @@
 				<slot name="startButton"></slot>
 		{{/if}}
 
-		{{#unless interactiveLogo}}
-			<img class="ui5-shellbar-logo" src="{{logo}}" @click="{{_logoPress}}" />
-		{{/unless}}
+		{{#if hasFocusableLogo}}
+			<span class="ui5-shellbar-logo"
+				role="button"
+				aria-label="{{_logoText}}"
+				title="{{_logoText}}"
+				@click="{{_logoPress}}"
+				@keydown="{{_logoKeydown}}"
+				@keyup="{{_logoKeyup}}"
+				tabindex="0"
+				data-ui5-stable="logo"
+			>
+				<slot name="logo"></slot>
+			</span>
+		{{/if}}
 
 		{{#if showArrowDown}}
-			<button tabindex="0" class="{{classes.button}}" @click="{{_header.press}}">
-				{{#if interactiveLogo}}
-					<img class="ui5-shellbar-logo" src="{{logo}}" />
+			<button tabindex="{{menuBtnTabindex}}"
+				class="{{classes.button}}"
+				@click="{{_header.press}}"
+				aria-haspopup="{{menuBtnHasPopup}}"
+				aria-expanded="{{menuPopoverExpanded}}"
+			>
+				{{#if hasNonFocusableLogo}}
+					<span
+						class="ui5-shellbar-logo"
+						aria-label="{{_logoText}}"
+						title="{{_logoText}}"
+					>
+						<slot name="logo"></slot>
+					</span>
 				{{/if}}
 
 				{{#if primaryTitle}}
@@ -28,83 +53,146 @@
 			</button>
 		{{/if}}
 
-		<ui5-popover class="ui5-shellbar-menu-popover" placement-type="Bottom">
-			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}}>
-				<slot name="menuItems"></slot>
-			</ui5-list>
-		</ui5-popover>
-
 		<h2 class="ui5-shellbar-secondary-title">{{secondaryTitle}}</h2>
 	</div>
 
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-middle">
 		{{#if showCoPilot}}
-			{{> coPilot}}
+			<div class="ui5-shellbar-copilot-wrapper"
+				tabindex="0"
+				aria-label="{{_copilotText}}"
+				role="button"
+				title="{{_copilotText}}"
+				@keydown="{{_coPilotKeydown}}"
+				@keyup="{{_coPilotKeyup}}"
+				?active="{{coPilotActive}}"
+				data-ui5-stable="copilot"
+			>
+				{{> coPilot}}
+			</div>
 		{{else}}
 			<span class="ui5-shellbar-co-pilot-placeholder"></span>
 		{{/if}}
 	</div>
 
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
-
 		<div class="ui5-shellbar-overflow-container-right-child">
-			{{#each _itemsInfo}}
-				{{#if this.icon}}
-					<ui5-icon
-						tabindex="{{this._tabIndex}}"
-						data-ui5-notification-count="{{../notificationCount}}"
-						data-ui5-external-action-item-id="{{this.refItemid}}"
-						class="{{this.classes}}"
-						name="{{this.icon}}"
-						id="{{this.id}}"
-						style="{{this.style}}"
-						@click={{this.press}}>
-					</ui5-icon>
-				{{else}}
-					<div
-						tabindex="{{this._tabIndex}}"
-						id="{{this.id}}"
-						style="{{this.style}}"
-						class="{{this.classes}}"
-						@click="{{this.press}}"
-					>
-						<span style="{{this.subStyles}}" class="{{this.subclasses}}"></span>
+
+			{{#if hasSearchField}}
+				{{#if _fullWidthSearch}}
+					<div class="ui5-shellbar-search-full-width-wrapper" style="{{styles.searchField}}">
+						<div class="ui5-shellbar-search-full-field">
+							<slot name="searchField"></slot>
+						</div>
+						<ui5-button
+							@click={{_handleCancelButtonPress}}
+							class="ui5-shellbar-button"
+						>
+							Cancel
+						</ui5-button>
 					</div>
 				{{/if}}
-			{{/each}}
-		</div>
-	</div>
 
-	<ui5-popover class="ui5-shellbar-overflow-popover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
-		<ui5-list separators="None" @ui5-itemPress="{{_actionList.itemPress}}">
-			{{#each _hiddenIcons}}
-				<ui5-li
-					data-ui5-external-action-item-id="{{this.refItemid}}"
+				<div class="ui5-shellbar-search-field" style="{{styles.searchField}}">
+					{{#unless _fullWidthSearch}}
+							<slot name="searchField"></slot>
+					{{/unless}}
+				</div>
+
+				<ui5-button
+					id="{{this._id}}-item-1"
+					class="{{classes.items.search}} ui5-shellbar-button ui5-shellbar-search-button"
+					icon="sap-icon://search"
+					data-ui5-text="Search"
+					data-ui5-notification-count="{{notificationCount}}"
+					@click={{_handleSearchIconPress}}
+					aria-label="{{_searchText}}"
+					title="{{_searchText}}"
+					._buttonAccInfo="{{accInfo.search}}"
+				></ui5-button>
+			{{/if}}
+
+			{{#each customItemsInfo}}
+				<ui5-button
+					id="{{this.id}}"
+					style="{{this.style}}"
+					class="{{this.classes}}"
 					icon="{{this.icon}}"
-					type="Active"
-					@ui5-_press="{{this.press}}"
-				>{{this.text}}
-				</ui5-li>
+					title="{{this.title}}"
+					data-count="{{this.count}}"
+					data-ui5-notification-count="{{../notificationCount}}"
+					data-ui5-external-action-item-id="{{this.refItemid}}"
+					data-ui5-stable="{{stableDomRef}}"
+					@click={{this.press}}
+				></ui5-button>
 			{{/each}}
-		</ui5-list>
-	</ui5-popover>
 
-	<div class="ui5-shellbar-block-layer">
-	</div>
+			{{#if showNotifications}}
+			<ui5-button
+				id="{{this._id}}-item-2"
+				style="{{styles.items.notification}}"
+				class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button"
+				icon="sap-icon://bell"
+				data-ui5-text="Notifications"
+				data-ui5-notification-count="{{notificationCount}}"
+				@click={{_handleNotificationsPress}}
+				aria-label="{{_notificationsText}}"
+				title="{{_notificationsText}}"
+				._buttonAccInfo="{{accInfo.notifications}}"
+				data-ui5-stable="notifications"
+			></ui5-button>
+			{{/if}}
 
-	<div id="{{_id}}-searchfield-wrapper"
-		class="ui5-shellbar-search-field"
-		style="{{styles.searchField}}"
-		@focusout={{_searchField.focusout}}
-	>
-		{{#if searchField.length}}
-			<slot name="searchField"></slot>
-		{{/if}}
+			<ui5-button
+				id="{{this._id}}-item-5"
+				style="{{styles.items.overflow}}"
+				class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button"
+				icon="sap-icon://overflow"
+				@click="{{_handleOverflowPress}}"
+				aria-label="{{_overflowText}}"
+				title="{{_overflowText}}"
+				._buttonAccInfo="{{accInfo.overflow}}"
+				data-ui5-stable="overflow"
+			></ui5-button>
+
+			{{#if hasProfile}}
+				<ui5-button
+					profile-btn
+					id="{{this._id}}-item-3"
+					@click={{_handleProfilePress}}
+					style="{{styles.items.profile}}"
+					aria-label="{{_profileText}}"
+					title="{{_profileText}}"
+					._buttonAccInfo="{{accInfo.profile}}"
+					class="ui5-shellbar-button ui5-shellbar-image-button"
+					data-ui5-stable="profile"
+				>
+					<slot
+						name="profile"
+					></slot>
+				</ui5-button>
+			{{/if}}
+
+			{{#if showProductSwitch}}
+			<ui5-button
+				id="{{this._id}}-item-4"
+				style="{{styles.items.product}}"
+				class="{{classes.items.product}} ui5-shellbar-button ui5-shellbar-button-product-switch"
+				icon="sap-icon://grid"
+				data-ui5-text="Product Switch"
+				@click={{_handleProductSwitchPress}}
+				aria-label="{{_productsText}}"
+				title="{{_productsText}}"
+				._buttonAccInfo="{{accInfo.products}}"
+				data-ui5-stable="product-switch"
+			></ui5-button>
+			{{/if}}
+		</div>
 	</div>
 </div>
 
 {{#*inline "coPilot"}}
-	<svg @click="{{_coPilotPress}}" width="44" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-shellbar-coPilot">
+	<svg @click="{{_coPilotClick}}" focusable="false" width="44" role="presentation" aria-hidden="true" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-shellbar-coPilot">
 		<defs>
 			<linearGradient id="f" x1="0%" x2="100%" y1="100%" y2="0%"><stop offset="0%" stop-color="#c0d9f2" stop-opacity=".87"/><stop offset="80%" stop-color="#fff" stop-opacity=".87"/></linearGradient>
 			<linearGradient id="e" x1="0%" x2="100%" y1="100%" y2="0%"><stop offset="0%" stop-color="#b4d2ff" stop-opacity=".16"/><stop offset="80%" stop-color="#fff" stop-opacity=".16"/></linearGradient>

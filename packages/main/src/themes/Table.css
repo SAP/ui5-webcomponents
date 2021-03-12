@@ -1,6 +1,12 @@
+@import "./TableLoadMoreRow.css";
+
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
+}
+
+.ui5-table-root {
+	position: relative;
 }
 
 table {
@@ -10,14 +16,14 @@ table {
 }
 
 .ui5-table-header-row {
-	color: var(--sapUiListTextColor);
+	color: var(--sapTextColor);
 	height: 3rem;
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
 }
 
 .ui5-table-header-row:focus {
-	outline: var(--ui5_table_header_row_outline_width) dotted var(--sapUiContentFocusColor);
+	outline: var(--ui5_table_header_row_outline_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -0.125rem;
 }
 
@@ -33,13 +39,40 @@ tr {
 	justify-content: center;
 	text-align: center;
 	padding: 0.5rem 1rem;
-	font-family: var(--sapUiFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: 0.875rem;
 	box-sizing: border-box;
-	color: var(--sapUiListTextColor);
+	color: var(--sapTextColor);
 	min-height: 3rem;
+	background-color: var(--sapList_Background);
+	border-top: 1px solid var(--sapList_BorderColor);
 }
 
 :host([_no-data-displayed]) {
-	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
+	border-bottom: 1px solid var(--sapList_TableGroupHeaderBorderColor);
+}
+
+.ui5-table-end-row {
+	height: 0px;
+}
+
+:host([busy]) .ui5-table-busy-row {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	outline: none;
+}
+
+:host([busy]) .ui5-table-busy-ind {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+:host([busy]) .ui5-table-load-more-row {
+	opacity: 0.72;
 }

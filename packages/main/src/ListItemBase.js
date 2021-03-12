@@ -1,7 +1,7 @@
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
@@ -11,6 +11,16 @@ import styles from "./generated/themes/ListItemBase.css.js";
  */
 const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
+
+		/**
+		 * Defines the selected state of the <code>ListItem</code>.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		selected: {
+			type: Boolean,
+		},
 
 		/**
 		* Defines if the list item should display its bottom border.
@@ -25,12 +35,33 @@ const metadata = {
 			defaultValue: "-1",
 			noAttribute: true,
 		},
+
+		/**
+		 * Defines whether <code>ui5-li</code> is in disabled state.
+		 * <br><br>
+		 * <b>Note:</b> A disabled <code>ui5-li</code> is noninteractive.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @protected
+		 * @since 1.0.0-rc.12
+		 */
+		disabled: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the element is on focus
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
 	},
-	events: {
+	events: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
 		_focused: {},
-		_focusForward: {},
+		"_forward-after": {},
+		"_forward-before": {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -49,15 +80,28 @@ class ListItemBase extends UI5Element {
 		return metadata;
 	}
 
+	static get render() {
+		return litRender;
+	}
+
 	static get styles() {
 		return styles;
 	}
 
-	onfocusin(event) {
+	_onfocusin(event) {
+		if (event.isMarked === "button" || event.isMarked === "link") {
+			return;
+		}
+
+		this.focused = true;
 		this.fireEvent("_focused", event);
 	}
 
-	onkeydown(event) {
+	_onfocusout(_event) {
+		this.focused = false;
+	}
+
+	_onkeydown(event) {
 		if (isTabNext(event)) {
 			return this._handleTabNext(event);
 		}
@@ -67,21 +111,23 @@ class ListItemBase extends UI5Element {
 		}
 	}
 
+	_onkeyup() {}
+
 	_handleTabNext(event) {
-		const target = event.target.shadowRoot.activeElement;
+		const target = event.target;
 
 		if (this.shouldForwardTabAfter(target)) {
-			this.fireEvent("_forwardAfter", { item: target });
+			this.fireEvent("_forward-after", { item: target });
 		}
 	}
 
 	_handleTabPrevious(event) {
-		const target = event.target.shadowRoot.activeElement;
+		const target = event.target;
 
 		if (this.shouldForwardTabBefore(target)) {
 			const eventData = event;
 			eventData.item = target;
-			this.fireEvent("_forwardBefore", eventData);
+			this.fireEvent("_forward-before", eventData);
 		}
 	}
 
@@ -110,13 +156,23 @@ class ListItemBase extends UI5Element {
 		return {
 			main: {
 				"ui5-li-root": true,
-				"ui5-li--focusable": true,
+				"ui5-li--focusable": !this.disabled,
 			},
 		};
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
+	}
+
+	get tabIndex() {
+		if (this.disabled) {
+			return -1;
+		}
+		if (this.selected) {
+			return 0;
+		}
+		return this._tabIndex;
 	}
 }
 

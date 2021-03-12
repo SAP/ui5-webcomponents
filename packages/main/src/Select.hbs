@@ -1,45 +1,38 @@
 <div
 	class="ui5-select-root"
-	tabindex="{{tabIndex}}"
-	dir="{{dir}}"
-	@keydown="{{_onkeydown}}"
-	@keyup="{{_onkeyup}}"
-	@focusin="{{_onfocusin}}"
-	@focusout="{{_onfocusout}}"
+	dir="{{effectiveDir}}"
+	id="{{_id}}-select"
+	@click="{{_onclick}}"
 >
-	<div
-		class="ui5-select-label-root"
-		@click="{{_togglePopover}}">
-		<ui5-label>{{_text}}</ui5-label>
+	<div class="ui5-select-label-root"
+		data-sap-focus-ref
+		tabindex="{{tabIndex}}"
+		role="combobox"
+		aria-haspopup="listbox"
+		aria-label="{{ariaLabelText}}"
+		aria-describedby="{{valueStateTextId}}"
+		aria-disabled="{{isDisabled}}"
+		aria-required="{{required}}"
+		aria-expanded="{{_isPickerOpen}}"
+		@keydown="{{_onkeydown}}"
+		@keyup="{{_onkeyup}}"
+		@focusin="{{_onfocusin}}"
+		@focusout="{{_onfocusout}}"
+	>
+		{{_text}}
 	</div>
 
-	{{#if options}}
-		<ui5-popover
-			id="ui5-select--popover"
-			placement-type="Bottom"
-			no-arrow
-			horizontal-align="Stretch"
-			@ui5-afterOpen="{{_applyFocusAfterOpen}}"
-			@ui5-beforeOpen="{{_beforeOpen}}"
-			@ui5-afterClose="{{_afterClose}}"
-		>
-				<ui5-list mode="SingleSelect" separators="None" @keydown="{{_handlePickerKeydown}}" @ui5-itemPress="{{_selectionChange}}">
-					{{#each _syncedOptions}}
-						<ui5-li ?selected="{{this.selected}}" icon="{{this.icon}}" id="{{this.id}}-li">
-							{{this.textContent}}
-						</ui5-li>
-					{{/each}}
-				</ui5-list>
-		</ui5-popover>
+	<span id="{{_id}}-selectionText" class="ui5-hidden-text" aria-live="polite" role="status"></span>
+
+	<ui5-icon
+		name="slim-arrow-down"
+		input-icon
+		?pressed="{{_iconPressed}}"
+		dir="{{effectiveDir}}"
+	></ui5-icon>
+
+	{{#if hasValueState}}
+		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
 	{{/if}}
-
-		<ui5-icon 
-			@click="{{_togglePopover}}"
-			name="slim-arrow-down"
-			input-icon
-			?pressed="{{_iconPressed}}"
-			dir="{{dir}}"
-		></ui5-icon>
-
 	<slot name="formSupport"></slot>
 </div>

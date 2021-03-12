@@ -1,0 +1,22 @@
+<ui5-li-custom
+	id="{{this._id}}"
+	class="{{this.overflowClasses}}"
+	type="{{this.overflowState}}"
+	?selected="{{this.effectiveSelected}}"
+	?disabled="{{this.effectiveDisabled}}"
+	aria-disabled="{{this.effectiveDisabled}}"
+	aria-selected="{{this.effectiveSelected}}"
+	aria-labelledby="{{this.ariaLabelledBy}}"
+>
+	<div class="ui5-tab-overflow-itemContent">
+		{{#if this.icon}}
+			<ui5-icon name="{{this.icon}}"></ui5-icon>
+		{{/if}}
+
+		{{this.text}}
+
+		{{#if this.additionalText}}
+			({{this.additionalText}})
+		{{/if}}
+	</div>
+</ui5-li-custom>

@@ -1,0 +1,31 @@
+<ui5-popover class="ui5-shellbar-menu-popover"
+	placement-type="Bottom"
+	@ui5-before-open={{_menuPopoverBeforeOpen}}
+	@ui5-after-close={{_menuPopoverAfterClose}}
+>
+	<ui5-list separators="None" mode="SingleSelect" @ui5-item-press={{_menuItemPress}}>
+		{{#each _menuPopoverItems}}
+			{{ this }}
+		{{/each}}
+	</ui5-list>
+</ui5-popover>
+
+<ui5-popover class="ui5-shellbar-overflow-popover"
+	placement-type="Bottom"
+	horizontal-align="{{popoverHorizontalAlign}}"
+	no-arrow
+	@ui5-before-open={{_overflowPopoverBeforeOpen}}
+	@ui5-after-close={{_overflowPopoverAfterClose}}
+>
+	<ui5-list separators="None" @ui5-item-press="{{_actionList.itemPress}}">
+		{{#each _hiddenIcons}}
+			<ui5-li
+				data-ui5-external-action-item-id="{{this.refItemid}}"
+				icon="{{this.icon}}"
+				type="Active"
+				@ui5-_press="{{this.press}}"
+			>{{this.text}}
+			</ui5-li>
+		{{/each}}
+	</ui5-list>
+</ui5-popover>

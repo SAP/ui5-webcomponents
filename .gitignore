@@ -51,3 +51,6 @@ packages/playground/docs/documentation
 
 packages/playground/docs/tutorials
 !packages/playground/docs/tutorials/tutorials.md
+
+packages/playground/docs/pages/content/main/*
+packages/playground/docs/pages/content/fiori/*

@@ -1,0 +1,13 @@
+@import "../base/Button-parameters.css";
+
+:root {
+	--_ui5_button_outline_offset: -0.25rem;
+	--_ui5_button_outline: 0.125rem dotted var(--sapContent_FocusColor);
+	--_ui5_button_positive_border_active_color: var(--sapButton_Emphasized_Active_Background);
+	--_ui5_button_active_border_color: var(--sapButton_Accept_Active_BorderColor);
+	--_ui5_button_negative_active_border_color: var(--sapButton_Reject_Active_Background);
+	--_ui5_button_transparent_border_color: var(--sapButton_BorderColor);
+	--_ui5_button_focus_width: 1px;
+	--_ui5_button_focus_color: var(--sapContent_FocusColor);
+	--_ui5_button_focussed_border_color: transparent;
+}

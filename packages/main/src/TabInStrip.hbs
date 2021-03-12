@@ -1,0 +1,48 @@
+<li id="{{this._id}}"
+	class="{{this.headerClasses}}"
+	tabindex="{{this._tabIndex}}"
+	role="tab"
+	aria-posinset="{{this._posinset}}"
+	aria-setsize="{{this._setsize}}"
+	aria-controls="ui5-tc-contentItem-{{this._posinset}}"
+	aria-selected="{{this.effectiveSelected}}"
+	aria-disabled="{{this.effectiveDisabled}}"
+	?disabled="{{this.effectiveDisabled}}"
+	aria-labelledby="{{this.ariaLabelledBy}}"
+	data-ui5-stable="{{this.stableDomRef}}"
+	style="list-style-type: none;"
+>
+
+	{{#if this.icon}}
+		<div class="ui5-tab-strip-item-icon-outer">
+			<ui5-icon name="{{this.icon}}" class="ui5-tab-strip-item-icon"></ui5-icon>
+		</div>
+	{{/if}}
+
+	<div class="ui5-tab-strip-itemContent">
+
+		{{#unless this._isInline}}
+			{{> additionalText}}
+		{{/unless}}
+
+		{{#if this.text}}
+			<span class="ui5-tab-strip-itemText" id="{{this._id}}-text">
+				<span class="{{this.headerSemanticIconClasses}}"></span>
+				{{this.text}}
+			</span>
+		{{/if}}
+
+		{{#if this._isInline}}
+			{{> additionalText}}
+		{{/if}}
+
+	</div>
+
+</li>
+
+<!-- Additional text -->
+{{#*inline additionalText}}
+	{{#if this.additionalText}}
+		<span class="ui5-tab-strip-itemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
+	{{/if}}
+{{/inline}}

@@ -13,6 +13,7 @@ const metadata = {
 		/**
 		 * Defines the name of the item's icon.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		icon: {
@@ -22,23 +23,45 @@ const metadata = {
 		/**
 		 * Defines the item text.
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		text: {
 			type: String,
 		},
+
+		/**
+		 * Defines the count displayed in the top-right corner.
+		 * @type {string}
+		 * @defaultValue ""
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
+		count: {
+			type: String,
+		},
+
+		/**
+		 * Defines the stable selector that you can use via getStableDomRef method.
+		 * @public
+		 * @type {string}
+		 * @since 1.0.0-rc.8
+		 */
+		stableDomRef: {
+			type: String,
+		},
 	},
 
-	events: /** @lends sap.ui.webcomponents.main.ShellBarItem.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.ShellBarItem.prototype */ {
 		/**
 		 * Fired, when the item is pressed.
 		 *
-		 * @event
+		 * @event sap.ui.webcomponents.fiori.ShellBarItem#item-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
-		itemClick: {
+		"item-click": {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
@@ -52,12 +75,13 @@ const metadata = {
  * might be added to the <code>ui5-shellbar</code>.
  * <br><br>
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/ShellBarItem";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/ShellBarItem";</code>
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ShellBarItem
+ * @alias sap.ui.webcomponents.fiori.ShellBarItem
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-shellbar-item
+ * @implements sap.ui.webcomponents.fiori.IShellBarItem
  * @public
  */
 class ShellBarItem extends UI5Element {

@@ -3,6 +3,8 @@ const getopts = require('getopts');
 const hbs2lit = require('../hbs2lit');
 const path = require('path');
 const litRenderer = require('./RenderTemplates/LitRenderer');
+const recursiveReadDir = require("recursive-readdir");
+const mkdirp = require('mkdirp');
 
 const args = getopts(process.argv.slice(2), {
 	alias: {
@@ -18,32 +20,34 @@ const args = getopts(process.argv.slice(2), {
 
 const onError = (place) => {
 	console.log(`A problem occoured when reading ${place}. Please recheck passed parameters.`);
-}
+};
+
 const isHandlebars = (fileName) => fileName.indexOf('.hbs') !== -1;
-const parseFile = (filePath, inputDir, outputDir) => {
-	fs.readFile(filePath, 'utf-8', (err, content) => {
 
-		if (err) {
-			onError('file');
-		}
+const processFile = (file, outputDir) => {
+	const litCode = hbs2lit(file);
+	const absoluteOutputDir = composeAbsoluteOutputDir(file, outputDir);
+	const componentNameMatcher = /(\w+)(\.hbs)/gim;
+	const componentName = componentNameMatcher.exec(file)[1];
 
-		hbs2lit.compileString(content, {
-			templatesPath: inputDir,
-			compiledTemplatesPath: outputDir
-		}).then((litCode) => {
-			const componentNameMatcher = /(\w+)(\.hbs)/gim;
-			const componentName = componentNameMatcher.exec(filePath)[1];
+	writeRenderers(absoluteOutputDir, componentName, litRenderer.generateTemplate(componentName, litCode));
+};
 
-			writeRenderers(outputDir, componentName, litRenderer.generateTemplate(componentName, litCode));
-		});
-	});
-}
+const composeAbsoluteOutputDir = (file, outputDir) => {
+	// (1) Extract the dir structure from the source file path - "src/lvl1/lvl2/MyCompBadge.hbs"
+	// - remove the filename - "src/lvl1/lvl2"
+	// - remove the leading dir - "lvl1/lvl2"
+	const fileDir = file.split(path.sep).slice(1, -1).join(path.sep);
+
+	// (2) Compose full output dir - "dist/generated/templates/lvl1/lvl2"
+	return `${outputDir}${path.sep}${fileDir}`; 
+};
 
 const wrapDirectory = (directory, outputDir) => {
 	directory = path.normalize(directory);
 	outputDir = path.normalize(outputDir);
 
-	fs.readdir(directory, (err, files) => {
+	recursiveReadDir(directory, (err, files) => {
 
 		if (err) {
 			onError('directory');
@@ -51,9 +55,7 @@ const wrapDirectory = (directory, outputDir) => {
 
 		files.forEach(fileName => {
 			if (isHandlebars(fileName)) {
-
-				// could be refactored a bit
-				parseFile(directory + fileName, directory, outputDir);
+				processFile(fileName, outputDir);
 			}
 		});
 	})
@@ -61,6 +63,10 @@ const wrapDirectory = (directory, outputDir) => {
 
 const writeRenderers = (outputDir, controlName, fileContent) => {
 	try {
+		if (!fs.existsSync(outputDir)) {
+			mkdirp.sync(outputDir);
+		}
+
 		const compiledFilePath = `${outputDir}${path.sep}${controlName}Template.lit.js`;
 
 		// strip DOS line endings because the break the source maps

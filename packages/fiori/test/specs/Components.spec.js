@@ -1,4 +1,4 @@
-const assert = require("assert");
+const assert = require("chai").assert;
 
 const assertBooleanProperty = (el, prop) => {
 	assert.strictEqual(el.getProperty(prop), false, "the value should be false by default.");
@@ -13,7 +13,8 @@ describe("General assertions", () => {
 
 	it("tests components with 'hidden' property are not visible", () => {
 		[
-			browser.$("#shellbar2")
+			browser.$("#shellbar2"),
+			browser.$("#uploadCollection")
 		].forEach(assertHidden);
 	});
 });

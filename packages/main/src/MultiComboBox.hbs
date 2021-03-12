@@ -1,28 +1,33 @@
 <div class="ui5-multi-combobox-root"
-	@focusin={{rootFocusIn}}
-	@focusout={{rootFocusOut}}
-	role="combobox"
-	aria-haspopup="listbox"
-	aria-expanded="{{open}}"
 >
-	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{nMoreCountText}}</span>
-	
+	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
+
 	{{#if hasValueState}}
 		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
 	{{/if}}
-	
+
 	<ui5-tokenizer slot="_beginContent"
 		show-more
 		class="ui5-multi-combobox-tokenizer"
 		?disabled="{{disabled}}"
-		@ui5-showMoreItemsPress="{{_showMorePopover}}"
-		@ui5-tokenDelete="{{_tokenDelete}}"
+		@ui5-show-more-items-press="{{_showMorePopover}}"
+		@ui5-token-delete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
-		?expanded="{{expandedTokenizer}}"
+		@focusin="{{_tokenizerFocusIn}}"
+		@click={{_click}}
+		@keydown="{{_onTokenizerKeydown}}"
+		?expanded="{{_tokenizerExpanded}}"
 	>
 		{{#each items}}
 			{{#if this.selected}}
-				<ui5-token ?readonly="{{../readonly}}" class="ui5-multi-combobox-token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
+				<ui5-token
+					?readonly="{{../readonly}}"
+					class="ui5-multi-combobox-token"
+					data-ui5-id="{{this._id}}"
+					part="token-{{@index}}"
+					text="{{this.text}}"
+				>
+				</ui5-token>
 			{{/if}}
 		{{/each}}
 	</ui5-tokenizer>
@@ -30,62 +35,39 @@
 	<input id="ui5-multi-combobox-input"
 		.value="{{value}}"
 		inner-input
-		placeholder="{{placeholder}}"
+		placeholder={{_getPlaceholder}}
 		?disabled={{disabled}}
 		?readonly={{readonly}}
-		?required={{required}}
 		value-state="{{valueState}}"
 		@input="{{_inputLiveChange}}"
 		@change={{_inputChange}}
 		@keydown="{{_onkeydown}}"
 		@keyup="{{_onkeyup}}"
-		@focusin="{{_focusin}}"
-		@focusout="{{_focusout}}"
+		@click={{_click}}
+		@focusin={{inputFocusIn}}
+		@focusout={{inputFocusOut}}
+		role="combobox"
+		aria-haspopup="listbox"
+		aria-expanded="{{open}}"
 		aria-autocomplete="both"
-		aria-labelledby="{{_id}}-hiddenText-nMore"
-		aria-describedby="{{_id}}-valueStateDesc"
+		aria-describedby="{{ariaDescribedByText}}"
+		aria-required="{{required}}"
 	/>
+
+	{{#if icon}}
+		<slot name="icon"></slot>
+	{{/if}}
 
 	{{#unless readonly}}
 		<ui5-icon name="slim-arrow-down"
 			input-icon
 			slot="icon"
 			tabindex="-1"
-			@click={{_showAllItemsPopover}}
-			?pressed="{{_iconPressed}}"
-			dir="{{dir}}"
+			@click="{{togglePopover}}"
+			@mousedown="{{_onIconMousedown}}"
+			?pressed="{{open}}"
+			dir="{{effectiveDir}}"
+			accessible-name="{{_iconAccessibleNameText}}"
 		></ui5-icon>
 	{{/unless}}
-
-	<ui5-popover
-		class="ui5-multi-combobox-selected-items-popover"
-		horizontal-align="Stretch"
-		?no-arrow={{editable}}
-		placement-type="Bottom">
-		<ui5-list separators="None" mode="{{selectedItemsListMode}}"
-			@ui5-selectionChange={{_listSelectionChange}}>
-			{{#each items}}
-				{{#if this.selected}}
-					<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../editable}}">{{this.textContent}}</ui5-li>
-				{{/if}}
-			{{/each}}
-		</ui5-list>
-	</ui5-popover>
-
-	<ui5-popover class="ui5-multi-combobox-all-items-popover"
-		no-arrow
-		horizontal-align="Stretch"
-		initial-focus="ui5-multi-combobox-input"
-		horizontal-align="Left"
-		placement-type="Bottom"
-		@ui5-selectionChange={{_listSelectionChange}}
-		@ui5-afterClose={{_toggleIcon}}
-		@ui5-afterOpen={{_toggleIcon}}>
-		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
-			{{#each _filteredItems}}
-					<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.textContent}}</ui5-li>
-			{{/each}}
-		</ui5-list>
-	</ui5-popover>
-
 </div>

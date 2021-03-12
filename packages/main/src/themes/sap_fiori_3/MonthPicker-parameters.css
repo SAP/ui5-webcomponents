@@ -1,8 +1,5 @@
 @import "../base/MonthPicker-parameters.css";
 
 :root {
-	--_ui5_monthpicker_item_background_color: var(--sapUiListBackgroundDarken3); /* darken(@sapUiListBackground, 3); */
-	--_ui5_monthpicker_item_hover_background_color: var(--sapUiListBackgroundDarken3); /* darken(@sapUiListBackground, 3); */
-	--_ui5_monthpicker_item_focus_background_color: var(--sapUiListBackgroundDarken3); /* darken(@sapUiListBackground, 3); */
 	--_ui5_monthpicker_item_border_radius: 0.25rem;
 }

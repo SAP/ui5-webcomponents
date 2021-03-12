@@ -1,9 +1,9 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
-import columnListItemCss from "./generated/themes/CustomListItem.css.js";
+import customListItemCss from "./generated/themes/CustomListItem.css.js";
 
 /**
  * @public
@@ -24,7 +24,6 @@ const metadata = {
 	},
 	properties: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -40,6 +39,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.CustomListItem
  * @extends ListItem
  * @tagname ui5-li-custom
+ * @implements sap.ui.webcomponents.main.IListItem
  * @public
  */
 class CustomListItem extends ListItem {
@@ -47,16 +47,32 @@ class CustomListItem extends ListItem {
 		return metadata;
 	}
 
-	static get render() {
-		return litRender;
-	}
-
 	static get template() {
 		return CustomListItemTemplate;
 	}
 
 	static get styles() {
-		return [ListItem.styles, columnListItemCss];
+		return [ListItem.styles, customListItemCss];
+	}
+
+	_onkeydown(event) {
+		const isTab = isTabNext(event) || isTabPrevious(event);
+
+		if (!isTab && !this.focused) {
+			return;
+		}
+
+		super._onkeydown(event);
+	}
+
+	_onkeyup(event) {
+		const isTab = isTabNext(event) || isTabPrevious(event);
+
+		if (!isTab && !this.focused) {
+			return;
+		}
+
+		super._onkeyup(event);
 	}
 
 	get classes() {

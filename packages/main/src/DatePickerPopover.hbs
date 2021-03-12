@@ -1,0 +1,60 @@
+<ui5-responsive-popover
+	id="{{_id}}-responsive-popover"
+	allow-target-overlap
+	stay-open-on-scroll
+	placement-type="Bottom"
+	horizontal-align="Left"
+	?disable-scrolling="{{_isIE}}"
+	no-arrow
+	with-padding
+	no-stretch
+	?_hide-header={{_shouldHideHeader}}
+	@keydown="{{_onkeydown}}"
+	@ui5-after-close="{{onResponsivePopoverAfterClose}}"
+>
+	{{#if showHeader}}
+		{{> header}}
+	{{/if}}
+
+	{{> content}}
+
+	{{#if showFooter}}
+		{{> footer}}
+	{{/if}}
+</ui5-responsive-popover>
+
+{{#*inline "header"}}
+	<div slot="header" class="ui5-responsive-popover-header">
+		<div class="row">
+			<span>{{_headerTitleText}}</span>
+			<ui5-button
+				class="ui5-responsive-popover-close-btn"
+				icon="decline"
+				design="Transparent"
+				@click="{{closePicker}}"
+			>
+			</ui5-button>
+		</div>
+	</div>
+{{/inline}}
+
+{{#*inline "content"}}
+	<ui5-calendar
+		id="{{_id}}-calendar"
+		primary-calendar-type="{{_primaryCalendarType}}"
+		format-pattern="{{_formatPattern}}"
+		timestamp="{{_calendarTimestamp}}"
+		.selectionMode="{{_calendarSelectionMode}}"
+		.minDate="{{minDate}}"
+		.maxDate="{{maxDate}}"
+		@ui5-selected-dates-change="{{onSelectedDatesChange}}"
+		?hide-week-numbers="{{hideWeekNumbers}}"
+		._currentPicker="{{_calendarCurrentPicker}}"
+	>
+		{{#each _calendarSelectedDates}}
+			<ui5-date value="{{this}}"></ui5-date>
+		{{/each}}
+	</ui5-calendar>
+{{/inline}}
+
+{{#*inline "footer"}}{{/inline}}

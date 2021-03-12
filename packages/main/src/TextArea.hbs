@@ -5,15 +5,12 @@
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 >
-
 	{{#if growing}}
 		<div id="{{_id}}-mirror" style="{{styles.mirror}}" class="ui5-textarea-mirror" aria-hidden="true">
 			{{#each _mirrorText}}
 				{{this.text}}
 
-				{{#unless this.last}}
-					<br/>
-				{{/unless}}
+				<br />
 			{{/each}}
 		</div>
 	{{/if}}
@@ -21,23 +18,33 @@
 	<textarea
 		id="{{_id}}-inner"
 		class="ui5-textarea-inner"
-		placeholder="{{ placeholder }}"
+		placeholder="{{placeholder}}"
 		?disabled="{{disabled}}"
 		?readonly="{{readonly}}"
-		?required="{{required}}"
+		aria-label="{{ariaLabelText}}"
+		aria-describedby="{{ariaDescribedBy}}"
+		aria-required="{{required}}"
 		maxlength="{{_exceededTextProps.calcedMaxLength}}"
-		aria-labelledby={{ariaLabelledBy}}
 		.value="{{value}}"
 		@input="{{_oninput}}"
 		@change="{{_onchange}}"
 		@keyup="{{_onkeyup}}"
 		@keydown="{{_onkeydown}}"
-		data-sap-focus-ref>
+		data-sap-focus-ref
+		part="textarea">
 	</textarea>
 
+	{{> afterTextarea}}
+
 	{{#if showExceededText}}
-		<span id="{{_id}}-exceededText" class="ui5-textarea-exceeded-text">{{_exceededTextProps.exceededText}}</span>
+		<span class="ui5-textarea-exceeded-text">{{_exceededTextProps.exceededText}}</span>
+	{{/if}}
+
+	{{#if hasValueState}}
+		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{ariaValueStateHiddenText}}</span>
 	{{/if}}
 
 	<slot name="formSupport"></slot>
 </div>
+
+{{#*inline "afterTextarea"}}{{/inline}}

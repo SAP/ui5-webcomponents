@@ -1,0 +1,116 @@
+<ui5-responsive-popover
+	no-arrow
+	content-only-on-desktop
+	_disable-initial-focus
+	placement-type="Bottom"
+	horizontal-align="Left"
+	@ui5-after-open={{_afterOpenPopover}}
+	@ui5-after-close={{_afterClosePopover}}
+>
+	<ui5-busyindicator
+		?active={{loading}}
+		size="Medium"
+		class="ui5-combobox-busy"
+	>
+	</ui5-busyindicator>
+
+	<div slot="header" class="ui5-responsive-popover-header">
+		<div class="row">
+			<span>{{_headerTitleText}}</span>
+			<ui5-button
+				class="ui5-responsive-popover-close-btn"
+				icon="decline"
+				design="Transparent"
+				@click="{{_closeRespPopover}}"
+			>
+			</ui5-button>
+		</div>
+
+		<div class="row">
+			<div
+				class="input-root-phone"
+				value-state="{{valueState}}"
+			>
+				<input
+					class="ui5-input-inner-phone"
+					.value="{{_tempValue}}"
+					inner-input
+					placeholder="{{placeholder}}"
+					value-state="{{valueState}}"
+					@input="{{_input}}"
+					@change="{{_inputChange}}"
+					@keydown="{{_keydown}}"
+					aria-autocomplete="both"
+				/>
+			</div>
+		</div>
+
+		{{#if hasValueStateText}}
+			<div class="row {{classes.popoverValueState}}">
+				{{> valueStateMessage}}
+			</div>
+		{{/if}}
+	</div>
+
+	{{#unless _isPhone}}
+		{{#if hasValueStateText}}
+			<div class="ui5-responsive-popover-header {{classes.popoverValueState}}" style="{{styles.suggestionPopoverHeader}}">
+				{{> valueStateMessage}}
+			</div>
+		{{/if}}
+	{{/unless}}
+
+	<ui5-list
+		separators="None"
+		@ui5-item-click={{_selectItem}}
+		@ui5-item-focused={{_onItemFocus}}
+		@mousedown={{_itemMousedown}}
+		mode="SingleSelect"
+	>
+		{{#each _filteredItems}}
+			<ui5-li
+				type="Active"
+				info={{this.additionalText}}
+				._tabIndex={{itemTabIndex}}
+				.mappedItem={{this}}
+				?selected={{this.selected}}
+				?focused={{this.focused}}
+			>
+				{{this.text}}
+			</ui5-li>
+		{{/each}}
+	</ui5-list>
+
+	<div slot="footer" class="ui5-responsive-popover-footer">
+		<ui5-button
+			design="Transparent"
+			@click="{{_closeRespPopover}}"
+		>OK</ui5-button>
+	</div>
+</ui5-responsive-popover>
+
+{{#if shouldOpenValueStateMessagePopover}}
+	<ui5-popover
+		skip-registry-update
+		_disable-initial-focus
+		prevent-focus-restore
+		no-padding
+		no-arrow
+		class="ui5-valuestatemessage-popover"
+		placement-type="Bottom"
+	>
+		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
+			{{> valueStateMessage}}
+		</div>
+	</ui5-popover>
+{{/if}}
+
+{{#*inline "valueStateMessage"}}
+	{{#if shouldDisplayDefaultValueStateMessage}}
+		{{valueStateText}}
+	{{else}}
+		{{#each valueStateMessageText}}
+			{{this}}
+		{{/each}}
+	{{/if}}
+{{/inline}}

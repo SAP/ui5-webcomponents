@@ -1,12 +1,18 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
-import { ARIA_ROLEDESCRIPTION_CARD, AVATAR_TOOLTIP, ARIA_LABEL_CARD_CONTENT } from "./generated/i18n/i18n-defaults.js";
+import {
+	ARIA_ROLEDESCRIPTION_CARD,
+	AVATAR_TOOLTIP,
+	ARIA_LABEL_CARD_CONTENT,
+	ARIA_ROLEDESCRIPTION_CARD_HEADER,
+	ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import cardCss from "./generated/themes/Card.css.js";
@@ -16,12 +22,14 @@ import cardCss from "./generated/themes/Card.css.js";
  */
 const metadata = {
 	tag: "ui5-card",
+	languageAware: true,
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
 		 * Defines the content of the <code>ui5-card</code>.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot content
 		 * @public
 		 */
 		"default": {
@@ -32,6 +40,7 @@ const metadata = {
 		/**
 		 * Defines the visual representation in the header of the card.
 		 * Supports images and icons.
+		 * <br><br>
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous options. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -40,6 +49,20 @@ const metadata = {
 		 * @public
 		 */
 		avatar: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * Defines an action, displayed in the right most part of the header.
+		 * <br><br>
+		 * <b>Note:</b> If set, the <code>status</code> text will not be displayed,
+		 * you can either have <code>action</code>, or <code>status</code>.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		action: {
 			type: HTMLElement,
 		},
 	},
@@ -56,17 +79,20 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the subtitle displayed in the <code>ui5-card</code> header.
+		 * Defines the subheading displayed in the <code>ui5-card</code> header.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		subtitle: {
+		subheading: {
 			type: String,
 		},
 
 		/**
 		 * Defines the status displayed in the <code>ui5-card</code> header.
+		 * <br><br>
+		 * <b>Note:</b> If the <code>action</code> slot is set, the <code>status</code> will not be displayed,
+		 * you can either have <code>action</code>, or <code>status</code>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -86,6 +112,31 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the aria-label attribute for the <code>ui5-card</code>
+		 *
+		 * @type {String}
+		 * @since 1.0.0-rc.9
+		 * @private
+		 * @defaultvalue ""
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the <code>ui5-card</code>
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
+
 		_headerActive: {
 			type: Boolean,
 			noAttribute: true,
@@ -98,11 +149,11 @@ const metadata = {
 		 * by mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
-		 * @event
+		 * @event sap.ui.webcomponents.main.Card#header-click
 		 * @public
 		 * @since 0.10.0
 		 */
-		headerClick: {},
+		"header-click": {},
 	},
 };
 
@@ -113,10 +164,8 @@ const metadata = {
  * The <code>ui5-card</code> is a component that represents information in the form of a
  * tile with separate header and content areas.
  * The content area of a <code>ui5-card</code> can be arbitrary HTML content.
- * The header can be used through several properties, such as:
- * <code>heading</code>, <code>subtitle</code>, <code>status</code>
- * and a slot:
- * <code>avatar</code>.
+ * The header can be used through several properties, such as: <code>heading</code>, <code>subheading</code>, <code>status</code>
+ * and two slots: <code>avatar</code> and <code>action</code>.
  *
  * <h3>Keyboard handling</h3>
  * In case you enable <code>headerInteractive</code> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
@@ -177,20 +226,28 @@ class Card extends UI5Element {
 		return !!this.avatar && !this.icon;
 	}
 
-	get tabindex() {
-		return this.headerInteractive ? "0" : undefined;
+	get ariaHeaderRole() {
+		return this.headerInteractive ? "button" : "heading";
+	}
+
+	get ariaLevel() {
+		return this.headerInteractive ? undefined : "3";
 	}
 
 	get hasHeader() {
-		return !!(this.heading || this.subtitle || this.status || this.avatar);
+		return !!(this.heading || this.subheading || this.status || this.hasAction || this.avatar);
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get ariaCardRoleDescription() {
 		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
+	}
+
+	get ariaCardHeaderRoleDescription() {
+		return this.headerInteractive ? this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER) : this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
 	}
 
 	get ariaCardAvatarLabel() {
@@ -201,18 +258,47 @@ class Card extends UI5Element {
 		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
 	}
 
-	static async define(...params) {
-		await Promise.all([
-			Icon.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+	get ariaLabelledByHeader() {
+		const labels = [];
 
-		super.define(...params);
+		if (this.subheading) {
+			labels.push(`${this._id}-subheading`);
+		}
+
+		if (this.status) {
+			labels.push(`${this._id}-status`);
+		}
+
+		if (this.hasAvatar) {
+			labels.push(`${this._id}-avatar`);
+		}
+
+		return labels.length !== 0 ? labels.join(" ") : undefined;
+	}
+
+	get ariaLabelledByCard() {
+		return this.heading ? `${this._id}-heading ${this._id}-desc` : `${this._id}-desc`;
+	}
+
+	get hasAvatar() {
+		return !!this.avatar.length;
+	}
+
+	get hasAction() {
+		return !!this.action.length;
+	}
+
+	static get dependencies() {
+		return [Icon];
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	_headerClick() {
 		if (this.headerInteractive) {
-			this.fireEvent("headerClick");
+			this.fireEvent("header-click");
 		}
 	}
 
@@ -227,7 +313,7 @@ class Card extends UI5Element {
 		this._headerActive = enter || space;
 
 		if (enter) {
-			this.fireEvent("headerClick");
+			this.fireEvent("header-click");
 			return;
 		}
 
@@ -246,7 +332,7 @@ class Card extends UI5Element {
 		this._headerActive = false;
 
 		if (space) {
-			this.fireEvent("headerClick");
+			this.fireEvent("header-click");
 		}
 	}
 }

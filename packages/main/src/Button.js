@@ -1,9 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -13,12 +14,17 @@ import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPH
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
+import buttonIECss from "./generated/themes/Button.ie11.css.js";
+
+let isGlobalHandlerAttached = false;
+let activeButton = null;
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-button",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
@@ -80,9 +86,22 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the size of the icon inside the <code>ui5-button</code>.
+		 *
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		iconSize: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
 		 * When set to <code>true</code>, the <code>ui5-button</code> will
 		 * automatically submit the nearest form element upon <code>press</code>.
-		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
@@ -92,6 +111,19 @@ const metadata = {
 		 */
 		submits: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the tooltip of the button.
+		 * <br>
+		 * <b>Important:</b> Tooltips should only be set to icon only buttons.
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @private
+		 * @since 1.0.0-rc.11
+		 */
+		title: {
+			type: String,
 		},
 
 		/**
@@ -127,6 +159,40 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the aria-label attribute for the button
+		 * @type {String}
+		 * @defaultvalue: ""
+		 * @private
+		 * @since 1.0.0-rc.7
+		 */
+		ariaLabel: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the button
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.7
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
+
+		/**
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaExpanded: {
+			type: String,
+		},
+
+		/**
 		 * Indicates if the element if focusable
 		 * @private
 		 */
@@ -141,11 +207,27 @@ const metadata = {
 		_isMobile: {
 			type: Boolean,
 		},
+
+		_buttonAccInfo: {
+			type: Object,
+		},
+
+		/**
+		 * Defines the tabIndex of the component.
+		 * @private
+		 */
+		_tabIndex: {
+			type: String,
+			defaultValue: "0",
+			noAttribute: true,
+		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-button</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -203,6 +285,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Button
  * @extends UI5Element
  * @tagname ui5-button
+ * @implements sap.ui.webcomponents.main.IButton
  * @public
  */
 class Button extends UI5Element {
@@ -211,7 +294,7 @@ class Button extends UI5Element {
 	}
 
 	static get styles() {
-		return buttonCss;
+		return [buttonCss, isLegacyBrowser() && buttonIECss];
 	}
 
 	static get render() {
@@ -222,15 +305,30 @@ class Button extends UI5Element {
 		return ButtonTemplate;
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	constructor() {
 		super();
 		this._isMobile = isMobile() || isCombi();
 
 		this._deactivate = () => {
+<<<<<<< HEAD
 			if (this.active && (!isMobile() || isCombi())) {
 				this.active = false;
+=======
+			if (activeButton) {
+				activeButton.active = false;
+>>>>>>> master
 			}
 		};
+
+		if (!isGlobalHandlerAttached) {
+			document.addEventListener("mouseup", this._deactivate);
+
+			isGlobalHandlerAttached = true;
+		}
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
@@ -241,16 +339,8 @@ class Button extends UI5Element {
 			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 
-		this.iconOnly = !this.childNodes.length;
+		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
-	}
-
-	onEnterDOM() {
-		document.addEventListener("mouseup", this._deactivate);
-	}
-
-	onExitDOM() {
-		document.removeEventListener("mouseup", this._deactivate);
 	}
 
 	_onclick(event) {
@@ -264,6 +354,7 @@ class Button extends UI5Element {
 	_onmousedown(event) {
 		event.isMarked = "button";
 		this.active = true;
+		activeButton = this; // eslint-disable-line
 	}
 
 	_onmouseup(event) {
@@ -285,6 +376,8 @@ class Button extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		event.isMarked = "button";
+
 		if (isSpace(event) || isEnter(event)) {
 			this.active = true;
 		}
@@ -301,24 +394,33 @@ class Button extends UI5Element {
 		this.focused = false;
 	}
 
-	_onfocusin() {
+	_onfocusin(event) {
+		event.isMarked = "button";
 		this.focused = true;
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	get hasButtonType() {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
 
+	get isIconOnly() {
+		return !Array.from(this.childNodes).filter(node => {
+		    return node.nodeType !== Node.COMMENT_NODE
+            && ( node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0)
+        }).length;
+	}
+
 	get accInfo() {
 		return {
-			"ariaExpanded": this._buttonAccInfo && this._buttonAccInfo.ariaExpanded,
+			"ariaExpanded": this.ariaExpanded || (this._buttonAccInfo && this._buttonAccInfo.ariaExpanded),
 			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
-			"title": this._buttonAccInfo && this._buttonAccInfo.title,
+			"ariaHaspopup": this._buttonAccInfo && this._buttonAccInfo.ariaHaspopup,
+			"title": this.title || (this._buttonAccInfo && this._buttonAccInfo.title),
 		};
+	}
+
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	static typeTextMappings() {
@@ -334,9 +436,16 @@ class Button extends UI5Element {
 	}
 
 	get tabIndexValue() {
-		return this.nonFocusable ? "-1" : "0";
+		const tabindex = this.getAttribute("tabindex");
+
+		if (tabindex) {
+			return tabindex;
+		}
+
+		return this.nonFocusable ? "-1" : this._tabIndex;
 	}
 
+<<<<<<< HEAD
 	get classes() {
 		return {
 			main: {
@@ -351,8 +460,23 @@ class Button extends UI5Element {
 			Icon.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
+=======
+	get showIconTooltip() {
+		return this.iconOnly && !this.title;
+	}
 
-		super.define(...params);
+	get styles() {
+		return {
+			icon: {
+				width: this.iconSize,
+				height: this.iconSize,
+			},
+		};
+	}
+>>>>>>> master
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

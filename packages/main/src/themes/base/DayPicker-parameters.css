@@ -1,25 +1,19 @@
 :root {
 	--_ui5_daypicker_item_margin: 2px;
 	--_ui5_daypicker_item_border: none;
+	--_ui5_daypicker_item_selected_border_color: var(--sapList_Background);
 	--_ui5_daypicker_item_outline_width: 1px;
 	--_ui5_daypicker_item_outline_offset: 1px;
 	--_ui5_daypicker_daynames_container_height: 2rem;
 	--_ui5_daypicker_weeknumbers_container_padding_top: 2rem;
-	--_ui5_daypicker_item_background_color: var(--sapUiContentForegroundColorLighten5); /* lighten(@sapUiContentForegroundColor, 5); */
-	--_ui5_daypicker_item_hover_background_color: var(--sapUiContentForegroundColorDarken5); /* darken(@sapUiContentForegroundColor, 5); */
-	--_ui5_daypicker_item_selected_background_color: var(--sapUiSelectedDarken10); /* darken(@sapUiSelected, 10); */
-	--_ui5_daypicker_item_selected_hover_background_color: var(--sapUiSelectedDarken10); /* darken(@sapUiSelected, 10); */
-	--_ui5_daypicker_item_weekend_background_color: var(--sapUiContentForegroundColorDarken3); /* darken(@sapUiContentForegroundColor, 3); */
-	--_ui5_daypicker_item_weekend_hover_background_color: var(--sapUiContentForegroundColorDarken10); /* darken(@sapUiContentForegroundColor, 10); */
-	--_ui5_daypicker_item_othermonth_hover_background_color: var(--sapUiListBackgroundDarken10); /* darken(@sapUiListBackground, 10); */
-	--_ui5_daypicker_item_othermonth_background_color: var(--sapUiListBackground);
-	--_ui5_daypicker_item_othermonth_color: var(--sapUiContentLabelColor);
-	--_ui5_daypicker_item_othermonth_hover_color: var(--sapUiContentLabelColor);
+	--_ui5_daypicker_item_selected_hover_background_color: var(--sapContent_Selected_Background); /* darken(@sapSelectedColor, 10); */
+	--_ui5_daypicker_item_othermonth_background_color: var(--sapList_Background);
+	--_ui5_daypicker_item_othermonth_color: var(--sapContent_LabelColor);
+	--_ui5_daypicker_item_othermonth_hover_color: var(--sapContent_LabelColor);
 	--_ui5_daypicker_item_border_radius: 0;
 	--_ui5_daypicker_item_now_inner_border_radius: 0;
-	--_ui5_daypicker_dayname_color: var(--sapUiContentLabelColor);
-	--_ui5_daypicker_weekname_color: var(--sapUiContentLabelColor);
+	--_ui5_daypicker_dayname_color: var(--sapContent_LabelColor);
+	--_ui5_daypicker_weekname_color: var(--sapContent_LabelColor);
 	--_ui5_daypicker_item_now_selected_focus_after_width: calc(100% - 0.125rem);
 	--_ui5_daypicker_item_now_selected_focus_after_height: calc(100% - 0.125rem);
-	--_ui5_daypicker_item_now_selected_text_border_color: var(--sapUiListBorderColorLighten10); /* lighten(var(--sapUiListBorderColor), 10); */
 }

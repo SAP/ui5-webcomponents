@@ -1,20 +1,33 @@
 {{>include "./Popup.hbs"}}
 
-<span class="ui5-popup-frame">
-	<span id="{{_id}}-firstfe" tabindex="0"></span>
-	<div style="{{zindex}}" class="ui5-dialog-root-parent {{classes.dialogParent}}">
-		<div tabindex="-1" aria-labelledby="{{headerId}}" role="dialog" aria-modal="true" class="ui5-popup-root ui5-dialog-root">
-			{{> header}}
-			<section class="ui5-dialog-section">
-				<div class="ui5-popup-content">
-					<div class="ui5-popup-scroll">
-						<slot></slot>
-					</div>
-				</div>
-			</section>
-			{{> footer}}
-		</div>
-	</div>
-	<span id="{{_id}}-lastfe" tabindex="0"></span>
-	<div tabindex="0" id="{{_id}}-blocklayer" style="{{blockLayer}}" class="{{classes.blockLayer}}"></div>
-</span>
+{{#*inline "beforeContent"}}
+	{{#if _displayHeader }}
+		<header
+			class="ui5-popup-header-root"
+			id="ui5-popup-header"
+			@mousedown="{{_onDragMouseDown}}">
+			{{#if header.length }}
+				<slot name="header"></slot>
+			{{else}}
+				<h2 class="ui5-popup-header-text">{{headerText}}</h2>
+			{{/if}}
+		</header>
+	{{/if}}
+{{/inline}}
+
+{{#*inline "afterContent"}}
+	{{#if footer.length }}
+		<footer class="ui5-popup-footer-root">
+			<slot name="footer"></slot>
+		</footer>
+	{{/if}}
+	{{#if resizable}}
+		<ui5-icon
+			name="resize-corner"
+			dir="{{effectiveDir}}"
+			class="ui5-popup-resize-handle"
+			@mousedown="{{_onResizeMouseDown}}">
+		</ui5-icon>
+	{{/if}}
+{{/inline}}
+

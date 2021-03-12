@@ -1,0 +1,41 @@
+{
+  "name": "@ui5/webcomponents-localization",
+  "version": "0.30.0",
+  "description": "Localization for UI5 Web Components",
+  "author": "SAP SE (https://www.sap.com)",
+  "license": "Apache-2.0",
+  "keywords": [
+    "openui5",
+    "sapui5",
+    "ui5"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/localization"
+  },
+  "scripts": {
+    "clean": "nps clean",
+    "lint": "nps lint",
+    "start": "nps start",
+    "build": "nps build",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "devDependencies": {
+    "@buxlabs/amd-to-es6": "^0.15.0",
+    "@openui5/sap.ui.core": "1.76.0",
+    "@ui5/webcomponents-tools": "1.0.0-rc.12",
+    "chromedriver": "88.0.0",
+    "copy-and-watch": "^0.1.4",
+    "escodegen": "^1.11.0",
+    "esprima": "^4.0.1",
+    "glob": "^7.1.3",
+    "mkdirp": "^0.5.1",
+    "path-exists-cli": "^1.0.0",
+    "replace-in-file": "^3.4.2",
+    "rimraf": "^2.6.2"
+  },
+  "dependencies": {
+    "@ui5/webcomponents-base": "0.30.0"
+  }
+}

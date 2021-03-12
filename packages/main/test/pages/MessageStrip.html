@@ -2,27 +2,23 @@
 <html role="application">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
 	<title>MessageStrip</title>
 
 	<script data-ui5-config type="application/json">
 		{
-			"rtl": false,
-			"compactSize": false
+			"rtl": false
 		}
 	</script>
 	<script>
 		delete Document.prototype.adoptedStyleSheets;
 	</script>
 
-	<script src="../../resources/bundle.esm.js"
-		type="module"
-	>
-	</script>
-
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	<style>
 		.top {
@@ -31,7 +27,7 @@
 	</style>
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 	<ui5-messagestrip id="messageStrip">Hello World!</ui5-messagestrip>
 	<ui5-input id="inputField"></ui5-input>
 
@@ -48,6 +44,9 @@
 	<ui5-messagestrip no-icon no-close-button class="top" type="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-messagestrip>
 	<ui5-messagestrip no-close-button class="top" type="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-messagestrip>
 
+    <ui5-messagestrip type="Warning" class="top"><ui5-icon name="palette" slot="icon"></ui5-icon>Custom icon</ui5-messagestrip>
+
+    <ui5-messagestrip type="Positive" class="top"><img src="./img/loading.gif" width="16" height="16" slot="icon">Custom icon</ui5-messagestrip>
 
 	<script>
 		var counter = 0;

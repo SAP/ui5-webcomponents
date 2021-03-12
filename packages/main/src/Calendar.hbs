@@ -1,46 +1,64 @@
-<div class="{{classes.main}}" style="{{styles.main}}">
-
-	<ui5-calendar-header
-		id="{{_id}}-head"
-		month-text="{{_header.monthText}}"
-		year-text="{{_header.yearText}}"
-		.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
-		@ui5-pressPrevious="{{_header.onPressPrevious}}"
-		@ui5-pressNext="{{_header.onPressNext}}"
-		@ui5-btn1Press="{{_header.onBtn1Press}}"
-		@ui5-btn2Press="{{_header.onBtn2Press}}"
-	></ui5-calendar-header>
-
-	<div id="{{_id}}-content">
+<div
+	class="ui5-cal-root"
+	@keydown={{_onkeydown}}
+>
+	<div id="{{_id}}-content" class="ui5-cal-content">
 		<ui5-daypicker
 			id="{{_id}}-daypicker"
-			class="{{classes.dayPicker}}"
-			format-pattern="{{_oMonth.formatPattern}}"
-			.selectedDates="{{_oMonth.selectedDates}}"
-			._hidden="{{_oMonth._hidden}}"
-			.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
-			timestamp="{{_oMonth.timestamp}}"
-			@ui5-selectionChange="{{_oMonth.onSelectedDatesChange}}"
-			@ui5-navigate="{{_oMonth.onNavigate}}"
+			?hidden="{{_isDayPickerHidden}}"
+			format-pattern="{{_formatPattern}}"
+			.selectedDates="{{_selectedDatesTimestamps}}"
+			._hidden="{{_isDayPickerHidden}}"
+			.primaryCalendarType="{{_primaryCalendarType}}"
+			.selectionMode="{{selectionMode}}"
+			.minDate="{{minDate}}"
+			.maxDate="{{maxDate}}"
+			timestamp="{{_timestamp}}"
+			?hide-week-numbers="{{hideWeekNumbers}}"
+			@ui5-change="{{onSelectedDatesChange}}"
+			@ui5-navigate="{{onNavigate}}"
 		></ui5-daypicker>
 
 		<ui5-monthpicker
 			id="{{_id}}-MP"
-			class="{{classes.monthPicker}}"
-			._hidden="{{_monthPicker._hidden}}"
-			.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
-			timestamp="{{_monthPicker.timestamp}}"
-			@ui5-selectedMonthChange="{{_monthPicker.onSelectedMonthChange}}"
+			?hidden="{{_isMonthPickerHidden}}"
+			format-pattern="{{_formatPattern}}"
+			.selectedDates="{{_selectedDatesTimestamps}}"
+			._hidden="{{_isMonthPickerHidden}}"
+			.primaryCalendarType="{{_primaryCalendarType}}"
+			.minDate="{{minDate}}"
+			.maxDate="{{maxDate}}"
+			timestamp="{{_timestamp}}"
+			@ui5-change="{{onSelectedMonthChange}}"
+			@ui5-navigate="{{onNavigate}}"
 		></ui5-monthpicker>
 
 		<ui5-yearpicker
-				id="{{_id}}-YP"
-				class="{{classes.yearPicker}}"
-				._hidden="{{_yearPicker._hidden}}"
-				.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
-				timestamp="{{_yearPicker.timestamp}}"
-				._selectedYear="{{_yearPicker._selectedYear}}"
-				@ui5-selectedYearChange="{{_yearPicker.onSelectedYearChange}}"
+			id="{{_id}}-YP"
+			?hidden="{{_isYearPickerHidden}}"
+			format-pattern="{{_formatPattern}}"
+			.selectedDates="{{_selectedDatesTimestamps}}"
+			._hidden="{{_isYearPickerHidden}}"
+			.primaryCalendarType="{{_primaryCalendarType}}"
+			.minDate="{{minDate}}"
+			.maxDate="{{maxDate}}"
+			timestamp="{{_timestamp}}"
+			@ui5-change="{{onSelectedYearChange}}"
+			@ui5-navigate="{{onNavigate}}"
 		></ui5-yearpicker>
 	</div>
+
+	<!-- Positioned above the content due to flex-direction:column-reverse, but physically here for tab order to work -->
+	<ui5-calendar-header
+			id="{{_id}}-head"
+			.primaryCalendarType="{{_primaryCalendarType}}"
+			timestamp="{{_timestamp}}"
+			.isPrevButtonDisabled="{{_previousButtonDisabled}}"
+			.isNextButtonDisabled="{{_nextButtonDisabled}}"
+			.isMonthButtonHidden="{{_isHeaderMonthButtonHidden}}"
+			@ui5-previous-press="{{onHeaderPreviousPress}}"
+			@ui5-next-press="{{onHeaderNextPress}}"
+			@ui5-show-month-press="{{onHeaderShowMonthPress}}"
+			@ui5-show-year-press="{{onHeaderShowYearPress}}"
+	></ui5-calendar-header>
 </div>

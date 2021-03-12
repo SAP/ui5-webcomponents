@@ -9,7 +9,7 @@
 
 <div class="control-tag">&lt;ui5-shellbar&gt;</div>
 
-	<!-- ShellBar -->
+<!-- ShellBar -->
 <section>
 	<h3>ShellBar</h3>
 	<div class="snippet">
@@ -17,18 +17,18 @@
 		id="shellbar"
 		primary-title="Corporate Portal"
 		secondary-title="secondary title"
-		logo="../../assets/images/sap-logo-svg.svg"
-		profile="../../assets/images/avatars/woman_avatar_5.png"
 		notification-count="99+"
 		show-notifications
 		show-product-switch
 		show-co-pilot
 	>
+		<ui5-avatar slot="profile" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
+		<img slot="logo" src="../../../assets/images/sap-logo-svg.svg"/>
 
 		<ui5-button icon="nav-back" slot="startButton"></ui5-button>
 
 		<ui5-shellbar-item id="disc" icon="disconnected" text="Disconnect"></ui5-shellbar-item>
-		<ui5-shellbar-item id="call" icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+		<ui5-shellbar-item id="call" icon="incoming-call" text="Incoming Calls" count="4"></ui5-shellbar-item>
 
 		<ui5-input slot="searchField"></ui5-input>
 
@@ -56,7 +56,7 @@
 	</ui5-popover>
 
 	<script>
-		shellbar.addEventListener("profileClick", function(event) {
+		shellbar.addEventListener("profile-click", function(event) {
 			window["action-popover"].openBy(event.detail.targetRef);
 		});
 	</script>
@@ -66,18 +66,18 @@
 	id="shellbar"
 	primary-title="Corporate Portal"
 	secondary-title="secondary title"
-	logo="../../assets/images/sap-logo-svg.svg"
-	profile="../../assets/images/avatars/woman_avatar_5.png"
 	notification-count="99+"
 	show-notifications
 	show-product-switch
 	show-co-pilot
 >
 
+	<ui5-avatar slot="profile" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
+	<img slot="logo" src="../../../assets/images/sap-logo-svg.svg"/>
 	<ui5-button icon="nav-back" slot="startButton"></ui5-button>
 
 	<ui5-shellbar-item id="disc" icon="disconnected" text="Disconnect"></ui5-shellbar-item>
-	<ui5-shellbar-item id="call" icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+	<ui5-shellbar-item id="call" icon="incoming-call" text="Incoming Calls" count="4"></ui5-shellbar-item>
 
 	<ui5-input slot="searchField"></ui5-input>
 
@@ -106,7 +106,7 @@
 </ui5-popover>
 
 <script>
-	shellbar.addEventListener("profileClick", function(event) {
+	shellbar.addEventListener("profile-click", function(event) {
 		popover.openBy(event.detail.targetRef);
 	});
 </script>
@@ -118,56 +118,55 @@
 	<h3>Basic ShellBar</h3>
 	<div class="snippet">
 		<ui5-shellbar
-			profile="../../assets/images/avatars/woman_avatar_5.png"
 			primary-title="Corporate Portal"
 			secondary-title="secondary title"
-			logo="../../assets/images/sap-logo-svg.svg"
 		>
 
-		<ui5-button icon="nav-back" slot="startButton"></ui5-button>
+			<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
+			<img slot="logo" src="../../../assets/images/sap-logo-svg.svg"/>
+			<ui5-button icon="nav-back" slot="startButton"></ui5-button>
 
 		</ui5-shellbar>
 	</div>
 
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-shellbar
-	profile="../../assets/images/avatars/woman_avatar_5.png"
 	primary-title="Corporate Portal"
 	secondary-title="secondary title"
-	logo="../../assets/images/sap-logo-svg.svg"
 >
+	<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
+	<img slot="logo" src="../../../assets/images/sap-logo-svg.svg"/>
+	<ui5-button icon="nav-back" slot="startButton"></ui5-button>
 </ui5-shellbar>
 	</xmp></pre>
 </section>
 
-<!-- ShellBar with searhc and notifications -->
+<!-- ShellBar with search and notifications -->
 <section>
 	<h3>ShellBar with search and notifications</h3>
 	<div class="snippet">
 		<ui5-shellbar
-			profile="../../assets/images/avatars/woman_avatar_5.png"
 			primary-title="Corporate Portal"
 			secondary-title="secondary title"
-			logo="../../assets/images/sap-logo-svg.svg"
 			show-notifications
 			notification-count="22"
 		>
-
+			<ui5-avatar slot="profile" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
+			<img slot="logo" src="../../../assets/images/sap-logo-svg.svg"/>
 			<ui5-input slot="searchField" placeholer="Enter service..."></ui5-input>
 		</ui5-shellbar>
 	</div>
 
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-shellbar
-	profile="../../assets/images/avatars/woman_avatar_5.png"
 	primary-title="Corporate Portal"
 	secondary-title="secondary title"
-	logo="../../images/sap-logo-svg.svg"
 	show-notifications
 	notification-count="22"
-	>
-
-	<ui5-input slot="searchField" placeholer="Enter service..."></ui5-input>
+>
+		<ui5-avatar slot="profile" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
+		<img slot="logo" src="../../../assets/images/sap-logo-svg.svg"/>
+		<ui5-input slot="searchField" placeholer="Enter service..."></ui5-input>
 </ui5-shellbar>
 	</xmp></pre>
 </section>
@@ -177,31 +176,29 @@
 	<h3>ShellBar with product switch and CoPilot</h3>
 	<div class="snippet">
 		<ui5-shellbar
-			profile="../../assets/images/avatars/woman_avatar_5.png"
 			primary-title="Corporate Portal"
 			secondary-title="secondary title"
-			logo="../../assets/images/sap-logo-svg.svg"
 			show-co-pilot
 			show-product-switch
 			show-notifications
 			notification-count="22"
 		>
-
+			<img slot="logo" src="../../../assets/images/sap-logo-svg.svg"/>
+			<ui5-avatar slot="profile" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
 		</ui5-shellbar>
 	</div>
 
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-shellbar
-profile="../../assets/images/avatars/woman_avatar_5.png"
 primary-title="Corporate Portal"
 secondary-title="secondary title"
-logo="../../assets/images/sap-logo-svg.svg"
 show-co-pilot
 show-product-switch
 show-notifications
 notification-count="22"
 >
-
+	<img slot="logo" src="../../../assets/images/sap-logo-svg.svg"/>
+	<ui5-avatar slot="profile" image="../../../assets/images/avatars/woman_avatar_5.png"></ui5-avatar>
 </ui5-shellbar>
 	</xmp></pre>
 </section>

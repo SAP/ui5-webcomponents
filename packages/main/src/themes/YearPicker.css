@@ -1,5 +1,5 @@
 :host(:not([hidden])) {
-	display: inline-block;
+	display: block;
 }
 
 :host {
@@ -7,16 +7,12 @@
 	height: 100%;
 }
 
-:host([data-ui5-compact-size]) .ui5-yp-item {
-	height: 2rem;
-}
-
 .ui5-yp-root {
 	padding: 2rem 0 1rem 0;
 	display: flex;
 	flex-direction: column;
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
 	justify-content: center;
 	align-items: center;
 }
@@ -32,9 +28,9 @@
 	display: flex;
 	margin: var(--_ui5_yearpicker_item_margin);
 	width: calc(25% - 0.125rem);
-	height: 3rem;
-	color: var(--sapUiBaseText);
-	background-color: var(--_ui5_yearpicker_item_background_color);
+	height: var(--_ui5_year_picker_item_height);
+	color: var(--sapTextColor);
+	background-color: var(--sapLegend_WorkingBackground);
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
@@ -50,16 +46,17 @@
 }
 
 .ui5-yp-item:hover {
-	background-color: var(--_ui5_yearpicker_item_hover_background_color);
-}
-
-.ui5-yp-item:focus {
-	background-color: var(--_ui5_yearpicker_item_focus_background_color);
+	background-color: var(--sapList_Hover_Background);
 }
 
 .ui5-yp-item.ui5-yp-item--selected {
-	background-color: var(--sapUiSelected);
-	color: var(--sapUiContentContrastTextColor);
+	background-color: var(--sapSelectedColor);
+	color: var(--sapContent_ContrastTextColor);
+}
+
+.ui5-yp-item.ui5-yp-item--disabled {
+	pointer-events: none;
+	opacity: 0.5;
 }
 
 .ui5-yp-item.ui5-yp-item--selected:focus {
@@ -67,7 +64,7 @@
 }
 
 .ui5-yp-item.ui5-yp-item--selected:focus::after {
-	border-color: var(--sapUiContentContrastFocusColor);
+	border-color: var(--sapContent_ContrastFocusColor);
 }
 
 .ui5-yp-item.ui5-yp-item--selected:hover {

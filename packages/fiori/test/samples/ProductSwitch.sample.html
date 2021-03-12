@@ -10,13 +10,33 @@
 <div class="control-tag">&lt;ui5-product-switch&gt;</div>
 
 <section>
-	<h3>Basic ProductSwitch</h3>
+	<h3>Basic sample</h3>
+	<div class="snippet">
+		<ui5-product-switch style="display:flex;">
+			<ui5-product-switch-item heading="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Travel & Expense" subtitle="Concur" icon="sap-icon://flight"></ui5-product-switch-item>
+		</ui5-product-switch>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-product-switch>
+	<ui5-product-switch-item heading="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-product-switch-item>
+	<ui5-product-switch-item heading="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-product-switch-item>
+	<ui5-product-switch-item heading="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-product-switch-item>
+	<ui5-product-switch-item heading="Travel & Expense" subtitle="Concur" icon="sap-icon://flight"></ui5-product-switch-item>
+</ui5-product-switch>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>ProductSwitch within ShellBar</h3>
 	<div class="snippet">
 		<ui5-shellbar
 			id="shellbar"
 			primary-title="Corporate Portal"
 			secondary-title="home"
-			logo="../../assets/images/sap-logo-svg.svg"
+			logo="../../../assets/images/sap-logo-svg.svg"
 			show-product-switch
 			show-co-pilot>
 		</ui5-shellbar>
@@ -43,10 +63,11 @@
 			var shellBar = document.getElementById("shellbar");
 			var popover = document.getElementById("productswitch-popover");
 
-			shellbar.addEventListener("productSwitchClick", function(event) {
+			shellbar.addEventListener("product-switch-click", function(event) {
 				if (popover.opened) {
 					popover.close();
 				} else {
+					event.preventDefault();
 					popover.openBy(event.detail.targetRef);
 				}
 			});
@@ -57,7 +78,7 @@
 	id="shellbar"
 	heading="Corporate Portal"
 	secondary-title="secondary title"
-	logo="../../assets/images/sap-logo-svg.svg"
+	logo="../../../assets/images/sap-logo-svg.svg"
 	show-product-switch
 	show-co-pilot>
 </ui5-shellbar>
@@ -84,7 +105,7 @@
 	var shellBar = document.getElementById("shellbar");
 	var popover = document.getElementById("productswitch-popover");
 
-	shellbar.addEventListener("productSwitchClick", function(event) {
+	shellbar.addEventListener("product-switch-click", function(event) {
 		if (popover.opened) {
 			popover.close();
 		} else {

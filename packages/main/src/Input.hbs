@@ -4,29 +4,40 @@
 	@focusout="{{_onfocusout}}"
 >
 	<div class="ui5-input-content">
+		{{> preContent}}
+
 		<input id="{{_id}}-inner"
 			class="ui5-input-inner"
+			style="{{styles.innerInput}}"
 			type="{{inputType}}"
 			inner-input
+			?inner-input-with-icon="{{icon.length}}"
 			?disabled="{{disabled}}"
 			?readonly="{{_readonly}}"
-			?required="{{required}}"
 			.value="{{value}}"
-			placeholder="{{placeholder}}"
+			placeholder="{{_placeholder}}"
 			maxlength="{{maxlength}}"
 			role="{{accInfo.input.role}}"
 			aria-owns="{{accInfo.input.ariaOwns}}"
-			aria-invalid="{{accInfo.input.ariaInvalid}}"
+			?aria-invalid="{{accInfo.input.ariaInvalid}}"
 			aria-haspopup="{{accInfo.input.ariaHasPopup}}"
 			aria-describedby="{{accInfo.input.ariaDescribedBy}}"
+			aria-roledescription="{{accInfo.input.ariaRoledescription}}"
 			aria-autocomplete="{{accInfo.input.ariaAutoComplete}}"
 			aria-expanded="{{accInfo.input.ariaExpanded}}"
+			aria-label="{{accInfo.input.ariaLabel}}"
+			aria-required="{{required}}"
 			@input="{{_handleInput}}"
 			@change="{{_handleChange}}"
 			@keydown="{{_onkeydown}}"
 			@keyup="{{_onkeyup}}"
+			@click={{_click}}
+			@focusin={{innerFocusIn}}
 			data-sap-no-tab-ref
 			data-sap-focus-ref
+			step="{{nativeInputAttributes.step}}"
+			min="{{nativeInputAttributes.min}}"
+			max="{{nativeInputAttributes.max}}"
 		/>
 		{{#if icon.length}}
 			<div class="ui5-input-icon-root">
@@ -34,8 +45,12 @@
 			</div>
 		{{/if}}
 
+		{{> postContent }}
+
 		{{#if showSuggestions}}
 			<span id="{{_id}}-suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
+			<span id="{{_id}}-selectionText" class="ui5-hidden-text" aria-live="polite" role="status"></span>
+			<span id="{{_id}}-suggestionsCount" class="ui5-hidden-text" aria-live="polite">{{availableSuggestionsCount}}</span>
 		{{/if}}
 
 		{{#if accInfo.input.ariaDescription}}
@@ -43,21 +58,13 @@
 		{{/if}}
 
 		{{#if hasValueState}}
-			<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
+			<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{ariaValueStateHiddenText}}</span>
 		{{/if}}
 	</div>
 
-	{{#if showSuggestions}}
-			<ui5-popover
-				placement-type="Bottom"
-				no-arrow
-				horizontal-align="Stretch"
-				initial-focus="{{_id}}-inner">
-					<ui5-list separators="Inner">
-						<slot></slot>
-					</ui5-list>
-			</ui5-popover>
-	{{/if}}
-
 	<slot name="formSupport"></slot>
 </div>
+
+
+{{#*inline "preContent"}}{{/inline}}
+{{#*inline "postContent"}}{{/inline}}

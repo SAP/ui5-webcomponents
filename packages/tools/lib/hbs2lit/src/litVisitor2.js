@@ -2,6 +2,15 @@ const Handlebars = require("handlebars/dist/handlebars.min.js");
 const path = require("path");
 const Visitor = Handlebars.Visitor;
 
+// skip ifDefined for event handlers and boolean attrs
+let skipIfDefined = false;
+
+// when true => an HTML node value, when false => an attribute value
+let isNodeValue = false;
+
+// matches event handlers @click= and boolean attrs ?disabled=
+const dynamicAttributeRgx = /\s(\?|@)([a-zA-Z|-]+)="?\s*$/;
+
 function HTMLLitVisitor(debug) {
 	this.blockCounter = 0;
 	this.keys = [];
@@ -45,8 +54,16 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	Visitor.prototype.ContentStatement.call(this, content);
 	// let content = content.orgiinal; // attribute="__ attribute = "__  attribute ="__
 
-	this.blocks[this.currentKey()] += content.original;
+	const contentStatement = content.original;
+	skipIfDefined = !!dynamicAttributeRgx.exec(contentStatement);
 
+	const closingIndex = contentStatement.lastIndexOf(">");
+	const openingIndex = contentStatement.lastIndexOf("<");
+	if (closingIndex !== -1 || openingIndex !== -1) { // Only change isNodeValue whenever < or > is found in the content statement
+		isNodeValue = closingIndex > openingIndex;
+	}
+
+	this.blocks[this.currentKey()] += contentStatement;
 };
 
 HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
@@ -58,13 +75,17 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		const path = normalizePath.call(this, mustache.path.original);
 		const hasCalculatingClasses = path.includes("context.classes");
 		const hasStylesCalculation = path.includes("context.styles");
-		
+
 		let parsedCode = "";
 
-		if (hasCalculatingClasses) {
-			parsedCode = `\${ifDefined(classMap(${path}))}`;
+		if (isNodeValue && !mustache.escaped) {
+			parsedCode = `\${unsafeHTML(${path})}`;
+		} else if (hasCalculatingClasses) {
+			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
-			parsedCode = `\${ifDefined(styleMap(${path}))}`;
+			parsedCode = `\${styleMap(${path})}`;
+		} else if (skipIfDefined){
+			parsedCode = `\${${path}}`;
 		} else {
 			parsedCode = `\${ifDefined(${path})}`;
 		}
@@ -125,7 +146,7 @@ function visitEachBlock(block) {
 	var bParamAdded = false;
 	visitSubExpression.call(this, block);
 
-	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", undefined, (item, index) => ";
+	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", (item, index) => item._id || index, (item, index) => ";
 	this.paths.push(normalizePath.call(this, block.params[0].original));
 	this.blockPath = "item";
 

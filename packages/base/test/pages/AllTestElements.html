@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+
+    <title>Base package default test page</title>
+
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+</head>
+
+<body>
+
+    <ui5-test-generic id="gen"></ui5-test-generic>
+
+    <ui5-test-generic id="withContent">
+        Default slot text
+        <span>Default slot content</span>
+        <span slot="other">Other slot content 1</span>
+        <span slot="other">Other slot content 2</span>
+        <span slot="individual">Individual slot content 1</span>
+        <span slot="individual">Individual slot content 2</span>
+        <span slot="named">Item in slot with propertyName</span>
+        <span slot="named">Item in slot with propertyName</span>
+    </ui5-test-generic>
+
+    <ui5-test-no-shadow id="noShadow"></ui5-test-no-shadow>
+
+    <ui5-test-parent id="parent">
+        <ui5-test-child id="child1" prop1="old" prop2="old" prop3="old"></ui5-test-child>
+        <ui5-test-child id="child2" slot="items" prop1="old" prop2="old" prop3="old"></ui5-test-child>
+    </ui5-test-parent>
+
+    <ui5-test-generic-ext id="genExt"></ui5-test-generic-ext>
+
+    <ui5-with-static-area id="no-static-area"></ui5-with-static-area>
+    <ui5-with-static-area id="with-static-area" static-content></ui5-with-static-area>
+</body>
+</html>

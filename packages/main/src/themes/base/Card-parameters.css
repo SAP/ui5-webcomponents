@@ -1,8 +1,8 @@
 :root {
-	--_ui5_card_border_color: var(--sapUiTileBackgroundDarken20);
+	--_ui5_card_border_color: var(--sapTile_SeparatorColor); 
 	--_ui5_card_content_padding: 1rem;
-	--_ui5_card_header_hover_bg: var(--sapUiListHoverBackground);
+	--_ui5_card_header_hover_bg: var(--sapList_Hover_Background);
 	--_ui5_card_header_active_bg: var(--_ui5_card_header_hover_bg);
 	--_ui5_card_header_border_color: var(--_ui5_card_border_color);
-	--_ui5_card_header_focus_border:  1px dotted var(--sapUiContentFocusColor);
+	--_ui5_card_header_focus_border:  1px dotted var(--sapContent_FocusColor);
 }

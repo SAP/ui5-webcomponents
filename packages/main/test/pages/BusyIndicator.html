@@ -3,6 +3,7 @@
 
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
 	<title>Busy Indicator</title>
@@ -12,44 +13,55 @@
 
 	<script data-ui5-config type="application/json">
 		{
-			"rtl": false,
-			"compactSize": false
+			"rtl": false
 		}
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-title>Large ui5-busyindicator</ui5-title>
+	<ui5-busyindicator active size="Large"></ui5-busyindicator>
+	<br/>
+	<br/>
+
+	<ui5-title>Default Medium ui5-busyindicator</ui5-title>
 	<ui5-busyindicator size="Medium" active id="indicator1"></ui5-busyindicator>
 
-	<br/>
-	<br/>
+	<br />
+	<br />
 	<ui5-busyindicator size="Medium" active id="indicator2"></ui5-busyindicator>
 
-	<br/>
-	<br/>
+	<ui5-title>ui5-busyindicator with text</ui5-title>
+
+	<br />
+	<br />
+	<ui5-busyindicator active id="indicator2" text="Loading" style="width: 10rem; border: 1px solid red"></ui5-busyindicator>
+
+	<br />
+	<br />
 
 	<ui5-busyindicator size="Medium" active>
 		<ui5-button>Hello World</ui5-button>
 	</ui5-busyindicator>
 
-	<br/>
-	<br/>
-	<ui5-busyindicator size="Medium" active>
+	<br />
+	<br />
+	<ui5-busyindicator size="Medium" active text="Loading">
 		<ui5-checkbox text="Hello World"></ui5-checkbox>
 	</ui5-busyindicator>
 
-	<br/>
-	<br/>
+	<br />
+	<br />
 
 	<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
 	<br>
 	<br>
-	<ui5-busyindicator id="busy-container" style="width: 520px" size="Medium">
+	<ui5-busyindicator id="busy-container" style="width: 520px" size="Medium" text="Loading">
 		<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items" style="width: 100%"></ui5-list>
 	</ui5-busyindicator>
 
@@ -60,23 +72,75 @@
 	<br>
 
 	<ui5-busyindicator size="Medium" active style="width: 500px; margin-left: 100px">
-			<ui5-list style="width: 100%; border: 1px solid black;">
-				<ui5-li>Item 1</ui5-li>
-				<ui5-li>Item 2</ui5-li>
-				<ui5-li>Item 3</ui5-li>
-			</ui5-list>
-		</ui5-busyindicator>
+		<ui5-list style="width: 100%; border: 1px solid black;">
+			<ui5-li>Item 1</ui5-li>
+			<ui5-li>Item 2</ui5-li>
+			<ui5-li>Item 3</ui5-li>
+		</ui5-list>
+	</ui5-busyindicator>
+
+	 <br>
+	<br>
+	<br>
+
+	<span>Medium (default) </span>
+	<br>
+	<br>
+
+	<ui5-busyindicator active></ui5-busyindicator>
+	<br>
+	<br>
+	<span>Small </span>
+
+	<br>
+	<br>
+	<ui5-busyindicator size="Small" active></ui5-busyindicator>
+	<br>
+	<br>
+	<span>Medium </span>
+
+	<br>
+	<br>
+	<ui5-busyindicator size="Medium" active></ui5-busyindicator>
+	<br>
+	<br>
+	<span>Large </span>
+
+	<br>
+	<br>
+	<ui5-busyindicator size="Large" active></ui5-busyindicator>
+	<br>
+	<br>
+
+	<ui5-busyindicator id="busy-tree" style="width: 100%;">
+		<ui5-tree id="treeDynamic">
+			<div slot="header">
+				<ui5-title>Dynamic tree</ui5-title>
+			</div>
+
+			<ui5-tree-item text="Has preloaded children">
+				<ui5-tree-item text="Child 1"></ui5-tree-item>
+				<ui5-tree-item text="Child 2"></ui5-tree-item>
+			</ui5-tree-item>
+
+			<ui5-tree-item text="Has no children at all"></ui5-tree-item>
+
+			<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
+		</ui5-tree>
+	</ui5-busyindicator>
+
+	<ui5-input value="0" id="tree-input"></ui5-input>
 
 	<script>
-		const busyIndocator = document.getElementById("busy-container");
-		const list = document.getElementById("fetch-list");
+		var busyIndocator = document.getElementById("busy-container");
+		var list = document.getElementById("fetch-list");
 
-		document.getElementById("fetch-btn").addEventListener("click", event => {
+		document.getElementById("fetch-btn").addEventListener("click", function(event) {
 			busyIndocator.setAttribute("active", "");
 
-			setTimeout(() => {
-				const elements = ["UI5", "Web", "Components"].forEach(title => {
-					const el = document.createElement("ui5-li");
+			setTimeout(function() {
+				var elements = ["UI5", "Web", "Components"].forEach(function(title) {
+					var el = document.createElement("ui5-li");
 					el.textContent = title;
 
 					list.appendChild(el);
@@ -85,6 +149,37 @@
 				list.noDataText = "";
 				busyIndocator.removeAttribute("active");
 			}, 2000);
+		});
+
+		var dynamicTree = document.getElementById("treeDynamic");
+		var busyIndicator = document.getElementById("busy-tree");
+		var input = document.getElementById("tree-input");
+		var inputValue = 0;
+
+		dynamicTree.addEventListener("ui5-itemToggle", function(event) {
+			var item = event.detail.item; // get the node that is toggled
+			console.log(item);
+			// Only for the dynamic node, only when it's empty
+			if (item.id === "dynamicNode" && item.children.length === 0) {
+				busyIndicator.active = true;
+				event.preventDefault(); // do not let the toggle button switch yet
+				setTimeout(function() {
+					var newItem = document.createElement("ui5-tree-item"); // Fetching from db....
+					newItem.text = "Node fetched from DB after 2 sec";
+					item.appendChild(newItem);
+					item.toggle(); // now manually switch
+					busyIndicator.active = false;
+				}, 2000);
+			}
+		});
+
+		dynamicTree.addEventListener("ui5-itemClick", function(event) {
+			var item = event.detail.item; // get the node that is toggled
+
+			// Only for the dynamic node, only when it's empty
+			if (item.id === "dynamicNode") {
+				input.value = ++inputValue;
+			}
 		});
 	</script>
 </body>

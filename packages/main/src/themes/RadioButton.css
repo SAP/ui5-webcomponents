@@ -5,23 +5,29 @@
 }
 
 :host {
+	min-width: var(--_ui5_radiobutton_min_width);
 	max-width: 100%;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	color: var(--sapUiFieldBorderColor);
+	color: var(--sapField_BorderColor);
 }
 
 /* Selected */
 :host([selected]) {
 	color: var(--_ui5_radiobutton_selected_fill);
 }
-:host([selected]) .ui5-radio-svg .ui5-radio-svg-inner {
+
+:host([selected]) .ui5-radio-svg-inner {
 	fill: currentColor;
+}
+
+:host([selected]) .ui5-radio-svg-outer {
+	stroke: var(--sapField_BorderColor);
 }
 
 /* Disabled */
 :host([disabled]) .ui5-radio-root {
-	opacity: var(--sapUiContentDisabledOpacity);
+	opacity: var(--sapContent_DisabledOpacity);
 }
 
 /* Focused */
@@ -29,18 +35,18 @@
 	content: "";
 	display: block;
 	position: absolute;
-	top: 0.5rem;
-	bottom: 0.5rem;
-	left: 0.5rem;
-	right: 0.5rem;
+	top: var(--_ui5_rb_focus_dist);
+	bottom: var(--_ui5_rb_focus_dist);
+	left: var(--_ui5_rb_focus_dist);
+	right: var(--_ui5_rb_focus_dist);
 	pointer-events: none;
-	border: var(--_ui5_radiobutton_border_width) dotted var(--sapUiContentFocusColor);
+	border: var(--_ui5_radiobutton_border_width) dotted var(--sapContent_FocusColor);
 }
 
 /* Hovered */
 :host(:not([value-state="Error"]):not([value-state="Warning"])) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {
 	fill: var(--_ui5_radiobutton_hover_fill);
-	stroke: var(--sapUiFieldHoverBorderColor);
+	stroke: var(--sapField_Hover_BorderColor);
 }
 
 /* with label */
@@ -50,40 +56,47 @@
 
 /* Read only */
 :host([selected][readonly]) .ui5-radio-svg-inner {
-	fill: var(--sapUiContentNonInteractiveIconColor);
+	fill: var(--sapContent_NonInteractiveIconColor);
 }
 
 :host([readonly]) .ui5-radio-root .ui5-radio-svg-outer {
-	fill: var(--sapUiFieldReadOnlyBackground);
-	stroke: var(--sapUiFieldReadOnlyBorderColor);
+	fill: var(--sapField_ReadOnly_Background);
+	stroke: var(--sapField_ReadOnly_BorderColor);
+}
+/* State */
+:host([value-state="Error"]) .ui5-radio-svg-outer,
+:host([value-state="Warning"]) .ui5-radio-svg-outer {
+	stroke-width: 2;
 }
 
 /* Error state */
-:host([value-state="Error"][selected]) .ui5-radio-root .ui5-radio-svg-inner {
+:host([value-state="Error"][selected]) .ui5-radio-svg-inner {
 	fill: var(--_ui5_radiobutton_selected_error_fill);
 }
-:host([value-state="Error"]) .ui5-radio-root .ui5-radio-svg-outer,
+:host([value-state="Error"]) .ui5-radio-svg-outer,
 :host([value-state="Error"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable:hover .ui5-radio-svg-outer {
-	stroke: var(--sapUiFieldInvalidColor);
-	fill: var(--sapUiFieldInvalidBackground);
+	stroke: var(--sapField_InvalidColor);
+	fill: var(--sapField_InvalidBackground);
 }
 
 /* Warning state */
-:host([value-state="Warning"][selected]) .ui5-radio-root .ui5-radio-svg-inner {
+:host([value-state="Warning"][selected]) .ui5-radio-svg-inner {
 	fill: var(--_ui5_radiobutton_selected_warning_fill);
 }
-:host([value-state="Warning"]) .ui5-radio-root .ui5-radio-svg-outer,
+:host([value-state="Warning"]) .ui5-radio-svg-outer,
 :host([value-state="Warning"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable:hover .ui5-radio-svg-outer {
-	stroke: var(--sapUiFieldWarningColor);
-	fill: var(--sapUiFieldWarningBackground);
+	stroke: var(--sapField_WarningColor);
+	fill: var(--sapField_WarningBackground);
 }
 
 :host([value-state="Error"]) .ui5-radio-root,
-:host([value-state="Warning"]) .ui5-radio-root {
+:host([value-state="Warning"]) .ui5-radio-root,
+:host([value-state="Information"]) .ui5-radio-root {
 	stroke-dasharray: var(--_ui5_radiobutton_warning_error_border_dash);
 }
 
 .ui5-radio-root {
+	height: var(--_ui5_rb_height);
 	position: relative;
 	display: flex;
 	flex-wrap: nowrap;
@@ -93,12 +106,15 @@
 
 /* Inner */
 .ui5-radio-inner {
-	width: 2.75rem;
-	height: 2.75rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: var(--_ui5_rb_inner_size);
+	height: var(--_ui5_rb_inner_size);
 	font-size: 1rem; /* override font size of the message dialog */
 	pointer-events: none;
 	vertical-align: top;
-	display: inline-block;
 }
 
 .ui5-radio-inner:focus {
@@ -106,18 +122,22 @@
 }
 
 .ui5-radio-inner input {
-	margin: 0; /* FF puts margin */
+	-webkit-appearance: none;
 	visibility: hidden;
 	width: 0;
+	left: 0;
+	position: absolute;
+	font-size: inherit;
+	margin: 0; /* FF puts margin */
 }
 
 /* Label */
-ui5-label.labelInRadioButton {
-	width: calc(100% - 2.75rem);
+[ui5-label].ui5-radio-label {
+	display: flex;
+	align-items: center;
+	width: var(--_ui5_rb_label_width);
 	padding-right: 1px;
 	vertical-align: top;
-	height: 2.75rem;
-	line-height: 2.75rem;
 	cursor: default;
 	max-width: 100%;
 	text-overflow: ellipsis;
@@ -125,70 +145,45 @@ ui5-label.labelInRadioButton {
 	pointer-events: none;
 }
 
+:host([wrap][text]) .ui5-radio-root {
+	height: auto;
+}
+
+:host([wrap][text]) [ui5-label].ui5-radio-label {
+	padding: var(--_ui5_rb_label_side_padding) 0;
+	word-break: break-all;
+}
+
 /* SVG */
 .ui5-radio-svg {
-	height: 2.75rem;
-	width: 2.75rem;
+	height: var(--_ui5_rb_svg_size);
+	width: var(--_ui5_rb_svg_size);
+	overflow: visible;
 	pointer-events: none;
 }
 
-.ui5-radio-svg .ui5-radio-svg-outer {
+.ui5-radio-svg-outer {
+	fill: var(--sapField_Background);
 	stroke: currentColor;
+	stroke-width: 1;
 }
 
-.ui5-radio-svg .ui5-radio-svg-inner {
+.ui5-radio-svg-inner {
 	fill: none;
 }
 
-/* Compact size */
-:host([data-ui5-compact-size]) .ui5-radio-root {
-	height : 2rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-radio-root:focus:before {
-	top: .375rem;
-	bottom: .375rem;
-	left: .375rem;
-	right: .325rem;
-}
-
-:host([data-ui5-compact-size][text]) .ui5-radio-root:focus:before {
-	right: 0;
-}
-
-:host([data-ui5-compact-size]) .ui5-radio-root .ui5-radio-inner {
-	width: 2rem;
-	height: 2rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-:host([data-ui5-compact-size]) .ui5-radio-root .ui5-radio-inner .ui5-radio-svg {
-	height: 2rem;
-	width: 2rem;
-	line-height: 2rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-radio-root ui5-label.labelInRadioButton {
-	line-height: 2rem;
-	height: 2rem;
-	width: calc(100% - 2rem + 1px);
+.ui5-radio-svg-outer,
+.ui5-radio-svg-inner {
+	flex-shrink: 0;
 }
 
 /* RTL */
 :host([text]) [dir="rtl"].ui5-radio-root:focus:before {
 	left: 0;
-	right: 0.5rem;
-}
-
-/* RTL in Compact */
-:host([data-ui5-compact-size][text]) [dir="rtl"].ui5-radio-root:focus:before {
-	left: 0;
-	right: 0.375rem;
+	right: var(--_ui5_rb_rtl_focus_right);
 }
 
 /* ListItem Context */
 :host(.ui5-li-singlesel-radiobtn) .ui5-radio-root .ui5-radio-inner .ui5-radio-svg-outer {
-	fill: var(--sapUiListBackground);
+	fill: var(--sapList_Background);
 }

@@ -1,0 +1,80 @@
+<section
+    class="ui5-carousel-root"
+    tabindex="0"
+    role="listbox"
+    aria-activedescendant="{{ariaActiveDescendant}}"
+    @keydown={{_onkeydown}}
+>
+    <div class="ui5-carousel-viewport {{classes.viewport}}">
+        <div class="{{classes.content}}" style="{{styles.content}}">
+            {{#each items}}
+                 <div id="{{id}}"
+                    class="ui5-carousel-item {{classes}}"
+                    style="width: {{this.width}}px;"
+                    role="option"
+                    aria-posinset="{{posinset}}"
+                    aria-setsize="{{setsize}}"
+                >
+                    <slot name="{{this.item._individualSlot}}" tabindex="{{this.tabIndex}}"></slot>
+                </div>
+            {{/each}}
+            </div>
+        </div>
+
+        {{#if arrows.content}}
+            <div class="ui5-carousel-navigation-arrows">
+                {{> arrow-back}}
+                {{> arrow-forward}}
+            </div>
+        {{/if}}
+
+        {{#if showNavigationArrows}}
+            <div class="{{classes.navigation}}">
+                {{#if arrows.navigation}}
+                    {{> arrow-back}}
+                {{/if}}
+
+                <div class="ui5-carousel-navigation">
+                    {{#if isPageTypeDots}}
+                        {{#each dots}}
+                            <div
+                                role="img"
+                                aria-label="{{ariaLabel}}"
+                                ?active="{{active}}"
+                                class="ui5-carousel-navigation-dot"
+                            ></div>
+                        {{/each}}
+                    {{else}}
+                        <ui5-label>{{selectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pagesCount}}</ui5-label>
+                    {{/if}}
+                </div>
+
+                {{#if arrows.navigation}}
+                    {{> arrow-forward}}
+                {{/if}}
+            </div>
+        {{/if}}
+    </div>
+</section>
+
+{{#*inline "arrow-back"}}
+	<ui5-button
+        arrow-back
+        title="{{previousPageText}}"
+        class="ui5-carousel-navigation-button {{classes.navPrevButton}}"
+        icon="slim-arrow-left"
+        tabindex="-1"
+        @click={{navigateLeft}}
+    ></ui5-button>
+{{/inline}}
+
+{{#*inline "arrow-forward"}}
+    <ui5-button
+        arrow-forward
+        title="{{nextPageText}}"
+        class="ui5-carousel-navigation-button {{classes.navNextButton}}"
+        icon="slim-arrow-right"
+        tabindex="-1"
+        @click={{navigateRight}}
+    ></ui5-button>
+{{/inline}}

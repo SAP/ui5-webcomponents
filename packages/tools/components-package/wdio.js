@@ -153,43 +153,6 @@ exports.config = {
 	 * @param {Array.<String>} specs List of spec file paths that are to be run
 	 */
 	before: function (capabilities, specs) {
-		browser.addCommand("findElementDeep", function (selector) {
-			const selectors = selector.split(">>>");
-
-			for (var i = 0; i < selectors.length; i++) {
-				if (i === 0) {
-					curElement = browser.$(selectors[i]);
-					continue;
-				}
-
-				// wait for the shadowDom to be filled before executing the selector
-				browser.executeAsync(function (elem, done) {
-					elem._waitForDomRef().then(done);
-				}, curElement);
-
-				// find the next element from the selector
-				curElement = curElement.$(new Function (`
-                    return this.shadowRoot.querySelector("${selectors[i]}");
-                `));
-			}
-
-			return curElement;
-
-		});
-
-		browser.addCommand("findElementDeep", function (selector) {
-			const selectors = selector.split(">>>");
-			let curElement = this;
-
-			for (var i = 0; i < selectors.length; i++) {
-				curElement = curElement.$(new Function (`
-                    return this.shadowRoot.querySelector("${selectors[i]}");
-                `));
-			}
-
-			return curElement;
-		}, this);
-
 		browser.addCommand("isFocusedDeep", function () {
 			return browser.execute(function (elem) {
 				let activeElement = document.activeElement;
@@ -217,19 +180,58 @@ exports.config = {
 			}, this, attribute, value);
 		}, true);
 
+		browser.addCommand("removeAttribute", function(attribute) {
+			return browser.execute((elem, attribute) => {
+				return elem.removeAttribute(attribute);
+			}, this, attribute);
+		}, true);
+
 		browser.addCommand("hasClass", function(className) {
 			return browser.execute((elem, className) => {
 				return elem.classList.contains(className);
 			}, this, className);
 		}, true);
+
+		browser.addCommand("getStaticAreaItemClassName", function(selector) {
+			return browser.execute(async (selector) => {
+				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
+				return staticAreaItem.host.classList[0];
+			}, selector);
+		}, false);
 	},
 	/**
 	 * Runs before a WebdriverIO command gets executed.
 	 * @param {String} commandName hook command name
 	 * @param {Array} args arguments that command would receive
 	 */
-	// beforeCommand: function (commandName, args) {
-	// },
+	beforeCommand: function (commandName, args) {
+		const waitFor = [
+			"$",
+			"$$",
+			"getAttribute",
+			"getCSSProperty",
+			"getHTML",
+			"getProperty",
+			"getSize",
+			"getStaticAreaItemClassName", // custom
+			"getText",
+			"getValue",
+			"hasClass", // custom
+			"isDisplayed",
+			"isDisplayedInViewport",
+			"isEnabled",
+			"isExisting",
+			"isFocused",
+			"isFocusedDeep", // custom
+			"shadow$",
+			"shadow$$",
+		];
+		if (waitFor.includes(commandName)) {
+			browser.executeAsync(function (done) {
+				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
+			});
+		}
+	},
 
 	/**
 	 * Hook that gets executed before the suite starts
@@ -276,12 +278,33 @@ exports.config = {
 	 * @param {Object} error error object if any
 	 */
 	afterCommand: function (commandName, args, result, error) {
-		const waitFor = ["$", "$$", "shadow$", "click", "performActions", "elementClick", "keys", "sendKeys", "findElement", "elementClear", "elementSendKeys", "setValue", "addValue", "getHTML", "getProperty", "setAttribute", "getElementProperty"];
+
+		// url -> set configuration first
+		if (commandName === "url" && !args[0].includes("do-not-change-configuration")) {
+			browser.execute(function() {
+				window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
+			});
+		}
+
+		const waitFor = [
+			"addValue",
+			"clearValue",
+			"click",
+			"doubleClick",
+			"dragAndDrop",
+			"keys",
+			"pause",
+			"removeAttribute", // custom
+			"setAttribute", // custom
+			"setProperty", // custom
+			"setValue",
+			"setWindowSize",
+			"touchAction",
+			"url"
+		];
 		if (waitFor.includes(commandName)) {
 			browser.executeAsync(function (done) {
-				// run all the tests in no conflict mode
-				window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
-				window.RenderScheduler.whenFinished().then(done);
+				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
 			});
 		}
 	},

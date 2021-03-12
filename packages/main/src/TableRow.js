@@ -10,13 +10,15 @@ import styles from "./generated/themes/TableRow.css.js";
  */
 const metadata = {
 	tag: "ui5-table-row",
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the <code>ui5-table-row</code>.
-		 * <br><b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.ITableCell[]}
+		 * @slot cells
 		 * @public
 		 */
 		"default": {
@@ -34,11 +36,14 @@ const metadata = {
 			type: String,
 			defaultValue: "-1",
 		},
+		_busy: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
+		"row-click": {},
 		_focused: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -53,14 +58,10 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.TableRow
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-row
+ * @implements sap.ui.webcomponents.main.ITableRow
  * @public
  */
 class TableRow extends UI5Element {
-	constructor() {
-		super();
-		this.fnOnCellClick = this._oncellclick.bind(this);
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -85,7 +86,7 @@ class TableRow extends UI5Element {
 		this.fireEvent("_focused", event);
 	}
 
-	_oncellclick(event) {
+	_onrowclick(event) {
 		if (this._getActiveElementTagName() === "body") {
 			// If the user clickes on non-focusable element within the ui5-table-cell,
 			// the focus goes to the body, se we have to bring it back to the row.
@@ -93,13 +94,29 @@ class TableRow extends UI5Element {
 			// the focus remains on that element.
 			this._onfocusin(event, true /* force row focus */);
 		}
+
+		this.fireEvent("row-click", { row: this });
 	}
 
 	_getActiveElementTagName() {
 		return document.activeElement.localName.toLocaleLowerCase();
 	}
 
+	get shouldPopin() {
+		return this._columnsInfo.filter(el => {
+			return el.demandPopin;
+		}).length;
+	}
+
+	get allColumnsPoppedIn() {
+		return this._columnsInfo.every(el => el.demandPopin && !el.visible);
+	}
+
 	onBeforeRendering() {
+		if (!this.shouldPopin) {
+			return;
+		}
+
 		this.visibleCells = [];
 		this.popinCells = [];
 
@@ -107,6 +124,7 @@ class TableRow extends UI5Element {
 			return;
 		}
 
+		const allColumnsPoppedInClass = this.allColumnsPoppedIn ? "all-columns-popped-in" : "";
 		this._columnsInfo.forEach((info, index) => {
 			const cell = this.cells[index];
 
@@ -119,9 +137,11 @@ class TableRow extends UI5Element {
 				cell.firstInRow = (index === 0);
 				cell.popined = false;
 			} else if (info.demandPopin) {
+				const popinHeaderClass = this.popinCells.length === 0 ? "popin-header" : "";
 				this.popinCells.push({
 					cell,
 					popinText: info.popinText,
+					classes: `ui5-table-popin-row ${allColumnsPoppedInClass} ${popinHeaderClass}`,
 				});
 
 				cell.popined = true;
@@ -137,23 +157,34 @@ class TableRow extends UI5Element {
 		}
 	}
 
-	get styles() {
-		const gridTemplateColumns = this._columnsInfo.reduce((acc, info) => {
-			return info.visible ? `${acc}minmax(0, ${info.width || "1fr"}) ` : acc;
-		}, "");
-
-		return {
-			main: {
-				"grid-template-columns": gridTemplateColumns,
-			},
-			popin: {
-				"grid-column-end": 6,
-			},
-		};
-	}
-
 	get visibleCellsCount() {
 		return this.visibleCells.length;
+	}
+
+	get ariaLabelText() {
+		return this.cells.map((cell, index) => {
+			const columText = this.getColumnTextByIdx(index);
+			const cellText = this.getCellText(cell);
+			return `${columText} ${cellText}`;
+		}).join(" ");
+	}
+
+	getCellText(cell) {
+		return this.getNormilzedTextContent(cell.textContent);
+	}
+
+	getColumnTextByIdx(index) {
+		const columnInfo = this._columnsInfo[index];
+
+		if (!columnInfo) {
+			return "";
+		}
+
+		return this.getNormilzedTextContent(columnInfo.text);
+	}
+
+	getNormilzedTextContent(textContent) {
+		return textContent.replace(/[\n\r\t]/g, "").trim();
 	}
 }
 

@@ -3,9 +3,15 @@
 
 <head>
 	<title>ui5 webcomponents</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
+
+	<script data-ui5-config type="application/json">
+		{
+			"assetsPath": ""
+		}
+	</script>
 
 	<link rel="stylesheet" type="text/css" href="./kitchen-styles.css">
 
@@ -13,28 +19,39 @@
 		*:not(:defined) {
 			visibility: hidden;
 		}
+		.body-bg {
+			background-color: var(--sapBackgroundColor);
+		}
 	</style>
 
-	<script id="sap-ui-config" type="application/json">
-		{
-			"language": "EN"
-		}
-	</script>
+    <!-- CUSTOM THEME: my_custom_theme
+    <link rel="stylesheet" type="text/css" href="./css/css_variables.css">
+    -->
+
+    <!-- OPENUI5 WITH CSS VARIABLES
+    <script id='sap-ui-bootstrap'
+            src='https://openui5.hana.ondemand.com/resources/sap-ui-core.js'
+            data-sap-ui-theme='sap_belize_hcb'
+            data-sap-ui-libs='sap.m'
+            data-sap-ui-preload="async"
+            data-sap-ui-xx-cssVariables="true"
+    ></script>
+    -->
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
-	<!-- <script>delete Document.prototype.adoptedStyleSheets;</script> -->
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
 </head>
 
-<body>
+<body class="body-bg">
 	<div id="nav" class="navbar">
 		<ui5-togglebutton id="menu-btn" icon="menu" design="Transparent"></ui5-togglebutton>
 		<ui5-title level="H5">UI5 webcomponents</ui5-title>
 		<ui5-togglebutton id="btnCompact">Compact</ui5-togglebutton>
 		<ui5-togglebutton id="btnRTL">RTL</ui5-togglebutton>
-		<ui5-togglebutton id="btnTheme">HCB/FIORI</ui5-togglebutton>
+		<ui5-togglebutton id="btnTheme">HCB</ui5-togglebutton>
 		<ui5-togglebutton id="btnLightDark">Dark/Light</ui5-togglebutton>
 	</div>
 
@@ -43,7 +60,7 @@
 			<ui5-li id="arg1" icon="developer-settings">ui5-button</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-card</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-checkbox</ui5-li>
-			<ui5-li id="ch1" icon="developer-settings">ui5-datepicker</ui5-li>
+			<ui5-li id="ch1" icon="developer-settings">ui5-date-picker</ui5-li>
 			<ui5-li id="arg1" icon="developer-settings" selected>ui5-dialog</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-icon</ui5-li>
 			<ui5-li id="arg1" icon="developer-settings">ui5-label</ui5-li>
@@ -316,13 +333,23 @@
 		</section>
 
 		<section style="display: flex;flex-direction: row; justify-content: space-around">
-			<ui5-datepicker style="width:40%" id="myDatepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-datepicker>
-			<ui5-datepicker style="width:40%" id="myDatepicker"></ui5-datepicker>
+			<ui5-date-picker style="width:40%" id="myDatepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-date-picker>
+			<ui5-date-picker style="width:40%" id="myDatepicker1"></ui5-date-picker>
+		</section>
+
+		<section style="display: flex;flex-direction: row; justify-content: space-around">
+			<ui5-datetime-picker style="width:40%" id="myDateTimepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-datetime-picker>
+			<ui5-datetime-picker style="width:40%" id="myDateTimepicker1"></ui5-datetime-picker>
+		</section>
+
+		<section style="display: flex;flex-direction: row; justify-content: space-around">
+			<ui5-duration-picker value="05:10:02" seconds-step="5" id="duration-picker6"></ui5-duration-picker>
+			<ui5-time-picker></ui5-time-picker>
 		</section>
 
 		<section class="row">
 			<ui5-tabcontainer style="width:80%" show-overflow selected-key="item1">
-				<ui5-tab key="item1" text="Products" icon="product" icon-color="Negative">
+				<ui5-tab key="item1" text="Products" icon="product" semantic-color="Negative">
 					<ui5-togglebutton pressed design="Positive">Cucumber</ui5-togglebutton>
 					<ui5-button>Banana</ui5-button>
 					<ui5-togglebutton pressed design="Negative">Tomato</ui5-togglebutton>
@@ -330,11 +357,11 @@
 
 				<ui5-tab-separator></ui5-tab-separator>
 
-				<ui5-tab key="item2" text="Drinks" icon="pharmacy" icon-color="Critical">
+				<ui5-tab key="item2" text="Drinks" icon="pharmacy" semantic-color="Critical">
 					<ui5-button>Wine</ui5-button>
 				</ui5-tab>
 
-				<ui5-tab key="item3" text="Music" icon="widgets" icon-color="Positive">
+				<ui5-tab key="item3" text="Music" icon="widgets" semantic-color="Positive">
 					<ui5-button>Pop</ui5-button>
 				</ui5-tab>
 
@@ -342,7 +369,7 @@
 					<ui5-button>Dress</ui5-button>
 				</ui5-tab>
 
-				<ui5-tab key="item5" text="Team" icon="group"  icon-color="Neutral">
+				<ui5-tab key="item5" text="Team" icon="group"  semantic-color="Neutral">
 					<ui5-button>Gravity</ui5-button>
 				</ui5-tab>
 			</ui5-tabcontainer>
@@ -370,6 +397,51 @@
 						<ui5-button>Gravity</ui5-button>
 					</ui5-tab>
 				</ui5-tabcontainer>
+
+
+				<ui5-tree id="tree" no-data-text="No data" mode="MultiSelect" style="margin-top: 5rem;">
+					<div slot="header" style="margin: .25rem; display: flex; align-items: center; justify-content: space-around;">
+						<ui5-title>My tree</ui5-title>
+						<div class="spacer"></div>
+						<ui5-select id="modeSelect">
+							<ui5-option>None</ui5-option>
+							<ui5-option>SingleSelect</ui5-option>
+							<ui5-option>SingleSelectBegin</ui5-option>
+							<ui5-option>SingleSelectEnd</ui5-option>
+							<ui5-option selected>MultiSelect</ui5-option>
+
+							<ui5-option>Delete</ui5-option>
+						</ui5-select>
+						<ui5-button id="expandLevel1" icon="expand">Expand Level 1</ui5-button>
+						<ui5-button id="expandLevel2" icon="expand">Expand Level 2</ui5-button>
+						<ui5-button id="expandAll" icon="expand-all">Expand All</ui5-button>
+						<ui5-button id="collapseAll" icon="collapse-all">Collapse All</ui5-button>
+					</div>
+
+					<ui5-tree-item expanded text="Tree 1" icon="paste" selected>
+						<ui5-tree-item expanded text="Tree 1.1" selected>
+							<ui5-tree-item text="Tree 1.1.1"></ui5-tree-item>
+							<ui5-tree-item text="Tree 1.1.2"></ui5-tree-item>
+						</ui5-tree-item>
+					</ui5-tree-item>
+
+					<ui5-tree-item text="Tree 2" icon="copy">
+						<ui5-tree-item text="Tree 2.1">
+							<ui5-tree-item text="Tree 2.1.1"></ui5-tree-item>
+							<ui5-tree-item text="Tree 2.1.2">
+								<ui5-tree-item text="Tree 2.1.2.1"></ui5-tree-item>
+								<ui5-tree-item text="Tree 2.1.2.2"></ui5-tree-item>
+								<ui5-tree-item text="Tree 2.1.2.3"></ui5-tree-item>
+								<ui5-tree-item text="Tree 2.1.2.5"></ui5-tree-item>
+							</ui5-tree-item>
+						</ui5-tree-item>
+						<ui5-tree-item text="Tree 2.2"></ui5-tree-item>
+					</ui5-tree-item>
+
+					<ui5-tree-item expanded text="Tree 3 (no icon)">
+					</ui5-tree-item>
+
+				</ui5-tree>
 		</section>
 
 		<section class="row">

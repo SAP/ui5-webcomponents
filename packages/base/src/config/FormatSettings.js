@@ -1,8 +1,12 @@
 import { getFormatSettings } from "../InitialConfiguration.js";
 
-const formatSettings = getFormatSettings();
+let formatSettings;
 
 const getFirstDayOfWeek = () => {
+	if (formatSettings === undefined) {
+		formatSettings = getFormatSettings();
+	}
+
 	return formatSettings.firstDayOfWeek;
 };
 

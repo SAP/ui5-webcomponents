@@ -29,7 +29,9 @@
  *
  *   appenddocs
  *
- *   customtag
+ *   tagname
+ *
+ *   allowPreventDefault
  *
  * It furthermore listens to the following JSDoc3 events to implement additional functionality
  *
@@ -2060,9 +2062,11 @@ exports.defineTags = function(dictionary) {
 	});
 
 	dictionary.defineTag('slot', {
-		mustNotHaveValue: true,
 		onTagged: function(doclet, tag) {
 			doclet.slot = true;
+			if (tag.value) {
+				doclet.propertyName = tag.value;
+			}
 		}
 	});
 
@@ -2073,10 +2077,17 @@ exports.defineTags = function(dictionary) {
 		}
 	});
 
-	dictionary.defineTag('customtag', {
+	dictionary.defineTag('tagname', {
 		mustHaveValue: true,
 		onTagged: function(doclet, tag) {
-			doclet.customtag = tag.value;
+			doclet.tagname = tag.value;
+		}
+	});
+
+	dictionary.defineTag('allowPreventDefault', {
+		mustHaveValue: false,
+		onTagged: function(doclet, tag) {
+			doclet.allowPreventDefault = true;
 		}
 	});
 };

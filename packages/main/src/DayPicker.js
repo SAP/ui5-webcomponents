@@ -1,20 +1,40 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
-import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
-import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import {
+	isSpace,
+	isSpaceShift,
+	isEnter,
+	isEnterShift,
+	isUp,
+	isDown,
+	isLeft,
+	isRight,
+	isHome,
+	isEnd,
+	isHomeCtrl,
+	isEndCtrl,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageUpShiftCtrl,
+	isPageDownShift,
+	isPageDownShiftCtrl,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
-import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
-import { calculateWeekNumber } from "@ui5/webcomponents-base/dist/dates/CalendarUtils.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
-import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
+import CalendarPart from "./CalendarPart.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
-// Styles
+import {
+	DAY_PICKER_WEEK_NUMBER_TEXT,
+	DAY_PICKER_NON_WORKING_DAY,
+	DAY_PICKER_TODAY,
+} from "./generated/i18n/i18n-defaults.js";
+
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
 
 /**
@@ -24,67 +44,100 @@ const metadata = {
 	tag: "ui5-daypicker",
 	properties: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
-		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
-		 * @type {number}
-		 * @public
-		 */
-		timestamp: {
-			type: Integer,
-		},
-
-		/**
-		 * Sets a calendar type used for display.
-		 * If not set, the calendar type of the global configuration is used.
-		 * @type {string}
-		 * @public
-		 */
-		primaryCalendarType: {
-			type: CalendarType,
-		},
-
-		/**
-		 * Sets the selected dates as UTC timestamps.
+		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 		 * @type {Array}
 		 * @public
 		 */
 		selectedDates: {
 			type: Integer,
 			multiple: true,
+			compareValues: true,
 		},
 
+		/**
+		 * Defines the type of selection used in the day picker component.
+		 * Accepted property values are:<br>
+		 * <ul>
+		 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
+		 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
+		 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
+		 * </ul>
+		 * @type {CalendarSelectionMode}
+		 * @defaultvalue "Single"
+		 * @public
+		 */
+		selectionMode: {
+			type: CalendarSelectionMode,
+			defaultValue: CalendarSelectionMode.Single,
+		},
+
+		/**
+		 * Defines the visibility of the week numbers column.
+		 * <br><br>
+		 *
+		 * <b>Note:<b> For calendars other than Gregorian,
+		 * the week numbers are not displayed regardless of what is set.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.8
+		 */
+		hideWeekNumbers: {
+			type: Boolean,
+		},
+
+		/**
+		 * @type {Object}
+		 * @private
+		 */
 		_weeks: {
 			type: Object,
 			multiple: true,
 		},
 
-		_weekNumbers: {
+		_dayNames: {
 			type: Object,
 			multiple: true,
 		},
+
+		/**
+		 * When set, the component will skip all work in onBeforeRendering and will not automatically set the focus on itself
+		 * @type {boolean}
+		 * @private
+		 */
 		_hidden: {
 			type: Boolean,
 			noAttribute: true,
 		},
+
+		/**
+		 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
+		 * @private
+		 */
+		_secondTimestamp: {
+			type: String,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
-		 * Fired when the user selects a new Date on the Web Component.
+		 * Fired when the selected date(s) change
 		 * @public
 		 * @event
 		 */
-		selectionChange: {},
+		change: {},
 		/**
-		 * Fired when month, year has changed due to item navigation.
+		 * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
 		 * @public
 		 * @event
 		 */
 		navigate: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
-const MAX_YEAR = 9999;
-const MIN_YEAR = 1;
+const isBetween = (x, num1, num2) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
+
+const DAYS_IN_WEEK = 7;
 
 /**
  * @class
@@ -94,17 +147,13 @@ const MIN_YEAR = 1;
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DayPicker
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends CalendarPart
  * @tagname ui5-daypicker
  * @public
  */
-class DayPicker extends UI5Element {
+class DayPicker extends CalendarPart {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 
 	static get template() {
@@ -115,269 +164,504 @@ class DayPicker extends UI5Element {
 		return dayPickerCSS;
 	}
 
-	constructor() {
-		super();
-		this._oLocale = getFormatLocale();
-		this._oLocaleData = new LocaleData(this._oLocale);
-
-		this._itemNav = new ItemNavigation(this, { rowSize: 7 });
-		this._itemNav.getItemsCallback = function getItemsCallback() {
-			return [].concat(...this._weeks);
-		}.bind(this);
-
-		this._itemNav.attachEvent(
-			ItemNavigation.BORDER_REACH,
-			this._handleItemNavigationBorderReach.bind(this)
-		);
+	onBeforeRendering() {
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		this._buildWeeks(localeData);
+		this._buildDayNames(localeData);
 	}
 
-	onBeforeRendering() {
-		let oCalDate,
-			day,
-			timestamp,
-			lastWeekNumber = -1,
-			isDaySelected = false,
-			todayIndex = 0;
-
-		const _aVisibleDays = this._getVisibleDays(this._calendarDate);
+	/**
+	 * Builds the _weeks object that represents the month
+	 * @param localeData
+	 * @private
+	 */
+	_buildWeeks(localeData) {
+		if (this._hidden) {
+			return; // Optimization to not do any work unless the current picker
+		}
 
 		this._weeks = [];
+
+		const firstDayOfWeek = this._getFirstDayOfWeek();
+		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
+		const nonWorkingDayLabel = this.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
+		const todayLabel = this.i18nBundle.getText(DAY_PICKER_TODAY);
+		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
+		const todayDate = CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType); // current day date - calculate once
+		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
+		const minDate = this._minDate; // store the _minDate (expensive getter)
+		const maxDate = this._maxDate; // store the _maxDate (expensive getter)
+
 		let week = [];
-		this._weekNumbers = [];
-		let weekday;
+		for (let i = 0; i < DAYS_IN_WEEK * 6; i++) { // always show 6 weeks total, 42 days to avoid jumping
+			const timestamp = tempDate.valueOf() / 1000; // no need to round because CalendarDate does it
 
-		/* eslint-disable no-loop-func */
-		for (let i = 0; i < _aVisibleDays.length; i++) {
-			oCalDate = _aVisibleDays[i];
-			timestamp = oCalDate.valueOf() / 1000; // no need to round because CalendarDate does it
-
-			// day of the week
-			weekday = oCalDate.getDay() - this._getFirstDayOfWeek();
-			if (weekday < 0) {
-				weekday += 7;
+			let dayOfTheWeek = tempDate.getDay() - firstDayOfWeek;
+			if (dayOfTheWeek < 0) {
+				dayOfTheWeek += DAYS_IN_WEEK;
 			}
-			day = {
+
+			const isFocused = tempDate.getMonth() === calendarDate.getMonth() && tempDate.getDate() === calendarDate.getDate();
+			const isSelected = this._isDaySelected(timestamp);
+			const isSelectedBetween = this._isDayInsideSelectionRange(timestamp);
+			const isOtherMonth = tempDate.getMonth() !== calendarDate.getMonth();
+			const isWeekend = this._isWeekend(tempDate);
+			const isDisabled = tempDate.valueOf() < minDate.valueOf() || tempDate.valueOf() > maxDate.valueOf();
+			const isToday = tempDate.isSame(todayDate);
+			const isFirstDayOfWeek = tempDate.getDay() === firstDayOfWeek;
+
+			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
+			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
+
+			const day = {
 				timestamp: timestamp.toString(),
-				selected: this._selectedDates.some(d => {
-					return d === timestamp;
-				}),
-				iDay: oCalDate.getDate(),
-				_index: i.toString(),
-				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
+				focusRef: isFocused,
+				_tabIndex: isFocused ? "0" : "-1",
+				selected: isSelected,
+				iDay: tempDate.getDate(),
+				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
+				ariaLabel: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`,
+				ariaSelected: isSelected ? "true" : "false",
+				ariaDisabled: isOtherMonth ? "true" : undefined,
+				disabled: isDisabled,
 			};
 
-			const weekNumber = calculateWeekNumber(oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
-
-			if (lastWeekNumber !== weekNumber) {
-				this._weekNumbers.push(weekNumber);
-
-				lastWeekNumber = weekNumber;
-			}
-
-			const isToday = (oCalDate.getDate() === this._currentCalendarDate.getDate())
-				&& (oCalDate.getMonth() === this._currentCalendarDate.getMonth())
-				&& (oCalDate.getYear() === this._currentCalendarDate.getYear());
-
-			week.push(day);
-
-			if (oCalDate.getDay() === this._getFirstDayOfWeek()) {
+			if (isFirstDayOfWeek) {
 				day.classes += " ui5-dp-firstday";
 			}
 
-			if (day.selected) {
+			if (isSelected) {
 				day.classes += " ui5-dp-item--selected";
-				isDaySelected = true;
+			}
+
+			if (isSelectedBetween) {
+				day.classes += " ui5-dp-item--selected-between";
 			}
 
 			if (isToday) {
 				day.classes += " ui5-dp-item--now";
-				todayIndex = i;
 			}
 
-			if (oCalDate.getMonth() !== this._month) {
+			if (isOtherMonth) {
 				day.classes += " ui5-dp-item--othermonth";
 			}
 
-			day.id = `${this._id}-${timestamp}`;
-
-			if (this._isWeekend(oCalDate)) {
+			if (isWeekend) {
 				day.classes += " ui5-dp-item--weeekend";
 			}
+			if (isDisabled) {
+				day.classes += " ui5-dp-item--disabled";
+			}
 
-			if (day.classes.indexOf("ui5-dp-wday6") !== -1
-				|| _aVisibleDays.length - 1 === i) {
+			week.push(day);
+
+			if (dayOfTheWeek === DAYS_IN_WEEK - 1) { // 0-indexed so 6 is the last day of the week
+				week.unshift({
+					weekNum: calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData),
+					isHidden: this.shouldHideWeekNumbers,
+				});
+			}
+
+			if (week.length === DAYS_IN_WEEK + 1) { // 7 entries for each day + 1 for the week numbers
 				this._weeks.push(week);
 				week = [];
 			}
+
+			tempDate.setDate(tempDate.getDate() + 1);
+		}
+	}
+
+	/**
+	 * Builds the dayNames object (header of the month)
+	 * @param localeData
+	 * @private
+	 */
+	_buildDayNames(localeData) {
+		if (this._hidden) {
+			return; // Optimization to not do any work unless the current picker
 		}
 
-		while (this._weeks.length < 6) {
-			this._weeks.push([]);
-		}
-		/* eslint-enable no-loop-func */
+		let dayOfTheWeek;
 
-		if (!isDaySelected && todayIndex && this._itemNav.current === 0) {
-			this._itemNav.current = todayIndex;
-		}
-
-		const aDayNamesWide = this._oLocaleData.getDays("wide", this._primaryCalendarType);
-		const aDayNamesAbbreviated = this._oLocaleData.getDays("abbreviated", this._primaryCalendarType);
-		const aUltraShortNames = aDayNamesAbbreviated.map(n => n);
+		const aDayNamesWide = localeData.getDays("wide", this._primaryCalendarType);
+		const aDayNamesAbbreviated = localeData.getDays("abbreviated", this._primaryCalendarType);
 		let dayName;
 
 		this._dayNames = [];
-		for (let i = 0; i < 7; i++) {
-			weekday = i + this._getFirstDayOfWeek();
-			if (weekday > 6) {
-				weekday -= 7;
+		this._dayNames.push({
+			classes: "ui5-dp-dayname",
+			name: this.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT),
+		});
+		for (let i = 0; i < DAYS_IN_WEEK; i++) {
+			dayOfTheWeek = i + this._getFirstDayOfWeek();
+			if (dayOfTheWeek > DAYS_IN_WEEK - 1) { // 0-indexed so index of 6 is the maximum allowed
+				dayOfTheWeek -= DAYS_IN_WEEK;
 			}
 			dayName = {
-				id: `${this._id}-WH${i.toString()}`,
-				name: aDayNamesWide[weekday],
-				ultraShortName: aUltraShortNames[weekday],
+				name: aDayNamesWide[dayOfTheWeek],
+				ultraShortName: aDayNamesAbbreviated[dayOfTheWeek],
 				classes: "ui5-dp-dayname",
 			};
 
 			this._dayNames.push(dayName);
 		}
 
-		this._dayNames[0].classes += " ui5-dp-firstday";
+		this._dayNames[1].classes += " ui5-dp-firstday";
 	}
 
-	onmousedown(event) {
-		const target = getShadowDOMTarget(event);
-
-		const dayPressed = this._isDayPressed(target);
-
-		if (dayPressed) {
-			const targetDate = parseInt(target.getAttribute("data-sap-timestamp"));
-
-			// findIndex, give it to item navigation
-			for (let i = 0; i < this._weeks.length; i++) {
-				for (let j = 0; j < this._weeks[i].length; j++) {
-					if (parseInt(this._weeks[i][j].timestamp) === targetDate) {
-						this._itemNav.current = parseInt(target.getAttribute("data-sap-index"));
-
-						this._itemNav.update();
-						break;
-					}
-				}
-			}
-
-			this.targetDate = targetDate;
+	onAfterRendering() {
+		if (this._autoFocus && !this._hidden) {
+			this.focus();
 		}
 	}
 
-	onmouseup(event) {
-		if (this.targetDate) {
-			this._modifySelectionAndNotifySubscribers(this.targetDate, event.ctrlKey);
-			this.targetDate = null;
-		}
+	_onfocusin() {
+		this._autoFocus = true;
 	}
 
-	onkeydown(event) {
-		if (isEnter(event)) {
-			return this._handleEnter(event);
-		}
-
-		if (isSpace(event)) {
-			return this._handleSpace(event);
-		}
-	}
-
-	_handleEnter(event) {
-		const eventTarget = getShadowDOMTarget(event);
-		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-dp-item") > -1) {
-			const targetDate = parseInt(eventTarget.getAttribute("data-sap-timestamp"));
-			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
-		}
-	}
-
-	_handleSpace(event) {
-		const eventTarget = getShadowDOMTarget(event);
-		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-dp-item") > -1) {
-			const targetDate = parseInt(eventTarget.getAttribute("data-sap-timestamp"));
-			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
-		}
-	}
-
-	get showWeekNumbers() {
-		return this.primaryCalendarType === CalendarType.Gregorian;
-	}
-
-	get _timestamp() {
-		return this.timestamp !== undefined ? this.timestamp : Math.floor(new Date().getTime() / 1000);
-	}
-
-	get _localDate() {
-		return new Date(this._timestamp * 1000);
-	}
-
-	get _calendarDate() {
-		return CalendarDate.fromTimestamp(this._localDate.getTime(), this._primaryCalendarType);
-	}
-
-	get _month() {
-		return this._calendarDate.getMonth();
-	}
-
-	get _year() {
-		return this._calendarDate.getYear();
-	}
-
-	get _currentCalendarDate() {
-		return CalendarDate.fromTimestamp(new Date().getTime(), this._primaryCalendarType);
-	}
-
-	get _selectedDates() {
-		return this.selectedDates || [];
-	}
-
-	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
-	}
-
-	_modifySelectionAndNotifySubscribers(sNewDate, bAdd) {
-		if (bAdd) {
-			this.selectedDates = [...this._selectedDates, sNewDate];
-		} else {
-			this.selectedDates = [sNewDate];
+	/**
+	 * Tells if the day is selected (dark blue)
+	 * @param timestamp
+	 * @returns {boolean}
+	 * @private
+	 */
+	_isDaySelected(timestamp) {
+		if (this.selectionMode === CalendarSelectionMode.Single) {
+			return timestamp === this.selectedDates[0];
 		}
 
-		this.fireEvent("selectionChange", { dates: [...this._selectedDates] });
+		// Multiple, Range
+		return this.selectedDates.includes(timestamp);
 	}
 
-	_handleItemNavigationBorderReach(event) {
-		const currentMonth = this._month,
-			currentYear = this._year;
-		let iNewMonth,
-			iNewYear;
-
-		if (event.end) {
-			iNewMonth = currentMonth < 11 ? currentMonth + 1 : 0;
-			iNewYear = currentMonth < 11 ? currentYear : currentYear + 1;
-		} else if (event.start) {
-			iNewMonth = currentMonth > 0 ? currentMonth - 1 : 11;
-			iNewYear = currentMonth > 0 ? currentYear : currentYear - 1;
+	/**
+	 * Tells if the day is inside a selection range (light blue)
+	 * @param timestamp
+	 * @returns {*}
+	 * @private
+	 */
+	_isDayInsideSelectionRange(timestamp) {
+		// No selection at all (or not in range selection mode)
+		if (this.selectionMode !== CalendarSelectionMode.Range || !this.selectedDates.length) {
+			return false;
 		}
 
-		const oNewDate = this._calendarDate;
-		oNewDate.setYear(iNewYear);
-		oNewDate.setMonth(iNewMonth);
+		// Only one date selected - the user is hovering with the mouse or navigating with the keyboard to select the second one
+		if (this.selectedDates.length === 1 && this._secondTimestamp) {
+			return isBetween(timestamp, this.selectedDates[0], this._secondTimestamp);
+		}
 
-		if (oNewDate.getYear() < MIN_YEAR || oNewDate.getYear() > MAX_YEAR) {
+		// Two dates selected - stable range
+		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
+	}
+
+	/**
+	 * Selects/deselects a day
+	 * @param event
+	 * @param isShift true if the user did Click+Shift or Enter+Shift (but not Space+Shift)
+	 * @private
+	 */
+	_selectDate(event, isShift) {
+		const target = event.target;
+
+		if (!this._isDayPressed(target)) {
 			return;
 		}
 
-		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000) });
+		const timestamp = this._getTimestampFromDom(target);
+
+		this._safelySetTimestamp(timestamp);
+		this._updateSecondTimestamp();
+
+		if (this.selectionMode === CalendarSelectionMode.Single) {
+			this.selectedDates = [timestamp];
+		} else if (this.selectionMode === CalendarSelectionMode.Multiple) {
+			if (this.selectedDates.length > 0 && isShift) {
+				this._multipleSelection(timestamp);
+			} else {
+				this._toggleTimestampInSelection(timestamp);
+			}
+		} else {
+			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	: [timestamp];
+		}
+
+		this.fireEvent("change", {
+			timestamp: this.timestamp,
+			dates: this.selectedDates,
+		});
+	}
+
+	/**
+	 * Selects/deselects the whole row (week)
+	 * @param event
+	 * @private
+	 */
+	_selectWeek(event) {
+		this._weeks.forEach(week => {
+			const dayInThisWeek = week.findIndex(item => {
+				const date = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000);
+				return date.getMonth() === this._calendarDate.getMonth() && date.getDate() === this._calendarDate.getDate();
+			}) !== -1;
+			if (dayInThisWeek) { // The current day is in this week
+				const notAllDaysOfThisWeekSelected = week.some(item => item.timestamp && !this.selectedDates.includes(parseInt(item.timestamp)));
+				if (notAllDaysOfThisWeekSelected) { // even if one day is not selected, select the whole week
+					week.filter(item => item.timestamp).forEach(item => {
+						this._addTimestampToSelection(parseInt(item.timestamp));
+					});
+				} else { // only if all days of this week are selected, deselect them
+					week.filter(item => item.timestamp).forEach(item => {
+						this._removeTimestampFromSelection(parseInt(item.timestamp));
+					});
+				}
+			}
+		});
+
+		this.fireEvent("change", {
+			timestamp: this.timestamp,
+			dates: this.selectedDates,
+		});
+	}
+
+	_toggleTimestampInSelection(timestamp) {
+		if (this.selectedDates.includes(timestamp)) {
+			this._removeTimestampFromSelection(timestamp);
+		} else {
+			this._addTimestampToSelection(timestamp);
+		}
+	}
+
+
+	_addTimestampToSelection(timestamp) {
+		if (!this.selectedDates.includes(timestamp)) {
+			this.selectedDates = [...this.selectedDates, timestamp];
+		}
+	}
+
+	_removeTimestampFromSelection(timestamp) {
+		this.selectedDates = this.selectedDates.filter(value => value !== timestamp);
+	}
+
+	/**
+	 * When at least one day is selected and the user pressed shift
+	 * @param timestamp
+	 * @private
+	 */
+	_multipleSelection(timestamp) {
+		const min = Math.min(...this.selectedDates);
+		const max = Math.max(...this.selectedDates);
+		let start;
+		let end;
+		let toggle = false;
+
+		if (timestamp < min) {
+			start = timestamp;
+			end = min;
+		} else if (timestamp >= min && timestamp <= max) { // inside the current range - toggle all between the selected and focused
+			const distanceToMin = Math.abs(timestamp - min);
+			const distanceToMax = Math.abs(timestamp - max);
+
+			if (distanceToMin < distanceToMax) {
+				start = timestamp;
+				end = max;
+			} else {
+				start = min;
+				end = timestamp;
+			}
+			toggle = true;
+		} else {
+			start = max;
+			end = timestamp;
+		}
+
+		const startDate = CalendarDate.fromTimestamp(start * 1000);
+		const endDate = CalendarDate.fromTimestamp(end * 1000);
+
+		while (startDate.valueOf() <= endDate.valueOf()) {
+			this[toggle ? "_toggleTimestampInSelection" : "_addTimestampToSelection"](startDate.valueOf() / 1000);
+			startDate.setDate(startDate.getDate() + 1);
+		}
+	}
+
+
+	/**
+	 * Set the hovered day as the _secondTimestamp
+	 * @param event
+	 * @private
+	 */
+	_onmouseover(event) {
+		const hoveredItem = event.target.closest(".ui5-dp-item");
+		if (hoveredItem && this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+			this._secondTimestamp = this._getTimestampFromDom(hoveredItem);
+		}
+	}
+
+	_onkeydown(event) {
+		let preventDefault = true;
+
+		if (isEnter(event) || isEnterShift(event)) {
+			this._selectDate(event, isEnterShift(event));
+		} else if (isSpace(event) || isSpaceShift(event)) {
+			event.preventDefault();
+		} else if (isLeft(event)) {
+			this._modifyTimestampBy(-1, "day");
+		} else if (isRight(event)) {
+			this._modifyTimestampBy(1, "day");
+		} else if (isUp(event)) {
+			this._modifyTimestampBy(-7, "day");
+		} else if (isDown(event)) {
+			this._modifyTimestampBy(7, "day");
+		} else if (isPageUp(event)) {
+			this._modifyTimestampBy(-1, "month");
+		} else if (isPageDown(event)) {
+			this._modifyTimestampBy(1, "month");
+		} else if (isPageUpShift(event)) {
+			this._modifyTimestampBy(-1, "year");
+		} else if (isPageDownShift(event)) {
+			this._modifyTimestampBy(1, "year");
+		} else if (isPageUpShiftCtrl(event)) {
+			this._modifyTimestampBy(-10, "year");
+		} else if (isPageDownShiftCtrl(event)) {
+			this._modifyTimestampBy(10, "year");
+		} else if (isHome(event) || isEnd(event)) {
+			this._onHomeOrEnd(isHome(event));
+		} else if (isHomeCtrl(event)) {
+			const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			tempDate.setDate(1); // Set the first day of the month
+			this._setTimestamp(tempDate.valueOf() / 1000);
+		} else if (isEndCtrl(event)) {
+			const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+			tempDate.setMonth(tempDate.getMonth() + 1);
+			tempDate.setDate(0); // Set the last day of the month (0th day of next month)
+			this._setTimestamp(tempDate.valueOf() / 1000);
+		} else {
+			preventDefault = false;
+		}
+
+		if (preventDefault) {
+			event.preventDefault();
+		}
+	}
+
+	_onkeyup(event) {
+		// Even if Space+Shift was pressed, ignore the shift unless in Multiple selection
+		if (isSpace(event) || (isSpaceShift(event) && this.selectionMode !== CalendarSelectionMode.Multiple)) {
+			this._selectDate(event, false);
+		} else if (isSpaceShift(event)) {
+			this._selectWeek(event);
+		}
+	}
+
+	/**
+	 * Click is the same as Enter: Click+Shift has the same effect as Enter+Shift
+	 * @param event
+	 * @private
+	 */
+	_onclick(event) {
+		this._selectDate(event, event.shiftKey);
+	}
+
+	/**
+	 * One Home or End, move the focus to the first or last item in the row
+	 * @param homePressed
+	 * @private
+	 */
+	_onHomeOrEnd(homePressed) {
+		this._weeks.forEach(week => {
+			const dayInThisWeek = week.findIndex(item => {
+				const date = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000);
+				return date.getMonth() === this._calendarDate.getMonth() && date.getDate() === this._calendarDate.getDate();
+			}) !== -1;
+			if (dayInThisWeek) { // The current day is in this week
+				const index = homePressed ? 1 : 7; // select the first (if Home) or last (if End) day of the week
+				this._setTimestamp(parseInt(week[index].timestamp));
+			}
+		});
+	}
+
+	/**
+	 * Called from Calendar.js
+	 * @protected
+	 */
+	_hasPreviousPage() {
+		return !(this._calendarDate.getMonth() === this._minDate.getMonth() && this._calendarDate.getYear() === this._minDate.getYear());
+	}
+
+	/**
+	 * Called from Calendar.js
+	 * @protected
+	 */
+	_hasNextPage() {
+		return !(this._calendarDate.getMonth() === this._maxDate.getMonth() && this._calendarDate.getYear() === this._maxDate.getYear());
+	}
+
+	/**
+	 * Called from Calendar.js
+	 * Same as PageUp
+	 * @protected
+	 */
+	_showPreviousPage() {
+		this._modifyTimestampBy(-1, "month");
+	}
+
+	/**
+	 * Called from Calendar.js
+	 * Same as PageDown
+	 * @protected
+	 */
+	_showNextPage() {
+		this._modifyTimestampBy(1, "month");
+	}
+
+	/**
+	 * Modifies the timestamp by a certain amount of days/months/years
+	 * @param amount
+	 * @param unit
+	 * @private
+	 */
+	_modifyTimestampBy(amount, unit) {
+		// Modify the current timestamp
+		this._safelyModifyTimestampBy(amount, unit);
+		this._updateSecondTimestamp();
+
+		// Notify the calendar to update its timestamp
+		this.fireEvent("navigate", { timestamp: this.timestamp });
+	}
+
+	/**
+	 * Sets the timestamp to an absolute value
+	 * @param value
+	 * @private
+	 */
+	_setTimestamp(value) {
+		this._safelySetTimestamp(value);
+		this._updateSecondTimestamp();
+		this.fireEvent("navigate", { timestamp: this.timestamp });
+	}
+
+	/**
+	 * During range selection, when the user is navigating with the keyboard, the currently focused day is considered the "second day"
+	 * @private
+	 */
+	_updateSecondTimestamp() {
+		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+			this._secondTimestamp = this.timestamp;
+		}
+	}
+
+	get shouldHideWeekNumbers() {
+		if (this._primaryCalendarType !== CalendarType.Gregorian) {
+			return true;
+		}
+
+		return this.hideWeekNumbers;
 	}
 
 	_isWeekend(oDate) {
+		const localeData = getCachedLocaleDataInstance(getLocale());
+
 		const iWeekDay = oDate.getDay(),
-			iWeekendStart = this._oLocaleData.getWeekendStart(),
-			iWeekendEnd = this._oLocaleData.getWeekendEnd();
+			iWeekendStart = localeData.getWeekendStart(),
+			iWeekendEnd = localeData.getWeekendEnd();
 
 		return (iWeekDay >= iWeekendStart && iWeekDay <= iWeekendEnd)
 			|| (iWeekendEnd < iWeekendStart && (iWeekDay >= iWeekendStart || iWeekDay <= iWeekendEnd));
@@ -385,58 +669,33 @@ class DayPicker extends UI5Element {
 
 	_isDayPressed(target) {
 		const targetParent = target.parentNode;
-		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && target.parentNode.classList.contains("ui5-dp-item"));
+		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
 	}
 
-	_getVisibleDays(oStartDate, bIncludeBCDates) {
-		let oCalDate,
-			iDaysOldMonth,
-			iYear;
+	_getFirstDay() {
+		let daysFromPreviousMonth;
 
-		const _aVisibleDays = [];
-
-		// If date passed generate days for new start date else return the current one
-		if (!oStartDate) {
-			return _aVisibleDays;
-		}
-
-		const iFirstDayOfWeek = this._getFirstDayOfWeek();
+		const firstDayOfWeek = this._getFirstDayOfWeek();
 
 		// determine weekday of first day in month
-		const oFirstDay = new CalendarDate(oStartDate, this._primaryCalendarType);
-		oFirstDay.setDate(1);
-		iDaysOldMonth = oFirstDay.getDay() - iFirstDayOfWeek;
-		if (iDaysOldMonth < 0) {
-			iDaysOldMonth = 7 + iDaysOldMonth;
+		const firstDay = new CalendarDate(this._calendarDate, this._primaryCalendarType);
+		firstDay.setDate(1);
+		daysFromPreviousMonth = firstDay.getDay() - firstDayOfWeek;
+		if (daysFromPreviousMonth < 0) {
+			daysFromPreviousMonth = 7 + daysFromPreviousMonth;
 		}
 
-		if (iDaysOldMonth > 0) {
-			// determine first day for display
-			oFirstDay.setDate(1 - iDaysOldMonth);
+		if (daysFromPreviousMonth > 0) {
+			firstDay.setDate(1 - daysFromPreviousMonth);
 		}
 
-		const oDay = new CalendarDate(oFirstDay);
-		for (let i = 0; i < 42; i++) {
-			iYear = oDay.getYear();
-			oCalDate = new CalendarDate(oDay, this._primaryCalendarType);
-			if (bIncludeBCDates && iYear < MIN_YEAR) {
-				// For dates before 0001-01-01 we should render only empty squares to keep
-				// the month square matrix correct.
-				oCalDate._bBeforeFirstYear = true;
-				_aVisibleDays.push(oCalDate);
-			} else if (iYear >= MIN_YEAR && iYear <= MAX_YEAR) {
-				// Days before 0001-01-01 or after 9999-12-31 should not be rendered.
-				_aVisibleDays.push(oCalDate);
-			}
-			oDay.setDate(oDay.getDate() + 1);
-		}
-
-		return _aVisibleDays;
+		return firstDay;
 	}
 
 	_getFirstDayOfWeek() {
+		const localeData = getCachedLocaleDataInstance(getLocale());
 		const confFirstDayOfWeek = getFirstDayOfWeek();
-		return Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek : this._oLocaleData.getFirstDayOfWeek();
+		return Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek : localeData.getFirstDayOfWeek();
 	}
 
 	get styles() {

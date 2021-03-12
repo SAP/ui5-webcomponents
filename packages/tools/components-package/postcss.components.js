@@ -1,6 +1,9 @@
 const postcssImport = require('postcss-import');
 const postcssCSStoESM = require('../lib/postcss-css-to-esm/index.js');
 const cssnano = require('cssnano');
+const fs = require("fs");
+
+const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 
 module.exports = {
 	plugins: [
@@ -13,6 +16,6 @@ module.exports = {
 				},
 			]
 		}),
-		postcssCSStoESM(),
+		postcssCSStoESM({toReplace: 'src', includeDefaultTheme: true, packageName}),
 	]
 };

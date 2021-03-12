@@ -4,6 +4,36 @@ const assert = require("chai").assert;
 describe("Button general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Button.html");
 
+	it("tests button's text rendering", () => {
+		const slotsLength = browser.$("#button1").shadow$$(".ui5-button-text>bdi>slot").length;
+
+		// The default slot
+		assert.strictEqual(slotsLength, 1, "Button text is not rendered");
+	});
+
+	it("tests button's icon rendering", () => {
+		const button = browser.$("#button1");
+
+		button.setAttribute("icon", "add");
+		assert.strictEqual(button.shadow$$("ui5-icon").length, 1, "icon is present");
+
+		button.setAttribute("icon", "");
+		assert.strictEqual(button.shadow$$("ui5-icon").length, 0, "icon is not present");
+	});
+
+	it("tests button's slot rendering", () => {
+		const btnImage = browser.$("#btnImage");
+		assert.strictEqual(btnImage.isDisplayed(), true, "Btn image is rendered");
+	});
+
+    it("tests button's icon only rendering", () => {
+        const oButtonIconOnlyComment = browser.$("#icon-only-comment");
+        const oButtonIconOnlyBlankText = browser.$("#icon-only-blank-text");
+
+        assert.strictEqual(oButtonIconOnlyComment.getAttribute("icon-only"), "", "Button comment has attribute icon-only");
+        assert.strictEqual(oButtonIconOnlyBlankText.getAttribute("icon-only"), "", "Button blank text has attribute icon-only");
+    });
+
 	it("tests click event", () => {
 		const button = browser.$("#button1");
 		const field = browser.$("#click-counter");
@@ -55,5 +85,20 @@ describe("Button general interaction", () => {
 		// button.keys("Enter");
 
 		assert.strictEqual(field.getProperty("value"), "6", "click should be called 6 times");
+	});
+
+	it("setting aria-expanded on the host is reflected on the button tag", () => {
+		const button = browser.$("#button1");
+		const innerButton = button.shadow$("button");
+
+		assert.strictEqual(innerButton.getAttribute("aria-expanded"), "true", "Attribute is reflected");
+
+		button.setAttribute("aria-expanded", "false");
+
+		assert.strictEqual(innerButton.getAttribute("aria-expanded"), "false", "Attribute is reflected");
+
+		button.removeAttribute("aria-expanded");
+
+		assert.strictEqual(innerButton.getAttribute("aria-expanded"), null, "Attribute is reflected");
 	});
 });

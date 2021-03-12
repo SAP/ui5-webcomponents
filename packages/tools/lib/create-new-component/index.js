@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 const jsFileContentTemplate = componentName => {
 	return `import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -6,20 +8,42 @@ import ${componentName}Template from "./generated/templates/${componentName}Temp
 // Styles
 import ${componentName}Css from "./generated/themes/${componentName}.css.js";
 
-
+/**
+ * @public
+ */
 const metadata = {
-	tag: "ui5-${componentName.toLowerCase()}",
-	properties: {
+	tag: "${tagName}",
+	properties: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
 		//
 	},
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
 		//
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
 		//
 	},
 };
 
+/**
+ * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ *
+ * <h3>Usage</h3>
+ *
+ * For the <code>${tagName}</code>
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import ${packageName}/dist/${componentName}.js";</code>
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.${library}.${componentName}
+ * @extends UI5Element
+ * @tagname ${tagName}
+ * @public
+ */
 class ${componentName} extends UI5Element {
 	static get metadata() {
 		return metadata;
@@ -37,8 +61,12 @@ class ${componentName} extends UI5Element {
 		return ${componentName}Template;
 	}
 
-	static async define(...params) {
-		super.define(...params);
+	static get dependencies() {
+		return [];
+	}
+
+	static async onDefine() {
+
 	}
 }
 
@@ -48,13 +76,52 @@ export default ${componentName};
 `;
 };
 
+const getPackageName = () => {
+	if (!fs.existsSync("./package.json")) {
+		throw("The current directory doesn't contain package.json file.");
+	}
+
+	const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+
+	if (!packageJSON.name) {
+		throw("The package.json file in the current directory doesn't have a name property");
+	}
+
+	return packageJSON.name;
+};
+
+const getLibraryName = packageName => {
+	if (!packageName.includes("/")) {
+		return packageName;
+	}
+
+	if (packageName === "@ui5/webcomponents") {
+		return `main`;
+	}
+
+	packageName = packageName.split("/").pop();
+
+	if (!packageName.startsWith("webcomponents-")) {
+		return packageName;
+	}
+
+	return packageName.substr("webcomponents-".length);
+};
+
+const camelToKebabCase = string => string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+
+const packageName = getPackageName();
+const library = getLibraryName(packageName);
+
 const consoleArguments = process.argv.slice(2);
 const componentName = consoleArguments[0];
 
 if (!componentName){
-	console.error("Please enter component name.")
+	console.error("Please enter component name.");
 	return;
 }
+
+const tagName = `ui5-${camelToKebabCase(componentName)}`;
 
 const filePaths = {
 	"js": `./src/${componentName}.js`,
@@ -62,8 +129,6 @@ const filePaths = {
 	"hbs": `./src/${componentName}.hbs`,
 };
 const sJsFileContentTemplate = jsFileContentTemplate(componentName);
-
-const fs = require("fs");
 
 fs.writeFileSync(filePaths.js, sJsFileContentTemplate, { flag: "wx+" });
 fs.writeFileSync(filePaths.css, "", { flag: "wx+" });

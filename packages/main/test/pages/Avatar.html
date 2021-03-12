@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Avatar</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<section>
+		<h3>Avatar - Basic sample</h3>
+		<ui5-avatar image="./img/John_Miller.png"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - special characters in image path</h3>
+		<ui5-avatar image="./img/John$$$ ' (_)Miller 100%25 &=.png" style="border: 1px dashed red;"></ui5-avatar>
+		<ui5-avatar image="./img/John Miller.png" style="border: 1px dashed red;"></ui5-avatar>
+		<ui5-avatar image="./img/John%20Miller.png" style="border: 1px dashed red;"></ui5-avatar>
+		<ui5-avatar image="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" style="border: 1px dashed red;"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - Square [ XS, S, M, L, XL ]</h3>
+		<ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="XS"></ui5-avatar>
+		<ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="S"></ui5-avatar>
+		<ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="M"></ui5-avatar>
+		<ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="L"></ui5-avatar>
+		<ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - Circle [ XS, S, M, L, XL ]</h3>
+		<ui5-avatar image="./img/John_Miller.png" size="XS"></ui5-avatar>
+		<ui5-avatar image="./img/John_Miller.png" size="S"></ui5-avatar>
+		<ui5-avatar image="./img/John_Miller.png" size="M"></ui5-avatar>
+		<ui5-avatar image="./img/John_Miller.png" size="L"></ui5-avatar>
+		<ui5-avatar image="./img/John_Miller.png" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - UI5 Icons</h3>
+		<ui5-avatar icon="filter" size="XS"></ui5-avatar>
+		<ui5-avatar icon="employee" size="S"></ui5-avatar>
+		<ui5-avatar icon="product" size="M"></ui5-avatar>
+		<ui5-avatar icon="supplier" size="L"></ui5-avatar>
+		<ui5-avatar icon="shipping-status" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - UI5 Icons</h3>
+		<ui5-avatar icon="filter" shape="Square" size="XS"></ui5-avatar>
+		<ui5-avatar icon="employee" shape="Square" size="S"></ui5-avatar>
+		<ui5-avatar icon="product" shape="Square" size="M"></ui5-avatar>
+		<ui5-avatar icon="supplier" shape="Square" size="L"></ui5-avatar>
+		<ui5-avatar icon="shipping-status" shape="Square" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - Background colors [ Accent1, Accent2, Accent3, Accent4, Accent5, Accent6, Accent7, Accent8, Accent9, Accent10, Placeholder ]</h3>
+		<ui5-avatar background-color="Accent1" size="L"></ui5-avatar>
+		<ui5-avatar background-color="Accent2" size="L"></ui5-avatar>
+		<ui5-avatar background-color="Accent3" size="L"></ui5-avatar>
+		<ui5-avatar background-color="Accent4" size="L"></ui5-avatar>
+		<ui5-avatar background-color="Accent5" size="L"></ui5-avatar>
+		<ui5-avatar size="L"></ui5-avatar>
+		<ui5-avatar background-color="Accent7" size="L"></ui5-avatar>
+		<ui5-avatar background-color="Accent8" size="L"></ui5-avatar>
+		<ui5-avatar background-color="Accent9" size="L"></ui5-avatar>
+		<ui5-avatar background-color="Accent10" size="L"></ui5-avatar>
+		<ui5-avatar background-color="Placeholder" size="L"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - Initials</h3>
+		<ui5-avatar initials="XS" background-color="Accent1" size="XS"></ui5-avatar>
+		<ui5-avatar initials="S" background-color="Accent2" size="S"></ui5-avatar>
+		<ui5-avatar initials="M" background-color="Accent3" size="M"></ui5-avatar>
+		<ui5-avatar initials="L" background-color="Accent4" size="L"></ui5-avatar>
+		<ui5-avatar initials="XL" background-color="Accent5" size="XL"></ui5-avatar>
+		<ui5-avatar initials="XS" shape="Square" size="XS"></ui5-avatar>
+		<ui5-avatar initials="S" background-color="Accent7" shape="Square" size="S"></ui5-avatar>
+		<ui5-avatar initials="M" background-color="Accent8" shape="Square" size="M"></ui5-avatar>
+		<ui5-avatar initials="L" background-color="Accent9" shape="Square" size="L"></ui5-avatar>
+		<ui5-avatar initials="XL" background-color="Accent10" shape="Square" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - Custom</h3>
+		<h4>Avatar with custom size</h4>
+		<ui5-avatar id="myCustomAvatar" image="./img/Lamp_avatar_01.jpg" shape="Square" size="XL" style="width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)"></ui5-avatar>
+		<h4>Avatar with custom size and imageFitType="Contain"</h4>
+		<ui5-avatar id="myCustomAvatar1" image="./img/Lamp_avatar_01.jpg" shape="Square" size="XL" style="width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)" image-fit-type="Contain"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - test</h3>
+		<ui5-avatar id="myAvatar1" image="./img/woman_avatar_5.png"></ui5-avatar>
+		<ui5-avatar id="myAvatar2" icon="filter"></ui5-avatar>
+		<ui5-avatar id="myAvatar3" image="./img/woman_avatar_5.png" icon="filter" initials="SF"></ui5-avatar>
+		<ui5-avatar id="myAvatar4" initials="SF" shape="Square" size="M"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - interactive</h3>
+		<ui5-avatar id="interactive-avatar" interactive initials="XS" size="XS"></ui5-avatar>
+		<ui5-avatar id="non-interactive-avatar" initials="S" size="S"></ui5-avatar>
+		<ui5-input id="click-event" value="0"></ui5-input>
+	</section>
+
+	<script>
+		var avatar = document.getElementById("interactive-avatar"),
+			nonInteractiveAvatar = document.getElementById("non-interactive-avatar"),
+			input = document.getElementById("click-event"),
+			inputValue = 0;
+
+		avatar.addEventListener("ui5-click", function() {
+			input.value = ++inputValue;
+		});
+
+		nonInteractiveAvatar.addEventListener("ui5-click", function() {
+			input.value = ++inputValue;
+		});
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>ResponsivePopover</title>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+	
+	.popover-footer,
+	.popover-header {
+		margin: 0.25rem 0.25rem;
+	}
+	
+	.popover-content {
+		padding: 1rem;
+	}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-button id="btnOpen" design="Positive">Open me</ui5-button> <br/>
+	<ui5-button id="btnOpen2" design="Negative">Open me</ui5-button> <br/>
+	<ui5-button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</ui5-button>
+
+	<!-- with header and footer slots -->
+	<ui5-responsive-popover id="respPopover">
+		<div id="respPopoverHeader" slot="header">
+			<ui5-title>Hello World</ui5-title>
+		</div>
+
+		<div class="popover-content">
+			<ui5-label for="emailInput" required>Email: </ui5-label>
+			<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+		</div>
+
+		<div slot="footer" class="popover-footer">
+			<ui5-button id="btnClose" design="Emphasized">Subscribe</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
+	<!-- with header-text and footer slot-->
+	<ui5-responsive-popover id="respPopover2" header-text="Newsletter subscription for very long period of time">
+		<div class="popover-content">
+			<ui5-label for="emailInput" required>Email: </ui5-label>
+			<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+		</div>
+
+		<div slot="footer" class="popover-footer">
+			<ui5-label>You are already subscribed.</ui5-label>
+			<ui5-button id="btnClose2">Cancel</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
+	<ui5-responsive-popover id="respPopover3" content-only-on-desktop>
+		<div id="respPopoverHeader3" slot="header">
+			<ui5-title>Hello World</ui5-title>
+		</div>
+
+		<div class="popover-content">
+			<ui5-label for="emailInput" required>Email: </ui5-label>
+			<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+		</div>
+
+		<div slot="footer" class="popover-footer">
+			<ui5-button id="btnClose3" design="Emphasized">Subscribe</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
+	<h2> Inputs based component that opens popover/dialog within dialog</h2>
+	<ui5-button id="btnOpenDialog" design="Emphasized" icon="employee">Open Dialog</ui5-button>
+	<ui5-dialog id="dialog" header-text="Dialog" stretch>
+		<ui5-select id="mySelect">
+			<ui5-option >Cozy</ui5-option>
+			<ui5-option >Compact</ui5-option>
+			<ui5-option selected>Condensed</ui5-option>
+		</ui5-select>
+		<ui5-combobox>
+			<ui5-cb-item text="Algeria"></ui5-cb-item>
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="Australia"></ui5-cb-item>
+		</ui5-combobox>
+		<ui5-multi-combobox>
+			<ui5-mcb-item text="Cosy"></ui5-mcb-item>
+			<ui5-mcb-item text="Compact"></ui5-mcb-item>
+			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
+			<ui5-mcb-item text="Longest word in the world"></ui5-mcb-item>
+		</ui5-multi-combobox>
+		<ui5-date-picker></ui5-date-picker>
+	</ui5-dialog>
+
+	<script>
+		btnOpen.addEventListener("click", function(event) {
+			respPopover.open(btnOpen);
+		});
+		btnClose.addEventListener("click", function(event) {
+			respPopover.close();
+		});
+
+		btnOpen2.addEventListener("click", function(event) {
+			respPopover2.open(btnOpen2);
+		});
+		btnClose2.addEventListener("click", function(event) {
+			respPopover2.close();
+		});
+
+		btnOpen3.addEventListener("click", function(event) {
+			respPopover3.open(btnOpen3);
+		});
+		btnClose3.addEventListener("click", function(event) {
+			respPopover3.close();
+		});
+		btnOpenDialog.addEventListener('click', function (event) {
+			dialog.open(btnOpenDialog);
+		});
+	</script>
+</body>
+</html>

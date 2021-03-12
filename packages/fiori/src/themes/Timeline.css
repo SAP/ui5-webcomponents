@@ -1,0 +1,23 @@
+:host(:not([hidden])) {
+	display: block;
+}
+
+.ui5-timeline-root {
+	padding: var(--_ui5_tl_padding);
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.ui5-timeline-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.ui5-timeline-list-item {
+	margin-bottom: var(--_ui5_tl_li_margin_bottom);
+}
+
+.ui5-timeline-list-item:last-child {
+	margin-bottom: 0;
+}

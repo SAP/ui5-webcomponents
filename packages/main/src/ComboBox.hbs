@@ -1,0 +1,44 @@
+<div class="ui5-combobox-root">
+	{{#if hasValueState}}
+		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
+	{{/if}}
+
+	<input id="ui5-combobox-input"
+		.value="{{_tempValue}}"
+		inner-input
+		placeholder="{{placeholder}}"
+		?disabled={{disabled}}
+		?readonly={{readonly}}
+		value-state="{{valueState}}"
+		@input="{{_input}}"
+		@change="{{_inputChange}}"
+		@click={{_click}}
+		@keydown="{{_keydown}}"
+		@focusin="{{_focusin}}"
+		@focusout="{{_focusout}}"
+		aria-expanded="{{open}}"
+		role="combobox"
+		aria-haspopup="listbox"
+		aria-autocomplete="both"
+		aria-describedby="{{valueStateTextId}}"
+		aria-label="{{ariaLabelText}}"
+		aria-required="{{required}}"
+	/>
+
+	{{#if icon}}
+		<slot name="icon"></slot>
+	{{/if}}
+
+	{{#unless readonly}}
+		<ui5-icon
+			name="slim-arrow-down"
+			slot="icon"
+			tabindex="-1"
+			input-icon
+			?pressed="{{_iconPressed}}"
+			@click="{{_arrowClick}}"
+			dir="{{effectiveDir}}"
+			accessible-name="{{_iconAccessibleNameText}}"
+		></ui5-icon>
+	{{/unless}}
+</div>

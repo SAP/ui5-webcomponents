@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
@@ -13,24 +13,35 @@
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		ui5-date-picker {
+			width: 100%;
+		}
+	</style>
 </head>
-<body>
-	<ui5-datepicker id="dp12"></ui5-datepicker>
-	<ui5-datepicker id="dp"></ui5-datepicker>
-	<ui5-datepicker id="dp1" value="11/11/11"></ui5-datepicker>
-	<ui5-datepicker id="dp2" format-pattern="yyyy, dd/MM"></ui5-datepicker>
-	<ui5-datepicker id="dp3"></ui5-datepicker>
-	<ui5-datepicker id="dp4" value="Jan 29, 2019" format-pattern="MMM d, y"></ui5-datepicker>
-	<ui5-datepicker id="dp5"></ui5-datepicker>
-	<ui5-datepicker id="dp6"></ui5-datepicker>
-	<ui5-datepicker id="dp7" format-pattern="MMM d, y" value="Jan 1, 2019"></ui5-datepicker>
-	<ui5-datepicker id="dp7_1" format-pattern="MMM d, y"></ui5-datepicker>
-	<ui5-datepicker id="dp7_2" format-pattern="MMM d, y"></ui5-datepicker>
-	<ui5-datepicker id="dp8" value="Jan 6, 2015"></ui5-datepicker>
-	<ui5-datepicker id="dp9" value="today"></ui5-datepicker>
-	<ui5-datepicker id="dp10" disabled></ui5-datepicker>
-	<ui5-datepicker id="dp11"></ui5-datepicker>
-	<ui5-datepicker id="dp13"></ui5-datepicker>
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-date-picker id="dp12"></ui5-date-picker>
+	<ui5-date-picker id="dp"></ui5-date-picker>
+	<ui5-date-picker id="dp1" value="11/11/11"></ui5-date-picker>
+	<ui5-date-picker id="dp2" format-pattern="yyyy, dd/MM"></ui5-date-picker>
+	<ui5-date-picker id="dp3"></ui5-date-picker>
+	<ui5-date-picker id="dp4" value="Jan 29, 2019" format-pattern="MMM d, y"></ui5-date-picker>
+	<ui5-date-picker id="dp5"></ui5-date-picker>
+	<ui5-date-picker id="dp6"></ui5-date-picker>
+	<ui5-date-picker id="dp7" format-pattern="MMM d, y" value="Jan 1, 2019"></ui5-date-picker>
+	<ui5-date-picker id="dp7_1" format-pattern="MMM d, y"></ui5-date-picker>
+	<ui5-date-picker id="dp7_2" format-pattern="MMM d, y"></ui5-date-picker>
+	<ui5-date-picker id="dp8" value="Jan 6, 2015"></ui5-date-picker>
+	<ui5-date-picker id="dp9" value="today"></ui5-date-picker>
+	<ui5-date-picker id="dp10" disabled></ui5-date-picker>
+	<ui5-date-picker id='dp-required' required></ui5-date-picker>
+	<ui5-date-picker id="dp11"></ui5-date-picker>
+	<ui5-date-picker id="dp13"></ui5-date-picker>
+	<ui5-date-picker id="dp16" format-pattern="long"></ui5-date-picker>
+	<ui5-button id="b1" design="Default">Set date</ui5-button>
+	
 
 	<label id='lbl'>0</label>
 	<label for="inputTimezone">Timezone:</label>
@@ -41,9 +52,32 @@
 	<label id='lblTomorrow'>0</label>
 	<label id='lblTomorrowDate'></label>
 
+	<h3> Minimum and Maximum Date</h3>
+	<ui5-date-picker id="dp33" format-pattern="MMM d, y" min-date="Jan 1, 2000" max-date="Jan 8, 2100" ></ui5-date-picker>
+	<h3> Minimum and Maximum Date In Smaller Range</h3>
+	<ui5-date-picker id="dp34" format-pattern="MMM d, y" min-date="Jan 12, 2020" max-date="Jan 20, 2020" ></ui5-date-picker>
 	<h3>Test placeholder</h3>
-	<ui5-datepicker id="dp14" format-pattern="MMM d, y"></ui5-datepicker>
-	<ui5-datepicker id="dp15" format-pattern="MMM d, y" placeholder="Delivery date"></ui5-datepicker>
+	<ui5-date-picker id="dp14" format-pattern="MMM d, y"></ui5-date-picker>
+	<ui5-date-picker id="dp15" format-pattern="MMM d, y" placeholder="Delivery date"></ui5-date-picker>
+
+	<h3>DatePicker with valueStateMessage</h3>
+	<ui5-date-picker id="dp17" value-state="Error">
+		<div slot="valueStateMessage" id="coolValueStateMessage">
+			This date is wrong
+		</div>
+	</ui5-date-picker>
+
+	<h3>DatePicker with hide-week-numbers=true/false</h3>
+	<ui5-date-picker id="dp18"></ui5-date-picker>
+	<ui5-date-picker id="dp19" hide-week-numbers></ui5-date-picker>
+
+	<section>
+		<h3>Test ariaLabel and ariaLabelledBy</h3>
+		<ui5-date-picker id="dpAriaLabel" aria-label="Hello World"></ui5-date-picker>
+		<br>
+		<ui5-label id="infoText">info text</ui5-label>
+		<ui5-date-picker id="dpAriaLabelledBy" aria-labelledby="infoText"></ui5-date-picker>
+	</section>
 
 	<script>
 		var originalGetDate = Date.prototype.getDate;
@@ -72,6 +106,12 @@
 		document.querySelector("#dp13").addEventListener("ui5-change", function(e) {
 			document.querySelector('#lblTomorrow').innerHTML = ++counterTomorrow;
 			document.querySelector('#lblTomorrowDate').innerHTML = e.target.value;
+		});
+
+		var dp16 = document.getElementById('dp16');
+
+		document.getElementById('b1').addEventListener("click", function(e) {
+			dp16.setAttribute("value", dp16.formatValue(new Date(2018, 11, 11)));
 		});
 	</script>
 </body>

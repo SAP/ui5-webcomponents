@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>FileUploader test page</title>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+	<style>
+		body > div {
+			margin-bottom: 1rem;
+		}
+	</style>
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+</head>
+<body>
+	<div>
+		<label>Single file upload:</label>
+		<ui5-file-uploader placeholder="upload file">
+			<ui5-button>Upload</ui5-button>
+		</ui5-file-uploader>
+	</div>
+
+	<div>
+		<label>FileUploader with ValueState</label>
+		<ui5-file-uploader placeholder="upload file" value-state="Warning">
+			<ui5-button>Upload</ui5-button>
+		</ui5-file-uploader>
+
+		<ui5-file-uploader placeholder="upload file" value-state="Error">
+			<ui5-button>Upload</ui5-button>
+			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+			<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		</ui5-file-uploader>
+	</div>
+
+	<div>
+		<label>Multiple files upload:</label>
+		<ui5-file-uploader multiple>
+			<ui5-button>Upload</ui5-button>
+		</ui5-file-uploader>
+	</div>
+	<div>
+		<label>Accept only .txt and .docx files:</label>
+		<ui5-file-uploader accept=".txt,.docx" id="file-uploader-accept">
+			<ui5-button>Upload</ui5-button>
+		</ui5-file-uploader>
+	</div>
+	<div>
+		<label>Value state Error:</label>
+		<ui5-file-uploader value-state="Error">
+			<ui5-button icon="upload" icon-end>Upload</ui5-button>
+		</ui5-file-uploader>
+	</div>
+	<div>
+		<label>Disabled uploader:</label>
+		<ui5-file-uploader disabled id="disabled"></ui5-file-uploader>
+	</div>
+	<div>
+		<label>Button only:</label>
+		<ui5-file-uploader hide-input id="file-uploader-no-input">
+			<ui5-button icon="upload" icon-end>Upload</ui5-button>
+		</ui5-file-uploader>
+	</div>
+	<div>
+		<label>With Avatar:</label>
+		<ui5-file-uploader hide-input>
+			<ui5-avatar icon="upload"></ui5-avatar>
+		</ui5-file-uploader>
+	</div>
+	<div>
+		<label>With Icons:</label>
+		<ui5-file-uploader hide-input>
+			<ui5-icon name="upload"></ui5-icon>
+			<ui5-icon name="upload"></ui5-icon>
+		</ui5-file-uploader>
+	</div>
+	<div>
+		<label>With badge:</label>
+		<ui5-file-uploader hide-input>
+			<ui5-badge>Upload File</ui5-badge>
+		</ui5-file-uploader>
+	</div>
+	<div>
+		<ui5-title>Form support</ui5-title>
+		<form
+			style="border: 1px solid black; padding: 1rem;"
+			method="POST"
+			action="http://localhost:3000/echo"
+			enctype="multipart/form-data"
+		>
+			<div>
+				<label>Disabled uploader:</label>
+				<ui5-file-uploader disabled name="disabledUploader"></ui5-file-uploader>
+			</div>
+			<div>
+				<label>Normal uploader:</label>
+				<ui5-file-uploader name="enabledUploader"></ui5-file-uploader>
+			</div>
+			<div>
+				<label>Native input type="file":</label>
+				<input name="nativeInput" type="file">
+			</div>
+			<ui5-button submits>Submit</ui5-button>
+		</form>
+	</div>
+	<div>
+		<ui5-title>Upload files async using fetch</ui5-title>
+		<div style="border: 1px solid black; padding: 1rem;">
+			<ui5-file-uploader id="fuFetch"></ui5-file-uploader>
+			<ui5-button id="uploadBtn">Upload</ui5-button>
+		</div>
+	</div>
+	<script>
+		document.getElementById("uploadBtn").addEventListener("click", function() {
+			var fu = document.getElementById("fuFetch");
+			var data = new FormData();
+
+			for (var i = 0; i < fu.files.length; i++) {
+				data.append("file", fu.files[i]);
+			}
+
+			fetch("http://localhost:3000/echo", {
+				method: "POST",
+				body: data
+			})
+			.then(function(res) {
+				console.log(`Success! Response status: ${res.status}`);
+			})
+			.catch(function(err) {
+				console.log("Error")
+			})
+		});
+	</script>
+</body>
+</html>

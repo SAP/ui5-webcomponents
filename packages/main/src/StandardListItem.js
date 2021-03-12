@@ -1,7 +1,7 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
+import Avatar from "./Avatar.js";
 import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
 
 /**
@@ -74,8 +74,9 @@ const metadata = {
 		/**
 		 * Defines the state of the <code>info</code>.
 		 * <br>
-		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
-		 * @type {string}
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
 		 * @public
 		 * @since 0.13.0
 		 */
@@ -96,7 +97,8 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-li</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -106,7 +108,6 @@ const metadata = {
 			type: Node,
 		},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -122,19 +123,12 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.StandardListItem
  * @extends ListItem
  * @tagname ui5-li
+ * @implements sap.ui.webcomponents.main.IListItem
  * @public
  */
 class StandardListItem extends ListItem {
-	static get render() {
-		return litRender;
-	}
-
 	static get template() {
 		return StandardListItemTemplate;
-	}
-
-	static get styles() {
-		return ListItem.styles;
 	}
 
 	static get metadata() {
@@ -158,10 +152,12 @@ class StandardListItem extends ListItem {
 		return (this.icon && this.iconEnd);
 	}
 
-	static async define(...params) {
-		await Icon.define();
-
-		super.define(...params);
+	static get dependencies() {
+		return [
+			...ListItem.dependencies,
+			Icon,
+			Avatar,
+		];
 	}
 }
 

@@ -1,20 +1,24 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
-import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import {
+	isEnter,
+	isSpace,
+	isDown,
+	isUp,
+	isLeft,
+	isRight,
+	isHome,
+	isEnd,
+	isHomeCtrl,
+	isEndCtrl,
+	isPageUp,
+	isPageDown,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
-import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
-import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
-import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import CalendarPart from "./CalendarPart.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
-
-// Styles
 import styles from "./generated/themes/MonthPicker.css.js";
-
 /**
  * @public
  */
@@ -22,26 +26,21 @@ const metadata = {
 	tag: "ui5-monthpicker",
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
-		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
-		 * @type {Integer}
+		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
+		 * @type {Array}
 		 * @public
 		 */
-		timestamp: {
+		selectedDates: {
 			type: Integer,
+			multiple: true,
+			compareValues: true,
 		},
-		/**
-		 * Sets a calendar type used for display.
-		 * If not set, the calendar type of the global configuration is used.
-		 * @type {string}
-		 * @public
-		 */
-		primaryCalendarType: {
-			type: CalendarType,
-		},
-		_quarters: {
+
+		_months: {
 			type: Object,
 			multiple: true,
 		},
+
 		_hidden: {
 			type: Boolean,
 			noAttribute: true,
@@ -49,14 +48,23 @@ const metadata = {
 	},
 	events: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
-		 * Fired when the user selects a new Date on the Web Component.
+		 * Fired when the user selects a month (space/enter/click).
 		 * @public
 		 * @event
 		 */
-		selectedMonthChange: {},
+		change: {},
+		/**
+		 * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
+		 * @since 1.0.0-rc.9
+		 * @public
+		 * @event
+		 */
+		navigate: {},
 	},
-	_eventHandlersByConvention: true,
 };
+
+const PAGE_SIZE = 12; // Total months on a single page
+const ROW_SIZE = 3; // Months per row (4 rows of 3 months each)
 
 /**
  * Month picker component.
@@ -68,17 +76,13 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MonthPicker
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends CalendarPart
  * @tagname ui5-monthpicker
  * @public
  */
-class MonthPicker extends UI5Element {
+class MonthPicker extends CalendarPart {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 
 	static get template() {
@@ -89,113 +93,204 @@ class MonthPicker extends UI5Element {
 		return styles;
 	}
 
-	constructor() {
-		super();
-		this._oLocale = getFormatLocale();
-		this._oLocaleData = new LocaleData(this._oLocale);
-
-		this._itemNav = new ItemNavigation(this, { rowSize: 3, cyclic: true });
-		this._itemNav.getItemsCallback = function getItemsCallback() {
-			return [].concat(...this._quarters);
-		}.bind(this);
-		this._itemNav.setItemsCallback = function setItemsCallback(items) {
-			this._quarters = items;
-		}.bind(this);
+	onBeforeRendering() {
+		this._buildMonths();
 	}
 
-	onBeforeRendering() {
-		const quarters = [];
-		const oCalDate = CalendarDate.fromTimestamp(new Date().getTime(), this._primaryCalendarType);
+	_buildMonths() {
+		if (this._hidden) {
+			return;
+		}
+
+		const localeData = getCachedLocaleDataInstance(getLocale());
+		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
+
+		const months = [];
+		const calendarDate = this._calendarDate; // store the value of the expensive getter
+		const minDate = this._minDate; // store the value of the expensive getter
+		const maxDate = this._maxDate; // store the value of the expensive getter
+		const tempDate = new CalendarDate(calendarDate, this._primaryCalendarType);
 		let timestamp;
 
+		/* eslint-disable no-loop-func */
 		for (let i = 0; i < 12; i++) {
-			oCalDate.setMonth(i);
-			timestamp = oCalDate.valueOf() / 1000;
+			tempDate.setMonth(i);
+			timestamp = tempDate.valueOf() / 1000;
+
+			const isSelected = this.selectedDates.some(itemTimestamp => {
+				const date = CalendarDate.fromTimestamp(itemTimestamp * 1000, this._primaryCalendarType);
+				return date.getYear() === tempDate.getYear() && date.getMonth() === tempDate.getMonth();
+			});
+			const isFocused = tempDate.getMonth() === calendarDate.getMonth();
+			const isDisabled = this._isOutOfSelectableRange(tempDate, minDate, maxDate);
 
 			const month = {
 				timestamp: timestamp.toString(),
-				id: `${this._state._id}-m${i}`,
-				name: this._oLocaleData.getMonths("wide", this._primaryCalendarType)[i],
+				focusRef: isFocused,
+				_tabIndex: isFocused ? "0" : "-1",
+				selected: isSelected,
+				ariaSelected: isSelected ? "true" : "false",
+				name: monthsNames[i],
+				disabled: isDisabled,
 				classes: "ui5-mp-item",
 			};
 
-			if (this._month === i) {
+			if (isSelected) {
 				month.classes += " ui5-mp-item--selected";
 			}
 
-			const quarterIndex = parseInt(i / 3);
+			if (isDisabled) {
+				month.classes += " ui5-mp-item--disabled";
+			}
 
-			if (quarters[quarterIndex]) {
-				quarters[quarterIndex].push(month);
+			const quarterIndex = parseInt(i / ROW_SIZE);
+
+			if (months[quarterIndex]) {
+				months[quarterIndex].push(month);
 			} else {
-				quarters[quarterIndex] = [month];
+				months[quarterIndex] = [month];
 			}
 		}
 
-		this._quarters = quarters;
+		this._months = months;
 	}
 
 	onAfterRendering() {
-		this._itemNav.focusCurrent();
-	}
-
-	get _timestamp() {
-		return this.timestamp !== undefined ? this.timestamp : Math.floor(new Date().getTime() / 1000);
-	}
-
-	get _localDate() {
-		return new Date(this._timestamp * 1000);
-	}
-
-	get _calendarDate() {
-		return CalendarDate.fromTimestamp(this._localDate.getTime(), this._primaryCalendarType);
-	}
-
-	get _month() {
-		return this._calendarDate.getMonth();
-	}
-
-	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
-	}
-
-	onclick(event) {
-		const eventTarget = getShadowDOMTarget(event);
-		if (eventTarget.className.indexOf("ui5-mp-item") > -1) {
-			const timestamp = this.getTimestampFromDOM(eventTarget);
-			this.timestamp = timestamp;
-			this._itemNav.current = this._month;
-			this.fireEvent("selectedMonthChange", { timestamp });
+		if (!this._hidden) {
+			this.focus();
 		}
 	}
 
-	onkeydown(event) {
-		if (isSpace(event) || isEnter(event)) {
-			this._activateMonth(event);
+	_onkeydown(event) {
+		let preventDefault = true;
+
+		if (isEnter(event)) {
+			this._selectMonth(event);
+		} else if (isSpace(event)) {
+			event.preventDefault();
+		} else if (isLeft(event)) {
+			this._modifyTimestampBy(-1);
+		} else if (isRight(event)) {
+			this._modifyTimestampBy(1);
+		} else if (isUp(event)) {
+			this._modifyTimestampBy(-ROW_SIZE);
+		} else if (isDown(event)) {
+			this._modifyTimestampBy(ROW_SIZE);
+		} else if (isPageUp(event)) {
+			this._modifyTimestampBy(-PAGE_SIZE);
+		} else if (isPageDown(event)) {
+			this._modifyTimestampBy(PAGE_SIZE);
+		} else if (isHome(event) || isEnd(event)) {
+			this._onHomeOrEnd(isHome(event));
+		} else if (isHomeCtrl(event)) {
+			this._setTimestamp(parseInt(this._months[0][0].timestamp)); // first month of first row
+		} else if (isEndCtrl(event)) {
+			this._setTimestamp(parseInt(this._months[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last month of last row
+		} else {
+			preventDefault = false;
+		}
+
+		if (preventDefault) {
+			event.preventDefault();
 		}
 	}
 
-	_activateMonth(event) {
-		const eventTarget = getShadowDOMTarget(event);
+	_onHomeOrEnd(homePressed) {
+		this._months.forEach(row => {
+			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getMonth() === this._calendarDate.getMonth());
+			if (indexInRow !== -1) { // The current month is on this row
+				const index = homePressed ? 0 : ROW_SIZE - 1; // select the first (if Home) or last (if End) month on the row
+				this._setTimestamp(parseInt(row[index].timestamp));
+			}
+		});
+	}
+
+	/**
+	 * Sets the timestamp to an absolute value
+	 * @param value
+	 * @private
+	 */
+	_setTimestamp(value) {
+		this._safelySetTimestamp(value);
+		this.fireEvent("navigate", { timestamp: this.timestamp });
+	}
+
+	/**
+	 * Modifies timestamp by a given amount of months and, if necessary, loads the prev/next page
+	 * @param amount
+	 * @private
+	 */
+	_modifyTimestampBy(amount) {
+		// Modify the current timestamp
+		this._safelyModifyTimestampBy(amount, "month");
+
+		// Notify the calendar to update its timestamp
+		this.fireEvent("navigate", { timestamp: this.timestamp });
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this._selectMonth(event);
+		}
+	}
+
+	/**
+	 * User clicked with the mouser or pressed Enter/Space
+	 * @param event
+	 * @private
+	 */
+	_selectMonth(event) {
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-mp-item") > -1) {
-			const timestamp = this.getTimestampFromDOM(eventTarget);
-			this.timestamp = timestamp;
-			this.fireEvent("selectedMonthChange", { timestamp });
+		if (event.target.className.indexOf("ui5-mp-item") > -1) {
+			const timestamp = this._getTimestampFromDom(event.target);
+			this._safelySetTimestamp(timestamp);
+			this.fireEvent("change", { timestamp: this.timestamp });
 		}
 	}
 
-	getTimestampFromDOM(domNode) {
-		const oMonthDomRef = domNode.getAttribute("data-sap-timestamp");
-		return parseInt(oMonthDomRef);
+	/**
+	 * Called from Calendar.js
+	 * @protected
+	 */
+	_hasPreviousPage() {
+		return this._calendarDate.getYear() !== this._minDate.getYear();
 	}
 
-	get styles() {
-		return {
-			main: {
-				display: this._hidden ? "none" : "",
-			},
-		};
+	/**
+	 * Called from Calendar.js
+	 * @protected
+	 */
+	_hasNextPage() {
+		return this._calendarDate.getYear() !== this._maxDate.getYear();
+	}
+
+	/**
+	 * Called by Calendar.js
+	 * User pressed the "<" button in the calendar header (same as PageUp)
+	 * @protected
+	 */
+	_showPreviousPage() {
+		this._modifyTimestampBy(-PAGE_SIZE);
+	}
+
+	/**
+	 * Called by Calendar.js
+	 * User pressed the ">" button in the calendar header (same as PageDown)
+	 * @protected
+	 */
+	_showNextPage() {
+		this._modifyTimestampBy(PAGE_SIZE);
+	}
+
+	_isOutOfSelectableRange(date, minDate, maxDate) {
+		const month = date.getMonth();
+		const year = date.getYear();
+		const minYear = minDate.getYear();
+		const minMonth = minDate.getMonth();
+		const maxYear = maxDate.getYear();
+		const maxMonth = maxDate.getMonth();
+
+		return year < minYear || (year === minYear && month < minMonth) || year > maxYear || (year === maxYear && month > maxMonth);
 	}
 }
 

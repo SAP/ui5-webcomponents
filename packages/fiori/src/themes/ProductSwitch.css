@@ -1,6 +1,6 @@
 :host {
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
 }
 
 .ui5-product-switch-root {

@@ -1,0 +1,18 @@
+<div 
+	class="ui5-avatar-root" 
+	tabindex="{{tabindex}}"
+	data-sap-focus-ref
+	@keyup={{_onkeyup}}
+	@keydown={{_onkeydown}}
+	@focusout={{_onfocusout}}
+	@focusin={{_onfocusin}}
+	@click={{_onclick}}
+>
+	{{#if image}}
+		<span class="ui5-avatar-img" style="{{styles.img}}" role="img" aria-label="{{accessibleNameText}}"></span>
+	{{else if icon}}
+		<ui5-icon class="ui5-avatar-icon" name="{{icon}}" accessible-name="{{accessibleNameText}}"></ui5-icon>
+	{{else if initials}}
+		<span class="ui5-avatar-initials">{{validInitials}}</span>
+	{{/if}}
+</div>

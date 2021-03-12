@@ -25,6 +25,7 @@
 	height: 100%;
 	overflow: hidden;
 	pointer-events: none;
+	will-change: transform;
 }
 
 .ui5-switch-track {
@@ -32,9 +33,9 @@
 	width: 100%;
 	display: flex;
 	align-items: center;
-	background: var(--_ui5_switch_track_bg);
+	background: var(--sapButton_Track_Background);
 	border: 1px solid;
-	border-color: var(--sapUiContentForegroundBorderColor);
+	border-color: var(--sapContent_ForegroundBorderColor);
 	border-radius: var(--_ui5_switch_track_border_radius);
 	box-sizing: border-box;
 }
@@ -57,7 +58,7 @@
 	width: var(--_ui5_switch_handle_width);
 	height: var(--_ui5_switch_handle_height);
 	background: var(--_ui5_switch_handle_bg);
-	border: var(--_ui5_switch_handle_border_width) solid var(--sapUiContentForegroundBorderColor);
+	border: var(--_ui5_switch_handle_border_width) solid var(--sapContent_ForegroundBorderColor);
 	border-radius: var(--_ui5_switch_handle_border_radius);
 	box-sizing: border-box;
 }
@@ -68,11 +69,11 @@
 	position: absolute;
 	min-width: 1.625rem;
 	padding: 0 0.125rem;
-	font-size: var(--sapMFontSmallSize);
-	font-family: "72","72full",Arial,Helvetica,sans-serif;
+	font-size: var(--sapFontSmallSize);
+	font-family: "72override", var(--sapFontFamily);
 	text-transform: uppercase;
 	text-align: center;
-	color: var(--sapUiBaseText);
+	color: var(--sapTextColor);
 	white-space: nowrap;
 	user-select: none;
 	-webkit-user-select: none;
@@ -80,7 +81,7 @@
 }
 
 .ui5-switch-text--on {
-	left: calc(-100% + 1.9125rem);
+	left: var(--_ui5_switch_text_on_left);
 }
 
 .ui5-switch-text--off {
@@ -100,8 +101,9 @@
 	left: -var(--_ui5_switch_outline);
 	top: 0;
 	bottom: 0;
-	width: 100%;
-	border: var(--_ui5_switch_outline) dotted var(--sapUiContentFocusColor);
+	left: 0;
+	right: 0;
+	border: var(--_ui5_switch_outline) dotted var(--sapContent_FocusColor);
 	pointer-events: none;
 }
 
@@ -122,10 +124,6 @@
 	cursor: default;
 }
 
-.ui5-switch-root.ui5-switch--disabled .ui5-switch-track {
-	background: var(--_ui5_switch_track_disabled_bg);
-	border-color: var(--_ui5_switch_track_disabled_border_color);
-}
 
 .ui5-switch-root.ui5-switch--disabled.ui5-switch--checked .ui5-switch-track {
 	background: var(--_ui5_switch_track_disabled_checked_bg);
@@ -137,33 +135,23 @@
 
 .ui5-switch-root.ui5-switch--disabled .ui5-switch-handle {
 	background: var(--_ui5_switch_handle_disabled_bg);
-	border-color: var(--_ui5_switch_handle_disabled_border_color);
 }
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled .ui5-switch-track {
 	background: var(--_ui5_switch_track_disabled_semantic_checked_bg);
-	border-color: var(--_ui5_switch_track_disabled_semantic_checked_border_color);
 }
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled .ui5-switch-handle {
 	background: var(--_ui5_switch_handle_disabled_semantic_checked_bg);
-	border-color: var(--_ui5_switch_handle_disabled_semantic_checked_border_color);
 }
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled:not(.ui5-switch--checked) .ui5-switch-track {
 	background: var(--_ui5_switch_track_disabled_semantic_bg);
-	border-color: var(--_ui5_switch_track_disabled_semantic_border_color);
 }
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled:not(.ui5-switch--checked) .ui5-switch-handle {
-	background: var(--_ui5_switch_handle_disabled_semantic_bg);
-	border-color: var(--_ui5_switch_handle_disabled_semantic_border_color);
+	background: var(--sapButton_Background);
 }
-
-.ui5-switch-root.ui5-switch--disabled.ui5-switch--checked .ui5-switch-text {
-	color: var(--_ui5_switch_text_disabled_color);
-}
-
 
 /* switch checked */
 .ui5-switch-root.ui5-switch--checked .ui5-switch-handle {
@@ -172,34 +160,38 @@
 }
 
 .ui5-switch-root.ui5-switch--checked .ui5-switch-track {
-	background: var(--_ui5_switch_track_checked_bg);
-	border-color: var(--_ui5_switch_track_checked_border_color);
+	background: var(--sapButton_Track_Selected_Background);
 }
 
 .ui5-switch-root.ui5-switch--checked .ui5-switch-slider {
 	/* Move slider to oposite end, taking into account the handle as an offset. */
 	/* Note: translate(calc()) does not work in IE11 */
-	transform: translateX(100%) translateX(-1.875rem);
+	transform	: var(--_ui5_switch_slide_transform);
+}
+
+.ui5-switch-desktop.ui5-switch-root.ui5-switch--checked:not(.ui5-switch--disabled) .ui5-switch-text--on,
+.ui5-switch-root.ui5-switch--checked .ui5-switch-text--off {
+	color: var(--sapButton_Track_Selected_TextColor);
 }
 
 /* switch semantic off */
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-track,
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-handle {
-	border-color: var(--sapUiSuccessBorder);
+	border-color: var(--sapSuccessBorderColor);
 }
 
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-track {
-	background: var(--sapUiSuccessBG);
+	background: var(--sapSuccessBackground);
 }
 
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-handle {
-	background: var(--sapUiSuccessBGLighten5); /* lighten(var(--sapUiSuccessBG), 5) */
+	background: var(--sapButton_Background);
 }
 
 /* switch semantic icon */
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-text {
 	justify-content: center;
-	font-size: var(--sapMFontSmallSize);
+	font-size: var(--sapFontSmallSize);
 }
 
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-icon-on,
@@ -208,48 +200,49 @@
 	height: 0.75rem;
 }
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-icon-on {
-	color: var(--sapUiPositiveElement);
+	color: var(--sapPositiveElementColor);
 }
 
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-icon-off {
-	color: var(--sapUiNegativeElement);
+	color: var(--sapNegativeElementColor);
 }
 
 /* switch semantic on */
 .ui5-switch-root.ui5-switch--semantic:not(.ui5-switch--checked) .ui5-switch-track,
 .ui5-switch-root.ui5-switch--semantic:not(.ui5-switch--checked) .ui5-switch-handle {
-	border-color: var(--sapUiErrorBorder);
+	border-color: var(--sapErrorBorderColor);
 }
 
 .ui5-switch-root.ui5-switch--semantic:not(.ui5-switch--checked) .ui5-switch-track {
-	background: var(--sapUiErrorBG);
+	background: var(--sapErrorBackground);
 }
 
 .ui5-switch-root.ui5-switch--semantic:not(.ui5-switch--checked) .ui5-switch-handle {
-	background: var(--sapUiErrorBGLighten4); /*lighten(var(--sapUiErrorBG),4);*/
+	background: var(--sapButton_Background);
 }
 
 /* switch hover effects */
 
 /* switch on hover, when switched off */
 .ui5-switch-desktop.ui5-switch-root:not(.ui5-switch--disabled):hover .ui5-switch-track {
-	border-color: var(--sapUiContentForegroundBorderColor);
+	border-color: var(--sapButton_Hover_BorderColor);
+	background: var(--sapButton_Track_Background);
 }
 
 .ui5-switch-desktop.ui5-switch-root:not(.ui5-switch--disabled):hover .ui5-switch-handle {
-	background: var(--_ui5_switch_handle_hover_bg);
-	border-color: var(--sapUiContentForegroundBorderColor);
+	background: var(--sapButton_Hover_Background);
+	border-color: var(--sapButton_Hover_BorderColor);
 }
 
  /* switch on hover, when switched on */
 .ui5-switch-desktop.ui5-switch-root.ui5-switch--checked:not(.ui5-switch--disabled):hover .ui5-switch-handle {
-	background: var(--sapUiToggleButtonPressedHoverBackground);
-	border-color: var(--sapUiToggleButtonPressedHoverBorderColor);
+	background: var(--sapButton_Selected_Hover_Background);
+	border-color: var(--sapButton_Hover_BorderColor);
 }
 
 .ui5-switch-desktop.ui5-switch-root.ui5-switch--checked:not(.ui5-switch--disabled):hover .ui5-switch-track {
-	background: var(--_ui5_switch_track_hover_checked_bg);
-	border-color: var(--_ui5_switch_track_hover_border_color);
+	border-color: var(--sapButton_Hover_BorderColor);
+	background: var(--_ui5_switch_track_hover_checked_background_color);
 }
 
 /* semantic switch on hover, when switched off */
@@ -282,40 +275,6 @@
 	color: var(--_ui5_switch_text_off_semantic_color);
 }
 
-/* Compact size */
-:host([data-ui5-compact-size]) .ui5-switch-root {
-	height: var(--_ui5_switch_compact_height);
-	min-width: var(--_ui5_switch_compact_width);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch-root {
-	height: var(--_ui5_switch_compact_height);
-	min-width: var(--_ui5_switch_compact_width);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch-root .ui5-switch-handle {
-	height: var(--_ui5_switch_handle_compact_height);
-	width: var(--_ui5_switch_handle_compact_width);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch-root .ui5-switch-text--on {
-	left: calc(-100% + 1.5625rem);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch-root.ui5-switch--checked .ui5-switch-slider {
-	/* Move slider to oposite end, taking into account the handle as an offset. */
-	/* Note: translate(calc()) does not work in IE11 */
-	transform: translateX(100%) translateX(-1.5rem);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch-root.ui5-switch--no-label {
-	min-width: var(--_ui5_switch_compact_no_label_width);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch--no-label .ui5-switch-track {
-	height: var(--_ui5_switch_track_compact_no_label_height);
-}
-
 /* RTL */
 [dir="rtl"].ui5-switch-root .ui5-switch-handle {
 	left: 0;
@@ -323,24 +282,15 @@
 }
 
 [dir="rtl"].ui5-switch-root.ui5-switch--checked .ui5-switch-slider {
-	transform: translateX(1.875rem) translateX(-100%);
+	transform: var(--_ui5_switch_rtl_transform);
 }
 
 [dir="rtl"].ui5-switch-root .ui5-switch-text--on {
-	right: calc(-100% + 1.9125rem);
+	right: var(--_ui5_switch_text_right);
 	left: auto;
 }
 
 [dir="rtl"].ui5-switch-root .ui5-switch-text--off {
 	right: auto;
 	left: 0;
-}
-
-/* RTL + Compact */
-:host([data-ui5-compact-size]) [dir="rtl"].ui5-switch-root.ui5-switch--checked .ui5-switch-slider {
-	transform: translateX(-100%) translateX(1.5rem);
-}
-
-:host([data-ui5-compact-size]) [dir="rtl"].ui5-switch-root .ui5-switch-text--on {
-	right: calc(-100% + 1.5625rem);
 }

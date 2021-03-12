@@ -7,6 +7,12 @@
 <div class="control-tag">&lt;ui5-tabcontainer&gt;</div>
 
 <section>
+	<!-- Workaround for IE issue -->
+	<style>
+		ui5-tabcontainer {
+			width: calc(100% + 2 * .0625rem) !important;
+		}
+	</style>
 	<h3>Basic TabContainer</h3>
 	<div class="snippet">
 		<ui5-tabcontainer class="full-width" show-overflow>
@@ -50,8 +56,9 @@
 	</xmp></pre>
 </section>
 
+<!-- text only -->
 <section>
-	<h3>Text Only TabContainer</h3>
+	<h3>TabContainer with text only tabs</h3>
 	<div class="snippet">
 		<ui5-tabcontainer class="full-width" collapsed fixed show-overflow>
 			<ui5-tab text="Home"></ui5-tab>
@@ -68,6 +75,78 @@
 	<ui5-tab text="Who are we"></ui5-tab>
 	<ui5-tab text="About"></ui5-tab>
 <ui5-tab text="Contacts"></ui5-tab>
+</ui5-tabcontainer>
+	</xmp></pre>
+</section>
+
+<!-- text and additional-text -->
+<section>
+	<h3>TabContainer with text and additional-text</h3>
+	<div class="snippet">
+		<ui5-tabcontainer show-overflow="true" collapsed fixed>
+			<ui5-tab text="Info" additional-text="3">
+			</ui5-tab>
+			<ui5-tab text="Attachments" additional-text="24" selected>
+			</ui5-tab>
+			<ui5-tab text="Notes" additional-text="16">
+			</ui5-tab>
+			<ui5-tab text="People" additional-text="34">
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-tabcontainer show-overflow="true" collapsed fixed>
+	<ui5-tab text="Info" additional-text="3">
+	</ui5-tab>
+	<ui5-tab text="Attachments" additional-text="24" selected>
+	</ui5-tab>
+	<ui5-tab text="Notes" additional-text="16">
+	</ui5-tab>
+	<ui5-tab text="People" additional-text="34">
+	</ui5-tab>
+</ui5-tabcontainer>
+	</xmp></pre>
+</section>
+
+<!-- Inline tabs -->
+<section>
+	<h3>TabContainer with tabLayout="Inline"</h3>
+	<div class="snippet">
+		<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+			<ui5-tab text="Monitors" additional-text="(10)">
+			</ui5-tab>
+			<ui5-tab text="Cameras" additional-text="(2)" selected>
+			</ui5-tab>
+			<ui5-tab text="Rooms" additional-text="(16)">
+			</ui5-tab>
+		</ui5-tabcontainer>
+
+		<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+			<ui5-tab icon="laptop" ext="Monitors" additional-text="(10)">
+			</ui5-tab>
+			<ui5-tab icon="video" text="Cameras" additional-text="(2)" selected>
+			</ui5-tab>
+			<ui5-tab icon="home" text="Rooms" additional-text="(16)">
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+	<ui5-tab text="Monitors" additional-text="(10)">
+	</ui5-tab>
+	<ui5-tab text="Cameras" additional-text="(2)" selected>
+	</ui5-tab>
+	<ui5-tab text="Rooms" additional-text="(16)">
+	</ui5-tab>
+</ui5-tabcontainer>
+
+<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+	<ui5-tab icon="laptop" ext="Monitors" additional-text="(10)">
+	</ui5-tab>
+	<ui5-tab icon="video" text="Cameras" additional-text="(2)" selected>
+	</ui5-tab>
+	<ui5-tab icon="home" text="Rooms" additional-text="(16)">
+	</ui5-tab>
 </ui5-tabcontainer>
 	</xmp></pre>
 </section>

@@ -1,0 +1,37 @@
+{{#if _isPhone}}
+	<ui5-dialog
+		?with-padding={{withPadding}}
+		stretch
+		_disable-initial-focus
+		@ui5-before-open="{{_propagateDialogEvent}}"
+		@ui5-after-open="{{_afterDialogOpen}}"
+		@ui5-before-close="{{_propagateDialogEvent}}"
+		@ui5-after-close="{{_afterDialogClose}}"
+	>
+		{{!-- forward slot header to inner dialog slot header --}}
+		{{#unless _hideHeader}}
+			{{#if header.length}}
+				<slot slot="header" name="header"></slot>
+			{{else}}
+				<header class="{{dialogClasses.header}}">
+					{{#if headerText }}
+						<ui5-title level="H2" class="ui5-popup-header-text ui5-responsive-popover-header-text">{{headerText}}</ui5-title>
+					{{/if}}
+					<ui5-button
+						icon="decline"
+						design="Transparent"
+						aria-label="{{_closeDialogAriaLabel}}"
+						@click="{{close}}"
+					>
+					</ui5-button>
+				</header>
+			{{/if}}
+		{{/unless}}
+
+		<slot></slot>
+		{{!-- forward slot footer to inner dialog slot footer --}}
+		<slot slot="footer" name="footer"></slot>
+	</ui5-dialog>
+{{else}}
+	{{>include "./Popover.hbs"}}
+{{/if}}

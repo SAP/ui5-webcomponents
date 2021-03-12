@@ -1,0 +1,11 @@
+<div class="ui5-toast-root"
+	role="alert"
+	style="{{styles.root}}"
+	dir="{{effectiveDir}}"
+	@mouseover="{{_onmouseover}}"
+	@mouseleave="{{_onmouseleave}}"
+	@transitionend="{{_ontransitionend}}">
+	<bdi>
+		<slot></slot>
+	</bdi>
+</div>

@@ -6,20 +6,20 @@
 
 :host {
 	max-width: 100%;
-	color: var(--sapUiLink);
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	color: var(--sapLinkColor);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
 	cursor: pointer;
+	outline: none;
 }
 
 :host([disabled]) {
 	pointer-events: none;
 }
 
-:host(:not([disabled])) .ui5-link-root:hover,
 :host(:not([disabled])) .ui5-link-root:hover {
-	text-decoration: underline;
-	color: var(--sapUiLinkHover);
+	color: var(--sapLinkColor);
+	text-decoration: var(--_ui5_link_hover_text_decoration);
 }
 
 :host([disabled]) .ui5-link-root {
@@ -36,11 +36,11 @@
 
 :host([design="Subtle"]) .ui5-link-root,
 :host([design="Subtle"]) .ui5-link-root:visited {
-	color: var(--_ui5_link_subtle_color);
+	color: var(--sapLink_SubtleColor);
 }
 
 :host([design="Subtle"]) .ui5-link-root:focus {
-	color: var(--sapUiLink);
+	color: var(--sapLinkColor);
 }
 
 :host([wrap]) .ui5-link-root {
@@ -49,6 +49,7 @@
 }
 
 .ui5-link-root {
+	width: 100%;
 	display: inline-block;
 	position: relative;
 	white-space: nowrap;
@@ -57,6 +58,7 @@
 	word-wrap: normal;
 	text-decoration: none;
 	outline: none;
+	text-decoration: var(--_ui5_link_text_decoration);
 }
 
 .ui5-link-root,
@@ -66,16 +68,7 @@
 }
 
 .ui5-link-root:focus {
+	outline-offset: -1px;
+	outline: 1px dotted var(--sapContent_FocusColor);
 	text-decoration: underline;
-}
-
-.ui5-link-root:focus::after {
-	content: "";
-	width: var(--_ui5_link_outline_element_size);
-	height: var(--_ui5_link_outline_element_size);
-	position: absolute;
-	left: 0px;
-	border: 1px dotted var(--sapUiContentFocusColor);
-	top: 0;
-	outline: none;
 }

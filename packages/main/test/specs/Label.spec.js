@@ -1,7 +1,23 @@
-const assert = require('assert');
+const assert = require("chai").assert;
 
 describe("General API", () => {
 	browser.url('http://localhost:8080/test-resources/pages/Label.html');
+
+	it("tests initial rendering", () => {
+		const labelRoot = browser.$("#basic-label").shadow$(".ui5-label-root");
+
+		assert.ok(labelRoot, "Label is rendered");
+	})
+
+	it("changes text of ui5-label", () => {
+		const INITIAL_TEXT = "Basic Label";
+		const NEW_TEXT = "Advanced Label";
+		assert.strictEqual(browser.execute("return document.querySelector('#basic-label').shadowRoot.querySelector('slot').assignedNodes()[0].textContent"), INITIAL_TEXT, "Initial text is correct");
+
+		//change label's text
+		browser.execute(`document.querySelector('#basic-label').innerHTML = '${NEW_TEXT}'`);
+		assert.strictEqual(browser.execute("return document.querySelector('#basic-label').shadowRoot.querySelector('slot').assignedNodes()[0].textContent"), NEW_TEXT, "Text of label should be changed");
+	});
 	
 	it("should show required star", () => {
 		const requiredLabelContent = browser.execute(`
@@ -9,6 +25,18 @@ describe("General API", () => {
 		`);
 
 		assert.strictEqual(requiredLabelContent, '"*"', "after's content should be *");
+	});
+
+	it("tests show-colon does not force truncation", () => {
+		const labelWithNoColon = browser.$("#showColon-false").shadow$(".ui5-label-text-wrapper");
+		const labelWithShowColon = browser.$("#showColon-true").shadow$(".ui5-label-text-wrapper");
+
+		const labelWithNoColonSize = labelWithNoColon.getSize();
+		const labelWithShowColonSize = labelWithShowColon.getSize();
+
+		// Comparing ui5-label(s) "Basic Label" and "Basic Label:", but just the "Basic Label" part,
+		// that should be equal if no trunctation and not equal if truncated.
+		assert.strictEqual(labelWithNoColonSize.width, labelWithShowColonSize.width, "Both texts are equal in width");
 	});
 
 	it("should wrap the text of the label", () => {
@@ -56,7 +84,7 @@ describe("General API", () => {
 			assert.ok(field.isFocused(), "native-textarea should be focussed");
 		});
 
-		it("should focus ui5-datepicker on click", () => {
+		it("should focus ui5-date-picker on click", () => {
 			const label = browser.$("#label-for-ui5-datepicker");
 			const field = browser.$("#ui5-datepicker");
 

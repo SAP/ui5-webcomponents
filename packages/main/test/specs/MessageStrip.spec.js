@@ -1,11 +1,11 @@
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("MessageStrip general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/MessageStrip.html");
 
 	it("tests close event", () => {
 
-		const closeButton = browser.$("#messageStrip").shadow$(".ui5-messagestrip-close-icon-wrapper");
+		const closeButton = browser.$("#messageStrip").shadow$(".ui5-messagestrip-close-button");
 		const input = browser.$("#inputField");
 
 		closeButton.click();

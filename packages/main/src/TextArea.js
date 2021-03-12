@@ -1,21 +1,36 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import Popover from "./Popover.js";
 
-import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/i18n/i18n-defaults.js";
+import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
+import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
+
+import {
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	TEXTAREA_CHARACTERS_LEFT,
+	TEXTAREA_CHARACTERS_EXCEEDED,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
+import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-textarea",
+	languageAware: true,
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
 		 * Defines the value of the Web Component.
@@ -42,9 +57,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-textarea</code> is readonly.
+		 * Defines whether the <code>ui5-textarea</code> is read-only.
 		 * <br><br>
-		 * <b>Note:</b> A readonly <code>ui5-textarea</code> is not editable,
+		 * <b>Note:</b> A read-only <code>ui5-textarea</code> is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
@@ -79,6 +94,31 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the value state of the <code>ui5-textarea</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
+		 * <br><br>
+		 * <b>Note:</b> If <code>maxlength</code> property is set,
+		 * the component turns into "Warning" state once the characters exceeds the limit.
+		 * In this case, only the "Error" state is considered and can be applied.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @since 1.0.0-rc.7
+		 * @public
+		 */
+		valueState: {
+			type: ValueState,
+			defaultValue: ValueState.None,
+		},
+
+		/**
 		 * Defines the number of visible text lines for the component.
 		 * <br><br>
 		 * <b>Notes:</b>
@@ -88,7 +128,7 @@ const metadata = {
 		 * <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li>
 		 * </ul>
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -100,10 +140,11 @@ const metadata = {
 		/**
 		 * Defines the maximum number of characters that the <code>value</code> can have.
 		 *
-		 * @type {number}
+		 * @type {Integer}
+		 * @defaultValue null
 		 * @public
 		 */
-		maxLength: {
+		maxlength: {
 			type: Integer,
 			defaultValue: null,
 		},
@@ -113,8 +154,8 @@ const metadata = {
 		 * in the <code>ui5-textarea</code>.
 		 * <br><br>
 		 * If set to <code>false</code>, the user is not allowed to enter more characters than what is set in the
-		 * <code>maxLength</code> property.
-		 * If set to <code>true</code> the characters exceeding the <code>maxLength</code> value are selected on
+		 * <code>maxlength</code> property.
+		 * If set to <code>true</code> the characters exceeding the <code>maxlength</code> value are selected on
 		 * paste and the counter below the <code>ui5-textarea</code> displays their number.
 		 *
 		 * @type {boolean}
@@ -140,7 +181,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of lines that the Web Component can grow.
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -152,18 +193,45 @@ const metadata = {
 		/**
 		 * Determines the name with which the <code>ui5-textarea</code> will be submitted in an HTML form.
 		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-textarea</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		name: {
+			type: String,
+		},
+
+		/**
+		 * Defines the aria-label attribute for the textarea.
+		 *
+		 * @type {String}
+		 * @since 1.0.0-rc.9
+		 * @private
+		 * @defaultvalue ""
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+
+		/**
+		 * Receives id(or many ids) of the elements that label the textarea.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		ariaLabelledby: {
 			type: String,
 		},
 
@@ -181,14 +249,59 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * @private
+		 */
 		_mirrorText: {
 			type: Object,
 			multiple: true,
 			defaultValue: "",
 		},
+
+		/**
+		 * @private
+		 */
 		_maxHeight: {
 			type: String,
 			noAttribute: true,
+		},
+
+		/**
+		 * @private
+		 */
+		_width: {
+			type: Integer,
+		},
+	},
+	slots: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
+
+		/**
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-textarea</code>.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed if the <code>ui5-textarea</code> has
+		 * <code>valueState</code> of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
+		 * @type {HTMLElement[]}
+		 * @since 1.0.0-rc.7
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
@@ -253,10 +366,29 @@ class TextArea extends UI5Element {
 		return TextAreaTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return TextAreaPopoverTemplate;
+	}
+
+	static get staticAreaStyles() {
+		return valueStateMessageStyles;
+	}
+
 	constructor() {
 		super();
 
+		this._firstRendering = true;
+		this._openValueStateMsgPopover = false;
+		this._fnOnResize = this._onResize.bind(this);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._fnOnResize);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._fnOnResize);
 	}
 
 	onBeforeRendering() {
@@ -278,6 +410,11 @@ class TextArea extends UI5Element {
 		}
 	}
 
+	onAfterRendering() {
+		this.toggleValueStateMessage(this.openValueStateMsgPopover);
+		this._firstRendering = false;
+	}
+
 	getInputDomRef() {
 		return this.getDomRef().querySelector("textarea");
 	}
@@ -292,10 +429,12 @@ class TextArea extends UI5Element {
 
 	_onfocusin() {
 		this.focused = true;
+		this._openValueStateMsgPopover = true;
 	}
 
 	_onfocusout() {
 		this.focused = false;
+		this._openValueStateMsgPopover = false;
 	}
 
 	_onchange() {
@@ -303,14 +442,14 @@ class TextArea extends UI5Element {
 	}
 
 	_oninput(event) {
-		const nativeTextarea = this.getInputDomRef();
+		const nativeTextArea = this.getInputDomRef();
 
 		/* skip calling change event when an textarea with a placeholder is focused on IE
 			- value of the host and the internal textarea should be different in case of actual input
 			- input is called when a key is pressed => keyup should not be called yet
 		*/
-		const skipFiring = (this.getInputDomRef().value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
-		if (event.target === nativeTextarea) {
+		const skipFiring = (nativeTextArea.value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
+		if (event.target === nativeTextArea) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
 		}
@@ -319,15 +458,44 @@ class TextArea extends UI5Element {
 			return;
 		}
 
-		this.value = nativeTextarea.value;
+		this.value = nativeTextArea.value;
 		this.fireEvent("input", {});
 
 		// Angular two way data binding
 		this.fireEvent("value-changed");
 	}
 
+	_onResize() {
+		if (this.displayValueStateMessagePopover) {
+			this._width = this.offsetWidth;
+		}
+	}
+
+	toggleValueStateMessage(toggle) {
+		if (toggle) {
+			this.openPopover();
+		} else {
+			this.closePopover();
+		}
+	}
+
+	async openPopover() {
+		this.popover = await this._getPopover();
+		this.popover && this.popover.openBy(this.shadowRoot.querySelector(".ui5-textarea-inner"));
+	}
+
+	async closePopover() {
+		this.popover = await this._getPopover();
+		this.popover && this.popover.close();
+	}
+
+	async _getPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("[ui5-popover]");
+	}
+
 	_tokenizeText(value) {
-		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/"/gm, "&#39;").replace(/</gm, "&lt;")
+		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "&lt;")
 			.replace(/>/gm, "&gt;")
 			.split("\n");
 
@@ -353,7 +521,7 @@ class TextArea extends UI5Element {
 			leftCharactersCount;
 
 		if (this.showExceededText) {
-			const maxLength = this.maxLength || 0;
+			const maxLength = this.maxlength || 0;
 
 			if (maxLength) {
 				leftCharactersCount = maxLength - this.value.length;
@@ -365,11 +533,21 @@ class TextArea extends UI5Element {
 				}
 			}
 		} else {
-			calcedMaxLength = this.maxLength;
+			calcedMaxLength = this.maxlength;
 		}
 
 		return {
 			exceededText, leftCharactersCount, calcedMaxLength,
+		};
+	}
+
+	get classes() {
+		return {
+			valueStateMsg: {
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning || this.exceeding,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
 		};
 	}
 
@@ -388,6 +566,9 @@ class TextArea extends UI5Element {
 				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
 				"max-height": (this._maxHeight),
 			},
+			valueStateMsgPopover: {
+				"max-width": `${this._width}px`,
+			},
 		};
 	}
 
@@ -395,18 +576,84 @@ class TextArea extends UI5Element {
 		return this.disabled ? undefined : "0";
 	}
 
-	get ariaLabelledBy() {
-		return this.showExceededText ? `${this._id}-exceededText` : undefined;
+	get ariaLabelText() {
+		const effectiveAriaLabelText = getEffectiveAriaLabelText(this);
+
+		if (this.showExceededText) {
+			if (effectiveAriaLabelText) {
+				return `${effectiveAriaLabelText} ${this._exceededTextProps.exceededText}`;
+			}
+
+			return this._exceededTextProps.exceededText;
+		}
+
+		return effectiveAriaLabelText;
+	}
+
+	get ariaDescribedBy() {
+		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+	}
+
+	get ariaValueStateHiddenText() {
+		if (!this.hasValueState) {
+			return;
+		}
+
+		if (this.hasCustomValueState) {
+			return this.valueStateMessageText.map(el => el.textContent).join(" ");
+		}
+
+		return this.valueStateText;
 	}
 
 	get ariaInvalid() {
 		return this.valueState === "Error" ? "true" : undefined;
 	}
 
-	static async define(...params) {
-		await fetchI18nBundle("@ui5/webcomponents");
+	get openValueStateMsgPopover() {
+		return !this._firstRendering && this._openValueStateMsgPopover && this.displayValueStateMessagePopover;
+	}
 
-		super.define(...params);
+	get displayValueStateMessagePopover() {
+		return this.hasCustomValueState || this.hasValueState || this.exceeding;
+	}
+
+	get hasCustomValueState() {
+		return !!this.valueStateMessage.length && this.hasValueState;
+	}
+
+	get hasValueState() {
+		return this.valueState === ValueState.Error || this.valueState === ValueState.Warning || this.valueState === ValueState.Information;
+	}
+
+	get valueStateMessageText() {
+		return this.valueStateMessage.map(x => x.cloneNode(true));
+	}
+
+	get valueStateText() {
+		if (this.valueState !== ValueState.Error && this.exceeding) {
+			return this.valueStateTextMappings()[ValueState.Warning];
+		}
+
+		return this.valueStateTextMappings()[this.valueState];
+	}
+
+	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
+	static get dependencies() {
+		return [Popover];
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

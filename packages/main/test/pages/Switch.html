@@ -2,17 +2,15 @@
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
 	<title>ui5-switch</title>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script
-		src="../../resources/bundle.esm.js"
-		type="module"
-	></script>
-
+	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 	<script>delete Document.prototype.adoptedStyleSheets</script>
 </head>
 
@@ -20,8 +18,44 @@
 	ui5-switch {
 		margin: 8px;
 	}
+
+    #styled1::part(slider) {
+        height: 1.75rem;
+        background: orange;
+        border-color: green;
+    }
+    #styled1::part(text-on) {
+        color: blue;
+        font-weight: bold;
+    }
+    #styled1::part(text-off) {
+        color: magenta;
+        font-weight: bold;
+    }
+    #styled1::part(handle) {
+        background: orange;
+        border-color: green;
+    }
+
+    .styled2::part(slider) {
+        height: 0.75rem;
+        background: purple;
+        border-color: white;
+    }
+    .styled2::part(text-on) {
+        font-size: .5rem;
+        color: white;
+    }
+    .styled2::part(text-off) {
+        font-size: .5rem;
+        color: white;
+    }
+    .styled2::part(handle) {
+        background: purple;
+        border-color: white;
+    }
 </style>
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 	<h3>Default Switch</h3>
 	<div style="display: flex">
 		<ui5-switch style="width:200px" text-on="On" text-off="Off"></ui5-switch>
@@ -61,6 +95,12 @@
 		<ui5-switch text-on="Enabled" text-off="disabled" style="width: 200px; height: 100px;"></ui5-switch>
 		<ui5-switch checked  text-on="Allowed" text-off="Prohibitted" style="width: 200px; height: 200px;"></ui5-switch>
 	</div>
+
+    <h3>Switch styled with shadow parts</h3>
+    <div style="display: flex">
+        <ui5-switch id="styled1" text-on="On" text-off="Off"></ui5-switch>
+        <ui5-switch class="styled2" checked text-on="Yes" text-off="No"></ui5-switch>
+    </div>
 
 	<ui5-input id="field"></ui5-input>
 </body>

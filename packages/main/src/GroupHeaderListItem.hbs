@@ -1,9 +1,14 @@
 <li
 	tabindex="{{_tabIndex}}"
 	class="ui5-ghli-root {{classes.main}}"
-	@focusin="{{onfocusin}}"
-	@focusout="{{onfocusout}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+	@keydown="{{_onkeydown}}"
+	role="option"
+	style="list-style-type: none;"
 >
+	<span class="ui5-hidden-text">{{groupHeaderText}}</span>
+
 	<div id="{{_id}}-content" class="ui5-li-content">
 		<span class="ui5-ghli-title"><slot></slot></span>
 	</div>

@@ -2440,7 +2440,7 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 					}
 					closeTag("parameters");
 				}
-				methodList("methods", event.methods, true);
+				methodList("methods", event.methods);
 				closeTag("event");
 			}
 			endCollection("events");
@@ -2651,8 +2651,8 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 
 	attrib("name", symbol.longname);
 	attrib("basename", symbol.name);
-	if (symbol.customtag) {
-		attrib("customTag", symbol.customtag);
+	if (symbol.tagname) {
+		attrib("tagname", symbol.tagname);
 	}
 	if (symbol.appenddocs) {
 		attrib("appenddocs", symbol.appenddocs);
@@ -2787,7 +2787,7 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 			endCollection("properties");
 		}
 	} else if ( kind === 'function' ) {
-		methodSignature(symbol, /* no since */ true);
+		methodSignature(symbol);
 	}
 
 	if ( !skipMembers ) {
@@ -2838,6 +2838,9 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 				if (member.slot) {
 					tag("property");
 					attrib("name", member.name);
+					if (member.propertyName) {
+						attrib("propertyName", member.propertyName);
+					}
 					if (member.__ui5.module && member.__ui5.module !== symbol.__ui5.module) {
 						attrib("module", member.__ui5.module);
 						attrib("export", undefined, '', true);
@@ -2878,6 +2881,9 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 				if ( member.__ui5.module && member.__ui5.module !== symbol.__ui5.module ) {
 					attrib("module", member.__ui5.module);
 					attrib("export", undefined, '', true);
+				}
+				if (member.allowPreventDefault) {
+					attrib("allowPreventDefault", true);
 				}
 				attrib("visibility", visibility(member), 'public');
 				if ( member.scope === 'static' ) {

@@ -2,12 +2,17 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import {
+	getAriaLabelledByTexts,
+} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import findNodeOwner from "@ui5/webcomponents-base/dist/util/findNodeOwner.js";
 import Button from "./Button.js";
+import TitleLevel from "./types/TitleLevel.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
 
@@ -21,6 +26,8 @@ import panelCss from "./generated/themes/Panel.css.js";
  */
 const metadata = {
 	tag: "ui5-panel",
+	languageAware: true,
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
@@ -45,7 +52,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			type: Node,
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
@@ -57,7 +64,7 @@ const metadata = {
 		 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		headerText: {
@@ -93,6 +100,7 @@ const metadata = {
 		 * to <code>Region</code> or <code>Complementary</code>.
 		 *
 		 * @type {PanelAccessibleRole}
+		 * @defaultvalue "Form"
 		 * @public
 		 */
 		accessibleRole: {
@@ -101,27 +109,67 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the "aria-level" of <code>ui5-panel</code> heading,
+		 * set by the <code>headerText</code>.
+		 * <br><br>
+		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
+		 * @type {TitleLevel}
+		 * @defaultvalue "H2"
+		 * @public
+		*/
+		headerLevel: {
+			type: TitleLevel,
+			defaultValue: TitleLevel.H2,
+		},
+
+		/**
+		 * Sets the accessible aria name of the <code>ui5-panel</code>.
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * When set to <code>true</code>, the <code>accessibleName</code> property will be
+		 * applied not only on the panel root itself, but on its toggle button too.
+		 * <b>Note:</b> This property only has effect if <code>accessibleName</code> is set and a header slot is provided.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+ 		 */
+		useAccessibleNameForToggleButton: {
+			type: Boolean,
+		},
+
+		/**
 		 * @private
 		 */
 		_hasHeader: {
 			type: Boolean,
 		},
+
 		_header: {
 			type: Object,
 		},
+
 		_contentExpanded: {
 			type: Boolean,
 			noAttribute: true,
 		},
+
 		_animationRunning: {
 			type: Boolean,
 			noAttribute: true,
 		},
+
 		_buttonAccInfo: {
 			type: Object,
 		},
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
 		 * Fired when the ui5-panel is expanded/collapsed by user interaction.
@@ -324,29 +372,47 @@ class Panel extends UI5Element {
 		return !this.collapsed;
 	}
 
-	get ariaLabelledBy() {
-		return this.header.length ? "" : `${this._id}-header`;
-	}
-
 	get accRole() {
 		return this.accessibleRole.toLowerCase();
+	}
+
+	get effectiveAccessibleName() {
+		return typeof this.accessibleName === "string" && this.accessibleName.length ? this.accessibleName : undefined;
 	}
 
 	get accInfo() {
 		return {
 			"button": {
-				"ariaExpanded": this._hasHeader ? this.expanded : undefined,
-				"ariaControls": this._hasHeader ? `${this._id}-content` : undefined,
+				"ariaExpanded": this.expanded,
+				"ariaControls": `${this._id}-content`,
 				"title": this.toggleButtonTitle,
+				"ariaLabelButton": !this.nonFocusableButton && this.useAccessibleNameForToggleButton ? this.effectiveAccessibleName : undefined,
 			},
-			"ariaExpanded": !this._hasHeader ? this.expanded : undefined,
-			"ariaControls": !this._hasHeader ? `${this._id}-content` : undefined,
-			"role": !this._hasHeader ? "button" : undefined,
+			"ariaExpanded": this.nonFixedInternalHeader ? this.expanded : undefined,
+			"ariaControls": this.nonFixedInternalHeader ? `${this._id}-content` : undefined,
+			"ariaLabelledby": this.nonFocusableButton ? this.ariaLabelledbyReference : undefined,
+			"role": this.nonFixedInternalHeader ? "button" : undefined,
 		};
+	}
+
+	get ariaLabelledbyReference() {
+		return (this.nonFocusableButton && this.headerText) ? `${this._id}-header-title` : undefined;
+	}
+
+	get header() {
+		return this.getDomRef().querySelector(`#${this._id}-header-title`);
+	}
+
+	get headerAriaLevel() {
+		return this.headerLevel.slice(1);
 	}
 
 	get headerTabIndex() {
 		return (this.header.length || this.fixed) ? "-1" : "0";
+	}
+
+	get nonFixedInternalHeader() {
+		return !this._hasHeader && !this.fixed;
 	}
 
 	get nonFocusableButton() {
@@ -365,13 +431,12 @@ class Panel extends UI5Element {
 		};
 	}
 
-	static async define(...params) {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-			Button.define(),
-		]);
+	static get dependencies() {
+		return [Button];
+	}
 
-		super.define(...params);
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

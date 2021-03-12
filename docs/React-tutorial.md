@@ -2,6 +2,8 @@
 
 In this tutorial you will learn how to add UI5 Web Components to your application. The UI5 Web Components can be added both to new React applications, as well as already existing ones.
 
+In order to have a better development expierence, we would also recommend to take a look at our dedicated wrapper for UI5 Web Components in React, [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) and check out [their tutorial](https://developers.sap.com/mission.react-spa.html) as well.
+
 ## Step 1. Start New Application. For Example with create-react-app
 
 ```bash
@@ -35,6 +37,10 @@ yarn start
 
 ## Additional
 
+### UI5 Web Components for React
+
+If your framework of choice is React and you plan to use UI5 Web components, it is worth checking out the [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) project. This wrapper project enables some additional functionalities when it comes to the usage of UI5 Web Components in React environment. For example typescript definitions, event handling, boolean properties binding, etc...
+
 ### Event Binding
 
 In order to use the events, provided by UI5 Web Components, currently you need to get a ref to the component, because React doesn't support custom events. Here is an example of what you need to do in order to use the events provided by UI5 Web Components:
@@ -55,13 +61,13 @@ class Home extends Component {
 
     render(){
         return(
-            <ui5-switch ref={this.switch}></ui5-buttswitchon>
+            <ui5-switch ref={this.switch}></ui5-switch>
         );
     }
 }
 ```
 
-### Bolean Properties Binding
+### Boolean Properties Binding
 
 For boolean properties like ```collapsed```  in ```ui5-panel```, instead of setting true or false, you have to take care of the presence of the property. Here is an example:
 

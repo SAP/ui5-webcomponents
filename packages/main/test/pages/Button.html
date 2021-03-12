@@ -2,27 +2,46 @@
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
 	<title>Button</title>
 	<script>
-			delete Document.prototype.adoptedStyleSheets
-		</script>
-
-	<script data-ui5-config type="application/json">
-		{
-			"compactSize": false
-		}
+		delete Document.prototype.adoptedStyleSheets
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+    <style>
+        .long-button {
+            width: 1000px;
+        }
+        .long-button-begin::part(button) {
+            justify-content: flex-start;
+        }
+        .long-button-end::part(button) {
+            justify-content: flex-end;
+        }
+    </style>
+
 </head>
 
-<body style="background: qq">
-	<ui5-button id="button1" design="Emphasized">Action Bar Button</ui5-button>
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-button icon="home" id="icon-only-comment"><!----><!----></ui5-button>
+	<ui5-button icon="text" id="icon-only-blank-text"> </ui5-button>
+	<ui5-button>
+		<ui5-avatar
+			id="btnImage"
+			size="XS"
+			image="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png">
+		</ui5-avatar>
+	</ui5-button>
+	<ui5-icon name="invalid_name"></ui5-icon>
+	<ui5-button design="Emphasized" icon="invalid_name">Press</ui5-button>
+
+	<ui5-button id="button1" design="Emphasized" aria-expanded="true">Action Bar Button</ui5-button>
 	<ui5-button style="height: auto">Primary <br> button</ui5-button>
 	<ui5-button style="height: auto" design="Transparent">Secondary <span style="color:red;">button</span></ui5-button>
 	<ui5-button disabled id="button-disabled">Inactive</ui5-button>
@@ -42,7 +61,7 @@
 
 	<ui5-input id="click-counter"></ui5-input>
 
-	<ui5-button style="height: auto" design="Emphasized">Action<br> Bar<br> Button</ui5-button>
+	<ui5-button style="height: auto" design="Emphasized">Action<br> <i>Bar</i><br> Button</ui5-button>
 	<ui5-button>Primary button</ui5-button>
 	<ui5-button design="Transparent">Secondary button</ui5-button>
 	<ui5-button disabled>Inactive</ui5-button>
@@ -53,16 +72,25 @@
 	<br/>
 	<br/>
 
-	<ui5-button icon="employee">Action Bar Button</ui5-button>
+	<ui5-button icon="download" aria-label="Download application"></ui5-button>
+	<ui5-button icon="employee" aria-label="Download book">Action Bar Button</ui5-button>
 	<ui5-button icon="download"></ui5-button>
-	<ui5-button icon="download"></ui5-button>
+
+	<ui5-button icon="employee" aria-label="Download book" style="width: 6rem;">Action Bar Button</ui5-button>
+	<ui5-button icon="employee" icon-end aria-label="Download book" style="width: 6rem;">Action Bar Button</ui5-button>
 
 	<br />
 	<br />
 
-	<ui5-button icon="employee">Action Bar Button</ui5-button>
-	<ui5-button icon="download"></ui5-button>
-	<ui5-button icon="download"></ui5-button>
+	<ui5-label id="1download-text">Download Application</ui5-label>
+	<ui5-label id="download-text2">From This Button</ui5-label>
+
+	<ui5-button icon="employee" aria-label="Help me">Action Bar Button</ui5-button>
+	<ui5-button icon="download" aria-label="Help me" aria-labelledby="1download-text"></ui5-button>
+
+	<ui5-button icon="employee" aria-labelledby="1download-text download-text2">Action Bar Button</ui5-button>
+	<ui5-button icon="download" aria-labelledby="1download-text"></ui5-button>
+
 
 
 	<br/>
@@ -155,8 +183,23 @@
 	<ui5-togglebutton design="Emphasized" icon="employee">Emphasized</ui5-togglebutton>
 	<ui5-togglebutton disabled design="Emphasized" icon="employee">Emphasized</ui5-togglebutton>
 
+    <br/>
+    <br/>
+    <ui5-button class="long-button long-button-begin" icon="download">Download</ui5-button>
+    <ui5-button class="long-button" icon="download">Download</ui5-button>
+    <ui5-button class="long-button long-button-end" icon="download">Download</ui5-button>
 
-	<script>
+	<br/>
+	<br/>
+	<ui5-title>Buttons with tooltip</ui5-title>
+	<br/>
+	<ui5-button icon="message-information" title="Go home"></ui5-button>
+	<ui5-button icon="accept" title="Accept terms & conditions"></ui5-button>
+	<ui5-button icon="action-settings" title="Go to settings"></ui5-button>
+	<ui5-button icon="alert" title="Fire an alert"></ui5-button>
+	<ui5-button icon="arrow-down" title="Go down"></ui5-button>
+
+    <script>
 		var clickCounter = document.querySelector("#click-counter");
 		var button = document.querySelector("#button1");
 		var disabledButton = document.querySelector("#button-disabled");

@@ -1,0 +1,37 @@
+<div
+	id="{{this._id}}"
+	?disabled= "{{disabled}}"
+	value = "{{value}}"
+	label = "{{label}}"
+	@click = {{_onclick}}
+	@keydown={{_onkeydown}}
+	class = "{{classes.root}}"
+	data-sap-focus-ref
+	tabindex="0"
+	@wheel="{{_handleWheel}}"
+>
+	<div class="ui5-wheelslider-header-block">
+		<div id="{{this._id}}--label" class="ui5-wheelslider-label">{{label}}</div>
+		<div class="ui5-wheelslider-invisible-text"></div>
+		<ui5-button class="ui5-wheelslider-arrow" icon="navigation-up-arrow" @click={{_onArrowUp}} tabindex="-1"></ui5-button>
+	</div>
+	<div id="{{this._id}}--inner" class="ui5-wheelslider-inner">
+	<div id="{{this._id}}--selection-frame" class="ui5-wheelslider-selection-frame"></div>
+		<div id="{{this._id}}--wrapper" class="ui5-wheelslider-wrapper">
+			{{#if expanded}}
+				<ul id="{{this._id}}--items-list">
+					{{#each _itemsToShow}}
+						<li class="ui5-wheelslider-item" data-item-index="{{@index}}" style="list-style-type: none;">{{this}}</li>
+					{{/each}}
+				</ul>
+			{{else}}
+				<ul id="{{this._id}}--items-list">
+					<li class="ui5-wheelslider-item" style="list-style-type: none;">{{value}}</li>
+				</ul>
+			{{/if}}
+		</div>
+	</div>
+	<div class="ui5-wheelslider-footer-block">
+		<ui5-button class="ui5-wheelslider-arrow" icon="navigation-down-arrow" @click={{_onArrowDown}} tabindex="-1"></ui5-button>
+	</div>
+</div>

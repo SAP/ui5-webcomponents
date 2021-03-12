@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
@@ -16,8 +16,8 @@
             "@ui5/webcomponents-base/": [
                 "/node_modules/@ui5/webcomponents-base/"
             ],
-            "@ui5/webcomponents-core/": [
-                "/node_modules/@ui5/webcomponents-core/"
+            "@ui5/webcomponents-localization/": [
+                "/node_modules/@ui5/webcomponents-localization/"
             ],
             "lit-html": [
                 "/node_modules/lit-html/lit-html.js"
@@ -37,12 +37,12 @@
 
         // option 2 - manually register a single URL
         import { registerCldr } from "@ui5/webcomponents-base/dist/AssetRegistry.js";
-        // registerCldr("de", "https://unpkg.com/@ui5/webcomponents-core@0.10.1/dist/sap/ui/core/cldr/de.json")
+        // registerCldr("de", "https://unpkg.com/@ui5/webcomponents-localization@0.10.1/dist/sap/ui/core/cldr/de.json")
 
         // option 3 - provide mapping function
         import { _registerMappingFunction } from "@ui5/webcomponents-base/dist/AssetRegistry.js";
         // _registerMappingFunction((locale) => {
-        //     return `https://unpkg.com/@ui5/webcomponents-core@0.10.1/dist/sap/ui/core/cldr/${locale}.json`
+        //     return `https://unpkg.com/@ui5/webcomponents-localization@0.10.1/dist/sap/ui/core/cldr/${locale}.json`
         // });
 
         // import DatePickerElement from "@ui5/webcomponents/dist/DatePickerElement.js";
@@ -55,7 +55,7 @@
         // import "@ui5/webcomponents/dist/TextArea.js";
     </script>
     <ui5-button>hi</ui5-button>
-    <ui5-datepicker></ui5-datepicker>
+    <ui5-date-picker></ui5-date-picker>
     <ui5-calendar></ui5-calendar>
 </body>
 </html>

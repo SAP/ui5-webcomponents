@@ -1,14 +1,16 @@
+@import "./InvisibleTextStyles.css";
+
 :host {
 	background: var(--ui5-group-header-listitem-background-color);
-	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
-	color: var(--sapUiListTableGroupHeaderTextColor);
+	border-bottom: 1px solid var(--sapList_TableGroupHeaderBorderColor);
+	color: var(--sapList_TableGroupHeaderTextColor);
 }
 
 .ui5-li-root.ui5-ghli-root {
 	padding-top: 1rem;
 	color: currentColor;
-	font-size: var(--sapMFontHeader6Size);
-	font-weight: var(--sapUiFontHeaderWeight);
+	font-size: var(--sapFontHeader6Size);
+	font-weight: normal;
 	line-height: 2rem;
 }
 
@@ -17,4 +19,5 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	font-weight: bold;
 }

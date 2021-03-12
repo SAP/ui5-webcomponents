@@ -1,0 +1,68 @@
+@import "./NotificationListItemBase.css";
+@import "./NotificationPrioIcon.css";
+
+:host(:not([collapsed])) .ui5-nli-group-toggle-btn {
+	transform: rotate(90deg);
+}
+
+:host([collapsed]) .ui5-nli-group-items {
+	display: none;
+}
+
+:host([read]) .ui5-nli-group-heading {
+	font-weight: normal;
+}
+
+.ui5-nli-group-root {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ui5-nli-group-header {
+	display: flex;
+	align-items: center;
+	padding: 0.75rem 0.5rem 0.25rem 0.75rem;
+	width: 100%;
+	border-bottom: 0.0625rem solid var(--sapList_GroupHeaderBorderColor);
+	box-sizing: border-box;
+	cursor: default;
+}
+
+.ui5-nli-group-toggle-btn {
+	margin-right: 0.75rem;
+	cursor: pointer;
+}
+
+.ui5-nli-group-heading {
+	color: var(--sapGroup_TitleTextColor);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontHeader6Size);
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ui5-nli-group-divider {
+	flex: 1;
+}
+
+.ui5-nli-group-counter {
+	margin-left: 0.25rem;
+	margin-right: 1rem;
+	color: var(--sapList_TableGroupHeaderTextColor);
+	font-size: var(--sapFontHeader6Size);
+	font-family: "72override", var(--sapFontHeaderFamily);
+}
+
+[dir="rtl"] .ui5-nli-group-toggle-btn {
+	margin-left: 1rem;
+}
+
+[dir="rtl"] .ui5-nli-group-counter {
+	margin-right: 0.25rem;
+	margin-left: 1rem;
+}

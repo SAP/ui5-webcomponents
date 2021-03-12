@@ -10,10 +10,10 @@
 :host([design="Positive"][pressed]),
 :host([design="Positive"][pressed][focused]),
 :host([design="Positive"][pressed]:hover) {
-	background: var(--sapUiButtonAcceptActiveBackground);
-	border-color: var(--sapUiButtonAcceptActiveBorderColor);
-	color: var(--sapUiToggleButtonPressedTextColor);
-	outline-color: var(--sapUiContentContrastFocusColor);
+	background: var(--sapButton_Accept_Active_Background);
+	border-color: var(--sapButton_Accept_Active_BorderColor);
+	color: var(--sapButton_Selected_TextColor);
+	outline-color: var(--sapContent_ContrastFocusColor);
 }
 
 :host([design="Positive"][pressed][active]),
@@ -24,10 +24,10 @@
 :host([design="Negative"][pressed]),
 :host([design="Negative"][pressed][focused]),
 :host([design="Negative"][pressed]:hover) {
-	background: var(--sapUiButtonRejectActiveBackground);
-	border-color: var(--sapUiButtonRejectActiveBorderColor);
-	color: var(--sapUiToggleButtonPressedTextColor);
-	outline-color: var(--sapUiContentContrastFocusColor);
+	background: var(--sapButton_Reject_Active_Background);
+	border-color: var(--sapButton_Reject_Active_BorderColor);
+	color: var(--sapButton_Selected_TextColor);
+	outline-color: var(--sapContent_ContrastFocusColor);
 }
 
 :host([design="Negative"][pressed][active]),
@@ -43,64 +43,13 @@
 :host([design="Transparent"][pressed]:hover),
 :host([design="Emphasized"][pressed]),
 :host([design="Emphasized"][pressed]:hover) {
-	background: var(--sapUiToggleButtonPressedBackground);
-	border-color: var(--sapUiToggleButtonPressedBorderColor);
-	color: var(--sapUiToggleButtonPressedTextColor);
-	outline-color: var(--sapUiContentContrastFocusColor);
+	background: var(--sapButton_Selected_Background);
+	border-color: var(--sapButton_Selected_BorderColor);
+	color: var(--sapButton_Selected_TextColor);
+	outline-color: var(--sapContent_ContrastFocusColor);
 }
 
 :host([pressed][active]),
 :host([pressed]:not([_is-mobile]):hover) {
 	background: var(--sapUiToggleButtonPressedHoverBackground);
-}
-
-/* IE Specific CSS, duplicate it for ToggleButton */
-
-ui5-togglebutton[focused] {
-	outline: none;
-}
-
-ui5-togglebutton[focused] .ui5-button-root {
-	position: relative;
-}
-
-ui5-togglebutton[focused] .ui5-button-root::after {
-	content: "";
-	position: absolute;
-	border-width: 1px;
-	border-style: dotted;
-	border-color: var(--_ui5_button_focus_color);
-	top: var(--_ui5_button_focus_offset);
-	bottom: var(--_ui5_button_focus_offset);
-	left: var(--_ui5_button_focus_offset);
-	right: var(--_ui5_button_focus_offset);
-}
-
-ui5-togglebutton[active] .ui5-button-root::after {
-	border-color: var(--sapUiContentContrastFocusColor);
-}
-
-ui5-togglebutton[design="Positive"][focused] .ui5-button-root::after {
-	border-color: var(--_ui5_button_positive_border_focus_hover_color);
-}
-
-ui5-togglebutton[design="Positive"][active][focused] .ui5-button-root::after {
-	border-color: var(--sapUiContentContrastFocusColor);
-}
-
-ui5-togglebutton[design="Negative"][focused] .ui5-button-root::after {
-	border-color: var(--_ui5_button_positive_border_focus_hover_color);
-}
-
-ui5-togglebutton[design="Negative"][active][focused] .ui5-button-root::after {
-	border-color: var(--sapUiContentContrastFocusColor);
-}
-
-ui5-togglebutton[design="Emphasized"][focused] .ui5-button-root::after {
-	border-color: var(--sapUiContentContrastFocusColor);
-}
-
-ui5-togglebutton ui5-icon.ui5-button-icon {
-	height: 1rem;
-	top: 0;
 }

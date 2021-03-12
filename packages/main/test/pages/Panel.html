@@ -2,14 +2,10 @@
 <html>
 
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
-
 	<title>Panel</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
-
-	<title>Panel</title>
 
 	<script data-ui5-config type="application/json">
 		{
@@ -22,11 +18,8 @@
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module">
-	</script>
-
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
@@ -54,12 +47,9 @@
 	</script>
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 
 <style>
-	ui5-panel {
-		border: 1px dotted #bad0e3;
-	}
 
 	.header {
 		display: flex;
@@ -68,12 +58,11 @@
 	}
 </style>
 
-
 	<ui5-panel id="p1" collapsed accessible-role="Complementary">
 
 		<!-- Panel header -->
 		<div slot="header" class="header">
-			<ui5-title>Expandable but not expanded</ui5-title>
+			<ui5-title id="p1-title">Expandable but not expanded</ui5-title>
 			<ui5-button id="b1">Add child </ui5-button>
 			<ui5-label id="l1">No new children added yet.</ui5-label>
 			<ui5-button design="Reject" icon="cancel">Cancel</ui5-button>
@@ -81,9 +70,10 @@
 		</div>
 
 		<!-- Content -->
-        This is my panel <!-- fafa --> <br>
+		This is my panel <!-- fafa --> <br>
 		<ui5-title id="p1-content1">Lorem ipsum!</ui5-title>
 		<ui5-label id="p1-content2" wrap>
+			<span>
 			Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui illud zril
 			nostrum, vel ea sint dicant postea. Vel ne facete tritani, neglegentur concludaturque sed te. His animal dolorum ut.
 			Aeterno appareat ei mei, cu sed elit scripserit, an quodsi oportere accusamus quo. Pri ea probo corpora rationibus,
@@ -100,18 +90,20 @@
 			sensibus duo.
 			Vis cu commodo definiebas, postea dissentias ne vim. Modo homero eos ad. Ut vix equidem temporibus. At duo audire
 			volumus, id volumus rationibus vim. Sit ne diam volumus. Augue labitur mel cu, an eam omnis causae hendrerit.
+			</span>
 		</ui5-label>
 
 	</ui5-panel>
 
 	<br>
 
-	<ui5-panel accessible-role="Complementary" header-text="Both expandable and expanded">
+	<ui5-panel id="panel-expandable" accessible-role="Complementary" header-text="Both expandable and expanded" header-level="H4">
 
 
 		<!-- Content -->
 		<ui5-title>Lorem ipsum!</ui5-title>
 		<ui5-label wrap>
+			<span>
 			Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui illud zril
 			nostrum, vel ea sint dicant postea. Vel ne facete tritani, neglegentur concludaturque sed te. His animal dolorum ut.
 			Aeterno appareat ei mei, cu sed elit scripserit, an quodsi oportere accusamus quo. Pri ea probo corpora rationibus,
@@ -128,13 +120,14 @@
 			sensibus duo.
 			Vis cu commodo definiebas, postea dissentias ne vim. Modo homero eos ad. Ut vix equidem temporibus. At duo audire
 			volumus, id volumus rationibus vim. Sit ne diam volumus. Augue labitur mel cu, an eam omnis causae hendrerit.
+			</span>
 		</ui5-label>
 
 	</ui5-panel>
 
 	<br>
 
-	<ui5-panel fixed accessible-role="Complementary" header-text="Expanded, but not expandable">
+	<ui5-panel id="panel-fixed" fixed accessible-role="Complementary" header-text="Expanded, but not expandable">
 
 		<!-- Content -->
 		<ui5-title>Lorem ipsum!</ui5-title>
@@ -160,7 +153,7 @@
 
 	<br>
 
-	<ui5-panel id="panel1" collapsed header-text="Click to expand!">
+	<ui5-panel id="panel1" collapsed header-text="Click to expand!" header-level="H3" accessible-role="Form">
 
 		<!-- Content -->
 		<ui5-title>This is a demo how to use the &quot;expand&quot; event.</ui5-title>
@@ -190,6 +183,40 @@
 
 	<ui5-input id="field1" value="0"></ui5-input>
 	<ui5-input id="field2" value="0"></ui5-input>
+
+	<section>
+		<!-- accessibleName, useAccessibleNameForToggleButton and header text -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header text and button" use-accessible-name-for-toggle-button header-text="Accessible name test 1">
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+
+		<br><br>
+
+		<!-- accessibleName and header text -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header text" header-text="Accessible name test 2">
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+
+		<br><br>
+
+		<!-- accessibleName, useAccessibleNameForToggleButton and header SLOT -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header SLOT and button" use-accessible-name-for-toggle-button>
+			<div slot="header" class="header">
+				<ui5-title>Accessible name test 3</ui5-title>
+			</div>
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+
+		<br><br>
+
+		<!-- accessibleName and header SLOT -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header SLOT">
+			<div slot="header" class="header">
+				<ui5-title>Accessible name test 4</ui5-title>
+			</div>
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+	</section>
 
 </body>
 

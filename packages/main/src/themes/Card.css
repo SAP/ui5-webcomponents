@@ -1,3 +1,5 @@
+@import "./InvisibleTextStyles.css";
+
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
@@ -6,23 +8,29 @@
 .ui5-card-root {
 	width: 100%;
 	height: 100%;
-	color: var(--sapUiGroupTitleTextColor);
-	background: var(--sapUiTileBackground);
-	box-shadow: var(--sapUiShadowLevel0);
+	color: var(--sapGroup_TitleTextColor);
+	background: var(--sapTile_Background);
+	box-shadow: var(--sapContent_Shadow0);
 	border-radius: .25rem;
 	border: 1px solid var(--_ui5_card_border_color);
 	overflow: hidden;
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapUiFontSize);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+	box-sizing: border-box;
 }
 
 .ui5-card-header {
 	position: relative;
 	display: flex;
-	align-items: flex-start;
-	background: var(--sapUiTileBackground);
+	align-items: center;
+	background: var(--sapTile_Background);
 	border-bottom: 1px solid var(--_ui5_card_header_border_color);
 	padding: var(--_ui5_card_content_padding);
+	outline: none;
+}
+
+:host([subheading]) .ui5-card-header {
+	align-items: flex-start;
 }
 
 /* Card with no content */
@@ -34,11 +42,8 @@
 	border-bottom: none;
 }
 
-.ui5-card-header:focus {
+.ui5-card-header:focus:before {
 	outline: none;
-}
-
-.ui5-card-header.ui5-card-header--interactive:focus:before {
 	content: "";
 	position: absolute;
 	border: var(--_ui5_card_header_focus_border);
@@ -61,6 +66,7 @@
 
 .ui5-card-header .ui5-card-header-text {
 	flex: 1;
+	pointer-events: none;
 }
 
 .ui5-card-header .ui5-card-avatar {
@@ -70,25 +76,26 @@
 	align-items: center;
 	justify-content: center;
 	margin-right: .75rem;
+	pointer-events: none;
 }
 
-::slotted(ui5-icon) {
+::slotted([ui5-icon]) {
 	width: 1.5rem;
 	height: 1.5rem;
-	color: var(--sapUiTileIconColor);
+	color: var(--sapTile_IconColor);
 }
 
 ::slotted(img) {
 	width: 100%;
-    height: 100%;
+	height: 100%;
 	border-radius: 50%;
 }
 
 .ui5-card-header .ui5-card-status {
 	display: inline-block;
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontSmallSize);
-	color: var(--sapUiTileTextColor);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSmallSize);
+	color: var(--sapTile_TextColor);
 	text-align: left;
 	line-height: 1.125rem;
 	padding-left: 1rem;
@@ -99,24 +106,24 @@
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-heading {
-	font-family: var(--sapUiFontHeaderFamily);
-	font-size: var(--sapMFontHeader5Size);
-	font-weight: var(--sapUiFontHeaderWeight);
-	color: var(--sapUiTileTitleTextColor);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontHeader5Size);
+	font-weight: normal;
+	color: var(--sapTile_TitleTextColor);
 	max-height: 3.5rem;
 }
 
-.ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+.ui5-card-header .ui5-card-header-text .ui5-card-subheading {
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
 	font-weight: normal;
-	color: var(--sapUiTileTextColor);
+	color: var(--sapTile_TextColor);
 	margin-top: .5rem;
 	max-height: 2.1rem;
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-heading,
-.ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
+.ui5-card-header .ui5-card-header-text .ui5-card-subheading {
 	text-align: left;
 	text-overflow: ellipsis;
 	white-space: normal;
@@ -143,6 +150,6 @@
 	text-align: right;
 }
 
-[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
+[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-subheading {
 	text-align: right;
 }

@@ -6,13 +6,14 @@
 
 <div class="control-tag">&lt;ui5-list&gt;</div>
 
+<!--Basic -->
 <section>
 	<h3>Basic List</h3>
 	<div class="snippet">
 		<ui5-list id="myList" class="full-width">
 			<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" info="In-stock" info-state="Success">Pineapple</ui5-li>
 			<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" info="Expires" info-state="Warning">Orange</ui5-li>
-			<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Error">Banana</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Information">Blueberry</ui5-li>
 			<ui5-li icon="nutrition-activity" description="The tropical stone fruit" info="Re-stock" info-state="Error">Mango</ui5-li>
 		</ui5-list>
 	</div>
@@ -20,12 +21,88 @@
 <ui5-list id="myList" class="full-width">
 	<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" info="In-stock" info-state="Success">Pineapple</ui5-li>
 	<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" info="Expires" info-state="Warning">Orange</ui5-li>
-	<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Error">Banana</ui5-li>
+	<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Information">Blueberry</ui5-li>
 	<ui5-li icon="nutrition-activity" description="The tropical stone fruit" info="Re-stock" info-state="Error">Mango</ui5-li>
 </ui5-list>
 	</xmp></pre>
 </section>
 
+<!-- Infinite scroll -->
+<section>
+	<h3>List with infinite-scroll</h3>
+	<div class="snippet">
+		<ui5-list id="infiniteScrollEx" style="height: 300px" infinite-scroll>
+			<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" info="In-stock" info-state="Success">Pineapple</ui5-li>
+			<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" info="Expires" info-state="Warning">Orange</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Error">Banana</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The tropical stone fruit" info="Re-stock" info-state="Error">Mango</ui5-li>
+			<ui5-li icon="nutrition-activity" description="An apple is a sweet, edible fruit produced by an apple tree " info="In-stock" info-state="Success">Apple</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The peach (Prunus persica) is a deciduous tree native to the region of Northwest China" info="Expires" info-state="Warning">Peach</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The pomelo is the largest citrus fruit from the family Rutaceae and the principal ancestor of the grapefruit" info="Re-stock" info-state="Error">Pomelo</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The pear (/ˈpɛər/) tree and shrub are a species of genus Pyrus, bearing the pomaceous fruit of the same name." info="Re-stock" info-state="Error">Pear</ui5-li>
+		</ui5-list>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-list id="infiniteScrollEx" style="height: 300px" infinite-scroll>
+	<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" info="In-stock" info-state="Success">Pineapple</ui5-li>
+	<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" info="Expires" info-state="Warning">Orange</ui5-li>
+	<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Error">Banana</ui5-li>
+	<ui5-li icon="nutrition-activity" description="The tropical stone fruit" info="Re-stock" info-state="Error">Mango</ui5-li>
+	<ui5-li icon="nutrition-activity" description="An apple is a sweet, edible fruit produced by an apple tree " info="In-stock" info-state="Success">Apple</ui5-li>
+	<ui5-li icon="nutrition-activity" description="The peach (Prunus persica) is a deciduous tree native to the region of Northwest China" info="Expires" info-state="Warning">Peach</ui5-li>
+	<ui5-li icon="nutrition-activity" description="The pomelo is the largest citrus fruit from the family Rutaceae and the principal ancestor of the grapefruit" info="Re-stock" info-state="Error">Pomelo</ui5-li>
+	<ui5-li icon="nutrition-activity" description="The pear (/ˈpɛər/) tree and shrub are a species of genus Pyrus, bearing the pomaceous fruit of the same name." info="Re-stock" info-state="Error">Pear</ui5-li>
+</ui5-list>
+
+<script>
+	const infiniteScrollEx = document.getElementById("infiniteScrollEx");
+
+	infiniteScrollEx.addEventListener("load-more", (e) => {
+		infiniteScrollEx.busy = true;
+
+		setTimeout(() => {
+			for(let i = 0; i < 5; i++) {
+				const li = document.createElement("ui5-li");
+				li.textContent = "Fruit name" + i;
+				infiniteScrollEx.appendChild(li);
+			}
+
+			infiniteScrollEx.busy = false;
+		}, 200);
+	});
+</script>
+	</xmp></pre>
+
+	<script>
+		function template(i) {
+			var li = document.createElement("ui5-li");
+			li.textContent = "Fruit name";
+			li.description = "the description goes here " + i;
+			li.info = "Available";
+			li.infoState = "Success";
+			li.icon = "nutrition-activity" 
+			return li;
+		}
+
+		function insertItems(el, num) {
+			for(var i = 0; i < num; i++) {
+				el.appendChild(template(i));
+			}
+		}
+
+		infiniteScrollEx.addEventListener("load-more", (e) => {
+			var el = infiniteScrollEx;
+			el.busy = true;
+
+			setTimeout(() => {
+				insertItems(el, 5);
+				el.busy = false;
+			}, 200);
+		});
+	</script>
+</section>
+
+<!-- Single Selection -->
 <section>
 	<h3>List in Single-selection Mode</h3>
 	<div class="snippet">
@@ -37,7 +114,7 @@
 		</ui5-list>
 
 		<script>
-			document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
+			document.getElementById('country-selector').addEventListener("selection-change", function (event) {
 				var selectedItems = event.detail.selectedItems;
 
 				alert("The selected item:  " + selectedItems[0].textContent);
@@ -53,7 +130,7 @@
 </ui5-list>
 
 <script>
-	document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
+	document.getElementById('country-selector').addEventListener("selection-change", function (event) {
 		var selectedItems = event.detail.selectedItems;
 
 		alert("The selected item:  " + selectedItems[0].textContent);
@@ -62,7 +139,7 @@
 	</xmp></pre>
 </section>
 
-<!-- MultiSelection List Example -->
+<!-- Multi Selection -->
 <section>
 	<h3>List in Multi-selection Mode</h3>
 	<div class="snippet">
@@ -83,43 +160,54 @@
 	</xmp></pre>
 </section>
 
-	<!-- GroupHeaders List Example -->
+<!-- Busy List -->
+<section>
+	<h3>Busy List</h3>
+	<div class="snippet">
+		<ui5-list header-text="Fetching data ..." class="full-width" busy></ui5-list>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-list header-text="Fetching data ..." busy></ui5-list>
+	</xmp></pre>
+</section>
+
+<!-- GroupHeaders List Example -->
 <section>
 	<h3>List With GroupHeaders</h3>
 	<div class="snippet">
 		<ui5-list header-text="Community" mode="MultiSelect">
 			<ui5-li-groupheader>Front End Developers</ui5-li-groupheader>
-			<ui5-li image="../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Jennifer</ui5-li>
-			<ui5-li image="../../assets/images/avatars/woman_avatar_4.png" icon="navigation-right-arrow" icon-end>Lora</ui5-li>
-			<ui5-li image="../../assets/images/avatars/woman_avatar_5.png" icon="navigation-right-arrow" icon-end>Carlotta</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Jennifer</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/woman_avatar_4.png" icon="navigation-right-arrow" icon-end>Lora</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/woman_avatar_5.png" icon="navigation-right-arrow" icon-end>Carlotta</ui5-li>
 
 			<ui5-li-groupheader>Back End Developers</ui5-li-groupheader>
-			<ui5-li image="../../assets/images/avatars/man_avatar_1.png"  icon="navigation-right-arrow" icon-end>Clark</ui5-li>
-			<ui5-li image="../../assets/images/avatars/woman_avatar_1.png" icon="navigation-right-arrow" icon-end>Ellen</ui5-li>
-			<ui5-li image="../../assets/images/avatars/man_avatar_2.png" icon="navigation-right-arrow" icon-end>Adam</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/man_avatar_1.png"  icon="navigation-right-arrow" icon-end>Clark</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/woman_avatar_1.png" icon="navigation-right-arrow" icon-end>Ellen</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/man_avatar_2.png" icon="navigation-right-arrow" icon-end>Adam</ui5-li>
 
 			<ui5-li-groupheader>FullStack Developers</ui5-li-groupheader>
-			<ui5-li image="../../assets/images/avatars/woman_avatar_2.png" icon="navigation-right-arrow" icon-end>Susan</ui5-li>
-			<ui5-li image="../../assets/images/avatars/man_avatar_3.png" icon="navigation-right-arrow" icon-end>David</ui5-li>
-			<ui5-li image="../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Natalie</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" icon="navigation-right-arrow" icon-end>Susan</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/man_avatar_3.png" icon="navigation-right-arrow" icon-end>David</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Natalie</ui5-li>
 		</ui5-list>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-list header-text="Team Members" mode="MultiSelect">
 	<ui5-li-groupheader>Front End Developers</ui5-li-groupheader>
-	<ui5-li image="../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Jennifer</ui5-li>
-	<ui5-li image="../../assets/images/avatars/woman_avatar_4.png" icon="navigation-right-arrow" icon-end>Lora</ui5-li>
-	<ui5-li image="../../assets/images/avatars/woman_avatar_5.png" icon="navigation-right-arrow" icon-end>Carlotta</ui5-li>
+	<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Jennifer</ui5-li>
+	<ui5-li image="../../../assets/images/avatars/woman_avatar_4.png" icon="navigation-right-arrow" icon-end>Lora</ui5-li>
+	<ui5-li image="../../../assets/images/avatars/woman_avatar_5.png" icon="navigation-right-arrow" icon-end>Carlotta</ui5-li>
 
 	<ui5-li-groupheader>Back End Developers</ui5-li-groupheader>
-	<ui5-li image="../../assets/images/avatars/man_avatar_1.png"  icon="navigation-right-arrow" icon-end>Clark</ui5-li>
-	<ui5-li image="../../assets/images/avatars/woman_avatar_1.png" icon="navigation-right-arrow" icon-end>Ellen</ui5-li>
-	<ui5-li image="../../assets/images/avatars/man_avatar_2.png" icon="navigation-right-arrow" icon-end>Adam</ui5-li>
+	<ui5-li image="../../../assets/images/avatars/man_avatar_1.png"  icon="navigation-right-arrow" icon-end>Clark</ui5-li>
+	<ui5-li image="../../../assets/images/avatars/woman_avatar_1.png" icon="navigation-right-arrow" icon-end>Ellen</ui5-li>
+	<ui5-li image="../../../assets/images/avatars/man_avatar_2.png" icon="navigation-right-arrow" icon-end>Adam</ui5-li>
 
 	<ui5-li-groupheader>FullStack Developers</ui5-li-groupheader>
-	<ui5-li image="../../assets/images/avatars/woman_avatar_2.png" icon="navigation-right-arrow" icon-end>Susan</ui5-li>
-	<ui5-li image="../../assets/images/avatars/man_avatar_3.png" icon="navigation-right-arrow" icon-end>David</ui5-li>
-	<ui5-li image="../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Natalie</ui5-li>
+	<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" icon="navigation-right-arrow" icon-end>Susan</ui5-li>
+	<ui5-li image="../../../assets/images/avatars/man_avatar_3.png" icon="navigation-right-arrow" icon-end>David</ui5-li>
+	<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Natalie</ui5-li>
 </ui5-list>
 	</xmp></pre>
 </section>
@@ -149,7 +237,7 @@
 		<ui5-list class="full-width" header-text="Products" no-data-text="No Data Available" separators="None"></ui5-list>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-list class="full-width" header-text="Products" no-data-text="No Data Available separators="None"></ui5-list>
+<ui5-list class="full-width" header-text="Products" no-data-text="No Data Available" separators="None"></ui5-list>
 	</xmp></pre>
 </section>
 

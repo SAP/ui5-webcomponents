@@ -1,0 +1,39 @@
+<div
+	class="ui5-tli-root"
+	dir="{{effectiveDir}}"
+>
+	<div class="ui5-tli-indicator">
+		{{#if icon}}
+			<div class="ui5-tli-icon-outer">
+				<ui5-icon class="ui5-tli-icon" name="{{icon}}"></ui5-icon>
+			</div>
+		{{/if}}
+	</div>
+	<div class="ui5-tli-bubble" tabindex="{{_tabIndex}}" role="option" data-sap-focus-ref>
+		<div class="ui5-tli-title">
+			{{#if itemName}}
+				{{> itemName}}
+			{{/if}}
+
+			<span>{{titleText}}</span>
+		</div>
+		<div class="ui5-tli-subtitle">{{subtitleText}}</div>
+
+		{{#if textContent}}
+			<div class="ui5-tli-desc">
+				<slot></slot>
+			</div>
+		{{/if}}
+		<span class="ui5-tli-bubble-arrow ui5-tli-bubble-arrow--left"></span>
+	</div>
+</div>
+
+{{#*inline "itemName"}}
+	{{#if itemNameClickable}}
+		<ui5-link @click="{{onItemNamePress}}">{{itemName}}</ui5-link>
+	{{/if}}
+
+	{{#unless itemNameClickable}}
+		<span>{{itemName}}</span>
+	{{/unless}}
+{{/inline}}

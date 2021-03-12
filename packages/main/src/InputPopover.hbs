@@ -1,0 +1,115 @@
+{{#if showSuggestions}}
+	<ui5-responsive-popover
+		no-arrow
+		_disable-initial-focus
+		placement-type="Bottom"
+		horizontal-align="Left"
+		style="{{styles.suggestionsPopover}}"
+		@ui5-after-open="{{_afterOpenPopover}}"
+		@ui5-after-close="{{_afterClosePopover}}"
+		@scroll="{{_scroll}}"
+	>
+	{{#if _isPhone}}
+		<div slot="header" class="ui5-responsive-popover-header">
+			<div class="row">
+				<span>{{_headerTitleText}}</span>
+				<ui5-button
+					class="ui5-responsive-popover-close-btn"
+					icon="decline"
+					design="Transparent"
+					@click="{{_closeRespPopover}}"
+				>
+				</ui5-button>
+			</div>
+			<div class="row">
+				<div class="input-root-phone">
+					<input
+						class="ui5-input-inner-phone"
+						type="{{inputType}}"
+						.value="{{value}}"
+						inner-input
+						placeholder="{{placeholder}}"
+						@input="{{_handleInput}}"
+						@change="{{_handleChange}}"
+					/>
+				</div>
+			</div>
+			{{#if hasValueStateMessage}}
+				<div class="row {{classes.popoverValueState}}" style="{{styles.suggestionPopoverHeader}}">
+					{{> valueStateMessage}}
+				</div>
+			{{/if}}
+		</div>
+	{{/if}}
+
+	{{#unless _isPhone}}
+		{{#if hasValueStateMessage}}
+			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.suggestionPopoverHeader}}>
+				{{> valueStateMessage}}
+			</div>
+		{{/if}}
+	{{/unless}}
+
+		{{> suggestionsList}}
+
+		{{#if _isPhone}}
+			<div slot="footer" class="ui5-responsive-popover-footer">
+				<ui5-button
+					design="Transparent"
+					@click="{{_closeRespPopover}}"
+				>OK</ui5-button>
+			</div>
+		{{/if}}
+	</ui5-responsive-popover>
+{{/if}}
+{{#if hasValueStateMessage}}
+		<ui5-popover
+			skip-registry-update
+			_disable-initial-focus
+			prevent-focus-restore
+			no-padding
+			no-arrow
+			class="ui5-valuestatemessage-popover"
+			placement-type="Bottom"
+			horizontal-align="Left"
+		>
+			<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
+				{{> valueStateMessage}}
+			</div>
+		</ui5-popover>
+{{/if}}
+
+{{#*inline "valueStateMessage"}}
+	{{#if shouldDisplayDefaultValueStateMessage}}
+		{{valueStateText}}
+	{{else}}
+		{{#each valueStateMessageText}}
+			{{this}}
+		{{/each}}
+	{{/if}}
+{{/inline}}
+
+{{#*inline "suggestionsList"}}
+	<ui5-list separators="{{suggestionSeparators}}">
+		{{#each suggestionsTexts}}
+			{{#if group}}
+				<ui5-li-groupheader data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-groupheader>
+			{{else}}
+				<ui5-li-suggestion-item
+					image="{{this.image}}"
+					icon="{{this.icon}}"
+					info="{{this.info}}"
+					type="{{this.type}}"
+					info-state="{{this.infoState}}"
+					@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
+					data-ui5-key="{{key}}"
+				>
+					{{{ this.text }}}
+					{{#if this.description}}
+						<span slot="richDescription">{{{ this.description }}}</span>
+					{{/if}}
+				</ui5-li-suggestion-item>
+			{{/if}}
+		{{/each}}
+	</ui5-list>
+{{/inline}}

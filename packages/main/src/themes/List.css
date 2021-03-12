@@ -1,6 +1,7 @@
 :host(:not([hidden])) {
 	display: block;
 	max-width: 100%;
+	width: 100%;
 }
 
 :host([inset]) .ui5-list-root {
@@ -11,6 +12,16 @@
 	border-bottom: 0;
 }
 
+:host([busy]) {
+	opacity: 0.72;
+}
+
+:host([busy]) .ui5-list-busy-row {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+
 .ui5-list-root {
 	width: 100%;
 	height: 100%;
@@ -18,51 +29,56 @@
 	box-sizing: border-box;
 }
 
-.ui5-list-root .ui5-list-ul {
+.ui5-list-scroll-container {
+	overflow: auto;
+	height: 100%;
+}
+
+.ui5-list-ul {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 }
 
-.ui5-list-root .ui5-list-ul:focus {
+.ui5-list-ul:focus {
 	outline: none;
 }
 
-.ui5-list-root .ui5-list-focusarea {
+.ui5-list-focusarea {
 	position: fixed; /* keep it in the visible viewport, so that IE does not scroll on focus */
 }
 
-.ui5-list-root .ui5-list-header {
+.ui5-list-header {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	box-sizing: border-box;
-	font-size: var(--sapMFontHeader4Size);
-	font-family: var(--sapUiFontHeaderFamily);
-	color: var(--sapUiGroupTitleTextColor);
+	font-size: var(--sapFontHeader4Size); 
+	font-family: "72override", var(--sapFontFamily);
+	color: var(--sapGroup_TitleTextColor);
 	height: 3rem;
 	line-height: 3rem;
 	padding: 0 1rem;
-	background-color: var(--sapUiGroupTitleBackground);
-	border-bottom: 1px solid var(--sapUiGroupTitleBorderColor);
+	background-color: var(--sapGroup_TitleBackground);
+	border-bottom: 1px solid var(--sapGroup_TitleBorderColor);
 }
 
-.ui5-list-root .ui5-list-footer {
+.ui5-list-footer {
 	height: 2rem;
 	box-sizing: border-box;
 	-webkit-text-size-adjust: none;	/* To improve readability Mobile Safari automatically increases the size of small text so let's disable this */
-	font-size: var(--sapMFontMediumSize);
-	font-family: var(--sapUiFontFamily,var(--sapFontFamily,"72","72full",Arial,Helvetica,sans-serif));
+	font-size: var(--sapFontSize);
+	font-family: "72override", var(--sapFontFamily);
 	line-height: 2rem;
-	background-color: var(--sapUiListFooterBackground);
-	color: var(--sapUiListFooterTextColor);
+	background-color: var(--sapList_FooterBackground);
+	color: var(--ui5_list_footer_text_color);
 	padding: 0 1rem;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
-.ui5-list-root .ui5-list-nodata {
+.ui5-list-nodata {
 	list-style-type: none;
 	display: -webkit-box;
 	display: flex;
@@ -70,22 +86,16 @@
 	align-items: center;
 	-webkit-box-pack: center;
 	justify-content: center;
-	color: var(--sapUiListTextColor);
-	background-color: var(--sapUiListBackground);
-	border-bottom: 1px solid var(--sapUiListBorderColor);
+	color: var(--sapTextColor);
+	background-color: var(--sapList_Background);
+	border-bottom: 1px solid var(--sapList_BorderColor);
 	padding: 0 1rem !important;
-	height:3rem;
+	height: var(--_ui5_list_no_data_height);
+	font-size: var(--sapFontSize);
 }
 
-
-.ui5-list-root .ui5-list-nodata-text {
+.ui5-list-nodata-text {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-}
-
-/* Compact size */
-:host([data-ui5-compact-size]) .ui5-list-root .ui5-list-nodata {
-	height: 2rem;
-	font-size: var(--sapMFontMediumSize);
 }

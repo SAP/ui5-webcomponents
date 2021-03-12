@@ -3,17 +3,22 @@
 	role="grid"
 	aria-readonly="false"
 	aria-multiselectable="false"
-	style="{{styles.main}}"
+	@keydown={{_onkeydown}}
+	@keyup={{_onkeyup}}
+	@click={{_selectYear}}
+	@focusin={{_onfocusin}}
 >
-	{{#each _yearIntervals}}
+	{{#each _years}}
 		<div class="ui5-yp-interval-container">
 			{{#each this}}
-				<div id="{{this.id}}"
-					tabindex="{{this._tabIndex}}"
+				<div
 					data-sap-timestamp="{{this.timestamp}}"
+					tabindex="{{this._tabIndex}}"
+					?data-sap-focus-ref="{{this.focusRef}}"
 					class="{{this.classes}}"
 					role="gridcell"
-					aria-selected="false">
+					aria-selected="{{this.ariaSelected}}"
+				>
 						{{this.year}}
 				</div>
 			{{/each}}

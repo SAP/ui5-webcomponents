@@ -1,21 +1,28 @@
 <div
 	tabindex="{{_tabIndex}}"
-	@click="{{_select}}"
+	@click="{{_handleSelect}}"
 	@keydown="{{_keydown}}"
 	class="ui5-token--wrapper"
-	dir="{{dir}}"
+	dir="{{effectiveDir}}"
 	role="option"
 	aria-selected="{{selected}}"
 >
-	<span class="ui5-token--text"><slot></slot></span>
+	<span class="ui5-token--text">{{this.text}}</span>
 
 	{{#unless readonly}}
-		<ui5-icon
-			@click="{{_delete}}"
-			src="{{iconURI}}"
-			accessible-name="{{tokenDeletableText}}"
-			show-tooltip
+		<div
 			class="ui5-token--icon"
-		></ui5-icon>
+			@click="{{_delete}}"
+		>
+			{{#if closeIcon.length}}
+				<slot name="closeIcon"></slot>
+			{{else}}
+				<ui5-icon
+					name="{{iconURI}}"
+					accessible-name="{{tokenDeletableText}}"
+					show-tooltip
+				></ui5-icon>
+			{{/if}}
+		</div>
 	{{/unless}}
 </div>

@@ -1,0 +1,72 @@
+
+{{>include "./DatePickerPopover.hbs"}}
+
+{{#*inline "header"}}
+	{{#if phone}}
+		<div class="ui5-dt-picker-header">
+			<ui5-segmentedbutton style="width: 8rem">
+				<ui5-togglebutton key="Date" ?pressed="{{showDateView}}" @click="{{_dateTimeSwitchChange}}">{{btnDateLabel}}</ui5-togglebutton>
+				<ui5-togglebutton key="Time" ?pressed="{{showTimeView}}" @click="{{_dateTimeSwitchChange}}">{{btnTimeLabel}}</ui5-togglebutton>
+			</ui5-segmentedbutton>
+		</div>
+	{{/if}}
+{{/inline}}
+
+{{#*inline "content"}}
+	<div class="ui5-dt-picker-content {{classes.picker}}">
+		<ui5-calendar
+			class="ui5-dt-cal {{classes.dateTimeView}}"
+			id="{{_id}}-calendar"
+			primary-calendar-type="{{_primaryCalendarType}}"
+			format-pattern="{{_formatPattern}}"
+			timestamp="{{_calendarTimestamp}}"
+			.selectionMode="{{_calendarSelectionMode}}"
+			.minDate="{{minDate}}"
+			.maxDate="{{maxDate}}"
+			@ui5-selected-dates-change="{{onSelectedDatesChange}}"
+			?hide-week-numbers="{{hideWeekNumbers}}"
+			._currentPicker="{{_calendarCurrentPicker}}"
+		>
+			{{#each _calendarSelectedDates}}
+				<ui5-date value="{{this}}"></ui5-date>
+			{{/each}}
+		</ui5-calendar>
+
+		{{#unless phone}}
+			<span class="ui5-dt-picker-separator"></span>
+		{{/unless}}
+
+		<ui5-time-selection
+				id="{{_id}}-time-sel"
+				class="ui5-dt-time {{classes.dateTimeView}}"
+				value="{{_timeSelectionValue}}"
+				format-pattern="{{_formatPattern}}"
+				._currentSlider="{{_currentTimeSlider}}"
+				@ui5-change="{{onTimeSelectionChange}}"
+				@ui5-slider-change="{{onTimeSliderChange}}"
+		></ui5-time-selection>
+	</div>
+{{/inline}}
+
+{{#*inline "footer"}}
+	<div slot="footer" class="ui5-dt-picker-footer">
+		<ui5-button
+			id="ok"
+			class="ui5-dt-picker-action"
+			design="Emphasized"
+			?disabled="{{_submitDisabled}}"
+			@click="{{_submitClick}}"
+		>
+			{{btnOKLabel}}
+		</ui5-button>
+
+		<ui5-button
+			id="cancel"
+			class="ui5-dt-picker-action"
+			design="Transparent"
+			@click="{{_cancelClick}}"
+		>
+			{{btnCancelLabel}}
+		</ui5-button>
+	</div>
+{{/inline}}

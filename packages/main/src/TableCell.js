@@ -25,21 +25,21 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 
 		/**
-		 * @protected
+		 * @private
 		 */
 		firstInRow: {
 			type: Boolean,
 		},
 
 		/**
-		 * @protected
+		 * @private
 		 */
 		lastInRow: {
 			type: Boolean,
 		},
 
 		/**
-		 * @protected
+		 * @private
 		 */
 		popined: {
 			type: Boolean,
@@ -61,6 +61,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.TableCell
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-cell
+ * @implements sap.ui.webcomponents.main.ITableCell
  * @public
  */
 class TableCell extends UI5Element {
@@ -78,10 +79,6 @@ class TableCell extends UI5Element {
 
 	static get template() {
 		return TableCellTemplate;
-	}
-
-	_onclick(event) {
-		this.fireEvent("_cellclick", event);
 	}
 }
 

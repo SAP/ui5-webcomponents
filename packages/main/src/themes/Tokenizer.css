@@ -7,21 +7,16 @@
 	height: 2.25rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-tokenizer-root {
-	padding: 0.125rem;
-}
-
 .ui5-tokenizer-root {
 	height: 100%;
 	display: flex;
 	align-items: center;
-	padding: 0.1875rem;
+	padding: var(--_ui5_tokenizer_root_padding);
 	overflow-x: scroll;
 	box-sizing: border-box;
-	font-family: var(--sapUiFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 }
 
-:host([data-ui5-compact-size]) .ui5-tokenizer-root.ui5-tokenizer-no-padding,
 .ui5-tokenizer-no-padding {
 	padding: 0;
 }
@@ -37,11 +32,16 @@
 	height: 100%;
 }
 
+:host([expanded]) .ui5-tokenizer--content {
+	display: inline-block;
+	white-space: nowrap;
+}
+
 .ui5-tokenizer--content {
-	height: 100%;
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
+	overflow: auto;
 }
 
 .ui5-tokenizer--content.ui5-tokenizer-nmore--content {
@@ -53,28 +53,26 @@
 	margin-left: .25rem;
 	cursor: pointer;
 	white-space: nowrap;
-	font-size: var(--sapMFontMediumSize);
-}
-
-.ui5-tokenizer-token-placeholder {
-	display: inline-block;
-	height: 1.625rem;
-	width: 1px;
-	margin-top: auto;
-}
-
-:host([data-ui5-compact-size]) .ui5-tokenizer-token-placeholder {
-	height: 1.25rem;
+	font-size: var(--sapFontSize);
 }
 
 :host([expanded]) .ui5-tokenizer--content {
-	overflow: auto;
+	overflow: hidden;
+	justify-content: flex-end;
 }
 
-::slotted(ui5-token) {
+::slotted([ui5-token]) {
 	margin-left: .25rem;
 }
 
-:host([data-ui5-compact-size]) :slotted(ui5-token) {
-	height: 100%;
+/* RTL */
+
+[dir="rtl"] .ui5-tokenizer-more-text  {
+	margin-right: .25rem;
+	margin-left: 0;
+}
+
+[dir=rtl] ::slotted([ui5-token]) {
+	margin-right: .25rem;
+	margin-left: 0;
 }

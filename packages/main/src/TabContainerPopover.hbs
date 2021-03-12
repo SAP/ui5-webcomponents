@@ -1,0 +1,23 @@
+<ui5-responsive-popover
+	id="{{_id}}-overflowMenu"
+	horizontal-align="Right"
+	placement-type="Bottom"
+	content-only-on-desktop
+	with-padding
+	no-arrow
+	_hide-header
+>
+	<ui5-list @ui5-item-press="{{_onOverflowListItemSelect}}">
+		{{#each items}}
+			{{#unless this.isSeparator}}
+				{{this.overflowPresentation}}
+			{{/unless}}
+		{{/each}}
+	</ui5-list>
+	<div slot="footer" class="ui5-responsive-popover-footer">
+		<ui5-button
+			design="Transparent"
+			@click="{{_closeRespPopover}}"
+		>Cancel</ui5-button>
+	</div>
+</ui5-responsive-popover>

@@ -1,4 +1,4 @@
-const assert = require("assert");
+const assert = require("chai").assert;
 
 const assertBooleanProperty = (el, prop) => {
 	assert.strictEqual(el.getProperty(prop), false, "the value should be false by default.");

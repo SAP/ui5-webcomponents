@@ -1,53 +1,60 @@
-<div class="ui5-dp-root" style="{{styles.wrapper}}">
+<div
+	class="ui5-dp-root"
+	style="{{styles.wrapper}}"
+	@keydown={{_onkeydown}}
+	@keyup={{_onkeyup}}
+	@click={{_onclick}}
+	@mouseover={{_onmouseover}}
+	@focusin={{_onfocusin}}
+>
 
-	{{#if showWeekNumbers}}
-		<div class="ui5-dp-weeknumber-container">
-			{{#each _weekNumbers}}
-				<div class="ui5-dp-weekname-container">
-					<span class="ui5-dp-weekname">{{this}}</span>
-				</div>
-			{{/each}}
-		</div>
-	{{/if}}
-
-	<div id="{{_id}}-content" class="ui5-dp-content">
+	<div id="{{_id}}-content" class="ui5-dp-content" role="grid" aria-roledescription="Calendar">
 		<div role="row" class="ui5-dp-days-names-container">
 			{{#each _dayNames}}
 				<div
-					id={{this._id}}
 					role="columnheader"
 					aria-label="{{this.name}}"
-					class="{{this.classes}}">
+					class="{{this.classes}}"
+				>
 					{{this.ultraShortName}}
 				</div>
 			{{/each}}
 		</div>
-		<div id="{{_id}}-days" class="ui5-dp-items-container" tabindex="-1">
-			{{#each _weeks}}
-				{{#if this.length}}
-					<div style="display: flex;">
-						{{#each this}}
+		{{#each _weeks}}
+			{{#if this.length}}
+				<div style="display: flex;" role="row">
+					{{#each this}}
+						{{#if this.timestamp}}
 							<div
-								id="{{this.id}}"
 								tabindex="{{this._tabIndex}}"
+								?data-sap-focus-ref="{{this.focusRef}}"
 								data-sap-timestamp="{{this.timestamp}}"
-								data-sap-index="{{this._index}}"
 								role="gridcell"
-								aria-selected="{{this.selected}}"
+								aria-selected="{{this.ariaSelected}}"
+								aria-label="{{this.ariaLabel}}"
+								aria-disabled="{{this.ariaDisabled}}"
 								class="{{this.classes}}">
-									<span 
+									<span
 										class="ui5-dp-daytext"
 										data-sap-timestamp="{{this.timestamp}}"
-										data-sap-index="{{this._index}}">
+									>
 											{{this.iDay}}
 									</span>
 							</div>
-						{{/each}}
-					</div>
-				{{else}}
-					<div class="sapWCEmptyWeek"></div>
-				{{/if}}
-			{{/each}}
-		</div>
+						{{else}}
+							{{#unless this.isHidden}}
+									<div class="ui5-dp-weekname-container"
+										role="rowheader"
+										aria-label="Calendar Week {{this.weekNum}}">
+											<span class="ui5-dp-weekname">{{this.weekNum}}</span>
+									</div>
+							{{/unless}}
+						{{/if}}
+					{{/each}}
+				</div>
+			{{else}}
+				<div class="sapWCEmptyWeek"></div>
+			{{/if}}
+		{{/each}}
 	</div>
 </div>

@@ -1,0 +1,11 @@
+@import "./InvisibleTextStyles.css";
+
+:host(:not([hidden])) {
+	display: block;
+	width: 100%;
+}
+
+.ui5-tree-root {
+	height: 100%;
+	width: 100%;
+}

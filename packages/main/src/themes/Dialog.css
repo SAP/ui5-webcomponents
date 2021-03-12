@@ -1,42 +1,54 @@
-.ui5-dialog-root-parent {
-	position: fixed;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	overflow: hidden;
+:host {
+	min-width: 20rem;
+	min-height: 6rem;
+	box-shadow: var(--sapContent_Shadow3);
 }
 
-:host([stretch]) .ui5-dialog-root {
+:host([stretch]) {
 	width: 90%;
-	height: 93%;
-	min-width: 0;
-	min-height: 0;
+	height: 90%;
 }
 
-:host([stretch]) .ui5-phone.ui5-dialog-root-parent .ui5-dialog-root {
+:host([stretch][on-phone]) {
 	width: 100%;
 	height: 100%;
-	box-shadow: none;
-	border-radius: 0;
 }
 
-.ui5-dialog-root {
+:host([stretch][on-phone]) .ui5-popup-root {
+	max-height: 100vh;
+	max-width: 100vw;
+}
+
+:host([draggable]) .ui5-popup-header-root,
+:host([draggable]) ::slotted([slot="header"]) {
+	cursor: move;
+}
+
+:host([draggable]) .ui5-popup-header-root * {
+	cursor: auto;
+}
+
+.ui5-popup-root {
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
+	max-width: 100vw;
 }
 
-.ui5-dialog-root header,
-.ui5-dialog-root footer {
-	flex-shrink: 0;
-}
-
-.ui5-dialog-section {
-	overflow: hidden;
+.ui5-popup-content {
+	min-height: var(--_ui5_dialog_content_min_height);
 	flex: 1 1 auto;
-	display: flex;
+}
+
+.ui5-popup-resize-handle {
+	position: absolute;
+	bottom: -0.0625rem;
+	right: -0.25rem;
+	cursor: se-resize;
+	color: var(--_ui5_dialog_resize_handle_color);
+}
+
+.ui5-popup-resize-handle[dir=rtl] {
+	left: -0.25rem;
+	right: unset;
+	cursor: sw-resize;
 }

@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
@@ -16,6 +15,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
  */
 const metadata = {
 	tag: "ui5-badge",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.Badge.prototype */  {
 
 		/**
@@ -23,9 +23,9 @@ const metadata = {
 		 * There are 10 predefined schemes. Each scheme applies different values for the <code>background-color</code> and <code>border-color</code>.
 		 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The <code>colorScheme</code> <code>"1"</code> will be set by default.
 		 * <br><br>
-		 * <b>Note:</b> color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
+		 * <b>Note:</b> Color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
 		 * @type {string}
-		 * @defaultvalue ""
+		 * @defaultvalue "1"
 		 * @public
 		 */
 		colorScheme: {
@@ -33,10 +33,11 @@ const metadata = {
 			defaultValue: "1",
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Badge.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-badge</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -49,14 +50,13 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
 		 * @public
 		 */
 		icon: {
 			type: HTMLElement,
 		},
-
 	},
 };
 
@@ -109,10 +109,8 @@ class Badge extends UI5Element {
 		return badgeCss;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
-
-		super.define(...params);
 	}
 
 	onBeforeRendering() {
@@ -129,10 +127,6 @@ class Badge extends UI5Element {
 
 	get hasIcon() {
 		return !!this.icon.length;
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 
 	get badgeDescription() {

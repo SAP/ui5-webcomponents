@@ -2,55 +2,84 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
+import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
-import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
 import Button from "./Button.js";
-import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
-import Popover from "./Popover.js";
-import SemanticColor from "./types/SemanticColor.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
+
+// Templates
+import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
+import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopoverTemplate.lit.js";
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
-
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import TabLayout from "./types/TabLayout.js";
 
 const SCROLL_STEP = 128;
+
+const tabStyles = [];
+const staticAreaTabStyles = [];
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-tabcontainer",
+	languageAware: true,
+	managedSlots: true,
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
-		 * <br><b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.ITab[]}
 		 * @public
-		 * @slot
+		 * @slot items
 		 */
 		"default": {
 			propertyName: "items",
 			type: HTMLElement,
 			individualSlots: true,
-			listenFor: { include: ["*"] },
+			invalidateOnChildChange: {
+				properties: true,
+				slots: false,
+			},
+		},
+
+		/**
+		 * Defines the button which will open the overflow menu. If nothing is provided to this slot, the default button will be used.
+		 *
+		 * @type {sap.ui.webcomponents.main.IButton}
+		 * @public
+		 * @slot
+		 * @since 1.0.0-rc.9
+		 */
+		overflowButton: {
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
-		 * Determines whether the tabs are in a fixed state that is not
+		 * Defines whether the tabs are in a fixed state that is not
 		 * expandable/collapsible by user interaction.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -59,9 +88,9 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the tab content is collapsed.
+		 * Defines whether the tab content is collapsed.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -70,17 +99,68 @@ const metadata = {
 		},
 
 		/**
-		 * Specifies if the overflow select list is displayed.
+		 * Defines the placement of the tab strip (tab buttons area) relative to the actual tabs' content.
+		 * <br><br>
+		 * <b>Note:</b> By default the tab strip is displayed above the tabs' content area and this is the recommended
+		 * layout for most scenarios. Set to <code>Bottom</code> only when the <code>ui5-tabcontainer</code> is at the
+		 * bottom of the page and you want the tab strip to act as a menu.
+		 *
+		 * @type {TabContainerTabsPlacement}
+		 * @defaultvalue "Top"
+		 * @since 1.0.0-rc.7
+		 * @public
+		 */
+		tabsPlacement: {
+			type: TabContainerTabsPlacement,
+			defaultValue: TabContainerTabsPlacement.Top,
+		},
+
+		/**
+		 * Defines whether the overflow select list is displayed.
 		 * <br><br>
 		 * The overflow select list represents a list, where all tab filters are displayed
 		 * so that it's easier for the user to select a specific tab filter.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
 		showOverflow: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab.
+		 *
+		 * <br><br>
+		 * <b>Note:</b>
+		 * The <code>main text</code> and the <code>additionalText</code> would be displayed vertically by defualt,
+		 * but when set to <code>Inline</code>, they would be displayed horizontally.
+		 *
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Standard</code></li>
+		 * <li><code>Inline</code></li>
+		 * </ul>
+		 *
+		 * @type {TabLayout}
+		 * @defaultvalue "Standard"
+		 * @public
+		 */
+		tabLayout: {
+			type: String,
+			defaultValue: TabLayout.Standard,
+		},
+
+		/**
+		 * Defines the current media query size.
+		 *
+		 * @type {string}
+		 * @private
+		 */
+		mediaRange: {
+			type: String,
 		},
 
 		_selectedTab: {
@@ -101,17 +181,32 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
+		_animationRunning: {
+			type: Boolean,
+			noAttribute: true,
+		},
+
+		_contentCollapsed: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
+
 		/**
-		 * Fired when an item is selected.
+		 * Fired when a tab is selected.
 		 *
-		 * @event
-		 * @param {HTMLElement} item The selected <code>item</code>.
+		 * @event sap.ui.webcomponents.main.TabContainer#tab-select
+		 * @param {HTMLElement} tab The selected <code>tab</code>.
+		 * @param {Integer} tabIndex The selected <code>tab</code> index.
 		 * @public
 		 */
-		itemSelect: {
-			item: { type: HTMLElement },
+		"tab-select": {
+			detail: {
+				tab: { type: HTMLElement },
+				tabIndex: { type: Number },
+			},
 		},
 	},
 };
@@ -133,7 +228,15 @@ const metadata = {
  * <li><code>ui5-tab-separator</code> - used to separate tabs with a vertical line</li>
  * </ul>
  *
- * <h3>ES6 import</h3>
+ * <h3>Stable DOM Refs</h3>
+ *
+ * In the context of <code>ui5-tabcontainer</code>, you can provide a custom stable DOM refs for:
+ * <ul>
+ * <li>Each <code>ui5-tab</code>
+ * Example: <code><ui5-tab stable-dom-ref="in-stock"></ui5-tab></code></li>
+ * </ul>
+ *
+ * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/TabContainer";</code>
  * <br>
@@ -155,7 +258,11 @@ class TabContainer extends UI5Element {
 	}
 
 	static get styles() {
-		return tabContainerCss;
+		return [tabStyles, tabContainerCss];
+	}
+
+	static get staticAreaStyles() {
+		return [ResponsivePopoverCommonCss, staticAreaTabStyles];
 	}
 
 	static get render() {
@@ -166,66 +273,51 @@ class TabContainer extends UI5Element {
 		return TabContainerTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return TabContainerPopoverTemplate;
+	}
+
+	static registerTabStyles(styles) {
+		tabStyles.push(styles);
+	}
+
+	static registerStaticAreaTabStyles(styles) {
+		staticAreaTabStyles.push(styles);
+	}
+
 	constructor() {
 		super();
 
-		this._handleHeaderResize = this._handleHeaderResize.bind(this);
+		this._handleResize = this._handleResize.bind(this);
 
 		// Init ScrollEnablement
 		this._scrollEnablement = new ScrollEnablement(this);
 		this._scrollEnablement.attachEvent("scroll", this._updateScrolling.bind(this));
 
 		// Init ItemNavigation
-		this._initItemNavigation();
+		this._itemNavigation = new ItemNavigation(this, {
+			getItemsCallback: () => this._getTabs(),
+		});
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
-		const hasSelected = this.items.some(item => item.selected);
-		this.items.forEach(item => {
+		// Set external properties to items
+		this.items.filter(item => !item.isSeparator).forEach((item, index, arr) => {
+			item._isInline = this.tabLayout === TabLayout.Inline;
+			item._mixedMode = this.mixedMode;
+			item._posinset = index + 1;
+			item._setsize = arr.length;
 			item._getTabContainerHeaderItemCallback = _ => {
 				return this.getDomRef().querySelector(`#${item._id}`);
 			};
+			item._itemSelectCallback = this._onItemSelect.bind(this);
 		});
 
-		if (this.items.length && !hasSelected) {
-			this.items[0].selected = true;
+		if (!this._animationRunning) {
+			this._contentCollapsed = this.collapsed;
 		}
-
-		this.calculateRenderItems();
-	}
-
-	calculateRenderItems() {
-		this.renderItems = this.items.map((item, index) => {
-			const isSeparator = item.isSeparator;
-
-			if (isSeparator) {
-				return { isSeparator, _tabIndex: item._tabIndex, _id: item._id };
-			}
-
-			return {
-				item,
-				isMixedModeTab: !item.icon && this.mixedMode,
-				isTextOnlyTab: !item.icon && !this.mixedMode,
-				isIconTab: item.icon,
-				position: index + 1,
-				disabled: item.disabled || undefined,
-				selected: item.selected || false,
-				hidden: !item.selected,
-				ariaLabelledBy: calculateAriaLabelledBy(item),
-				contentItemClasses: calculateContentItemClasses(item),
-				headerItemClasses: calculateHeaderItemClasses(item, this.mixedMode),
-				headerItemContentClasses: calculateHeaderItemContentClasses(item),
-				headerItemIconClasses: calculateHeaderItemIconClasses(item),
-				headerItemSemanticIconClasses: calculateHeaderItemSemanticIconClasses(item),
-				headerItemTextClasses: calculateHeaderItemTextClasses(item),
-				headerItemAdditionalTextClasses: calculateHeaderItemAdditionalTextClasses(item),
-				overflowItemClasses: calculateOverflowItemClasses(item),
-				overflowItemContentClasses: calculateOverflowItemContentClasses(item),
-				overflowItemState: calculateOverflowItemState(item),
-			};
-		}, this);
 	}
 
 	onAfterRendering() {
@@ -234,16 +326,30 @@ class TabContainer extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this._getHeader(), this._handleHeaderResize);
+		ResizeHandler.register(this._getHeader(), this._handleResize);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this._getHeader(), this._handleHeaderResize);
+		ResizeHandler.deregister(this._getHeader(), this._handleResize);
 	}
 
-	_onHeaderItemKeyDown(event) {
+	_onHeaderClick(event) {
+		const tab = getTab(event.target);
+		if (!tab) {
+			return;
+		}
+
+		this._onHeaderItemSelect(tab);
+	}
+
+	_onHeaderKeyDown(event) {
+		const tab = getTab(event.target);
+		if (!tab) {
+			return;
+		}
+
 		if (isEnter(event)) {
-			this._onHeaderItemSelect(event);
+			this._onHeaderItemSelect(tab);
 		}
 
 		// Prevent Scrolling
@@ -252,33 +358,33 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_onHeaderItemKeyUp(event) {
+	_onHeaderKeyUp(event) {
+		const tab = getTab(event.target);
+		if (!tab) {
+			return;
+		}
+
 		if (isSpace(event)) {
-			this._onHeaderItemSelect(event);
+			this._onHeaderItemSelect(tab);
 		}
 	}
 
-	_initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this);
-		this._itemNavigation.getItemsCallback = () => this._getTabs();
-	}
-
-	_onHeaderItemSelect(event) {
-		if (!event.target.hasAttribute("disabled")) {
-			this._onItemSelect(event.target);
+	_onHeaderItemSelect(tab) {
+		if (!tab.hasAttribute("disabled")) {
+			this._onItemSelect(tab);
 		}
 	}
 
 	_onOverflowListItemSelect(event) {
 		this._onItemSelect(event.detail.item);
-		this._getPopover().close();
+		this.responsivePopover.close();
 		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
 	}
 
 	_onItemSelect(target) {
 		const selectedIndex = findIndex(this.items, item => item._id === target.id);
 		const selectedTabIndex = findIndex(this._getTabs(), item => item._id === target.id);
-		const currentSelectedTab = this.items[selectedIndex];
+		const selectedTab = this.items[selectedIndex];
 
 		// update selected items
 		this.items.forEach((item, index) => {
@@ -287,29 +393,85 @@ class TabContainer extends UI5Element {
 				item.selected = selected;
 
 				if (selected) {
-					this._itemNavigation.current = selectedTabIndex;
+					this._itemNavigation.setCurrentItem(item);
 				}
 			}
 		}, this);
 
-		// update collapsed state
-		if (!this.fixed) {
-			if (currentSelectedTab === this._selectedTab) {
-				this.collapsed = !this.collapsed;
-			} else {
-				this.collapsed = false;
-			}
+		if (this.fixed) {
+			this.selectTab(selectedTab, selectedTabIndex);
+			return;
 		}
 
+		if (!this.animate) {
+			this.toggle(selectedTab);
+			this.selectTab(selectedTab, selectedTabIndex);
+			return;
+		}
+
+		this.toggleAnimated(selectedTab);
+		this.selectTab(selectedTab, selectedTabIndex);
+	}
+
+	async toggleAnimated(selectedTab) {
+		const content = this.shadowRoot.querySelector(".ui5-tc__content");
+		let animationPromise = null;
+
+		this._animationRunning = true;
+
+		if (selectedTab === this._selectedTab) {
+			// click on already selected tab - animate both directions
+			this.collapsed = !this.collapsed;
+			animationPromise = this.collapsed ? this.slideContentUp(content) : this.slideContentDown(content);
+		} else {
+			// click on new tab - animate if the content is currently collapsed
+			animationPromise = this.collapsed ? this.slideContentDown(content) : Promise.resolve();
+			this.collapsed = false;
+		}
+
+		await animationPromise;
+		this._contentCollapsed = this.collapsed;
+		this._animationRunning = false;
+	}
+
+	toggle(selectedTab) {
+		if (selectedTab === this._selectedTab) {
+			this.collapsed = !this.collapsed;
+		} else {
+			this.collapsed = false;
+		}
+	}
+
+	selectTab(selectedTab, selectedTabIndex) {
 		// select the tab
-		this._selectedTab = currentSelectedTab;
-		this.fireEvent("itemSelect", {
-			item: currentSelectedTab,
+		this._selectedTab = selectedTab;
+		this.fireEvent("tab-select", {
+			tab: selectedTab,
+			tabIndex: selectedTabIndex,
 		});
 	}
 
-	_onOverflowButtonClick(event) {
-		this._getPopover().openBy(event.target);
+	slideContentDown(element) {
+		return slideDown({ element }).promise();
+	}
+
+	slideContentUp(element) {
+		return slideUp({ element }).promise();
+	}
+
+	async _onOverflowButtonClick(event) {
+		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui-tc__overflowButton > ui5-button");
+
+		if (event.target !== button) {
+			return;
+		}
+
+		this.responsivePopover = await this._respPopover();
+		if (this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		} else {
+			this.responsivePopover.open(button);
+		}
 	}
 
 	_onHeaderBackArrowClick() {
@@ -322,8 +484,14 @@ class TabContainer extends UI5Element {
 			.then(_ => this._updateScrolling());
 	}
 
-	_handleHeaderResize() {
+	_handleResize() {
 		this._updateScrolling();
+		this._updateMediaRange();
+	}
+
+	async _closeRespPopover() {
+		this.responsivePopover = await this._respPopover();
+		this.responsivePopover.close();
 	}
 
 	_updateScrolling() {
@@ -332,6 +500,14 @@ class TabContainer extends UI5Element {
 		this._scrollable = headerScrollContainer.offsetWidth < headerScrollContainer.scrollWidth;
 		this._scrollableBack = headerScrollContainer.scrollLeft > 0;
 		this._scrollableForward = Math.ceil(headerScrollContainer.scrollLeft) < headerScrollContainer.scrollWidth - headerScrollContainer.offsetWidth;
+
+		if (!this._scrollable) {
+			this._closeRespPopover();
+		}
+	}
+
+	_updateMediaRange() {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
 	}
 
 	_getHeader() {
@@ -346,15 +522,27 @@ class TabContainer extends UI5Element {
 		return this.shadowRoot.querySelector(`#${this._id}-headerScrollContainer`);
 	}
 
-	_getPopover() {
-		return this.shadowRoot.querySelector(`#${this._id}-overflowMenu`);
+	async _respPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
+	}
+
+	get shouldShowOverflow() {
+		return this.showOverflow && this._scrollable;
 	}
 
 	get classes() {
 		return {
+			root: {
+				"ui5-tc-root": true,
+				"ui5-tc--textOnly": this.textOnly,
+			},
 			header: {
 				"ui5-tc__header": true,
 				"ui5-tc__header--scrollable": this._scrollable,
+			},
+			headerInnerContainer: {
+				"ui5-tc__headerInnerContainer": true,
 			},
 			headerScrollContainer: {
 				"ui-tc__headerScrollContainer": true,
@@ -375,19 +563,19 @@ class TabContainer extends UI5Element {
 				"ui5-tc__headerArrowRight": true,
 				"ui5-tc__headerArrow--visible": this._scrollableForward,
 			},
-			overflowButton: {
-				"ui-tc__overflowButton": true,
-				"ui-tc__overflowButton--visible": this._scrollable,
-			},
 			content: {
 				"ui5-tc__content": true,
-				"ui5-tc__content--collapsed": this.collapsed,
+				"ui5-tc__content--collapsed": this._contentCollapsed,
 			},
 		};
 	}
 
 	get mixedMode() {
 		return this.items.some(item => item.icon) && this.items.some(item => item.text);
+	}
+
+	get textOnly() {
+		return this.items.every(item => !item.icon);
 	}
 
 	get previousIconACCName() {
@@ -402,23 +590,45 @@ class TabContainer extends UI5Element {
 		return this.i18nBundle.getText(TABCONTAINER_OVERFLOW_MENU_TITLE);
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+	get tabsAtTheBottom() {
+		return this.tabsPlacement === TabContainerTabsPlacement.Bottom;
 	}
 
-	static async define(...params) {
-		await Promise.all([
-			Button.define(),
-			CustomListItem.define(),
-			Icon.define(),
-			List.define(),
-			Popover.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+	get overflowMenuIcon() {
+		return this.tabsAtTheBottom ? "slim-arrow-up" : "slim-arrow-down";
+	}
 
-		super.define(...params);
+	get animate() {
+		return getAnimationMode() !== AnimationMode.None;
+	}
+
+	static get dependencies() {
+		return [
+			Button,
+			Icon,
+			List,
+			ResponsivePopover,
+		];
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
+
+const isTabLi = el => el.localName === "li" && el.getAttribute("role") === "tab";
+
+const getTab = el => {
+	while (el) {
+		if (isTabLi(el)) {
+			return el;
+		}
+
+		el = el.parentElement;
+	}
+
+	return false;
+};
 
 const findIndex = (arr, predicate) => {
 	for (let i = 0; i < arr.length; i++) {
@@ -430,120 +640,6 @@ const findIndex = (arr, predicate) => {
 	}
 
 	return -1;
-};
-
-/* CSS classes calculation helpers */
-
-const calculateAriaLabelledBy = item => {
-	const labels = [];
-
-	if (item.text) {
-		labels.push(`${item._id}-text`);
-	}
-
-	if (item.additionalText) {
-		labels.push(`${item._id}-additionalText`);
-	}
-
-	if (item.icon) {
-		labels.push(`${item._id}-icon`);
-	}
-
-	return labels.join(" ");
-};
-
-const calculateHeaderItemClasses = (item, mixedMode) => {
-	const classes = ["ui5-tc__headerItem"];
-
-	if (item.selected) {
-		classes.push("ui5-tc__headerItem--selected");
-	}
-
-	if (item.disabled) {
-		classes.push("ui5-tc__headerItem--disabled");
-	}
-
-	if (!item.icon && !mixedMode) {
-		classes.push("ui5-tc__headerItem--textOnly");
-	}
-
-	if (item.icon) {
-		classes.push("ui5-tc__headerItem--withIcon");
-	}
-
-	if (!item.icon && mixedMode) {
-		classes.push("ui5-tc__headerItem--mixedMode");
-	}
-
-	if (item.semanticColor !== SemanticColor.Default) {
-		classes.push(`ui5-tc__headerItem--${item.semanticColor.toLowerCase()}`);
-	}
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemContentClasses = item => {
-	const classes = ["ui5-tc__headerItemContent"];
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemIconClasses = item => {
-	const classes = ["ui5-tc-headerItemIcon"];
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemSemanticIconClasses = item => {
-	const classes = ["ui5-tc-headerItemSemanticIcon"];
-
-	if (item.semanticColor !== SemanticColor.Default) {
-		classes.push(`ui5-tc-headerItemSemanticIcon--${item.semanticColor.toLowerCase()}`);
-	}
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemTextClasses = item => {
-	const classes = ["ui5-tc__headerItemText"];
-
-	return classes.join(" ");
-};
-
-const calculateHeaderItemAdditionalTextClasses = item => {
-	const classes = ["ui5-tc__headerItemAdditionalText"];
-
-	return classes.join(" ");
-};
-
-const calculateOverflowItemClasses = item => {
-	const classes = ["ui5-tc__overflowItem"];
-
-	if (item.semanticColor !== SemanticColor.Default) {
-		classes.push(`ui5-tc__overflowItem--${item.semanticColor.toLowerCase()}`);
-	}
-
-	if (item.disabled) {
-		classes.push("ui5-tc__overflowItem--disabled");
-	}
-
-	return classes.join(" ");
-};
-
-const calculateOverflowItemContentClasses = item => {
-	const classes = ["ui5-tc__overflowItemContent"];
-
-	return classes.join(" ");
-};
-
-const calculateOverflowItemState = item => {
-	return item.disabled ? "Inactive" : "Active";
-};
-
-const calculateContentItemClasses = item => {
-	const classes = ["ui5-tc__contentItem"];
-
-	return classes.join(" ");
 };
 
 TabContainer.define();

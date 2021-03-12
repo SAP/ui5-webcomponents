@@ -1,56 +1,44 @@
 <div
-		class="ui5-datepicker-root"
+		class="ui5-date-picker-root"
 		style="{{styles.main}}"
-		@keydown={{_onkeydown}}
 >
 	<!-- INPUT -->
 	<ui5-input
 			id="{{_id}}-inner"
+			class="ui5-date-picker-input"
 			placeholder="{{_placeholder}}"
 			type="{{type}}"
 			value="{{value}}"
 			?disabled="{{disabled}}"
+			?required="{{required}}"
 			?readonly="{{readonly}}"
 			value-state="{{valueState}}"
-			@ui5-change="{{_handleInputChange}}"
-			@ui5-input="{{_handleInputLiveChange}}"
 			data-sap-focus-ref
 			._inputAccInfo ="{{accInfo}}"
+			@ui5-change="{{_onInputChange}}"
+			@ui5-input="{{_onInputInput}}"
+			@ui5-submit="{{_onInputSubmit}}"
+			@keydown="{{_onkeydown}}"
 	>
+
+		{{#if valueStateMessage.length}}
+			<slot name="valueStateMessage" slot="valueStateMessage"></slot>
+		{{/if}}
+
 		{{#unless readonly}}
 			<ui5-icon
 				slot="icon"
-				name="appointment-2"
+				name="{{openIconName}}"
 				tabindex="-1"
 				accessible-name="{{openIconTitle}}"
 				show-tooltip
 				@click="{{togglePicker}}"
 				input-icon
 				?pressed="{{_isPickerOpen}}"
-				dir="{{dir}}"
+				dir="{{effectiveDir}}"
 			></ui5-icon>
 		{{/unless}}
 	</ui5-input>
 
-	<!-- POPOVER -->
-	<ui5-popover
-			id="{{_id}}-popover"
-			allow-target-overlap="{{_popover.allowTargetOverlap}}"
-			placement-type="{{_popover.placementType}}"
-			no-arrow
-			horizontal-align="{{_popover.horizontalAlign}}"
-			stay-open-on-scroll="{{_popover.stayOpenOnScroll}}"
-			@ui5-afterClose="{{_popover.afterClose}}"
-			@ui5-afterOpen="{{_popover.afterOpen}}"
-	>
-		<ui5-calendar
-				id="{{_id}}-calendar"
-				primary-calendar-type="{{_calendar.primaryCalendarType}}"
-				format-pattern="{{_calendar.formatPattern}}"
-				timestamp="{{_calendar.timestamp}}"
-				.selectedDates="{{_calendar.selectedDates}}"
-				@ui5-selectedDatesChange="{{_calendar.onSelectedDatesChange}}"
-		></ui5-calendar>
-	</ui5-popover>
 	<slot name="formSupport"></slot>
 </div>

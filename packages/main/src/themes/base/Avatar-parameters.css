@@ -1,0 +1,20 @@
+:root {
+	--ui5-avatar-initials-color: var(--sapContent_ImagePlaceholderForegroundColor);
+    --ui5-avatar-initials-border: none;
+    --ui5-avatar-accent1: var(--sapAccentColor1);
+    --ui5-avatar-accent2: var(--sapAccentColor2);
+    --ui5-avatar-accent3: var(--sapAccentColor3);
+    --ui5-avatar-accent4: var(--sapAccentColor4);
+    --ui5-avatar-accent5: var(--sapAccentColor5);
+    --ui5-avatar-accent6: var(--sapAccentColor6);
+    --ui5-avatar-accent7: var(--sapAccentColor7);
+    --ui5-avatar-accent8: var(--sapAccentColor8);
+    --ui5-avatar-accent9: var(--sapAccentColor9);
+    --ui5-avatar-accent10: var(--sapAccentColor10);
+    --ui5-avatar-placeholder: var(--sapContent_ImagePlaceholderBackground);
+
+    --_ui5_avatar_outline: 1px dotted var(--sapContent_FocusColor);
+    --_ui5_avatar_focus_offset: 1px;
+	--_ui5_avatar_focus_width: 1px;
+	--_ui5_avatar_focus_color: var(--sapContent_FocusColor);
+}

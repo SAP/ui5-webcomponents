@@ -1,0 +1,34 @@
+<ui5-responsive-popover
+	id="{{_id}}-responsive-popover"
+	class="ui5-time-picker-popover"
+	placement-type="Bottom"
+	horizontal-align="Left"
+	allow-target-overlap
+	_hide-header
+	no-arrow
+	no-stretch
+	stay-open-on-scroll
+	@ui5-after-close="{{onResponsivePopoverAfterClose}}"
+	@wheel="{{_handleWheel}}"
+>
+
+	<ui5-time-selection
+		id="{{_id}}-time-sel"
+		value="{{_timeSelectionValue}}"
+		format-pattern="{{_formatPattern}}"
+		.hideHours="{{hideHours}}"
+		.hideMinutes="{{hideMinutes}}"
+		.hideSeconds="{{hideSeconds}}"
+		.minutesStep="{{minutesStep}}"
+		.secondsStep="{{secondsStep}}"
+		.maxHours="{{maxHours}}"
+		.maxMinutes="{{maxMinutes}}"
+		.maxSeconds="{{maxSeconds}}"
+		@ui5-change="{{onTimeSelectionChange}}"
+	></ui5-time-selection>
+
+	<div slot="footer" class="ui5-time-picker-footer" @keydown={{_onfooterkeydown}}>
+		<ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
+		<ui5-button id="close" design="Transparent" @click="{{closePicker}}">{{cancelButtonLabel}}</ui5-button>
+	</div>
+</ui5-responsive-popover>

@@ -3,8 +3,22 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
+	line-height: normal;
+	letter-spacing: normal;
+	word-spacing: normal;
 }
 
 :host {
+	color: var(--sapField_TextColor);
+	background-color: var(--sapField_Background);
+}
+
+:host .ui5-date-picker-input {
 	width: 100%;
+	min-width: 12.5625rem;
+	color: inherit;
+	background-color: inherit;
+	line-height: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
 }

@@ -2,9 +2,9 @@
 <html style="height: 100%">
 
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
-
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Popover</title>
 
 	<script data-ui5-config type="application/json">
@@ -15,18 +15,24 @@
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module">
-	</script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		ui5-date-picker,
+		ui5-select,
+		ui5-input,
+		ui5-multi-combobox {
+			width: 100%;
+		}
+	</style>
 
 	<script>
 		delete Document.prototype.adoptedStyleSheets
 	</script>
-
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 	<!-- <ui5-button id="btnOpenPopover" design="Emphasized" icon="employee">Open Popover</ui5-button>
 
 	<ui5-popover id="popoverToOpen" header-text="Popover">
@@ -54,10 +60,10 @@
 
 	<ui5-button id="btn">Click me !</ui5-button>
 
-	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
-		<!-- <div slot="header">
-			Hello World
-		</div> -->
+	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top" aria-label="This popover is important">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
 
 		<ui5-list>
 			<ui5-li>Hello</ui5-li>
@@ -68,9 +74,11 @@
 		<br>
 		<br>
 
-		<ui5-button id='popbtn'>Open Popover</ui5-button>
+		<ui5-button id="popbtn">Open Popover</ui5-button>
 
-		<ui5-popover placement-type="Bottom" no-arrow id='danger'>
+		<ui5-popover placement-type="Bottom" no-arrow id="danger">
+
+
 			<ui5-list>
 				<ui5-li>Hello</ui5-li>
 				<ui5-li>World</ui5-li>
@@ -80,9 +88,9 @@
 			<br>
 			<br>
 
-			<ui5-button id='bigDanger'>Super Danger !</ui5-button>
+			<ui5-button id="bigDanger">Super Danger !</ui5-button>
 
-			<ui5-popover id='bigDangerPop'>
+			<ui5-popover id="bigDangerPop">
 				<ui5-list>
 					<ui5-li>Hello</ui5-li>
 					<ui5-li>World</ui5-li>
@@ -102,10 +110,10 @@
 		<br>
 		<br>
 
-		<!-- <ui5-datepicker></ui5-datepicker> -->
+		<!-- <ui5-date-picker></ui5-date-picker> -->
 
 		<div slot="footer">
-			Hello World Footer
+			<ui5-button>I am in the footer</ui5-button>
 		</div>
 	</ui5-popover>
 
@@ -122,15 +130,15 @@
 	<br>
 	<br>
 
-	<ui5-datepicker id="field"></ui5-datepicker>
+	<ui5-date-picker id="field"></ui5-date-picker>
 
 	<br>
 	<br>
 
 
 	<ui5-multi-combobox>
-		<ui5-li>Hello</ui5-li>
-		<ui5-li>World</ui5-li>
+		<ui5-cb-item text="Hello"></ui5-cb-item>
+		<ui5-cb-item text="World"></ui5-cb-item>
 	</ui5-multi-combobox>
 
 	<br>
@@ -149,18 +157,273 @@
 		<ui5-list id="bigList"></ui5-list>
 	</ui5-popover>
 
-	<script>
+	<ui5-button id="btnPopModal">Opens modal popover!</ui5-button>
 
-		btn.addEventListener('click', function (event) {
+	<ui5-popover id="modalPopover" modal header-text="Modal popover">
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>Again</ui5-li>
+			<ui5-li>Wooooooooooooooooooooooooooooorld</ui5-li>
+		</ui5-list>
+
+		<div slot="footer">
+			<ui5-button id="modalPopoverClose">Close</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<ui5-button id="btnPopModalNoLayer">Opens modal popover with no block layer!</ui5-button>
+
+	<ui5-popover id="modalPopoverNoLayer" modal header-text="Modal popover" hide-backdrop>
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>Again</ui5-li>
+			<ui5-li>Wooooooooooooooooooooooooooooorld</ui5-li>
+		</ui5-list>
+
+		<div slot="footer">
+			<ui5-button id="modalPopoverNoLayerClose">Close</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<ui5-button id="btnPopFocus">Opens popover with initial focus!</ui5-button>
+
+	<ui5-popover id="popFocus" initial-focus="focusMe" header-text="Popover header">
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>Again</ui5-li>
+			<ui5-li>Wold</ui5-li>
+		</ui5-list>
+
+		<div slot="footer">
+			<ui5-button id="focusMe">Close</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<br>
+	<br>
+	<ui5-title>Test open popup and hide opener</ui5-title>
+	<ui5-button id="btnQuickViewCardOpener">Open popup and hide myself</ui5-button>
+	<ui5-button id="btnMoveFocus">focusable element</ui5-button>
+	<br>
+	<br>
+	<ui5-title>placement-type="Right", but no space on the right</ui5-title>
+	<p>No space on the Right, try Left, Bottom, Top</p>
+	<ui5-button id="btnFullWidth" style="width: 100%">Click me !</ui5-button>
+	<br>
+	<br>
+	<ui5-title>placement-type="Right" (default) and allow-target-overlap=true </ui5-title>
+	<p>No space on the right, try Left, Bottom, Top and if nothing works, the target will be overlapped</p>
+	<ui5-button id="btnFullWidthTargetOverlap" style="width: 100%">Click me !</ui5-button>
+
+	<br>
+	<br>
+	<ui5-title>placement-type="Left", but no space on the left</ui5-title>
+	<p>No space on the Left, try Right, Bottom, Top</p>
+	<ui5-button id="btnFullWidthLeft" style="width: 100%">Click me !</ui5-button>
+
+	<br>
+	<br>
+	<ui5-title>placement-type="Left" and allow-target-overlap=true</ui5-title>
+	<p>No space on the right, try Roght, Bottom, Top and if nothing works, the target will be overlapped</p>
+	<ui5-button id="btnFullWidthLeftTargetOverlap" style="width: 100%">Click me !</ui5-button>
+
+	<br>
+	<br>
+	<ui5-title>placement-type="Top"</ui5-title>
+	<ui5-button id="btnFullWidthTop" style="width: 100%">Click me !</ui5-button>
+
+	<br>
+	<br>
+	<ui5-title>placement-type="Bottom"</ui5-title>
+	<ui5-button id="btnFullWidthBottom" style="width: 100%">Click me !</ui5-button>
+
+	<ui5-popover header-text="My Heading" id="popFullWidth" style="width: 300px" >
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+	<ui5-popover allow-target-overlap header-text="My Heading" id="popFullWidthTargetOverlap" style="width: 300px" >
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+
+	<ui5-popover header-text="My Heading" id="popFullWidthLeft" style="width: 300px" placement-type="Left">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+	<ui5-popover header-text="My Heading" id="popFullWidthLeftTargetOverlap" style="width: 300px" placement-type="Left" allow-target-overlap>
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+
+	<ui5-popover header-text="My Heading" id="popFullWidthTop" style="width: 300px" placement-type="Top">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+	<ui5-popover header-text="My Heading" id="popFullWidthBottom" style="width: 300px" placement-type="Bottom">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+
+	<ui5-popover id="quickViewCard" placement-type="Right" height="500px">
+		<ui5-input id="searchInput" style="width: 300px">
+			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
+		</ui5-input>
+		<ui5-list style="height: 400px">
+			<ui5-li-groupheader>Actions</ui5-li-groupheader>
+			<ui5-li>Delete Product</ui5-li>
+			<ui5-li>Audit Log Settings</ui5-li>
+			<ui5-li>OData API Audit</ui5-li>
+			<ui5-li-groupheader>Products</ui5-li-groupheader>
+			<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+			<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+	<br>
+	<br>
+	<div id="targetOpener" style="height: 3rem; background: red;"></div>
+
+	<ui5-button id="btnOpenXLeft">Open Popup Left aligned</ui5-button>
+
+	<ui5-popover
+		header-text="My Heading"
+		id="popXLeft" horizontal-align="Left"
+		style="width: 300px">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<div id="targetOpener2" style="height: 3rem; background: yellow;"></div>
+
+	<ui5-button id="btnOpenXRight">Open Popup Right aligned</ui5-button>
+
+	<ui5-popover
+		header-text="My Heading"
+		id="popXRight" horizontal-align="Right"
+		style="width: 300px">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<br>
+	<br>
+
+	<ui5-button id="firstBtn">First button</ui5-button>
+	<ui5-button id="secondBtn">Second button</ui5-button>
+	<ui5-popover id="popNoFocusableContent" placement-type="Bottom">Sample text for the ui5-popover</ui5-popover>
+
+	<br>
+	<br>
+
+	<div style="height: 6rem; text-align: center;">
+		<ui5-button id="btnOpenDynamic" icon="overflow"></ui5-button>
+	</div>
+
+	<br>
+
+	<ui5-button id="btnOpenPopoverWithDiv">Open Popover with div Inside</ui5-button>
+
+	<ui5-popover id="popWithDiv" header-text="Newsletter subscription" modal>
+		<div id="divContent">I'm a div, which can't get focus. Click me and see where focus goes.</div>
+		<div slot="footer" class="popover-footer">
+			<ui5-button design="Emphasized">Subscribe</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<script>
+		btn.addEventListener("click", function (event) {
 			pop.openBy(btn);
 		});
 
-		popbtn.addEventListener('click', function (event) {
+		popbtn.addEventListener("click", function (event) {
 			danger.openBy(popbtn);
 		});
 
-		bigDanger.addEventListener('click', function (event) {
+		bigDanger.addEventListener("click", function (event) {
 			bigDangerPop.openBy(bigDanger);
+		});
+
+		btnPopModal.addEventListener("click", function (event) {
+			modalPopover.openBy(btnPopModal);
+		});
+
+		btnPopModalNoLayer.addEventListener("click", function() {
+			modalPopoverNoLayer.openBy(btnPopModalNoLayer);
+		});
+
+		modalPopoverNoLayerClose.addEventListener("click", function() {
+			modalPopoverNoLayer.close();
+		});
+
+		modalPopoverClose.addEventListener("click", function (event) {
+			modalPopover.close();
+		});
+
+		btnPopFocus.addEventListener("click", function (event) {
+			popFocus.openBy(btnPopFocus);
 		});
 
 		document.getElementById("many-items").innerHTML = [].map.call("Ullamco ea ad fugiat enim elit dolore ullamco ad magna excepteur cupidatat.", function (item, index) {
@@ -173,6 +436,70 @@
 
 		document.getElementById("big-popover-button").addEventListener("click", function (event) {
 			document.getElementById("big-popover").openBy(event.target);
+		});
+
+		btnFullWidth.addEventListener("click", function (event) {
+			popFullWidth.openBy(btnFullWidth);
+		});
+
+		btnFullWidthTargetOverlap.addEventListener("click", function (event) {
+			popFullWidthTargetOverlap.openBy(btnFullWidthTargetOverlap);
+		});
+
+		btnFullWidthLeft.addEventListener("click", function (event) {
+			popFullWidthLeft.openBy(btnFullWidthLeft);
+		});
+
+		btnFullWidthLeftTargetOverlap.addEventListener("click", function (event) {
+			popFullWidthLeftTargetOverlap.openBy(btnFullWidthLeftTargetOverlap);
+		});
+
+		btnFullWidthTop.addEventListener("click", function (event) {
+			popFullWidthTop.openBy(btnFullWidthTop);
+		});
+
+		btnFullWidthBottom.addEventListener("click", function (event) {
+			popFullWidthBottom.openBy(btnFullWidthBottom);
+		});
+
+		btnQuickViewCardOpener.addEventListener("click", function (event) {
+			quickViewCard.openBy(btnQuickViewCardOpener);
+
+			btnQuickViewCardOpener.setAttribute("hidden", true);
+		})
+		btnOpenXLeft.addEventListener("click", function (event) {
+			popXLeft.openBy(targetOpener);
+		});
+		btnOpenXRight.addEventListener("click", function (event) {
+			popXRight.openBy(targetOpener2);
+		});
+
+		firstBtn.addEventListener("click", function (event) {
+			popNoFocusableContent.innerHTML = "First button is clicked";
+			popNoFocusableContent.openBy(event.target);
+		});
+
+		secondBtn.addEventListener("click", function (event) {
+			popNoFocusableContent.innerHTML = "Second button is clicked";
+			popNoFocusableContent.openBy(event.target);
+		});
+
+		btnOpenDynamic.addEventListener("click", function () {
+			var popover = document.createElement("ui5-popover"),
+				button = document.createElement("ui5-button");
+
+			button.textContent = "Focusable element";
+			popover.appendChild(button);
+			popover.setAttribute("id", "dynamic-popover");
+			popover.setAttribute("placement-type", "Bottom");
+
+			document.body.appendChild(popover);
+
+			popover.openBy(btnOpenDynamic);
+		});
+
+		btnOpenPopoverWithDiv.addEventListener("click", function (event) {
+			popWithDiv.openBy(event.target);
 		});
 
 	</script>

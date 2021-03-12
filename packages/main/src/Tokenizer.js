@@ -2,28 +2,52 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import List from "./List.js";
+import StandardListItem from "./StandardListItem.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
-import { MULTIINPUT_SHOW_MORE_TOKENS } from "./generated/i18n/i18n-defaults.js";
-import { TOKENIZER_ARIA_LABEL } from "../dist/generated/i18n/i18n-defaults.js";
+import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
+import {
+	MULTIINPUT_SHOW_MORE_TOKENS,
+	TOKENIZER_ARIA_LABEL,
+	TOKENIZER_POPOVER_REMOVE,
+	TOKENIZER_ARIA_CONTAIN_TOKEN,
+	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
+	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/Tokenizer.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-tokenizer",
+	languageAware: true,
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		"default": {
 			propertyName: "tokens",
 			type: HTMLElement,
 			individualSlots: true,
 		},
+		"valueStateMessage": {
+			propertyName: "valueStateMessage",
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		showMore: { type: Boolean },
+
 		disabled: { type: Boolean },
 
 		/**
@@ -32,16 +56,35 @@ const metadata = {
 		 * @private
 		 */
 		expanded: { type: Boolean },
-		_nMoreText: { type: String },
+
+		morePopoverOpener: { type: Object },
+
+		popoverMinWidth: {
+			type: Integer,
+		},
+
+		/**
+		 * Indicates the value state of the related input component.
+		 *
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @private
+		 */
+		valueState: {
+			type: ValueState,
+			defaultValue: ValueState.None,
+		},
+
+		_nMoreCount: { type: Integer },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
-		tokenDelete: {
+		"token-delete": {
 			detail: {
 				ref: { type: HTMLElement },
 			},
 		},
 
-		showMoreItemsPress: {
+		"show-more-items-press": {
 			detail: {
 				ref: { type: HTMLElement },
 			},
@@ -81,41 +124,38 @@ class Tokenizer extends UI5Element {
 		return styles;
 	}
 
+	static get staticAreaStyles() {
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+	}
+
+	static get staticAreaTemplate() {
+		return TokenizerPopoverTemplate;
+	}
+
 	_handleResize() {
-		/*
-		 * Overflow happens with a pure CSS, but we
-		 * have to update the "n more" label when tokenizer is resized
-		 */
-		this._invalidate();
+		this._nMoreCount = this.overflownTokens.length;
 	}
 
 	constructor() {
 		super();
 
-		this._tokensCount = 0;
 		this._resizeHandler = this._handleResize.bind(this);
-		this._itemNav = new ItemNavigation(this);
 
-		this._itemNav.getItemsCallback = () => {
-			if (this.disabled) {
-				return [];
-			}
+		this._itemNav = new ItemNavigation(this, {
+			currentIndex: "-1",
+			getItemsCallback: this._getVisibleTokens.bind(this),
+		});
 
-			return this._getTokens().filter((token, index) => {
-				return index < (this._getTokens().length - this.overflownTokens.length);
-			});
-		};
-
+		this._scrollEnablement = new ScrollEnablement(this);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	onBeforeRendering() {
-		setTimeout(() => {
-			// wait for the layouting and update the text
-			this._nMoreText = this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this.overflownTokens.length]);
-		}, 0);
+	async onBeforeRendering() {
+		if (this.showPopover && !this._getTokens().length) {
+			const popover = await this.getPopover();
+			popover.close();
+		}
 	}
-
 
 	onEnterDOM() {
 		ResizeHandler.register(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._resizeHandler);
@@ -125,54 +165,113 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._resizeHandler);
 	}
 
-	_openOverflowPopover() {
-		this.fireEvent("showMoreItemsPress");
+	async _openOverflowPopover() {
+		if (this.showPopover) {
+			const popover = await this.getPopover();
+
+			popover.open(this.morePopoverOpener || this);
+		}
+
+		this.fireEvent("show-more-items-press");
 	}
 
 	_getTokens() {
-		return this.tokens;
+		return this.getSlottedNodes("tokens");
+	}
+
+	get _tokens() {
+		return this.getSlottedNodes("tokens");
+	}
+
+	get showPopover() {
+		return Object.keys(this.morePopoverOpener).length;
+	}
+
+	_getVisibleTokens() {
+		if (this.disabled) {
+			return [];
+		}
+
+		return this._tokens.filter((token, index) => {
+			return index < (this._tokens.length - this._nMoreCount);
+		});
 	}
 
 	onAfterRendering() {
-		/*
-			We schedule an invalidation as we have the tokens count
-			changed and we need them rendered for the nmore count
-		*/
-		if (this._tokensCount !== this.tokens.length) {
-			this._invalidate();
-			this._tokensCount = this.tokens.length;
-		}
+		this._nMoreCount = this.overflownTokens.length;
+		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
 	}
 
 	_tokenDelete(event) {
-		if (event.detail && event.detail.backSpace) {
-			this._deleteByBackspace();
+		let nextTokenIndex; // The index of the next token that needs to be focused next due to the deletion
+		const deletedTokenIndex = this._getVisibleTokens().indexOf(event.target); // The index of the token that just got deleted
+
+		if (event.detail && event.detail.backSpace) { // on backspace key select the previous item (unless deleting the first)
+			nextTokenIndex = deletedTokenIndex === 0 ? deletedTokenIndex + 1 : deletedTokenIndex - 1;
+		} else { // on delete key or mouse click on the "x" select the next item (unless deleting the last)
+			nextTokenIndex = deletedTokenIndex === this._getVisibleTokens().length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
 		}
+		const nextToken = this._getVisibleTokens()[nextTokenIndex]; // if the last item was deleted this will be undefined
+		this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
 
-		this._updateAndFocus();
-		this.fireEvent("tokenDelete", { ref: event.target });
-	}
-
-	/* Keyboard handling */
-
-	_updateAndFocus() {
-		if (this._getTokens().length) {
-			this._itemNav.update();
-
+		if (nextToken) {
 			setTimeout(() => {
-				this._itemNav.focusCurrent();
+				nextToken.focus();
 			}, 0);
 		}
+
+		this.fireEvent("token-delete", { ref: event.target });
 	}
 
-	_deleteByBackspace() {
-		const newIndex = this._itemNav.currentIndex - 1;
+	itemDelete(event) {
+		const token = event.detail.item.tokenRef;
 
-		if (newIndex < 0) {
-			this._itemNav.currentIndex = 0;
-		} else {
-			this._itemNav.currentIndex = newIndex;
+		this.fireEvent("token-delete", { ref: token });
+	}
+
+	_onkeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+
+			this._handleTokenSelection(event);
 		}
+	}
+
+	_click(event) {
+		this._handleTokenSelection(event);
+	}
+
+	_onmousedown(event) {
+		this._itemNav.setCurrentItem(event.target);
+	}
+
+	_handleTokenSelection(event) {
+		if (event.target.localName === "ui5-token") {
+			this._tokens.forEach(token => {
+				if (token !== event.target) {
+					token.selected = false;
+				}
+			});
+		}
+	}
+
+	/**
+	 * Scrolls the container of the tokens to its beginning.
+	 * This method is used by MultiInput and MultiComboBox.
+	 * @private
+	 */
+	scrollToStart() {
+		this.contentDom.scrollLeft = 0;
+	}
+
+	async closeMorePopover() {
+		const popover = await this.getPopover();
+
+		popover.close();
+	}
+
+	get _nMoreText() {
+		return this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._nMoreCount]);
 	}
 
 	get showNMore() {
@@ -187,21 +286,39 @@ class Tokenizer extends UI5Element {
 		return this.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
 	}
 
+	get morePopoverTitle() {
+		return this.i18nBundle.getText(TOKENIZER_POPOVER_REMOVE);
+	}
+
 	get overflownTokens() {
 		if (!this.contentDom) {
 			return [];
 		}
 
-		return this.tokens.filter(token => {
+		return this._getTokens().filter(token => {
+			const isRTL = this.effectiveDir === "rtl";
+			const elementEnd = isRTL ? "left" : "right";
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenLeft = tokenRect.left + tokenRect.width;
-			const parentLeft = parentRect.left + parentRect.width;
+			const tokenEnd = tokenRect[elementEnd];
+			const parentEnd = parentRect[elementEnd];
 
-			token.overflows = (tokenLeft > parentLeft) && !this.expanded;
+			token.overflows = isRTL ? ((tokenEnd < parentEnd) && !this.expanded) : ((tokenEnd > parentEnd) && !this.expanded);
 
 			return token.overflows;
 		});
+	}
+
+	get hasValueState() {
+		return this.valueState === ValueState.None || this.valueState === ValueState.Success;
+	}
+
+	get valueStateMessageText() {
+		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
+	}
+
+	get _isPhone() {
+		return isPhone();
 	}
 
 	get classes() {
@@ -209,19 +326,83 @@ class Tokenizer extends UI5Element {
 			wrapper: {
 				"ui5-tokenizer-root": true,
 				"ui5-tokenizer-nmore--wrapper": this.showMore,
-				"ui5-tokenizer-no-padding": !this.tokens.length,
+				"ui5-tokenizer-no-padding": !this._getTokens().length,
 			},
 			content: {
 				"ui5-tokenizer--content": true,
 				"ui5-tokenizer-nmore--content": this.showMore,
 			},
+			popoverValueState: {
+				"ui5-valuestatemessage-root": true,
+				"ui5-responsive-popover-header": this.showPopover,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
 		};
 	}
 
-	static async define(...params) {
-		await fetchI18nBundle("@ui5/webcomponents");
+	get styles() {
+		return {
+			popover: {
+				"min-width": `${this.popoverMinWidth}px`,
+			},
+			popoverValueStateMessage: {
+				"width": isPhone() ? "100%" : `${this.popoverMinWidth}px`,
+				"min-height": "2rem",
+				"padding": isPhone() ? "0.25rem 1rem" : "0.3rem 0.625rem",
+			},
+			popoverHeader: {
+				"min-height": "2rem",
+			},
+			popoverHeaderTitle: {
+				"justify-content": "left",
+			},
+		};
+	}
 
-		super.define(...params);
+	_tokensCountText() {
+		const iTokenCount = this._getTokens().length;
+
+		if (iTokenCount === 0) {
+			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
+		}
+
+		if (iTokenCount === 1) {
+			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+		}
+
+		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
+	}
+
+	/**
+	 * @protected
+	 */
+	_focusLastToken() {
+		if (this.tokens.length === 0) {
+			return;
+		}
+
+		const lastToken = this.tokens[this.tokens.length - 1];
+		lastToken.focus();
+		this._itemNav.setCurrentItem(lastToken);
+	}
+
+	static get dependencies() {
+		return [
+			ResponsivePopover,
+			List,
+			StandardListItem,
+		];
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
+	}
+
+	async getPopover() {
+		return (await this.getStaticAreaItemDomRef()).querySelector("[ui5-responsive-popover]");
 	}
 }
 

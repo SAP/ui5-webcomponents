@@ -7,6 +7,7 @@
 :host {
 	overflow: hidden;
 	max-width: 100%;
+	outline: none;
 }
 
 /* disabled */
@@ -16,23 +17,28 @@
 
 /* readonly */
 :host([readonly]:not([value-state="Warning"]):not([value-state="Error"])) .ui5-checkbox-inner {
-	background: var(--sapUiFieldReadOnlyBackground);
+	background: var(--sapField_ReadOnly_Background);
 	border: var(--_ui5_checkbox_inner_readonly_border);
-	color: var(--sapUiContentNonInteractiveIconColor);
+	color: var(--sapContent_NonInteractiveIconColor);
 }
 
 /* wrap */
 :host([wrap][text]) .ui5-checkbox-root {
 	min-height: auto;
-	padding-top: .6875rem;
 	box-sizing: border-box;
-	padding-bottom: .6875rem;
 	align-items: flex-start;
+	padding-top: var(--_ui5_checkbox_root_side_padding);
+	padding-bottom: var(--_ui5_checkbox_root_side_padding);
 }
 
 :host([wrap][text]) .ui5-checkbox-root .ui5-checkbox-inner,
 :host([wrap][text]) .ui5-checkbox-root .ui5-checkbox-label {
 	margin-top: var(--_ui5_checkbox_wrapped_content_margin_top);
+}
+
+:host([wrap][text]) .ui5-checkbox-root .ui5-checkbox-label {
+	word-break: break-all;
+	align-self: center;
 }
 
 :host([wrap]) .ui5-checkbox-root:focus::before {
@@ -42,16 +48,23 @@
 /* value states */
 :host([value-state="Error"]) .ui5-checkbox-inner,
 :host([value-state="Error"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
-	background: var(--sapUiFieldInvalidBackground);
+	background: var(--sapField_InvalidBackground);
 	border: var(--_ui5_checkbox_inner_error_border);
-	color: var(--sapUiFieldInvalidColor);
+	color: var(--sapField_InvalidColor);
 }
 
 :host([value-state="Warning"]) .ui5-checkbox-inner,
 :host([value-state="Warning"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
-	background: var(--sapUiFieldWarningBackground);
+	background: var(--sapField_WarningBackground);
 	border: var(--_ui5_checkbox_inner_warning_border);
-	color: var(--sapUiFieldWarningColor);
+	color: var(--sapField_WarningColor);
+}
+
+:host([value-state="Information"]) .ui5-checkbox-inner,
+:host([value-state="Information"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: var(--sapField_InformationBackground);
+	border: var(--_ui5_checkbox_inner_information_border);
+	color: var(--sapField_InformationColor);
 }
 
 :host([value-state="Warning"]) .ui5-checkbox-icon {
@@ -101,7 +114,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 
 .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--_ui5_checkbox_hover_background);
-	border-color: var(--sapUiFieldHoverBorderColor);
+	border-color: var(--sapField_Hover_BorderColor);
 }
 
 .ui5-checkbox-inner {
@@ -114,7 +127,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 	max-height: var(--_ui5_checkbox_inner_width_height);
 	border: var(--_ui5_checkbox_inner_border);
 	border-radius: var(--_ui5_checkbox_inner_border_radius);
-	background: var(--sapUiFieldBackground);
+	background: var(--sapField_Background);
 	color: var(--_ui5_checkbox_checkmark_color);
 	box-sizing: border-box;
 	position: relative;
@@ -147,51 +160,9 @@ https://github.com/philipwalton/flexbugs/issues/231
 	-webkit-user-select: none;
 }
 
-/* Compact */
-:host([wrap][text][data-ui5-compact-size]) .ui5-checkbox-root {
-	min-height: auto;
-	padding-top: var(--_ui5_checkbox_wrapped_focus_padding);
-	padding-bottom: var(--_ui5_checkbox_wrapped_focus_padding);
-}
-
-:host([wrap][text][data-ui5-compact-size]) .ui5-checkbox-root .ui5-checkbox-label {
-	margin-top: var(--_ui5_checkbox_compact_wrapped_label_margin_top);
-}
-
-:host([wrap][data-ui5-compact-size]) .ui5-checkbox-root:focus::before {
-	bottom: var(--_ui5_checkbox_compact_focus_position);
-}
-
-:host([data-ui5-compact-size]) .ui5-checkbox-root {
-	min-height: var(--_ui5_checkbox_compact_width_height);
-	min-width: var(--_ui5_checkbox_compact_width_height);
-	padding: 0 var(--_ui5_checkbox_compact_wrapper_padding);
-}
-
-:host([data-ui5-compact-size]) .ui5-checkbox-root:focus::before {
-	top: var(--_ui5_checkbox_compact_focus_position);
-	left: var(--_ui5_checkbox_compact_focus_position);
-	right: var(--_ui5_checkbox_compact_focus_position);
-	bottom: var(--_ui5_checkbox_compact_focus_position);
-	border: var(--_ui5_checkbox_focus_outline);
-}
-
-:host([data-ui5-compact-size]) .ui5-checkbox-inner {
-	max-height: var(--_ui5_checkbox_compact_inner_size);
-	height: var(--_ui5_checkbox_compact_inner_size);
-	max-width: var(--_ui5_checkbox_compact_inner_size);
-	min-width: var(--_ui5_checkbox_compact_inner_size);
-	font-size: .625rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-checkbox-root .ui5-checkbox-label {
-	margin-left: var(--_ui5_checkbox_compact_wrapper_padding);
-	width: calc(100% - .8125rem - var(--_ui5_checkbox_compact_inner_size));
-}
-
-:host([data-ui5-compact-size]) .ui5-checkbox-icon {
-	width: 0.75rem;
-	height: 0.75rem;
+.ui5-checkbox-icon {
+	width: var(--_ui5_checkbox_icon_size);
+	height: var(--_ui5_checkbox_icon_size);
 }
 
 /* RTL */
@@ -208,13 +179,4 @@ https://github.com/philipwalton/flexbugs/issues/231
 :host([text]) [dir="rtl"].ui5-checkbox-root .ui5-checkbox-label {
 	margin-left: 0;
 	margin-right: var(--_ui5_checkbox_compact_wrapper_padding);
-}
-
-/* RTL + Compact */
-:host([data-ui5-compact-size][text]) [dir="rtl"].ui5-checkbox-root {
-	padding-right: var(--_ui5_checkbox_compact_wrapper_padding);
-}
-
-:host([data-ui5-compact-size][text]) [dir="rtl"].ui5-checkbox-root:focus::before {
-	right: var(--_ui5_checkbox_compact_focus_position);
 }

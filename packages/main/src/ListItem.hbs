@@ -1,10 +1,28 @@
 <li
-	tabindex="{{_tabIndex}}"
+	tabindex="{{tabIndex}}"
 	class="{{classes.main}}"
-	dir="{{rtl}}"
-	@focusin="{{onfocusin}}"
-	@focusout="{{onfocusout}}"
+	dir="{{effectiveDir}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+	@keyup="{{_onkeyup}}"
+	@keydown="{{_onkeydown}}"
+	@mouseup="{{_onmouseup}}"
+	@mousedown="{{_onmousedown}}"
+	@touchstart="{{_ontouchstart}}"
+	@touchend="{{_ontouchend}}"
+	@click="{{_onclick}}"
+	aria-selected="{{ariaSelected}}"
+	role="{{_accInfo.role}}"
+	aria-expanded="{{_accInfo.ariaExpanded}}"
+	aria-level="{{_accInfo.ariaLevel}}"
+	aria-posinset="{{_accInfo.posinset}}"
+	aria-setsize="{{_accInfo.setsize}}"
+	aria-labelledby="{{_id}}-invisibleText {{_id}}-content"
+	aria-disabled="{{ariaDisabled}}"
+	style="list-style-type: none;"
 >
+		{{> listItemPreContent}}
+
 		{{#if placeSelectionElementBefore}}
 			{{> selectionElement}}
 		{{/if}}
@@ -16,13 +34,24 @@
 		</div>
 
 		{{> iconEnd}}
+		{{#if typeDetail}}
+			<div class="ui5-li-detailbtn">
+				<ui5-button
+					design="Transparent"
+					icon="edit"
+					@click="{{onDetailClick}}"
+				></ui5-button>
+			</div>
+		{{/if}}
 
 		{{#if placeSelectionElementAfter}}
 			{{> selectionElement}}
 		{{/if}}
+
+		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{_accInfo.listItemAriaLabel}}</span>
 </li>
 
-
+{{#*inline "listItemPreContent"}}{{/inline}}
 {{#*inline "listItemContent"}}{{/inline}}
 {{#*inline "imageBegin"}}{{/inline}}
 {{#*inline "iconBegin"}}{{/inline}}
@@ -31,6 +60,8 @@
 {{#*inline "selectionElement"}}
 	{{#if modeSingleSelect}}
 		<ui5-radiobutton
+				?disabled="{{isInactive}}"
+				tabindex="-1"
 				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
 				?selected="{{selected}}"
@@ -40,9 +71,12 @@
 
 	{{#if modeMultiSelect}}
 		<ui5-checkbox
+				?disabled="{{isInactive}}"
+				tabindex="-1"
 				id="{{_id}}-multiSelectionElement"
 				class="ui5-li-multisel-cb"
 				?checked="{{selected}}"
+				aria-label="{{_accInfo.ariaLabel}}"
 				@click="{{onMultiSelectionComponentPress}}">
 		</ui5-checkbox>
 	{{/if}}
@@ -53,7 +87,9 @@
 				id="{{_id}}-deleteSelectionElement"
 				design="Transparent"
 				icon="decline"
+				?disabled="{{disableDeleteButton}}"
 				@click="{{onDelete}}"
+				title="{{deleteText}}"
 			></ui5-button>
 		</div>
 	{{/if}}

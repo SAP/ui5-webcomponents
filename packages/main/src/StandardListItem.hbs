@@ -1,22 +1,31 @@
 {{>include "./ListItem.hbs"}}
 
 {{#*inline "listItemContent"}}
-	<div class="ui5-li-title-wrapper">
-		{{#if textContent.length}}
-			<span part="title" class="ui5-li-title"><slot></slot></span>
-		{{/if}}
+	<div class="ui5-li-text-wrapper">
+		<span part="title" class="ui5-li-title"><slot></slot></span>
 		{{#if description}}
-			<span part="description" class="ui5-li-desc">{{description}}</span>
+			<div class="ui5-li-description-info-wrapper">
+				<span part="description" class="ui5-li-desc">{{description}}</span>
+
+				{{#if info}}
+					<span part="info" class="ui5-li-info">{{info}}</span>
+				{{/if}}
+			</div>
 		{{/if}}
+		{{#unless typeActive}}
+			<span class="ui5-hidden-text">{{type}}</span>
+		{{/unless}}
 	</div>
-	{{#if info}}
-		<span part="info" class="ui5-li-info">{{info}}</span>
-	{{/if}}
+	{{#unless description}}
+		{{#if info}}
+			<span part="info" class="ui5-li-info">{{info}}</span>
+		{{/if}}
+	{{/unless}}
 {{/inline}}
 
 {{#*inline "imageBegin"}}
 	{{#if displayImage}}
-		<img part="img" src="{{image}}" class="ui5-li-img">
+		<ui5-avatar image="{{image}}" image-fit-type="Contain" shape="Square" class="ui5-li-img"></ui5-avatar>
 	{{/if}}
 {{/inline}}
 

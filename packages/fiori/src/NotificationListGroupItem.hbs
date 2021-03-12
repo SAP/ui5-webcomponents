@@ -1,0 +1,87 @@
+<li
+	class="ui5-nli-group-root ui5-nli-focusable"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+	@keydown="{{_onkeydown}}"
+	role="option"
+	tabindex="{{_tabIndex}}"
+	dir="{{effectiveDir}}"
+	aria-expanded="{{ariaExpanded}}"
+	aria-labelledby="{{ariaLabelledBy}}"
+	style="list-style-type: none;"
+>
+	<div class="ui5-nli-group-header">
+		<ui5-button
+			icon="navigation-right-arrow"
+			design="Transparent"
+			@click="{{_onBtnToggleClick}}"
+			class="ui5-nli-group-toggle-btn"
+			title="{{toggleBtnAccessibleName}}"
+			aria-label="{{toggleBtnAccessibleName}}"
+		></ui5-button>
+
+		{{#if hasPriority}}
+			<ui5-icon
+				class="ui5-prio-icon ui5-prio-icon--{{priorityIcon}}"
+				name="{{priorityIcon}}">
+			</ui5-icon>
+		{{/if}}
+
+		<div id="{{_id}}-heading" class="ui5-nli-group-heading" part="heading">
+			{{heading}}
+		</div>
+
+		{{#if showCounter}}
+			<span class="ui5-nli-group-counter">({{itemsCount}})</span>
+		{{/if}}
+
+		<div class="ui5-nli-group-divider"></div>
+
+		{{#unless collapsed}}
+			{{#if showOverflow}}
+				<ui5-button
+					icon="overflow"
+					design="Transparent"
+					@click="{{_onBtnOverflowClick}}"
+					class="ui5-nli-overflow-btn"
+					title="{{overflowBtnAccessibleName}}"
+					aria-label="{{overflowBtnAccessibleName}}"
+				></ui5-button>
+			{{else}}
+				{{#each standardActions}}
+					<ui5-button
+						icon="{{this.icon}}"
+						class="ui5-nli-action"
+						?disabled="{{this.disabled}}"
+						design="{{this.design}}"
+						@click="{{this.press}}"
+						data-ui5-external-action-item-id="{{this.refItemid}}"
+					>
+						{{this.text}}
+					</ui5-button>
+				{{/each}}
+			{{/if}}
+		{{/unless}}
+
+		{{#if showClose}}
+			<ui5-button
+				icon="decline"
+				design="Transparent"
+				@click="{{_onBtnCloseClick}}"
+				title="{{closeBtnAccessibleName}}"
+				aria-label="{{closeBtnAccessibleName}}"
+				close-btn
+			></ui5-button>
+		{{/if}}
+
+		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
+	</div>
+
+	<ui5-list class="ui5-nli-group-items">
+		<slot></slot>
+	</ui5-list>
+
+	{{#if busy}}
+		<ui5-busyindicator active size="Medium" class="ui5-nli-busy"></ui5-busyindicator>
+	{{/if}}
+</li>

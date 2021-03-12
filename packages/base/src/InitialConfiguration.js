@@ -1,14 +1,19 @@
+import merge from "./thirdparty/merge.js";
+import { getFeature } from "./FeaturesRegistry.js";
+import { DEFAULT_THEME } from "./generated/AssetParameters.js";
+
 let initialized = false;
 
-const initialConfig = {
+let initialConfig = {
 	animationMode: "full",
-	theme: "sap_fiori_3",
+	theme: DEFAULT_THEME,
 	rtl: null,
 	language: null,
-	compactSize: false,
 	calendarType: null,
 	noConflict: false, // no URL
 	formatSettings: {},
+	fetchDefaultLanguage: false,
+	assetsPath: "",
 };
 
 /* General settings */
@@ -32,9 +37,14 @@ const getLanguage = () => {
 	return initialConfig.language;
 };
 
-const getCompactSize = () => {
+/**
+ * Returns if the default language, that is inlined at build time,
+ * should be fetched over the network instead.
+ * @returns {Boolean}
+ */
+const getFetchDefaultLanguage = () => {
 	initConfiguration();
-	return initialConfig.compactSize;
+	return initialConfig.fetchDefaultLanguage;
 };
 
 const getNoConflict = () => {
@@ -52,11 +62,14 @@ const getFormatSettings = () => {
 	return initialConfig.formatSettings;
 };
 
+const getAssetsPath = () => {
+	initConfiguration();
+	return initialConfig.assetsPath;
+};
+
 const booleanMapping = new Map();
 booleanMapping.set("true", true);
 booleanMapping.set("false", false);
-
-let runtimeConfig = {};
 
 const parseConfigurationScript = () => {
 	const configScript = document.querySelector("[data-ui5-config]") || document.querySelector("[data-id='sap-ui-config']"); // for backward compatibility
@@ -71,7 +84,7 @@ const parseConfigurationScript = () => {
 		}
 
 		if (configJSON) {
-			runtimeConfig = Object.assign({}, configJSON);
+			initialConfig = merge(initialConfig, configJSON);
 		}
 	}
 };
@@ -92,24 +105,34 @@ const parseURLParameters = () => {
 			value = booleanMapping.get(lowerCaseValue);
 		}
 
-		runtimeConfig[param] = value;
+		initialConfig[param] = value;
 	});
 };
 
-const applyConfigurations = () => {
-	Object.keys(runtimeConfig).forEach(key => {
-		initialConfig[key] = runtimeConfig[key];
-	});
+const applyOpenUI5Configuration = () => {
+	const OpenUI5Support = getFeature("OpenUI5Support");
+	if (!OpenUI5Support || !OpenUI5Support.isLoaded()) {
+		return;
+	}
+
+	const OpenUI5Config = OpenUI5Support.getConfigurationSettingsObject();
+	initialConfig = merge(initialConfig, OpenUI5Config);
 };
+
 
 const initConfiguration = () => {
 	if (initialized) {
 		return;
 	}
 
+	// 1. Lowest priority - configuration script
 	parseConfigurationScript();
+
+	// 2. URL parameters overwrite configuration script parameters
 	parseURLParameters();
-	applyConfigurations();
+
+	// 3. If OpenUI5 is detected, it has the highest priority
+	applyOpenUI5Configuration();
 
 	initialized = true;
 };
@@ -119,8 +142,9 @@ export {
 	getTheme,
 	getRTL,
 	getLanguage,
-	getCompactSize,
+	getFetchDefaultLanguage,
 	getNoConflict,
 	getCalendarType,
 	getFormatSettings,
+	getAssetsPath,
 };

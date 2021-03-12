@@ -1,0 +1,48 @@
+{{>include "./ListItem.hbs"}}
+
+{{#*inline "listItemPreContent"}}
+	<div
+		class="ui5-li-tree-toggle-box"
+		style="padding-left: {{effectiveLevel}}rem; padding-left: calc(var(--_ui5-tree-indent-step) * {{effectiveLevel}});"
+	>
+		{{#if _showToggleButtonBeginning}}
+			<ui5-icon
+				class="ui5-li-tree-toggle-icon"
+				name="{{_toggleIconName}}"
+				show-tooltip
+				accessible-name="{{iconAccessibleName}}"
+				@click="{{_toggleClick}}"
+			></ui5-icon>
+		{{/if}}
+	</div>
+{{/inline}}
+
+{{#*inline "listItemContent"}}
+	<div class="ui5-li-tree-text-wrapper">
+		{{#if _showTitle}}
+			<div part="title" class="ui5-li-title"><slot></slot></div>
+		{{/if}}
+
+		{{#if info}}
+			<span part="info" class="ui5-li-tree-info">{{info}}</span>
+		{{/if}}
+	</div>
+{{/inline}}
+
+{{#*inline "imageBegin"}}{{/inline}}
+
+{{#*inline "iconBegin"}}
+	{{#if icon}}
+		<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon"></ui5-icon>
+	{{/if}}
+{{/inline}}
+
+{{#*inline "iconEnd"}}
+	{{#if _showToggleButtonEnd}}
+		<ui5-icon
+			class="ui5-li-tree-toggle-icon"
+			name="{{_toggleIconName}}"
+			@click="{{_toggleClick}}"
+		></ui5-icon>
+	{{/if}}
+{{/inline}}

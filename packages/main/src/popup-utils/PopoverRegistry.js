@@ -1,13 +1,14 @@
 import { isClickInRect } from "./PopupUtils.js";
 import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./OpenedPopupsRegistry.js";
 
+
 let updateInterval = null;
 const intervalTimeout = 300;
 const openedRegistry = [];
 
 const repositionPopovers = event => {
 	openedRegistry.forEach(popover => {
-		popover.reposition();
+		popover.instance.reposition();
 	});
 };
 
@@ -38,27 +39,27 @@ const detachGlobalClickHandler = () => {
 };
 
 const clickHandler = event => {
-	const openedPopovers = openedRegistry;
 	const openedPopups = getOpenedPopups();
+	const isTopPopupPopover = openedPopups[openedPopups.length - 1].instance.openBy;
 
-	if (openedPopups.length === 0 || !(openedPopups[openedPopups.length - 1].openBy)) {
+	if (openedPopups.length === 0 || !isTopPopupPopover) {
 		return;
 	}
 
 	// loop all open popovers
-	for (let i = (openedPopovers.length - 1); i !== -1; i--) {
-		const popover = openedPopovers[i];
+	for (let i = (openedPopups.length - 1); i !== -1; i--) {
+		const popup = openedPopups[i].instance;
 
-		// if popover is modal, opener is clicked or there is one more popover above, skip closing
-		if (popover.modal || popover.isOpenerClicked(event)) {
+		// if popup is modal, opener is clicked, popup is dialog skip closing
+		if (popup.isModal || popup.isOpenerClicked(event)) {
 			return;
 		}
 
-		if (isClickInRect(event, popover.getBoundingClientRect())) {
+		if (isClickInRect(event, popup.getBoundingClientRect())) {
 			break;
 		}
 
-		popover.close();
+		popup.close();
 	}
 };
 
@@ -71,8 +72,13 @@ const detachScrollHandler = popover => {
 };
 
 const addOpenedPopover = instance => {
-	addOpenedPopup(instance);
-	openedRegistry.push(instance);
+	const parentPopovers = getParentPopoversIfNested(instance);
+
+	addOpenedPopup(instance, parentPopovers);
+	openedRegistry.push({
+		instance,
+		parentPopovers,
+	});
 
 	attachScrollHandler(instance);
 
@@ -84,18 +90,31 @@ const addOpenedPopover = instance => {
 };
 
 const removeOpenedPopover = instance => {
-	let count = 0;
+	const popoversToClose = [instance];
 
-
-	for (let i = openedRegistry.indexOf(instance); i < openedRegistry.length; i++) {
-		openedRegistry[i].close(false, true);
-		removeOpenedPopup(openedRegistry[i]);
-		detachScrollHandler(openedRegistry[i]);
-		count++;
+	for (let i = 0; i < openedRegistry.length; i++) {
+		const indexOfCurrentInstance = openedRegistry[i].parentPopovers.indexOf(instance);
+		if (openedRegistry[i].parentPopovers.length > 0 && indexOfCurrentInstance > -1) {
+			popoversToClose.push(openedRegistry[i].instance);
+		}
 	}
 
-	// remove top popovers from registry
-	Array(count).fill().forEach(() => { openedRegistry.pop(); });
+	for (let i = popoversToClose.length - 1; i >= 0; i--) {
+		for (let j = 0; j < openedRegistry.length; j++) {
+			let indexOfItemToRemove;
+			if (popoversToClose[i] === openedRegistry[j].instance) {
+				indexOfItemToRemove = j;
+			}
+
+
+			if (indexOfItemToRemove >= 0) {
+				removeOpenedPopup(openedRegistry[indexOfItemToRemove].instance);
+				detachScrollHandler(openedRegistry[indexOfItemToRemove].instance);
+				const itemToClose = openedRegistry.splice(indexOfItemToRemove, 1);
+				itemToClose[0].instance.close(false, true);
+			}
+		}
+	}
 
 	if (!openedRegistry.length) {
 		detachGlobalScrollHandler();
@@ -106,6 +125,23 @@ const removeOpenedPopover = instance => {
 
 const getRegistry = () => {
 	return openedRegistry;
+};
+
+const getParentPopoversIfNested = instance => {
+	let currentElement = instance.parentNode;
+	const parentPopovers = [];
+
+	while (currentElement.parentNode) {
+		for (let i = 0; i < openedRegistry.length; i++) {
+			if (currentElement && currentElement === openedRegistry[i].instance) {
+				parentPopovers.push(currentElement);
+			}
+		}
+
+		currentElement = currentElement.parentNode;
+	}
+
+	return parentPopovers;
 };
 
 export { addOpenedPopover, removeOpenedPopover, getRegistry };

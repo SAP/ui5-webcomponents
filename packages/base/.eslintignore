@@ -1,4 +1,11 @@
 # Note: Changes to this file also must be applied to the top level .eslintignore file.
 test
+lib
 dist
 src/thirdparty
+bundle.esm.js
+bundle.es5.js
+rollup.config*.js
+wdio.conf.js
+postcss.config.js
+package-scripts.js

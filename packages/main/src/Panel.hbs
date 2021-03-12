@@ -2,6 +2,7 @@
 	data-sap-ui-fastnavgroup="true"
 	class="ui5-panel-root"
 	role="{{accRole}}"
+	aria-label="{{effectiveAccessibleName}}"
 >
 	<!-- header: either header or h1 with header text -->
 	<div
@@ -13,25 +14,38 @@
 		role="{{accInfo.role}}"
 		aria-expanded="{{accInfo.ariaExpanded}}"
 		aria-controls="{{accInfo.ariaControls}}"
+		aria-labelledby="{{accInfo.ariaLabelledby}}"
 	>
-		<div
-			class="ui5-panel-header-button-root"
-		>
-			<ui5-button
-				design="Transparent"
-				class="ui5-panel-header-button {{classes.headerBtn}}"
-				icon="navigation-right-arrow"
-				?non-focusable="{{nonFocusableButton}}"
-				@click="{{_toggleButtonClick}}"
-				._buttonAccInfo="{{accInfo.button}}"
-			></ui5-button>
-		</div>
+		{{#unless fixed}}
+			<div class="ui5-panel-header-button-root">
+				{{#if _hasHeader}}
+					<ui5-button
+						design="Transparent"
+						class="ui5-panel-header-button {{classes.headerBtn}}"
+						icon="slim-arrow-right"
+						@click="{{_toggleButtonClick}}"
+						._buttonAccInfo="{{accInfo.button}}"
+						aria-label="{{accInfo.button.ariaLabelButton}}"
+					></ui5-button>
+				{{else}}
+					<ui5-icon
+						class="ui5-panel-header-button ui5-panel-header-icon {{classes.headerBtn}}"
+						name="slim-arrow-right"
+					></ui5-icon>
+				{{/if}}
+			</div>
+		{{/unless}}
 
 		{{#if _hasHeader}}
 			<slot name="header"></slot>
 		{{else}}
-			<div class="ui5-panel-header-content">
-				<h1 class="ui5-panel-header-title">{{headerText}}</h1>
+			<div
+				id="{{_id}}-header-title"
+				role="heading"
+				aria-level="{{headerAriaLevel}}"
+				class="ui5-panel-header-title"
+			>
+				{{headerText}}
 			</div>
 		{{/if}}
 	</div>

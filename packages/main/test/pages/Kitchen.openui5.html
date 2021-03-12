@@ -3,7 +3,7 @@
 
 <head>
 	<title>ui5 webcomponents</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
@@ -30,9 +30,10 @@
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 	<div id="nav" class="navbar" style="display: flex; align-items: center;">
 		<ui5-togglebutton id="menu-btn" icon="menu" type="Transparent"></ui5-togglebutton>
 		<ui5-title level="H5">UI5 webcomponents</ui5-title>
@@ -46,7 +47,7 @@
 			<ui5-li type="Active" id="arg1" icon="developer-settings">ui5-button</ui5-li>
 			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-card</ui5-li>
 			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-checkbox</ui5-li>
-			<ui5-li type="Active" id="ch1" icon="developer-settings">ui5-datepicker</ui5-li>
+			<ui5-li type="Active" id="ch1" icon="developer-settings">ui5-date-picker</ui5-li>
 			<ui5-li type="Active" id="arg1" icon="developer-settings" selected>ui5-dialog</ui5-li>
 			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-icon</ui5-li>
 			<ui5-li type="Active" id="arg1" icon="developer-settings">ui5-label</ui5-li>
@@ -310,8 +311,8 @@
 		<section style="display: flex;flex-direction: row; justify-content: space-around">
 			<div id="sapMDatePicker"></div>
 
-			<ui5-datepicker style="width:40%" id="myDatepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-datepicker>
-			<ui5-datepicker style="width:40%" id="myDatepicker"></ui5-datepicker>
+			<ui5-date-picker style="width:40%" id="myDatepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-date-picker>
+			<ui5-date-picker style="width:40%" id="myDatepicker"></ui5-date-picker>
 		</section>
 
 		<section class="row">

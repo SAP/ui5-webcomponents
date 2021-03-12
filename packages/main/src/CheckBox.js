@@ -1,12 +1,12 @@
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import "@ui5/webcomponents-icons/dist/icons/accept.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import "@ui5/webcomponents-icons/dist/accept.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
 import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
@@ -22,12 +22,13 @@ import checkboxCss from "./generated/themes/CheckBox.css.js";
  */
 const metadata = {
 	tag: "ui5-checkbox",
+	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
 
 		/**
 		 * Defines whether the <code>ui5-checkbox</code> is disabled.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-checkbox</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-checkbox</code> is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -82,7 +83,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Available options are <code>Warning</code>, <code>Error</code>, and <code>None</code> (default).
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -107,9 +108,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the <code>ui5-checkbox</code> will be submitted in an HTML form.
 		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-checkbox</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -120,6 +123,30 @@ const metadata = {
 		 */
 		name: {
 			type: String,
+		},
+
+		/**
+		 * Determines the <code>aria-label</code>, set on the component root tag.
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @private
+		 * @since 1.0.0-rc.8
+		 */
+		ariaLabel: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the checkbox
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
 		},
 
 		_label: {
@@ -136,6 +163,18 @@ const metadata = {
 		 */
 		change: {},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
+	}
 };
 
 /**
@@ -150,8 +189,8 @@ const metadata = {
  * To check/uncheck the <code>ui5-checkbox</code>, the user has to click or tap the square
  * box or its label.
  * <br><br>
- * Clicking or tapping toggles the <code>ui5-checkbox</code> between checked and unchecked state.
  * The <code>ui5-checkbox</code> component only has 2 states - checked and unchecked.
+ * Clicking or tapping toggles the <code>ui5-checkbox</code> between checked and unchecked state.
  *
  * <h3>Usage</h3>
  *
@@ -283,8 +322,16 @@ class CheckBox extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
 	get ariaLabelledBy() {
-		return this.text ? `${this._id}-label` : undefined;
+		if (!this.ariaLabelText) {
+			return this.text ? `${this._id}-label` : undefined;
+		}
+
+		return undefined;
 	}
 
 	get ariaDescribedBy() {
@@ -300,21 +347,19 @@ class CheckBox extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.disabled ? undefined : "0";
+		const tabindex = this.getAttribute("tabindex");
+		return this.disabled ? undefined : tabindex || "0";
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+	static get dependencies() {
+		return [
+			Label,
+			Icon,
+		];
 	}
 
-	static async define(...params) {
-		await Promise.all([
-			Label.define(),
-			Icon.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
-
-		super.define(...params);
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

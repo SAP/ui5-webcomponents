@@ -8,6 +8,7 @@ const ValueStates = {
 	Success: "Success",
 	Warning: "Warning",
 	Error: "Error",
+	Information: "Information",
 };
 
 class ValueState extends DataType {
@@ -16,6 +17,6 @@ class ValueState extends DataType {
 	}
 }
 
-ValueState.generataTypeAcessors(ValueStates);
+ValueState.generateTypeAccessors(ValueStates);
 
 export default ValueState;

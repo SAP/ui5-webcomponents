@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -22,12 +23,13 @@ const metadata = {
 			type: Integer,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.fiori.ProductSwitch.prototype */ {
 		/**
 		 * Defines the items of the <code>ui5-product-switch</code>.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.fiori.IProductSwitchItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
@@ -46,7 +48,8 @@ const metadata = {
  * <br><br>
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";</code>
- *
+ * <br>
+ * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code> (for <code>ui5-product-switch-item</code>)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.ProductSwitch
@@ -60,12 +63,11 @@ class ProductSwitch extends UI5Element {
 	constructor() {
 		super();
 
-		this.initItemNavigation();
-	}
-
-	initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this, { rowSize: 4 });
-		this._itemNavigation.getItemsCallback = () => this.items;
+		this._itemNavigation = new ItemNavigation(this, {
+			rowSize: 4,
+			behavior: ItemNavigationBehavior.Cyclic,
+			getItemsCallback: () => this.items,
+		});
 	}
 
 	static get metadata() {
@@ -109,18 +111,18 @@ class ProductSwitch extends UI5Element {
 		const documentWidth = document.body.clientWidth;
 
 		if (documentWidth <= this.constructor.ROW_MIN_WIDTH.ONE_COLUMN) {
-			this._itemNavigation.rowSize = 1;
+			this._itemNavigation.setRowSize(1);
 		} else if (documentWidth <= this.constructor.ROW_MIN_WIDTH.THREE_COLUMN || this.items.length <= 6) {
-			this._itemNavigation.rowSize = 3;
+			this._itemNavigation.setRowSize(3);
 		} else {
-			this._itemNavigation.rowSize = 4;
+			this._itemNavigation.setRowSize(4);
 		}
 	}
 
 	_onfocusin(event) {
 		const target = event.target;
 
-		this._itemNavigation.update(target);
+		this._itemNavigation.setCurrentItem(target);
 	}
 }
 

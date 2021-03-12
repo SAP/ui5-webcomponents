@@ -8,10 +8,10 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background: var(--sapUiShellColor);
+	background: var(--sapShellColor);
 	height: 2.75rem;
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
 	font-weight: normal;
 	box-sizing: border-box;
 }
@@ -19,50 +19,71 @@
 .ui5-shellbar-menu-button,
 .ui5-shellbar-button,
 .ui5-shellbar-image-button,
-::slotted(ui5-button[slot="startButton"]) {
+::slotted([ui5-button][slot="startButton"]) {
 	height: 2.25rem;
 	padding: 0;
 	margin-left: 0.5rem;
 	border: none;
-	outline: none;
 	background: transparent;
-	color: var(--sapUiShellTextColor);
+	outline-color: var(--sapShell_TextColor);
+	color: var(--sapShell_TextColor);
 	box-sizing: border-box;
 	cursor: pointer;
 	border-radius: 0.25rem;
 	position: relative;
 	font-size: 0.75rem;
 	font-weight: bold;
+	white-space: initial;
+	overflow: initial;
+	text-overflow: initial;
 }
 
-::slotted(ui5-button[slot="startButton"]:hover),
+.ui5-shellbar-menu-button,
+.ui5-shellbar-button,
+::slotted([ui5-button][slot="startButton"]) {
+	outline: none;
+}
+
+::slotted([ui5-button][slot="startButton"]:hover),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
 .ui5-shellbar-button:hover,
 .ui5-shellbar-image-button:hover {
-	background: var(--sapUiShellHoverBackground);
+	background: var(--sapShell_Hover_Background);
 }
 
-::slotted(ui5-button[slot="startButton"][active]),
+::slotted([ui5-button][slot="startButton"][active]),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
-.ui5-shellbar-button:active,
+.ui5-shellbar-button[active],
 .ui5-shellbar-image-button:active {
-	background: var(--sapUiShellActiveBackground);
-	color: var(--sapUiShellActiveTextColor);
+	background: var(--sapShell_Active_Background);
+	color: var(--sapShell_Active_TextColor);
 }
 
-::slotted(ui5-button[slot="startButton"][focused])::after,
+::slotted([ui5-button][slot="startButton"][focused])::after,
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus::after,
-.ui5-shellbar-button:focus::after,
+.ui5-shellbar-button[focused]::after,
 .ui5-shellbar-image-button:focus::after {
 	content: "";
 	position: absolute;
 	width: calc(100% - 0.375rem);
 	height: calc(100% - 0.375rem);
-	border: 1px dotted var(--sapUiContentContrastFocusColor);
+	border: 1px dotted var(--sapContent_ContrastFocusColor);
 	pointer-events: none;
 	left: 2px;
 	top: 2px;
 	z-index: 1;
+}
+
+slot[name="profile"] {
+	min-width: 0;
+}
+
+::slotted([ui5-avatar][slot="profile"]) {
+	min-width: 0;
+	width: 2rem;
+	height: 2rem;
+	padding: .25rem;
+	pointer-events: none;
 }
 
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive::-moz-focus-inner {
@@ -71,7 +92,7 @@
 
 .ui5-shellbar-menu-button-title {
 	display: inline-block;
-	font-family: var(--sapUiFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	margin: 0;
 	font-size: 0.75rem;
 	white-space: nowrap;
@@ -96,8 +117,8 @@
 .ui5-shellbar-secondary-title {
 	display: inline-block;
 	margin: 0 0.5rem;
-	font-size: var(--sapMFontSmallSize);
-	color: var(--sapUiShellTextColor);
+	font-size: var(--sapFontSmallSize);
+	color: var(--sapShell_TextColor);
 	line-height: 1rem;
 	font-weight: normal;
 	text-overflow: ellipsis;
@@ -112,10 +133,10 @@
 	height: 10px;
 	width: 0px;
 	height: 0px;
-	color: var(--sapUiShellInteractiveTextColor);
+	color: var(--sapShell_InteractiveTextColor);
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
-	border-top: 5px solid var(--sapUiShellTextColor);
+	border-top: 5px solid var(--sapShell_TextColor);
 }
 
 .ui5-shellbar-overflow-container {
@@ -149,15 +170,19 @@
 	padding: 0.25rem 1rem;
 }
 
-:host([breakpoint-size="S"]) ::slotted(ui5-button[slot="startButton"]) {
+:host([breakpoint-size="S"]) .ui5-shellbar-search-full-width-wrapper {
+	padding: 0.25rem 1rem;
+}
+
+:host([breakpoint-size="S"]) ::slotted([ui5-button][slot="startButton"]) {
 	margin-right: 0;
 }
 
-:host([breakpoint-size="S"]) .ui5-shellbar-search-field {
-	width: 200px;
+:host([breakpoint-size="M"]) .ui5-shellbar-root {
+	padding: 0.25rem 2rem;
 }
 
-:host([breakpoint-size="M"]) .ui5-shellbar-root {
+:host([breakpoint-size="M"]) .ui5-shellbar-search-full-width-wrapper {
 	padding: 0.25rem 2rem;
 }
 
@@ -175,17 +200,16 @@
 
 .ui5-shellbar-logo {
 	cursor: pointer;
-	height: 1.675rem;
+	max-height: 2rem;
 }
 
-.ui5-shellbar-logo:not([src]) {
-	display: none;
+.ui5-shellbar-logo:focus {
+	outline: 1px dotted var(--sapContent_ContrastFocusColor);
+
 }
 
 .ui5-shellbar-button {
-	min-width: 2.25rem;
-	font-size: 1rem;
-	padding: .625rem;
+	width: 2.5rem;
 }
 
 .ui5-shellbar-image-buttonImage {
@@ -234,7 +258,7 @@
 	cursor: pointer;
 }
 
-:host(:not([logo])) .ui5-shellbar-menu-button {
+:host(:not([with-logo])) .ui5-shellbar-menu-button {
 	margin-left: 0;
 }
 
@@ -243,8 +267,11 @@
 	overflow: hidden;
 	box-sizing: border-box;
 	white-space: nowrap;
-	margin-left: 8rem;
 	flex: 1;
+}
+
+:host(:not([show-search-field])) .ui5-shellbar-overflow-container-right {
+	margin-left: 8rem;
 }
 
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
@@ -264,7 +291,8 @@
 	display: none;
 }
 
-:host([breakpoint-size="S"]) .ui5-shellbar-menu-button-title {
+:host([breakpoint-size="S"]) .ui5-shellbar-logo + .ui5-shellbar-menu-button-title,
+:host([breakpoint-size="S"]) .ui5-shellbar-menu-button + .ui5-shellbar-menu-button-title {
 	display: none;
 }
 
@@ -286,11 +314,6 @@
 	cursor: pointer;
 }
 
-:host(:not([show-block-layer])) .ui5-shellbar-search-field {
-	display: none;
-}
-
-
 :host([breakpoint-size="L"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
 	margin-left: 1rem;
 }
@@ -303,14 +326,14 @@
 	position: relative;
 }
 
-:host([notification-count]) .ui5-shellbar-bell-button::before {
-	content: attr(data-ui5-notification-count);
+:host([notification-count]) .ui5-shellbar-bell-button::before,
+.ui5-shellbar-button[data-count]::before {
 	position: absolute;
 	width: auto;
 	height: 1rem;
 	min-width: 1rem;
-	background: var(--sapUiContentBadgeBackground);
-	color: var(--sapUiShellTextColor);
+	background: var(--sapContent_BadgeBackground);
+	color: var(--sapShell_TextColor);
 	top: 0.125rem;
 	left: 1.5rem;
 	padding: .25rem;
@@ -318,59 +341,113 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: var(--sapMFontSmallSize);
-	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapFontSmallSize);
+	font-family: "72override", var(--sapFontFamily);
 	z-index: 2;
 	box-sizing: border-box;
+}
+
+:host([notification-count]) .ui5-shellbar-bell-button::before {
+	content: attr(data-ui5-notification-count);
+}
+
+.ui5-shellbar-button[data-count]::before {
+	content: attr(data-count);
 }
 
 .ui5-shellbar-menu-button {
 	margin-left: 0.5rem;
 }
 
-.ui5-shellbar-block-layer {
+.ui5-shellbar-search-field {
+	width: 240px;
+	min-width: 240px;
+	margin-left: 0.5rem;
+}
+
+.ui5-shellbar-search-full-width-wrapper .ui5-shellbar-search-full-field {
+	height: 2.25rem;
+	width: 100%;
+}
+
+.ui5-shellbar-search-full-width-wrapper {
+	position: absolute;
 	top: 0;
 	left: 0;
-	right: 0;
-	bottom: 0;
-	position: fixed;
-	outline: 0 none;
-	z-index: 100;
-}
-
-:host(:not([show-block-layer])) .ui5-shellbar-block-layer {
-	display: none;
-}
-
-.ui5-shellbar-search-field {
-	z-index: 101;
-	position: absolute;
-	width: 240px;
-	top: 0.25rem;
-	height: 2.25rem;
-}
-
-::slotted(ui5-input) {
-	background-color: var(--sapUiShellColor);
-	border: 1px solid var(--sapUiShellBorderColorLighten30);
-	color: var(--sapUiShellTextColor);
+	background: var(--sapShellColor);
 	height: 100%;
+	width: 100%;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
 }
 
-::slotted(ui5-input:hover) {
-	background: var(--sapUiShellHoverBackground);
-	border: 1px solid var(--sapUiShellBorderColorLighten30);
+.ui5-shellbar-search-full-width-wrapper .ui5-shellbar-button {
+	width: auto;
 }
 
-::slotted(ui5-input[focused]) {
-	outline: 1px dotted var(--sapUiContentContrastFocusColor);
+::slotted([ui5-input]) {
+	background-color: var(--sapShellColor);
+	border: 1px solid var(--sapShell_InteractiveBorderColor);
+	color: var(--sapShell_TextColor);
+	height: 100%;
+	width: 100%;
 }
 
-:host([show-block-layer]) .ui5-shellbar-search-button {
-	background: var(--sapUiHighlight);
-	color: var(--sapUiShellActiveTextColor);
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
+::slotted([ui5-input][focused]) {
+	outline: 1px dotted var(--sapContent_ContrastFocusColor);
+}
+
+::slotted([slot="logo"]) {
+	max-height: 2rem;
+	pointer-events: none;
+}
+
+/**
+* IE styles
+*/
+[ui5-input][value-state]:not([readonly]) {
+	background: var(--sapShellColor);
+	border: 1px solid var(--sapShell_InteractiveBorderColor);
+}
+
+[ui5-input][value-state]:not([readonly]):hover,
+[ui5-input]:not([value-state]):not([readonly]):hover {
+	background: var(--sapShell_Hover_Background);
+	border: 1px solid var(--sapShell_InteractiveBorderColor);
+}
+
+[ui5-input][value-state]:not([value-state="None"])[focused] {
+	outline: 1px dotted var(--sapContent_ContrastFocusColor);
+}
+/* IE styles end */
+
+.ui5-shellbar-copilot-wrapper {
+	position: relative;
+	outline: none;
+	box-sizing: border-box;
+}
+
+.ui5-shellbar-copilot-wrapper:hover {
+	background: var(--sapShell_Hover_Background);
+}
+
+.ui5-shellbar-copilot-wrapper:active,
+.ui5-shellbar-copilot-wrapper[active] {
+	background: var(--sapShell_Active_Background);
+}
+
+.ui5-shellbar-copilot-wrapper:focus::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: calc(100% - 0.75rem);
+	border: 1px dotted var(--sapContent_ContrastFocusColor);
+	pointer-events: none;
+	left: 0;
+	top: 0.25rem;
+	z-index: 1;
 }
 
 .ui5-shellbar-co-pilot-placeholder {
@@ -379,10 +456,10 @@
 }
 
 .ui5-shellbar-co-pilot-circle {
-	fill: var(--sapUiShellColor);
+	fill: var(--sapShellColor);
 }
 
-:host [dir="rtl"] ::slotted(ui5-button[slot="startButton"]) {
+:host [dir="rtl"] ::slotted([ui5-button][slot="startButton"]) {
 	margin-left: 0.5rem;
 	margin-right: 0;
 }
@@ -397,8 +474,12 @@
 	margin-left: 0;
 }
 
-[dir="rtl"] .ui5-shellbar-overflow-container-right {
+:host(:not([show-search-field])) [dir="rtl"] .ui5-shellbar-overflow-container-right {
 	margin-right: 8rem;
+	margin-left: 0;
+}
+
+[dir="rtl"] .ui5-shellbar-overflow-container-right {
 	margin-left: 0;
 }
 
@@ -410,9 +491,13 @@
 	margin-right: 0;
 }
 
-::slotted(ui5-button[slot="startButton"]) {
+::slotted([ui5-button][slot="startButton"]) {
 	margin-right: 0.5rem;
 	margin-left: 0;
 	justify-content: center;
 	align-items: center;
+}
+
+::slotted([ui5-button][profile-btn]) {
+	width: auto;
 }

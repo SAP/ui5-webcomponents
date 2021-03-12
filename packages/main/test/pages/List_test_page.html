@@ -2,25 +2,51 @@
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 	<title>ui5-list / ui5-li</title>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-
 	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-title>List "infinite-scroll"</ui5-title>
+	<ui5-button id="btnTrigger">scroll</ui5-button>
+	<ui5-list id="infiniteScrollEx" style="height: 200px" infinite-scroll>
+		<ui5-li>Laptop Lenovo</ui5-li>
+		<ui5-li>IPhone 3</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+		<ui5-li>Audio cabel</ui5-li>
+		<ui5-li>DVD set</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+		<ui5-li>Audio cabel</ui5-li>
+		<ui5-li id="lastItem">Last Item</ui5-li>
+	</ui5-list>
+	<input id="loadMoreResult" value="0"/>
+	<br/>
 	<ui5-list id="listEvents" mode="SingleSelectEnd">
-		<ui5-li id="country1" >Argentina</ui5-li>
+		<ui5-li id="country1">Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
-		<ui5-li id="country3" >China</ui5-li>
+		<ui5-li id="country3">China</ui5-li>
 		<ui5-li id="country4" type="Inactive">Portugal</ui5-li>
 	</ui5-list>
 	<ui5-input id="itemPressResultField" placeholder="itemPress result"></ui5-input>
+	<ui5-input id="itemPressSelectedResultField" placeholder="itemPress selected result"></ui5-input>
 	<ui5-input id="selectionChangeResultField" placeholder="selectionChange result"></ui5-input>
 	<ui5-input id="selectionChangeResultPreviousItemsParameter" placeholder="selectionChange previousSelection result"></ui5-input>
+
+	<ui5-list id="listEvents2" mode="MultiSelect">
+		<ui5-li id="country11">Argentina</ui5-li>
+		<ui5-li id="country22" selected >Bulgaria</ui5-li>
+		<ui5-li id="country33">China</ui5-li>
+		<ui5-li id="country44">Portugal</ui5-li>
+	</ui5-list>
+	<ui5-input id="itemPressResultField2" placeholder="itemPress result"></ui5-input>
+	<ui5-input id="itemPressSelectedResultField2" placeholder="itemPress selected result"></ui5-input>
+	<ui5-input id="selectionChangeResultField2" placeholder="selectionChange result"></ui5-input>
 
 	<ui5-list id="list1" header-text="API: GroupHeaderListItem">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
@@ -48,6 +74,12 @@
 		<ui5-li>Option #3</ui5-li>
 	</ui5-list>
 
+	<ui5-list id="default-slot-test" mode="SingleSelect">
+		<ui5-li>Option #1</ui5-li>
+		<ui5-li>Option #2</ui5-li>
+		<ui5-li>Option #3</ui5-li>
+	</ui5-list>
+
 	<ui5-input id="fieldMultiSelResult"></ui5-input>
 
 	<ui5-list id="keyboardTestList">
@@ -65,13 +97,113 @@
 				<ui5-radiobutton text="Option C" disabled="disabled"></ui5-radiobutton>
 		</ui5-li-custom>
 	</ui5-list>
+	<ui5-button id="randomBtn">Random button</ui5-button>
+
+	<ui5-list id="no-data-list" header-text="API: noDataText" separators="None" no-data-text="No Data Available"></ui5-list>
+
+	<ui5-list
+		id="header-slot-list"
+		mode="MultiSelect"
+		header-text="Text when no header provided"
+		footer-text="Copyright"
+		no-data-text="No data">
+
+		<div slot="header" class="header">
+			<ui5-title id="header-slot-title">List Title Here</ui5-title>
+		</div>
+
+	</ui5-list>
+
+	<ui5-list id="inactiveMultiSelect" header-text="API: ListItem type='Inactive'" mode="MultiSelect">
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
+	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" mode="SingleSelectBegin">
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+	<span id="detailPressCounter">0</span>
+	<ui5-list header-text="API: ListItem type='Detail'">
+		<ui5-li id="detailListItem" type="Detail">Detail item</ui5-li>
+		<ui5-li >Normal item</ui5-li>
+	</ui5-list>
+	<br/><br/>
+
+	<ui5-list id="listWithInternalHeader" header-text="Test aria">
+		<ui5-li>item</ui5-li>
+		<ui5-li >item</ui5-li>
+	</ui5-list>
+	<br/><br/>
+
+	<ui5-list id="listWithCustomHeader" aria-labelledby="testHeader">
+		<div slot="header" class="header">
+			<h2 id="testHeader">Test aria</h2>
+		</div>
+
+		<ui5-li>item</ui5-li>
+		<ui5-li >item</ui5-li>
+	</ui5-list>
+
+	<ui5-list id="listWithEmptyItem">
+		<ui5-li id="emptyItem"></ui5-li>
+		<ui5-li>IPhone 3</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+	</ui5-list>
+	<ui5-button id="changeEmptyItem">Change empty item text</ui5-button>
+	<br>
+	<ui5-title>Events within ui5-li-custom</ui5-title>
+	<br>
+
+	<ui5-list id="customList" separators="Inner">
+		<ui5-li-custom>
+			<ui5-button id="liBtn1" design="Transparent">List Button 1</ui5-button>
+			<br />
+		</ui5-li-custom>
+		<ui5-li-custom>
+			<ui5-button design="Transparent">List Button 2</ui5-button>
+			<br />
+		</ui5-li-custom>
+		<ui5-li-custom>
+			<ui5-button design="Transparent">List Button 2</ui5-button>
+			<br />
+		</ui5-li-custom>
+	</ui5-list>
+
+	<ui5-input value="0" id="customListItemEvents"></ui5-input>
+	<br />
+	<br />
+	<ui5-button id="btnOpenPopup">Open popup with List</ui5-button>
+	<ui5-responsive-popover id="popup" placement-type="Bottom" style="width: 300px;height: 18rem;">
+		<ui5-list>
+			<div slot="header">
+				<ui5-button id="btnInHeader" icon="refresh" />
+			</div>
+		</ui5-list>
+
+		<ui5-list style="height: 15rem" infinite-scroll no-data-text="No data">
+			<ui5-li>Test</ui5-li>
+		</ui5-list>
+	</ui5-responsive-popover>
+
+	<ui5-list id="basicList">
+		<ui5-li>Laptop HP</ui5-li>
+		<ui5-li>Audio cabel</ui5-li>
+		<ui5-li>DVD set</ui5-li>
+	</ui5-list>
 
 	<script>
 		'use strict';
 
 		var itemDeleteCounter = 0;
 		var itemPressCounter = 0;
+		var itemPressCounter2 = 0;
 		var selectionChangeCounter = 0;
+		var selectionChangeCounter2 = 0;
 
 		function deleteItemHandler(e) {
 			document.querySelector("#lblResult").innerHTML = e.detail.item.innerHTML + ": " + ++itemDeleteCounter;
@@ -82,6 +214,7 @@
 		listEvents.addEventListener("ui5-itemPress", function (event) {
 			itemPressCounter += 1;
 			itemPressResultField.value = itemPressCounter;
+			itemPressSelectedResultField.value = event.detail.item.selected;
 		});
 
 		listEvents.addEventListener("ui5-selectionChange", function (event) {
@@ -93,9 +226,57 @@
 			selectionChangeResultPreviousItemsParameter.value = event.detail.previouslySelectedItems[0].id;
 		})
 
+		listEvents2.addEventListener("ui5-itemPress", function (event) {
+			itemPressCounter2 += 1;
+			itemPressResultField2.value = itemPressCounter2;
+			itemPressSelectedResultField2.value = event.detail.item.selected;
+		});
+
+		listEvents2.addEventListener("ui5-selectionChange", function (event) {
+			selectionChangeCounter2 += 1;
+			selectionChangeResultField2.value = selectionChangeCounter2;
+		});
+
+
 		listMultiSel.addEventListener("ui5-selectionChange", function(event) {
 			fieldMultiSelResult.value = event.detail.selectionComponentPressed;
 		})
+
+		btnTrigger.addEventListener("click", function(e) {
+			var scrollableContiner = infiniteScrollEx.shadowRoot.querySelector(".ui5-list-scroll-container");
+			scrollableContiner.scroll(0, scrollableContiner.scrollHeight);
+		});
+
+		changeEmptyItem.addEventListener("click", function(e) {
+			emptyItem.textContent = "updated";
+		});
+
+		var loadMoreCounter = 0;
+		infiniteScrollEx.addEventListener("ui5-loadMore", function(e) {
+			for(var i = 0; i < 3; i++) {
+				var li = document.createElement("ui5-li");
+				li.textContent = "Title" + i;
+				infiniteScrollEx.appendChild(li);
+			}
+			loadMoreResult.value= ++loadMoreCounter;
+		});
+
+		detailListItem.addEventListener("ui5-detailClick", function(e) {
+			detailPressCounter.innerHTML = parseInt(detailPressCounter.innerHTML) + 1;
+		});
+
+		var ui5List = document.getElementById("customList"),
+			liBtn1 = document.getElementById("liBtn1"),
+			customListItemEventsValue = 0,
+			customListItemEventsInput = document.getElementById("customListItemEvents");
+
+		ui5List.addEventListener("ui5-item-click", function(event) {
+			customListItemEventsInput.value = ++customListItemEventsValue;
+		});
+
+		btnOpenPopup.addEventListener("click", function() {
+			popup.openBy(btnOpenPopup);
+		});
 	</script>
 </body>
 </html>

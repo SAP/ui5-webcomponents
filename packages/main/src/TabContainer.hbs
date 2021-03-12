@@ -1,151 +1,87 @@
 <div
-	class="ui5-tc-root"
-	dir="{{rtl}}"
+	class="{{classes.root}}"
+	dir="{{effectiveDir}}"
 >
+	{{#if tabsAtTheBottom}}
+		{{> contentArea}}
+	{{/if}}
+
 	<div class="{{classes.header}}" id="{{_id}}-header">
-		<ui5-icon @click="{{_onHeaderBackArrowClick}}" class="{{classes.headerBackArrow}}" name="slim-arrow-left" tabindex="-1" accessible-name="{{previousIconACCName}}" show-tooltip></ui5-icon>
-
-		<!-- tab items -->
-		<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
-			<ul role="tablist" class="{{classes.headerList}}">
-				{{#each renderItems}}
-					{{#unless this.isSeparator}}
-						<li class="{{this.headerItemClasses}}"
-							id="{{this.item._id}}"
-							tabindex="{{this.item._tabIndex}}"
-							@click="{{../_onHeaderItemSelect}}"
-							@keydown="{{../	_onHeaderItemKeyDown}}"
-							@keyup="{{../_onHeaderItemKeyUp}}"
-							role="tab"
-							aria-posinset="{{this.position}}"
-							aria-setsize="{{../renderItems.length}}"
-							aria-controls="ui5-tc-contentItem-{{this.position}}"
-							aria-selected="{{this.selected}}"
-							?aria-disabled="{{this.disabled}}"
-							?disabled="{{this.disabled}}"
-							aria-labelledby="{{this.ariaLabelledBy}}"
-						>
-							{{#if this.isTextOnlyTab}}
-								{{> textOnlyTab}}
-							{{/if}}
-
-							{{#if this.isIconTab}}
-								{{> iconTab}}
-							{{/if}}
-
-							{{#if this.isMixedModeTab}}
-								{{> mixedModeTab}}
-							{{/if}}
-						</li>
-					{{/unless}}
-					{{#if this.isSeparator}}
-						<li id="{{this._id}}" role="separator" class="{{../classes.separator}}"></li>
-					{{/if}}
-				{{/each}}
-			</ul>
+		<div class="{{classes.headerInnerContainer}}">
+			<div class="{{classes.headerBackArrow}}">
+				<ui5-button @click="{{_onHeaderBackArrowClick}}"
+							icon="slim-arrow-left"
+							design="Transparent"
+							tabindex="-1"
+							title="{{previousIconACCName}}"></ui5-button>
+			</div>
+			<!-- tab items -->
+			<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
+				<ul
+					role="tablist"
+					class="{{classes.headerList}}"
+					@click="{{_onHeaderClick}}"
+					@keydown="{{_onHeaderKeyDown}}"
+					@keyup="{{_onHeaderKeyUp}}"
+				>
+					{{#each items}}
+						{{#unless this.isSeparator}}
+							{{this.stripPresentation}}
+						{{/unless}}
+						{{#if this.isSeparator}}
+							<li id="{{this._id}}" role="separator" class="{{../classes.separator}}" style="list-style-type: none;"></li>
+						{{/if}}
+					{{/each}}
+				</ul>
+			</div>
+			<div class="{{classes.headerForwardArrow}}">
+			<ui5-button @click="{{_onHeaderForwardArrowClick}}"
+						icon="slim-arrow-right"
+						design="Transparent"
+						tabindex="-1"
+						title="{{nextIconACCName}}"></ui5-button>
 		</div>
-
-		<ui5-icon @click="{{_onHeaderForwardArrowClick}}" class="{{classes.headerForwardArrow}}" name="slim-arrow-right" tabindex="-1" accessible-name="{{nextIconACCName}}" show-tooltip></ui5-icon>
-
+		</div>
 		<!-- overflow button -->
-		{{#if showOverflow}}
-			<ui5-button
+		{{#if shouldShowOverflow}}
+			<div
+				class="ui-tc__overflowButton"
 				@click="{{_onOverflowButtonClick}}"
-				class="{{classes.overflowButton}}"
-				icon="slim-arrow-down"
-				type="Transparent"
-				title="{{overflowMenuTitle}}"
-			></ui5-button>
+			>
+				{{#if overflowButton.length}}
+					<slot name="overflowButton"></slot>
+				{{else}}
+					<ui5-button
+						icon="{{overflowMenuIcon}}"
+						design="Transparent"
+						tabindex="-1"
+						title="{{overflowMenuTitle}}"
+						aria-haspopup="true"></ui5-button>
+				{{/if}}
+			</div>
 		{{/if}}
 	</div>
 
-	<!-- content area -->
+	{{#unless tabsAtTheBottom}}
+		{{> contentArea}}
+	{{/unless}}
+
+</div>
+
+{{#*inline "contentArea"}}
 	<div class="{{classes.content}}">
-		{{#each renderItems}}
+		{{#each items}}
 			{{#unless this.isSeparator}}
-				<div class="{{this.contentItemClasses}}" id="ui5-tc-contentItem-{{this.position}}" ?hidden="{{this.hidden}}" role="tabpanel" aria-labelledby="{{item._id}}">
-					<slot name="{{this.item._individualSlot}}"></slot>
+				<div
+					class="ui5-tc__contentItem"
+					id="ui5-tc-contentItem-{{this._posinset}}"
+					?hidden="{{this.effectiveHidden}}"
+					role="tabpanel"
+					aria-labelledby="{{this._id}}"
+				>
+					<slot name="{{this._individualSlot}}"></slot>
 				</div>
 			{{/unless}}
 		{{/each}}
-	</div>
-
-	<!-- overflow menu -->
-	<ui5-popover
-		id="{{_id}}-overflowMenu"
-		no-arrow
-		placement-type="Bottom"
-		horizontal-align="Right">
-		<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
-			{{#each renderItems}}
-				{{#unless this.isSeparator}}
-					<ui5-li-custom id="{{this.item._id}}"
-						class="{{this.overflowItemClasses}}"
-						type="{{this.overflowItemState}}"
-						?selected="{{this.selected}}"
-						?disabled="{{this.disabled}}"
-					>
-						<div class="{{this.overflowItemContentClasses}}">
-							{{#if this.item.icon}}
-								<ui5-icon name="{{this.item.icon}}"></ui5-icon>
-							{{/if}}
-
-							{{this.item.text}}
-
-							{{#if this.item.additionalText}}
-								({{this.item.additionalText}})
-							{{/if}}
-						</div>
-					</ui5-li-custom>
-				{{/unless}}
-			{{/each}}
-		</ui5-list>
-	</ui5-popover>
-</div>
-
-{{#*inline "textOnlyTab"}}
-	<div class="{{this.headerItemContentClasses}}">
-		<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
-			<span class="{{this.headerItemSemanticIconClasses}}"></span>
-			{{this.item.text}}
-		</span>
-
-		{{#if this.item.additionalText}}
-			<span class="{{this.headerItemAdditionalTextClasses}}" id="{{this.item._id}}-additionalText">({{this.item.additionalText}})</span>
-		{{/if}}
-	</div>
-{{/inline}}
-
-{{#*inline "iconTab"}}
-	<div id="{{this.item._id}}" class="ui5-tc-headerItemIcon-outer">
-		<ui5-icon name="{{this.item.icon}}" class="{{this.headerItemIconClasses}}"></ui5-icon>
-	</div>
-
-	<div class="{{this.headerItemContentClasses}}">
-		{{#if this.item.additionalText}}
-			<span class="{{this.headerItemAdditionalTextClasses}}" id="{{this.item._id}}-additionalText">{{this.item.additionalText}}</span>
-		{{/if}}
-
-		{{#if this.item.text}}
-			<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
-				<span class="{{this.headerItemSemanticIconClasses}}"></span>
-				{{this.item.text}}
-			</span>
-		{{/if}}
-	</div>
-{{/inline}}
-
-{{#*inline "mixedModeTab"}}
-	<div class="{{this.headerItemContentClasses}}">
-		{{#if this.item.additionalText}}
-			<span class="{{this.headerItemAdditionalTextClasses}}" id="{{this.item._id}}-additionalText">{{this.item.additionalText}}</span>
-		{{/if}}
-
-		{{#if this.item.text}}
-			<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
-				<span class="{{this.headerItemSemanticIconClasses}}"></span>
-				{{this.item.text}}
-			</span>
-		{{/if}}
 	</div>
 {{/inline}}
