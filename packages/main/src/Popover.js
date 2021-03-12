@@ -540,7 +540,7 @@ class Popover extends Popup {
 
 		this._maxContentHeight = maxContentHeight;
 
-		let arrowPos = this.getArrowPosition();
+		let arrowPos = this.getArrowPosition(targetRect, popoverSize, left, isVertical);
 
 		if (this._left === undefined || Math.abs(this._left - left) > 1.5) {
 			this._left = Math.round(left);
@@ -562,9 +562,13 @@ class Popover extends Popup {
 	/**
 	 * Calculates the position for the arrow.
 	 * @private
+	 * @param targetRect BoundingClientRect of the target element
+	 * @param popoverSize Width and height of the popover
+	 * @param left Left offset of the popover
+	 * @param isVertical if the popover is positioned vertically to the target element
 	 * @returns {{x: number, y: number}} Arrow's coordinates
 	 */
-	getArrowPosition() {
+	getArrowPosition(targetRect, popoverSize, left, isVertical) {
 		let arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
 
 		if (this.horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
