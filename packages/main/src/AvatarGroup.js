@@ -81,6 +81,7 @@ const metadata = {
 		 * @type {AvatarGroupType}
 		 * @defaultValue "Group"
 		 * @public
+		 * @since 1.0.0-rc.13
 		 */
 		totalAvatarsCount: {
 			type: Integer,
@@ -109,6 +110,7 @@ const metadata = {
 		/**
 		 * Defines the number of hidden avatars.
 		 * @private
+		 * @since 1.0.0-rc.13
 		 */
 		_hiddenItems: {
 			type: Integer,
