@@ -221,7 +221,7 @@ class Icon extends UI5Element {
 	_onclick(event) {
 		if (this.interactive) {
 			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-			event.stopPropagation(); 
+			event.stopPropagation();
 			this.fireEvent("click");
 		}
 	}

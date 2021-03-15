@@ -14,7 +14,7 @@ const getScripts = (options) => {
 
 	const scripts = {
 		clean: "rimraf dist",
-		lint: "",
+		lint: "eslint . --config config/.eslintrc.js",
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
 		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
 		build: {
