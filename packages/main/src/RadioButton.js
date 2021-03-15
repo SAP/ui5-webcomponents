@@ -168,7 +168,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots:  /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 		/**
 		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 		 * when <code>name</code> property is set.

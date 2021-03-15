@@ -470,7 +470,7 @@ class ComboBox extends UI5Element {
 		this._iconPressed = true;
 
 		if (isPhone() && this.value) {
-			this.filterValue = this.value
+			this.filterValue = this.value;
 		}
 
 		this._clearFocus();
