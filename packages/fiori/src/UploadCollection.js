@@ -13,6 +13,7 @@ import {
 	UPLOADCOLLECTION_NO_DATA_DESCRIPTION,
 	UPLOADCOLLECTION_DRAG_FILE_INDICATOR,
 	UPLOADCOLLECTION_DROP_FILE_INDICATOR,
+	UPLOADCOLLECTION_ARIA_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import {
 	attachBodyDnDHandler,
@@ -329,6 +330,10 @@ class UploadCollection extends UI5Element {
 
 	get _noDataDescription() {
 		return this.noDataDescription || this.i18nBundle.getText(UPLOADCOLLECTION_NO_DATA_DESCRIPTION);
+	}
+
+	get _roleDescription() {
+		return this.i18nBundle.getText(UPLOADCOLLECTION_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get _dndOverlayText() {

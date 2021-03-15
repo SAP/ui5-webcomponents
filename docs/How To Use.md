@@ -13,8 +13,8 @@ Table of contents:
 - [How do I call public methods?](#methods)
 - [Concusion](#conclusion)
 
-<a name="create"></a>
 ## 1. How do I create a UI5 Web Component instance?
+<a name="create"></a>
 
 The simplest way is to just add it to the `<body>`.
 
@@ -32,8 +32,8 @@ document.body.appendChild(myButton);
 
 In most real-world scenarios the above will be done by your framework of choice.
 
-<a name="properties"></a>
 ## 2. How do I set the properties/attributes of UI5 Web Components?
+<a name="properties"></a>
 
 You can use attributes and properties to the same effect. Keep in mind that attribute
 names are "kebab-case" (f.e. `value-state`) while property names are "camelCase" (f.e. `valueState`).
@@ -70,8 +70,8 @@ myCb.setAttribute("checked", ""); // same as myCB.checked = true;
 myCb.removeAttribute("checked"); // same as myCB.checked = false;
 ```
 
-<a name="content"></a>
 ## 3. How do I set the content of UI5 Web Components?
+<a name="content"></a>
 
 Some UI5 Web Components do not accept children or text. They are just modified by
 properties and attributes.
@@ -192,9 +192,9 @@ Here's a summary of `slot` types:
  | ------------------------------ | --------------------------------------------- | ------------------------------------------------------------------------------ |
  | `Node`                         | All HTML Elements and text                    | `ui5-button` default slot                                                      |
  | `HTMLElement`                  | HTML Elements only (no text)                  | `ui5-popover` `header` slot                                                    |
- 
-<a name="events"></a>
+
 ## 4. How do I listen for events?
+<a name="events"></a>
 
 Again, you can use standard DOM methods for this task:
 
@@ -221,8 +221,8 @@ So, for custom events in React you'd have to get a reference to the element and 
 
 For more information, please check our [React tutorial](React-tutorial.md).
 
-<a name="methods"></a>
 ## 5. How do I call public methods?
+<a name="methods"></a>
 
 Get a reference to the UI5 Web Component and call the method on it, as you would with any other HTML element.
 
@@ -233,8 +233,8 @@ myDialog.open();
 
 Again, consult the documentation for the available public methods for each UI5 Web Component.
 
-<a name="conclusion"></a>
 ## 6. Conclusion
+<a name="conclusion"></a>
 
 As you can see from this article, UI5 Web Components, being HTML elements in the first place,
 comply to the same rules. There are some novelties that come with the Web Components standard,

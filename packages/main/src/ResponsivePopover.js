@@ -95,8 +95,8 @@ class ResponsivePopover extends Popover {
 			header: {
 				"ui5-responsive-popover-header": true,
 				"ui5-responsive-popover-header-no-title": !this.headerText,
-			}
-		}
+			},
+		};
 	}
 
 	static get template() {
