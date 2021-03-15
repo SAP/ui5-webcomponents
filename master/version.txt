@@ -1,7 +1,5 @@
-commit cc4ab195b343692ad1628ea4400d784d0fbd361c
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Mar 12 19:04:34 2021 +0200
+commit 9da711963e9e390d8fa7388a8582aa6121b3eef0
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Mar 15 16:24:30 2021 +0200
 
-    chore(ui5-button): new nonInteractive property (#2942)
-    
-    Added new nonInteractive private property which removes hover, active states and it can't be accessed thought Tab key and mouse.
+    chore: fix lint errors (#2947)
