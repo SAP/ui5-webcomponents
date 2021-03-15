@@ -172,7 +172,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Delimiter is part of the format pattern", () => {
-		browser.url("http://localhost:8080/test-resources/pages/DateRangePicker.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
 		const daterangepicker = browser.$("#daterange-picker6");
 
 		daterangepicker.click();
