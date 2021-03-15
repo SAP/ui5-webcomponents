@@ -74,7 +74,7 @@
 	
 	<ui5-slider id="slider" min="1" max="100" value="60" class="slider"></ui5-slider>
 
-	<div id="avatar-group-wrapper">
+	<div class="avatar-group-wrapper">
 
 		<ui5-popover header-text="My Heading" id="group-pop" style="width: 400px" placement-type="Bottom" aria-label="This popover is important">
 			<div slot="header">
@@ -214,6 +214,78 @@
 			<ui5-avatar size="XL" interactive initials="XL"></ui5-avatar>
 		</ui5-avatar-group>
 	</div>
+	<h1>AvatarGroup with totalAvatarCount smaller than ui5-avatar count used in items slot</h1>
+	<div class="avatar-group-wrapper">
+		<ui5-avatar-group type="Individual" avatar-size="M" total-avatars-count="50">
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+		</ui5-avatar-group>
+		<br>
+		<ui5-avatar-group type="Group" avatar-size="M" total-avatars-count="50">
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+		</ui5-avatar-group>
+	</div>
+	<h1>AvatarGroup with totalAvatarCount smaller than ui5-avatar count used in items slot</h1>
+	<div class="avatar-group-wrapper">
+		<ui5-avatar-group type="Individual" avatar-size="M" total-avatars-count="1">
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+		</ui5-avatar-group>
+		<br>
+		<ui5-avatar-group type="Group" avatar-size="M" total-avatars-count="1">
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+		</ui5-avatar-group>
+	</div>
+	<h1>AvatarGroup without totalAvatarCount</h1>
+	<div class="avatar-group-wrapper">
+		<ui5-avatar-group type="Individual" avatar-size="M">
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+		</ui5-avatar-group>
+		<br>
+		<ui5-avatar-group type="Group" avatar-size="M">
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+			<ui5-avatar initials="M"></ui5-avatar>
+		</ui5-avatar-group>
+	</div>
 
 <script>
 	// document.body.dir = "rtl";
@@ -229,10 +301,12 @@
 	var popAvatar = document.getElementById("pop-avatar")
 	var resetBtn = document.getElementById("reset-btn")
 	var slider = document.getElementById("slider");
-	var avGrWrapper = document.getElementById("avatar-group-wrapper");
+	var avGrWrappers = document.querySelectorAll(".avatar-group-wrapper");
 
 	slider.style.width = '100%';
-	avGrWrapper.style.width = slider.getAttribute("value") + '%';
+	avGrWrappers.forEach(function (wrapper) {
+		wrapper.style.width = slider.getAttribute("value") + '%';
+	});
 
 	function onButtonClicked(avatarGroup, event) {
 		var hiddenItems = avatarGroup.type === "Group" ? avatarGroup.items : avatarGroup.hiddenItems;
@@ -292,7 +366,9 @@
 	});
 
 	slider.addEventListener("input", function (event) {
-		avGrWrapper.style.width = event.target.value + '%';
+		avGrWrappers.forEach(function (wrapper) {
+			wrapper.style.width = event.target.value + '%';
+		});
 	});
 
 	resetBtn.addEventListener("click", function (event) {
