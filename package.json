@@ -42,7 +42,7 @@
     "scopeDev:fiori": "cd packages/fiori && nps scope.dev",
     "start": "npm-run-all --sequential build:base build:ie11 build:localization build:theme-base build:icons build:icons-tnt prepare:main prepare:fiori start:all",
     "startWithScope": "npm-run-all --sequential build:base build:ie11 build:localization build:theme-base build:icons build:icons-tnt scopePrepare:main scopePrepare:fiori scopeStart:all",
-    "start:noie": "NO_IE=1 yarn start",
+    "start:es5": "ES5=1 yarn start",
     "start:all": "npm-run-all --parallel dev:base dev:ie11 dev:localization dev:main dev:fiori",
     "scopeStart:all": "npm-run-all --parallel dev:base dev:ie11 dev:localization scopeDev:main scopeDev:fiori",
     "start:base": "cd packages/base && yarn start",

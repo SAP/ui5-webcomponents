@@ -6,7 +6,7 @@ const serveConfig = path.join(__dirname, `serve.json`);
 const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
 const polyfillPath = path.join(polyfillDir, "{*.js,*.map,*.md,bundles/**/*.*}");
 
-const noIE = !!process.env.NO_IE;
+const es5Build = !!process.env.ES5;
 
 const getScripts = (options) => {
 
@@ -35,7 +35,7 @@ const getScripts = (options) => {
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
-			bundle: `rollup --config config/rollup.config.js --environment ${noIE ? "" : "ES5_BUILD"}`,
+			bundle: `rollup --config config/rollup.config.js --environment ${es5Build ? "ES5_BUILD" : ""}`,
 			samples: {
 				default: "nps build.samples.api build.samples.docs",
 				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
@@ -43,7 +43,7 @@ const getScripts = (options) => {
 			}
 		},
 		copy: {
-			default: "nps copy.src copy.props copy.test copy.webcomponents-polyfill",
+			default: `nps copy.src copy.props copy.test ${es5Build ? "copy.webcomponents-polyfill" : ""}`,
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 			test: `node "${LIB}/copy-and-watch/index.js" --silent "test/**/*.*" dist/test-resources`,
@@ -54,7 +54,7 @@ const getScripts = (options) => {
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			test: 'nps "copy.test --watch --safe --skip-initial-copy"',
-			bundle: `rollup --config config/rollup.config.js -w --environment ${noIE ? "" : "ES5_BUILD,"}DEV,DEPLOY_PUBLIC_PATH:/resources/`,
+			bundle: `rollup --config config/rollup.config.js -w --environment ${es5Build ? "ES5_BUILD," : ""}DEV,DEPLOY_PUBLIC_PATH:/resources/`,
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
@@ -88,7 +88,7 @@ const getScripts = (options) => {
 			},
 			dev: 'concurrently "nps serve" "nps scope.watch"',
 			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.props" "nps scope.bundle" "nps watch.styles"',
-			bundle: `rollup --config config/rollup.config.js -w --environment ${noIE ? "" : "ES5_BUILD,"}DEV,SCOPE`
+			bundle: `rollup --config config/rollup.config.js -w --environment ${es5Build ? "ES5_BUILD," : ""}DEV,SCOPE`
 		}
 	};
 
