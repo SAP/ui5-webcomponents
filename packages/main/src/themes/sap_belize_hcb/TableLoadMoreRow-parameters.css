@@ -1,7 +1,0 @@
-@import "../base/TableLoadMoreRow-parameters.css";
-
-:root {
-	--ui5_table_load_more_padding: 0.25rem;
-	--ui5_table_load_more_border: 1px solid var(--sapButton_BorderColor);
-	--ui5_table_load_more_border_radius: 0.375rem;
-}
