@@ -427,12 +427,7 @@ class List extends UI5Element {
 	}
 
 	onExitDOM() {
-		if (this.growingIntersectionObserver) {
-			this.growingIntersectionObserver.disconnect();
-			this.growingIntersectionObserver = null;
-			this.listEndObserved = false;
-		}
-
+		this.unobserveListEnd();
 		this.resizeListenerAttached = false;
 		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
 	}
@@ -444,6 +439,8 @@ class List extends UI5Element {
 	onAfterRendering() {
 		if (this.growsOnScroll) {
 			this.observeListEnd();
+		} else if (this.listEndObserved) {
+			this.unobserveListEnd();
 		}
 
 		if (this.grows) {
@@ -559,6 +556,14 @@ class List extends UI5Element {
 		if (!this.listEndObserved) {
 			this.getIntersectionObserver().observe(this.listEndDOM);
 			this.listEndObserved = true;
+		}
+	}
+
+	unobserveListEnd() {
+		if (this.growingIntersectionObserver) {
+			this.growingIntersectionObserver.disconnect();
+			this.growingIntersectionObserver = null;
+			this.listEndObserved = false;
 		}
 	}
 
