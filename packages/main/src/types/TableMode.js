@@ -1,4 +1,4 @@
-import DataType from "./DataType.js";
+import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
  * @lends sap.ui.webcomponents.main.types.TableMode.prototype

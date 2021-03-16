@@ -5,11 +5,13 @@
 
 	<table border="0" cellspacing="0" cellpadding="0" @keydown="{{_onkeydown}}" role="table">
 		<thead>
-			<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" tabindex="{{_columnHeader._tabIndex}}" style="height: 48px" @click="{{_onColumnHeaderClick}}">
+			<tr id="{{_columnHeader.id}}" role="row" class="ui5-table-header-row" aria-label="{{ariaLabelText}}" tabindex="{{_columnHeader._tabIndex}}" style="height: 48px" @click="{{_onColumnHeaderClick}}">
 				{{#if isMultiSelect}}
-					<th class="ui5-table-select-all-column">
+					<th class="ui5-table-select-all-column" role="presentation" aria-hidden="true">
 						<ui5-checkbox class="ui5-table-select-all-checkbox"
+							?checked="{{_allRowsSelected}}"
 							@change="{{_selectAll}}"
+							aria-label="{{ariaLabelSelectAllText}}"
 						>
 						</ui5-checkbox>
 					</th>

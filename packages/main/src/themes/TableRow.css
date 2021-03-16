@@ -50,13 +50,14 @@
 	cursor: pointer;
 }
 
+:host([type="Active"]) .ui5-table-row-root:hover,
 :host([mode="SingleSelect"]) .ui5-table-row-root:hover,
-:host([mode="MultiSelect"]) .ui5-table-row-root:hover {
+:host([mode="SingleSelect"]) .ui5-table-row-root:active {
 	background-color: var(--sapList_Hover_Background);
 }
 
-:host([mode="SingleSelect"]) .ui5-table-row-root:active,
-:host([mode="MultiSelect"]) .ui5-table-row-root:active {
+:host([type="Active"][active]) .ui5-table-row-root:active,
+:host([selected][type="Active"][active]) .ui5-table-row-root:hover {
 	background-color: var(--sapList_Active_Background);
 }
 
@@ -65,16 +66,12 @@
 	border-bottom: 1px solid var(--sapList_SelectionBorderColor);
 }
 
-:host([selected]) .ui5-table-row-root:hover {
+:host([selected][type="Active"]) .ui5-table-row-root:hover,
+:host([selected][mode="SingleSelect"]) .ui5-table-row-root:hover {
 	background: var(--sapList_Hover_SelectionBackground);
 }
-:host([selected]) .ui5-table-row-root:active,
-:host([selected]) .ui5-table-row-root:active {
-	background-color: var(--sapList_Active_Background);
-}
 
-:host([mode="SingleSelect"]) .ui5-table-row-root:active ::slotted(ui5-table-cell),
-:host([mode="MultiSelect"]) .ui5-table-row-root:active ::slotted(ui5-table-cell) {
+:host([type="Active"][active]) .ui5-table-row-root ::slotted(ui5-table-cell) {
 	color: var(--sapList_Active_TextColor);
 }
 

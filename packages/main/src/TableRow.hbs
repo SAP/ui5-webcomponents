@@ -3,17 +3,29 @@
 	tabindex="{{_tabIndex}}"
 	@focusin="{{_onfocusin}}"
 	@click="{{_onrowclick}}"
+	@keydown="{{_onkeydown}}"
+	@keyup="{{_onkeyup}}"
+	@mouseup="{{_onmouseup}}"
+	@touchstart="{{_ontouchstart}}"
+	@touchend="{{_ontouchend}}"
 	aria-label="{{ariaLabelText}}"
+	aria-selected="{{this.selected}}"
 	data-sap-focus-ref
 	part="row"
 	role="row"
 >
 
 	{{#if isMultiSelect}}
-		<td class="ui5-table-multi-select-cell">
+		<td 
+			class="ui5-table-multi-select-cell" 
+			aria-hidden="true" 
+			role="presentation"
+		>
 			<ui5-checkbox
-				@change="{{_handleMultiSelection}}"
+				class="ui5-multi-select-checkbox"
 				?checked="{{this.selected}}"
+				aria-label="{{ariaLabelRowSelection}}"
+				@change="{{_handleSelection}}"
 			>
 			</ui5-checkbox>
 		</td>

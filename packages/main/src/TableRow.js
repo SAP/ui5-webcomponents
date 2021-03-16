@@ -1,7 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import TableMode from "@ui5/webcomponents-base/dist/types/TableMode.js";
+import TableMode from "./types/TableMode.js";
+import TableRowType from "./types/TableRowType.js";
+
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { ARIA_LABEL_ROW_SELECTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/TableRow.css.js";
@@ -40,6 +45,22 @@ const metadata = {
 			defaultValue: TableMode.None,
 		},
 		/**
+		 * Defines the visual indication and behavior of the table row.
+		 * Available options are <code>Inactive</code> (by default) and <code>Active</code>.
+		 * <br><br>
+		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
+		 * while with type <code>Inactive</code> - will not.
+		 *
+		 * @type {TableRowType}
+		 * @defaultvalue "Inactive"
+		 * @public
+		*/
+		type: {
+			type: TableRowType,
+			defaultValue: TableRowType.Inactive,
+		},
+
+		/**
 		 * Defines the row's selected state.
 		 *
 		 * @type {boolean}
@@ -50,6 +71,18 @@ const metadata = {
 		selected: {
 			type: Boolean,
 		},
+
+		/**
+		 * Indicates if the table row is active.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+		*/
+		active: {
+			type: Boolean,
+		},
+
 		_columnsInfo: {
 			type: Object,
 			multiple: true,
@@ -66,7 +99,7 @@ const metadata = {
 		"row-click": {},
 		_focused: {},
 		/**
-		 * Fired on selection change of a row in MultiSelect mode.
+		 * Fired on selection change of an active row.
 		 *
 		 * @event sap.ui.webcomponents.main.TableRow#selection-requested
 		 * @private
@@ -106,27 +139,95 @@ class TableRow extends UI5Element {
 		return TableRowTemplate;
 	}
 
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	_onmouseup() {
+		this.deactivate();
+	}
+
+	_onkeydown(event) {
+		const itemActive = this.type === "Active";
+		const isSingleSelect = this.isSingleSelect;
+		const itemSelectable = isSingleSelect || this.isMultiSelect;
+		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
+		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
+
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+
+		if ((isSpace(event) && itemSelectable && !checkboxPressed) || (isEnter(event) && isSingleSelect)) {
+			this.fireEvent("selection-requested", { row: this });
+		}
+		
+		if (isEnter(event) && itemActive && isRowFocused) {
+			this.fireEvent("row-click", { row: this });
+			if (!isSingleSelect) {
+				this.activate();
+			}
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event) || isEnter(event)) {
+			this.deactivate();
+		}
+	}
+
+	_ontouchstart(event) {
+		this.activate();
+	}
+
+	_ontouchend() {
+		this.deactivate();
+	}
+
+	_onfocusout() {
+		this.deactivate();
+	}
+
 	_onfocusin(event, forceSelfFocus = false) {
 		if (forceSelfFocus || this._getActiveElementTagName() === "ui5-table-cell") {
-			this.getDomRef().focus();
+			this.shadowRoot.querySelector(".ui5-table-row-root").focus();
+			this.activate();
 		}
 
 		this.fireEvent("_focused", event);
 	}
 
 	_onrowclick(event) {
+		// If the user tab over a button on IOS device, the document.activeElement
+		// is the ui5-table-row. The check below ensure that, if a button within the row is pressed,
+		// the row will not be selected.	
+		if (event.isMarked === "button") {
+			return;
+		}
+
 		if (this._getActiveElementTagName() === "body") {
 			// If the user clickes on non-focusable element within the ui5-table-cell,
 			// the focus goes to the body, se we have to bring it back to the row.
 			// If the user clicks on input, button or similar clickable element,
 			// the focus remains on that element.
 			this._onfocusin(event, true /* force row focus */);
+			this.deactivate();
 		}
 
-		this.fireEvent("row-click", { row: this });
+		if (this._getActiveElementTagName() === "ui5-table-row") {
+			if (this.isSingleSelect) {
+				this._handleSelection();
+			}
+
+			if (this.type === "Active") {
+				this.fireEvent("row-click", { row: this });
+			}
+		}
 	}
 
-	_handleMultiSelection() {
+	_handleSelection() {
 		this.fireEvent("selection-requested", { row: this });
 	}
 
@@ -134,6 +235,17 @@ class TableRow extends UI5Element {
 		return document.activeElement.localName.toLocaleLowerCase();
 	}
 
+	activate() {
+		if (this.type === TableRowType.Active) {
+			this.active = true;
+		}
+	}
+
+	deactivate() {
+		if (this.active) {
+			this.active = false;
+		}
+	}
 	get shouldPopin() {
 		return this._columnsInfo.filter(el => {
 			return el.demandPopin;
@@ -204,6 +316,14 @@ class TableRow extends UI5Element {
 		}).join(" ");
 	}
 
+	get ariaLabelRowSelection() {
+		return this.i18nBundle.getText(ARIA_LABEL_ROW_SELECTION);
+	}
+
+	get isSingleSelect() {
+		return this.mode === "SingleSelect";
+	}
+
 	get isMultiSelect() {
 		return this.mode === "MultiSelect";
 	}
@@ -224,6 +344,12 @@ class TableRow extends UI5Element {
 
 	getNormilzedTextContent(textContent) {
 		return textContent.replace(/[\n\r\t]/g, "").trim();
+	}
+
+	static async onDefine() {
+		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 	}
 }
 

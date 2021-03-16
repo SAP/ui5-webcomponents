@@ -9,10 +9,14 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
-import TableMode from "@ui5/webcomponents-base/dist/types/TableMode.js";
+import TableMode from "./types/TableMode.js";
 
 // Texts
-import { TABLE_LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
+import {
+	TABLE_LOAD_MORE_TEXT,
+	ARIA_LABEL_SELECT_ALL_CHECKBOX,
+	TABLE_HEADER_ROW_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
@@ -235,13 +239,23 @@ const metadata = {
 		_inViewport: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines whether all rows are selected or not when table is in MultiSelect mode.
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @private
+		 */
+		_allRowsSelected: {
+			type: Boolean
+		}
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 		/**
-		 * Fired when a row is clicked.
+		 * Fired when a row is clicked or enter key is pressed.
 		 *
 		 * @event sap.ui.webcomponents.main.Table#row-click
-		 * @param {HTMLElement} row the clicked row.
+		 * @param {HTMLElement} row the activated row.
 		 * @public
 		 */
 		"row-click": {
@@ -373,8 +387,7 @@ class Table extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this.tableEndObserved = false;
-		this.addEventListener("selection-requested", this._handleMultiSelect.bind(this));
-		this.addEventListener("row-click", this._handleSingleSelect.bind(this));
+		this.addEventListener("selection-requested", this._handleSelect.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -479,7 +492,7 @@ class Table extends UI5Element {
 
 	_handleSingleSelect(event) {
 		const row = this.getRowParent(event.target);
-		if (this.mode === "SingleSelect" && !row.selected) {
+		if (!row.selected) {
 			const previouslySelectedRows = this.rows.filter(item => item.selected);
 			this.rows.forEach(item => {
 				if (item.selected) {
@@ -497,22 +510,30 @@ class Table extends UI5Element {
 	_handleMultiSelect(event) {
 		const row = this.getRowParent(event.target);
 		const previouslySelectedRows = this.rows.filter(item => item.selected);
-		const selectAllCheckbox = this.getDomRef().querySelector(".ui5-table-select-all-checkbox");
 
 		row.selected = !row.selected;
 
 		const selectedRows = this.rows.filter(item => item.selected);
 
 		if (selectedRows.length === this.rows.length) {
-			selectAllCheckbox.checked = true;
+			this._allRowsSelected = true;
 		} else {
-			selectAllCheckbox.checked = false;
+			this._allRowsSelected = false;
 		}
 
 		this.fireEvent("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
+	}
+
+	_handleSelect(event) {
+		const mappings = {
+			"SingleSelect": "_handleSingleSelect",
+			"MultiSelect": "_handleMultiSelect",
+		}
+
+		this[mappings[this.mode]](event);
 	}
 
 	_selectAll(event) {
@@ -649,6 +670,19 @@ class Table extends UI5Element {
 
 	get _moreText() {
 		return this.moreText || this.i18nBundle.getText(TABLE_LOAD_MORE_TEXT);
+	}
+
+	get ariaLabelText() {
+		const headerRowText = this.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
+		const columnsTitle = this.columns.map((column) => {
+			return column.textContent.trim();
+		}).join(" ");
+
+		return `${headerRowText} ${columnsTitle}`;
+	}
+
+	get ariaLabelSelectAllText() {
+		return this.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
 	}
 
 	get loadMoreAriaLabelledBy() {
