@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
 	isEnter,
 	isSpace,
@@ -12,7 +13,6 @@ import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.j
 // Styles
 import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Button from "./Button.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
@@ -490,7 +490,7 @@ class AvatarGroup extends UI5Element {
 		let hiddenItemsCount = this._hiddenItems;
 
 		if (this._shouldUseTotalAvatarsCount) {
-			hiddenItemsCount += this.totalAvatarsCount - this._itemsCount
+			hiddenItemsCount += this.totalAvatarsCount - this._itemsCount;
 		}
 
 		return hiddenItemsCount > 99 ? "+99" : `+${hiddenItemsCount}`;
