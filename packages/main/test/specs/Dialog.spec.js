@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Dialog general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+	});
 
 	it("tests dialog toggling", () => {
 		const btnOpenDialog = $("#btnOpenDialog");
@@ -142,7 +144,9 @@ describe("Dialog general interaction", () => {
 
 
 describe("Acc", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+	});
 
 	it("tests aria-labelledby and aria-label", () => {
 		const dialog = browser.$("ui5-dialog");

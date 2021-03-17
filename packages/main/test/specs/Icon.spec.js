@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Icon general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Icon.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Icon.html");
+	});
 
 	it("Tests icon rendering", () => {
 		const iconRoot = browser.$("#interactive-icon").shadow$("ui5-icon-root");

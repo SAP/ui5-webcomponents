@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Attributes propagation", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	});
 
 	it("Should change the placeholder of the inner input", () => {
 		const input = $("#myInput");

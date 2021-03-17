@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("ToggleButton general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/ToggleButton.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/ToggleButton.html");
+	});
 
 	it("should fire click event on a normal togglebutton", () => {
 		const toggleButton = $("#toggle-button");

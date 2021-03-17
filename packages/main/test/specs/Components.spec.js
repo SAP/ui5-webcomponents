@@ -9,7 +9,9 @@ const assertHidden = component => {
 }
 
 describe("General assertions", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Components.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Components.html");
+	});
 
 	it("tests boolean props default", () => {
 		const button = browser.$("#btn");

@@ -2,15 +2,17 @@ const daypicker = require("../pageobjects/DayPickerTestPage");
 const assert = require("chai").assert;
 
 describe("Day Picker Tests", () => {
-	browser.url("http://localhost:8080/test-resources/pages/DayPicker.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/DayPicker.html");
+	});
 
 	it("Day Picker Renders", () => {
 		daypicker.id = "daypicker";
 		const DayPicker = daypicker.dayPickerRoot;
-	
+
 		assert.ok(DayPicker, "Day Picker is rendered");
 	});
-		
+
 	it("Select day with Space", () => {
 		const today = browser.$(`#${daypicker._sut}`).shadow$(".ui5-dp-item--now");
 

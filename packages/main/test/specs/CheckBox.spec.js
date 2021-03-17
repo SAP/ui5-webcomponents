@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("CheckBox general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/CheckBox.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/CheckBox.html");
+	});
 
 	it("tests checked default value is false", () => {
 		const checkBox = browser.$("#cb1");
