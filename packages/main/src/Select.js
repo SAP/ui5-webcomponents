@@ -324,10 +324,6 @@ class Select extends UI5Element {
 			if (!this._listWidth) {
 				this._listWidth = this.responsivePopover.offsetWidth;
 			}
-			if (this.responsivePopover.querySelector("[ui5-li][focused]:not([selected])")) {
-				// selection changed programmatically => apply focus to the newly selected item
-				this._applyFocusAfterOpen();
-			}
 		}
 	}
 
@@ -385,10 +381,11 @@ class Select extends UI5Element {
 			}
 
 			opt.selected = false;
+			opt._focused = false;
 
 			return {
 				selected: false,
-				focused: false,
+				_focused: false,
 				disabled: opt.disabled,
 				icon: opt.icon,
 				value: opt.value,
@@ -511,19 +508,6 @@ class Select extends UI5Element {
 		this._toggleRespPopover();
 	}
 
-	_applyFocusAfterOpen() {
-		if (!this._currentlySelectedOption) {
-			return;
-		}
-
-		const li = this.responsivePopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
-		if (!li) {
-			return;
-		}
-
-		li.focused = true; // focus applied only visually
-	}
-
 	_handleArrowNavigation(event, shouldFireEvent) {
 		let nextIndex = -1;
 		const currentIndex = this._selectedIndex;
@@ -575,7 +559,6 @@ class Select extends UI5Element {
 
 	_afterOpen() {
 		this.opened = true;
-		this._applyFocusAfterOpen()
 	}
 
 	_afterClose() {
