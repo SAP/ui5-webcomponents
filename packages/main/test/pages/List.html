@@ -14,9 +14,11 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
-	<ui5-title>List "infinite-scroll"</ui5-title>
-	<label style="font-size:2rem;">new items loaded:</label><label id="result" style="font-size:2rem;"> 0 times: 0</label>
-	<ui5-list id="infiniteScrollEx" style="height: 300px" infinite-scroll>
+	<ui5-title>List growing="Scroll"</ui5-title>
+	<label style="font-size:2rem;">new items loaded:</label>
+	<label id="result" style="font-size:2rem;"> 0 times: 0</label>
+
+	<ui5-list id="infiniteScrollEx" growing="Scroll" style="height: 300px;">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
 		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
 		<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
@@ -33,6 +35,7 @@
 		<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
 	</ui5-list>
 
+	<br/><br/>
 
 	<h2>ui5-list</h2>
 
@@ -57,13 +60,10 @@
 
 	<ui5-list header-text="API: icon">
 		<ui5-li  icon="navigation-right-arrow">Option 1</ui5-li>
-		<ui5-li  icon="navigation-right-arrow">Option 2</ui5-li>
-		<ui5-li  icon="navigation-right-arrow">Option 3</ui5-li>
-		<ui5-li  icon-end icon="navigation-right-arrow">Option 1</ui5-li>
-		<ui5-li  icon-end icon="navigation-right-arrow">Option 2</ui5-li>
-		<ui5-li  icon-end icon="navigation-right-arrow">Option 3</ui5-li>
 	</ui5-list>
 
+	<br/><br/>
+	<hr />
 	<br/><br/>
 
 	<ui5-list header-text="API: image">
