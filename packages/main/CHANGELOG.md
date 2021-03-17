@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.8](https://github.com/SAP/ui5-webcomponents/compare/v0.29.6...v0.29.8) (2021-03-17)
+
+
+### Bug Fixes
+
+* **ui5-datepicker:** minDate and maxDate work on all timezones ([628a330](https://github.com/SAP/ui5-webcomponents/commit/628a330))
+* **ui5-table-column:** align content right in RTL ([#2955](https://github.com/SAP/ui5-webcomponents/issues/2955)) ([ab3b08a](https://github.com/SAP/ui5-webcomponents/commit/ab3b08a)), closes [#2945](https://github.com/SAP/ui5-webcomponents/issues/2945)
+* **ui5-table-row:** fire row-click on SPACE/ENTER ([#2954](https://github.com/SAP/ui5-webcomponents/issues/2954)) ([4de2cd9](https://github.com/SAP/ui5-webcomponents/commit/4de2cd9)), closes [#2944](https://github.com/SAP/ui5-webcomponents/issues/2944)
+
+
+### Features
+
+* **ui5-list:** introduce "growing" property ([#2950](https://github.com/SAP/ui5-webcomponents/issues/2950)) ([d0d684e](https://github.com/SAP/ui5-webcomponents/commit/d0d684e)), closes [#2882](https://github.com/SAP/ui5-webcomponents/issues/2882) [#2882](https://github.com/SAP/ui5-webcomponents/issues/2882)
+
+
+
+
+
 ## [0.29.5](https://github.com/SAP/ui5-webcomponents/compare/v0.29.4...v0.29.5) (2021-03-02)
 
 

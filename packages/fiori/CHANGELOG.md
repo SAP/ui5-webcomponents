@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.8](https://github.com/SAP/ui5-webcomponents/compare/v0.29.6...v0.29.8) (2021-03-17)
+
+
+### Bug Fixes
+
+* **ui5-wizard:** use CSS vars for navigation bg-color ([#2892](https://github.com/SAP/ui5-webcomponents/issues/2892)) ([03383c3](https://github.com/SAP/ui5-webcomponents/commit/03383c3))
+
+
+
+
+
 ## [0.29.5](https://github.com/SAP/ui5-webcomponents/compare/v0.29.4...v0.29.5) (2021-03-02)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
