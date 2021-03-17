@@ -23,7 +23,7 @@ class ColorPaletteMoreColors {
 			ColorPicker,
 		];
 	}
-	
+
 	get colorPaletteDialogTitle() {
 		return this.i18nBundle.getText(COLOR_PALETTE_DIALOG_TITLE);
 	}
