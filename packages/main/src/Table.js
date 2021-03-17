@@ -7,11 +7,12 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
+import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
 
 // Texts
-import { TABLE_LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
+import { LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
@@ -142,7 +143,7 @@ const metadata = {
 		 */
 		growing: {
 			type: TableGrowingMode,
-			defaultvalue: TableGrowingMode.None,
+			defaultValue: TableGrowingMode.None,
 		},
 
 		/**
@@ -455,7 +456,7 @@ class Table extends UI5Element {
 	}
 
 	checkTableInViewport() {
-		this._inViewport = this.isInViewport();
+		this._inViewport = isElementInView(this.getDomRef());
 	}
 
 	popinContent(_event) {
@@ -546,7 +547,7 @@ class Table extends UI5Element {
 	}
 
 	get _moreText() {
-		return this.moreText || this.i18nBundle.getText(TABLE_LOAD_MORE_TEXT);
+		return this.moreText || this.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get loadMoreAriaLabelledBy() {
@@ -567,16 +568,6 @@ class Table extends UI5Element {
 		}
 
 		return this._inViewport ? "absolute" : "sticky";
-	}
-
-	isInViewport() {
-		const rect = this.getDomRef().getBoundingClientRect();
-
-		return (
-			rect.top >= 0 && rect.left >= 0
-				&& rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-				&& rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-		);
 	}
 }
 

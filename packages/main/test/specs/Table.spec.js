@@ -77,7 +77,7 @@ describe("Table general interaction", () => {
 			browser.url("http://localhost:8080/test-resources/pages/TableLoadMore.html");
 
 			const inputResult = browser.$("#inputLoadMoreCounter");
-			const loadMoreTrigger = browser.$("#tbl").shadow$(".ui5-table-load-more-row-inner");
+			const loadMoreTrigger = browser.$("#tbl").shadow$("[load-more-inner]");
 
 			// act
 			loadMoreTrigger.click();
