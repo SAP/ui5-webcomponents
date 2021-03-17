@@ -45,7 +45,7 @@ describe("Table general interaction", () => {
 		assert.strictEqual(tableLabel.getHTML(false), "Number of poppedColumns: 4", "popinChange should be fired and columns should be 4");
 	});
 
-	it("tests rowClick is fired", () => {
+	it("tests row-click is fired", () => {
 		const lbl = browser.$("#testRowClickResult");
 		const cellInRow1 = browser.$("#testRowClickCell1");
 		const cellInRow2 = browser.$("#testRowClickCell2");
@@ -53,10 +53,16 @@ describe("Table general interaction", () => {
 		const row2Data = "London";
 
 		cellInRow1.click();
-		assert.ok(lbl.getHTML().indexOf(row1Data), "Event rowClick fired and intercepted.");
+		assert.ok(lbl.getHTML().indexOf(row1Data), "Event row-click fired and intercepted.");
 
 		cellInRow2.click();
-		assert.ok(lbl.getHTML().indexOf(row2Data), "Event rowClick fired and intercepted.");
+		assert.ok(lbl.getHTML().indexOf(row2Data), "Event row-click fired and intercepted.");
+
+		cellInRow1.keys("Space");
+		assert.ok(lbl.getHTML().indexOf(row1Data), "Event row-click fired and intercepted.");
+
+		cellInRow2.keys("Enter");
+		assert.ok(lbl.getHTML().indexOf(row2Data), "Event row-click fired and intercepted.");
 	});
 
 	it("tests row aria-label value", () => {
