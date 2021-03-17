@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
 import styles from "./generated/themes/TableRow.css.js";
@@ -96,6 +97,18 @@ class TableRow extends UI5Element {
 		}
 
 		this.fireEvent("row-click", { row: this });
+	}
+
+	_onkeydown(event) {
+		if (isEnter(event)) {
+			this.fireEvent("row-click", { row: this });
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this.fireEvent("row-click", { row: this });
+		}
 	}
 
 	_getActiveElementTagName() {
