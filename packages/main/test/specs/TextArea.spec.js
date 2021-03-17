@@ -108,6 +108,9 @@ describe("when enabled", () => {
 		const textarea = browser.$("#basic-textarea");
 		const textareaInner = browser.$("#basic-textarea").shadow$("textarea");
 
+		browser.execute(() => {
+			document.getElementById("basic-textarea").value = "Test";
+		}); // set the value again since browser.url reset the page
 		assert.strictEqual(textarea.getProperty("value"), "Test", "Initial value is correct");
 
 		textareaInner.addValue("a");

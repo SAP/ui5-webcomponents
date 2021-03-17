@@ -156,7 +156,7 @@ describe("Input general interaction", () => {
 			const input = document.getElementById("scrollInput");
 			return (await input.isSuggestionsScrollable());
 		});
-		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrolalble");
+		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrollable");
 
 		// close suggestions
 		input.keys("Enter");
