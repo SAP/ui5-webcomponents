@@ -10,7 +10,9 @@ const getTokenizerPopoverId = (inputId) => {
 }
 
 describe("MultiInput general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/MultiInput.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/MultiInput.html");
+	});
 
 	it("tests expanding of tokenizer", () => {
 		const basic = $("#basic-overflow");

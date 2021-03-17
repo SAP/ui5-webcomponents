@@ -1,7 +1,9 @@
 const assert = require('chai').assert;
 
 describe("Card general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Card.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Card.html");
+	});
 
 	it("tests initial rendering", () => {
 		const card = browser.$("#card");

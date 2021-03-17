@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Attributes propagation", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	});
 
 	it("Should change the placeholder of the inner input", () => {
 		const input = $("#myInput");
@@ -55,7 +57,9 @@ describe("Attributes propagation", () => {
 });
 
 describe("Input general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	});
 
 	it("Should open suggestions popover when focused", () => {
 		const input = $("#myInput2");
@@ -152,7 +156,7 @@ describe("Input general interaction", () => {
 			const input = document.getElementById("scrollInput");
 			return (await input.isSuggestionsScrollable());
 		});
-		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrolalble");
+		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrollable");
 
 		// close suggestions
 		input.keys("Enter");

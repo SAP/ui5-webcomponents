@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Some configuration options can be changed at runtime", () => {
-	browser.url("http://localhost:9191/test-resources/pages/Configuration.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/Configuration.html");
+	});
 
 	it("Tests that theme can be changed", () => {
 		const newTheme = 'sap_belize_hcb';

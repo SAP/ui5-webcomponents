@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Lit HTML key function for #each", () => {
-	browser.url("http://localhost:8080/test-resources/pages/LitKeyFunction.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/LitKeyFunction.html");
+	});
 
 	it("LIT HTML does not mess up keys when looping over lists", () => {
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mcb");

@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Theming works", () => {
-	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	});
 
 	it("Tests that the parameters for the default theme are embedded on boot", () => {
 

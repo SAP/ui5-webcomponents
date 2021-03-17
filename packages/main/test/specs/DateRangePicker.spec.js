@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("DateRangePicker general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/DateRangePicker.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/DateRangePicker.html");
+	});
 
 	it("Custom Validation Error", () => {
 		const daterangepicker = browser.$("#daterange-picker3");

@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Wheel Slider general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/WheelSlider_Test_Page.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/WheelSlider_Test_Page.html");
+	});
 
 	before(() => {
 		browser.$("#wheelslider").setProperty("_items",["1","2","3","4","5","6","7"]);
