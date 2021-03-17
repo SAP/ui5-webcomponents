@@ -77,7 +77,6 @@ class FormSupport {
 	}
 }
 
-
 const copyDefaultProperties = (element, nativeInput) => {
 	nativeInput.disabled = element.disabled;
 	nativeInput.value = element.value;

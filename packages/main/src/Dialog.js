@@ -132,7 +132,6 @@ const metadata = {
  * The <code>ui5-dialog</code> is usually displayed at the center of the screen.
  * Its position can be changed by the user. To enable this, you need to set the property <code>draggable</code> accordingly.
 
-
  *
  * <h3>Responsive Behavior</h3>
  * The <code>stretch</code> property can be used to stretch the

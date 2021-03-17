@@ -104,7 +104,6 @@ const MediaRange = {
 	getCurrentRange: _getCurrentRange,
 };
 
-
 MediaRange.initRangeSet(MediaRange.RANGESETS.RANGE_4STEPS, [600, 1024, 1440], ["S", "M", "L", "XL"]);
 
 export default MediaRange;

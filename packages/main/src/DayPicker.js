@@ -430,7 +430,6 @@ class DayPicker extends CalendarPart {
 		}
 	}
 
-
 	_addTimestampToSelection(timestamp) {
 		if (!this.selectedDates.includes(timestamp)) {
 			this.selectedDates = [...this.selectedDates, timestamp];
@@ -481,7 +480,6 @@ class DayPicker extends CalendarPart {
 			startDate.setDate(startDate.getDate() + 1);
 		}
 	}
-
 
 	/**
 	 * Set the hovered day as the _secondTimestamp

@@ -222,7 +222,6 @@ const metadata = {
 			type: String,
 		},
 
-
 		/**
 		 * Receives id(or many ids) of the elements that label the textarea.
 		 *

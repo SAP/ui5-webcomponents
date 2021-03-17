@@ -691,7 +691,6 @@ class List extends UI5Element {
 		item.focus();
 	}
 
-
 	focusUploadCollectionItem(event) {
 		setTimeout(() => {
 			this.setPreviouslyFocusedItem(event.target);

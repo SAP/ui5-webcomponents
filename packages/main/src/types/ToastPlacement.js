@@ -1,6 +1,5 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
-
 /**
  * @lends sap.ui.webcomponents.main.types.ToastPlacement.prototype
  * @public

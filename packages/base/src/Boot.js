@@ -23,6 +23,7 @@ const boot = () => {
 		return bootPromise;
 	}
 
+	// eslint-disable-next-line no-async-promise-executor
 	bootPromise = new Promise(async resolve => {
 		const OpenUI5Support = getFeature("OpenUI5Support");
 		if (OpenUI5Support) {
