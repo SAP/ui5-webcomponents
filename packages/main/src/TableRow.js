@@ -1,11 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import TableMode from "./types/TableMode.js";
-import TableRowType from "./types/TableRowType.js";
-
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import TableMode from "./types/TableMode.js";
+import TableRowType from "./types/TableRowType.js";
+import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 import { ARIA_LABEL_ROW_SELECTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -164,7 +163,7 @@ class TableRow extends UI5Element {
 		if ((isSpace(event) && itemSelectable && !checkboxPressed) || (isEnter(event) && isSingleSelect)) {
 			this.fireEvent("selection-requested", { row: this });
 		}
-		
+
 		if (isEnter(event) && itemActive && isRowFocused) {
 			this.fireEvent("row-click", { row: this });
 			if (!isSingleSelect) {
@@ -203,7 +202,7 @@ class TableRow extends UI5Element {
 	_onrowclick(event) {
 		// If the user tab over a button on IOS device, the document.activeElement
 		// is the ui5-table-row. The check below ensure that, if a button within the row is pressed,
-		// the row will not be selected.	
+		// the row will not be selected.
 		if (event.isMarked === "button") {
 			return;
 		}
@@ -247,6 +246,7 @@ class TableRow extends UI5Element {
 			this.active = false;
 		}
 	}
+
 	get shouldPopin() {
 		return this._columnsInfo.filter(el => {
 			return el.demandPopin;
@@ -302,11 +302,13 @@ class TableRow extends UI5Element {
 	}
 
 	get visibleCellsCount() {
+		let visibleCellsCount = this.visibleCells.length;
+
 		if (this.isMultiSelect) {
-			return this.visibleCells.length + 1;
-		} else {
-			return this.visibleCells.length;
+			visibleCellsCount += 1;
 		}
+
+		return visibleCellsCount;
 	}
 
 	get ariaLabelText() {

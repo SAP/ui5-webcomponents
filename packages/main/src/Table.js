@@ -247,8 +247,8 @@ const metadata = {
 		 * @private
 		 */
 		_allRowsSelected: {
-			type: Boolean
-		}
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 		/**
@@ -531,7 +531,7 @@ class Table extends UI5Element {
 		const mappings = {
 			"SingleSelect": "_handleSingleSelect",
 			"MultiSelect": "_handleMultiSelect",
-		}
+		};
 
 		this[mappings[this.mode]](event);
 	}
@@ -674,7 +674,7 @@ class Table extends UI5Element {
 
 	get ariaLabelText() {
 		const headerRowText = this.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
-		const columnsTitle = this.columns.map((column) => {
+		const columnsTitle = this.columns.map(column => {
 			return column.textContent.trim();
 		}).join(" ");
 
