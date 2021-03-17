@@ -291,6 +291,8 @@ class Popover extends Popup {
 	 * @param {HTMLElement} opener the element that the popover is opened by
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
+	 * @async
+	 * @returns {Promise} Resolved when the popover is open
 	 */
 	async openBy(opener, preventInitialFocus = false) {
 		if (!opener || this.opened) {
@@ -527,9 +529,7 @@ class Popover extends Popup {
 
 		let maxContentHeight = Math.round(maxHeight);
 
-		const hasHeader = this.header.length || this.headerText;
-
-		if (hasHeader) {
+		if (this._displayHeader) {
 			const headerDomRef = this.shadowRoot.querySelector(".ui5-popup-header-root")
 				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
 
@@ -540,9 +540,7 @@ class Popover extends Popup {
 
 		this._maxContentHeight = maxContentHeight;
 
-		const arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
-		const arrowTranslateX = isVertical && arrowXCentered ? targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2 : 0;
-		const arrowTranslateY = !isVertical ? targetRect.top + targetRect.height / 2 - top - popoverSize.height / 2 : 0;
+		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
 
 		if (this._left === undefined || Math.abs(this._left - left) > 1.5) {
 			this._left = Math.round(left);
@@ -553,11 +551,48 @@ class Popover extends Popup {
 		}
 
 		return {
-			arrowX: Math.round(arrowTranslateX),
-			arrowY: Math.round(arrowTranslateY),
+			arrowX: arrowPos.x,
+			arrowY: arrowPos.y,
 			top: this._top,
 			left: this._left,
 			placementType,
+		};
+	}
+
+	/**
+	 * Calculates the position for the arrow.
+	 * @private
+	 * @param targetRect BoundingClientRect of the target element
+	 * @param popoverSize Width and height of the popover
+	 * @param left Left offset of the popover
+	 * @param top Top offset of the popover
+	 * @param isVertical if the popover is positioned vertically to the target element
+	 * @returns {{x: number, y: number}} Arrow's coordinates
+	 */
+	getArrowPosition(targetRect, popoverSize, left, top, isVertical) {
+		let arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
+
+		if (this.horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
+			arrowXCentered = true;
+		}
+
+		if (this.horizontalAlign === PopoverHorizontalAlign.Left && left + popoverSize.width >= targetRect.left + targetRect.width) {
+			arrowXCentered = true;
+		}
+
+		let arrowTranslateX = 0;
+		if (isVertical && arrowXCentered) {
+			arrowTranslateX = targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2;
+		}
+
+		let arrowTranslateY = 0;
+		if (!isVertical) {
+			arrowTranslateY = targetRect.top + targetRect.height / 2 - top - popoverSize.height / 2;
+		}
+
+		return {
+			x: Math.round(arrowTranslateX),
+			y: Math.round(arrowTranslateY),
 		};
 	}
 

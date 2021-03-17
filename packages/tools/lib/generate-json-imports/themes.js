@@ -8,14 +8,14 @@ const outputFile = path.normalize(`${process.argv[3]}/Themes-static.js`);
 const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.js`);
 
 // All supported optional themes
-const optionalThemes = assets.themes.all.filter(theme => theme !== assets.themes.default);
+const allThemes = assets.themes.all;
 
 // All themes present in the file system
 const dirs = fs.readdirSync(inputFolder);
 const themesOnFileSystem = dirs.map(dir => {
 	const matches = dir.match(/sap_.*$/);
 	return matches ? dir : undefined;
-}).filter(key => !!key && optionalThemes.includes(key));
+}).filter(key => !!key && allThemes.includes(key));
 
 const packageName = JSON.parse(fs.readFileSync("package.json")).name;
 

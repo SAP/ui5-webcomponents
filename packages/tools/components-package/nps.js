@@ -3,7 +3,7 @@ const path = require("path");
 const LIB = path.join(__dirname, `../lib/`);
 const serveConfig = path.join(__dirname, `serve.json`);
 const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
-const polyfillPath = path.join(polyfillDir, "/**/*.*");
+const polyfillPath = path.join(polyfillDir, "{*.js,*.map,*.md,bundles/**/*.*}");
 
 const getScripts = (options) => {
 
@@ -11,7 +11,7 @@ const getScripts = (options) => {
 
 	const scripts = {
 		clean: "rimraf dist",
-		lint: "",
+		lint: "eslint . --config config/.eslintrc.js",
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
 		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
 		build: {

@@ -11,8 +11,11 @@
 	cursor: text;
 }
 
-:host(:not([wrap])) .ui5-label-root {
+.ui5-label-root {
 	width: 100%;
+}
+
+:host(:not([wrap])) .ui5-label-root {
 	font-weight: inherit;
 	display: inline-block;
 	white-space: nowrap;
@@ -20,8 +23,8 @@
 	overflow: hidden;
 }
 
-bdi{
-    content: "";
+bdi {
+	content: "";
 	padding-right: 0.15625rem;
 }
 

@@ -249,7 +249,13 @@ class DateRangePicker extends DatePicker {
 	}
 
 	_splitValueByDelimiter(value) {
-		return value.split(this._effectiveDelimiter).map(date => date.trim()); // just split by delimiter and trim spaces
+		const valuesArray = [];
+		const partsArray = value.split(this._effectiveDelimiter);
+
+		valuesArray[0] = partsArray.slice(0, partsArray.length / 2).join(this._effectiveDelimiter);
+		valuesArray[1] = partsArray.slice(partsArray.length / 2).join(this._effectiveDelimiter);
+
+		return valuesArray;
 	}
 
 	/**

@@ -100,35 +100,36 @@ describe("Panel general interaction", () => {
 	describe("Accessibility", () => {
 
 		it("tests whether aria attributes are set correctly with native header", () => {
+			const panelRoot = browser.$("#panel1").shadow$(".ui5-panel-root");
 			const header = browser.$("#panel1").shadow$(".ui5-panel-header");
 			const title = browser.$("#panel1").shadow$(".ui5-panel-header-title");
 			const button = browser.$("#panel1").shadow$(".ui5-panel-header-button");
 
-			assert.ok(!button.getAttribute("aria-expanded"), "aria-expanded shouldn't be set on the button");
-			assert.ok(!button.getAttribute("aria-controls"), "aria-controls shouldn't be set on the button");
-			assert.ok(!button.getAttribute("title"), "title shouldn't be set on the button");
+			assert.strictEqual(panelRoot.getAttribute("role"), "form", "The correct accessible role is applied");
+
+			assert.strictEqual(button.getTagName(), "ui5-icon", "ui5-icon should be rendered");
 
 			assert.ok(header.getAttribute("aria-expanded"), "aria-expanded should be set on the header");
 			assert.ok(header.getAttribute("aria-controls"), "aria-controls should be set on the header");
+			assert.ok(header.getAttribute("role"), "role should be set on the header");
 
 			assert.strictEqual(title.getAttribute("aria-level"), "3", "title aria-level is set to 3 correctly");
 		});
 
-		it("tests aria-label and aria-labelledby attributes", () => {
+		it("tests aria label attributes", () => {
 			const panelWithNativeHeader = $("#panel-expandable");
 			const nativeHeader = panelWithNativeHeader.shadow$(".ui5-panel-header");
 			const panelWithNativeHeaderId = panelWithNativeHeader.getProperty("_id");
 
-			assert.strictEqual(nativeHeader.getAttribute("aria-label"), null, "aria-label is not present");
 			assert.strictEqual(nativeHeader.getAttribute("aria-labelledby"),
 				`${panelWithNativeHeaderId}-header-title`, "aria-labelledby is correct");
 
-			const panelWithCustomHeader = $("#p1");
-			const headerButton = panelWithCustomHeader.shadow$(".ui5-panel-header-button");
-			const expectedText = "Expandable but not expanded";
+			browser.execute(() => {
+				document.getElementById("panel-expandable").setAttribute("accessible-name", "New accessible name");
+			});
+			browser.pause(500);
 
-			assert.strictEqual(headerButton.getAttribute("aria-label"), expectedText,
-				"aria-labelledby is propagated correctly to the expand/collapse button");
+			assert.strictEqual(panelWithNativeHeader.shadow$(".ui5-panel-root").getAttribute("aria-label"), "New accessible name", "aria-label is set correctly");
 		});
 
 		it("tests whether aria attributes are set correctly with fixed header", () => {
@@ -140,6 +141,7 @@ describe("Panel general interaction", () => {
 		});
 
 		it("tests whether aria attributes are set correctly in case of custom header", () => {
+			const panelRoot = browser.$("#panel2").shadow$(".ui5-panel-root");
 			const button = browser.$("#panel2").shadow$(".ui5-panel-header-button").shadow$(".ui5-button-root");
 			const header = browser.$("#panel2").shadow$(".ui5-panel-header");
 
@@ -149,6 +151,21 @@ describe("Panel general interaction", () => {
 			assert.ok(button.getAttribute("aria-expanded"), "aria-expanded should be set on the button");
 			assert.ok(button.getAttribute("aria-controls"), "aria-controls should be set on the button");
 			assert.ok(button.getAttribute("title"), "title should be set on the button");
+
+			browser.execute(() => {
+				document.getElementById("panel2").setAttribute("accessible-name", "New accessible name");
+			});
+			browser.pause(500);
+
+			assert.strictEqual(panelRoot.getAttribute("aria-label"), "New accessible name", "aria-label should be set on the panel");
+			assert.ok(!button.getAttribute("aria-label"), "aria-label should not be set on the button");
+
+			browser.execute(() => {
+				document.getElementById("panel2").setAttribute("use-accessible-name-for-toggle-button", "");
+			});
+			browser.pause(500);
+
+			assert.strictEqual(button.getAttribute("aria-label"), "New accessible name", "aria-label should be set on the button");
 		});
 	});
 });

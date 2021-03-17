@@ -160,6 +160,8 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.WizardStep
  * @extends UI5Element
  * @tagname ui5-wizard-step
+ * @since 1.0.0-rc.10
+ * @implements sap.ui.webcomponents.fiori.IWizardStep
  * @public
  */
 class WizardStep extends UI5Element {

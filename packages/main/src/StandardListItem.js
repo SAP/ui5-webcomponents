@@ -123,6 +123,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.StandardListItem
  * @extends ListItem
  * @tagname ui5-li
+ * @implements sap.ui.webcomponents.main.IListItem
  * @public
  */
 class StandardListItem extends ListItem {

@@ -116,6 +116,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.TimelineItem
  * @extends UI5Element
  * @tagname ui5-timeline-item
+ * @implements sap.ui.webcomponents.fiori.ITimelineItem
  * @public
  */
 class TimelineItem extends UI5Element {

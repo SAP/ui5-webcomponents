@@ -89,20 +89,20 @@ class ResponsivePopover extends Popover {
 	static get styles() {
 		return [Popover.styles, ResponsivePopoverCss];
 	}
-	
+
 	get dialogClasses() {
 		return {
 			header: {
 				"ui5-responsive-popover-header": true,
 				"ui5-responsive-popover-header-no-title": !this.headerText,
-			}
-		}
+			},
+		};
 	}
-	
+
 	static get template() {
 		return ResponsivePopoverTemplate;
 	}
-	
+
 	static get dependencies() {
 		return [
 			Button,
@@ -115,8 +115,10 @@ class ResponsivePopover extends Popover {
 	 * Opens popover on desktop and dialog on mobile.
 	 * @param {HTMLElement} opener the element that the popover is opened by
 	 * @public
+	 * @async
+	 * @returns {Promise} Resolves when the responsive popover is open
 	 */
-	open(opener) {
+	async open(opener) {
 		this.style.display = this._isPhone ? "contents" : "";
 
 		if (this.isOpen() || (this._dialog && this._dialog.isOpen())) {
@@ -129,10 +131,10 @@ class ResponsivePopover extends Popover {
 				this._minWidth = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
 			}
 
-			this.openBy(opener);
+			await this.openBy(opener);
 		} else {
 			this.style.zIndex = getNextZIndex();
-			this._dialog.open();
+			await this._dialog.open();
 		}
 	}
 
@@ -156,6 +158,11 @@ class ResponsivePopover extends Popover {
 		this.open(opener);
 	}
 
+	/**
+	 * Tells if the responsive popover is open
+	 * @public
+	 * @returns {boolean}
+	 */
 	isOpen() {
 		return isPhone() ? this._dialog.isOpen() : super.isOpen();
 	}

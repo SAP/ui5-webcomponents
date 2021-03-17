@@ -106,6 +106,7 @@ const metadata = {
 		/**
 		 * Defines the stable selector that you can use via getStableDomRef method.
 		 * @public
+		 * @type {string}
 		 * @since 1.0.0-rc.8
 		 */
 		stableDomRef: {
@@ -144,6 +145,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Tab
  * @extends UI5Element
  * @tagname ui5-tab
+ * @implements sap.ui.webcomponents.main.ITab
  * @public
  */
 class Tab extends UI5Element {

@@ -28,7 +28,7 @@ const metadata = {
 		/**
 		 * Defines the items of the <code>ui5-product-switch</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.fiori.IProductSwitchItem[]}
 		 * @slot items
 		 * @public
 		 */

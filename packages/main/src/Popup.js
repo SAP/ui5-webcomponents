@@ -29,6 +29,7 @@ const metadata = {
 		 */
 		"default": {
 			type: HTMLElement,
+			propertyName: "content",
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
@@ -96,6 +97,7 @@ const metadata = {
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-open
+		 * @allowPreventDefault
 		 */
 		"before-open": {},
 
@@ -112,10 +114,13 @@ const metadata = {
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-close
-		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
+		 * @allowPreventDefault
+		 * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
 		"before-close": {
-			escPressed: { type: Boolean },
+			detail: {
+				escPressed: { type: Boolean },
+			},
 		},
 
 		/**
@@ -310,6 +315,8 @@ class Popup extends UI5Element {
 	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
 	 * or the first focusable element otherwise.
 	 * @public
+	 * @async
+	 * @returns {Promise} Promise that resolves when the focus is applied
 	 */
 	async applyFocus() {
 		await this._waitForDomRef();
@@ -325,7 +332,7 @@ class Popup extends UI5Element {
 	}
 
 	/**
-	 * Override this method to provide custom logic for the popup's open/closed state. Maps to the "opened" property by default.
+	 * Tells if the component is open
 	 * @public
 	 * @returns {boolean}
 	 */
@@ -339,8 +346,7 @@ class Popup extends UI5Element {
 
 	/**
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
-	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
-	 * @public
+	 * @protected
 	 */
 	async open(preventInitialFocus) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);

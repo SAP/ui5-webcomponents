@@ -98,7 +98,7 @@ const metadata = {
 		/**
 		 * Defines the items of this <code>ui5-tree-item</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.ITreeItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -131,6 +131,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-tree-item
  * @public
+ * @implements sap.ui.webcomponents.main.ITreeItem
  * @since 1.0.0-rc.8
  */
 class TreeItem extends UI5Element {
@@ -144,7 +145,6 @@ class TreeItem extends UI5Element {
 
 	/**
 	 * Call this method to manually switch the <code>expanded</code> state of a tree item.
-	 *
 	 * @public
 	 */
 	toggle() {

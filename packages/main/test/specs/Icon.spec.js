@@ -14,7 +14,7 @@ describe("Icon general interaction", () => {
 			"Built-in tooltip is correct");
 	});
 
-	it("Tests if clicked event is thrown for interactive icons", () => {
+	it("Tests noConflict 'ui5-click' event is thrown for interactive icons", () => {
 		const iconRoot = browser.$("#interactive-icon").shadow$(".ui5-icon-root");
 		const input = browser.$("#click-event");
 
@@ -28,7 +28,7 @@ describe("Icon general interaction", () => {
 		assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
 	});
 
-	it("Tests if clicked event is not thrown for non interactive icons", () => {
+	it("Tests noConflict 'ui5-click' event is not thrown for non interactive icons", () => {
 		const iconRoot = browser.$("#non-interactive-icon");
 		const input = browser.$("#click-event");
 
@@ -40,5 +40,13 @@ describe("Icon general interaction", () => {
 
 		iconRoot.keys("Space");
 		assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
+	});
+
+	it("Tests native 'click' event thrown", () => {
+		const icon = browser.$("#myInteractiveIcon");
+		const input = browser.$("#click-event-2");
+
+		icon.click();
+		assert.strictEqual(input.getAttribute("value"), "1", "Mouse click throws event");
 	});
 });

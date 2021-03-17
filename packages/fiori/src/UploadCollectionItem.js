@@ -22,6 +22,7 @@ import {
 	UPLOADCOLLECTIONITEM_READY_STATE,
 	UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT,
+	UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -234,6 +235,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-upload-collection-item
  * @public
+ * @implements sap.ui.webcomponents.fiori.IUploadCollectionItem
  * @since 1.0.0-rc.7
  */
 class UploadCollectionItem extends ListItem {
@@ -420,8 +422,8 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * @override
 	 */
-	get modeDelete() {
-		return !this.noDelete && super.modeDelete;
+	get disableDeleteButton() {
+		return this.noDelete;
 	}
 
 	get _fileNameWithoutExtension() {
@@ -470,6 +472,10 @@ class UploadCollectionItem extends ListItem {
 
 	get _terminateButtonTooltip() {
 		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
+	}
+
+	get _editButtonTooltip() {
+		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT);
 	}
 
 	get valueStateName() {

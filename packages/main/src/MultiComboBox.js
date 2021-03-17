@@ -63,7 +63,7 @@ const metadata = {
 		 * &lt;/ui5-multi-combobox>
 		 * <br> <br>
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IMultiComboBoxItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -76,7 +76,7 @@ const metadata = {
 		/**
 		* Defines the icon to be displayed in the <code>ui5-multi-combobox</code>.
 		*
-		* @type {HTMLElement[]}
+		* @type {sap.ui.webcomponents.main.IIcon}
 		* @slot
 		* @public
 		* @since 1.0.0-rc.9
@@ -428,11 +428,11 @@ class MultiComboBox extends UI5Element {
 	}
 
 	togglePopover() {
-		this._toggleRespPopover();
-
 		if (!isPhone()) {
 			this._inputDom.focus();
 		}
+
+		this._toggleRespPopover();
 	}
 
 	filterSelectedItems(event) {

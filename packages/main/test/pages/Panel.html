@@ -58,7 +58,7 @@
 	}
 </style>
 
-	<ui5-panel id="p1" collapsed accessible-role="Complementary" aria-labelledby="p1-title">
+	<ui5-panel id="p1" collapsed accessible-role="Complementary">
 
 		<!-- Panel header -->
 		<div slot="header" class="header">
@@ -153,7 +153,7 @@
 
 	<br>
 
-	<ui5-panel id="panel1" collapsed header-text="Click to expand!" header-level="H3">
+	<ui5-panel id="panel1" collapsed header-text="Click to expand!" header-level="H3" accessible-role="Form">
 
 		<!-- Content -->
 		<ui5-title>This is a demo how to use the &quot;expand&quot; event.</ui5-title>
@@ -185,34 +185,36 @@
 	<ui5-input id="field2" value="0"></ui5-input>
 
 	<section>
-		<ui5-label id="info-state">Success</ui5-label>
-		<ui5-label id="info">Helpfull message here</ui5-label>
-		<ui5-panel id="panel-expandable" accessible-role="Complementary" header-text="Custom Aria labelledby texts" header-level="H4" header-aria-labelledby="info-state info">
-
-
-			<!-- Content -->
+		<!-- accessibleName, useAccessibleNameForToggleButton and header text -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header text and button" use-accessible-name-for-toggle-button header-text="Accessible name test 1">
 			<ui5-title>Lorem ipsum!</ui5-title>
-			<ui5-label wrap>
-				<span>
-				Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui illud zril
-				nostrum, vel ea sint dicant postea. Vel ne facete tritani, neglegentur concludaturque sed te. His animal dolorum ut.
-				Aeterno appareat ei mei, cu sed elit scripserit, an quodsi oportere accusamus quo. Pri ea probo corpora rationibus,
-				soluta incorrupte ex his.
-				Mei ei brute cetero, id duo magna aeque torquatos. Quodsi erroribus mediocritatem his ut, ad pri legere iracundia
-				democritum. Menandri intellegam in mea, ex vero movet qualisque sed. Maiorum verterem perfecto nec ea, est velit
-				elaboraret consequuntur eu, eam ad reque postea admodum. Ne inimicus convenire pri, doctus vidisse te ius.
-				Percipitur contentiones in vis, cu vim propriae phaedrum. Has ad magna errem honestatis, duo vero graeco epicurei
-				no, populo semper sit ne. Vulputate dissentiunt interpretaris ea vis, nec civibus moderatius at. Cu vim stet
-				dissentias, no vidit saperet indoctum nec, et pro magna prima nobis. Vis consul feugiat qualisque in, regione
-				persecuti cotidieque id eos, id ius omnesque vituperata.
-				Pri ex impedit percipit consulatu. Ius iudico feugiat instructior an. Iusto putant eum eu, ubique splendide pri ad,
-				cu qui salutandi assentior percipitur. At esse ceteros salutandi ius. Te dicam reprehendunt nec, ea discere ponderum
-				sensibus duo.
-				Vis cu commodo definiebas, postea dissentias ne vim. Modo homero eos ad. Ut vix equidem temporibus. At duo audire
-				volumus, id volumus rationibus vim. Sit ne diam volumus. Augue labitur mel cu, an eam omnis causae hendrerit.
-				</span>
-			</ui5-label>
+		</ui5-panel>
 
+		<br><br>
+
+		<!-- accessibleName and header text -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header text" header-text="Accessible name test 2">
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+
+		<br><br>
+
+		<!-- accessibleName, useAccessibleNameForToggleButton and header SLOT -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header SLOT and button" use-accessible-name-for-toggle-button>
+			<div slot="header" class="header">
+				<ui5-title>Accessible name test 3</ui5-title>
+			</div>
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+
+		<br><br>
+
+		<!-- accessibleName and header SLOT -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header SLOT">
+			<div slot="header" class="header">
+				<ui5-title>Accessible name test 4</ui5-title>
+			</div>
+			<ui5-title>Lorem ipsum!</ui5-title>
 		</ui5-panel>
 	</section>
 

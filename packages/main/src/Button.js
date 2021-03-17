@@ -195,7 +195,7 @@ const metadata = {
 		 * Indicates if the element if focusable
 		 * @private
 		 */
-		nonFocusable: {
+		nonInteractive: {
 			type: Boolean,
 		},
 
@@ -280,6 +280,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Button
  * @extends UI5Element
  * @tagname ui5-button
+ * @implements sap.ui.webcomponents.main.IButton
  * @public
  */
 class Button extends UI5Element {
@@ -332,6 +333,9 @@ class Button extends UI5Element {
 	}
 
 	_onclick(event) {
+		if (this.nonInteractive) {
+			return;
+		}
 		event.isMarked = "button";
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
@@ -340,6 +344,9 @@ class Button extends UI5Element {
 	}
 
 	_onmousedown(event) {
+		if (this.nonInteractive) {
+			return;
+		}
 		event.isMarked = "button";
 		this.active = true;
 		activeButton = this; // eslint-disable-line
@@ -364,11 +371,18 @@ class Button extends UI5Element {
 	}
 
 	_onfocusout(_event) {
+		if (this.nonInteractive) {
+			return;
+		}
 		this.active = false;
 		this.focused = false;
 	}
 
 	_onfocusin(event) {
+		if (this.nonInteractive) {
+			return;
+		}
+
 		event.isMarked = "button";
 		this.focused = true;
 	}
@@ -378,7 +392,10 @@ class Button extends UI5Element {
 	}
 
 	get isIconOnly() {
-		return !Array.from(this.childNodes).filter(node => node.nodeType !== Node.COMMENT_NODE).length;
+		return !Array.from(this.childNodes).filter(node => {
+			return node.nodeType !== Node.COMMENT_NODE
+			&& (node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0);
+		}).length;
 	}
 
 	get accInfo() {
@@ -413,7 +430,7 @@ class Button extends UI5Element {
 			return tabindex;
 		}
 
-		return this.nonFocusable ? "-1" : this._tabIndex;
+		return this.nonInteractive ? "-1" : this._tabIndex;
 	}
 
 	get showIconTooltip() {

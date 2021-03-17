@@ -80,7 +80,7 @@ const metadata = {
 		/**
 		 * Defines the selected date or dates (depending on the <code>selectionMode</code> property) for this calendar as instances of <code>ui5-date</code>
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.ICalendarDate[]}
 		 * @slot dates
 		 * @public
 		 */
@@ -97,6 +97,7 @@ const metadata = {
 		 * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
 		 *
 		 * @event sap.ui.webcomponents.main.Calendar#selected-dates-change
+		 * @allowPreventDefault
 		 * @param {Array} values The selected dates
 		 * @param {Array} dates The selected dates as UTC timestamps
 		 * @public

@@ -44,6 +44,7 @@ const metadata = {
 		/**
 		 * Defines the stable selector that you can use via getStableDomRef method.
 		 * @public
+		 * @type {string}
 		 * @since 1.0.0-rc.8
 		 */
 		stableDomRef: {
@@ -56,6 +57,7 @@ const metadata = {
 		 * Fired, when the item is pressed.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBarItem#item-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
@@ -79,6 +81,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.ShellBarItem
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-shellbar-item
+ * @implements sap.ui.webcomponents.fiori.IShellBarItem
  * @public
  */
 class ShellBarItem extends UI5Element {

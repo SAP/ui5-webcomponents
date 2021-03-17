@@ -17,6 +17,7 @@ const metadata = {
 		/**
 		 * Defines the stable selector that you can use via getStableDomRef method.
 		 * @public
+		 * @type {string}
 		 * @since 1.0.0-rc.11
 		 */
 		stableDomRef: {
@@ -34,6 +35,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.MultiComboBoxItem
  * @extends ComboBoxItem
  * @tagname ui5-mcb-item
+ * @implements sap.ui.webcomponents.main.IMultiComboBoxItem
  * @public
  */
 class MultiComboBoxItem extends ComboBoxItem {

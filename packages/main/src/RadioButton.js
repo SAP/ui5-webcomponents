@@ -30,7 +30,7 @@ import radioButtonCss from "./generated/themes/RadioButton.css.js";
 const metadata = {
 	tag: "ui5-radiobutton",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */  {
+	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
 		/**
 		 * Determines whether the <code>ui5-radiobutton</code> is disabled.
@@ -166,6 +166,18 @@ const metadata = {
 			type: String,
 			defaultValue: "-1",
 			noAttribute: true,
+		},
+	},
+	slots: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
