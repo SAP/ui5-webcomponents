@@ -55,7 +55,7 @@
 			placement-type="Bottom"
 			horizontal-align="Left"
 			no-arrow>
-				<ui5-color-palette id="colorPalettInPopover" more-colors>
+				<ui5-color-palette id="colorPaletteInPopover" more-colors>
 					<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 					<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 					<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -72,7 +72,7 @@
 		</ui5-popover>
 
 	<script>
-		colorPalettInPopover.addEventListener("change", function(event) {
+		colorPaletteInPopover.addEventListener("change", function(event) {
 			inpSelectedColor.value = event.detail.color;
 		});
 		btnOpenPopover.addEventListener("click", function(event) {
@@ -86,8 +86,8 @@
 	<ui5-input id="inpSelectedColor" placeholder="Selected color..."></ui5-input>
 </section>
 
-<ui5-popover header-text="Pick a color" placement-type="Bottom">
-		<ui5-color-palette id="colorPalettInPopover" more-colors>
+<ui5-popover id="palettePopover" header-text="Pick a color" placement-type="Bottom">
+		<ui5-color-palette id="colorPaletteInPopover" more-colors>
 			<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 			<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 			<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -96,7 +96,7 @@
 </ui5-popover>
 
 <script>
-	colorPalettInPopover.addEventListener("change", event => {
+	colorPaletteInPopover.addEventListener("change", event => {
 		inpSelectedColor.value = event.detail.color;
 	});
 
