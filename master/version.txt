@@ -1,5 +1,5 @@
-commit e9f10526ebc020950e690281bc83d474d9adefcd
+commit d1726648fed8a37870846ae587d53bd48c774300
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 17 10:30:42 2021 +0200
+Date:   Wed Mar 17 15:23:28 2021 +0200
 
-    chore: upgrade postcss and plugins (#2949)
+    chore: Upgrade WDIO (#2953)
