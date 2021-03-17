@@ -1,8 +1,9 @@
-commit 8ef07fecbb0ecc996c31aeb00e12700eb2141a1e
+commit 1e328dcfdc54893dd506f95b5860bc1a9b7eebba
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 17 17:48:32 2021 +0200
+Date:   Wed Mar 17 18:14:19 2021 +0200
 
-    fix(ui5-color-palette): remove additional dots in more-colors (#2958)
+    fix(ui5-table-row): fire row-click on SPACE/ENTER (#2954)
     
-    More colors text used to have 6 dots (3 from the template and 3 from the translated text)
-    sample updated to show real-case scenario of ColorPalette with "more-colors" set.
+    Start firing row-click upon ENTER/SPACE
+    
+    FIXES: #2944
