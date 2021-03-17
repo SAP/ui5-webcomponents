@@ -45,6 +45,10 @@ describe("Icon general interaction", () => {
 	});
 
 	it("Tests native 'click' event thrown", () => {
+		browser.execute(function() {
+			window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(false);
+		});
+
 		const icon = browser.$("#myInteractiveIcon");
 		const input = browser.$("#click-event-2");
 

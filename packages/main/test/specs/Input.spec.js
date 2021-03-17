@@ -57,7 +57,9 @@ describe("Attributes propagation", () => {
 });
 
 describe("Input general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	});
 
 	it("Should open suggestions popover when focused", () => {
 		const input = $("#myInput2");
