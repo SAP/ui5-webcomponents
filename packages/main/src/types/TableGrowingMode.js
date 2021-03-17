@@ -1,32 +1,4 @@
-import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
-
-/**
- * @lends sap.ui.webcomponents.main.types.TableGrowingMode.prototype
- * @public
- */
-const TableGrowingModes = {
-	/**
-	 * Table's <code>load-more</code> is fired upon pressing a "More" button.
-	 * at the bottom.
-	 * @public
-	 * @type {Button}
-	 */
-	Button: "Button",
-
-	/**
-	 * Table's <code>load-more</code> is fired upon scroll.
-	 * @public
-	 * @type {Scroll}
-	 */
-	Scroll: "Scroll",
-
-	/**
-	 * Table's growing is not enabled.
-	 * @public
-	 * @type {None}
-	 */
-	None: "None",
-};
+import GrowingMode from "./GrowingMode.js";
 
 /**
  * @class
@@ -37,12 +9,7 @@ const TableGrowingModes = {
  * @public
  * @enum {string}
  */
-class TableGrowingMode extends DataType {
-	static isValid(value) {
-		return !!TableGrowingModes[value];
-	}
+class TableGrowingMode extends GrowingMode {
 }
-
-TableGrowingMode.generateTypeAccessors(TableGrowingModes);
 
 export default TableGrowingMode;
