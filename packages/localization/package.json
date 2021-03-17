@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@buxlabs/amd-to-es6": "^0.16.0",
-    "@openui5/sap.ui.core": "1.76.0",
+    "@openui5/sap.ui.core": "1.87.3",
     "@ui5/webcomponents-tools": "1.0.0-rc.12",
     "chromedriver": "89.0.0",
     "copy-and-watch": "^0.1.5",

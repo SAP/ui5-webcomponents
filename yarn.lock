@@ -1066,10 +1066,10 @@
     node-gyp "^7.1.0"
     read-package-json-fast "^2.0.1"
 
-"@openui5/sap.ui.core@1.76.0":
-  version "1.76.0"
-  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.76.0.tgz#351fe3b11922fa7100d7c88bdf5138ad025e531e"
-  integrity sha512-b2+LPxORY4qKgGggqGeP4ckEuMqG0HHy7zwT/vMGGl1L2zLJ/xzruVvsl46KfOcCqEcdjxW+tSGP7dLEe1O4bQ==
+"@openui5/sap.ui.core@1.87.3":
+  version "1.87.3"
+  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.87.3.tgz#ce1ac03d31f63f396b5d9ee7d325a0b951f2532f"
+  integrity sha512-9z8ltcp6yFOglqqdlv073dLa5tJ4DrczKHusjBJ1PaVgpH1dBLpwb1pJTDtnp8jiSVm7kkWLjd5DmgSGhoZp5Q==
 
 "@rollup/plugin-babel@^5.3.0":
   version "5.3.0"
@@ -1116,10 +1116,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sap-theming/theming-base-content@11.1.19":
-  version "11.1.19"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.1.19.tgz#301b8085807cd410e5c7269cca55cd4ca385534c"
-  integrity sha512-0RIoniX0XgQDMfMsySvNDeXVGtH3UQRQMkJYFIkaq/nrTGSyfXT9k+B4CbTf4546dyrlLM0YoaHIOtxmMsh1ZA==
+"@sap-theming/theming-base-content@11.1.27":
+  version "11.1.27"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.1.27.tgz#59852c4c41c3bd55984fe14148f461f0ab8e1c6c"
+  integrity sha512-0ZIAs/+AMjfxSz0cTbrdrv560zGccVPRkMU/ZT8lALYQpeEpHMOgDHcNi7m2ULQ2zzciwL72hK7Xii85wGB40w==
 
 "@sindresorhus/is@^4.0.0":
   version "4.0.0"
@@ -6087,10 +6087,10 @@ linkify-it@^2.0.0:
   dependencies:
     uc.micro "^1.0.1"
 
-lit-html@^1.0.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-1.1.2.tgz#2e3560a7075210243649c888ad738eaf0daa8374"
-  integrity sha512-FFlUMKHKi+qG1x1iHNZ1hrtc/zHmfYTyrSvs3/wBTvaNtpZjOZGWzU7efGYVpgp6KvWeKF6ql9/KsCq6Z/mEDA==
+lit-html@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-1.3.0.tgz#c80f3cc5793a6dea6c07172be90a70ab20e56034"
+  integrity sha512-0Q1bwmaFH9O14vycPHw8C/IeHMk/uSDldVLIefu/kfbTBGIc44KGH6A8p1bDfxUfHdc8q6Ct7kQklWoHgr4t1Q==
 
 livereload-js@^3.3.1:
   version "3.3.2"
