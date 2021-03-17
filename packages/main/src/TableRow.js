@@ -103,6 +103,10 @@ class TableRow extends UI5Element {
 		if (isEnter(event)) {
 			this.fireEvent("row-click", { row: this });
 		}
+
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
 	}
 
 	_onkeyup(event) {
