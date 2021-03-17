@@ -1,5 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+
+// Template
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 
 // Styles
@@ -95,6 +98,22 @@ class TableRow extends UI5Element {
 		}
 
 		this.fireEvent("row-click", { row: this });
+	}
+
+	_onkeydown(event) {
+		if (isEnter(event)) {
+			this.fireEvent("row-click", { row: this });
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this.fireEvent("row-click", { row: this });
+		}
 	}
 
 	_getActiveElementTagName() {
