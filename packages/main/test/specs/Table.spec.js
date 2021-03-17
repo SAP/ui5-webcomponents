@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Table general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Table.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Table.html");
+	});
 
 	it("tests if column disapears when min-width is reacted (650px)", () => {
 		const btn = browser.$("#size-btn-650");
@@ -62,7 +64,7 @@ describe("Table general interaction", () => {
 
 		const EXPECTED_TEXT = "Product Notebook Basic 15HT-1000 Supplier Very Best Screens Dimensions 30 x 18 x 3 cm Weight 4.2 KG Price 956 EUR";
 
-		assert.strictEqual(row.getAttribute("aria-label"), EXPECTED_TEXT, 
+		assert.strictEqual(row.getAttribute("aria-label"), EXPECTED_TEXT,
 			"The aria-label value is correct.");
 	});
 
@@ -76,19 +78,19 @@ describe("Table general interaction", () => {
 			// act
 			loadMoreTrigger.click();
 			// assert
-			assert.strictEqual(inputResult.getProperty("value"), "1", 
+			assert.strictEqual(inputResult.getProperty("value"), "1",
 				"The load-more is fired.");
-	
+
 			// act
 			loadMoreTrigger.keys("Space");
 			// assert
-			assert.strictEqual(inputResult.getProperty("value"), "2", 
+			assert.strictEqual(inputResult.getProperty("value"), "2",
 				"The load-more is fired 2nd time.");
 
 			// act
 			loadMoreTrigger.keys("Enter");
 			// assert
-			assert.strictEqual(inputResult.getProperty("value"), "3", 
+			assert.strictEqual(inputResult.getProperty("value"), "3",
 				"The load-more is fired 3rd time.");
 		});
 	});
@@ -106,7 +108,7 @@ describe("Table general interaction", () => {
 			browser.pause(500);
 
 			// assert
-			assert.strictEqual(inputResult.getProperty("value"), "1", 
+			assert.strictEqual(inputResult.getProperty("value"), "1",
 				"The load-more is fired.");
 		});
 	});

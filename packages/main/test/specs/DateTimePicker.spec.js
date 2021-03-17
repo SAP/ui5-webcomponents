@@ -44,7 +44,9 @@ const getTimeSlidersCount = id => {
 }
 
 describe("DateTimePicker general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/DateTimePicker.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/DateTimePicker.html");
+	});
 
 	it("tests picker opens/closes programmatically", () => {
 		// act

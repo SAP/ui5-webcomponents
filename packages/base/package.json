@@ -29,7 +29,7 @@
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.12",
     "array-uniq": "^2.0.0",
-    "chromedriver": "88.0.0",
+    "chromedriver": "89.0.0",
     "copy-and-watch": "^0.1.4",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",

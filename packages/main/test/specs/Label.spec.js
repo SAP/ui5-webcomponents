@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("General API", () => {
-	browser.url('http://localhost:8080/test-resources/pages/Label.html');
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Label.html");
+	});
 
 	it("tests initial rendering", () => {
 		const labelRoot = browser.$("#basic-label").shadow$(".ui5-label-root");
@@ -18,7 +20,7 @@ describe("General API", () => {
 		browser.execute(`document.querySelector('#basic-label').innerHTML = '${NEW_TEXT}'`);
 		assert.strictEqual(browser.execute("return document.querySelector('#basic-label').shadowRoot.querySelector('slot').assignedNodes()[0].textContent"), NEW_TEXT, "Text of label should be changed");
 	});
-	
+
 	it("should show required star", () => {
 		const requiredLabelContent = browser.execute(`
 			return window.getComputedStyle(document.querySelector('#required-label').shadowRoot.querySelector(".ui5-label-required-colon"), ':after').content;

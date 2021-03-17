@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Rendering", () => {
-	browser.url('http://localhost:8080/test-resources/pages/Title.html');
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Title.html");
+	});
 
 	it("h{n} tags rendered correctly", () => {
 		const titleH1 = browser.$("#titleH1").shadow$(".ui5-title-root").getHTML();

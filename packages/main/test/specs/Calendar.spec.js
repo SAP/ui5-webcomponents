@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Calendar general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+	});
 
 	it("Calendar is rendered", () => {
 		const calendar = browser.$("#calendar1").shadow$(".ui5-cal-root");
