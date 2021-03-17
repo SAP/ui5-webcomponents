@@ -679,7 +679,7 @@ class List extends UI5Element {
 	checkListInViewport() {
 		this._inViewport = isElementInView(this.getDomRef());
 	}
-	
+
 	loadMore() {
 		this.fireEvent("load-more");
 	}
