@@ -1,5 +1,8 @@
-commit 8e7fcddd31aa0d1c616ca8f222616d774fd4dd9d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 17 16:55:59 2021 +0200
+commit 8ef07fecbb0ecc996c31aeb00e12700eb2141a1e
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 17 17:48:32 2021 +0200
 
-    chore: Upgrade all dependencies (#2957)
+    fix(ui5-color-palette): remove additional dots in more-colors (#2958)
+    
+    More colors text used to have 6 dots (3 from the template and 3 from the translated text)
+    sample updated to show real-case scenario of ColorPalette with "more-colors" set.

@@ -2456,79 +2456,63 @@
 <section>
 	<h3>ColorPalette in Popover</h3>
 	<div class="snippet">
-		<ui5-button id="colorPaletteBtn" >Open ColorPalette</ui5-button> <br/>
-		<ui5-responsive-popover id="respPopover">
-		<div id="respPopoverHeader" slot="header" with-padding>
-			<ui5-title>Color Palette Popover</ui5-title>
-		</div>
+		<section style="display:flex; align-items: center;">
+			<ui5-button id="btnOpenPopover" icon="text-color"></ui5-button>
+			<ui5-input id="inpSelectedColor" placeholder="Selected color..."></ui5-input>
+		</section>
 
-		<ui5-color-palette>
-			<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
-			<ui5-color-palette-item value="pink"></ui5-color-palette-item>
-			<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
-			<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
-			<ui5-color-palette-item value="green"></ui5-color-palette-item>
-			<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
-			<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
-			<ui5-color-palette-item value="lightblue"></ui5-color-palette-item>
-			<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
-			<ui5-color-palette-item value="orange"></ui5-color-palette-item>
-			<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
-			<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
-			<ui5-color-palette-item value="blue"></ui5-color-palette-item>
-			<ui5-color-palette-item value="gray"></ui5-color-palette-item>
-			<ui5-color-palette-item value="white"></ui5-color-palette-item>
-			<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
-		</ui5-color-palette>
+		<ui5-popover
+			id="palettePopover"
+			header-text="Pick a color"
+			placement-type="Bottom"
+			horizontal-align="Left"
+			no-arrow>
+				<ui5-color-palette id="colorPaletteInPopover" more-colors>
+					<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+					<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+					<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+					<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+					<ui5-color-palette-item value="green"></ui5-color-palette-item>
+					<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+					<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+					<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+					<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+					<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+					<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+					<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+				</ui5-color-palette>
+		</ui5-popover>
 
-		<div slot="footer" class="popover-footer">
-			<ui5-button id="btnClose" design="Emphasized">Close</ui5-button>
-		</div>
-	</ui5-responsive-popover>
 	<script>
-		colorPaletteBtn.addEventListener("click", function(event) {
-			respPopover.open(colorPaletteBtn);
+		colorPaletteInPopover.addEventListener("change", function(event) {
+			inpSelectedColor.value = event.detail.color;
 		});
-		btnClose.addEventListener("click", function(event) {
-			respPopover.close();
+		btnOpenPopover.addEventListener("click", function(event) {
+			palettePopover.openBy(btnOpenPopover);
 		});
 	</script>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"colorPaletteBtn"</span> <span class="nt">&gt;</span>Open ColorPalette<span class="nt">&lt;/ui5-button&gt;</span> <span class="nt">&lt;br/&gt;</span>
-<span class="nt">&lt;ui5-responsive-popover</span> <span class="na">id=</span><span class="s">"respPopover"</span> <span class="na">with-padding</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"respPopoverHeader"</span> <span class="na">slot=</span><span class="s">"header"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;ui5-title&gt;</span>Color Palette Popover<span class="nt">&lt;/ui5-title&gt;</span>
-	<span class="nt">&lt;/div&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;section&gt;</span>
+	<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"btnOpenPopover"</span> <span class="na">icon=</span><span class="s">"text-color"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+	<span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"inpSelectedColor"</span> <span class="na">placeholder=</span><span class="s">"Selected color..."</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+<span class="nt">&lt;/section&gt;</span>
 
-	<span class="nt">&lt;ui5-color-palette&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"darkblue"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"pink"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"#444444"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"rgb(0,200,0)"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"green"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"darkred"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"yellow"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"lightblue"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"cyan"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"orange"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"#5480e7"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"#ff6699"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"blue"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"gray"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"white"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-		<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"cyan"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
-	<span class="nt">&lt;/ui5-color-palette&gt;</span>
+<span class="nt">&lt;ui5-popover</span> <span class="na">id=</span><span class="s">"palettePopover"</span> <span class="na">header-text=</span><span class="s">"Pick a color"</span> <span class="na">placement-type=</span><span class="s">"Bottom"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-color-palette</span> <span class="na">id=</span><span class="s">"colorPaletteInPopover"</span> <span class="na">more-colors</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"darkblue"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+			<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"pink"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+			<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"#444444"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+			...
+		<span class="nt">&lt;/ui5-color-palette&gt;</span>
+<span class="nt">&lt;/ui5-popover&gt;</span>
 
-	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"footer"</span> <span class="na">class=</span><span class="s">"popover-footer"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"btnClose"</span> <span class="na">design=</span><span class="s">"Emphasized"</span><span class="nt">&gt;</span>Close<span class="nt">&lt;/ui5-button&gt;</span>
-	<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/ui5-responsive-popover&gt;</span>
 <span class="nt">&lt;script&gt;</span>
-	<span class="nx">colorPaletteBtn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">respPopover</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">colorPaletteBtn</span><span class="p">);</span>
+	<span class="nx">colorPaletteInPopover</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+		<span class="nx">inpSelectedColor</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">color</span><span class="p">;</span>
 	<span class="p">});</span>
-	<span class="nx">btnClose</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">respPopover</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+
+	<span class="nx">btnOpenPopover</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+		<span class="nx">palettePopover</span><span class="p">.</span><span class="nx">openBy</span><span class="p">(</span><span class="nx">btnOpenPopover</span><span class="p">);</span>
 	<span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span></code></pre></figure></pre>
 </section>
