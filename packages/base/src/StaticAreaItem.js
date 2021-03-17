@@ -77,4 +77,8 @@ if (!customElements.get("ui5-static-area-item")) {
 	customElements.define("ui5-static-area-item", StaticAreaItem);
 }
 
+if (!customElements.get("ui5-static-area")) {
+	customElements.define("ui5-static-area", class extends HTMLElement {});
+}
+
 export default StaticAreaItem;

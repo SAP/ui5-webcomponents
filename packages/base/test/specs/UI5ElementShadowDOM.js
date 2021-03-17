@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("The framework can define web components", () => {
-	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	});
 
 	it("Tests that element's Shadow DOM is rendered if it has a template", () => {
 		const res = browser.execute(() => {

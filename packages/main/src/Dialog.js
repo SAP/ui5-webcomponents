@@ -390,26 +390,26 @@ class Dialog extends Popup {
 			newWidth = this._clamp(
 				this._initialWidth - (clientX - this._initialX),
 				this._minWidth,
-				this._initialLeft + this._initialWidth
+				this._initialLeft + this._initialWidth,
 			);
 
 			newLeft = this._clamp(
 				this._initialLeft + (clientX - this._initialX),
 				0,
-				this._initialX + this._initialWidth - this._minWidth
+				this._initialX + this._initialWidth - this._minWidth,
 			);
 		} else {
 			newWidth = this._clamp(
 				this._initialWidth + (clientX - this._initialX),
 				this._minWidth,
-				window.innerWidth - this._initialLeft
+				window.innerWidth - this._initialLeft,
 			);
 		}
 
 		const newHeight = this._clamp(
 			this._initialHeight + (clientY - this._initialY),
 			this._minHeight,
-			window.innerHeight - this._initialTop
+			window.innerHeight - this._initialTop,
 		);
 
 		Object.assign(this.style, {

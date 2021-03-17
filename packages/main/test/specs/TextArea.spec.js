@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Attributes propagation", () => {
-	browser.url("http://localhost:8080/test-resources/pages/TextArea.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/TextArea.html");
+	});
 
 	it("Should change the placeholder of the inner textarea", () => {
 		const textarea = $("#basic-textarea");
@@ -51,7 +53,9 @@ describe("Attributes propagation", () => {
 });
 
 describe("disabled and readonly textarea", () => {
-	browser.url('http://localhost:8080/test-resources/pages/TextArea.html');
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/TextArea.html");
+	});
 
 	it("can not be edited when disabled", () => {
 		const textAreaInnerDisabled = browser.$("#disabled-textarea").shadow$("textarea");
@@ -72,7 +76,9 @@ describe("disabled and readonly textarea", () => {
 });
 
 describe("when enabled", () => {
-	browser.url('http://localhost:8080/test-resources/pages/TextArea.html');
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/TextArea.html");
+	});
 
 	it("shows value state message", () => {
 		const textarea = $("#textarea-value-state-msg")
@@ -102,6 +108,9 @@ describe("when enabled", () => {
 		const textarea = browser.$("#basic-textarea");
 		const textareaInner = browser.$("#basic-textarea").shadow$("textarea");
 
+		browser.execute(() => {
+			document.getElementById("basic-textarea").value = "Test";
+		}); // set the value again since browser.url reset the page
 		assert.strictEqual(textarea.getProperty("value"), "Test", "Initial value is correct");
 
 		textareaInner.addValue("a");

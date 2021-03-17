@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Metadata slot invalidateOnChildChange works", () => {
-	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	});
 
 	it("Tests that changing a monitored property of a child invalidates the parent", () => {
 

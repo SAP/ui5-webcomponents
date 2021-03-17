@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("DateRangePicker general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/DateRangePicker.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/DateRangePicker.html");
+	});
 
 	it("Custom Validation Error", () => {
 		const daterangepicker = browser.$("#daterange-picker3");
@@ -167,6 +169,17 @@ describe("DateRangePicker general interaction", () => {
 
 		browser.keys("Tab");
 		assert.strictEqual(dateRangePicker.getAttribute("value"), "Jul 16, 2020 @ Jul 17, 2020");
+	});
+
+	it("Delimiter is part of the format pattern", () => {
+		browser.url("http://localhost:8080/test-resources/pages/DateRangePicker.html");
+		const daterangepicker = browser.$("#daterange-picker6");
+
+		daterangepicker.click();
+		daterangepicker.keys("2020-09-09 - 2020-10-10");
+		daterangepicker.keys("Enter");
+
+		assert.strictEqual(daterangepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is on none");
 	});
 
 });

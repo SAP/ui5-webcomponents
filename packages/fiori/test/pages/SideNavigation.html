@@ -114,7 +114,7 @@
 		});
 
 		document.querySelectorAll("ui5-side-navigation-item").forEach(item => {
-			item.addEventListener("click", event => {
+			item.addEventListener("ui5-click", event => {
 				clickInput.value = ++clickCounter;
 			});
 		})
