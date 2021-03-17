@@ -1,5 +1,5 @@
-commit d1726648fed8a37870846ae587d53bd48c774300
+commit 8e7fcddd31aa0d1c616ca8f222616d774fd4dd9d
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 17 15:23:28 2021 +0200
+Date:   Wed Mar 17 16:55:59 2021 +0200
 
-    chore: Upgrade WDIO (#2953)
+    chore: Upgrade all dependencies (#2957)
