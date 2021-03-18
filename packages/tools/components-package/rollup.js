@@ -28,15 +28,15 @@ function ui5DevImportCheckerPlugin() {
 	};
 }
 
-function ui5DevReadyMessagePlugin({ packageName, port }) {
+function ui5DevReadyMessagePlugin({ pckgName, port }) {
 	return {
 		name: "ui5-dev-message-ready-plugin",
 		generateBundle: () => {
-			console.log(colors.blue(colors.bold(packageName) + ` successfully built!`));
+			console.log(colors.blue(`${colors.bold(pckgName)} successfully built!`));
 			if (port) {
-				console.log(colors.blue(`Navigate to: ` + colors.bold(`http://localhost:${port}/test-resources/pages/`)));
+				console.log(colors.blue(`Navigate to: ${colors.bold(`http://localhost:${port}/test-resources/pages/`)}`));
 			}
-		}
+		},
 	};
 }
 
@@ -91,7 +91,7 @@ const getPlugins = ({ transpile }) => {
 			presets: ["@babel/preset-env"],
 			exclude: /node_modules\/(?!(lit-html|@ui5\/webcomponents))/, // exclude all node_modules/ except lit-html and all starting with @ui5/webcomponents
 			sourcemap: true,
-			babelHelpers: "bundled"
+			babelHelpers: "bundled",
 		}));
 	}
 
