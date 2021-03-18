@@ -324,7 +324,7 @@ class Select extends UI5Element {
 			if (!this._listWidth) {
 				this._listWidth = this.responsivePopover.offsetWidth;
 			}
-			if (this.responsivePopover.querySelector("ui5-li[focused]:not([selected]")) {
+			if (this.responsivePopover.querySelector("[ui5-li][focused]:not([selected])")) {
 				// selection changed programmatically => apply focus to the newly selected item
 				this._applyFocusAfterOpen();
 			}
