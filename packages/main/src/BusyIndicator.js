@@ -171,7 +171,6 @@ class BusyIndicator extends UI5Element {
 			event.stopImmediatePropagation();
 		}
 	}
-
 }
 
 BusyIndicator.define();
