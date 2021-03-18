@@ -531,7 +531,7 @@ class Select extends UI5Element {
 			this._selectedIndex = nextIndex === -1 ? this._selectedIndex : nextIndex;
 
 			if (currentIndex !== this._selectedIndex) {
-				// Announce new item even if picker is opened. 
+				// Announce new item even if picker is opened.
 				// The aria-activedescendents attribute can't be used,
 				// because listitem elements are in different shadow dom
 				this.itemSelectionAnnounce();
