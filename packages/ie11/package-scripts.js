@@ -13,7 +13,6 @@ const scripts = {
 	hash: `node ${generateHash} dist/ hash.txt`,
 };
 
-
 module.exports = {
 	scripts,
 };

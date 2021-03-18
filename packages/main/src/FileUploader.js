@@ -330,7 +330,7 @@ class FileUploader extends UI5Element {
 					(element, nativeInput) => {
 						nativeInput.disabled = element.disabled;
 					},
-					this._onChange.bind(this)
+					this._onChange.bind(this),
 				);
 			}
 		} else if (this.name) {

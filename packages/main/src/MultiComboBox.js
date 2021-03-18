@@ -229,7 +229,6 @@ const metadata = {
 			type: Object,
 		},
 
-
 		filterSelected: {
 			type: Boolean,
 		},
@@ -490,7 +489,6 @@ class MultiComboBox extends UI5Element {
 
 			return;
 		}
-
 
 		this._inputLastValue = input.value;
 		this.value = input.value;

@@ -27,7 +27,6 @@ import WizardPopoverTemplate from "./generated/templates/WizardPopoverTemplate.l
 import WizardCss from "./generated/themes/Wizard.css.js";
 import WizardPopoverCss from "./generated/themes/WizardPopover.css.js";
 
-
 const MIN_STEP_WIDTH_NO_TITLE = 64;
 const MIN_STEP_WIDTH_WITH_TITLE = 200;
 

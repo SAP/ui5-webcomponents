@@ -232,12 +232,12 @@ class ColorPalette extends UI5Element {
 
 	async _getDialog() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-dialog");
+		return staticAreaItem.querySelector("[ui5-dialog]");
 	}
 
 	async getColorPicker() {
 		const dialog = await this._getDialog();
-		return dialog.content[0].querySelector("ui5-color-picker");
+		return dialog.content[0].querySelector("[ui5-color-picker]");
 	}
 }
 

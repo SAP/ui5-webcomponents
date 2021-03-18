@@ -2,4 +2,4 @@
 lib
 dist
 src/thirdparty
-package-scripts.js
+.eslintrc.js
