@@ -596,10 +596,11 @@ class ShellBar extends UI5Element {
 			const isImageIcon = info.classes.indexOf("ui5-shellbar-image-button") !== -1;
 			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.hasProfile);
 
-			return Object.assign({}, info, {
+			return {
+				...info,
 				classes: `${info.classes} ${shouldStayOnScreen ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-button`,
 				style: `order: ${shouldStayOnScreen ? 1 : -1}`,
-			});
+			};
 		});
 
 		this._updateItemsInfo(newItems);

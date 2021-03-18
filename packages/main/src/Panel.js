@@ -292,7 +292,6 @@ class Panel extends UI5Element {
 			return;
 		}
 
-
 		if (isEnter(event)) {
 			this._toggleOpen();
 		}

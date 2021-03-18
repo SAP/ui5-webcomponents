@@ -245,7 +245,7 @@ class CheckBox extends UI5Element {
 	}
 
 	syncLabel() {
-		this._label = Object.assign({}, this._label);
+		this._label = { ...this._label };
 		this._label.text = this.text;
 		this._label.wrap = this.wrap;
 		this._label.textDirection = this.textDirection;

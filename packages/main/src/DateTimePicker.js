@@ -387,7 +387,6 @@ class DateTimePicker extends DatePicker {
 		}
 	}
 
-
 	/**
 	 * @override
 	 */
