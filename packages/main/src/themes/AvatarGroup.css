@@ -26,7 +26,7 @@
 	cursor: pointer;
 }
 
-:host([type="Group"]) ::slotted(ui5-avatar) {
+:host([type="Group"]) ::slotted([ui5-avatar]) {
 	pointer-events: none;
 }
 
