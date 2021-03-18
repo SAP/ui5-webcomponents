@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("ColorPalette interactions", () => {
-	browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");
+	});
 
 	it("Test if selecting element works", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ColorPalette.html");

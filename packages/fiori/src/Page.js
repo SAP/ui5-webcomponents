@@ -9,7 +9,6 @@ import PageTemplate from "./generated/templates/PageTemplate.lit.js";
 // Styles
 import PageCss from "./generated/themes/Page.css.js";
 
-
 /**
  * @public
  */

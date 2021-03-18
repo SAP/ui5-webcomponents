@@ -15,7 +15,6 @@ import {
 // Template
 import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
 
-
 // Styles
 import switchCss from "./generated/themes/Switch.css.js";
 

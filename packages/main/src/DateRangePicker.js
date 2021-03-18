@@ -249,12 +249,12 @@ class DateRangePicker extends DatePicker {
 	}
 
 	_splitValueByDelimiter(value) {
-		let valuesArray = [];
+		const valuesArray = [];
 		const partsArray = value.split(this._effectiveDelimiter);
 
 		valuesArray[0] = partsArray.slice(0, partsArray.length / 2).join(this._effectiveDelimiter);
 		valuesArray[1] = partsArray.slice(partsArray.length / 2).join(this._effectiveDelimiter);
-	
+
 		return valuesArray;
 	}
 

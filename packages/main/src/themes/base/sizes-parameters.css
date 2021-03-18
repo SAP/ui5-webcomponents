@@ -77,9 +77,9 @@
 
 	/* Table */
 
-	--ui5_table_load_more_text_height: 2.75rem;
-	--_ui5_table_load_more_text_font_size: var(--sapFontMediumSize);
-	--_ui5_table_load_more_desc_padding:  0.375rem 2rem 0.875rem 2rem;
+	--_ui5_load_more_text_height: 2.75rem;
+	--_ui5_load_more_text_font_size: var(--sapFontMediumSize);
+	--_ui5_load_more_desc_padding:  0.375rem 2rem 0.875rem 2rem;
 
 	/* Tree */
 	--_ui5-tree-indent-step: 1.5rem;
@@ -234,9 +234,9 @@
 	--_ui5_slider_tooltip_bottom: 1.825rem;
 
 	/* Table */
-	--ui5_table_load_more_text_height: 2.625rem;
-	--_ui5_table_load_more_text_font_size: var(--sapFontSize);
-	--_ui5_table_load_more_desc_padding: 0 2rem 0.875rem 2rem;
+	--_ui5_load_more_text_height: 2.625rem;
+	--_ui5_load_more_text_font_size: var(--sapFontSize);
+	--_ui5_load_more_desc_padding: 0 2rem 0.875rem 2rem;
 
 	/* Tree */
 	--_ui5-tree-indent-step: 0.5rem;

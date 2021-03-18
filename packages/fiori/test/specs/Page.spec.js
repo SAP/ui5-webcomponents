@@ -1,7 +1,9 @@
 const assert = require('chai').assert;
 
 describe("Page general interaction", () => {
-	browser.url("http://localhost:8081/test-resources/pages/Page.html");
+	before(() => {
+		browser.url("http://localhost:8081/test-resources/pages/Page.html");
+	});
 
 	it("tests initial rendering", () => {
         const page = browser.$("#page");

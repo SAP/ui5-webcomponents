@@ -130,6 +130,14 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.Popup#after-close
 		 */
 		"after-close": {},
+
+		/**
+		 * Fired whenever the popup content area is scrolled
+		 *
+		 * @private
+		 * @event sap.ui.webcomponents.main.Popup#scroll
+		 */
+		"scroll": {},
 	},
 };
 
@@ -448,7 +456,6 @@ class Popup extends UI5Element {
 	show() {
 		this.style.display = this._displayProp;
 	}
-
 
 	/**
 	 * Sets "none" display to the popup

@@ -15,7 +15,6 @@ let mutationObserverTimer;
 
 let queuePromise;
 
-
 /**
  * Schedules a render task (if not already scheduled) to render the component
  *

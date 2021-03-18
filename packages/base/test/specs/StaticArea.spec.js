@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Some configuration options can be changed at runtime", () => {
-	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	});
 
 	it("Tests control with no static area item", () => {
 		const componentId = browser.$("#no-static-area").getProperty("_id");
