@@ -162,7 +162,6 @@ class Slider extends SliderBase {
 		this._setInitialValue("value", null);
 	}
 
-
 	/**
 	 * Called when the user moves the slider
 	 *
@@ -204,7 +203,6 @@ class Slider extends SliderBase {
 		const sliderHandleDomRect = this._sliderHandle.getBoundingClientRect();
 		return clientX >= sliderHandleDomRect.left && clientX <= sliderHandleDomRect.right;
 	}
-
 
 	/** Updates the UI representation of the progress bar and handle position
 	 *

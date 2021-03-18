@@ -1,7 +1,6 @@
 import { isClickInRect } from "./PopupUtils.js";
 import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./OpenedPopupsRegistry.js";
 
-
 let updateInterval = null;
 const intervalTimeout = 300;
 const openedRegistry = [];
@@ -105,7 +104,6 @@ const removeOpenedPopover = instance => {
 			if (popoversToClose[i] === openedRegistry[j].instance) {
 				indexOfItemToRemove = j;
 			}
-
 
 			if (indexOfItemToRemove >= 0) {
 				removeOpenedPopup(openedRegistry[indexOfItemToRemove].instance);

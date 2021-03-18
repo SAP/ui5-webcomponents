@@ -31,6 +31,6 @@
     "@ui5/webcomponents-tools": "1.0.0-rc.12",
     "copy-and-watch": "^0.1.5",
     "eslint": "^7.22.0",
-    "eslint-config-airbnb-base": "^13.1.0"
+    "eslint-config-airbnb-base": "^14.2.1"
   }
 }

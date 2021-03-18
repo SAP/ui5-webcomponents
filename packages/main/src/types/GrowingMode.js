@@ -1,6 +1,5 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
-
 /**
  * @lends sap.ui.webcomponents.main.types.GrowingMode.prototype
  * @public
@@ -20,7 +19,6 @@ const GrowingModes = {
 	 * @type {Scroll}
 	 */
 	Scroll: "Scroll",
-
 
 	/**
 	 * Component's growing is not enabled.

@@ -338,7 +338,6 @@ class RangeSlider extends SliderBase {
 		this.update(this._valueAffected, newValue, null);
 	}
 
-
 	/**
 	 * Determines and saves needed values from the start of the interaction:
 	 *
@@ -363,7 +362,6 @@ class RangeSlider extends SliderBase {
 		// Use the progress bar to save the initial coordinates of the start-handle when the interaction begins.
 		this._initialStartHandlePageX = this.directionStart === "left" ? progressBarDom.left : progressBarDom.right;
 	}
-
 
 	/**
 	 * Called when the user moves the slider
@@ -638,12 +636,12 @@ class RangeSlider extends SliderBase {
 			this._firstHandlePositionFromStart = ((newValue - min) / (max - min)) * 100;
 		} else if (affectedValue === RangeSlider.VALUES.end) {
 			this._selectedRange = ((newValue - prevStartValue)) / (max - min);
-			this._secondHandlePositionFromStart = (newValue - min) / (max - min) * 100;
+			this._secondHandlePositionFromStart = ((newValue - min) / (max - min)) * 100;
 		} else {
 			// When both values are changed - UI sync or moving the whole selected range:
 			this._selectedRange = ((this.endValue - this.startValue)) / (max - min);
 			this._firstHandlePositionFromStart = ((this.startValue - min) / (max - min)) * 100;
-			this._secondHandlePositionFromStart = (this.endValue - min) / (max - min) * 100;
+			this._secondHandlePositionFromStart = ((this.endValue - min) / (max - min)) * 100;
 		}
 	}
 

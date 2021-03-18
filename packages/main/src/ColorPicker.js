@@ -338,15 +338,15 @@ class ColorPicker extends UI5Element {
 		let tempColor;
 		switch (event.target.id) {
 		case "red":
-			tempColor = Object.assign({ }, this._color, { r: targetValue });
+			tempColor = { ...this._color, r: targetValue };
 			break;
 
 		case "green":
-			tempColor = Object.assign({ }, this._color, { g: targetValue });
+			tempColor = { ...this._color, g: targetValue };
 			break;
 
 		case "blue":
-			tempColor = Object.assign({ }, this._color, { b: targetValue });
+			tempColor = { ...this._color, b: targetValue };
 			break;
 		}
 

@@ -4,7 +4,6 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 
-
 // Template
 import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
 
