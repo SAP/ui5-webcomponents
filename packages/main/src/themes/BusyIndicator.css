@@ -10,10 +10,6 @@
 	color: var(--sapContent_IconColor);
 }
 
-:host([active]) ::slotted(*) {
-	pointer-events: none;
-}
-
 :host([active]) :not(.ui5-busyindicator-root--ie) ::slotted(:not([class^="ui5-busyindicator-"])) {
 	opacity: 0.6;
 }
@@ -81,12 +77,10 @@
 .ui5-busyindicator-wrapper {
 	position: absolute;
 	z-index: 99;
-	width: 100%;
-	/* Fixes IE positioning */
 	left: 0;
 	right: 0;
-	top: 50%;
-	transform: translate(0, -50%);
+	top: 0;
+	bottom: 0;
 }
 
 .ui5-busyindicator-circle {
@@ -112,6 +106,7 @@
 
 .ui5-busyindicator-dynamic-content:focus {
 	outline: 1px dotted var(--sapContent_FocusColor);
+	outline-offset: -2px;
 }
 
 .circle-animation-0 {
