@@ -423,7 +423,7 @@ class Wizard extends UI5Element {
 		this._width = this.getBoundingClientRect().width;
 		this.contentHeight = this.getContentHeight();
 
-		if (this.responsivePopover && this.responsivePopover.opened) {
+		if (!this.selectionRequestedByClick) {
 			this._closeRespPopover();
 		}
 	}
@@ -568,7 +568,9 @@ class Wizard extends UI5Element {
 	}
 
 	_closeRespPopover() {
-		this.responsivePopover.close();
+		if (this.responsivePopover && this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		}
 	}
 
 	async _respPopover() {
