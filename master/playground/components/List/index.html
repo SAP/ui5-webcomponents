@@ -285,6 +285,10 @@
       
     
       
+    
+      
+    
+      
         
       
     
@@ -322,6 +326,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1042,6 +1050,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" class="navigation-list-link">
@@ -1242,6 +1254,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2442,9 +2458,9 @@
 
 <!-- Infinite scroll -->
 <section>
-	<h3>List with infinite-scroll</h3>
+	<h3>List with  growing="Scroll"</h3>
 	<div class="snippet">
-		<ui5-list id="infiniteScrollEx" style="height: 300px" infinite-scroll>
+		<ui5-list id="infiniteScrollEx" style="height: 300px" growing="Scroll">
 			<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" info="In-stock" info-state="Success">Pineapple</ui5-li>
 			<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" info="Expires" info-state="Warning">Orange</ui5-li>
 			<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Error">Banana</ui5-li>
@@ -2455,7 +2471,7 @@
 			<ui5-li icon="nutrition-activity" description="The pear (/ˈpɛər/) tree and shrub are a species of genus Pyrus, bearing the pomaceous fruit of the same name." info="Re-stock" info-state="Error">Pear</ui5-li>
 		</ui5-list>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"infiniteScrollEx"</span> <span class="na">style=</span><span class="s">"height: 300px"</span> <span class="na">infinite-scroll</span><span class="nt">&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"infiniteScrollEx"</span> <span class="na">style=</span><span class="s">"height: 300px"</span> <span class="na">growing=</span><span class="s">"Scroll"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"Tropical plant with an edible fruit"</span> <span class="na">info=</span><span class="s">"In-stock"</span> <span class="na">info-state=</span><span class="s">"Success"</span><span class="nt">&gt;</span>Pineapple<span class="nt">&lt;/ui5-li&gt;</span>
 	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"Occurs between red and yellow"</span> <span class="na">info=</span><span class="s">"Expires"</span> <span class="na">info-state=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Orange<span class="nt">&lt;/ui5-li&gt;</span>
 	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The yellow lengthy fruit"</span> <span class="na">info=</span><span class="s">"Re-stock"</span> <span class="na">info-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Banana<span class="nt">&lt;/ui5-li&gt;</span>
@@ -2706,7 +2722,7 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines if the component would display a loading indicator at the bottom of the list. It's especially useful, when combined with <code>infiniteScroll</code>.
+                            Defines if the component would display a loading indicator over the list.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
                         </div>
                       </div>
@@ -2724,6 +2740,22 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          growing
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">ListGrowingMode</div>
+                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the <code>ui5-list</code> will have growing capability either by pressing a <code>More</code> button, or via user scroll. In both cases <code>load-more</code> event is fired. <br><br>
+            
+            Available options: <br><br> <code>Button</code> - Shows a <code>More</code> button at the bottom of the list, pressing of which triggers the <code>load-more</code> event. <br> <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the list; <br> <code>None</code> (default) - The growing is off. <br><br>
+            
+            <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer, on IE the component will fallback to <code>growing="Button"</code>.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.13</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           headerText
                             <br>
                             <code>header-text</code>
@@ -2732,19 +2764,6 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the <code>ui5-list</code> header text. <br><br> <b>Note:</b> If <code>header</code> is set this property is ignored.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          infiniteScroll
-                            <br>
-                            <code>infinite-scroll</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines if the component would fire the <code>load-more</code> event when the user scrolls to the bottom of the list, and helps achieving an "infinite scroll" effect by adding new items each time.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -2888,7 +2907,7 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">load-more</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the user scrolls to the bottom of the list. <br><br> <b>Note:</b> The event is fired when the <code>infiniteScroll</code> property is enabled.
+                        Fired when the user scrolls to the bottom of the list. <br><br> <b>Note:</b> The event is fired when the <code>growing='Scroll'</code> property is enabled.
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
                         </div>
                       </div>

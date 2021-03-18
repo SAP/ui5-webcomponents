@@ -1,9 +1,5 @@
-commit 1e328dcfdc54893dd506f95b5860bc1a9b7eebba
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 17 18:14:19 2021 +0200
+commit af26243e21bc628d254fb7d8e9de908a2e6ea8d7
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Mar 18 09:47:31 2021 +0200
 
-    fix(ui5-table-row): fire row-click on SPACE/ENTER (#2954)
-    
-    Start firing row-click upon ENTER/SPACE
-    
-    FIXES: #2944
+    chore: apply new eslint rules (#2959)
