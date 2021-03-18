@@ -27,15 +27,10 @@ function ui5DevImportCheckerPlugin() {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
-	const publicPath = DEPLOY_PUBLIC_PATH;
-
 	if (!process.env.DEV) {
-
-		/*
 		plugins.push(filesize(
-
-			[
-				function (options, bundle, {
+			{
+				reporter(options, bundle, {
 					minSize, gzipSize, brotliSize, bundleSize,
 					fileName,
 					// "showBeforeSizes: release"
@@ -43,21 +38,15 @@ const getPlugins = ({ transpile }) => {
 					// "showBeforeSizes: "release" or "showBeforeSizes": "build"
 					bundleSizeBefore, brotliSizeBefore, minSizeBefore, gzipSizeBefore,
 				}) {
-					// If a promise is returned, it will be awaited before rendering.
+				// If a promise is returned, it will be awaited before rendering.
 					return `${fileName.padEnd(35)} ${minSize} / gzipped: ${gzipSize}`;
 				},
-			],
-		));
-		 */
-
-		plugins.push(filesize({
-			render(options, bundle, {
-				minSize, gzipSize, brotliSize, bundleSize, fileName,
-			}) {
-				return `${fileName.padEnd(35)} ${minSize} / gzipped: ${gzipSize}`;
 			},
-		}));
+
+		));
 	}
+
+	const publicPath = DEPLOY_PUBLIC_PATH;
 
 	plugins.push(ui5DevImportCheckerPlugin());
 
