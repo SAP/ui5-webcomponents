@@ -1,3 +1,4 @@
+import "./StaticArea.js";
 import updateShadowRoot from "./updateShadowRoot.js";
 import { renderFinished } from "./Render.js";
 import getEffectiveContentDensity from "./util/getEffectiveContentDensity.js";
@@ -75,10 +76,6 @@ class StaticAreaItem extends HTMLElement {
 
 if (!customElements.get("ui5-static-area-item")) {
 	customElements.define("ui5-static-area-item", StaticAreaItem);
-}
-
-if (!customElements.get("ui5-static-area")) {
-	customElements.define("ui5-static-area", class extends HTMLElement {});
 }
 
 export default StaticAreaItem;

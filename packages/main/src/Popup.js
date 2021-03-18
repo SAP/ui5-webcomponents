@@ -457,7 +457,6 @@ class Popup extends UI5Element {
 		this.style.display = this._displayProp;
 	}
 
-
 	/**
 	 * Sets "none" display to the popup
 	 * @protected

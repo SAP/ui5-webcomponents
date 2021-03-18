@@ -66,7 +66,6 @@ const getClosedPopupParent = el => {
 	return getClosedPopupParent(parent);
 };
 
-
 const getNextZIndex = () => {
 	currentZIndex += 2;
 	return currentZIndex;
