@@ -1,5 +1,5 @@
-commit af26243e21bc628d254fb7d8e9de908a2e6ea8d7
+commit fdd98ab26ad96da641cd384710e3e1e273dcee3f
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Mar 18 09:47:31 2021 +0200
+Date:   Thu Mar 18 10:33:36 2021 +0200
 
-    chore: apply new eslint rules (#2959)
+    chore: use scoping-friendly selectors (#2966)
