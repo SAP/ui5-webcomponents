@@ -14,7 +14,7 @@ import TableMode from "./types/TableMode.js";
 
 // Texts
 import {
-	TABLE_LOAD_MORE_TEXT,
+	LOAD_MORE_TEXT,
 	ARIA_LABEL_SELECT_ALL_CHECKBOX,
 	TABLE_HEADER_ROW_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
