@@ -6,10 +6,10 @@ const { nodeResolve } = require("@rollup/plugin-node-resolve");
 const url = require("@rollup/plugin-url");
 const { terser } = require("rollup-plugin-terser");
 const json = require("@rollup/plugin-json");
-const notify = require('rollup-plugin-notify');
-const filesize = require('rollup-plugin-filesize');
-const livereload = require('rollup-plugin-livereload');
-const colors = require('colors/safe');
+const colors = require("colors/safe");
+const notify = require("rollup-plugin-notify");
+const filesize = require("rollup-plugin-filesize");
+const livereload = require("rollup-plugin-livereload");
 
 const packageFile = JSON.parse(fs.readFileSync("./package.json"));
 const packageName = packageFile.name;
@@ -24,7 +24,7 @@ function ui5DevImportCheckerPlugin() {
 			if (re.test(code)) {
 				throw new Error(`illegal import in ${file}`);
 			}
-		}
+		},
 	};
 }
 
@@ -42,41 +42,54 @@ function ui5DevReadyMessagePlugin({ packageName, port }) {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
-	let publicPath = DEPLOY_PUBLIC_PATH;
-
 	if (!process.env.DEV) {
-		plugins.push(filesize({
-			render : function (options, bundle, { minSize, gzipSize, brotliSize, bundleSize, fileName }){
-				return fileName.padEnd(35) + " " + minSize + " / gzipped: " + gzipSize
-			}
-		}));
+		plugins.push(filesize(
+			{
+				reporter(options, bundle, {
+					minSize, gzipSize, brotliSize, bundleSize,
+					fileName,
+					// "showBeforeSizes: release"
+					lastVersion,
+					// "showBeforeSizes: "release" or "showBeforeSizes": "build"
+					bundleSizeBefore, brotliSizeBefore, minSizeBefore, gzipSizeBefore,
+				}) {
+				// If a promise is returned, it will be awaited before rendering.
+					return `${fileName.padEnd(35)} ${minSize} / gzipped: ${gzipSize}`;
+				},
+			},
+
+		));
 	}
+
+	const publicPath = DEPLOY_PUBLIC_PATH;
 
 	plugins.push(ui5DevImportCheckerPlugin());
 
-	// comment out json plugin when testing static imports
-	plugins.push(json({
-		include: [
-			/.*assets\/.*\.json/,
-		],
-		namedExports: false,
-	}));
+	if (!transpile) {
+		plugins.push(json({
+			include: [
+				/.*assets\/.*\.json/,
+			],
+			namedExports: false,
+		}));
+	}
 
-	// uncomment when testing static resources
-	// plugins.push(url({
-	// 	limit: 0,
-	// 	include: [
-	// 		/.*assets\/.*\.json/,
-	// 	],
-	// 	emitFiles: true,
-	// 	fileName: "[name].[hash][extname]",
-	// 	publicPath,
-	// }));
+	if (transpile) {
+		plugins.push(url({
+			limit: 0,
+			include: [
+				/.*assets\/.*\.json/,
+			],
+			emitFiles: true,
+			fileName: "[name].[hash][extname]",
+			publicPath,
+		}));
+	}
 
 	if (transpile) {
 		plugins.push(babel({
 			presets: ["@babel/preset-env"],
-			exclude: /node_modules\/(?!(lit-html|@ui5\/webcomponents))/, //exclude all node_modules/ except lit-html and all starting with @ui5/webcomponents
+			exclude: /node_modules\/(?!(lit-html|@ui5\/webcomponents))/, // exclude all node_modules/ except lit-html and all starting with @ui5/webcomponents
 			sourcemap: true,
 			babelHelpers: "bundled"
 		}));
@@ -101,7 +114,7 @@ const getPlugins = ({ transpile }) => {
 				"dist/resources/bundle.esm.js",
 				"dist/**/*.html",
 				"dist/**/*.json",
-			]
+			],
 		}));
 	}
 
@@ -121,23 +134,23 @@ const getES6Config = (input = "bundle.esm.js") => {
 		output: {
 			dir: "dist/resources",
 			format: "esm",
-			sourcemap: true
+			sourcemap: true,
 		},
-		moduleContext: (id) => {
+		moduleContext: id => {
 			if (typeof id === "string" && id.includes("url-search-params-polyfill")) {
 				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
 				return "window";
 			}
 		},
 		watch: {
-			clearScreen: false
+			clearScreen: false,
 		},
-		plugins: getPlugins({transpile: false}),
+		plugins: getPlugins({ transpile: false }),
 	}];
 };
 
 const getES5Config = (input = "bundle.es5.js") => {
-	return [ {
+	return [{
 		input,
 		output: {
 			dir: "dist/resources",
@@ -145,18 +158,18 @@ const getES5Config = (input = "bundle.es5.js") => {
 			inlineDynamicImports: true,
 			name: "sap-ui-webcomponents-bundle",
 			extend: "true",	// Whether or not to extend the global variable defined by the name option in umd or iife formats.
-			sourcemap: true
+			sourcemap: true,
 		},
-		moduleContext: (id) => {
+		moduleContext: id => {
 			if (id.includes("url-search-params-polyfill")) {
 				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
 				return "window";
 			}
 		},
 		watch: {
-			clearScreen: false
+			clearScreen: false,
 		},
-		plugins: getPlugins({transpile: true}),
+		plugins: getPlugins({ transpile: true }),
 	}];
 };
 
