@@ -1,4 +1,4 @@
-@import "./TableLoadMoreRow.css";
+@import "./LoadMoreRow.css";
 
 :host(:not([hidden])) {
 	display: inline-block;
@@ -73,7 +73,7 @@ tr {
 	z-index: 1;
 }
 
-:host([busy]) .ui5-table-load-more-row {
+:host([busy]) [load-more] {
 	opacity: 0.72;
 }
 

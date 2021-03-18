@@ -2,7 +2,9 @@ const assert = require("chai").assert;
 
 
 describe("Color Picker general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/ColorPicker.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/ColorPicker.html");
+	});
 
 	it("tests color picker rendering", () => {
 		const circle = browser.$("#cp1").shadow$(".ui5-color-picker-circle");
@@ -27,7 +29,7 @@ describe("Color Picker general interaction", () => {
 		const colorPicker = browser.$("#cp3");
 		const redInput = colorPicker.shadow$("#red");
 		const hexInput = colorPicker.shadow$(".ui5-color-picker-hex-input");
-		
+
 		redInput.click();
 		browser.keys(["Shift", "Tab"]);
 		browser.keys("123");

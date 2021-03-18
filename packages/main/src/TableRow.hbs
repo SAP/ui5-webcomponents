@@ -44,7 +44,10 @@
 
 {{#if shouldPopin}}
 	{{#each popinCells}}
-		<tr part="popin-row" role="row" class="{{this.classes}}" @click="{{../_onrowclick}}">
+		<tr part="popin-row" role="row" class="{{this.classes}}"
+			@click="{{../_onrowclick}}"
+			@keydown="{{../_onkeydown}}"
+			@keyup="{{../_onkeyup}}">
 			<td colspan="{{../visibleCellsCount}}" role="cell">
 				{{#if this.popinText}}
 					<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>

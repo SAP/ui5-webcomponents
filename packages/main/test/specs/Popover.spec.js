@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Attributes propagation", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	});
 
 	it("Header text attribute is propagated", () => {
 		const popover = $("#pop");
@@ -29,7 +31,9 @@ describe("Attributes propagation", () => {
 });
 
 describe("Popover general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	});
 
 	it("tests popover toggling", () => {
 		const btnOpenPopover = $("#btn");
@@ -283,7 +287,9 @@ describe("Popover general interaction", () => {
 });
 
 describe("Acc", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	});
 
 	it("tests aria-labelledby and aria-label", () => {
 		const popover = browser.$("ui5-popover");

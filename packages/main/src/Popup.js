@@ -130,6 +130,14 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.Popup#after-close
 		 */
 		"after-close": {},
+
+		/**
+		 * Fired whenever the popup content area is scrolled
+		 *
+		 * @private
+		 * @event sap.ui.webcomponents.main.Popup#scroll
+		 */
+		"scroll": {},
 	},
 };
 

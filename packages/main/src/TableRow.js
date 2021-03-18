@@ -231,6 +231,22 @@ class TableRow extends UI5Element {
 		this.fireEvent("selection-requested", { row: this });
 	}
 
+	_onkeydown(event) {
+		if (isEnter(event)) {
+			this.fireEvent("row-click", { row: this });
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this.fireEvent("row-click", { row: this });
+		}
+	}
+
 	_getActiveElementTagName() {
 		return document.activeElement.localName.toLocaleLowerCase();
 	}

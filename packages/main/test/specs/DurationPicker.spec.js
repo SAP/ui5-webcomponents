@@ -2,7 +2,9 @@ const assert = require("chai").assert;
 
 
 describe("Duration Picker general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/DurationPicker.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/DurationPicker.html");
+	});
 
 	it("Tests opening and closing of popover", () => {
 		const durationPicker = browser.$("#duration-picker1");
