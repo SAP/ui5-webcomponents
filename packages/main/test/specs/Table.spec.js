@@ -1,9 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("Table general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Table.html");
+	});
 
 	it("tests if column disapears when min-width is reacted (650px)", () => {
 		const btn = browser.$("#size-btn-650");
@@ -45,7 +45,7 @@ describe("Table general interaction", () => {
 		assert.strictEqual(tableLabel.getHTML(false), "Number of poppedColumns: 4", "popinChange should be fired and columns should be 4");
 	});
 
-	it("tests rowClick is fired", () => {
+	it("tests row-click is fired", () => {
 		const lbl = browser.$("#testRowClickResult");
 		const cellInRow1 = browser.$("#testRowClickCell1");
 		const cellInRow2 = browser.$("#testRowClickCell2");
@@ -53,10 +53,16 @@ describe("Table general interaction", () => {
 		const row2Data = "London";
 
 		cellInRow1.click();
-		assert.ok(lbl.getHTML().indexOf(row1Data), "Event rowClick fired and intercepted.");
+		assert.ok(lbl.getHTML().indexOf(row1Data), "Event row-click fired and intercepted.");
 
 		cellInRow2.click();
-		assert.ok(lbl.getHTML().indexOf(row2Data), "Event rowClick fired and intercepted.");
+		assert.ok(lbl.getHTML().indexOf(row2Data), "Event row-click fired and intercepted.");
+
+		cellInRow1.keys("Space");
+		assert.ok(lbl.getHTML().indexOf(row1Data), "Event row-click fired and intercepted.");
+
+		cellInRow2.keys("Enter");
+		assert.ok(lbl.getHTML().indexOf(row2Data), "Event row-click fired and intercepted.");
 	});
 
 	it("tests row aria-label value", () => {
@@ -70,10 +76,10 @@ describe("Table general interaction", () => {
 
 	describe("Growing Table on 'More' button press", () => {
 		it("tests the 'load-more' event", () => {
-			browser.url(`http://localhost:${PORT}/test-resources/pages/TableLoadMore.html`);
+			browser.url("http://localhost:8080/test-resources/pages/TableLoadMore.html");
 
 			const inputResult = browser.$("#inputLoadMoreCounter");
-			const loadMoreTrigger = browser.$("#tbl").shadow$(".ui5-table-load-more-row-inner");
+			const loadMoreTrigger = browser.$("#tbl").shadow$("[load-more-inner]");
 
 			// act
 			loadMoreTrigger.click();
@@ -97,7 +103,7 @@ describe("Table general interaction", () => {
 
 	describe("Growing Table on Scroll", () => {
 		it("tests the 'load-more' event", () => {
-			browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithScroll.html`);
+			browser.url("http://localhost:8080/test-resources/pages/TableGrowingWithScroll.html");
 
 			const inputResult = browser.$("#inputLoadMoreCounter");
 			const btnScroll = browser.$("#btnScroll");

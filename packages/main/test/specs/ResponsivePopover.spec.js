@@ -1,9 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("ResponsivePopover general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/ResponsivePopover.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/ResponsivePopover.html");
+	});
 
 	it("header and footer are displayed by default", () => {
 		const btnOpenPopover = $("#btnOpen");

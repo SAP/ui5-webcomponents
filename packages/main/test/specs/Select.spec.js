@@ -1,10 +1,8 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("Select general interaction", () => {
 	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
+		browser.url("http://localhost:8080/test-resources/pages/Select.html");
 	});
 
 	it("fires change on selection", () => {
@@ -56,7 +54,7 @@ describe("Select general interaction", () => {
 
 		assert.strictEqual(inputResult.getProperty("value"), "3", "Fired change event is called once more.");
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
-
+		
 	});
 
 	it("changes selection while closed with Arrow Up/Down", () => {

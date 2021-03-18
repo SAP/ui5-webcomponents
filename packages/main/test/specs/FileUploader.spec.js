@@ -1,9 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("API", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/FileUploader.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/FileUploader.html");
+	});
 
 	it("Files property", () => {
 		const fileUploader = $("ui5-file-uploader");

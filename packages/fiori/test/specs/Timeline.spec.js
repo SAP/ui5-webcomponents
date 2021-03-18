@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
 
 describe("Timeline general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Timeline.html`);
+	before(() => {
+		browser.url("http://localhost:8081/test-resources/pages/Timeline.html");
+	});
 
 	it("should fire itemNameClick event on a normal item name", () => {
 		const timelineItemName = browser.$("#test-item").shadow$("ui5-link");

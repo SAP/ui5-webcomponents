@@ -1,9 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("Panel general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Panel.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Panel.html");
+	});
 
 	it("Changing the header text is reflected", () => {
 		const panel = browser.$( "#panel-fixed");

@@ -1,10 +1,10 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 
 describe("BusyIndicator general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/BusyIndicator.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/BusyIndicator.html");
+	});
 
 	it("tests event propagation", () => {
 		const busyIndicator = browser.$("#busy-tree");

@@ -1,7 +1,5 @@
 const datepicker = require("../pageobjects/DatePickerTestPage");
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("Date Picker Tests", () => {
 	before(() => {
@@ -27,7 +25,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("input receives value in format pattern depending on the set language", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg");
 		datepicker.id = "#dp16";
 
 		const setDateButton = browser.$("#b1");
@@ -204,7 +202,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("respect first day of the week - monday", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg`);
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg");
 		datepicker.id = "#dp7_1";
 
 		datepicker.root.setProperty("value", "фев 6, 2019");
@@ -772,7 +770,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DayPicker day name attribute", ()=>{
-		// browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		// browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		// datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		// datepicker.id = "#dp13";
 		// datepicker.openPicker();
@@ -788,7 +786,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DayPiker day number attribute", ()=>{
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
 		datepicker.openPicker();
@@ -809,7 +807,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("DatePicker dates and week number", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=en");
 		datepicker.root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
 		datepicker.input.click();

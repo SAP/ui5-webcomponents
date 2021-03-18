@@ -1,9 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("TabContainer general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/TabContainer.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/TabContainer.html");
+	});
 
 	it("tests initially selected tab", () => {
 		const tabContainer = browser.$("#tabContainer1");

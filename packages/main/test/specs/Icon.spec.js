@@ -1,9 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("Icon general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Icon.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Icon.html");
+	});
 
 	it("Tests icon rendering", () => {
 		const iconRoot = browser.$("#interactive-icon").shadow$("ui5-icon-root");
@@ -45,6 +45,10 @@ describe("Icon general interaction", () => {
 	});
 
 	it("Tests native 'click' event thrown", () => {
+		browser.execute(function() {
+			window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(false);
+		});
+
 		const icon = browser.$("#myInteractiveIcon");
 		const input = browser.$("#click-event-2");
 

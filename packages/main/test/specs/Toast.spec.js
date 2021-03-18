@@ -1,10 +1,10 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 
 describe("Toast general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Toast.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Toast.html");
+	});
 
 	it("tests open attribute before show", () => {
 		const toast = browser.$("#wcToastME");

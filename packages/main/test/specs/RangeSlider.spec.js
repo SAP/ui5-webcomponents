@@ -1,11 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("Testing Range Slider interactions", () => {
 
 	it("Changing the current startValue is reflected", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
 		browser.setWindowSize(1257, 2000);
 
 		const rangeSlider = browser.$("#range-slider-tickmarks");
@@ -326,7 +324,7 @@ describe("Accessibility", () => {
 	});
 
 	it("Click anywhere in the  Range Slider should focus the closest handle", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
 
 		const rangeSlider = browser.$("#basic-range-slider");
 		const rangeSliderStartHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
@@ -351,7 +349,7 @@ describe("Accessibility", () => {
 	});
 
 	it("Click currently selected range should focus it", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
 
 		const rangeSlider = browser.$("#basic-range-slider");
 		const rangeSliderSelection = rangeSlider.shadow$(".ui5-slider-progress");
@@ -368,7 +366,7 @@ describe("Accessibility", () => {
 
 
 	it("When not yet focused, 'Tab' should focus the Range Slider and move the focus to the progress bar", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
 
 		const rangeSlider = browser.$("#basic-range-slider");
 		const rangeSliderSelection = rangeSlider.shadow$(".ui5-slider-progress");
@@ -494,7 +492,7 @@ describe("Accessibility", () => {
 
 describe("Accessibility: Testing keyboard handling", () => {
 	it("When progress bar is focused 'Right Arrow' key should increase both values of the Range Slider with a small increment step", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
 		const rangeSlider = browser.$("#basic-range-slider");
 
 		browser.keys("Tab");
@@ -646,7 +644,7 @@ describe("Accessibility: Testing keyboard handling", () => {
 	});
 
 	it("When a handle is focused 'Right Arrow' key should increase its value with a small increment step", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+		browser.url("http://localhost:8080/test-resources/pages/RangeSlider.html");
 
 		const rangeSlider = browser.$("#basic-range-slider");
 

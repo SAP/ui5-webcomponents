@@ -1,8 +1,10 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
+
 
 describe("Avatar", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Avatar.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Avatar.html");
+	});
 
 	it("tests rendering of image", () => {
 		const avatar = browser.$("#myAvatar1");

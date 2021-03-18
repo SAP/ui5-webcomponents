@@ -1,8 +1,9 @@
-const assert = require("chai").assert;
-const PORT = require("./port");
+const assert = require('chai').assert;
 
 describe("General API", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Link.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Link.html");
+	});
 
 	it("render initially", () => {
 		const linkRoot = browser.$("ui5-link").shadow$("ui5-link-root");

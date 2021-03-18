@@ -1,10 +1,10 @@
 const daypicker = require("../pageobjects/DayPickerTestPage");
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("Day Picker Tests", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/DayPicker.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/DayPicker.html");
+	});
 
 	it("Day Picker Renders", () => {
 		daypicker.id = "daypicker";

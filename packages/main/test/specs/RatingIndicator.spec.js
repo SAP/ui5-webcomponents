@@ -1,10 +1,10 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 
 describe("Rating Indicator general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/RatingIndicator.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/RatingIndicator.html");
+	});
 
 	it("Tests basic rating indicator rendering", () => {
 		const ratingIndicator = browser.$("#rating-indicator1");

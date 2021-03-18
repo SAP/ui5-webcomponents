@@ -1,11 +1,9 @@
 const list = require("../pageobjects/ListTestPage");
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("List Tests", () => {
 	before(() => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
 	});
 
 	it("List is rendered", () => {
@@ -140,7 +138,7 @@ describe("List Tests", () => {
 	});
 
 	it("mode: multiselect. clicking every item selects it independently from the other items", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
 		list.root.setProperty("mode", "MultiSelect");
 
 		const firstItem = list.getItem(0);
@@ -158,7 +156,7 @@ describe("List Tests", () => {
 	});
 
 	it("mode: delete. items have X buttons which delete them", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
+		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
 		list.root.setProperty("mode", "Delete");
 
 		const firstItem = list.getItem(0);

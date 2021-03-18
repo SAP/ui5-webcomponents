@@ -1,9 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("Attributes propagation", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	});
 
 	it("Should change the placeholder of the inner input", () => {
 		const input = $("#myInput");
@@ -57,7 +57,9 @@ describe("Attributes propagation", () => {
 });
 
 describe("Input general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	});
 
 	it("Should open suggestions popover when focused", () => {
 		const input = $("#myInput2");
@@ -154,14 +156,14 @@ describe("Input general interaction", () => {
 			const input = document.getElementById("scrollInput");
 			return (await input.isSuggestionsScrollable());
 		});
-		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrolalble");
+		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrollable");
 
 		// close suggestions
 		input.keys("Enter");
 	});
 
 	it("handles suggestions", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 
 		let item;
 		const suggestionsInput = $("#myInput").shadow$("input");
@@ -194,7 +196,7 @@ describe("Input general interaction", () => {
 	});
 
 	it("handles suggestions via keyboard", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 
 		const suggestionsInput = $("#myInput2").shadow$("input");
 		const inputResult = $("#inputResult").shadow$("input");
@@ -348,7 +350,7 @@ describe("Input general interaction", () => {
 	});
 
 	it("fires suggestion-item-preview", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Input_quickview.html`);
+		browser.url("http://localhost:8080/test-resources/pages/Input_quickview.html");
 
 		const inputItemPreview = $("#inputPreview2").shadow$("input");
 		const suggestionItemPreviewRes = $("#suggestionItemPreviewRes");
@@ -379,7 +381,7 @@ describe("Input general interaction", () => {
 	});
 
 	it("Should open suggestions popover when ui5-input is the first focusable element within a dialog", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 		const input = $("#inputInDialog");
 		const button = browser.$("#btnOpenDialog");
 

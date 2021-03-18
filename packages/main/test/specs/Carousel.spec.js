@@ -1,10 +1,10 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 
 describe("Carousel general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Carousel.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Carousel.html");
+	});
 
 	it("Carousel is rendered", () => {
 		const carouselRoot = browser.$("#carousel1").shadow$(".ui5-carousel-root");

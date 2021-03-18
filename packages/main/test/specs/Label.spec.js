@@ -1,9 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("General API", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Label.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Label.html");
+	});
 
 	it("tests initial rendering", () => {
 		const labelRoot = browser.$("#basic-label").shadow$(".ui5-label-root");

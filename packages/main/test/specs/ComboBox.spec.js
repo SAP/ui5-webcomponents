@@ -1,11 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 describe("General interaction", () => {
 
 	it ("Should open the popover when clicking on the arrow", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
 
 		const combo = $("#combo");
 		const arrow = combo.shadow$("[input-icon]");
@@ -20,7 +18,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Items filtration", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
 
 		const combo = $("#combo");
 		const arrow = combo.shadow$("[input-icon]");
@@ -46,7 +44,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Should open the popover when typing a value", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
 
 		const combo = $("#combo");
 		const lazy = $("#lazy");
@@ -76,7 +74,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Should filter items based on input", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
 
 		const combo = $("#combo2");
 		const arrow = combo.shadow$("[input-icon]");
@@ -115,7 +113,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Should close popover on item click / change event", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
 
 		const combo = $("#combo2");
 		const arrow = combo.shadow$("[input-icon]");
@@ -175,7 +173,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests change event", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
 
 		const counter = $("#change-count");
 		const combo = $("#change-cb");
@@ -194,7 +192,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests input event", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
 
 		const counter = $("#input-count");
 		const combo = $("#input-cb");
@@ -293,7 +291,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests focused property when clicking on the arrow", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
 
 		const combo = $("#combo");
 		const arrow = combo.shadow$("[input-icon]");
@@ -306,7 +304,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests focused property when clicking on the input", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
 
 		const combo = $("#combo");
 		const input = combo.shadow$("#ui5-combobox-input");
@@ -317,7 +315,7 @@ describe("General interaction", () => {
 
 		assert.ok(combo.getProperty("focused"), "property focused should be true");
 	});
-
+	
 	it ("Tests Combo with two-column layout", () => {
 		const combo = $("#combobox-two-column-layout");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combobox-two-column-layout");

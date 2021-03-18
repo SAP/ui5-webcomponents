@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
 
 describe("Wizard general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
+	before(() => {
+		browser.url("http://localhost:8081/test-resources/pages/Wizard_test.html");
+	});
 
 	it("test initial selection", () => {
 		const wiz = browser.$("#wizTest");
@@ -178,7 +179,7 @@ describe("Wizard general interaction", () => {
 	});
 
 	it("tests no scrolling to selected step, if the selection was not changed", ()=>{
-		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
+		browser.url("http://localhost:8081/test-resources/pages/Wizard_test.html");
 
 		const wizard = browser.$("#wizTest");
 		const wizardContentDOM = wizard.shadow$(".ui5-wiz-content");

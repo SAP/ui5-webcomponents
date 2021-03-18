@@ -1,10 +1,10 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
-
 
 
 describe("Color Picker general interaction", () => {
-	browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPicker.html`);
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/ColorPicker.html");
+	});
 
 	it("tests color picker rendering", () => {
 		const circle = browser.$("#cp1").shadow$(".ui5-color-picker-circle");

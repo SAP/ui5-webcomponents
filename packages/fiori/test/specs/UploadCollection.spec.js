@@ -1,9 +1,10 @@
 const assert = require("chai").assert;
-const PORT = require("./port");
 
 describe("UploadCollection", () => {
 	describe("Rendering", () => {
-		browser.url(`http://localhost:${PORT}/test-resources/pages/UploadCollection.html`);
+		before(() => {
+			browser.url("http://localhost:8081/test-resources/pages/UploadCollection.html");
+		});
 
 		it("should show Link when 'fileNameClickable'", () => {
 			const firstItem = browser.$("#firstItem");
