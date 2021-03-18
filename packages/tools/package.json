@@ -80,8 +80,5 @@
   },
   "peerDependencies": {
     "chromedriver": "*"
-  },
-  "resolutions": {
-    "rollup-plugin-livereload/livereload/chokidar": "^3.x"
   }
 }
