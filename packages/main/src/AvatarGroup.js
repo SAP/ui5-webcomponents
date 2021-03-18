@@ -341,8 +341,12 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_onGroupClick(event) {
+		const isAvatar = event.target.hasAttribute("ui5-avatar");
+		const isButton = event.target.hasAttribute("ui5-button");
+
 		event.stopPropagation();
-		if (event.isMarked === "avatar" || event.isMarked === "button" || this._isGroup) {
+
+		if (this._isGroup || isAvatar || isButton) {
 			this._fireGroupEvent(event.target);
 		}
 	}
