@@ -1,5 +1,3 @@
-const PORT = require("../specs/port");
-
 class DatePickerFGPage {
 
     get dpStart() { return $('#ui5-datepicker--startDate'); }
@@ -10,7 +8,7 @@ class DatePickerFGPage {
     get dpEnd() { return $('#ui5-datepicker--endDate'); }
 
     open() {
-        browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker_fg.html`);
+        browser.url('http://localhost:8080/test-resources/pages/DatePicker_fg.html');
     }
 
 }

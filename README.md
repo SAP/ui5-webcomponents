@@ -139,7 +139,7 @@ yarn start # to serve the project
 ```
 
 You can then explore component test pages on:
- - http://localhost:8082/test-resources/pages/ for the `main` package
+ - http://localhost:8080/test-resources/pages/ for the `main` package
  - http://localhost:8081/test-resources/pages/ for the `fiori` package.
 
 You can start the Playground app with the following commands:
