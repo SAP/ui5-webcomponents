@@ -1,4 +1,5 @@
 const resolve = require("resolve");
+
 const generateHash = resolve.sync("@ui5/webcomponents-tools/lib/hash/generate.js");
 const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.js");
 const UP_TO_DATE = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`;
