@@ -28,14 +28,19 @@ function ui5DevImportCheckerPlugin() {
 	};
 }
 
+const reportedForPackages = new Set(); // sometimes writeBundle is called more than once per bundle -> suppress extra messages
 function ui5DevReadyMessagePlugin({ packageName, port }) {
 	return {
 		name: "ui5-dev-message-ready-plugin",
 		writeBundle: (assets, bundle) => {
+			if (reportedForPackages.has(packageName)) {
+				return;
+			}
 			console.log(colors.blue(`${colors.bold(packageName)} successfully built!`));
 			if (port) {
 				console.log(colors.blue(`Navigate to: ${colors.bold(`http://localhost:${port}/test-resources/pages/`)}`));
 			}
+			reportedForPackages.add(packageName);
 		},
 	};
 }
