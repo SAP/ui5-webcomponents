@@ -64,7 +64,7 @@ const getScripts = (options) => {
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
-				components: 'chokidar "src/themes/*.css" -c "nps build.styles.components"',
+				components: `node "${LIB}/watch-components-css/index.js" "src/themes/*.css"`,
 			},
 			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
 			samples: 'chokidar "test/**/*.sample.html" -c "nps build.samples"',
