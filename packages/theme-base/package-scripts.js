@@ -22,7 +22,7 @@ const UP_TO_DATE = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`
 
 module.exports = {
 	scripts: {
-		clean: "rimraf dist && rimraf hash.txt",
+		clean: "rimraf dist",
 		build: {
 			default: `${UP_TO_DATE} || nps clean build.src build.themes build.postcss build.jsonImports generateReport hash`,
 			src: `copy-and-watch "src/**/*.js" dist/`,

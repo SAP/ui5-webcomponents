@@ -5,7 +5,7 @@ const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.
 const UP_TO_DATE = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`;
 
 const scripts = {
-	clean: "rimraf dist && rimraf hash.txt",
+	clean: "rimraf dist",
 	lint: "eslint . --config config/.eslintrc.js",
 	copy: `copy-and-watch "src/**/*.js" dist/`,
 	build: `${UP_TO_DATE} || nps lint clean copy hash`,

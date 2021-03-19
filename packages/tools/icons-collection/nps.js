@@ -10,7 +10,7 @@ const LIB = path.join(__dirname, `../lib/`);
 const getScripts = (options) => {
 
 	const scripts = {
-		clean: "rimraf dist && rimraf hash.txt",
+		clean: "rimraf dist",
 		copy: {
 			default: "nps copy.json-imports copy.icon-collection",
 			"json-imports": `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
