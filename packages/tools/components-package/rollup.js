@@ -28,11 +28,11 @@ function ui5DevImportCheckerPlugin() {
 	};
 }
 
-function ui5DevReadyMessagePlugin({ pckgName, port }) {
+function ui5DevReadyMessagePlugin({ packageName, port }) {
 	return {
 		name: "ui5-dev-message-ready-plugin",
 		generateBundle: () => {
-			console.log(colors.blue(`${colors.bold(pckgName)} successfully built!`));
+			console.log(colors.blue(`${colors.bold(packageName)} successfully built!`));
 			if (port) {
 				console.log(colors.blue(`Navigate to: ${colors.bold(`http://localhost:${port}/test-resources/pages/`)}`));
 			}
