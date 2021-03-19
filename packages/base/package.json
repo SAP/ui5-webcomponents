@@ -21,6 +21,7 @@
     "start": "nps start",
     "build": "nps build",
     "test": "nps test",
+    "hash": "nps hash",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {

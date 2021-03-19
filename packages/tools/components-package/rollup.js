@@ -6,11 +6,14 @@ const { nodeResolve } = require("@rollup/plugin-node-resolve");
 const url = require("@rollup/plugin-url");
 const { terser } = require("rollup-plugin-terser");
 const json = require("@rollup/plugin-json");
+const colors = require("colors/safe");
 const notify = require("rollup-plugin-notify");
 const filesize = require("rollup-plugin-filesize");
 const livereload = require("rollup-plugin-livereload");
 
-const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
+const packageFile = JSON.parse(fs.readFileSync("./package.json"));
+const packageName = packageFile.name;
+const ui5Info = packageFile.ui5 || {};
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
 
 function ui5DevImportCheckerPlugin() {
@@ -21,6 +24,23 @@ function ui5DevImportCheckerPlugin() {
 			if (re.test(code)) {
 				throw new Error(`illegal import in ${file}`);
 			}
+		},
+	};
+}
+
+const reportedForPackages = new Set(); // sometimes writeBundle is called more than once per bundle -> suppress extra messages
+function ui5DevReadyMessagePlugin({ packageName, port }) {
+	return {
+		name: "ui5-dev-message-ready-plugin",
+		writeBundle: (assets, bundle) => {
+			if (reportedForPackages.has(packageName)) {
+				return;
+			}
+			console.log(colors.blue(`${colors.bold(packageName)} successfully built!`));
+			if (port) {
+				console.log(colors.blue(`Navigate to: ${colors.bold(`http://localhost:${port}/test-resources/pages/`)}`));
+			}
+			reportedForPackages.add(packageName);
 		},
 	};
 }
@@ -76,15 +96,14 @@ const getPlugins = ({ transpile }) => {
 			presets: ["@babel/preset-env"],
 			exclude: /node_modules\/(?!(lit-html|@ui5\/webcomponents))/, // exclude all node_modules/ except lit-html and all starting with @ui5/webcomponents
 			sourcemap: true,
+			babelHelpers: "bundled",
 		}));
 	}
 
 	plugins.push(nodeResolve());
 
 	if (!process.env.DEV) {
-		plugins.push(terser({
-			numWorkers: 1,	// temp workaround for `Error: kill EPERM` error on MacOS 11
-		}));
+		plugins.push(terser());
 	}
 
 	if (process.env.DEV) {
@@ -99,6 +118,13 @@ const getPlugins = ({ transpile }) => {
 				"dist/**/*.html",
 				"dist/**/*.json",
 			],
+		}));
+	}
+
+	if (process.env.DEV) {
+		plugins.push(ui5DevReadyMessagePlugin({
+			packageName,
+			port: ui5Info.port,
 		}));
 	}
 

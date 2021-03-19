@@ -13,9 +13,12 @@ const getScripts = (options) => {
 		clean: "rimraf dist",
 		lint: "eslint . --config config/.eslintrc.js",
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
-		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
+		prepare: {
+			default: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
+			es5: "nps clean build.templates build.styles build.i18n build.jsonImports copy.es5 build.samples"
+		},
 		build: {
-			default: "nps lint prepare build.bundle",
+			default: "nps lint prepare.es5 build.bundle",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
 			styles: {
 				default: "nps build.styles.themes build.styles.components",
@@ -40,18 +43,24 @@ const getScripts = (options) => {
 			}
 		},
 		copy: {
-			default: "nps copy.src copy.props copy.test copy.webcomponents-polyfill",
-			src: `node "${LIB}/copy-and-watch/index.js" "src/**/*.js" dist/`,
-			props: `node "${LIB}/copy-and-watch/index.js" "src/**/*.properties" dist/`,
-			test: `node "${LIB}/copy-and-watch/index.js" "test/**/*.*" dist/test-resources`,
-			"webcomponents-polyfill": `node "${LIB}/copy-and-watch/index.js" "${polyfillPath}" dist/webcomponentsjs/`,
+			default: "nps copy.src copy.props copy.test copy.webcomponents-polyfill-placeholder",
+			es5: "nps copy.src copy.props copy.test copy.webcomponents-polyfill",
+			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
+			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
+			test: `node "${LIB}/copy-and-watch/index.js" --silent "test/**/*.*" dist/test-resources`,
+			"webcomponents-polyfill": `node "${LIB}/copy-and-watch/index.js" --silent "${polyfillPath}" dist/webcomponentsjs/`,
+			"webcomponents-polyfill-placeholder": `node ${LIB}/polyfill-placeholder/index.js`
 		},
 		watch: {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
+			es5: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle.es5" "nps watch.styles"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			test: 'nps "copy.test --watch --safe --skip-initial-copy"',
-			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,DEPLOY_PUBLIC_PATH:/resources/",
+			bundle: {
+				default: 'rollup --config config/rollup.config.js -w --environment DEV,DEPLOY_PUBLIC_PATH:/resources/',
+				es5: 'rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,DEPLOY_PUBLIC_PATH:/resources/'
+			},
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
@@ -60,11 +69,14 @@ const getScripts = (options) => {
 			templates: "chokidar \"src/**/*.hbs\" -c \"nps build.templates\"",
 			samples: "chokidar \"test/**/*.sample.html\" -c \"nps build.samples\"",
 		},
-		dev: 'concurrently "nps serve" "nps watch"',
+		dev: {
+			default: 'concurrently "nps serve" "nps watch"',
+			es5: 'concurrently "nps serve" "nps watch.es5"'
+		},
 		start: "nps prepare dev",
 		serve: {
 			default: "nps serve.prepare serve.run",
-			prepare: `node "${LIB}/copy-and-watch/index.js" "${serveConfig}" dist/`,
+			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "${serveConfig}" dist/`,
 			run: `serve --no-clipboard -l ${port} dist`,
 		},
 		test: {
@@ -80,12 +92,12 @@ const getScripts = (options) => {
 			testPages: {
 				default: "nps scope.testPages.clean scope.testPages.copy scope.testPages.replace",
 				clean: "rimraf dist/test-resources/pages/scoped",
-				copy: `node "${LIB}/copy-and-watch/index.js" "dist/test-resources/pages/**/*" dist/test-resources/scoped`,
+				copy: `node "${LIB}/copy-and-watch/index.js" --silent "dist/test-resources/pages/**/*" dist/test-resources/scoped`,
 				replace: `node "${LIB}/scoping/scope-test-pages.js" dist/test-resources/scoped demo`,
 			},
 			dev: 'concurrently "nps serve" "nps scope.watch"',
 			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.props" "nps scope.bundle" "nps watch.styles"',
-			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,SCOPE"
+			bundle: 'rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,SCOPE'
 		}
 	};
 

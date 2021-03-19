@@ -15,6 +15,7 @@
     "build": "nps build",
     "start": "nps start",
     "verify": "node ./lib/verify-vars/index.js",
+    "hash": "nps hash",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "repository": {

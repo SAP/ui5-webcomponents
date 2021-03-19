@@ -19,6 +19,7 @@
     "lint": "nps lint",
     "start": "nps start",
     "build": "nps build",
+    "hash": "nps hash",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "devDependencies": {
