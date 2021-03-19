@@ -15,7 +15,7 @@ const getScripts = (options) => {
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
 		prepare: {
 			default: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
-			es5: "nps clean build.templates build.styles build.i18n build.jsonImports copy.es5 build.samples"
+			optimized: "nps clean build.templates build.styles build.i18n build.jsonImports copy.optimized build.samples"
 		},
 		build: {
 			default: "nps lint prepare build.bundle",
@@ -43,12 +43,13 @@ const getScripts = (options) => {
 			}
 		},
 		copy: {
-			default: "nps copy.src copy.props copy.test",
-			es5: "nps copy.src copy.props copy.test copy.webcomponents-polyfill",
+			default: "nps copy.src copy.props copy.test copy.webcomponents-polyfill",
+			optimized: "nps copy.src copy.props copy.test copy.webcomponents-polyfill-placeholder",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 			test: `node "${LIB}/copy-and-watch/index.js" --silent "test/**/*.*" dist/test-resources`,
 			"webcomponents-polyfill": `node "${LIB}/copy-and-watch/index.js" --silent "${polyfillPath}" dist/webcomponentsjs/`,
+			"webcomponents-polyfill-placeholder": `node ${LIB}/polyfill-placeholder/index.js`
 		},
 		watch: {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
