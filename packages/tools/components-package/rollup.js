@@ -103,9 +103,7 @@ const getPlugins = ({ transpile }) => {
 	plugins.push(nodeResolve());
 
 	if (!process.env.DEV) {
-		plugins.push(terser({
-			numWorkers: 1,	// temp workaround for `Error: kill EPERM` error on MacOS 11
-		}));
+		plugins.push(terser());
 	}
 
 	if (process.env.DEV) {
