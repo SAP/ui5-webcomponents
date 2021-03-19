@@ -232,6 +232,8 @@
 	--_ui5_slider_tooltip_height: 1rem;
 	--_ui5_slider_tooltip_padding: 0.25rem;
 	--_ui5_slider_tooltip_bottom: 1.825rem;
+	--_ui5_slider_progress_outline_offset: -0.625rem;
+	--_ui5_slider_outer_height: 1.3125rem;
 
 	/* Table */
 	--_ui5_load_more_text_height: 2.625rem;
