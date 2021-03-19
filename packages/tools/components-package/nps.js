@@ -52,8 +52,8 @@ const getScripts = (options) => {
 			"webcomponents-polyfill-placeholder": `node ${LIB}/polyfill-placeholder/index.js`
 		},
 		watch: {
-			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
-			es5: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle.es5" "nps watch.styles"',
+			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps watch.i18n"',
+			es5: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle.es5" "nps watch.styles" "nps watch.i18n"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			test: 'nps "copy.test --watch --safe --skip-initial-copy"',
@@ -64,10 +64,11 @@ const getScripts = (options) => {
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
-				components: 'nps "build.styles.components -w"',
+				components: 'chokidar "src/themes/*.css" -c "nps build.styles.components"',
 			},
-			templates: "chokidar \"src/**/*.hbs\" -c \"nps build.templates\"",
-			samples: "chokidar \"test/**/*.sample.html\" -c \"nps build.samples\"",
+			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
+			samples: 'chokidar "test/**/*.sample.html" -c "nps build.samples"',
+			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
 		dev: {
 			default: 'concurrently "nps serve" "nps watch"',
