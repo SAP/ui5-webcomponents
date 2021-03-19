@@ -340,19 +340,24 @@ class AvatarGroup extends UI5Element {
 		});
 	}
 
-	_onGroupClick(event) {
-		const isAvatar = event.target.hasAttribute("ui5-avatar");
+	_onClick(event) {
+		// no matter the value of noConflict, the ui5-button and the group container (div) always fire a native click event
 		const isButton = event.target.hasAttribute("ui5-button");
-
 		event.stopPropagation();
 
-		if (this._isGroup || isAvatar || isButton) {
+		if (this._isGroup || isButton) {
 			this._fireGroupEvent(event.target);
 		}
 	}
 
 	_onUI5Click(event) {
+		// when noConflict=true only ui5-avatar will fire ui5-click event
+		const isAvatar = event.target.hasAttribute("ui5-avatar");
 		event.stopPropagation();
+
+		if (isAvatar) {
+			this._fireGroupEvent(event.target);
+		}
 	}
 
 	/**

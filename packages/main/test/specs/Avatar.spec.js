@@ -75,6 +75,10 @@ describe("Avatar", () => {
 	});
 
 	it("Tests native 'click' event thrown", () => {
+		browser.execute(function() {
+			window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(false);
+		});
+		
 		const avatar = browser.$("#myInteractiveAvatar");
 		const input = browser.$("#click-event-2");
 
