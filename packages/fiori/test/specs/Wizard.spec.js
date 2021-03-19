@@ -210,4 +210,32 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(scrolPosBefore, scrolPosAfter,
 			"No scrolling occures after re-rendering when the selected step remains the same.");
 	});
+
+	it("tests small screen", ()=>{
+		browser.url("http://localhost:8081/test-resources/pages/Wizard_test_mobile.html");
+
+		const wizard = browser.$("#wizTest");
+		const wizardDisabled = browser.$("#wizTest2");
+		const groupedStep = wizard.shadow$(`[data-ui5-index="3"]`);
+		const groupedStepDisabled = wizardDisabled.shadow$(`[data-ui5-index="3"]`);
+		
+		// act - click on the stack of steps
+		groupedStep.shadow$(`.ui5-wiz-step-root`).click();
+
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#wizTest")
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// assert - the popup is open
+		assert.ok(popover.isDisplayedInViewport(), "Popover is opened.");
+
+
+		// act - click on the disabled stack of steps
+		groupedStepDisabled.shadow$(`.ui5-wiz-step-root`).click();
+
+		const staticAreaItemClassName2 = browser.getStaticAreaItemClassName("#wizTest2")
+		const disabledPopover = browser.$(`.${staticAreaItemClassName2}`).shadow$("ui5-responsive-popover");
+
+		// assert - the popup is open
+		assert.ok(disabledPopover.isDisplayedInViewport(), "Popover is opened.");
+	});
 });

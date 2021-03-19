@@ -58,7 +58,7 @@ const metadata = {
 		 * Defines the width of the <code>ui5-wizard</code>.
 		 * @private
 		 */
-		_width: {
+		width: {
 			type: Float,
 		},
 
@@ -203,6 +203,12 @@ class Wizard extends UI5Element {
 		// Indicates that selection will be changed
 		// due to user click.
 		this.selectionRequestedByClick = false;
+
+		// Stores the previous width
+		this._prevWidth = 0;
+
+		// Stores the previous height
+		this._prevContentHeight = 0;
 
 		// Indicates that selection will be changed
 		// due to user scroll.
@@ -420,12 +426,15 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	onStepResize() {
-		this._width = this.getBoundingClientRect().width;
+		this.width = this.getBoundingClientRect().width;
 		this.contentHeight = this.getContentHeight();
 
-		if (this.responsivePopover && this.responsivePopover.opened) {
+		if (this._prevWidth !== this.width || this.contentHeight !== this._prevContentHeight) {
 			this._closeRespPopover();
 		}
+
+		this._prevWidth = this.width;
+		this._prevContentHeight = this.contentHeight;
 	}
 
 	attachStepsResizeObserver() {
@@ -448,7 +457,7 @@ class Wizard extends UI5Element {
 	_adjustHeaderOverflow() {
 		let counter = 0;
 		let isForward = true;
-		const iWidth = this._width;
+		const iWidth = this.width;
 		const iCurrStep = this.getSelectedStepIndex();
 		const iStepsToShow = this.steps.length ? Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) : Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
 
@@ -541,8 +550,8 @@ class Wizard extends UI5Element {
 			this._groupedTabs.push(tabs[i]);
 		}
 
-		this.responsivePopover = await this._respPopover();
-		this.responsivePopover.open(oDomTarget);
+		const responsivePopover = await this._respPopover();
+		responsivePopover.open(oDomTarget);
 	}
 
 	async _onGroupedTabClick(event) {
@@ -567,8 +576,9 @@ class Wizard extends UI5Element {
 		tabs[newlySelectedIndex].focus();
 	}
 
-	_closeRespPopover() {
-		this.responsivePopover.close();
+	async _closeRespPopover() {
+		const responsivePopover = await this._respPopover();
+		responsivePopover && responsivePopover.close();
 	}
 
 	async _respPopover() {
@@ -706,7 +716,7 @@ class Wizard extends UI5Element {
 			return true;
 		}
 
-		return this._width <= Wizard.PHONE_BREAKPOINT;
+		return this.width <= Wizard.PHONE_BREAKPOINT;
 	}
 
 	get navAriaRoleDescription() {
