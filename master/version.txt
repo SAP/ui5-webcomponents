@@ -1,5 +1,7 @@
-commit 703cbc6144298f512e839a5bf05e56e3b980c5ea
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Mar 19 13:09:51 2021 +0200
+commit cb849ba0846dcf02f4d3c2fab4cd7306a3864653
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri Mar 19 19:24:43 2021 +0200
 
-    chore(tools): Optimize the build and start tasks (#2933)
+    fix(ui5-slider): focus outline fully visible (#2971)
+    
+    The focus outline was not fully visible among different browsers and mobile devices.
