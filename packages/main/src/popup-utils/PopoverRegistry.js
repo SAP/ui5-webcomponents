@@ -1,4 +1,4 @@
-import { isClickInRect } from "./PopupUtils.js";
+import { isClickInRect } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./OpenedPopupsRegistry.js";
 
 
