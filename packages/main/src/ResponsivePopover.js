@@ -1,5 +1,5 @@
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import { getNextZIndex } from "./popup-utils/PopupUtils.js";
+import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";

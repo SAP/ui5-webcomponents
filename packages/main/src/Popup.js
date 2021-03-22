@@ -5,9 +5,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "./popup-utils/PopupUtils.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
