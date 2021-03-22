@@ -1,7 +1,5 @@
-commit cb849ba0846dcf02f4d3c2fab4cd7306a3864653
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Fri Mar 19 19:24:43 2021 +0200
+commit 13bdc02beafb705c76952039764ceca03da29004
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Mar 22 14:38:27 2021 +0200
 
-    fix(ui5-slider): focus outline fully visible (#2971)
-    
-    The focus outline was not fully visible among different browsers and mobile devices.
+    feat(framework): Maintain a common z-index for all UI5 Web Components instances and OpenUI5 (#2980)
