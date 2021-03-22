@@ -1,11 +1,11 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import Popup from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
-import { getClosedPopupParent } from "./popup-utils/PopupUtils.js";
 
 // Template
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
