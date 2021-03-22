@@ -5,6 +5,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
+import { isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -216,6 +217,14 @@ const metadata = {
 			defaultValue: "0",
 			noAttribute: true,
 		},
+
+		/**
+		 * @since 1.0.0-rc.13
+		 * @private
+		 */
+		_isTouch: {
+			type: Boolean,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
@@ -306,6 +315,7 @@ class Button extends UI5Element {
 
 	constructor() {
 		super();
+		this._isTouch = isPhone() || isTablet();
 
 		this._deactivate = () => {
 			if (activeButton) {
@@ -344,12 +354,30 @@ class Button extends UI5Element {
 	}
 
 	_onmousedown(event) {
-		if (this.nonInteractive) {
+		if (this.nonInteractive || this._isTouch) {
 			return;
 		}
+
 		event.isMarked = "button";
 		this.active = true;
 		activeButton = this; // eslint-disable-line
+	}
+
+	_ontouchstart(event) {
+		event.isMarked = "button";
+		if (this.nonInteractive) {
+			return;
+		}
+
+		this.active = true;
+	}
+
+	_ontouchend(event) {
+		this.active = false;
+
+		if (activeButton) {
+			activeButton.active = false;
+		}
 	}
 
 	_onmouseup(event) {
