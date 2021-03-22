@@ -3,7 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.29.8](https://github.com/SAP/ui5-webcomponents/compare/v0.29.6...v0.29.8) (2021-03-17)
+## [0.29.9](https://github.com/SAP/ui5-webcomponents/compare/v0.29.8...v0.29.9) (2021-03-22)
+
+### FIXES 
+* **ui5-icon:** fix vertical icon flip in RTL ([#2645](https://github.com/SAP/ui5-webcomponents/issues/2645)) ([0120960](https://github.com/SAP/ui5-webcomponents/commit/0120960)), closes [#2644](https://github.com/SAP/ui5-webcomponents/issues/2644)
+
+### Features
+* **framework:** : share popups' z-index for all UI5 Web Components instances and OpenUI5([#2980](https://github.com/SAP/ui5-webcomponents/issues/2980)) ([13bdc02](https://github.com/SAP/ui5-webcomponents/commit/13bdc02)), closes [#2973](https://github.com/SAP/ui5-webcomponents/issues/2973)
+
+
+
+## [0.29.8](https://github.com/SAP/ui5-webcomponents/compare/v0.29.7...v0.29.8) (2021-03-17)
 
 ### Bug Fixes
 * **ui5-table-column:** align content right in RTL ([#2955](https://github.com/SAP/ui5-webcomponents/issues/2955)) ([ab3b08a](https://github.com/SAP/ui5-webcomponents/commit/ab3b08a)), closes [#2945](https://github.com/SAP/ui5-webcomponents/issues/2945)
