@@ -1,6 +1,8 @@
+import getSharedResource from "@ui5/webcomponents-base/dist/getSharedResource.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 
-let currentZIndex = 100;
+const PopupUtilsData = getSharedResource("PopupUtilsData", {});
+PopupUtilsData.currentZIndex = PopupUtilsData.currentZIndex || 100;
 
 const getFocusedElement = () => {
 	const element = getActiveElement();
@@ -67,8 +69,8 @@ const getClosedPopupParent = el => {
 };
 
 const getNextZIndex = () => {
-	currentZIndex += 2;
-	return currentZIndex;
+	PopupUtilsData.currentZIndex += 2;
+	return PopupUtilsData.currentZIndex;
 };
 
 export {
