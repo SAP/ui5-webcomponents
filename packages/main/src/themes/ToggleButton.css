@@ -17,7 +17,7 @@
 }
 
 :host([design="Positive"][pressed][active]),
-:host([design="Positive"][pressed]:hover) {
+:host([design="Positive"][pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover) {
 	background: var(--sapButton_Accept_Selected_Hover_Background);
 }
 
@@ -31,7 +31,7 @@
 }
 
 :host([design="Negative"][pressed][active]),
-:host([design="Negative"][pressed]:hover) {
+:host([design="Negative"][pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover) {
 	background: var(--sapButton_Reject_Selected_Hover_Background);
 }
 
@@ -42,7 +42,7 @@
 :host([design="Transparent"][pressed]),
 :host([design="Transparent"][pressed]:hover),
 :host([design="Emphasized"][pressed]),
-:host([design="Emphasized"][pressed]:hover) {
+:host([design="Emphasized"][pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover) {
 	background: var(--sapButton_Selected_Background);
 	border-color: var(--sapButton_Selected_BorderColor);
 	color: var(--sapButton_Selected_TextColor);
@@ -50,6 +50,6 @@
 }
 
 :host([pressed][active]),
-:host([pressed]:hover) {
+:host([pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover) {
 	background: var(--sapButton_Selected_Hover_Background);
 }
