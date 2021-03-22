@@ -1,8 +1,40 @@
-
 # Change Log
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [0.31.1](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.12...v0.31.1) (2021-03-22)
+
+
+### Bug Fixes
+
+* **ui5-icon:** fix click event fired twice ([#2858](https://github.com/SAP/ui5-webcomponents/issues/2858)) ([d0468bd](https://github.com/SAP/ui5-webcomponents/commit/d0468bd)), closes [#2857](https://github.com/SAP/ui5-webcomponents/issues/2857)
+* **ui5-icon:** work of applied styles ([#2872](https://github.com/SAP/ui5-webcomponents/issues/2872)) ([b947825](https://github.com/SAP/ui5-webcomponents/commit/b947825)), closes [#2839](https://github.com/SAP/ui5-webcomponents/issues/2839)
+* **ui5-li-custom:** keyboard handling improvement ([#2870](https://github.com/SAP/ui5-webcomponents/issues/2870)) ([91d5104](https://github.com/SAP/ui5-webcomponents/commit/91d5104)), closes [#2849](https://github.com/SAP/ui5-webcomponents/issues/2849)
+* **ui5-table-column:** align content right in RTL ([#2955](https://github.com/SAP/ui5-webcomponents/issues/2955)) ([32b8b26](https://github.com/SAP/ui5-webcomponents/commit/32b8b26)), closes [#2945](https://github.com/SAP/ui5-webcomponents/issues/2945)
+* **ui5-table-row:** fire row-click on SPACE/ENTER ([#2954](https://github.com/SAP/ui5-webcomponents/issues/2954)) ([179e05a](https://github.com/SAP/ui5-webcomponents/commit/179e05a)), closes [#2944](https://github.com/SAP/ui5-webcomponents/issues/2944)
+* **ui5-wizard:** use CSS vars for navigation bg-color ([#2892](https://github.com/SAP/ui5-webcomponents/issues/2892)) ([7352eb0](https://github.com/SAP/ui5-webcomponents/commit/7352eb0))
+
+
+### Features
+
+* **framework:** Maintain a common z-index for all UI5 Web Components instances and OpenUI5 ([#2980](https://github.com/SAP/ui5-webcomponents/issues/2980)) ([7af5a28](https://github.com/SAP/ui5-webcomponents/commit/7af5a28))
+* **ui5-list:** introduce "growing" property ([#2950](https://github.com/SAP/ui5-webcomponents/issues/2950)) ([7ac45d9](https://github.com/SAP/ui5-webcomponents/commit/7ac45d9)), closes [#2882](https://github.com/SAP/ui5-webcomponents/issues/2882) [#2882](https://github.com/SAP/ui5-webcomponents/issues/2882)
+* **ui5-panel:** implement accessibleName ([#2860](https://github.com/SAP/ui5-webcomponents/issues/2860)) ([536a8e8](https://github.com/SAP/ui5-webcomponents/commit/536a8e8))
+
+
+
+### BREAKING_CHANGES
+- ui5-list: The "infiniteScroll" property has been removed, use growing="Scroll" instead
+- framework: The `@ui5/webcomponents/dist/popup-utils/PopupUtils.js` has been moved to the `base` package.  Change your imports from:
+ ```js
+ import PopupUtils from "@ui5/webcomponents/dist/popup-utils/PopupUtils.js";
+ ``` 
+to:
+```js
+import PopupUtils from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+```
+
 
 # [0.31.0](https://github.com/SAP/ui5-webcomponents/releases/tag/v0.31.0) (2021-02-22)
 

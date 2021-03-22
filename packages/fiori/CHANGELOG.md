@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.1](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.12...v0.31.1) (2021-03-22)
+
+
+### Bug Fixes
+
+* **ui5-wizard:** use CSS vars for navigation bg-color ([#2892](https://github.com/SAP/ui5-webcomponents/issues/2892)) ([7352eb0](https://github.com/SAP/ui5-webcomponents/commit/7352eb0))
+
+
+
+
+
 # [1.0.0-rc.12](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.11...v1.0.0-rc.12) (2021-02-18)
 
 
