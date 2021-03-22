@@ -71,10 +71,15 @@ const getNextZIndex = () => {
 	return currentZIndex;
 };
 
+const setZIndex = index => {
+	currentZIndex = index;
+};
+
 export {
 	getFocusedElement,
 	isClickInRect,
 	getClosedPopupParent,
+	setZIndex,
 	getNextZIndex,
 	isFocusedElementWithinNode,
 };

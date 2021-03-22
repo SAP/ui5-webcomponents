@@ -7,7 +7,12 @@ import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHe
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "./popup-utils/PopupUtils.js";
+import {
+	getNextZIndex,
+	getFocusedElement,
+	isFocusedElementWithinNode,
+	setZIndex,
+} from "./popup-utils/PopupUtils.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
@@ -261,6 +266,14 @@ class Popup extends UI5Element {
 		document.body.classList.remove("ui5-popup-scroll-blocker");
 		window.scrollTo(0, -parseFloat(document.body.style.top));
 		document.body.style.top = "";
+	}
+
+	/**
+	 * @public
+	 * @param {Number} index Defines the initial z-index for popups(dialogs and popovers)
+	 */
+	static setInitialZIndex(index) {
+		setZIndex(index);
 	}
 
 	_scroll(e) {
