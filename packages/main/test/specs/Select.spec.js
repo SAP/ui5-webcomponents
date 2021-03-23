@@ -332,7 +332,7 @@ describe("Select general interaction", () => {
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
 	});
 
-	it("Tests aria-label and aria-labelledby", () => {
+	it("Tests aria-label, aria-labelledby and aria-expanded", () => {
 		const select1 = browser.$("#textAreaAriaLabel").shadow$(".ui5-select-label-root");
 		const select2 = browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-select-label-root");
 		const EXPECTED_ARIA_LABEL1 = "Hello World";
@@ -340,8 +340,13 @@ describe("Select general interaction", () => {
 
 		assert.strictEqual(select1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
 			"The aria-label is correctly set internally.");
+		assert.strictEqual(select1.getAttribute("aria-expanded"), "false",
+			"The aria-expanded is false by default.");
+	
 		assert.strictEqual(select2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
 			"The aria-label is correctly set internally.");
+		assert.strictEqual(select2.getAttribute("aria-expanded"), "false",
+			"The aria-expanded is false by default.");
 	});
 
 	it('selected options are correctly disabled', () => {
