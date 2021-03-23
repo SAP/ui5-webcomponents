@@ -1,5 +1,5 @@
-commit 07cd7c5a36b4b96b2d8429d7f40ff9d13deb625d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Mar 22 16:10:07 2021 +0200
+commit e35cc1ae9f3830fa137b3d683dc10481e13743f4
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Tue Mar 23 10:29:34 2021 +0200
 
-    docs: require Node.js 14 (#2985)
+    fix(ui5-popover): calculate offset for all sides of the page (#2916)
