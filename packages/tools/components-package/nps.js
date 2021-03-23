@@ -5,7 +5,6 @@ const LIB = path.join(__dirname, `../lib/`);
 const serveConfig = path.join(__dirname, `serve.json`);
 const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
 const polyfillPath = path.join(polyfillDir, "{*.js,*.map,*.md,bundles/**/*.*}");
-const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 
 const getScripts = (options) => {
 
@@ -25,7 +24,7 @@ const getScripts = (options) => {
 			styles: {
 				default: "nps build.styles.themes build.styles.components",
 				themes: "postcss src/**/parameters-bundle.css --config config/postcss.themes --base src --dir dist/css/",
-				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/",
+				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
@@ -64,10 +63,13 @@ const getScripts = (options) => {
 				es5: 'rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV,DEPLOY_PUBLIC_PATH:/resources/'
 			},
 			styles: {
-				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components" "nps watch.styles.monitor"',
+				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
-				components: `nps "build.styles.components -w --packageName=${packageName}"`,
-				monitor: `node "${LIB}/monitor-postcss/index.js" --srcFiles="src/themes/*.css" --packageName=${packageName}`,
+				components: {
+					default: 'concurrently "nps watch.styles.components.existingFiles" "nps watch.styles.components.newFiles"',
+					existingFiles: `nps "build.styles.components -w"`,
+					newFiles: `node "${LIB}/postcss-new-files/index.js" --srcFiles="src/themes/*.css"`,
+				},
 			},
 			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
 			samples: 'chokidar "test/**/*.sample.html" -c "nps build.samples"',
