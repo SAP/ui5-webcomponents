@@ -160,14 +160,16 @@ class TableRow extends UI5Element {
 			event.preventDefault();
 		}
 
-		if ((isSpace(event) && itemSelectable && !checkboxPressed) || (isEnter(event) && isSingleSelect)) {
-			this.fireEvent("selection-requested", { row: this });
-		}
+		if (isRowFocused && !checkboxPressed) {
+			if ((isSpace(event) && itemSelectable) || (isEnter(event) && isSingleSelect)) {
+				this.fireEvent("selection-requested", { row: this });
+			}
 
-		if (isEnter(event) && itemActive && isRowFocused) {
-			this.fireEvent("row-click", { row: this });
-			if (!isSingleSelect) {
-				this.activate();
+			if (isEnter(event) && itemActive) {
+				this.fireEvent("row-click", { row: this });
+				if (!isSingleSelect) {
+					this.activate();
+				}
 			}
 		}
 	}
@@ -200,6 +202,7 @@ class TableRow extends UI5Element {
 	}
 
 	_onrowclick(event) {
+		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
 		// If the user tab over a button on IOS device, the document.activeElement
 		// is the ui5-table-row. The check below ensure that, if a button within the row is pressed,
 		// the row will not be selected.
@@ -221,7 +224,7 @@ class TableRow extends UI5Element {
 				this._handleSelection();
 			}
 
-			if (this.type === "Active") {
+			if (this.type === "Active" && !checkboxPressed) {
 				this.fireEvent("row-click", { row: this });
 			}
 		}

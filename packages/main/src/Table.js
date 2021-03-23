@@ -388,7 +388,7 @@ class Table extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this.tableEndObserved = false;
-		this.addEventListener("selection-requested", this._handleSelect.bind(this));
+		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
 	}
 
 	onBeforeRendering() {

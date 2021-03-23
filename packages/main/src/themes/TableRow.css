@@ -56,7 +56,7 @@
 	background-color: var(--sapList_Hover_Background);
 }
 
-:host([type="Active"][active]) .ui5-table-row-root:active,
+:host([type="Active"][active]) .ui5-table-row-root,
 :host([selected][type="Active"][active]) .ui5-table-row-root:hover {
 	background-color: var(--sapList_Active_Background);
 }
