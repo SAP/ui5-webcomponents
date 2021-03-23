@@ -652,7 +652,7 @@ class Wizard extends UI5Element {
 		return contentHeight;
 	}
 
-	getStepAriaLebeltext(step, ariaLabel) {
+	getStepAriaLabelText(step, ariaLabel) {
 		if (step.selected) {
 			return this.i18nBundle.getText(WIZARD_CURRENT_STEP_ARIA_LABEL, ariaLabel)
 		}
@@ -790,7 +790,7 @@ debugger;
 			accInfo = {
 				"ariaSetsize": stepsCount,
 				"ariaPosinset": pos,
-				"ariaLabel": this.getStepAriaLebeltext(step, ariaLabel),
+				"ariaLabel": this.getStepAriaLabelText(step, ariaLabel),
 			}
 
 			return {
