@@ -1,6 +1,9 @@
 <ui5-responsive-popover
 	horizontal-align="Center"
 	placement-type="Bottom"
+	role="dialog"
+	aria-modal="true"
+	aria-labelledby="{{_id}}-actions {{_id}}-steps"
 	class="{{classes.popover}}"
 	@ui5-after-close={{_afterClosePopover}}
 	content-only-on-desktop
@@ -15,7 +18,7 @@
 					icon="{{this.icon}}"
 					?disabled="{{this.disabled}}"
 					design="Transparent"
-					data-ui5-header-tab-ref-id="{{this.ariaPosinset}}"
+					data-ui5-header-tab-ref-id="{{accInfo.ariaPosinset}}"
 					@click="{{../_onOverflowStepButtonClick}}"
 				>
 				{{this.heading}}
@@ -29,4 +32,7 @@
 			@click="{{_closeRespPopover}}"
 		>Cancel</ui5-button>
 	</div>
+
+	<span id="{{_id}}-actions" class="ui5-hidden-text">{{actionSheetActionsText}}</span>
+	<span id="{{_id}}-steps" class="ui5-hidden-text">{{actionSheetStepsText}}</span>
 </ui5-responsive-popover>

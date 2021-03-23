@@ -113,15 +113,6 @@ const metadata = {
 			defaultValue: "listitem",
 		},
 
-		/**
-		 * Defines the aria-roledescription of the step.
-		 * @type {boolean}
-		 * @defaultvalue ""
-		 * @private
-		 */
-		ariaRoledescription: {
-			type: String,
-		},
 
 		/**
 		 * Defines the aria-label of the step.
@@ -174,6 +165,10 @@ const metadata = {
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
+		},
+
+		_wizardTabAccInfo: {
+			type: Object,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.WizardTab.prototype */ {
@@ -283,6 +278,17 @@ class WizardTab extends UI5Element {
 
 	get hasTexts() {
 		return this.heading || this.subheading;
+	}
+
+	get accInfo() {
+		return {
+			"role": this._wizardTabAccInfo.role ? this._wizardTabAccInfo.role : this.role,
+			"ariaSetsize": this._wizardTabAccInfo.ariaSetsize ? this._wizardTabAccInfo.ariaSetsize : this.ariaSetsize,
+			"ariaPosinset": this._wizardTabAccInfo.ariaPosinset ? this._wizardTabAccInfo.ariaPosinset : this.ariaPosinset,
+			"ariaLabel": this._wizardTabAccInfo.ariaLabel ? this._wizardTabAccInfo.ariaLabel : this.ariaLabel,
+			"ariaCurrent": this._wizardTabAccInfo.ariaCurrent ? this._wizardTabAccInfo.ariaCurrent : this.ariaCurrent,
+			"ariaDisabled": this._wizardTabAccInfo.ariaDisabled ? this._wizardTabAccInfo.ariaDisabled : this.ariaDisabled,
+		};
 	}
 }
 
