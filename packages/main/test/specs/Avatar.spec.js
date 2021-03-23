@@ -46,7 +46,7 @@ describe("Avatar", () => {
 		assert.ok(initials.isExisting(), "initials are rendered");
 	});
 
-	it("Tests if clicked event is thrown for interactive avatars", () => {
+	it("Tests noConflict 'ui5-click' event is thrown for interactive avatars", () => {
 		const avatarRoot = browser.$("#interactive-avatar").shadow$(".ui5-avatar-root");
 		const input = browser.$("#click-event");
 
@@ -60,7 +60,7 @@ describe("Avatar", () => {
 		assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
 	  });
 
-	  it("Tests if clicked event is not thrown for non interactive avatars", () => {
+	  it("Tests noConflict 'ui5-click' event is not thrown for non interactive avatars", () => {
 		const avatarRoot = browser.$("#non-interactive-avatar").shadow$(".ui5-avatar-root");;
 		const input = browser.$("#click-event");
 
@@ -72,5 +72,17 @@ describe("Avatar", () => {
 
 		avatarRoot.keys("Space");
 		assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
+	});
+
+	it("Tests native 'click' event thrown", () => {
+		browser.execute(function() {
+			window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(false);
 		});
+		
+		const avatar = browser.$("#myInteractiveAvatar");
+		const input = browser.$("#click-event-2");
+
+		avatar.click();
+		assert.strictEqual(input.getAttribute("value"), "1", "Mouse click throws event");
+	});
 });

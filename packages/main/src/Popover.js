@@ -1,6 +1,7 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import Popup from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
@@ -396,15 +397,44 @@ class Popover extends Popup {
 
 		this._oldPlacement = placement;
 
+		const left = clamp(
+			this._left,
+			Popover.MIN_OFFSET,
+			document.documentElement.clientWidth - popoverSize.width - Popover.MIN_OFFSET,
+		);
+
+		const top = clamp(
+			this._top,
+			Popover.MIN_OFFSET,
+			document.documentElement.clientHeight - popoverSize.height - Popover.MIN_OFFSET,
+		);
+
+		let { arrowX, arrowY } = placement;
+
 		const popoverOnLeftBorder = this._left === 0;
+		const popoverOnRightBorder = this._left + popoverSize.width >= document.documentElement.clientWidth;
+		if (popoverOnLeftBorder) {
+			arrowX -= Popover.MIN_OFFSET;
+		} else if (popoverOnRightBorder) {
+			arrowX += Popover.MIN_OFFSET;
+		}
+		this.arrowTranslateX = arrowX;
+
 		const popoverOnTopBorder = this._top === 0;
+		const popoverOnBottomBorder = this._top + popoverSize.height >= document.documentElement.clientHeight;
+		if (popoverOnTopBorder) {
+			arrowY -= Popover.MIN_OFFSET;
+		} else if (popoverOnBottomBorder) {
+			arrowY += Popover.MIN_OFFSET;
+		}
+		this.arrowTranslateY = arrowY;
 
 		this.actualPlacementType = placement.placementType;
-		this.arrowTranslateX = popoverOnLeftBorder ? placement.arrowX - Popover.MIN_OFFSET : placement.arrowX;
-		this.arrowTranslateY = popoverOnTopBorder ? placement.arrowY - Popover.MIN_OFFSET : placement.arrowY;
 
-		this.style.left = `${popoverOnLeftBorder ? Popover.MIN_OFFSET : this._left}px`;
-		this.style.top = `${popoverOnTopBorder ? Popover.MIN_OFFSET : this._top}px`;
+		Object.assign(this.style, {
+			top: `${top}px`,
+			left: `${left}px`,
+		});
 		super.show();
 
 		if (stretching && this._width) {
@@ -413,25 +443,17 @@ class Popover extends Popup {
 	}
 
 	getPopoverSize() {
-		let width,
-			height;
-		let rect = this.getBoundingClientRect();
-
-		if (this.opened) {
-			width = rect.width;
-			height = rect.height;
-
-			return { width, height };
+		if (!this.opened) {
+			Object.assign(this.style, {
+				display: "block",
+				top: "-10000px",
+				left: "-10000px",
+			});
 		}
 
-		this.style.display = "block";
-		this.style.top = "-10000px";
-		this.style.left = "-10000px";
-
-		rect = this.getBoundingClientRect();
-
-		width = rect.width;
-		height = rect.height;
+		const rect = this.getBoundingClientRect(),
+			width = rect.width,
+			height = rect.height;
 
 		return { width, height };
 	}
