@@ -341,7 +341,7 @@ class Select extends UI5Element {
 	}
 
 	get _isPickerOpen() {
-		return this.responsivePopover && this.responsivePopover.opened;
+		return !!this.responsivePopover && this.responsivePopover.opened;
 	}
 
 	async _respPopover() {
