@@ -402,6 +402,16 @@
 		</div>
 	</ui5-popover>
 
+	<div style="display: flex; justify-content: flex-end;">
+		<ui5-button id="btnRightEdge">Popover on right edge of screen</ui5-button>
+	</div>
+
+	<ui5-popover header-text="Header" id="popoverRightEdge" placement-type="Top">
+		<ui5-label>Input field: </ui5-label>
+		<ui5-input></ui5-input>
+	</ui5-popover>
+
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.openBy(btn);
@@ -513,6 +523,10 @@
 
 		btnOpenXRightWide.addEventListener("click", function () {
 			popXRightWide.openBy(btnOpenXRightWide);
+		});
+
+		btnRightEdge.addEventListener("click", function () {
+			popoverRightEdge.openBy(btnRightEdge);
 		});
 
 	</script>
