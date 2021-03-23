@@ -107,7 +107,7 @@ Edge | Latest
 This section might be of interest to you mainly if you need to run or build the project locally
 
 ### Requirements
-- [Node.js](https://nodejs.org/) (**version 12 or higher**)
+- [Node.js](https://nodejs.org/) (**version 14 or higher**)
 - [Yarn](https://yarnpkg.com/en)
 
 **Note:** The UI5 Web Components project is set up with the [Yarn](https://yarnpkg.com/) node package manager.

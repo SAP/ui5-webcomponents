@@ -3,7 +3,8 @@
   "version": "1.0.0-rc.12",
   "description": "UI5 Web Components: webcomponents.fiori",
   "ui5": {
-    "webComponentsPackage": true
+    "webComponentsPackage": true,
+    "port": "8081"
   },
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",

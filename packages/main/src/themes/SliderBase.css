@@ -47,13 +47,17 @@
 	background: var(--_ui5_slider_progress_background);
 	border-radius: var(--_ui5_slider_progress_border_radius);
 	height: var(--_ui5_slider_inner_height);
-	will-change: transform;
 	position: relative;
+	outline: none;
 }
 
-.ui5-slider-progress:focus {
-	outline: var(--_ui5_slider_progress_outline);
-	outline-offset: var(--_ui5_slider_progress_outline_offset);
+.ui5-slider-progress:focus::after {
+	content: '';
+	position: absolute;
+	width: 100%;
+	border: var(--_ui5_slider_progress_outline);
+	top: var(--_ui5_slider_progress_outline_offset);
+	height: var(--_ui5_slider_outer_height);
 }
 
 .ui5-slider-tickmarks {
