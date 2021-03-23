@@ -113,7 +113,6 @@ const metadata = {
 			defaultValue: "listitem",
 		},
 
-
 		/**
 		 * Defines the aria-label of the step.
 		 * @type {boolean}

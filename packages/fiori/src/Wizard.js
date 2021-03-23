@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
@@ -654,7 +653,7 @@ class Wizard extends UI5Element {
 
 	getStepAriaLabelText(step, ariaLabel) {
 		if (step.selected) {
-			return this.i18nBundle.getText(WIZARD_CURRENT_STEP_ARIA_LABEL, ariaLabel)
+			return this.i18nBundle.getText(WIZARD_CURRENT_STEP_ARIA_LABEL, ariaLabel);
 		}
 
 		return this.i18nBundle.getText(WIZARD_STEP_ARIA_LABEL, ariaLabel);
@@ -786,12 +785,12 @@ class Wizard extends UI5Element {
 			const isOptional = step.subheading ? "Optional" : "";
 			const ariaLabel = step.heading ? `${pos} ${step.heading} ${isOptional}` : `${this.navStepDefaultHeading} ${pos} ${isOptional}`;
 			const isAfterCurrent = (idx > selectedStepIndex);
-debugger;
+
 			accInfo = {
 				"ariaSetsize": stepsCount,
 				"ariaPosinset": pos,
 				"ariaLabel": this.getStepAriaLabelText(step, ariaLabel),
-			}
+			};
 
 			return {
 				icon: step.icon,
