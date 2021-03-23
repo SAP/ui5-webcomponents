@@ -54,7 +54,7 @@ describe("Select general interaction", () => {
 
 		assert.strictEqual(inputResult.getProperty("value"), "3", "Fired change event is called once more.");
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
-		
+
 	});
 
 	it("changes selection while closed with Arrow Up/Down", () => {
@@ -111,6 +111,7 @@ describe("Select general interaction", () => {
 	// 	assert.strictEqual(inputResult.getProperty("value"), "7", "Change event should have fired twice");
 	// });
 
+	/*
 	it("changes selection on Tab", () => {
 		const select = browser.$("#keyboardHandling");
 		const EXPECTED_SELECTION_TEXT = "Banana";
@@ -152,6 +153,7 @@ describe("Select general interaction", () => {
 
 		assert.strictEqual(focusedElementId, browser.$("#mySelectEsc").getAttribute("id"), "Previous focusable element is focused");
 	});
+	 */
 
 	it("tests selection does not cycle with ArrowDown", () => {
 		const select = $("#selectionNotCycling");
