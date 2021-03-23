@@ -1,9 +1,9 @@
-commit 377c9bc1b2ab34b6af3e4126491901ba52d5ec28
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Tue Mar 23 10:36:08 2021 +0200
+commit 8353ac287604f1a2d86b7027753e807709d65c34
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 23 12:21:50 2021 +0200
 
-    fix(ui5-avatar): fix click event fired twice (#2967)
+    fix(ui5-select): set aria-expanded initially (#2991)
     
-    We used to fire a custom event, but did not stop the native one and end up firing two "click" events.
-    Now, the native one is stopped properly (we need to fire the custom one, so the noConflict ui5-click is also fired).
-    FIXES: #2943
+    We used to return undefined for aria-expanded upon initial rendering, causing the attribute to not render at all, now we always return boolean and the attribute is added with "false" on initial rendering.
+    
+    FIXES: #2987
