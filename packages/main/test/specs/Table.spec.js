@@ -125,8 +125,8 @@ describe("Table general interaction", () => {
 			const table = $("#single");
 			const firstRow = $("#firstRowSingleSelect");
 			const thirdRow = $("#thirdRowSingleSelect");
-			const firstCellFirstRow = $("#firstCellFirstRowSS").shadow$("td");
-			const firstCellThirdRow = $("#firstCellThirdRowSS").shadow$("td");
+			const firstCellFirstRowLabel = $("#firstCellFirstRowSSLabel");
+			const firstCellThirdRowLabel = $("#firstCellThirdRowSSLabel");
 			const contentButton = $("#button1");
 			const rowClickCount = $("#rowClickSSCountField");
 			const selectionChangeCount = $("#selectionChangeSSCountField");
@@ -134,7 +134,7 @@ describe("Table general interaction", () => {
 			const previouslySelectedRows = $("#selectionChangeSSPreviousRowField");
 
 			// act
-			firstCellFirstRow.click();
+			firstCellFirstRowLabel.click();
 
 			// check whether the table's and row's mode property is set correctly, as well as the row type property
 			assert.strictEqual(table.getAttribute("mode"), "SingleSelect", "The table's mode is SingleSelect");
@@ -148,7 +148,7 @@ describe("Table general interaction", () => {
 			assert.strictEqual(selectedRow.getProperty("value"), "firstRowSingleSelect", "The first row is selected");
 
 			// act
-			firstCellThirdRow.click();
+			firstCellThirdRowLabel.click();
 
 			// test row-click and selection-change events on click over an Inactive row
 			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Inctive row should not trigger row-click event");
@@ -244,8 +244,8 @@ describe("Table general interaction", () => {
 			const table = $("#multi");
 			const firstRow = $("#firstRowMultiSelect");
 			const thirdRow = $("#thirdRowMultiSelect");
-			const firstCellFirstRow = $("#firstCellFirstRowMS").shadow$("td");
-			const firstCellThirdRow = $("#firstCellThirdRowMS").shadow$("td");
+			const firstCellFirstRowLabel = $("#firstCellFirstRowMSLabel");
+			const firstCellThirdRowLabel = $("#firstCellThirdRowMSLabel");
 			const checkBoxFirstCell = firstRow.shadow$(".ui5-multi-select-checkbox").shadow$(".ui5-checkbox-root");
 			const contentButton = $("#button2");
 			const rowClickCount = $("#rowClickMSCountField");
@@ -254,7 +254,7 @@ describe("Table general interaction", () => {
 			const previouslySelectedRows = $("#selectionChangeMSPreviousRowField");
 
 			// act
-			firstCellFirstRow.click();
+			firstCellFirstRowLabel.click();
 
 			// check whether the table's and row's mode property is set correctly, as well as the row type property
 			assert.strictEqual(table.getAttribute("mode"), "MultiSelect", "The table's mode is MultiSelect");
@@ -284,7 +284,7 @@ describe("Table general interaction", () => {
 			assert.strictEqual(selectedRow.getProperty("value"), "firstRowMultiSelect", "The selected row is not changed");
 
 			// act
-			firstCellThirdRow.click();
+			firstCellThirdRowLabel.click();
 
 			// test row-click and selection-change events over an Inactive row
 			assert.strictEqual(rowClickCount.getProperty("value"), "1", "Click over an Inctive row should not trigger row-click event");
@@ -371,13 +371,13 @@ describe("Table general interaction", () => {
 			const table = $("#default");
 			const firstRow = $("#firstRowDefaultMode");
 			const thirdRow = $("#thirdRowDefaultMode");
-			const firstCellFirstRow = $("#firstCellFirstRowDefault").shadow$("td");
-			const firstCellThirdRow = $("#firstCellThirdRowDefault").shadow$("td");
+			const firstCellFirstRowLabel = $("#firstCellFirstRowDefaultLabel");
+			const firstCellThirdRowLabel = $("#firstCellThirdRowDefaultLabel");
 			const rowClickCount = $("#rowClickDefaultCountField");
 			const selectionChangeCount = $("#selectionChangeDefaultCountField");
 
 			// act
-			firstCellFirstRow.click();
+			firstCellFirstRowLabel.click();
 
 			// Check whether the table's and row's mode property is set correctly, as well as the row type property
 			assert.strictEqual(table.getAttribute("mode"), "None", "The table's mode is None");
@@ -404,7 +404,7 @@ describe("Table general interaction", () => {
 			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Space key over an Active row should not trigger row-click event");
 
 			// act
-			firstCellThirdRow.click();
+			firstCellThirdRowLabel.click();
 
 			// test row-click and selection-change events on click over an Inactive row
 			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Click over a row in a default mode table should not trigger selection-change event");
