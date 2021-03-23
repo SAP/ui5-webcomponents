@@ -38,6 +38,8 @@
     "@wdio/sync": "^7.2.0",
     "@webcomponents/webcomponentsjs": "^2.5.0",
     "chai": "^4.3.4",
+    "child_process": "^1.0.2",
+    "chokidar": "^3.5.1",
     "chokidar-cli": "^2.1.0",
     "clean-css": "^5.1.1",
     "colors": "^1.4.0",
