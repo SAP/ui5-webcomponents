@@ -8,6 +8,7 @@ import { isTabNext, isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.j
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import ListMode from "./types/ListMode.js";
@@ -424,6 +425,8 @@ class List extends UI5Element {
 
 		this._handleResize = this.checkListInViewport.bind(this);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
+		this.initialIntersection = true;
 	}
 
 	onExitDOM() {
@@ -552,8 +555,9 @@ class List extends UI5Element {
 		this._previouslySelectedItem = null;
 	}
 
-	observeListEnd() {
+	async observeListEnd() {
 		if (!this.listEndObserved) {
+			await RenderScheduler.whenFinished();
 			this.getIntersectionObserver().observe(this.listEndDOM);
 			this.listEndObserved = true;
 		}
@@ -568,9 +572,15 @@ class List extends UI5Element {
 	}
 
 	onInteresection(entries) {
-		if (entries.some(entry => entry.isIntersecting)) {
-			debounce(this.loadMore.bind(this), INFINITE_SCROLL_DEBOUNCE_RATE);
-		}
+			if (this.initialIntersection) {
+				this.initialIntersection = false;
+				return;
+			}
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					debounce(this.loadMore.bind(this), INFINITE_SCROLL_DEBOUNCE_RATE);
+				}
+			});
 	}
 
 	/*
