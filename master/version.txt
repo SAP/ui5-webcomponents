@@ -1,5 +1,9 @@
-commit e35cc1ae9f3830fa137b3d683dc10481e13743f4
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Tue Mar 23 10:29:34 2021 +0200
+commit 377c9bc1b2ab34b6af3e4126491901ba52d5ec28
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Tue Mar 23 10:36:08 2021 +0200
 
-    fix(ui5-popover): calculate offset for all sides of the page (#2916)
+    fix(ui5-avatar): fix click event fired twice (#2967)
+    
+    We used to fire a custom event, but did not stop the native one and end up firing two "click" events.
+    Now, the native one is stopped properly (we need to fire the custom one, so the noConflict ui5-click is also fired).
+    FIXES: #2943
