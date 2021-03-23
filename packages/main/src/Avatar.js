@@ -323,17 +323,24 @@ class Avatar extends UI5Element {
 	}
 
 	_onclick(event) {
-		event.isMarked = "avatar";
 		if (this.interactive) {
-			event.preventDefault();
-			// Prevent the native event and fire custom event because otherwise the noConfict event won't be thrown
+			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+			event.stopPropagation();
 			this.fireEvent("click");
 		}
 	}
 
 	_onkeydown(event) {
-		if (this.interactive && isEnter(event)) {
+		if (!this.interactive) {
+			return;
+		}
+
+		if (isEnter(event)) {
 			this.fireEvent("click");
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault(); // prevent scrolling
 		}
 	}
 
