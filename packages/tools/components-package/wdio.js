@@ -174,6 +174,12 @@ exports.config = {
 			}, this, property, value);
 		}, true);
 
+		browser.addCommand("setPropertyToNull", function(property) {
+			return browser.execute((elem, property) => {
+				return elem[property] = null;
+			}, this, property);
+		}, true);
+
 		browser.addCommand("setAttribute", function(attribute, value) {
 			return browser.execute((elem, attribute, value) => {
 				return elem.setAttribute(attribute, value);
@@ -297,6 +303,7 @@ exports.config = {
 			"removeAttribute", // custom
 			"setAttribute", // custom
 			"setProperty", // custom
+			"setPropertyToNull", // custom
 			"setValue",
 			"setWindowSize",
 			"touchAction",
