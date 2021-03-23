@@ -572,15 +572,16 @@ class List extends UI5Element {
 	}
 
 	onInteresection(entries) {
-			if (this.initialIntersection) {
-				this.initialIntersection = false;
-				return;
+		if (this.initialIntersection) {
+			this.initialIntersection = false;
+			return;
+		}
+
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				debounce(this.loadMore.bind(this), INFINITE_SCROLL_DEBOUNCE_RATE);
 			}
-			entries.forEach(entry => {
-				if (entry.isIntersecting) {
-					debounce(this.loadMore.bind(this), INFINITE_SCROLL_DEBOUNCE_RATE);
-				}
-			});
+		});
 	}
 
 	/*
