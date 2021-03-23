@@ -341,12 +341,12 @@ describe("Select general interaction", () => {
 		assert.strictEqual(select1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
 			"The aria-label is correctly set internally.");
 		assert.strictEqual(select1.getAttribute("aria-expanded"), "false",
-			"The aria-expanded is false by defaualt.");
+			"The aria-expanded is false by default.");
 	
 		assert.strictEqual(select2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
 			"The aria-label is correctly set internally.");
 		assert.strictEqual(select2.getAttribute("aria-expanded"), "false",
-			"The aria-expanded is false by defaualt.");
+			"The aria-expanded is false by default.");
 	});
 
 	it('selected options are correctly disabled', () => {
