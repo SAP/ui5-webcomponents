@@ -1,13 +1,13 @@
 const path = require("path");
+const fs = require("fs");
 
 const LIB = path.join(__dirname, `../lib/`);
 const serveConfig = path.join(__dirname, `serve.json`);
 const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
 const polyfillPath = path.join(polyfillDir, "{*.js,*.map,*.md,bundles/**/*.*}");
+const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 
 const getScripts = (options) => {
-
-	const port = options.port;
 
 	const scripts = {
 		clean: "rimraf dist",
@@ -82,7 +82,7 @@ const getScripts = (options) => {
 		serve: {
 			default: "nps serve.prepare serve.run",
 			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "${serveConfig}" dist/`,
-			run: `serve --no-clipboard -l ${port} dist`,
+			run: `node "${LIB}/serve/index.js" --dir="dist/" --packageName="${packageName}"`,
 		},
 		test: {
 			// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code

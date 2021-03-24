@@ -1,9 +1,7 @@
 const getScripts = require("@ui5/webcomponents-tools/components-package/nps.js");
 const fs = require("fs");
 
-const options = {
-	port: fs.existsSync(".port") ? `${fs.readFileSync(".port")}` : JSON.parse(fs.readFileSync("package.json")).ui5.port,
-};
+const options = {};
 
 const scripts = getScripts(options);
 
