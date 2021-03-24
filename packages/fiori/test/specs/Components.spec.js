@@ -1,4 +1,5 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 const assertBooleanProperty = (el, prop) => {
 	assert.strictEqual(el.getProperty(prop), false, "the value should be false by default.");

@@ -1,4 +1,5 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("General interaction", () => {
 
@@ -315,7 +316,7 @@ describe("General interaction", () => {
 
 		assert.ok(combo.getProperty("focused"), "property focused should be true");
 	});
-	
+
 	it ("Tests Combo with two-column layout", () => {
 		const combo = $("#combobox-two-column-layout");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combobox-two-column-layout");

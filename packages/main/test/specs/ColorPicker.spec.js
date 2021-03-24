@@ -1,4 +1,5 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 
 describe("Color Picker general interaction", () => {

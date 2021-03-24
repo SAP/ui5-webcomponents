@@ -1,4 +1,5 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 
 describe("Avatar", () => {
@@ -78,7 +79,7 @@ describe("Avatar", () => {
 		browser.execute(function() {
 			window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(false);
 		});
-		
+
 		const avatar = browser.$("#myInteractiveAvatar");
 		const input = browser.$("#click-event-2");
 

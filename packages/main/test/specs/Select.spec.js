@@ -1,4 +1,5 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Select general interaction", () => {
 	before(() => {
@@ -344,7 +345,7 @@ describe("Select general interaction", () => {
 			"The aria-label is correctly set internally.");
 		assert.strictEqual(select1.getAttribute("aria-expanded"), "false",
 			"The aria-expanded is false by default.");
-	
+
 		assert.strictEqual(select2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
 			"The aria-label is correctly set internally.");
 		assert.strictEqual(select2.getAttribute("aria-expanded"), "false",

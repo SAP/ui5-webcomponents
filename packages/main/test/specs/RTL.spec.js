@@ -1,4 +1,5 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("RTL", () => {
 	it("language forces RTL, if RTL not specified", () => {

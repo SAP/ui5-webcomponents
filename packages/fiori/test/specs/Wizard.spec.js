@@ -1,4 +1,5 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Wizard general interaction", () => {
 	before(() => {
@@ -218,7 +219,7 @@ describe("Wizard general interaction", () => {
 		const wizardDisabled = browser.$("#wizTest2");
 		const groupedStep = wizard.shadow$(`[data-ui5-index="3"]`);
 		const groupedStepDisabled = wizardDisabled.shadow$(`[data-ui5-index="3"]`);
-		
+
 		// act - click on the stack of steps
 		groupedStep.shadow$(`.ui5-wiz-step-root`).click();
 

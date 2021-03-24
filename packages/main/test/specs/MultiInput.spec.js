@@ -1,4 +1,5 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 const getTokenizerPopoverId = (inputId) => {
 	return browser.execute(async (inputId) => {
