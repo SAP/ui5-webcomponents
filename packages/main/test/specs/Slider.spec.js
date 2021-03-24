@@ -1,9 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Slider basic interactions", () => {
 
 	it("Changing the current value is reflected", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Slider.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Slider.html`);
 
 		const slider = browser.$("#basic-slider");
 		const sliderHandle = slider.shadow$(".ui5-slider-handle");
@@ -202,7 +203,7 @@ describe("Accessibility", () => {
 	});
 
 	it("Click anywhere in the Slider should focus the Slider's handle", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Slider.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Slider.html`);
 
 		const slider = browser.$("#basic-slider");
 		const sliderHandle = slider.shadow$(".ui5-slider-handle");

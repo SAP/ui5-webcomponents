@@ -1,9 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 
 describe("Color Picker general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/ColorPicker.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ColorPicker.html`);
 	});
 
 	it("tests color picker rendering", () => {

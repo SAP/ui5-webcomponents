@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("ProductSwitchItem general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8081/test-resources/pages/ProductSwitchItem.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ProductSwitchItem.html`);
 	});
 
 	it("tests rendering", () => {

@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Dialog general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
 	});
 
 	it("tests dialog toggling", () => {
@@ -35,7 +36,7 @@ describe("Dialog general interaction", () => {
 	});
 
 	it("tests dialog lifecycle", () => {
-		browser.url("http://localhost:8080/test-resources/pages/DialogLifecycle.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DialogLifecycle.html`);
 
 		assert.ok(!browser.$("ui5-static-area").length, "No static area.");
 
@@ -51,7 +52,7 @@ describe("Dialog general interaction", () => {
 	});
 
 	it("draggable", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
 
 		const openDraggableDialogButton = browser.$("#draggable-open");
 		openDraggableDialogButton.click();
@@ -145,7 +146,7 @@ describe("Dialog general interaction", () => {
 
 describe("Acc", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
 	});
 
 	it("tests aria-labelledby and aria-label", () => {

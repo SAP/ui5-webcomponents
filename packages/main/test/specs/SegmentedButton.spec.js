@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("SegmentedButton general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/SegmentedButton.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/SegmentedButton.html`);
 	});
 
 	it("tests if pressed attribute is applied", () => {

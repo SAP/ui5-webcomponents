@@ -1,4 +1,5 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 const openPickerById = (id, options) => {
 	const res = browser.execute((id, options) => {
@@ -45,7 +46,7 @@ const getTimeSlidersCount = id => {
 
 describe("DateTimePicker general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/DateTimePicker.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DateTimePicker.html`);
 	});
 
 	it("tests picker opens/closes programmatically", () => {
