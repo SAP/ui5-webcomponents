@@ -753,7 +753,7 @@ class Wizard extends UI5Element {
 		return this.ariaLabel || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
-	get effectivestepSwitchThreshold() {
+	get effectiveStepSwitchThreshold() {
 		if (this.stepSwitchThreshold < 0.5) {
 			return 0.5;
 		}
@@ -905,7 +905,7 @@ class Wizard extends UI5Element {
 		for (let closestStepIndex = 0; closestStepIndex <= this.stepScrollOffsets.length - 1; closestStepIndex++) {
 			const stepScrollOffset = this.stepScrollOffsets[closestStepIndex];
 			const step = this.getStepWrapperByIdx(closestStepIndex);
-			const switchStepBoundary = step.offsetTop + (step.offsetHeight * this.effectivestepSwitchThreshold);
+			const switchStepBoundary = step.offsetTop + (step.offsetHeight * this.effectiveStepSwitchThreshold);
 
 			if (stepScrollOffset > 0 && scrollPos < stepScrollOffset) {
 				if (scrollPos > switchStepBoundary) {
