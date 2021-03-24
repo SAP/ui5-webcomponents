@@ -1,4 +1,3 @@
-const path = require("path");
 const resolve = require("resolve");
 
 const serveConfig = `../tools/components-package/serve.json`;

@@ -9,6 +9,7 @@
     "ui5"
   ],
   "scripts": {
+    "reservePorts": "node packages/tools/lib/ports/reserve.js",
     "build": "npm-run-all --sequential build:base build:ie11 build:localization build:theme-base build:icons build:icons-tnt build:main build:fiori",
     "build:localization": "cd packages/localization && yarn build",
     "build:base": "cd packages/base && yarn build",
@@ -44,7 +45,7 @@
     "dev:fiori:es5": "cd packages/fiori && nps dev.es5",
     "scopeDev:main": "cd packages/main && nps scope.dev",
     "scopeDev:fiori": "cd packages/fiori && nps scope.dev",
-    "start": "npm-run-all --sequential build:base build:ie11 build:localization build:theme-base build:icons build:icons-tnt prepare:main prepare:fiori start:all",
+    "start": "npm-run-all --sequential reservePorts build:base build:ie11 build:localization build:theme-base build:icons build:icons-tnt prepare:main prepare:fiori start:all",
     "start:es5": "npm-run-all --sequential build:base build:ie11 build:localization build:theme-base build:icons build:icons-tnt prepare:main:es5 prepare:fiori:es5 start:all:es5",
     "startWithScope": "npm-run-all --sequential build:base build:ie11 build:localization build:theme-base build:icons build:icons-tnt scopePrepare:main scopePrepare:fiori scopeStart:all",
     "start:all": "npm-run-all --parallel dev:base dev:localization dev:main dev:fiori",

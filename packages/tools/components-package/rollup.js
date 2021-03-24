@@ -124,7 +124,7 @@ const getPlugins = ({ transpile }) => {
 	if (process.env.DEV) {
 		plugins.push(ui5DevReadyMessagePlugin({
 			packageName,
-			port: ui5Info.port,
+			port: fs.existsSync(".port") ? `${fs.readFileSync(".port")}` : ui5Info.port,
 		}));
 	}
 

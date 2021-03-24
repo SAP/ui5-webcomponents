@@ -4,6 +4,7 @@ tmp
 temp
 target
 dist
+.port
 
 # Ignore default target directory for the npm package 'ui5-codecompletion'
 .ui5
