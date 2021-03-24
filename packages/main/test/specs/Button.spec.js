@@ -4,7 +4,7 @@ const PORT = require("./_port.js");
 
 describe("Button general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Button.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Button.html`);
 	});
 
 	it("tests button's text rendering", () => {

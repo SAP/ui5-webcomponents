@@ -3,7 +3,7 @@ const PORT = require("./_port.js");
 
 describe("Select general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Select.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
 	});
 
 	it("fires change on selection", () => {

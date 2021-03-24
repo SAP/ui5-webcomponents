@@ -3,7 +3,7 @@ const PORT = require("./_port.js");
 
 describe("Timeline general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8081/test-resources/pages/Timeline.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Timeline.html`);
 	});
 
 	it("should fire itemNameClick event on a normal item name", () => {

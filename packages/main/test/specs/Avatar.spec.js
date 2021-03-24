@@ -4,7 +4,7 @@ const PORT = require("./_port.js");
 
 describe("Avatar", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Avatar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Avatar.html`);
 	});
 
 	it("tests rendering of image", () => {

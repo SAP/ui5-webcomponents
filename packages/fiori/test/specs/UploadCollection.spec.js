@@ -4,7 +4,7 @@ const PORT = require("./_port.js");
 describe("UploadCollection", () => {
 	describe("Rendering", () => {
 		before(() => {
-			browser.url("http://localhost:8081/test-resources/pages/UploadCollection.html");
+			browser.url(`http://localhost:${PORT}/test-resources/pages/UploadCollection.html`);
 		});
 
 		it("should show Link when 'fileNameClickable'", () => {

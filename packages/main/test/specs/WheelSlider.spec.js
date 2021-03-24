@@ -3,7 +3,7 @@ const PORT = require("./_port.js");
 
 describe("Wheel Slider general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/WheelSlider_Test_Page.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/WheelSlider_Test_Page.html`);
 	});
 
 	before(() => {

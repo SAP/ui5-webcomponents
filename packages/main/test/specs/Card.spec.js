@@ -3,7 +3,7 @@ const PORT = require("./_port.js");
 
 describe("Card general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Card.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Card.html`);
 	});
 
 	it("tests initial rendering", () => {

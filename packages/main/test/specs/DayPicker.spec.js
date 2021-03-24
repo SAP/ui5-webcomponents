@@ -4,7 +4,7 @@ const PORT = require("./_port.js");
 
 describe("Day Picker Tests", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/DayPicker.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DayPicker.html`);
 	});
 
 	it("Day Picker Renders", () => {

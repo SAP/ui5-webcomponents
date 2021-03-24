@@ -3,7 +3,7 @@ const PORT = require("./_port.js");
 
 describe("CheckBox general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/CheckBox.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/CheckBox.html`);
 	});
 
 	it("tests checked default value is false", () => {

@@ -3,7 +3,7 @@ const PORT = require("./_port.js");
 
 describe("Switch general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Switch.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Switch.html`);
 	});
 
 	it("tests change event", () => {

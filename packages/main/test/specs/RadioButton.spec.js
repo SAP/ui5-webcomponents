@@ -3,7 +3,7 @@ const PORT = require("./_port.js");
 
 describe("RadioButton general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/RadioButton.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/RadioButton.html`);
 	});
 
 	it("tests select event", () => {

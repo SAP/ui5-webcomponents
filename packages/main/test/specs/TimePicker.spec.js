@@ -3,7 +3,7 @@ const PORT = require("./_port.js");
 
 describe("TimePicker general interaction", () => {
 	it("input receives value in format pattern depending on the set language", () => {
-		browser.url("http://localhost:8080/test-resources/pages/TimePicker.html?sap-ui-language=bg");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html?sap-ui-language=bg`);
 
 		const timepicker = browser.$("#timepickerSetTime");
 		const setTimeButton = browser.$("#setTimeButton");
@@ -14,7 +14,7 @@ describe("TimePicker general interaction", () => {
 	});
 
 	it("tests sliders value", () => {
-		browser.url("http://localhost:8080/test-resources/pages/TimePicker.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TimePicker.html`);
 		const timepicker = browser.$("#timepicker");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#timepicker");
 		const timepickerPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");

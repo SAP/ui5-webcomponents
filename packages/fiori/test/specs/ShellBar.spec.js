@@ -25,7 +25,7 @@ const getCustomActionProp = (id, pos, prop) => {
 
 describe("Component Behavior", () => {
 	before(() => {
-		browser.url("http://localhost:8081/test-resources/pages/ShellBar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ShellBar.html`);
 	});
 
 	describe("ui5-shellbar-item", () => {

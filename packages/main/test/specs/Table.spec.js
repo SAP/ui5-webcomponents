@@ -3,7 +3,7 @@ const PORT = require("./_port.js");
 
 describe("Table general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Table.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
 	});
 
 	it("tests if column disapears when min-width is reacted (650px)", () => {
@@ -77,7 +77,7 @@ describe("Table general interaction", () => {
 
 	describe("Growing Table on 'More' button press", () => {
 		it("tests the 'load-more' event", () => {
-			browser.url("http://localhost:8080/test-resources/pages/TableLoadMore.html");
+			browser.url(`http://localhost:${PORT}/test-resources/pages/TableLoadMore.html`);
 
 			const inputResult = browser.$("#inputLoadMoreCounter");
 			const loadMoreTrigger = browser.$("#tbl").shadow$("[load-more-inner]");
@@ -104,7 +104,7 @@ describe("Table general interaction", () => {
 
 	describe("Growing Table on Scroll", () => {
 		it("tests the 'load-more' event", () => {
-			browser.url("http://localhost:8080/test-resources/pages/TableGrowingWithScroll.html");
+			browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithScroll.html`);
 
 			const inputResult = browser.$("#inputLoadMoreCounter");
 			const btnScroll = browser.$("#btnScroll");

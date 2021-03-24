@@ -4,7 +4,7 @@ const PORT = require("./_port.js");
 
 describe("Toast general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Toast.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Toast.html`);
 	});
 
 	it("tests open attribute before show", () => {

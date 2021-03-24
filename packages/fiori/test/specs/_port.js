@@ -1,3 +1,3 @@
 const fs = require("fs");
-const PORT = JSON.parse(fs.readFileSync("../../package.json")).ui5.port;
-export default PORT;
+const packageFile = JSON.parse(fs.readFileSync(require.resolve("@ui5/webcomponents-fiori/package.json")));
+module.exports = packageFile.ui5.port;

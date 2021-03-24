@@ -3,7 +3,7 @@ const PORT = require("./_port.js");
 
 describe("ToggleButton general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/ToggleButton.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ToggleButton.html`);
 	});
 
 	it("should fire click event on a normal togglebutton", () => {
