@@ -7,7 +7,7 @@ const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs
 const polyfillPath = path.join(polyfillDir, "{*.js,*.map,*.md,bundles/**/*.*}");
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 
-const getScripts = (options) => {
+const getScripts = (options = {}) => {
 
 	const scripts = {
 		clean: "rimraf dist",

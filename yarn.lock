@@ -1932,16 +1932,6 @@ async-exit-hook@^2.0.1:
   resolved "https://registry.yarnpkg.com/async-exit-hook/-/async-exit-hook-2.0.1.tgz#8bd8b024b0ec9b1c01cccb9af9db29bd717dfaf3"
   integrity sha512-NW2cX8m1Q7KPA7a5M2ULQeZ2wR5qI5PAbw5L0UOMxdioVk9PMZ0h1TmyZEkPYrCvYjDlFICusOu1dlEKAAeXBw==
 
-async@0.1.15:
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/async/-/async-0.1.15.tgz#2180eaca2cf2a6ca5280d41c0585bec9b3e49bd3"
-  integrity sha1-IYDqyizypspSgNQcBYW+ybPkm9M=
-
-async@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/async/-/async-0.9.0.tgz#ac3613b1da9bed1b47510bb4651b8931e47146c7"
-  integrity sha1-rDYTsdqb7RtHUQu0ZRuJMeRxRsc=
-
 async@0.9.x:
   version "0.9.2"
   resolved "https://registry.yarnpkg.com/async/-/async-0.9.2.tgz#aea74d5e61c1f899613bf64bda66d4c78f2fd17d"
@@ -7337,21 +7327,6 @@ plur@^2.0.0, plur@^2.1.2:
   integrity sha1-dIJFLBoPUI4+NE6uwxLJHCncZVo=
   dependencies:
     irregular-plurals "^1.0.0"
-
-portreserver@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/portreserver/-/portreserver-1.0.1.tgz#64c8f3ae20e923365fb578b03fa3fe199c034afa"
-  integrity sha1-ZMjzriDpIzZftXiwP6P+GZwDSvo=
-  dependencies:
-    async "0.9.0"
-    portscanner "1.0.0"
-
-portscanner@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/portscanner/-/portscanner-1.0.0.tgz#3b5cfe393828b5160abc600e6270ebc2f1590558"
-  integrity sha1-O1z+OTgotRYKvGAOYnDrwvFZBVg=
-  dependencies:
-    async "0.1.15"
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
