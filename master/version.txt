@@ -1,9 +1,5 @@
-commit 8353ac287604f1a2d86b7027753e807709d65c34
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 23 12:21:50 2021 +0200
+commit bcf43e5be485e894ff82213fed5f74e493567184
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Mar 24 09:09:17 2021 +0200
 
-    fix(ui5-select): set aria-expanded initially (#2991)
-    
-    We used to return undefined for aria-expanded upon initial rendering, causing the attribute to not render at all, now we always return boolean and the attribute is added with "false" on initial rendering.
-    
-    FIXES: #2987
+    chore: temporarily comment out failing test (#2997)
