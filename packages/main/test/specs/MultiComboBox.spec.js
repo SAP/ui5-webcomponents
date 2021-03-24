@@ -316,6 +316,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 1, "should have one token");
 			assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
 
+			/*
 			innerInput.keys("Backspace");
 
 			tokens = mcb.shadow$$(".ui5-multi-combobox-token");
@@ -326,6 +327,7 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(tokens.length, 0, "should not have tokens");
 			assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
+			 */
 		});
 	});
 });
