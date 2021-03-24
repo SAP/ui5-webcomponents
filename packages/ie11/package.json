@@ -19,18 +19,20 @@
     "clean": "nps clean",
     "lint": "nps lint",
     "build": "nps build",
+    "hash": "nps hash",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
     "@ui5/webcomponents-base": "0.30.0",
-    "css-vars-ponyfill": "^2.1.2",
-    "regenerator-runtime": "0.12.1",
-    "url-search-params-polyfill": "^5.0.0"
+    "css-vars-ponyfill": "^2.4.3",
+    "regenerator-runtime": "0.13.7",
+    "url-search-params-polyfill": "^8.1.0"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.12",
-    "copy-and-watch": "^0.1.4",
-    "eslint": "^5.13.0",
-    "eslint-config-airbnb-base": "^13.1.0"
+    "copy-and-watch": "^0.1.5",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "resolve": "^1.20.0"
   }
 }

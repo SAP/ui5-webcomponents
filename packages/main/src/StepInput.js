@@ -29,7 +29,6 @@ import Icon from "./Icon.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 
-
 // Styles
 import StepInputCss from "./generated/themes/StepInput.css.js";
 

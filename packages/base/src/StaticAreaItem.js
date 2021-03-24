@@ -1,3 +1,4 @@
+import "./StaticArea.js";
 import updateShadowRoot from "./updateShadowRoot.js";
 import { renderFinished } from "./Render.js";
 import getEffectiveContentDensity from "./util/getEffectiveContentDensity.js";

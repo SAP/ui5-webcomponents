@@ -131,9 +131,8 @@ class ColorPalette extends UI5Element {
 	}
 
 	static get dependencies() {
-		const moreColorsFeature = getFeature("ColorPaletteMoreColors");
-
-		return [ColorPaletteItem].concat(moreColorsFeature ? moreColorsFeature.dependencies : []);
+		const ColorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
+		return [ColorPaletteItem].concat(ColorPaletteMoreColors ? ColorPaletteMoreColors.dependencies : []);
 	}
 
 	static async onDefine() {
@@ -156,9 +155,9 @@ class ColorPalette extends UI5Element {
 		});
 
 		if (this.moreColors) {
-			const moreColorsFeature = getFeature("ColorPaletteMoreColors");
-			if (moreColorsFeature) {
-				this.moreColorsFeature = new moreColorsFeature();
+			const ColorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
+			if (ColorPaletteMoreColors) {
+				this.moreColorsFeature = new ColorPaletteMoreColors();
 			} else {
 				throw new Error(`You have to import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js" module to use the more-colors functionality.`);
 			}
@@ -233,12 +232,12 @@ class ColorPalette extends UI5Element {
 
 	async _getDialog() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-dialog");
+		return staticAreaItem.querySelector("[ui5-dialog]");
 	}
 
 	async getColorPicker() {
 		const dialog = await this._getDialog();
-		return dialog.content[0].querySelector("ui5-color-picker");
+		return dialog.content[0].querySelector("[ui5-color-picker]");
 	}
 }
 

@@ -1,7 +1,7 @@
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
-import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
@@ -95,8 +95,8 @@ class ResponsivePopover extends Popover {
 			header: {
 				"ui5-responsive-popover-header": true,
 				"ui5-responsive-popover-header-no-title": !this.headerText,
-			}
-		}
+			},
+		};
 	}
 
 	static get template() {

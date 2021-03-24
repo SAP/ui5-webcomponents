@@ -5,9 +5,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "./popup-utils/PopupUtils.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
@@ -130,6 +130,14 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.Popup#after-close
 		 */
 		"after-close": {},
+
+		/**
+		 * Fired whenever the popup content area is scrolled
+		 *
+		 * @private
+		 * @event sap.ui.webcomponents.main.Popup#scroll
+		 */
+		"scroll": {},
 	},
 };
 
@@ -448,7 +456,6 @@ class Popup extends UI5Element {
 	show() {
 		this.style.display = this._displayProp;
 	}
-
 
 	/**
 	 * Sets "none" display to the popup
