@@ -1,7 +1,24 @@
-commit f0346c05758c4f530d3a8821a9fc381ef7eec126
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Thu Mar 25 17:15:46 2021 +0200
+commit 4123f5a5bdb08b84d88e61ae045c46689ed6b0ef
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Mar 25 17:23:56 2021 +0200
 
-    fix(ui5-rangeslider): fix handles opacity for IE11 (#2983)
+    refactor(ui5-wizard): configure step change threshold (#3009)
     
-    Range Slider's handles' background is now fixed to be consistent across all browsers, as previously their opacity was not correct in IE11.
+    Background
+    There are complains that if the user is at the very beginning of a step and scrolls a bit upwards, the selection switches to the previous step, although most of the viewport is taken by the first one.
+    
+    This has been raised with #2883:
+    "5. scroll up a little bit of the cascading goal dialog, and you can see the fact that although the most of dialog is step two, but the wizard will highlight the step one button. this is an issue, because the current step is still step two"
+    
+    Solution
+    Add private/protected API, called step-switch-threshold
+    to give more control of the point the switch happens.
+    It support float values between 0.5 and 1, where 0.5 means the step will be switched after the user scrolls half of the current step, and 1 - when the current step is entirely scrolled out. The default value is 0.7, which is very close to the behaviour of the sap.m.Wizard.
+    
+    Usage
+    
+    <ui5-wizard step-switch-threshold="0.5">
+    <ui5-wizard step-switch-threshold="0.6">
+    <ui5-wizard step-switch-threshold="1">
+    
+    Related to: #2883

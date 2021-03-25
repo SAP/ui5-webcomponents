@@ -47,6 +47,16 @@
 
 					<ui5-input id="inpSelectionChangeCounter"></ui5-input>
 					<ui5-button id="btnOpenDialog" style="width: 150px; align-self: flex-end;">Open Wizard Dialog</ui5-button>
+
+					<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
+						<ui5-label>Configure step-switch-threshold</ui5-label>
+						<ui5-segmentedbutton id="setting">
+							<ui5-togglebutton threshold="0.3">0.5</ui5-togglebutton>
+							<ui5-togglebutton threshold="0.7" pressed>default (0.7)</ui5-togglebutton>
+							<ui5-togglebutton threshold="1">1</ui5-togglebutton>
+						</ui5-segmentedbutton>
+					</div>
+					
 				</div>
 
 				<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
@@ -354,6 +364,10 @@
 
 		btnOpenDialog.addEventListener("click", function () {
 			dialog.open();
+		});
+
+		setting.addEventListener("selection-change", function (event) {
+			wiz.setAttribute("step-switch-threshold", event.detail.selectedButton.getAttribute("threshold"));
 		});
 	</script>
 </body>
