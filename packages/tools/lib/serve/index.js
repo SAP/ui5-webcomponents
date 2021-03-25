@@ -23,11 +23,11 @@ const requestPort = async () => {
 			fs.writeFileSync(".port", matches[1]);
 		}
 	});
-}
+};
 
 async function* serverGenerator(callback, port = 8080, step = 1) {
-	while (1) {
-		const portInUse = await isPortReachable(port, {host: "localhost"});
+	while (true) {
+		const portInUse = await isPortReachable(port, { host: "127.0.0.1" });
 		if (!portInUse) {
 			const command = `serve --config "${serveConfig}" --no-port-switching --no-clipboard -l ${port} ${options.dir}`;
 			console.log(colors.yellow(`Executing: ${command}`));
