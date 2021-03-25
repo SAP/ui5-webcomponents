@@ -2,7 +2,6 @@ const path = require("path");
 const fs = require("fs");
 
 const LIB = path.join(__dirname, `../lib/`);
-const serveConfig = path.join(__dirname, `serve.json`);
 const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
 const polyfillPath = path.join(polyfillDir, "{*.js,*.map,*.md,bundles/**/*.*}");
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
@@ -82,7 +81,7 @@ const getScripts = (options) => {
 			es5: 'concurrently "nps serve" "nps watch.es5"'
 		},
 		start: "nps prepare dev",
-		serve: `node "${LIB}/serve/index.js" --dir="dist/" --port=${port} --portStep=${portStep} --packageName="${packageName}" --config="${serveConfig}"`,
+		serve: `node "${LIB}/serve/index.js" --dir="dist/" --port=${port} --portStep=${portStep} --packageName="${packageName}"`,
 		test: {
 			// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
 			default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
