@@ -1,5 +1,5 @@
-commit 55d029cf09f8acc73c85a53108a244f361dcbef0
+commit fb725fe7c3d72cc9fd4dbd9a5855bb6b1b82a9f4
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Mar 25 15:38:24 2021 +0200
+Date:   Thu Mar 25 16:09:16 2021 +0200
 
-    chore: reserve free ports for main and fiori (#3008)
+    chore: improve the localization build (#3017)
