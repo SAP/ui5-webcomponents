@@ -63,6 +63,28 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the threshold to switch between steps upon user scrolling.
+		 * <br><br>
+		 *
+		 * <b>For Example:</b>
+		 * <br>
+		 * (1) To switch to the next step, when half of the step is scrolled out - set <code>step-switch-threshold="0.5"</code>.
+		 * (2) To switch to the next step, when the entire current step is scrolled out - set <code>step-switch-threshold="1"</code>.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> Supported values are between 0.5 and 1
+		 * and values out of the range will be normalized to 0.5 and 1 respectively.
+		 * @private
+		 * @type {Float}
+		 * @defaultvalue 0.7
+		 * @since 1.0.0-rc.13
+		 */
+		 stepSwitchThreshold: {
+			type: Float,
+			defaultValue: 0.7,
+		},
+
+		/**
 		 * Defines the height of the <code>ui5-wizard</code> content.
 		 * @private
 		 */
@@ -731,6 +753,18 @@ class Wizard extends UI5Element {
 		return this.ariaLabel || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
+	get effectiveStepSwitchThreshold() {
+		if (this.stepSwitchThreshold < 0.5) {
+			return 0.5;
+		}
+
+		if (this.stepSwitchThreshold > 1) {
+			return 1;
+		}
+
+		return this.stepSwitchThreshold;
+	}
+
 	/**
 	 * Returns an array of data objects, based on the user defined steps
 	 * to later build the steps (tabs) within the header.
@@ -813,9 +847,12 @@ class Wizard extends UI5Element {
 		return this.shadowRoot.querySelector(`[data-ui5-content-item-ref-id=${refId}]`);
 	}
 
+	getStepWrapperByIdx(idx) {
+		return this.getStepWrapperByRefId(this.steps[idx]._id);
+	}
+
 	/**
-	 * Scrolls to the content of the selected step
-	 * and it is used in <code>onAfteRendering</cod>.
+	 * Scrolls to the content of the selected step, used in <code>onAfterRendering</cod>.
 	 * @private
 	 */
 	scrollToSelectedStep() {
@@ -838,7 +875,6 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns to closest scroll position for the given step index.
-	 * by given step index.
 	 *
 	 * @private
 	 * @param {Integer} stepIndex the index of a step
@@ -862,16 +898,20 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns the closest step index by given scroll position.
-	 *
-	 * @param {Integer} scrollPos scroll position
-	 * @returns {Integer} closestStepIndex the closest step index
 	 * @private
+	 * @param {Integer} scrollPos the scroll position
 	 */
 	getClosestStepIndexByScrollPos(scrollPos) {
 		for (let closestStepIndex = 0; closestStepIndex <= this.stepScrollOffsets.length - 1; closestStepIndex++) {
-			const stepOffset = this.stepScrollOffsets[closestStepIndex];
+			const stepScrollOffset = this.stepScrollOffsets[closestStepIndex];
+			const step = this.getStepWrapperByIdx(closestStepIndex);
+			const switchStepBoundary = step.offsetTop + (step.offsetHeight * this.effectiveStepSwitchThreshold);
 
-			if (stepOffset > 0 && scrollPos < stepOffset) {
+			if (stepScrollOffset > 0 && scrollPos < stepScrollOffset) {
+				if (scrollPos > switchStepBoundary) {
+					return closestStepIndex + 1;
+				}
+
 				return closestStepIndex;
 			}
 		}
