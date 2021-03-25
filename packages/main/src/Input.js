@@ -1101,7 +1101,7 @@ class Input extends UI5Element {
 	}
 
 	get styles() {
-		return {
+		const stylesObject = {
 			popoverHeader: {
 				"max-width": `${this._inputWidth}px`,
 			},
@@ -1113,10 +1113,14 @@ class Input extends UI5Element {
 			suggestionsPopover: {
 				"max-width": `${this._inputWidth}px`,
 			},
-			innerInput: {
-				padding: this.nativeInputWidth < 48 ? "0" : undefined,
-			},
+			innerInput: {},
 		};
+
+		if (this.nativeInputWidth < 48) {
+			stylesObject.innerInput.padding = "0";
+		}
+
+		return stylesObject;
 	}
 
 	get suggestionSeparators() {
