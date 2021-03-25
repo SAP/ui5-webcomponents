@@ -1,5 +1,5 @@
-commit 13df3abd17c891a7e00c1cb95a968273185525b6
+commit abcdee69286439cd8285a7a8f9de153a08c4599f
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 24 09:51:27 2021 +0200
+Date:   Thu Mar 25 15:24:31 2021 +0200
 
-    chore: fix the hash for the base package (#3004)
+    chore: update folder-hash (#3016)
