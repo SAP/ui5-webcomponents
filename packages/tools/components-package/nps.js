@@ -82,11 +82,7 @@ const getScripts = (options) => {
 			es5: 'concurrently "nps serve" "nps watch.es5"'
 		},
 		start: "nps prepare dev",
-		serve: {
-			default: "nps serve.prepare serve.run",
-			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "${serveConfig}" dist/`,
-			run: `node "${LIB}/serve/index.js" --dir="dist/" --port=${port} --portStep=${portStep} --packageName="${packageName}"`,
-		},
+		serve: `node "${LIB}/serve/index.js" --dir="dist/" --port=${port} --portStep=${portStep} --packageName="${packageName}" --config="${serveConfig}"`,
 		test: {
 			// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
 			default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',

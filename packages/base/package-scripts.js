@@ -31,11 +31,7 @@ const scripts = {
 	},
 	dev: 'concurrently "nps serve" "nps watch"',
 	start: "nps prepare dev",
-	serve: {
-		default: "nps serve.prepare serve.run",
-		prepare: `copy-and-watch "${serveConfig}" dist/`,
-		run: `serve --no-clipboard -l ${port} dist`,
-	},
+	serve: `serve --config "${serveConfig}" --no-clipboard -l ${port} dist/`,
 	test: {
 		// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
 		default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
