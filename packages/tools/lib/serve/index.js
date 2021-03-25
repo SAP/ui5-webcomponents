@@ -3,6 +3,7 @@ const path = require("path");
 const commandLineArgs = require("command-line-args");
 const { exec } = require("child_process");
 const colors = require("colors/safe");
+const isPortReachable = require("is-port-reachable");
 
 const options = commandLineArgs([
 	{ name: "port", type: Number },
@@ -13,8 +14,8 @@ const options = commandLineArgs([
 ]);
 const serveConfig = path.join(__dirname, `serve.json`);
 
-const requestPort = () => {
-	const serveProcess = gen.next().value;
+const requestPort = async () => {
+	const serveProcess = (await gen.next()).value;
 	serveProcess.stdout.on('data', data => {
 		const matches = data.match(/Accepting connections at .*?:(\d+)/);
 		if (matches) {
@@ -24,15 +25,18 @@ const requestPort = () => {
 	});
 }
 
-function* serverGenerator(callback, port = 8080, step = 1) {
+async function* serverGenerator(callback, port = 8080, step = 1) {
 	while (1) {
-		const command = `serve --config "${serveConfig}" --no-port-switching --no-clipboard -l ${port} ${options.dir}`;
-		console.log(colors.yellow(`Executing: ${command}`));
-		const serveProcess = exec(command, (err) => {
-			console.log(colors.yellow(`Port ${port} already in use.`));
-			callback();
-		});
-		yield serveProcess;
+		const portInUse = await isPortReachable(port, {host: "localhost"});
+		if (!portInUse) {
+			const command = `serve --config "${serveConfig}" --no-port-switching --no-clipboard -l ${port} ${options.dir}`;
+			console.log(colors.yellow(`Executing: ${command}`));
+			const serveProcess = exec(command, (err) => {
+				console.log(colors.yellow(`Port ${port} already in use.`));
+				callback();
+			});
+			yield serveProcess;
+		}
 		port += step;
 	}
 }
