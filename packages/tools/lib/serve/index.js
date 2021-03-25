@@ -4,37 +4,36 @@ const { exec } = require("child_process");
 const colors = require("colors/safe");
 
 const options = commandLineArgs([
+	{ name: "port", type: Number },
+	{ name: "portStep", type: Number },
 	{ name: "packageName", type: String },
 	{ name: "dir", type: String },
 ]);
 
-const dir = options.dir;
-const packageName = options.packageName;
-
-function* serverGenerator(callback) {
-	let port = 8080; // always start from port 8080
-	while (1) {
-		const command = `serve --no-port-switching --no-clipboard -l ${port} ${dir}`;
-		console.log(`Executing: ${command}`);
-		yield exec(command, callback);
-		port++;
-	}
-}
-
-const gen = serverGenerator(err => {
-	console.log("Port taken");
-	requestAnotherPort();
-});
-
-const requestAnotherPort = () => {
+const requestPort = () => {
 	const serveProcess = gen.next().value;
 	serveProcess.stdout.on('data', data => {
 		const matches = data.match(/Accepting connections at .*?:(\d+)/);
 		if (matches) {
-			console.log(colors.yellow(`Reserved port ${matches[1]} for the ${packageName} package`));
+			console.log(colors.cyan(`Reserved port ${matches[1]} for the ${options.packageName} package.`));
 			fs.writeFileSync(".port", matches[1]);
 		}
 	});
 }
 
-requestAnotherPort();
+function* serverGenerator(callback, port = 8080, step = 1) {
+	while (1) {
+		const command = `serve --no-port-switching --no-clipboard -l ${port} ${options.dir}`;
+		console.log(`Executing: ${command}`);
+		const serveProcess = exec(command, (err) => {
+			console.log(colors.cyan(`Port ${port} already in use.`));
+			callback();
+		});
+		yield serveProcess;
+		port += step;
+	}
+}
+
+const gen = serverGenerator(requestPort, options.port, options.portStep);
+
+requestPort();
