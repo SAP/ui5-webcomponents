@@ -229,7 +229,6 @@ const metadata = {
 			type: Object,
 		},
 
-
 		filterSelected: {
 			type: Boolean,
 		},
@@ -428,11 +427,11 @@ class MultiComboBox extends UI5Element {
 	}
 
 	togglePopover() {
-		this._toggleRespPopover();
-
 		if (!isPhone()) {
 			this._inputDom.focus();
 		}
+
+		this._toggleRespPopover();
 	}
 
 	filterSelectedItems(event) {
@@ -490,7 +489,6 @@ class MultiComboBox extends UI5Element {
 
 			return;
 		}
-
 
 		this._inputLastValue = input.value;
 		this.value = input.value;

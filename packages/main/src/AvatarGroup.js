@@ -220,7 +220,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	/**
-	 * Returns an array containing the ui5-avatar instances that are currently not displayed due to lack of space.
+	 * Returns an array containing the <code>ui5-avatar</code> instances that are currently not displayed due to lack of space.
 	 * @readonly
 	 * @type { Array }
 	 * @defaultValue []
@@ -231,7 +231,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	/**
-	 * Returns an array containing the <code>AvatarBackgroundColor</code> values that correspond to the avatars in the <code>items</code> array.
+	 * Returns an array containing the <code>AvatarBackgroundColor</code> values that correspond to the avatars in the <code>ui5-avatar-group</code>.
 	 * @readonly
 	 * @type { Array }
 	 * @defaultValue []
@@ -340,15 +340,24 @@ class AvatarGroup extends UI5Element {
 		});
 	}
 
-	_onGroupClick(event) {
+	_onClick(event) {
+		// no matter the value of noConflict, the ui5-button and the group container (div) always fire a native click event
+		const isButton = event.target.hasAttribute("ui5-button");
 		event.stopPropagation();
-		if (event.isMarked === "avatar" || event.isMarked === "button" || this._isGroup) {
+
+		if (this._isGroup || isButton) {
 			this._fireGroupEvent(event.target);
 		}
 	}
 
 	_onUI5Click(event) {
+		// when noConflict=true only ui5-avatar will fire ui5-click event
+		const isAvatar = event.target.hasAttribute("ui5-avatar");
 		event.stopPropagation();
+
+		if (isAvatar) {
+			this._fireGroupEvent(event.target);
+		}
 	}
 
 	/**

@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Wizard Test Page - small widths</title>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+		}
+		.stretch {
+			position: absolute;
+			overflow: hidden;
+			height: 100%;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<div class="stretch" style="width: 400px;">
+		<div style="display: flex; flex-direction: row;">
+			<ui5-wizard id="wizTest">
+				<ui5-wizard-step icon="sap-icon://product" heading="Product type">
+					<div style="display: flex; min-height: 200px; flex-direction: column;">
+						<ui5-title>1. Product Type</ui5-title><br>
+						<ui5-messagestrip>
+							The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
+						</ui5-messagestrip><br>
+					</div>
+				</ui5-wizard-step>
+	
+				<ui5-wizard-step heading="Product Information">
+					<div style="display: flex;flex-direction: column">
+						<ui5-title>2. Product Information</ui5-title><br>
+						<ui5-label wrap>
+							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
+						</ui5-label>
+					</div>
+				</ui5-wizard-step>
+	
+				<ui5-wizard-step heading="Options">
+						<ui5-title>3. Options</ui5-title><br>
+						<ui5-label wrap>
+							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
+						</ui5-label>
+						<ui5-messagestrip>
+							The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
+						</ui5-messagestrip><br>
+				</ui5-wizard-step>
+	
+				<ui5-wizard-step heading="Pricing" selected>
+						<ui5-title>4. Pricing</ui5-title><br>
+						<ui5-label wrap>
+							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
+						</ui5-label>
+						<ui5-messagestrip>
+							The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
+						</ui5-messagestrip><br>
+				</ui5-wizard-step>
+			</ui5-wizard>
+
+			<ui5-wizard id="wizTest2">
+				<ui5-wizard-step icon="sap-icon://product" heading="Product type" disabled>
+					<div style="display: flex; min-height: 200px; flex-direction: column;">
+						<ui5-title>1. Product Type</ui5-title><br>
+						<ui5-messagestrip>
+							The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
+						</ui5-messagestrip><br>
+					</div>
+				</ui5-wizard-step>
+	
+				<ui5-wizard-step heading="Product Information" disabled>
+					<div style="display: flex;flex-direction: column">
+						<ui5-title>2. Product Information</ui5-title><br>
+						<ui5-label wrap>
+							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
+						</ui5-label>
+					</div>
+				</ui5-wizard-step>
+	
+				<ui5-wizard-step heading="Options" disabled>
+						<ui5-title>3. Options</ui5-title><br>
+						<ui5-label wrap>
+							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
+						</ui5-label>
+						<ui5-messagestrip>
+							The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
+						</ui5-messagestrip><br>
+				</ui5-wizard-step>
+	
+				<ui5-wizard-step heading="Pricing" selected>
+						<ui5-title>4. Pricing</ui5-title><br>
+						<ui5-label wrap>
+							Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
+						</ui5-label>
+						<ui5-messagestrip>
+							The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
+						</ui5-messagestrip><br>
+				</ui5-wizard-step>
+			</ui5-wizard>
+		</div>
+	
+	</div>
+</body>
+</html>

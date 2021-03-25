@@ -203,8 +203,10 @@ const metadata = {
 		 * @public
 		 */
 		"tab-select": {
-			tab: { type: HTMLElement },
-			tabIndex: { type: Number },
+			detail: {
+				tab: { type: HTMLElement },
+				tabIndex: { type: Number },
+			},
 		},
 	},
 };

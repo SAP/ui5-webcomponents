@@ -177,6 +177,17 @@ const metadata = {
 		valueStateMessage: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
@@ -319,7 +330,7 @@ class FileUploader extends UI5Element {
 					(element, nativeInput) => {
 						nativeInput.disabled = element.disabled;
 					},
-					this._onChange.bind(this)
+					this._onChange.bind(this),
 				);
 			}
 		} else if (this.name) {

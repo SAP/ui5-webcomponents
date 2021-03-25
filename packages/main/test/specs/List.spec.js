@@ -1,9 +1,10 @@
 const list = require("../pageobjects/ListTestPage");
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("List Tests", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
 	});
 
 	it("List is rendered", () => {
@@ -138,7 +139,7 @@ describe("List Tests", () => {
 	});
 
 	it("mode: multiselect. clicking every item selects it independently from the other items", () => {
-		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
 		list.root.setProperty("mode", "MultiSelect");
 
 		const firstItem = list.getItem(0);
@@ -156,7 +157,7 @@ describe("List Tests", () => {
 	});
 
 	it("mode: delete. items have X buttons which delete them", () => {
-		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
 		list.root.setProperty("mode", "Delete");
 
 		const firstItem = list.getItem(0);
@@ -185,6 +186,7 @@ describe("List Tests", () => {
 		const itemBtn = $("ui5-button.itemBtn");
 		const itemLink = $("ui5-link.itemLink");
 		const itemRadioBtn = $("ui5-radiobutton.itemRadio");
+		const randomBtn = $("#randomBtn");
 
 		headerBtn.click();
 		assert.strictEqual(headerBtn.isFocused(), true, "header btn is focused");
@@ -205,6 +207,11 @@ describe("List Tests", () => {
 		// and go to the "Option B" radio button
 		itemLink.keys("Tab");
 		assert.strictEqual(itemRadioBtn.isFocused(), true, "the last tabbable element (radio) is focused");
+
+		// act: TAB from the "Option B" radio button - the focus should leave  the ui5-list
+		// and Random button should be focused
+		itemLink.keys("Tab");
+		assert.strictEqual(randomBtn.isFocused(), true, "element outside of the list is focused");
 	});
 
 	it("does not focus next / prev item when right / left arrow is pressed", () => {

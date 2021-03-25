@@ -20,7 +20,7 @@
             min="0"
             max="1530"
             value="{{_hue}}"
-            @input="{{_handleHueInput}}"
+            @ui5-input="{{_handleHueInput}}"
         ></ui5-slider>
         <ui5-slider
             disabled="{{inputsDisabled}}"
@@ -29,7 +29,7 @@
             max="1"
             step="0.01"
             value="{{_alpha}}"
-            @input="{{_handleAlphaInput}}"
+            @ui5-input="{{_handleAlphaInput}}"
         ></ui5-slider>
     </div>
 
@@ -46,7 +46,7 @@
             <ui5-input
                 class="ui5-color-picker-hex-input"
                 value="{{hex}}"
-                @change="{{_handleHEXChange}}"
+                @ui5-change="{{_handleHEXChange}}"
                 value-state="{{hexInputErrorState}}"
             ></ui5-input>
         </div>
@@ -54,7 +54,7 @@
 
     <div
         class="ui5-color-picker-rgb-wrapper"
-        @change="{{_handleRGBInputsChange}}"
+        @ui5-change="{{_handleRGBInputsChange}}"
     >
         <div class="ui5-color-picker-rgb">
             <ui5-input
@@ -88,8 +88,8 @@
                 disabled="{{inputsDisabled}}"
                 class="ui5-color-picker-rgb-input"
                 value="{{_alpha}}"
-                @input="{{_handleAlphaInput}}"
-                @change="{{_handleAlphaChange}}"
+                @ui5-input="{{_handleAlphaInput}}"
+                @ui5-change="{{_handleAlphaChange}}"
             ></ui5-input>
             <ui5-label>A</ui5-label>
         </div>

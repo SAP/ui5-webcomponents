@@ -22,7 +22,7 @@
 
     <style>
 		code { color: blue; font-size: small; }
-		
+
 		#individual-pop .avatar-slot,
 		#groupPop .avatar-slot {
 			display: inline-block;
@@ -71,7 +71,7 @@
     <br><br>
 
 	<h1>Test your web components here</h1>
-	
+
 	<ui5-slider id="slider" min="1" max="100" value="60" class="slider"></ui5-slider>
 
 	<div id="avatar-group-wrapper">
@@ -80,8 +80,8 @@
 			<div slot="header">
 				<h5>Business card</h5>
 			</div>
-			
-			<div class="placeholder" style="display: flex;"> 
+
+			<div class="placeholder" style="display: flex;">
 				<!-- TODO -->
 			</div>
 
@@ -94,7 +94,7 @@
 			<div slot="header">
 				<h5>Business card</h5>
 			</div>
-			
+
 			<div class="avatar-slot">
 				<ui5-avatar id="pop-avatar"></ui5-avatar>
 			</div>
@@ -108,18 +108,18 @@
 			</div>
 		</ui5-popover>
 		<ui5-avatar-group type="Individual" avatar-size="XL" id="avatar-group-individual">
-			<ui5-avatar interactive icon="home" initials="XL" id="avatar-1"></ui5-avatar> 
-			<ui5-avatar interactive initials="XL"></ui5-avatar> 
-			<ui5-avatar interactive initials="XL"></ui5-avatar> 
-			<ui5-avatar interactive initials="XL"></ui5-avatar> 
-			<ui5-avatar interactive initials="XL"></ui5-avatar> 
-			<ui5-avatar interactive initials="XL"></ui5-avatar> 
-			<ui5-avatar interactive icon="home"></ui5-avatar> 
-			<ui5-avatar interactive initials="XL"></ui5-avatar> 
-			<ui5-avatar interactive initials="XL"></ui5-avatar> 
-			<ui5-avatar interactive icon="home"></ui5-avatar> 
-			<ui5-avatar interactive icon="home"></ui5-avatar> 
-			<ui5-avatar interactive initials="XL"></ui5-avatar> 
+			<ui5-avatar interactive icon="home" initials="XL" id="avatar-1"></ui5-avatar>
+			<ui5-avatar interactive initials="XL"></ui5-avatar>
+			<ui5-avatar interactive initials="XL"></ui5-avatar>
+			<ui5-avatar interactive initials="XL"></ui5-avatar>
+			<ui5-avatar interactive initials="XL"></ui5-avatar>
+			<ui5-avatar interactive initials="XL"></ui5-avatar>
+			<ui5-avatar interactive icon="home"></ui5-avatar>
+			<ui5-avatar interactive initials="XL"></ui5-avatar>
+			<ui5-avatar interactive initials="XL"></ui5-avatar>
+			<ui5-avatar interactive icon="home"></ui5-avatar>
+			<ui5-avatar interactive icon="home"></ui5-avatar>
+			<ui5-avatar interactive initials="XL"></ui5-avatar>
 		</ui5-avatar-group>
 		<br>
 		<ui5-avatar-group type="Group" avatar-size="M" id="avatar-group-group">
@@ -147,16 +147,16 @@
 		<div class="demo-section">
 			<span>TargetRef Tag Name: </span>
 			<input type="text" id="event-target" />
-	
+
 			<br>
 			<br>
-	
+
 			<span>Event Overflow Button Clicked: </span>
 			<input type="text" id="event-overflow-button-clicked" />
-	
+
 			<br>
 			<br>
-	
+
 			<button id="reset-btn">Reset fields</button>
 		</div>
 		<br>
@@ -218,7 +218,7 @@
 <script>
 	// document.body.dir = "rtl";
 
-	// ES5 
+	// ES5
 	var eventName = document.getElementById("event-name");
 	var eventTargetRef = document.getElementById("event-target");
 	var eventOverflowButtonClicked = document.getElementById("event-overflow-button-clicked");
@@ -242,7 +242,7 @@
 		var color;
 
 		var html = "";
-		
+
 		hiddenItems.forEach(function (avatar, index) {
 			var color = avatarGroup.colorScheme[firstHiddenIndex + index]
 			html += '<div class="avatar-slot" style="padding: 5px">' +
@@ -273,10 +273,10 @@
 	}
 
 
-	avatarGroupIndividual.addEventListener("click", function (event) {
+	avatarGroupIndividual.addEventListener("ui5-click", function (event) {
 		eventTargetRef.value = event.detail.targetRef.tagName;
 		eventOverflowButtonClicked.value = event.detail.overflowButtonClicked;
-		
+
 		if (event.detail.overflowButtonClicked) {
 			onButtonClicked(avatarGroupIndividual, event);
 		} else {
@@ -284,18 +284,18 @@
 		}
 	});
 
-	avatarGroupGroup.addEventListener("click", function (event) { 
+	avatarGroupGroup.addEventListener("ui5-click", function (event) {
 		eventTargetRef.value = event.detail.targetRef.tagName + '.' + event.detail.targetRef.className;
 		eventOverflowButtonClicked.value = event.detail.overflowButtonClicked;
 
 		onButtonClicked(avatarGroupGroup, event)
 	});
 
-	slider.addEventListener("input", function (event) {
+	slider.addEventListener("ui5-input", function (event) {
 		avGrWrapper.style.width = event.target.value + '%';
 	});
 
-	resetBtn.addEventListener("click", function (event) {
+	resetBtn.addEventListener("ui5-click", function (event) {
 		eventName.value = "";
 		eventTargetRef.value = "";
 		eventOverflowButtonClicked.value = "";

@@ -82,7 +82,7 @@ const metadata = {
 		 * Defines whether the <code>ui5-date-picker</code> is required.
 		 *
 		 * @since 1.0.0-rc.9
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -220,6 +220,17 @@ const metadata = {
 		 * @public
 		 */
 		valueStateMessage: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
 			type: HTMLElement,
 		},
 	},
@@ -555,8 +566,9 @@ class DatePicker extends DateComponentBase {
 	}
 
 	/**
-	 * Checks if a date is in range between minimum and maximum date.
-	 * @param {object} value
+	 * Checks if a date is between the minimum and maximum date.
+	 * @param {string} value
+	 * @returns {boolean}
 	 * @public
 	 */
 	isInValidRange(value = "") {
@@ -671,6 +683,7 @@ class DatePicker extends DateComponentBase {
 	 * Formats a Java Script date object into a string representing a locale date
 	 * according to the <code>formatPattern</code> property of the DatePicker instance
 	 * @param {object} oDate A Java Script date object to be formatted as string
+	 * @returns {string} The date as string
 	 * @public
 	 */
 	formatValue(oDate) {
@@ -688,6 +701,8 @@ class DatePicker extends DateComponentBase {
 	/**
 	 * Opens the picker.
 	 * @public
+	 * @async
+	 * @returns {Promise} Resolves when the picker is open
 	 */
 	async openPicker() {
 		this._isPickerOpen = true;
@@ -707,7 +722,7 @@ class DatePicker extends DateComponentBase {
 
 	/**
 	 * Checks if the picker is open.
-	 * @returns {Boolean} true if the picker is open, false otherwise
+	 * @returns {boolean} true if the picker is open, false otherwise
 	 * @public
 	 */
 	isOpen() {

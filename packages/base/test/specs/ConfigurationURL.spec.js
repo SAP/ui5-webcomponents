@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Some settings can be set via URL params", () => {
-	browser.url("http://localhost:9191/test-resources/pages/Configuration.html?sap-ui-rtl=true&sap-ui-language=ja&sap-ui-calendarType=Japanese&sap-ui-theme=sap_belize_hcb&sap-ui-animationMode=basic");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/Configuration.html?sap-ui-rtl=true&sap-ui-language=ja&sap-ui-calendarType=Japanese&sap-ui-theme=sap_belize_hcb&sap-ui-animationMode=basic");
+	});
 
 	it("Tests that RTL is applied", () => {
 		const res = browser.execute( () => {

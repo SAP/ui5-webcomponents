@@ -373,18 +373,6 @@ const metadata = {
 		input: {},
 
 		/**
-		 * Fired when user presses Enter key on the <code>ui5-input</code>.
-		 * <br><br>
-		 * <b>Note:</b> The event is fired independent of whether there was a change before or not.
-		 * If change was performed, the event is fired after the change event.
-		 * The event is also fired when an item of the select list is selected by pressing Enter.
-		 *
-		 * @event
-		 * @public
-		 */
-		submit: {},
-
-		/**
 		 * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
 		 *
 		 * @event sap.ui.webcomponents.main.Input#suggestion-item-select
@@ -464,6 +452,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
  * @appenddocs SuggestionItem
+ * @implements sap.ui.webcomponents.main.IInput
  * @public
  */
 class Input extends UI5Element {
@@ -523,7 +512,6 @@ class Input extends UI5Element {
 		this._backspaceKeyDown = false;
 
 		// all sementic events
-		this.EVENT_SUBMIT = "submit";
 		this.EVENT_CHANGE = "change";
 		this.EVENT_INPUT = "input";
 		this.EVENT_SUGGESTION_ITEM_SELECT = "suggestion-item-select";
@@ -780,7 +768,7 @@ class Input extends UI5Element {
 
 	/**
 	 * Checks if the value state popover is open.
-	 * @returns {Boolean} true if the popover is open, false otherwise
+	 * @returns {boolean} true if the popover is open, false otherwise
 	 * @public
 	 */
 	isOpen() {
@@ -892,7 +880,6 @@ class Input extends UI5Element {
 		}
 
 		const inputValue = await this.getInputValue();
-		const isSubmit = action === this.ACTION_ENTER;
 		const isUserInput = action === this.ACTION_USER_INPUT;
 
 		const input = await this.getInputDOMRef();
@@ -917,13 +904,9 @@ class Input extends UI5Element {
 			return;
 		}
 
-		if (isSubmit) { // submit
-			this.fireEvent(this.EVENT_SUBMIT);
-		}
-
 		// In IE, pressing the ENTER does not fire change
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
-		if (isIE() && isSubmit && valueChanged) {
+		if (isIE() && action === this.ACTION_ENTER && valueChanged) {
 			this.fireEvent(this.EVENT_CHANGE);
 		}
 	}

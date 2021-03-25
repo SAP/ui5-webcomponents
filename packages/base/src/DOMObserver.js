@@ -21,7 +21,9 @@ let _destroyObserver = observer => {
  * @param createFn
  */
 const setCreateObserverCallback = createFn => {
-	_createObserver = createFn;
+	if (typeof createFn === "function") {
+		_createObserver = createFn;
+	}
 };
 
 /**
@@ -29,7 +31,9 @@ const setCreateObserverCallback = createFn => {
  * @param destroyFn
  */
 const setDestroyObserverCallback = destroyFn => {
-	_destroyObserver = destroyFn;
+	if (typeof destroyFn === "function") {
+		_destroyObserver = destroyFn;
+	}
 };
 
 /**

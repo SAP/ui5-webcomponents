@@ -13,9 +13,9 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
-	<ui5-title>List "infinite-scroll"</ui5-title>
+	<ui5-title>List  growing="Scroll"</ui5-title>
 	<ui5-button id="btnTrigger">scroll</ui5-button>
-	<ui5-list id="infiniteScrollEx" style="height: 200px" infinite-scroll>
+	<ui5-list id="infiniteScrollEx" style="height: 200px" growing="Scroll">
 		<ui5-li>Laptop Lenovo</ui5-li>
 		<ui5-li>IPhone 3</ui5-li>
 		<ui5-li>HP Monitor 24</ui5-li>
@@ -97,6 +97,7 @@
 				<ui5-radiobutton text="Option C" disabled="disabled"></ui5-radiobutton>
 		</ui5-li-custom>
 	</ui5-list>
+	<ui5-button id="randomBtn">Random button</ui5-button>
 
 	<ui5-list id="no-data-list" header-text="API: noDataText" separators="None" no-data-text="No Data Available"></ui5-list>
 
@@ -184,7 +185,7 @@
 			</div>
 		</ui5-list>
 
-		<ui5-list style="height: 15rem" infinite-scroll no-data-text="No data">
+		<ui5-list style="height: 15rem" growing="Scroll" no-data-text="No data">
 			<ui5-li>Test</ui5-li>
 		</ui5-list>
 	</ui5-responsive-popover>

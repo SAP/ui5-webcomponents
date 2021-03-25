@@ -88,6 +88,17 @@ const metadata = {
 		valueStateMessage: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Select.prototype */  {
 
@@ -150,7 +161,7 @@ const metadata = {
 		 * Defines whether the <code>ui5-select</code> is required.
 		 *
 		 * @since 1.0.0-rc.9
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -313,7 +324,7 @@ class Select extends UI5Element {
 			if (!this._listWidth) {
 				this._listWidth = this.responsivePopover.offsetWidth;
 			}
-			if (this.responsivePopover.querySelector("ui5-li[focused]:not([selected]")) {
+			if (this.responsivePopover.querySelector("[ui5-li][focused]:not([selected])")) {
 				// selection changed programmatically => apply focus to the newly selected item
 				this._applyFocusAfterOpen();
 			}
@@ -330,7 +341,7 @@ class Select extends UI5Element {
 	}
 
 	get _isPickerOpen() {
-		return this.responsivePopover && this.responsivePopover.opened;
+		return !!this.responsivePopover && this.responsivePopover.opened;
 	}
 
 	async _respPopover() {
@@ -410,7 +421,7 @@ class Select extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
 				nativeInput.disabled = element.disabled;
-				nativeInput.value = element._currentlySelectedOption.value;
+				nativeInput.value = element._currentlySelectedOption ? element._currentlySelectedOption.value : "";
 			});
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line

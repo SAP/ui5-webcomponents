@@ -257,6 +257,7 @@ const metadata = {
 		 *
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBar#notifications-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
@@ -284,6 +285,7 @@ const metadata = {
 		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event sap.ui.webcomponents.fiori.ShellBar#product-switch-click
+		 * @allowPreventDefault
 		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
@@ -594,10 +596,11 @@ class ShellBar extends UI5Element {
 			const isImageIcon = info.classes.indexOf("ui5-shellbar-image-button") !== -1;
 			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.hasProfile);
 
-			return Object.assign({}, info, {
+			return {
+				...info,
 				classes: `${info.classes} ${shouldStayOnScreen ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-button`,
 				style: `order: ${shouldStayOnScreen ? 1 : -1}`,
-			});
+			};
 		});
 
 		this._updateItemsInfo(newItems);
@@ -743,7 +746,7 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns all items that will be placed in the right of the bar as icons / dom elements.
-	 * @param {Boolean} showOverflowButton Determines if overflow button should be visible (not overflowing)
+	 * @param {boolean} showOverflowButton Determines if overflow button should be visible (not overflowing)
 	 */
 	_getAllItems(showOverflowButton) {
 		let domOrder = -1;

@@ -13,6 +13,7 @@
   "scripts": {
     "clean": "wc-dev clean",
     "build": "wc-dev build",
+    "hash": "nps hash",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "repository": {
@@ -25,6 +26,6 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.12",
-    "chromedriver": "88.0.0"
+    "chromedriver": "89.0.0"
   }
 }

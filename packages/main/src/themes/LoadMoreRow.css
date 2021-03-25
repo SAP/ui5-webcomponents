@@ -1,51 +1,50 @@
-/* Show more row */
-.ui5-table-load-more-row {
+[load-more] {
 	display: flex;
 	align-items: center;
-	padding: var(--ui5_table_load_more_padding);
+	padding: var(--_ui5_load_more_padding);
 	border-top: 1px solid var(--sapList_BorderColor);
 	box-sizing: border-box;
 	cursor: pointer;
 	outline: none;
 }
 
-.ui5-table-load-more-row-inner {
+[load-more-inner] {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	min-height: var(--ui5_table_load_more_text_height);
+	min-height: var(--_ui5_load_more_text_height);
 	width: 100%;
 	color: var(--sapButton_TextColor);
 	background-color: var(--sapList_Background);
-	border: var(--ui5_table_load_more_border);
-	border-radius: var(--ui5_table_load_more_border_radius);
+	border: var(--_ui5_load_more_border);
+	border-radius: var(--_ui5_load_more_border_radius);
 	box-sizing: border-box;
 }
 
-.ui5-table-load-more-row-inner:focus {
-	outline: var(--ui5_table_row_outline_width) dotted var(--sapContent_FocusColor);
+[load-more-inner]:focus {
+	outline: var(--_ui5_load_more_outline_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -0.125rem;
 	border-color: transparent;
 }
 
-.ui5-table-load-more-row-inner:hover {
+[load-more-inner]:hover {
 	background-color: var(--sapList_Hover_Background);
 }
 
-.ui5-table-load-more-row-inner:active,
-.ui5-table-load-more-row-inner[active] {
+[load-more-inner]:active,
+[load-more-inner][active] {
 	background-color: var(--sapList_Active_Background);
 	border-color: var(--sapList_Active_Background);
 }
 
-.ui5-table-load-more-row-inner[active] > *,
-.ui5-table-load-more-row-inner:active> * {
+[load-more-inner]:active > *,
+[load-more-inner][active] > * {
 	color: var(--sapList_Active_TextColor);
 }
 
-.ui5-table-load-more-row-text,
-.ui5-table-load-more-row-desc {
+[load-more-text],
+[load-more-subtext] {
 	width: 100%;
 	text-align: center;
 	font-family: "72override", var(--sapFontFamily);
@@ -55,14 +54,14 @@
 	box-sizing: border-box;
 }
 
-.ui5-table-load-more-row-text {
-	height: var(--ui5_table_load_more_text_height);
+[load-more-text] {
+	height: var(--_ui5_load_more_text_height);
 	padding: 0.875rem 1rem 0 1rem;
-	font-size: var(--_ui5_table_load_more_text_font_size);
+	font-size: var(--_ui5_load_more_text_font_size);
 	font-weight: bold;
 }
 
-.ui5-table-load-more-row-desc {
+[load-more-subtext] {
 	font-size: var(--sapFontSize);
-	padding: var(--_ui5_table_load_more_desc_padding);
+	padding: var(--_ui5_load_more_desc_padding);
 }

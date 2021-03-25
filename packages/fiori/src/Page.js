@@ -9,7 +9,6 @@ import PageTemplate from "./generated/templates/PageTemplate.lit.js";
 // Styles
 import PageCss from "./generated/themes/Page.css.js";
 
-
 /**
  * @public
  */
@@ -26,25 +25,24 @@ const metadata = {
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
-		 * <li><code>List</code></li>
-		 * <li><code>Solid</code></li>
-		 * <li><code>Standard</code></li> (default)
+		 * <li><code>Solid</code></li> (default)
 		 * <li><code>Transparent</code></li>
+		 * <li><code>List</code></li>
 		 * </ul>
 		 * @type {PageBackgroundDesign}
-		 * @defaultvalue "Standard"
+		 * @defaultvalue "Solid"
 		 * @public
 		 */
 		backgroundDesign: {
 			type: String,
-			defaultValue: PageBackgroundDesign.Standard,
+			defaultValue: PageBackgroundDesign.Solid,
 		},
 
 		/**
-         * Disables vertical scrolling of page content.
-         * If set to true, there will be no vertical scrolling at all.
-         *
-		 * @type {Boolean}
+		 * Disables vertical scrolling of page content.
+		 * If set to true, there will be no vertical scrolling at all.
+		 *
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -56,7 +54,7 @@ const metadata = {
 		 * Defines if the footer should float over the content.
 		 * <br><br>
 		 * <b>Note:</b> When set to true the footer floats over the content with a slight offset from the bottom, otherwise it is fixed at the very bottom of the page.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue true
 		 * @public
 		 */
@@ -65,9 +63,9 @@ const metadata = {
 		},
 
 		/**
-         * Defines the footer visibility.
-         *
-		 * @type {Boolean}
+		 * Defines the footer visibility.
+		 *
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */

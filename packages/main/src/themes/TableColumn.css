@@ -15,6 +15,10 @@ th {
 	vertical-align: middle;
 }
 
+th[dir="rtl"] {
+	text-align: right;
+}
+
 :host([first]) th {
 	padding-left: 1rem;
 }

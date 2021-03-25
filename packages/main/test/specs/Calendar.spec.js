@@ -1,7 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Calendar general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
+	});
 
 	it("Calendar is rendered", () => {
 		const calendar = browser.$("#calendar1").shadow$(".ui5-cal-root");
@@ -62,7 +65,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar focuses the selected year when yearpicker is opened", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
 		const calendar = browser.$("#calendar1");
 		const yearPicker = calendar.shadow$("ui5-yearpicker");
 		const YEAR = 1997;
@@ -73,7 +76,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar doesn't mark year as selected when there are no selected dates", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
@@ -84,7 +87,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar doesn't mark month as selected when there are no selected dates", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
 		calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-month]`).click();
@@ -95,7 +98,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Page up/down increments/decrements the month value", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
 		const calendar = browser.$("#calendar1");
 
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
@@ -154,7 +157,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Page up/down increments/decrements the year range in the year picker", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 1, 0, 0, 0)).valueOf() / 1000);
 
@@ -170,7 +173,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("When month picker is shown the month button is hidden", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
 		const calendar = browser.$("#calendar1");
 		const calendarHeader = calendar.shadow$("ui5-calendar-header");
 
@@ -183,7 +186,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar with 'Multiple' selection type", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("selection-mode", "Multiple");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
@@ -205,7 +208,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Keyboard navigation works properly, when calendar selection type is set to 'Multiple'", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
 		const toggleButton = browser.$("#weekNumbersButton");
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("selection-mode", "Multiple");
@@ -225,7 +228,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Calendar with 'Range' selection type", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
 		const calendar = browser.$("#calendar1");
 		calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
 		calendar.setAttribute("selection-mode", "Range");

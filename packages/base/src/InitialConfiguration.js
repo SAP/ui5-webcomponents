@@ -119,7 +119,6 @@ const applyOpenUI5Configuration = () => {
 	initialConfig = merge(initialConfig, OpenUI5Config);
 };
 
-
 const initConfiguration = () => {
 	if (initialized) {
 		return;

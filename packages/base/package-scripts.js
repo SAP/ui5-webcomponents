@@ -6,12 +6,16 @@ const port = `9191`;
 
 const assetParametersScript = resolve.sync("@ui5/webcomponents-base/lib/generate-asset-parameters/index.js");
 
+const generateHash = resolve.sync("@ui5/webcomponents-tools/lib/hash/generate.js");
+const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.js");
+const UP_TO_DATE = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`;
+
 const scripts = {
 	clean: "rimraf dist",
 	lint: "eslint . --config config/.eslintrc.js",
 	prepare: "nps clean copy generateAssetParameters",
 	build: {
-		default: "nps lint prepare build.bundle",
+		default: `${UP_TO_DATE} || nps lint prepare build.bundle hash`,
 		bundle: "rollup --config config/rollup.config.js",
 	},
 	copy: {
@@ -38,6 +42,7 @@ const scripts = {
 		default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
 		run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
 	},
+	hash: `node ${generateHash} dist/ hash.txt`,
 };
 
 

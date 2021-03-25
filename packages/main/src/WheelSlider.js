@@ -108,8 +108,10 @@ const metadata = {
 		 *  Fires when new value is selected.
 		 */
 		select: {
-			value: {
-				type: String,
+			detail: {
+				value: {
+					type: String,
+				},
 			},
 		},
 	},

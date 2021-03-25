@@ -145,7 +145,6 @@ class TreeItem extends UI5Element {
 
 	/**
 	 * Call this method to manually switch the <code>expanded</code> state of a tree item.
-	 *
 	 * @public
 	 */
 	toggle() {

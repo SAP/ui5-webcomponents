@@ -1,11 +1,12 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import Popup from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
-import { getClosedPopupParent } from "./popup-utils/PopupUtils.js";
 
 // Template
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
@@ -291,6 +292,8 @@ class Popover extends Popup {
 	 * @param {HTMLElement} opener the element that the popover is opened by
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
+	 * @async
+	 * @returns {Promise} Resolved when the popover is open
 	 */
 	async openBy(opener, preventInitialFocus = false) {
 		if (!opener || this.opened) {
@@ -394,15 +397,44 @@ class Popover extends Popup {
 
 		this._oldPlacement = placement;
 
+		const left = clamp(
+			this._left,
+			Popover.MIN_OFFSET,
+			document.documentElement.clientWidth - popoverSize.width - Popover.MIN_OFFSET,
+		);
+
+		const top = clamp(
+			this._top,
+			Popover.MIN_OFFSET,
+			document.documentElement.clientHeight - popoverSize.height - Popover.MIN_OFFSET,
+		);
+
+		let { arrowX, arrowY } = placement;
+
 		const popoverOnLeftBorder = this._left === 0;
+		const popoverOnRightBorder = this._left + popoverSize.width >= document.documentElement.clientWidth;
+		if (popoverOnLeftBorder) {
+			arrowX -= Popover.MIN_OFFSET;
+		} else if (popoverOnRightBorder) {
+			arrowX += Popover.MIN_OFFSET;
+		}
+		this.arrowTranslateX = arrowX;
+
 		const popoverOnTopBorder = this._top === 0;
+		const popoverOnBottomBorder = this._top + popoverSize.height >= document.documentElement.clientHeight;
+		if (popoverOnTopBorder) {
+			arrowY -= Popover.MIN_OFFSET;
+		} else if (popoverOnBottomBorder) {
+			arrowY += Popover.MIN_OFFSET;
+		}
+		this.arrowTranslateY = arrowY;
 
 		this.actualPlacementType = placement.placementType;
-		this.arrowTranslateX = popoverOnLeftBorder ? placement.arrowX - Popover.MIN_OFFSET : placement.arrowX;
-		this.arrowTranslateY = popoverOnTopBorder ? placement.arrowY - Popover.MIN_OFFSET : placement.arrowY;
 
-		this.style.left = `${popoverOnLeftBorder ? Popover.MIN_OFFSET : this._left}px`;
-		this.style.top = `${popoverOnTopBorder ? Popover.MIN_OFFSET : this._top}px`;
+		Object.assign(this.style, {
+			top: `${top}px`,
+			left: `${left}px`,
+		});
 		super.show();
 
 		if (stretching && this._width) {
@@ -411,25 +443,17 @@ class Popover extends Popup {
 	}
 
 	getPopoverSize() {
-		let width,
-			height;
-		let rect = this.getBoundingClientRect();
-
-		if (this.opened) {
-			width = rect.width;
-			height = rect.height;
-
-			return { width, height };
+		if (!this.opened) {
+			Object.assign(this.style, {
+				display: "block",
+				top: "-10000px",
+				left: "-10000px",
+			});
 		}
 
-		this.style.display = "block";
-		this.style.top = "-10000px";
-		this.style.left = "-10000px";
-
-		rect = this.getBoundingClientRect();
-
-		width = rect.width;
-		height = rect.height;
+		const rect = this.getBoundingClientRect(),
+			width = rect.width,
+			height = rect.height;
 
 		return { width, height };
 	}
@@ -527,9 +551,7 @@ class Popover extends Popup {
 
 		let maxContentHeight = Math.round(maxHeight);
 
-		const hasHeader = this.header.length || this.headerText;
-
-		if (hasHeader) {
+		if (this._displayHeader) {
 			const headerDomRef = this.shadowRoot.querySelector(".ui5-popup-header-root")
 				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
 
@@ -540,9 +562,7 @@ class Popover extends Popup {
 
 		this._maxContentHeight = maxContentHeight;
 
-		const arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
-		const arrowTranslateX = isVertical && arrowXCentered ? targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2 : 0;
-		const arrowTranslateY = !isVertical ? targetRect.top + targetRect.height / 2 - top - popoverSize.height / 2 : 0;
+		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical);
 
 		if (this._left === undefined || Math.abs(this._left - left) > 1.5) {
 			this._left = Math.round(left);
@@ -553,11 +573,48 @@ class Popover extends Popup {
 		}
 
 		return {
-			arrowX: Math.round(arrowTranslateX),
-			arrowY: Math.round(arrowTranslateY),
+			arrowX: arrowPos.x,
+			arrowY: arrowPos.y,
 			top: this._top,
 			left: this._left,
 			placementType,
+		};
+	}
+
+	/**
+	 * Calculates the position for the arrow.
+	 * @private
+	 * @param targetRect BoundingClientRect of the target element
+	 * @param popoverSize Width and height of the popover
+	 * @param left Left offset of the popover
+	 * @param top Top offset of the popover
+	 * @param isVertical if the popover is positioned vertically to the target element
+	 * @returns {{x: number, y: number}} Arrow's coordinates
+	 */
+	getArrowPosition(targetRect, popoverSize, left, top, isVertical) {
+		let arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
+
+		if (this.horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
+			arrowXCentered = true;
+		}
+
+		if (this.horizontalAlign === PopoverHorizontalAlign.Left && left + popoverSize.width >= targetRect.left + targetRect.width) {
+			arrowXCentered = true;
+		}
+
+		let arrowTranslateX = 0;
+		if (isVertical && arrowXCentered) {
+			arrowTranslateX = targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2;
+		}
+
+		let arrowTranslateY = 0;
+		if (!isVertical) {
+			arrowTranslateY = targetRect.top + targetRect.height / 2 - top - popoverSize.height / 2;
+		}
+
+		return {
+			x: Math.round(arrowTranslateX),
+			y: Math.round(arrowTranslateY),
 		};
 	}
 
