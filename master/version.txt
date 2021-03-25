@@ -1,5 +1,7 @@
-commit fb725fe7c3d72cc9fd4dbd9a5855bb6b1b82a9f4
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Mar 25 16:09:16 2021 +0200
+commit f0346c05758c4f530d3a8821a9fc381ef7eec126
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Mar 25 17:15:46 2021 +0200
 
-    chore: improve the localization build (#3017)
+    fix(ui5-rangeslider): fix handles opacity for IE11 (#2983)
+    
+    Range Slider's handles' background is now fixed to be consistent across all browsers, as previously their opacity was not correct in IE11.
