@@ -45,15 +45,6 @@ const metadata = {
 	},
 
 	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
-		/**
-		 * @public
-		 * @event
-		 * @since 1.0.0-rc.9
-		 * @native
-		 */
-		click: {
-
-		},
 	},
 };
 
