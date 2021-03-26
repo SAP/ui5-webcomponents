@@ -1,6 +1,8 @@
-// ES5 bundle targets IE11 only
-import "@ui5/webcomponents-ie11/dist/features/IE11.js";
+import testAssets from "@ui5/webcomponents/bundle.es5.js";
 
-import testAssets from "./bundle.esm.js";
+// FIORI assets
+import "./dist/Assets-static.js";
+
+import "./bundle.common.js";
 
 export default testAssets;

@@ -43,8 +43,8 @@ const metadata = {
 		/**
 		 * Defines the columns layout and their proportion.
 		 * <br><br>
-		 * <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 900px,
-		 * two columns between 900px and 1280px and three columns for sizes bigger than 1280px.
+		 * <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 599px,
+		 * two columns between 599px and 1023px and three columns for sizes bigger than 1023px.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -228,8 +228,8 @@ const metadata = {
  * <h3>Responsive Behavior</h3>
  *
  * The <code>FlexibleColumnLayout</code> automatically displays the maximum possible number of columns based on <code>layout</code> property and the window size.
- * The component would display 1 column for window size smaller than 900px, up to two columns between 900px and 1280px,
- * and 3 columns for sizes bigger than 1280px.
+ * The component would display 1 column for window size smaller than 599px, up to two columns between 599px and 1023px,
+ * and 3 columns for sizes bigger than 1023px.
  *
  * <h3>ES6 Module Import</h3>
  *
