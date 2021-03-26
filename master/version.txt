@@ -1,7 +1,9 @@
-commit 802b6ca23992b073daeb1ce0a66a4bbacafa4e33
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Fri Mar 26 09:53:59 2021 +0200
+commit e99927e6afe62ee9e79b8f31c63f95342c688132
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Mar 26 09:57:09 2021 +0200
 
-    fix(ui5-table): bottom borded added (#2994)
+    docs: fix breakpoints info (#2977)
     
-    FIXES: #2981
+    We changed the breakpoints for layout changes in the past, but the docs still point to the old ones. Now we update them to correctly reflect the component behaviour.
+    
+    FIXES: #2976
