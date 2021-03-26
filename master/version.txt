@@ -1,9 +1,5 @@
-commit e99927e6afe62ee9e79b8f31c63f95342c688132
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 26 09:57:09 2021 +0200
+commit e6e1730891310691b5fa85ce32fb2dc7eaf4e308
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Mar 26 10:20:47 2021 +0200
 
-    docs: fix breakpoints info (#2977)
-    
-    We changed the breakpoints for layout changes in the past, but the docs still point to the old ones. Now we update them to correctly reflect the component behaviour.
-    
-    FIXES: #2976
+    chore: fix IE11 bundle (#3023)
