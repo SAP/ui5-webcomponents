@@ -285,7 +285,7 @@ class FileUploader extends UI5Element {
 		});
 	}
 
-	_onkeydown(event){
+	_onkeydown(event) {
 		if (isEnter(event) || isSpace(event)) {
 			this._input.click(event);
 		}
