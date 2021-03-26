@@ -10,14 +10,16 @@
 	--_ui5_slider_handle_width: 1.625rem;
 	--_ui5_slider_handle_border: solid 0.125rem var(--sapField_BorderColor);
 	--_ui5_slider_handle_background: var(--sapButton_Background);
-	--_ui5_range_slider_handle_background: rgba(var(--sapButton_Background), 0.25);
+	/* --_ui5_range_slider_handle_background: rgba(var(--sapButton_Background), 0.25); - doesn't work on IE */
+	--_ui5_range_slider_handle_background: rgba(255, 255, 255, 0.25);
 	--_ui5_slider_handle_top: -0.825rem;
 	--_ui5_slider_handle_margin_left: -0.9725rem;
 	--_ui5_slider_handle_hover_background: var(--sapButton_Hover_Background);
 	--_ui5_slider_handle_hover_border: var(--sapButton_Hover_BorderColor);
 	--_ui5_slider_handle_outline: 1px dotted var(--sapContent_FocusColor);
 	--_ui5_slider_handle_outline_offset: 0.075rem;
-	--_ui5_range_slider_handle_hover_background: rgba(var(--sapButton_Background), 0.25);
+	/* --_ui5_range_slider_handle_hover_background: rgba(var(--sapButton_Background), 0.25); - doesn't work on IE */
+	--_ui5_range_slider_handle_hover_background: rgba(255, 255, 255, 0.25);
 	--_ui5_slider_progress_outline: 0.0625rem dotted var(--sapContent_FocusColor);
 	--_ui5_slider_progress_outline_offset: -0.8125rem;
 	--_ui5_slider_tickmark_color: #89919a;

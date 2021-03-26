@@ -1,16 +1,18 @@
 const path = require("path");
+const fs = require("fs");
 
 const LIB = path.join(__dirname, `../lib/`);
-const serveConfig = path.join(__dirname, `serve.json`);
 const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
 const polyfillPath = path.join(polyfillDir, "{*.js,*.map,*.md,bundles/**/*.*}");
+const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 
 const getScripts = (options) => {
 
-	const port = options.port;
+	const port = options.port || 8080; // preferred port
+	const portStep = options.portStep || 1; // step to check for available ports, if preferred port is already used
 
 	const scripts = {
-		clean: "rimraf dist",
+		clean: "rimraf dist && rimraf .port",
 		lint: "eslint . --config config/.eslintrc.js",
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
 		prepare: {
@@ -79,11 +81,7 @@ const getScripts = (options) => {
 			es5: 'concurrently "nps serve" "nps watch.es5"'
 		},
 		start: "nps prepare dev",
-		serve: {
-			default: "nps serve.prepare serve.run",
-			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "${serveConfig}" dist/`,
-			run: `serve --no-clipboard -l ${port} dist`,
-		},
+		serve: `node "${LIB}/serve/index.js" --dir="dist/" --port=${port} --portStep=${portStep} --packageName="${packageName}"`,
 		test: {
 			// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
 			default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
