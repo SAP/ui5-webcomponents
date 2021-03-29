@@ -30,6 +30,6 @@
 }
 
 :host(:not([dir="ltr"])) .ui5-icon-root[dir=rtl] {
-	transform: scale(-1, -1);
+	transform: scale(-1, 1);
 	transform-origin: center;
 }
