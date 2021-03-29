@@ -1,5 +1,6 @@
 
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 const getOverflowPopover = id => {
 	const staticAreaItemClassName = browser.getStaticAreaItemClassName(`#${id}`);
@@ -24,7 +25,7 @@ const getCustomActionProp = (id, pos, prop) => {
 
 describe("Component Behavior", () => {
 	before(() => {
-		browser.url("http://localhost:8081/test-resources/pages/ShellBar.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ShellBar.html`);
 	});
 
 	describe("ui5-shellbar-item", () => {

@@ -3,8 +3,7 @@
   "version": "1.0.0-rc.12",
   "description": "UI5 Web Components: webcomponents.main",
   "ui5": {
-    "webComponentsPackage": true,
-    "port": "8080"
+    "webComponentsPackage": true
   },
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",

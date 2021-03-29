@@ -117,13 +117,20 @@
 		<ui5-avatar id="interactive-avatar" interactive initials="XS" size="XS"></ui5-avatar>
 		<ui5-avatar id="non-interactive-avatar" initials="S" size="S"></ui5-avatar>
 		<ui5-input id="click-event" value="0"></ui5-input>
+
+		<br>
+		<ui5-avatar id="myInteractiveAvatar" interactive initials="L" size="L"></ui5-avatar>
+		<ui5-input id="click-event-2"></ui5-input>
 	</section>
 
 	<script>
 		var avatar = document.getElementById("interactive-avatar"),
+			myInteractiveAvatar = document.getElementById("myInteractiveAvatar"),
 			nonInteractiveAvatar = document.getElementById("non-interactive-avatar"),
 			input = document.getElementById("click-event"),
+			input2 = document.getElementById("click-event-2"),
 			inputValue = 0;
+			inputValue2 = 0;
 
 		avatar.addEventListener("ui5-click", function() {
 			input.value = ++inputValue;
@@ -131,6 +138,10 @@
 
 		nonInteractiveAvatar.addEventListener("ui5-click", function() {
 			input.value = ++inputValue;
+		});
+
+		myInteractiveAvatar.addEventListener("click", function() {
+			input2.value = ++inputValue2;
 		});
 	</script>
 

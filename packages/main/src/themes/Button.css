@@ -59,9 +59,13 @@
 	letter-spacing: inherit;
 	word-spacing: inherit;
 	line-height: inherit;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
-:host(:not([active]):not([non-interactive]):hover),
+:host(:not([active]):not([non-interactive]):not([_is-touch]):hover),
 :host(:not([hidden]).ui5_hovered) {
 	background: var(--sapButton_Hover_Background);
 }
@@ -125,7 +129,7 @@ bdi {
 	text-overflow: inherit;
 }
 
-:host([active]:not([disabled])) {
+:host([ui5-button][active]:not([disabled]):not([non-interactive])) {
 	background-image: none;
 	background-color: var(--sapButton_Active_Background);
 	border-color: var(--_ui5_button_active_border_color);
@@ -133,7 +137,7 @@ bdi {
 	text-shadow: none;
 }
 
-:host([active]) {
+:host([active]:not([_is-touch])) {
 	outline-color: var(--sapContent_ContrastFocusColor);
 }
 
@@ -144,19 +148,19 @@ bdi {
 	text-shadow: var(--_ui5_button_text_shadow);
 }
 
-:host([design="Positive"]:hover) {
+:host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):hover) {
 	background-color: var(--sapButton_Accept_Hover_Background);
 	border-color: var(--_ui5_button_positive_border_hover_color);
 }
 
-:host([design="Positive"][active]) {
+:host([ui5-button][_is-touch][design="Positive"][active]:not([non-interactive])) {
 	background-color: var(--sapButton_Accept_Active_Background);
 	border-color: var(--_ui5_button_positive_border_active_color);
 	color: var(--sapButton_Active_TextColor);
 	text-shadow: none;
 }
 
-:host([design="Positive"][focused]) {
+:host([design="Positive"][focused]:not([_is-touch])) {
 	outline-color: var(--_ui5_button_positive_border_focus_hover_color);
 	border-color: var(--_ui5_button_positive_focus_border_color);
 }
@@ -172,7 +176,7 @@ bdi {
 	text-shadow: var(--_ui5_button_text_shadow);
 }
 
-:host([design="Negative"]:hover) {
+:host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):hover) {
 	background-color: var(--sapButton_Reject_Hover_Background);
 	border-color: var(--sapButton_Reject_Hover_BorderColor);
 }
@@ -182,7 +186,7 @@ bdi {
 	outline-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
-:host([design="Negative"][active]) {
+:host([ui5-button][design="Negative"][active]:not([non-interactive])) {
 	background-color: var(--sapButton_Reject_Active_Background);
 	border-color: var(--_ui5_button_negative_active_border_color);
 	color: var(--sapButton_Active_TextColor);
@@ -201,12 +205,11 @@ bdi {
 	font-weight: var(--_ui5_button_emphasized_font_weight);
 }
 
-:host([design="Emphasized"]:not([active]):hover) {
+:host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]):hover) {
 	background-color: var(--sapButton_Emphasized_Hover_Background);
 	border-color: var(--sapButton_Emphasized_Hover_BorderColor);
 }
-
-:host([design="Empasized"][active]) {
+:host([ui5-button][design="Empasized"][active]:not([non-interactive])) {
 	background-color: var(--sapButton_Emphasized_Active_Background);
 	border-color: var(--sapButton_Emphasized_Active_BorderColor);
 	color: var(--sapButton_Active_TextColor);
@@ -225,11 +228,11 @@ bdi {
 	border-color: var(--_ui5_button_transparent_border_color);
 }
 
-:host([design="Transparent"]):hover {
+:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):hover){
 	background-color: var(--sapButton_Lite_Hover_Background);
 }
 
-:host([design="Transparent"][active]) {
+:host([ui5-button][design="Transparent"][active]:not([non-interactive])) {
 	background-color: var(--sapButton_Active_Background);
 	color: var(--sapButton_Active_TextColor);
 	text-shadow: none;

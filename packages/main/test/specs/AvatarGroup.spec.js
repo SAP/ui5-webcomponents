@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("avatar-group rendering", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/AvatarGroup.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/AvatarGroup.html`);
 	});
 
 	it("tests if web component is correctly rendered", () => {

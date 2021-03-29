@@ -1,16 +1,18 @@
 const path = require("path");
+const fs = require("fs");
 
 const LIB = path.join(__dirname, `../lib/`);
-const serveConfig = path.join(__dirname, `serve.json`);
 const polyfillDir = path.dirname(require.resolve("@webcomponents/webcomponentsjs"));
 const polyfillPath = path.join(polyfillDir, "{*.js,*.map,*.md,bundles/**/*.*}");
+const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 
 const getScripts = (options) => {
 
-	const port = options.port;
+	const port = options.port || 8080; // preferred port
+	const portStep = options.portStep || 1; // step to check for available ports, if preferred port is already used
 
 	const scripts = {
-		clean: "rimraf dist",
+		clean: "rimraf dist && rimraf .port",
 		lint: "eslint . --config config/.eslintrc.js",
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
 		prepare: {
@@ -23,7 +25,7 @@ const getScripts = (options) => {
 			styles: {
 				default: "nps build.styles.themes build.styles.components",
 				themes: "postcss src/**/parameters-bundle.css --config config/postcss.themes --base src --dir dist/css/",
-				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/",
+				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
@@ -52,8 +54,8 @@ const getScripts = (options) => {
 			"webcomponents-polyfill-placeholder": `node ${LIB}/polyfill-placeholder/index.js`
 		},
 		watch: {
-			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
-			es5: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle.es5" "nps watch.styles"',
+			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps watch.i18n"',
+			es5: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle.es5" "nps watch.styles" "nps watch.i18n"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			test: 'nps "copy.test --watch --safe --skip-initial-copy"',
@@ -64,21 +66,22 @@ const getScripts = (options) => {
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
-				components: 'nps "build.styles.components -w"',
+				components: {
+					default: 'concurrently "nps watch.styles.components.existingFiles" "nps watch.styles.components.newFiles"',
+					existingFiles: `nps "build.styles.components -w"`,
+					newFiles: `node "${LIB}/postcss-new-files/index.js" --srcFiles="src/themes/*.css"`,
+				},
 			},
-			templates: "chokidar \"src/**/*.hbs\" -c \"nps build.templates\"",
-			samples: "chokidar \"test/**/*.sample.html\" -c \"nps build.samples\"",
+			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
+			samples: 'chokidar "test/**/*.sample.html" -c "nps build.samples"',
+			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
 		dev: {
 			default: 'concurrently "nps serve" "nps watch"',
 			es5: 'concurrently "nps serve" "nps watch.es5"'
 		},
 		start: "nps prepare dev",
-		serve: {
-			default: "nps serve.prepare serve.run",
-			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "${serveConfig}" dist/`,
-			run: `serve --no-clipboard -l ${port} dist`,
-		},
+		serve: `node "${LIB}/serve/index.js" --dir="dist/" --port=${port} --portStep=${portStep} --packageName="${packageName}"`,
 		test: {
 			// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
 			default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',

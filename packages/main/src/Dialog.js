@@ -1,4 +1,5 @@
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popup from "./Popup.js";
 import "@ui5/webcomponents-icons/dist/resize-corner.js";
@@ -223,10 +224,6 @@ class Dialog extends Popup {
 		this._center();
 	}
 
-	_clamp(val, min, max) {
-		return Math.min(Math.max(val, min), max);
-	}
-
 	onBeforeRendering() {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
@@ -386,26 +383,26 @@ class Dialog extends Popup {
 		let newLeft;
 
 		if (this._isRTL) {
-			newWidth = this._clamp(
+			newWidth = clamp(
 				this._initialWidth - (clientX - this._initialX),
 				this._minWidth,
 				this._initialLeft + this._initialWidth,
 			);
 
-			newLeft = this._clamp(
+			newLeft = clamp(
 				this._initialLeft + (clientX - this._initialX),
 				0,
 				this._initialX + this._initialWidth - this._minWidth,
 			);
 		} else {
-			newWidth = this._clamp(
+			newWidth = clamp(
 				this._initialWidth + (clientX - this._initialX),
 				this._minWidth,
 				window.innerWidth - this._initialLeft,
 			);
 		}
 
-		const newHeight = this._clamp(
+		const newHeight = clamp(
 			this._initialHeight + (clientY - this._initialY),
 			this._minHeight,
 			window.innerHeight - this._initialTop,

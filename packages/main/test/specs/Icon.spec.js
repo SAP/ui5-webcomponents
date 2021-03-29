@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Icon general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Icon.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Icon.html`);
 	});
 
 	it("Tests icon rendering", () => {

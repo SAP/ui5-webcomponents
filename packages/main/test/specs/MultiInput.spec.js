@@ -1,4 +1,5 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 const getTokenizerPopoverId = (inputId) => {
 	return browser.execute(async (inputId) => {
@@ -11,7 +12,7 @@ const getTokenizerPopoverId = (inputId) => {
 
 describe("MultiInput general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/MultiInput.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/MultiInput.html`);
 	});
 
 	it("tests expanding of tokenizer", () => {

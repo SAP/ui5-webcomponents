@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Wizard general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8081/test-resources/pages/Wizard_test.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
 	});
 
 	it("test initial selection", () => {
@@ -179,7 +180,7 @@ describe("Wizard general interaction", () => {
 	});
 
 	it("tests no scrolling to selected step, if the selection was not changed", ()=>{
-		browser.url("http://localhost:8081/test-resources/pages/Wizard_test.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
 
 		const wizard = browser.$("#wizTest");
 		const wizardContentDOM = wizard.shadow$(".ui5-wiz-content");
@@ -212,13 +213,13 @@ describe("Wizard general interaction", () => {
 	});
 
 	it("tests small screen", ()=>{
-		browser.url("http://localhost:8081/test-resources/pages/Wizard_test_mobile.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test_mobile.html`);
 
 		const wizard = browser.$("#wizTest");
 		const wizardDisabled = browser.$("#wizTest2");
 		const groupedStep = wizard.shadow$(`[data-ui5-index="3"]`);
 		const groupedStepDisabled = wizardDisabled.shadow$(`[data-ui5-index="3"]`);
-		
+
 		// act - click on the stack of steps
 		groupedStep.shadow$(`.ui5-wiz-step-root`).click();
 
