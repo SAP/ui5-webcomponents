@@ -263,8 +263,8 @@ class AvatarGroup extends UI5Element {
 		return this.items.map(avatar => avatar._effectiveBackgroundColor);
 	}
 
-	get _hasSlottedOverflowBtn() {
-		return !!this.overflowButton.length;
+	get _customOverflowButton () {
+		return this.overflowButton[0];
 	}
 
 	get _hiddenStartIndex() {
@@ -325,8 +325,8 @@ class AvatarGroup extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this._hasSlottedOverflowBtn) {
-			this.overflowButton[0].nonInteractive = this._isGroup;
+		if (this._customOverflowButton) {
+			this._customOverflowButton.nonInteractive = this._isGroup;
 		}
 
 		this._prepareAvatars();
@@ -415,7 +415,7 @@ class AvatarGroup extends UI5Element {
 			}
 
 			// last avatar should not be offset as it breaks the container width and focus styles are no set correctly
-			if (index !== this._itemsCount - 1 || this._hasSlottedOverflowBtn) {
+			if (index !== this._itemsCount - 1 || this._customOverflowButton) {
 				// based on RTL margin left or right is set to avatars
 				avatar.style[`margin-${RTL ? "left" : "right"}`] = offsets[avatar._effectiveSize][this.type];
 			}
@@ -468,7 +468,7 @@ class AvatarGroup extends UI5Element {
 			// used to determine whether the following items will fit the container or not
 			let totalWidth = this._getWidthToItem(item) + item.offsetWidth;
 
-			if (index !== this._itemsCount - 1 || this._hasSlottedOverflowBtn) {
+			if (index !== this._itemsCount - 1 || this._customOverflowButton) {
 				totalWidth += this._overflowButtonEffectiveWidth;
 			}
 

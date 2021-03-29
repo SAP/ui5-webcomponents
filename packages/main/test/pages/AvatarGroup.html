@@ -226,7 +226,7 @@
 			<ui5-avatar size="M" interactive initials="M"></ui5-avatar>
 			<ui5-avatar size="L" interactive initials="L"></ui5-avatar>
 			<ui5-avatar size="XL" interactive initials="XL"></ui5-avatar>
-			<ui5-button slot="overflowButton" id="overflowButton">+99</ui5-button>
+			<ui5-button slot="overflowButton" id="overflowButton" aria-label="+99 avatars">+99</ui5-button>
 		</ui5-avatar-group>
 	</div>
 
@@ -245,6 +245,7 @@
 	var resetBtn = document.getElementById("reset-btn")
 	var slider = document.getElementById("slider");
 	var avGrWrapper = document.getElementById("avatar-group-wrapper");
+	var groupWithBtn = document.getElementById("group-with-overflow-btn");
 	var customOBtn = document.getElementById("overflowButton");
 
 	slider.style.width = '100%';
@@ -321,6 +322,7 @@
 		var totalAvatars = 90 - group.items.length + group.hiddenItems.length;
 
 		customOBtn.innerHTML = totalAvatars > 99 ? "+99" : "+" + totalAvatars;
+		customOBtn.ariaLabel = totalAvatars > 99 ? "+99 avatars" : "+" + totalAvatars + " avatars";
 	};
 
 

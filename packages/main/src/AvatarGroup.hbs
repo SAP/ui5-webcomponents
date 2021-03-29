@@ -10,7 +10,7 @@
 	>
 		<slot></slot>
 
-		{{#if _hasSlottedOverflowBtn}}
+		{{#if _customOverflowButton}}
 			<slot name="overflowButton"></slot>
 		{{else}}
 			<ui5-button ?hidden="{{_overflowBtnHidden}}" tabindex="{{_overflowButtonTabIndex}}" class="ui5-avatar-group-overflow-btn">
