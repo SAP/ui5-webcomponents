@@ -1,7 +1,5 @@
-commit 64a4daae21309729d2c1adb173a6a21a4950c30d
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Mon Mar 29 16:38:00 2021 +0300
+commit 8db37e26765c4fa267dc0bd5ed34847332d9669e
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Mar 29 21:43:54 2021 +0300
 
-    fix(ui5-li-notification): Fix contents if description cannot wrap (#3035)
-    
-    Fixes: #2920
+    docs: fix components JS doc (#3038)
