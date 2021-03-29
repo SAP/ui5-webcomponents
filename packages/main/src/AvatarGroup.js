@@ -263,7 +263,7 @@ class AvatarGroup extends UI5Element {
 		return this.items.map(avatar => avatar._effectiveBackgroundColor);
 	}
 
-	get _customOverflowButton () {
+	get _customOverflowButton() {
 		return this.overflowButton[0];
 	}
 
