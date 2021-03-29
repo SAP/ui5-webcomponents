@@ -464,6 +464,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_menuItemPress(event) {
+		this.menuPopover.close();
 		this.fireEvent("menu-item-click", {
 			item: event.detail.item,
 		}, true);
