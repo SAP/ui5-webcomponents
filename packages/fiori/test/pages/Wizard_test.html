@@ -65,6 +65,8 @@
 						Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 					</ui5-label>
 
+					<ui5-input id="inpSelectionChangeCause" placeholder="step changed via click"></ui5-input>
+
 					<div style="display: flex; flex-direction: column;">
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Name</ui5-label>
@@ -310,9 +312,10 @@
 	<script>
 		var wiz = document.getElementById("wizTest");
 		var counter = 0;
-		wiz.addEventListener("ui5-selection-change", function () {
+		wiz.addEventListener("ui5-selection-change", function (event) {
 			console.log(event.detail.selectedStep);
 			inpSelectionChangeCounter.value = ++counter;
+			inpSelectionChangeCause.value = event.detail.changeWithClick;
 		});
 
 		toStep2.addEventListener("click", function () {
