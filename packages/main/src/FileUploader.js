@@ -6,6 +6,7 @@ import {
 	fetchI18nBundle,
 	getI18nBundle,
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	FILEUPLOAD_BROWSE,
 	FILEUPLOADER_TITLE,
@@ -282,6 +283,18 @@ class FileUploader extends UI5Element {
 		this.content.forEach(item => {
 			item.classList.remove("ui5_hovered");
 		});
+	}
+
+	_onkeydown(event) {
+		if (isEnter(event)) {
+			this._input.click(event);
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this._input.click(event);
+		}
 	}
 
 	_onfocusin() {
