@@ -301,7 +301,7 @@ const metadata = {
 		/**
 		 * Fired when selection is changed by user interaction
 		 *
-		 * @event sap.ui.webcomponents.main.Combobox#selection-change
+		 * @event sap.ui.webcomponents.main.ComboBox#selection-change
 		 * @param {HTMLElement} item item to be selected.
 		 * @public
 		 */
