@@ -1,7 +1,7 @@
-commit 0097f21ea2a483a3007984d166b7066918a8cb9a
-Author: Todor Stoyanov <t.stoyanov@sap.com>
-Date:   Mon Mar 29 15:20:17 2021 +0300
+commit 64a4daae21309729d2c1adb173a6a21a4950c30d
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Mon Mar 29 16:38:00 2021 +0300
 
-    fix(ui5-file-uploader): open browse dialog with Space and Enter keys (#3026)
+    fix(ui5-li-notification): Fix contents if description cannot wrap (#3035)
     
-    Fixes: #3001
+    Fixes: #2920
