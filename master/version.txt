@@ -1,5 +1,5 @@
-commit 426e1d1347f52032b74076d2ff048f2a8daa6f04
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Mon Mar 29 13:16:36 2021 +0300
+commit 9d3b89e9999e81faf54b2d0f59e584315609c58e
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Mon Mar 29 14:38:47 2021 +0300
 
-    fix(ui5-icon): RTL mirroring (#3031)
+    fix(ui5-shellbar): primary title menu is closed on content click (#3032)
