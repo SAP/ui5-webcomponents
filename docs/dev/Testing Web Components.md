@@ -77,10 +77,12 @@ npm install --global --production windows-build-tools --vs2015
 Note the `--vs2015` flag.
 
 Also note that this might take some time to complete as several GB might be downloaded in the process.
+
  2. Configure the right version of Windows build tools for Node.js:
 ```shell
 npm config set msvs_version 2015 -–global
 ```
+
  3. Install Python `2.7` if you don't already have it: https://www.python.org/download/releases/2.7/
 
  4. Set the version of Python to `2.7`
