@@ -286,7 +286,13 @@ class FileUploader extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isEnter(event) || isSpace(event)) {
+		if (isEnter(event)) {
+			this._input.click(event);
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
 			this._input.click(event);
 		}
 	}
