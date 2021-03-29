@@ -1,5 +1,7 @@
-commit 9d3b89e9999e81faf54b2d0f59e584315609c58e
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Mon Mar 29 14:38:47 2021 +0300
+commit 0097f21ea2a483a3007984d166b7066918a8cb9a
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Mon Mar 29 15:20:17 2021 +0300
 
-    fix(ui5-shellbar): primary title menu is closed on content click (#3032)
+    fix(ui5-file-uploader): open browse dialog with Space and Enter keys (#3026)
+    
+    Fixes: #3001
