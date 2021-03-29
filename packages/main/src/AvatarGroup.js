@@ -113,6 +113,20 @@ const metadata = {
 			type: HTMLElement,
 			propertyName: "items",
 		},
+		/**
+		 * Defines the overflow button of <code>ui5-avatar-group</code>.
+		 * <b>Note:</b> We recommend using the <code>ui5-button</code> component.
+		 * <br><br>
+		 * <b>Note:</b> If this slot is not used, the <code>ui5-avatar-group</code> will
+		 * display the built-in overflow button.
+		 * @type {sap.ui.webcomponents.main.Button}
+		 * @slot overflowButton
+		 * @public
+		 * @since 1.0.0-rc.13
+		 */
+		 overflowButton: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
 		/**
@@ -130,6 +144,14 @@ const metadata = {
 				overflowButtonClicked: { type: Boolean },
 			},
 		},
+		/**
+		* Fired when the count of visible <code>ui5-avatar</code> elements in the
+		* <code>ui5-avatar-group</code> has changed
+		* @event
+		* @public
+		* @since 1.0.0-rc.13
+		*/
+		overflow: {},
 	},
 };
 
@@ -241,6 +263,10 @@ class AvatarGroup extends UI5Element {
 		return this.items.map(avatar => avatar._effectiveBackgroundColor);
 	}
 
+	get _hasSlottedOverflowBtn() {
+		return !!this.overflowButton.length;
+	}
+
 	get _hiddenStartIndex() {
 		return this._itemsCount - this._hiddenItems;
 	}
@@ -278,19 +304,20 @@ class AvatarGroup extends UI5Element {
 	 * @private
 	 */
 	get _overflowButtonEffectiveWidth() {
+		const button = this.overflowButton.length ? this.overflowButton[0] : this._overflowButton;
 		// if in "Group" mode overflow button size is equal to the offset from second item
 		if (this._isGroup) {
 			let item = this.items[1];
 
 			// in some cases when second avatar is overflowed the offset of the button is the right one
 			if (!item || item.hidden) {
-				item = this._overflowButton;
+				item = button;
 			}
 
 			return this.effectiveDir === "rtl" ? this._getWidthToItem(item) : item.offsetLeft;
 		}
 
-		return this._overflowButton.offsetWidth;
+		return button.offsetWidth;
 	}
 
 	onAfterRendering() {
@@ -298,6 +325,10 @@ class AvatarGroup extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		if (this._hasSlottedOverflowBtn) {
+			this.overflowButton[0].nonInteractive = this._isGroup;
+		}
+
 		this._prepareAvatars();
 	}
 
@@ -332,7 +363,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_fireGroupEvent(targetRef) {
-		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS);
+		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this.overflowButton[0];
 
 		this.fireEvent("click", {
 			targetRef,
@@ -384,7 +415,7 @@ class AvatarGroup extends UI5Element {
 			}
 
 			// last avatar should not be offset as it breaks the container width and focus styles are no set correctly
-			if (index !== this._itemsCount - 1) {
+			if (index !== this._itemsCount - 1 || this._hasSlottedOverflowBtn) {
 				// based on RTL margin left or right is set to avatars
 				avatar.style[`margin-${RTL ? "left" : "right"}`] = offsets[avatar._effectiveSize][this.type];
 			}
@@ -437,7 +468,7 @@ class AvatarGroup extends UI5Element {
 			// used to determine whether the following items will fit the container or not
 			let totalWidth = this._getWidthToItem(item) + item.offsetWidth;
 
-			if (index !== this._itemsCount - 1) {
+			if (index !== this._itemsCount - 1 || this._hasSlottedOverflowBtn) {
 				totalWidth += this._overflowButtonEffectiveWidth;
 			}
 
@@ -460,6 +491,8 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_setHiddenItems(hiddenItems) {
+		const shouldFireEvent = this._hiddenItems !== hiddenItems;
+
 		this._hiddenItems = hiddenItems;
 
 		this.items.forEach((item, index) => {
@@ -467,6 +500,10 @@ class AvatarGroup extends UI5Element {
 		});
 
 		this._overflowButtonText = `+${hiddenItems > 99 ? 99 : hiddenItems}`;
+
+		if (shouldFireEvent) {
+			this.fireEvent("overflow");
+		}
 	}
 }
 
