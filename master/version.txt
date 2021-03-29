@@ -1,11 +1,5 @@
-commit d7c5983782c4b40db2759037b2a7f599595744e6
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Mar 29 10:45:55 2021 +0300
+commit 426e1d1347f52032b74076d2ff048f2a8daa6f04
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Mon Mar 29 13:16:36 2021 +0300
 
-    fix(ui5-input): fix Backspace on Input type=Number (#2864)
-    
-    Issue: If you remove/delete a number/character in Input type="Number" with Backspace and you click somewhere else, e.g. focus out, the deleted number/character gets back into the input field.
-    Root cause: The "_handleInput" handler works with event from type "InputEvent" that never has "key" or "keyCode", that's why "isBackspace" or any other checks regarding pressed keys will always result in false.
-    Solution: The solution is to execute the logic on keydown where the "KeyboardEvent" has "key" or "keyCode", store the result and later use it in "_handleInput".
-    
-    FIXES: #2841
+    fix(ui5-icon): RTL mirroring (#3031)
