@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 
 import WizardTabTemplate from "./generated/templates/WizardTabTemplate.lit.js";
@@ -100,59 +99,6 @@ const metadata = {
 		 */
 		branchingSeparator: {
 			type: Boolean,
-		},
-
-		/**
-		 * Defines the role of the step.
-		 * @type {boolean}
-		 * @defaultvalue listitem
-		 * @private
-		 */
-		role: {
-			type: String,
-			defaultValue: "listitem",
-		},
-
-		/**
-		 * Defines the aria-label of the step.
-		 * @type {boolean}
-		 * @defaultvalue undefined
-		 * @private
-		 */
-		ariaLabel: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Defines the aria-labelledby of the step.
-		 * @type {boolean}
-		 * @defaultvalue undefined
-		 * @private
-		 */
-		ariaLabelledby: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Defines the aria-setsize of the step.
-		 * @type {boolean}
-		 * @defaultvalue undefined
-		 * @private
-		 */
-		ariaSetsize: {
-			type: Integer,
-		},
-
-		/**
-		 * Defines the aria-posinset of the step.
-		 * @type {boolean}
-		 * @defaultvalue undefined
-		 * @private
-		 */
-		ariaPosinset: {
-			type: Integer,
 		},
 
 		/**
@@ -267,26 +213,17 @@ class WizardTab extends UI5Element {
 		return this.disabled ? undefined : this._tabIndex;
 	}
 
-	get ariaCurrent() {
-		return this.selected ? "step" : undefined;
-	}
-
-	get ariaDisabled() {
-		return this.disabled ? "true" : undefined;
-	}
-
 	get hasTexts() {
 		return this.heading || this.subheading;
 	}
 
 	get accInfo() {
 		return {
-			"role": this._wizardTabAccInfo.role ? this._wizardTabAccInfo.role : this.role,
-			"ariaSetsize": this._wizardTabAccInfo.ariaSetsize ? this._wizardTabAccInfo.ariaSetsize : this.ariaSetsize,
-			"ariaPosinset": this._wizardTabAccInfo.ariaPosinset ? this._wizardTabAccInfo.ariaPosinset : this.ariaPosinset,
-			"ariaLabel": this._wizardTabAccInfo.ariaLabel ? this._wizardTabAccInfo.ariaLabel : this.ariaLabel,
-			"ariaCurrent": this._wizardTabAccInfo.ariaCurrent ? this._wizardTabAccInfo.ariaCurrent : this.ariaCurrent,
-			"ariaDisabled": this._wizardTabAccInfo.ariaDisabled ? this._wizardTabAccInfo.ariaDisabled : this.ariaDisabled,
+			"ariaSetsize": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaSetsize,
+			"ariaPosinset": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaPosinset,
+			"ariaLabel": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaLabel,
+			"ariaCurrent": this.selected ? "true" : undefined,
+			"ariaDisabled": this.disabled ? "true" : undefined,
 		};
 	}
 }

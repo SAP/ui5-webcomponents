@@ -16,7 +16,6 @@ import {
 	WIZARD_NAV_ARIA_ROLE_DESCRIPTION,
 	WIZARD_NAV_ARIA_LABEL,
 	WIZARD_LIST_ARIA_LABEL,
-	WIZARD_ACTIONSHEET_ACTIONS_ARIA_LABEL,
 	WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL,
 	WIZARD_STEP_ARIA_LABEL,
 	WIZARD_CURRENT_STEP_ARIA_LABEL,
@@ -766,10 +765,6 @@ class Wizard extends UI5Element {
 		return this.i18nBundle.getText(WIZARD_LIST_ARIA_LABEL);
 	}
 
-	get actionSheetActionsText() {
-		return this.i18nBundle.getText(WIZARD_ACTIONSHEET_ACTIONS_ARIA_LABEL);
-	}
-
 	get actionSheetStepsText() {
 		return this.i18nBundle.getText(WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL);
 	}
@@ -815,9 +810,8 @@ class Wizard extends UI5Element {
 			// Hide separator if it's the last step and it's not a branching one
 			const hideSeparator = (idx === stepsCount - 1) && !step.branching;
 
-			// Calculate the step's aria-label: "1. heading" or "Step 1".
 			const isOptional = step.subheading ? "Optional" : "";
-			const ariaLabel = step.heading ? `${pos} ${step.heading} ${isOptional}` : `${this.navStepDefaultHeading} ${pos} ${isOptional}`;
+			const ariaLabel = (step.heading ? `${pos} ${step.heading} ${isOptional}` : `${this.navStepDefaultHeading} ${pos} ${isOptional}`).trim();
 			const isAfterCurrent = (idx > selectedStepIndex);
 
 			accInfo = {
@@ -836,6 +830,7 @@ class Wizard extends UI5Element {
 				hideSeparator,
 				activeSeparator: (idx < lastEnabledStepIndex) && !step.disabled,
 				branchingSeparator: step.branching,
+				pos,
 				accInfo,
 				refStepId: step._id,
 				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
