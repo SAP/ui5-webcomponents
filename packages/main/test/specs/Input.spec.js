@@ -158,6 +158,60 @@ describe("Input general interaction", () => {
 		input.keys("Enter");
 	});
 
+	it("tests value removal when Input type is 'Number'", () => {
+		const input = browser.$("#input-number3");
+		const btn = browser.$("#input-number3-focusout");
+
+		// Press Backspace and focus out the 
+		input.click();
+		input.keys("Backspace");
+		btn.click();
+
+		assert.strictEqual(input.getProperty("value"), "", "Input's value is removed");
+	});
+
+
+	it("tests removing fractional part of numeric value", () => {
+		const input1 = browser.$("#input-number31");
+		const input2 = browser.$("#input-number32");
+		const input3 = browser.$("#input-number33");
+		const input4 = browser.$("#input-number34");
+		const btn = browser.$("#input-number3-focusout");
+
+		// Press Backspace as many times as the number of digits after the delimiter
+		// 4,333
+		input1.click();
+		input1.keys("Backspace");
+		input1.keys("Backspace");
+		input1.keys("Backspace");
+		btn.click();
+		
+		assert.strictEqual(input1.getProperty("value"), "4", "Removed properly");
+		
+		// 4,3
+		input2.click();
+		input2.keys("Backspace");
+		btn.click();
+		
+		assert.strictEqual(input2.getProperty("value"), "4", "Removed properly");
+		
+		// ,33
+		input3.click();
+		input3.keys("Backspace");
+		input3.keys("Backspace");
+		btn.click();
+
+		assert.strictEqual(input3.getProperty("value"), "", "Removed properly");
+
+		// -1,33
+		input4.click();
+		input4.keys("Backspace");
+		input4.keys("Backspace");
+		btn.click();
+
+		assert.strictEqual(input4.getProperty("value"), "-1", "Removed properly");
+	});
+
 	it("handles suggestions", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 
