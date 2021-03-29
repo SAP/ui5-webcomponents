@@ -40,6 +40,8 @@ import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
+const rgxFloat = new RegExp(/(\+|-)?\d+(\.|,)\d+/);
+
 /**
  * @public
  */
@@ -518,6 +520,9 @@ class Input extends UI5Element {
 		// The value that should be highlited.
 		this.highlightValue = "";
 
+		// Indicates, if the user pressed the BACKSPACE key.
+		this._backspaceKeyDown = false;
+
 		// all sementic events
 		this.EVENT_SUBMIT = "submit";
 		this.EVENT_CHANGE = "change";
@@ -605,6 +610,11 @@ class Input extends UI5Element {
 			return this._handleEscape(event);
 		}
 
+		if (isBackSpace(event)) {
+			this._backspaceKeyDown = true;
+			this._selectedText = window.getSelection().toString();
+		}
+
 		if (this.showSuggestions) {
 			this.Suggestions._deselectItems();
 		}
@@ -614,6 +624,7 @@ class Input extends UI5Element {
 
 	_onkeyup(event) {
 		this._keyDown = false;
+		this._backspaceKeyDown = false;
 	}
 
 	/* Event handling */
@@ -710,12 +721,42 @@ class Input extends UI5Element {
 
 	async _handleInput(event) {
 		const inputDomRef = await this.getInputDOMRef();
+		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 
 		this.suggestionSelectionCanceled = false;
 
-		if (this.value && this.type === InputType.Number && !isBackSpace(event) && !inputDomRef.value) {
-			// For input with type="Number", if the delimiter is entered second time, the inner input is firing event with empty value
+		if (emptyValueFiredOnNumberInput && !this._backspaceKeyDown) {
+			// For input with type="Number", if the delimiter is entered second time,
+			// the inner input is firing event with empty value
 			return;
+		}
+
+		if (emptyValueFiredOnNumberInput && this._backspaceKeyDown) {
+			// Issue: when the user removes the character(s) after the delimeter of numeric Input,
+			// the native input is firing event with an empty value and we have to manually handle this case,
+			// otherwise the entire input will be cleared as we sync the "value".
+
+			// There are tree scenarios:
+			// Example: type "123.4" and press BACKSPACE - the native input is firing event with empty value.
+			// Example: type "123.456", select/mark "456" and press BACKSPACE - the native input is firing event with empty value.
+			// Example: type "123.456", select/mark "123.456" and press BACKSPACE - the native input is firing event with empty value,
+			// but this time that's really the case.
+
+			// Perform manual handling in case of floating number
+			// and if the user did not select the entire input value
+			if (rgxFloat.test(this.value) && this._selectedText !== this.value) {
+				const newValue = this.removeFractionalPart(this.value);
+
+				// update state
+				this.value = newValue;
+				this.highlightValue = newValue;
+				this.valueBeforeItemPreview = newValue;
+
+				// fire events
+				this.fireEvent(this.EVENT_INPUT);
+				this.fireEvent("value-changed");
+				return;
+			}
 		}
 
 		if (event.target === inputDomRef) {
@@ -1035,6 +1076,10 @@ class Input extends UI5Element {
 		return this.type.toLowerCase();
 	}
 
+	get isTypeNumber() {
+		return this.type === InputType.Number;
+	}
+
 	get suggestionsTextId() {
 		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
 	}
@@ -1069,9 +1114,9 @@ class Input extends UI5Element {
 
 	get nativeInputAttributes() {
 		return {
-			"min": this.type === InputType.Number ? this._nativeInputAttributes.min : undefined,
-			"max": this.type === InputType.Number ? this._nativeInputAttributes.max : undefined,
-			"step": this.type === InputType.Number ? (this._nativeInputAttributes.step || "any") : undefined,
+			"min": this.isTypeNumber ? this._nativeInputAttributes.min : undefined,
+			"max": this.isTypeNumber ? this._nativeInputAttributes.max : undefined,
+			"step": this.isTypeNumber ? (this._nativeInputAttributes.step || "any") : undefined,
 		};
 	}
 
@@ -1172,11 +1217,26 @@ class Input extends UI5Element {
 	}
 
 	get step() {
-		return this.type === InputType.Number ? "any" : undefined;
+		return this.isTypeNumber ? "any" : undefined;
 	}
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	/**
+	 * Removes the fractional part of floating-point number.
+	 * @param {String} value the numeric value of Input of type "Number"
+	 */
+	removeFractionalPart(value) {
+		if (value.includes(".")) {
+			return value.slice(0, value.indexOf("."));
+		}
+		if (value.includes(",")) {
+			return value.slice(0, value.indexOf(","));
+		}
+
+		return value;
 	}
 
 	static get dependencies() {
