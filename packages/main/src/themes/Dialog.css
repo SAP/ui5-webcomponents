@@ -48,7 +48,9 @@
 }
 
 .ui5-popup-resize-handle[dir=rtl] {
-	left: -0.25rem;
+	transform: rotate(90deg);
+    left: -0.0625rem;
+    bottom: -0.2625rem;
 	right: unset;
 	cursor: sw-resize;
 }
