@@ -158,7 +158,7 @@ yarn start:playground
 
 *Note: If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](/docs/dev/Playground.md)*
 
-If you want to locally run the tests on a Windows machine, you must also manually install Windows Build Tools 2015 and Python 2.7.
+If you wish to run the tests locally on a Windows machine, you must also manually install `Windows Build Tools 2015` and `Python 2.7`.
 See the [instructions](/docs/dev/Testing%20Web%20Components.md#24-getting-the-tests-to-run-on-windows) on how to do this. 
 
 ### Production Build

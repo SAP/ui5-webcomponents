@@ -65,6 +65,8 @@ files, and test the changes on the fly.
 
 ## 2.4 Getting the tests to run on Windows
 
+When you first try to run the tests on a Windows machine, you're most likely to get an error saying `node-gyp` is not installed.
+
 Certain modules, required by the test setup, have a dependency to [Node gyp](https://github.com/nodejs/node-gyp). 
 Normally it is installed along with the other dependencies from NPM, but for a `Windows` environment specifically, this is not enough, and
 some manual steps must be performed:
