@@ -2886,11 +2886,11 @@
 			document.getElementById("tbl").style.width = "500px";
 		});
 
-		table.addEventListener("popinChange", function (e) {
+		table.addEventListener("ui5-popin-change", function (e) {
 			tableLable.textContent = "Number of poppedColumns: " + e.detail.poppedColumns.length;
 		});
 
-		testRowClick.addEventListener("rowClick", function (e) {
+		testRowClick.addEventListener("ui5-row-click", function (e) {
 			testRowClickResult.textContent = e.detail.row.getAttribute("data-city");
 		});
 	</script>

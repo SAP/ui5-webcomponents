@@ -22,7 +22,6 @@
 	<h3> Input with suggestions: type 'a'</h3>
 	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
 
 	<div>
@@ -57,7 +56,7 @@
 	<br/>
 	<br/>
 	<h3>Input suggestions with grouping</h3>
-	<ui5-input id="myInputGrouping"show-suggestions style="width: 100%">
+	<ui5-input id="myInputGrouping" show-suggestions style="width: 100%">
 		<ui5-suggestion-item group text="Content Density"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
@@ -139,7 +138,7 @@
 	<ui5-input id="inputChangeResult"></ui5-input>
 
 	<h3>Input test ESC</h3>
-	<ui5-input id="myInputEsc"show-suggestions style="width: 100%">
+	<ui5-input id="myInputEsc" show-suggestions style="width: 100%">
 		<ui5-suggestion-item text="Chromium"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Titanium"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Iron"></ui5-suggestion-item>
@@ -223,6 +222,11 @@
 		<ui5-icon slot="icon" name="search" style="padding-left: 8px; padding-right: 8px"></ui5-icon>
 		<ui5-icon slot="icon" name="decline" style="padding-left: 8px; padding-right: 8px"></ui5-icon>
 	</ui5-input>
+
+	<h3> Input firing submit event and submit action on 'ENTER' in a form</h3>
+	<form id="submit-form">
+		<ui5-input id="submit-input" name="my-submit-input" placeholder="Type something and press 'ENTER' ..."></ui5-input>
+	</form>
 
 	<h3> Test scroll pos</h3>
 	<ui5-input id="scrollInput" show-suggestions>
@@ -321,7 +325,39 @@
 		}
 	</style>
 
+	<h3>Test Backspace</h3>
+	<ui5-input id="input-number3" type="Number" value="4"></ui5-input><br>
+	<ui5-button id="input-number3-focusout">Click</ui5-button>
+
+	<ui5-input id="input-number31" type="Number" value="4.333"></ui5-input><br>
+	<ui5-input id="input-number32" type="Number" value="4.3"></ui5-input><br>
+	<ui5-input id="input-number33" type="Number" value=".33"></ui5-input><br>
+	<ui5-input id="input-number34" type="Number" value="-1.33"></ui5-input><br>
+
 	<script>
+		document.getElementById("submit-input").addEventListener("keypress", function(event) {
+			if (event.key === 'Enter') {
+				var formToSubmit = document.getElementById("submit-form");
+				var submitEvent = new Event('submit');
+				
+				/* The old way - supported by all browsers:
+				The submit method of the form won't trigger
+				a submit event by itself, dispatch it manually */
+
+				// formToSubmit.dispatchEvent(submitEvent);
+				// formToSubmit.submit();
+
+				// Fires submit event and submits
+				// No MS IE11 & Safari support yet
+				formToSubmit.requestSubmit()
+			}
+		});
+
+		document.getElementById("submit-form").addEventListener("submit", function(event) {
+			event.preventDefault();
+			alert("Submitted");
+		});
+
 		btnOpenDialog.addEventListener("click", function () {
 			dialog.open();
 		});
@@ -339,7 +375,6 @@
 		var label = document.getElementById('myLabel');
 		var labelChange = document.getElementById('myLabelChange');
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
-		var labelSubmit = document.getElementById('myLabelSubmit');
 
 		var suggestionSelectedCounterWithGrouping = 0;
 
@@ -394,10 +429,6 @@
 			labelChange.innerHTML = "Event [change] :: " + event.target.value;
 		});
 
-		input.addEventListener("ui5-submit", function (event) {
-			labelSubmit.innerHTML = "Event [submit] :: " + event.target.value;
-		});
-
 		var changeCounter = 0;
 		var inputCounter = 0;
 		var suggestionSelectedCounter = 0;
@@ -420,9 +451,6 @@
 
 		var inputChangeResultCounter = 0;
 
-		inputChange.addEventListener("ui5-submit", function (event) {
-			inputChange.value = "Changed via API";
-		});
 		inputChange.addEventListener("ui5-change", function (event) {
 			inputChangeResult.value = ++inputChangeResultCounter;
 		});
