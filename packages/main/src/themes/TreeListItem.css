@@ -33,6 +33,10 @@
     bottom: 0.125rem;
 }
 
+:host([_minimal]) .ui5-li-tree-text-wrapper {
+	display: none;
+}
+
 .ui5-li-root-tree {
     padding-left: 0;
 }
