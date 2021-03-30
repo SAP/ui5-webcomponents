@@ -1,5 +1,7 @@
-commit e4ccac9c5f6cede5c3e0d6bdb4bc38755aa1cebe
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Mar 30 15:32:45 2021 +0300
+commit e0ab90009de87b7a015923f4159f599126e89fa9
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Tue Mar 30 17:43:01 2021 +0300
 
-    docs: update playground to rc.13 (#3047)
+    fix(ui5-dialog): Fix aria-labelledby attribute value (#3044)
+    
+    FIXES: #2946
