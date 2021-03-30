@@ -31,11 +31,11 @@
 	pointer-events: none;
 }
 
-::slotted([ui5-button]),
+::slotted([ui5-button]:not([hidden])),
 .ui5-avatar-group-overflow-btn:not([hidden]) {
 	border-radius: 50%;
 	display: inline-flex;
-	text-overflow: unset;
+	text-overflow: initial;
 }
 
 ::slotted([ui5-button][focused]),

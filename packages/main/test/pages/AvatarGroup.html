@@ -214,7 +214,7 @@
 			<ui5-avatar size="XL" interactive initials="XL"></ui5-avatar>
 		</ui5-avatar-group>
 
-		<h3>Slotted overflow button</h3>
+		<h3>AvatarGroup with user defined overflow button</h3>
 		<ui5-avatar-group type="Individual" id="group-with-overflow-btn">
 			<ui5-avatar size="XS" interactive initials="XS"></ui5-avatar>
 			<ui5-avatar size="S" interactive initials="S"></ui5-avatar>
@@ -324,7 +324,6 @@
 		customOBtn.innerHTML = totalAvatars > 99 ? "+99" : "+" + totalAvatars;
 		customOBtn.ariaLabel = totalAvatars > 99 ? "+99 avatars" : "+" + totalAvatars + " avatars";
 	};
-
 
 	groupWithBtn.addEventListener("ui5-overflow", function (event) {
 		formatBtnText(event.target);

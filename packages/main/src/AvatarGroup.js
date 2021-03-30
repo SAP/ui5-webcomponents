@@ -119,7 +119,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> If this slot is not used, the <code>ui5-avatar-group</code> will
 		 * display the built-in overflow button.
-		 * @type {sap.ui.webcomponents.main.Button}
+		 * @type {HTMLElement}
 		 * @slot overflowButton
 		 * @public
 		 * @since 1.0.0-rc.13
@@ -264,7 +264,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get _customOverflowButton() {
-		return this.overflowButton[0];
+		return this.overflowButton.length ? this.overflowButton[0] : undefined;
 	}
 
 	get _hiddenStartIndex() {
@@ -287,10 +287,6 @@ class AvatarGroup extends UI5Element {
 		return this._isGroup ? "0" : "-1";
 	}
 
-	get _overflowButtonTabIndex() {
-		return this._isGroup ? "-1" : false;
-	}
-
 	get _overflowButton() {
 		return this.shadowRoot.querySelector(AVATAR_GROUP_OVERFLOW_BTN_SELECTOR);
 	}
@@ -304,7 +300,7 @@ class AvatarGroup extends UI5Element {
 	 * @private
 	 */
 	get _overflowButtonEffectiveWidth() {
-		const button = this.overflowButton.length ? this.overflowButton[0] : this._overflowButton;
+		const button = this._customOverflowButton ? this._customOverflowButton : this._overflowButton;
 		// if in "Group" mode overflow button size is equal to the offset from second item
 		if (this._isGroup) {
 			let item = this.items[1];
@@ -363,7 +359,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_fireGroupEvent(targetRef) {
-		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this.overflowButton[0];
+		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this._customOverflowButton;
 
 		this.fireEvent("click", {
 			targetRef,
