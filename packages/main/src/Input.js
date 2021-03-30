@@ -661,9 +661,6 @@ class Input extends UI5Element {
 			// Mark that the selection has been canceled, so the popover can close
 			// and not reopen, due to receiving focus.
 			this.suggestionSelectionCanceled = true;
-
-			// Close suggestion popover
-			this._closeRespPopover(true);
 		}
 	}
 
