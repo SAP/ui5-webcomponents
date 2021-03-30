@@ -1,0 +1,28 @@
+{
+  "name": "@ui5/webcomponents-i18n",
+  "version": "1.0.0-rc.12",
+  "description": "UI5 Web Components: webcomponents.i18n",
+  "author": "SAP SE (https://www.sap.com)",
+  "license": "Apache-2.0",
+  "private": false,
+  "keywords": [
+    "openui5",
+    "sapui5",
+    "ui5"
+  ],
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/i18n"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "glob": "^7.1.6",
+    "mkdirp": "^1.0.4",
+    "properties-reader": "^2.2.0",
+    "resolve": "^1.20.0"
+  }
+}

@@ -1,3 +1,5 @@
+const languagesMeta = require("@ui5/webcomponents-i18n/languages-meta.js");
+
 const assetsMeta = {
   "themes": {
     "default": "sap_fiori_3",
@@ -11,59 +13,7 @@ const assetsMeta = {
       "sap_fiori_3_hcw"
     ]
   },
-  "languages": {
-    "default": "en",
-    "all": [
-      "ar",
-      "bg",
-      "ca",
-      "cs",
-      "cy",
-      "da",
-      "de",
-      "el",
-      "en",
-      "en_GB",
-      "en_US_sappsd",
-      "en_US_saprigi",
-      "en_US_saptrc",
-      "es",
-      "es_MX",
-      "et",
-      "fi",
-      "fr",
-      "fr_CA",
-      "hi",
-      "hr",
-      "hu",
-      "in",
-      "it",
-      "iw",
-      "ja",
-      "kk",
-      "ko",
-      "lt",
-      "lv",
-      "ms",
-      "nl",
-      "no",
-      "pl",
-      "pt_PT",
-      "pt",
-      "ro",
-      "ru",
-      "sh",
-      "sk",
-      "sl",
-      "sv",
-      "th",
-      "tr",
-      "uk",
-      "vi",
-      "zh_CN",
-      "zh_TW"
-    ]
-  },
+  "languages": languagesMeta,
   "locales": {
     "default": "en",
     "all": [
