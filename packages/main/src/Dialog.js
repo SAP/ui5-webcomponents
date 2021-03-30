@@ -192,7 +192,7 @@ class Dialog extends Popup {
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
-		return this.ariaLabel ? undefined : "ui5-popup-header";
+		return (this.ariaLabel || this.header.length) ? undefined : "ui5-popup-header-text";
 	}
 
 	get _ariaModal() { // Required by Popup.js
