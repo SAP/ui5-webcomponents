@@ -66,6 +66,17 @@ const metadata = {
 		stableDomRef: {
 			type: String,
 		},
+
+		/**
+		 * Defines the focused state of the <code>ui5-option</code>.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.13
+		 * @private
+		 */
+		_focused: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Option.prototype */ {
 		/**
