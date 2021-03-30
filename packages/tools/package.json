@@ -30,12 +30,6 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.2.0",
     "@rollup/plugin-url": "^6.0.0",
-    "@wdio/cli": "^7.2.0",
-    "@wdio/dot-reporter": "^7.2.0",
-    "@wdio/local-runner": "^7.2.0",
-    "@wdio/mocha-framework": "^7.2.0",
-    "@wdio/spec-reporter": "^7.2.0",
-    "@wdio/sync": "^7.2.0",
     "@webcomponents/webcomponentsjs": "^2.5.0",
     "chai": "^4.3.4",
     "child_process": "^1.0.2",
@@ -79,6 +73,14 @@
     "rollup-plugin-visualizer": "^4.2.0",
     "serve": "github:vercel/serve#a85bd9d03ae267a492aac683616e028c0bfc6447",
     "wdio-chromedriver-service": "^7.0.0"
+  },
+  "devDependencies": {
+    "@wdio/cli": "^7.2.0",
+    "@wdio/dot-reporter": "^7.2.0",
+    "@wdio/local-runner": "^7.2.0",
+    "@wdio/mocha-framework": "^7.2.0",
+    "@wdio/spec-reporter": "^7.2.0",
+    "@wdio/sync": "^7.2.0"
   },
   "peerDependencies": {
     "chromedriver": "*"
