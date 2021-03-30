@@ -1,10 +1,5 @@
-commit 6d47d68d5a30ea18a9be0394628862896464f8d3
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Tue Mar 30 13:55:34 2021 +0300
+commit 1e844735ca7e04ebf89371db9d4bc7af975f1035
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 30 14:34:03 2021 +0300
 
-    feat(ui5-avatar-group): new slot overflowButton (#3037)
-    
-    Added new slot which allows to add custom overflow button and "overflow" event to let you know when avatars
-    hide/show in order to update the overflow button text. If not provided, the AvatarGroup will display the built-in overflow button. The slot is provided to allow you defining the text of the overflow button and let you set additional aria attributes, such as aria-label.
-    
-    Fixes: #2912
+    chore: release v1.0.0-rc.13 (#3027)
