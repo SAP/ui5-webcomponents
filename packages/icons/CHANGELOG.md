@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.13(https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.12...v1.0.0-rc.13) (2021-03-26)
+
+
+### Features
+
+* **icons:** add new icons ([#3024](https://github.com/SAP/ui5-webcomponents/issues/3024)) ([8da6502](https://github.com/SAP/ui5-webcomponents/commit/8da6502))
+
+
+
+
 # [1.0.0-rc.12](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.11...v1.0.0-rc.12) (2021-02-18)
 
 

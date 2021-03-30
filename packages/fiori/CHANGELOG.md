@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.13](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.12...v1.0.0-rc.13) (2021-03-26)
+
+
+### Bug Fixes
+
+* **ui5-page:** correct background-design styles ([#2862](https://github.com/SAP/ui5-webcomponents/issues/2862)) ([b10ee4c](https://github.com/SAP/ui5-webcomponents/commit/b10ee4c))
+* **ui5-upload-collection:** add region and roledescription to root element ([#2915](https://github.com/SAP/ui5-webcomponents/issues/2915)) ([6db9f09](https://github.com/SAP/ui5-webcomponents/commit/6db9f09))
+* **ui5-upload-collection:** add tooltip to edit button ([#2886](https://github.com/SAP/ui5-webcomponents/issues/2886)) ([35de38c](https://github.com/SAP/ui5-webcomponents/commit/35de38c))
+* **ui5-upload-collection-item:** show disabled delete button ([#2893](https://github.com/SAP/ui5-webcomponents/issues/2893)) ([b609b47](https://github.com/SAP/ui5-webcomponents/commit/b609b47))
+* **ui5-wizard:** use CSS vars for navigation bg-color ([#2892](https://github.com/SAP/ui5-webcomponents/issues/2892)) ([c967c6c](https://github.com/SAP/ui5-webcomponents/commit/c967c6c))
+
+
+
+
+
 # [1.0.0-rc.12](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.11...v1.0.0-rc.12) (2021-02-18)
 
 
