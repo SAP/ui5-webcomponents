@@ -440,8 +440,17 @@ describe("Input general interaction", () => {
 
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputInDialog");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const dialog = browser.$("#inputInDialog");
 
 		//assert
 		assert.ok(popover.isDisplayedInViewport(), "The popover is visible");
+
+		// act
+		input.keys("ArrowDown");
+		browser.keys("Escape");
+
+		// assert
+		assert.notOk(popover.isDisplayedInViewport(), "The popover is not visible");
+		assert.ok(dialog.isDisplayedInViewport(), "The dialog is opened.");
 	});
 });
