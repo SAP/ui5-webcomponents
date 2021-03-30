@@ -217,6 +217,21 @@
 			<ui5-avatar size="L" interactive initials="L"></ui5-avatar>
 			<ui5-avatar size="XL" interactive initials="XL"></ui5-avatar>
 		</ui5-avatar-group>
+
+		<h3>AvatarGroup with user defined overflow button</h3>
+		<ui5-avatar-group type="Individual" id="group-with-overflow-btn">
+			<ui5-avatar size="XS" interactive initials="XS"></ui5-avatar>
+			<ui5-avatar size="S" interactive initials="S"></ui5-avatar>
+			<ui5-avatar size="M" interactive initials="M"></ui5-avatar>
+			<ui5-avatar size="L" interactive initials="L"></ui5-avatar>
+			<ui5-avatar size="XL" interactive initials="XL"></ui5-avatar>
+			<ui5-avatar size="XS" interactive initials="XS"></ui5-avatar>
+			<ui5-avatar size="S" interactive initials="S"></ui5-avatar>
+			<ui5-avatar size="M" interactive initials="M"></ui5-avatar>
+			<ui5-avatar size="L" interactive initials="L"></ui5-avatar>
+			<ui5-avatar size="XL" interactive initials="XL"></ui5-avatar>
+			<ui5-button slot="overflowButton" id="overflowButton" aria-label="+99 avatars">+99</ui5-button>
+		</ui5-avatar-group>
 	</div>
 
 <script>
@@ -234,6 +249,8 @@
 	var resetBtn = document.getElementById("reset-btn")
 	var slider = document.getElementById("slider");
 	var avGrWrapper = document.getElementById("avatar-group-wrapper");
+	var groupWithBtn = document.getElementById("group-with-overflow-btn");
+	var customOBtn = document.getElementById("overflowButton");
 
 	slider.style.width = '100%';
 	avGrWrapper.style.width = slider.getAttribute("value") + '%';
@@ -303,6 +320,17 @@
 		eventName.value = "";
 		eventTargetRef.value = "";
 		eventOverflowButtonClicked.value = "";
+	});
+
+	function formatBtnText(group) {
+		var totalAvatars = 90 - group.items.length + group.hiddenItems.length;
+
+		customOBtn.innerHTML = totalAvatars > 99 ? "+99" : "+" + totalAvatars;
+		customOBtn.ariaLabel = totalAvatars > 99 ? "+99 avatars" : "+" + totalAvatars + " avatars";
+	};
+
+	groupWithBtn.addEventListener("ui5-overflow", function (event) {
+		formatBtnText(event.target);
 	});
 </script>
 

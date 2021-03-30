@@ -1,10 +1,10 @@
-commit 249334afc7ff2a815386d96c76ff6b1ac5053642
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Tue Mar 30 11:57:02 2021 +0300
+commit 6d47d68d5a30ea18a9be0394628862896464f8d3
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Tue Mar 30 13:55:34 2021 +0300
 
-    fix(ui5-li-tree): fixed incorrect display of the text (#3036)
+    feat(ui5-avatar-group): new slot overflowButton (#3037)
     
-    While the TreeListItem is in its _minimal state (with no visible
-    text), the text was still taking space, causing incorrect alignment
-    of the icons. Now the text is not rendered when we are in _minimal state
-    which results in proper alignment of the icons.
+    Added new slot which allows to add custom overflow button and "overflow" event to let you know when avatars
+    hide/show in order to update the overflow button text. If not provided, the AvatarGroup will display the built-in overflow button. The slot is provided to allow you defining the text of the overflow button and let you set additional aria attributes, such as aria-label.
+    
+    Fixes: #2912

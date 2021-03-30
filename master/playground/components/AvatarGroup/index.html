@@ -2854,6 +2854,11 @@ Do not use the <code>AvatarGroup</code> if: <ul> <li>You want to display a singl
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the items of the <code>ui5-avatar-group</code>. Use the <code>ui5-avatar</code> component as an item. <br><br> <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape. Moreover, if you use avatars with "Square" shape, there will be visual inconsistency as the built-in overflow action has "Circle" shape.</div>
                     </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">overflowButton</div>
+                      <div class="cell api-table-content-cell">HTMLElement</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the overflow button of <code>ui5-avatar-group</code>. <b>Note:</b> We recommend using the <code>ui5-button</code> component. <br><br> <b>Note:</b> If this slot is not used, the <code>ui5-avatar-group</code> will display the built-in overflow button.</div>
+                    </div>
             
                 </div>
             
@@ -2886,6 +2891,14 @@ Do not use the <code>AvatarGroup</code> if: <ul> <li>You want to display a singl
                             <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> boolean <br/> <strong class="api-table-event-description bold">description:</strong> indicates if the overflow button is clicked</div>
                           </div>
                         </tr>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">overflow</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the count of visible <code>ui5-avatar</code> elements in the <code>ui5-avatar-group</code> has changed
+                            <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.13</div>
+                        </div>
+                      </div>
+            
                   </div>
             
             
