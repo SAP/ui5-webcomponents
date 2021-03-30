@@ -8,6 +8,7 @@
     @ui5-item-delete="{{_onListItemDelete}}"
     @ui5-selection-change="{{_onListSelectionChange}}"
     class="ui5-tree-root"
+	non-scrollable
 >
     <slot name="header" slot="header"></slot>
     {{#each _listItems}}
