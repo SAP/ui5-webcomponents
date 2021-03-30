@@ -50,6 +50,7 @@ describe("Wizard general interaction", () => {
 		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
 		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
+		const inpSelectionChangeCause =  browser.$("#inpSelectionChangeCause");
 
 		// act - click on the first step in the header
 		step1InHeader.click();
@@ -73,6 +74,9 @@ describe("Wizard general interaction", () => {
 		// assert - selection-change fired once
 		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "1",
 			"Event selection-change fired once.");
+		// assert - selection-change fired due to user click
+		assert.strictEqual(inpSelectionChangeCause.getProperty("value"), "true",
+			"Event selection-change fired due to click.");
 	});
 
 	it("move to next step by SPACE/ENTER", () => {
@@ -136,6 +140,7 @@ describe("Wizard general interaction", () => {
 		const step2 = browser.$("#st2");
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
 		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
+		const inpSelectionChangeCause =  browser.$("#inpSelectionChangeCause");
 
 		// act - scroll the 2nd step into view
 		// Note: scrollIntoView works in Chrome, but if we start executing the test on every browser,
@@ -151,6 +156,10 @@ describe("Wizard general interaction", () => {
 
 		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "4",
 			"Event selection-change fired 4th time due to scrolling.");
+
+		// assert - selection-change fired not becasue of user click
+		assert.strictEqual(inpSelectionChangeCause.getProperty("value"), "false",
+			"Event selection-change fired not becasue of user click, but scrolling");
 	});
 
 	it("tests dynamically increase step size and move to next step", () => {
