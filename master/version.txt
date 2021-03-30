@@ -1,5 +1,10 @@
-commit 8db37e26765c4fa267dc0bd5ed34847332d9669e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Mar 29 21:43:54 2021 +0300
+commit 249334afc7ff2a815386d96c76ff6b1ac5053642
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Tue Mar 30 11:57:02 2021 +0300
 
-    docs: fix components JS doc (#3038)
+    fix(ui5-li-tree): fixed incorrect display of the text (#3036)
+    
+    While the TreeListItem is in its _minimal state (with no visible
+    text), the text was still taking space, causing incorrect alignment
+    of the icons. Now the text is not rendered when we are in _minimal state
+    which results in proper alignment of the icons.
