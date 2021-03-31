@@ -35,10 +35,6 @@
 	z-index: 1;
 }
 
-:host([non-scrollable]) .ui5-list-scroll-container {
-	overflow: hidden;
-}
-
 .ui5-list-root {
 	width: 100%;
 	height: 100%;
