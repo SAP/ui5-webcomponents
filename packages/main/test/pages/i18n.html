@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>TextArea</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		html,
+		body {
+			margin: 0;
+		}
+
+		.group {
+			padding: 1rem;
+		}
+	</style>
+	</head>
+
+	<body style="background-color: var(--sapBackgroundColor);">
+
+	<section class="group">
+		<ui5-title>Will use the custom text on the class as no i18Data or data-i18n-* attribute have been set on it</ui5-title>
+		<ui5-textarea id="t1" maxlength="20" show-exceeded-text></ui5-textarea>
+	</section>
+
+	<section class="group">
+		<ui5-title>Has i18Data set on the instance -> will use that</ui5-title>
+		<ui5-textarea id="t2" maxlength="20" show-exceeded-text></ui5-textarea>
+	</section>
+
+
+	<section class="group">
+		<ui5-title>Has both i18Data set on the instance, and data-i18n-* attribute -> will use the attribute</ui5-title>
+		<ui5-textarea id="t3" maxlength="20" show-exceeded-text data-i18n-TEXTAREA_CHARACTERS_LEFT="Only {0} characters left! (Attribute message)"></ui5-textarea>
+	</section>
+
+
+	<section class="group">
+		<ui5-title>Has data-i18n-* attribute -> will use the attribute</ui5-title>
+		<ui5-textarea id="t4" maxlength="20" show-exceeded-text data-i18n-TEXTAREA_CHARACTERS_LEFT="Just {0} symbols left! (Attribute message)"></ui5-textarea>
+	</section>
+
+	<script>
+
+		document.getElementById("t2").i18nData = {
+			"TEXTAREA_CHARACTERS_LEFT": "You have {0} characters left to type (On the instance)"
+		};
+		document.getElementById("t3").i18nData = {
+			"TEXTAREA_CHARACTERS_LEFT": "Just {0} char(s) left. (On the instance)"
+		};
+
+		(async () => {
+			await window.customElements.whenDefined("ui5-textarea");
+			window.customElements.get("ui5-textarea").prototype.i18nData = {
+				"TEXTAREA_CHARACTERS_LEFT": "{0} remaining... (On the whole class)"
+			};
+		})();
+	</script>
+
+</body>
+</html>

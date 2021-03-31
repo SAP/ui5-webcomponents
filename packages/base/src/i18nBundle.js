@@ -15,11 +15,18 @@ class I18nBundle {
 	/**
 	 * Returns a text in the currently loaded language
 	 *
+	 * @param {instance} textObj the web component on which the text is applied
 	 * @param {Object|String} textObj key/defaultText pair or just the key
 	 * @param params Values for the placeholders
 	 * @returns {*}
 	 */
-	getText(textObj, ...params) {
+	getText(instance, textObj, ...params) {
+		if (typeof instance !== "object" || !instance.isUI5Element) { // instance not given (old format) - shift parameters
+			params = textObj ? [textObj, ...params] : [];
+			textObj = instance;
+			instance = undefined;
+		}
+
 		if (typeof textObj === "string") {
 			textObj = { key: textObj, defaultText: textObj };
 		}
@@ -28,10 +35,29 @@ class I18nBundle {
 			return "";
 		}
 
-		const bundle = getI18nBundleData(this.packageName);
-		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : (textObj.defaultText || textObj.key);
+		const messageText = this._getMessageText(instance, textObj);
 
 		return formatMessage(messageText, params);
+	}
+
+	_getMessageText(instance, textObj) {
+		const key = textObj.key;
+
+		if (instance) {
+			// "data-i18n-*" attribute on the instance
+			if (instance.hasAttribute(`data-i18n-${key}`)) {
+				return instance.getAttribute(`data-i18n-${key}`);
+			}
+
+			// "i18nData" bundle object on the instance/class
+			if (typeof instance.i18nData === "object" && instance.i18nData[key]) {
+				return instance.i18nData[key];
+			}
+		}
+
+		// Use the message bundle
+		const bundle = getI18nBundleData(this.packageName);
+		return bundle && bundle[key] ? bundle[key] : (textObj.defaultText || key);
 	}
 }
 
