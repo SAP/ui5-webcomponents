@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
@@ -145,11 +144,6 @@ const metadata = {
  * @public
  */
 class Page extends UI5Element {
-	constructor() {
-		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -164,10 +158,6 @@ class Page extends UI5Element {
 
 	static get template() {
 		return PageTemplate;
-	}
-
-	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	get _contentBottom() {

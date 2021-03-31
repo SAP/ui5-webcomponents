@@ -245,7 +245,7 @@ class Wizard extends UI5Element {
 
 		this._onStepResize = this.onStepResize.bind(this);
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {
