@@ -1,5 +1,5 @@
-commit 2a01cb453e73dfbdf7dea3606c664129439972d9
+commit d6b6fa4095df1830ada066f0870bf616dd586a9d
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Mar 31 12:52:46 2021 +0300
+Date:   Wed Mar 31 16:18:41 2021 +0300
 
-    fix(ui5-upload-collection-item): make use of both main & fiori i18n bundles (#3061)
+    fix(ui5-li-notification-group, ui5-li-notification): fix i18n bundles usage (#3063)
