@@ -1,5 +1,5 @@
-commit 958ab46669e0e030400172f3b2549d31d5be515e
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 31 10:17:49 2021 +0300
+commit 2a01cb453e73dfbdf7dea3606c664129439972d9
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Mar 31 12:52:46 2021 +0300
 
-    chore(ie11): Provide a polyfill feature without fetch (#3055)
+    fix(ui5-upload-collection-item): make use of both main & fiori i18n bundles (#3061)
