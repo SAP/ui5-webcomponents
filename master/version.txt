@@ -1,5 +1,5 @@
-commit 8e9cc2d8e89de97a072d04f03518196313e5c14a
+commit 958ab46669e0e030400172f3b2549d31d5be515e
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 31 10:10:39 2021 +0300
+Date:   Wed Mar 31 10:17:49 2021 +0300
 
-    chore: disable the whole unstable test (#3056)
+    chore(ie11): Provide a polyfill feature without fetch (#3055)
