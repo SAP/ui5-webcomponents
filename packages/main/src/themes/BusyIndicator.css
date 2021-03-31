@@ -2,10 +2,6 @@
 	display: inline-block;
 }
 
-:host(:not([active])) .ui5-busyindicator-wrapper {
-	display: none;
-}
-
 :host([active]) {
 	color: var(--sapContent_IconColor);
 }
@@ -74,13 +70,27 @@
 	background-color: inherit;
 }
 
-.ui5-busyindicator-wrapper {
+.ui5-busyindicator-busy-area {
 	position: absolute;
 	z-index: 99;
 	left: 0;
 	right: 0;
 	top: 0;
 	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: inherit;
+	flex-direction: column;
+}
+
+.ui5-busyindicator-busy-area:focus {
+	outline: 1px dotted var(--sapContent_FocusColor);
+	outline-offset: -2px;
+}
+
+.ui5-busyindicator-circles-wrapper {
+	line-height: 0;
 }
 
 .ui5-busyindicator-circle {
@@ -94,19 +104,6 @@
 	width: 100%;
 	height: 100%;
 	border-radius: 100%;
-}
-
-.ui5-busyindicator-dynamic-content {
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: inherit;
-}
-
-.ui5-busyindicator-dynamic-content:focus {
-	outline: 1px dotted var(--sapContent_FocusColor);
-	outline-offset: -2px;
 }
 
 .circle-animation-0 {

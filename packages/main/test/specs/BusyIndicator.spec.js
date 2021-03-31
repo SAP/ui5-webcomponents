@@ -27,13 +27,13 @@ describe("BusyIndicator general interaction", () => {
 
 		innerFocusElement = $(innerFocusElement);
 
-		assert.strictEqual(innerFocusElement.getAttribute("class"), "ui5-busyindicator-dynamic-content", "The correct inner element is focused");
+		assert.strictEqual(innerFocusElement.getAttribute("class"), "ui5-busyindicator-busy-area", "The correct inner element is focused");
 	});
 
 	it("tests internal focused element attributes", () => {
 		const busyIndicator = browser.$("#indicator1");
 		busyIndicator.click();
-		const innerFocusElement = busyIndicator.shadow$(".ui5-busyindicator-dynamic-content");
+		const innerFocusElement = busyIndicator.shadow$(".ui5-busyindicator-busy-area");
 
 		assert.strictEqual(innerFocusElement.getAttribute("role"), "progressbar", "Correct 'role' is set");
 		assert.strictEqual(innerFocusElement.getAttribute("tabindex"), "0", "Correct 'tabindex' is set");
