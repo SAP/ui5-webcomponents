@@ -34,6 +34,11 @@
 	max-width: 100vw;
 }
 
+:host([stretch]) .ui5-popup-content {
+	width: 100%;
+	height: 100%;
+}
+
 .ui5-popup-content {
 	min-height: var(--_ui5_dialog_content_min_height);
 	flex: 1 1 auto;
