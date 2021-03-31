@@ -124,7 +124,7 @@ class NotificationListItemBase extends ListItemBase {
 	constructor() {
 		super();
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+		this.i18nFioriBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {
