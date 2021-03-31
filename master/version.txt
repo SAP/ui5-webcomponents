@@ -1,5 +1,11 @@
-commit d6b6fa4095df1830ada066f0870bf616dd586a9d
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Mar 31 16:18:41 2021 +0300
+commit 573a6c6213b4bfdc48aa487c0929b58ab474532b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 31 17:15:37 2021 +0300
 
-    fix(ui5-li-notification-group, ui5-li-notification): fix i18n bundles usage (#3063)
+    fix(ui5-dialog): fix content stretching on Safari (#3068)
+    
+    On Safari the style that stretches the content flex: 1 1 auto is not working the same way as in the rest of the browsers. Two issues have been observed:
+    (1) One with the Wizard, the navigation header used to not remain at the top, but scrolled together with the content, which breaks the scrolling/navigation of the Wizard
+    (2) One of the Dialog itself - the header and the footer are not displayed correctly (see below), because of the content not stretched correctly. Adding "height: 100%", when the "stretched" property is set did fix the issues.
+    
+    FIXES: #3064
