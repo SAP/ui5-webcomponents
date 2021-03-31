@@ -222,18 +222,18 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get showMoreText() {
 		if (this._showMorePressed) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_LESS);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_LESS);
 		}
 
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
 	}
 
 	get overflowBtnAccessibleName() {
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
 	}
 
 	get closeBtnAccessibleName() {
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
 	}
 
 	get hideShowMore() {
@@ -319,23 +319,23 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get priorityText() {
 		if (this.priority === Priority.High) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Medium) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Low) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
 		}
 
 		return "";
 	}
 
 	get accInvisibleText() {
-		const notifcationTxt = this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
-		const readTxt = this.read ? this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_READ) : this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
+		const notifcationTxt = this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
+		const readTxt = this.read ? this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 		const priorityText = this.priorityText;
 
 		return `${notifcationTxt} ${readTxt} ${priorityText}`;
