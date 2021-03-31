@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("General API", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Label.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Label.html`);
 	});
 
 	it("tests initial rendering", () => {

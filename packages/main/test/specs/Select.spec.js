@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Select general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Select.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Select.html`);
 	});
 
 	it("fires change on selection", () => {
@@ -22,19 +23,23 @@ describe("Select general interaction", () => {
 	});
 
 	it("does not fire change, when clicking on selected item", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Select.html");
+
 		const select = $("#mySelect");
 		const inputResult = browser.$("#inputResult").shadow$("input");
 
 		select.click();
 
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect")
-		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
+		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:last-child");
 		firstItem.click();
 
-		assert.strictEqual(inputResult.getProperty("value"), "1", "Event not fired when already selected item is selected");
+		assert.strictEqual(inputResult.getProperty("value"), "", "Event not fired when already selected item is selected");
 	});
 
 	it("fires change on selection with keyboard handling", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Select.html");
+
 		const select = $("#mySelect2").shadow$(".ui5-select-root");
 		const selectText = browser.$("#mySelect2").shadow$(".ui5-select-label-root");
 		const inputResult = browser.$("#inputResult");
@@ -45,19 +50,21 @@ describe("Select general interaction", () => {
 		select.keys("ArrowUp");
 		select.keys("Enter");
 
-		assert.strictEqual(inputResult.getProperty("value"), "2", "Fired change event is called once more.");
+		assert.strictEqual(inputResult.getProperty("value"), "1", "Fired change event is called once more.");
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT1) !== -1, "Select label is correct.");
 
 		select.click();
 		select.keys("ArrowDown");
 		select.keys("Space");
 
-		assert.strictEqual(inputResult.getProperty("value"), "3", "Fired change event is called once more.");
+		assert.strictEqual(inputResult.getProperty("value"), "2", "Fired change event is called once more.");
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
-		
+
 	});
 
 	it("changes selection while closed with Arrow Up/Down", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Select.html");
+
 		const inputResult = browser.$("#inputResult").shadow$("input");
 		const select = $("#mySelect2");
 		const selectText = browser.$("#mySelect2").shadow$(".ui5-select-label-root");
@@ -74,43 +81,57 @@ describe("Select general interaction", () => {
 		select.keys("ArrowDown");
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) > -1, "Arrow Down should change selected item");
 
-		assert.strictEqual(inputResult.getProperty("value"), "5", "Change event should have fired twice");
+		assert.strictEqual(inputResult.getProperty("value"), "2", "Change event should have fired twice");
 	});
 
-	// TODO: Temporary commented as fails on the central build on regular basis
-	// it("changes selection sync with selection announcement", () => {
-	// 	const btn = $("#myBtn2");
-	// 	const inputResult = browser.$("#inputResult").shadow$("input");
-	// 	const select = $("#mySelect2");
-	// 	const selectId = select.getProperty("_id")
-	// 	const selectText = browser.$("#mySelect2").shadow$(".ui5-select-label-root");
-	// 	const selectionText = browser.$("#mySelect2").shadow$(`#${selectId}-selectionText`);
-	// 	const EXPECTED_SELECTION_TEXT1 = "Compact";
-	// 	const EXPECTED_SELECTION_TEXT2 = "Condensed";
+	it("changes selection sync with selection announcement", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Select.html");
 
-	// 	select.click();
-	// 	select.keys("Escape");
+		const btn = $("#myBtn2");
+		const inputResult = browser.$("#inputResult").shadow$("input");
+		const select = $("#mySelect2");
+		const selectId = select.getProperty("_id")
+		const selectText = browser.$("#mySelect2").shadow$(".ui5-select-label-root");
+		const selectionText = browser.$("#mySelect2").shadow$(`#${selectId}-selectionText`);
+		const EXPECTED_SELECTION_TEXT1 = "Compact";
+		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
-	// 	assert.strictEqual(selectionText.getHTML(false), "", "Selection announcement text should be clear if there is no interaction");
+		// open picker without following interaction
+		select.click();
+		select.keys("Escape");
 
-	// 	select.keys("ArrowUp");
-	// 	assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT1), "Arrow Up should change selected item");
-	// 	assert.strictEqual(selectionText.getHTML(false), EXPECTED_SELECTION_TEXT1, "Selection announcement text should be equalt to the current selected item's text");
+		assert.strictEqual(selectionText.getHTML(false), "", "Selection announcement text should be clear if there is no interaction");
 
-	// 	select.click();
-	// 	select.keys("Escape");
-	// 	assert.strictEqual(selectionText.getHTML(false), "", "Selection announcement text should be cleared if the picker is opened");
+		// change selection with picker closed
+		select.keys("ArrowUp");
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT1), "Arrow Up should change selected item");
+		assert.strictEqual(selectionText.getHTML(false), EXPECTED_SELECTION_TEXT1, "Selection announcement text should be equalt to the current selected item's text");
 
-	// 	select.keys("ArrowDown");
-	// 	assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2), "Arrow Up should change selected item");
-	// 	assert.strictEqual(selectionText.getHTML(false), EXPECTED_SELECTION_TEXT2, "Selection announcement text should be equalt to the current selected item's text");
+		// change selection with picker closed
+		select.keys("ArrowDown");
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2), "Arrow Down should change selected item");
+		assert.strictEqual(selectionText.getHTML(false), EXPECTED_SELECTION_TEXT2, "Selection announcement text should be equalt to the current selected item's text");
+		
+		// change previewed item with picker opened
+		select.click();
+		select.keys("ArrowUp");
+		assert.strictEqual(selectionText.getHTML(false), EXPECTED_SELECTION_TEXT1, "Selection announcement text should be equalt to the current selected item's text");
+		select.keys("Escape");
+		
+		// change selection with picker opened
+		select.click();
+		select.keys("ArrowUp");
+		select.keys("Enter");
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT1), "Arrow Up and Enter should change selected item");
+		assert.strictEqual(selectionText.getHTML(false), EXPECTED_SELECTION_TEXT1, "Selection announcement text should be equalt to the current selected item's text");
 
-	// 	btn.click();
-	// 	assert.strictEqual(selectionText.getHTML(false), "", "Selection announcement text should be cleared on focusout");
+		btn.click();
+		assert.strictEqual(selectionText.getHTML(false), "", "Selection announcement text should be cleared on focusout");
 
-	// 	assert.strictEqual(inputResult.getProperty("value"), "7", "Change event should have fired twice");
-	// });
+		assert.strictEqual(inputResult.getProperty("value"), "3", "Change event should have fired twice");
+	});
 
+	/*
 	it("changes selection on Tab", () => {
 		const select = browser.$("#keyboardHandling");
 		const EXPECTED_SELECTION_TEXT = "Banana";
@@ -152,6 +173,7 @@ describe("Select general interaction", () => {
 
 		assert.strictEqual(focusedElementId, browser.$("#mySelectEsc").getAttribute("id"), "Previous focusable element is focused");
 	});
+	 */
 
 	it("tests selection does not cycle with ArrowDown", () => {
 		const select = $("#selectionNotCycling");
@@ -258,56 +280,60 @@ describe("Select general interaction", () => {
 		restoreItemsBtn.click();
 	});
 
-	// TODO: Temporary commented as fails on the central build on regular basis
-	// it("reverts value before open after clicking on escape", () => {
-	// 	const select = $("#mySelect");
-	// 	const selectText = browser.$("#mySelect").shadow$(".ui5-select-label-root").getHTML(false);
-	// 	const inputResult = browser.$("#inputResult").shadow$("input");
+	it("reverts value before open after clicking on escape", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Select.html");
 
-	// 	select.click();
-	// 	select.keys("ArrowDown");
-	// 	select.keys("Escape");
+		const select = $("#mySelect");
+		const selectText = browser.$("#mySelect").shadow$(".ui5-select-label-root").getHTML(false);
+		const inputResult = browser.$("#inputResult").shadow$("input");
 
-	// 	const selectedOption = browser.$("#mySelect ui5-option[selected]");
-	// 	const selectTextAfterEscape = browser.$("#mySelect").shadow$(".ui5-select-label-root").getHTML(false);
+		select.click();
+		select.keys("ArrowDown");
+		select.keys("Escape");
 
-	// 	assert.ok(selectedOption.getProperty("selected"), "Initially selected item should remain selected");
-	// 	assert.strictEqual(inputResult.getProperty("value"), "7", "Change event should not be fired");
-	// 	assert.strictEqual(selectTextAfterEscape, selectText, "Initially selected item should remain selected");
-	// });
+		const selectedOption = browser.$("#mySelect ui5-option[selected]");
+		const selectTextAfterEscape = browser.$("#mySelect").shadow$(".ui5-select-label-root").getHTML(false);
 
-	// it("fires change event after selection is change and picker if focussed out", () => {
-	// 	const select = $("#mySelect");
-	// 	const inputResult = browser.$("#inputResult").shadow$("input");
-	// 	const btn = $("#myBtn2");
+		assert.ok(selectedOption.getProperty("selected"), "Initially selected item should remain selected");
+		assert.strictEqual(inputResult.getProperty("value"), "", "Change event should not be fired");
+		assert.strictEqual(selectTextAfterEscape, selectText, "Initially selected item should remain selected");
+	});
 
-	// 	select.click();
-	// 	select.keys("ArrowDown");
-	// 	select.keys("ArrowDown");
+	it("fires change event after selection is change and picker if focussed out", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Select.html");
 
-	// 	// focus out select
-	// 	btn.click();
+		const select = $("#mySelect");
+		const inputResult = browser.$("#inputResult").shadow$("input");
+		const btn = $("#myBtn2");
 
-	// 	assert.strictEqual(inputResult.getProperty("value"), "8", "Change event should be fired");
-	// });
+		select.click();
+		select.keys("ArrowUp");
 
-	// it("fires change event after selecting a previewed item", () => {
-	// 	const select = $("#mySelect");
-	// 	const inputResult = browser.$("#inputResult").shadow$("input");
+		// focus out select
+		btn.click();
 
-	// 	select.click();
-	// 	select.keys("ArrowDown");
+		assert.strictEqual(inputResult.getProperty("value"), "1", "Change event should be fired");
+	});
 
-	// 	select.keys("Escape");
+	it("fires change event after selecting a previewed item", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Select.html");
 
-	// 	select.click();
-	// 	const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
-	// 	const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
+		const select = $("#mySelect");
+		const inputResult = browser.$("#inputResult").shadow$("input");
 
-	// 	firstItem.click();
+		select.click();
+		select.keys("ArrowDown");
 
-	// 	assert.strictEqual(inputResult.getProperty("value"), "9", "Change event should be fired");
-	// });
+		select.keys("Escape");
+
+		select.click();
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
+		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
+
+		firstItem.click();
+
+		assert.strictEqual(inputResult.getProperty("value"), "1", "Change event should be fired");
+	});
 
 	it("tests ESC on closed picker", () => {
 		const select = $("#mySelectEsc");
@@ -332,7 +358,7 @@ describe("Select general interaction", () => {
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
 	});
 
-	it("Tests aria-label and aria-labelledby", () => {
+	it("Tests aria-label, aria-labelledby and aria-expanded", () => {
 		const select1 = browser.$("#textAreaAriaLabel").shadow$(".ui5-select-label-root");
 		const select2 = browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-select-label-root");
 		const EXPECTED_ARIA_LABEL1 = "Hello World";
@@ -340,8 +366,13 @@ describe("Select general interaction", () => {
 
 		assert.strictEqual(select1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
 			"The aria-label is correctly set internally.");
+		assert.strictEqual(select1.getAttribute("aria-expanded"), "false",
+			"The aria-expanded is false by default.");
+
 		assert.strictEqual(select2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
 			"The aria-label is correctly set internally.");
+		assert.strictEqual(select2.getAttribute("aria-expanded"), "false",
+			"The aria-expanded is false by default.");
 	});
 
 	it('selected options are correctly disabled', () => {

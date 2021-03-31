@@ -71,14 +71,6 @@ const metadata = {
 	},
 
 	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
-		/**
-		 * @public
-		 * @event
-		 * @since 1.0.0-rc.9
-		 */
-		click: {
-
-		},
 	},
 
 	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {

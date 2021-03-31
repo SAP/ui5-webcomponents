@@ -2885,6 +2885,9 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 				if (member.allowPreventDefault) {
 					attrib("allowPreventDefault", true);
 				}
+				if (member.native) {
+					attrib("native", true);
+				}
 				attrib("visibility", visibility(member), 'public');
 				if ( member.scope === 'static' ) {
 					attrib("static", true, false, /* raw = */true);

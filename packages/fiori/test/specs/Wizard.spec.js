@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Wizard general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8081/test-resources/pages/Wizard_test.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
 	});
 
 	it("test initial selection", () => {
@@ -52,6 +53,7 @@ describe("Wizard general interaction", () => {
 		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
 		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
+		const inpSelectionChangeCause =  browser.$("#inpSelectionChangeCause");
 
 		// act - click on the first step in the header
 		step1InHeader.click();
@@ -75,6 +77,9 @@ describe("Wizard general interaction", () => {
 		// assert - selection-change fired once
 		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "1",
 			"Event selection-change fired once.");
+		// assert - selection-change fired due to user click
+		assert.strictEqual(inpSelectionChangeCause.getProperty("value"), "true",
+			"Event selection-change fired due to click.");
 	});
 
 	it("move to next step by SPACE/ENTER", () => {
@@ -138,6 +143,7 @@ describe("Wizard general interaction", () => {
 		const step2 = browser.$("#st2");
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
 		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
+		const inpSelectionChangeCause =  browser.$("#inpSelectionChangeCause");
 
 		// act - scroll the 2nd step into view
 		// Note: scrollIntoView works in Chrome, but if we start executing the test on every browser,
@@ -153,6 +159,10 @@ describe("Wizard general interaction", () => {
 
 		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "4",
 			"Event selection-change fired 4th time due to scrolling.");
+
+		// assert - selection-change fired not becasue of user click
+		assert.strictEqual(inpSelectionChangeCause.getProperty("value"), "false",
+			"Event selection-change fired not becasue of user click, but scrolling");
 	});
 
 	it("tests dynamically increase step size and move to next step", () => {
@@ -179,7 +189,7 @@ describe("Wizard general interaction", () => {
 	});
 
 	it("tests no scrolling to selected step, if the selection was not changed", ()=>{
-		browser.url("http://localhost:8081/test-resources/pages/Wizard_test.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
 
 		const wizard = browser.$("#wizTest");
 		const wizardContentDOM = wizard.shadow$(".ui5-wiz-content");
@@ -212,13 +222,13 @@ describe("Wizard general interaction", () => {
 	});
 
 	it("tests small screen", ()=>{
-		browser.url("http://localhost:8081/test-resources/pages/Wizard_test_mobile.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test_mobile.html`);
 
 		const wizard = browser.$("#wizTest");
 		const wizardDisabled = browser.$("#wizTest2");
 		const groupedStep = wizard.shadow$(`[data-ui5-index="3"]`);
 		const groupedStepDisabled = wizardDisabled.shadow$(`[data-ui5-index="3"]`);
-		
+
 		// act - click on the stack of steps
 		groupedStep.shadow$(`.ui5-wiz-step-root`).click();
 

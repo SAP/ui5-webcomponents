@@ -135,6 +135,7 @@ const metadata = {
 		 * @readonly
 		 * @param {DataTransfer} dataTransfer The <code>drop</code> event operation data.
 		 * @public
+		 * @native
 		 */
 		drop: {},
 

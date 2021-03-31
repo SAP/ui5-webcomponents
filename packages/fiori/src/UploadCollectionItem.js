@@ -232,7 +232,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.UploadCollectionItem
- * @extends UI5Element
+ * @extends ListItem
  * @tagname ui5-upload-collection-item
  * @public
  * @implements sap.ui.webcomponents.fiori.IUploadCollectionItem
@@ -268,7 +268,7 @@ class UploadCollectionItem extends ListItem {
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+		this.i18nFioriBundle = getI18nBundle("@ui5/webcomponents-fiori");
 
 		this._editPressed = false; // indicates if the edit btn has been pressed
 		this.doNotCloseInput = false; // Indicates whether the input should be closed when using keybord for navigation
@@ -435,11 +435,11 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _renameBtnText() {
-		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT);
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT);
 	}
 
 	get _cancelRenameBtnText() {
-		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT);
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT);
 	}
 
 	get _showProgressIndicator() {
@@ -448,14 +448,14 @@ class UploadCollectionItem extends ListItem {
 
 	get _progressText() {
 		if (this.uploadState === UploadState.Uploading) {
-			return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_UPLOADING_STATE);
+			return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_UPLOADING_STATE);
 		}
 
 		if (this.uploadState === UploadState.Error) {
-			return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_ERROR_STATE);
+			return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_ERROR_STATE);
 		}
 
-		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_READY_STATE);
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_READY_STATE);
 	}
 
 	get _showRetry() {
@@ -467,15 +467,15 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _retryButtonTooltip() {
-		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT);
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT);
 	}
 
 	get _terminateButtonTooltip() {
-		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
 	}
 
 	get _editButtonTooltip() {
-		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT);
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT);
 	}
 
 	get valueStateName() {

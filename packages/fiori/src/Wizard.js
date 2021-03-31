@@ -63,6 +63,28 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the threshold to switch between steps upon user scrolling.
+		 * <br><br>
+		 *
+		 * <b>For Example:</b>
+		 * <br>
+		 * (1) To switch to the next step, when half of the step is scrolled out - set <code>step-switch-threshold="0.5"</code>.
+		 * (2) To switch to the next step, when the entire current step is scrolled out - set <code>step-switch-threshold="1"</code>.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> Supported values are between 0.5 and 1
+		 * and values out of the range will be normalized to 0.5 and 1 respectively.
+		 * @private
+		 * @type {Float}
+		 * @defaultvalue 0.7
+		 * @since 1.0.0-rc.13
+		 */
+		 stepSwitchThreshold: {
+			type: Float,
+			defaultValue: 0.7,
+		},
+
+		/**
 		 * Defines the height of the <code>ui5-wizard</code> content.
 		 * @private
 		 */
@@ -100,12 +122,14 @@ const metadata = {
 		 * @event sap.ui.webcomponents.fiori.Wizard#selection-change
 		 * @param {HTMLElement} selectedStep the newly selected step
 		 * @param {HTMLElement} previouslySelectedStep the previously selected step
+		 * @param {Boolean} changeWithClick the selection changed due to user's click on step within the navigation
 		 * @public
 		 */
 		"selection-change": {
 			detail: {
 				selectedStep: { type: HTMLElement },
 				previouslySelectedStep: { type: HTMLElement },
+				changeWithClick: { Boolean },
 			},
 		},
 	},
@@ -221,7 +245,7 @@ class Wizard extends UI5Element {
 
 		this._onStepResize = this.onStepResize.bind(this);
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {
@@ -571,7 +595,7 @@ class Wizard extends UI5Element {
 		const selectedStep = this.selectedStep;
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 
-		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex);
+		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
 		this._closeRespPopover();
 		tabs[newlySelectedIndex].focus();
 	}
@@ -604,7 +628,8 @@ class Wizard extends UI5Element {
 		// change selection and fire "selection-change".
 		if (newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
 			const stepToSelect = this.slottedSteps[newlySelectedIndex];
-			this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex);
+
+			this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex, false);
 			this.selectionRequestedByScroll = true;
 		}
 	}
@@ -632,7 +657,7 @@ class Wizard extends UI5Element {
 
 		if (bExpanded || (!bExpanded && (newlySelectedIndex === 0 || newlySelectedIndex === this.steps.length - 1))) {
 			// Change selection and fire "selection-change".
-			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex);
+			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
 		}
 	}
 
@@ -731,6 +756,18 @@ class Wizard extends UI5Element {
 		return this.ariaLabel || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
+	get effectiveStepSwitchThreshold() {
+		if (this.stepSwitchThreshold < 0.5) {
+			return 0.5;
+		}
+
+		if (this.stepSwitchThreshold > 1) {
+			return 1;
+		}
+
+		return this.stepSwitchThreshold;
+	}
+
 	/**
 	 * Returns an array of data objects, based on the user defined steps
 	 * to later build the steps (tabs) within the header.
@@ -813,9 +850,12 @@ class Wizard extends UI5Element {
 		return this.shadowRoot.querySelector(`[data-ui5-content-item-ref-id=${refId}]`);
 	}
 
+	getStepWrapperByIdx(idx) {
+		return this.getStepWrapperByRefId(this.steps[idx]._id);
+	}
+
 	/**
-	 * Scrolls to the content of the selected step
-	 * and it is used in <code>onAfteRendering</cod>.
+	 * Scrolls to the content of the selected step, used in <code>onAfterRendering</cod>.
 	 * @private
 	 */
 	scrollToSelectedStep() {
@@ -838,7 +878,6 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns to closest scroll position for the given step index.
-	 * by given step index.
 	 *
 	 * @private
 	 * @param {Integer} stepIndex the index of a step
@@ -862,16 +901,20 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns the closest step index by given scroll position.
-	 *
-	 * @param {Integer} scrollPos scroll position
-	 * @returns {Integer} closestStepIndex the closest step index
 	 * @private
+	 * @param {Integer} scrollPos the scroll position
 	 */
 	getClosestStepIndexByScrollPos(scrollPos) {
 		for (let closestStepIndex = 0; closestStepIndex <= this.stepScrollOffsets.length - 1; closestStepIndex++) {
-			const stepOffset = this.stepScrollOffsets[closestStepIndex];
+			const stepScrollOffset = this.stepScrollOffsets[closestStepIndex];
+			const step = this.getStepWrapperByIdx(closestStepIndex);
+			const switchStepBoundary = step.offsetTop + (step.offsetHeight * this.effectiveStepSwitchThreshold);
 
-			if (stepOffset > 0 && scrollPos < stepOffset) {
+			if (stepScrollOffset > 0 && scrollPos < stepScrollOffset) {
+				if (scrollPos > switchStepBoundary) {
+					return closestStepIndex + 1;
+				}
+
 				return closestStepIndex;
 			}
 		}
@@ -885,9 +928,10 @@ class Wizard extends UI5Element {
 	 * @param {HTMLElement} selectedStep the old step
 	 * @param {HTMLElement} stepToSelect the step to be selected
 	 * @param {Integer} stepToSelectIndex the index of the newly selected step
+	 * @param {Boolean} changeWithClick the selection changed due to user click in the step navigation
 	 * @private
 	 */
-	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex) {
+	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex, changeWithClick) {
 		if (selectedStep && stepToSelect) {
 			selectedStep.selected = false;
 			stepToSelect.selected = true;
@@ -895,6 +939,7 @@ class Wizard extends UI5Element {
 			this.fireEvent("selection-change", {
 				selectedStep: stepToSelect,
 				previouslySelectedStep: selectedStep,
+				changeWithClick,
 			});
 
 			this.selectedStepIndex = stepToSelectIndex;

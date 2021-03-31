@@ -13,7 +13,6 @@ const livereload = require("rollup-plugin-livereload");
 
 const packageFile = JSON.parse(fs.readFileSync("./package.json"));
 const packageName = packageFile.name;
-const ui5Info = packageFile.ui5 || {};
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
 
 function ui5DevImportCheckerPlugin() {
@@ -29,7 +28,7 @@ function ui5DevImportCheckerPlugin() {
 }
 
 const reportedForPackages = new Set(); // sometimes writeBundle is called more than once per bundle -> suppress extra messages
-function ui5DevReadyMessagePlugin({ packageName, port }) {
+function ui5DevReadyMessagePlugin() {
 	return {
 		name: "ui5-dev-message-ready-plugin",
 		writeBundle: (assets, bundle) => {
@@ -37,8 +36,12 @@ function ui5DevReadyMessagePlugin({ packageName, port }) {
 				return;
 			}
 			console.log(colors.blue(`${colors.bold(packageName)} successfully built!`));
-			if (port) {
-				console.log(colors.blue(`Navigate to: ${colors.bold(`http://localhost:${port}/test-resources/pages/`)}`));
+
+			if (fs.existsSync(".port")) {
+				const port = `${fs.readFileSync(".port")}`;
+				if (port) {
+					console.log(colors.blue(`Navigate to: ${colors.bold(`http://localhost:${port}/test-resources/pages/`)}`));
+				}
 			}
 			reportedForPackages.add(packageName);
 		},
@@ -122,10 +125,7 @@ const getPlugins = ({ transpile }) => {
 	}
 
 	if (process.env.DEV) {
-		plugins.push(ui5DevReadyMessagePlugin({
-			packageName,
-			port: ui5Info.port,
-		}));
+		plugins.push(ui5DevReadyMessagePlugin());
 	}
 
 	return plugins;

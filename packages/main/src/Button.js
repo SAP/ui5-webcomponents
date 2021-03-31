@@ -252,6 +252,7 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
+		 * @native
 		 */
 		click: {},
 	},

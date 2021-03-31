@@ -43,6 +43,16 @@
 
 					<ui5-input id="inpSelectionChangeCounter"></ui5-input>
 					<ui5-button id="btnOpenDialog" style="width: 150px; align-self: flex-end;">Open Wizard Dialog</ui5-button>
+
+					<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
+						<ui5-label>Configure step-switch-threshold</ui5-label>
+						<ui5-segmentedbutton id="setting">
+							<ui5-togglebutton threshold="0.3">0.5</ui5-togglebutton>
+							<ui5-togglebutton threshold="0.7" pressed>default (0.7)</ui5-togglebutton>
+							<ui5-togglebutton threshold="1">1</ui5-togglebutton>
+						</ui5-segmentedbutton>
+					</div>
+					
 				</div>
 
 				<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
@@ -54,6 +64,8 @@
 					<ui5-label wrap>
 						Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 					</ui5-label>
+
+					<ui5-input id="inpSelectionChangeCause" placeholder="step changed via click"></ui5-input>
 
 					<div style="display: flex; flex-direction: column;">
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
@@ -300,9 +312,10 @@
 	<script>
 		var wiz = document.getElementById("wizTest");
 		var counter = 0;
-		wiz.addEventListener("ui5-selection-change", function () {
+		wiz.addEventListener("ui5-selection-change", function (event) {
 			console.log(event.detail.selectedStep);
 			inpSelectionChangeCounter.value = ++counter;
+			inpSelectionChangeCause.value = event.detail.changeWithClick;
 		});
 
 		toStep2.addEventListener("click", function () {
@@ -350,6 +363,10 @@
 
 		btnOpenDialog.addEventListener("click", function () {
 			dialog.open();
+		});
+
+		setting.addEventListener("selection-change", function (event) {
+			wiz.setAttribute("step-switch-threshold", event.detail.selectedButton.getAttribute("threshold"));
 		});
 	</script>
 </body>

@@ -12,9 +12,7 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-	"ColorPalette",
-	"ColorPicker",
-	"Page",
+	"StepInput",
 ];
 
 packages.forEach(package => {

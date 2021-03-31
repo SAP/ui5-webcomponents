@@ -345,7 +345,6 @@ const INITIAL_SPEED = 120; // milliseconds
  * <li>To enter dates and times. In this case, use date/time related components instead.</li>
  * </ul>
  *
- * For the <code>ui5-step-input</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/StepInput.js";</code>
@@ -355,7 +354,7 @@ const INITIAL_SPEED = 120; // milliseconds
  * @alias sap.ui.webcomponents.main.StepInput
  * @extends UI5Element
  * @tagname ui5-step-input
- * @since 1.0.0-rc.12
+ * @since 1.0.0-rc.13
  * @public
  */
 class StepInput extends UI5Element {

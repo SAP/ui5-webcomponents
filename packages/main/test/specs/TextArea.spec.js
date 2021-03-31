@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Attributes propagation", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/TextArea.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
 	});
 
 	it("Should change the placeholder of the inner textarea", () => {
@@ -54,7 +55,7 @@ describe("Attributes propagation", () => {
 
 describe("disabled and readonly textarea", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/TextArea.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
 	});
 
 	it("can not be edited when disabled", () => {
@@ -77,7 +78,7 @@ describe("disabled and readonly textarea", () => {
 
 describe("when enabled", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/TextArea.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
 	});
 
 	it("shows value state message", () => {

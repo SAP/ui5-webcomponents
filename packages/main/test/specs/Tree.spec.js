@@ -1,8 +1,9 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Tree general interaction", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Tree.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Tree.html`);
 	});
 
 	it("Tree is rendered", () => {
@@ -34,7 +35,7 @@ describe("Tree general interaction", () => {
 
 describe("Tree proxies properties to list", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Tree.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Tree.html`);
 	});
 
 	it("Mode works", () => {
@@ -65,7 +66,7 @@ describe("Tree proxies properties to list", () => {
 
 describe("Tree has screen reader support", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/Tree.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Tree.html`);
 	});
 
 	it("List role is correct", () => {

@@ -31,6 +31,8 @@
  *
  *   tagname
  *
+ *   native
+ *
  *   allowPreventDefault
  *
  * It furthermore listens to the following JSDoc3 events to implement additional functionality
@@ -2088,6 +2090,13 @@ exports.defineTags = function(dictionary) {
 		mustHaveValue: false,
 		onTagged: function(doclet, tag) {
 			doclet.allowPreventDefault = true;
+		}
+	});
+
+	dictionary.defineTag('native', {
+		mustHaveValue: false,
+		onTagged: function(doclet, tag) {
+			doclet.native = true;
 		}
 	});
 };
