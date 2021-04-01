@@ -1,6 +1,7 @@
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import getEffectiveStyle from "@ui5/webcomponents-base/dist/theming/getEffectiveStyle.js";
 import { attachCustomCSSChange } from "@ui5/webcomponents-base/dist/theming/CustomStyle.js";
+import StaticAreaItem from "@ui5/webcomponents-base/dist/StaticAreaItem.js";
 import adaptCSSForIE from "./adaptCSSForIE.js";
 import { schedulePonyfill } from "./CSSVarsPonyfill.js";
 
@@ -29,7 +30,7 @@ const createComponentStyleTag = component => {
 	// Append static CSS, if any, for IE
 	let staticCssContent = getEffectiveStyle(ElementClass, true);
 	if (staticCssContent) {
-		staticCssContent = adaptCSSForIE(staticCssContent, "ui5-static-area-item");
+		staticCssContent = adaptCSSForIE(staticCssContent, StaticAreaItem.getTag());
 		cssContent = `${cssContent} ${staticCssContent}`;
 	}
 
