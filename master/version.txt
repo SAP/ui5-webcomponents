@@ -1,5 +1,10 @@
-commit 8786c9d91c2bc3e2274caceda695253ff23f8538
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Apr 1 15:09:11 2021 +0300
+commit bb5d65fdc881ee8f7fac28632b7ba05bab1ad49a
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Thu Apr 1 17:42:48 2021 +0300
 
-    chore: warn developers if a key they're using is not in the bundle (#3074)
+    fix(ui5-li-tree): fixed incorrect background of selected item (#3072)
+    
+    The background of the selected items on level 2 and higher was wrong.
+    Now it's aligned with specification.
+    
+    Fixes: #2978
