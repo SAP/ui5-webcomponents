@@ -3,7 +3,7 @@ import { boot } from "./Boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import EventProvider from "./EventProvider.js";
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
-import "./StaticAreaItem.js";
+import StaticAreaItem from "./StaticAreaItem.js";
 import updateShadowRoot from "./updateShadowRoot.js";
 import { renderDeferred, renderImmediately, cancelRender } from "./Render.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
@@ -796,7 +796,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		if (!this.staticAreaItem) {
-			this.staticAreaItem = document.createElement("ui5-static-area-item");
+			this.staticAreaItem = StaticAreaItem.createInstance();
 			this.staticAreaItem.setOwnerElement(this);
 		}
 		if (!this.staticAreaItem.parentElement) {
