@@ -41,7 +41,6 @@
     padding-left: 0;
 }
 
-:host([selected][has-border]:not([level="1"])),
 :host(:not([level="1"])) {
     border-bottom: none;
 }
@@ -55,7 +54,7 @@
     cursor: pointer;
 }
 
-:host(:not([level="1"])) .ui5-li-root-tree {
+:host(:not([level="1"]):not([selected])) .ui5-li-root-tree {
     background: var(--sapList_AlternatingBackground);
 }
 
