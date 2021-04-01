@@ -481,7 +481,7 @@ class Wizard extends UI5Element {
 		const iCurrStep = this.getSelectedStepIndex();
 		const iStepsToShow = this.steps.length ? Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) : Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
 
-		const tabs = this.shadowRoot.querySelectorAll("ui5-wizard-tab");
+		const tabs = this.shadowRoot.querySelectorAll("[ui5-wizard-tab]");
 
 		if (!tabs.length) {
 			return;
@@ -560,7 +560,7 @@ class Wizard extends UI5Element {
 	}
 
 	async _showPopover(oDomTarget, bAtStart) {
-		const tabs = Array.from(this.shadowRoot.querySelectorAll("ui5-wizard-tab"));
+		const tabs = Array.from(this.shadowRoot.querySelectorAll("[ui5-wizard-tab]"));
 		this._groupedTabs = [];
 
 		const iFromStep = bAtStart ? 0 : this.stepsInHeaderDOM.indexOf(oDomTarget);
@@ -585,7 +585,7 @@ class Wizard extends UI5Element {
 	}
 
 	_onOverflowStepButtonClick(event) {
-		const tabs = Array.from(this.shadowRoot.querySelectorAll("ui5-wizard-tab"));
+		const tabs = Array.from(this.shadowRoot.querySelectorAll("[ui5-wizard-tab]"));
 		const stepRefId = event.target.getAttribute("data-ui5-header-tab-ref-id");
 		const stepToSelect = this.slottedSteps[stepRefId - 1];
 		const selectedStep = this.selectedStep;
