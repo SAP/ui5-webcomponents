@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.14](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.13...v1.0.0-rc.14) (2021-04-01)
+
+
+### Bug Fixes
+
+
+
+* **ui5-li-notification-group, ui5-li-notification:** fix i18n bundles usage ([#3063](https://github.com/SAP/ui5-webcomponents/issues/3063)) ([d6b6fa4](https://github.com/SAP/ui5-webcomponents/commit/d6b6fa4))
+* **ui5-upload-collection-item:** make use of both main & fiori i18n bundles ([#3061](https://github.com/SAP/ui5-webcomponents/issues/3061)) ([2a01cb4](https://github.com/SAP/ui5-webcomponents/commit/2a01cb4))
+
+
+### Features
+
+* **ui5-static-area-item:** StaticAreaItem can now be scoped ([#3076](https://github.com/SAP/ui5-webcomponents/issues/3076)) ([9a7ffe4](https://github.com/SAP/ui5-webcomponents/commit/9a7ffe4))
+* **ui5-wizard:** add parameter to selectionChange event ([#3034](https://github.com/SAP/ui5-webcomponents/issues/3034)) ([7ad94d2](https://github.com/SAP/ui5-webcomponents/commit/7ad94d2))
+
+
+
 # [1.0.0-rc.13](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.12...v1.0.0-rc.13) (2021-03-26)
 
 
