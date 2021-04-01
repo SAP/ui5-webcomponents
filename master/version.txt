@@ -1,5 +1,7 @@
-commit 9a7ffe4636b5cf4324afc1867e696d2787b75508
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Apr 1 14:15:35 2021 +0300
+commit 4c20427e8117cff504a355faf7dc0022427bba8b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Apr 1 14:26:01 2021 +0300
 
-    feat(ui5-static-area-item): StaticAreaItem can now be scoped (#3076)
+    Revert "refactor(ui5-button, ui5-li): make touch events handlers passive (#3046)" (#3078)
+    
+    This reverts commit 00d0be409d19016b18463b2c9f62e0d354cae393.
