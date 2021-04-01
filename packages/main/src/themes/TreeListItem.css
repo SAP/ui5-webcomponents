@@ -68,8 +68,8 @@
 }
 
 .ui5-li-tree-toggle-box {
-    width: var(--_ui5-tree-toggle-box-width);
-    height: var(--_ui5-tree-toggle-box-height);
+    min-width: var(--_ui5-tree-toggle-box-width);
+    min-height: var(--_ui5-tree-toggle-box-height);
     display: flex;
     align-items: center;
     justify-content: center;
