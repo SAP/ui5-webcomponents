@@ -1,7 +1,11 @@
-commit 0aac0484cb7bb2b3f7a8a711c498d75712be7c0f
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Thu Apr 1 12:03:12 2021 +0300
+commit 4b83c7b501401c72a8084fe410a04c7723e0c2c3
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Thu Apr 1 13:03:06 2021 +0300
 
-    fix(ui5-dialog): Fixed RTL mode (#3070)
+    fix(ui5-li-tree): fixed incorrect tree items alignment (#3075)
     
-    Fixes: #3013
+    When there was ellipsis of the text of the tree items, the ones
+    which got truncated were misaligned with the ones which weren't.
+    Now they are correctly aligned.
+    
+    Fixes: #3069
