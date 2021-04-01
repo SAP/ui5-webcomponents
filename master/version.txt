@@ -1,7 +1,5 @@
-commit 4c20427e8117cff504a355faf7dc0022427bba8b
+commit d0c4b3c949d21380e6e733c67c2c3b8515194ba1
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Apr 1 14:26:01 2021 +0300
+Date:   Thu Apr 1 14:54:58 2021 +0300
 
-    Revert "refactor(ui5-button, ui5-li): make touch events handlers passive (#3046)" (#3078)
-    
-    This reverts commit 00d0be409d19016b18463b2c9f62e0d354cae393.
+    fix comments (#3077)
