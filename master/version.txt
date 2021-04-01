@@ -1,5 +1,7 @@
-commit 00d0be409d19016b18463b2c9f62e0d354cae393
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Apr 1 11:09:42 2021 +0300
+commit 0aac0484cb7bb2b3f7a8a711c498d75712be7c0f
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Thu Apr 1 12:03:12 2021 +0300
 
-    refactor(ui5-button, ui5-li): make touch events handlers passive (#3046)
+    fix(ui5-dialog): Fixed RTL mode (#3070)
+    
+    Fixes: #3013
