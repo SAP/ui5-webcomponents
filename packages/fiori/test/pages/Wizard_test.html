@@ -175,7 +175,7 @@
 		</ui5-wizard>
 
 		<ui5-dialog id="dialog" stretch header-heading="Wizard">
-				<ui5-wizard>
+				<ui5-wizard id="wizInDialog">
 					<ui5-wizard-step icon="sap-icon://product" selected heading="Product type">
 						<div style="display: flex; min-height: 200px; flex-direction: column;">
 							<ui5-title>1. Product Type</ui5-title><br>
@@ -190,7 +190,7 @@
 							<ui5-input></ui5-input>
 						</div>
 
-						<ui5-button design="Emphasized">Step 2</ui5-button>
+						<ui5-button id="toStep2InDialog" design="Emphasized">Step 2</ui5-button>
 					</ui5-wizard-step>
 
 					<ui5-wizard-step heading="Product Information">
@@ -231,7 +231,7 @@
 							</div>
 						</div>
 
-						<ui5-button design="Emphasized">Step 3</ui5-button>
+						<ui5-button id="toStep3InDialog" design="Emphasized">Step 3</ui5-button>
 					</ui5-wizard-step>
 
 					<ui5-wizard-step heading="Options">
@@ -272,7 +272,7 @@
 							</div>
 						</div>
 
-						<ui5-button design="Emphasized">Step 4</ui5-button>
+						<ui5-button id="toStep4InDialog" design="Emphasized">Step 4</ui5-button>
 					</ui5-wizard-step>
 
 					<ui5-wizard-step heading="Pricing">
@@ -311,6 +311,7 @@
 
 	<script>
 		var wiz = document.getElementById("wizTest");
+		var wizInDialog = document.getElementById("wizInDialog");
 		var counter = 0;
 		wiz.addEventListener("ui5-selection-change", function (event) {
 			console.log(event.detail.selectedStep);
@@ -319,37 +320,53 @@
 		});
 
 		toStep2.addEventListener("click", function () {
-			deselectAll();
-			setStep(1);
+			deselectAll(wiz);
+			setStep(1, wiz);
 		});
+
 		toStep22.addEventListener("click", function () {
-			deselectAll();
-			setStep(1);
+			deselectAll(wiz);
+			setStep(1, wiz);
 		});
 
 		toStep3.addEventListener("click", function () {
-			deselectAll();
-			setStep(2);
+			deselectAll(wiz);
+			setStep(2, wiz);
 		});
 
 		toStep4.addEventListener("click", function () {
-			deselectAll();
-			setStep(3);
+			deselectAll(wiz);
+			setStep(3, wiz);
 		});
 
-		function deselectAll() {
+		toStep2InDialog.addEventListener("click", function () {
+			deselectAll(wizInDialog);
+			setStep(1, wizInDialog);
+		});
+
+		toStep3InDialog.addEventListener("click", function () {
+			deselectAll(wizInDialog);
+			setStep(2, wizInDialog);
+		});
+
+		toStep4InDialog.addEventListener("click", function () {
+			deselectAll(wizInDialog);
+			setStep(3, wizInDialog);
+		});
+
+		function deselectAll(wiz) {
 			Array.from(wiz.children).forEach(function(step) {
 				step.selected = false;
 			});
 		}
 
-		function setStep(idx) {
-			const step = getStep(idx);
+		function setStep(idx, wiz) {
+			const step = getStep(idx, wiz);
 			step.selected = true;
 			step.disabled = false;
 		}
 
-		function getStep(idx) {
+		function getStep(idx, wiz) {
 			return Array.from(wiz.children)[idx];
 		}
 
