@@ -41,7 +41,6 @@
     padding-left: 0;
 }
 
-:host([selected][has-border]:not([level="1"])),
 :host(:not([level="1"])) {
     border-bottom: none;
 }
