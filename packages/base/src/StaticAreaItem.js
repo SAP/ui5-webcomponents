@@ -85,12 +85,12 @@ class StaticAreaItem extends HTMLElement {
 	}
 
 	static createInstance() {
+		if (!customElements.get(StaticAreaItem.getTag())) {
+			customElements.define(StaticAreaItem.getTag(), StaticAreaItem);
+		}
+
 		return document.createElement(this.getTag());
 	}
-}
-
-if (!customElements.get(StaticAreaItem.getTag())) {
-	customElements.define(StaticAreaItem.getTag(), StaticAreaItem);
 }
 
 export default StaticAreaItem;
