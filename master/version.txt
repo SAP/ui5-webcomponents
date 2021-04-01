@@ -1,9 +1,5 @@
-commit cfa50d8e93b82f1781c2648bfc785e2fdeba95e8
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Thu Apr 1 10:37:35 2021 +0300
+commit 00d0be409d19016b18463b2c9f62e0d354cae393
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Apr 1 11:09:42 2021 +0300
 
-    fix(ui5-busyindicator): add a11y support (#2938)
-    
-    Tooltip, Focus is provided, so screen readers can read the component properly
-    
-    Fixes #2381
+    refactor(ui5-button, ui5-li): make touch events handlers passive (#3046)
