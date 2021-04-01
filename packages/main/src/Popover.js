@@ -11,6 +11,7 @@ import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegi
 // Template
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 // Styles
+import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 
@@ -263,7 +264,7 @@ class Popover extends Popup {
 	}
 
 	static get styles() {
-		return [PopupsCommonCss, PopoverCss];
+		return [browserScrollbarCSS, PopupsCommonCss, PopoverCss];
 	}
 
 	static get template() {
