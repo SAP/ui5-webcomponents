@@ -8,6 +8,7 @@ import Icon from "./Icon.js";
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 // Styles
+import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 
@@ -180,7 +181,7 @@ class Dialog extends Popup {
 	}
 
 	static get styles() {
-		return [PopupsCommonCss, dialogCSS];
+		return [browserScrollbarCSS, PopupsCommonCss, dialogCSS];
 	}
 
 	/**

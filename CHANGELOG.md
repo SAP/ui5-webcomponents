@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.14](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.11...v1.0.0-rc.14) (2021-04-01)
+
+
+### Bug Fixes
+
+* **ui5-busyindicator:** add a11y support ([#2938](https://github.com/SAP/ui5-webcomponents/issues/2938)) ([cfa50d8](https://github.com/SAP/ui5-webcomponents/commit/cfa50d8)), closes [#2381](https://github.com/SAP/ui5-webcomponents/issues/2381)
+* **ui5-button:** disable hover on mobile devices ([#2968](https://github.com/SAP/ui5-webcomponents/issues/2968)) ([c870eb4](https://github.com/SAP/ui5-webcomponents/commit/c870eb4))
+* **ui5-dialog:** Fix aria-labelledby attribute value ([#3044](https://github.com/SAP/ui5-webcomponents/issues/3044)) ([e0ab900](https://github.com/SAP/ui5-webcomponents/commit/e0ab900)), closes [#2946](https://github.com/SAP/ui5-webcomponents/issues/2946)
+* **ui5-dialog:** fix content stretching on Safari ([#3068](https://github.com/SAP/ui5-webcomponents/issues/3068)) ([573a6c6](https://github.com/SAP/ui5-webcomponents/commit/573a6c6)), closes [#3064](https://github.com/SAP/ui5-webcomponents/issues/3064)
+* **ui5-dialog:** Fixed RTL mode ([#3070](https://github.com/SAP/ui5-webcomponents/issues/3070)) ([0aac048](https://github.com/SAP/ui5-webcomponents/commit/0aac048)), closes [#3013](https://github.com/SAP/ui5-webcomponents/issues/3013)
+* **ui5-dialog:** Fixed scrollbars styling ([#3067](https://github.com/SAP/ui5-webcomponents/issues/3067)) ([f4301b8](https://github.com/SAP/ui5-webcomponents/commit/f4301b8)), closes [#2887](https://github.com/SAP/ui5-webcomponents/issues/2887)
+* **ui5-file-uploader:** open browse dialog with Space and Enter keys ([#3026](https://github.com/SAP/ui5-webcomponents/issues/3026)) ([0097f21](https://github.com/SAP/ui5-webcomponents/commit/0097f21)), closes [#3001](https://github.com/SAP/ui5-webcomponents/issues/3001)
+* **ui5-input:** inner input padding is correctly updated ([#3015](https://github.com/SAP/ui5-webcomponents/issues/3015)) ([b00b02b](https://github.com/SAP/ui5-webcomponents/commit/b00b02b)), closes [#2940](https://github.com/SAP/ui5-webcomponents/issues/2940)
+* **ui5-input:** Prevent dialog closing on Escape ([#3043](https://github.com/SAP/ui5-webcomponents/issues/3043)) ([c073ad4](https://github.com/SAP/ui5-webcomponents/commit/c073ad4))
+* **ui5-li-notification-group, ui5-li-notification:** fix i18n bundles usage ([#3063](https://github.com/SAP/ui5-webcomponents/issues/3063)) ([d6b6fa4](https://github.com/SAP/ui5-webcomponents/commit/d6b6fa4))
+* **ui5-li-tree:** fixed incorrect tree items alignment ([#3075](https://github.com/SAP/ui5-webcomponents/issues/3075)) ([4b83c7b](https://github.com/SAP/ui5-webcomponents/commit/4b83c7b)), closes [#3069](https://github.com/SAP/ui5-webcomponents/issues/3069)
+* **ui5-select:** keyboard/selection handling improvement ([#2907](https://github.com/SAP/ui5-webcomponents/issues/2907)) ([f18fd45](https://github.com/SAP/ui5-webcomponents/commit/f18fd45))
+
+
+### Features
+
+* **ui5-avatar-group:** new slot overflowButton ([#3037](https://github.com/SAP/ui5-webcomponents/issues/3037)) ([6d47d68](https://github.com/SAP/ui5-webcomponents/commit/6d47d68)), closes [#2912](https://github.com/SAP/ui5-webcomponents/issues/2912)
+* **ui5-static-area-item:** StaticAreaItem can now be scoped ([#3076](https://github.com/SAP/ui5-webcomponents/issues/3076)) ([9a7ffe4](https://github.com/SAP/ui5-webcomponents/commit/9a7ffe4))
+* **ui5-wizard:** add parameter to selectionChange event ([#3034](https://github.com/SAP/ui5-webcomponents/issues/3034)) ([7ad94d2](https://github.com/SAP/ui5-webcomponents/commit/7ad94d2))
+
+
+
 # [1.0.0-rc.13](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.12...v1.0.0-rc.13) (2021-03-26)
 
 
