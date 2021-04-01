@@ -514,10 +514,6 @@ class Popup extends UI5Element {
 		return this.shadowRoot.querySelector(".ui5-popup-root");
 	}
 
-	get dir() {
-		return getRTL() ? "rtl" : "ltr";
-	}
-
 	get styles() {
 		return {
 			root: {},
