@@ -1,11 +1,11 @@
-commit 4b83c7b501401c72a8084fe410a04c7723e0c2c3
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Thu Apr 1 13:03:06 2021 +0300
+commit b00b02b3f2c783b8e62a4a7c9a97c96d6ae27f21
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Thu Apr 1 13:57:20 2021 +0300
 
-    fix(ui5-li-tree): fixed incorrect tree items alignment (#3075)
+    fix(ui5-input): inner input padding is correctly updated (#3015)
     
-    When there was ellipsis of the text of the tree items, the ones
-    which got truncated were misaligned with the ones which weren't.
-    Now they are correctly aligned.
+    Prevously, after padding: 0 was applied when the condition is false, it remained 0. That could be easily reproduced with native HTML as well. Setting 'undefined' as a value does not change the padding to the one specified in the component's css styles.
+    https://snippix.only.sap/snippets/52143
+    Now, when the padding should not be 0, the inline style is removed, instead of setting 'undefined' as a value
     
-    Fixes: #3069
+    FIXES: #2940
