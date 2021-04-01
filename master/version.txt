@@ -1,7 +1,9 @@
-commit f4301b8653fb70fa0713b91994a37b7a18e2f32e
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Thu Apr 1 09:45:21 2021 +0300
+commit cfa50d8e93b82f1781c2648bfc785e2fdeba95e8
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Thu Apr 1 10:37:35 2021 +0300
 
-    fix(ui5-dialog): Fixed scrollbars styling (#3067)
+    fix(ui5-busyindicator): add a11y support (#2938)
     
-    Fixes: #2887
+    Tooltip, Focus is provided, so screen readers can read the component properly
+    
+    Fixes #2381
