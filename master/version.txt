@@ -1,10 +1,5 @@
-commit bb5d65fdc881ee8f7fac28632b7ba05bab1ad49a
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Thu Apr 1 17:42:48 2021 +0300
+commit 6ee46e013614e24d823c5a29b680686d3e43415d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Apr 1 17:58:01 2021 +0300
 
-    fix(ui5-li-tree): fixed incorrect background of selected item (#3072)
-    
-    The background of the selected items on level 2 and higher was wrong.
-    Now it's aligned with specification.
-    
-    Fixes: #2978
+    chore: release v1.0.0-rc.14 (#3081)
