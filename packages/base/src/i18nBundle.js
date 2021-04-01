@@ -29,6 +29,9 @@ class I18nBundle {
 		}
 
 		const bundle = getI18nBundleData(this.packageName);
+		if (bundle && !bundle[textObj.key]) {
+			console.warn(`Key ${textObj.key} not found in the i18n bundle, the default text will be used`); // eslint-disable-line
+		}
 		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : (textObj.defaultText || textObj.key);
 
 		return formatMessage(messageText, params);
