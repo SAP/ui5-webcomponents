@@ -316,7 +316,6 @@ class Button extends UI5Element {
 
 	constructor() {
 		super();
-		this._isTouch = isPhone() || isTablet();
 
 		this._deactivate = () => {
 			if (activeButton) {
@@ -331,6 +330,10 @@ class Button extends UI5Element {
 		}
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	onEnterDOM() {
+		this._isTouch = isPhone() || isTablet();
 	}
 
 	onBeforeRendering() {
@@ -376,7 +379,7 @@ class Button extends UI5Element {
 	get _ontouchstart() {
 		return {
 			handleEvent(event) {
-			  this._touchStartPassiveHandler(event);
+				this._touchStartPassiveHandler(event);
 			},
 			passive: true,
 		};
@@ -393,7 +396,7 @@ class Button extends UI5Element {
 	get _ontouchend() {
 		return {
 			handleEvent(event) {
-			  this._touchEndPassiveHandler(event);
+				this._touchEndPassiveHandler(event);
 			},
 			passive: true,
 		};
