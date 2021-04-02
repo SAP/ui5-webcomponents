@@ -56,6 +56,11 @@
 		<ui5-textarea id="t4" maxlength="20" show-exceeded-text data-i18n-TEXTAREA_CHARACTERS_LEFT="Just {0} symbols left! (Attribute message)"></ui5-textarea>
 	</section>
 
+	<section class="group">
+		<ui5-title>Has i18Data Promise set on the instance -> will use that when resolved</ui5-title>
+		<ui5-textarea id="t5" maxlength="20" show-exceeded-text></ui5-textarea>
+	</section>
+
 	<script>
 
 		document.getElementById("t2").i18nData = {
@@ -64,6 +69,15 @@
 		document.getElementById("t3").i18nData = {
 			"TEXTAREA_CHARACTERS_LEFT": "Just {0} char(s) left. (On the instance)"
 		};
+
+		const fetchCustomTexts = async () => {
+			return (await fetch("lang/fr.json")).json();
+		};
+
+		(async () => {
+			document.getElementById("t5").i18nData = await fetchCustomTexts();
+		})();
+
 
 		(async () => {
 			await window.customElements.whenDefined("ui5-textarea");
