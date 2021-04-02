@@ -271,10 +271,6 @@ const metadata = {
 		_width: {
 			type: Integer,
 		},
-
-		i18nData: {
-			type: Object,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 
