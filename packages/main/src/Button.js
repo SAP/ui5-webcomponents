@@ -358,7 +358,7 @@ class Button extends UI5Element {
 	}
 
 	_onmousedown(event) {
-		if (this.nonInteractive || this._isTouch) {
+		if (this.nonInteractive) {
 			return;
 		}
 
@@ -367,7 +367,7 @@ class Button extends UI5Element {
 		activeButton = this; // eslint-disable-line
 	}
 
-	_ontouchstart(event) {
+	_ontouchstartPassiveHandler(event) {
 		event.isMarked = "button";
 		if (this.nonInteractive) {
 			return;
@@ -376,12 +376,34 @@ class Button extends UI5Element {
 		this.active = true;
 	}
 
-	_ontouchend(event) {
+	get _ontouchstart() {
+		const handleEvent = event => {
+			this._ontouchstartPassiveHandler(event);
+		};
+
+		return {
+			handleEvent,
+			passive: true,
+		};
+	}
+
+	_ontouchendPassiveHandler(event) {
 		this.active = false;
 
 		if (activeButton) {
 			activeButton.active = false;
 		}
+	}
+
+	get _ontouchend() {
+		const handleEvent = event => {
+			this._ontouchendPassiveHandler(event);
+		};
+
+		return {
+			handleEvent,
+			passive: true,
+		};
 	}
 
 	_onmouseup(event) {

@@ -193,12 +193,34 @@ class ListItem extends ListItemBase {
 		this.deactivate();
 	}
 
-	_ontouchstart(event) {
+	_ontouchstartPassiveHandler(event) {
 		this._onmousedown(event);
 	}
 
-	_ontouchend(event) {
+	get _ontouchstart() {
+		const handleEvent = event => {
+			this._ontouchstartPassiveHandler(event);
+		};
+
+		return {
+			handleEvent,
+			passive: true,
+		};
+	}
+
+	_ontouchendPassiveHandler(event) {
 		this._onmouseup(event);
+	}
+
+	get _ontouchend() {
+		const handleEvent = event => {
+			this._ontouchendPassiveHandler(event);
+		};
+
+		return {
+			handleEvent,
+			passive: true,
+		};
 	}
 
 	_onfocusout() {

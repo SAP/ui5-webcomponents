@@ -153,7 +153,7 @@ bdi {
 	border-color: var(--_ui5_button_positive_border_hover_color);
 }
 
-:host([ui5-button][_is-touch][design="Positive"][active]:not([non-interactive])) {
+:host([ui5-button][design="Positive"][active]:not([non-interactive])) {
 	background-color: var(--sapButton_Accept_Active_Background);
 	border-color: var(--_ui5_button_positive_border_active_color);
 	color: var(--sapButton_Active_TextColor);
