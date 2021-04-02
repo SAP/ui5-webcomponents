@@ -4,4 +4,5 @@
 	user-select: none;
 	left: -1000px; /* ensure the invisible texts are never part of the viewport */
 	top: -1000px;
+	pointer-events: none;
 }
