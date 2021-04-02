@@ -197,10 +197,17 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the mode of the component (None, SingleSelect, MultiSelect).
+		 * Defines the mode of the <code>ui5-table</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>MultiSelect</code></li>
+		 * <li><code>SingleSelect</code></li>
+		 * <li><code>None</code></li>
+		 * <ul>
 		 * @type {TableMode}
 		 * @defaultvalue "None"
-		 * @since 1.0.0-rc.13
+		 * @since 1.0.0-rc.15
 		 * @public
 		 */
 		mode: {
@@ -245,6 +252,7 @@ const metadata = {
 		 * Defines whether all rows are selected or not when table is in MultiSelect mode.
 		 * @type {Boolean}
 		 * @defaultvalue false
+		 * @since 1.0.0-rc.15
 		 * @private
 		 */
 		_allRowsSelected: {
@@ -253,7 +261,7 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 		/**
-		 * Fired when a row is clicked or enter key is pressed.
+		 * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
 		 *
 		 * @event sap.ui.webcomponents.main.Table#row-click
 		 * @param {HTMLElement} row the activated row.
@@ -298,6 +306,7 @@ const metadata = {
 		 * @param {Array} selectedRows An array of the selected rows.
 		 * @param {Array} previouslySelectedRows An array of the previously selected rows.
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
 		"selection-change": {
 			detail: {
@@ -494,7 +503,7 @@ class Table extends UI5Element {
 	_handleSingleSelect(event) {
 		const row = this.getRowParent(event.target);
 		if (!row.selected) {
-			const previouslySelectedRows = this.rows.filter(item => item.selected);
+			const previouslySelectedRows = this.selectedRows;
 			this.rows.forEach(item => {
 				if (item.selected) {
 					item.selected = false;
@@ -510,11 +519,11 @@ class Table extends UI5Element {
 
 	_handleMultiSelect(event) {
 		const row = this.getRowParent(event.target);
-		const previouslySelectedRows = this.rows.filter(item => item.selected);
+		const previouslySelectedRows = this.selectedRows;
 
 		row.selected = !row.selected;
 
-		const selectedRows = this.rows.filter(item => item.selected);
+		const selectedRows = this.selectedRows;
 
 		if (selectedRows.length === this.rows.length) {
 			this._allRowsSelected = true;
@@ -529,17 +538,14 @@ class Table extends UI5Element {
 	}
 
 	_handleSelect(event) {
-		const mappings = {
-			"SingleSelect": "_handleSingleSelect",
-			"MultiSelect": "_handleMultiSelect",
-		};
-
-		this[mappings[this.mode]](event);
+		this[`_handle${this.mode}`](event);
 	}
 
 	_selectAll(event) {
 		const bAllSelected = event.target.checked;
 		const previouslySelectedRows = this.rows.filter(row => row.selected);
+
+		this._allRowsSelected = bAllSelected;
 
 		this.rows.forEach(row => {
 			row.selected = bAllSelected;
@@ -706,18 +712,12 @@ class Table extends UI5Element {
 		return this._inViewport ? "absolute" : "sticky";
 	}
 
-	isInViewport() {
-		const rect = this.getDomRef().getBoundingClientRect();
-
-		return (
-			rect.top >= 0 && rect.left >= 0
-				&& rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-				&& rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-		);
-	}
-
 	get isMultiSelect() {
 		return this.mode === "MultiSelect";
+	}
+
+	get selectedRows() {
+		return this.rows.filter(row => row.selected);
 	}
 }
 

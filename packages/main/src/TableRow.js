@@ -37,6 +37,7 @@ const metadata = {
 		 * Defines the mode of the row (None, SingleSelect, MultiSelect).
 		 * @type {TableMode}
 		 * @defaultvalue "None"
+		 * @since 1.0.0-rc.15
 		 * @private
 		 */
 		mode: {
@@ -44,14 +45,20 @@ const metadata = {
 			defaultValue: TableMode.None,
 		},
 		/**
-		 * Defines the visual indication and behavior of the table row.
-		 * Available options are <code>Inactive</code> (by default) and <code>Active</code>.
+		 * Defines the visual indication and behavior of the <code>ui5-table-row</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Active</code> (by default)</li>
+		 * <li><code>Inactive</code></li>
+		 * <ul>
 		 * <br><br>
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
 		 * while with type <code>Inactive</code> - will not.
 		 *
 		 * @type {TableRowType}
 		 * @defaultvalue "Inactive"
+		 * @since 1.0.0-rc.15
 		 * @public
 		*/
 		type: {
@@ -64,7 +71,7 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @since 1.0.0-rc.13
+		 * @since 1.0.0-rc.15
 		 * @public
 		 */
 		selected: {
@@ -76,6 +83,7 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @since 1.0.0-rc.15
 		 * @private
 		*/
 		active: {
@@ -95,12 +103,20 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
+		/**
+		 * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
+		 *
+		 * @event sap.ui.webcomponents.main.TableRow#row-click
+		 * @since 1.0.0-rc.15
+		 * @private
+		 */
 		"row-click": {},
 		_focused: {},
 		/**
 		 * Fired on selection change of an active row.
 		 *
 		 * @event sap.ui.webcomponents.main.TableRow#selection-requested
+		 * @since 1.0.0-rc.15
 		 * @private
 		 */
 		"selection-requested": {},
@@ -150,7 +166,7 @@ class TableRow extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		const itemActive = this.type === "Active";
+		const itemActive = this.type === TableRowType.Active;
 		const isSingleSelect = this.isSingleSelect;
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
 		const isRowFocused = this._getActiveElementTagName() === "ui5-table-row";
@@ -224,7 +240,7 @@ class TableRow extends UI5Element {
 				this._handleSelection();
 			}
 
-			if (this.type === "Active" && !checkboxPressed) {
+			if (this.type === TableRowType.Active && !checkboxPressed) {
 				this.fireEvent("row-click", { row: this });
 			}
 		}
@@ -353,9 +369,7 @@ class TableRow extends UI5Element {
 	}
 
 	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents")
 	}
 }
 
