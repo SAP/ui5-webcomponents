@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-theme-base",
-  "version": "1.0.0-rc.13",
+  "version": "1.0.0-rc.14",
   "description": "UI5 Web Components: webcomponents.theme-base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -25,10 +25,10 @@
   },
   "dependencies": {
     "@sap-theming/theming-base-content": "11.1.27",
-    "@ui5/webcomponents-base": "0.32.0"
+    "@ui5/webcomponents-base": "0.34.0"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.13",
+    "@ui5/webcomponents-tools": "1.0.0-rc.14",
     "chokidar-cli": "^2.1.0",
     "chromedriver": "89.0.0",
     "copy-and-watch": "^0.1.5",
