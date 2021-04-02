@@ -22,7 +22,7 @@
     "directory": "packages/tools"
   },
   "dependencies": {
-    "@ui5/webcomponents-i18n": "1.0.0-rc.12",
+    "@ui5/webcomponents-tools-i18n": "1.0.0-rc.14",
     "@babel/cli": "^7.13.10",
     "@babel/core": "^7.13.10",
     "@babel/plugin-proposal-object-rest-spread": "^7.13.8",

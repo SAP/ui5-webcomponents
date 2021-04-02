@@ -82,7 +82,7 @@
     "packages/icons",
     "packages/icons-tnt",
     "packages/ie11",
-    "packages/i18n",
+    "packages/tools-i18n",
     "packages/tools",
     "packages/playground"
   ]

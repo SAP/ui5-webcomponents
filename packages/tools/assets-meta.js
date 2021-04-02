@@ -1,4 +1,4 @@
-const languagesMeta = require("@ui5/webcomponents-i18n/languages-meta.js");
+const languagesMeta = require("@ui5/webcomponents-tools-i18n/languages-meta.js");
 
 const assetsMeta = {
   "themes": {

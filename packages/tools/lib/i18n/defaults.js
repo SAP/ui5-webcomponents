@@ -1,1 +1,1 @@
-require("@ui5/webcomponents-i18n/lib/defaults.js");
+require("@ui5/webcomponents-tools-i18n/lib/defaults.js");
