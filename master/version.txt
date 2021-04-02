@@ -1,5 +1,10 @@
-commit 6ee46e013614e24d823c5a29b680686d3e43415d
+commit de47520781f0a334860e2e20f516f3688c87b26a
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 1 17:58:01 2021 +0300
+Date:   Fri Apr 2 13:00:59 2021 +0300
 
-    chore: release v1.0.0-rc.14 (#3081)
+    fix: keep invisible texts out of the view port (#3085)
+    
+    Add negative coordinates to the a11y invisible texts to ensure they remain out of the view port. Already this is the case in most of the browsers, but on IE they can be still observed. The negative coordinates do not affect the a11y and do not prevent Screen Readers from announcing the texts.
+    
+    FIXES: #2723
+    CLOSES: #2723
