@@ -6,17 +6,17 @@ describe("Wizard general interaction", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
 	});
 
-	// it("test initial selection", () => {
-	// 	const wiz = browser.$("#wizTest");
-	// 	const step1 = browser.$("#st1");
-	// 	const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
+	it("test initial selection", () => {
+		const wiz = browser.$("#wizTest");
+		const step1 = browser.$("#st1");
+		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
 
-	// 	// assert - that first step in the content and in the header are properly selected
-	// 	assert.strictEqual(step1.getAttribute("selected"), "true",
-	// 		"First step in the content is selected.");
-	// 	assert.strictEqual(step1InHeader.getAttribute("selected"), "true",
-	// 		"First step  in the header is selected.");
-	// });
+		// assert - that first step in the content and in the header are properly selected
+		assert.strictEqual(step1.getAttribute("selected"), "true",
+			"First step in the content is selected.");
+		assert.strictEqual(step1InHeader.getAttribute("selected"), "true",
+			"First step  in the header is selected.");
+	});
 
 	it("move to next step by API", () => {
 		const wiz = browser.$("#wizTest");
