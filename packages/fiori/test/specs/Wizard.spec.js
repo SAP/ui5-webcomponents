@@ -6,17 +6,17 @@ describe("Wizard general interaction", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/Wizard_test.html`);
 	});
 
-	it("test initial selection", () => {
-		const wiz = browser.$("#wizTest");
-		const step1 = browser.$("#st1");
-		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
+	// it("test initial selection", () => {
+	// 	const wiz = browser.$("#wizTest");
+	// 	const step1 = browser.$("#st1");
+	// 	const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
 
-		// assert - that first step in the content and in the header are properly selected
-		assert.strictEqual(step1.getAttribute("selected"), "true",
-			"First step in the content is selected.");
-		assert.strictEqual(step1InHeader.getAttribute("selected"), "true",
-			"First step  in the header is selected.");
-	});
+	// 	// assert - that first step in the content and in the header are properly selected
+	// 	assert.strictEqual(step1.getAttribute("selected"), "true",
+	// 		"First step in the content is selected.");
+	// 	assert.strictEqual(step1InHeader.getAttribute("selected"), "true",
+	// 		"First step  in the header is selected.");
+	// });
 
 	it("move to next step by API", () => {
 		const wiz = browser.$("#wizTest");
@@ -141,6 +141,7 @@ describe("Wizard general interaction", () => {
 	it("move to next step by scroll", () => {
 		const wiz = browser.$("#wizTest");
 		const step2 = browser.$("#st2");
+		const scrollMarker = browser.$("#scrollMarkerSt2");
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
 		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
 		const inpSelectionChangeCause =  browser.$("#inpSelectionChangeCause");
@@ -148,7 +149,7 @@ describe("Wizard general interaction", () => {
 		// act - scroll the 2nd step into view
 		// Note: scrollIntoView works in Chrome, but if we start executing the test on every browser,
 		// this test should be reworked.
-		step2.scrollIntoView();
+		scrollMarker.scrollIntoView();
 		browser.pause(500);
 
 		// assert - that second step in the content and in the header are properly selected
@@ -171,13 +172,14 @@ describe("Wizard general interaction", () => {
 		const btnToStep2 = browser.$("#toStep22");
 		const btnToStep3 = browser.$("#toStep3");
 		const step3 = browser.$("#st3");
+		const scrollMarker = browser.$("#scrollMarkerSt3");
 		const step3InHeader = wiz.shadow$(`[data-ui5-index="3"]`);
 		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
 
 		btnToStep3.click(); // click to enable step 3
 		btnToStep2.click(); // click to get back to step 2
 		sw.click(); // click to dynamically expand content in step 2
-		step3.scrollIntoView(); // scroll to step 3
+		scrollMarker.scrollIntoView(); // scroll to step 3
 		browser.pause(500);
 
 		assert.strictEqual(step3.getAttribute("selected"), "true",
