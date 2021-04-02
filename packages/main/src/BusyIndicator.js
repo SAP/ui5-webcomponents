@@ -110,14 +110,6 @@ class BusyIndicator extends UI5Element {
 		this._preventHandler = this._preventEvent.bind(this);
 	}
 
-	onBeforeRendering() {
-		if (this.active) {
-			this.tabIndex = -1;
-		} else {
-			this.removeAttribute("tabindex");
-		}
-	}
-
 	onEnterDOM() {
 		this.addEventListener("keyup", this._preventHandler, {
 			capture: true,
@@ -168,6 +160,10 @@ class BusyIndicator extends UI5Element {
 				"ui5-busyindicator-root--ie": isIE(),
 			},
 		};
+	}
+
+	get slotTabIndex() {
+		return this.active ? -1 : 0;
 	}
 
 	_preventEvent(event) {

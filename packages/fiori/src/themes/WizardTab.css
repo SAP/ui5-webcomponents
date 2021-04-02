@@ -1,5 +1,5 @@
 :host(:not([hidden])) {
-	/* Well known worakround to allow shrinking inside flex containers 
+	/* Well known worakround to allow shrinking inside flex containers
 	 * and shrinking is needed so the texts trucnate properly.
 	 */
 	min-width: 1px;
@@ -146,7 +146,7 @@
 }
 
 /* Workaround for IE to make the focus outline visible */
-ui5-wizard-tab .ui5-wiz-step-main {
+[ui5-wizard-tab] .ui5-wiz-step-main {
 	pointer-events: none;
 }
 

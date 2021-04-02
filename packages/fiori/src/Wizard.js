@@ -122,12 +122,14 @@ const metadata = {
 		 * @event sap.ui.webcomponents.fiori.Wizard#selection-change
 		 * @param {HTMLElement} selectedStep the newly selected step
 		 * @param {HTMLElement} previouslySelectedStep the previously selected step
+		 * @param {Boolean} changeWithClick the selection changed due to user's click on step within the navigation
 		 * @public
 		 */
 		"selection-change": {
 			detail: {
 				selectedStep: { type: HTMLElement },
 				previouslySelectedStep: { type: HTMLElement },
+				changeWithClick: { Boolean },
 			},
 		},
 	},
@@ -243,7 +245,7 @@ class Wizard extends UI5Element {
 
 		this._onStepResize = this.onStepResize.bind(this);
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {
@@ -483,7 +485,7 @@ class Wizard extends UI5Element {
 		const iCurrStep = this.getSelectedStepIndex();
 		const iStepsToShow = this.steps.length ? Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) : Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
 
-		const tabs = this.shadowRoot.querySelectorAll("ui5-wizard-tab");
+		const tabs = this.shadowRoot.querySelectorAll("[ui5-wizard-tab]");
 
 		if (!tabs.length) {
 			return;
@@ -562,7 +564,7 @@ class Wizard extends UI5Element {
 	}
 
 	async _showPopover(oDomTarget, bAtStart) {
-		const tabs = Array.from(this.shadowRoot.querySelectorAll("ui5-wizard-tab"));
+		const tabs = Array.from(this.shadowRoot.querySelectorAll("[ui5-wizard-tab]"));
 		this._groupedTabs = [];
 
 		const iFromStep = bAtStart ? 0 : this.stepsInHeaderDOM.indexOf(oDomTarget);
@@ -587,13 +589,13 @@ class Wizard extends UI5Element {
 	}
 
 	_onOverflowStepButtonClick(event) {
-		const tabs = Array.from(this.shadowRoot.querySelectorAll("ui5-wizard-tab"));
+		const tabs = Array.from(this.shadowRoot.querySelectorAll("[ui5-wizard-tab]"));
 		const stepRefId = event.target.getAttribute("data-ui5-header-tab-ref-id");
 		const stepToSelect = this.slottedSteps[stepRefId - 1];
 		const selectedStep = this.selectedStep;
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 
-		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex);
+		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
 		this._closeRespPopover();
 		tabs[newlySelectedIndex].focus();
 	}
@@ -626,7 +628,8 @@ class Wizard extends UI5Element {
 		// change selection and fire "selection-change".
 		if (newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
 			const stepToSelect = this.slottedSteps[newlySelectedIndex];
-			this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex);
+
+			this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex, false);
 			this.selectionRequestedByScroll = true;
 		}
 	}
@@ -654,7 +657,7 @@ class Wizard extends UI5Element {
 
 		if (bExpanded || (!bExpanded && (newlySelectedIndex === 0 || newlySelectedIndex === this.steps.length - 1))) {
 			// Change selection and fire "selection-change".
-			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex);
+			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
 		}
 	}
 
@@ -925,9 +928,10 @@ class Wizard extends UI5Element {
 	 * @param {HTMLElement} selectedStep the old step
 	 * @param {HTMLElement} stepToSelect the step to be selected
 	 * @param {Integer} stepToSelectIndex the index of the newly selected step
+	 * @param {Boolean} changeWithClick the selection changed due to user click in the step navigation
 	 * @private
 	 */
-	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex) {
+	switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex, changeWithClick) {
 		if (selectedStep && stepToSelect) {
 			selectedStep.selected = false;
 			stepToSelect.selected = true;
@@ -935,6 +939,7 @@ class Wizard extends UI5Element {
 			this.fireEvent("selection-change", {
 				selectedStep: stepToSelect,
 				previouslySelectedStep: selectedStep,
+				changeWithClick,
 			});
 
 			this.selectedStepIndex = stepToSelectIndex;

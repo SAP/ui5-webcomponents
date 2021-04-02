@@ -35,3 +35,8 @@
 :host(:not([disabled])) {
 	cursor: pointer;
 }
+
+:host([focused][opened]),
+:host([value-state]:not([value-state="None"])[focused][opened]) {
+	outline: none;
+}
