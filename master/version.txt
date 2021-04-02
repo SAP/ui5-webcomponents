@@ -1,10 +1,10 @@
-commit de47520781f0a334860e2e20f516f3688c87b26a
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Apr 2 13:00:59 2021 +0300
+commit 684ccbf995b4cdd8f0db25bb952c3ebebbcd5d0e
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Fri Apr 2 14:44:52 2021 +0300
 
-    fix: keep invisible texts out of the view port (#3085)
+    fix(ui5-li-tree): fixed incorrect display of the text (#3086)
     
-    Add negative coordinates to the a11y invisible texts to ensure they remain out of the view port. Already this is the case in most of the browsers, but on IE they can be still observed. The negative coordinates do not affect the a11y and do not prevent Screen Readers from announcing the texts.
-    
-    FIXES: #2723
-    CLOSES: #2723
+    While the TreeListItem is in its _minimal state (with no visible
+    text), the text was still taking space, causing incorrect alignment
+    of the icons. Now the text is not rendered when we are in _minimal state
+    which results in proper alignment of the icons.
