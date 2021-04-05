@@ -24,17 +24,21 @@ describe("Wizard general interaction", () => {
 		const wizNav = wiz.shadow$(".ui5-wiz-nav");
 		const wizList = wiz.shadow$(".ui5-wiz-nav-list");
 
+		const wizRootText = "Wizard";
+		const wizNavText = "Wizard Progress Bar";
+		const wizListText = "Wizard Steps";
+
 		assert.strictEqual(wizRoot.getAttribute("role"), "region",
 			"Wizard has role set.");
-		assert.strictEqual(wizRoot.getAttribute("aria-label"), "Wizard",
+		assert.strictEqual(wizRoot.getAttribute("aria-label"), wizRootText,
 			"Wizard has aria-label set.");
-		assert.strictEqual(wizNav.getAttribute("aria-label"), "Wizard Progress Bar",
+		assert.strictEqual(wizNav.getAttribute("aria-label"), wizNavText,
 			"Wizard nav has aria-label set.");
 		assert.strictEqual(wizList.getAttribute("role"), "list",
 			"Wizard list has role set..");
 		assert.strictEqual(wizList.getAttribute("aria-controls"), "ui5-wiz-content",
 			"Wizard list has aria-controls set.");
-		assert.strictEqual(wizList.getAttribute("aria-label"), "Wizard Steps",
+		assert.strictEqual(wizList.getAttribute("aria-label"), wizListText,
 			"Wizard list has aria-label set.");
 	});
 
@@ -48,6 +52,10 @@ describe("Wizard general interaction", () => {
 		const step1InHeaderRoot = step1InHeader.shadow$(`.ui5-wiz-step-root`);
 		const step2InHeaderRoot = step2InHeader.shadow$(`.ui5-wiz-step-root`);
 
+		const stepText = "Step 1 Product type";
+		const currentStepText = "Step 2 Product Information current";
+
+
 		// act - the click handler calls the API
 		btnToStep2.click();
 
@@ -60,7 +68,7 @@ describe("Wizard general interaction", () => {
 		// assert - check if aria-attributes are applied correctly when step is not selected
 		assert.strictEqual(step1InHeaderRoot.getAttribute("role"), "listitem",
 			"First step in the header has role.");
-		assert.strictEqual(step1InHeaderRoot.getAttribute("aria-label"), "Step 1 Product type",
+		assert.strictEqual(step1InHeaderRoot.getAttribute("aria-label"), stepText,
 			"First step in the header has aria-label.");
 
 		// assert - that second step in the content and in the header are properly selected
@@ -74,7 +82,7 @@ describe("Wizard general interaction", () => {
 			"Second step in header is enabled.");
 
 		// assert - check if aria-label is applied correctly when step is selected
-		assert.strictEqual(step2InHeaderRoot.getAttribute("aria-label"), "Step 2 Product Information current",
+		assert.strictEqual(step2InHeaderRoot.getAttribute("aria-label"), currentStepText,
 			"Second step in the header has aria-label.");
 	});
 

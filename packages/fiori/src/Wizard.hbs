@@ -1,6 +1,6 @@
 <div class="ui5-wiz-root" aria-label="{{ariaLabelText}}" role="region">
 	<nav class="ui5-wiz-nav" aria-label="{{navAriaLabelText}}" tabindex="-1">
-		<ul class="ui5-wiz-nav-list" role="list" aria-label="{{listAriaLabelText}}" aria-controls="ui5-wiz-content" >
+		<div class="ui5-wiz-nav-list" role="list" aria-label="{{listAriaLabelText}}" aria-controls="ui5-wiz-content" >
 			{{#each _stepsInHeader}}
 				<ui5-wizard-tab
 					heading="{{heading}}"
@@ -22,7 +22,7 @@
 					style={{styles}}
 				></ui5-wizard-tab>
 			{{/each}}
-		</ul>
+		</div>
 	</nav>
 
 	<div class="ui5-wiz-content" @scroll="{{onScroll}}">
