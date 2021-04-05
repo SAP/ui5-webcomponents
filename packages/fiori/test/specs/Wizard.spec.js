@@ -85,6 +85,7 @@ describe("Wizard general interaction", () => {
 		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
 		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
+		const inpSelectionChangeCause =  browser.$("#inpSelectionChangeCause");
 
 		// act - click on the first step in the header
 		step1InHeader.click();
@@ -108,6 +109,9 @@ describe("Wizard general interaction", () => {
 		// assert - selection-change fired once
 		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "1",
 			"Event selection-change fired once.");
+		// assert - selection-change fired due to user click
+		assert.strictEqual(inpSelectionChangeCause.getProperty("value"), "true",
+			"Event selection-change fired due to click.");
 	});
 
 	it("move to next step by SPACE/ENTER", () => {
@@ -169,13 +173,15 @@ describe("Wizard general interaction", () => {
 	it("move to next step by scroll", () => {
 		const wiz = browser.$("#wizTest");
 		const step2 = browser.$("#st2");
+		const scrollMarker = browser.$("#scrollMarkerSt2");
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
 		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
+		const inpSelectionChangeCause =  browser.$("#inpSelectionChangeCause");
 
 		// act - scroll the 2nd step into view
 		// Note: scrollIntoView works in Chrome, but if we start executing the test on every browser,
 		// this test should be reworked.
-		step2.scrollIntoView();
+		scrollMarker.scrollIntoView();
 		browser.pause(500);
 
 		// assert - that second step in the content and in the header are properly selected
@@ -186,6 +192,10 @@ describe("Wizard general interaction", () => {
 
 		assert.strictEqual(inpSelectionChangeCounter.getProperty("value"), "4",
 			"Event selection-change fired 4th time due to scrolling.");
+
+		// assert - selection-change fired not becasue of user click
+		assert.strictEqual(inpSelectionChangeCause.getProperty("value"), "false",
+			"Event selection-change fired not becasue of user click, but scrolling");
 	});
 
 	it("tests dynamically increase step size and move to next step", () => {
@@ -194,13 +204,14 @@ describe("Wizard general interaction", () => {
 		const btnToStep2 = browser.$("#toStep22");
 		const btnToStep3 = browser.$("#toStep3");
 		const step3 = browser.$("#st3");
+		const scrollMarker = browser.$("#scrollMarkerSt3");
 		const step3InHeader = wiz.shadow$(`[data-ui5-index="3"]`);
 		const inpSelectionChangeCounter =  browser.$("#inpSelectionChangeCounter");
 
 		btnToStep3.click(); // click to enable step 3
 		btnToStep2.click(); // click to get back to step 2
 		sw.click(); // click to dynamically expand content in step 2
-		step3.scrollIntoView(); // scroll to step 3
+		scrollMarker.scrollIntoView(); // scroll to step 3
 		browser.pause(500);
 
 		assert.strictEqual(step3.getAttribute("selected"), "true",
