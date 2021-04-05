@@ -307,6 +307,10 @@ class DayPicker extends CalendarPart {
 		}
 
 		this._dayNames[1].classes += " ui5-dp-firstday";
+
+		if (this.shouldHideWeekNumbers) {
+			this._dayNames.shift();
+		}
 	}
 
 	onAfterRendering() {
@@ -700,6 +704,7 @@ class DayPicker extends CalendarPart {
 		return {
 			wrapper: {
 				display: this._hidden ? "none" : "flex",
+				"justify-content": "center",
 			},
 			main: {
 				width: "100%",
