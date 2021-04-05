@@ -1,9 +1,8 @@
-commit cc312800a8052d792ab70b3489ceb65aa57e0613
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Mon Apr 5 14:17:13 2021 +0300
+commit 3508ba81f3e6daa96f2ab243fb3ebe24cb7bbc94
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Apr 5 16:15:41 2021 +0300
 
-    feat(ui5-table): Introduce  Single and Multi selection (#2848)
+    chore(ui5-wizard): make use of base util mehtod (#3093)
     
-    Support single, multi selection modes in ui5-table component.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2659
+    This is a follow up of a review comment from #3009
+    to make us of an existing method instead of local implementation.
