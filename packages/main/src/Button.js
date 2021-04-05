@@ -287,7 +287,7 @@ const metadata = {
  * <br>
  * The <code>ui5-button</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li><code>button</code> - Used to style the native button element</li>
+ * <li>button - Used to style the native button element</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>

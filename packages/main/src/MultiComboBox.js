@@ -346,7 +346,7 @@ const metadata = {
  * <br>
  * The <code>ui5-multi-combobox</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li><code>token-{index}</code> - Used to style each token(where <code>token-0</code> corresponds to the first item)</li>
+ * <li>token-{index} - Used to style each token(where <code>token-0</code> corresponds to the first item)</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>

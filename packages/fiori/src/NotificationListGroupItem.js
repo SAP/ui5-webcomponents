@@ -110,7 +110,7 @@ const metadata = {
  * <br>
  * The <code>ui5-li-notification-group</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li><code>heading</code> - Used to style the heading of the notification list group item</li>
+ * <li>heading - Used to style the heading of the notification list group item</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>

@@ -343,7 +343,7 @@ const metadata = {
  * <br>
  * The <code>ui5-textarea</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li><code>textarea</code> - Used to style the native textarea</li>
+ * <li>textarea - Used to style the native textarea</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>

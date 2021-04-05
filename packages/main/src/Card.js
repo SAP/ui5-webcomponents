@@ -176,9 +176,9 @@ const metadata = {
  * <br>
  * The <code>ui5-card</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li><code>heading</code> - Used to style the heading of the card</li>
- * <li><code>subheading</code> - Used to style the subheading of the card</li>
- * <li><code>status</code> - Used to style the status of the card</li>
+ * <li>heading - Used to style the heading of the card</li>
+ * <li>subheading - Used to style the subheading of the card</li>
+ * <li>status - Used to style the status of the card</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>

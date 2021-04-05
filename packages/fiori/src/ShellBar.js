@@ -372,7 +372,7 @@ const metadata = {
  * <br>
  * The <code>ui5-shellbar</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li><code>root</code> - Used to style the outermost wrapper of the <code>ui5-shellbar</code></li>
+ * <li>root - Used to style the outermost wrapper of the <code>ui5-shellbar</code></li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>

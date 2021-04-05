@@ -206,9 +206,9 @@ const metadata = {
  * <br>
  * The <code>ui5-li-tree</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li><code>title</code> - Used to style the title of the tree list item</li>
- * <li><code>info</code> - Used to style the info of the tree list item</li>
- * <li><code>icon</code> - Used to style the icon of the tree list item</li>
+ * <li>title - Used to style the title of the tree list item</li>
+ * <li>info - Used to style the info of the tree list item</li>
+ * <li>icon - Used to style the icon of the tree list item</li>
  * </ul>
  *
  * @constructor

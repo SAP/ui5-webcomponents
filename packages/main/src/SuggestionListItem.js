@@ -37,9 +37,9 @@ const metadata = {
  * <br>
  * The <code>ui5-li-suggestion-item</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li><code>title</code> - Used to style the title of the suggestion list item</li>
- * <li><code>description</code> - Used to style the description of the suggestion list item</li>
- * <li><code>info</code> - Used to style the info of the suggestion list item</li>
+ * <li>title - Used to style the title of the suggestion list item</li>
+ * <li>description - Used to style the description of the suggestion list item</li>
+ * <li>info - Used to style the info of the suggestion list item</li>
  * </ul>
  *
  * @constructor

@@ -62,7 +62,7 @@ const metadata = {
  * <br>
  * The <code>ui5-table-cell</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li><code>cell</code> - Used to style the native <code>td</code> element</li>
+ * <li>cell - Used to style the native <code>td</code> element</li>
  * </ul>
  *
  * @constructor

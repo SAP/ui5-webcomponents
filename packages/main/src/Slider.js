@@ -70,9 +70,9 @@ const metadata = {
  * <br>
  * The <code>ui5-slider</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li><code>progress-container</code> - Used to style the progress container(the thin line) of the <code>ui5-slider</code></li>
- * <li><code>progress-bar</code> - Used to style the progress bar, which shows the progress of the <code>ui5-slider</code></li>
- * <li><code>handle</code> - Used to style the handle of the <code>ui5-slider</code></li>
+ * <li>progress-container - Used to style the progress container(the thin line) of the <code>ui5-slider</code></li>
+ * <li>progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-slider</code></li>
+ * <li>handle - Used to style the handle of the <code>ui5-slider</code></li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>

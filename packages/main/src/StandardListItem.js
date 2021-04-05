@@ -122,12 +122,12 @@ const metadata = {
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
  * <br>
- * The <code>ui5-switch</code> exposes the following CSS Shadow Parts:
+ * The <code>ui5-li</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li><code>title</code> - Used to style the title of the list item</li>
- * <li><code>description</code> - Used to style the description of the list item</li>
- * <li><code>info</code> - Used to style the info of the list item</li>
- * <li><code>icon</code> - Used to style the icon of the list item</li>
+ * <li>title - Used to style the title of the list item</li>
+ * <li>description - Used to style the description of the list item</li>
+ * <li>info - Used to style the info of the list item</li>
+ * <li>icon - Used to style the icon of the list item</li>
  * </ul>
  *
  * @constructor
