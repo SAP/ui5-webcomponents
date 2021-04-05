@@ -999,7 +999,9 @@ class UI5Element extends HTMLElement {
 
 			if (altTag && !customElements.get(altTag)) {
 				registerTag(altTag);
-				window.customElements.define(altTag, getClassCopy(this));
+				window.customElements.define(altTag, getClassCopy(this, () => {
+					console.log(`The ${altTag} tag is deprecated and will be removed in the next release, please use ${tag} instead.`); // eslint-disable-line
+				}));
 			}
 		}
 		return this;
