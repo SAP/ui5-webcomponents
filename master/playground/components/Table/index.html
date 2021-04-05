@@ -291,6 +291,8 @@
       
     
       
+    
+      
         
       
     
@@ -328,6 +330,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1060,6 +1064,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" class="navigation-list-link">
@@ -1260,6 +1266,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -2530,6 +2538,110 @@
 		</code></pre></figure></pre>
 	</section>
 
+	<section class="table-example">
+		<h3>Table in SingleSelect mode</h3>
+		<div class="snippet flex-column">
+			<ui5-table class="demo-table" id="singleSelectTbl" mode="SingleSelect">
+				<!-- Columns -->
+				<ui5-table-column slot="columns">
+					<span>Product</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Supplier</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Dimensions</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Weight</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns" >
+					<span>Price</span>
+				</ui5-table-column>
+			</ui5-table>
+		</div>
+	
+		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-table</span> <span class="na">class=</span><span class="s">"demo-table"</span> <span class="na">id=</span><span class="s">"singleSelectTable"</span><span class="nt">&gt;</span>
+	<span class="c">&lt;!-- Columns --&gt;</span>
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;span&gt;</span>Product<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;span&gt;</span>Supplier<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;span&gt;</span>Dimensions<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;span&gt;</span>Weight<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;span&gt;</span>Price<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/ui5-table-column&gt;</span>		
+<span class="nt">&lt;/ui5-table&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+	<section class="table-example">
+		<h3>Table in MultiSelect mode</h3>
+		<div class="snippet flex-column">
+			<ui5-table class="demo-table" id="multiSelectTbl" mode="MultiSelect">
+				<!-- Columns -->
+				<ui5-table-column slot="columns">
+					<span>Product</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Supplier</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Dimensions</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns">
+					<span>Weight</span>
+				</ui5-table-column>
+	
+				<ui5-table-column slot="columns" >
+					<span>Price</span>
+				</ui5-table-column>
+			</ui5-table>
+		</div>
+	
+		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-table</span> <span class="na">class=</span><span class="s">"demo-table"</span> <span class="na">id=</span><span class="s">"multiSelectTable"</span><span class="nt">&gt;</span>
+	<span class="c">&lt;!-- Columns --&gt;</span>
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;span&gt;</span>Product<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;span&gt;</span>Supplier<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;span&gt;</span>Dimensions<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;span&gt;</span>Weight<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;span&gt;</span>Price<span class="nt">&lt;/span&gt;</span>
+	<span class="nt">&lt;/ui5-table-column&gt;</span>		
+<span class="nt">&lt;/ui5-table&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
 	<section>
 		<h3>Table with No Data</h3>
 		<div class="snippet flex-column">
@@ -2862,6 +2974,8 @@
 					+ '</ui5-table-row>';
 	});
 	document.getElementById("tbl").insertAdjacentHTML('beforeend', html);
+	document.getElementById("singleSelectTbl").insertAdjacentHTML('beforeend', html);
+	document.getElementById("multiSelectTbl").insertAdjacentHTML('beforeend', html);
 
 
 	document.getElementById("toggleSticky").addEventListener("click", function(event) {
@@ -3865,6 +3979,18 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          mode
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">TableMode</div>
+                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the mode of the <code>ui5-table</code>. <br><br> Available options are: <ul> <li><code>MultiSelect</code></li> <li><code>SingleSelect</code></li> <li><code>None</code></li> <ul>
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           moreSubtext
                             <br>
                             <code>more-subtext</code>
@@ -3878,7 +4004,7 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           moreText
                             <br>
@@ -3893,7 +4019,7 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           noDataText
                             <br>
@@ -3905,7 +4031,7 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                             Defines the text that will be displayed when there is no data and <code>showNoData</code> is present.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showNoData
                             <br>
@@ -3917,7 +4043,7 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                             Defines if the value of <code>noDataText</code> will be diplayed when there is no rows present in the table.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           stickyColumnHeader
                             <br>
@@ -3995,14 +4121,34 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">row-click</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when a row is clicked.
+                        Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
                         </div>
                       </div>
             
                         <tr class="api-table-event-param">
                           <div class="api-table-content-event-params-wrapper">
                             <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">row</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the clicked row.</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the activated row.</div>
+                          </div>
+                        </tr>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">selection-change</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when selection is changed by user interaction in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+                            <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+            
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">selectedRows</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Array <br/> <strong class="api-table-event-description bold">description:</strong> An array of the selected rows.</div>
+                          </div>
+                        </tr>
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">previouslySelectedRows</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Array <br/> <strong class="api-table-event-description bold">description:</strong> An array of the previously selected rows.</div>
                           </div>
                         </tr>
                   </div>
@@ -4104,6 +4250,43 @@ The <code>ui5-table-column</code> component allows to define column specific pro
 The <code>ui5-table-row</code> component represents a row in the <code>ui5-table</code>.
           <section class="component-api space-top">
             
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          selected
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the row's selected state.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          type
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">TableRowType</div>
+                        <div class="cell api-table-content-cell">&quot;Inactive&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the visual indication and behavior of the <code>ui5-table-row</code>. <br><br> Available options are: <ul> <li><code>Active</code> (by default)</li> <li><code>Inactive</code></li> <ul> <br><br> <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press, while with type <code>Inactive</code> - will not.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+            
+                  </div>
             
                 <h3 class="comment-api-title space-top" >Slots</h3>
             	<p class="small-space-top" >

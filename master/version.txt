@@ -1,5 +1,9 @@
-commit 0a4758be93ca1d03198c915731955313af8e58fa
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Apr 5 10:30:47 2021 +0300
+commit cc312800a8052d792ab70b3489ceb65aa57e0613
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Mon Apr 5 14:17:13 2021 +0300
 
-    chore: show a deprecation warning for old tags (#3088)
+    feat(ui5-table): Introduce  Single and Multi selection (#2848)
+    
+    Support single, multi selection modes in ui5-table component.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/2659
