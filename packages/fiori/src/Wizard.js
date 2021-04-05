@@ -5,6 +5,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
+import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
@@ -34,6 +35,12 @@ const EXPANDED_STEP = "data-ui5-wizard-expanded-tab";
 const AFTER_EXPANDED_STEP = "data-ui5-wizard-expanded-tab-next";
 const AFTER_CURRENT_STEP = "data-ui5-wizard-after-current-tab";
 const BEFORE_EXPANDED_STEP = "data-ui5-wizard-expanded-tab-prev";
+
+const STEP_SWITCH_THRESHOLDS = {
+	MIN: 0.5,
+	DEFAULT: 0.7,
+	MAX: 1,
+};
 
 /**
  * @public
@@ -81,7 +88,7 @@ const metadata = {
 		 */
 		 stepSwitchThreshold: {
 			type: Float,
-			defaultValue: 0.7,
+			defaultValue: STEP_SWITCH_THRESHOLDS.DEFAULT,
 		},
 
 		/**
@@ -757,15 +764,7 @@ class Wizard extends UI5Element {
 	}
 
 	get effectiveStepSwitchThreshold() {
-		if (this.stepSwitchThreshold < 0.5) {
-			return 0.5;
-		}
-
-		if (this.stepSwitchThreshold > 1) {
-			return 1;
-		}
-
-		return this.stepSwitchThreshold;
+		return clamp(this.stepSwitchThreshold, STEP_SWITCH_THRESHOLDS.MIN, STEP_SWITCH_THRESHOLDS.MAX);
 	}
 
 	/**
