@@ -10,9 +10,14 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
+import TableMode from "./types/TableMode.js";
 
 // Texts
-import { LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
+import {
+	LOAD_MORE_TEXT,
+	ARIA_LABEL_SELECT_ALL_CHECKBOX,
+	TABLE_HEADER_ROW_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
@@ -191,6 +196,25 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the mode of the <code>ui5-table</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>MultiSelect</code></li>
+		 * <li><code>SingleSelect</code></li>
+		 * <li><code>None</code></li>
+		 * <ul>
+		 * @type {TableMode}
+		 * @defaultvalue "None"
+		 * @since 1.0.0-rc.15
+		 * @public
+		 */
+		mode: {
+			type: TableMode,
+			defaultValue: TableMode.None,
+		},
+
 		_hiddenColumns: {
 			type: Object,
 			multiple: true,
@@ -223,13 +247,24 @@ const metadata = {
 		_inViewport: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines whether all rows are selected or not when table is in MultiSelect mode.
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.15
+		 * @private
+		 */
+		_allRowsSelected: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 		/**
-		 * Fired when a row is clicked.
+		 * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
 		 *
 		 * @event sap.ui.webcomponents.main.Table#row-click
-		 * @param {HTMLElement} row the clicked row.
+		 * @param {HTMLElement} row the activated row.
 		 * @public
 		 */
 		"row-click": {
@@ -262,6 +297,23 @@ const metadata = {
 		 * @since 1.0.0-rc.11
 		 */
 		"load-more": {},
+
+		/**
+		 * Fired when selection is changed by user interaction
+		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+		 *
+		 * @event sap.ui.webcomponents.main.Table#selection-change
+		 * @param {Array} selectedRows An array of the selected rows.
+		 * @param {Array} previouslySelectedRows An array of the previously selected rows.
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		"selection-change": {
+			detail: {
+				selectedRows: { type: Array },
+				previouslySelectedRows: { type: Array },
+			},
+		},
 	},
 };
 
@@ -345,6 +397,7 @@ class Table extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this.tableEndObserved = false;
+		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -360,6 +413,7 @@ class Table extends UI5Element {
 			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
+			row.mode = this.mode;
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
@@ -446,6 +500,79 @@ class Table extends UI5Element {
 		this.fireEvent("load-more");
 	}
 
+	_handleSingleSelect(event) {
+		const row = this.getRowParent(event.target);
+		if (!row.selected) {
+			const previouslySelectedRows = this.selectedRows;
+			this.rows.forEach(item => {
+				if (item.selected) {
+					item.selected = false;
+				}
+			});
+			row.selected = true;
+			this.fireEvent("selection-change", {
+				selectedRows: [row],
+				previouslySelectedRows,
+			});
+		}
+	}
+
+	_handleMultiSelect(event) {
+		const row = this.getRowParent(event.target);
+		const previouslySelectedRows = this.selectedRows;
+
+		row.selected = !row.selected;
+
+		const selectedRows = this.selectedRows;
+
+		if (selectedRows.length === this.rows.length) {
+			this._allRowsSelected = true;
+		} else {
+			this._allRowsSelected = false;
+		}
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	_handleSelect(event) {
+		this[`_handle${this.mode}`](event);
+	}
+
+	_selectAll(event) {
+		const bAllSelected = event.target.checked;
+		const previouslySelectedRows = this.rows.filter(row => row.selected);
+
+		this._allRowsSelected = bAllSelected;
+
+		this.rows.forEach(row => {
+			row.selected = bAllSelected;
+		});
+
+		const selectedRows = bAllSelected ? this.rows : [];
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	getRowParent(child) {
+		const parent = child.parentElement;
+
+		if (child.hasAttribute("ui5-table-row")) {
+			return child;
+		}
+
+		if (parent && parent.hasAttribute("ui5-table-row")) {
+			return parent;
+		}
+
+		this.getRowParent(parent);
+	}
+
 	getColumnHeader() {
 		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
 	}
@@ -479,7 +606,9 @@ class Table extends UI5Element {
 		});
 
 		if (visibleColumnsIndexes.length) {
-			this.columns[visibleColumnsIndexes[0]].first = true;
+			if (!this.isMultiSelect) {
+				this.columns[visibleColumnsIndexes[0]].first = true;
+			}
 			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
 		}
 
@@ -550,6 +679,19 @@ class Table extends UI5Element {
 		return this.moreText || this.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
+	get ariaLabelText() {
+		const headerRowText = this.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
+		const columnsTitle = this.columns.map(column => {
+			return column.textContent.trim();
+		}).join(" ");
+
+		return `${headerRowText} ${columnsTitle}`;
+	}
+
+	get ariaLabelSelectAllText() {
+		return this.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
+	}
+
 	get loadMoreAriaLabelledBy() {
 		if (this.moreDataText) {
 			return `${this._id}-showMore-text ${this._id}-showMore-desc`;
@@ -568,6 +710,14 @@ class Table extends UI5Element {
 		}
 
 		return this._inViewport ? "absolute" : "sticky";
+	}
+
+	get isMultiSelect() {
+		return this.mode === "MultiSelect";
+	}
+
+	get selectedRows() {
+		return this.rows.filter(row => row.selected);
 	}
 }
 

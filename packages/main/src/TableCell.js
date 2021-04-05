@@ -23,14 +23,6 @@ const metadata = {
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
-
-		/**
-		 * @private
-		 */
-		firstInRow: {
-			type: Boolean,
-		},
-
 		/**
 		 * @private
 		 */
