@@ -1,5 +1,10 @@
-const getClassCopy = klass => {
-	return class classCopy extends klass {};
+const getClassCopy = (klass, constructorCallback) => {
+	return class classCopy extends klass {
+		constructor() {
+			super();
+			constructorCallback();
+		}
+	};
 };
 
 export default getClassCopy;
