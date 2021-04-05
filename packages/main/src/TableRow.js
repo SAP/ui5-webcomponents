@@ -130,6 +130,16 @@ const metadata = {
  *
  * The <code>ui5-table-row</code> component represents a row in the <code>ui5-table</code>.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-table-row</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>row - Used to style the native <code>tr</code> element</li>
+ * <li>popin-row - Used to style the <code>tr</code> element</li> when a row pops in
+ * </ul>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableRow
