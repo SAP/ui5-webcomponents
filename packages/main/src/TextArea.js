@@ -337,6 +337,15 @@ const metadata = {
  * When empty, it can hold a placeholder similar to a <code>ui5-input</code>.
  * You can define the rows of the <code>ui5-textarea</code> and also determine specific behavior when handling long texts.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-textarea</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li><code>textarea</code> - Used to style the native textarea</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/TextArea";</code>

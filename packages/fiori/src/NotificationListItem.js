@@ -149,6 +149,15 @@ const metadata = {
  * <h3>Usage</h3>
  * The component can be used in a standard <code>ui5-list</code>.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-li-notification</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li><code>heading</code> - Used to style the heading of the notification list item</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/NotificationListItem.js";</code>

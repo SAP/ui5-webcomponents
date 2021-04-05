@@ -31,6 +31,17 @@ const metadata = {
  * The <code>ui5-li-suggestion-item</code> represents the suggestion item in the <code>ui5-input</code>
  * suggestion popover.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-li-suggestion-item</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li><code>title</code> - Used to style the title of the suggestion list item</li>
+ * <li><code>description</code> - Used to style the description of the suggestion list item</li>
+ * <li><code>info</code> - Used to style the info of the suggestion list item</li>
+ * </ul>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.SuggestionListItem

@@ -281,6 +281,15 @@ const metadata = {
  * its style to provide visual feedback to the user that it is pressed or hovered over with
  * the mouse cursor. A disabled <code>ui5-button</code> appears inactive and cannot be pressed.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-button</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li><code>button</code> - Used to style the native button element</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Button";</code>

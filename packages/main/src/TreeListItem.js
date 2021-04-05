@@ -200,6 +200,17 @@ const metadata = {
  * <i>Note:</i> Do not use <code>ui5-li-tree</code> directly in your apps. Use <code>ui5-tree-item</code> instead, as it can be nested inside a <code>ui5-tree</code>.
  * On the other hand, <code>ui5-li-tree</code> can only be slotted inside a <code>ui5-list</code>, being a list item. It may be useful if you want to build a custom tree component, for example.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-li-tree</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li><code>title</code> - Used to style the title of the tree list item</li>
+ * <li><code>info</code> - Used to style the info of the tree list item</li>
+ * <li><code>icon</code> - Used to style the icon of the tree list item</li>
+ * </ul>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TreeListItem
