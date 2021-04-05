@@ -34,7 +34,7 @@
     "@ui5/webcomponents-icons": "1.0.0-rc.14",
     "@ui5/webcomponents-ie11": "0.34.0",
     "@ui5/webcomponents-localization": "0.34.0",
-    "@ui5/webcomponents-theme-base": "1.0.0-rc.14"
+    "@ui5/webcomponents-theming": "1.0.0-rc.14"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.14",

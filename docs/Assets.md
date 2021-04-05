@@ -38,7 +38,7 @@ but rather from the package(s) containing the actual Web Components you'll be us
 
 The `theme-base` package provides common parameters for all themes.
 
-`import "@ui5/webcomponents-theme-base/dist/Assets.js";`
+`import "@ui5/webcomponents-theming/dist/Assets.js";`
 
 Usually you don't need to import the assets directly from the `theme-base` package (unless you are developing a Web Components package of your own),
 but rather from the package(s) containing the actual Web Components you'll be using in your app.
