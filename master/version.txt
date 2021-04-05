@@ -1,8 +1,5 @@
-commit 3508ba81f3e6daa96f2ab243fb3ebe24cb7bbc94
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 5 16:15:41 2021 +0300
+commit f18d59a489d1abd1818b2aef7e487f37a933c6e7
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Apr 5 16:26:21 2021 +0300
 
-    chore(ui5-wizard): make use of base util mehtod (#3093)
-    
-    This is a follow up of a review comment from #3009
-    to make us of an existing method instead of local implementation.
+    docs: add docs for css parts (#3096)
