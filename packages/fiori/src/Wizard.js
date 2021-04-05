@@ -36,11 +36,10 @@ const AFTER_EXPANDED_STEP = "data-ui5-wizard-expanded-tab-next";
 const AFTER_CURRENT_STEP = "data-ui5-wizard-after-current-tab";
 const BEFORE_EXPANDED_STEP = "data-ui5-wizard-expanded-tab-prev";
 
-
 const STEP_SWITCH_THRESHOLDS = {
 	MIN: 0.5,
 	DEFAULT: 0.7,
-	MAX: 1, 
+	MAX: 1,
 };
 
 /**
