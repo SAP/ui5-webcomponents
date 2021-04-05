@@ -1,10 +1,5 @@
-commit 684ccbf995b4cdd8f0db25bb952c3ebebbcd5d0e
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Fri Apr 2 14:44:52 2021 +0300
+commit 0a4758be93ca1d03198c915731955313af8e58fa
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Apr 5 10:30:47 2021 +0300
 
-    fix(ui5-li-tree): fixed incorrect display of the text (#3086)
-    
-    While the TreeListItem is in its _minimal state (with no visible
-    text), the text was still taking space, causing incorrect alignment
-    of the icons. Now the text is not rendered when we are in _minimal state
-    which results in proper alignment of the icons.
+    chore: show a deprecation warning for old tags (#3088)
