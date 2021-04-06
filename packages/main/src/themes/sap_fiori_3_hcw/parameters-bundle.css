@@ -6,6 +6,7 @@
 @import "./Carousel-parameters.css";
 @import "./Card-parameters.css";
 @import "./CheckBox-parameters.css";
+@import "../base/ColorPalette-parameters.css";
 @import "./DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
 @import "../base/Dialog-parameters.css";
@@ -26,7 +27,7 @@
 @import "./TabContainer-parameters.css";
 @import "./Table-parameters.css";
 @import "./TableRow-parameters.css";
-@import "./TableLoadMoreRow-parameters.css";
+@import "./LoadMoreRow-parameters.css";
 @import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Title-parameters.css";

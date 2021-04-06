@@ -94,13 +94,13 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Circle</code></li>
 		 * <li><code>Square</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarShape}
 		 * @defaultvalue "Circle"
 		 * @public
 		 */
 		shape: {
-			type: String,
+			type: AvatarShape,
 			defaultValue: AvatarShape.Circle,
 		},
 
@@ -114,13 +114,13 @@ const metadata = {
 		 * <li><code>M</code></li>
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarSize}
 		 * @defaultvalue "S"
 		 * @public
 		 */
 		size: {
-			type: String,
+			type: AvatarSize,
 			defaultValue: AvatarSize.S,
 		},
 
@@ -139,13 +139,13 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Cover</code></li>
 		 * <li><code>Contain</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarFitType}
 		 * @defaultvalue "Cover"
 		 * @public
 		 */
 		imageFitType: {
-			type: String,
+			type: AvatarFitType,
 			defaultValue: AvatarFitType.Cover,
 		},
 
@@ -165,13 +165,13 @@ const metadata = {
 		 * <li><code>Accent9</code></li>
 		 * <li><code>Accent10</code></li>
 		 * <li><code>Placeholder</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarBackgroundColor}
 		 * @defaultvalue "Accent6"
 		 * @public
 		 */
 		backgroundColor: {
-			type: String,
+			type: AvatarBackgroundColor,
 			defaultValue: AvatarBackgroundColor.Accent6,
 		},
 
@@ -228,7 +228,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/Avatar.js";</code>
+ * <code>import "@ui5/webcomponents/dist/Avatar.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -236,6 +236,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-avatar
  * @since 1.0.0-rc.6
+ * @implements sap.ui.webcomponents.main.IAvatar
  * @public
  */
 class Avatar extends UI5Element {
@@ -323,17 +324,24 @@ class Avatar extends UI5Element {
 	}
 
 	_onclick(event) {
-		event.isMarked = "avatar";
 		if (this.interactive) {
-			event.preventDefault();
-			// Prevent the native event and fire custom event because otherwise the noConfict event won't be thrown
+			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+			event.stopPropagation();
 			this.fireEvent("click");
 		}
 	}
 
 	_onkeydown(event) {
-		if (this.interactive && isEnter(event)) {
+		if (!this.interactive) {
+			return;
+		}
+
+		if (isEnter(event)) {
 			this.fireEvent("click");
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault(); // prevent scrolling
 		}
 	}
 

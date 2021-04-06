@@ -21,6 +21,7 @@
 	</head>
 	<body style="background-color: var(--sapBackgroundColor);">
 		<ui5-time-picker id="timepicker" format-pattern="HH:mm:ss"></ui5-time-picker>
+		<ui5-time-picker></ui5-time-picker>
 		<ui5-time-picker id="timepicker2" format-pattern="hh:mm:ss" value=""></ui5-time-picker>
 		<ui5-time-picker id="timepicker3" format-pattern="hh:mm:ss a"></ui5-time-picker>
 		<ui5-time-picker id="timepicker4" format-pattern="HH:mm" value="12:05"></ui5-time-picker>
@@ -74,7 +75,7 @@
 					inputResult.value = ++inputCounter;
 				});
 
-				var tp = document.getElementById('timepickerSetTime'); 
+				var tp = document.getElementById('timepickerSetTime');
 				document.getElementById('setTimeButton').addEventListener("click", function(e) {
 					tp.setAttribute("value", tp.formatValue(new Date(2020, 3, 13, 3, 16, 16)));
 				});

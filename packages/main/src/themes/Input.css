@@ -16,6 +16,10 @@
 	border: 1px solid var(--sapField_BorderColor);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
 	box-sizing: border-box;
+	line-height: normal;
+	letter-spacing: normal;
+	word-spacing: normal;
+	text-align: start;
 }
 
 :host([focused]) {
@@ -53,15 +57,20 @@
 	font-style: inherit;
 	-webkit-appearance: none;
 	-moz-appearance: textfield;
-	line-height: normal;
 	padding: var(--_ui5_input_inner_padding);
 	box-sizing: border-box;
-	min-width: 3rem;
+	min-width: inherit;
+	width: 100%;
+	text-align: inherit;
 	text-overflow: ellipsis;
 	flex: 1;
 	outline: none;
 	font-size: inherit;
 	font-family: inherit;
+	line-height: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+	text-align: inherit;
 }
 
 [inner-input][inner-input-with-icon] {
@@ -83,6 +92,7 @@
 [inner-input]::-webkit-input-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 0.125rem;
 }
 
 :host([disabled]) [inner-input]::-moz-placeholder {
@@ -94,6 +104,7 @@
 [inner-input]::-moz-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 0.125rem;
 }
 
 :host([disabled]) [inner-input]:-ms-input-placeholder {
@@ -105,6 +116,7 @@
 [inner-input]:-ms-input-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 0.125rem;
 }
 
 .ui5-input-content {
@@ -197,4 +209,11 @@
 */
 ::slotted([ui5-icon][slot="icon"]) {
 	padding: var(--_ui5_input_icon_padding);
+}
+
+/* Chrome, Safari, Edge, Opera */
+[inner-input]::-webkit-outer-spin-button,
+[inner-input]::-webkit-inner-spin-button {
+  -webkit-appearance: inherit;
+  margin: inherit;
 }

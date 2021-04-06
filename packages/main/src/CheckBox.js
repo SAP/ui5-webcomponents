@@ -163,6 +163,18 @@ const metadata = {
 		 */
 		change: {},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
+	},
 };
 
 /**
@@ -233,7 +245,7 @@ class CheckBox extends UI5Element {
 	}
 
 	syncLabel() {
-		this._label = Object.assign({}, this._label);
+		this._label = { ...this._label };
 		this._label.text = this.text;
 		this._label.wrap = this.wrap;
 		this._label.textDirection = this.textDirection;

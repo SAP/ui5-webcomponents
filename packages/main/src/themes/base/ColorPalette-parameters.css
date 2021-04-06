@@ -1,0 +1,12 @@
+:root {
+	--_ui5_color-palette-item-height: 1.75rem;
+	--_ui5_color-palette-item-container-sides-padding: 0.3125rem;
+	--_ui5_color-palette-item-container-rows-padding: 0.6875rem;
+	--_ui5_color-palette-item-focus-height: 1.5rem;
+	--_ui5_color-palette-item-container-padding: var(--_ui5_color-palette-item-container-sides-padding) var(--_ui5_color-palette-item-container-rows-padding);
+	--_ui5_color-palette-item-hover-height: 2.25rem;
+	--_ui5_color-palette-item-margin: calc(var(--_ui5_color-palette-item-hover-height) - var(--_ui5_color-palette-item-height));
+	--_ui5_color-palette-item-hover-margin: calc(var(--_ui5_color-palette-item-margin) / 2);
+	--_ui5_color-palette-row-width: 14.5rem;
+	--_ui5_color-palette-row-height: 9.5rem;
+}

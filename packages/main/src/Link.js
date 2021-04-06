@@ -4,7 +4,6 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 
-
 // Template
 import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
 
@@ -126,7 +125,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-link</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -144,6 +143,7 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
+		 * @native
 		 */
 		click: {},
 	},
@@ -232,10 +232,6 @@ class Link extends UI5Element {
 
 	get tabIndex() {
 		return (this.disabled || !this.textContent.length) ? "-1" : "0";
-	}
-
-	get ariaDisabled() {
-		return this.disabled ? "true" : undefined;
 	}
 
 	get ariaLabelText() {

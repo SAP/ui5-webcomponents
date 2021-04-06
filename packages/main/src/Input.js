@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE, isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -16,6 +16,7 @@ import {
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
@@ -40,6 +41,8 @@ import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
+const rgxFloat = new RegExp(/(\+|-)?\d+(\.|,)\d+/);
+
 /**
  * @public
  */
@@ -52,7 +55,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the <code>ui5-input</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
 		 * @public
 		 */
@@ -85,8 +88,8 @@ const metadata = {
 		 * <br>
 		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
+		 * @slot suggestionItems
 		 * @public
 		 */
 		"default": {
@@ -331,7 +334,7 @@ const metadata = {
 			type: Object,
 		},
 
-		_wrapperAccInfo: {
+		_nativeInputAttributes: {
 			type: Object,
 		},
 
@@ -370,18 +373,6 @@ const metadata = {
 		 * @public
 		 */
 		input: {},
-
-		/**
-		 * Fired when user presses Enter key on the <code>ui5-input</code>.
-		 * <br><br>
-		 * <b>Note:</b> The event is fired independent of whether there was a change before or not.
-		 * If change was performed, the event is fired after the change event.
-		 * The event is also fired when an item of the select list is selected by pressing Enter.
-		 *
-		 * @event
-		 * @public
-		 */
-		submit: {},
 
 		/**
 		 * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
@@ -463,6 +454,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
  * @appenddocs SuggestionItem
+ * @implements sap.ui.webcomponents.main.IInput
  * @public
  */
 class Input extends UI5Element {
@@ -518,8 +510,10 @@ class Input extends UI5Element {
 		// The value that should be highlited.
 		this.highlightValue = "";
 
+		// Indicates, if the user pressed the BACKSPACE key.
+		this._backspaceKeyDown = false;
+
 		// all sementic events
-		this.EVENT_SUBMIT = "submit";
 		this.EVENT_CHANGE = "change";
 		this.EVENT_INPUT = "input";
 		this.EVENT_SUGGESTION_ITEM_SELECT = "suggestion-item-select";
@@ -566,9 +560,8 @@ class Input extends UI5Element {
 				preventFocusRestore: !this.hasSuggestionItemSelected,
 			});
 
-			RenderScheduler.whenFinished().then(async () => {
-				this._listWidth = await this.Suggestions._getListWidth();
-			});
+			await renderFinished();
+			this._listWidth = await this.Suggestions._getListWidth();
 
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
@@ -605,6 +598,11 @@ class Input extends UI5Element {
 			return this._handleEscape(event);
 		}
 
+		if (isBackSpace(event)) {
+			this._backspaceKeyDown = true;
+			this._selectedText = window.getSelection().toString();
+		}
+
 		if (this.showSuggestions) {
 			this.Suggestions._deselectItems();
 		}
@@ -614,6 +612,7 @@ class Input extends UI5Element {
 
 	_onkeyup(event) {
 		this._keyDown = false;
+		this._backspaceKeyDown = false;
 	}
 
 	/* Event handling */
@@ -650,18 +649,11 @@ class Input extends UI5Element {
 			// Mark that the selection has been canceled, so the popover can close
 			// and not reopen, due to receiving focus.
 			this.suggestionSelectionCanceled = true;
-
-			// Close suggestion popover
-			this._closeRespPopover(true);
 		}
 	}
 
 	async _onfocusin(event) {
-		const inputDomRef = await this.getInputDOMRef();
-
-		if (event.target !== inputDomRef) {
-			return;
-		}
+		await this.getInputDOMRef();
 
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
@@ -714,12 +706,42 @@ class Input extends UI5Element {
 
 	async _handleInput(event) {
 		const inputDomRef = await this.getInputDOMRef();
+		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 
 		this.suggestionSelectionCanceled = false;
 
-		if (this.value && this.type === InputType.Number && !isBackSpace(event) && !inputDomRef.value) {
-			// For input with type="Number", if the delimiter is entered second time, the inner input is firing event with empty value
+		if (emptyValueFiredOnNumberInput && !this._backspaceKeyDown) {
+			// For input with type="Number", if the delimiter is entered second time,
+			// the inner input is firing event with empty value
 			return;
+		}
+
+		if (emptyValueFiredOnNumberInput && this._backspaceKeyDown) {
+			// Issue: when the user removes the character(s) after the delimeter of numeric Input,
+			// the native input is firing event with an empty value and we have to manually handle this case,
+			// otherwise the entire input will be cleared as we sync the "value".
+
+			// There are tree scenarios:
+			// Example: type "123.4" and press BACKSPACE - the native input is firing event with empty value.
+			// Example: type "123.456", select/mark "456" and press BACKSPACE - the native input is firing event with empty value.
+			// Example: type "123.456", select/mark "123.456" and press BACKSPACE - the native input is firing event with empty value,
+			// but this time that's really the case.
+
+			// Perform manual handling in case of floating number
+			// and if the user did not select the entire input value
+			if (rgxFloat.test(this.value) && this._selectedText !== this.value) {
+				const newValue = this.removeFractionalPart(this.value);
+
+				// update state
+				this.value = newValue;
+				this.highlightValue = newValue;
+				this.valueBeforeItemPreview = newValue;
+
+				// fire events
+				this.fireEvent(this.EVENT_INPUT);
+				this.fireEvent("value-changed");
+				return;
+			}
 		}
 
 		if (event.target === inputDomRef) {
@@ -776,7 +798,7 @@ class Input extends UI5Element {
 
 	/**
 	 * Checks if the value state popover is open.
-	 * @returns {Boolean} true if the popover is open, false otherwise
+	 * @returns {boolean} true if the popover is open, false otherwise
 	 * @public
 	 */
 	isOpen() {
@@ -888,7 +910,6 @@ class Input extends UI5Element {
 		}
 
 		const inputValue = await this.getInputValue();
-		const isSubmit = action === this.ACTION_ENTER;
 		const isUserInput = action === this.ACTION_USER_INPUT;
 
 		const input = await this.getInputDOMRef();
@@ -913,13 +934,9 @@ class Input extends UI5Element {
 			return;
 		}
 
-		if (isSubmit) { // submit
-			this.fireEvent(this.EVENT_SUBMIT);
-		}
-
 		// In IE, pressing the ENTER does not fire change
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
-		if (isIE() && isSubmit && valueChanged) {
+		if (isIE() && action === this.ACTION_ENTER && valueChanged) {
 			this.fireEvent(this.EVENT_CHANGE);
 		}
 	}
@@ -939,7 +956,19 @@ class Input extends UI5Element {
 			return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
-		return this.getDomRef().querySelector(`input`);
+		return this.nativeInput;
+	}
+
+	/**
+	 * Returns a reference to the native input element
+	 * @protected
+	 */
+	get nativeInput() {
+		return this.getDomRef() && this.getDomRef().querySelector(`input`);
+	}
+
+	get nativeInputWidth() {
+		return this.nativeInput && this.nativeInput.offsetWidth;
 	}
 
 	getLabelableElementId() {
@@ -1039,6 +1068,10 @@ class Input extends UI5Element {
 		return this.type.toLowerCase();
 	}
 
+	get isTypeNumber() {
+		return this.type === InputType.Number;
+	}
+
 	get suggestionsTextId() {
 		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
 	}
@@ -1058,6 +1091,7 @@ class Input extends UI5Element {
 
 		return {
 			"input": {
+				"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
 				"ariaDescribedBy": ariaDescribedBy || undefined,
 				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
 				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
@@ -1068,6 +1102,14 @@ class Input extends UI5Element {
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
 				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this),
 			},
+		};
+	}
+
+	get nativeInputAttributes() {
+		return {
+			"min": this.isTypeNumber ? this._nativeInputAttributes.min : undefined,
+			"max": this.isTypeNumber ? this._nativeInputAttributes.max : undefined,
+			"step": this.isTypeNumber ? (this._nativeInputAttributes.step || "any") : undefined,
 		};
 	}
 
@@ -1101,19 +1143,26 @@ class Input extends UI5Element {
 	}
 
 	get styles() {
-		return {
+		const stylesObject = {
 			popoverHeader: {
-				"width": `${this._inputWidth}px`,
+				"max-width": `${this._inputWidth}px`,
 			},
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
-				"padding": "0.5625rem 1rem",
+				"padding": "0.925rem 1rem",
 			},
 			suggestionsPopover: {
 				"max-width": `${this._inputWidth}px`,
 			},
+			innerInput: {},
 		};
+
+		if (this.nativeInputWidth < 48) {
+			stylesObject.innerInput.padding = "0";
+		}
+
+		return stylesObject;
 	}
 
 	get suggestionSeparators() {
@@ -1168,11 +1217,51 @@ class Input extends UI5Element {
 	}
 
 	get step() {
-		return this.type === InputType.Number ? "any" : undefined;
+		return this.isTypeNumber ? "any" : undefined;
 	}
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	/**
+	 * Returns the placeholder value.
+	 * @protected
+	 */
+	get _placeholder() {
+		return this.placeholder;
+	}
+
+	/**
+	 * Returns the caret position inside the native input
+	 * @protected
+	 */
+	getCaretPosition() {
+		return getCaretPosition(this.nativeInput);
+	}
+
+	/**
+	 * Sets the caret to a certain position inside the native input
+	 * @protected
+	 * @param pos
+	 */
+	setCaretPosition(pos) {
+		setCaretPosition(this.nativeInput, pos);
+	}
+
+	/**
+	 * Removes the fractional part of floating-point number.
+	 * @param {String} value the numeric value of Input of type "Number"
+	 */
+	removeFractionalPart(value) {
+		if (value.includes(".")) {
+			return value.slice(0, value.indexOf("."));
+		}
+		if (value.includes(",")) {
+			return value.slice(0, value.indexOf(","));
+		}
+
+		return value;
 	}
 
 	static get dependencies() {

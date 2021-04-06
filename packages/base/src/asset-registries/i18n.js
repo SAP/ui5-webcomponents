@@ -1,23 +1,31 @@
-import { getFeature } from "../FeaturesRegistry.js";
 import getLocale from "../locale/getLocale.js";
 import { attachLanguageChange } from "../locale/languageChange.js";
-import { fetchTextOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
-import { getEffectiveAssetPath } from "../util/EffectiveAssetPath.js";
-import { getUseDefaultLanguage } from "../config/Language.js";
+import { getFetchDefaultLanguage } from "../config/Language.js";
+
+// contains package names for which the warning has been shown
+const warningShown = new Set();
+const reportedErrors = new Set();
 
 const bundleData = new Map();
-const bundleURLs = new Map();
+const bundlePromises = new Map();
+const loaders = new Map();
 
 /**
- * Sets a map with texts and ID the are related to.
- * @param {string} packageName package ID that the i18n bundle will be related to
- * @param {Object} data an object with string locales as keys and text translataions as values
- * @public
+ *
+ * @param {string} packageName for which package this loader can fetch data
+ * @param {function} loader async function that will be passed a localeId and should return a JSON object
+ * @param {Array} localeIds Array of locale IDs that this loader can handle
  */
-const setI18nBundleData = (packageName, data) => {
+const registerI18nLoader = (packageName, localeId, loader) => {
+	// register loader by key
+	const bundleKey = `${packageName}/${localeId}`;
+	loaders.set(bundleKey, loader);
+};
+
+const _setI18nBundleData = (packageName, data) => {
 	bundleData.set(packageName, data);
 };
 
@@ -26,18 +34,36 @@ const getI18nBundleData = packageName => {
 };
 
 /**
- * Registers a map of locale/url information, to be used by the <code>fetchI18nBundle</code> method.
- * Note: In order to be able to register ".properties" files, you must import the following module:
- * import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";
- *
- * @param {string} packageName package ID that the i18n bundle will be related to
- * @param {Object} bundle an object with string locales as keys and the URLs (in .json or .properties format - see the note above) where the corresponding locale can be fetched from, f.e {"en": "path/en.json", ...}
- *
  * @public
+ * @deprecated
  */
-const registerI18nBundle = (packageName, bundle) => {
-	const oldBundle = bundleURLs.get(packageName) || {};
-	bundleURLs.set(packageName, Object.assign({}, oldBundle, bundle));
+const registerI18nBundle = (_packageName, _bundle) => {
+	throw new Error("This method has been removed. Use `registerI18nLoader` instead.");
+};
+
+const _hasLoader = (packageName, localeId) => {
+	const bundleKey = `${packageName}/${localeId}`;
+	return loaders.has(bundleKey);
+};
+
+// load bundle over the network once
+const _loadMessageBundleOnce = (packageName, localeId) => {
+	const bundleKey = `${packageName}/${localeId}`;
+	const loadMessageBundle = loaders.get(bundleKey);
+
+	if (!bundlePromises.get(bundleKey)) {
+		bundlePromises.set(bundleKey, loadMessageBundle(localeId));
+	}
+
+	return bundlePromises.get(bundleKey);
+};
+
+const _showAssetsWarningOnce = packageName => {
+	if (!warningShown.has(packageName)) {
+		console.warn(`[${packageName}]: Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
+		` Add \`import "${packageName}/dist/Assets.js"\` in your bundle and make sure your build tool supports dynamic imports and JSON imports. See section "Assets" in the documentation for more information.`); /* eslint-disable-line */
+		warningShown.add(packageName);
+	}
 };
 
 /**
@@ -50,50 +76,35 @@ const registerI18nBundle = (packageName, bundle) => {
  * @public
  */
 const fetchI18nBundle = async packageName => {
-	const bundlesForPackage = bundleURLs.get(packageName);
-
-	if (!bundlesForPackage) {
-		console.warn(`Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
-		` You need to import ${packageName}/dist/Assets.js with a build tool that supports JSON imports.`); /* eslint-disable-line */
-		return;
-	}
-
 	const language = getLocale().getLanguage();
 	const region = getLocale().getRegion();
-	const useDefaultLanguage = getUseDefaultLanguage();
 	let localeId = normalizeLocale(language + (region ? `-${region}` : ``));
 
-	while (localeId !== DEFAULT_LANGUAGE && !bundlesForPackage[localeId]) {
+	while (localeId !== DEFAULT_LANGUAGE && !_hasLoader(packageName, localeId)) {
 		localeId = nextFallbackLocale(localeId);
 	}
 
-	if (useDefaultLanguage && localeId === DEFAULT_LANGUAGE) {
-		setI18nBundleData(packageName, null); // reset for the default language (if data was set for a previous language)
+	// use default language unless configured to always fetch it from the network
+	const fetchDefaultLanguage = getFetchDefaultLanguage();
+	if (localeId === DEFAULT_LANGUAGE && !fetchDefaultLanguage) {
+		_setI18nBundleData(packageName, null); // reset for the default language (if data was set for a previous language)
 		return;
 	}
 
-	const bundleURL = bundlesForPackage[localeId];
-
-	if (typeof bundleURL === "object") { // inlined from build
-		setI18nBundleData(packageName, bundleURL);
+	if (!_hasLoader(packageName, localeId)) {
+		_showAssetsWarningOnce(packageName);
 		return;
 	}
 
-	const content = await fetchTextOnce(getEffectiveAssetPath(bundleURL));
-	let parser;
-	if (content.startsWith("{")) {
-		parser = JSON.parse;
-	} else {
-		const PropertiesFormatSupport = getFeature("PropertiesFormatSupport");
-		if (!PropertiesFormatSupport) {
-			throw new Error(`In order to support .properties files, please: import "@ui5/webcomponents-base/dist/features/PropertiesFormatSupport.js";`);
+	try {
+		const data = await _loadMessageBundleOnce(packageName, localeId);
+		_setI18nBundleData(packageName, data);
+	} catch (e) {
+		if (!reportedErrors.has(e.message)) {
+			reportedErrors.add(e.message);
+			console.error(e.message); /* eslint-disable-line */
 		}
-		parser = PropertiesFormatSupport.parser;
 	}
-
-	const data = parser(content);
-
-	setI18nBundleData(packageName, data);
 };
 
 // When the language changes dynamically (the user calls setLanguage), re-fetch all previously fetched bundles
@@ -103,8 +114,8 @@ attachLanguageChange(() => {
 });
 
 export {
+	registerI18nLoader,
 	fetchI18nBundle,
 	registerI18nBundle,
-	setI18nBundleData,
 	getI18nBundleData,
 };

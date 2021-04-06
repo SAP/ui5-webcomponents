@@ -1,15 +1,18 @@
 const list = require("../pageobjects/ListTestPage");
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("List Tests", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
 	});
 
 	it("List is rendered", () => {
-		const list = browser.$("ui5-list").shadow$(".ui5-list-root");
+		const list = browser.$("#infiniteScrollEx").shadow$(".ui5-list-root");
+		const busyInd = browser.$("#infiniteScrollEx").shadow$(".ui5-list-busy-row");
 
-		assert.ok(list, "List is rendered");
+		assert.ok(list.isExisting(), "List is rendered");
+		assert.notOk(busyInd.isExisting(), "Busy indicator is not rendered, when List is not busy");
 	});
 
 	it("itemPress and selectionChange events are fired in Single selection", () => {
@@ -136,7 +139,7 @@ describe("List Tests", () => {
 	});
 
 	it("mode: multiselect. clicking every item selects it independently from the other items", () => {
-		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
 		list.root.setProperty("mode", "MultiSelect");
 
 		const firstItem = list.getItem(0);
@@ -154,7 +157,7 @@ describe("List Tests", () => {
 	});
 
 	it("mode: delete. items have X buttons which delete them", () => {
-		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/List_test_page.html`);
 		list.root.setProperty("mode", "Delete");
 
 		const firstItem = list.getItem(0);
@@ -183,6 +186,7 @@ describe("List Tests", () => {
 		const itemBtn = $("ui5-button.itemBtn");
 		const itemLink = $("ui5-link.itemLink");
 		const itemRadioBtn = $("ui5-radiobutton.itemRadio");
+		const randomBtn = $("#randomBtn");
 
 		headerBtn.click();
 		assert.strictEqual(headerBtn.isFocused(), true, "header btn is focused");
@@ -203,6 +207,11 @@ describe("List Tests", () => {
 		// and go to the "Option B" radio button
 		itemLink.keys("Tab");
 		assert.strictEqual(itemRadioBtn.isFocused(), true, "the last tabbable element (radio) is focused");
+
+		// act: TAB from the "Option B" radio button - the focus should leave  the ui5-list
+		// and Random button should be focused
+		itemLink.keys("Tab");
+		assert.strictEqual(randomBtn.isFocused(), true, "element outside of the list is focused");
 	});
 
 	it("does not focus next / prev item when right / left arrow is pressed", () => {
@@ -300,5 +309,44 @@ describe("List Tests", () => {
 		browser.keys("Space");
 
 		assert.strictEqual(input.getProperty("value"), "0", "item-click event is not fired when the button is pressed.");
+	});
+
+	it("Popover with List opens without errors", () => {
+		const btnPopupOpener = $("#btnOpenPopup");
+		const btnInListHeader = $("#btnInHeader");
+
+		btnPopupOpener.click();
+		assert.strictEqual(btnInListHeader.isFocused(), true, "The List header btn is focused.");
+	});
+
+	it('focusable list-items are correctly disabled', () => {
+		const item2 = $('#basicList ui5-li:nth-child(2)');
+
+		// focus the second item
+		item2.click();
+
+		// disable the second item
+		browser.execute(() => {
+			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
+		});
+
+		assert.strictEqual(item2.shadow$('li').getProperty("tabIndex"), -1, "disabled item is no longer focusable");
+		assert.strictEqual(item2.shadow$('li').getAttribute("class"),"ui5-li-root", "disabled item no longer styled as focusable");
+	});
+
+	it('disabled list-items are skipped on navigation', () => {
+		const item1 = $('#basicList ui5-li:nth-child(1)'),
+			item3 = $('#basicList ui5-li:nth-child(3)');
+
+		// ensure the second item is disabled
+		browser.execute(() => {
+			document.querySelector("#basicList ui5-li:nth-child(2)").disabled = true;
+		});
+
+		// navigate from the first item to the next focusable item
+		item1.click();
+		item1.keys("ArrowDown");
+
+		assert.strictEqual(item3.getProperty("focused"), true, "disabled item is skipped");
 	});
 });

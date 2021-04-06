@@ -3,13 +3,10 @@
 	?disabled= "{{disabled}}"
 	value = "{{value}}"
 	label = "{{label}}"
-	?expanded= "{{_expanded}}"
 	@click = {{_onclick}}
 	@keydown={{_onkeydown}}
 	class = "{{classes.root}}"
 	data-sap-focus-ref
-	@focusin="{{_onfocusin}}"
-	@focusout="{{_onfocusout}}"
 	tabindex="0"
 	@wheel="{{_handleWheel}}"
 >
@@ -19,10 +16,9 @@
 		<ui5-button class="ui5-wheelslider-arrow" icon="navigation-up-arrow" @click={{_onArrowUp}} tabindex="-1"></ui5-button>
 	</div>
 	<div id="{{this._id}}--inner" class="ui5-wheelslider-inner">
-	<div id="{{this._id}}--selection-frame" class="ui5-wheelslider-selection-frame">
-		</div>
+	<div id="{{this._id}}--selection-frame" class="ui5-wheelslider-selection-frame"></div>
 		<div id="{{this._id}}--wrapper" class="ui5-wheelslider-wrapper">
-			{{#if _expanded}}
+			{{#if expanded}}
 				<ul id="{{this._id}}--items-list">
 					{{#each _itemsToShow}}
 						<li class="ui5-wheelslider-item" data-item-index="{{@index}}" style="list-style-type: none;">{{this}}</li>

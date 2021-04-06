@@ -2,9 +2,10 @@
 	class="ui5-select-root"
 	dir="{{effectiveDir}}"
 	id="{{_id}}-select"
-	@click="{{_toggleRespPopover}}"
+	@click="{{_onclick}}"
 >
 	<div class="ui5-select-label-root"
+		data-sap-focus-ref
 		tabindex="{{tabIndex}}"
 		role="combobox"
 		aria-haspopup="listbox"

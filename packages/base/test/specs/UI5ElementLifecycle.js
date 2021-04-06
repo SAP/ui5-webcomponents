@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Lifecycle works", () => {
-	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	});
 
 	it("Tests element creation callbacks", () => {
 
@@ -20,7 +22,7 @@ describe("Lifecycle works", () => {
 			});
 
 			document.body.appendChild(el);
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(calledCallbacks);
 		});
@@ -40,7 +42,7 @@ describe("Lifecycle works", () => {
 			const el = document.createElement("ui5-test-generic");
 			document.body.appendChild(el);
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			el.strProp = "some string";
 
@@ -52,7 +54,7 @@ describe("Lifecycle works", () => {
 				};
 			});
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(calledCallbacks);
 		});
@@ -80,11 +82,11 @@ describe("Lifecycle works", () => {
 
 			document.body.appendChild(el);
 
-			await window.RenderScheduler.whenFinished(); // Must wait, otherwise onExitDOM won't be called
+			await window["sap-ui-webcomponents-bundle"].renderFinished(); // Must wait, otherwise onExitDOM won't be called
 
 			document.body.removeChild(el);
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(calledCallbacks);
 		});

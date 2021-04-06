@@ -27,7 +27,7 @@
 
 **Q: Can I create my own UI5 Web Components?**
 
-**A:** Yes, for more information see [Creating a custom UI5 Web Components package](./dev/Creating%20UI5%20Web%20Components%20Packages.md)
+**A:** Yes, for more information see [Creating a custom UI5 Web Components package](https://github.com/SAP/ui5-webcomponents/blob/master/docs/dev/Creating%20UI5%20Web%20Components%20Packages.md)
 
 
 **Q: How big is the runtime?**

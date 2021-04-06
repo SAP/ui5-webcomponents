@@ -30,7 +30,7 @@ import radioButtonCss from "./generated/themes/RadioButton.css.js";
 const metadata = {
 	tag: "ui5-radiobutton",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */  {
+	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
 		/**
 		 * Determines whether the <code>ui5-radiobutton</code> is disabled.
@@ -161,6 +161,24 @@ const metadata = {
 		wrap: {
 			type: Boolean,
 		},
+
+		_tabIndex: {
+			type: String,
+			defaultValue: "-1",
+			noAttribute: true,
+		},
+	},
+	slots: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
@@ -240,13 +258,14 @@ class RadioButton extends UI5Element {
 
 	onBeforeRendering() {
 		this.syncGroup();
-
 		this._enableFormSupport();
 	}
 
 	syncGroup() {
 		const oldGroup = this._name;
 		const currentGroup = this.name;
+		const oldSelected = this._selected;
+		const currentSelected = this.selected;
 
 		if (currentGroup !== oldGroup) {
 			if (oldGroup) {
@@ -262,7 +281,12 @@ class RadioButton extends UI5Element {
 			RadioButtonGroup.enforceSingleSelection(this, currentGroup);
 		}
 
+		if (this.name && currentSelected !== oldSelected) {
+			RadioButtonGroup.updateTabOrder(this.name);
+		}
+
 		this._name = this.name;
+		this._selected = this.selected;
 	}
 
 	_enableFormSupport() {
@@ -395,7 +419,7 @@ class RadioButton extends UI5Element {
 		}
 
 		if (this.name) {
-			return this.selected ? "0" : "-1";
+			return this._tabIndex;
 		}
 
 		return tabindex || "0";

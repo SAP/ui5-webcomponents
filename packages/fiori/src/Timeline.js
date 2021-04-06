@@ -20,8 +20,8 @@ const metadata = {
 		/**
 		 * Determines the content of the <code>ui5-timeline</code>.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.fiori.ITimelineItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
@@ -94,7 +94,7 @@ class Timeline extends UI5Element {
 	_onfocusin(event) {
 		const target = event.target;
 
-		this._itemNavigation.update(target);
+		this._itemNavigation.setCurrentItem(target);
 	}
 }
 

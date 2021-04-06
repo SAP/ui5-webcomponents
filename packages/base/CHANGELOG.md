@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.13](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.12...v1.0.0-rc.13) (2021-03-26)
+
+
+### Bug Fixes
+
+* **framework:** adapt ie11 package for usage in modern browsers ([#2878](https://github.com/SAP/ui5-webcomponents/issues/2878)) ([70bbfbb](https://github.com/SAP/ui5-webcomponents/commit/70bbfbb))
+* **framework:**  add fallback for CLDR dev use case ([#2844](https://github.com/SAP/ui5-webcomponents/issues/2844)) ([deb173a](https://github.com/SAP/ui5-webcomponents/commit/deb173a))
+
+
+### Features
+
+* **framework:** Create attachDirectionChange function ([#2646](https://github.com/SAP/ui5-webcomponents/issues/2646)) ([b4f836a](https://github.com/SAP/ui5-webcomponents/commit/b4f836a))
+* **framework:** ItemNavigation cyclic behavior implemented for multiple rows ([#2780](https://github.com/SAP/ui5-webcomponents/issues/2780)) ([b7ad1ea](https://github.com/SAP/ui5-webcomponents/commit/b7ad1ea))
+* **framework:** Maintain a common z-index for all UI5 Web Components instances and OpenUI5 ([#2980](https://github.com/SAP/ui5-webcomponents/issues/2980)) ([13bdc02](https://github.com/SAP/ui5-webcomponents/commit/13bdc02))
+* **ui5-color-palette:** initial implementation ([#2731](https://github.com/SAP/ui5-webcomponents/issues/2731)) ([772424e](https://github.com/SAP/ui5-webcomponents/commit/772424e))
+* **ui5-color-picker:** initial implementation ([#2769](https://github.com/SAP/ui5-webcomponents/issues/2769)) ([6a70e5a](https://github.com/SAP/ui5-webcomponents/commit/6a70e5a))
+* **ui5-list:** introduce "growing" property ([#2950](https://github.com/SAP/ui5-webcomponents/issues/2950)) ([6fbbb21](https://github.com/SAP/ui5-webcomponents/commit/6fbbb21)), closes [#2882](https://github.com/SAP/ui5-webcomponents/issues/2882) [#2882](https://github.com/SAP/ui5-webcomponents/issues/2882)
+* **ui5-step-input:** inintial implementation ([#2804](https://github.com/SAP/ui5-webcomponents/issues/2804)) ([d80420e](https://github.com/SAP/ui5-webcomponents/commit/d80420e)), closes [#2640](https://github.com/SAP/ui5-webcomponents/issues/2640)
+* **ui5-tabcontainer:** support responsive paddings ([#2775](https://github.com/SAP/ui5-webcomponents/issues/2775)) ([19392ff](https://github.com/SAP/ui5-webcomponents/commit/19392ff)), closes [#2539](https://github.com/SAP/ui5-webcomponents/issues/2539)
+* add dynamic imports for .json assets ([#2740](https://github.com/SAP/ui5-webcomponents/issues/2740)) ([46e38fb](https://github.com/SAP/ui5-webcomponents/commit/46e38fb))
+* **ui5-table:** add growing on scroll ([#2593](https://github.com/SAP/ui5-webcomponents/issues/2593)) ([87520c2](https://github.com/SAP/ui5-webcomponents/commit/87520c2)), closes [#2589](https://github.com/SAP/ui5-webcomponents/issues/2589) [#2570](https://github.com/SAP/ui5-webcomponents/issues/2570)
+* create @ui5/webcomponents-ie11 package ([#2686](https://github.com/SAP/ui5-webcomponents/issues/2686)) ([1d3b37e](https://github.com/SAP/ui5-webcomponents/commit/1d3b37e))
+* **ui5-slider:** focus and keyboard handling implementation ([#2614](https://github.com/SAP/ui5-webcomponents/issues/2614)) ([7b78c16](https://github.com/SAP/ui5-webcomponents/commit/7b78c16))
+* refactoring and new features for pickers ([#2598](https://github.com/SAP/ui5-webcomponents/issues/2598)) ([3e684b4](https://github.com/SAP/ui5-webcomponents/commit/3e684b4))
+
+
+
+
+
+# [1.0.0-rc.12](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.11...v1.0.0-rc.12) (2021-02-18)
+
+
+### Bug Fixes
+
+* **theming:** fix error message ([#2818](https://github.com/SAP/ui5-webcomponents/issues/2818)) ([7a0732a](https://github.com/SAP/ui5-webcomponents/commit/7a0732a))
+* **i18n:** ui5-icon i18n works for all packages ([#2816](https://github.com/SAP/ui5-webcomponents/issues/2816)) ([91e16a1](https://github.com/SAP/ui5-webcomponents/commit/91e16a1))
+
+### Features
+
+* **framework:** add dynamic imports for .json assets ([#2740](https://github.com/SAP/ui5-webcomponents/issues/2740)) ([46e38fb](https://github.com/SAP/ui5-webcomponents/commit/46e38fb))
+* **framework:** Create attachDirectionChange function ([#2646](https://github.com/SAP/ui5-webcomponents/issues/2646)) ([b4f836a](https://github.com/SAP/ui5-webcomponents/commit/b4f836a))
+* **framework:** ItemNavigation cyclic behavior implemented for multiple rows ([#2780](https://github.com/SAP/ui5-webcomponents/issues/2780)) ([b7ad1ea](https://github.com/SAP/ui5-webcomponents/commit/b7ad1ea))
+
+
+
+
 # [1.0.0-rc.11](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.10...v1.0.0-rc.11) (2020-12-21)
 
 

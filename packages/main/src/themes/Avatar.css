@@ -81,6 +81,7 @@
 :host .ui5-avatar-icon {
 	height: 1.5rem;
 	width: 1.5rem;
+	color: inherit;
 }
 
 :host([_size="XS"]) .ui5-avatar-icon,
@@ -170,10 +171,6 @@
 :host([_background-color="Placeholder"]),
 :host([background-color="Placeholder"]) {
 	background-color: var(--ui5-avatar-placeholder);
-}
-
-:host(:not([image])) .ui5-avatar-icon {
-	color: inherit;
 }
 
 :host([image-fit-type="Contain"]) .ui5-avatar-img {

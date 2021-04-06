@@ -1,27 +1,8 @@
-.ui5-time-picker-sliders-container {
-	display: flex;
-	justify-content: center;
-	align-items: stretch;
-	direction: ltr;
-	padding: 0.5rem;
-	min-width: 18rem;
-	box-sizing: border-box;
-}
-
-.ui5-time-picker-sliders-container.ui5-phone{
-	height: 90vh;
-}
-
 .ui5-time-picker-footer {
 	height: fit-content;
 	display: flex;
 	justify-content: flex-end;
 	width: 100%;
-}
-
-.ui5-time-picker-wheelslider {
-	padding-left: 0.25rem;
-	padding-right: 0.25rem;
 }
 
 .ui5-time-picker-footer > [ui5-button] {

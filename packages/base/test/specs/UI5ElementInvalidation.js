@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Invalidation works", () => {
-	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	});
 
 	it("Tests that changing a property invalidates", () => {
 
@@ -19,7 +21,7 @@ describe("Invalidation works", () => {
 			el.strProp = "new value";
 			el.boolProp = true;
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidations);
 		});
@@ -34,7 +36,7 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.strProp = text;
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			let invalidations = 0;
 
@@ -44,7 +46,7 @@ describe("Invalidation works", () => {
 
 			el.strProp = text;
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidations);
 		});
@@ -60,7 +62,7 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.objectProp = obj;
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			let invalidations = 0;
 
@@ -70,7 +72,7 @@ describe("Invalidation works", () => {
 
 			el.objectProp = otherObj;
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidations);
 		});
@@ -86,7 +88,7 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.multiProp = arr;
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			let invalidations = 0;
 
@@ -96,7 +98,7 @@ describe("Invalidation works", () => {
 
 			el.multiProp = otherArr;
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidations);
 		});
@@ -120,7 +122,7 @@ describe("Invalidation works", () => {
 			const div = document.createElement("div");
 			el.appendChild(div);
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidated);
 		});
@@ -136,7 +138,7 @@ describe("Invalidation works", () => {
 			const div = document.createElement("div");
 			el.appendChild(div);
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			let invalidated = false;
 
@@ -146,7 +148,7 @@ describe("Invalidation works", () => {
 
 			el.removeChild(div);
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidated);
 		});
@@ -160,7 +162,7 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.textContent = "test";
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			// Number of invalidations may vary with children/slots count, so just check for invalidation
 			let invalidated = false;
@@ -171,7 +173,7 @@ describe("Invalidation works", () => {
 
 			el.textContent = "test2";
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidated);
 		});
@@ -185,7 +187,7 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.textContent = "test";
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			// Number of invalidations may vary with children/slots count, so just check for invalidation
 			let invalidated = false;
@@ -196,7 +198,7 @@ describe("Invalidation works", () => {
 
 			el.childNodes[0].nodeValue = "test2";
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidated);
 		});
@@ -228,7 +230,7 @@ describe("Invalidation works", () => {
 			el.strProp = "new";
 			el.strProp = "newer";
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(operations);
 		});

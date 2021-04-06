@@ -1,7 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Dialog general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+	});
 
 	it("tests dialog toggling", () => {
 		const btnOpenDialog = $("#btnOpenDialog");
@@ -33,7 +36,7 @@ describe("Dialog general interaction", () => {
 	});
 
 	it("tests dialog lifecycle", () => {
-		browser.url("http://localhost:8080/test-resources/pages/DialogLifecycle.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DialogLifecycle.html`);
 
 		assert.ok(!browser.$("ui5-static-area").length, "No static area.");
 
@@ -49,7 +52,7 @@ describe("Dialog general interaction", () => {
 	});
 
 	it("draggable", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
 
 		const openDraggableDialogButton = browser.$("#draggable-open");
 		openDraggableDialogButton.click();
@@ -127,11 +130,24 @@ describe("Dialog general interaction", () => {
 
 		closeButton.click();
 	});
+
+	it("test dialog overlay when dialog isn't open", () => {
+		const isBlockLayerHidden = browser.executeAsync(async (done) => {
+			const dialog = document.getElementById("dialog");
+			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
+
+			done(staticAreaItemDomRef.querySelector(".ui5-block-layer").hasAttribute("hidden"));
+		});
+
+		assert.ok(isBlockLayerHidden, "the block layer is hidden");
+	});
 });
 
 
 describe("Acc", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Dialog.html`);
+	});
 
 	it("tests aria-labelledby and aria-label", () => {
 		const dialog = browser.$("ui5-dialog");

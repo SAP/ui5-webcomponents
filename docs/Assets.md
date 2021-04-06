@@ -1,9 +1,14 @@
 # Assets and JSON module imports
 
-UI5 Web Components aim to be feature rich and with a minimal code footprint at the same time. In order to achieve this, 
-most UI5 Web Components packages ship their assets as `.json` files while also providing a public module import for them.
+1. UI5 web components need non-code assets for their entrprise-ready features (i18n texts, themes, etc.)
+2. These assets need to be known at runtime, but the actual bundle is created by applications.
+3. The application has to "link" the assets from their node_modules location to their runtime location and make them known to the UI5 webcomponents framework.
 
-The assets in question could be i18n texts, icons, additional themes parameters, CLDR, etc...
+The easiest way to enable applications for such "linking" is to express the dependency from the code of the web components to the actual asset files in terms of ES6 imports. In our case, the assets are in `.json` format, so using ES6 imports for the `.json` files is a way to "show" applicaitons what assets are needed.
+
+Since JSON module imports are not standard browser functionality yet (spec work is in progress), a build tool is necessary and the assets imports are not imported automatically from the components in order to make them work without a build tool for rapid prototyping.
+
+The assets are still required for productive usage so a separate import is necessary as well.
 
 Currently our npm packages follow the scheme:
 
@@ -13,8 +18,12 @@ Currently our npm packages follow the scheme:
 `@ui5/<PACKAGE_NAME>/dist/Assets.js`
 (for the module that provides the assets)
 
-<a name="packages"></a>
+All JS build tools support importing JSON modules (via plugins like `@rollup/plugin-json` or by default like webpack), by inlining them in a JS module that exports the acutual content. In order to avoid inlinding all 40+ languages and ending up with a huge bundle, the `Assets.js` file exposes the assets with dynamic imports. This way, application build tools can do the following two things:
+- include the necessary JSON data (inlined in JS) in the build output folder
+- leave dynamic imports to only load the necessary one at runtime (since the ui5 webcomponents framework will see the runtime location inside the dynamic import).
+
 ## Packages
+<a name="packages"></a>
 
 ### `localization` package
 
@@ -36,7 +45,7 @@ but rather from the package(s) containing the actual Web Components you'll be us
 
 ### `main` package
 
-The `main` package's `Assets.js` import provides package-specific additional theming parameters and i18n assets. 
+The `main` package's `Assets.js` import provides package-specific additional theming parameters and i18n assets.
 All assets from the `base` and `theme-base` packages are also imported automatically so you don't have to worry about them.
 
 `import "@ui5/webcomponents/dist/Assets.js";`
@@ -56,44 +65,5 @@ Normally applications are expected to import only the individual icons that are 
 
 `import "@ui5/webcomponents-icons/dist/add.js`";`
 
-However, sometimes it makes sense to import all icons, hence the `import "@ui5/webcomponents-fiori/dist/Assets.js";` JSON import. 
+However, sometimes it makes sense to import all icons, hence the `import "@ui5/webcomponents-fiori/dist/Assets.js";` JSON import.
 Along with the icons, it also includes all translatable texts.
-
-<a name="bundling"></a>
-## Efficient asset bundling
-
-You may notice that `Assets.js` imports, such as:
-
-`import "@ui5/webcomponents/dist/Assets.js"`
- 
- will produce warning messages in the browser's console, such as for example:
-> Inefficient bundling detected: consider bundling i18n/theme properties imports as URLs instead of inlining them.
-> See rollup-plugin-url or webpack file-loader for more information.
-> Suggested pattern: "assets\/.*\.json"
-
-What this means is that it's recommended to instruct your source code bundling software
-(some of the most popular being Webpack and Rollup) not to include all the asset files or theming related files
-(files that match the <code>assets\/.*\.json</code> pattern) in your applications' JavaScript bundle,
-but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.
-
-[How to do it with Webpack](https://github.com/webpack-contrib/file-loader)
-
-[How to do it with Rollup](https://github.com/rollup/rollup-plugin-url)
-
-Rollup example:
-
-```js
-import url from "rollup-plugin-url";
-...
-plugins.push(url({
-	limit: 0,
-	include: [
-		/.*assets\/.*\.json/,
-	],
-	emitFiles: true,
-	fileName: "[name].[hash][extname]",
-	publicPath: YOUR_APPLICATION_PUBLIC_PATH + "/resources/",
-}));
-```
-
-Please note that the code above is just sample snippet, and will not work on its own.

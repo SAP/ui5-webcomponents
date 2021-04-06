@@ -1,0 +1,26 @@
+<div class="ui5-cp-root">
+	<div class="ui5-cp-item-container" 
+		role="region"
+		aria-label="{{colorContainerLabel}}"
+		@click={{_onclick}}
+		@keyup={{_onkeyup}}
+		@keydown={{_onkeydown}}>
+		{{#each this.displayedColors}}
+			<slot
+				name="{{this._individualSlot}}"
+			>
+			</slot>
+		{{/each}}
+	</div>
+
+	{{#if showMoreColors}}
+		<div class="ui5-cp-more-colors-wrapper">
+			<div class="ui5-cp-separator"></div>
+			<ui5-button
+				design="Transparent"
+				class="ui5-cp-more-colors"
+				@click="{{_openMoreColorsDialog}}"
+			>{{colorPaleteMoreColorsText}}</ui5-button>
+		</div>
+	{{/if}}
+</div>

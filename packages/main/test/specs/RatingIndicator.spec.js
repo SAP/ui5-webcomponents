@@ -1,8 +1,11 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 
 describe("Rating Indicator general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/RatingIndicator.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/RatingIndicator.html`);
+	});
 
 	it("Tests basic rating indicator rendering", () => {
 		const ratingIndicator = browser.$("#rating-indicator1");
@@ -23,7 +26,7 @@ describe("Rating Indicator general interaction", () => {
 		assert.strictEqual(ratingIndicator.getProperty("value"), 6, "Initial value is applied");
 
 		thirdStar.click();
-		
+
 		assert.strictEqual(ratingIndicator.getProperty("value"), 3, "Value is changed on click");
 	});
 
@@ -33,7 +36,7 @@ describe("Rating Indicator general interaction", () => {
 		const input = browser.$("#change-event");
 
 		assert.strictEqual(ratingIndicator.getProperty("value"), 6, "Initial value is applied");
-		
+
 		thirdStar.click();
 
 		assert.strictEqual(ratingIndicator.getProperty("value"), 3, "Value is changed on click");

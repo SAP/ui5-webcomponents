@@ -1,16 +1,19 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 const getTokenizerPopoverId = (inputId) => {
 	return browser.execute(async (inputId) => {
 		const input = await document.querySelector(`#${inputId}`);
 		const staticAreaItem = await (input.shadowRoot.querySelector("ui5-tokenizer").getStaticAreaItemDomRef());
-		
+
 		return staticAreaItem.host.classList[0];
 	}, inputId);
 }
 
 describe("MultiInput general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/MultiInput.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/MultiInput.html`);
+	});
 
 	it("tests expanding of tokenizer", () => {
 		const basic = $("#basic-overflow");
@@ -22,11 +25,11 @@ describe("MultiInput general interaction", () => {
 
 		assert.ok(!basicTokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
 	});
-	
+
 	it ("tests opening of tokenizer Popover", () => {
 		const tokenizer = $("#basic-overflow").shadow$("ui5-tokenizer");
 		const nMoreLabel = tokenizer.shadow$(".ui5-tokenizer-more-text");
-		
+
 		nMoreLabel.click();
 
 		const rpoClassName = getTokenizerPopoverId("basic-overflow");
@@ -34,7 +37,7 @@ describe("MultiInput general interaction", () => {
 
 		assert.ok(rpo.getProperty("opened"), "More Popover should be open");
 	});
-	
+
 	it ("fires value-help-trigger on icon press", () => {
 		const label = $("#basic-event-listener");
 		const icon = $("#basic-overflow-and-icon").shadow$("ui5-icon");
@@ -47,7 +50,7 @@ describe("MultiInput general interaction", () => {
 
 		// assert
 		assert.strictEqual(label.getText(), EXPECTED_TEXT, "value help press event is fired");
-		
+
 	});
 
 	it ("fires value-help-trigger with F4 and Alt/Option + ArrowUp/Down", () => {
@@ -123,4 +126,72 @@ describe("MultiInput general interaction", () => {
 		assert.ok(!popover.getProperty("opened"), "Suggestion Popovoer is closed");
 		assert.strictEqual(mi.$$("ui5-token").length, 1, "a token is added after selection");
 	});
+
+	it ("Placeholder", () => {
+		const mi1 = browser.$("#empty-mi").shadow$(".ui5-input-inner");
+		const mi2 = browser.$("#mi-with-tokens-customicon").shadow$(".ui5-input-inner");
+
+		assert.strictEqual(mi1.getAttribute("placeholder"), "Placeholder", "a token is added after selection");
+		assert.strictEqual(mi2.getAttribute("placeholder"), "", "a token is added after selection");
+	});
 });
+
+describe("ARIA attributes", () => {
+	it ("aria-describedby value according to the tokens count", () => {
+		const mi = $("#no-tokens");
+		const innerInput = mi.shadow$("input");
+		const btn = $("#add-tokens");
+		const invisibleText = mi.shadow$(".ui5-hidden-text");
+		const inivisbleTextId = invisibleText.getProperty("id");
+		let resourceBundleText = null;
+
+		resourceBundleText = browser.execute(() => {
+			const mi = document.getElementById("no-tokens");
+			return mi.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN);
+		});
+
+		assert.strictEqual(mi.$$("ui5-token").length, 0, "should not have tokens");
+		assert.strictEqual(innerInput.getAttribute("aria-describedby"), inivisbleTextId, "aria-describedby reference is correct");
+		assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
+
+		$("#add-tokens").scrollIntoView();
+		btn.click();
+
+		resourceBundleText = browser.execute(() => {
+			const mi = document.getElementById("no-tokens");
+			return mi.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+		});
+
+		assert.strictEqual(mi.$$("ui5-token").length, 1, "should have one token");
+		assert.strictEqual(invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
+
+		btn.click();
+		assert.strictEqual(mi.$$("ui5-token").length, 2, "should have two tokens");
+		assert.strictEqual(invisibleText.getText(), "Contains 2 tokens", "aria-describedby text is correct");
+	});
+
+	it ("aria-describedby value according to the tokens and suggestions count", () => {
+		const mi = $("#suggestion-token");
+		const innerInput = mi.shadow$("input");
+		const tokensCountITextId = `${mi.getProperty("_id")}-hiddenText-nMore`;
+		const suggestionsITextId = `${mi.getProperty("_id")}-suggestionsText`;
+		const suggestionsCountITextId = `${mi.getProperty("_id")}-suggestionsCount`;
+		const ariaDescribedBy = `${tokensCountITextId} ${suggestionsITextId}  ${suggestionsCountITextId}`;
+
+		$("#suggestion-token").scrollIntoView();
+		innerInput.click();
+		innerInput.keys("a");
+		innerInput.keys("ArrowDown");
+		innerInput.keys("Enter");
+
+		assert.strictEqual(innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby attribute contains multiple references");
+	});
+
+	it ("aria-roledescription is set properly", () => {
+		const mi = $("#no-tokens");
+		const innerInput = mi.shadow$("input");
+
+		assert.strictEqual(innerInput.getAttribute("aria-roledescription"), "Multi Value Input", "aria-roledescription value is correct");
+	});
+});
+

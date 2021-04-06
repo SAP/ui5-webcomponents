@@ -3,11 +3,34 @@
 	tabindex="{{_tabIndex}}"
 	@focusin="{{_onfocusin}}"
 	@click="{{_onrowclick}}"
+	@keydown="{{_onkeydown}}"
+	@keyup="{{_onkeyup}}"
+	@mouseup="{{_onmouseup}}"
+	@touchstart="{{_ontouchstart}}"
+	@touchend="{{_ontouchend}}"
 	aria-label="{{ariaLabelText}}"
+	aria-selected="{{this.selected}}"
 	data-sap-focus-ref
 	part="row"
 	role="row"
 >
+
+	{{#if isMultiSelect}}
+		<td 
+			class="ui5-table-multi-select-cell" 
+			aria-hidden="true" 
+			role="presentation"
+		>
+			<ui5-checkbox
+				class="ui5-multi-select-checkbox"
+				?checked="{{this.selected}}"
+				aria-label="{{ariaLabelRowSelection}}"
+				@ui5-change="{{_handleSelection}}"
+			>
+			</ui5-checkbox>
+		</td>
+	{{/if}}
+
 	{{#if shouldPopin}}
 		{{#each visibleCells}}
 			<slot name="{{this._individualSlot}}"></slot>
@@ -21,7 +44,10 @@
 
 {{#if shouldPopin}}
 	{{#each popinCells}}
-		<tr part="popin-row" role="row" class="{{this.classes}}" @click="{{../_onrowclick}}">
+		<tr part="popin-row" role="row" class="{{this.classes}}"
+			@click="{{../_onrowclick}}"
+			@keydown="{{../_onkeydown}}"
+			@keyup="{{../_onkeyup}}">
 			<td colspan="{{../visibleCellsCount}}" role="cell">
 				{{#if this.popinText}}
 					<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>

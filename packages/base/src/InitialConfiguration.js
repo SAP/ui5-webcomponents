@@ -12,7 +12,7 @@ let initialConfig = {
 	calendarType: null,
 	noConflict: false, // no URL
 	formatSettings: {},
-	useDefaultLanguage: false,
+	fetchDefaultLanguage: false,
 	assetsPath: "",
 };
 
@@ -38,13 +38,13 @@ const getLanguage = () => {
 };
 
 /**
- * Returns if the default language, that is inlined build time,
- * should be used, instead of trying fetching the language over the network.
+ * Returns if the default language, that is inlined at build time,
+ * should be fetched over the network instead.
  * @returns {Boolean}
  */
-const getUseDefaultLanguage = () => {
+const getFetchDefaultLanguage = () => {
 	initConfiguration();
-	return initialConfig.useDefaultLanguage;
+	return initialConfig.fetchDefaultLanguage;
 };
 
 const getNoConflict = () => {
@@ -119,7 +119,6 @@ const applyOpenUI5Configuration = () => {
 	initialConfig = merge(initialConfig, OpenUI5Config);
 };
 
-
 const initConfiguration = () => {
 	if (initialized) {
 		return;
@@ -142,7 +141,7 @@ export {
 	getTheme,
 	getRTL,
 	getLanguage,
-	getUseDefaultLanguage,
+	getFetchDefaultLanguage,
 	getNoConflict,
 	getCalendarType,
 	getFormatSettings,

@@ -56,6 +56,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the <code>notification</code> is new or has been already read.
+		 * <br><br>
+		 * <b>Note:</b> if set to <code>false</code> the <code>heading</code> has bold font,
+		 * if set to true - it has a normal font.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		read: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines if a busy indicator would be displayed over the item.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -73,7 +86,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 		 *
-		 * @type {HTMLElement}
+		 * @type {sap.ui.webcomponents.fiori.INotificationAction[]}
 		 * @slot
 		 * @public
 		 */
@@ -111,7 +124,7 @@ class NotificationListItemBase extends ListItemBase {
 	constructor() {
 		super();
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+		this.i18nFioriBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {

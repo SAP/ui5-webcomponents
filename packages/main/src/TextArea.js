@@ -128,7 +128,7 @@ const metadata = {
 		 * <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li>
 		 * </ul>
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -140,7 +140,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of characters that the <code>value</code> can have.
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultValue null
 		 * @public
 		 */
@@ -181,7 +181,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of lines that the Web Component can grow.
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -221,7 +221,6 @@ const metadata = {
 		ariaLabel: {
 			type: String,
 		},
-
 
 		/**
 		 * Receives id(or many ids) of the elements that label the textarea.
@@ -292,6 +291,17 @@ const metadata = {
 		valueStateMessage: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
@@ -326,6 +336,15 @@ const metadata = {
  * <br><br>
  * When empty, it can hold a placeholder similar to a <code>ui5-input</code>.
  * You can define the rows of the <code>ui5-textarea</code> and also determine specific behavior when handling long texts.
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-textarea</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>textarea - Used to style the native textarea</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *

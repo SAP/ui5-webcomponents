@@ -12,7 +12,7 @@ import BarCss from "./generated/themes/Bar.css.js";
 const metadata = {
 	tag: "ui5-bar",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.Bar.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
 		 * Defines the <code>ui5-bar</code> design.
 		 * <br><br>
@@ -27,8 +27,9 @@ const metadata = {
 			defaultValue: BarDesign.Header,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.Bar.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
+		 * Defines the content at the start of the bar
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -37,6 +38,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 		/**
+		 * Defines the content in the middle of the bar
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -45,6 +47,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 		/**
+		 * Defines the content at the end of the bar
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -53,7 +56,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Bar.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		//
 	},
 };
@@ -72,11 +75,11 @@ const metadata = {
  * For the <code>ui5-bar</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/Bar.js";</code>
+ * <code>import @ui5/webcomponents-fiori/dist/Bar.js";</code>
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Bar
+ * @alias sap.ui.webcomponents.fiori.Bar
  * @extends UI5Element
  * @tagname ui5-bar
  * @public

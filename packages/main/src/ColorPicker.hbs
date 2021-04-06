@@ -1,0 +1,97 @@
+<section class="ui5-color-picker-root">
+    <div
+        class="ui5-color-picker-main-color"
+        style="{{styles.mainColor}}"
+        @mousedown="{{_handleMouseDown}}"
+        @mouseup="{{_handleMouseUp}}"
+        @mousemove="{{_handleMouseMove}}"
+        @mouseout="{{_handleMouseOut}}"
+    >
+        <div
+            class="ui5-color-picker-circle"
+            style="{{styles.circle}}"    
+        ></div>
+    </div>
+
+    <div class="ui5-color-picker-sliders-wrapper">
+        <ui5-slider
+            disabled="{{inputsDisabled}}"
+            class="ui5-color-picker-hue-slider"
+            min="0"
+            max="1530"
+            value="{{_hue}}"
+            @ui5-input="{{_handleHueInput}}"
+        ></ui5-slider>
+        <ui5-slider
+            disabled="{{inputsDisabled}}"
+            class="ui5-color-picker-alpha-slider"
+            min="0"
+            max="1"
+            step="0.01"
+            value="{{_alpha}}"
+            @ui5-input="{{_handleAlphaInput}}"
+        ></ui5-slider>
+    </div>
+
+    <div class="ui5-color-picker-current-color">
+        <div class="ui5-color-picker-colors-wrapper">
+            <span class="ui5-color-picker-white"></span>
+            <span class="ui5-color-picker-color">
+                <div class="ui5-color-picker-color-inner" style="{{styles.colorSpan}}"></div>
+            </span>
+        </div>
+
+        <div class="ui5-color-picker-hex-input-wrapper">
+            <ui5-label>Hex</ui5-label>
+            <ui5-input
+                class="ui5-color-picker-hex-input"
+                value="{{hex}}"
+                @ui5-change="{{_handleHEXChange}}"
+                value-state="{{hexInputErrorState}}"
+            ></ui5-input>
+        </div>
+    </div>
+
+    <div
+        class="ui5-color-picker-rgb-wrapper"
+        @ui5-change="{{_handleRGBInputsChange}}"
+    >
+        <div class="ui5-color-picker-rgb">
+            <ui5-input
+                id="red"
+                class="ui5-color-picker-rgb-input"
+                disabled="{{inputsDisabled}}"
+                value="{{_color.r}}"
+            ></ui5-input>
+            <ui5-label>R</ui5-label>
+        </div>
+        <div class="ui5-color-picker-rgb">
+            <ui5-input
+                id="green"
+                class="ui5-color-picker-rgb-input"
+                disabled="{{inputsDisabled}}"
+                value="{{_color.g}}"
+            ></ui5-input>
+            <ui5-label>G</ui5-label>
+        </div>
+        <div class="ui5-color-picker-rgb">
+            <ui5-input
+                id="blue"
+                class="ui5-color-picker-rgb-input"
+                disabled="{{inputsDisabled}}"
+                value="{{_color.b}}"
+            ></ui5-input>
+            <ui5-label>B</ui5-label>
+        </div>
+        <div class="ui5-color-picker-rgb">
+            <ui5-input
+                disabled="{{inputsDisabled}}"
+                class="ui5-color-picker-rgb-input"
+                value="{{_alpha}}"
+                @ui5-input="{{_handleAlphaInput}}"
+                @ui5-change="{{_handleAlphaChange}}"
+            ></ui5-input>
+            <ui5-label>A</ui5-label>
+        </div>
+    </div>
+</section>

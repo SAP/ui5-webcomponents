@@ -1,6 +1,5 @@
-
 :host(:not([hidden])) {
-	display: inline-block;
+	display: block;
 }
 
 :host {

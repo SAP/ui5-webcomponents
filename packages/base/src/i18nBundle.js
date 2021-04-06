@@ -1,4 +1,4 @@
-import { registerI18nBundle, fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
+import { registerI18nLoader, fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
 import formatMessage from "./util/formatMessage.js";
 
 const I18nBundleInstances = new Map();
@@ -29,6 +29,9 @@ class I18nBundle {
 		}
 
 		const bundle = getI18nBundleData(this.packageName);
+		if (bundle && !bundle[textObj.key]) {
+			console.warn(`Key ${textObj.key} not found in the i18n bundle, the default text will be used`); // eslint-disable-line
+		}
 		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : (textObj.defaultText || textObj.key);
 
 		return formatMessage(messageText, params);
@@ -46,7 +49,7 @@ const getI18nBundle = packageName => {
 };
 
 export {
-	registerI18nBundle,
+	registerI18nLoader,
 	fetchI18nBundle,
 	getI18nBundle,
 };

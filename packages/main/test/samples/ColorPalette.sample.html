@@ -1,0 +1,111 @@
+<header>
+	<h2 class="control-header">ColorPalette</h2>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-color-palette&gt;</div>
+
+<section>
+	<h3>ColorPalette</h3>
+	<div class="snippet">
+		<ui5-color-palette>
+			<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+			<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+			<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+			<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+			<ui5-color-palette-item value="green"></ui5-color-palette-item>
+			<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+			<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+			<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+			<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+			<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+			<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+			<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+		</ui5-color-palette>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-color-palette>
+	<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+	<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+	<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+	<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+	<ui5-color-palette-item value="green"></ui5-color-palette-item>
+	<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+	<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+	<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+	<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+	<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+	<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+	<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+</ui5-color-palette>
+</xmp></pre>
+</section>
+<section>
+	<h3>ColorPalette in Popover</h3>
+	<div class="snippet">
+		<section style="display:flex; align-items: center;">
+			<ui5-button id="btnOpenPopover" icon="text-color"></ui5-button>
+			<ui5-input id="inpSelectedColor" placeholder="Selected color..."></ui5-input>
+		</section>
+
+		<ui5-popover
+			id="palettePopover"
+			header-text="Pick a color"
+			placement-type="Bottom"
+			horizontal-align="Left"
+			no-arrow>
+				<ui5-color-palette id="colorPaletteInPopover" more-colors>
+					<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+					<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+					<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+					<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+					<ui5-color-palette-item value="green"></ui5-color-palette-item>
+					<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+					<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+					<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+					<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+					<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+					<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+					<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+				</ui5-color-palette>
+		</ui5-popover>
+
+	<script>
+		colorPaletteInPopover.addEventListener("change", function(event) {
+			inpSelectedColor.value = event.detail.color;
+		});
+		btnOpenPopover.addEventListener("click", function(event) {
+			palettePopover.openBy(btnOpenPopover);
+		});
+	</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<section>
+	<ui5-button id="btnOpenPopover" icon="text-color"></ui5-button>
+	<ui5-input id="inpSelectedColor" placeholder="Selected color..."></ui5-input>
+</section>
+
+<ui5-popover id="palettePopover" header-text="Pick a color" placement-type="Bottom">
+		<ui5-color-palette id="colorPaletteInPopover" more-colors>
+			<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+			<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+			<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+			...
+		</ui5-color-palette>
+</ui5-popover>
+
+<script>
+	colorPaletteInPopover.addEventListener("change", event => {
+		inpSelectedColor.value = event.detail.color;
+	});
+
+	btnOpenPopover.addEventListener("click", event => {
+		palettePopover.openBy(btnOpenPopover);
+	});
+</script>
+</xmp></pre>
+</section>
+
+
+<!-- JSDoc marker -->

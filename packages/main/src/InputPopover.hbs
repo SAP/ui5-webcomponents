@@ -7,7 +7,7 @@
 		style="{{styles.suggestionsPopover}}"
 		@ui5-after-open="{{_afterOpenPopover}}"
 		@ui5-after-close="{{_afterClosePopover}}"
-		@scroll="{{_scroll}}"
+		@ui5-scroll="{{_scroll}}"
 	>
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header">
@@ -71,6 +71,7 @@
 			no-arrow
 			class="ui5-valuestatemessage-popover"
 			placement-type="Bottom"
+			horizontal-align="Left"
 		>
 			<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 				{{> valueStateMessage}}

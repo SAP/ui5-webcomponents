@@ -1,24 +1,26 @@
-const generateTimeItemsArray = x => {
+const generateTimeItemsArray = (x, step = 1) => {
 	const array = [];
 	for (let i = 0; i < x; i++) {
-		let tempString = i.toString();
-		if (tempString.length === 1) {
-			tempString = `0${tempString}`;
-		}
+		if (i % step === 0) {
+			let tempString = i.toString();
+			if (tempString.length === 1) {
+				tempString = `0${tempString}`;
+			}
 
-		array.push(tempString);
+			array.push(tempString);
+		}
 	}
 
 	return array;
 };
 
-const getHours = config => {
+const getHours = (config, max) => {
 	let hoursValueArray = [];
 
 	if (config.isTwelveHoursFormat) {
-		hoursValueArray = generateTimeItemsArray(12);
+		hoursValueArray = generateTimeItemsArray(max || 12, 1);
 	} else {
-		hoursValueArray = generateTimeItemsArray(24);
+		hoursValueArray = generateTimeItemsArray(max || 24, 1);
 	}
 
 	if (config.minHour === 1) {
@@ -36,12 +38,12 @@ const getHours = config => {
 	return hoursValueArray;
 };
 
-const getMinutes = () => {
-	return generateTimeItemsArray(60);
+const getMinutes = (max, step) => {
+	return generateTimeItemsArray(max || 60, step);
 };
 
-const getSeconds = () => {
-	return generateTimeItemsArray(60);
+const getSeconds = (max, step) => {
+	return generateTimeItemsArray(max || 60, step);
 };
 
 const getHoursConfigByFormat = type => {

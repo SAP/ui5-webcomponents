@@ -12,11 +12,7 @@ const components = [];
 
  // Add new components here
 const newComponents = [
-	"Bar",
-	"Calendar",
-	"RangeSlider",
-	"Slider",
-	"AvatarGroup",
+	"StepInput",
 ];
 
 packages.forEach(package => {

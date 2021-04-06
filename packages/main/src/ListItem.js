@@ -285,6 +285,13 @@ class ListItem extends ListItemBase {
 		return this._mode === ListMode.Delete;
 	}
 
+	/**
+	 * Used in UploadCollectionItem
+	 */
+	get disableDeleteButton() {
+		return false;
+	}
+
 	get typeDetail() {
 		return this.type === ListItemType.Detail;
 	}
@@ -311,6 +318,7 @@ class ListItem extends ListItemBase {
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: this.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
+			listItemAriaLabel: undefined,
 		};
 	}
 

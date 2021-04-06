@@ -1,19 +1,18 @@
-:host {
-	display: inline-block;
-}
-
-.ui5-yearpicker--hidden,
-.ui5-monthpicker--hidden,
-.ui5-daypicker--hidden {
-	display: none;
+:host(:not([hidden])) {
+    display: inline-block;
 }
 
 .ui5-cal-root {
-	background: var(--sapList_Background);
+    background: var(--sapList_Background);
+    box-sizing: border-box;
+    height: var(--_ui5_calendar_height);
+    width: var(--_ui5_calendar_width);
+    padding: var(--_ui5_calendar_padding);
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
 }
 
-.ui5-cal-root [ui5-daypicker],
-.ui5-cal-root [ui5-month-picker],
-.ui5-cal-root [ui5-yearpicker] {
-	vertical-align: top;
+.ui5-cal-root [ui5-calendar-header] {
+    height: var(--_ui5_calendar_header_height);
 }

@@ -35,7 +35,7 @@
 }
 
 :host([readonly]) .ui5-token--wrapper {
-	padding-right: 0.375rem;
+	padding-right: 0.3125rem;
 }
 
 :host([selected]) .ui5-token--wrapper:focus {
@@ -48,9 +48,8 @@
 	height: 100%;
 	width: 100%;
 	cursor: default;
+	padding: 0.25rem 0;
 	padding-left: 0.3125rem;
-	padding-top: 0.25rem;
-	padding-bottom: 0.25rem;
 	box-sizing: border-box;
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
@@ -70,13 +69,13 @@
 	display: flex;
 }
 
-:host([selected]) .ui5-token--icon > ui5-icon,
-:host([selected]) ::slotted(ui5-icon) {
+:host([selected]) .ui5-token--icon > [ui5-icon],
+:host([selected]) ::slotted([ui5-icon]) {
 	color: var(--sapButton_Selected_TextColor);
 }
 
-.ui5-token--icon > ui5-icon,
-::slotted(ui5-icon) {
+.ui5-token--icon > [ui5-icon],
+::slotted([ui5-icon]) {
 	color: inherit;
 	cursor: pointer;
 	width: var(--_ui5_token_icon_size);
@@ -86,12 +85,7 @@
 }
 
 /* RTL */
-:host .ui5-token--wrapper[dir="rtl"] {
+:host(:not([readonly])) .ui5-token--wrapper[dir="rtl"] {
 	padding-right: var(--_ui5_token_wrapper_right_padding);
 	padding-left: var(--_ui5_token_wrapper_left_padding);
-}
-
-:host([readonly]) .ui5-token--wrapper[dir="rtl"] {
-	padding-right: 0;
-	padding-left: 0.375rem;
 }

@@ -1,5 +1,6 @@
 
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 const getOverflowPopover = id => {
 	const staticAreaItemClassName = browser.getStaticAreaItemClassName(`#${id}`);
@@ -23,7 +24,25 @@ const getCustomActionProp = (id, pos, prop) => {
 }
 
 describe("Component Behavior", () => {
-	browser.url("http://localhost:8081/test-resources/pages/ShellBar.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ShellBar.html`);
+	});
+
+
+	describe("ui5-shellbar menu", () => {
+		it("tests close on content click", () => {
+			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
+			const menuPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
+			const firstMenuItem = menuPopover.$("ui5-list > ui5-li");
+
+			primaryTitle.click();
+			firstMenuItem.click();
+
+			assert.strictEqual(menuPopover.getProperty("opened"), false, "Count property propagates to ui5-button");
+		});
+	});
+
 
 	describe("ui5-shellbar-item", () => {
 		it("tests count property", () => {
@@ -297,6 +316,7 @@ describe("Component Behavior", () => {
 				assert.strictEqual(input.getValue(), "Application 1", "Input value is set by click event of the first menu item");
 				assert.strictEqual(inputData.getValue(), "key1", "The user defined attributes are available.");
 
+				primaryTitle.click();
 				secondMenuItem.click();
 
 				assert.strictEqual(input.getValue(), "Application 2", "Input value is set by click event of the second menu item");

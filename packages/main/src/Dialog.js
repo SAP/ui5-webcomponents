@@ -1,4 +1,5 @@
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popup from "./Popup.js";
 import "@ui5/webcomponents-icons/dist/resize-corner.js";
@@ -7,6 +8,7 @@ import Icon from "./Icon.js";
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 // Styles
+import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 
@@ -15,7 +17,7 @@ import dialogCSS from "./generated/themes/Dialog.css.js";
  */
 const metadata = {
 	tag: "ui5-dialog",
-	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+	slots: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header HTML Element.
 		 *
@@ -132,7 +134,6 @@ const metadata = {
  * The <code>ui5-dialog</code> is usually displayed at the center of the screen.
  * Its position can be changed by the user. To enable this, you need to set the property <code>draggable</code> accordingly.
 
-
  *
  * <h3>Responsive Behavior</h3>
  * The <code>stretch</code> property can be used to stretch the
@@ -180,7 +181,19 @@ class Dialog extends Popup {
 	}
 
 	static get styles() {
-		return [PopupsCommonCss, dialogCSS];
+		return [browserScrollbarCSS, PopupsCommonCss, dialogCSS];
+	}
+
+	/**
+	 * Opens the dialog
+	 *
+	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
+	 * @async
+	 * @returns {Promise} Resolves when the dialog is open
+	 * @public
+	 */
+	async open(preventInitialFocus) {
+		await super.open(preventInitialFocus);
 	}
 
 	get isModal() { // Required by Popup.js
@@ -192,7 +205,7 @@ class Dialog extends Popup {
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
-		return this.ariaLabel ? undefined : "ui5-popup-header";
+		return (this.ariaLabel || this.header.length) ? undefined : "ui5-popup-header-text";
 	}
 
 	get _ariaModal() { // Required by Popup.js
@@ -203,24 +216,13 @@ class Dialog extends Popup {
 		return "flex";
 	}
 
-	get classes() {
-		return {
-			root: {
-				"ui5-popup-root": true,
-			},
-			content: {
-				"ui5-popup-content": true,
-			},
-		};
+	get _displayHeader() {
+		return this.header.length || this.headerText;
 	}
 
 	show() {
 		super.show();
 		this._center();
-	}
-
-	_clamp(val, min, max) {
-		return Math.min(Math.max(val, min), max);
 	}
 
 	onBeforeRendering() {
@@ -230,11 +232,15 @@ class Dialog extends Popup {
 	}
 
 	onEnterDOM() {
+		super.onEnterDOM();
+
 		ResizeHandler.register(this, this._screenResizeHandler);
 		ResizeHandler.register(document.body, this._screenResizeHandler);
 	}
 
 	onExitDOM() {
+		super.onExitDOM();
+
 		ResizeHandler.deregister(this, this._screenResizeHandler);
 		ResizeHandler.deregister(document.body, this._screenResizeHandler);
 	}
@@ -378,29 +384,29 @@ class Dialog extends Popup {
 		let newLeft;
 
 		if (this._isRTL) {
-			newWidth = this._clamp(
+			newWidth = clamp(
 				this._initialWidth - (clientX - this._initialX),
 				this._minWidth,
-				this._initialLeft + this._initialWidth
+				this._initialLeft + this._initialWidth,
 			);
 
-			newLeft = this._clamp(
+			newLeft = clamp(
 				this._initialLeft + (clientX - this._initialX),
 				0,
-				this._initialX + this._initialWidth - this._minWidth
+				this._initialX + this._initialWidth - this._minWidth,
 			);
 		} else {
-			newWidth = this._clamp(
+			newWidth = clamp(
 				this._initialWidth + (clientX - this._initialX),
 				this._minWidth,
-				window.innerWidth - this._initialLeft
+				window.innerWidth - this._initialLeft,
 			);
 		}
 
-		const newHeight = this._clamp(
+		const newHeight = clamp(
 			this._initialHeight + (clientY - this._initialY),
 			this._minHeight,
-			window.innerHeight - this._initialTop
+			window.innerHeight - this._initialTop,
 		);
 
 		Object.assign(this.style, {

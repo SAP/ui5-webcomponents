@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -27,8 +28,8 @@ const metadata = {
 		/**
 		 * Defines the items of the <code>ui5-product-switch</code>.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.fiori.IProductSwitchItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
@@ -64,6 +65,7 @@ class ProductSwitch extends UI5Element {
 
 		this._itemNavigation = new ItemNavigation(this, {
 			rowSize: 4,
+			behavior: ItemNavigationBehavior.Cyclic,
 			getItemsCallback: () => this.items,
 		});
 	}
@@ -109,18 +111,18 @@ class ProductSwitch extends UI5Element {
 		const documentWidth = document.body.clientWidth;
 
 		if (documentWidth <= this.constructor.ROW_MIN_WIDTH.ONE_COLUMN) {
-			this._itemNavigation.rowSize = 1;
+			this._itemNavigation.setRowSize(1);
 		} else if (documentWidth <= this.constructor.ROW_MIN_WIDTH.THREE_COLUMN || this.items.length <= 6) {
-			this._itemNavigation.rowSize = 3;
+			this._itemNavigation.setRowSize(3);
 		} else {
-			this._itemNavigation.rowSize = 4;
+			this._itemNavigation.setRowSize(4);
 		}
 	}
 
 	_onfocusin(event) {
 		const target = event.target;
 
-		this._itemNavigation.update(target);
+		this._itemNavigation.setCurrentItem(target);
 	}
 }
 

@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Custom themes can be registered", () => {
-	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	});
 
 	it("Tests that theme parameters are changed on theme change", () => {
 		const newTheme = 'my_custom_theme';
@@ -9,7 +11,7 @@ describe("Custom themes can be registered", () => {
 		const res = browser.executeAsync( async (newTheme, done) => {
 			const var1 = "--var1: #555555";
 
-			window.registerThemeProperties("@ui5/webcomponents-base-test", newTheme, `:root{ ${var1}; }`);
+			window.registerThemePropertiesLoader("@ui5/webcomponents-base-test", newTheme, () => `:root{ ${var1}; }`);
 
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			await config.setTheme(newTheme);

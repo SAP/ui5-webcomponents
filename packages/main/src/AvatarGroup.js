@@ -59,7 +59,7 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Group</code></li>
 		 * <li><code>Individual</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarGroupType}
 		 * @defaultValue "Group"
 		 * @public
@@ -79,7 +79,7 @@ const metadata = {
 		 * <li><code>M</code></li>
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarSize}
 		 * @defaultValue "S"
 		 * @public
@@ -100,14 +100,32 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
 		/**
-		 * Defines the items of the <code>ui5-avatar-group</code>.
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * Defines the items of the <code>ui5-avatar-group</code>. Use the <code>ui5-avatar</code> component as an item.
+		 * <br><br>
+		 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
+		 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
+		 * as the built-in overflow action has "Circle" shape.
+		 * @type {sap.ui.webcomponents.main.IAvatar[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
 			type: HTMLElement,
 			propertyName: "items",
+		},
+		/**
+		 * Defines the overflow button of <code>ui5-avatar-group</code>.
+		 * <b>Note:</b> We recommend using the <code>ui5-button</code> component.
+		 * <br><br>
+		 * <b>Note:</b> If this slot is not used, the <code>ui5-avatar-group</code> will
+		 * display the built-in overflow button.
+		 * @type {HTMLElement}
+		 * @slot overflowButton
+		 * @public
+		 * @since 1.0.0-rc.13
+		 */
+		 overflowButton: {
+			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
@@ -120,12 +138,20 @@ const metadata = {
 		* @public
 		* @since 1.0.0-rc.11
 		*/
-	   click: {
+		click: {
 			detail: {
 				targetRef: { type: HTMLElement },
 				overflowButtonClicked: { type: Boolean },
 			},
 		},
+		/**
+		* Fired when the count of visible <code>ui5-avatar</code> elements in the
+		* <code>ui5-avatar-group</code> has changed
+		* @event
+		* @public
+		* @since 1.0.0-rc.13
+		*/
+		overflow: {},
 	},
 };
 
@@ -216,7 +242,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	/**
-	 * Returns an array containing the ui5-avatar instances that are currently not displayed due to lack of space.
+	 * Returns an array containing the <code>ui5-avatar</code> instances that are currently not displayed due to lack of space.
 	 * @readonly
 	 * @type { Array }
 	 * @defaultValue []
@@ -227,7 +253,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	/**
-	 * Returns an array containing the <code>AvatarBackgroundColor</code> values that correspond to the avatars in the <code>items</code> array.
+	 * Returns an array containing the <code>AvatarBackgroundColor</code> values that correspond to the avatars in the <code>ui5-avatar-group</code>.
 	 * @readonly
 	 * @type { Array }
 	 * @defaultValue []
@@ -235,6 +261,10 @@ class AvatarGroup extends UI5Element {
 	 */
 	get colorScheme() {
 		return this.items.map(avatar => avatar._effectiveBackgroundColor);
+	}
+
+	get _customOverflowButton() {
+		return this.overflowButton.length ? this.overflowButton[0] : undefined;
 	}
 
 	get _hiddenStartIndex() {
@@ -257,10 +287,6 @@ class AvatarGroup extends UI5Element {
 		return this._isGroup ? "0" : "-1";
 	}
 
-	get _overflowButtonTabIndex() {
-		return this._isGroup ? "-1" : false;
-	}
-
 	get _overflowButton() {
 		return this.shadowRoot.querySelector(AVATAR_GROUP_OVERFLOW_BTN_SELECTOR);
 	}
@@ -274,19 +300,20 @@ class AvatarGroup extends UI5Element {
 	 * @private
 	 */
 	get _overflowButtonEffectiveWidth() {
+		const button = this._customOverflowButton ? this._customOverflowButton : this._overflowButton;
 		// if in "Group" mode overflow button size is equal to the offset from second item
 		if (this._isGroup) {
 			let item = this.items[1];
 
 			// in some cases when second avatar is overflowed the offset of the button is the right one
 			if (!item || item.hidden) {
-				item = this._overflowButton;
+				item = button;
 			}
 
 			return this.effectiveDir === "rtl" ? this._getWidthToItem(item) : item.offsetLeft;
 		}
 
-		return this._overflowButton.offsetWidth;
+		return button.offsetWidth;
 	}
 
 	onAfterRendering() {
@@ -294,6 +321,10 @@ class AvatarGroup extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		if (this._customOverflowButton) {
+			this._customOverflowButton.nonInteractive = this._isGroup;
+		}
+
 		this._prepareAvatars();
 	}
 
@@ -328,7 +359,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_fireGroupEvent(targetRef) {
-		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS);
+		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this._customOverflowButton;
 
 		this.fireEvent("click", {
 			targetRef,
@@ -336,15 +367,24 @@ class AvatarGroup extends UI5Element {
 		});
 	}
 
-	_onGroupClick(event) {
+	_onClick(event) {
+		// no matter the value of noConflict, the ui5-button and the group container (div) always fire a native click event
+		const isButton = event.target.hasAttribute("ui5-button");
 		event.stopPropagation();
-		if (event.isMarked === "avatar" || event.isMarked === "button" || this._isGroup) {
+
+		if (this._isGroup || isButton) {
 			this._fireGroupEvent(event.target);
 		}
 	}
 
 	_onUI5Click(event) {
+		// when noConflict=true only ui5-avatar will fire ui5-click event
+		const isAvatar = event.target.hasAttribute("ui5-avatar");
 		event.stopPropagation();
+
+		if (isAvatar) {
+			this._fireGroupEvent(event.target);
+		}
 	}
 
 	/**
@@ -371,7 +411,7 @@ class AvatarGroup extends UI5Element {
 			}
 
 			// last avatar should not be offset as it breaks the container width and focus styles are no set correctly
-			if (index !== this._itemsCount - 1) {
+			if (index !== this._itemsCount - 1 || this._customOverflowButton) {
 				// based on RTL margin left or right is set to avatars
 				avatar.style[`margin-${RTL ? "left" : "right"}`] = offsets[avatar._effectiveSize][this.type];
 			}
@@ -380,7 +420,7 @@ class AvatarGroup extends UI5Element {
 
 	_onfocusin(event) {
 		const target = event.target;
-		this._itemNavigation.update(target);
+		this._itemNavigation.setCurrentItem(target);
 	}
 
 	/**
@@ -424,7 +464,7 @@ class AvatarGroup extends UI5Element {
 			// used to determine whether the following items will fit the container or not
 			let totalWidth = this._getWidthToItem(item) + item.offsetWidth;
 
-			if (index !== this._itemsCount - 1) {
+			if (index !== this._itemsCount - 1 || this._customOverflowButton) {
 				totalWidth += this._overflowButtonEffectiveWidth;
 			}
 
@@ -447,6 +487,8 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_setHiddenItems(hiddenItems) {
+		const shouldFireEvent = this._hiddenItems !== hiddenItems;
+
 		this._hiddenItems = hiddenItems;
 
 		this.items.forEach((item, index) => {
@@ -454,6 +496,10 @@ class AvatarGroup extends UI5Element {
 		});
 
 		this._overflowButtonText = `+${hiddenItems > 99 ? 99 : hiddenItems}`;
+
+		if (shouldFireEvent) {
+			this.fireEvent("overflow");
+		}
 	}
 }
 

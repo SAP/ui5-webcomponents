@@ -1,11 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isTabNext, isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
+import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import ListMode from "./types/ListMode.js";
+import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
 
@@ -15,7 +21,9 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 // Styles
 import listCss from "./generated/themes/List.css.js";
 
-const BUSYINDICATOR_HEIGHT = 48; // px
+// Texts
+import { LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
+
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 /**
@@ -45,8 +53,8 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.IListItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
@@ -138,22 +146,34 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the component would fire the <code>load-more</code> event
-		 * when the user scrolls to the bottom of the list, and helps achieving an "infinite scroll" effect
-		 * by adding new items each time.
+		 * Defines whether the <code>ui5-list</code> will have growing capability either by pressing a <code>More</code> button,
+		 * or via user scroll. In both cases <code>load-more</code> event is fired.
+		 * <br><br>
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
+		 * Available options:
+		 * <br><br>
+		 * <code>Button</code> - Shows a <code>More</code> button at the bottom of the list,
+		 * pressing of which triggers the <code>load-more</code> event.
+		 * <br>
+		 * <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the list;
+		 * <br>
+		 * <code>None</code> (default) - The growing is off.
+		 * <br><br>
+		 *
+		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
+		 * on IE the component will fallback to <code>growing="Button"</code>.
+		 * @type {ListGrowingMode}
+		 * @defaultvalue "None"
+		 * @since 1.0.0-rc.13
 		 * @public
-		 * @since 1.0.0-rc.6
 		 */
-		infiniteScroll: {
-			type: Boolean,
+		 growing: {
+			type: ListGrowingMode,
+			defaultValue: ListGrowingMode.None,
 		},
 
 		/**
-		 * Defines if the component would display a loading indicator at the bottom of the list.
-		 * It's especially useful, when combined with <code>infiniteScroll</code>.
+		 * Defines if the component would display a loading indicator over the list.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -195,9 +215,25 @@ const metadata = {
 		 * @defaultvalue "listbox"
 		 * @since 1.0.0-rc.9
 		 */
-		role: {
+		accRole: {
 			type: String,
 			defaultValue: "listbox",
+		},
+
+		/**
+		 * Defines if the entire list is in view port.
+		 * @private
+		 */
+		 _inViewport: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the active state of the <code>More</code> button.
+		 * @private
+		 */
+		 _loadMoreActive: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
@@ -285,7 +321,7 @@ const metadata = {
 		/**
 		 * Fired when the user scrolls to the bottom of the list.
 		 * <br><br>
-		 * <b>Note:</b> The event is fired when the <code>infiniteScroll</code> property is enabled.
+		 * <b>Note:</b> The event is fired when the <code>growing='Scroll'</code> property is enabled.
 		 *
 		 * @event sap.ui.webcomponents.main.List#load-more
 		 * @public
@@ -351,6 +387,14 @@ class List extends UI5Element {
 		return listCss;
 	}
 
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
+	}
+
+	static get dependencies() {
+		return [BusyIndicator];
+	}
+
 	constructor() {
 		super();
 		this.initItemNavigation();
@@ -363,6 +407,12 @@ class List extends UI5Element {
 
 		this._previouslySelectedItem = null;
 
+		// Indicates that the List has already subscribed for resize.
+		this.resizeListenerAttached = false;
+
+		// Indicates if the IntersectionObserver started observing the List
+		this.listEndObserved = false;
+
 		this.addEventListener("ui5-_press", this.onItemPress.bind(this));
 		this.addEventListener("ui5-close", this.onItemClose.bind(this));
 		this.addEventListener("ui5-toggle", this.onItemToggle.bind(this));
@@ -371,6 +421,39 @@ class List extends UI5Element {
 		this.addEventListener("ui5-_forward-before", this.onForwardBefore.bind(this));
 		this.addEventListener("ui5-_selection-requested", this.onSelectionRequested.bind(this));
 		this.addEventListener("ui5-_focus-requested", this.focusUploadCollectionItem.bind(this));
+
+		this._handleResize = this.checkListInViewport.bind(this);
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	onExitDOM() {
+		this.unobserveListEnd();
+		this.resizeListenerAttached = false;
+		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
+	}
+
+	onBeforeRendering() {
+		this.prepareListItems();
+	}
+
+	onAfterRendering() {
+		if (this.growsOnScroll) {
+			this.observeListEnd();
+		} else if (this.listEndObserved) {
+			this.unobserveListEnd();
+		}
+
+		if (this.grows) {
+			this.checkListInViewport();
+			this.attachForResize();
+		}
+	}
+
+	attachForResize() {
+		if (!this.resizeListenerAttached) {
+			this.resizeListenerAttached = true;
+			ResizeHandler.register(this.getDomRef(), this._handleResize);
+		}
 	}
 
 	get shouldRenderH1() {
@@ -381,16 +464,16 @@ class List extends UI5Element {
 		return `${this._id}-header`;
 	}
 
+	get listEndDOM() {
+		return this.shadowRoot.querySelector(".ui5-list-end-marker");
+	}
+
 	get hasData() {
 		return this.getSlottedNodes("items").length !== 0;
 	}
 
 	get showNoDataText() {
 		return !this.hasData && this.noDataText;
-	}
-
-	get showBusy() {
-		return this.busy || this.infiniteScroll;
 	}
 
 	get isMultiSelect() {
@@ -409,14 +492,47 @@ class List extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	onBeforeRendering() {
-		this.prepareListItems();
+	get grows() {
+		return this.growing !== ListGrowingMode.None;
+	}
+
+	get growsOnScroll() {
+		return this.growing === ListGrowingMode.Scroll && !isIE();
+	}
+
+	get growsWithButton() {
+		if (isIE()) {
+			// On IE fallback to "More" button, even if growing of type "Scroll" is set.
+			return this.grows;
+		}
+
+		return this.growing === ListGrowingMode.Button;
+	}
+
+	get _moreText() {
+		return this.i18nBundle.getText(LOAD_MORE_TEXT);
+	}
+
+	get busyIndPosition() {
+		if (isIE() || !this.grows) {
+			return "absolute";
+		}
+
+		return this._inViewport ? "absolute" : "sticky";
+	}
+
+	get styles() {
+		return {
+			busyInd: {
+				position: this.busyIndPosition,
+			},
+		};
 	}
 
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, {
 			navigationMode: NavigationMode.Vertical,
-			getItemsCallback: () => this.getSlottedNodes("items"),
+			getItemsCallback: () => this.getEnabledItems(),
 		});
 	}
 
@@ -433,6 +549,27 @@ class List extends UI5Element {
 		});
 
 		this._previouslySelectedItem = null;
+	}
+
+	observeListEnd() {
+		if (!this.listEndObserved) {
+			this.getIntersectionObserver().observe(this.listEndDOM);
+			this.listEndObserved = true;
+		}
+	}
+
+	unobserveListEnd() {
+		if (this.growingIntersectionObserver) {
+			this.growingIntersectionObserver.disconnect();
+			this.growingIntersectionObserver = null;
+			this.listEndObserved = false;
+		}
+	}
+
+	onInteresection(entries) {
+		if (entries.some(entry => entry.isIntersecting)) {
+			debounce(this.loadMore.bind(this), INFINITE_SCROLL_DEBOUNCE_RATE);
+		}
 	}
 
 	/*
@@ -497,24 +634,53 @@ class List extends UI5Element {
 		return this.getSlottedNodes("items").filter(item => item.selected);
 	}
 
-	getFirstSelectedItem() {
-		const slottedItems = this.getSlottedNodes("items");
-		let firstSelectedItem = null;
-
-		for (let i = 0; i < slottedItems.length; i++) {
-			if (slottedItems[i].selected) {
-				firstSelectedItem = slottedItems[i];
-				break;
-			}
-		}
-
-		return firstSelectedItem;
+	getEnabledItems() {
+		return this.getSlottedNodes("items").filter(item => !item.disabled);
 	}
 
 	_onkeydown(event) {
 		if (isTabNext(event)) {
 			this._handleTabNext(event);
 		}
+	}
+
+	_onLoadMoreKeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+			this._loadMoreActive = true;
+		}
+
+		if (isEnter(event)) {
+			this._onLoadMoreClick();
+			this._loadMoreActive = true;
+		}
+	}
+
+	_onLoadMoreKeyup(event) {
+		if (isSpace(event)) {
+			this._onLoadMoreClick();
+		}
+		this._loadMoreActive = false;
+	}
+
+	_onLoadMoreMousedown() {
+		this._loadMoreActive = true;
+	}
+
+	_onLoadMoreMouseup() {
+		this._loadMoreActive = false;
+	}
+
+	_onLoadMoreClick() {
+		this.loadMore();
+	}
+
+	checkListInViewport() {
+		this._inViewport = isElementInView(this.getDomRef());
+	}
+
+	loadMore() {
+		this.fireEvent("load-more");
 	}
 
 	/*
@@ -536,7 +702,7 @@ class List extends UI5Element {
 		}
 
 		if (lastTabbableEl === target) {
-			if (this.getFirstSelectedItem()) {
+			if (this.getFirstItem(x => x.selected && !x.disabled)) {
 				this.focusFirstSelectedItem();
 			} else if (this.getPreviouslyFocusedItem()) {
 				this.focusPreviouslyFocusedItem();
@@ -549,13 +715,6 @@ class List extends UI5Element {
 		}
 	}
 
-	_onScroll(event) {
-		if (!this.infiniteScroll) {
-			return;
-		}
-		this.debounce(this.loadMore.bind(this, event.target), INFINITE_SCROLL_DEBOUNCE_RATE);
-	}
-
 	_onfocusin(event) {
 		// If the focusin event does not origin from one of the 'triggers' - ignore it.
 		if (!this.isForwardElement(this.getNormalizedTarget(event.target))) {
@@ -566,7 +725,7 @@ class List extends UI5Element {
 		// The focus arrives in the List for the first time.
 		// If there is selected item - focus it or focus the first item.
 		if (!this.getPreviouslyFocusedItem()) {
-			if (this.getFirstSelectedItem()) {
+			if (this.getFirstItem(x => x.selected && !x.disabled)) {
 				this.focusFirstSelectedItem();
 			} else {
 				this.focusFirstItem();
@@ -579,7 +738,7 @@ class List extends UI5Element {
 		// The focus returns to the List,
 		// focus the first selected item or the previously focused element.
 		if (!this.getForwardingFocus()) {
-			if (this.getFirstSelectedItem()) {
+			if (this.getFirstItem(x => x.selected && !x.disabled)) {
 				this.focusFirstSelectedItem();
 			} else {
 				this.focusPreviouslyFocusedItem();
@@ -591,18 +750,20 @@ class List extends UI5Element {
 
 	isForwardElement(node) {
 		const nodeId = node.id;
+		const afterElement = this.getAfterElement();
+		const beforeElement = this.getBeforeElement();
 
-		if (this._id === nodeId || this.getBeforeElement().id === nodeId) {
+		if (this._id === nodeId || (beforeElement && beforeElement.id === nodeId)) {
 			return true;
 		}
 
-		return this.getAfterElement().id === nodeId;
+		return afterElement && afterElement.id === nodeId;
 	}
 
 	onItemFocused(event) {
 		const target = event.target;
 
-		this._itemNavigation.update(target);
+		this._itemNavigation.setCurrentItem(target);
 		this.fireEvent("item-focused", { item: target });
 
 		if (this.mode === ListMode.SingleSelectAuto) {
@@ -654,7 +815,10 @@ class List extends UI5Element {
 
 	onForwardAfter(event) {
 		this.setPreviouslyFocusedItem(event.target);
-		this.focusAfterElement();
+
+		if (!this.growsWithButton) {
+			this.focusAfterElement();
+		}
 	}
 
 	focusBeforeElement() {
@@ -668,7 +832,8 @@ class List extends UI5Element {
 	}
 
 	focusFirstItem() {
-		const firstItem = this.getFirstItem();
+		// only enabled items are focusable
+		const firstItem = this.getFirstItem(x => !x.disabled);
 
 		if (firstItem) {
 			firstItem.focus();
@@ -684,17 +849,23 @@ class List extends UI5Element {
 	}
 
 	focusFirstSelectedItem() {
-		const firstSelectedItem = this.getFirstSelectedItem();
+		// only enabled items are focusable
+		const firstSelectedItem = this.getFirstItem(x => x.selected && !x.disabled);
 
 		if (firstSelectedItem) {
 			firstSelectedItem.focus();
 		}
 	}
 
+	/**
+	 * Focuses a list item and sets its tabindex to "0" via the ItemNavigation
+	 * @protected
+	 * @param item
+	 */
 	focusItem(item) {
+		this._itemNavigation.setCurrentItem(item);
 		item.focus();
 	}
-
 
 	focusUploadCollectionItem(event) {
 		setTimeout(() => {
@@ -719,9 +890,22 @@ class List extends UI5Element {
 		return this._previouslyFocusedItem;
 	}
 
-	getFirstItem() {
+	getFirstItem(filter) {
 		const slottedItems = this.getSlottedNodes("items");
-		return !!slottedItems.length && slottedItems[0];
+		let firstItem = null;
+
+		if (!filter) {
+			return !!slottedItems.length && slottedItems[0];
+		}
+
+		for (let i = 0; i < slottedItems.length; i++) {
+			if (filter(slottedItems[i])) {
+				firstItem = slottedItems[i];
+				break;
+			}
+		}
+
+		return firstItem;
 	}
 
 	getAfterElement() {
@@ -752,32 +936,16 @@ class List extends UI5Element {
 		return focused;
 	}
 
-	loadMore(el) {
-		const scrollTop = el.scrollTop;
-		const height = el.offsetHeight;
-		const scrollHeight = el.scrollHeight;
-
-		if (this.previousScrollPosition > scrollTop) { // skip scrolling upwards
-			this.previousScrollPosition = scrollTop;
-			return;
+	getIntersectionObserver() {
+		if (!this.growingIntersectionObserver) {
+			this.growingIntersectionObserver = new IntersectionObserver(this.onInteresection.bind(this), {
+				root: null,
+				rootMargin: "0px",
+				threshold: 1.0,
+			});
 		}
-		this.previousScrollPosition = scrollTop;
 
-		if (scrollHeight - BUSYINDICATOR_HEIGHT <= height + scrollTop) {
-			this.fireEvent("load-more");
-		}
-	}
-
-	debounce(fn, delay) {
-		clearTimeout(this.debounceInterval);
-		this.debounceInterval = setTimeout(() => {
-			this.debounceInterval = null;
-			fn();
-		}, delay);
-	}
-
-	static get dependencies() {
-		return [BusyIndicator];
+		return this.growingIntersectionObserver;
 	}
 }
 

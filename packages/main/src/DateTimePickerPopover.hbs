@@ -17,61 +17,34 @@
 		<ui5-calendar
 			class="ui5-dt-cal {{classes.dateTimeView}}"
 			id="{{_id}}-calendar"
-			primary-calendar-type="{{_calendar.primaryCalendarType}}"
-			format-pattern="{{_calendar.formatPattern}}"
-			timestamp="{{_calTimestamp}}"
-			.selectedDates="{{_calDates}}"
-			.minDate="{{_calendar.minDate}}"
-			.maxDate="{{_calendar.maxDate}}"
-			@ui5-selected-dates-change="{{_calendar.onSelectedDatesChange}}"
+			primary-calendar-type="{{_primaryCalendarType}}"
+			format-pattern="{{_formatPattern}}"
+			timestamp="{{_calendarTimestamp}}"
+			.selectionMode="{{_calendarSelectionMode}}"
+			.minDate="{{minDate}}"
+			.maxDate="{{maxDate}}"
+			@ui5-selected-dates-change="{{onSelectedDatesChange}}"
+			?hide-week-numbers="{{hideWeekNumbers}}"
+			._currentPicker="{{_calendarCurrentPicker}}"
 		>
+			{{#each _calendarSelectedDates}}
+				<ui5-date value="{{this}}"></ui5-date>
+			{{/each}}
 		</ui5-calendar>
 
 		{{#unless phone}}
 			<span class="ui5-dt-picker-separator"></span>
 		{{/unless}}
 
-		<div class="ui5-dt-time {{classes.dateTimeView}}" @keydown="{{_ontimekeydown}}">
-			{{#if shouldBuildHoursSlider}}
-			<ui5-wheelslider
-				label = "{{hoursLabel}}"
-				._items="{{hoursArray}}"
-				class="ui5-dt-wheel ui5-dt-hours-wheel"
-				cyclic
-				?_expanded="{{_hoursExpanded}}"
-			></ui5-wheelslider>
-			{{/if}}
-
-			{{#if shouldBuildMinutesSlider}}
-			<ui5-wheelslider
-				label = "{{minutesLabel}}"
-				._items="{{minutesArray}}"
-				class="ui5-dt-wheel ui5-dt-minutes-wheel"
-				@expand="{{_sliderClick}}"
-				cyclic
-			></ui5-wheelslider>
-			{{/if}}
-
-			{{#if shouldBuildSecondsSlider}}
-			<ui5-wheelslider
-				label = "{{secondsLabel}}"
-				._items="{{secondsArray}}"
-				class="ui5-dt-wheel ui5-dt-seconds-wheel"
-				@expand="{{_sliderClick}}"
-				cyclic
-			></ui5-wheelslider>
-			{{/if}}
-
-			{{#if shouldBuildPeriodsSlider}}
-			<ui5-wheelslider
-				label = "{{periodLabel}}"
-				value="AM"
-				._items="{{periodsArray}}"
-				class="ui5-dt-wheel ui5-dt-periods-wheel"
-				@expand="{{_sliderClick}}"
-			></ui5-wheelslider>
-			{{/if}}
-		</div>
+		<ui5-time-selection
+				id="{{_id}}-time-sel"
+				class="ui5-dt-time {{classes.dateTimeView}}"
+				value="{{_timeSelectionValue}}"
+				format-pattern="{{_formatPattern}}"
+				._currentSlider="{{_currentTimeSlider}}"
+				@ui5-change="{{onTimeSelectionChange}}"
+				@ui5-slider-change="{{onTimeSliderChange}}"
+		></ui5-time-selection>
 	</div>
 {{/inline}}
 
@@ -81,6 +54,7 @@
 			id="ok"
 			class="ui5-dt-picker-action"
 			design="Emphasized"
+			?disabled="{{_submitDisabled}}"
 			@click="{{_submitClick}}"
 		>
 			{{btnOKLabel}}

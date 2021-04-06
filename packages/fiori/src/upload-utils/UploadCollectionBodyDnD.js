@@ -1,4 +1,3 @@
-
 /**
  * Handles drag and drop event listeners on document.body.
  * Ensures that there is only 1 listener per type attached (drag, drop, leave). Event listeners will only be attached when

@@ -3,17 +3,29 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
+import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
+import TableGrowingMode from "./types/TableGrowingMode.js";
+import BusyIndicator from "./BusyIndicator.js";
+import TableMode from "./types/TableMode.js";
 
 // Texts
-import { TABLE_LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
+import {
+	LOAD_MORE_TEXT,
+	ARIA_LABEL_SELECT_ALL_CHECKBOX,
+	TABLE_HEADER_ROW_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/Table.css.js";
+
+const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 /**
  * @public
@@ -28,8 +40,8 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.ITableRow[]}
+		 * @slot rows
 		 * @public
 		 */
 		"default": {
@@ -43,7 +55,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.ITableColumn[]}
 		 * @slot
 		 * @public
 		 */
@@ -70,35 +82,35 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text that will be displayed inside the additional row at the bottom of the table,
+		 * Defines the text that will be displayed inside the <code>More</code> button at the bottom of the table,
 		 * meant for loading more rows upon press.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> If not specified a built-in text will be displayed.
 		 * <br>
-		 * <b>Note:</b> This property takes effect if <code>hasMore</code> is set.
+		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.11
 		 * @public
 		 */
-		loadMoreText: {
+		moreText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the subtext that will be displayed under the <code>loadMoreText</code>.
+		 * Defines the subtext that will be displayed under the <code>moreText</code>.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> This property takes effect if <code>hasMore</code> is set.
+		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.11
 		 * @public
 		 */
-		loadMoreSubtext: {
+		moreSubtext: {
 			type: String,
 		},
 
@@ -114,15 +126,43 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if additonal row will be displayed at the bottom of the table.
-		 * Pressing on the row will fire the <code>load-more</code> event.
+		 * Defines whether the table will have growing capability either by pressing a <code>More</code> button,
+		 * or via user scroll. In both cases <code>load-more</code> event is fired.
+		 * <br><br>
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @since 1.0.0-rc.11
+		 * Available options:
+		 * <br><br>
+		 * <code>Button</code> - Shows a <code>More</code> button at the bottom of the table, pressing of which triggers the <code>load-more</code> event.
+		 * <br>
+		 * <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the table;
+		 * <br>
+		 * <code>None</code> (default) - The growing is off.
+		 * <br><br>
+		 *
+		 * <b>Limitations:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
+		 * and the component will fallback to <code>growing="Button"</code>.
+		 * @type {TableGrowingMode}
+		 * @defaultvalue "None"
+		 * @since 1.0.0-rc.12
 		 * @public
 		 */
-		hasMore: {
+		growing: {
+			type: TableGrowingMode,
+			defaultValue: TableGrowingMode.None,
+		},
+
+		/**
+		 * Defines if the table is in busy state.
+		 * <b>
+		 *
+		 * In this state the component's opacity is reduced
+		 * and busy indicator is displayed at the bottom of the table.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.12
+		 * @public
+		*/
+		busy: {
 			type: Boolean,
 		},
 
@@ -156,6 +196,25 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the mode of the <code>ui5-table</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>MultiSelect</code></li>
+		 * <li><code>SingleSelect</code></li>
+		 * <li><code>None</code></li>
+		 * <ul>
+		 * @type {TableMode}
+		 * @defaultvalue "None"
+		 * @since 1.0.0-rc.15
+		 * @public
+		 */
+		mode: {
+			type: TableMode,
+			defaultValue: TableMode.None,
+		},
+
 		_hiddenColumns: {
 			type: Object,
 			multiple: true,
@@ -166,7 +225,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the active state of the "load more" row.
+		 * Defines the active state of the <code>More</code> button.
 		 * @private
 		 */
 		_loadMoreActive: {
@@ -180,13 +239,32 @@ const metadata = {
 		_columnHeader: {
 			type: Object,
 		},
+
+		/**
+		 * Defines if the entire table is in view port.
+		 * @private
+		 */
+		_inViewport: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether all rows are selected or not when table is in MultiSelect mode.
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.15
+		 * @private
+		 */
+		_allRowsSelected: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 		/**
-		 * Fired when a row is clicked.
+		 * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
 		 *
 		 * @event sap.ui.webcomponents.main.Table#row-click
-		 * @param {HTMLElement} row the clicked row.
+		 * @param {HTMLElement} row the activated row.
 		 * @public
 		 */
 		"row-click": {
@@ -210,13 +288,32 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when the user presses the <code>showMore</code> row of the table.
+		 * Fired when the user presses the <code>More</code> button or scrolls to the table's end.
 		 * <br><br>
+		 *
+		 * <b>Note:</b> The event will be fired if <code>growing</code> is set to <code>Button</code> or <code>Scroll</code>.
 		 * @event sap.ui.webcomponents.main.Table#load-more
 		 * @public
 		 * @since 1.0.0-rc.11
 		 */
 		"load-more": {},
+
+		/**
+		 * Fired when selection is changed by user interaction
+		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+		 *
+		 * @event sap.ui.webcomponents.main.Table#selection-change
+		 * @param {Array} selectedRows An array of the selected rows.
+		 * @param {Array} previouslySelectedRows An array of the previously selected rows.
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		"selection-change": {
+			detail: {
+				selectedRows: { type: Array },
+				previouslySelectedRows: { type: Array },
+			},
+		},
 	},
 };
 
@@ -270,6 +367,10 @@ class Table extends UI5Element {
 		return TableTemplate;
 	}
 
+	static get dependencies() {
+		return [BusyIndicator];
+	}
+
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
@@ -294,6 +395,9 @@ class Table extends UI5Element {
 		this._handleResize = this.popinContent.bind(this);
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
+		this.tableEndObserved = false;
+		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -306,8 +410,10 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
+			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
+			row.mode = this.mode;
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
@@ -319,21 +425,39 @@ class Table extends UI5Element {
 		this.visibleColumnsCount = this.visibleColumns.length;
 	}
 
+	onAfterRendering() {
+		if (this.growsOnScroll) {
+			this.observeTableEnd();
+		}
+
+		this.checkTableInViewport();
+	}
+
 	onEnterDOM() {
+		if (!isIE()) {
+			this.growingIntersectionObserver = this.getIntersectionObserver();
+		}
+
 		ResizeHandler.register(this.getDomRef(), this._handleResize);
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
+
+		if (!isIE()) {
+			this.growingIntersectionObserver.disconnect();
+			this.growingIntersectionObserver = null;
+			this.tableEndObserved = false;
+		}
 	}
 
 	onRowFocused(event) {
-		this._itemNavigation.update(event.target);
+		this._itemNavigation.setCurrentItem(event.target);
 	}
 
 	_onColumnHeaderClick(event) {
 		this.getColumnHeader().focus();
-		this._itemNavigation.update(this._columnHeader);
+		this._itemNavigation.setCurrentItem(this._columnHeader);
 	}
 
 	_onLoadMoreKeydown(event) {
@@ -359,8 +483,107 @@ class Table extends UI5Element {
 		this.fireEvent("load-more");
 	}
 
+	observeTableEnd() {
+		if (!this.tableEndObserved) {
+			this.getIntersectionObserver().observe(this.tableEndDOM);
+			this.tableEndObserved = true;
+		}
+	}
+
+	onInteresection(entries) {
+		if (entries.some(entry => entry.isIntersecting)) {
+			debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
+		}
+	}
+
+	loadMore() {
+		this.fireEvent("load-more");
+	}
+
+	_handleSingleSelect(event) {
+		const row = this.getRowParent(event.target);
+		if (!row.selected) {
+			const previouslySelectedRows = this.selectedRows;
+			this.rows.forEach(item => {
+				if (item.selected) {
+					item.selected = false;
+				}
+			});
+			row.selected = true;
+			this.fireEvent("selection-change", {
+				selectedRows: [row],
+				previouslySelectedRows,
+			});
+		}
+	}
+
+	_handleMultiSelect(event) {
+		const row = this.getRowParent(event.target);
+		const previouslySelectedRows = this.selectedRows;
+
+		row.selected = !row.selected;
+
+		const selectedRows = this.selectedRows;
+
+		if (selectedRows.length === this.rows.length) {
+			this._allRowsSelected = true;
+		} else {
+			this._allRowsSelected = false;
+		}
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	_handleSelect(event) {
+		this[`_handle${this.mode}`](event);
+	}
+
+	_selectAll(event) {
+		const bAllSelected = event.target.checked;
+		const previouslySelectedRows = this.rows.filter(row => row.selected);
+
+		this._allRowsSelected = bAllSelected;
+
+		this.rows.forEach(row => {
+			row.selected = bAllSelected;
+		});
+
+		const selectedRows = bAllSelected ? this.rows : [];
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	getRowParent(child) {
+		const parent = child.parentElement;
+
+		if (child.hasAttribute("ui5-table-row")) {
+			return child;
+		}
+
+		if (parent && parent.hasAttribute("ui5-table-row")) {
+			return parent;
+		}
+
+		this.getRowParent(parent);
+	}
+
 	getColumnHeader() {
 		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
+	}
+
+	handleResize(event) {
+		this.checkTableInViewport();
+		this.popinContent(event);
+	}
+
+	checkTableInViewport() {
+		this._inViewport = isElementInView(this.getDomRef());
 	}
 
 	popinContent(_event) {
@@ -383,7 +606,9 @@ class Table extends UI5Element {
 		});
 
 		if (visibleColumnsIndexes.length) {
-			this.columns[visibleColumnsIndexes[0]].first = true;
+			if (!this.isMultiSelect) {
+				this.columns[visibleColumnsIndexes[0]].first = true;
+			}
 			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
 		}
 
@@ -417,8 +642,54 @@ class Table extends UI5Element {
 		}, this);
 	}
 
-	get _loadMoreText() {
-		return this.loadMoreText || this.i18nBundle.getText(TABLE_LOAD_MORE_TEXT);
+	getIntersectionObserver() {
+		if (!this.growingIntersectionObserver) {
+			this.growingIntersectionObserver = new IntersectionObserver(this.onInteresection.bind(this), {
+				root: document,
+				rootMargin: "0px",
+				threshold: 1.0,
+			});
+		}
+
+		return this.growingIntersectionObserver;
+	}
+
+	get styles() {
+		return {
+			busy: {
+				position: this.busyIndPosition,
+			},
+		};
+	}
+
+	get growsWithButton() {
+		if (isIE()) {
+			// On IE fallback to "More" button, even if growing of type "Scroll" is set.
+			return this.growing === TableGrowingMode.Button || this.growing === TableGrowingMode.Scroll;
+		}
+
+		return this.growing === TableGrowingMode.Button;
+	}
+
+	get growsOnScroll() {
+		return !isIE() && this.growing === TableGrowingMode.Scroll;
+	}
+
+	get _moreText() {
+		return this.moreText || this.i18nBundle.getText(LOAD_MORE_TEXT);
+	}
+
+	get ariaLabelText() {
+		const headerRowText = this.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
+		const columnsTitle = this.columns.map(column => {
+			return column.textContent.trim();
+		}).join(" ");
+
+		return `${headerRowText} ${columnsTitle}`;
+	}
+
+	get ariaLabelSelectAllText() {
+		return this.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
 	}
 
 	get loadMoreAriaLabelledBy() {
@@ -427,6 +698,26 @@ class Table extends UI5Element {
 		}
 
 		return `${this._id}-showMore-text`;
+	}
+
+	get tableEndDOM() {
+		return this.shadowRoot.querySelector(".ui5-table-end-marker");
+	}
+
+	get busyIndPosition() {
+		if (isIE()) {
+			return "absolute";
+		}
+
+		return this._inViewport ? "absolute" : "sticky";
+	}
+
+	get isMultiSelect() {
+		return this.mode === "MultiSelect";
+	}
+
+	get selectedRows() {
+		return this.rows.filter(row => row.selected);
 	}
 }
 

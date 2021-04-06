@@ -1,6 +1,5 @@
-import { isClickInRect } from "./PopupUtils.js";
+import { isClickInRect } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./OpenedPopupsRegistry.js";
-
 
 let updateInterval = null;
 const intervalTimeout = 300;
@@ -105,7 +104,6 @@ const removeOpenedPopover = instance => {
 			if (popoversToClose[i] === openedRegistry[j].instance) {
 				indexOfItemToRemove = j;
 			}
-
 
 			if (indexOfItemToRemove >= 0) {
 				removeOpenedPopup(openedRegistry[indexOfItemToRemove].instance);

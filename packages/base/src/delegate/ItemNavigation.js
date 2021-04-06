@@ -1,4 +1,3 @@
-import RenderScheduler from "../RenderScheduler.js";
 import {
 	isDown,
 	isUp,
@@ -6,12 +5,9 @@ import {
 	isRight,
 	isHome,
 	isEnd,
-	isPageUp,
-	isPageDown,
 } from "../Keys.js";
 import getActiveElement from "../util/getActiveElement.js";
 
-import EventProvider from "../EventProvider.js";
 import NavigationMode from "../types/NavigationMode.js";
 import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
 
@@ -23,7 +19,6 @@ import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
  *  - Up/down
  *  - Left/right
  *  - Home/End
- *  - PageUp/PageDown
  *
  * Usage:
  * 1) Use the "getItemsCallback" constructor property to pass a callback to ItemNavigation, which, whenever called, will return the list of items to navigate among.
@@ -42,14 +37,14 @@ import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
  * If the items are Objects with "id" and "_tabIndex" however, it is the developer's responsibility to apply these and the easiest way is to have the root component invalidated by ItemNavigation.
  * To do so, set the "affectedPropertiesNames" constructor property to point to one or more of the root component's properties that need refreshing when "_tabIndex" is changed deeply.
  *
- * 2) Call the "update" method of ItemNavigation whenever you want to change the current item.
+ * 2) Call the "setCurrentItem" method of ItemNavigation whenever you want to change the current item.
  * This is most commonly required if the user for example clicks on an item and thus selects it directly.
- * Pass as the only argument to "update" the item that becomes current (must be one of the items, returned by "getItemsCallback").
+ * Pass as the only argument to "setCurrentItem" the item that becomes current (must be one of the items, returned by "getItemsCallback").
  *
  * @class
  * @public
  */
-class ItemNavigation extends EventProvider {
+class ItemNavigation {
 	/**
 	 *
 	 * @param rootWebComponent the component to operate on (component that slots or contains within its shadow root the items the user navigates among)
@@ -57,166 +52,39 @@ class ItemNavigation extends EventProvider {
 	 *  - currentIndex: the index of the item that will be initially selected (from which navigation will begin)
 	 *  - navigationMode (Auto|Horizontal|Vertical): whether the items are displayed horizontally (Horizontal), vertically (Vertical) or as a matrix (Auto) meaning the user can navigate in both directions (up/down and left/right)
 	 *  - rowSize: tells how many items per row there are when the items are not rendered as a flat list but rather as a matrix. Relevant for navigationMode=Auto
-	 *  - behavior (Static|Cycling|Paging): tells what to do when trying to navigate beyond the first and last items
+	 *  - behavior (Static|Cycling): tells what to do when trying to navigate beyond the first and last items
 	 *    Static means that nothing happens if the user tries to navigate beyond the first/last item.
 	 *    Cycling means that when the user navigates beyond the last item they go to the first and vice versa.
-	 *    Paging means that when the urse navigates beyond the first/last item, a new "page" of items appears (as commonly observed with calendars for example)
-	 *  - pageSize: tells how many items the user skips by using the PageUp/PageDown keys
 	 *  - getItemsCallback: function that, when called, returns an array with all items the user can navigate among
 	 *  - affectedPropertiesNames: a list of metadata properties on the root component which, upon user navigation, will be reassigned by address thus causing the root component to invalidate
 	 */
 	constructor(rootWebComponent, options = {}) {
-		super();
+		this._setRootComponent(rootWebComponent);
+		this._initOptions(options);
+	}
 
-		this.currentIndex = options.currentIndex || 0;
-		this.rowSize = options.rowSize || 1;
-		this.behavior = options.behavior || ItemNavigationBehavior.Static;
-		const navigationMode = options.navigationMode;
-		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
-		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
-		this.verticalNavigationOn = autoNavigation || navigationMode === NavigationMode.Vertical;
-
-		this.pageSize = options.pageSize;
-
-		if (options.affectedPropertiesNames) {
-			this.affectedPropertiesNames = options.affectedPropertiesNames;
+	_setRootComponent(rootWebComponent) {
+		if (!rootWebComponent.isUI5Element) {
+			throw new Error("The root web component must be a UI5 Element instance");
 		}
-
-		if (options.getItemsCallback) {
-			this._getItems = options.getItemsCallback;
-		}
-
-		const trueFunction = () => true;
-		this._hasNextPage = typeof options.hasNextPageCallback === "function" ? options.hasNextPageCallback : trueFunction;
-		this._hasPreviousPage = typeof options.hasPreviousPageCallback === "function" ? options.hasPreviousPageCallback : trueFunction;
-
 		this.rootWebComponent = rootWebComponent;
-		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
+		this.rootWebComponent.addEventListener("keydown", this._onkeydown.bind(this));
 		this.rootWebComponent._onComponentStateFinalized = () => {
 			this._init();
 		};
 	}
 
-	_init() {
-		this._getItems().forEach((item, idx) => {
-			item._tabIndex = (idx === this.currentIndex) ? "0" : "-1";
-		});
-	}
-
-	_horizontalNavigationOn() {
-		return this.horizontalNavigationOn;
-	}
-
-	_verticalNavigationOn() {
-		return this.verticalNavigationOn;
-	}
-
-	async _onKeyPress(event) {
-		if (this.currentIndex >= this._getItems().length) {
-			this.onOverflowBottomEdge(event);
-		} else if (this.currentIndex < 0) {
-			this.onOverflowTopEdge(event);
+	_initOptions(options) {
+		if (typeof options.getItemsCallback !== "function") {
+			throw new Error("getItemsCallback is required");
 		}
 
-		event.preventDefault();
-
-		await RenderScheduler.whenFinished();
-
-		this.update();
-		this.focusCurrent();
-		this.fireEvent(ItemNavigation.AFTER_FOCUS);
-	}
-
-	onkeydown(event) {
-		if (isUp(event) && this._verticalNavigationOn()) {
-			return this._handleUp(event);
-		}
-
-		if (isDown(event) && this._verticalNavigationOn()) {
-			return this._handleDown(event);
-		}
-
-		if (isLeft(event) && this._horizontalNavigationOn()) {
-			return this._handleLeft(event);
-		}
-
-		if (isRight(event) && this._horizontalNavigationOn()) {
-			return this._handleRight(event);
-		}
-
-		if (isHome(event)) {
-			return this._handleHome(event);
-		}
-
-		if (isEnd(event)) {
-			return this._handleEnd(event);
-		}
-
-		if (isPageUp(event)) {
-			return this._handlePageUp(event);
-		}
-
-		if (isPageDown(event)) {
-			return this._handlePageDown(event);
-		}
-	}
-
-	_handleUp(event) {
-		if (this._canNavigate()) {
-			this.currentIndex -= this.rowSize;
-			this._onKeyPress(event);
-		}
-	}
-
-	_handleDown(event) {
-		if (this._canNavigate()) {
-			this.currentIndex += this.rowSize;
-			this._onKeyPress(event);
-		}
-	}
-
-	_handleLeft(event) {
-		if (this._canNavigate()) {
-			this.currentIndex -= 1;
-			this._onKeyPress(event);
-		}
-	}
-
-	_handleRight(event) {
-		if (this._canNavigate()) {
-			this.currentIndex += 1;
-			this._onKeyPress(event);
-		}
-	}
-
-	_handleHome(event) {
-		if (this._canNavigate()) {
-			const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
-			this.currentIndex -= this.currentIndex % homeEndRange;
-			this._onKeyPress(event);
-		}
-	}
-
-	_handleEnd(event) {
-		if (this._canNavigate()) {
-			const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
-			this.currentIndex += (homeEndRange - 1 - this.currentIndex % homeEndRange); // eslint-disable-line
-			this._onKeyPress(event);
-		}
-	}
-
-	_handlePageUp(event) {
-		if (this._canNavigate()) {
-			this.currentIndex -= this.pageSize;
-			this._onKeyPress(event);
-		}
-	}
-
-	_handlePageDown(event) {
-		if (this._canNavigate()) {
-			this.currentIndex += this.pageSize;
-			this._onKeyPress(event);
-		}
+		this._getItems = options.getItemsCallback;
+		this._currentIndex = options.currentIndex || 0;
+		this._rowSize = options.rowSize || 1;
+		this._behavior = options.behavior || ItemNavigationBehavior.Static;
+		this._navigationMode = options.navigationMode || NavigationMode.Auto;
+		this._affectedPropertiesNames = options.affectedPropertiesNames || [];
 	}
 
 	/**
@@ -226,37 +94,147 @@ class ItemNavigation extends EventProvider {
 	 * @public
 	 * @param current the new selected item
 	 */
-	update(current) {
-		const origItems = this._getItems();
+	setCurrentItem(current) {
+		const currentItemIndex = this._getItems().indexOf(current);
 
-		if (current) {
-			this.currentIndex = this._getItems().indexOf(current);
-		}
-
-		if (!origItems[this.currentIndex]
-			|| (origItems[this.currentIndex]._tabIndex && origItems[this.currentIndex]._tabIndex === "0")) {
+		if (currentItemIndex === -1) {
+			console.warn(`The provided item is not managed by ItemNavigation`, current); // eslint-disable-line
 			return;
 		}
 
-		const items = origItems.slice(0);
-
-		for (let i = 0; i < items.length; i++) {
-			items[i]._tabIndex = (i === this.currentIndex ? "0" : "-1");
-		}
-
-		if (Array.isArray(this.affectedPropertiesNames)) {
-			this.affectedPropertiesNames.forEach(propName => {
-				const prop = this.rootWebComponent[propName];
-				this.rootWebComponent[propName] = Array.isArray(prop) ? [...prop] : { ...prop };
-			});
-		}
+		this._currentIndex = currentItemIndex;
+		this._applyTabIndex();
 	}
 
 	/**
+	 * Call this method to dynamically change the row size
+	 *
 	 * @public
-	 * @deprecated
+	 * @param newRowSize
 	 */
-	focusCurrent() {
+	setRowSize(newRowSize) {
+		this._rowSize = newRowSize;
+	}
+
+	_init() {
+		this._getItems().forEach((item, idx) => {
+			item._tabIndex = (idx === this._currentIndex) ? "0" : "-1";
+		});
+	}
+
+	_onkeydown(event) {
+		if (!this._canNavigate()) {
+			return;
+		}
+
+		const horizontalNavigationOn = this._navigationMode === NavigationMode.Horizontal || this._navigationMode === NavigationMode.Auto;
+		const verticalNavigationOn = this._navigationMode === NavigationMode.Vertical || this._navigationMode === NavigationMode.Auto;
+
+		if (isUp(event) && verticalNavigationOn) {
+			this._handleUp();
+		} else if (isDown(event) && verticalNavigationOn) {
+			this._handleDown();
+		} else if (isLeft(event) && horizontalNavigationOn) {
+			this._handleLeft();
+		} else if (isRight(event) && horizontalNavigationOn) {
+			this._handleRight();
+		} else if (isHome(event)) {
+			this._handleHome();
+		} else if (isEnd(event)) {
+			this._handleEnd();
+		} else {
+			return; // if none of the supported keys is pressed, we don't want to prevent the event or update the item navigation
+		}
+
+		event.preventDefault();
+		this._applyTabIndex();
+		this._focusCurrentItem();
+	}
+
+	_handleUp() {
+		const itemsLength = this._getItems().length;
+		if (this._currentIndex - this._rowSize >= 0) { // no border reached, just decrease the index by a row
+			this._currentIndex -= this._rowSize;
+			return;
+		}
+
+		if (this._behavior === ItemNavigationBehavior.Cyclic) { // if cyclic, go to the **last** item in the **previous** column
+			const firstItemInThisColumnIndex = this._currentIndex % this._rowSize;
+			const firstItemInPreviousColumnIndex = firstItemInThisColumnIndex === 0 ? this._rowSize - 1 : firstItemInThisColumnIndex - 1; // find the first item in the previous column (if the current column is the first column -> move to the last column)
+			const rows = Math.ceil(itemsLength / this._rowSize); // how many rows there are (even if incomplete, f.e. for 14 items and _rowSize=4 -> 4 rows total, although only 2 items on the last row)
+			let lastItemInPreviousColumnIndex = firstItemInPreviousColumnIndex + (rows - 1) * this._rowSize; // multiply rows by columns, and add the column's first item's index
+			if (lastItemInPreviousColumnIndex > itemsLength - 1) { // for incomplete rows, use the previous row's last item, as for them the last item is missing
+				lastItemInPreviousColumnIndex -= this._rowSize;
+			}
+			this._currentIndex = lastItemInPreviousColumnIndex;
+		} else { // not cyclic, so just go to the first item
+			this._currentIndex = 0;
+		}
+	}
+
+	_handleDown() {
+		const itemsLength = this._getItems().length;
+		if (this._currentIndex + this._rowSize < itemsLength) { // no border reached, just increase the index by a row
+			this._currentIndex += this._rowSize;
+			return;
+		}
+
+		if (this._behavior === ItemNavigationBehavior.Cyclic) { // if cyclic, go to the **first** item in the **next** column
+			const firstItemInThisColumnIndex = this._currentIndex % this._rowSize; // find the first item in the current column first
+			const firstItemInNextColumnIndex = (firstItemInThisColumnIndex + 1) % this._rowSize; // to get the first item in the next column, just increase the index by 1. The modulo by rows is for the case when we are at the last column
+			this._currentIndex = firstItemInNextColumnIndex;
+		} else { // not cyclic, so just go to the last item
+			this._currentIndex = itemsLength - 1;
+		}
+	}
+
+	_handleLeft() {
+		const itemsLength = this._getItems().length;
+		if (this._currentIndex > 0) {
+			this._currentIndex -= 1;
+			return;
+		}
+
+		if (this._behavior === ItemNavigationBehavior.Cyclic) { // go to the first item in the next column
+			this._currentIndex = itemsLength - 1;
+		}
+	}
+
+	_handleRight() {
+		const itemsLength = this._getItems().length;
+		if (this._currentIndex < itemsLength - 1) {
+			this._currentIndex += 1;
+			return;
+		}
+
+		if (this._behavior === ItemNavigationBehavior.Cyclic) { // go to the first item in the next column
+			this._currentIndex = 0;
+		}
+	}
+
+	_handleHome() {
+		const homeEndRange = this._rowSize > 1 ? this._rowSize : this._getItems().length;
+		this._currentIndex -= this._currentIndex % homeEndRange;
+	}
+
+	_handleEnd() {
+		const homeEndRange = this._rowSize > 1 ? this._rowSize : this._getItems().length;
+		this._currentIndex += (homeEndRange - 1 - this._currentIndex % homeEndRange); // eslint-disable-line
+	}
+
+	_applyTabIndex() {
+		const items = this._getItems();
+		for (let i = 0; i < items.length; i++) {
+			items[i]._tabIndex = i === this._currentIndex ? "0" : "-1";
+		}
+
+		this._affectedPropertiesNames.forEach(propName => {
+			const prop = this.rootWebComponent[propName];
+			this.rootWebComponent[propName] = Array.isArray(prop) ? [...prop] : { ...prop };
+		});
+	}
+
+	_focusCurrentItem() {
 		const currentItem = this._getCurrentItem();
 		if (currentItem) {
 			currentItem.focus();
@@ -278,15 +256,15 @@ class ItemNavigation extends EventProvider {
 		}
 
 		// normalize the index
-		while (this.currentIndex >= items.length) {
-			this.currentIndex -= this.rowSize;
+		while (this._currentIndex >= items.length) {
+			this._currentIndex -= this._rowSize;
 		}
 
-		if (this.currentIndex < 0) {
-			this.currentIndex = 0;
+		if (this._currentIndex < 0) {
+			this._currentIndex = 0;
 		}
 
-		const currentItem = items[this.currentIndex];
+		const currentItem = items[this._currentIndex];
 
 		if (!currentItem) {
 			return;
@@ -302,92 +280,6 @@ class ItemNavigation extends EventProvider {
 
 		return this.rootWebComponent.getDomRef().querySelector(`#${currentItem.id}`);
 	}
-
-	/**
-	 * Set to callback that returns the list of items to navigate among
-	 * @public
-	 * @param callback a function that returns an array of items to navigate among
-	 */
-	set getItemsCallback(callback) {
-		this._getItems = callback;
-	}
-
-	/**
-	 * @public
-	 * @deprecated
-	 * @param val
-	 */
-	set current(val) {
-		this.currentIndex = val;
-	}
-
-	onOverflowBottomEdge(event) {
-		const items = this._getItems();
-		const offset = (this.currentIndex - items.length) % this.rowSize;
-
-		if (this.behavior === ItemNavigationBehavior.Cyclic) {
-			this.currentIndex = 0;
-			return;
-		}
-
-		if (this.behavior === ItemNavigationBehavior.Paging) {
-			this._handleNextPage();
-		} else {
-			this.currentIndex = items.length - 1;
-		}
-
-		this.fireEvent(ItemNavigation.BORDER_REACH, {
-			start: false,
-			end: true,
-			originalEvent: event,
-			offset,
-		});
-	}
-
-	onOverflowTopEdge(event) {
-		const items = this._getItems();
-		const offsetRight = (this.currentIndex + this.rowSize) % this.rowSize;
-		const offset = offsetRight < 0 ? (this.rowSize + offsetRight) : offsetRight;
-
-		if (this.behavior === ItemNavigationBehavior.Cyclic) {
-			this.currentIndex = items.length - 1;
-			return;
-		}
-
-		if (this.behavior === ItemNavigationBehavior.Paging) {
-			this._handlePrevPage();
-		} else {
-			this.currentIndex = 0;
-		}
-
-		this.fireEvent(ItemNavigation.BORDER_REACH, {
-			start: true,
-			end: false,
-			originalEvent: event,
-			offset,
-		});
-	}
-
-	_handleNextPage() {
-		const items = this._getItems();
-
-		if (!this._hasNextPage()) {
-			this.currentIndex = items.length - 1;
-		} else {
-			this.currentIndex -= this.pageSize;
-		}
-	}
-
-	_handlePrevPage() {
-		if (!this._hasPreviousPage()) {
-			this.currentIndex = 0;
-		} else {
-			this.currentIndex = this.pageSize + this.currentIndex;
-		}
-	}
 }
-
-ItemNavigation.BORDER_REACH = "_borderReach";
-ItemNavigation.AFTER_FOCUS = "_afterFocus";
 
 export default ItemNavigation;

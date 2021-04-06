@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Color Palette</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		body, html {
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+		}
+
+		.popover-content {
+			margin-top: 1rem;
+		}
+
+		.shellbar-example {
+			margin-top: 1px;
+		}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+</body>
+	<ui5-color-palette id="cp1" more-colors>
+		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+		<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+		<ui5-color-palette-item value="green"></ui5-color-palette-item>
+		<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+		<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+		<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+		<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+	</ui5-color-palette>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<ui5-input id="changeResult" value="Nothing selected"></ui5-input>
+	<br>
+	<ui5-button id="colorPaletteBtn" >Open ColorPalette</ui5-button>
+	<ui5-responsive-popover id="respPopover" with-padding>
+		<div id="respPopoverHeader" slot="header">
+			<ui5-title>Color Palette Popover</ui5-title>
+		</div>
+
+		<ui5-color-palette id="cp2">
+			<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+			<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+			<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+			<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+			<ui5-color-palette-item value="green"></ui5-color-palette-item>
+			<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+			<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+			<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+			<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+			<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+			<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+			<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+			<ui5-color-palette-item value="invalidColor"></ui5-color-palette-item>
+			<ui5-color-palette-item value="gray"></ui5-color-palette-item>
+			<ui5-color-palette-item value="white"></ui5-color-palette-item>
+			<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+		</ui5-color-palette>
+
+		<div slot="footer" class="popover-footer">
+			<ui5-button id="btnClose" design="Emphasized">Close</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-color-palette id="cp3" more-colors>
+		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+		<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+		<ui5-color-palette-item value="green"></ui5-color-palette-item>
+		<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+		<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+		<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+		<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+	</ui5-color-palette>
+
+	<script>
+		cp1.addEventListener("change", function(event) {
+			changeResult.value = event.detail.color;
+		});
+		colorPaletteBtn.addEventListener("click", function(event) {
+			respPopover.open(colorPaletteBtn);
+		});
+		btnClose.addEventListener("click", function(event) {
+			respPopover.close();
+		});
+	</script>
+</html>

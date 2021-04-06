@@ -1,0 +1,78 @@
+<div
+	id="{{_id}}"
+	class="ui5-step-input-root"
+	style="{{styles}}"
+	@keydown="{{_onkeydown}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+>
+	<!-- Decrement Icon -->
+	<div
+		class="ui5-step-icon ui5-step-dec"
+		title="{{decIconTitle}}"
+	>
+		<ui5-icon
+			id="{{_id}}-dec"
+			name="{{decIconName}}"
+			tabindex="-1"
+			accessible-name="{{decIconTitle}}"
+			@click="{{_decValue}}"
+			@focusout="{{_onButtonFocusOut}}"
+			@mousedown="{{_decSpin}}"
+			@mouseup="{{_resetSpin}}"
+			@mouseout="{{_resetSpinOut}}"
+			input-icon
+			show-tooltip
+			?clickable="{{_decIconClickable}}"
+		></ui5-icon>
+	</div>
+
+	<!-- INPUT -->
+	<ui5-input
+			id="{{_id}}-inner"
+			class="ui5-step-input-input"
+			placeholder="{{placeholder}}"
+			type="{{type}}"
+			value="{{_valuePrecisioned}}"
+			?disabled="{{disabled}}"
+			?required="{{required}}"
+			?readonly="{{readonly}}"
+			value-state="{{valueState}}"
+			data-sap-focus-ref
+			._inputAccInfo ="{{accInfo}}"
+			._nativeInputAttributes="{{inputAttributes}}"
+			@ui5-change="{{_onInputChange}}"
+			@focusout="{{_onInputFocusOut}}"
+			@focusin="{{_onInputFocusIn}}"
+	>
+
+		{{#if valueStateMessage.length}}
+			<slot name="valueStateMessage" slot="valueStateMessage"></slot>
+		{{/if}}
+
+	</ui5-input>
+
+	<!-- Increment Icon -->
+	<div
+		class="ui5-step-icon ui5-step-inc"
+		title="{{incIconTitle}}"
+	>
+		<ui5-icon
+			id="{{_id}}-inc"
+			name="{{incIconName}}"
+			tabindex="-1"
+			accessible-name="{{incIconTitle}}"
+			@click="{{_incValue}}"
+			@focusout="{{_onButtonFocusOut}}"
+			@mousedown="{{_incSpin}}"
+			@mouseup="{{_resetSpin}}"
+			@mouseout="{{_resetSpinOut}}"
+			input-icon
+			show-tooltip
+			?clickable="{{_incIconClickable}}"
+		></ui5-icon>
+	</div>
+
+	<slot name="formSupport"></slot>
+
+</div>

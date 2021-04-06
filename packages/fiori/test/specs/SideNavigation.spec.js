@@ -1,8 +1,11 @@
 
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Component Behavior", () => {
-	browser.url("http://localhost:8081/test-resources/pages/SideNavigation.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/SideNavigation.html`);
+	});
 
 	describe("Main functionality", () => {
 		it("Tests selection-change event", () => {
@@ -69,7 +72,7 @@ describe("Component Behavior", () => {
 
 				return sideNavigation.showHeader;
 			});
-		
+
 			assert.strictEqual(showHeader, true, "Header is displayed");
 
 			showHeader = browser.execute( () => {
@@ -78,7 +81,7 @@ describe("Component Behavior", () => {
 
 				return sideNavigation.showHeader;
 			});
-	
+
 			assert.strictEqual(showHeader, false, "Header is not displayed");
 		});
 	});
