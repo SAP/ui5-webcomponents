@@ -1,19 +1,8 @@
-commit 99cb6b1ab17d8e76c08a2bbd68ed59f5b14625f7
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Tue Apr 6 11:19:57 2021 +0300
+commit 1bd3c1513c8e2dd6dfc74cba9f144ee432e27a84
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Apr 6 11:58:32 2021 +0300
 
-    fix(ui5-wizard): implement revised accessibility spec (#2990)
+    chore(ui5-color-picker): adopt new shadow part names (#3099)
     
-    * ui5-wizard: implement revised accessibility spec
-    
-    * (fix)ui5-wizard: implement revised accessibility spec
-    
-    * fix typo
-    
-    * fix linter
-    
-    * fix tests
-    
-    * apply comments
-    
-    * apply comments
+    The Shadow Parts names of the Slider have changed
+    and the Color Picker should adopt the new names.
