@@ -26,6 +26,20 @@
 		<ui5-li id="lastItem">Last Item</ui5-li>
 	</ui5-list>
 	<input id="loadMoreResult" value="0"/>
+	<br><br><br>
+
+	<ui5-title>List growing="Scroll" items don't overflow initially</ui5-title>
+
+	<ui5-input id="growingScrollTestCounter" value="0"></ui5-input>
+	<section style="max-height: 20rem; overflow: auto;">
+		<ui5-list id="growingScrollTest" growing="Scroll">
+			<ui5-li-groupheader>New Items</ui5-li-groupheader>
+		</ui5-list>
+	</section>
+
+	<br><br><br>
+
+	
 	<br/>
 	<ui5-list id="listEvents" mode="SingleSelectEnd">
 		<ui5-li id="country1">Argentina</ui5-li>
@@ -38,6 +52,7 @@
 	<ui5-input id="selectionChangeResultField" placeholder="selectionChange result"></ui5-input>
 	<ui5-input id="selectionChangeResultPreviousItemsParameter" placeholder="selectionChange previousSelection result"></ui5-input>
 
+	<br><br><br>
 	<ui5-list id="listEvents2" mode="MultiSelect">
 		<ui5-li id="country11">Argentina</ui5-li>
 		<ui5-li id="country22" selected >Bulgaria</ui5-li>
@@ -48,6 +63,7 @@
 	<ui5-input id="itemPressSelectedResultField2" placeholder="itemPress selected result"></ui5-input>
 	<ui5-input id="selectionChangeResultField2" placeholder="selectionChange result"></ui5-input>
 
+	<br><br><br>
 	<ui5-list id="list1" header-text="API: GroupHeaderListItem">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
 		<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
@@ -276,6 +292,12 @@
 
 		btnOpenPopup.addEventListener("click", function() {
 			popup.openBy(btnOpenPopup);
+		});
+
+
+		var groiwngScrollTestCounter = 0;
+		growingScrollTest.addEventListener("ui5-loadMore", function(e) {
+			growingScrollTestCounter.value= ++groiwngScrollTestCounter;
 		});
 	</script>
 </body>
