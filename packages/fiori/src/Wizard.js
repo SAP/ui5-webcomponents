@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
@@ -15,6 +14,11 @@ import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import {
 	WIZARD_NAV_STEP_DEFAULT_HEADING,
 	WIZARD_NAV_ARIA_ROLE_DESCRIPTION,
+	WIZARD_NAV_ARIA_LABEL,
+	WIZARD_LIST_ARIA_LABEL,
+	WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL,
+	WIZARD_STEP_ARIA_LABEL,
+	WIZARD_CURRENT_STEP_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Step in header and content
@@ -662,6 +666,14 @@ class Wizard extends UI5Element {
 		return contentHeight;
 	}
 
+	getStepAriaLabelText(step, ariaLabel) {
+		if (step.selected) {
+			return this.i18nBundle.getText(WIZARD_CURRENT_STEP_ARIA_LABEL, ariaLabel);
+		}
+
+		return this.i18nBundle.getText(WIZARD_STEP_ARIA_LABEL, ariaLabel);
+	}
+
 	get stepsDOM() {
 		return Array.from(this.shadowRoot.querySelectorAll(".ui5-wiz-content-item"));
 	}
@@ -739,6 +751,18 @@ class Wizard extends UI5Element {
 		return this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
 
+	get navAriaLabelText() {
+		return this.i18nBundle.getText(WIZARD_NAV_ARIA_LABEL);
+	}
+
+	get listAriaLabelText() {
+		return this.i18nBundle.getText(WIZARD_LIST_ARIA_LABEL);
+	}
+
+	get actionSheetStepsText() {
+		return this.i18nBundle.getText(WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL);
+	}
+
 	get navStepDefaultHeading() {
 		return this.i18nBundle.getText(WIZARD_NAV_STEP_DEFAULT_HEADING);
 	}
@@ -770,6 +794,7 @@ class Wizard extends UI5Element {
 		const stepsCount = this.stepsCount;
 		const selectedStepIndex = this.getSelectedStepIndex();
 		let inintialZIndex = this.steps.length + 10;
+		let accInfo;
 
 		this._adjustHeaderOverflow();
 
@@ -779,9 +804,15 @@ class Wizard extends UI5Element {
 			// Hide separator if it's the last step and it's not a branching one
 			const hideSeparator = (idx === stepsCount - 1) && !step.branching;
 
-			// Calculate the step's aria-roledectioption: "1. heading" or "Step 1".
-			const roleDescription = step.heading ? `${pos}. ${step.heading}` : `${this.navStepDefaultHeading} ${pos}`;
+			const isOptional = step.subheading ? "Optional" : "";
+			const ariaLabel = (step.heading ? `${pos} ${step.heading} ${isOptional}` : `${this.navStepDefaultHeading} ${pos} ${isOptional}`).trim();
 			const isAfterCurrent = (idx > selectedStepIndex);
+
+			accInfo = {
+				"ariaSetsize": stepsCount,
+				"ariaPosinset": pos,
+				"ariaLabel": this.getStepAriaLabelText(step, ariaLabel),
+			};
 
 			return {
 				icon: step.icon,
@@ -794,9 +825,7 @@ class Wizard extends UI5Element {
 				activeSeparator: (idx < lastEnabledStepIndex) && !step.disabled,
 				branchingSeparator: step.branching,
 				pos,
-				size: stepsCount,
-				roleDescription,
-				ariaLabel: getEffectiveAriaLabelText(step),
+				accInfo,
 				refStepId: step._id,
 				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
 				styles: `z-index: ${isAfterCurrent ? --inintialZIndex : 1}`,

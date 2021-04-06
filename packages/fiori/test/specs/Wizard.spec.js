@@ -15,6 +15,30 @@ describe("Wizard general interaction", () => {
 			"First step  in the header is selected.");
 	});
 
+	it("ARIA Attributes", () => {
+		const wiz = browser.$("#wizTest");
+		const wizRoot = wiz.shadow$(".ui5-wiz-root");
+		const wizNav = wiz.shadow$(".ui5-wiz-nav");
+		const wizList = wiz.shadow$(".ui5-wiz-nav-list");
+
+		const wizRootText = "Wizard";
+		const wizNavText = "Wizard Progress Bar";
+		const wizListText = "Wizard Steps";
+
+		assert.strictEqual(wizRoot.getAttribute("role"), "region",
+			"Wizard has role set.");
+		assert.strictEqual(wizRoot.getAttribute("aria-label"), wizRootText,
+			"Wizard has aria-label set.");
+		assert.strictEqual(wizNav.getAttribute("aria-label"), wizNavText,
+			"Wizard nav has aria-label set.");
+		assert.strictEqual(wizList.getAttribute("role"), "list",
+			"Wizard list has role set..");
+		assert.strictEqual(wizList.getAttribute("aria-controls"), "ui5-wiz-content",
+			"Wizard list has aria-controls set.");
+		assert.strictEqual(wizList.getAttribute("aria-label"), wizListText,
+			"Wizard list has aria-label set.");
+	});
+
 	it("move to next step by API", () => {
 		const wiz = browser.$("#wizTest");
 		const btnToStep2 = browser.$("#toStep2");
@@ -22,6 +46,12 @@ describe("Wizard general interaction", () => {
 		const step2 = browser.$("#st2");
 		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
+		const step1InHeaderRoot = step1InHeader.shadow$(`.ui5-wiz-step-root`);
+		const step2InHeaderRoot = step2InHeader.shadow$(`.ui5-wiz-step-root`);
+
+		const stepText = "Step 1 Product type";
+		const currentStepText = "Step 2 Product Information current";
+
 
 		// act - the click handler calls the API
 		btnToStep2.click();
@@ -32,6 +62,12 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(step1InHeader.getAttribute("selected"), null,
 			"First step  in the header not is selected.");
 
+		// assert - check if aria-attributes are applied correctly when step is not selected
+		assert.strictEqual(step1InHeaderRoot.getAttribute("role"), "listitem",
+			"First step in the header has role.");
+		assert.strictEqual(step1InHeaderRoot.getAttribute("aria-label"), stepText,
+			"First step in the header has aria-label.");
+
 		// assert - that second step in the content and in the header are properly selected
 		assert.strictEqual(step2.getAttribute("selected"), "true",
 			"Second step in the content is selected.");
@@ -41,6 +77,10 @@ describe("Wizard general interaction", () => {
 			"Second step is enabled.");
 		assert.strictEqual(step2InHeader.getAttribute("disabled"), null,
 			"Second step in header is enabled.");
+
+		// assert - check if aria-label is applied correctly when step is selected
+		assert.strictEqual(step2InHeaderRoot.getAttribute("aria-label"), currentStepText,
+			"Second step in the header has aria-label.");
 	});
 
 	it("move to next step by click", () => {
