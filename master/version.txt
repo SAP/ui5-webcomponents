@@ -1,5 +1,19 @@
-commit f18d59a489d1abd1818b2aef7e487f37a933c6e7
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Apr 5 16:26:21 2021 +0300
+commit 99cb6b1ab17d8e76c08a2bbd68ed59f5b14625f7
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Tue Apr 6 11:19:57 2021 +0300
 
-    docs: add docs for css parts (#3096)
+    fix(ui5-wizard): implement revised accessibility spec (#2990)
+    
+    * ui5-wizard: implement revised accessibility spec
+    
+    * (fix)ui5-wizard: implement revised accessibility spec
+    
+    * fix typo
+    
+    * fix linter
+    
+    * fix tests
+    
+    * apply comments
+    
+    * apply comments
