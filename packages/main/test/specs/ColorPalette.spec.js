@@ -88,6 +88,8 @@ describe("ColorPalette interactions", () => {
 		colorPicker.setProperty("color", "#fafafa");
 
 		// The initial focus is on the HEX input
+		browser.keys("Tab"); // Slider 1
+		browser.keys("Tab"); // Slider 2
 		browser.keys("Tab"); // Red
 		browser.keys("Tab"); // Green
 		browser.keys("Tab"); // Blue
