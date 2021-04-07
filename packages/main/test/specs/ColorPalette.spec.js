@@ -99,7 +99,7 @@ describe("ColorPalette interactions", () => {
 		assert.strictEqual(colorPalette.getProperty("value"), "#fafafa", "Custom color is selected from the color picker");
 	})
 
-	it("Tests show-recent-color functionality", () => {
+	it("Tests show-recent-colors functionality", () => {
 		const colorPalette = browser.$("#cp4");
 		const colorPaletteEntries = colorPalette.$$("[ui5-color-palette-item]");
 
