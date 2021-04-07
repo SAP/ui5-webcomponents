@@ -28,6 +28,17 @@ const metadata = {
 	tag: "ui5-color-palette",
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
+
+		/**
+		 * Defines whether the user can see the last used colors in the bottom of the <code>ui5-color-palette</code>
+		 * @type {boolean}
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		showRecentColors: {
+			type: Boolean,
+		},
+
 		/**
 		 * Defines whether the user can choose a custom color from a color picker
 		 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
@@ -47,7 +58,7 @@ const metadata = {
 		 */
 		value: {
 			type: CSSColor,
-		 },
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
@@ -147,6 +158,8 @@ class ColorPalette extends UI5Element {
 			rowSize: 5,
 			behavior: ItemNavigationBehavior.Cyclic,
 		});
+
+		this._recentColors = [];
 	}
 
 	onBeforeRendering() {
@@ -173,6 +186,9 @@ class ColorPalette extends UI5Element {
 
 	_setColor(color) {
 		this.value = color;
+		if (this._recentColors[0] !== this.value) {
+			this._recentColors.unshift(this.value);
+		}
 
 		this.fireEvent("change", {
 			color: this.value,
@@ -228,6 +244,18 @@ class ColorPalette extends UI5Element {
 
 	get showMoreColors() {
 		return this.moreColors && this.moreColorsFeature;
+	}
+
+	get recentColors() {
+		if (this._recentColors.length > 5) {
+			this._recentColors = this._recentColors.slice(0, 5);
+		}
+
+		while (this._recentColors.length < 5) {
+			this._recentColors.push("");
+		}
+
+		return this._recentColors;
 	}
 
 	async _getDialog() {
