@@ -25,3 +25,8 @@
 	text-align: center;
 	border: none;
 }
+
+.ui5-cp-more-colors-wrapper {
+	display: flex;
+    flex-direction: column;
+}
