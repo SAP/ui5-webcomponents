@@ -1,7 +1,5 @@
-commit 201167e130e955449bb31cb053170afcc8fe2d79
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Apr 7 14:00:39 2021 +0300
+commit 4bcd049cc4368b47f97686e1792b64a31973099b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Apr 7 14:07:34 2021 +0300
 
-    docs: update table sample (#3111)
-    
-    The selection sample now shows the "mode" attribute set.
+    feat(ui5-color-palette): implement show-recent-color functionality (#3113)

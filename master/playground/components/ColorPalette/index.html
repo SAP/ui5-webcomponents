@@ -2449,7 +2449,41 @@
 <div class="control-tag">&lt;ui5-color-palette&gt;</div>
 
 <section>
-	<h3>ColorPalette</h3>
+	<h3>ColorPalette With More Colors & Recent Colours Functionality</h3>
+	<div class="snippet">
+		<ui5-color-palette show-more show-recent-colors>
+			<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+			<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+			<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+			<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+			<ui5-color-palette-item value="green"></ui5-color-palette-item>
+			<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+			<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+			<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+			<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+			<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+			<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+			<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+		</ui5-color-palette>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-color-palette</span> <span class="na">show-more</span> <span class="na">show-recent-colors</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"darkblue"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"pink"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"#444444"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"rgb(0,200,0)"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"green"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"darkred"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"yellow"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"blue"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"cyan"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"orange"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"#5480e7"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"#ff6699"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
+<span class="nt">&lt;/ui5-color-palette&gt;</span></code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>Basic ColorPalette</h3>
 	<div class="snippet">
 		<ui5-color-palette>
 			<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
@@ -2481,6 +2515,7 @@
 	<span class="nt">&lt;ui5-color-palette-item</span> <span class="na">value=</span><span class="s">"#ff6699"</span><span class="nt">&gt;&lt;/ui5-color-palette-item&gt;</span>
 <span class="nt">&lt;/ui5-color-palette&gt;</span></code></pre></figure></pre>
 </section>
+
 <section>
 	<h3>ColorPalette in Popover</h3>
 	<div class="snippet">
@@ -2584,6 +2619,19 @@ For the <code>ui5-color-palette</code> <h3>ES6 Module Import</h3>
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          showRecentColors
+                            <br>
+                            <code>show-recent-colors</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the user can see the last used colors in the bottom of the <code>ui5-color-palette</code>
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           value
                             <br>
