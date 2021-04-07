@@ -1,28 +1,32 @@
-import { html, svg, render } from "lit-html";
-import scopeHTML from "./scopeHTML.js";
-
-let tags;
-let	suffix;
-
-const setTags = t => {
-	tags = t;
-};
-const setSuffix = s => {
-	suffix = s;
-};
+import { render } from "lit-html";
+import {
+	html,
+	svg,
+	withStatic,
+	unsafeStatic,
+} from "lit-html/static.js";
 
 const litRender = (templateResult, domNode, styles, { host } = {}) => {
 	if (styles) {
-		templateResult = html`<style>${styles}</style>${templateResult}`;
+		templateResult = withStatic(html`<style>${styles}</style>${templateResult}`);
 	}
 	render(templateResult, domNode, { host });
 };
 
-const scopedHtml = (strings, ...values) => html(scopeHTML(strings, tags, suffix), ...values);
-const scopedSvg = (strings, ...values) => svg(scopeHTML(strings, tags, suffix), ...values);
+const setTags = t => {
 
+};
+const setSuffix = s => {
+
+};
+
+export {
+	html,
+	svg,
+	withStatic,
+	unsafeStatic,
+};
 export { setTags, setSuffix };
-export { scopedHtml as html, scopedSvg as svg };
 export { repeat } from "lit-html/directives/repeat.js";
 export { classMap } from "lit-html/directives/class-map.js";
 export { styleMap } from "lit-html/directives/style-map.js";
