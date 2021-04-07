@@ -1,5 +1,7 @@
-commit aeaff54189aebf20c317aa8b0f7cb1aefed744f4
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Apr 6 21:06:34 2021 +0300
+commit 201167e130e955449bb31cb053170afcc8fe2d79
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Apr 7 14:00:39 2021 +0300
 
-    docs(ui5-table): Documentation adjusment (#3102)
+    docs: update table sample (#3111)
+    
+    The selection sample now shows the "mode" attribute set.
