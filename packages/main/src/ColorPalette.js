@@ -179,7 +179,10 @@ class ColorPalette extends UI5Element {
 
 	selectColor(item) {
 		item.focus();
-		this._itemNavigation.setCurrentItem(item);
+
+		if (this.displayedColors.includes(item)) {
+			this._itemNavigation.setCurrentItem(item);
+		}
 
 		this._setColor(item.value);
 	}
@@ -187,7 +190,11 @@ class ColorPalette extends UI5Element {
 	_setColor(color) {
 		this.value = color;
 		if (this._recentColors[0] !== this.value) {
-			this._recentColors.unshift(this.value);
+			if (this._recentColors.includes(this.value)) {
+				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this.value), 1)[0]);
+			} else {
+				this._recentColors.unshift(this.value);
+			}
 		}
 
 		this.fireEvent("change", {
