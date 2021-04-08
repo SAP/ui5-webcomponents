@@ -1,7 +1,7 @@
-commit d873033e32554edc29b163b8c93c34f94d896618
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 8 15:37:17 2021 +0300
+commit de5b0335d4bb5736500f4c378965281e607e7630
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Thu Apr 8 16:40:16 2021 +0300
 
-    chore(ui5-page): offset content start when header exists (#3103)
+    chore(ui5-wizard): translate optional step text (#3120)
     
-    We had feedback in one of the Slack channels that the content will start with an offset even when the "header" slot is not present. And this is what we address here - setting "2.75rem" top offset to the content in case the Page has a header.
+    "Optional" text added to the aria-label attribute of the step is now translated.
