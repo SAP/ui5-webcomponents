@@ -920,6 +920,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Value state changes only on submit", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html`);
 		datepicker.id = "#dp33";
 		datepicker.innerInput.click();
 		browser.keys("somereallylongtextthatshouldcheckifwevalidateoninput");
