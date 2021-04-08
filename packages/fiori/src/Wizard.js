@@ -18,6 +18,7 @@ import {
 	WIZARD_NAV_ARIA_LABEL,
 	WIZARD_LIST_ARIA_LABEL,
 	WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL,
+	WIZARD_OPTIONAL_STEP_ARIA_LABEL,
 	WIZARD_STEP_ARIA_LABEL,
 	WIZARD_CURRENT_STEP_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
@@ -783,6 +784,10 @@ class Wizard extends UI5Element {
 		return this.i18nBundle.getText(WIZARD_NAV_STEP_DEFAULT_HEADING);
 	}
 
+	get optionalStepText() {
+		return this.i18nBundle.getText(WIZARD_OPTIONAL_STEP_ARIA_LABEL);
+	}
+
 	get ariaLabelText() {
 		return this.ariaLabel || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
@@ -812,7 +817,7 @@ class Wizard extends UI5Element {
 			// Hide separator if it's the last step and it's not a branching one
 			const hideSeparator = (idx === stepsCount - 1) && !step.branching;
 
-			const isOptional = step.subheading ? "Optional" : "";
+			const isOptional = step.subheading ? this.optionalStepText : "";
 			const ariaLabel = (step.heading ? `${pos} ${step.heading} ${isOptional}` : `${this.navStepDefaultHeading} ${pos} ${isOptional}`).trim();
 			const isAfterCurrent = (idx > selectedStepIndex);
 
