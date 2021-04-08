@@ -1,5 +1,7 @@
-commit c03f211cc3951fbb925d457f31f0f26012d375bf
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Apr 8 12:40:19 2021 +0300
+commit d873033e32554edc29b163b8c93c34f94d896618
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Apr 8 15:37:17 2021 +0300
 
-    fix(ui5-slider, ui5-range-slider): render only one top level element (#3115)
+    chore(ui5-page): offset content start when header exists (#3103)
+    
+    We had feedback in one of the Slack channels that the content will start with an offset even when the "header" slot is not present. And this is what we address here - setting "2.75rem" top offset to the content in case the Page has a header.
