@@ -20,7 +20,6 @@ import {
 	WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL,
 	WIZARD_OPTIONAL_STEP_ARIA_LABEL,
 	WIZARD_STEP_ARIA_LABEL,
-	WIZARD_CURRENT_STEP_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Step in header and content
@@ -684,10 +683,6 @@ class Wizard extends UI5Element {
 	}
 
 	getStepAriaLabelText(step, ariaLabel) {
-		if (step.selected) {
-			return this.i18nBundle.getText(WIZARD_CURRENT_STEP_ARIA_LABEL, ariaLabel);
-		}
-
 		return this.i18nBundle.getText(WIZARD_STEP_ARIA_LABEL, ariaLabel);
 	}
 
