@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("SegmentedButton general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/SegmentedButton.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/SegmentedButton.html");
+	});
 
 	it("tests if pressed attribute is applied", () => {
 		const toggleButton =  browser.$("#segButton1 > ui5-togglebutton:first-child");

@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Custom themes can be registered", () => {
-	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	});
 
 	it("Tests that theme parameters are changed on theme change", () => {
 		const newTheme = 'my_custom_theme';

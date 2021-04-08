@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Switch general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Switch.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Switch.html");
+	});
 
 	it("tests change event", () => {
 		const switchEl = browser.$("#sw");

@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("MessageStrip general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/MessageStrip.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/MessageStrip.html");
+	});
 
 	it("tests close event", () => {
 

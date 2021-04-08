@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Tree general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Tree.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Tree.html");
+	});
 
 	it("Tree is rendered", () => {
 		const treeRoot = browser.$("#tree").shadow$("ui5-list");
@@ -31,7 +33,9 @@ describe("Tree general interaction", () => {
 });
 
 describe("Tree proxies properties to list", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Tree.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Tree.html");
+	});
 
 	it("Mode works", () => {
 		const tree = browser.$("#tree");
@@ -60,7 +64,9 @@ describe("Tree proxies properties to list", () => {
 });
 
 describe("Tree has screen reader support", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Tree.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/Tree.html");
+	});
 
 	it("List role is correct", () => {
 		const tree = browser.$("#tree");

@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("TabContainer general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/TabContainer.html");
+	before(() => {
+		browser.url("http://localhost:8080/test-resources/pages/TabContainer.html");
+	});
 
 	it("tests initially selected tab", () => {
 		const tabContainer = browser.$("#tabContainer1");

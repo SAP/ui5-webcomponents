@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Slots work properly", () => {
-	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	});
 
 	it("Tests that properties exist on the element for each slot", () => {
 		const res = browser.execute(() => {
