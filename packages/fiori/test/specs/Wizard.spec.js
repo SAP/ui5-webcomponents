@@ -51,10 +51,7 @@ describe("Wizard general interaction", () => {
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
 		const step1InHeaderRoot = step1InHeader.shadow$(`.ui5-wiz-step-root`);
 		const step2InHeaderRoot = step2InHeader.shadow$(`.ui5-wiz-step-root`);
-
 		const stepText = "Step 1 Product type";
-		const currentStepText = "Step 2 Product Information current";
-
 
 		// act - the click handler calls the API
 		btnToStep2.click();
@@ -80,10 +77,6 @@ describe("Wizard general interaction", () => {
 			"Second step is enabled.");
 		assert.strictEqual(step2InHeader.getAttribute("disabled"), null,
 			"Second step in header is enabled.");
-
-		// assert - check if aria-label is applied correctly when step is selected
-		assert.strictEqual(step2InHeaderRoot.getAttribute("aria-label"), currentStepText,
-			"Second step in the header has aria-label.");
 	});
 
 	it("move to next step by click", () => {
