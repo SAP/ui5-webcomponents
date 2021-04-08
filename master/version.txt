@@ -1,5 +1,5 @@
-commit 4bcd049cc4368b47f97686e1792b64a31973099b
+commit c03f211cc3951fbb925d457f31f0f26012d375bf
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Apr 7 14:07:34 2021 +0300
+Date:   Thu Apr 8 12:40:19 2021 +0300
 
-    feat(ui5-color-palette): implement show-recent-color functionality (#3113)
+    fix(ui5-slider, ui5-range-slider): render only one top level element (#3115)
