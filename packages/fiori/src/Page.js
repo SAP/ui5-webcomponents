@@ -168,11 +168,16 @@ class Page extends UI5Element {
 		return this.floatingFooter && !this.hideFooter ? "3.5rem" : "0";
 	}
 
+	get _contentTop() {
+		return !!this.header.length ? "2.75rem" : "0rem";
+	}
+
 	get styles() {
 		return {
 			content: {
 				"padding-bottom": this.footer.length && this._contentPaddingBottom,
 				"bottom": this.footer.length && this._contentBottom,
+				"top": this._contentTop,
 			},
 		};
 	}
