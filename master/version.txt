@@ -1,10 +1,5 @@
-commit 76ec379b95e4ab892d25d21d0b143142e1902bf6
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Fri Apr 9 18:34:53 2021 +0300
+commit 48a002ae2316f694ffbcb7a7ec0f8de47a163843
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Apr 9 19:14:15 2021 +0300
 
-    fix(ui5-input): Suggestions count is read out when expected (#3127)
-    
-    On accessing the ui5-input web component, the suggestions count should not be read out.
-    It is expected to be read out, once the suggestions are opened or after entering a value.
-    
-    FIXES: #3051
+    docs: fix playground samples & docs (#3132)

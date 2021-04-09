@@ -2497,6 +2497,7 @@
 
 	.content-padding {
 		padding: 0.5rem 1rem 0 1rem;
+		box-sizing: border-box;
 	}
 </style>
 
@@ -2513,18 +2514,19 @@
 	<div class="snippet card-container">
 		<ui5-card heading="Team Space" subheading="Direct Reports" status="3 of 10" class="medium">
 			<ui5-icon name="group" slot="avatar"></ui5-icon>
+			<ui5-button design="Emphasized" slot="action">View All</ui5-button>
 
 			<div class="card-content">
 				<ui5-list separators="None" class="card-content-child" style="width: 100%">
 					<ui5-li image="../../../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
 					<ui5-li image="../../../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
-					<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
+					<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Isabella Adams</ui5-li>
 				</ui5-list>
 				
 			</div>
 		</ui5-card>
 		<ui5-card heading="This header is interactive" header-interactive subheading="Click, press Enter or Space" status="3 of 6" class="medium">
-				<ui5-icon name="group" slot="avatar"></ui5-icon>
+			<ui5-icon name="group" slot="avatar"></ui5-icon>
 			
 			<div class="card-content">
 				<ui5-list separators="None" class="card-content-child" style="width: 100%">
@@ -2545,16 +2547,19 @@
 <span class="nt">&lt;/style&gt;</span>
 
 <span class="nt">&lt;ui5-card</span> <span class="na">avatar=</span><span class="s">"group"</span> <span class="na">heading=</span><span class="s">"Team Space"</span> <span class="na">subheading=</span><span class="s">"Direct Reports"</span> <span class="na">status=</span><span class="s">"3 of 10"</span> <span class="na">class=</span><span class="s">"medium"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"group"</span> <span class="na">slot=</span><span class="s">"avatar"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+	<span class="nt">&lt;ui5-button</span> <span class="na">design=</span><span class="s">"Emphasized"</span> <span class="na">slot=</span><span class="s">"action"</span><span class="nt">&gt;</span>View All<span class="nt">&lt;/ui5-button&gt;</span>
 	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"card-content"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;ui5-list</span> <span class="na">separators=</span><span class="s">"None"</span> <span class="na">class=</span><span class="s">"card-content-child"</span> <span class="na">style=</span><span class="s">"width: 100%"</span><span class="nt">&gt;</span>
 			<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/man_avatar_1.png"</span> <span class="na">description=</span><span class="s">"User Researcher"</span><span class="nt">&gt;</span>Alain Chevalier<span class="nt">&lt;/ui5-li&gt;</span>
 			<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/woman_avatar_1.png"</span> <span class="na">description=</span><span class="s">"Artist"</span><span class="nt">&gt;</span>Monique Legrand<span class="nt">&lt;/ui5-li&gt;</span>
-			<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/woman_avatar_2.png"</span> <span class="na">description=</span><span class="s">"UX Specialist"</span><span class="nt">&gt;</span>Michael Adams<span class="nt">&lt;/ui5-li&gt;</span>
+			<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/woman_avatar_2.png"</span> <span class="na">description=</span><span class="s">"UX Specialist"</span><span class="nt">&gt;</span>Isabella Adams<span class="nt">&lt;/ui5-li&gt;</span>
 		<span class="nt">&lt;/ui5-list&gt;</span>
 
 	<span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;/ui5-card&gt;</span>
 <span class="nt">&lt;ui5-card</span> <span class="na">avatar=</span><span class="s">"group"</span> <span class="na">heading=</span><span class="s">"This header is interactive"</span> <span class="na">header-interactive</span> <span class="na">subheading=</span><span class="s">"Click, press Enter or Space"</span> <span class="na">status=</span><span class="s">"3 of 6"</span> <span class="na">class=</span><span class="s">"medium"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"group"</span> <span class="na">slot=</span><span class="s">"avatar"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
 	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"card-content"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;ui5-list</span> <span class="na">separators=</span><span class="s">"None"</span> <span class="na">class=</span><span class="s">"card-content-child"</span> <span class="na">style=</span><span class="s">"width: 100%"</span><span class="nt">&gt;</span>
 			<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../../assets/images/avatars/man_avatar_2.png"</span> <span class="na">description=</span><span class="s">"Software Architect"</span><span class="nt">&gt;</span>Richard Wilson<span class="nt">&lt;/ui5-li&gt;</span>
