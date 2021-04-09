@@ -485,7 +485,6 @@ class DatePicker extends DateComponentBase {
 	_updateValueAndFireEvents(value, normalizeValue, events, shouldChangeValueState) {
 		const valid = this._checkValueValidity(value);
 
-		// const valid = this._checkValueValidity(value);
 		if (valid && normalizeValue) {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
@@ -494,6 +493,7 @@ class DatePicker extends DateComponentBase {
 			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
+
 		events.forEach(event => {
 			this.fireEvent(event, { value, valid });
 		});
