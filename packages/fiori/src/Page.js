@@ -169,7 +169,7 @@ class Page extends UI5Element {
 	}
 
 	get _contentTop() {
-		return !!this.header.length ? "2.75rem" : "0rem";
+		return this.header.length ? "2.75rem" : "0rem";
 	}
 
 	get styles() {

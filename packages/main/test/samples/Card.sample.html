@@ -55,6 +55,7 @@
 
 	.content-padding {
 		padding: 0.5rem 1rem 0 1rem;
+		box-sizing: border-box;
 	}
 </style>
 
@@ -71,18 +72,19 @@
 	<div class="snippet card-container">
 		<ui5-card heading="Team Space" subheading="Direct Reports" status="3 of 10" class="medium">
 			<ui5-icon name="group" slot="avatar"></ui5-icon>
+			<ui5-button design="Emphasized" slot="action">View All</ui5-button>
 
 			<div class="card-content">
 				<ui5-list separators="None" class="card-content-child" style="width: 100%">
 					<ui5-li image="../../../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
 					<ui5-li image="../../../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
-					<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
+					<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Isabella Adams</ui5-li>
 				</ui5-list>
 				
 			</div>
 		</ui5-card>
 		<ui5-card heading="This header is interactive" header-interactive subheading="Click, press Enter or Space" status="3 of 6" class="medium">
-				<ui5-icon name="group" slot="avatar"></ui5-icon>
+			<ui5-icon name="group" slot="avatar"></ui5-icon>
 			
 			<div class="card-content">
 				<ui5-list separators="None" class="card-content-child" style="width: 100%">
@@ -104,16 +106,19 @@
 </style>
 
 <ui5-card avatar="group" heading="Team Space" subheading="Direct Reports" status="3 of 10" class="medium">
+	<ui5-icon name="group" slot="avatar"></ui5-icon>
+	<ui5-button design="Emphasized" slot="action">View All</ui5-button>
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child" style="width: 100%">
 			<ui5-li image="../../../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
 			<ui5-li image="../../../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
-			<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Isabella Adams</ui5-li>
 		</ui5-list>
 
 	</div>
 </ui5-card>
 <ui5-card avatar="group" heading="This header is interactive" header-interactive subheading="Click, press Enter or Space" status="3 of 6" class="medium">
+	<ui5-icon name="group" slot="avatar"></ui5-icon>
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child" style="width: 100%">
 			<ui5-li image="../../../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
