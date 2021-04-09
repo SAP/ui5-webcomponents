@@ -1,7 +1,9 @@
-commit de5b0335d4bb5736500f4c378965281e607e7630
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Thu Apr 8 16:40:16 2021 +0300
+commit 33fde82d1b46451838d3c38ec400955cd2ff4c22
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Apr 9 10:46:17 2021 +0300
 
-    chore(ui5-wizard): translate optional step text (#3120)
+    fix(ui5-shellbar): hide notification bubble if empty str (#3123)
     
-    "Optional" text added to the aria-label attribute of the step is now translated.
+    The notification bubble used to remain displayed when notification-count is an empty string.
+    
+    Fixes: #3121
