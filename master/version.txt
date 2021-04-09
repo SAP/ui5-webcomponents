@@ -1,9 +1,5 @@
-commit 33fde82d1b46451838d3c38ec400955cd2ff4c22
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Apr 9 10:46:17 2021 +0300
+commit 4a00f3a1b2748ea76d0cc0045415b72ff61dbff8
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Apr 9 13:12:34 2021 +0300
 
-    fix(ui5-shellbar): hide notification bubble if empty str (#3123)
-    
-    The notification bubble used to remain displayed when notification-count is an empty string.
-    
-    Fixes: #3121
+    docs: fix ui5-avatar sample (#3124)
