@@ -1,29 +1,10 @@
-commit a2c8fce761f90e57b1d8d0e7f4068d5a3b31c83d
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Fri Apr 9 05:22:14 2021 -0700
+commit 76ec379b95e4ab892d25d21d0b143142e1902bf6
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Fri Apr 9 18:34:53 2021 +0300
 
-    Translation Delivery (#3098)
+    fix(ui5-input): Suggestions count is read out when expected (#3127)
     
-    * chore: translation delivery
+    On accessing the ui5-input web component, the suggestions count should not be read out.
+    It is expected to be read out, once the suggestions are opened or after entering a value.
     
-    Change-Id: I67ce007cbf28aabd7626e9c2e953eca402ee31bd
-    
-    * chore: translation delivery
-    
-    Change-Id: I477e4dab55b9ebcd2203bb06efa3df6aa95a4f68
-    
-    * chore: translation delivery
-    
-    Change-Id: If052b82b871ede39ba3d0ca35df9f2cbe5e81a8d
-    
-    * chore: translation delivery
-    
-    Change-Id: Ie04cc22b49b50962ee86320728f49a23bdd62f60
-    
-    * chore: translation delivery
-    
-    Change-Id: Iaf81c9162df734ed45fba4e484128a978291bd37
-    
-    * chore: translation delivery
-    
-    Change-Id: I8afc0175804df1f5964009e210acbc1fc0cfc06c
+    FIXES: #3051
