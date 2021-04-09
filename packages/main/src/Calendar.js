@@ -615,7 +615,7 @@ class Calendar extends PickerBase {
 		oNewDate.setMonth(iNewMonth);
 
 		if (this._calendarDate.getMonth() === oNewDate.getMonth()) {
-			oNewDate.setDate(0);
+			oNewDate.setDate(0); // If we're still in the same month we set the date to the last day of previous month
 		}
 
 		if (oNewDate.getYear() < minCalendarDateYear) {
