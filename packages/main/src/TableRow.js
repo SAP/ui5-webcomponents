@@ -49,7 +49,7 @@ const metadata = {
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
-		 * <li><code>Active</code> (by default)</li>
+		 * <li><code>Active</code></li>
 		 * <li><code>Inactive</code></li>
 		 * <ul>
 		 * <br><br>
