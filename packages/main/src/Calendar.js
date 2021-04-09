@@ -568,8 +568,7 @@ class Calendar extends PickerBase {
 
 		// focus first day of the month
 		const currentMonthDate = this.dayPicker._calendarDate.setMonth(this.dayPicker._calendarDate.getMonth());
-		let lastMonthDate = this.dayPicker._calendarDate.setDate(1);
-		lastMonthDate = this.dayPicker._calendarDate.setDate(0);
+		let lastMonthDate = this.dayPicker._calendarDate.setDate(0); // Last day of previous month
 
 		// set the date to last day of last month
 		currentMonthDate.setDate(-1);
