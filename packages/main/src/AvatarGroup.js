@@ -53,7 +53,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */  {
 
 		/**
-	 	 * Defines the mode of the <code>AvatarGroup</code>.
+	 	 * Determines the mode of the <code>AvatarGroup</code>.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
