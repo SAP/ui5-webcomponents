@@ -175,8 +175,7 @@ describe("ARIA attributes", () => {
 		const innerInput = mi.shadow$("input");
 		const tokensCountITextId = `${mi.getProperty("_id")}-hiddenText-nMore`;
 		const suggestionsITextId = `${mi.getProperty("_id")}-suggestionsText`;
-		const suggestionsCountITextId = `${mi.getProperty("_id")}-suggestionsCount`;
-		const ariaDescribedBy = `${tokensCountITextId} ${suggestionsITextId}  ${suggestionsCountITextId}`;
+		const ariaDescribedBy = `${tokensCountITextId} ${suggestionsITextId}`;
 
 		$("#suggestion-token").scrollIntoView();
 		innerInput.click();
