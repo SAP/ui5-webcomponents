@@ -230,6 +230,11 @@ describe("List Tests", () => {
 		assert.ok(firstListItem.isFocused(), "First item remains focussed");
 	});
 
+	it("tests 'loadMore' event not fired initially when the list did not overflow", () => {
+		const loadMoreResult = $("#growingScrollTestCounter");
+		assert.strictEqual(loadMoreResult.getAttribute("value"), "0", "The event loadMore has not been fired.");
+	});
+
 	it("tests 'loadMore' event fired upon infinite scroll", () => {
 		const btn = $("#btnTrigger");
 		const loadMoreResult = $("#loadMoreResult");
