@@ -1,7 +1,7 @@
 {
   "name": "@ui5/webcomponents-theming",
   "version": "1.0.0-rc.14",
-  "description": "UI5 Web Components: webcomponents.theme-base",
+  "description": "UI5 Web Components: webcomponents.theming",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "private": false,
@@ -21,7 +21,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/SAP/ui5-webcomponents.git",
-    "directory": "packages/theme-base"
+    "directory": "packages/theming"
   },
   "dependencies": {
     "@sap-theming/theming-base-content": "11.1.27",
