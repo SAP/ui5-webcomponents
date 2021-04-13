@@ -119,12 +119,12 @@ const metadata = {
  * <h4>When to use</h4
  * Use the color picker if:
  * <ul>
- * <li> users need to select any color freely.
+ * <li> users need to select any color freely.</li>
  * </ul>
  *
  * <h4>When not to use</h4>
  * <ul>
- * <li> Users need to select one color from a predefined set of colors. Use the ColorPalette component instead.
+ * <li> Users need to select one color from a predefined set of colors. Use the ColorPalette component instead.</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
