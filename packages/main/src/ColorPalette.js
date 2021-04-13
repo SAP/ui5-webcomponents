@@ -96,13 +96,14 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The ColorPalette provides the users with a range of predefined colors.
+ * The ColorPalette provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
  * You can set them by using the ColorPaletteItem items as slots.
  *
  * <h3>Usage</h3>
- * The palette is intended for users, who don't want to check and remember the different values of the colors .
+ * The Colorpalette is intended for users that needs to select a color from a predefined set of colors.
+ * To allow users select any color from a color picker, enable the <code>more-colors</code> property.
+ * And, to display the most recent color selection, enable the <code>show-recent-colors</code> property.
  *
- * For the <code>ui5-color-palette</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/ColorPalette.js";</code>

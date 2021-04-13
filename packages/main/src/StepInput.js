@@ -330,13 +330,13 @@ const INITIAL_SPEED = 120; // milliseconds
  * The increase/decrease button and the up/down keyboard navigation become disabled when
  * the value reaches the max/min or a new value is entered from the input which is greater/less than the max/min.
  * <br><br>
- * <i>When to use</i>
+ * <h4>When to use</h4>
  * <ul>
  * <li>To adjust amounts, quantities, or other values quickly.</li>
  * <li>To adjust values for a specific step.</li>
  * </ul>
  *
- * <i>When not to use</i>
+ * <h4>When not to use</h4>
  * <ul>
  * <li>To enter a static number (for example, postal code, phone number, or ID). In this case,
  * use the regular <code>ui5-input</code> instead.</li>

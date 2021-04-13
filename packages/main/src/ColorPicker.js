@@ -28,8 +28,8 @@ const metadata = {
 
 		/**
 		 * Defines the currently selected color of the <code>ui5-color-picker</code>.
-		 * *Note*:  If you need to have initially set color, or change the color programmatically, use this property
-		 * *Important*: Use HEX, RGB, RGBA, HSV, or a CSS color name when modifying this property.
+		 * <br><br>
+		 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
 		 * @type {String}
 		 * @public
 		 */
@@ -112,11 +112,21 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * Enables the user to select a color & transparency.
+ * The ColorPicker allows users to choose any color and provides different input options for selecting colors.
  *
  * <h3>Usage</h3>
  *
- * For the <code>ui5-color-picker</code>
+ * <h4>When to use</h4
+ * Use the color picker if:
+ * <ul>
+ * <li> users need to select any color freely.
+ * </ul>
+ *
+ * <h4>When not to use</h4>
+ * <ul>
+ * <li> Users need to select one color from a predefined set of colors. Use the ColorPalette component instead.
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/ColorPicker.js";</code>
