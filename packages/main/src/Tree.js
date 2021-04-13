@@ -20,9 +20,18 @@ const metadata = {
 		/**
 		 * Defines the mode of the <code>ui5-tree</code>. Since the tree uses a <code>ui5-list</code> to display its structure,
 		 * the tree modes are exactly the same as the list modes, and are all applicable.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
-		 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
+		 * <b>Note:</b>
+		 *
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>SingleSelect</code></li>
+		 * <li><code>SingleSelectBegin</code></li>
+		 * <li><code>SingleSelectEnd</code></li>
+		 * <li><code>MultiSelect</code></li>
+		 * <li><code>Delete</code></li>
+		 * </ul>
 		 *
 		 * @public
 		 * @type {ListMode}
@@ -153,7 +162,7 @@ const metadata = {
 		 * Fired when a tree item is activated.
 		 *
 		 * @event sap.ui.webcomponents.main.Tree#item-click
-		 * @param {HTMLElement} item the clicked item.
+		 * @param {HTMLElement} item The clicked item.
 		 * @public
 		 */
 		"item-click": {

@@ -315,7 +315,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
-	 * Checks if a value is valid against the current date format of the TimePicker
+	 * Checks if the picker is open
 	 * @public
 	 * @returns {boolean}
 	 */
