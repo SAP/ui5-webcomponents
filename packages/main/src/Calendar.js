@@ -568,7 +568,7 @@ class Calendar extends PickerBase {
 
 		// focus first day of the month
 		const currentMonthDate = this.dayPicker._calendarDate.setMonth(this.dayPicker._calendarDate.getMonth());
-		const lastMonthDate = this.dayPicker._calendarDate.setMonth(this.dayPicker._calendarDate.getMonth() - 1);
+		const lastMonthDate = this.dayPicker._calendarDate.setDate(0); // last day of previous month
 
 		// set the date to last day of last month
 		currentMonthDate.setDate(-1);
@@ -576,7 +576,7 @@ class Calendar extends PickerBase {
 		// find the index of the last day
 		let lastDayOfMonthIndex = -1;
 
-		if (!this.isInValidRange(currentMonthDate.toLocalJSDate().valueOf())) {
+		if (!this.isInValidRange(lastMonthDate.toLocalJSDate().valueOf())) {
 			return;
 		}
 
@@ -614,6 +614,9 @@ class Calendar extends PickerBase {
 		oNewDate.setYear(iNewYear);
 		oNewDate.setMonth(iNewMonth);
 
+		if (this._calendarDate.getMonth() === oNewDate.getMonth()) {
+			oNewDate.setDate(0); // If we're still in the same month we set the date to the last day of previous month
+		}
 
 		if (oNewDate.getYear() < minCalendarDateYear) {
 			return;
