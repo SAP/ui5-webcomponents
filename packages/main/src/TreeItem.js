@@ -123,7 +123,7 @@ const metadata = {
  * <code>ui5-tree-item</code> directly in your apps. The <code>ui5-li-tree</code> list item is internal for the list, and not intended for public use.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import @ui5/webcomponents/dist/TreeItem.js";</code>
+ * <code>import "@ui5/webcomponents/dist/TreeItem.js";</code>
  *
  * @constructor
  * @author SAP SE

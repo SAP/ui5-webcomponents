@@ -330,13 +330,13 @@ const INITIAL_SPEED = 120; // milliseconds
  * The increase/decrease button and the up/down keyboard navigation become disabled when
  * the value reaches the max/min or a new value is entered from the input which is greater/less than the max/min.
  * <br><br>
- * <h4>When to use</h4>
+ * <h4>When to use:</h4>
  * <ul>
  * <li>To adjust amounts, quantities, or other values quickly.</li>
  * <li>To adjust values for a specific step.</li>
  * </ul>
  *
- * <h4>When not to use</h4>
+ * <h4>When not to use:</h4>
  * <ul>
  * <li>To enter a static number (for example, postal code, phone number, or ID). In this case,
  * use the regular <code>ui5-input</code> instead.</li>
@@ -347,7 +347,7 @@ const INITIAL_SPEED = 120; // milliseconds
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/StepInput.js";</code>
+ * <code>import "@ui5/webcomponents/dist/StepInput.js";</code>
  *
  * @constructor
  * @author SAP SE

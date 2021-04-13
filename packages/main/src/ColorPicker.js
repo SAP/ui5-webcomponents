@@ -116,20 +116,20 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * <h4>When to use</h4
+ * <h4>When to use:</h4
  * Use the color picker if:
  * <ul>
  * <li> users need to select any color freely.</li>
  * </ul>
  *
- * <h4>When not to use</h4>
+ * <h4>When not to use:</h4>
  * <ul>
  * <li> Users need to select one color from a predefined set of colors. Use the ColorPalette component instead.</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/ColorPicker.js";</code>
+ * <code>import "@ui5/webcomponents/dist/ColorPicker.js";</code>
  *
  * @constructor
  * @author SAP SE
