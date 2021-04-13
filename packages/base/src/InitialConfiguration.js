@@ -102,7 +102,7 @@ const parseURLParameters = () => {
 		applyURLParam(key, value, "sap");
 	});
 
-	// Process "sap-ui-*" params 
+	// Process "sap-ui-*" params
 	params.forEach((value, key) => {
 		if (!key.startsWith("sap-ui")) {
 			return;
@@ -120,7 +120,7 @@ const applyURLParam = (key, value, paramType) => {
 		value = booleanMapping.get(lowerCaseValue);
 	}
 	initialConfig[param] = value;
-}
+};
 
 const applyOpenUI5Configuration = () => {
 	const OpenUI5Support = getFeature("OpenUI5Support");
