@@ -84,7 +84,7 @@ const metadata = {
 		 * <br>
 		 * <b>Note:</b>In order to be complaint with the UX guidlines and for best experience,
 		 * we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
-		 * you can set its <code>size</code><code> property to <code>XS</code> to get the required size - <code><ui5-avatar size="XS"></code>.
+		 * you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
 		 *
 		 * @type {sap.ui.webcomponents.main.IAvatar}
 		 * @slot

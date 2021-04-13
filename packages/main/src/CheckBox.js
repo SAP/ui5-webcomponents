@@ -80,8 +80,17 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-checkbox</code>.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are <code>Warning</code>, <code>Error</code>, and <code>None</code> (default).
+		 * <b>Note:</b>
+		 *
+		 * <ul>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>None</code>(default)</li>
+		 * <li><code>Negative</code></li>
+		 * <li><code>Transparent</code></li>
+		 * </ul>
 		 *
 		 * @type {ValueState}
 		 * @defaultvalue "None"

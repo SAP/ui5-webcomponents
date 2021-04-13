@@ -567,7 +567,7 @@ class DatePicker extends DateComponentBase {
 
 	/**
 	 * Checks if a date is between the minimum and maximum date.
-	 * @param {string} value
+	 * @param {string} value A value to be checked
 	 * @returns {boolean}
 	 * @public
 	 */
