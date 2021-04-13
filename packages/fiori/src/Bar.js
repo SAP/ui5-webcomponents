@@ -15,8 +15,16 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
 		/**
 		 * Defines the <code>ui5-bar</code> design.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are "Header", "Subheader", "Footer", "FloatingFooter".
+		 * <b>Note:</b>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Header</code></li>
+		 * <li><code>Subheader</code></li>
+		 * <li><code>Footer</code></li>
+		 * <li><code>FloatingFooter</code></li>
+		 * </ul>
 		 *
 		 * @type {BarDesign}
 		 * @defaultvalue "Header"

@@ -37,9 +37,15 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		/**
 		 * Defines the mode of the <code>ui5-upload-collection</code>.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>,
-		 * <code>MultiSelect</code>, and <code>Delete</code>.
+		 * <b>Note:</b>
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>SingleSelect</code></li>
+		 * <li><code>MultiSelect</code></li>
+		 * <li><code>Delete</code></li>
+		 * </ul>
 		 *
 		 * @type {ListMode}
 		 * @defaultvalue "None"

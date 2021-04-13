@@ -69,7 +69,7 @@ const metadata = {
  * <li>showTickmarks - Displays a visual divider between the step values</li>
  * <li>labelInterval - Labels some or all of the tickmarks with their values.</li>
  * </ul>
- * <h4>Notes:<h4>
+ * <h4>Notes:</h4>
  * <ul>
  * <li>The right and left handle can be moved individually and their positions could therefore switch.</li>
  * <li>The entire range can be moved along the interval.</li>
