@@ -203,8 +203,8 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * You can manually set the width of the element containing the box and the label using the <code>width</code> property.
- * If the text exceeds the available width, it is truncated.
+ * You can define the checkbox text with via the <code>text</code> property. If the text exceeds the available width, it is truncated by default.
+ * In case you prefer text to wrap, use the <code>wrap</code> property.
  * The touchable area for toggling the <code>ui5-checkbox</code> ends where the text ends.
  * <br><br>
  * You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to

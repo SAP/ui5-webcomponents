@@ -35,7 +35,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
 
 		/**
-		 * Defines text to be displayed below the busy indicator. It can be used to inform the user of the current operation.
+		 * Defines text to be displayed below the <code>ui5-busyindicator</code>. It can be used to inform the user of the current operation.
 		 * @type {String}
 		 * @public
 		 * @defaultvalue ""
@@ -85,17 +85,30 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-busyindicator</code> signals that some operation is going on and that the
- *  user must wait. It does not block the current UI screen so other operations could be
- *  triggered in parallel.
+ * user must wait. It does not block the current UI screen so other operations could be triggered in parallel.
+ * It displays 3 dots and each dot expands and shrinks at a different rate, resulting in a cascading flow of animation.
  *
  * <h3>Usage</h3>
- * For the <code>ui5-busyindicator</code> you can define the size of the indicator, as well
- * as whether it is shown or hidden. In order to hide it, use the html attribute <code>hidden</code> or <code>display: none;</code>
+ * For the <code>ui5-busyindicator</code> you can define the size, the text and whether it is shown or hidden.
+ * In order to hide it, use the "active" property.
  * <br><br>
- * In order to show busy state for an HTML element, simply nest the HTML element in a <code>ui5-busyindicator</code> instance.
+ * In order to show busy state over an HTML element, simply nest the HTML element in a <code>ui5-busyindicator</code> instance.
  * <br>
  * <b>Note:</b> Since <code>ui5-busyindicator</code> has <code>display: inline-block;</code> by default and no width of its own,
  * whenever you need to wrap a block-level element, you should set <code>display: block</code> to the busy indicator as well.
+ *
+ * <h4>When to use:</h4>
+ * <ul>
+ * <li>The user needs to be able to cancel the operation.</li>
+ * <li>Only part of the application or a particular control is affected.</li>
+ * </ul>
+ *
+ * <h4>When not to use:</h4>
+ * <ul>
+ * <li>The operation takes less than one second.</li>
+ * <li>You need to block the screen and prevent the user from starting another activity.</li>
+ * <li>Do not show multiple busy indicators at once.</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *

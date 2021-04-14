@@ -225,7 +225,7 @@ const metadata = {
  * For the <code>ui5-file-uploader</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/FileUploader.js";</code>
+ * <code>import "@ui5/webcomponents/dist/FileUploader.js";</code>
  *
  * @constructor
  * @since 1.0.0-rc.6

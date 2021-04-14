@@ -199,6 +199,7 @@ const metadata = {
  * <h3>Usage</h3>
  * <h4>When to use:</h4>
  * When the user has to accomplish a long set of tasks.
+ *
  * <h4>When not to use:</h4>
  * When the task has less than 3 steps.
  *
@@ -207,7 +208,7 @@ const metadata = {
  * will start truncate and shrink and from particular point they will hide to free as much space as possible.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import @ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
+ * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
  *
  * @constructor
  * @author SAP SE
