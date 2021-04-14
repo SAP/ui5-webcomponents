@@ -2672,16 +2672,19 @@
 	<h3>Input with Label</h3>
 	<div class="snippet">
 		<div class="flex-column samples-margin">
-			<ui5-label class="samples-big-margin-right" for="myInput" required>Name</ui5-label>
+			<ui5-label class="samples-big-margin-right" for="myInput" required show-colon>Name</ui5-label>
 			<ui5-input id="myInput" placeholder="Enter your Name" required></ui5-input>
 		</div>
 		<div class="flex-column">
-			<ui5-label class="samples-big-margin-right" for="myPassword" required>Secret Code</ui5-label>
+			<ui5-label class="samples-big-margin-right" for="myPassword" required show-colon>Secret Code</ui5-label>
 			<ui5-input id="myPassword" type="Password" value-state="Error" placeholder="Enter your Secret Code" required></ui5-input>
 		</div>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-label</span> <span class="na">class=</span><span class="s">"samples-big-margin-right"</span> <span class="na">for=</span><span class="s">"myInput"</span> <span class="na">required</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/ui5-label&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-label</span> <span class="na">class=</span><span class="s">"samples-big-margin-right"</span> <span class="na">for=</span><span class="s">"myInput"</span> <span class="na">required</span> <span class="na">show-colon</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/ui5-label&gt;</span>
 <span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"myInput"</span> <span class="na">placeholder=</span><span class="s">"Enter your Name"</span> <span class="na">required</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+
+<span class="nt">&lt;ui5-label</span> <span class="na">class=</span><span class="s">"samples-big-margin-right"</span> <span class="na">for=</span><span class="s">"myPassword"</span> <span class="na">required</span> <span class="na">show-colon</span><span class="nt">&gt;</span>Secret Code<span class="nt">&lt;/ui5-label&gt;</span>
+<span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"myPassword"</span> <span class="na">type=</span><span class="s">"Password"</span> <span class="na">value-state=</span><span class="s">"Error"</span> <span class="na">placeholder=</span><span class="s">"Enter your Secret Code"</span> <span class="na">required</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 	</code></pre></figure></pre>
 </section>
 

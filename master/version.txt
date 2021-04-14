@@ -1,9 +1,9 @@
-commit ef52f2b96d247cbf0723cfa2229e20b62a1ed0c9
+commit 8333773b171b013be47bc53632d3abc1a327d4b8
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 12 09:46:35 2021 +0300
+Date:   Wed Apr 14 13:42:04 2021 +0300
 
-    fix(ui5-list): prevent load-more on initial intersection (#3105)
+    docs: improve samples and overview sections (#3142)
     
-    This is a change already merged in release-0.29, because of a tight deadline, set by stakeholders. Now we ensure that the issue is fixed in the future versions. The commit in the release-0.29 branch is the following: af2070f
+    improve samples and overview sections.
     
-    And the change fixes the case when the List does not actually overflow, the bottom most part of the List is visible and the IntersectionObserver detects that the bottom of the List is reached. What happens in the apps is that the List fires "load-more" just before the items that the app wants to show initially are actually rendered, which results in additional loading, not due to user scroll.
+    FIXES: #3145
