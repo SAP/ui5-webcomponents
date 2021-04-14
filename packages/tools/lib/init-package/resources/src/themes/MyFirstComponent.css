@@ -1,0 +1,11 @@
+:host {
+    border: 2px solid var(--my-component-border-color);
+    background-color: var(--sapBackgroundColor);
+    color: var(--sapTextColor);
+    display: block;
+    width: 24rem;
+    height: 3rem;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 3rem;
+}

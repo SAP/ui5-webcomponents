@@ -14,7 +14,7 @@
 	border-radius: .25rem;
 	border: 1px solid var(--_ui5_card_border_color);
 	overflow: hidden;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	box-sizing: border-box;
 }
@@ -66,6 +66,7 @@
 
 .ui5-card-header .ui5-card-header-text {
 	flex: 1;
+	pointer-events: none;
 }
 
 .ui5-card-header .ui5-card-avatar {
@@ -75,9 +76,10 @@
 	align-items: center;
 	justify-content: center;
 	margin-right: .75rem;
+	pointer-events: none;
 }
 
-::slotted(ui5-icon) {
+::slotted([ui5-icon]) {
 	width: 1.5rem;
 	height: 1.5rem;
 	color: var(--sapTile_IconColor);
@@ -91,7 +93,7 @@
 
 .ui5-card-header .ui5-card-status {
 	display: inline-block;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
 	color: var(--sapTile_TextColor);
 	text-align: left;
@@ -104,15 +106,15 @@
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-heading {
-	font-family: var(--sapFontFamily);
-	font-size: var(--sapMFontHeader5Size);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontHeader5Size);
 	font-weight: normal;
 	color: var(--sapTile_TitleTextColor);
 	max-height: 3.5rem;
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-subheading {
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	font-weight: normal;
 	color: var(--sapTile_TextColor);

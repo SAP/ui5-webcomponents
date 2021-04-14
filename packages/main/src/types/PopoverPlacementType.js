@@ -22,7 +22,7 @@ const PopoverPlacementTypes = {
 	/**
 	 * Popover will be placed at the top of the reference element.
 	 * @public
-	 * @type {Bottom}
+	 * @type {Top}
 	 */
 	Top: "Top",
 
@@ -49,6 +49,6 @@ class PopoverPlacementType extends DataType {
 	}
 }
 
-PopoverPlacementType.generataTypeAcessors(PopoverPlacementTypes);
+PopoverPlacementType.generateTypeAccessors(PopoverPlacementTypes);
 
 export default PopoverPlacementType;

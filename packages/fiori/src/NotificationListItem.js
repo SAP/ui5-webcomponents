@@ -43,12 +43,13 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListItem.prototype */ {
 
 		/**
-		 * Defines if the <code>heading</code> and <code>decription</code> should wrap,
+		 * Defines if the <code>heading</code> and <code>description</code> should wrap,
 		 * they truncate by default.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> by default the <code>heading</code> and <code>decription</code>,
 		 * and a <code>ShowMore/Less</code> button would be displayed.
+         * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -57,20 +58,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the <code>notification</code> is new or has been already read.
-		 * <br><br>
-		 * <b>Note:</b> if set to <code>false</code> the <code>heading</code> has bold font,
-		 * if set to true - it has a normal font.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		read: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the state of the <code>heading</code> and <code>decription</code>,
+		 * Defines the state of the <code>heading</code> and <code>description</code>,
 		 * if less or more information is displayed.
 		 * @private
 		 */
@@ -93,8 +81,12 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> Consider using the <code>ui5-avatar</code> to display icons, initials or images.
+		 * <br>
+		 * <b>Note:</b>In order to be complaint with the UX guidlines and for best experience,
+		 * we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
+		 * you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
 		 *
-		 * @type {HTMLElement}
+		 * @type {sap.ui.webcomponents.main.IAvatar}
 		 * @slot
 		 * @public
 		 */
@@ -105,7 +97,7 @@ const metadata = {
 		/**
 		 * Defines the elements, dipalyed in the footer of the of the <code>ui5-li-notification</code>.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot footnotes
 		 * @public
 		 */
 		footnotes: {
@@ -119,10 +111,10 @@ const metadata = {
 		 * usually a description of the notification.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
-		 * @slot
+		 * @slot description
 		 * @public
 		 */
 		"default": {
@@ -139,36 +131,46 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-li-notification</code> is a type of list item, meant to dispaly notifcatations.
+ * The <code>ui5-li-notification</code> is a type of list item, meant to display notifications.
  * <br>
  *
  * The component has a rich set of various properties that allows the user to set <code>avatar</code>, <code>heading</code>, descriptive <code>content</code>
- * and <code>footnotes</code> to fully describe a notifcation.
+ * and <code>footnotes</code> to fully describe a notification.
  * <br>
  *
  * The user can:
  * <ul>
- * <li>display a <code>Close</code> button</code></li>
+ * <li>display a <code>Close</code> button</li>
  * <li>can control whether the <code>heading</code> and <code>description</code> should wrap or truncate
- * and display a <code>ShomeMore</code> button to switch between less and more information</code></li>
- * <li>add custom actions by using the <code>ui5-notification-overflow-action</code></code> component</li>
+ * and display a <code>ShowMore</code> button to switch between less and more information</li>
+ * <li>add custom actions by using the <code>ui5-notification-action</code> component</li>
  * </ul>
  *
  * <h3>Usage</h3>
  * The component can be used in a standard <code>ui5-list</code>.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-li-notification</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>heading - Used to style the heading of the notification list item</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/NotificationListItem.js";</code>
+ * <code>import "@ui5/webcomponents/dist/NotificationListItem.js";</code>
  * <br>
- * <code>import @ui5/webcomponents/dist/NotificationOverflowAction.js";</code> (optional)
+ * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListItem
  * @extends NotificationListItemBase
  * @tagname ui5-li-notification
- * @appenddocs NotificationOverflowAction
+ * @appenddocs NotificationAction
  * @since 1.0.0-rc.8
+ * @implements sap.ui.webcomponents.fiori.INotificationListItem, sap.ui.webcomponents.main.IListItem
  * @public
  */
 class NotificationListItem extends NotificationListItemBase {
@@ -197,15 +199,18 @@ class NotificationListItem extends NotificationListItemBase {
 		return NotificationListItemTemplate;
 	}
 
+	static get dependencies() {
+		return [
+			Button,
+			Icon,
+			BusyIndicator,
+			Link,
+			Popover,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Button.define(),
-			Icon.define(),
-			BusyIndicator.define(),
-			Link.define(),
-			Popover.define(),
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	onEnterDOM() {
@@ -226,18 +231,18 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get showMoreText() {
 		if (this._showMorePressed) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_LESS);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_LESS);
 		}
 
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
 	}
 
-	get overflowBtnTitle() {
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
+	get overflowBtnAccessibleName() {
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
 	}
 
-	get closeBtnTitle() {
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
+	get closeBtnAccessibleName() {
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
 	}
 
 	get hideShowMore() {
@@ -253,7 +258,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get headingDOM() {
-		return this.shadowRoot.querySelector(".ui5-nli-title");
+		return this.shadowRoot.querySelector(".ui5-nli-heading");
 	}
 
 	get headingHeight() {
@@ -323,23 +328,23 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get priorityText() {
 		if (this.priority === Priority.High) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Medium) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Low) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
 		}
 
 		return "";
 	}
 
 	get accInvisibleText() {
-		const notifcationTxt = this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
-		const readTxt = this.read ? this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_READ) : this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
+		const notifcationTxt = this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
+		const readTxt = this.read ? this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 		const priorityText = this.priorityText;
 
 		return `${notifcationTxt} ${readTxt} ${priorityText}`;
@@ -406,7 +411,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		const headingWouldOverflow = this.headingHeight > this._headingOverflowHeight;
-		const descWouldOverflow = this.descriptionHeight > this._descOverflowHeight;
+		const descWouldOverflow = this.hasDesc && this.descriptionHeight > this._descOverflowHeight;
 		const overflows = headingWouldOverflow || descWouldOverflow;
 
 		if (this._showMorePressed && overflows) {
@@ -416,7 +421,7 @@ class NotificationListItem extends NotificationListItemBase {
 
 		if (this.headingOverflows || this.descriptionOverflows) {
 			this._headingOverflowHeight = this.headingHeight;
-			this._descOverflowHeight = this.descriptionHeight;
+			this._descOverflowHeight = this.hasDesc ? this.descriptionHeight : 0;
 			this._showMore = true;
 			return;
 		}

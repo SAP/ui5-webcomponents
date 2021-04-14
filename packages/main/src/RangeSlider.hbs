@@ -1,0 +1,64 @@
+{{>include "./SliderBase.hbs"}}
+
+<span id="{{_id}}-startHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.startHandleText}}</span>
+<span id="{{_id}}-endHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.endHandleText}}</span>
+
+{{#*inline "progressBar"}}
+	<div class="ui5-slider-progress-container">
+		<div class="ui5-slider-progress"
+			style="{{styles.progress}}"
+			@focusin="{{_onfocusin}}"
+			@focusout="{{_onfocusout}}"
+			role="slider"
+			tabindex="{{tabIndex}}"
+			aria-orientation="horizontal"
+			aria-valuemin="{{min}}"
+			aria-valuemax="{{max}}"
+			aria-valuetext="From {{startValue}} to {{endValue}}"
+			aria-labelledby="{{_id}}-sliderDesc"
+			aria-disabled="{{_ariaDisabled}}"
+		></div>
+	</div>
+{{/inline}}
+
+{{#*inline "handles"}}
+	<div class="ui5-slider-handle ui5-slider-handle--start"
+		style="{{styles.startHandle}}"
+		@focusin="{{_onfocusin}}"
+		@focusout="{{_onfocusout}}"
+		role="slider"
+		tabindex="{{tabIndex}}"
+		aria-orientation="horizontal"
+		aria-valuemin="{{min}}"
+		aria-valuemax="{{max}}"
+		aria-valuenow="{{startValue}}"
+		aria-labelledby="{{_id}}-startHandleDesc"
+		aria-disabled="{{_ariaDisabled}}"
+	>
+		{{#if showTooltip}}
+			<div class="ui5-slider-tooltip ui5-slider-tooltip--start" style="{{styles.tooltip}}">
+				<span class="ui5-slider-tooltip-value">{{tooltipStartValue}}</span>
+			</div>
+		{{/if}}
+	</div>
+
+	<div class="ui5-slider-handle ui5-slider-handle--end"
+		style="{{styles.endHandle}}"
+		@focusin="{{_onfocusin}}"
+		@focusout="{{_onfocusout}}"
+		role="slider"
+		tabindex="{{tabIndex}}"
+		aria-orientation="horizontal"
+		aria-valuemin="{{min}}"
+		aria-valuemax="{{max}}"
+		aria-valuenow="{{endValue}}"
+		aria-labelledby="{{_id}}-endHandleDesc"
+		aria-disabled="{{_ariaDisabled}}"
+	>
+		{{#if showTooltip}}
+			<div class="ui5-slider-tooltip ui5-slider-tooltip--end" style="{{styles.tooltip}}">
+				<span class="ui5-slider-tooltip-value">{{tooltipEndValue}}</span>
+			</div>
+		{{/if}}
+	</div>
+{{/inline}}

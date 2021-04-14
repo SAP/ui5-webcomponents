@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 
@@ -49,11 +50,16 @@ const metadata = {
 		 * Defines the <code>ui5-link</code> target.
 		 * <br><br>
 		 * <b>Notes:</b>
+		 *
 		 * <ul>
-		 * <li>Available options are the standard values: <code>_self</code>, <code>_top</code>,
-		 * <code>_blank</code>, <code>_parent</code>, and <code>_search</code>.</li>
-		 * <li>This property must only be used when the <code>href</code> property is set.</li>
+		 * <li><code>_self</code></li>
+		 * <li><code>_top</code></li>
+		 * <li><code>_blank</code></li>
+		 * <li><code>_parent</code></li>
+		 * <li><code>_search</code></li>
 		 * </ul>
+		 *
+		 * <b>This property must only be used when the <code>href</code> property is set.</b>
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -91,6 +97,31 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the aria-label attribute for the link.
+		 *
+		 * @type {String}
+		 * @since 1.0.0-rc.10
+		 * @private
+		 * @defaultvalue ""
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the input
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.10
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
+
 		_rel: {
 			type: String,
 			noAttribute: true,
@@ -99,7 +130,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-link</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -117,6 +148,7 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
+		 * @native
 		 */
 		click: {},
 	},
@@ -141,8 +173,8 @@ const metadata = {
  * <code>Subtle</code> or the more important ones as <code>Emphasized</code>,
  * by using the <code>design</code> property.
  * <br><br>
- * If the <code>href</code> property is set, the link behaves as the basic HTML
- * anchor tag (<code><a></code>) and opens the specified URL in the given target frame (<code>target</code> property).
+ * If the <code>href</code> property is set, the link behaves as the HTML
+ * anchor tag (<code>&lt;a>&lt;a/></code>) and opens the specified URL in the given target frame (<code>target</code> property).
  * To specify where the linked content is opened, you can use the <code>target</code> property.
  *
  * <h3>Responsive behavior</h3>
@@ -207,8 +239,8 @@ class Link extends UI5Element {
 		return (this.disabled || !this.textContent.length) ? "-1" : "0";
 	}
 
-	get ariaDisabled() {
-		return this.disabled ? "true" : undefined;
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get hasLinkType() {

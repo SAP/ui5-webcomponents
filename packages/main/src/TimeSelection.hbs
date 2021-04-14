@@ -1,0 +1,60 @@
+<div
+		class="{{classes.root}}"
+		tabindex="-1"
+		@keydown={{_onkeydown}}
+		@focusin="{{_onfocusin}}"
+		@focusout="{{_onfocusout}}"
+>
+	{{#if _hasHoursSlider}}
+		<ui5-wheelslider
+				label = "{{hoursSliderTitle}}"
+				._items="{{hoursArray}}"
+				data-sap-focus-ref
+				?expanded="{{_hoursSliderFocused}}"
+				value="{{_hours}}"
+				@ui5-select="{{onHoursChange}}"
+				@click="{{selectSlider}}"
+				@focusin="{{selectSlider}}"
+				data-sap-slider="hours"
+				?cyclic="{{_isCyclic}}"
+		></ui5-wheelslider>
+	{{/if}}
+	{{#if _hasMinutesSlider}}
+		<ui5-wheelslider
+				label = "{{minutesSliderTitle}}"
+				._items="{{minutesArray}}"
+				?expanded="{{_minutesSliderFocused}}"
+				value="{{_minutes}}"
+				@ui5-select="{{onMinutesChange}}"
+				@click="{{selectSlider}}"
+				@focusin="{{selectSlider}}"
+				data-sap-slider="minutes"
+				?cyclic="{{_isCyclic}}"
+		></ui5-wheelslider>
+	{{/if}}
+	{{#if _hasSecondsSlider}}
+		<ui5-wheelslider
+				label = "{{secondsSliderTitle}}"
+				._items="{{secondsArray}}"
+				?expanded="{{_secondsSliderFocused}}"
+				value="{{_seconds}}"
+				@ui5-select="{{onSecondsChange}}"
+				@click="{{selectSlider}}"
+				@focusin="{{selectSlider}}"
+				data-sap-slider="seconds"
+				?cyclic="{{_isCyclic}}"
+		></ui5-wheelslider>
+	{{/if}}
+	{{#if _hasPeriodsSlider}}
+		<ui5-wheelslider
+				label = "{{periodSliderTitle}}"
+				._items="{{periodsArray}}"
+				?expanded="{{_periodSliderFocused}}"
+				value="{{_period}}"
+				@ui5-select="{{onPeriodChange}}"
+				@click="{{selectSlider}}"
+				@focusin="{{selectSlider}}"
+				data-sap-slider="period"
+		></ui5-wheelslider>
+	{{/if}}
+</div>

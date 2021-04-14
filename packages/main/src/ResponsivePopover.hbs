@@ -13,11 +13,14 @@
 			{{#if header.length}}
 				<slot slot="header" name="header"></slot>
 			{{else}}
-				<header class="ui5-responsive-popover-header">
-					<ui5-title level="H5" class="ui5-responsive-popover-header-text">{{headerText}}</ui5-title>
+				<header class="{{dialogClasses.header}}">
+					{{#if headerText }}
+						<ui5-title level="H2" class="ui5-popup-header-text ui5-responsive-popover-header-text">{{headerText}}</ui5-title>
+					{{/if}}
 					<ui5-button
 						icon="decline"
 						design="Transparent"
+						aria-label="{{_closeDialogAriaLabel}}"
 						@click="{{close}}"
 					>
 					</ui5-button>

@@ -1,8 +1,11 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ToastTemplate from "./generated/templates/ToastTemplate.lit.js";
+import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ToastPlacement from "./types/ToastPlacement.js";
+
+// Template
+import ToastTemplate from "./generated/templates/ToastTemplate.lit.js";
 
 // Styles
 import ToastCss from "./generated/themes/Toast.css.js";
@@ -81,7 +84,7 @@ const metadata = {
 		/**
 		 * Defines the text of the <code>ui5-toast</code> web component.
 		 * <br><br>
-		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -196,6 +199,8 @@ class Toast extends UI5Element {
 
 				// We alter the opacity property, in order to trigger transition
 				"opacity": this.open && !this.hover ? "0" : "",
+
+				"z-index": getNextZIndex(),
 			},
 		};
 	}

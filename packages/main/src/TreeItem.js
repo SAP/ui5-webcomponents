@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 /**
  * @public
@@ -66,18 +67,45 @@ const metadata = {
 		icon: {
 			type: String,
 		},
+
+		/**
+		 * Defines the <code>info</code>, displayed in the end of the tree item.
+		 * @type {string}
+		 * @public
+		 * @since 1.0.0-rc.12
+		 */
+		info: {
+			type: String,
+		},
+
+		/**
+		 * Defines the state of the <code>info</code>.
+		 * <br>
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @public
+		 * @since 1.0.0-rc.12
+		 */
+		infoState: {
+			type: ValueState,
+			defaultValue: ValueState.None,
+		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
 
 		/**
 		 * Defines the items of this <code>ui5-tree-item</code>.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.ITreeItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
+			propertyName: "items",
 			type: HTMLElement,
+			invalidateOnChildChange: true,
 		},
 	},
 };
@@ -95,7 +123,7 @@ const metadata = {
  * <code>ui5-tree-item</code> directly in your apps. The <code>ui5-li-tree</code> list item is internal for the list, and not intended for public use.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import @ui5/webcomponents/dist/TreeItem.js";</code>
+ * <code>import "@ui5/webcomponents/dist/TreeItem.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -103,15 +131,12 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-tree-item
  * @public
+ * @implements sap.ui.webcomponents.main.ITreeItem
  * @since 1.0.0-rc.8
  */
 class TreeItem extends UI5Element {
 	static get metadata() {
 		return metadata;
-	}
-
-	get items() {
-		return [...this.children];
 	}
 
 	get requiresToggleButton() {
@@ -120,7 +145,6 @@ class TreeItem extends UI5Element {
 
 	/**
 	 * Call this method to manually switch the <code>expanded</code> state of a tree item.
-	 *
 	 * @public
 	 */
 	toggle() {

@@ -1,7 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Attributes propagation", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+	});
 
 	it("Should change the placeholder of the inner input", () => {
 		const input = $("#myInput");
@@ -23,7 +26,8 @@ describe("Attributes propagation", () => {
 	});
 
 	it("Required attribute is propagated properly", () => {
-		assert.ok(browser.$("#input-required").shadow$(".ui5-input-inner").getAttribute("required"), "Required property was propagated");
+		assert.strictEqual(browser.$("#input-required").shadow$(".ui5-input-inner").getAttribute("aria-required"), "true", "Aria-required attribute is set correctly");
+		assert.strictEqual(browser.$("#input-number").shadow$(".ui5-input-inner").getAttribute("aria-required"), "false", "Aria-required attribute is set correctly");
 	});
 
 	it("Type attribute is propagated properly", () => {
@@ -54,7 +58,9 @@ describe("Attributes propagation", () => {
 });
 
 describe("Input general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Input.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+	});
 
 	it("Should open suggestions popover when focused", () => {
 		const input = $("#myInput2");
@@ -151,14 +157,68 @@ describe("Input general interaction", () => {
 			const input = document.getElementById("scrollInput");
 			return (await input.isSuggestionsScrollable());
 		});
-		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrolalble");
+		assert.equal(suggestionsScrollable, true, "The suggestions popup is scrollable");
 
 		// close suggestions
-		input.keys("Enter"); 
+		input.keys("Enter");
+	});
+
+	it("tests value removal when Input type is 'Number'", () => {
+		const input = browser.$("#input-number3");
+		const btn = browser.$("#input-number3-focusout");
+
+		// Press Backspace and focus out the 
+		input.click();
+		input.keys("Backspace");
+		btn.click();
+
+		assert.strictEqual(input.getProperty("value"), "", "Input's value is removed");
+	});
+
+
+	it("tests removing fractional part of numeric value", () => {
+		const input1 = browser.$("#input-number31");
+		const input2 = browser.$("#input-number32");
+		const input3 = browser.$("#input-number33");
+		const input4 = browser.$("#input-number34");
+		const btn = browser.$("#input-number3-focusout");
+
+		// Press Backspace as many times as the number of digits after the delimiter
+		// 4,333
+		input1.click();
+		input1.keys("Backspace");
+		input1.keys("Backspace");
+		input1.keys("Backspace");
+		btn.click();
+		
+		assert.strictEqual(input1.getProperty("value"), "4", "Removed properly");
+		
+		// 4,3
+		input2.click();
+		input2.keys("Backspace");
+		btn.click();
+		
+		assert.strictEqual(input2.getProperty("value"), "4", "Removed properly");
+		
+		// ,33
+		input3.click();
+		input3.keys("Backspace");
+		input3.keys("Backspace");
+		btn.click();
+
+		assert.strictEqual(input3.getProperty("value"), "", "Removed properly");
+
+		// -1,33
+		input4.click();
+		input4.keys("Backspace");
+		input4.keys("Backspace");
+		btn.click();
+
+		assert.strictEqual(input4.getProperty("value"), "-1", "Removed properly");
 	});
 
 	it("handles suggestions", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Input.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
 		let item;
 		const suggestionsInput = $("#myInput").shadow$("input");
@@ -191,7 +251,7 @@ describe("Input general interaction", () => {
 	});
 
 	it("handles suggestions via keyboard", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Input.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
 
 		const suggestionsInput = $("#myInput2").shadow$("input");
 		const inputResult = $("#inputResult").shadow$("input");
@@ -215,14 +275,38 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelect is not fired as item is 'Inactive'");
 	});
 
+	it("handles suggestions selection cancel with ESC", () => {
+		const suggestionsInput = $("#myInputEsc").shadow$("input");
+
+		// act
+		suggestionsInput.click();
+		suggestionsInput.keys("ch");
+		suggestionsInput.keys("ArrowDown");
+
+		// assert
+		assert.strictEqual(suggestionsInput.getValue(), "Chromium",
+			"The value is updated as the item has been previewed.");
+
+		// act
+		suggestionsInput.keys("Escape");
+
+		// assert
+		assert.strictEqual(suggestionsInput.getValue(), "ch",
+			"The value is restored as ESC has been pressed.");
+	});
+
 	it("handles group suggestion item via keyboard", () => {
 		const suggestionsInput = $("#myInputGrouping").shadow$("input");
 		const inputResult = $("#inputResultGrouping").shadow$("input");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#myInputGrouping");
+		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		suggestionsInput.click();
 		suggestionsInput.keys("ArrowDown");
 		suggestionsInput.keys("Enter");
+		browser.pause(300);
 
+		assert.ok(respPopover.getProperty("opened"), "Popover should not be closed after trying to select a group header.");
 		assert.strictEqual(suggestionsInput.getValue(), "", "Group item is not selected");
 		assert.strictEqual(inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
@@ -234,6 +318,7 @@ describe("Input general interaction", () => {
 		const listItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
 
 		nativeInput.click();
+		nativeInput.keys("a");
 
 		assert.strictEqual(input.getSize('width'), listItem.getSize('width'));
 	})
@@ -257,7 +342,7 @@ describe("Input general interaction", () => {
 		const inputShadowRef = browser.$("#inputError").shadow$("input");
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputError");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
-		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-responsive-popover-header");
+		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-header");
 
 		inputShadowRef.click();
 
@@ -266,6 +351,13 @@ describe("Input general interaction", () => {
 		inputShadowRef.keys("a");
 
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
+	});
+
+	it("Checks if aria-describedby is renderd if not neccessary", () => {
+		const input = browser.$("#input-max-length"); // Input with no show-suggestions attribute
+		const innerInput = input.shadow$("input");
+
+		assert.notOk(innerInput.getAttribute("aria-describedby"), "aria-describedby is not rendered");
 	});
 
 	it("Checks if aria-label is reflected in the shadow DOM", () => {
@@ -292,11 +384,28 @@ describe("Input general interaction", () => {
 		const firstListItem = respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 
 		assert.ok(respPopover.isDisplayedInViewport(), "The popover is visible");
-		assert.ok(firstListItem.getHTML().indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.")
+		assert.ok(firstListItem.getHTML().indexOf(EXPTECTED_TEXT) !== -1, "The suggestions is highlighted.");
+	});
+
+	it("Doesn't remove value on number type input even if locale specific delimiter/multiple delimiters", () => {
+		const input = browser.$("#input-number2");
+
+		input.click();
+		input.keys("1");
+		input.keys(".");
+		input.keys("2");
+		input.keys("2");
+		input.keys(".");
+		input.keys("3");
+		input.keys("3");
+		input.keys("Tab");
+
+		browser.pause(500);
+		assert.strictEqual(parseFloat(input.getProperty("value")).toPrecision(3), "1.22", "Value is not lost");
 	});
 
 	it("fires suggestion-item-preview", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Input_quickview.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input_quickview.html`);
 
 		const inputItemPreview = $("#inputPreview2").shadow$("input");
 		const suggestionItemPreviewRes = $("#suggestionItemPreviewRes");
@@ -304,8 +413,10 @@ describe("Input general interaction", () => {
 
 		// act
 		inputItemPreview.click();
+		inputItemPreview.keys("c");
+
 		inputItemPreview.keys("ArrowDown");
-		
+
 		// assert
 		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputPreview2");
 		const inputPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
@@ -322,5 +433,57 @@ describe("Input general interaction", () => {
 		// assert
 		assert.notOk(inputPopover.isDisplayedInViewport(), "The inpuit popover is closed as it lost the focus.");
 		assert.ok(helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
+	});
+
+	it("Should open suggestions popover when ui5-input is the first focusable element within a dialog", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+		const input = $("#inputInDialog");
+		const button = browser.$("#btnOpenDialog");
+
+		//act
+		button.click();
+
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputInDialog");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const dialog = browser.$("#inputInDialog");
+
+		//assert
+		assert.ok(popover.isDisplayedInViewport(), "The popover is visible");
+
+		// act
+		input.keys("ArrowDown");
+		browser.keys("Escape");
+
+		// assert
+		assert.notOk(popover.isDisplayedInViewport(), "The popover is not visible");
+		assert.ok(dialog.isDisplayedInViewport(), "The dialog is opened.");
+	});
+
+	it("Suggestions count should be read out when necessary", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Input.html`);
+
+		const inputDynamicSuggestions = $("#inputCompact");
+		const inputSuggestions = $("#myInput2");
+		const dynamicSuggestionsInnerInput = inputDynamicSuggestions.shadow$("input");
+		const dynamicSuggestionsCount = inputDynamicSuggestions.shadow$(`#${inputDynamicSuggestions.getProperty("_id")}-suggestionsCount`);
+		const suggestionsCount = inputSuggestions.shadow$(`#${inputSuggestions.getProperty("_id")}-suggestionsCount`);
+
+		//act
+		dynamicSuggestionsInnerInput.click();
+
+		//assert
+		assert.strictEqual(dynamicSuggestionsCount.getText(), "", "Suggestions count is not available");
+
+		//act
+		dynamicSuggestionsInnerInput.keys("c");
+
+		//assert
+		assert.strictEqual(dynamicSuggestionsCount.getText(), "4 results are available", "Suggestions count is available since value is entered");
+		dynamicSuggestionsInnerInput.keys("Backspace");
+		//act
+		inputSuggestions.click();
+
+		//assert
+		assert.strictEqual(suggestionsCount.getText(), "5 results are available", "Suggestions count is available since the suggestions popover is opened");
 	});
 });

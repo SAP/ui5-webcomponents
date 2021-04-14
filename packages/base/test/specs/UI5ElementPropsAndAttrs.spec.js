@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Properties and attributes convert to each other", () => {
-	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	});
 
 	it("Tests that properties with default values are initialized with the default value", () => {
 		const el = browser.$("#gen");

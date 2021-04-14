@@ -18,7 +18,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Checkbox                 | `ui5-checkbox`       | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
 | ComboBox                 | `ui5-combobox`       | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
 | ComboBox Item            | `ui5-cb-item`        | comes with ui5-combobox                                    |
-| Date Picker              | `ui5-date-picker`     | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
+| Date Picker              | `ui5-date-picker`    | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
 | Dialog                   | `ui5-dialog`         | `import "@ui5/webcomponents/dist/Dialog.js";`              |
 | File Uploader            | `ui5-file-uploader`  | `import "@ui5/webcomponents/dist/FileUploader.js";`        |
 | Icon                     | `ui5-icon`           | `import "@ui5/webcomponents/dist/Icon.js";`                |
@@ -49,9 +49,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Table Row                | `ui5-table-row`      | `import "@ui5/webcomponents/dist/TableRow.js";`            |
 | Table Cell               | `ui5-table-cell`     | `import "@ui5/webcomponents/dist/TableCell.js";`           |
 | Textarea                 | `ui5-textarea`       | `import "@ui5/webcomponents/dist/TextArea.js";`            |
-| TimePicker               | `ui5-time-picker`     | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
-| Timeline                 | `ui5-timeline`       | `import "@ui5/webcomponents/dist/Timeline.js";`            |
-| Timeline Item            | `ui5-timeline-item`  | comes with ui5-timeline                                    |
+| TimePicker               | `ui5-time-picker`    | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toast                    | `ui5-toast`          | `import "@ui5/webcomponents/dist/Toast.js";`               |
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |

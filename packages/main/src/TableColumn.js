@@ -31,7 +31,7 @@ const metadata = {
 		 * <br>
 		 * For further responsive design options, see <code>demandPopin</code> property.
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultvalue Infinity
 		 * @public
 		 */
@@ -96,11 +96,21 @@ const metadata = {
  * The <code>ui5-table-column</code> component allows to define column specific properties that are applied
  * when rendering the <code>ui5-table</code> component.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-table-column</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>column - Used to style the native <code>th</code> element</li>
+ * </ul>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableColumn
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-column
+ * @implements sap.ui.webcomponents.main.ITableColumn
  * @public
  */
 class TableColumn extends UI5Element {

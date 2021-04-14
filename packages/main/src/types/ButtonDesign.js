@@ -56,6 +56,6 @@ class ButtonDesign extends DataType {
 	}
 }
 
-ButtonDesign.generataTypeAcessors(ButtonTypes);
+ButtonDesign.generateTypeAccessors(ButtonTypes);
 
 export default ButtonDesign;

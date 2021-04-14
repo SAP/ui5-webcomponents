@@ -1,7 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("TabContainer general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/TabContainer.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TabContainer.html`);
+	});
 
 	it("tests initially selected tab", () => {
 		const tabContainer = browser.$("#tabContainer1");
@@ -27,11 +30,25 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(resultIdx.getText(), SELECTED_TAB_INDEX, "Tab index is retrieved correctly.");
 	});
 
+	it("tests custom media ranges", () => {
+		browser.setWindowSize(520, 1080);
+		assert.strictEqual($("#tabContainerIconOnly").getAttribute("media-range"), "S", "media-range=S");
+
+		browser.setWindowSize(650, 1080);
+		assert.strictEqual($("#tabContainerIconOnly").getAttribute("media-range"), "M", "media-range=M");
+
+		browser.setWindowSize(1350, 1080);
+		assert.strictEqual($("#tabContainerIconOnly").getAttribute("media-range"), "L", "media-range=L");
+
+		browser.setWindowSize(1650, 1080);
+		assert.strictEqual($("#tabContainerIconOnly").getAttribute("media-range"), "XL", "media-range=XL");
+	});
+
 	it("scroll works on iconsOnly TabContainer", () => {
 		browser.setWindowSize(520, 1080);
 
-		const arrowLeft = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowLeft");
-		const arrowRight = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowRight");
+		const arrowLeft = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowLeft ui5-button");
+		const arrowRight = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowRight ui5-button");
 
 		assert.ok(!arrowLeft.isDisplayed(), "'Left Arrow' should be initially hidden");
 		assert.ok(arrowRight.isDisplayed(), "'Right Arrow' should be initially shown");
@@ -51,11 +68,11 @@ describe("TabContainer general interaction", () => {
 	it("scroll works on textOnly TabContainer", () => {
 		browser.setWindowSize(520, 1080);
 
-		let arrowLeft = browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowLeft");
-		let arrowRight = browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowRight");
+		let arrowLeft = browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowLeft  ui5-button");
+		let arrowRight = browser.$("#tabContainerTextOnly").shadow$(".ui5-tc__headerArrowRight  ui5-button");
 
-		assert.ok(!arrowLeft.shadow$("svg").isDisplayed(), "'Left Arrow' should be initially hidden");
-		assert.ok(arrowRight.shadow$("svg").isDisplayed(), "'Right Arrow' should be initially shown");
+		assert.ok(!arrowLeft.isDisplayed(), "'Left Arrow' should be initially hidden");
+		assert.ok(arrowRight.isDisplayed(), "'Right Arrow' should be initially shown");
 
 		arrowRight.click();
 		browser.pause(1000); // TODO: wait for animation finish. Remove when solved on framework level
@@ -108,5 +125,16 @@ describe("TabContainer general interaction", () => {
 
 		assert.ok(tabHeight < tabScrollHeight, "Tab Content is scrollable");
 		assert.ok(tcHeight >= tcScrollHeight, "TabContainer is not scrollable scrollable");
+	});
+
+	it("tests aria attrs", () => {
+		const tabContainer = browser.$("#tabContainer1");
+		const tab4 = tabContainer.shadow$(".ui5-tab-strip-item:nth-child(4)");
+
+		// assert: The TabContainer has 8 children, 7 tabs and 1 separator (at position 2)
+		// and the separator should be skipped in terms of aria-posinset and aria-setsize,
+		// so for child number 4 ("Monitors") we expect the following attributes aria-posinset="3" and aria-setsize="7".
+		assert.strictEqual(tab4.getAttribute("aria-posinset"), "3", "The aria-posinset is correct.");
+		assert.strictEqual(tab4.getAttribute("aria-setsize"), "7", "The aria-setsize is correct.");
 	});
 });

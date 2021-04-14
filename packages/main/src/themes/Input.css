@@ -10,12 +10,16 @@
 	height: var(--_ui5_input_height);
 	color: var(--sapField_TextColor);
 	font-size: var(--sapFontSize);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-style: normal;
 	background-color: var(--sapField_Background);
 	border: 1px solid var(--sapField_BorderColor);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
 	box-sizing: border-box;
+	line-height: normal;
+	letter-spacing: normal;
+	word-spacing: normal;
+	text-align: start;
 }
 
 :host([focused]) {
@@ -44,8 +48,6 @@
 	pointer-events: none;
 	background: var(--sapField_ReadOnly_Background);
 	border-color: var(--sapField_ReadOnly_BorderColor);
-	-webkit-text-fill-color: var(--sapContent_DisabledTextColor);
-	color: var(--sapContent_DisabledTextColor);
 }
 
 [inner-input] {
@@ -55,15 +57,24 @@
 	font-style: inherit;
 	-webkit-appearance: none;
 	-moz-appearance: textfield;
-	line-height: normal;
 	padding: var(--_ui5_input_inner_padding);
 	box-sizing: border-box;
-	min-width: 3rem;
+	min-width: inherit;
+	width: 100%;
+	text-align: inherit;
 	text-overflow: ellipsis;
 	flex: 1;
 	outline: none;
 	font-size: inherit;
 	font-family: inherit;
+	line-height: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+	text-align: inherit;
+}
+
+[inner-input][inner-input-with-icon] {
+	padding: var(--_ui5_input_inner_padding_with_icon);
 }
 
 [inner-input]::selection {
@@ -81,6 +92,7 @@
 [inner-input]::-webkit-input-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 0.125rem;
 }
 
 :host([disabled]) [inner-input]::-moz-placeholder {
@@ -92,6 +104,7 @@
 [inner-input]::-moz-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 0.125rem;
 }
 
 :host([disabled]) [inner-input]:-ms-input-placeholder {
@@ -103,6 +116,7 @@
 [inner-input]:-ms-input-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
+	padding-right: 0.125rem;
 }
 
 .ui5-input-content {
@@ -190,9 +204,16 @@
 }
 
 /* TODO: Remove this after parser is fixed
-	-	this statement is transformed to "ui5-multi-combobox ui5-icon" which
+	-	this statement is transformed to [ui5-multi-combobox] [ui5-icon] which
 	affects all icons in the combobox incuding these in the list items
 */
-::slotted(ui5-icon[slot="icon"]) {
+::slotted([ui5-icon][slot="icon"]) {
 	padding: var(--_ui5_input_icon_padding);
+}
+
+/* Chrome, Safari, Edge, Opera */
+[inner-input]::-webkit-outer-spin-button,
+[inner-input]::-webkit-inner-spin-button {
+  -webkit-appearance: inherit;
+  margin: inherit;
 }

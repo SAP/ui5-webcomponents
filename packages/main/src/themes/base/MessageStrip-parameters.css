@@ -5,7 +5,8 @@
 	--_ui5_messagestrip_button_border_style: none;
 	--_ui5_messagestrip_button_border_color: transparent;
 	--_ui5_messagestrip_button_border_radius: 0;
-	--_ui5_messagestrip_padding: 0.125rem .125rem;
+	--_ui5_messagestrip_padding: 0.4375rem 2.5rem 0.4375rem 2.5rem;
+	--_ui5_messagestrip_padding_no_icon: 0.4375rem 2.5rem 0.4375rem 1rem;
 	--_ui5_messagestrip_button_height: 1.625rem;
 	--_ui5_messagestrip_border_width: 1px;
 	--_ui5_messagestrip_close_button_border: none;

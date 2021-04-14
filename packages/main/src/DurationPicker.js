@@ -1,37 +1,12 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import DurationPickerTemplate from "./generated/templates/DurationPickerTemplate.lit.js";
-import PopoverPlacementType from "./types/PopoverPlacementType.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import WheelSlider from "./WheelSlider.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import Input from "./Input.js";
-import "@ui5/webcomponents-icons/dist/icons/fob-watch.js";
-import DurationPickerPopoverTemplate from "./generated/templates/DurationPickerPopoverTemplate.lit.js";
-import {
-	TIMEPICKER_HOURS_LABEL,
-	TIMEPICKER_MINUTES_LABEL,
-	TIMEPICKER_SECONDS_LABEL,
-	TIMEPICKER_SUBMIT_BUTTON,
-	TIMEPICKER_CANCEL_BUTTON,
-} from "./generated/i18n/i18n-defaults.js";
-
-// Styles
-import DurationPickerCss from "./generated/themes/DurationPicker.css.js";
-import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import DurationPickerPopoverCss from "./generated/themes/DurationPickerPopover.css.js";
+import "@ui5/webcomponents-icons/dist/fob-watch.js";
+import TimePickerBase from "./TimePickerBase.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-duration-picker",
-	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.DurationPicker.prototype */ {
 		/**
 		 * Defines a formatted time value.
@@ -112,78 +87,21 @@ const metadata = {
 		hideHours: {
 			type: Boolean,
 		},
-
-		/**
-		 * Determines whether the <code>ui5-duration-picker</code> is displayed as disabled.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		disabled: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines whether the <code>ui5-duration-picker</code> is displayed as readonly.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		readonly: {
-			type: Boolean,
-		},
-
-		/**
-		 * Visualizes the validation state of the Web Component, for example
-		 * <code>Error</code>, <code>Warning</code> and
-		 * <code>Success</code>.
-		 *
-		 * <ul>
-		 * <li><code>None</code></li>
-		 * <li><code>Error</code></li>
-		 * <li><code>Warning</code></li>
-		 * <li><code>Success</code></li>
-		 * <li><code>Information</code></li>
-		 * </ul>
-		 *
-		 * @type {string}
-		 * @defaultvalue "None"
-		 * @public
-		 */
-		valueState: {
-			type: ValueState,
-			defaultValue: ValueState.None,
-		},
-
-		/**
-		 * @private
-		 */
-		_isPickerOpen: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		_maxValue: {
-			type: String,
-			multiple: true,
-		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.DurationPicker.prototype */ {
-		//
-	},
-	events: /** @lends sap.ui.webcomponents.main.DurationPicker.prototype */ {
-		/**
-		 * Fired when the input operation has finished by pressing Enter or on focusout.
-		 *
-		 * @event
-		 * @public
-		*/
-		change: {},
-	},
+};
+
+const getNearestValue = (x, step, max) => {
+	const down = Math.floor(x / step) * step; // closest value rounded down to the step
+	const up = Math.ceil(x / step) * step; // closest value rounded up to the step
+	if (up > max || x - down < up - x) { // if the rounded-up value is more than max, or x is closer to the rounded-down value, return down
+		return down;
+	}
+	return up; // x is closer to the rounded-up value and it is not
+};
+
+const pad = number => {
+	number = parseInt(number);
+	return number < 9 ? `0${number}` : `${number}`;
 };
 
 /**
@@ -209,368 +127,164 @@ const metadata = {
  * When the user directly triggers the sliders display, the actual time is displayed.
  *
  * For the <code>ui5-duration-picker</code>
+ *
+ * <h3>Keyboard handling</h3>
+ * [F4], [ALT]+[UP], [ALT]+[DOWN] Open/Close picker dialog and move focus to it.
+ * <br>
+ * When closed:
+ * <ul>
+ * <li>[PAGEUP] - Increments hours by 1. If max value is reached, the slider doesn't increment.</li>
+ * <li>[PAGEDOWN] - Decrements the corresponding field by 1. If min value is reached, the slider doesn't increment.</li>
+ * <li>[SHIFT]+[PAGEUP] Increments minutes by 1.</li>
+ * <li>[SHIFT]+ [PAGEDOWN] Decrements minutes by 1.</li>
+ * <li>[SHIFT]+[CTRL]+[PAGEUP] Increments seconds by 1.</li>
+ * <li>[SHIFT]+[CTRL]+ [PAGEDOWN] Decrements seconds by 1.</li>
+ * </ul>
+ * When opened:
+ * <ul>
+ * <li>[UP] If focus is on one of the selection lists: Select the value which is above the current value. If the first value is selected, select the last value in the list.</li>
+ * <li>[DOWN] If focus is on one of the selection lists: Select the value which is below the current value. If the last value is selected, select the first value in the list.</li>
+ * <li>[LEFT] If focus is on one of the selection lists: Move focus to the selection list which is left of the current selection list. If focus is at the first selection list, move focus to the last selection list.</li>
+ * <li>[RIGHT] If focus is on one of the selection lists: Move focus to the selection list which is right of the current selection list. When focus is at the last selection list, move focus to the first selection list.</li>
+ * <li>[PAGEUP] If focus is on one of the selection lists: Move focus to the first entry of this list.</li>
+ * <li>[PAGEDOWN] If focus is on one of the selection lists: Move focus to the last entry of this list.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/DurationPicker.js";</code>
+ * <code>import "@ui5/webcomponents/dist/DurationPicker.js";</code>
  *
  * @constructor
  * @since 1.0.0-rc.7
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DurationPicker
- * @extends UI5Element
+ * @extends TimePickerBase
  * @tagname ui5-duration-picker
  * @public
  */
-class DurationPicker extends UI5Element {
+class DurationPicker extends TimePickerBase {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return DurationPickerCss;
-	}
-
-	static get template() {
-		return DurationPickerTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return DurationPickerPopoverTemplate;
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, DurationPickerPopoverCss];
-	}
-
-	constructor() {
-		super();
-
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-
-		this._respPopover = {
-			placementType: PopoverPlacementType.Bottom,
-			horizontalAlign: PopoverHorizontalAlign.Left,
-			allowTargetOverlap: true,
-			stayOpenOnScroll: true,
-			_onAfterClose: () => {
-				this._isPickerOpen = false;
-			},
-		};
-	}
-
-	onBeforeRendering() {
-		this.checkValue();
-	}
-
-	checkValue() {
-		this._setValue("maxValue");
-		this.setSelectedValues();
-		this.normalizaValue();
-	}
-
-	normalizaValue() {
-		this.value = `${!this.hideHours ? this.selectedHours || "00" : ""}${!this.hideHours && !this.hideMinutes ? ":" : ""}${!this.hideMinutes ? this.selectedMinutes || "00" : ""}${!this.hideSeconds ? `:${this.selectedSeconds || "00"}` : ""}`;
-	}
-
 	/**
-	 * reads string from format hh:mm:ss and returns an array which contains the hours, minutes and seconds
-	 * @param {string} value string in formathh:mm:ss
+	 * In order to keep the existing behavior (although not consistent with the other picker components), we enforce limits and step on each change and initially
 	 */
-	readFormattedValue(value) {
-		value = value.replace(/\s/g, ""); // Remove spaces
-		return value.split(":");
-	}
-
-	getSecondsFromFormattedValue(destructuredValues) {
-		if (this.hideSeconds) {
-			return "";
+	onBeforeRendering() {
+		const value = this.value;
+		if (this.isValid(value)) {
+			this.value = this.normalizeValue(value);
 		}
-
-		if (this.hideHours && this.hideMinutes) {
-			return destructuredValues[0];
-		}
-
-		if (this.hideHours || this.hideMinutes) {
-			return destructuredValues[1];
-		}
-
-		return destructuredValues[2];
-	}
-
-	getMinutesFromFormattedValue(destructuredValues) {
-		if (this.hideMinutes) {
-			return "";
-		}
-
-		if (this.hideHours) {
-			return destructuredValues[0];
-		}
-
-		return destructuredValues[1];
-	}
-
-	setSelectedValues() {
-		const destructuredValues = this.readFormattedValue(this.value || "");
-		let currentHours = this.hideHours ? "" : destructuredValues[0],
-			currentMinutes = this.getMinutesFromFormattedValue(destructuredValues), // this.hideHours && !this.hideMinutes ? destructuredValues[0] : "",
-			currentSeconds = this.getSecondsFromFormattedValue(destructuredValues); //  this.hideHours && this.hideHours ? destructuredValues[0] : {};
-
-		if (currentHours > -1) {
-			if (parseInt(currentHours) > parseInt(this._maxValue[0])) {
-				currentHours = this._maxValue[0];
-			}
-
-			this.selectedHours = this._formatSelectedValue(currentHours, parseInt(this.readFormattedValue(this.maxValue)));
-		}
-
-		if (currentMinutes > -1) {
-			if (currentMinutes && parseInt(currentMinutes) % this.minutesStep !== 0) {
-				currentMinutes = this.findNearestStep(currentMinutes, this.minutesStep);
-			}
-			if (this._maxValue[0] && this.selectedHours === this._maxValue[0]) {
-				currentMinutes = currentMinutes > this._maxValue[1] ? this._maxValue[1] : currentMinutes;
-			} else if (parseInt(currentMinutes) > parseInt(this._maxValue[1])) {
-				currentMinutes = this._maxValue[1];
-			}
-
-			this.selectedMinutes = this._formatSelectedValue(currentMinutes, 59);
-		}
-
-		if (currentSeconds > -1) {
-			if (currentSeconds && parseInt(currentSeconds) % this.secondsStep !== 0) {
-				currentSeconds = this.findNearestStep(currentSeconds, this.secondsStep);
-			}
-			if (this._maxValue[0] && this._maxValue[1] && this.selectedHours >= this._maxValue[0] && this.selectedSeconds >= this._maxValue[1]) {
-				currentSeconds = currentSeconds > this._maxValue[2] ? this._maxValue[2] : currentSeconds;
-			} else if (parseInt(currentSeconds) > parseInt(this._maxValue[2])) {
-				currentSeconds = this._maxValue[2];
-			}
-
-			this.selectedSeconds = this._formatSelectedValue(currentSeconds, 59);
-		}
-	}
-
-	_formatSelectedValue(currentValue, maximum = Infinity) {
-		if (currentValue.length === 1) {
-			return `0${currentValue}`;
-		}
-
-		if (parseInt(currentValue) < 0 || parseInt(currentValue) > maximum) {
-			return "00";
-		}
-
-		return currentValue;
 	}
 
 	/**
-	 * Reads maxValue and stores it as array _maxValue
-	 * @param {string} name the name of the property to read(could be used for _minValue e.g.)
+	 * In order to keep the existing behavior (although not consistent with the other picker components), we do not update "value" on input, only fire event
+	 * @override
+	 */
+	async _handleInputLiveChange(event) {
+		const value = event.target.value;
+		const valid = this.isValid(value);
+		this._updateValueState(); // Change the value state to Error/None, but only if needed
+		this.fireEvent("input", { value, valid });
+	}
+
+	get _formatPattern() {
+		return "HH:mm:ss";
+	}
+
+	/**
+	 * The "value" property might be "02:03" (HH:ss) or just "12"(ss) but the ui5-time-selection component requires a value compliant with _formatPattern
+	 * We split the value and shift up to 3 times, filling the values for the configured units (based on hideHours, hideMinutes, hideSeconds)
+	 * @override
+	 */
+	get _effectiveValue() {
+		return this.isValid(this.value) ? this._toFullFormat(this.value) : "00:00:00";
+	}
+
+	get _timeSelectionValue() {
+		return this._effectiveValue;
+	}
+
+	/**
+	 * @override
+	 */
+	get openIconName() {
+		return "fob-watch";
+	}
+
+	/**
+	 * Transforms the value to HH:mm:ss format to be compatible with time manipulation logic (keyboard handling, time selection component)
 	 * @private
 	 */
-	_setValue(name) {
-		const _value = this[name];
-		if (!_value) {
-			return;
+	_toFullFormat(value) {
+		let hours = "00",
+			minutes = "00",
+			seconds = "00";
+
+		const parts = value.split(":");
+		if (parts.length && !this.hideHours) {
+			hours = parts.shift();
 		}
-		const temp = this.readFormattedValue(_value);
-		this[`_${name}`] = temp;
-	}
+		if (parts.length && !this.hideMinutes) {
+			minutes = parts.shift();
+		}
+		if (parts.length && !this.hideSeconds) {
+			seconds = parts.shift();
+		}
 
-	findNearestStep(currentValue, step) {
-		const curr = parseInt(currentValue);
-		const biggerClosest = this._getClosest(curr, step, true),
-			lowerClosest = this._getClosest(curr, step, false);
-
-		const diffToBiggerClosest = biggerClosest - curr,
-			diffToLowerClosest = curr - lowerClosest;
-
-		return diffToBiggerClosest > diffToLowerClosest ? lowerClosest.toString() : biggerClosest.toString();
+		return `${hours}:${minutes}:${seconds}`;
 	}
 
 	/**
-	 * Finds the nearest lower/bigger number to the givent curr
-	 * @param {Integer} curr the starting number
-	 * @param {Boolean} larger defines if we are searching for bigger or lower number
+	 * Transforms the value from HH:mm:ss format to the needed partial format (f.e. HH:ss or mm or ss) to be displayed in the input
+	 * @private
 	 */
-	_getClosest(curr, step, larger = true) {
-		while (curr % step !== 0) {
-			curr = larger ? ++curr : --curr;
+	_toPartialFormat(value) {
+		const parts = value.split(":");
+		const newParts = [];
+		if (!this.hideHours) {
+			newParts.push(parts[0]);
 		}
-
-		return curr;
-	}
-
-	_onkeydown(event) {
-		if (isShow(event)) {
-			this.togglePicker();
+		if (!this.hideMinutes) {
+			newParts.push(parts[1]);
 		}
-	}
-
-	generateTimeItemsArray(arrayLength, step = 1) {
-		const resultArray = [];
-		for (let i = 0; i < arrayLength; i++) {
-			let tempString = i.toString();
-			if (tempString.length === 1) {
-				tempString = `0${tempString}`;
-			}
-
-			if (tempString % step === 0) {
-				resultArray.push(tempString);
-			}
+		if (!this.hideSeconds) {
+			newParts.push(parts[2]);
 		}
-
-		return resultArray;
+		return newParts.join(":");
 	}
 
-	submitPickers() {
-		const prevValue = this.value;
-		this.value = `${!this.hideHours ? this.hoursSlider.value : ""}${!this.hideHours && !this.hideMinutes ? ":" : ""}${!this.hideMinutes ? this.minutesSlider.value : ""}${!this.hideSeconds ? `:${this.secondsSlider.value}` : ""}`;
-		this.togglePicker();
-		if (prevValue !== this.value) {
-			this.fireEvent("change", { value: this.value });
-		}
+	_enforceLimitsAndStep(fullFormatValue) {
+		let [hours, minutes, seconds] = fullFormatValue.split(":");
+		hours = Math.min(hours, this.maxHours);
+		minutes = Math.min(minutes, this.maxMinutes);
+		seconds = Math.min(seconds, this.maxSeconds);
+
+		minutes = getNearestValue(minutes, this.minutesStep, this.maxMinutes);
+		seconds = getNearestValue(seconds, this.secondsStep, this.maxSeconds);
+
+		return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 	}
 
-	_handleInputChange(event) {
-		const prevValue = this.value;
-		this.value = event.target.value;
-		this.checkValue();
-
-		if (prevValue !== this.value) {
-			this.fireEvent("change", { value: this.value });
-		}
+	/**
+	 * @override
+	 */
+	normalizeValue(value) {
+		let fullFormatValue = this._toFullFormat(value); // transform to full format (HH:mm:ss) if not already in this format, in order to normalize the value
+		fullFormatValue = this._enforceLimitsAndStep(fullFormatValue);
+		return this._toPartialFormat(fullFormatValue); // finally transform back to the needed format for the input
 	}
 
-	_handleKeysDown(event) {
-		if (isShow(event)) {
-			event.preventDefault();
-			this.togglePicker();
-		}
+	get maxHours() {
+		return parseInt(this.maxValue.split(":")[0]);
 	}
 
-	async _handleInputLiveChange() {
-		await this._getResponsivePopover();
-
-		if (this.responsivePopover.opened) {
-			this.togglePicker();
-		}
+	get maxMinutes() {
+		return parseInt(this.maxValue.split(":")[1]);
 	}
 
-	async togglePicker() {
-		await this._getResponsivePopover();
-
-		if (this.responsivePopover.opened) {
-			this._isPickerOpen = false;
-			this.responsivePopover.close();
-		} else {
-			this._isPickerOpen = true;
-			this.responsivePopover.open(this);
-		}
-	}
-
-	async _getResponsivePopover() {
-		if (this.responsivePopover) {
-			return this.responsivePopover;
-		}
-
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
-		return this.responsivePopover;
-	}
-
-
-	get hours() {
-		return this.selectedHours;
-	}
-
-	get minutes() {
-		return this.selectedMinutes;
-	}
-
-	get seconds() {
-		return this.selectedSeconds;
-	}
-
-	get hoursArray() {
-		const _maxHours = parseInt(this.readFormattedValue(this.maxValue)[0]);
-		const _currHours = parseInt(this.selectedHours) + 1;
-		let hours;
-
-		if (_maxHours) {
-			hours = _maxHours + 1;
-		} else if (_currHours < 24) {
-			hours = 24;
-		} else {
-			hours = _currHours;
-		}
-
-		return this.generateTimeItemsArray(hours);
-	}
-
-	get minutesArray() {
-		const currentMinutes = parseInt(this.readFormattedValue(this.maxValue)[1]);
-		const minutes = currentMinutes && currentMinutes > 0 && currentMinutes < 60 ? currentMinutes + 1 : 60;
-		return this.generateTimeItemsArray(minutes, this.minutesStep);
-	}
-
-	get secondsArray() {
-		const currentSeconds = parseInt(this.readFormattedValue(this.maxValue)[2]);
-		const seconds = currentSeconds && currentSeconds > 0 && currentSeconds < 60 ? currentSeconds + 1 : 60;
-		return this.generateTimeItemsArray(seconds, this.secondsStep);
-	}
-
-	get secondsSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-duration-picker-seconds-wheelslider");
-	}
-
-	get minutesSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-duration-picker-minutes-wheelslider");
-	}
-
-	get hoursSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-duration-picker-hours-wheelslider");
-	}
-
-	get hoursSliderTitle() {
-		return this.i18nBundle.getText(TIMEPICKER_HOURS_LABEL);
-	}
-
-	get minutesSliderTitle() {
-		return this.i18nBundle.getText(TIMEPICKER_MINUTES_LABEL);
-	}
-
-	get secondsSliderTitle() {
-		return this.i18nBundle.getText(TIMEPICKER_SECONDS_LABEL);
-	}
-
-	get submitButtonLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
-	}
-
-	get cancelButtonLabel() {
-		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
-	}
-
-	get classes() {
-		return {
-			container: {
-				"ui5-duration-picker-sliders-container": true,
-				"ui5-phone": isPhone(),
-			},
-		};
-	}
-
-	static async onDefine(...params) {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-			WheelSlider.define(),
-			ResponsivePopover.define(),
-			Input.define(),
-		]);
+	get maxSeconds() {
+		return parseInt(this.maxValue.split(":")[2]);
 	}
 }
 

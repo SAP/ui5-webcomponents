@@ -1,0 +1,29 @@
+.ui5-cp-item {
+	height: var(--_ui5_color-palette-item-height);
+	width: var(--_ui5_color-palette-item-height);
+	border: 1px solid var(--sapContent_ForegroundBorderColor);
+	border-radius: 0.25rem;
+	display: inline-block;
+	margin: var(--_ui5_color-palette-item-margin);
+}
+
+.ui5-cp-item:focus:before {
+	content: "";
+	width: var(--_ui5_color-palette-item-focus-height);
+	height: var(--_ui5_color-palette-item-focus-height);
+	margin: 2px;
+	position: absolute;
+	outline: rgb(0, 0, 0) dotted 0.0625rem;
+}
+
+.ui5-cp-item:focus {
+	pointer-events: none;
+	outline: white solid 0.0625rem;
+	outline-offset: -3px;
+}
+
+.ui5-cp-item:hover {
+	height: var(--_ui5_color-palette-item-hover-height);
+	width: var(--_ui5_color-palette-item-hover-height);
+	margin: var(--_ui5_color-palette-item-hover-margin);
+}

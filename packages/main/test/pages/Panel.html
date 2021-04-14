@@ -50,9 +50,6 @@
 <body style="background-color: var(--sapBackgroundColor);">
 
 <style>
-	ui5-panel {
-		border: 1px dotted #bad0e3;
-	}
 
 	.header {
 		display: flex;
@@ -61,7 +58,7 @@
 	}
 </style>
 
-	<ui5-panel id="p1" collapsed accessible-role="Complementary" aria-labelledby="p1-title">
+	<ui5-panel id="p1" collapsed accessible-role="Complementary">
 
 		<!-- Panel header -->
 		<div slot="header" class="header">
@@ -156,7 +153,7 @@
 
 	<br>
 
-	<ui5-panel id="panel1" collapsed header-text="Click to expand!" header-level="H3">
+	<ui5-panel id="panel1" collapsed header-text="Click to expand!" header-level="H3" accessible-role="Form">
 
 		<!-- Content -->
 		<ui5-title>This is a demo how to use the &quot;expand&quot; event.</ui5-title>
@@ -186,6 +183,40 @@
 
 	<ui5-input id="field1" value="0"></ui5-input>
 	<ui5-input id="field2" value="0"></ui5-input>
+
+	<section>
+		<!-- accessibleName, useAccessibleNameForToggleButton and header text -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header text and button" use-accessible-name-for-toggle-button header-text="Accessible name test 1">
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+
+		<br><br>
+
+		<!-- accessibleName and header text -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header text" header-text="Accessible name test 2">
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+
+		<br><br>
+
+		<!-- accessibleName, useAccessibleNameForToggleButton and header SLOT -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header SLOT and button" use-accessible-name-for-toggle-button>
+			<div slot="header" class="header">
+				<ui5-title>Accessible name test 3</ui5-title>
+			</div>
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+
+		<br><br>
+
+		<!-- accessibleName and header SLOT -->
+		<ui5-panel accessible-role="Complementary" accessible-name="My new panel with header SLOT">
+			<div slot="header" class="header">
+				<ui5-title>Accessible name test 4</ui5-title>
+			</div>
+			<ui5-title>Lorem ipsum!</ui5-title>
+		</ui5-panel>
+	</section>
 
 </body>
 

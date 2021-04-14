@@ -10,10 +10,10 @@ Provides assets for the rich `SAP-icons` icon collection.
 |      Icon asset       |                           Module import                        |
 | ------------------------ |  ---------------------------------------------------------- |
 | All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/Assets.js";`      |
-| Accelerated icon           |  `import "@ui5/webcomponents-icons/dist/icons/accelerated.js";`  |
-| Accept icon           |  `import "@ui5/webcomponents-icons/dist/icons/accept.js";`  |
+| Accelerated icon           |  `import "@ui5/webcomponents-icons/dist/accelerated.js";`  |
+| Accept icon           |  `import "@ui5/webcomponents-icons/dist/accept.js";`  |
 | ...           |  ...  |
-| Zoom out icon           |  `import "@ui5/webcomponents-icons/dist/icons/zoom-out.js";`  |
+| Zoom out icon           |  `import "@ui5/webcomponents-icons/dist/zoom-out.js";`  |
 
 *Note:* The `@ui5/webcomponents-icons` package does not provide any web components per se, but rather icon assets,
 usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import 

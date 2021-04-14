@@ -7,7 +7,7 @@
 :host {
 	max-width: 100%;
 	color: var(--sapLinkColor);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	cursor: pointer;
 	outline: none;
@@ -49,6 +49,7 @@
 }
 
 .ui5-link-root {
+	width: 100%;
 	display: inline-block;
 	position: relative;
 	white-space: nowrap;

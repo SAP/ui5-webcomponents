@@ -30,4 +30,11 @@ const Contains = (value, items) => {
 	});
 };
 
-export { StartsWithPerTerm, StartsWith, Contains };
+const None = (_, items) => items;
+
+export {
+	StartsWithPerTerm,
+	StartsWith,
+	Contains,
+	None,
+};

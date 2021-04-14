@@ -10,7 +10,7 @@
 	align-items: center;
 	background: var(--sapShellColor);
 	height: 2.75rem;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	font-weight: normal;
 	box-sizing: border-box;
@@ -19,7 +19,7 @@
 .ui5-shellbar-menu-button,
 .ui5-shellbar-button,
 .ui5-shellbar-image-button,
-::slotted(ui5-button[slot="startButton"]) {
+::slotted([ui5-button][slot="startButton"]) {
 	height: 2.25rem;
 	padding: 0;
 	margin-left: 0.5rem;
@@ -40,18 +40,18 @@
 
 .ui5-shellbar-menu-button,
 .ui5-shellbar-button,
-::slotted(ui5-button[slot="startButton"]) {
+::slotted([ui5-button][slot="startButton"]) {
 	outline: none;
 }
 
-::slotted(ui5-button[slot="startButton"]:hover),
+::slotted([ui5-button][slot="startButton"]:hover),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
 .ui5-shellbar-button:hover,
 .ui5-shellbar-image-button:hover {
 	background: var(--sapShell_Hover_Background);
 }
 
-::slotted(ui5-button[slot="startButton"][active]),
+::slotted([ui5-button][slot="startButton"][active]),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
 .ui5-shellbar-button[active],
 .ui5-shellbar-image-button:active {
@@ -59,7 +59,7 @@
 	color: var(--sapShell_Active_TextColor);
 }
 
-::slotted(ui5-button[slot="startButton"][focused])::after,
+::slotted([ui5-button][slot="startButton"][focused])::after,
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus::after,
 .ui5-shellbar-button[focused]::after,
 .ui5-shellbar-image-button:focus::after {
@@ -78,7 +78,7 @@ slot[name="profile"] {
 	min-width: 0;
 }
 
-::slotted(ui5-avatar[slot="profile"]) {
+::slotted([ui5-avatar][slot="profile"]) {
 	min-width: 0;
 	width: 2rem;
 	height: 2rem;
@@ -92,7 +92,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-menu-button-title {
 	display: inline-block;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	margin: 0;
 	font-size: 0.75rem;
 	white-space: nowrap;
@@ -170,15 +170,19 @@ slot[name="profile"] {
 	padding: 0.25rem 1rem;
 }
 
-:host([breakpoint-size="S"]) ::slotted(ui5-button[slot="startButton"]) {
+:host([breakpoint-size="S"]) .ui5-shellbar-search-full-width-wrapper {
+	padding: 0.25rem 1rem;
+}
+
+:host([breakpoint-size="S"]) ::slotted([ui5-button][slot="startButton"]) {
 	margin-right: 0;
 }
 
-:host([breakpoint-size="S"]) .ui5-shellbar-search-field {
-	width: 200px;
+:host([breakpoint-size="M"]) .ui5-shellbar-root {
+	padding: 0.25rem 2rem;
 }
 
-:host([breakpoint-size="M"]) .ui5-shellbar-root {
+:host([breakpoint-size="M"]) .ui5-shellbar-search-full-width-wrapper {
 	padding: 0.25rem 2rem;
 }
 
@@ -196,7 +200,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-logo {
 	cursor: pointer;
-	height: 1.675rem;
+	max-height: 2rem;
 }
 
 .ui5-shellbar-logo:focus {
@@ -263,8 +267,11 @@ slot[name="profile"] {
 	overflow: hidden;
 	box-sizing: border-box;
 	white-space: nowrap;
-	margin-left: 8rem;
 	flex: 1;
+}
+
+:host(:not([show-search-field])) .ui5-shellbar-overflow-container-right {
+	margin-left: 8rem;
 }
 
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
@@ -307,11 +314,6 @@ slot[name="profile"] {
 	cursor: pointer;
 }
 
-:host(:not([show-search-field])) .ui5-shellbar-search-field {
-	display: none;
-}
-
-
 :host([breakpoint-size="L"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
 	margin-left: 1rem;
 }
@@ -324,7 +326,7 @@ slot[name="profile"] {
 	position: relative;
 }
 
-:host([notification-count]) .ui5-shellbar-bell-button::before,
+:host([notification-count]:not([notification-count=""])) .ui5-shellbar-bell-button::before,
 .ui5-shellbar-button[data-count]::before {
 	position: absolute;
 	width: auto;
@@ -340,12 +342,12 @@ slot[name="profile"] {
 	justify-content: center;
 	align-items: center;
 	font-size: var(--sapFontSmallSize);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	z-index: 2;
 	box-sizing: border-box;
 }
 
-:host([notification-count]) .ui5-shellbar-bell-button::before {
+:host([notification-count]:not([notification-count=""])) .ui5-shellbar-bell-button::before {
 	content: attr(data-ui5-notification-count);
 }
 
@@ -358,45 +360,65 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-search-field {
-	z-index: 101;
-	position: absolute;
 	width: 240px;
-	top: 0.25rem;
-	height: 2.25rem;
+	min-width: 240px;
+	margin-left: 0.5rem;
 }
 
-::slotted(ui5-input) {
+.ui5-shellbar-search-full-width-wrapper .ui5-shellbar-search-full-field {
+	height: 2.25rem;
+	width: 100%;
+}
+
+.ui5-shellbar-search-full-width-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: var(--sapShellColor);
+	height: 100%;
+	width: 100%;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+.ui5-shellbar-search-full-width-wrapper .ui5-shellbar-button {
+	width: auto;
+}
+
+::slotted([ui5-input]) {
 	background-color: var(--sapShellColor);
 	border: 1px solid var(--sapShell_InteractiveBorderColor);
 	color: var(--sapShell_TextColor);
 	height: 100%;
+	width: 100%;
 }
 
-::slotted(ui5-input[focused]) {
+::slotted([ui5-input][focused]) {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 
 ::slotted([slot="logo"]) {
-	height: 1.675rem;
-	max-width: 3rem;
+	max-height: 2rem;
 	pointer-events: none;
 }
 
 /**
 * IE styles
 */
-ui5-input[value-state]:not([readonly]) {
+[ui5-input][value-state]:not([readonly]) {
 	background: var(--sapShellColor);
 	border: 1px solid var(--sapShell_InteractiveBorderColor);
 }
 
-ui5-input[value-state]:not([readonly]):hover,
-ui5-input:not([value-state]):not([readonly]):hover {
+[ui5-input][value-state]:not([readonly]):hover,
+[ui5-input]:not([value-state]):not([readonly]):hover {
 	background: var(--sapShell_Hover_Background);
 	border: 1px solid var(--sapShell_InteractiveBorderColor);
 }
 
-ui5-input[value-state]:not([value-state="None"])[focused] {
+[ui5-input][value-state]:not([value-state="None"])[focused] {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 /* IE styles end */
@@ -437,7 +459,7 @@ ui5-input[value-state]:not([value-state="None"])[focused] {
 	fill: var(--sapShellColor);
 }
 
-:host [dir="rtl"] ::slotted(ui5-button[slot="startButton"]) {
+:host [dir="rtl"] ::slotted([ui5-button][slot="startButton"]) {
 	margin-left: 0.5rem;
 	margin-right: 0;
 }
@@ -452,8 +474,12 @@ ui5-input[value-state]:not([value-state="None"])[focused] {
 	margin-left: 0;
 }
 
-[dir="rtl"] .ui5-shellbar-overflow-container-right {
+:host(:not([show-search-field])) [dir="rtl"] .ui5-shellbar-overflow-container-right {
 	margin-right: 8rem;
+	margin-left: 0;
+}
+
+[dir="rtl"] .ui5-shellbar-overflow-container-right {
 	margin-left: 0;
 }
 
@@ -465,13 +491,13 @@ ui5-input[value-state]:not([value-state="None"])[focused] {
 	margin-right: 0;
 }
 
-::slotted(ui5-button[slot="startButton"]) {
+::slotted([ui5-button][slot="startButton"]) {
 	margin-right: 0.5rem;
 	margin-left: 0;
 	justify-content: center;
 	align-items: center;
 }
 
-::slotted(ui5-button[profile-btn]) {
+::slotted([ui5-button][profile-btn]) {
 	width: auto;
 }

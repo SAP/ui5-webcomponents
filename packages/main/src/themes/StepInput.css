@@ -1,0 +1,206 @@
+@import "./InvisibleTextStyles.css";
+@import "./InputIcon.css";
+
+:host(:not([hidden])) {
+	display: inline-block;
+	width: 100%;
+}
+
+:host {
+	color: var(--sapField_TextColor);
+	background-color: var(--sapField_Background);
+	border: 1px solid var(--sapField_BorderColor);
+	border-radius: var(--_ui5_input_wrapper_border_radius);
+	box-sizing: border-box;
+	height: var(--_ui5_input_height);
+	position: relative;
+}
+
+:host .ui5-step-input-input {
+	text-align: inherit;
+}
+
+:host(:not([value-state]):not([readonly]):not([disabled]):hover),
+:host([value-state=None]:not([readonly]):not([disabled]):hover) {
+    background-color: var(--sapField_Hover_Background);
+    border: 1px solid var(--sapField_Hover_BorderColor);
+}
+
+:host([value-state=Success]:not([readonly]):not([disabled]))::after,
+:host([value-state=Error]:not([readonly]):not([disabled]))::after,
+:host([value-state=None]:not([readonly]):not([disabled]))::after,
+:host([value-state=Information]:not([readonly]):not([disabled]))::after,
+:host([value-state=Warning]:not([readonly]):not([disabled]))::after {
+	position: absolute;
+	content: "";
+	top: -1px;
+	right: -1px;
+	bottom: -1px;
+	left: -1px;
+	outline: none;
+	pointer-events: none;
+	border-radius: var(--_ui5_input_wrapper_border_radius);
+	border-style: var(--_ui5_input_error_warning_border_style);
+	z-index: 3;
+	border-width: 0px;
+}
+
+:host([value-state=Information]:not([readonly]):not([disabled]))::after {
+	border-color: var(--sapField_InformationColor);
+	border-width: var(--_ui5-input-information_border_width);
+}
+
+:host([value-state=Warning]:not([readonly]):not([disabled]))::after {
+	border-color: var(--sapField_WarningColor);
+	border-width: 2px;
+}
+
+:host([value-state=Success]:not([readonly]):not([disabled]))::after {
+	border-color: var(--sapField_SuccessColor);
+	border-width: 1px;
+}
+
+:host([value-state=Error]:not([readonly]):not([disabled]))::after {
+	border-color: var(--sapField_InvalidColor);
+	border-width: var(--_ui5-input-information_border_width);
+}
+
+:host([value-state])::after {
+    border-width: var(--_ui5_input_state_border_width);
+}
+
+:host([value-state=Error]:not([readonly]):not([disabled])) .ui5-step-input-input {
+    background-color: var(--sapField_InvalidBackground);
+}
+
+:host([value-state]:not([value-state="None"]) .ui5-step-input-input[focused]) {
+		outline: none;
+}
+
+:host .ui5-step-input-input {
+	width: 100%;
+	color: inherit;
+	background-color: inherit;
+	border: 1px solid transparent;
+	box-sizing: border-box;
+	vertical-align: top;
+	margin-top: -1px;
+	min-width: 8rem;
+	position: relative;
+	padding: 0px 2.5rem 0px 2.4375rem;
+	outline: none;
+}
+
+:host .ui5-step-input-input[text-align=left] {
+	text-align: left;
+}
+
+:host .ui5-step-input-input[text-align=center] {
+	text-align: center;
+}
+
+:host .ui5-step-input-input[text-align=right] {
+	text-align: right;
+}
+
+:host .ui5-step-icon {
+	position: absolute;
+	display: inline-block;
+	height: 2rem;
+	height: 100%;
+	background-color: var(--sapField_Background);
+	z-index: 2;
+}
+
+:host .ui5-step-icon[focused] {
+	border: none;
+	outline: none;
+}
+
+:host .ui5-step-icon.ui5-step-dec {
+	left: 0;
+}
+
+:host .ui5-step-icon.ui5-step-inc {
+	right: 0;
+}
+
+:host .ui5-step-icon *:not([clickable]),
+:host .ui5-step-icon *:not([clickable]):active,
+:host .ui5-step-icon *:not([clickable]):hover {
+	opacity: 0.5;
+	background-color: transparent;
+	color: var(--sapContent_IconColor);
+}
+
+:host .ui5-step-icon :not([clickable]) *:hover,
+:host .ui5-step-icon :not([clickable]) *:active {
+	background-color: var(--sapField_Background);
+	color: var(--sapContent_IconColor);
+}
+
+:host .ui5-step-input-input[focused]::after {
+	position: absolute;
+	content: "";
+	border: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
+	top: 1px;
+	right: 0px;
+	bottom: 1px;
+	left: 0px;
+	outline: none;
+	pointer-events: none;
+	z-index: 3;
+}
+
+:host .ui5-step-input-input[focused] {
+	outline: none;
+}
+
+:host([value-state]:not([value-state=None]):not([value-state=Success]):not([readonly]):not([disabled])) .ui5-step-input-input[focused]::after {
+	top: 2px;
+	right: 1px;
+	bottom: 2px;
+	left: 1px;
+}
+
+:host([value-state=Information]:not([readonly]):not([disabled]))::after {
+	border-color: var(--sapField_InformationColor);
+	border-width: var(--_ui5-input-information_border_width);
+}
+
+:host([value-state=Warning]:not([readonly]):not([disabled]))::after {
+	border-color: var(--sapField_WarningColor);
+}
+
+:host([value-state=Success]:not([readonly]):not([disabled]))::after {
+	border-color: var(--sapField_SuccessColor);
+	border-width: 1px;
+}
+
+:host([value-state=Error]:not([readonly]):not([disabled]))::after {
+    border-color: var(--sapField_InvalidColor);
+}
+
+/* Disable spin buttons in Chrome, Safari, Edge, Opera */
+:host .ui5-step-input-input::-webkit-outer-spin-button,
+:host .ui5-step-input-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+:host([disabled]) {
+	opacity: var(--_ui5_input_disabled_opacity);
+	cursor: default;
+	pointer-events: none;
+	background: var(--sapField_ReadOnly_Background);
+	border-color: var(--sapField_ReadOnly_BorderColor);
+}
+
+:host([disabled]) .ui5-step-icon {
+	background: var(--sapField_ReadOnly_Background);
+}
+
+:host([disabled]) .ui5-step-icon [ui5-icon] {
+	color: var(--sapField_ReadOnly_BorderColor);
+}
+

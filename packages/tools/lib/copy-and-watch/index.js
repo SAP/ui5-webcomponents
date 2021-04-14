@@ -10,7 +10,7 @@ require('colors');
 const args = process.argv.slice(2);
 const options = {};
 
-['watch', 'clean', 'skip-initial-copy', 'safe'].forEach(key => {
+['watch', 'clean', 'skip-initial-copy', 'safe',  'silent'].forEach(key => {
 	const index = args.indexOf(`--${key}`);
 	if (index >= 0) {
 		options[key] = true;
@@ -64,12 +64,12 @@ const copy = from => {
 		return;
 	}
 	fs.writeFileSync(to, fs.readFileSync(from));
-	console.log('[COPY]'.yellow, from, 'to'.yellow, to);
+	options.silent || console.log('[COPY]'.yellow, from, 'to'.yellow, to);
 };
 const remove = from => {
 	const to = findTarget(from);
 	fs.unlinkSync(to);
-	console.log('[DELETE]'.yellow, to);
+	options.silent || console.log('[DELETE]'.yellow, to);
 };
 const rimraf = dir => {
 	if (fs.existsSync(dir)) {
@@ -110,7 +110,9 @@ if (options.watch) {
 
 	chokidar
 		.watch(sources, chokidarOptions)
-		.on('ready', () => sources.forEach(s => console.log('[WATCH]'.yellow, s)))
+		.on('ready', () => sources.forEach(s => {
+			options.silent || console.log('[WATCH]'.yellow, s);
+		}))
 		.on('add', copy)
 		.on('addDir', copy)
 		.on('change', copy)

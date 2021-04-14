@@ -20,6 +20,7 @@
     overflow: hidden;
     max-height: 94vh;
     max-width: 90vw;
+    outline: none;
 }
 
 @media screen and (-ms-high-contrast: active) {
@@ -46,7 +47,7 @@
     color: var(--sapPageHeader_TextColor);
     font-size: 1rem;
     font-weight: 400;
-    font-family: var(--sapFontFamily);
+    font-family: "72override", var(--sapFontFamily);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,4 +80,8 @@
 
 :host(:not([header-text])) .ui5-popup-header-text {
     display: none;
+}
+
+:host([disable-scrolling]) .ui5-popup-content {
+    overflow: hidden;
 }

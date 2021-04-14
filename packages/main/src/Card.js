@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -28,7 +29,7 @@ const metadata = {
 		/**
 		 * Defines the content of the <code>ui5-card</code>.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot content
 		 * @public
 		 */
 		"default": {
@@ -111,6 +112,31 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the aria-label attribute for the <code>ui5-card</code>
+		 *
+		 * @type {String}
+		 * @since 1.0.0-rc.9
+		 * @private
+		 * @defaultvalue ""
+		 */
+		ariaLabel: {
+			type: String,
+		},
+
+		/**
+		 * Receives id(or many ids) of the elements that label the <code>ui5-card</code>
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
+
 		_headerActive: {
 			type: Boolean,
 			noAttribute: true,
@@ -143,6 +169,17 @@ const metadata = {
  *
  * <h3>Keyboard handling</h3>
  * In case you enable <code>headerInteractive</code> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-card</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>heading - Used to style the heading of the card</li>
+ * <li>subheading - Used to style the subheading of the card</li>
+ * <li>status - Used to style the status of the card</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -212,6 +249,10 @@ class Card extends UI5Element {
 		return !!(this.heading || this.subheading || this.status || this.hasAction || this.avatar);
 	}
 
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
 	get ariaCardRoleDescription() {
 		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
 	}
@@ -228,6 +269,28 @@ class Card extends UI5Element {
 		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
 	}
 
+	get ariaLabelledByHeader() {
+		const labels = [];
+
+		if (this.subheading) {
+			labels.push(`${this._id}-subheading`);
+		}
+
+		if (this.status) {
+			labels.push(`${this._id}-status`);
+		}
+
+		if (this.hasAvatar) {
+			labels.push(`${this._id}-avatar`);
+		}
+
+		return labels.length !== 0 ? labels.join(" ") : undefined;
+	}
+
+	get ariaLabelledByCard() {
+		return this.heading ? `${this._id}-heading ${this._id}-desc` : `${this._id}-desc`;
+	}
+
 	get hasAvatar() {
 		return !!this.avatar.length;
 	}
@@ -236,11 +299,12 @@ class Card extends UI5Element {
 		return !!this.action.length;
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	_headerClick() {

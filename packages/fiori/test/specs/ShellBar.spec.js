@@ -1,5 +1,6 @@
 
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 const getOverflowPopover = id => {
 	const staticAreaItemClassName = browser.getStaticAreaItemClassName(`#${id}`);
@@ -23,7 +24,25 @@ const getCustomActionProp = (id, pos, prop) => {
 }
 
 describe("Component Behavior", () => {
-	browser.url("http://localhost:8081/test-resources/pages/ShellBar.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ShellBar.html`);
+	});
+
+
+	describe("ui5-shellbar menu", () => {
+		it("tests close on content click", () => {
+			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
+			const menuPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
+			const firstMenuItem = menuPopover.$("ui5-list > ui5-li");
+
+			primaryTitle.click();
+			firstMenuItem.click();
+
+			assert.strictEqual(menuPopover.getProperty("opened"), false, "Count property propagates to ui5-button");
+		});
+	});
+
 
 	describe("ui5-shellbar-item", () => {
 		it("tests count property", () => {
@@ -31,6 +50,16 @@ describe("Component Behavior", () => {
 			const icon = shellbar.shadow$("ui5-button[data-count]");
 
 			assert.strictEqual(icon.getAttribute("data-count"), '42', "Count property propagates to ui5-button");
+		});
+
+		it("tests if shellbar item invalidates the shellbar", () => {
+			const shellbar = browser.$("#test-invalidation");
+			const item = browser.$("#test-invalidation-item");
+
+			item.setProperty("count", "3");
+
+			assert.strictEqual(shellbar.shadow$(".ui5-shellbar-custom-item").getAttribute("data-count"), "3");
+
 		})
 	});
 
@@ -47,7 +76,7 @@ describe("Component Behavior", () => {
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
 			const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
+			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(4)");
 			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
 			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
@@ -68,7 +97,6 @@ describe("Component Behavior", () => {
 		it("tests XL Breakpoint 1820px", () => {
 			browser.setWindowSize(1820, 1080);
 
-			const shellbarWrapper = browser.$("#shellbar").shadow$("div");
 			const shellbar = browser.$("#shellbar");
 
 			assert.strictEqual(shellbar.getProperty("breakpointSize") === "XL", true, "XL Breakpoint class should be set");
@@ -84,7 +112,7 @@ describe("Component Behavior", () => {
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
 			const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
+			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(4)");
 			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
 			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
@@ -288,6 +316,7 @@ describe("Component Behavior", () => {
 				assert.strictEqual(input.getValue(), "Application 1", "Input value is set by click event of the first menu item");
 				assert.strictEqual(inputData.getValue(), "key1", "The user defined attributes are available.");
 
+				primaryTitle.click();
 				secondMenuItem.click();
 
 				assert.strictEqual(input.getValue(), "Application 2", "Input value is set by click event of the second menu item");
@@ -380,7 +409,8 @@ describe("Component Behavior", () => {
 
 			it("tests if searchfield toggles when clicking on search icon", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const searchField = browser.$("#shellbar").shadow$(".ui5-shellbar-search-field");
+				const searchField = browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper");
+				const cancelButton = browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper .ui5-shellbar-button");
 				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
 				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 				const searchListItem = overflowPopover.$("ui5-list ui5-li:nth-child(1)");
@@ -392,8 +422,7 @@ describe("Component Behavior", () => {
 
 				assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on the search icon within the overflow");
 
-				overflowButton.click();
-				searchListItem.click();
+				cancelButton.click();
 				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden after clicking on the search icon agian");
 			});
 		});

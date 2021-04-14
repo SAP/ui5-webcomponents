@@ -6,17 +6,27 @@ import {
 	fetchI18nBundle,
 	getI18nBundle,
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	FILEUPLOAD_BROWSE,
 	FILEUPLOADER_TITLE,
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
 } from "./generated/i18n/i18n-defaults.js";
+
 import Input from "./Input.js";
+import Popover from "./Popover.js";
 
 // Template
 import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit.js";
+import FileUploaderPopoverTemplate from "./generated/templates/FileUploaderPopoverTemplate.lit.js";
 
 // Styles
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 /**
  * @public
@@ -27,6 +37,8 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
 		 * Comma-separated list of file types that the <code>ui5-file-uploader</code> should accept.
+		 * <br><br>
+		 * <b>Note:</b> Please make sure you are adding the <code>.</code> in front on the file type, e.g. <code>.png</code> in case you want to accept png's only.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -128,6 +140,13 @@ const metadata = {
 			type: ValueState,
 			defaultValue: ValueState.None,
 		},
+
+		/**
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
@@ -135,11 +154,39 @@ const metadata = {
 		 * By default the <code>ui5-file-uploader</code> contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
 		 *
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot content
 		 * @public
 		 */
 		"default": {
 			propertyName: "content",
+			type: HTMLElement,
+		},
+
+		/**
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-file-uploader</code>.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 * <br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+		 * when the <code>ui5-file-uploader</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * @type {HTMLElement[]}
+		 * @since 1.0.0-rc.9
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
 			type: HTMLElement,
 		},
 	},
@@ -178,7 +225,7 @@ const metadata = {
  * For the <code>ui5-file-uploader</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/FileUploader.js";</code>
+ * <code>import "@ui5/webcomponents/dist/FileUploader.js";</code>
  *
  * @constructor
  * @since 1.0.0-rc.6
@@ -209,6 +256,14 @@ class FileUploader extends UI5Element {
 		return FileUploaderTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return FileUploaderPopoverTemplate;
+	}
+
+	static get staticAreaStyles() {
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
+	}
+
 	constructor() {
 		super();
 		if (this._canUseNativeFormSupport) {
@@ -228,6 +283,26 @@ class FileUploader extends UI5Element {
 		this.content.forEach(item => {
 			item.classList.remove("ui5_hovered");
 		});
+	}
+
+	_onkeydown(event) {
+		if (isEnter(event)) {
+			this._input.click(event);
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this._input.click(event);
+		}
+	}
+
+	_onfocusin() {
+		this.focused = true;
+	}
+
+	_onfocusout() {
+		this.focused = false;
 	}
 
 	/**
@@ -252,6 +327,8 @@ class FileUploader extends UI5Element {
 		if (!this.value) {
 			this._input.value = "";
 		}
+
+		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 	}
 
 	_enableFormSupport() {
@@ -266,7 +343,7 @@ class FileUploader extends UI5Element {
 					(element, nativeInput) => {
 						nativeInput.disabled = element.disabled;
 					},
-					this._onChange.bind(this)
+					this._onChange.bind(this),
 				);
 			}
 		} else if (this.name) {
@@ -295,6 +372,35 @@ class FileUploader extends UI5Element {
 		}
 
 		this._internals.setFormValue(formData);
+	}
+
+	toggleValueStatePopover(open) {
+		if (open) {
+			this.openValueStatePopover();
+		} else {
+			this.closeValueStatePopover();
+		}
+	}
+
+	async openValueStatePopover() {
+		const popover = await this._getPopover();
+
+		if (popover) {
+			popover.openBy(this);
+		}
+	}
+
+	async closeValueStatePopover() {
+		const popover = await this._getPopover();
+
+		if (popover) {
+			popover.close();
+		}
+	}
+
+	async _getPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector(".ui5-valuestatemessage-popover");
 	}
 
 	/**
@@ -338,11 +444,71 @@ class FileUploader extends UI5Element {
 		return "file";
 	}
 
+	get valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get hasValueStateText() {
+		return this.hasValueState && this.valueState !== ValueState.Success;
+	}
+
+	get valueStateMessageText() {
+		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
+	}
+
+	get shouldDisplayDefaultValueStateMessage() {
+		return !this.valueStateMessage.length && this.hasValueStateText;
+	}
+
+	get shouldOpenValueStateMessagePopover() {
+		return this.focused && this.hasValueStateText && !this.hideInput;
+	}
+
+	get classes() {
+		return {
+			popoverValueState: {
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			popoverHeader: {
+				"width": `${this.ui5Input ? this.ui5Input.offsetWidth : 0}px`,
+			},
+		};
+	}
+
+	get ui5Input() {
+		return this.shadowRoot.querySelector(".ui5-file-uploader-input");
+	}
+
+	static get dependencies() {
+		return [Input, Popover];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Input.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

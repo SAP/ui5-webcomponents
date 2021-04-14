@@ -1,4 +1,3 @@
-const postcss = require('postcss');
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
@@ -11,17 +10,22 @@ const proccessCSS = css => {
 	return css;
 }
 
-module.exports = postcss.plugin('add css to JSON transform plugin', function (opts) {
+module.exports = function (opts) {
 	opts = opts || {};
 
-	return function (root) {
-		let css = root.toString();
-		css = proccessCSS(css);
+	return {
+		postcssPlugin: 'postcss-css-to-json',
+		Once (root) {
+			let css = root.toString();
+			css = proccessCSS(css);
 
-		const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\assets\\");
-		mkdirp.sync(path.dirname(targetFile));
+			const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\assets\\");
+			mkdirp.sync(path.dirname(targetFile));
 
-		const filePath = `${targetFile}.json`;
-		fs.writeFileSync(filePath, JSON.stringify({_: css}));
-	}
-});
+			const filePath = `${targetFile}.json`;
+			fs.writeFileSync(filePath, JSON.stringify({_: css}));
+		}
+	};
+};
+
+module.exports.postcss = true;

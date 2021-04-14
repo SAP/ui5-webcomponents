@@ -41,6 +41,6 @@ class ListSeparators extends DataType {
 	}
 }
 
-ListSeparators.generataTypeAcessors(ListSeparatorsTypes);
+ListSeparators.generateTypeAccessors(ListSeparatorsTypes);
 
 export default ListSeparators;

@@ -1,6 +1,5 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
-
 /**
  * @lends sap.ui.webcomponents.main.types.ToastPlacement.prototype
  * @public
@@ -87,6 +86,6 @@ class ToastPlacement extends DataType {
 	}
 }
 
-ToastPlacement.generataTypeAcessors(ToastPlacements);
+ToastPlacement.generateTypeAccessors(ToastPlacements);
 
 export default ToastPlacement;

@@ -1,0 +1,35 @@
+<div
+	class="ui5-slider-root"
+	@mousedown="{{_onmousedown}}"
+	@touchstart="{{_ontouchstart}}"
+	@mouseover="{{_onmouseover}}"
+	@mouseout="{{_onmouseout}}"
+	@keydown="{{_onkeydown}}"
+	@keyup="{{_onkeyup}}"
+	dir="{{effectiveDir}}"
+>
+	<div class="ui5-slider-inner">
+		{{#if step}}
+			{{#if showTickmarks}}
+				<div class="ui5-slider-tickmarks" style="{{styles.tickmarks}}"></div>
+				{{#if labelInterval}}
+					<ul class="ui5-slider-labels {{classes.labelContainer}}" style="{{styles.labelContainer}}">
+						{{#each _labels}}
+							<li style="{{../styles.label}}">{{this}}</li>
+						{{/each}}
+					</ul>
+				{{/if}}
+			{{/if}}
+		{{/if}}
+
+		{{> progressBar}}
+
+		{{> handles}}
+	</div>
+
+	<span id="{{_id}}-sliderDesc" class="ui5-hidden-text">{{_ariaLabelledByText}}</span>
+</div>
+
+
+{{#*inline "progressBar"}}{{/inline}}
+{{#*inline "handles"}}{{/inline}}

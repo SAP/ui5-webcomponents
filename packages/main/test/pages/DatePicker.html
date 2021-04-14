@@ -7,7 +7,7 @@
 	<title>DatePicker test page</title>
 
 	<script>
-		delete Document.prototype.adoptedStyleSheets;
+		// delete Document.prototype.adoptedStyleSheets;
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
@@ -110,13 +110,26 @@
 		<h3>3 months range</h3>
 		<ui5-date-picker id="minMax3" value="5/6/2020" min-date="6/1/2020" max-date="5/1/2021" format-pattern="dd/MM/yyyy"></ui5-date-picker>
 		<h3>1 year range</h3>
-		<ui5-date-picker id="minMax4" value="5 Feb 2021" min-date="5 Jan 2020" max-date="5 Jan 2021"></ui5-date-picker>
+		<ui5-date-picker id="minMax4" value="Feb 5, 2020" min-date="Jan 5, 2020" max-date="Jan 5, 2021"></ui5-date-picker>
+
+		<section>
+			<h3>Test ariaLabel and ariaLabelledBy</h3>
+			<ui5-date-picker id="dpAriaLabel" aria-label="Hello World"></ui5-date-picker>
+			<br>
+			<ui5-label id="infoText">info text</ui5-label>
+			<ui5-date-picker id="dpAriaLabelledBy" aria-labelledby="infoText"></ui5-date-picker>
+		</section>
 
 		<section class="ui5-content-density-compact">
 			<h3>DatePicker in Compact</h3>
 			<div>
 				<ui5-date-picker></ui5-date-picker>
 			</div>
+		</section>
+
+		<section>
+			<h3>DatePicker with properties given in the wrong format</h3>
+			<ui5-date-picker min-date="1/1/2021" max-date="31/1/2021" value="5/1/2021"></ui5-date-picker>
 		</section>
 
 	</div>
@@ -146,22 +159,6 @@
 			$('#startDate').val($('#ui5-datepicker--startDate').val());
 			$('#startDate').trigger('change');
 		}));
-
-		$('#ui5-datepicker--startDate').dblclick(function(e) {
-			var dp = $('#ui5-datepicker--startDate')[0];
-			if (dp.getSemanticTargetInfo(e).isInput) {
-				dp.value = dp.normalizeValue("today");
-				dp.closePicker();
-			}
-		});
-
-		$('#ui5-datepicker--startDate').click(function(e) {
-			var dp = $('#ui5-datepicker--startDate')[0];
-			if (!dp.isOpen() && dp.getSemanticTargetInfo(e).isInput) {
-				dp.setAttribute('value-state', 'None');
-				dp.openPicker({ focusInput: true });
-			}
-		});
 
 		var dp11 = document.getElementById('dp11');
 

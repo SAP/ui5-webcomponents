@@ -1,15 +1,15 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/src/Keys.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
-import "@ui5/webcomponents-icons/dist/icons/message-information.js";
-import "@ui5/webcomponents-icons/dist/icons/message-success.js";
-import "@ui5/webcomponents-icons/dist/icons/message-error.js";
-import "@ui5/webcomponents-icons/dist/icons/message-warning.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/message-information.js";
+import "@ui5/webcomponents-icons/dist/message-success.js";
+import "@ui5/webcomponents-icons/dist/message-error.js";
+import "@ui5/webcomponents-icons/dist/message-warning.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
+import Button from "./Button.js";
 import { MESSAGE_STRIP_CLOSE_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -66,8 +66,7 @@ const metadata = {
 		/**
 		 * Defines the text of the <code>ui5-messagestrip</code>.
 		 * <br><br>
-		 * <b>Note:</b> Аlthough this slot accepts HTML Elements,
-		 * it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -86,7 +85,7 @@ const metadata = {
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
-		 * @type {HTMLElement}
+		 * @type {sap.ui.webcomponents.main.IIcon}
          * @slot
 		 * @public
 		 */
@@ -153,7 +152,6 @@ class MessageStrip extends UI5Element {
 
 	constructor() {
 		super();
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -161,34 +159,23 @@ class MessageStrip extends UI5Element {
 		this.fireEvent("close", {});
 	}
 
-	_closeKeyDown(event) {
-		if (isEnter(event)) {
-			this.fireEvent("close");
-		}
-
-		if (isSpace(event)) {
-			event.preventDefault();
-		}
-	}
-
-	_closeKeyUp(event) {
-		if (isSpace(event)) {
-			this.fireEvent("close");
-		}
+	static get dependencies() {
+		return [
+			Icon,
+			Button,
+		];
 	}
 
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
-
-		await Icon.define();
 	}
 
 	static typeClassesMappings() {
 		return {
-			"Information": "ui5-messagestrip--info",
-			"Positive": "ui5-messagestrip--positive",
-			"Negative": "ui5-messagestrip--negative",
-			"Warning": "ui5-messagestrip--warning",
+			"Information": "ui5-messagestrip-root--info",
+			"Positive": "ui5-messagestrip-root--positive",
+			"Negative": "ui5-messagestrip-root--negative",
+			"Warning": "ui5-messagestrip-root--warning",
 		};
 	}
 
@@ -211,14 +198,10 @@ class MessageStrip extends UI5Element {
 
 	get classes() {
 		return {
-			label: {
-				"ui5-messagestrip-text": true,
-				"ui5-messagestripNoCloseButton": this.noCloseButton,
-			},
-			main: {
+			root: {
 				"ui5-messagestrip-root": true,
-				"ui5-messagestrip-icon--hidden": this.noIcon,
-				"ui5-messagestrip-close-icon--hidden": this.noCloseButton,
+				"ui5-messagestrip-root-no-icon": this.noIcon,
+				"ui5-messagestrip-root-no-close-button": this.noCloseButton,
 				[this.typeClasses]: true,
 			},
 		};

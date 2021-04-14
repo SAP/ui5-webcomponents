@@ -16,11 +16,15 @@ allThemes.forEach(theme => {
 	buildThemesCommands[`copy_${theme}_bundle`] = `copy-and-watch "src/themes/${theme}/parameters-bundle.css" dist/themes/${theme}/`;
 });
 
+const generateHash = resolve.sync("@ui5/webcomponents-tools/lib/hash/generate.js");
+const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.js");
+const UP_TO_DATE = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`;
+
 module.exports = {
 	scripts: {
 		clean: "rimraf dist",
 		build: {
-			default: "nps clean build.src build.themes build.postcss build.jsonImports generateReport",
+			default: `${UP_TO_DATE} || nps clean build.src build.themes build.postcss build.jsonImports generateReport hash`,
 			src: `copy-and-watch "src/**/*.js" dist/`,
 			themes: {
 				default: `nps build.themes.prepare ${buildThemesCommandsNames}`,
@@ -30,5 +34,6 @@ module.exports = {
 			jsonImports: `node "${jsonImportsScript}" dist/generated/assets/themes dist/generated/json-imports`,
 		},
 		generateReport: `node "${generateReportScript}"`,
+		hash: `node ${generateHash} dist/ hash.txt`,
 	},
 };

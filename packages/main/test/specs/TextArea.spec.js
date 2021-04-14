@@ -1,7 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Attributes propagation", () => {
-	browser.url("http://localhost:8080/test-resources/pages/TextArea.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
+	});
 
 	it("Should change the placeholder of the inner textarea", () => {
 		const textarea = $("#basic-textarea");
@@ -23,7 +26,8 @@ describe("Attributes propagation", () => {
 	});
 
 	it("Required attribute is propagated properly", () => {
-		assert.ok(browser.$("#required-textarea").shadow$("textarea").getAttribute("required"), "Required property was propagated");
+		assert.strictEqual(browser.$("#required-textarea").shadow$("textarea").getAttribute("aria-required"), "true", "Aria-required attribute is set correctly");
+		assert.strictEqual(browser.$("#basic-textarea").shadow$("textarea").getAttribute("aria-required"), "false", "Aria-required attribute is set correctly");
 	});
 
 	it("Value attribute is propagated properly", () => {
@@ -35,10 +39,24 @@ describe("Attributes propagation", () => {
 
 		assert.strictEqual(browser.$("#basic-textarea").shadow$("textarea").getValue(), sExpectedValue, "Value property was set correctly");
 	});
+
+	it("Tests aria-label and aria-labelledby", () => {
+		const textArea1 = browser.$("#textAreaAriaLabel").shadow$("textarea");
+		const textArea2 = browser.$("#textAreaAriaLabelledBy").shadow$("textarea");
+		const EXPECTED_ARIA_LABEL1 = "Hello World";
+		const EXPECTED_ARIA_LABEL2 = "info text 20 characters remaining";
+
+		assert.strictEqual(textArea1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
+			"The aria-label is correctly set internally.");
+		assert.strictEqual(textArea2.getAttribute("aria-label"), EXPECTED_ARIA_LABEL2,
+			"The aria-label is correctly set internally.");
+	});
 });
 
 describe("disabled and readonly textarea", () => {
-	browser.url('http://localhost:8080/test-resources/pages/TextArea.html');
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
+	});
 
 	it("can not be edited when disabled", () => {
 		const textAreaInnerDisabled = browser.$("#disabled-textarea").shadow$("textarea");
@@ -59,7 +77,9 @@ describe("disabled and readonly textarea", () => {
 });
 
 describe("when enabled", () => {
-	browser.url('http://localhost:8080/test-resources/pages/TextArea.html');
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
+	});
 
 	it("shows value state message", () => {
 		const textarea = $("#textarea-value-state-msg")
@@ -89,6 +109,9 @@ describe("when enabled", () => {
 		const textarea = browser.$("#basic-textarea");
 		const textareaInner = browser.$("#basic-textarea").shadow$("textarea");
 
+		browser.execute(() => {
+			document.getElementById("basic-textarea").value = "Test";
+		}); // set the value again since browser.url reset the page
 		assert.strictEqual(textarea.getProperty("value"), "Test", "Initial value is correct");
 
 		textareaInner.addValue("a");

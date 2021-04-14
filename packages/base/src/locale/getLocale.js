@@ -2,10 +2,20 @@ import detectNavigatorLanguage from "../util/detectNavigatorLanguage.js";
 import { getLanguage as getConfigLanguage } from "../config/Language.js";
 import Locale from "./Locale.js";
 
+const cache = new Map();
+
+const getLocaleInstance = lang => {
+	if (!cache.has(lang)) {
+		cache.set(lang, new Locale(lang));
+	}
+
+	return cache.get(lang);
+};
+
 const convertToLocaleOrNull = lang => {
 	try {
 		if (lang && typeof lang === "string") {
-			return new Locale(lang);
+			return getLocaleInstance(lang);
 		}
 	} catch (e) {
 		// ignore
@@ -22,7 +32,7 @@ const getLocale = lang => {
 	}
 
 	if (getConfigLanguage()) {
-		return new Locale(getConfigLanguage());
+		return getLocaleInstance(getConfigLanguage());
 	}
 
 	return convertToLocaleOrNull(detectNavigatorLanguage());

@@ -1,7 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import encodeCSS from "@ui5/webcomponents-base/dist/util/encodeCSS.js";
 
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
 
@@ -25,6 +27,24 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 
 		/**
+		 * Defines if the avatar is interactive (focusable and pressable)
+		 * @type {boolean}
+		 * @defaultValue false
+		 * @public
+		 */
+		interactive: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the elements is on focus
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the source path to the desired image.
 		 * @type {string}
 		 * @defaultvalue ""
@@ -41,7 +61,7 @@ const metadata = {
 		 * <br>
 		 * <b>Note:</b> You should import the desired icon first, then use its name as "icon".
 		 * <br><br>
-		 * import "@ui5/webcomponents-icons/dist/icons/{icon_name}.js"
+		 * import "@ui5/webcomponents-icons/dist/{icon_name}.js"
 		 * <br>
 		 * <pre>&lt;ui5-avatar icon-src="employee"></pre>
 		 *
@@ -74,13 +94,13 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Circle</code></li>
 		 * <li><code>Square</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarShape}
 		 * @defaultvalue "Circle"
 		 * @public
 		 */
 		shape: {
-			type: String,
+			type: AvatarShape,
 			defaultValue: AvatarShape.Circle,
 		},
 
@@ -94,12 +114,20 @@ const metadata = {
 		 * <li><code>M</code></li>
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarSize}
 		 * @defaultvalue "S"
 		 * @public
 		 */
 		size: {
+			type: AvatarSize,
+			defaultValue: AvatarSize.S,
+		},
+
+		/**
+		 * @private
+		 */
+		_size: {
 			type: String,
 			defaultValue: AvatarSize.S,
 		},
@@ -111,13 +139,13 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Cover</code></li>
 		 * <li><code>Contain</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarFitType}
 		 * @defaultvalue "Cover"
 		 * @public
 		 */
 		imageFitType: {
-			type: String,
+			type: AvatarFitType,
 			defaultValue: AvatarFitType.Cover,
 		},
 
@@ -137,12 +165,20 @@ const metadata = {
 		 * <li><code>Accent9</code></li>
 		 * <li><code>Accent10</code></li>
 		 * <li><code>Placeholder</code></li>
-		 * <ul>
+		 * </ul>
 		 * @type {AvatarBackgroundColor}
 		 * @defaultvalue "Accent6"
 		 * @public
 		 */
 		backgroundColor: {
+			type: AvatarBackgroundColor,
+			defaultValue: AvatarBackgroundColor.Accent6,
+		},
+
+		/**
+		 * @private
+		 */
+		_backgroundColor: {
 			type: String,
 			defaultValue: AvatarBackgroundColor.Accent6,
 		},
@@ -159,10 +195,23 @@ const metadata = {
 		accessibleName: {
 			type: String,
 		},
+
+		_tabIndex: {
+			type: String,
+			noAttribute: true,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
+		/**
+		* Fired on mouseup, space and enter if avatar is interactive
+		*
+		* @event
+		* @private
+		* @since 1.0.0-rc.11
+		*/
+		click: {},
 	},
 };
 
@@ -179,7 +228,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/Avatar.js";</code>
+ * <code>import "@ui5/webcomponents/dist/Avatar.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -187,6 +236,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-avatar
  * @since 1.0.0-rc.6
+ * @implements sap.ui.webcomponents.main.IAvatar
  * @public
  */
 class Avatar extends UI5Element {
@@ -211,11 +261,40 @@ class Avatar extends UI5Element {
 		return AvatarTemplate;
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-			Icon.define(),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
+	}
+
+	get tabindex() {
+		return this._tabIndex || (this.interactive ? "0" : "-1");
+	}
+
+	/**
+	 * Returns the effective avatar size.
+	 * @readonly
+	 * @type { String }
+	 * @defaultValue "S"
+	 * @private
+	 */
+	get _effectiveSize() {
+		// we read the attribute, because the "size" property will always have a default value
+		return this.getAttribute("size") || this._size;
+	}
+
+	/**
+	 * Returns the effective background color.
+	 * @readonly
+	 * @type { String }
+	 * @defaultValue "Accent6"
+	 * @private
+	 */
+	get _effectiveBackgroundColor() {
+		// we read the attribute, because the "background-color" property will always have a default value
+		return this.getAttribute("background-color") || this._backgroundColor;
 	}
 
 	get validInitials() {
@@ -237,12 +316,49 @@ class Avatar extends UI5Element {
 	}
 
 	get styles() {
-		const image = this.image.replace(/%/g, "%25").replace(/#/g, "%23");
 		return {
 			img: {
-				"background-image": `url("${image}")`,
+				"background-image": `url("${encodeCSS(this.image)}")`,
 			},
 		};
+	}
+
+	_onclick(event) {
+		if (this.interactive) {
+			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+			event.stopPropagation();
+			this.fireEvent("click");
+		}
+	}
+
+	_onkeydown(event) {
+		if (!this.interactive) {
+			return;
+		}
+
+		if (isEnter(event)) {
+			this.fireEvent("click");
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault(); // prevent scrolling
+		}
+	}
+
+	_onkeyup(event) {
+		if (this.interactive && !event.shiftKey && isSpace(event)) {
+			this.fireEvent("click");
+		}
+	}
+
+	_onfocusout() {
+		this.focused = false;
+	}
+
+	_onfocusin() {
+		if (this.interactive) {
+			this.focused = true;
+		}
 	}
 }
 

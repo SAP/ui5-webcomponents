@@ -14,22 +14,14 @@
 }
 
 .ui5-dt-time {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	width: 100%;
 	min-width: var(--_ui5_datetime_timeview_width);
-	padding: var(--_ui5_datetime_timeview_padding);
 	box-sizing: border-box;
 }
 
 .ui5-dt-cal.ui5-dt-cal--hidden,
 .ui5-dt-time.ui5-dt-time--hidden {
 	display: none;
-}
-
-.ui5-dt-wheel {
-	height: 100%;
 }
 
 .ui5-dt-picker-header {

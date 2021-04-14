@@ -1,5 +1,5 @@
 :root {
 	--_ui5_textarea_focus_after_width: 1px;
 	--_ui5_textarea_warning_border_style: solid;
-	--_ui5_textarea_warning_border_width: 2px;
+	--_ui5_textarea_state_border_width: 0.125rem;
 }

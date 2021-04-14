@@ -1,9 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("General interaction", () => {
 
 	it ("Should open the popover when clicking on the arrow", () => {
-		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
 		const combo = $("#combo");
 		const arrow = combo.shadow$("[input-icon]");
@@ -18,7 +19,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Items filtration", () => {
-		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
 		const combo = $("#combo");
 		const arrow = combo.shadow$("[input-icon]");
@@ -44,7 +45,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Should open the popover when typing a value", () => {
-		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
 		const combo = $("#combo");
 		const lazy = $("#lazy");
@@ -74,7 +75,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Should filter items based on input", () => {
-		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
 		const combo = $("#combo2");
 		const arrow = combo.shadow$("[input-icon]");
@@ -98,7 +99,7 @@ describe("General interaction", () => {
 
 		// act
 		input.keys("u");
-		
+
 		// assert
 		listItems = popover.$("ui5-list").$$("ui5-li");
 		assert.strictEqual(listItems.length, 2, "Items should be 2");
@@ -113,7 +114,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Should close popover on item click / change event", () => {
-		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
 		const combo = $("#combo2");
 		const arrow = combo.shadow$("[input-icon]");
@@ -173,7 +174,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Tests change event", () => {
-		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
 
 		const counter = $("#change-count");
 		const combo = $("#change-cb");
@@ -189,6 +190,36 @@ describe("General interaction", () => {
 
 		assert.strictEqual(placeholder.getText(), "Argentina", "Text should be empty");
 		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+	});
+
+	it ("Tests input event", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const counter = $("#input-count");
+		const combo = $("#input-cb");
+		const placeholder = $("#input-placeholder");
+		const input = combo.shadow$("#ui5-combobox-input");
+
+		input.click();
+		input.keys("ArrowDown");
+
+		assert.strictEqual(placeholder.getText(), "Argentina", "First items is selected");
+		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+
+		input.keys("ArrowUp");
+
+		assert.strictEqual(placeholder.getText(), "Argentina", "Selection not changed");
+		assert.strictEqual(counter.getText(), "1", "Input event is not fired when first item is selected and navigating with arrow up");
+
+		input.keys("ArrowDown");
+
+		assert.strictEqual(placeholder.getText(), "Germany", "Last item is selected");
+		assert.strictEqual(counter.getText(), "2", "Call count should be 2");
+
+		input.keys("ArrowDown");
+
+		assert.strictEqual(placeholder.getText(), "Germany", "Selection not changed");
+		assert.strictEqual(counter.getText(), "2", "Input event is not fired when last item is selected and navigating with arrow down");
 	});
 
 	it ("Tests Combo with contains filter", () => {
@@ -240,6 +271,60 @@ describe("General interaction", () => {
 
 		input.keys("a");
 		listItems = popover.$("ui5-list").$$("ui5-li");
-		assert.strictEqual(listItems.length, 0, "Items should be 0");
+		assert.notOk(popover.opened, "Popover should be closed when no match");
+	});
+
+	it ("Tests selection-change event and its parameters", () => {
+		const combo = $("#combo");
+		const label = $("#selection-change-event-result");
+		const arrow = combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combo");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = popover.$("ui5-list").$$("ui5-li");
+
+		arrow.click();
+
+		const listItem = listItems[8];
+
+		listItem.click();
+
+		assert.strictEqual(label.getText(), listItem.shadow$(".ui5-li-title").getText(), "event is fired correctly");
+	});
+
+	it ("Tests focused property when clicking on the arrow", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#combo");
+		const arrow = combo.shadow$("[input-icon]");
+
+		assert.ok(!combo.getProperty("focused"), "property focused should be false");
+
+		arrow.click();
+
+		assert.ok(combo.getProperty("focused"), "property focused should be true");
+	});
+
+	it ("Tests focused property when clicking on the input", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#combo");
+		const input = combo.shadow$("#ui5-combobox-input");
+
+		assert.ok(!combo.getProperty("focused"), "property focused should be false");
+
+		input.click();
+
+		assert.ok(combo.getProperty("focused"), "property focused should be true");
+	});
+
+	it ("Tests Combo with two-column layout", () => {
+		const combo = $("#combobox-two-column-layout");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#combobox-two-column-layout");
+		const arrow = combo.shadow$("[input-icon]");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const listItem = popover.$("ui5-list").$$("ui5-li")[0];
+
+		arrow.click();
+		assert.strictEqual(listItem.shadow$(".ui5-li-info").getText(), "DZ", "Additional item text should be displayed");
 	});
 });

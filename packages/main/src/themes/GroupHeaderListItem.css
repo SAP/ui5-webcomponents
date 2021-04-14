@@ -9,7 +9,7 @@
 .ui5-li-root.ui5-ghli-root {
 	padding-top: 1rem;
 	color: currentColor;
-	font-size: var(--sapMFontHeader6Size);
+	font-size: var(--sapFontHeader6Size);
 	font-weight: normal;
 	line-height: 2rem;
 }

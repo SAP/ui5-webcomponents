@@ -1,0 +1,41 @@
+{{>include "./SliderBase.hbs"}}
+
+{{#*inline "progressBar"}}
+	<div
+		class="ui5-slider-progress-container"
+		aria-hidden="true"
+		part="progress-container"
+	>
+		<div class="ui5-slider-progress"
+			style="{{styles.progress}}"
+			@focusout="{{_onfocusout}}"
+			@focusin="{{_onfocusin}}"
+			tabindex="-1"
+			part="progress-bar"
+		></div>
+	</div>
+{{/inline}}
+
+{{#*inline "handles"}}
+	<div class="ui5-slider-handle"
+		style="{{styles.handle}}"
+		@focusout="{{_onfocusout}}"
+		@focusin="{{_onfocusin}}"
+		role="slider"
+		tabindex="{{tabIndex}}"
+		aria-orientation="horizontal"
+		aria-valuemin="{{min}}"
+		aria-valuemax="{{max}}"
+		aria-valuenow="{{value}}"
+		aria-labelledby="{{_id}}-sliderDesc"
+		aria-disabled="{{_ariaDisabled}}"
+		data-sap-focus-ref
+		part="handle"
+	>
+		{{#if showTooltip}}
+			<div class="ui5-slider-tooltip" style="{{styles.tooltip}}">
+				<span class="ui5-slider-tooltip-value">{{tooltipValue}}</span>
+			</div>
+		{{/if}}
+	</div>
+{{/inline}}

@@ -21,7 +21,7 @@ const metadata = {
 		/**
 		 * Defines the text of the <code>ui5-li-groupheader</code>.
 		 * <br>
-		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -37,13 +37,14 @@ const metadata = {
 
 /**
  * @class
- * The <code>ui5-li-group-header</code> is a special list item, used only to separate other list items into logical groups.
+ * The <code>ui5-li-groupheader</code> is a special list item, used only to separate other list items into logical groups.
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.GroupHeaderListItem
  * @extends ListItemBase
  * @tagname ui5-li-groupheader
+ * @implements sap.ui.webcomponents.main.IListItem
  * @public
  */
 class GroupHeaderListItem extends ListItemBase {

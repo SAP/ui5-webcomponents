@@ -14,7 +14,7 @@
 	padding: var(--_ui5_tokenizer_root_padding);
 	overflow-x: scroll;
 	box-sizing: border-box;
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 }
 
 .ui5-tokenizer-no-padding {
@@ -38,7 +38,6 @@
 }
 
 .ui5-tokenizer--content {
-	height: 100%;
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
@@ -62,6 +61,18 @@
 	justify-content: flex-end;
 }
 
-::slotted(ui5-token) {
+::slotted([ui5-token]) {
 	margin-left: .25rem;
+}
+
+/* RTL */
+
+[dir="rtl"] .ui5-tokenizer-more-text  {
+	margin-right: .25rem;
+	margin-left: 0;
+}
+
+[dir=rtl] ::slotted([ui5-token]) {
+	margin-right: .25rem;
+	margin-left: 0;
 }

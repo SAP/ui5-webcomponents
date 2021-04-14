@@ -50,6 +50,6 @@ class Priority extends DataType {
 	}
 }
 
-Priority.generataTypeAcessors(Priorities);
+Priority.generateTypeAccessors(Priorities);
 
 export default Priority;

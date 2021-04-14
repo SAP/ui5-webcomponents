@@ -49,6 +49,6 @@ class MessageStripType extends DataType {
 	}
 }
 
-MessageStripType.generataTypeAcessors(MessageStripTypes);
+MessageStripType.generateTypeAccessors(MessageStripTypes);
 
 export default MessageStripType;

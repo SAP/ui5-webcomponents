@@ -135,6 +135,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-product-switch-item
  * @public
+ * @implements sap.ui.webcomponents.fiori.IProductSwitchItem
  * @since 1.0.0-rc.5
  */
 class ProductSwitchItem extends UI5Element {
@@ -215,8 +216,8 @@ class ProductSwitchItem extends UI5Element {
 		this.fireEvent("click", { item: this });
 	}
 
-	static async onDefine() {
-		await Icon.define();
+	static get dependencies() {
+		return [Icon];
 	}
 }
 

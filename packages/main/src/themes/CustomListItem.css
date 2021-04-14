@@ -10,21 +10,21 @@
 
 .ui5-li-root.ui5-custom-li-root {
 	padding: 0;
-	pointer-events: auto;
+	pointer-events: inherit;
 }
 
 .ui5-li-root.ui5-custom-li-root .ui5-li-content {
-	pointer-events: auto;
+	pointer-events: inherit;
 }
 
-ui5-checkbox.ui5-li-singlesel-radiobtn,
-ui5-radiobutton.ui5-li-singlesel-radiobtn {
+[ui5-checkbox].ui5-li-singlesel-radiobtn,
+[ui5-radiobutton].ui5-li-singlesel-radiobtn {
 	display: flex;
 	align-items: center;
 }
 
 .ui5-li-root.ui5-custom-li-root,
-ui5-checkbox.ui5-li-singlesel-radiobtn,
-ui5-radiobutton.ui5-li-singlesel-radiobtn {
+[ui5-checkbox].ui5-li-singlesel-radiobtn,
+[ui5-radiobutton].ui5-li-singlesel-radiobtn {
 	min-width: var(--_ui5_custom_list_item_rb_min_width);
 }

@@ -105,7 +105,11 @@ const KeyCodes = {
 
 const isEnter = event => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && !hasModifierKeys(event);
 
+const isEnterShift = event => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && checkModifierKeys(event, false, false, true);
+
 const isSpace = event => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && !hasModifierKeys(event);
+
+const isSpaceShift = event => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, false, false, true);
 
 const isLeft = event => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && !hasModifierKeys(event);
 
@@ -115,9 +119,29 @@ const isUp = event => (event.key ? (event.key === "ArrowUp" || event.key === "Up
 
 const isDown = event => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && !hasModifierKeys(event);
 
+const isLeftCtrl = event => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && checkModifierKeys(event, true, false, false);
+
+const isRightCtrl = event => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && checkModifierKeys(event, true, false, false);
+
+const isUpCtrl = event => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, true, false, false);
+
+const isDownCtrl = event => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, false, false);
+
+const isUpShift = event => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, false, false, true);
+
+const isDownShift = event => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, false, false, true);
+
+const isUpShiftCtrl = event => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, true, false, true);
+
+const isDownShiftCtrl = event => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, false, true);
+
 const isHome = event => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && !hasModifierKeys(event);
 
 const isEnd = event => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && !hasModifierKeys(event);
+
+const isHomeCtrl = event => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && checkModifierKeys(event, true, false, false);
+
+const isEndCtrl = event => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && checkModifierKeys(event, true, false, false);
 
 const isEscape = event => (event.key ? event.key === "Escape" || event.key === "Esc" : event.keyCode === KeyCodes.ESCAPE) && !hasModifierKeys(event);
 
@@ -128,6 +152,22 @@ const isTabPrevious = event => (event.key ? event.key === "Tab" : event.keyCode 
 const isBackSpace = event => (event.key ? event.key === "Backspace" : event.keyCode === KeyCodes.BACKSPACE) && !hasModifierKeys(event);
 
 const isDelete = event => (event.key ? event.key === "Delete" : event.keyCode === KeyCodes.DELETE) && !hasModifierKeys(event);
+
+const isPageUp = event => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && !hasModifierKeys(event);
+
+const isPageDown = event => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && !hasModifierKeys(event);
+
+const isPageUpShift = event => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, false, false, true);
+
+const isPageDownShift = event => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, false, false, true);
+
+const isPageUpShiftCtrl = event => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, true, false, true);
+
+const isPageDownShiftCtrl = event => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, true, false, true);
+
+const isPlus = event => (event.key ? event.key === "+" : event.keyCode === KeyCodes.PLUS) || (event.keyCode === KeyCodes.NUMPAD_PLUS && !hasModifierKeys(event));
+
+const isMinus = event => (event.key ? event.key === "-" : event.keyCode === KeyCodes.MINUS) || (event.keyCode === KeyCodes.NUMPAD_MINUS && !hasModifierKeys(event));
 
 const isShow = event => {
 	if (event.key) {
@@ -141,6 +181,8 @@ const isF4 = event => {
 	return event.key === "F4" && !hasModifierKeys(event);
 };
 
+const isF4Shift = event => (event.key ? event.key === "F4" : event.keyCode === KeyCodes.F4) && checkModifierKeys(event, false, false, true);
+
 const isShowByArrows = event => {
 	return ((event.key === "ArrowDown" || event.key === "Down") || (event.key === "ArrowUp" || event.key === "Up")) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false);
 };
@@ -153,13 +195,27 @@ const checkModifierKeys = (event, bCtrlKey, bAltKey, bShiftKey) => event.shiftKe
 
 export {
 	isEnter,
+	isEnterShift,
 	isSpace,
+	isSpaceShift,
 	isLeft,
 	isRight,
 	isUp,
 	isDown,
+	isLeftCtrl,
+	isRightCtrl,
+	isUpCtrl,
+	isDownCtrl,
+	isUpShift,
+	isDownShift,
+	isUpShiftCtrl,
+	isDownShiftCtrl,
 	isHome,
 	isEnd,
+	isPlus,
+	isMinus,
+	isHomeCtrl,
+	isEndCtrl,
 	isEscape,
 	isTabNext,
 	isTabPrevious,
@@ -167,4 +223,11 @@ export {
 	isDelete,
 	isShow,
 	isF4,
+	isF4Shift,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl,
 };

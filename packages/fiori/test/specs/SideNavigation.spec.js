@@ -1,8 +1,11 @@
 
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Component Behavior", () => {
-	browser.url("http://localhost:8081/test-resources/pages/SideNavigation.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/SideNavigation.html`);
+	});
 
 	describe("Main functionality", () => {
 		it("Tests selection-change event", () => {
@@ -38,6 +41,48 @@ describe("Component Behavior", () => {
 			items[1].click();
 
 			assert.strictEqual(input.getProperty("value"), "5", "Event is fired");
-		})
+		});
+
+		it("Tests click event & whole-item-toggleable property", () => {
+			const input = browser.$("#click-counter");
+			const sideNavigation = browser.$("ui5-side-navigation");
+			let items = sideNavigation.shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+
+			items[0].click();
+
+			assert.strictEqual(input.getProperty("value"), "6", "Event is fired");
+
+			items[3].click();
+
+			assert.strictEqual(input.getProperty("value"), "6", "Event is not fired");
+			assert.strictEqual(items[3].getAttribute("expanded"), "true", "Expanded is toggled");
+
+			items[3].click();
+
+			assert.strictEqual(input.getProperty("value"), "6", "Event is not fired");
+			assert.strictEqual(items[3].getAttribute("expanded"), "false", "Expanded is toggled");
+		});
+
+		it("Tests header visibility", () => {
+			let showHeader = null;
+
+			showHeader = browser.execute(() => {
+				const sideNavigation = document.querySelector("#sn1");
+				sideNavigation.collapsed = false;
+
+				return sideNavigation.showHeader;
+			});
+
+			assert.strictEqual(showHeader, true, "Header is displayed");
+
+			showHeader = browser.execute( () => {
+				const sideNavigation = document.querySelector("#sn1");
+				sideNavigation.collapsed = true;
+
+				return sideNavigation.showHeader;
+			});
+
+			assert.strictEqual(showHeader, false, "Header is not displayed");
+		});
 	});
 });

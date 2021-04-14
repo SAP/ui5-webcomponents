@@ -1,8 +1,6 @@
 <div class="ui5-multi-combobox-root"
-	@focusin={{rootFocusIn}}
-	@focusout={{rootFocusOut}}
 >
-	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{nMoreCountText}}</span>
+	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
 
 	{{#if hasValueState}}
 		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
@@ -15,18 +13,20 @@
 		@ui5-show-more-items-press="{{_showMorePopover}}"
 		@ui5-token-delete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
+		@focusin="{{_tokenizerFocusIn}}"
 		@click={{_click}}
-		?expanded="{{expandedTokenizer}}"
+		@keydown="{{_onTokenizerKeydown}}"
+		?expanded="{{_tokenizerExpanded}}"
 	>
 		{{#each items}}
 			{{#if this.selected}}
 				<ui5-token
-				?readonly="{{../readonly}}"
-				class="ui5-multi-combobox-token"
-				data-ui5-id="{{this._id}}"
-				part="token-{{@index}}"
+					?readonly="{{../readonly}}"
+					class="ui5-multi-combobox-token"
+					data-ui5-id="{{this._id}}"
+					part="token-{{@index}}"
+					text="{{this.text}}"
 				>
-					{{this.text}}
 				</ui5-token>
 			{{/if}}
 		{{/each}}
@@ -35,33 +35,37 @@
 	<input id="ui5-multi-combobox-input"
 		.value="{{value}}"
 		inner-input
-		placeholder="{{placeholder}}"
+		placeholder={{_getPlaceholder}}
 		?disabled={{disabled}}
 		?readonly={{readonly}}
-		?required={{required}}
 		value-state="{{valueState}}"
 		@input="{{_inputLiveChange}}"
 		@change={{_inputChange}}
 		@keydown="{{_onkeydown}}"
 		@keyup="{{_onkeyup}}"
-		@focusin="{{_focusin}}"
-		@focusout="{{_focusout}}"
 		@click={{_click}}
+		@focusin={{inputFocusIn}}
+		@focusout={{inputFocusOut}}
 		role="combobox"
 		aria-haspopup="listbox"
 		aria-expanded="{{open}}"
 		aria-autocomplete="both"
-		aria-labelledby="{{_id}}-hiddenText-nMore"
-		aria-describedby="{{valueStateTextId}}"
+		aria-describedby="{{ariaDescribedByText}}"
+		aria-required="{{required}}"
 	/>
+
+	{{#if icon}}
+		<slot name="icon"></slot>
+	{{/if}}
 
 	{{#unless readonly}}
 		<ui5-icon name="slim-arrow-down"
 			input-icon
 			slot="icon"
 			tabindex="-1"
-			@click={{togglePopover}}
-			?pressed="{{_iconPressed}}"
+			@click="{{togglePopover}}"
+			@mousedown="{{_onIconMousedown}}"
+			?pressed="{{open}}"
 			dir="{{effectiveDir}}"
 			accessible-name="{{_iconAccessibleNameText}}"
 		></ui5-icon>

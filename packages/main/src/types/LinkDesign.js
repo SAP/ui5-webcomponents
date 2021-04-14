@@ -42,6 +42,6 @@ class LinkDesign extends DataType {
 	}
 }
 
-LinkDesign.generataTypeAcessors(LinkTypes);
+LinkDesign.generateTypeAccessors(LinkTypes);
 
 export default LinkDesign;

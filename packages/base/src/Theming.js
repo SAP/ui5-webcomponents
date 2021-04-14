@@ -1,3 +1,4 @@
 import { addCustomCSS } from "./theming/CustomStyle.js";
+import { attachThemeLoaded, detachThemeLoaded } from "./theming/ThemeLoaded.js";
 
-export { addCustomCSS }; // eslint-disable-line
+export { addCustomCSS, attachThemeLoaded, detachThemeLoaded };

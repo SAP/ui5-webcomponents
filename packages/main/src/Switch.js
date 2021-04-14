@@ -3,8 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/accept.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/accept.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
 import Icon from "./Icon.js";
 
 import {
@@ -14,7 +14,6 @@ import {
 
 // Template
 import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
-
 
 // Styles
 import switchCss from "./generated/themes/Switch.css.js";
@@ -114,12 +113,24 @@ const metadata = {
  * The component can display texts, that will be switched, based on the component state, via the <code>textOn</code> and <code>textOff</code> properties,
  * but texts longer than 3 letters will be cutted off.
  * <br>
- * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (&lt;ui5-switch style="width: 200px">), and set widths, depending on the texts they would use.
+ * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (<code>&lt;ui5-switch style="width: 200px"></code>), and set widths, depending on the texts they would use.
  * <br>
  * Note: the component would not automatically stretch to fit the whole text width.
  *
  * <h3>Keyboard Handling</h3>
  * The state can be changed by pressing the Space and Enter keys.
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-switch</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>slider - Used to style the track, where the handle is being slid</li>
+ * <li>text-on - Used to style the onText</li>
+ * <li>text-off - Used to style the offText</li>
+ * <li>handle - Used to style the handle of the switch</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -227,11 +238,12 @@ class Switch extends UI5Element {
 		return this.checked ? this.accessibilityOnText : this.accessibilityOffText;
 	}
 
+	static get dependencies() {
+		return [Icon];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

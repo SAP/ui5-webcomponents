@@ -1,7 +1,9 @@
 const assert = require("chai").assert;
 
 describe("Invalidation works", () => {
-	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	before(() => {
+		browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
+	});
 
 	it("Tests that changing a property invalidates", () => {
 
@@ -12,16 +14,14 @@ describe("Invalidation works", () => {
 			// Exactly 1 invalidation for each property change
 			let invalidations = 0;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidations++;
 			};
 
 			el.strProp = "new value";
 			el.boolProp = true;
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidations);
 		});
@@ -36,19 +36,17 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.strProp = text;
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			let invalidations = 0;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidations++;
 			};
 
 			el.strProp = text;
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidations);
 		});
@@ -64,19 +62,17 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.objectProp = obj;
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			let invalidations = 0;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidations++;
 			};
 
 			el.objectProp = otherObj;
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidations);
 		});
@@ -92,19 +88,17 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.multiProp = arr;
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			let invalidations = 0;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidations++;
 			};
 
 			el.multiProp = otherArr;
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidations);
 		});
@@ -121,16 +115,14 @@ describe("Invalidation works", () => {
 			// Number of invalidations may vary with children/slots count, so just check for invalidation
 			let invalidated = false;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidated = true;
 			};
 
 			const div = document.createElement("div");
 			el.appendChild(div);
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidated);
 		});
@@ -146,19 +138,17 @@ describe("Invalidation works", () => {
 			const div = document.createElement("div");
 			el.appendChild(div);
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			let invalidated = false;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidated = true;
 			};
 
 			el.removeChild(div);
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidated);
 		});
@@ -172,20 +162,18 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.textContent = "test";
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			// Number of invalidations may vary with children/slots count, so just check for invalidation
 			let invalidated = false;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidated = true;
 			};
 
 			el.textContent = "test2";
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidated);
 		});
@@ -199,20 +187,18 @@ describe("Invalidation works", () => {
 
 			const el = document.getElementById("gen");
 			el.textContent = "test";
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			// Number of invalidations may vary with children/slots count, so just check for invalidation
 			let invalidated = false;
 
-			const original = el._invalidate;
-			el._invalidate = () => {
-				original.apply(el, arguments);
+			el.onInvalidation = () => {
 				invalidated = true;
 			};
 
 			el.childNodes[0].nodeValue = "test2";
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(invalidated);
 		});
@@ -231,9 +217,7 @@ describe("Invalidation works", () => {
 				rendering: 0,
 			};
 
-			const originalInvalidate = el._invalidate;
-			el._invalidate = () => {
-				originalInvalidate.apply(el, arguments);
+			el.onInvalidation = () => {
 				operations.invalidation++;
 			};
 
@@ -246,7 +230,7 @@ describe("Invalidation works", () => {
 			el.strProp = "new";
 			el.strProp = "newer";
 
-			await window.RenderScheduler.whenFinished();
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
 
 			return done(operations);
 		});

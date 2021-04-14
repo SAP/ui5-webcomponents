@@ -8,11 +8,12 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-up.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
@@ -47,15 +48,30 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.ITab[]}
 		 * @public
-		 * @slot
+		 * @slot items
 		 */
 		"default": {
 			propertyName: "items",
 			type: HTMLElement,
 			individualSlots: true,
-			listenFor: { include: ["*"] },
+			invalidateOnChildChange: {
+				properties: true,
+				slots: false,
+			},
+		},
+
+		/**
+		 * Defines the button which will open the overflow menu. If nothing is provided to this slot, the default button will be used.
+		 *
+		 * @type {sap.ui.webcomponents.main.IButton}
+		 * @public
+		 * @slot
+		 * @since 1.0.0-rc.9
+		 */
+		overflowButton: {
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
@@ -89,6 +105,13 @@ const metadata = {
 		 * layout for most scenarios. Set to <code>Bottom</code> only when the <code>ui5-tabcontainer</code> is at the
 		 * bottom of the page and you want the tab strip to act as a menu.
 		 *
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Top</code></li>
+		 * <li><code>Bottom</code></li>
+		 * </ul>
+		 *
 		 * @type {TabContainerTabsPlacement}
 		 * @defaultvalue "Top"
 		 * @since 1.0.0-rc.7
@@ -114,11 +137,11 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab.
+		 * Defines the alignment of the content and the <code>additionalText</code> of a tab.
 		 *
 		 * <br><br>
 		 * <b>Note:</b>
-		 * The <code>main text</code> and the <code>additionalText</code> would be displayed vertically by defualt,
+		 * The content and the <code>additionalText</code> would be displayed vertically by defualt,
 		 * but when set to <code>Inline</code>, they would be displayed horizontally.
 		 *
 		 * <br><br>
@@ -126,7 +149,7 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Standard</code></li>
 		 * <li><code>Inline</code></li>
-		 * <ul>
+		 * </ul>
 		 *
 		 * @type {TabLayout}
 		 * @defaultvalue "Standard"
@@ -135,6 +158,16 @@ const metadata = {
 		tabLayout: {
 			type: String,
 			defaultValue: TabLayout.Standard,
+		},
+
+		/**
+		 * Defines the current media query size.
+		 *
+		 * @type {string}
+		 * @private
+		 */
+		mediaRange: {
+			type: String,
 		},
 
 		_selectedTab: {
@@ -173,12 +206,14 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.main.TabContainer#tab-select
 		 * @param {HTMLElement} tab The selected <code>tab</code>.
-		 * @param {Number} tabIndex The selected <code>tab</code> index.
+		 * @param {Integer} tabIndex The selected <code>tab</code> index.
 		 * @public
 		 */
 		"tab-select": {
-			tab: { type: HTMLElement },
-			tabIndex: { type: Number },
+			detail: {
+				tab: { type: HTMLElement },
+				tabIndex: { type: Number },
+			},
 		},
 	},
 };
@@ -200,7 +235,15 @@ const metadata = {
  * <li><code>ui5-tab-separator</code> - used to separate tabs with a vertical line</li>
  * </ul>
  *
- * <h3>ES6 import</h3>
+ * <h3>Stable DOM Refs</h3>
+ *
+ * In the context of <code>ui5-tabcontainer</code>, you can provide a custom stable DOM refs for:
+ * <ul>
+ * <li>Each <code>ui5-tab</code>
+ * Example: <code><ui5-tab stable-dom-ref="in-stock"></ui5-tab></code></li>
+ * </ul>
+ *
+ * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/TabContainer";</code>
  * <br>
@@ -222,11 +265,11 @@ class TabContainer extends UI5Element {
 	}
 
 	static get styles() {
-		return [...tabStyles, tabContainerCss];
+		return [tabStyles, tabContainerCss];
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ...staticAreaTabStyles];
+		return [ResponsivePopoverCommonCss, staticAreaTabStyles];
 	}
 
 	static get render() {
@@ -252,25 +295,27 @@ class TabContainer extends UI5Element {
 	constructor() {
 		super();
 
-		this._handleHeaderResize = this._handleHeaderResize.bind(this);
+		this._handleResize = this._handleResize.bind(this);
 
 		// Init ScrollEnablement
 		this._scrollEnablement = new ScrollEnablement(this);
 		this._scrollEnablement.attachEvent("scroll", this._updateScrolling.bind(this));
 
 		// Init ItemNavigation
-		this._initItemNavigation();
+		this._itemNavigation = new ItemNavigation(this, {
+			getItemsCallback: () => this._getTabs(),
+		});
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
 		// Set external properties to items
-		this.items.forEach((item, index) => {
+		this.items.filter(item => !item.isSeparator).forEach((item, index, arr) => {
 			item._isInline = this.tabLayout === TabLayout.Inline;
 			item._mixedMode = this.mixedMode;
 			item._posinset = index + 1;
-			item._setsize = this.items.length;
+			item._setsize = arr.length;
 			item._getTabContainerHeaderItemCallback = _ => {
 				return this.getDomRef().querySelector(`#${item._id}`);
 			};
@@ -288,11 +333,11 @@ class TabContainer extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this._getHeader(), this._handleHeaderResize);
+		ResizeHandler.register(this._getHeader(), this._handleResize);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this._getHeader(), this._handleHeaderResize);
+		ResizeHandler.deregister(this._getHeader(), this._handleResize);
 	}
 
 	_onHeaderClick(event) {
@@ -331,11 +376,6 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this);
-		this._itemNavigation.getItemsCallback = () => this._getTabs();
-	}
-
 	_onHeaderItemSelect(tab) {
 		if (!tab.hasAttribute("disabled")) {
 			this._onItemSelect(tab);
@@ -360,7 +400,7 @@ class TabContainer extends UI5Element {
 				item.selected = selected;
 
 				if (selected) {
-					this._itemNavigation.current = selectedTabIndex;
+					this._itemNavigation.setCurrentItem(item);
 				}
 			}
 		}, this);
@@ -427,9 +467,18 @@ class TabContainer extends UI5Element {
 	}
 
 	async _onOverflowButtonClick(event) {
+		const button = this.overflowButton[0] || this.getDomRef().querySelector(".ui-tc__overflowButton > ui5-button");
+
+		if (event.target !== button) {
+			return;
+		}
+
 		this.responsivePopover = await this._respPopover();
-		this.updateStaticAreaItemContentDensity();
-		this.responsivePopover.open(this.getDomRef().querySelector(".ui-tc__overflowButton"));
+		if (this.responsivePopover.opened) {
+			this.responsivePopover.close();
+		} else {
+			this.responsivePopover.open(button);
+		}
 	}
 
 	_onHeaderBackArrowClick() {
@@ -442,8 +491,9 @@ class TabContainer extends UI5Element {
 			.then(_ => this._updateScrolling());
 	}
 
-	_handleHeaderResize() {
+	_handleResize() {
 		this._updateScrolling();
+		this._updateMediaRange();
 	}
 
 	async _closeRespPopover() {
@@ -463,6 +513,10 @@ class TabContainer extends UI5Element {
 		}
 	}
 
+	_updateMediaRange() {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
+	}
+
 	_getHeader() {
 		return this.shadowRoot.querySelector(`#${this._id}-header`);
 	}
@@ -480,6 +534,10 @@ class TabContainer extends UI5Element {
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 
+	get shouldShowOverflow() {
+		return this.showOverflow && this._scrollable;
+	}
+
 	get classes() {
 		return {
 			root: {
@@ -489,6 +547,9 @@ class TabContainer extends UI5Element {
 			header: {
 				"ui5-tc__header": true,
 				"ui5-tc__header--scrollable": this._scrollable,
+			},
+			headerInnerContainer: {
+				"ui5-tc__headerInnerContainer": true,
 			},
 			headerScrollContainer: {
 				"ui-tc__headerScrollContainer": true,
@@ -508,10 +569,6 @@ class TabContainer extends UI5Element {
 				"ui5-tc__headerArrow": true,
 				"ui5-tc__headerArrowRight": true,
 				"ui5-tc__headerArrow--visible": this._scrollableForward,
-			},
-			overflowButton: {
-				"ui-tc__overflowButton": true,
-				"ui-tc__overflowButton--visible": this._scrollable,
 			},
 			content: {
 				"ui5-tc__content": true,
@@ -552,14 +609,17 @@ class TabContainer extends UI5Element {
 		return getAnimationMode() !== AnimationMode.None;
 	}
 
+	static get dependencies() {
+		return [
+			Button,
+			Icon,
+			List,
+			ResponsivePopover,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Button.define(),
-			Icon.define(),
-			List.define(),
-			ResponsivePopover.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

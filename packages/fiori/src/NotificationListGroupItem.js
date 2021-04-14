@@ -11,11 +11,15 @@ import NotificationListItemBase from "./NotificationListItemBase.js";
 import {
 	NOTIFICATION_LIST_GROUP_ITEM_TXT,
 	NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT,
+	NOTIFICATION_LIST_ITEM_READ,
+	NOTIFICATION_LIST_ITEM_UNREAD,
 	NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT,
 	NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT,
 	NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT,
 	NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE,
-	NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE,
+	NOTIFICATION_LIST_GROUP_ITEM_CLOSE_BTN_TITLE,
+	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE,
+	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -59,8 +63,8 @@ const metadata = {
 		 * Defines the items of the <code>ui5-li-notification-group</code>,
 		 * usually <code>ui5-li-notification</code> items.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.fiori.INotificationListItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
@@ -93,25 +97,35 @@ const metadata = {
  * <li><code>Toggle</code> button to expand and collapse the group</li>
  * <li><code>Priority</code> icon to display the priority of the group</li>
  * <li><code>Heading</code> to entitle the group</li>
- * <li>Custom actions - with the use of <code>ui5-notification-overflow-action</code></li>
+ * <li>Custom actions - with the use of <code>ui5-notification-action</code></li>
  * <li>Items of the group</li>
  * </ul>
  *
  * <h3>Usage</h3>
  * The component can be used in a standard <code>ui5-list</code>.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-li-notification-group</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>heading - Used to style the heading of the notification list group item</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/NotificationListGroupItem.js";</code>
+ * <code>import "@ui5/webcomponents/dist/NotificationListGroupItem.js";</code>
  * <br>
- * <code>import @ui5/webcomponents/dist/NotificationOverflowAction.js";</code> (optional)
+ * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListGroupItem
  * @extends NotificationListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
- * @appenddocs NotificationOverflowAction
+ * @appenddocs NotificationAction
+ * @implements sap.ui.webcomponents.main.IListItem
  * @public
  */
 class NotificationListGroupItem extends NotificationListItemBase {
@@ -143,52 +157,75 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		});
 	}
 
+	static get dependencies() {
+		return [
+			List,
+			Button,
+			Icon,
+			BusyIndicator,
+			Popover,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			List.define(),
-			Button.define(),
-			Icon.define(),
-			BusyIndicator.define(),
-			Popover.define(),
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	get itemsCount() {
 		return this.items.length;
 	}
 
-	get overflowBtnTitle() {
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
+	get overflowBtnAccessibleName() {
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
 	}
 
-	get closeBtnTitle() {
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
+	get closeBtnAccessibleName() {
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_CLOSE_BTN_TITLE);
+	}
+
+	get toggleBtnAccessibleName() {
+		if (this.collapsed) {
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE);
+		}
+
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE);
 	}
 
 	get priorityText() {
 		if (this.priority === Priority.High) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Medium) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Low) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
 		}
 
 		return "";
 	}
 
 	get accInvisibleText() {
-		const groupTxt = this.i18nBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TXT);
-		const counterTxt = this.i18nBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT);
-		const counter = this.showCounter ? `${counterTxt} ${this.itemsCount}` : "";
-		const priorityText = this.priorityText;
+		return `${this.groupText} ${this.readText} ${this.priorityText} ${this.counterText}`;
+	}
 
-		return `${groupTxt} ${priorityText} ${counter}`;
+	get readText() {
+		if (this.read) {
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ);
+		}
+
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
+	}
+
+	get groupText() {
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TXT);
+	}
+
+	get counterText() {
+		const text = this.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT);
+		return this.showCounter ? `${text} ${this.itemsCount}` : "";
 	}
 
 	get ariaLabelledBy() {
@@ -202,6 +239,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		ids.push(`${id}-invisibleText`);
 
 		return ids.join(" ");
+	}
+
+	get ariaExpanded() {
+		return !this.collapsed;
 	}
 
 	/**

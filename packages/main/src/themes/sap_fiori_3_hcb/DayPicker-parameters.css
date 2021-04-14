@@ -10,4 +10,5 @@
 	--_ui5_daypicker_weekname_color: var(--sapTextColor);
 	--_ui5_daypicker_item_now_selected_focus_after_width: calc(100% - 0.25rem);
 	--_ui5_daypicker_item_now_selected_focus_after_height: calc(100% - 0.25rem);
+	--_ui5_daypicker_item_selected_border_color: var(--sapList_SelectionBorderColor);
 }

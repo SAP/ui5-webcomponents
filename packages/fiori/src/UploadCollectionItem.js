@@ -8,12 +8,12 @@ import ProgressIndicator from "@ui5/webcomponents/dist/ProgressIndicator.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isEnter, isEscape, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import UploadState from "./types/UploadState.js";
-import "@ui5/webcomponents-icons/dist/icons/refresh.js";
-import "@ui5/webcomponents-icons/dist/icons/stop.js";
-import "@ui5/webcomponents-icons/dist/icons/edit.js";
+import "@ui5/webcomponents-icons/dist/refresh.js";
+import "@ui5/webcomponents-icons/dist/stop.js";
+import "@ui5/webcomponents-icons/dist/edit.js";
 import {
 	UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT,
@@ -22,6 +22,7 @@ import {
 	UPLOADCOLLECTIONITEM_READY_STATE,
 	UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT,
+	UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -226,14 +227,15 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code>
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.UploadCollectionItem
- * @extends UI5Element
+ * @extends ListItem
  * @tagname ui5-upload-collection-item
  * @public
+ * @implements sap.ui.webcomponents.fiori.IUploadCollectionItem
  * @since 1.0.0-rc.7
  */
 class UploadCollectionItem extends ListItem {
@@ -242,27 +244,31 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	static get styles() {
-		return [...ListItem.styles, UploadCollectionItemCss];
+		return [ListItem.styles, UploadCollectionItemCss];
 	}
 
 	static get template() {
 		return UploadCollectionItemTemplate;
 	}
 
+	static get dependencies() {
+		return [
+			...ListItem.dependencies,
+			Button,
+			Input,
+			Link,
+			Label,
+			ProgressIndicator,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Button.define(),
-			Input.define(),
-			Link.define(),
-			Label.define(),
-			ProgressIndicator.define(),
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+		this.i18nFioriBundle = getI18nBundle("@ui5/webcomponents-fiori");
 
 		this._editPressed = false; // indicates if the edit btn has been pressed
 		this.doNotCloseInput = false; // Indicates whether the input should be closed when using keybord for navigation
@@ -282,7 +288,7 @@ class UploadCollectionItem extends ListItem {
 
 		const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
 
-		await RenderScheduler.whenDOMUpdated();
+		await renderFinished();
 		if (inp.getFocusDomRef()) {
 			inp.getFocusDomRef().setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
@@ -416,8 +422,8 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * @override
 	 */
-	get modeDelete() {
-		return !this.noDelete && super.modeDelete;
+	get disableDeleteButton() {
+		return this.noDelete;
 	}
 
 	get _fileNameWithoutExtension() {
@@ -429,11 +435,11 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _renameBtnText() {
-		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT);
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT);
 	}
 
 	get _cancelRenameBtnText() {
-		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT);
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT);
 	}
 
 	get _showProgressIndicator() {
@@ -442,14 +448,14 @@ class UploadCollectionItem extends ListItem {
 
 	get _progressText() {
 		if (this.uploadState === UploadState.Uploading) {
-			return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_UPLOADING_STATE);
+			return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_UPLOADING_STATE);
 		}
 
 		if (this.uploadState === UploadState.Error) {
-			return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_ERROR_STATE);
+			return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_ERROR_STATE);
 		}
 
-		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_READY_STATE);
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_READY_STATE);
 	}
 
 	get _showRetry() {
@@ -461,11 +467,15 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _retryButtonTooltip() {
-		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT);
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT);
 	}
 
 	get _terminateButtonTooltip() {
-		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
+	}
+
+	get _editButtonTooltip() {
+		return this.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT);
 	}
 
 	get valueStateName() {

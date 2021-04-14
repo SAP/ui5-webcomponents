@@ -6,13 +6,14 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
-import "@ui5/webcomponents-icons/dist/icons/upload-to-cloud.js";
-import "@ui5/webcomponents-icons/dist/icons/document.js";
+import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
+import "@ui5/webcomponents-icons/dist/document.js";
 import {
 	UPLOADCOLLECTION_NO_DATA_TEXT,
 	UPLOADCOLLECTION_NO_DATA_DESCRIPTION,
 	UPLOADCOLLECTION_DRAG_FILE_INDICATOR,
 	UPLOADCOLLECTION_DROP_FILE_INDICATOR,
+	UPLOADCOLLECTION_ARIA_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import {
 	attachBodyDnDHandler,
@@ -36,9 +37,15 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		/**
 		 * Defines the mode of the <code>ui5-upload-collection</code>.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>,
-		 * <code>MultiSelect</code>, and <code>Delete</code>.
+		 * <b>Note:</b>
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>SingleSelect</code></li>
+		 * <li><code>MultiSelect</code></li>
+		 * <li><code>Delete</code></li>
+		 * </ul>
 		 *
 		 * @type {ListMode}
 		 * @defaultvalue "None"
@@ -73,7 +80,7 @@ const metadata = {
 
 		/**
 		 * By default there will be drag and drop overlay shown over the <code>ui5-upload-collection</code> when files
-		 * are dragged. If you don't intend to use drag and drop, set this property to <code>true</code>
+		 * are dragged. If you don't intend to use drag and drop, set this property.
 		 * <br><br>
 		 * <b>Note:</b> It is up to the application developer to add handler for <code>drop</code> event and handle it.
 		 * <code>ui5-upload-collection</code> only shows an overlay.
@@ -104,8 +111,8 @@ const metadata = {
 		 * Defines the items of the <code>ui5-upload-collection</code>.
 		 * <br><b>Note:</b> Use <code>ui5-upload-collection-item</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.fiori.IUploadCollectionItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
@@ -125,6 +132,19 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
+		/**
+		 * Fired when an element is dropped inside the drag and drop overlay.
+		 * <br><br>
+		 * <b>Note:</b> The <code>drop</code> event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the <code>ui5-upload-collection</code>.
+		 *
+		 * @event sap.ui.webcomponents.fiori.UploadCollection#drop
+		 * @readonly
+		 * @param {DataTransfer} dataTransfer The <code>drop</code> event operation data.
+		 * @public
+		 * @native
+		 */
+		drop: {},
+
 		/**
 		 * Fired when the Delete button of any item is pressed.
 		 * <br><br>
@@ -164,7 +184,9 @@ const metadata = {
  * It also allows you to show already uploaded files.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import @ui5/webcomponents-fiori/dist/UploadCollection.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/UploadCollection.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code> (for <code>ui5-upload-collection-item</code>)
  *
  * @constructor
  * @author SAP SE
@@ -192,14 +214,17 @@ class UploadCollection extends UI5Element {
 		return UploadCollectionTemplate;
 	}
 
+	static get dependencies() {
+		return [
+			Icon,
+			Label,
+			List,
+			Title,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Icon.define(),
-			Label.define(),
-			List.define(),
-			Title.define(),
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	constructor() {
@@ -243,6 +268,10 @@ class UploadCollection extends UI5Element {
 	_ondrop(event) {
 		if (this.noDnd) {
 			return;
+		}
+
+		if (event.target !== this.shadowRoot.querySelector(".uc-dnd-overlay")) {
+			event.stopPropagation();
 		}
 
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.None;
@@ -308,6 +337,10 @@ class UploadCollection extends UI5Element {
 
 	get _noDataDescription() {
 		return this.noDataDescription || this.i18nBundle.getText(UPLOADCOLLECTION_NO_DATA_DESCRIPTION);
+	}
+
+	get _roleDescription() {
+		return this.i18nBundle.getText(UPLOADCOLLECTION_ARIA_ROLE_DESCRIPTION);
 	}
 
 	get _dndOverlayText() {

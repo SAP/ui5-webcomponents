@@ -4,7 +4,7 @@
 	height: var(--_ui5_input_height);
 	color: var(--sapField_TextColor);
 	font-size: var(--sapFontSize);
-	font-family: var(--sapFontFamily);
+	font-family: "72override", var(--sapFontFamily);
 	background-color: var(--sapField_Background);
 	border: 1px solid var(--sapField_BorderColor);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
@@ -48,8 +48,8 @@
 
 [inner-input]::selection,
 [inner-input]::-moz-selection {
-	background: var(--sapSelected);
-	color: var(--sapContent_contrastTextColor);
+	background: var(--sapSelectedColor);
+	color: var(--sapContent_ContrastTextColor);
 }
 
 /* Input placeholder */
@@ -107,7 +107,7 @@
 	width: 0;
 }
 
-/* MultiComboBox specific */
+/* MultiComboBox & MultiInput specific */
 .ui5-multi-combobox-toggle-button {
 	margin-left: 0.5rem;
 }
@@ -119,11 +119,15 @@
 	flex-direction: column;
 }
 
+.ui5-responsive-popover-header-text {
+	width: calc(100% - var(--_ui5_button_base_min_width));
+}
+
 /* Header and footer layout */
 .ui5-responsive-popover-header .row {
 	box-sizing: border-box;
 	padding: 0.25rem 1rem;
-	height: 2.5rem;
+	min-height: 2.5rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;

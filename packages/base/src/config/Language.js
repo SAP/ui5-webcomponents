@@ -1,8 +1,12 @@
-import { getLanguage as getConfiguredLanguage } from "../InitialConfiguration.js";
+import {
+	getLanguage as getConfiguredLanguage,
+	getFetchDefaultLanguage as getConfiguredFetchDefaultLanguage,
+} from "../InitialConfiguration.js";
 import { fireLanguageChange } from "../locale/languageChange.js";
-import RenderScheduler from "../RenderScheduler.js";
+import { reRenderAllUI5Elements } from "../Render.js";
 
 let language;
+let fetchDefaultLanguage;
 
 /**
  * Returns the currently configured language, or the browser language as a fallback
@@ -29,13 +33,36 @@ const setLanguage = async newLanguage => {
 
 	language = newLanguage;
 
-	const listenersResults = fireLanguageChange(newLanguage);
-	await Promise.all(listenersResults);
-	RenderScheduler.reRenderAllUI5Elements({ languageAware: true });
-	return RenderScheduler.whenFinished();
+	await fireLanguageChange(newLanguage);
+	await reRenderAllUI5Elements({ languageAware: true });
+};
+
+/**
+ * Defines if the default language, that is inlined, should be
+ * fetched over the network instead of using the inlined one.
+ * <b>Note:</b> By default the language will not be fetched.
+ *
+ * @param {Boolean} fetchDefaultLanguage
+ */
+const setFetchDefaultLanguage = fetchDefaultLang => {
+	fetchDefaultLanguage = fetchDefaultLang;
+};
+
+/**
+ * Returns if the default language, that is inlined, should be fetched over the network.
+ * @returns {Boolean}
+ */
+const getFetchDefaultLanguage = () => {
+	if (fetchDefaultLanguage === undefined) {
+		setFetchDefaultLanguage(getConfiguredFetchDefaultLanguage());
+	}
+
+	return fetchDefaultLanguage;
 };
 
 export {
 	getLanguage,
 	setLanguage,
+	setFetchDefaultLanguage,
+	getFetchDefaultLanguage,
 };

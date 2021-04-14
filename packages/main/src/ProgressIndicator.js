@@ -96,10 +96,9 @@ const metadata = {
  * <br>
  * Example: <code>&lt;ui5-progress-indicator style="height: 2rem; width: 6rem;">&lt;/ui5-progress-indicator></code>
  *
- * For the <code>ui5-progress-indicator</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/ProgressIndicator.js";</code>
+ * <code>import "@ui5/webcomponents/dist/ProgressIndicator.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -211,6 +210,10 @@ class ProgressIndicator extends UI5Element {
 
 	get valueStateIcon() {
 		return this.valueStateIconMappings()[this.valueState];
+	}
+
+	get _ariaDisabled() {
+		return this.disabled || undefined;
 	}
 
 	static async onDefine() {

@@ -2,10 +2,11 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/icons/accept.js";
+import "@ui5/webcomponents-icons/dist/accept.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
 import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
@@ -79,8 +80,17 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-checkbox</code>.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are <code>Warning</code>, <code>Error</code>, and <code>None</code> (default).
+		 * <b>Note:</b>
+		 *
+		 * <ul>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>None</code>(default)</li>
+		 * <li><code>Negative</code></li>
+		 * <li><code>Transparent</code></li>
+		 * </ul>
 		 *
 		 * @type {ValueState}
 		 * @defaultvalue "None"
@@ -136,6 +146,18 @@ const metadata = {
 			defaultValue: undefined,
 		},
 
+		/**
+		 * Receives id(or many ids) of the elements that label the checkbox
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.9
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
+
 		_label: {
 			type: Object,
 		},
@@ -149,6 +171,18 @@ const metadata = {
 		 * @event
 		 */
 		change: {},
+	},
+	slots: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
 	},
 };
 
@@ -169,8 +203,8 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * You can manually set the width of the element containing the box and the label using the <code>width</code> property.
- * If the text exceeds the available width, it is truncated.
+ * You can define the checkbox text with via the <code>text</code> property. If the text exceeds the available width, it is truncated by default.
+ * In case you prefer text to wrap, use the <code>wrap</code> property.
  * The touchable area for toggling the <code>ui5-checkbox</code> ends where the text ends.
  * <br><br>
  * You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to
@@ -220,7 +254,7 @@ class CheckBox extends UI5Element {
 	}
 
 	syncLabel() {
-		this._label = Object.assign({}, this._label);
+		this._label = { ...this._label };
 		this._label.text = this.text;
 		this._label.wrap = this.wrap;
 		this._label.textDirection = this.textDirection;
@@ -297,8 +331,16 @@ class CheckBox extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
 	get ariaLabelledBy() {
-		return this.text ? `${this._id}-label` : undefined;
+		if (!this.ariaLabelText) {
+			return this.text ? `${this._id}-label` : undefined;
+		}
+
+		return undefined;
 	}
 
 	get ariaDescribedBy() {
@@ -318,12 +360,15 @@ class CheckBox extends UI5Element {
 		return this.disabled ? undefined : tabindex || "0";
 	}
 
+	static get dependencies() {
+		return [
+			Label,
+			Icon,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Label.define(),
-			Icon.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

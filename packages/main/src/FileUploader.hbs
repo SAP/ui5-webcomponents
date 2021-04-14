@@ -2,6 +2,10 @@
 <div class="ui5-file-uploader-root"
 	@mouseover="{{_onmouseover}}"
 	@mouseout="{{_onmouseout}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+	@keydown="{{_onkeydown}}"
+	@keyup="{{_onkeyup}}"
 >
 	<div class="ui5-file-uploader-mask">
 		{{#unless hideInput}}
@@ -11,6 +15,7 @@
 				placeholder="{{placeholder}}"
 				?disabled="{{disabled}}"
 				tabindex="-1"
+				class="ui5-file-uploader-input"
 			></ui5-input>
 		{{/unless}}
 		<slot></slot>

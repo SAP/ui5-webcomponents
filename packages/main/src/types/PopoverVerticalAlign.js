@@ -1,6 +1,5 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
-
 /**
  * @lends sap.ui.webcomponents.main.types.PopoverVerticalAlign.prototype
  * @public
@@ -50,6 +49,6 @@ class PopoverVerticalAlign extends DataType {
 	}
 }
 
-PopoverVerticalAlign.generataTypeAcessors(PopoverVerticalAligns);
+PopoverVerticalAlign.generateTypeAccessors(PopoverVerticalAligns);
 
 export default PopoverVerticalAlign;

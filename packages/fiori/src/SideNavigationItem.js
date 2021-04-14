@@ -20,7 +20,11 @@ const metadata = {
 
 		/**
 		 * Defines the icon of the item.
+		 * <br><br>
 		 *
+		 * The SAP-icons font provides numerous options.
+		 * <br>
+		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 * @public
 		 * @type {string}
 		 * @defaultvalue ""
@@ -50,18 +54,36 @@ const metadata = {
 		selected: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines whether pressing the whole item or only pressing the icon will show/hide the items's sub items(if present).
+		 * If set to true, pressing the whole item will toggle the sub items, and it won't fire the <code>click</code> event.
+		 * By default, only pressing the arrow icon will toggle the sub items & the click event will be fired if the item is pressed outside of the icon.
+		 *
+		 * @public
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.11
+		 */
+		wholeItemToggleable: {
+			type: Boolean,
+		},
 	},
+
+	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
+	},
+
 	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
 		/**
 		 * If you wish to nest menus, you can pass inner menu items to the default slot.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.fiori.ISideNavigationSubItem[]}
 		 * @public
-		 * @slot
+		 * @slot items
 		 */
 		"default": {
 			propertyName: "items",
-			invalidateParent: true,
+			invalidateOnChildChange: true,
 			type: HTMLElement,
 		},
 	},
@@ -72,14 +94,12 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The <code>ui5-side-navigation-item</code> is used within <code>ui5-side-navigation</code> only.
+ * Via the <code>ui5-side-navigation-item</code> you control the content of the <code>SideNavigation</code>.
  *
- * <h3>Usage</h3>
- *
- * <code>ui5-side-navigation-item</code> is used within <code>ui5-side-navigation</code> only. Via the <code>ui5-side-navigation-item</code> you control the content of the side navigation.
- * For the <code>ui5-side-navigation-item</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -88,6 +108,7 @@ const metadata = {
  * @tagname ui5-side-navigation-item
  * @public
  * @since 1.0.0-rc.8
+ * @implements sap.ui.webcomponents.fiori.ISideNavigationItem
  */
 class SideNavigationItem extends UI5Element {
 	static get metadata() {

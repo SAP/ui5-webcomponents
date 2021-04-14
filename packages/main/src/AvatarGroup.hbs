@@ -1,0 +1,21 @@
+<div class="ui5-avatar-group-root">
+	<div 
+		class="ui5-avatar-group-items" 
+		@keyup="{{_onkeyup}}" 
+		@keydown="{{_onkeydown}}" 
+		@focusin="{{_onfocusin}}" 
+		tabindex="{{_groupTabIndex}}"
+		@click="{{_onClick}}"
+		@ui5-click="{{_onUI5Click}}"
+	>
+		<slot></slot>
+
+		{{#if _customOverflowButton}}
+			<slot name="overflowButton"></slot>
+		{{else}}
+			<ui5-button ?hidden="{{_overflowBtnHidden}}" ?non-interactive={{_isGroup}} class="ui5-avatar-group-overflow-btn">
+				{{_overflowButtonText}}
+			</ui5-button>
+		{{/if}}
+	</div>
+</div>

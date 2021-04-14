@@ -3,7 +3,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import ToggleButton from "./ToggleButton.js";
@@ -30,8 +30,8 @@ const metadata = {
 		 * <b>Note:</b> Multiple buttons are allowed.
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-togglebutton</code> for the intended design.
-		 * @type {HTMLElement[]}
-		 * @slot
+		 * @type {sap.ui.webcomponents.main.IButton[]}
+		 * @slot buttons
 		 * @public
 		 */
 		"default": {
@@ -96,22 +96,26 @@ class SegmentedButton extends UI5Element {
 		return SegmentedButtonCss;
 	}
 
+	static get dependencies() {
+		return [ToggleButton];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-			ToggleButton.define(),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
 		super();
-		this.initItemNavigation();
+
+		this._itemNavigation = new ItemNavigation(this, {
+			getItemsCallback: () => this.getSlottedNodes("buttons"),
+		});
 
 		this.absoluteWidthSet = false; // set to true whenever we set absolute width to the component
 		this.percentageWidthSet = false; //  set to true whenever we set 100% width to the component
 		this.hasPreviouslyFocusedItem = false;
 
-		this._handleResizeBound = this._handleResize.bind(this);
+		this._handleResizeBound = this._doLayout.bind(this);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -128,7 +132,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	async onAfterRendering() {
-		await this.measureButtonsWidth();
+		await this._doLayout();
 	}
 
 	prepareToMeasureButtons() {
@@ -139,7 +143,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	async measureButtonsWidth() {
-		await RenderScheduler.whenDOMUpdated();
+		await renderFinished();
 		this.prepareToMeasureButtons();
 
 		this.widths = this.buttons.map(button => {
@@ -154,12 +158,6 @@ class SegmentedButton extends UI5Element {
 
 			return width;
 		});
-	}
-
-	initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this);
-
-		this._itemNavigation.getItemsCallback = () => this.getSlottedNodes("buttons");
 	}
 
 	normalizeSelection() {
@@ -189,7 +187,7 @@ class SegmentedButton extends UI5Element {
 		}
 
 		this._selectedButton.pressed = true;
-		this._itemNavigation.update(this._selectedButton);
+		this._itemNavigation.setCurrentItem(this._selectedButton);
 
 		return this;
 	}
@@ -198,7 +196,7 @@ class SegmentedButton extends UI5Element {
 		// If the component was previously focused,
 		// update the ItemNavigation to sync butons` tabindex values
 		if (this.hasPreviouslyFocusedItem) {
-			this._itemNavigation.update(event.target);
+			this._itemNavigation.setCurrentItem(event.target);
 			return;
 		}
 
@@ -206,12 +204,12 @@ class SegmentedButton extends UI5Element {
 		// focus the selected item if such present
 		if (this.selectedButton) {
 			this.selectedButton.focus();
-			this._itemNavigation.update(this._selectedButton);
+			this._itemNavigation.setCurrentItem(this._selectedButton);
 			this.hasPreviouslyFocusedItem = true;
 		}
 	}
 
-	async _handleResize() {
+	async _doLayout() {
 		const buttonsHaveWidth = this.widths && this.widths.some(button => button.offsetWidth > 2); // 2 are the pixel's added for rounding & IE
 		if (!buttonsHaveWidth) {
 			await this.measureButtonsWidth();

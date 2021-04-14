@@ -1,5 +1,5 @@
-:host(:not([hidden])) {
-	display: inline-block;
+:host([hidden]) {
+	display: none;
 }
 
 :host([invalid]) {
@@ -11,6 +11,7 @@
 }
 
 :host {
+	display: inline-block;
 	width: 1rem;
 	height: 1rem;
 	color: var(--sapContent_NonInteractiveIconColor);
@@ -22,14 +23,13 @@
 	outline: 1px dotted var(--sapContent_FocusColor);
 }
 
-:host(:not([dir="ltr"])) .ui5-icon-root[dir=rtl] {
-	transform: scale(-1, -1);
-	transform-origin: center;
-}
-
 .ui5-icon-root {
 	display:flex;
-	transform: scale(1, -1);
-	transform-origin: center;
 	outline: none;
+	vertical-align: top;
+}
+
+:host(:not([dir="ltr"])) .ui5-icon-root[dir=rtl] {
+	transform: scale(-1, 1);
+	transform-origin: center;
 }

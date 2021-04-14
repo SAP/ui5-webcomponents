@@ -6,9 +6,10 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import FCLLayout from "./types/FCLLayout.js";
 import {
 	getLayoutsByMedia,
@@ -21,6 +22,10 @@ import {
 	FCL_START_COLUMN_TXT,
 	FCL_MIDDLE_COLUMN_TXT,
 	FCL_END_COLUMN_TXT,
+	FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP,
+	FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP,
+	FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP,
+	FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -38,8 +43,8 @@ const metadata = {
 		/**
 		 * Defines the columns layout and their proportion.
 		 * <br><br>
-		 * <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 900px,
-		 * two columns between 900px and 1280px and three columns for sizes bigger than 1280px.
+		 * <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 599px,
+		 * two columns between 599px and 1023px and three columns for sizes bigger than 1023px.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -75,6 +80,26 @@ const metadata = {
 		*/
 		noArrows: {
 			type: Boolean,
+		},
+
+		/**
+		 * On object of strings that defines several additional accessibility texts for even further customization.
+		 *
+		 * It supports the following fields:
+		 *  - <code>startColumnAccessibleName</code>: the accessibility name for the <code>startColumn</code> region
+		 *  - <code>midColumnAccessibleName</code>: the accessibility name for the <code>midColumn</code> region
+		 *  - <code>endColumnAccessibleName</code>: the accessibility name for the <code>endColumn</code> region
+		 *  - <code>startArrowLeftText</code>: the text that the first arrow (between the <code>begin</code> and <code>mid</code> columns) will have when pointing to the left
+		 *  - <code>startArrowRightText</code>: the text that the first arrow (between the <code>begin</code> and <code>mid</code> columns) will have when pointing to the right
+		 *  - <code>endArrowLeftText</code>: the text that the second arrow (between the <code>mid</code> and <code>end</code> columns) will have when pointing to the left
+		 *  - <code>endArrowRightText</code>: the text that the second arrow (between the <code>mid</code> and <code>end</code> columns) will have when pointing to the right
+		 *
+		 * @type {object}
+		 * @public
+		 * @since 1.0.0-rc.11
+		 */
+		accessibilityTexts: {
+			type: Object,
 		},
 
 		/**
@@ -163,13 +188,13 @@ const metadata = {
 		 * Fired when the layout changes via user interaction by clicking the arrows
 		 * or by changing the component size due to resizing.
 		 *
-		 * @param {FCLLayout} layout the current layout
-		 * @param {Array} columnLayout the effective column layout, f.e [67%, 33%, 0]
-		 * @param {boolean} startColumnVisible indicates if the start column is currently visible
-		 * @param {boolean} midColumnVisible indicates if the middle column is currently visible
-		 * @param {boolean} endColumnVisible indicates if the end column is currently visible
-		 * @param {boolean} arrowsUsed indicates if the layout is changed via the arrows
-		 * @param {boolean} resize indicates if the layout is changed via resizing
+		 * @param {FCLLayout} layout The current layout
+		 * @param {Array} columnLayout The effective column layout, f.e [67%, 33%, 0]
+		 * @param {boolean} startColumnVisible Indicates if the start column is currently visible
+		 * @param {boolean} midColumnVisible Indicates if the middle column is currently visible
+		 * @param {boolean} endColumnVisible Indicates if the end column is currently visible
+		 * @param {boolean} arrowsUsed Indicates if the layout is changed via the arrows
+		 * @param {boolean} resize Indicates if the layout is changed via resizing
 		 * @event sap.ui.webcomponents.fiori.FlexibleColumnLayout#layout-change
 		 * @public
 		 */
@@ -203,12 +228,12 @@ const metadata = {
  * <h3>Responsive Behavior</h3>
  *
  * The <code>FlexibleColumnLayout</code> automatically displays the maximum possible number of columns based on <code>layout</code> property and the window size.
- * The component would display 1 column for window size smaller than 900px, up to two columns between 900px and 1280px,
- * and 3 columns for sizes bigger than 1280px.
+ * The component would display 1 column for window size smaller than 599px, up to two columns between 599px and 1023px,
+ * and 3 columns for sizes bigger than 1023px.
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -244,11 +269,12 @@ class FlexibleColumnLayout extends UI5Element {
 		return FlexibleColumnLayoutTemplate;
 	}
 
+	static get dependencies() {
+		return [Button];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			Button.define(),
-			fetchI18nBundle("@ui5/webcomponents-fiori"),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get BREAKPOINTS() {
@@ -490,6 +516,10 @@ class FlexibleColumnLayout extends UI5Element {
 		const hasAnimation = getAnimationMode() !== AnimationMode.None;
 
 		return {
+			root: {
+				"ui5-fcl-root": true,
+				"ui5-fcl--ie": isIE(),
+			},
 			columns: {
 				start: {
 					"ui5-fcl-column": true,
@@ -610,19 +640,39 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartColumnText() {
-		return this.i18nBundle.getText(FCL_START_COLUMN_TXT);
+		return this.accessibilityTexts.startColumnAccessibleName || this.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
 	get accMiddleColumnText() {
-		return this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+		return this.accessibilityTexts.midColumnAccessibleName || this.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
 	get accEndColumnText() {
-		return this.i18nBundle.getText(FCL_END_COLUMN_TXT);
+		return this.accessibilityTexts.endColumnAccessibleName || this.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
 	get _effectiveLayoutsByMedia() {
 		return this._layoutsConfiguration || getLayoutsByMedia();
+	}
+
+	get accStartArrowText() {
+		const customTexts = this.accessibilityTexts;
+
+		if (this.startArrowDirection === "mirror") {
+			return customTexts.startArrowLeftText || this.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+		}
+
+		return customTexts.startArrowRightText || this.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
+	}
+
+	get accEndArrowText() {
+		const customTexts = this.accessibilityTexts;
+
+		if (this.endArrowDirection === "mirror") {
+			return customTexts.endArrowRightText || this.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+		}
+
+		return customTexts.endArrowLeftText || this.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 }
 

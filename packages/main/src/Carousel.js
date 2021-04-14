@@ -19,13 +19,16 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import {
 	CAROUSEL_OF_TEXT,
 	CAROUSEL_DOT_TEXT,
+	CAROUSEL_PREVIOUS_ARROW_TEXT,
+	CAROUSEL_NEXT_ARROW_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 
 import Button from "./Button.js";
+import Label from "./Label.js";
 
 // Styles
 import CarouselCss from "./generated/themes/Carousel.css.js";
@@ -102,7 +105,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines when the <code>load-more</code> event is thrown. If not applied the event will not be thrown.
+		 * Defines when the <code>load-more</code> event is fired. If not applied the event will not be fired.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
@@ -155,7 +158,7 @@ const metadata = {
 		/**
 		 * Defines the content of the <code>ui5-carousel</code>.
 		 * @type {HTMLElement[]}
-		 * @slot
+		 * @slot content
 		 * @public
 		 */
 		"default": {
@@ -184,7 +187,7 @@ const metadata = {
 
 		/**
 		 * Fired for the last items of the <code>ui5-carousel</code> if it is scrolled and the direction of scrolling is to the end.
-		 * The number of items for which the event is thrown is controlled by the <code>infiniteScrollOffset</code> property.
+		 * The number of items for which the event is fired is controlled by the <code>infiniteScrollOffset</code> property.
 		 * @event sap.ui.webcomponents.main.Carousel#load-more
 		 * @public
 		 * @since 1.0.0-rc.8
@@ -197,24 +200,28 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The carousel allows the user to browse through a set of items by swiping right or left.
+ * The Carousel allows the user to browse through a set of items by swiping right or left.
  * The component is mostly used for showing a gallery of images, but can hold any other HTML element.
  *
  * <h3>Usage</h3>
  *
- * When to use
+ * <h4>When to use:</h4>
  *
- * - The items you want to display are very different from each other.
- * - You want to display the items one after the other.
- * When not to use
+ * <ul>
+ * <li>The items you want to display are very different from each other.</li>
+ * <li>You want to display the items one after the other.</li>
+ * </ul>
  *
- * - The items you want to display need to be visible at the same time.
- * - The items you want to display are uniform and very similar
+ * <h4>When not to use:</h4>
  *
- * For the <code>ui5-carousel</code>
+ * <ul>
+ * <li>The items you want to display need to be visible at the same time.</li>
+ * <li>The items you want to display are uniform and very similar.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/Carousel.js";</code>
+ * <code>import "@ui5/webcomponents/dist/Carousel.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -376,14 +383,15 @@ class Carousel extends UI5Element {
 	 */
 	get items() {
 		return this.content.map((item, idx) => {
+			const visible = this.isItemInViewport(idx);
 			return {
 				id: `${this._id}-carousel-item-${idx + 1}`,
 				item,
-				tabIndex: idx === this.selectedIndex ? "0" : "-1",
+				tabIndex: visible ? "0" : "-1",
 				posinset: idx + 1,
 				setsize: this.content.length,
 				width: this._itemWidth,
-				classes: this.isItemInViewport(idx) ? "" : "ui5-carousel-item--hidden",
+				classes: visible ? "" : "ui5-carousel-item--hidden",
 			};
 		});
 	}
@@ -411,7 +419,7 @@ class Carousel extends UI5Element {
 	get styles() {
 		return {
 			content: {
-				transform: `translateX(-${this.selectedIndex * this._itemWidth}px`,
+				transform: `translateX(${this._isRTL ? "" : "-"}${this.selectedIndex * this._itemWidth}px`,
 			},
 		};
 	}
@@ -484,8 +492,12 @@ class Carousel extends UI5Element {
 		return this._resizing || getAnimationMode() === AnimationMode.None;
 	}
 
+	get _isRTL() {
+		return this.effectiveDir === "rtl";
+	}
+
 	get selectedIndexToShow() {
-		return this.selectedIndex + 1;
+		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedIndex) + 1 : this.selectedIndex + 1;
 	}
 
 	get showNavigationArrows() {
@@ -500,11 +512,23 @@ class Carousel extends UI5Element {
 		return this.content.length ? `${this._id}-carousel-item-${this.selectedIndex + 1}` : undefined;
 	}
 
+	get nextPageText() {
+		return this.i18nBundle.getText(CAROUSEL_NEXT_ARROW_TEXT);
+	}
+
+	get previousPageText() {
+		return this.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
+	}
+
+	static get dependencies() {
+		return [
+			Button,
+			Label,
+		];
+	}
+
 	static async onDefine() {
-		await Promise.all([
-			fetchI18nBundle("@ui5/webcomponents"),
-			Button.define(),
-		]);
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 

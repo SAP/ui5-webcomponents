@@ -1,7 +1,8 @@
 import DataType from "./types/DataType.js";
 import isDescendantOf from "./util/isDescendantOf.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
-import isSlot from "./util/isSlot.js";
+import { getSlottedElements } from "./util/SlotsHelper.js";
+import { getEffectiveScopingSuffixForTag } from "./CustomElementsScope.js";
 
 /**
  *
@@ -11,6 +12,50 @@ import isSlot from "./util/isSlot.js";
 class UI5ElementMetadata {
 	constructor(metadata) {
 		this.metadata = metadata;
+	}
+
+	getInitialState() {
+		if (Object.prototype.hasOwnProperty.call(this, "_initialState")) {
+			return this._initialState;
+		}
+
+		const initialState = {};
+		const slotsAreManaged = this.slotsAreManaged();
+
+		// Initialize properties
+		const props = this.getProperties();
+		for (const propName in props) { // eslint-disable-line
+			const propType = props[propName].type;
+			const propDefaultValue = props[propName].defaultValue;
+
+			if (propType === Boolean) {
+				initialState[propName] = false;
+
+				if (propDefaultValue !== undefined) {
+					console.warn("The 'defaultValue' metadata key is ignored for all booleans properties, they would be initialized with 'false' by default"); // eslint-disable-line
+				}
+			} else if (props[propName].multiple) {
+				initialState[propName] = [];
+			} else if (propType === Object) {
+				initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
+			} else if (propType === String) {
+				initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : "";
+			} else {
+				initialState[propName] = propDefaultValue;
+			}
+		}
+
+		// Initialize slots
+		if (slotsAreManaged) {
+			const slots = this.getSlots();
+			for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+				const propertyName = slotData.propertyName || slotName;
+				initialState[propertyName] = [];
+			}
+		}
+
+		this._initialState = initialState;
+		return initialState;
 	}
 
 	/**
@@ -34,11 +79,25 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Returns the tag of the UI5 Element without the scope
+	 * @public
+	 */
+	getPureTag() {
+		return this.metadata.tag;
+	}
+
+	/**
 	 * Returns the tag of the UI5 Element
 	 * @public
 	 */
 	getTag() {
-		return this.metadata.tag;
+		const pureTag = this.metadata.tag;
+		const suffix = getEffectiveScopingSuffixForTag(pureTag);
+		if (!suffix) {
+			return pureTag;
+		}
+
+		return `${pureTag}-${suffix}`;
 	}
 
 	/**
@@ -46,7 +105,17 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	getAltTag() {
-		return this.metadata.altTag;
+		const pureAltTag = this.metadata.altTag;
+		if (!pureAltTag) {
+			return;
+		}
+
+		const suffix = getEffectiveScopingSuffixForTag(pureAltTag);
+		if (!suffix) {
+			return pureAltTag;
+		}
+
+		return `${pureAltTag}-${suffix}`;
 	}
 
 	/**
@@ -142,6 +211,74 @@ class UI5ElementMetadata {
 	isLanguageAware() {
 		return !!this.metadata.languageAware;
 	}
+
+	/**
+	 * Matches a changed entity (property/slot) with the given name against the "invalidateOnChildChange" configuration
+	 * and determines whether this should cause and invalidation
+	 *
+	 * @param slotName the name of the slot in which a child was changed
+	 * @param type the type of change in the child: "property" or "slot"
+	 * @param name the name of the property/slot that changed
+	 * @returns {boolean}
+	 */
+	shouldInvalidateOnChildChange(slotName, type, name) {
+		const config = this.getSlots()[slotName].invalidateOnChildChange;
+
+		// invalidateOnChildChange was not set in the slot metadata - by default child changes do not affect the component
+		if (config === undefined) {
+			return false;
+		}
+
+		// The simple format was used: invalidateOnChildChange: true/false;
+		if (typeof config === "boolean") {
+			return config;
+		}
+
+		// The complex format was used: invalidateOnChildChange: { properties, slots }
+		if (typeof config === "object") {
+			// A property was changed
+			if (type === "property") {
+				// The config object does not have a properties field
+				if (config.properties === undefined) {
+					return false;
+				}
+
+				// The config object has the short format: properties: true/false
+				if (typeof config.properties === "boolean") {
+					return config.properties;
+				}
+
+				// The config object has the complex format: properties: [...]
+				if (Array.isArray(config.properties)) {
+					return config.properties.includes(name);
+				}
+
+				throw new Error("Wrong format for invalidateOnChildChange.properties: boolean or array is expected");
+			}
+
+			// A slot was changed
+			if (type === "slot") {
+				// The config object does not have a slots field
+				if (config.slots === undefined) {
+					return false;
+				}
+
+				// The config object has the short format: slots: true/false
+				if (typeof config.slots === "boolean") {
+					return config.slots;
+				}
+
+				// The config object has the complex format: slots: [...]
+				if (Array.isArray(config.slots)) {
+					return config.slots.includes(name);
+				}
+
+				throw new Error("Wrong format for invalidateOnChildChange.slots: boolean or array is expected");
+			}
+		}
+
+		throw new Error("Wrong format for invalidateOnChildChange: boolean or object is expected");
+	}
 }
 
 const validateSingleProperty = (value, propData) => {
@@ -162,20 +299,7 @@ const validateSingleProperty = (value, propData) => {
 };
 
 const validateSingleSlot = (value, slotData) => {
-	if (value === null) {
-		return value;
-	}
-
-	const getSlottedNodes = el => {
-		if (isSlot(el)) {
-			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
-		}
-
-		return [el];
-	};
-
-	const slottedNodes = getSlottedNodes(value);
-	slottedNodes.forEach(el => {
+	value && getSlottedElements(value).forEach(el => {
 		if (!(el instanceof slotData.type)) {
 			throw new Error(`${el} is not of type ${slotData.type}`);
 		}

@@ -1,7 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Attributes propagation", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+	});
 
 	it("Header text attribute is propagated", () => {
 		const popover = $("#pop");
@@ -29,7 +32,9 @@ describe("Attributes propagation", () => {
 });
 
 describe("Popover general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+	});
 
 	it("tests popover toggling", () => {
 		const btnOpenPopover = $("#btn");
@@ -137,6 +142,32 @@ describe("Popover general interaction", () => {
 		assert.ok(!popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
+	it("tests modal popover with no block layer", () => {
+		const btnOpenPopover = $("#btnPopModalNoLayer");
+		const popover = $("#modalPopoverNoLayer");
+		const popoverId = popover.getProperty("_id");
+
+		btnOpenPopover.click();
+		assert.ok(popover.getProperty("opened"), "Popover is opened.");
+
+		const blockLayerIsCreated = browser.execute( (popoverId) => {
+			const staticAreaItems = document.querySelectorAll("ui5-static-area-item");
+			let result = false;
+
+			staticAreaItems.forEach(item => {
+				if (item.shadowRoot.querySelector(".ui5-block-layer") && item.classList.contains(popoverId)) {
+					result = true;
+				}
+			});
+
+			return result
+		}, popoverId);
+
+		assert.notOk(blockLayerIsCreated, "Block layer is not created.");
+
+		browser.keys("Escape");
+	});
+
 	it("tests initial focus", () => {
 		const focusedButton = $("#focusMe");
 		const btnOpenPopover = $("#btnPopFocus");
@@ -147,7 +178,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests focus trapping using TAB", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
 		const btn = $("#btn");
 		const ff = $("#first-focusable");
@@ -179,7 +210,7 @@ describe("Popover general interaction", () => {
 	});
 
 	it("tests focus trapping using SHIFT TAB", () => {
-		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
 
 		const btn = $("#btn");
 		const ff = $("#first-focusable");
@@ -205,10 +236,61 @@ describe("Popover general interaction", () => {
 
 		assert.ok(ff.getProperty("focused"), "The first focusable element is focused.");
 	});
+
+	it("tests focus when there is no focusable content", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+
+		const firstBtn = $("#firstBtn");
+		const popoverId = "popNoFocusableContent";
+
+		firstBtn.click();
+
+		let activeElementId = $(browser.getActiveElement()).getAttribute("id");
+
+		assert.strictEqual(activeElementId, popoverId, "Popover is focused");
+
+		browser.keys(["Shift", "Tab"]);
+
+		activeElementId = $(browser.getActiveElement()).getAttribute("id");
+
+		assert.ok(activeElementId, popoverId, "Popover remains focused");
+	});
+
+	it("tests focus when content, which can't be focused is clicked", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+
+		$("#btnOpenPopoverWithDiv").click();
+		$("#divContent").click();
+
+		const popoverId = "popWithDiv";
+		const activeElementId = $(browser.getActiveElement()).getAttribute("id");
+
+		assert.strictEqual(activeElementId, popoverId, "Popover is focused");
+	});
+
+	it("tests that dynamically created popover is opened", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+
+		const btnOpenDynamic = $("#btnOpenDynamic");
+		btnOpenDynamic.click();
+		const popover = $('#dynamic-popover');
+
+		browser.waitUntil(
+			() => popover.getCSSProperty("top").parsed.value > 0 && popover.getCSSProperty("left").parsed.value > 0,
+			{
+				timeout: 500,
+				timeoutMsg: "popover was not opened after a timeout"
+			}
+		);
+
+		assert.ok(true, "popover is opened");
+	});
 });
 
 describe("Acc", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Popover.html`);
+	});
 
 	it("tests aria-labelledby and aria-label", () => {
 		const popover = browser.$("ui5-popover");

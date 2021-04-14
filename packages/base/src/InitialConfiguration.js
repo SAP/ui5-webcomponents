@@ -12,6 +12,8 @@ let initialConfig = {
 	calendarType: null,
 	noConflict: false, // no URL
 	formatSettings: {},
+	fetchDefaultLanguage: false,
+	assetsPath: "",
 };
 
 /* General settings */
@@ -35,6 +37,16 @@ const getLanguage = () => {
 	return initialConfig.language;
 };
 
+/**
+ * Returns if the default language, that is inlined at build time,
+ * should be fetched over the network instead.
+ * @returns {Boolean}
+ */
+const getFetchDefaultLanguage = () => {
+	initConfiguration();
+	return initialConfig.fetchDefaultLanguage;
+};
+
 const getNoConflict = () => {
 	initConfiguration();
 	return initialConfig.noConflict;
@@ -48,6 +60,11 @@ const getCalendarType = () => {
 const getFormatSettings = () => {
 	initConfiguration();
 	return initialConfig.formatSettings;
+};
+
+const getAssetsPath = () => {
+	initConfiguration();
+	return initialConfig.assetsPath;
 };
 
 const booleanMapping = new Map();
@@ -102,7 +119,6 @@ const applyOpenUI5Configuration = () => {
 	initialConfig = merge(initialConfig, OpenUI5Config);
 };
 
-
 const initConfiguration = () => {
 	if (initialized) {
 		return;
@@ -125,7 +141,9 @@ export {
 	getTheme,
 	getRTL,
 	getLanguage,
+	getFetchDefaultLanguage,
 	getNoConflict,
 	getCalendarType,
 	getFormatSettings,
+	getAssetsPath,
 };

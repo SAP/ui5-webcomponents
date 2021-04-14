@@ -2,49 +2,84 @@
 	class="ui5-list-root"
 	@focusin="{{_onfocusin}}"
 	@keydown="{{_onkeydown}}"
-	@scroll="{{_onScroll}}"
 >
-	<!-- header -->
-	{{#if header.length}}
-		<slot name="header" />
-	{{/if}}
-	{{#if shouldRenderH1}}
-		<header id="{{headerID}}" class="ui5-list-header">
-			{{headerText}}
-		</header>
-	{{/if}}
-
-	<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
-
-	<ul id="{{_id}}-listUl"
-		class="ui5-list-ul"
-		role="{{_role}}"
-		aria-label="{{ariaLabelТxt}}"
-		aria-labelledby="{{ariaLabelledBy}}"
-		aria-multiselectable="{{isMultiSelect}}"
-	>
-		<slot></slot>
-
-		{{#if showNoDataText}}
-			<li id="{{_id}}-nodata" class="ui5-list-nodata" tabindex="{{noDataTabIndex}}" style="list-style-type: none;">
-				<div id="{{_id}}-nodata-text" class="ui5-list-nodata-text">
-					{{noDataText}}
-				</div>
-			</li>
+	<div class="ui5-list-scroll-container">
+		<!-- header -->
+		{{#if header.length}}
+			<slot name="header" />
 		{{/if}}
-	</ul>
+		{{#if shouldRenderH1}}
+			<header id="{{headerID}}" class="ui5-list-header">
+				{{headerText}}
+			</header>
+		{{/if}}
 
-	{{#if footerText}}
-		<footer id="{{_id}}-footer" class="ui5-list-footer">
-			{{footerText}}
-		</footer>
-	{{/if}}
+		{{#if hasData}}
+			<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
+		{{/if}}
 
-	{{#if showBusy}}
+		<ul id="{{_id}}-listUl"
+			class="ui5-list-ul"
+			role="{{accRole}}"
+			aria-label="{{ariaLabelТxt}}"
+			aria-labelledby="{{ariaLabelledBy}}"
+			aria-multiselectable="{{isMultiSelect}}"
+		>
+			<slot></slot>
+
+			{{#if showNoDataText}}
+				<li id="{{_id}}-nodata" class="ui5-list-nodata" tabindex="{{noDataTabIndex}}" style="list-style-type: none;">
+					<div id="{{_id}}-nodata-text" class="ui5-list-nodata-text">
+						{{noDataText}}
+					</div>
+				</li>
+			{{/if}}
+		</ul>
+
+		{{#if growsWithButton}}
+			{{> moreRow}}
+		{{/if}}
+
+		{{#if footerText}}
+			<footer id="{{_id}}-footer" class="ui5-list-footer">
+				{{footerText}}
+			</footer>
+		{{/if}}
+
+		{{#if hasData}}
+			<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>
+		{{/if}}
+
+		<span tabindex="-1" aria-hidden="true" class="ui5-list-end-marker"></span>
+	</div>
+
+	{{#if busy}}
 		<div class="ui5-list-busy-row">
-			<ui5-busyindicator ?active="{{busy}}" size="Medium" class="ui5-list-busy-ind"></ui5-busyindicator>
+			<ui5-busyindicator
+				active size="Medium"
+				class="ui5-list-busy-ind" 
+				style="{{styles.busyInd}}"
+			></ui5-busyindicator>
 		</div>
 	{{/if}}
-
-	<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>
 </div>
+
+
+{{#*inline "moreRow"}}
+	<div load-more>
+		<div 
+			tabindex="0"
+			role="button"
+			aria-labelledby="{{_id}}-showMore-text"
+			?active="{{_loadMoreActive}}"
+			@click="{{_onLoadMoreClick}}"
+			@keydown="{{_onLoadMoreKeydown}}"
+			@keyup="{{_onLoadMoreKeyup}}"
+			@mousedown="{{_onLoadMoreMousedown}}"
+			@mouseup="{{_onLoadMoreMouseup}}"
+			load-more-inner
+		>
+			<span id="{{_id}}-showMore-text" load-more-text>{{_moreText}}</span>
+		</div>
+	</div>
+{{/inline}}

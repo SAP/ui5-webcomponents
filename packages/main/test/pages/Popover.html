@@ -137,8 +137,8 @@
 
 
 	<ui5-multi-combobox>
-		<ui5-li>Hello</ui5-li>
-		<ui5-li>World</ui5-li>
+		<ui5-cb-item text="Hello"></ui5-cb-item>
+		<ui5-cb-item text="World"></ui5-cb-item>
 	</ui5-multi-combobox>
 
 	<br>
@@ -168,6 +168,20 @@
 
 		<div slot="footer">
 			<ui5-button id="modalPopoverClose">Close</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<ui5-button id="btnPopModalNoLayer">Opens modal popover with no block layer!</ui5-button>
+
+	<ui5-popover id="modalPopoverNoLayer" modal header-text="Modal popover" hide-backdrop>
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>Again</ui5-li>
+			<ui5-li>Wooooooooooooooooooooooooooooorld</ui5-li>
+		</ui5-list>
+
+		<div slot="footer">
+			<ui5-button id="modalPopoverNoLayerClose">Close</ui5-button>
 		</div>
 	</ui5-popover>
 
@@ -314,6 +328,90 @@
 		</ui5-list>
 	</ui5-popover>
 
+	<br>
+	<br>
+	<div id="targetOpener" style="height: 3rem; background: red;"></div>
+
+	<ui5-button id="btnOpenXLeft">Open Popup Left aligned</ui5-button>
+
+	<ui5-popover
+		header-text="My Heading"
+		id="popXLeft" horizontal-align="Left"
+		style="width: 300px">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<div id="targetOpener2" style="height: 3rem; background: yellow;"></div>
+
+	<ui5-button id="btnOpenXRight">Open Popup Right aligned</ui5-button>
+
+	<ui5-popover
+		header-text="My Heading"
+		id="popXRight" horizontal-align="Right"
+		style="width: 300px">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+		<div>
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<div style="text-align: right;">
+		<p>Right-aligned Popover, wider than button, arrow should be centered on the button</p>
+		<ui5-button id="btnOpenXRightWide">Open</ui5-button>
+	</div>
+
+	<ui5-popover id="popXRightWide" placement-type="Bottom" horizontal-align="Right">
+		Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni architecto tenetur quia nam reprehenderit quas eveniet possimus similique quisquam culpa distinctio ex doloremque molestiae maxime sed harum, in exercitationem! Incidunt?
+	</ui5-popover>
+
+	<br>
+	<br>
+
+	<ui5-button id="firstBtn">First button</ui5-button>
+	<ui5-button id="secondBtn">Second button</ui5-button>
+	<ui5-popover id="popNoFocusableContent" placement-type="Bottom">Sample text for the ui5-popover</ui5-popover>
+
+	<br>
+	<br>
+
+	<div style="height: 6rem; text-align: center;">
+		<ui5-button id="btnOpenDynamic" icon="overflow"></ui5-button>
+	</div>
+
+	<br>
+
+	<ui5-button id="btnOpenPopoverWithDiv">Open Popover with div Inside</ui5-button>
+
+	<ui5-popover id="popWithDiv" header-text="Newsletter subscription" modal>
+		<div id="divContent">I'm a div, which can't get focus. Click me and see where focus goes.</div>
+		<div slot="footer" class="popover-footer">
+			<ui5-button design="Emphasized">Subscribe</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<div style="display: flex; justify-content: flex-end;">
+		<ui5-button id="btnRightEdge">Popover on right edge of screen</ui5-button>
+	</div>
+
+	<ui5-popover header-text="Header" id="popoverRightEdge" placement-type="Top">
+		<ui5-label>Input field: </ui5-label>
+		<ui5-input></ui5-input>
+	</ui5-popover>
+
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.openBy(btn);
@@ -329,6 +427,14 @@
 
 		btnPopModal.addEventListener("click", function (event) {
 			modalPopover.openBy(btnPopModal);
+		});
+
+		btnPopModalNoLayer.addEventListener("click", function() {
+			modalPopoverNoLayer.openBy(btnPopModalNoLayer);
+		});
+
+		modalPopoverNoLayerClose.addEventListener("click", function() {
+			modalPopoverNoLayer.close();
 		});
 
 		modalPopoverClose.addEventListener("click", function (event) {
@@ -380,6 +486,49 @@
 
 			btnQuickViewCardOpener.setAttribute("hidden", true);
 		})
+		btnOpenXLeft.addEventListener("click", function (event) {
+			popXLeft.openBy(targetOpener);
+		});
+		btnOpenXRight.addEventListener("click", function (event) {
+			popXRight.openBy(targetOpener2);
+		});
+
+		firstBtn.addEventListener("click", function (event) {
+			popNoFocusableContent.innerHTML = "First button is clicked";
+			popNoFocusableContent.openBy(event.target);
+		});
+
+		secondBtn.addEventListener("click", function (event) {
+			popNoFocusableContent.innerHTML = "Second button is clicked";
+			popNoFocusableContent.openBy(event.target);
+		});
+
+		btnOpenDynamic.addEventListener("click", function () {
+			var popover = document.createElement("ui5-popover"),
+				button = document.createElement("ui5-button");
+
+			button.textContent = "Focusable element";
+			popover.appendChild(button);
+			popover.setAttribute("id", "dynamic-popover");
+			popover.setAttribute("placement-type", "Bottom");
+
+			document.body.appendChild(popover);
+
+			popover.openBy(btnOpenDynamic);
+		});
+
+		btnOpenPopoverWithDiv.addEventListener("click", function (event) {
+			popWithDiv.openBy(event.target);
+		});
+
+		btnOpenXRightWide.addEventListener("click", function () {
+			popXRightWide.openBy(btnOpenXRightWide);
+		});
+
+		btnRightEdge.addEventListener("click", function () {
+			popoverRightEdge.openBy(btnRightEdge);
+		});
+
 	</script>
 </body>
 

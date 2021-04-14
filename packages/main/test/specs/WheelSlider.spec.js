@@ -1,12 +1,15 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Wheel Slider general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/WheelSlider_Test_Page.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/WheelSlider_Test_Page.html`);
+	});
 
 	before(() => {
 		browser.$("#wheelslider").setProperty("_items",["1","2","3","4","5","6","7"]);
 		browser.$("#wheelslider").setProperty("value","1");
-		browser.$("#wheelslider").setProperty("_expanded",true);
+		browser.$("#wheelslider").setProperty("expanded",true);
 		browser.$("body").setAttribute("class", "sapUiSizeCompact");
 	});
 
@@ -26,7 +29,7 @@ describe("Wheel Slider general interaction", () => {
 
 	it("Arrow up button is working", () => {
 		const slider = browser.$("#wheelslider");
-		
+
 		const button = slider.shadow$$(".ui5-wheelslider-arrow")[0];
 
 		button.click();

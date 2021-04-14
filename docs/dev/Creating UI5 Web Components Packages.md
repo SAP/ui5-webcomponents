@@ -22,10 +22,12 @@ The name that you give to your package will be used by the UI5 Web Components to
 With `npm`:
  - `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
  - `npm i --save-dev chromedriver`
+ - (Optional) `npm i --save @ui5/webcomponents-ie11`
 
 or with `yarn`:
  - `yarn add @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
  - `yarn add -D chromedriver` 
+ - (Optional) `yarn add @ui5/webcomponents-ie11`
 
 These three `@ui5/` packages will serve as foundation for your own package and web components.
 
@@ -34,10 +36,13 @@ Package | Description
 `@ui5/webcomponents-base` | Base classes and Framework
 `@ui5/webcomponents-theme-base` | Base theming assets
 `@ui5/webcomponents-tools` | Build and configuration assets
+`@ui5/webcomponents-ie11` | (Optional) Internet Explorer 11 polyfills and adapter code
 
 *Note:* `chromedriver` is a peer dependency of `@ui5/webcomponents-tools` so that you get to choose the exact version, 
 if necessary. This is useful if, for example, you manually update Chrome on your system and you'd prefer to not have
 a fixed `chromedriver` version packaged with `@ui5/webcomponents-tools`. 
+
+*Note:* `@ui5/webcomponents-ie11` is optional and should not be installed unless you need Internet Explorer 11 support.
 
 ## Step 3 - run the package initialization script
 
@@ -46,7 +51,7 @@ Run the initialization script, optionally with parameters from the following tab
 Parameter | Description | Default value
 ----------|-------------|--------------
 port | Dev server port | 8080
-tag | The sample web component's tag name | ui5-demo
+tag | The sample web component's tag name | my-first-component
 
 For example: 
 
@@ -54,9 +59,12 @@ For example:
 
 to get all the default values, or:
 
-`npx wc-init-ui5-package --port=8081 --tag=ui5-my-new-component`
+`npx wc-init-ui5-package --port=8081 --tag=my-new-component`
 
 to change the port and the tag of the sample web component that will be created in the empty package.
+
+*Please note that the usage of the `ui5-` prefix is strongly discouraged, although not forbidden, for third-party components.
+This is due to the possibility of name clashes in the future. If you insist on using it*
 
 The initialization script will set the directory structure and copy a couple of files. 
 
@@ -123,7 +131,7 @@ File | Purpose
 .eslintignore | Excludes the `dist/` and `test/` directories from static code scans
 package-scripts.js | An [nps](https://www.npmjs.com/package/nps) package scripts configuration file
 bundle.esm.js | Entry point for the ES6 bundle, used for development and tests. Intended for modern browsers.
-bundle.es5.js | Entry point for the ES5 bundle, used for development and tests. Intended for IE11 only.
+bundle.es5.js | Entry point for the ES5 bundle, used for development and tests. Intended for IE11 only. Delete this file if you don't need IE11 support.
 
 You'll likely only need to change `bundle.esm.js` to import your new components there.
 
@@ -185,7 +193,7 @@ Examples:
 ### The `src/` directory
 
 This is where you'll do most of the development. 
-Let's see the necessary files for a `ui5-demo` component.
+Let's see the necessary files for a `my-first-component` component.
 
 #### Class and template files
 
@@ -193,8 +201,8 @@ The main files describing a web component are:
 
 File | Purpose
 ------------|-------------
-`src/Demo.js` | Web component class
-`src/Demo.hbs` | Handlebars template
+`src/MyFirstComponent.js` | Web component class
+`src/MyFirstComponent.hbs` | Handlebars template
 
 In order to understand how a UI5 Web Component works and what lies behind these two files, make sure you check the
 [Developing Web Components](./Developing%20Web%20Components.md) section of the documentation.
@@ -211,15 +219,18 @@ In addition, you can define your own CSS Vars and provide different values for t
 
 File | Purpose
 ------------|-------------
-`src/themes/Demo.css` | All CSS rules for the web component, same for all themes. Will be inserted in the shadow root.
+`src/themes/MyFirstComponent.css` | All CSS rules for the web component, same for all themes. Will be inserted in the shadow root.
 `src/themes/sap_belize/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize` theme.
 `src/themes/sap_belize_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme.
+`src/themes/sap_belize_hcw/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcw` theme.
 `src/themes/sap_fiori_3/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3` theme.
 `src/themes/sap_fiori_3_dark/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_dark` theme.
+`src/themes/sap_fiori_3_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_hcb` theme.
+`src/themes/sap_fiori_3_hcw/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_hcw` theme.
 
 *Note:* It's up to you whether to put the CSS Vars directly in the `parameters-bundle.css` files for the different themes or to 
-import them from separate `.css` files. You could have for example a `Demo-params.css` file for each theme and
-import it into the `parameters-bundle.css` file: `@import "Demo-params.css";`.
+import them from separate `.css` files. You could have for example a `MyFirstComponent-params.css` file for each theme and
+import it into the `parameters-bundle.css` file: `@import "MyFirstComponent-params.css";`.
 
 Again, to know more about how these files work, you could have a look at the [Developing Web Components](./Developing%20Web%20Components.md#css) section of the documentation.
 
@@ -238,7 +249,7 @@ etc... | etc...
 Let's have a look at the sample `messagebundle.properties` file, generated by the script.
 
 ```
-#please wait text for the demo component
+#please wait text for the sample component
 PLEASE_WAIT=wait
 ```
 
@@ -289,7 +300,7 @@ and then use it by:
 
 ```js
 import "my-ui5-webcomponents/Assets.js"; // optional
-import "my-ui5-webcomponents/dist/Demo.js"; // for ui5-demo from this tutorial
+import "my-ui5-webcomponents/dist/MyFirstComponent.js"; // for my-first-component from this tutorial
 import "my-ui5-webcomponents/dist/SomeOtherComponent.js";
 import "my-ui5-webcomponents/dist/YetAnotherComponent.js";
 ```

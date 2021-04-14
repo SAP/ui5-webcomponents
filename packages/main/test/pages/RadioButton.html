@@ -17,50 +17,57 @@
 		.radio-section {
 			display: flex;
 			flex-direction: column;
+			margin-bottom: 2rem;
 		}
 	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
-	<ui5-title level="H1">ui5-radiobutton</ui5-title>
-	<ui5-radiobutton id="rb1"></ui5-radiobutton>
-	<ui5-radiobutton id="rb2" text="Option B"></ui5-radiobutton>
-	<ui5-radiobutton id="rb3" wrap text="Option C"></ui5-radiobutton>
-	<ui5-radiobutton id="rb4" disabled text="Option D"></ui5-radiobutton>
-	<ui5-radiobutton id="truncatingRb" text="Long long long text that should truncate at some point">></ui5-radiobutton>
-	<br/>
-	<ui5-radiobutton id="wrappingRb" wrap text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s." style="width: 300px"></ui5-radiobutton>
 
-	<ui5-input id="field"></ui5-input>
+	<ui5-title level="H1">Radios within a group</ui5-title><br>
+	<div class="radio-section">
+		<ui5-title>Group1 - None pre-selection</ui5-title>
+		<ui5-radiobutton id="testRbtn" text="N/A" disabled name="test"></ui5-radiobutton>
+		<ui5-radiobutton id="testRbtn1" text="Male" name="test"></ui5-radiobutton>
+		<ui5-radiobutton id="testRbtn2"text="Female" name="test"></ui5-radiobutton>
+	</div>
 
 	<section class="radio-section">
-		<ui5-title>ui5-radiobutton in group</ui5-title>
-		<ui5-radiobutton id="groupRb1" name="a" selected text="Option A long long should shrink long long text text text text text text text text"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb2" name="a" disabled text="Option C"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRbReadOnly" name="a" readonly text="Option E"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb3" name="a" text="Option D"></ui5-radiobutton>
+		<ui5-title>Group 2</ui5-title>
+		<ui5-radiobutton id="testRbtn11" name="test2" selected text="Selected A"></ui5-radiobutton>
+		<ui5-radiobutton id="testRbtn12" name="test2" disabled text="Disabled B"></ui5-radiobutton>
+		<ui5-radiobutton id="testRbtn13" name="test2" text="Standard C"></ui5-radiobutton>
 	</section>
 
 	<section class="radio-section">
-		<ui5-title>ui5-radiobutton in group</ui5-title>
+		<ui5-title>Group 3</ui5-title>
+		<ui5-input id="tabField"></ui5-input>
+		<ui5-radiobutton id="groupRb1" name="a" selected text="Option A long long should shrink long long text text text text text text text text"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb2" name="a" disabled text="Option C"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb3" name="a" text="Option D"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRbReadOnly" name="a" readonly text="Option E"></ui5-radiobutton>
+	</section>
+
+	<section class="radio-section">
+		<ui5-title>Group 4</ui5-title>
 		<ui5-radiobutton id="groupRb4" name="b" selected text="Option A long long should shrink long long text text text text text text text text"></ui5-radiobutton>
 		<ui5-radiobutton id="groupRb5" name="b" disabled text="Option C"></ui5-radiobutton>
 		<ui5-radiobutton id="groupRb6" name="b" text="Option D"></ui5-radiobutton>
 	</section>
 
-	<div id="radioGroup" class="radio-section">
-		<ui5-title>Group of states</ui5-title>
-		<ui5-label id="lblRadioGroup"></ui5-label>
-		<ui5-label id="lblEventCounter"></ui5-label>
+	<section id="radioGroup" class="radio-section">
+		<ui5-title>Group 4 - Value states</ui5-title>
+		<ui5-label id="lblRadioGroup">N/A</ui5-label>
+		<ui5-label id="lblEventCounter">0</ui5-label>
 		<ui5-radiobutton id="groupRb7" text="None selected" value-state="None" name="GroupB"></ui5-radiobutton>
 		<ui5-radiobutton id="groupRb8" text="Warning" value-state="Warning" selected name="GroupB"></ui5-radiobutton>
 		<ui5-radiobutton id="groupRb9"text="Error" value-state="Error" selected name="GroupB"></ui5-radiobutton>
 		<ui5-radiobutton id="groupRb10" text="Default selected" value-state="None" selected name="GroupB"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb11" text="Other group selected" value-state="None" selected name="GroupBB"></ui5-radiobutton>
-	</div>
+		<ui5-radiobutton id="groupRb11" text="Radio From Another Group" value-state="None" selected name="GroupBB"></ui5-radiobutton>
+	</section>
 
+	<ui5-title level="H1">Standalone Radios Not Grouped</ui5-title>
 	<section>
-		<ui5-title>ui5-radiobutton states</ui5-title></p>
 		<ui5-radiobutton id="myRb6" selected text="Default"></ui5-radiobutton>
 		<ui5-radiobutton id="myRb7" readonly text="read only"></ui5-radiobutton>
 		<ui5-radiobutton id="myRb8" disabled text="disabled"></ui5-radiobutton>
@@ -70,6 +77,18 @@
 		<ui5-radiobutton id="myRb12" value-state="Error" text="error"></ui5-radiobutton>
 		<ui5-radiobutton id="myRb13" value-state="Warning" selected text="warning"></ui5-radiobutton>
 		<ui5-radiobutton id="myRb14" value-state="Error" selected text="error"></ui5-radiobutton>
+	</section>
+
+
+	<section class="radio-section">
+		<ui5-radiobutton id="rb1"></ui5-radiobutton>
+		<ui5-radiobutton id="rb2" text="Option B"></ui5-radiobutton>
+		<ui5-radiobutton id="rb3" wrap text="Option C"></ui5-radiobutton>
+		<ui5-radiobutton id="rb4" disabled text="Option D"></ui5-radiobutton>
+		<ui5-radiobutton id="truncatingRb" text="Long long long text that should truncate at some point">></ui5-radiobutton>
+		<br/>
+		<ui5-radiobutton id="wrappingRb" wrap text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s." style="width: 300px"></ui5-radiobutton>
+		<ui5-input id="field"></ui5-input>
 	</section>
 
 	<p>*Params</p>

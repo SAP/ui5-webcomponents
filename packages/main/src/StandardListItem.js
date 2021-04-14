@@ -1,6 +1,7 @@
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
+import Avatar from "./Avatar.js";
 import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
 
 /**
@@ -97,7 +98,7 @@ const metadata = {
 		/**
 		 * Defines the text of the <code>ui5-li</code>.
 		 * <br><br>
-		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -117,11 +118,24 @@ const metadata = {
  * providing the most common use cases such as <code>text</code>,
  * <code>image</code> and <code>icon</code>.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-li</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>title - Used to style the title of the list item</li>
+ * <li>description - Used to style the description of the list item</li>
+ * <li>info - Used to style the info of the list item</li>
+ * <li>icon - Used to style the icon of the list item</li>
+ * </ul>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.StandardListItem
  * @extends ListItem
  * @tagname ui5-li
+ * @implements sap.ui.webcomponents.main.IListItem
  * @public
  */
 class StandardListItem extends ListItem {
@@ -150,8 +164,12 @@ class StandardListItem extends ListItem {
 		return (this.icon && this.iconEnd);
 	}
 
-	static async onDefine() {
-		await Icon.define();
+	static get dependencies() {
+		return [
+			...ListItem.dependencies,
+			Icon,
+			Avatar,
+		];
 	}
 }
 

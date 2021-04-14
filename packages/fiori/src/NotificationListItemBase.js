@@ -5,11 +5,11 @@ import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 
 // Icons
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
-import "@ui5/webcomponents-icons/dist/icons/message-success.js";
-import "@ui5/webcomponents-icons/dist/icons/message-error.js";
-import "@ui5/webcomponents-icons/dist/icons/message-warning.js";
-import "@ui5/webcomponents-icons/dist/icons/overflow.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/message-success.js";
+import "@ui5/webcomponents-icons/dist/message-error.js";
+import "@ui5/webcomponents-icons/dist/message-warning.js";
+import "@ui5/webcomponents-icons/dist/overflow.js";
 
 // Templates
 import NotifactionOverflowActionsPopoverTemplate from "./generated/templates/NotifactionOverflowActionsPopoverTemplate.lit.js";
@@ -36,6 +36,13 @@ const metadata = {
 
 		/**
 		 * Defines the <code>priority</code> of the item.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Low</code></li>
+		 * <li><code>Medium</code></li>
+		 * <li><code>High</code></li>
+		 * </ul>
 		 * @type {Priority}
 		 * @defaultvalue "None"
 		 * @public
@@ -56,6 +63,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the <code>notification</code> is new or has been already read.
+		 * <br><br>
+		 * <b>Note:</b> if set to <code>false</code> the <code>heading</code> has bold font,
+		 * if set to true - it has a normal font.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		read: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines if a busy indicator would be displayed over the item.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -71,9 +91,9 @@ const metadata = {
 		/**
 		 * Defines the actions, displayed in the top-right area.
 		 * <br><br>
-		 * <b>Note:</b> use the <code>ui5-notification-overflow-action</code> component.
+		 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 		 *
-		 * @type {HTMLElement}
+		 * @type {sap.ui.webcomponents.fiori.INotificationAction[]}
 		 * @slot
 		 * @public
 		 */
@@ -104,14 +124,14 @@ const metadata = {
  * @extends ListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
- * @appenddocs NotificationOverflowAction
+ * @appenddocs NotificationAction
  * @public
  */
 class NotificationListItemBase extends ListItemBase {
 	constructor() {
 		super();
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+		this.i18nFioriBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {

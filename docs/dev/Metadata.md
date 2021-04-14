@@ -109,12 +109,101 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 
 Setting | Type | Default | Description
 --------|------|--------|-----------
-`type`    | `HTMLElement` or `Node` | N/A | The type of the children that can go into that slot 
+`type` *    | `HTMLElement` or `Node` | N/A | The type of the children that can go into that slot 
 `individualSlots` | `Boolean` | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
-`propertyName` | `String` | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
-`listenFor` | `Object` | N/A | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
-`invalidateParent` | `Boolean` | false | **Experimental, do not use.** Defines whether every invalidation of a UI5 Web Component in this slot should trigger an invalidation of the parent UI5 Web Component.
-The `type` setting is required.
+`propertyName` | `String` | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored. 
+`invalidateOnChildChange` ** | `Boolean` or `Object` | false | **Experimental, do not use.** Defines whether every invalidation of a UI5 Web Component in this slot should trigger an invalidation of the parent UI5 Web Component.
+
+`*` The `type` setting is required.
+
+`**` 
+**Important:** `invalidateOnChildChange` is not meant to be used with standard DOM Elements and is not to be confused with `MutationObserver`-like functionality. 
+It rather targets the use case of components that slot abstract items (`UI5Element` instances without a template) and require to be invalidated in turn whenever these items are invalidated.  
+
+The `invalidateOnChildChange` setting can be either a `Boolean` (`true` meaning invalidate the component on any change of a child in this slot) or an `Object` with `properties` and `slots` fields. They in turn can be either of
+type `Boolean` (`true` meaning invalidate on any property change or any slot change) or `Array` of strings indicating exactly which properties or slots lead to invalidation.
+
+Examples:
+
+ - In the following example, since `invalidateOnChildChange` is not used (`false` by default), the component will be invalidated whenever children are added/removed in the `tabs` slot,
+ but not whenever a child in that slot changes.
+ ```json
+{
+	managedSlots: true,
+	slots: {
+		"default": {
+			"type": "HTMLElement",
+			"propertyName": "tabs",
+		}
+	}
+}
+```
+
+ - Setting `invalidateOnChildChange` to `true` means: invalidate the component whenever a child in the `tabs` slot gets invalidated, regardless of the reason.
+ ```json
+{
+	managedSlots: true,
+	slots: {
+		"default": {
+			"type": "HTMLElement",
+			"propertyName": "tabs",
+			"invalidateOnChildChange": true
+		}
+	}
+}
+```
+
+ - The example below results in exactly the same behavior as the one above, but it uses the more explicit `Object` format:
+ ```json
+{
+	managedSlots: true,
+	slots: {
+		"default": {
+			"type": "HTMLElement",
+			"propertyName": "tabs",
+			"invalidateOnChildChange": {
+				"properties": true,
+				"slots": true
+			}
+		}
+	}
+}
+```
+
+ - The following example uses the `Object` format again and means: invalidate the component whenever the children in this slot are invalidated due to property changes, but not due 
+ to slot changes. Here `"slots": false` is added for completeness (as `false` is the default value for both `properties` and `slots`)
+ ```json
+{
+	managedSlots: true,
+	slots: {
+		"default": {
+			"type": "HTMLElement",
+			"propertyName": "tabs",
+			"invalidateOnChildChange": {
+				"properties": true,
+				"slots": false
+			}
+		}
+	}
+}
+```
+
+ - The final example shows the most complex format of `invalidateOnChildChange` which allows to define which slots or properties in the children inside that slot lead to invalidation of the component:
+ ```json
+{
+	managedSlots: true,
+	slots: {
+		"default": {
+			"type": "HTMLElement",
+			"propertyName": "tabs",
+			"invalidateOnChildChange": {
+				"properties": ["text", "selected", "disabled"],
+				"slots": ["default"]
+			}
+		}
+	}
+}
+```
 
 Notes:
  - Children without a `slot` attribute will be assigned to the `default` slot. 
@@ -135,7 +224,7 @@ Notes:
 
 Determines whether the framework should manage the slots of this UI5 Web Component. 
 
-This setting is useful for UI5 Web Components that dont' just slot children, but additionally base their own 
+This setting is useful for UI5 Web Components that don't just slot children, but additionally base their own 
 rendering on the presence/absence/type of children.
 
 ```json
@@ -145,7 +234,7 @@ rendering on the presence/absence/type of children.
 ```
 
 When `managedSlots` is set to `true`:
- - The framework will invalidate this UI5 Web Component, whenever its children are added/removed/changed.
+ - The framework will invalidate this UI5 Web Component, whenever its children are added/removed/rearranged (and additionally when invalidated, if `invalidateOnChildChange` is set).
  - If any of this UI5 Web Component's children are custom elements, the framework will await until they are all
  defined and upgraded, before rendering the component for the first time.
  - The framework will create properties for each slot on this UI5 Web Component's instances for easier access
