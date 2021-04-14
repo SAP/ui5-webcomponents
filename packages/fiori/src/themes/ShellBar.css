@@ -209,7 +209,7 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-button {
-	width: 2.5rem;
+	min-width: 2.5rem;
 }
 
 .ui5-shellbar-image-buttonImage {
