@@ -1,9 +1,7 @@
-commit 8333773b171b013be47bc53632d3abc1a327d4b8
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Apr 14 13:42:04 2021 +0300
+commit a0ce7322e8bc85ed218529bea8b1cddeb26f088b
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Apr 16 11:43:17 2021 +0300
 
-    docs: improve samples and overview sections (#3142)
+    fix(ui5-file-uploader): hovering now gives correct button styles (#3148)
     
-    improve samples and overview sections.
-    
-    FIXES: #3145
+    * fix(ui5-file-uploader): hovering now gives correct button styles

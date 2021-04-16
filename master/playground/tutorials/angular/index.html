@@ -2501,16 +2501,12 @@ In order to use it, you have to use a library called <a href="https://github.com
 
 <p>Example:</p>
 
-<ol>
-  <li>Install Origami:</li>
-</ol>
+<h4 id="1-install-origami">1. Install Origami:</h4>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @codebakery/origami
 </code></pre></div></div>
 
-<ol>
-  <li>Import the OrigamiFormsModule from Origami</li>
-</ol>
+<h4 id="2-import-the-origamiformsmodule-from-origami">2. Import the OrigamiFormsModule from Origami</h4>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">NgModule</span><span class="p">,</span> <span class="nx">CUSTOM_ELEMENTS_SCHEMA</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">BrowserModule</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/platform-browser</span><span class="dl">'</span><span class="p">;</span>
@@ -2526,16 +2522,12 @@ In order to use it, you have to use a library called <a href="https://github.com
 <span class="k">export</span> <span class="kd">class</span> <span class="nx">AppModule</span> <span class="p">{}</span>
 </code></pre></div></div>
 
-<ol>
-  <li>Use Origami in your template:</li>
-</ol>
+<h4 id="3-use-origami-in-your-template">3. Use Origami in your template:</h4>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-input</span> <span class="na">[(ngModel)]=</span><span class="s">"value"</span> <span class="na">origami</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 </code></pre></div></div>
 
-<ol>
-  <li>Make Angular boot after UI5 Web Components are defined:</li>
-</ol>
+<h4 id="4-make-angular-boot-after-ui5-web-components-are-defined">4. Make Angular boot after UI5 Web Components are defined:</h4>
 
 <p>In the module, where you are using UI5 Web Components, you should add the <code class="highlighter-rouge">APP_INITIALIZER</code> provider. In order to do so, import <code class="highlighter-rouge">APP_INITIALIZER</code> and add it to the providers array like this (In this example we will add it in the <code class="highlighter-rouge">app.module.ts</code>):</p>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="p">...,</span> <span class="nx">APP_INITIALIZER</span>  <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
@@ -2573,9 +2565,7 @@ In order to use it, you have to use a library called <a href="https://github.com
 
 <p><em>Note</em> These steps have been tested with Angular 7. For other versions of Angular, there might be some differences.</p>
 
-<ol>
-  <li>Install all needed dependencies:</li>
-</ol>
+<h4 id="1-install-all-needed-dependencies">1. Install all needed dependencies:</h4>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @ui5/webcomponents-ie11 <span class="nt">--save</span>
 </code></pre></div></div>
@@ -2583,9 +2573,7 @@ In order to use it, you have to use a library called <a href="https://github.com
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> <span class="nt">--save</span> @angular-builders/custom-webpack@7.5 @angular-builders/dev-server@7.3 @babel/core @babel/preset-env babel-loader
 </code></pre></div></div>
 
-<ol>
-  <li>After that we need to make Angular use custom webpack configuration. In angular.json add the following configuration lines:</li>
-</ol>
+<h4 id="2-after-that-we-need-to-make-angular-use-custom-webpack-configuration-in-angularjson-add-the-following-configuration-lines">2. After that we need to make Angular use custom webpack configuration. In angular.json add the following configuration lines:</h4>
 
 <p>In architect object, about the build command:</p>
 
@@ -2601,55 +2589,52 @@ In order to use it, you have to use a library called <a href="https://github.com
              </span><span class="nl">"builder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@angular-builders/dev-server:generic"</span><span class="p">,</span><span class="w">
 </span></code></pre></div></div>
 
-<ol>
-  <li>On root level create custom-webpack.config.js file with the following content(this is the config that Angular will use):
-```js
-const path = require(‘path’);
-const env = process.env.WEBPACK_ENV;</li>
-</ol>
+<h4 id="3-on-root-level-create-custom-webpackconfigjs-file-with-the-following-contentthis-is-the-config-that-angular-will-use">3. On root level create custom-webpack.config.js file with the following content(this is the config that Angular will use):</h4>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">env</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">WEBPACK_ENV</span><span class="p">;</span>
+ 
+<span class="kd">const</span> <span class="nx">OUTPUT_FILENAME</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">result</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">DEST_FOLDER</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">dist</span><span class="dl">'</span><span class="p">;</span>
+ 
+<span class="kd">const</span> <span class="nx">OUTPUT_FILE</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">OUTPUT_FILENAME</span><span class="p">}</span><span class="s2">.js`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">OUTPUT_FILE_MIN</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">OUTPUT_FILENAME</span><span class="p">}</span><span class="s2">.min.js`</span><span class="p">;</span>
+ 
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">outputfile</span><span class="p">,</span> <span class="nx">mode</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">env</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">build</span><span class="dl">'</span> 
+    <span class="p">?</span> <span class="p">{</span>
+        <span class="na">outputfile</span><span class="p">:</span> <span class="nx">OUTPUT_FILE_MIN</span><span class="p">,</span>
+        <span class="na">mode</span><span class="p">:</span> <span class="dl">'</span><span class="s1">production</span><span class="dl">'</span>
+    <span class="p">}</span> 
+    <span class="p">:</span> <span class="p">{</span>
+        <span class="na">outputfile</span><span class="p">:</span> <span class="nx">OUTPUT_FILE</span><span class="p">,</span>
+        <span class="na">mode</span><span class="p">:</span> <span class="dl">'</span><span class="s1">development</span><span class="dl">'</span>
+    <span class="p">};</span>
+ 
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">mode</span><span class="p">,</span>
+    <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="nx">DEST_FOLDER</span><span class="p">),</span>
+        <span class="na">filename</span><span class="p">:</span> <span class="nx">outputfile</span><span class="p">,</span>
+        <span class="na">libraryTarget</span><span class="p">:</span> <span class="dl">'</span><span class="s1">umd</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">umdNamedDefine</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="na">module</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">rules</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="c1">// Only run `.js` files through Babel</span>
+            <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">m</span><span class="se">?</span><span class="sr">js$/</span><span class="p">,</span>
+            <span class="na">use</span><span class="p">:</span> <span class="p">{</span>
+                <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">babel-loader</span><span class="dl">'</span><span class="p">,</span>
+                <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">presets</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">@babel/preset-env</span><span class="dl">'</span><span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}],</span>
+    <span class="p">},</span>
+    <span class="na">devtool</span><span class="p">:</span> <span class="dl">'</span><span class="s1">source-map</span><span class="dl">'</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div></div>
 
-<p>const OUTPUT_FILENAME = ‘result’;
-const DEST_FOLDER = ‘dist’;</p>
-
-<p>const OUTPUT_FILE = <code class="highlighter-rouge">${OUTPUT_FILENAME}.js</code>;
-const OUTPUT_FILE_MIN = <code class="highlighter-rouge">${OUTPUT_FILENAME}.min.js</code>;</p>
-
-<p>const { outputfile, mode } = env == ‘build’ 
-    ? {
-        outputfile: OUTPUT_FILE_MIN,
-        mode: ‘production’
-    } 
-    : {
-        outputfile: OUTPUT_FILE,
-        mode: ‘development’
-    };</p>
-
-<p>module.exports = {
-    mode,
-    output: {
-        path: path.join(__dirname, DEST_FOLDER),
-        filename: outputfile,
-        libraryTarget: ‘umd’,
-        umdNamedDefine: true
-    },
-    module: {
-        rules: [{
-            // Only run <code class="highlighter-rouge">.js</code> files through Babel
-            test: /.m?js$/,
-            use: {
-                loader: ‘babel-loader’,
-                options: {
-                    presets: [‘@babel/preset-env’]
-                }
-            }
-        }],
-    },
-    devtool: ‘source-map’,
-};</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-4. Add the following import ```to app.module.ts``` file:
-```js
-import "@ui5/webcomponents-ie11/dist/features/IE11WithWebComponentsPolyfill.js";
+<h4 id="4-add-the-following-import-to-appmodulets-file">4. Add the following import <code class="highlighter-rouge">to app.module.ts</code> file:</h4>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-ie11/dist/features/IE11WithWebComponentsPolyfill.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p><em>Note</em>: The <code class="highlighter-rouge">IE11WithWebComponentsPolyfill.js</code> file includes the official webcomponents polyfill, so you don’t have to import it by yourself. (This file was released in our latest @next version. It will be shipped with our next stable release rc.6, so until then it would be available only with the @next tag)</p>
