@@ -1,7 +1,7 @@
-commit a0ce7322e8bc85ed218529bea8b1cddeb26f088b
+commit f5e92e0fb9c9a5f386adfd49894961468305ee6e
 Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Apr 16 11:43:17 2021 +0300
+Date:   Fri Apr 16 12:09:00 2021 +0300
 
-    fix(ui5-file-uploader): hovering now gives correct button styles (#3148)
+    fix(ui5-date-picker):  does not trigger value verification upon typing(#2922)
     
-    * fix(ui5-file-uploader): hovering now gives correct button styles
+    Fixes: #2827
