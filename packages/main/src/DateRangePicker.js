@@ -205,7 +205,7 @@ class DateRangePicker extends DatePicker {
 		}
 
 		const newValue = this._buildValue(...event.detail.dates); // the value will be normalized so we don't need to order them here
-		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"], true);
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 		this._tempValue = "";
 		this._focusInputAfterClose = true;
 		this.closePicker();
@@ -238,7 +238,7 @@ class DateRangePicker extends DatePicker {
 				caretPos -= Math.ceil(this.value.length / 2);
 			}
 		}
-		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"], true);
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
 		await renderFinished();
 		input.setCaretPosition(caretPos); // Return the caret to the previous (or the adjusted, if dates flipped) position after rendering

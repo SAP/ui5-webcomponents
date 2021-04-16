@@ -402,7 +402,7 @@ class DateTimePicker extends DatePicker {
 		modifiedLocalDate.setSeconds(this.dateValue.getSeconds());
 
 		const newValue = this.formatValue(modifiedLocalDate);
-		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"], true);
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
 	async getPicker() {
