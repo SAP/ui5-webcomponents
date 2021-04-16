@@ -148,6 +148,7 @@ bdi {
 	text-shadow: var(--_ui5_button_text_shadow);
 }
 
+/*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
 :host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):hover),
 :host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
 	background-color: var(--sapButton_Accept_Hover_Background);
@@ -177,6 +178,7 @@ bdi {
 	text-shadow: var(--_ui5_button_text_shadow);
 }
 
+/*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
 :host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):hover),
 :host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
 	background-color: var(--sapButton_Reject_Hover_Background);
@@ -207,6 +209,7 @@ bdi {
 	font-weight: var(--_ui5_button_emphasized_font_weight);
 }
 
+/*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
 :host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]):hover),
 :host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
 	background-color: var(--sapButton_Emphasized_Hover_Background);
@@ -236,6 +239,7 @@ bdi {
 	background-color: var(--sapButton_Lite_Hover_Background);
 }
 
+/*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
 :host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered){
 	background-color: var(--sapButton_Lite_Hover_Background);
 	border-color: var(--_ui5_button_transparent_hover_border_color);
