@@ -609,9 +609,9 @@ describe("Date Picker Tests", () => {
 	it("Going under the minimum date changes value state", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.input.click();
-		datepicker.root.keys("Jan 1, 1999");
-		datepicker.root.keys("Enter");
+		datepicker.innerInput.click();
+		datepicker.innerInput.keys("Jan 1, 1999");
+		datepicker.innerInput.keys("Enter");
 
 		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
 
@@ -622,12 +622,12 @@ describe("Date Picker Tests", () => {
 	it("Going over the maximum date changes value state", () => {
 		datepicker.id = "#dp33";
 
-		datepicker.input.click();
-		while(datepicker.root.getValue() !== ""){
-			datepicker.root.keys("Backspace");
+		datepicker.innerInput.click();
+		while(datepicker.innerInput.getValue() !== ""){
+			datepicker.innerInput.keys("Backspace");
 		}
 
-		datepicker.root.keys("May 5, 2100");
+		datepicker.innerInput.keys("May 5, 2100");
 		datepicker.root.keys("Enter");
 
 		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
@@ -640,21 +640,17 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp33";
 
 		datepicker.input.click();
-		while(datepicker.root.getValue() !== ""){
-			datepicker.root.keys("Backspace");
+		while(datepicker.innerInput.getValue() !== ""){
+			datepicker.innerInput.keys("Backspace");
 		}
 
-		datepicker.root.keys("Jan 8, 2100");
+		datepicker.innerInput.keys("Jan 8, 2100");
 		datepicker.root.keys("Enter");
 
 		assert.equal(datepicker.input.getProperty("valueState"), "None", "value state of the input is valid");
 
 		datepicker.input.click();
-		while(datepicker.root.getValue() !== ""){
-			datepicker.root.keys("Backspace");
-		}
-
-		datepicker.root.keys("Jan 1, 2000");
+		datepicker.root.setProperty("value", "Jan 1, 2000");
 		datepicker.root.keys("Enter");
 
 		assert.equal(datepicker.input.getProperty("valueState"), "None", "value state of the input is valid");
@@ -667,10 +663,7 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp33";
 
 		datepicker.input.click();
-		while(datepicker.root.getValue() !== ""){
-			datepicker.root.keys("Backspace");
-		}
-		datepicker.root.keys("Jan 8, 2100");
+		datepicker.root.setProperty("value", "Jan 8, 2100");
 		datepicker.root.keys("Enter");
 
 		datepicker.openPicker();
@@ -916,5 +909,18 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.click();
 		browser.keys(["Control", "A"]);
 		browser.keys("Backspace");
+	});
+
+	it("Value state changes only on submit", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DatePicker.html`);
+		datepicker.id = "#dp33";
+		datepicker.innerInput.click();
+		browser.keys("somereallylongtextthatshouldcheckifwevalidateoninput");
+
+		assert.equal(datepicker.input.getProperty("valueState"), "None", "value state of the input is valid");
+
+		browser.keys("Enter");
+
+		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
 	});
 });
