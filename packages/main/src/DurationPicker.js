@@ -152,7 +152,7 @@ const pad = number => {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/DurationPicker.js";</code>
+ * <code>import "@ui5/webcomponents/dist/DurationPicker.js";</code>
  *
  * @constructor
  * @since 1.0.0-rc.7

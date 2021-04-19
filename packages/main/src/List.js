@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -243,7 +244,7 @@ const metadata = {
 		 * is set to <code>Inactive</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.List#item-click
-		 * @param {HTMLElement} item the clicked item.
+		 * @param {HTMLElement} item The clicked item.
 		 * @public
 		 */
 		"item-click": {
@@ -424,6 +425,10 @@ class List extends UI5Element {
 
 		this._handleResize = this.checkListInViewport.bind(this);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
+		// Indicates the List bottom most part has been detected by the IntersectionObserver
+		// for the first time.
+		this.initialIntersection = true;
 	}
 
 	onExitDOM() {
@@ -551,8 +556,9 @@ class List extends UI5Element {
 		this._previouslySelectedItem = null;
 	}
 
-	observeListEnd() {
+	async observeListEnd() {
 		if (!this.listEndObserved) {
+			await renderFinished();
 			this.getIntersectionObserver().observe(this.listEndDOM);
 			this.listEndObserved = true;
 		}
@@ -567,9 +573,15 @@ class List extends UI5Element {
 	}
 
 	onInteresection(entries) {
-		if (entries.some(entry => entry.isIntersecting)) {
-			debounce(this.loadMore.bind(this), INFINITE_SCROLL_DEBOUNCE_RATE);
+		if (this.initialIntersection) {
+			this.initialIntersection = false;
+			return;
 		}
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				debounce(this.loadMore.bind(this), INFINITE_SCROLL_DEBOUNCE_RATE);
+			}
+		});
 	}
 
 	/*

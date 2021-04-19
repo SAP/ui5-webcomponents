@@ -235,17 +235,20 @@
 	<h3>Input with Label</h3>
 	<div class="snippet">
 		<div class="flex-column samples-margin">
-			<ui5-label class="samples-big-margin-right" for="myInput" required>Name</ui5-label>
+			<ui5-label class="samples-big-margin-right" for="myInput" required show-colon>Name</ui5-label>
 			<ui5-input id="myInput" placeholder="Enter your Name" required></ui5-input>
 		</div>
 		<div class="flex-column">
-			<ui5-label class="samples-big-margin-right" for="myPassword" required>Secret Code</ui5-label>
+			<ui5-label class="samples-big-margin-right" for="myPassword" required show-colon>Secret Code</ui5-label>
 			<ui5-input id="myPassword" type="Password" value-state="Error" placeholder="Enter your Secret Code" required></ui5-input>
 		</div>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-label class="samples-big-margin-right" for="myInput" required>Name</ui5-label>
+<ui5-label class="samples-big-margin-right" for="myInput" required show-colon>Name</ui5-label>
 <ui5-input id="myInput" placeholder="Enter your Name" required></ui5-input>
+
+<ui5-label class="samples-big-margin-right" for="myPassword" required show-colon>Secret Code</ui5-label>
+<ui5-input id="myPassword" type="Password" value-state="Error" placeholder="Enter your Secret Code" required></ui5-input>
 	</xmp></pre>
 </section>
 

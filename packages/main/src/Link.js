@@ -50,11 +50,16 @@ const metadata = {
 		 * Defines the <code>ui5-link</code> target.
 		 * <br><br>
 		 * <b>Notes:</b>
+		 *
 		 * <ul>
-		 * <li>Available options are the standard values: <code>_self</code>, <code>_top</code>,
-		 * <code>_blank</code>, <code>_parent</code>, and <code>_search</code>.</li>
-		 * <li>This property must only be used when the <code>href</code> property is set.</li>
+		 * <li><code>_self</code></li>
+		 * <li><code>_top</code></li>
+		 * <li><code>_blank</code></li>
+		 * <li><code>_parent</code></li>
+		 * <li><code>_search</code></li>
 		 * </ul>
+		 *
+		 * <b>This property must only be used when the <code>href</code> property is set.</b>
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -168,8 +173,8 @@ const metadata = {
  * <code>Subtle</code> or the more important ones as <code>Emphasized</code>,
  * by using the <code>design</code> property.
  * <br><br>
- * If the <code>href</code> property is set, the link behaves as the basic HTML
- * anchor tag (<code><a></code>) and opens the specified URL in the given target frame (<code>target</code> property).
+ * If the <code>href</code> property is set, the link behaves as the HTML
+ * anchor tag (<code>&lt;a>&lt;a/></code>) and opens the specified URL in the given target frame (<code>target</code> property).
  * To specify where the linked content is opened, you can use the <code>target</code> property.
  *
  * <h3>Responsive behavior</h3>

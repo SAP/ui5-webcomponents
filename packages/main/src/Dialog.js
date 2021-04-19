@@ -204,7 +204,7 @@ class Dialog extends Popup {
 	/**
 	 * Opens the dialog
 	 *
-	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
+	 * @param {boolean} preventInitialFocus Prevents applying the focus inside the popup
 	 * @async
 	 * @returns {Promise} Resolves when the dialog is open
 	 * @public
@@ -235,7 +235,7 @@ class Dialog extends Popup {
 		let ariaLabel;
 
 		if (this.header.length > 0 && !!this.accessibleName) {
-			ariaLabel =  this.accessibleName;
+			ariaLabel = this.accessibleName;
 		}
 		return this.ariaLabel ? this.ariaLabel : ariaLabel;
 	}

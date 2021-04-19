@@ -227,7 +227,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code>
  *
  * @constructor
  * @author SAP SE

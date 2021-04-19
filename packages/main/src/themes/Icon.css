@@ -6,6 +6,7 @@
 	display:none;
 }
 
+/*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
 :host(:not([hidden]).ui5_hovered) {
 	opacity: .7;
 }

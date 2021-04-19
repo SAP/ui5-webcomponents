@@ -22,7 +22,7 @@ const metadata = {
 
 		/**
 		 * Defines the content of the Popup.
-		 * @type {Node[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -92,7 +92,7 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
-		 * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. This event does not bubble.
+		 * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-open
@@ -101,7 +101,7 @@ const metadata = {
 		"before-open": {},
 
 		/**
-		 * Fired after the component is opened. This event does not bubble.
+		 * Fired after the component is opened. <b>This event does not bubble.</b>
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#after-open
@@ -109,7 +109,7 @@ const metadata = {
 		"after-open": {},
 
 		/**
-		 * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. This event does not bubble.
+		 * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-close
@@ -123,7 +123,7 @@ const metadata = {
 		},
 
 		/**
-		 * Fired after the component is closed. This event does not bubble.
+		 * Fired after the component is closed. <b>This event does not bubble.</b>
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#after-close
@@ -339,7 +339,7 @@ class Popup extends UI5Element {
 	}
 
 	/**
-	 * Tells if the component is open
+	 * Tells if the component is opened
 	 * @public
 	 * @returns {boolean}
 	 */

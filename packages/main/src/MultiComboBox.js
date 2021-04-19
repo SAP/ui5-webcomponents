@@ -218,6 +218,7 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @readonly
 		 * @since 1.0.0-rc.5
 		 * @public
 		 */

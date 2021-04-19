@@ -326,7 +326,7 @@ slot[name="profile"] {
 	position: relative;
 }
 
-:host([notification-count]) .ui5-shellbar-bell-button::before,
+:host([notification-count]:not([notification-count=""])) .ui5-shellbar-bell-button::before,
 .ui5-shellbar-button[data-count]::before {
 	position: absolute;
 	width: auto;
@@ -347,7 +347,7 @@ slot[name="profile"] {
 	box-sizing: border-box;
 }
 
-:host([notification-count]) .ui5-shellbar-bell-button::before {
+:host([notification-count]:not([notification-count=""])) .ui5-shellbar-bell-button::before {
 	content: attr(data-ui5-notification-count);
 }
 
