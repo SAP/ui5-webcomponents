@@ -115,6 +115,12 @@ class Bar extends UI5Element {
 	static get template() {
 		return BarTemplate;
 	}
+
+	get accInfo() {
+		return {
+			"ariaLabelledBy": this.design
+		}
+	};
 }
 
 Bar.define();
