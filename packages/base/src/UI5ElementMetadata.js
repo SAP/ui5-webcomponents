@@ -189,6 +189,14 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Determines whether this component should await until its slotted custom elements are defined, before being rendered
+	 * @public
+	 */
+	shouldAwaitChildren() {
+		return !!this.metadata.awaitChildren;
+	}
+
+	/**
 	 * Returns an object with key-value pairs of properties and their metadata definitions
 	 * @public
 	 */
