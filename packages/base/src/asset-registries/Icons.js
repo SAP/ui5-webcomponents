@@ -21,6 +21,9 @@ const registerIconLoader = async (collectionName, loader) => {
 const _loadIconCollectionOnce = async collectionName => {
 	if (!iconCollectionPromises.has(collectionName)) {
 		const loadIcons = loaders.get(collectionName);
+		if (typeof loadIcons !== "function") {
+			throw new Error(`No loader registered for the ${collectionName} icons collection. Probably you forgot to import the "AllIcons.js" module for the respective package.`);
+		}
 		iconCollectionPromises.set(collectionName, loadIcons(collectionName));
 	}
 
