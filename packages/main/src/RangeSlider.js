@@ -21,7 +21,6 @@ import {
 const metadata = {
 	tag: "ui5-range-slider",
 	languageAware: true,
-	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.RangeSlider.prototype */  {
 		/**
 		 * Defines start point of a selection - position of a first handle on the slider.
