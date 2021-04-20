@@ -34,6 +34,7 @@ const metadata = {
 	tag: "ui5-tokenizer",
 	languageAware: true,
 	managedSlots: true,
+	awaitChildren: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		"default": {
 			propertyName: "tokens",

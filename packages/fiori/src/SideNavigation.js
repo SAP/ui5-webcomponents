@@ -17,6 +17,7 @@ import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
 const metadata = {
 	tag: "ui5-side-navigation",
 	managedSlots: true,
+	awaitChildren: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
 		/**
 		 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.

@@ -52,6 +52,7 @@ const STEP_SWITCH_THRESHOLDS = {
 const metadata = {
 	tag: "ui5-wizard",
 	managedSlots: true,
+	awaitChildren: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
 		 * Defines the aria-label text of the <code>ui5-wizard</code>.

@@ -4,6 +4,7 @@ import litRender, { html } from "../../renderer/LitRenderer.js";
 const metadata = {
 	tag: "ui5-test-parent",
 	managedSlots: true,
+	awaitChildren: true,
 	slots: {
 		default: {
 			type: Node,

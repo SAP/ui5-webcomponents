@@ -17,7 +17,6 @@ import {
 const metadata = {
 	tag: "ui5-slider",
 	languageAware: true,
-	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.Slider.prototype */  {
 		/**
 		 * Current value of the slider

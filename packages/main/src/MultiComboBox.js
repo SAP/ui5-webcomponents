@@ -52,6 +52,7 @@ const metadata = {
 	tag: "ui5-multi-combobox",
 	languageAware: true,
 	managedSlots: true,
+	awaitChildren: true,
 	slots: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
 		 * Defines the <code>ui5-multi-combobox</code> items.

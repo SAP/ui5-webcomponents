@@ -50,6 +50,7 @@ const offsets = {
 const metadata = {
 	tag: "ui5-avatar-group",
 	managedSlots: true,
+	awaitChildren: true,
 	properties: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */  {
 
 		/**

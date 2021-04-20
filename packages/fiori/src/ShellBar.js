@@ -167,6 +167,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
+	awaitChildren: true,
 	slots: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 		/**
 		 * Defines the <code>ui5-shellbar</code> aditional items.

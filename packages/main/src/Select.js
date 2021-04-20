@@ -51,6 +51,7 @@ const metadata = {
 	tag: "ui5-select",
 	languageAware: true,
 	managedSlots: true,
+	awaitChildren: true,
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 
 		/**
