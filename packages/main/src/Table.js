@@ -33,7 +33,7 @@ const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 const metadata = {
 	tag: "ui5-table",
 	managedSlots: true,
-	awaitChildren: true,
+	interactsWithChildren: true,
 	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**

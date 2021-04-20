@@ -16,7 +16,7 @@ const metadata = {
 	tag: "ui5-timeline",
 	languageAware: true,
 	managedSlots: true,
-	awaitChildren: true,
+	interactsWithChildren: true,
 	slots: /** @lends sap.ui.webcomponents.fiori.Timeline.prototype */ {
 		/**
 		 * Determines the content of the <code>ui5-timeline</code>.

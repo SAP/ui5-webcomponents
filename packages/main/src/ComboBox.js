@@ -230,7 +230,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	awaitChildren: true,
+	interactsWithChildren: true,
 	slots: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
 		 * Defines the <code>ui5-combobox</code> items.

@@ -16,7 +16,7 @@ import styles from "./generated/themes/TableRow.css.js";
 const metadata = {
 	tag: "ui5-table-row",
 	managedSlots: true,
-	awaitChildren: true,
+	interactsWithChildren: true,
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the <code>ui5-table-row</code>.

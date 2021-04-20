@@ -201,7 +201,7 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	shouldAwaitChildren() {
-		return !!this.metadata.awaitChildren || this.usesInvalidateOnChildChange();
+		return !!this.metadata.interactsWithChildren || this.usesInvalidateOnChildChange();
 	}
 
 	/**

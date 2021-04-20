@@ -76,7 +76,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	awaitChildren: true,
+	interactsWithChildren: true,
 	slots: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Defines the selected date or dates (depending on the <code>selectionMode</code> property) for this calendar as instances of <code>ui5-date</code>
