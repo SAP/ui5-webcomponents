@@ -189,11 +189,19 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Determines whether this UI5 Element supports any slots with "invalidateOnChildChange"
+	 * @public
+	 */
+	usesInvalidateOnChildChange() {
+		return this.slotsAreManaged() && Object.entries(this.getSlots()).some(([_slotName, slotData]) => !!slotData.invalidateOnChildChange);
+	}
+
+	/**
 	 * Determines whether this component should await until its slotted custom elements are defined, before being rendered
 	 * @public
 	 */
 	shouldAwaitChildren() {
-		return !!this.metadata.awaitChildren;
+		return !!this.metadata.awaitChildren || this.usesInvalidateOnChildChange();
 	}
 
 	/**
