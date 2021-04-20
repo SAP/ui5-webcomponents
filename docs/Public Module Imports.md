@@ -205,7 +205,7 @@ For additional `icons` package assets (i18n), use:
 `import "@ui5/webcomponents-icons/dist/Assets.js";`
 
 ## Icons-TNT package (```@ui5/webcomponents-icons-tnt```)
-<a name="icons"></a>
+<a name="icons-tnt"></a>
 
 The `icons-tnt` package provides assets for the rich `SAP-icons-TNT` icon collection.
 
