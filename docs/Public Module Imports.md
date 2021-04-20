@@ -10,6 +10,7 @@ Table of contents:
  - [Main package - @ui5/webcomponents](#main)
  - [Fiori package - @ui5/webcomponents-fiori](#fiori)
  - [Icons package - @ui5/webcomponents-icons](#icons)
+ - [Icons-TNT package - @ui5/webcomponents-icons-tnt](#icons-tnt)
  - [Base package - @ui5/webcomponents-base](#base)
 
 <a name="main"></a>
@@ -189,15 +190,52 @@ just the ones that your app will actually use.
 
 For a complete list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
 
-### 2. Assets
+### 2. All icons
 
-For additional `icons` package assets (i18n, all icons JSON), use:
+To import all icons, use:
+
+`import "@ui5/webcomponents-icons/dist/AllIcons.js";`
+
+*Note: if you use an icon which you did not import individually, the JSON, containing all icons definitions, will be fetched.*
+
+### 3. Assets
+
+For additional `icons` package assets (i18n), use:
 
 `import "@ui5/webcomponents-icons/dist/Assets.js";`
 
-*Note:*
-Apart from i18n assets, the above import also provides the JSON, containing all icons definitions (~115KB zipped).
-**Therefore, if you use an icon which you did not import individually, the JSON will be fetched.**
+## Icons-TNT package (```@ui5/webcomponents-icons-tnt```)
+<a name="icons"></a>
+
+The `icons-tnt` package provides assets for the rich `SAP-icons-TNT` icon collection.
+
+*Note:* The `@ui5/webcomponents-icons-tnt` package does not provide any web components per se, but rather icon assets,
+usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import
+just the ones that your app will actually use.
+
+### 1. Individual icon imports
+
+|    Icon asset    |                      Module import                       |
+| ---------------- | -------------------------------------------------------- |
+| Actor icon       | `import "@ui5/webcomponents-icons-tnt/dist/actor.js";` |
+| ...              | ...                                                      |
+| Workflow editor icon    | `import "@ui5/webcomponents-icons-tnt/dist/workflow-editor.js";`    |
+
+For a complete list of the icons in the `SAP-icons-TNT` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT).
+
+### 2. All icons
+
+To import all icons, use:
+
+`import "@ui5/webcomponents-icons-tnt/dist/AllIcons.js";`
+
+*Note: if you use an icon which you did not import individually, the JSON, containing all icons definitions, will be fetched.*
+
+### 3. Assets
+
+Currently, the `icons-tnt` package assets file does not provide any assets, but still it's recommended to import it to be future proof:
+
+`import "@ui5/webcomponents-icons/dist/Assets.js";`
 
 ## Base package (```@ui5/webcomponents-base```)
 
