@@ -118,7 +118,7 @@ class Bar extends UI5Element {
 
 	get accInfo() {
 		return {
-			"ariaLabelledBy": this.design,
+			"label": this.design,
 		};
 	}
 }
