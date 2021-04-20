@@ -1,7 +1,11 @@
-commit f5e92e0fb9c9a5f386adfd49894961468305ee6e
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Apr 16 12:09:00 2021 +0300
+commit fe06f849560f870cec978cc4fd14f33cd23f6922
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Tue Apr 20 14:10:12 2021 +0300
 
-    fix(ui5-date-picker):  does not trigger value verification upon typing(#2922)
+    fix(ui5-date-*): components accessibility improved (#3163)
     
-    Fixes: #2827
+    - ui5-date-picker: Replace aria-owns with aria-controls.
+     - ui5-datetime-picker: Change aria-roledescription's value to Date Time Input
+     - ui5-daterange-picker: Change aria-roledescription's value to Date Range Input
+    
+    Fixes #3002
