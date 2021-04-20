@@ -323,7 +323,7 @@ class WheelSlider extends UI5Element {
 		this._itemsToShow = itemsToShow.map(value => {
 			return {
 				value,
-				selected: (value === this.value ? true : false),
+				"selected": (value === this.value),
 			};
 		});
 	}
