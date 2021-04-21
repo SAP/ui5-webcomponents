@@ -267,9 +267,9 @@ will need its children to be fully functional before interacting with them
 
 ## Summary of slot control levels
 
-Setting | Level of involvement | Description | Use-case
- -----|-------------|------------|---------
-*None* | None | The component does not know anything of its children | A generic container that looks the same way regardless of whether empty or with children
-`managedSlots: true` | Some | The component needs to know if, or how many, children it has, and must be invalidated when children change, but does not interact with them directly (does not read/write their properties). | Component that needs to hide some of its HTML, if there are no children in a particular slot, or in general bases its design on the presence/number of children. 
-`intractsWithChildren: true` | High | The component will read/write the state of its children, therefore needs them to be defined and upgraded before being rendered | A component that bases its design/functionality not only on the presence/number of children, but also on their properties/attributes, etc...; a component that sets properties on its children. Usually such components expect their children to be of a specific type. 
+Setting | Level of involvement | Description | Use-case | Technical implications
+ -----|-------------|------------|---------|-----------
+*None* | None | The component does not need to know anything of its children | A generic container that looks the same way regardless of whether empty or with children | None - the component only renders `slot` tags in its shadow root and lets the browser do the rest
+`managedSlots: true` | Some | The component needs to know if, or how many, children it has, and must be invalidated when its children change, but does not interact with them directly (does not read/write their properties). | Component that needs to hide some of its HTML (or set specific CSS such as paddings/margins), if there are no children in a particular slot, or in general bases its design on the presence/number of children, but does not care about its children's type or properties. | The component will use a mutation observer to be invalidated whenever its children change. 
+`intractsWithChildren: true` | High | The component will read/write the state of its children, therefore needs them to be defined and upgraded before the component itself can be rendered | A component that bases its design/functionality not only on the presence/number of children, but also on their properties/attributes, etc..., or a component that directly sets properties/calls methods on its children. Such components expect their children to be of a specific type or at least have some assumptions about their children's API. | The component will not only use a mutation observer to monitor its children, but it will also await for all its children to be defined and upgraded, so it can safely start interacting with them.
 
