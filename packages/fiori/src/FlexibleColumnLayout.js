@@ -231,6 +231,14 @@ const metadata = {
  * The component would display 1 column for window size smaller than 599px, up to two columns between 599px and 1023px,
  * and 3 columns for sizes bigger than 1023px.
  *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li>[SPACE, ENTER] - If focus is on the layout toggle button (arrow button) trigger the associated action (such as expand/collapse the column).</li>
+ * </ul>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";</code>

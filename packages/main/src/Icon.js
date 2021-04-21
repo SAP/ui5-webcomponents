@@ -155,6 +155,15 @@ const metadata = {
  * <br>
  * <code>import "@ui5/webcomponents-icons-tnt/dist/antenna.js";</code>
  *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li>[SPACE, ENTER] - Fires the <code>ui5-click</code> event if the <code>interactive</code> property is set to true.</li>
+ * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, releases the <code>ui5-icon</code> without triggering the click event.</li>
+ * </ul>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Icon.js";</code>
