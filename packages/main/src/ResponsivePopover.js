@@ -91,12 +91,14 @@ class ResponsivePopover extends Popover {
 	}
 
 	get classes() {
-		return {
-			header: {
-				"ui5-responsive-popover-header": true,
-				"ui5-responsive-popover-header-no-title": !this.headerText,
-			},
+		const allClasses = super.classes;
+
+		allClasses.header = {
+			"ui5-responsive-popover-header": true,
+			"ui5-responsive-popover-header-no-title": !this.headerText,
 		};
+
+		return allClasses;
 	}
 
 	static get template() {
