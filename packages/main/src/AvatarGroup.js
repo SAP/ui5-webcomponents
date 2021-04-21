@@ -235,6 +235,30 @@ const metadata = {
  * <li>You want to display a gallery for simple images.</li>
  * <li>You want to use it for other visual content than avatars.</li>
  * </ul>
+ * 
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-avatar-group</code> provides advanced keyboard handling.
+ * When focused the user can use the following keyboard
+ * shortcuts in order to perform a navigation:
+ * <br>
+ * - <code>type</code> Individual: 
+ * <br>
+ * <ul>
+ * <li>[TAB] - Move focus to the overflow button</li>
+ * <li>[LEFT] - Navigate one avatar to the left</li>
+ * <li>[RIGHT] - Navigate one avatar to the right</li>
+ * <li>[HOME] - Navigate to the first avatar</li>
+ * <li>[END] - Navigate to the last avatar</li>
+ * <li>[SPACE],[ENTER],[RETURN] - Trigger <code>ui5-click</code> event</li>
+ * </ul>
+ * <br>
+ * - <code>type</code> Group: 
+ * <br>
+ * <ul>
+ * <li>[TAB] - Move focus to the next interactive element after the <code>ui5-avatar-group</code></li>
+ * <li>[SPACE],[ENTER],[RETURN] - Trigger <code>ui5-click</code> event</li>
+ * </ul>
+ * <br>
  *
  * @constructor
  * @author SAP SE
