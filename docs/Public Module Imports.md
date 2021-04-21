@@ -24,6 +24,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 |      Web Component       |         Tag name         |                       Module import                        |
 | ------------------------ | ------------------------ | ---------------------------------------------------------- |
 | Avatar                   | `ui5-avatar`             | `import "@ui5/webcomponents/dist/Avatar.js";`              |
+| Avatar Group             | `ui5-avatar-group`       | `import "@ui5/webcomponents/dist/AvatarGroup.js";`         |
 | Badge                    | `ui5-badge`              | `import "@ui5/webcomponents/dist/Badge.js";`               |
 | Busy Indicator           | `ui5-busyindicator`      | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`             | `import "@ui5/webcomponents/dist/Button.js";`              |
@@ -35,7 +36,10 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | ComboBox                 | `ui5-combobox`           | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
 | ComboBox Item            | `ui5-cb-item`            | comes with `ui5-combobox`                                  |
 | Date Picker              | `ui5-date-picker`        | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
+| Date Range Picker        | `ui5-daterange-picker`   | `import "@ui5/webcomponents/dist/DateRangePicker.js";`     |
+| Date Time Picker         | `ui5-datetime-picker`    | `import "@ui5/webcomponents/dist/DateTimePicker.js";`      |
 | Dialog                   | `ui5-dialog`             | `import "@ui5/webcomponents/dist/Dialog.js";`              |
+| Duration Pikcer          | `ui5-duration-picker`    | `import "@ui5/webcomponents/dist/DurationPicker.js";`      |
 | File Uploader            | `ui5-file-uploader`      | `import "@ui5/webcomponents/dist/FileUploader.js";`        |
 | Icon                     | `ui5-icon`               | `import "@ui5/webcomponents/dist/Icon.js";`                |
 | Input                    | `ui5-input`              | `import "@ui5/webcomponents/dist/Input.js";`               |
@@ -51,11 +55,14 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Panel                    | `ui5-panel`              | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`            | `import "@ui5/webcomponents/dist/Popover.js";`             |
 | Radio Button             | `ui5-radiobutton`        | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
+| Range Slider             | `ui5-range-slider`       | `import "@ui5/webcomponents/dist/RangeSlider.js";`         |
 | Responsive Popover       | `ui5-responsive-popover` | `import "@ui5/webcomponents/dist/ResponsivePopover.js";`   |
 | Select                   | `ui5-select`             | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`             | comes with `ui5-select `                                   |
 | Segmented Button         | `ui5-segmentedbutton`    | `import "@ui5/webcomponents/dist/SegmentedButton.js";`     |
-| Suggestion Item          | `ui5-suggestion-item`    | `import "@ui5/webcomponents/dist/SuggestionItem.js";`      |
+| Suggestion Item          | `ui5-suggestion-item`    | comes with `InputSuggestions.js` feature - see below       |
+| Slider                   | `ui5-slider`             | `import "@ui5/webcomponents/dist/Slider.js";`              |
+| Step Input               | `ui5-step-input`         | `import "@ui5/webcomponents/dist/StepInput.js";`           |
 | Switch                   | `ui5-switch`             | `import "@ui5/webcomponents/dist/Switch.js";`              |
 | Tab Container            | `ui5-tabcontainer`       | `import "@ui5/webcomponents/dist/TabContainer.js";`        |
 | Tab                      | `ui5-tab`                | `import "@ui5/webcomponents/dist/Tab.js";`                 |
