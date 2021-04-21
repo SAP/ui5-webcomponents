@@ -90,7 +90,7 @@ class ResponsivePopover extends Popover {
 		return [Popover.styles, ResponsivePopoverCss];
 	}
 
-	get dialogClasses() {
+	get classes() {
 		return {
 			header: {
 				"ui5-responsive-popover-header": true,
