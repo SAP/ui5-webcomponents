@@ -1,5 +1,29 @@
-commit 50384b6bbcde5e995a97c59460de6acbca3bbdb3
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Apr 21 11:20:54 2021 +0300
+commit 1c3481b262df5de3dee4ad5195ae398b7754312f
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed Apr 21 05:37:42 2021 -0700
 
-    refactor(ui5-icon): Show not-imported icons warning (#3168)
+    Translation Delivery (#3146)
+    
+    * chore: translation delivery
+    
+    Change-Id: I2cc7ad0b1252cbd485421f0b0e261e619da587dc
+    
+    * chore: translation delivery
+    
+    Change-Id: Ic70eada78aeef6a6cc60aeb94d731b1dde04364f
+    
+    * chore: translation delivery
+    
+    Change-Id: I1ee35200330983b5868c87008110d3c9a3620394
+    
+    * chore: translation delivery
+    
+    Change-Id: I8680c8b144bcb3bab7d68ee05da505126ccba9de
+    
+    * chore: translation delivery
+    
+    Change-Id: Iccbf8b825b7ddeca3d73415e62d8eb5fe51ced4e
+    
+    * chore: translation delivery
+    
+    Change-Id: I5799bd9757c048ec21d82d88f0d493b17d1db68d
