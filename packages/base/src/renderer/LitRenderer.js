@@ -13,7 +13,7 @@ const litRender = (templateResult, domNode, styles, { host } = {}) => {
 };
 
 const scopeTag = (tag, tags, suffix) => {
-	const resultTag = (tags || []).includes(tag) && suffix ? `${tag}-${suffix}` : tag;
+	const resultTag = suffix && (tags || []).includes(tag) ? `${tag}-${suffix}` : tag;
 	return unsafeStatic(resultTag);
 };
 
