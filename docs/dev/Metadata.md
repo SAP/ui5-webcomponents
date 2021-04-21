@@ -220,7 +220,7 @@ Notes:
  Node | Accepts both Text nodes and HTML Elements
  HTMLElement | Accepts HTML Elements only
 
-## Managed slots
+## The `managedSlots` setting
 
 Determines whether the framework should manage the slots of this UI5 Web Component. 
 
@@ -235,8 +235,6 @@ rendering on the presence/absence/type of children.
 
 When `managedSlots` is set to `true`:
  - The framework will invalidate this UI5 Web Component, whenever its children are added/removed/rearranged (and additionally when invalidated, if `invalidateOnChildChange` is set).
- - If any of this UI5 Web Component's children are custom elements, the framework will await until they are all
- defined and upgraded, before rendering the component for the first time.
  - The framework will create properties for each slot on this UI5 Web Component's instances for easier access
  to the slotted children. For example, if there are `header`, `content` and `footer` slots, there will be
  respectively `header`, `content` and `footer` properties of type `Array` holding the slotted children for each slot.
@@ -248,3 +246,30 @@ When `managedSlots` is set to `true`:
  An example of a component that would benefit from `managedSlots` is a Tab Container that monitors its children (Tabs)
  in order to display a link on its Tab Strip for each Tab child. Therefore it would need to be invalidated whenever
  Tabs are added/removed, in order to update its own state and visualization.
+
+## The `interactsWithChildren` setting
+
+Determines whether the framework should await for the children of this UI5 Web Component to be defined and upgraded, before rendering
+the component itself.
+
+This setting is useful for UI5 Web Components that not only base their rendering on the presence/absence of its children, but also
+read/set properties or attributes of their children.
+
+```json
+{
+	"interactsWithChildren": true
+}
+```
+
+An example of a component that would benefit from `interactsWithChildren` is a List that determines the characteristics 
+of its children (list items), based on its own properties (list type, inset, etc...). In such use cases, the component
+will need its children to be fully functional before interacting with them
+
+## Summary of slot control levels
+
+Setting | Level of involvement | Description | Use-case
+ -----|-------------|------------|---------
+*None* | None | The component does not know anything of its children | A generic container that looks the same way regardless of whether empty or with children
+`managedSlots: true` | Some | The component needs to know if, or how many, children it has, and must be invalidated when children change, but does not interact with them directly (does not read/write their properties). | Component that needs to hide some of its HTML, if there are no children in a particular slot, or in general bases its design on the presence/number of children. 
+`intractsWithChildren: true` | High | The component will read/write the state of its children, therefore needs them to be defined and upgraded before being rendered | A component that bases its design/functionality not only on the presence/number of children, but also on their properties/attributes, etc...; a component that sets properties on its children. Usually such components expect their children to be of a specific type. 
+
