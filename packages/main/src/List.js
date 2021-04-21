@@ -244,7 +244,7 @@ const metadata = {
 		 * is set to <code>Inactive</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.List#item-click
-		 * @param {HTMLElement} item the clicked item.
+		 * @param {HTMLElement} item The clicked item.
 		 * @public
 		 */
 		"item-click": {

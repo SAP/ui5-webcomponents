@@ -78,6 +78,7 @@
 .ui5-li-tree-toggle-icon {
     width: var(--_ui5-tree-toggle-icon-size);
     height: var(--_ui5-tree-toggle-icon-size);
+	color: var(--sapContent_IconColor);
 }
 
 :host([actionable]) .ui5-li-tree-toggle-icon {

@@ -2,6 +2,7 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
+import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
@@ -47,7 +48,7 @@ const metadata = {
  * For the <code>ui5-daterange-picker</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/DateRangePicker.js";</code>
+ * <code>import "@ui5/webcomponents/dist/DateRangePicker.js";</code>
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-daterange-picker</code> provides advanced keyboard handling.
@@ -148,6 +149,10 @@ class DateRangePicker extends DatePicker {
 	 */
 	get _placeholder() {
 		return this.placeholder !== undefined ? this.placeholder : `${this._displayFormat} ${this._effectiveDelimiter} ${this._displayFormat}`;
+	}
+
+	get dateAriaDescription() {
+		return this.i18nBundle.getText(DATERANGE_DESCRIPTION);
 	}
 
 	/**

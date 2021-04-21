@@ -236,7 +236,7 @@ class TableRow extends UI5Element {
 			return;
 		}
 
-		if (this._getActiveElementTagName() === "body") {
+		if (!this.contains(document.activeElement)) {
 			// If the user clickes on non-focusable element within the ui5-table-cell,
 			// the focus goes to the body, se we have to bring it back to the row.
 			// If the user clicks on input, button or similar clickable element,

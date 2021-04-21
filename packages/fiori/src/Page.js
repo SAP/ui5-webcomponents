@@ -130,10 +130,9 @@ const metadata = {
  * The footer is optional and occupies the fixed bottom part of the page. Alternatively, the footer can be floating above the bottom part of the content.
  * This is enabled with the <code>floatingFooter</code> property.
  *
- *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/Page.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/Page.js";</code>
  *
  * @constructor
  * @author SAP SE
