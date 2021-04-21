@@ -106,7 +106,7 @@ const metadata = {
 		 * <ul>
 		 * <li> the whole container when <code>type</code> property is <code>Group</code></li>
 		 * <li> the default "More" overflow button when <code>type</code> is <code>Individual</code></li>
-		 * <ul>
+		 * </ul>
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -118,7 +118,7 @@ const metadata = {
 		 * <li> Grid - Indicates the popup is a grid.</li>
 		 * <li> Dialog - Indicates the popup is a dialog.</li>
 		 *
-		 * <ul>
+		 * </ul>
 		 * @type {AriaHasPopup}
 		 * @defaultValue "None"
 		 * @since 1.0.0-rc.15
@@ -235,13 +235,13 @@ const metadata = {
  * <li>You want to display a gallery for simple images.</li>
  * <li>You want to use it for other visual content than avatars.</li>
  * </ul>
- * 
+ *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-avatar-group</code> provides advanced keyboard handling.
- * When focused the user can use the following keyboard
+ * When focused, the user can use the following keyboard
  * shortcuts in order to perform a navigation:
  * <br>
- * - <code>type</code> Individual: 
+ * - <code>type</code> Individual:
  * <br>
  * <ul>
  * <li>[TAB] - Move focus to the overflow button</li>
@@ -252,7 +252,7 @@ const metadata = {
  * <li>[SPACE],[ENTER],[RETURN] - Trigger <code>ui5-click</code> event</li>
  * </ul>
  * <br>
- * - <code>type</code> Group: 
+ * - <code>type</code> Group:
  * <br>
  * <ul>
  * <li>[TAB] - Move focus to the next interactive element after the <code>ui5-avatar-group</code></li>

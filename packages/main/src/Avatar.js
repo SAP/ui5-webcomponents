@@ -203,14 +203,14 @@ const metadata = {
 		 * Available options are:
 		 * <ul>
 		 *
-		 * <li><code> None - the aria-haspopup attribute will not be rendered.</li>
-		 * <li><code> Menu - Indicates the popup is a menu.</li>
-		 * <li><code> Listbox - Indicates the popup is a listbox.</li>
-		 * <li><code> Tree - Indicates the popup is a tree.</li>
-		 * <li><code> Grid - Indicates the popup is a grid.</li>
-		 * <li><code> Dialog - Indicates the popup is a dialog.</li>
+		 * <li><code>None</code> - the aria-haspopup attribute will not be rendered.</li>
+		 * <li><code>Menu</code> - Indicates the popup is a menu.</li>
+		 * <li><code>Listbox</code> - Indicates the popup is a listbox.</li>
+		 * <li><code>Tree</code> - Indicates the popup is a tree.</li>
+		 * <li><code>Grid</code> - Indicates the popup is a grid.</li>
+		 * <li><code>Dialog</code> - Indicates the popup is a dialog.</li>
 		 *
-		 * <ul>
+		 * </ul>
 		 * @type {AriaHasPopup}
 		 * @defaultValue "None"
 		 * @since 1.0.0-rc.15
