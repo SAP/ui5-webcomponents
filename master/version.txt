@@ -1,29 +1,10 @@
-commit 1c3481b262df5de3dee4ad5195ae398b7754312f
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Apr 21 05:37:42 2021 -0700
+commit 5d9cdb93482c553dbd9f1c2fb7df5758f3495ef1
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Apr 21 20:53:39 2021 +0300
 
-    Translation Delivery (#3146)
+    feat(framework): support sap-* config URL params (#3138)
     
-    * chore: translation delivery
+    The change will assist broader UI technology co-existence by allowing the app developers use the older sap-* params in order to configure the theme, language, etc. There are use-cases where the sap-* is still the preferred param.
+    In case both sap-ui-* and sap-* params are set, the sap-ui-* ones will take precedence - the same way UI5 handles it.
     
-    Change-Id: I2cc7ad0b1252cbd485421f0b0e261e619da587dc
-    
-    * chore: translation delivery
-    
-    Change-Id: Ic70eada78aeef6a6cc60aeb94d731b1dde04364f
-    
-    * chore: translation delivery
-    
-    Change-Id: I1ee35200330983b5868c87008110d3c9a3620394
-    
-    * chore: translation delivery
-    
-    Change-Id: I8680c8b144bcb3bab7d68ee05da505126ccba9de
-    
-    * chore: translation delivery
-    
-    Change-Id: Iccbf8b825b7ddeca3d73415e62d8eb5fe51ced4e
-    
-    * chore: translation delivery
-    
-    Change-Id: I5799bd9757c048ec21d82d88f0d493b17d1db68d
+    FIXES: #3114
