@@ -138,10 +138,9 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * For the <code>ui5-wizard-tap</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/WizardTab.js";</code> (imported with <ui5-wizard>)
+ * <code>import "@ui5/webcomponents/dist/WizardTab.js";</code> (imported with <ui5-wizard>)
  *
  * @constructor
  * @author SAP SE

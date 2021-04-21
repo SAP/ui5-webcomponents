@@ -105,6 +105,13 @@ const metadata = {
 		 * layout for most scenarios. Set to <code>Bottom</code> only when the <code>ui5-tabcontainer</code> is at the
 		 * bottom of the page and you want the tab strip to act as a menu.
 		 *
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Top</code></li>
+		 * <li><code>Bottom</code></li>
+		 * </ul>
+		 *
 		 * @type {TabContainerTabsPlacement}
 		 * @defaultvalue "Top"
 		 * @since 1.0.0-rc.7
@@ -130,11 +137,11 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab.
+		 * Defines the alignment of the content and the <code>additionalText</code> of a tab.
 		 *
 		 * <br><br>
 		 * <b>Note:</b>
-		 * The <code>main text</code> and the <code>additionalText</code> would be displayed vertically by defualt,
+		 * The content and the <code>additionalText</code> would be displayed vertically by defualt,
 		 * but when set to <code>Inline</code>, they would be displayed horizontally.
 		 *
 		 * <br><br>

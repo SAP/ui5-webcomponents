@@ -37,11 +37,9 @@
 			<ui5-busyindicator active size="Large"></ui5-busyindicator>
 		</div>
 	<pre class="prettyprint lang-html"><xmp>
-<div>
-	<ui5-busyindicator active size="Small"></ui5-busyindicator>
-	<ui5-busyindicator active size="Medium"></ui5-busyindicator>
-	<ui5-busyindicator active size="Large"></ui5-busyindicator>
-</div>
+<ui5-busyindicator active size="Small"></ui5-busyindicator>
+<ui5-busyindicator active size="Medium"></ui5-busyindicator>
+<ui5-busyindicator active size="Large"></ui5-busyindicator>
 	</xmp></pre>
 </section>
 
@@ -66,19 +64,18 @@
 <script>
 	const busyIndocator = document.getElementById("busy-container");
 	const list = document.getElementById("fetch-list");
+	const fetchBtn = document.getElementById("fetch-btn");
 
-	document.getElementById("fetch-btn").addEventListener("click", event => {
+	fetchBtn.addEventListener("click", event => {
 		busyIndocator.active = true;
 
 		setTimeout(() => {
 			const elements = ["UI5", "Web", "Components"].forEach(title => {
 				const el = document.createElement("ui5-li");
 				el.textContent = title;
-
 				list.appendChild(el);
 			});
 
-			list.noDataText = "";
 			busyIndocator.active = false;
 		}, 2000);
 	});
@@ -97,7 +94,6 @@
 				var elements = ["UI5", "Web", "Components"].forEach(function(title) {
 					var el = document.createElement("ui5-li");
 					el.textContent = title;
-
 					list.appendChild(el);
 				});
 

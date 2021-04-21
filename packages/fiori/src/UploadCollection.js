@@ -37,9 +37,15 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		/**
 		 * Defines the mode of the <code>ui5-upload-collection</code>.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>,
-		 * <code>MultiSelect</code>, and <code>Delete</code>.
+		 * <b>Note:</b>
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>SingleSelect</code></li>
+		 * <li><code>MultiSelect</code></li>
+		 * <li><code>Delete</code></li>
+		 * </ul>
 		 *
 		 * @type {ListMode}
 		 * @defaultvalue "None"
@@ -178,7 +184,7 @@ const metadata = {
  * It also allows you to show already uploaded files.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import @ui5/webcomponents-fiori/dist/UploadCollection.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/UploadCollection.js";</code>
  * <br>
  * <code>import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code> (for <code>ui5-upload-collection-item</code>)
  *

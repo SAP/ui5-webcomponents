@@ -18,8 +18,8 @@ import {
 	WIZARD_NAV_ARIA_LABEL,
 	WIZARD_LIST_ARIA_LABEL,
 	WIZARD_ACTIONSHEET_STEPS_ARIA_LABEL,
+	WIZARD_OPTIONAL_STEP_ARIA_LABEL,
 	WIZARD_STEP_ARIA_LABEL,
-	WIZARD_CURRENT_STEP_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Step in header and content
@@ -199,6 +199,7 @@ const metadata = {
  * <h3>Usage</h3>
  * <h4>When to use:</h4>
  * When the user has to accomplish a long set of tasks.
+ *
  * <h4>When not to use:</h4>
  * When the task has less than 3 steps.
  *
@@ -207,7 +208,7 @@ const metadata = {
  * will start truncate and shrink and from particular point they will hide to free as much space as possible.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import @ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
+ * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
  *
  * @constructor
  * @author SAP SE
@@ -683,10 +684,6 @@ class Wizard extends UI5Element {
 	}
 
 	getStepAriaLabelText(step, ariaLabel) {
-		if (step.selected) {
-			return this.i18nBundle.getText(WIZARD_CURRENT_STEP_ARIA_LABEL, ariaLabel);
-		}
-
 		return this.i18nBundle.getText(WIZARD_STEP_ARIA_LABEL, ariaLabel);
 	}
 
@@ -783,6 +780,10 @@ class Wizard extends UI5Element {
 		return this.i18nBundle.getText(WIZARD_NAV_STEP_DEFAULT_HEADING);
 	}
 
+	get optionalStepText() {
+		return this.i18nBundle.getText(WIZARD_OPTIONAL_STEP_ARIA_LABEL);
+	}
+
 	get ariaLabelText() {
 		return this.ariaLabel || this.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);
 	}
@@ -812,7 +813,7 @@ class Wizard extends UI5Element {
 			// Hide separator if it's the last step and it's not a branching one
 			const hideSeparator = (idx === stepsCount - 1) && !step.branching;
 
-			const isOptional = step.subheading ? "Optional" : "";
+			const isOptional = step.subheading ? this.optionalStepText : "";
 			const ariaLabel = (step.heading ? `${pos} ${step.heading} ${isOptional}` : `${this.navStepDefaultHeading} ${pos} ${isOptional}`).trim();
 			const isAfterCurrent = (idx > selectedStepIndex);
 
