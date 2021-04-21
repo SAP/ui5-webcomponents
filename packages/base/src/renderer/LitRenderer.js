@@ -12,16 +12,9 @@ const litRender = (templateResult, domNode, styles, { host } = {}) => {
 	render(templateResult, domNode, { host });
 };
 
-const setTags = t => {
-
-};
-const setSuffix = s => {
-
-};
-
-const scopeTag = t => {
-	console.log("Scoping", t);
-	return unsafeStatic(t);
+const scopeTag = (tag, tags, suffix) => {
+	const resultTag = (tags || []).includes("tag") && suffix ? `${tag}-${suffix}` : tag;
+	return unsafeStatic(resultTag);
 };
 
 export {
@@ -29,7 +22,7 @@ export {
 	svg,
 	unsafeStatic,
 };
-export { setTags, setSuffix, scopeTag };
+export { scopeTag };
 export { repeat } from "lit-html/directives/repeat.js";
 export { classMap } from "lit-html/directives/class-map.js";
 export { styleMap } from "lit-html/directives/style-map.js";
