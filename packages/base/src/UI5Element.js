@@ -201,6 +201,7 @@ class UI5Element extends HTMLElement {
 	async _updateSlots() {
 		const slotsMap = this.constructor.getMetadata().getSlots();
 		const canSlotText = this.constructor.getMetadata().canSlotText();
+		const shouldAwaitChildren = this.constructor.getMetadata().shouldAwaitChildren();
 		const domChildren = Array.from(canSlotText ? this.childNodes : this.children);
 
 		const slotsCachedContentMap = new Map(); // Store here the content of each slot before the mutation occurred
@@ -237,7 +238,7 @@ class UI5Element extends HTMLElement {
 			}
 
 			// Await for not-yet-defined custom elements
-			if (child instanceof HTMLElement) {
+			if (shouldAwaitChildren && child instanceof HTMLElement) {
 				const localName = child.localName;
 				const isCustomElement = localName.includes("-");
 				if (isCustomElement) {

@@ -108,6 +108,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
+	interactsWithChildren: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
 
 		/**

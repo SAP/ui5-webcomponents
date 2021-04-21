@@ -22,6 +22,7 @@ import NotifactionOverflowActionsPopoverCss from "./generated/themes/Notifaction
  */
 const metadata = {
 	managedSlots: true,
+	interactsWithChildren: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
 
 		/**

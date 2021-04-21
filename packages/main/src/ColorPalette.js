@@ -27,6 +27,7 @@ import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea
 const metadata = {
 	tag: "ui5-color-palette",
 	managedSlots: true,
+	interactsWithChildren: true,
 	properties: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 
 		/**

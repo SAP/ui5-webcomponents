@@ -50,6 +50,7 @@ const metadata = {
 	tag: "ui5-input",
 	languageAware: true,
 	managedSlots: true,
+	interactsWithChildren: true,
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
 		/**
