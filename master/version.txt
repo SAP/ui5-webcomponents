@@ -1,11 +1,9 @@
-commit fe06f849560f870cec978cc4fd14f33cd23f6922
+commit 7ffb575f2900e82281aff7ae025c1ec716d9a67b
 Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Apr 20 14:10:12 2021 +0300
+Date:   Wed Apr 21 10:06:57 2021 +0300
 
-    fix(ui5-date-*): components accessibility improved (#3163)
+    fix(ui5-bar): aria label added depending on the "design" property (#3161)
     
-    - ui5-date-picker: Replace aria-owns with aria-controls.
-     - ui5-datetime-picker: Change aria-roledescription's value to Date Time Input
-     - ui5-daterange-picker: Change aria-roledescription's value to Date Range Input
+    fix(ui5-bar): aria label added depending on the "design" property
     
-    Fixes #3002
+    Fixes #3020
