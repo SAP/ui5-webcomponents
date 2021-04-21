@@ -2505,14 +2505,29 @@ package are also imported since the <code class="highlighter-rouge">fiori</code>
 
 <h3 id="icons-package"><code class="highlighter-rouge">icons</code> package</h3>
 
-<p><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/Assets.js";</code></p>
+<p>The assets file for the <code class="highlighter-rouge">@ui5/webcomponents-icons</code> package provides i18n assets for some icons:</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/Assets.js";</code></p>
 
 <p>Normally applications are expected to import only the individual icons that are going to be used, for example:</p>
 
 <p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/add.js</code>”;`</p>
 
-<p>However, sometimes it makes sense to import all icons, hence the <code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/Assets.js";</code> JSON import.
-Along with the icons, it also includes all translatable texts.</p>
+<p>However, sometimes it makes sense to import all icons. To do so, use the following import:</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/AllIcons.js";</code></p>
+
+<h3 id="icons-tnt-package"><code class="highlighter-rouge">icons-tnt</code> package</h3>
+
+<p>The assets file for the <code class="highlighter-rouge">@ui5/webcomponents-icons-tnt</code> package is currently empty, but it may provide i18n assets in the future:</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/Assets.js";</code></p>
+
+<p>Therefore, we recommend importing it to be future-proof.</p>
+
+<p>To import all <code class="highlighter-rouge">tnt</code> icons:</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-icons-tnt/dist/AllIcons.js";</code></p>
 
 
 <footer class="footer-wrapper">

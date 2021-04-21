@@ -2453,6 +2453,7 @@ are therefore not listed here.</p>
   <li><a href="#main">Main package - @ui5/webcomponents</a></li>
   <li><a href="#fiori">Fiori package - @ui5/webcomponents-fiori</a></li>
   <li><a href="#icons">Icons package - @ui5/webcomponents-icons</a></li>
+  <li><a href="#icons-tnt">Icons-TNT package - @ui5/webcomponents-icons-tnt</a></li>
   <li><a href="#base">Base package - @ui5/webcomponents-base</a></li>
 </ul>
 
@@ -2930,15 +2931,69 @@ just the ones that your app will actually use.</p>
 
 <p>For a complete list of the icons in the <code class="highlighter-rouge">SAP-icons</code> collection, click <a href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons">here</a>.</p>
 
-<h3 id="2-assets-2">2. Assets</h3>
+<h3 id="2-all-icons">2. All icons</h3>
 
-<p>For additional <code class="highlighter-rouge">icons</code> package assets (i18n, all icons JSON), use:</p>
+<p>To import all icons, use:</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/AllIcons.js";</code></p>
+
+<p><em>Note: if you use an icon which you did not import individually, the JSON, containing all icons definitions, will be fetched.</em></p>
+
+<h3 id="3-assets">3. Assets</h3>
+
+<p>For additional <code class="highlighter-rouge">icons</code> package assets (i18n), use:</p>
 
 <p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/Assets.js";</code></p>
 
-<p><em>Note:</em>
-Apart from i18n assets, the above import also provides the JSON, containing all icons definitions (~115KB zipped).
-<strong>Therefore, if you use an icon which you did not import individually, the JSON will be fetched.</strong></p>
+<h2 id="icons-tnt-package-ui5webcomponents-icons-tnt">Icons-TNT package (<code class="highlighter-rouge">@ui5/webcomponents-icons-tnt</code>)</h2>
+<p><a name="icons-tnt"></a></p>
+
+<p>The <code class="highlighter-rouge">icons-tnt</code> package provides assets for the rich <code class="highlighter-rouge">SAP-icons-TNT</code> icon collection.</p>
+
+<p><em>Note:</em> The <code class="highlighter-rouge">@ui5/webcomponents-icons-tnt</code> package does not provide any web components per se, but rather icon assets,
+usable by other web components such as <code class="highlighter-rouge">ui5-icon</code>. You could import all icons, but it’s recommended to import
+just the ones that your app will actually use.</p>
+
+<h3 id="1-individual-icon-imports-1">1. Individual icon imports</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Icon asset</th>
+      <th>Module import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Actor icon</td>
+      <td><code class="highlighter-rouge">import "@ui5/webcomponents-icons-tnt/dist/actor.js";</code></td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>Workflow editor icon</td>
+      <td><code class="highlighter-rouge">import "@ui5/webcomponents-icons-tnt/dist/workflow-editor.js";</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>For a complete list of the icons in the <code class="highlighter-rouge">SAP-icons-TNT</code> collection, click <a href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT">here</a>.</p>
+
+<h3 id="2-all-icons-1">2. All icons</h3>
+
+<p>To import all icons, use:</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-icons-tnt/dist/AllIcons.js";</code></p>
+
+<p><em>Note: if you use an icon which you did not import individually, the JSON, containing all icons definitions, will be fetched.</em></p>
+
+<h3 id="3-assets-1">3. Assets</h3>
+
+<p>Currently, the <code class="highlighter-rouge">icons-tnt</code> package assets file does not provide any assets, but still it’s recommended to import it to be future proof:</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/Assets.js";</code></p>
 
 <h2 id="base-package-ui5webcomponents-base">Base package (<code class="highlighter-rouge">@ui5/webcomponents-base</code>)</h2>
 

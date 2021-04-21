@@ -1,9 +1,5 @@
-commit 7ffb575f2900e82281aff7ae025c1ec716d9a67b
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Wed Apr 21 10:06:57 2021 +0300
+commit 50384b6bbcde5e995a97c59460de6acbca3bbdb3
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Apr 21 11:20:54 2021 +0300
 
-    fix(ui5-bar): aria label added depending on the "design" property (#3161)
-    
-    fix(ui5-bar): aria label added depending on the "design" property
-    
-    Fixes #3020
+    refactor(ui5-icon): Show not-imported icons warning (#3168)
