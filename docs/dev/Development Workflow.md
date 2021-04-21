@@ -28,8 +28,10 @@ yarn
 yarn start
 ```
 Once the project is served, you can explore the components 
-on http://localhost:8080/test-resources/pages/ for the `main` package
-and http://localhost:8081/test-resources/pages/ for the `fiori` package.
+on:
+ - http://localhost:8080/test-resources/pages/ for the `main` package
+ - http://localhost:8081/test-resources/pages/ for the `fiori` package
+ - http://localhost:9191/test-resources/pages/ for the `base` package
 
 *Note: The server will reload the pages, whenever you make changes in the code.*
 
