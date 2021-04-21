@@ -152,6 +152,14 @@ const metadata = {
 		_itemWidth: {
 			type: Integer,
 		},
+
+		/**
+		 * If set to true navigation arrows are hidden
+		 * @private
+		 */
+		_hideNavigationArrows: {
+			type: Boolean,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
@@ -335,6 +343,14 @@ class Carousel extends UI5Element {
 		}
 	}
 
+	_onmouseout() {
+		this._hideNavigationArrows = true;
+	}
+
+	_onmouseover() {
+		this._hideNavigationArrows = false;
+	}
+
 	navigateLeft() {
 		this._resizing = false;
 
@@ -472,7 +488,7 @@ class Carousel extends UI5Element {
 	}
 
 	get arrows() {
-		const showArrows = this.showNavigationArrows && isDesktop();
+		const showArrows = !this._hideNavigationArrows && this.showNavigationArrows && isDesktop();
 
 		return {
 			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
