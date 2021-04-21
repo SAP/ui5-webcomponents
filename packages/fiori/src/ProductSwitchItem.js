@@ -102,10 +102,6 @@ const metadata = {
 			defaultValue: "-1",
 			noAttribute: true,
 		},
-
-		_accInfo: {
-			type: Object,
-		},
 	},
 	slots: /** @lends  sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
 	},

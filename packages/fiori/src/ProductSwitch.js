@@ -128,12 +128,6 @@ class ProductSwitch extends UI5Element {
 
 	onBeforeRendering() {
 		this.desktopColumns = this.items.length > 6 ? 4 : 3;
-
-		this.items.forEach(item => {
-			item._accInfo = {
-				role: "listitem",
-			};
-		});
 	}
 
 	_handleResize() {
@@ -163,9 +157,7 @@ class ProductSwitch extends UI5Element {
 	_onkeydown(event) {
 		if (isDown(event)) {
 			this._handleDown(event);
-		}
-
-		if (isUp(event)) {
+		} else if (isUp(event)) {
 			this._handleUp(event);
 		}
 	}
