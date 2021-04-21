@@ -6,7 +6,7 @@ import { html, svg, repeat, classMap, styleMap, unsafeHTML, scopeTag } from '@ui
 
 const main = (context, tags, suffix) => {
 	${litTemplate}
-	
+
 	return block0(context);
 };
 
