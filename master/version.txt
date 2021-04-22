@@ -1,10 +1,9 @@
-commit 5d9cdb93482c553dbd9f1c2fb7df5758f3495ef1
+commit 83a88afa23e70292799852e86a8c1cbfb2264bdd
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Apr 21 20:53:39 2021 +0300
+Date:   Thu Apr 22 10:27:04 2021 +0300
 
-    feat(framework): support sap-* config URL params (#3138)
+    fix(ui5-responsive-popover): fix header styles (#3176)
     
-    The change will assist broader UI technology co-existence by allowing the app developers use the older sap-* params in order to configure the theme, language, etc. There are use-cases where the sap-* is still the preferred param.
-    In case both sap-ui-* and sap-* params are set, the sap-ui-* ones will take precedence - the same way UI5 handles it.
+    We use lit-html classMaps to render classes out of objects , but it works with this getter "get classes()" not with any getters.
     
-    FIXES: #3114
+    FIXES: #3173
