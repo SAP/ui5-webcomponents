@@ -178,6 +178,7 @@ class Page extends UI5Element {
 				"bottom": this.footer.length && this._contentBottom,
 				"top": this._contentTop,
 			},
+			footer: {},
 		};
 	}
 }
