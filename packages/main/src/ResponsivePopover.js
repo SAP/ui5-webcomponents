@@ -90,13 +90,15 @@ class ResponsivePopover extends Popover {
 		return [Popover.styles, ResponsivePopoverCss];
 	}
 
-	get dialogClasses() {
-		return {
-			header: {
-				"ui5-responsive-popover-header": true,
-				"ui5-responsive-popover-header-no-title": !this.headerText,
-			},
+	get classes() {
+		const allClasses = super.classes;
+
+		allClasses.header = {
+			"ui5-responsive-popover-header": true,
+			"ui5-responsive-popover-header-no-title": !this.headerText,
 		};
+
+		return allClasses;
 	}
 
 	static get template() {
