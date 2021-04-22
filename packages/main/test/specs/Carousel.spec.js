@@ -35,8 +35,8 @@ describe("Carousel general interaction", () => {
 
 	it("Navigation is rendered for carousel with less than 9 elements", () => {
 		const carousel = browser.$("#carousel1");
-		//carousel.scrollIntoView();
 		carousel.moveTo();
+
 		const navigation = carousel.shadow$(".ui5-carousel-navigation > div");
 
 		assert.ok(navigation.isExisting(), "Navigation is rendered");
