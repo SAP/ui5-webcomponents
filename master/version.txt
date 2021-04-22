@@ -1,9 +1,5 @@
-commit 83a88afa23e70292799852e86a8c1cbfb2264bdd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 22 10:27:04 2021 +0300
+commit 13f9d990490848ea9a548519427128334901a03a
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Thu Apr 22 12:50:35 2021 +0300
 
-    fix(ui5-responsive-popover): fix header styles (#3176)
-    
-    We use lit-html classMaps to render classes out of objects , but it works with this getter "get classes()" not with any getters.
-    
-    FIXES: #3173
+    docs: add locahost link to base package (#3175)
