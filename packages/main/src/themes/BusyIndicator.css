@@ -18,7 +18,7 @@
 }
 
 :host([size="Small"]) .ui5-busyindicator-root {
-	min-width: 1.5em;
+	min-width: 1.5rem;
 	min-height: .5rem;
 }
 

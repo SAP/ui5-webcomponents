@@ -341,7 +341,9 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_onkeydown(event) {
-
+		if (isEnter(event) && !event.target.hasAttribute("ui5-avatar")) {
+			this._fireGroupEvent(event.target);
+		}
 		if (isSpace(event)) {
 			// prevent scrolling
 			event.preventDefault();
@@ -350,12 +352,15 @@ class AvatarGroup extends UI5Element {
 
 	_onkeyup(event) {
 		if (!event.shiftKey && isSpace(event)) {
+			if (!event.target.hasAttribute("ui5-avatar")) {
+				this._fireGroupEvent(event.target);
+			}
+
 			event.preventDefault();
 		}
 	}
 
 	_fireGroupEvent(targetRef) {
-		console.log("fired!");
 		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this._customOverflowButton;
 
 		this.fireEvent("click", {

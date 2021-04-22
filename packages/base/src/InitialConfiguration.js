@@ -92,21 +92,34 @@ const parseConfigurationScript = () => {
 const parseURLParameters = () => {
 	const params = new URLSearchParams(window.location.search);
 
+	// Process "sap-*" params first
+	params.forEach((value, key) => {
+		const parts = key.split("sap-").length;
+		if (parts === 0 || parts === key.split("sap-ui-").length) {
+			return;
+		}
+
+		applyURLParam(key, value, "sap");
+	});
+
+	// Process "sap-ui-*" params
 	params.forEach((value, key) => {
 		if (!key.startsWith("sap-ui")) {
 			return;
 		}
 
-		const lowerCaseValue = value.toLowerCase();
-
-		const param = key.split("sap-ui-")[1];
-
-		if (booleanMapping.has(value)) {
-			value = booleanMapping.get(lowerCaseValue);
-		}
-
-		initialConfig[param] = value;
+		applyURLParam(key, value, "sap-ui");
 	});
+};
+
+const applyURLParam = (key, value, paramType) => {
+	const lowerCaseValue = value.toLowerCase();
+	const param = key.split(`${paramType}-`)[1];
+
+	if (booleanMapping.has(value)) {
+		value = booleanMapping.get(lowerCaseValue);
+	}
+	initialConfig[param] = value;
 };
 
 const applyOpenUI5Configuration = () => {
