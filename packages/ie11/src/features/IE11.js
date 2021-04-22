@@ -1,3 +1,5 @@
+import "../globalThis.js";
+
 // CSS Custom Properties
 import cssVars from "css-vars-ponyfill/dist/css-vars-ponyfill.esm.js";
 
