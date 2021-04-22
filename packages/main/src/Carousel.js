@@ -154,10 +154,10 @@ const metadata = {
 		},
 
 		/**
-		 * If set to true navigation arrows are hidden
+		 * If set to true navigation arrows are shown
 		 * @private
 		 */
-		_hideNavigationArrows: {
+		_visibleNavigationArrows: {
 			type: Boolean,
 			noAttribute: true,
 		},
@@ -345,11 +345,11 @@ class Carousel extends UI5Element {
 	}
 
 	_onmouseout() {
-		this._hideNavigationArrows = true;
+		this._visibleNavigationArrows = false;
 	}
 
 	_onmouseover() {
-		this._hideNavigationArrows = false;
+		this._visibleNavigationArrows = true;
 	}
 
 	navigateLeft() {
@@ -489,7 +489,7 @@ class Carousel extends UI5Element {
 	}
 
 	get arrows() {
-		const showArrows = !this._hideNavigationArrows && this.showNavigationArrows && isDesktop();
+		const showArrows = this._visibleNavigationArrows && this.showNavigationArrows && isDesktop();
 
 		return {
 			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
