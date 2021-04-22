@@ -159,6 +159,7 @@ const metadata = {
 		 */
 		_hideNavigationArrows: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	managedSlots: true,
