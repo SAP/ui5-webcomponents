@@ -341,9 +341,6 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isEnter(event)) {
-			this._fireGroupEvent(event.target);
-		}
 
 		if (isSpace(event)) {
 			// prevent scrolling
@@ -354,11 +351,11 @@ class AvatarGroup extends UI5Element {
 	_onkeyup(event) {
 		if (!event.shiftKey && isSpace(event)) {
 			event.preventDefault();
-			this._fireGroupEvent(event.target);
 		}
 	}
 
 	_fireGroupEvent(targetRef) {
+		console.log("fired!");
 		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this._customOverflowButton;
 
 		this.fireEvent("click", {
