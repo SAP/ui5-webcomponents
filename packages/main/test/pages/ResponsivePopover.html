@@ -94,6 +94,11 @@
 		<ui5-date-picker></ui5-date-picker>
 	</ui5-dialog>
 
+	<ui5-button id="btnSimpleRP">Open Simple RP</ui5-button>
+	<ui5-responsive-popover id="simpleRP">
+		Content
+	</ui5-responsive-popover>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.open(btnOpen);
@@ -117,6 +122,10 @@
 		});
 		btnOpenDialog.addEventListener('click', function (event) {
 			dialog.open(btnOpenDialog);
+		});
+
+		btnSimpleRP.addEventListener("click", function(event) {
+			simpleRP.open(btnSimpleRP);
 		});
 	</script>
 </body>

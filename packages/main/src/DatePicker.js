@@ -482,14 +482,18 @@ class DatePicker extends DateComponentBase {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
-	_updateValueAndFireEvents(value, normalizeValue, events) {
+	_updateValueAndFireEvents(value, normalizeValue, events, updateValue = true) {
 		const valid = this._checkValueValidity(value);
+
 		if (valid && normalizeValue) {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 
-		this.value = value;
-		this._updateValueState(); // Change the value state to Error/None, but only if needed
+		if (updateValue) {
+			this.value = value;
+			this._updateValueState(); // Change the value state to Error/None, but only if needed
+		}
+
 		events.forEach(event => {
 			this.fireEvent(event, { value, valid });
 		});
@@ -532,7 +536,7 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	async _onInputInput(event) {
-		this._updateValueAndFireEvents(event.target.value, false, ["input"]);
+		this._updateValueAndFireEvents(event.target.value, false, ["input"], false);
 	}
 
 	/**
@@ -629,7 +633,7 @@ class DatePicker extends DateComponentBase {
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
 			"role": "combobox",
-			"ariaOwns": `${this._id}-responsive-popover`,
+			"ariaControls": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),

@@ -10,6 +10,7 @@ Table of contents:
  - [Main package - @ui5/webcomponents](#main)
  - [Fiori package - @ui5/webcomponents-fiori](#fiori)
  - [Icons package - @ui5/webcomponents-icons](#icons)
+ - [Icons-TNT package - @ui5/webcomponents-icons-tnt](#icons-tnt)
  - [Base package - @ui5/webcomponents-base](#base)
 
 <a name="main"></a>
@@ -24,6 +25,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 |      Web Component       |         Tag name         |                       Module import                        |
 | ------------------------ | ------------------------ | ---------------------------------------------------------- |
 | Avatar                   | `ui5-avatar`             | `import "@ui5/webcomponents/dist/Avatar.js";`              |
+| Avatar Group             | `ui5-avatar-group`       | `import "@ui5/webcomponents/dist/AvatarGroup.js";`         |
 | Badge                    | `ui5-badge`              | `import "@ui5/webcomponents/dist/Badge.js";`               |
 | Busy Indicator           | `ui5-busyindicator`      | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`             | `import "@ui5/webcomponents/dist/Button.js";`              |
@@ -35,7 +37,10 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | ComboBox                 | `ui5-combobox`           | `import "@ui5/webcomponents/dist/ComboBox.js";`            |
 | ComboBox Item            | `ui5-cb-item`            | comes with `ui5-combobox`                                  |
 | Date Picker              | `ui5-date-picker`        | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
+| Date Range Picker        | `ui5-daterange-picker`   | `import "@ui5/webcomponents/dist/DateRangePicker.js";`     |
+| Date Time Picker         | `ui5-datetime-picker`    | `import "@ui5/webcomponents/dist/DateTimePicker.js";`      |
 | Dialog                   | `ui5-dialog`             | `import "@ui5/webcomponents/dist/Dialog.js";`              |
+| Duration Picker          | `ui5-duration-picker`    | `import "@ui5/webcomponents/dist/DurationPicker.js";`      |
 | File Uploader            | `ui5-file-uploader`      | `import "@ui5/webcomponents/dist/FileUploader.js";`        |
 | Icon                     | `ui5-icon`               | `import "@ui5/webcomponents/dist/Icon.js";`                |
 | Input                    | `ui5-input`              | `import "@ui5/webcomponents/dist/Input.js";`               |
@@ -51,11 +56,14 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Panel                    | `ui5-panel`              | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`            | `import "@ui5/webcomponents/dist/Popover.js";`             |
 | Radio Button             | `ui5-radiobutton`        | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
+| Range Slider             | `ui5-range-slider`       | `import "@ui5/webcomponents/dist/RangeSlider.js";`         |
 | Responsive Popover       | `ui5-responsive-popover` | `import "@ui5/webcomponents/dist/ResponsivePopover.js";`   |
 | Select                   | `ui5-select`             | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`             | comes with `ui5-select `                                   |
 | Segmented Button         | `ui5-segmentedbutton`    | `import "@ui5/webcomponents/dist/SegmentedButton.js";`     |
-| Suggestion Item          | `ui5-suggestion-item`    | `import "@ui5/webcomponents/dist/SuggestionItem.js";`      |
+| Suggestion Item          | `ui5-suggestion-item`    | comes with `InputSuggestions.js` feature - see below       |
+| Slider                   | `ui5-slider`             | `import "@ui5/webcomponents/dist/Slider.js";`              |
+| Step Input               | `ui5-step-input`         | `import "@ui5/webcomponents/dist/StepInput.js";`           |
 | Switch                   | `ui5-switch`             | `import "@ui5/webcomponents/dist/Switch.js";`              |
 | Tab Container            | `ui5-tabcontainer`       | `import "@ui5/webcomponents/dist/TabContainer.js";`        |
 | Tab                      | `ui5-tab`                | `import "@ui5/webcomponents/dist/Tab.js";`                 |
@@ -189,15 +197,52 @@ just the ones that your app will actually use.
 
 For a complete list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
 
-### 2. Assets
+### 2. All icons
 
-For additional `icons` package assets (i18n, all icons JSON), use:
+To import all icons, use:
+
+`import "@ui5/webcomponents-icons/dist/AllIcons.js";`
+
+*Note: if you use an icon which you did not import individually, the JSON, containing all icons definitions, will be fetched.*
+
+### 3. Assets
+
+For additional `icons` package assets (i18n), use:
 
 `import "@ui5/webcomponents-icons/dist/Assets.js";`
 
-*Note:*
-Apart from i18n assets, the above import also provides the JSON, containing all icons definitions (~115KB zipped).
-**Therefore, if you use an icon which you did not import individually, the JSON will be fetched.**
+## Icons-TNT package (```@ui5/webcomponents-icons-tnt```)
+<a name="icons-tnt"></a>
+
+The `icons-tnt` package provides assets for the rich `SAP-icons-TNT` icon collection.
+
+*Note:* The `@ui5/webcomponents-icons-tnt` package does not provide any web components per se, but rather icon assets,
+usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import
+just the ones that your app will actually use.
+
+### 1. Individual icon imports
+
+|    Icon asset    |                      Module import                       |
+| ---------------- | -------------------------------------------------------- |
+| Actor icon       | `import "@ui5/webcomponents-icons-tnt/dist/actor.js";` |
+| ...              | ...                                                      |
+| Workflow editor icon    | `import "@ui5/webcomponents-icons-tnt/dist/workflow-editor.js";`    |
+
+For a complete list of the icons in the `SAP-icons-TNT` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT).
+
+### 2. All icons
+
+To import all icons, use:
+
+`import "@ui5/webcomponents-icons-tnt/dist/AllIcons.js";`
+
+*Note: if you use an icon which you did not import individually, the JSON, containing all icons definitions, will be fetched.*
+
+### 3. Assets
+
+Currently, the `icons-tnt` package assets file does not provide any assets, but still it's recommended to import it to be future proof:
+
+`import "@ui5/webcomponents-icons/dist/Assets.js";`
 
 ## Base package (```@ui5/webcomponents-base```)
 
