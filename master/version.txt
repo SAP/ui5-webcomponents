@@ -1,5 +1,5 @@
-commit 655ec499a8fc07d0fbb4d4b075569ed51d8bc7e5
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Fri Apr 23 09:00:30 2021 +0300
+commit d4498125dabcdad96459a1fb6752f6f4208f69a3
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Fri Apr 23 13:46:02 2021 +0300
 
-    fix(ui5-carousel): hide navigation arrows on mouse out (#3174)
+    fix(ui5-wizard): correct aria-controls value (#3180)
