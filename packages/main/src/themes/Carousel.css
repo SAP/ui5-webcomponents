@@ -74,7 +74,7 @@
 
 .ui5-carousel-navigation-arrows {
     width: 100%;
-    padding:0 1.5rem;
+    padding:0 0.5rem;
     position: absolute;
     top: calc(50% - 2.5rem);
     left: 0;
