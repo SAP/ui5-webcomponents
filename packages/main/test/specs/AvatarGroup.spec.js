@@ -110,4 +110,23 @@ describe("avatar-group rendering", () => {
 		assert.strictEqual(`+${hiddenItemsCount}`, overflowButtonText, "Overflow button shows the hidden items count correctly");
 	});
 
+	it("tests if click event is firing only once on avatar group single avatar click", () => {
+
+		const avatar = browser.$("#avatar-1");
+		const avatarGroup = browser.$("#avatar-group-group");
+		const overflowButton = browser.$("#avatar-group-individual").shadow$("ui5-button");
+		const eventAvatarsClicked = browser.$("#event-avatars-clicked");
+		eventAvatarsClicked.setValue("0");
+
+		avatar.keys('Enter');
+		assert.strictEqual(eventAvatarsClicked.getValue(), '1', "Avatar group 'click' event only fires once per keyboard interaction");
+		avatar.keys('Space');
+		assert.strictEqual(eventAvatarsClicked.getValue(), '2', "Avatar group 'click' event only fires once per keyboard interaction");
+
+
+
+
+	});
+
+
 });

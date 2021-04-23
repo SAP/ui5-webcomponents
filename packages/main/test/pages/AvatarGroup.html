@@ -157,6 +157,12 @@
 			<br>
 			<br>
 
+			<span>Avatars clicked count: </span>
+			<input type="text" id="event-avatars-clicked" value="0" />
+
+			<br>
+			<br>
+
 			<button id="reset-btn">Reset fields</button>
 		</div>
 		<br>
@@ -237,6 +243,8 @@
 	var eventName = document.getElementById("event-name");
 	var eventTargetRef = document.getElementById("event-target");
 	var eventOverflowButtonClicked = document.getElementById("event-overflow-button-clicked");
+	var eventAvatarsClicked = document.getElementById("event-avatars-clicked");
+	var eventAvatarsClickedValue = eventAvatarsClicked.value;
 	var avatarGroupIndividual = document.getElementById("avatar-group-individual");
 	var avatarGroupGroup = document.getElementById("avatar-group-group");
 	var groupPop = document.getElementById("group-pop")
@@ -276,6 +284,8 @@
 		}
 		placeholder.innerHTML = html;
 
+		eventAvatarsClicked.value= ++eventAvatarsClickedValue;
+
 		groupPop.close();
 		groupPop.openBy(event.detail.targetRef);
 	}
@@ -284,6 +294,8 @@
 		popAvatar.image = avatarRef.image;
 		popAvatar.initials = avatarRef.initials;
 		popAvatar.backgroundColor = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
+
+		eventAvatarsClicked.value= ++eventAvatarsClickedValue;
 
 		individualPop.close();
 		individualPop.openBy(avatarRef);
@@ -316,6 +328,7 @@
 		eventName.value = "";
 		eventTargetRef.value = "";
 		eventOverflowButtonClicked.value = "";
+		eventAvatarsClicked.value = "";
 	});
 
 	function formatBtnText(group) {
