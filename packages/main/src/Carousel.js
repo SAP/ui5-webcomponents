@@ -150,6 +150,16 @@ const metadata = {
 		_itemWidth: {
 			type: Integer,
 		},
+
+		/**
+		 * If set to true navigation arrows are shown
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		_visibleNavigationArrows: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
@@ -329,6 +339,14 @@ class Carousel extends UI5Element {
 		}
 	}
 
+	_onmouseout() {
+		this._visibleNavigationArrows = false;
+	}
+
+	_onmouseover() {
+		this._visibleNavigationArrows = true;
+	}
+
 	navigateLeft() {
 		this._resizing = false;
 
@@ -426,12 +444,12 @@ class Carousel extends UI5Element {
 			content: {
 				"ui5-carousel-content": true,
 				"ui5-carousel-content-no-animation": this.supressAimation,
-				"ui5-carousel-content-has-navigation": this.showNavigationArrows,
-				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-content-has-navigation": this.showNavigation,
+				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-navigation-with-buttons": this.showNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			navPrevButton: {
 				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
@@ -466,7 +484,7 @@ class Carousel extends UI5Element {
 	}
 
 	get arrows() {
-		const showArrows = this.showNavigationArrows && isDesktop();
+		const showArrows = this._visibleNavigationArrows && this.showNavigation && isDesktop();
 
 		return {
 			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
@@ -494,7 +512,7 @@ class Carousel extends UI5Element {
 		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedIndex) + 1 : this.selectedIndex + 1;
 	}
 
-	get showNavigationArrows() {
+	get showNavigation() {
 		return !this.hideNavigation && this.pagesCount > 1;
 	}
 
