@@ -37,11 +37,15 @@ bdi {
 }
 
 :host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100% - .85rem);
+	max-width: calc(100% - .75rem);
 }
 
 :host(:not([wrap])[required]) .ui5-label-text-wrapper {
 	max-width: calc(100% - 0.475rem);
+}
+
+:host([required]:not([wrap])) .ui5-label-text-wrapper {
+	max-width: calc(100% - 0.375rem);
 }
 
 :host(:not([wrap])[show-colon]) .ui5-label-text-wrapper {
