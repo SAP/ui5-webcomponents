@@ -8691,9 +8691,9 @@ serve-handler@6.1.3:
     path-to-regexp "2.2.1"
     range-parser "1.2.0"
 
-"serve@github:vercel/serve#a85bd9d03ae267a492aac683616e028c0bfc6447":
+"serve@git://github.com/vercel/serve.git#a85bd9d03ae267a492aac683616e028c0bfc6447":
   version "11.3.2"
-  resolved "https://codeload.github.com/vercel/serve/tar.gz/a85bd9d03ae267a492aac683616e028c0bfc6447"
+  resolved "git://github.com/vercel/serve.git#a85bd9d03ae267a492aac683616e028c0bfc6447"
   dependencies:
     "@zeit/schemas" "2.6.0"
     ajv "6.12.6"
