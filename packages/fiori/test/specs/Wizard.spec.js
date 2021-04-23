@@ -35,7 +35,7 @@ describe("Wizard general interaction", () => {
 			"Wizard nav has aria-label set.");
 		assert.strictEqual(wizList.getAttribute("role"), "list",
 			"Wizard list has role set..");
-		assert.strictEqual(wizList.getAttribute("aria-controls"), "ui5-wiz-content",
+		assert.strictEqual(wizList.getAttribute("aria-controls"), `${wiz.getProperty("_id")}-wiz-content`,
 			"Wizard list has aria-controls set.");
 		assert.strictEqual(wizList.getAttribute("aria-label"), wizListText,
 			"Wizard list has aria-label set.");
