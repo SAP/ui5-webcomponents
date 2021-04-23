@@ -1,5 +1,5 @@
-commit 13f9d990490848ea9a548519427128334901a03a
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Thu Apr 22 12:50:35 2021 +0300
+commit 655ec499a8fc07d0fbb4d4b075569ed51d8bc7e5
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Fri Apr 23 09:00:30 2021 +0300
 
-    docs: add locahost link to base package (#3175)
+    fix(ui5-carousel): hide navigation arrows on mouse out (#3174)
