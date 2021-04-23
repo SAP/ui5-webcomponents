@@ -1,6 +1,8 @@
-commit d245fa349e1d3c20bb48a007c1b9f132c0746b28
-Merge: 5cb56f2 e4ccac9
+commit 71f3f4c12d902781844d4e361f208727b863ac45
+Merge: d245fa3 20acae2
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Mar 30 15:35:40 2021 +0300
+Date:   Fri Apr 23 09:11:18 2021 +0300
 
-    update playground to rc13
+    Merge tag 'v1.0.0-rc.14' into latest-release-website
+    
+    chore: release 1.0.0-rc
