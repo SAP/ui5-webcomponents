@@ -2,6 +2,10 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import TimePickerBase from "./TimePickerBase.js";
 
+import {
+	TIMEPICKER_INPUT_DESCRIPTION,
+} from "./generated/i18n/i18n-defaults.js";
+
 /**
  * @public
  */
@@ -139,6 +143,21 @@ class TimePicker extends TimePickerBase {
 	 */
 	get dateValue() {
 		return this.getFormat().parse(this._effectiveValue);
+	}
+
+	get accInfo() {
+		return {
+			"ariaRoledescription": this.dateAriaDescription,
+			"ariaHasPopup": "dialog",
+			"ariaAutoComplete": "none",
+			"role": "combobox",
+			"ariaControls": `${this._id}-responsive-popover`,
+			"ariaExpanded": this.isOpen(),
+		};
+	}
+
+	get dateAriaDescription() {
+		return this.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
 	}
 }
 

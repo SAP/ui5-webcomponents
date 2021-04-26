@@ -2,6 +2,10 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/fob-watch.js";
 import TimePickerBase from "./TimePickerBase.js";
 
+import {
+	DURATION_INPUT_DESCRIPTION,
+} from "./generated/i18n/i18n-defaults.js";
+
 /**
  * @public
  */
@@ -285,6 +289,21 @@ class DurationPicker extends TimePickerBase {
 
 	get maxSeconds() {
 		return parseInt(this.maxValue.split(":")[2]);
+	}
+
+	get dateAriaDescription() {
+		return this.i18nBundle.getText(DURATION_INPUT_DESCRIPTION);
+	}
+
+	get accInfo() {
+		return {
+			"ariaRoledescription": this.dateAriaDescription,
+			"ariaHasPopup": "dialog",
+			"ariaAutoComplete": "none",
+			"role": "combobox",
+			"ariaControls": `${this._id}-responsive-popover`,
+			"ariaExpanded": this.isOpen(),
+		};
 	}
 }
 
