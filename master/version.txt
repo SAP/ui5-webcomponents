@@ -1,5 +1,5 @@
-commit d4498125dabcdad96459a1fb6752f6f4208f69a3
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Fri Apr 23 13:46:02 2021 +0300
+commit 3b930afe3057c12609801c968345734ad16bb53d
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Apr 26 16:29:36 2021 +0300
 
-    fix(ui5-wizard): correct aria-controls value (#3180)
+    fix(ui5-li): info text width (#3184)
