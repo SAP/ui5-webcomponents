@@ -142,8 +142,24 @@
 	<br>
 	<br>
 
-	<ui5-button id="open-dialog">Open Dialog</ui5-button>
-	<ui5-dialog id="dialog">
+	<ui5-button id="open-dialog-inactive-indicator">Open Dialog with Inactive Indicator</ui5-button>
+	<ui5-dialog id="dialog-inactive-indicator">
+		<div slot="header">Dialog with focus issue</div>
+		<div>
+			<div>
+				these buttons do not get initial focus and once they do, the focus is
+				allowed to leave the dialog
+			</div>
+			<ui5-busyindicator>
+				<ui5-button>button 1</ui5-button>
+				<ui5-button>button 2</ui5-button>
+				<ui5-button>button 3</ui5-button>
+			</ui5-busyindicator>
+		</div>
+	</ui5-dialog>
+
+	<ui5-button id="open-dialog-active-indicator">Open Dialog with Active Indicator</ui5-button>
+	<ui5-dialog id="dialog-active-indicator">
 		<div slot="header">Dialog with focus issue</div>
 		<div>
 			<div>
@@ -208,11 +224,12 @@
 			}
 		});
 
-		document.getElementById("open-dialog").addEventListener("click", function () {
-			document.getElementById("dialog").open();
-			setTimeout(function () {
-				document.getElementById("dialog").querySelector("ui5-busyindicator").active = false;
-			}, 2000)
+		document.getElementById("open-dialog-inactive-indicator").addEventListener("click", function () {
+			document.getElementById("dialog-inactive-indicator").open();
+		});
+
+		document.getElementById("open-dialog-active-indicator").addEventListener("click", function () {
+			document.getElementById("dialog-active-indicator").open();
 		});
 	</script>
 </body>
