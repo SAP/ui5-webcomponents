@@ -45,9 +45,13 @@
 	<br />
 	<br />
 
-	<ui5-busyindicator id="indicatorWithBtn" size="Medium" active>
-		<ui5-button>Hello World</ui5-button>
-	</ui5-busyindicator>
+	<div>
+		<ui5-button id="beforeIndicatorWithBtn">focus stop before</ui5-button>
+		<ui5-busyindicator id="indicatorWithBtn" size="Medium" active>
+			<ui5-button>Hello World</ui5-button>
+		</ui5-busyindicator>
+		<ui5-button id="afterIndicatorWithBtn" >focus stop after</ui5-button>
+	</div>
 
 	<br />
 	<br />
@@ -151,7 +155,7 @@
 				allowed to leave the dialog
 			</div>
 			<ui5-busyindicator>
-				<ui5-button>button 1</ui5-button>
+				<ui5-button id="dialog-inactive-indicator-focused-button">button 1</ui5-button>
 				<ui5-button>button 2</ui5-button>
 				<ui5-button>button 3</ui5-button>
 			</ui5-busyindicator>

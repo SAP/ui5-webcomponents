@@ -129,16 +129,21 @@ class BusyIndicator extends UI5Element {
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._keydownHandler = this._handleKeydown.bind(this);
+		this._preventEventHandler = this._preventEvent.bind(this);
 	}
 
 	onEnterDOM() {
 		this.addEventListener("keydown", this._keydownHandler, {
 			capture: true,
 		});
+		this.addEventListener("keyup", this._preventEventHandler, {
+			capture: true,
+		});
 	}
 
 	onExitDOM() {
 		this.removeEventListener("keydown", this._keydownHandler, true);
+		this.removeEventListener("keyup",this. _preventEventHandler, true);
 	}
 
 	static get metadata() {
@@ -193,6 +198,12 @@ class BusyIndicator extends UI5Element {
 			focusRedirectSpan.focus();
 			focusRedirectSpan.tabIndex = 0;
 			this.focusForward = false;
+		}
+	}
+
+	_preventEvent(event) {
+		if (this.active) {
+			event.stopImmediatePropagation();
 		}
 	}
 
