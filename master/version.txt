@@ -1,5 +1,11 @@
-commit 3b930afe3057c12609801c968345734ad16bb53d
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Apr 26 16:29:36 2021 +0300
+commit 927abf6c375e5a5820dda2f90879eb5ccda65f33
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Mon Apr 26 16:36:44 2021 +0300
 
-    fix(ui5-li): info text width (#3184)
+    fix(ui5-time-picker): accessibility improved (#3162)
+    
+    The ui5-time-picker and ui5-duration picker inner input
+    elements and wheel sliders now have aria properties set
+    according to the screen reader specification.
+    
+    Fixes #3010
