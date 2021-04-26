@@ -143,7 +143,7 @@ class BusyIndicator extends UI5Element {
 
 	onExitDOM() {
 		this.removeEventListener("keydown", this._keydownHandler, true);
-		this.removeEventListener("keyup",this. _preventEventHandler, true);
+		this.removeEventListener("keyup", this._preventEventHandler, true);
 	}
 
 	static get metadata() {
