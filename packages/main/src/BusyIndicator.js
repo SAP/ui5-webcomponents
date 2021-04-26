@@ -188,15 +188,10 @@ class BusyIndicator extends UI5Element {
 			return;
 		}
 
-		event.stopImmediatePropagation();
-
-		// use the helper span to move the focus out of ui5-busyindicator
+		// move the focus to the last element in this DOM and let TAB continue to the next focusable element
 		if (isTabNext(event)) {
-			const focusRedirectSpan = this.shadowRoot.querySelector("[data-ui5-focus-redirect]");
 			this.focusForward = true;
-			focusRedirectSpan.tabIndex = -1;
-			focusRedirectSpan.focus();
-			focusRedirectSpan.tabIndex = 0;
+			this.shadowRoot.querySelector("[data-ui5-focus-redirect]").focus();
 			this.focusForward = false;
 		}
 	}
