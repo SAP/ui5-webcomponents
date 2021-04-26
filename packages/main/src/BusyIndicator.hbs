@@ -23,5 +23,9 @@
 		</div>
 	{{/if}}
 
-	<slot tabindex="{{slotTabIndex}}"></slot>
+	<slot></slot>
+
+	{{#if active}}
+		<span data-ui5-focus-redirect tabindex="0" @focusin="{{_redirectFocus}}"></span>
+	{{/if}}
 </div>

@@ -12,6 +12,7 @@ import { BUSY_INDICATOR_TITLE } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 
 /**
  * @public
@@ -131,7 +132,7 @@ class BusyIndicator extends UI5Element {
 	}
 
 	onEnterDOM() {
-		this.addEventListener("keyup", this._preventHandler, {
+		this.addEventListener("focusin", this._preventHandler, {
 			capture: true,
 		});
 
@@ -141,7 +142,7 @@ class BusyIndicator extends UI5Element {
 	}
 
 	onExitDOM() {
-		this.removeEventListener("keyup", this._preventHandler, true);
+		this.removeEventListener("focusin", this._preventHandler, true);
 		this.removeEventListener("keydown", this._preventHandler, true);
 	}
 
@@ -183,13 +184,32 @@ class BusyIndicator extends UI5Element {
 	}
 
 	get slotTabIndex() {
-		return this.active ? -1 : 0;
+		return this.active ? -1 : "";
 	}
 
 	_preventEvent(event) {
-		if (this.active) {
-			event.stopImmediatePropagation();
+		if (!this.active) {
+			return;
 		}
+
+		if (isTabNext(event)) {
+			this.bIgnore = true;
+			this.shadowRoot.querySelector("[data-ui5-focus-redirect]").tabIndex = -1;
+			this.shadowRoot.querySelector("[data-ui5-focus-redirect]").focus();
+			this.shadowRoot.querySelector("[data-ui5-focus-redirect]").tabIndex = 0;
+			event.stopImmediatePropagation();
+			this.bIgnore = false;
+		}
+	}
+
+	_redirectFocus(e) {
+		if (this.bIgnore) {
+			return;
+		}
+
+		const busyArea = this.shadowRoot.querySelector(".ui5-busyindicator-busy-area");
+		e.preventDefault();
+		busyArea.focus();
 	}
 }
 
