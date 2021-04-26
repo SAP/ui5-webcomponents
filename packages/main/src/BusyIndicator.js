@@ -128,22 +128,17 @@ class BusyIndicator extends UI5Element {
 		super();
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-		this._preventHandler = this._preventEvent.bind(this);
+		this._keydownHandler = this._handleKeydown.bind(this);
 	}
 
 	onEnterDOM() {
-		this.addEventListener("focusin", this._preventHandler, {
-			capture: true,
-		});
-
-		this.addEventListener("keydown", this._preventHandler, {
+		this.addEventListener("keydown", this._keydownHandler, {
 			capture: true,
 		});
 	}
 
 	onExitDOM() {
-		this.removeEventListener("focusin", this._preventHandler, true);
-		this.removeEventListener("keydown", this._preventHandler, true);
+		this.removeEventListener("keydown", this._keydownHandler, true);
 	}
 
 	static get metadata() {
@@ -183,33 +178,34 @@ class BusyIndicator extends UI5Element {
 		};
 	}
 
-	get slotTabIndex() {
-		return this.active ? -1 : "";
-	}
-
-	_preventEvent(event) {
+	_handleKeydown(event) {
 		if (!this.active) {
 			return;
 		}
 
+		event.stopImmediatePropagation();
+
+		// use the helper span to move the focus out of ui5-busyindicator
 		if (isTabNext(event)) {
-			this.bIgnore = true;
-			this.shadowRoot.querySelector("[data-ui5-focus-redirect]").tabIndex = -1;
-			this.shadowRoot.querySelector("[data-ui5-focus-redirect]").focus();
-			this.shadowRoot.querySelector("[data-ui5-focus-redirect]").tabIndex = 0;
-			event.stopImmediatePropagation();
-			this.bIgnore = false;
+			const focusRedirectSpan = this.shadowRoot.querySelector("[data-ui5-focus-redirect]");
+			this.focusForward = true;
+			focusRedirectSpan.tabIndex = -1;
+			focusRedirectSpan.focus();
+			focusRedirectSpan.tabIndex = 0;
+			this.focusForward = false;
 		}
 	}
 
-	_redirectFocus(e) {
-		if (this.bIgnore) {
+	/**
+	 * Moves the focus to busy area when coming with SHIFT + TAB
+	 */
+	_redirectFocus(event) {
+		if (this.focusForward) {
 			return;
 		}
 
-		const busyArea = this.shadowRoot.querySelector(".ui5-busyindicator-busy-area");
-		e.preventDefault();
-		busyArea.focus();
+		event.preventDefault();
+		this.shadowRoot.querySelector(".ui5-busyindicator-busy-area").focus();
 	}
 }
 
