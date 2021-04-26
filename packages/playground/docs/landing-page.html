@@ -4,6 +4,9 @@ permalink: /
 nav_order: 4
 nav_exclude: true
 redirect_to: ./playground
+docs: ./playground/docs
+tutorials: ./playground/tutorials
+samples: ./playground/components
 ---
 
 <!DOCTYPE html>
@@ -39,6 +42,11 @@ redirect_to: ./playground
         <div class="content">
 
             <header class="header-wrapper section-container">
+                <div class="wrapper header-links">
+                    <a class="wrapper-links" href="{{ page.docs | absolute_url }}">Docs</a>
+                    <a class="wrapper-links" href="{{ page.tutorials | absolute_url }}">Tutorials</a>
+                    <a class="wrapper-links" href="{{ page.samples | absolute_url }}">Samples</a>
+                </div>
                 <div class="wrapper header-inside-wrapper">
                         <div class="header-text-wrapper">
                             <h2 class="ui5-header bold-font">UI5 Web Components</h2>
