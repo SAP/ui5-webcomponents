@@ -335,11 +335,8 @@ const metadata = {
  * <li> Backspace -  deletes the token and focus the next token. </li>
  * </ul>
  *
- * In the context of <code>ui5-multi-combobox</code>, you can provide a custom stable DOM ref for:
- * <ul>
- * <li>Every <code>ui5-mcb-item</code> that you provide.
- * Example: <code><ui5-mcb-item stable-dom-ref="item1"></ui5-mcb-item></code></li>
- * </ul>
+ * In the context of <code>ui5-multi-combobox</code>, you can provide a custom stable DOM ref for each <code>ui5-mcb-item</code> that you provide.
+ * Example: <code>&lt;ui5-mcb-item stable-dom-ref="item1">&lt;/ui5-mcb-item></code></li>
  *
  * <h3>CSS Shadow Parts</h3>
  *

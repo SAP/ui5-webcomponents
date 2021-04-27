@@ -128,12 +128,12 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
 		 * Fired when the step selection is changed by user interaction - either with scrolling,
-		 * or by clicking on the steps within the component header.
+		 * or by clicking on the steps within the navigation area.
 		 *
 		 * @event sap.ui.webcomponents.fiori.Wizard#selection-change
 		 * @param {HTMLElement} selectedStep the newly selected step
 		 * @param {HTMLElement} previouslySelectedStep the previously selected step
-		 * @param {Boolean} changeWithClick the selection changed due to user's click on step within the navigation
+		 * @param {Boolean} changeWithClick the selection changed due to user's click on step within the navigation area
 		 * @public
 		 */
 		"selection-change": {
@@ -173,8 +173,9 @@ const metadata = {
  * It's defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code>.
  *
  * <h3>Scrolling</h3>
- * The component handles user scrolling by selecting the closest step, based on the current scroll position
- * and scrolls to particular place, when the user clicks on the step within the navigation area.
+ * The component handles user scrolling by selecting the closest step, based on the current scroll position.
+ * And, when the user clicks on the step within the navigation area,
+ * the component will scrolls to the begining of the corresponding step content.
  * <br><br>
  *
  * <b>Important:</b> In order the component's scrolling behaviour to work, it has to be limited from the outside parent element in terms of height.
@@ -204,11 +205,11 @@ const metadata = {
  * When the task has less than 3 steps.
  *
  * <h3>Responsive Behavior</h3>
- * On small widths the step's heading, subheading and separators in the navigation area
- * will start truncate and shrink and from particular point they will hide to free as much space as possible.
+ * On small screens the steps in the navigation area are grouped together and overlap.
+ * Tapping on these groups will open a popover to select particular step to navigate to.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
+ * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <code><ui5-wizard-step></code>)
  *
  * @constructor
  * @author SAP SE

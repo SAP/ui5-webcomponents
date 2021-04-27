@@ -325,26 +325,35 @@ const metadata = {
  * The <code>ui5-table</code> component provides a set of sophisticated and convenient functions for responsive table design.
  * It provides a comprehensive set of features for displaying and dealing with vast amounts of data.
  * <br><br>
+ *
  * To render the <code>Table</code> properly, the order of the <code>columns</code> should match with the
  * order of the item <code>cells</code> in the <code>rows</code>.
  * <br><br>
+ *
  * Desktop and tablet devices are supported.
  * On tablets, special consideration should be given to the number of visible columns
  * and rows due to the limited performance of some devices.
  *
  * <h3>Selection</h3>
+ *
  * To benefit from the selection mechanism of <code>ui5-table</code> component, you can use the available selection modes:
  * <code>SingleSelect</code> and <code>MultiSelect</code>.
  * <br>
+ *
  * In additition to the used mode, you can also specify the <code>ui5-table-row</code> type choosing between
  * <code>Active</code> or <code>Inactive</code>.
- * <br><br>
- * In <code>SingleSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row via mouse or
- * by pressing the <code>Space</code> or <code>Enter</code> keys.
  * <br>
- * In <code>MultiSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row by pressing the
+ * 
+ * <ul>
+ * <li>In <code>MultiSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row by pressing the
  * <code>Space</code> key when a row is on focus or via mouse click over the selection checkbox of the row.
+ * </li>
+ * <li>In <code>SingleSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row via mouse or
+ * by pressing the <code>Space</code> or <code>Enter</code> keys.
  * In order to select all the available rows at once, you can use the selection checkbox presented in the table's header.
+ * </li>
+ * </ul>
+ * 
  * <br><br>
  * <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
  *

@@ -11,8 +11,6 @@ const metadata = {
 		 * <br><br>
 		 *
 		 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
-		 * <br>
-		 * <b>Note:</b> the text will hide on small sizes (about 559 px).
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
@@ -26,8 +24,6 @@ const metadata = {
 		 * <br><br>
 		 *
 		 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
-		 * <br>
-		 * <b>Note:</b> the text will hide on small sizes (about 559 px).
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public

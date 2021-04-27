@@ -109,8 +109,15 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * An entry posted on the timeline.
+ * Defines an entry as part of the <code>ui5-timeline</code>.
  *
+ * <h3>Usage</h3>
+ * The <code>ui5-timeline-item</code> component should be used only as slot of the <code>ui5-timeline</code> component
+ * and should not be used standalone.
+ * <br><br>
+ * The component provides several properties, such as: icon, titleText, subtitleText and default slot for entry description
+ * for defining an entry in the timeline.
+ * 
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.TimelineItem
