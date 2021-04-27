@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.6](https://github.com/SAP/ui5-webcomponents/compare/v0.31.5...v0.31.6) (2021-04-27)
+
+### Bug Fixes
+
+* **framework:** adapt ie11 package for usage in modern browsers ([#2878](https://github.com/SAP/ui5-webcomponents/issues/2878)) ([4c170a4](https://github.com/SAP/ui5-webcomponents/commit/4c170a4))
+* **ui5-busyindicator:** fix typo in styles ([#3178](https://github.com/SAP/ui5-webcomponents/issues/3178)) ([ab10d6a](https://github.com/SAP/ui5-webcomponents/commit/ab10d6a))
+* **ui5-wizard:** correct aria-controls value ([#3180](https://github.com/SAP/ui5-webcomponents/issues/3180)) ([5e2619c](https://github.com/SAP/ui5-webcomponents/commit/5e2619c))
+https://github.com/SAP/ui5-webcomponents/commit/0505017))
+
+
 ## [0.31.1](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.12...v0.31.1) (2021-03-22)
 
 
