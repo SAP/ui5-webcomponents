@@ -2613,6 +2613,20 @@
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibleName
+                            <br>
+                            <code>accessible-name</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the accessible name of the dialog when <code>header</code> slot is provided. <br><br>
+            
+            <b>Note:</b> If <code>aria-label</code> is provided, <code>accessibleName</code> will be ignored.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           draggable
                             <br>
                         </div>
@@ -2623,7 +2637,7 @@
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.9</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           headerText
                             <br>
@@ -2635,7 +2649,7 @@
                             Defines the header text. <br><br> <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           resizable
                             <br>
@@ -2647,7 +2661,7 @@
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.10</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           stretch
                             <br>
@@ -2658,7 +2672,7 @@
                             Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen. <br><br> <b>Note:</b> The <code>ui5-dialog</code> will be stretched to approximately 90% of the viewport.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           initialFocus
                             <br>
@@ -2670,7 +2684,7 @@
                             Defines the ID of the HTML Element, which will get the initial focus.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           preventFocusRestore
                             <br>
@@ -2708,7 +2722,7 @@
                     <div class="row api-table-roll-odd">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">header</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the header HTML Element.</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the header HTML Element. <br><br> <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer. <code>accessibleName</code> should be used.</div>
                     </div>
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>

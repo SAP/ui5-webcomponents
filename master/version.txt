@@ -1,11 +1,9 @@
-commit 927abf6c375e5a5820dda2f90879eb5ccda65f33
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Mon Apr 26 16:36:44 2021 +0300
+commit 9943ee72b2905fb3184735fcd845d60164b0eee4
+Author: GerganaKremenska <gergana.kremenska@sap.com>
+Date:   Wed Apr 28 10:33:58 2021 +0300
 
-    fix(ui5-time-picker): accessibility improved (#3162)
+    feat(ui5-dialog): labeling of header slots is now possible (#3155)
     
-    The ui5-time-picker and ui5-duration picker inner input
-    elements and wheel sliders now have aria properties set
-    according to the screen reader specification.
+    When Dialog's header slot is used, developers now would be able to use newly added accessible-name attribute to label the dialog properly. (If the header slot is not used, the Dialog labels the internally created header as previous.)
     
-    Fixes #3010
+    Fixes: #2838
