@@ -1,9 +1,5 @@
-commit 9943ee72b2905fb3184735fcd845d60164b0eee4
-Author: GerganaKremenska <gergana.kremenska@sap.com>
-Date:   Wed Apr 28 10:33:58 2021 +0300
+commit 80dce9d2fdea525a0888e74367fe438f80ba39de
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Apr 28 10:58:09 2021 +0300
 
-    feat(ui5-dialog): labeling of header slots is now possible (#3155)
-    
-    When Dialog's header slot is used, developers now would be able to use newly added accessible-name attribute to label the dialog properly. (If the header slot is not used, the Dialog labels the internally created header as previous.)
-    
-    Fixes: #2838
+    chore: use only one tab for the playground app (#3183)
