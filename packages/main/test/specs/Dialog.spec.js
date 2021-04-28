@@ -154,4 +154,15 @@ describe("Acc", () => {
 		assert.ok(!dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "dialog does not have aria-labelledby.");
 		assert.ok(dialog.shadow$(".ui5-popup-root").getAttribute("aria-label").length, "dialog has aria-label.");
 	});
+
+	it("tests aria-labelledby for slot header", () => {
+		const openDraggableDialog = browser.$("#draggable-open");
+		openDraggableDialog.click();
+
+		const dialog = browser.$("#draggable-dialog");
+		const accName = "Draggable" ;
+
+		assert.strictEqual(dialog.getAttribute("accessible-name"), accName, "dialog has correct attribute set");
+		assert.strictEqual(dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), accName, "dialog has aria-label.");
+	});
 });
