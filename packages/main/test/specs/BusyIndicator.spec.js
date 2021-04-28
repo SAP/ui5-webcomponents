@@ -40,10 +40,32 @@ describe("BusyIndicator general interaction", () => {
 		assert.strictEqual(innerFocusElement.getAttribute("aria-valuetext"), "Busy", "Correct 'aria-valuetext' is set");
 	});
 
-	it("tests content is not reachable with keyboard when active", () => {
+	it("tests content is not reachable with keyboard when active in both directions", () => {
+		const beforeBusyIndicator = browser.$("#beforeIndicatorWithBtn");
 		const busyIndicator = browser.$("#indicatorWithBtn");
-		const defaultSLot = busyIndicator.shadow$("slot");
+		const afterBusyIndicator = browser.$("#afterIndicatorWithBtn");
 
-		assert.strictEqual(defaultSLot.getAttribute("tabindex"), "-1", "Slot is not reachable via keyboard");
+		beforeBusyIndicator.click();
+		browser.keys("Tab");
+		assert.strictEqual($(browser.getActiveElement()).getAttribute("id"), busyIndicator.getAttribute("id"), "Correct element is focused with TAB");
+
+		browser.keys("Tab");
+		assert.strictEqual($(browser.getActiveElement()).getAttribute("id"), afterBusyIndicator.getAttribute("id"), "Correct element is focused with TAB");
+
+		browser.keys(["Shift", "Tab"]);
+		assert.strictEqual($(browser.getActiveElement()).getAttribute("id"), busyIndicator.getAttribute("id"), "Correct element is focused with SHIFT + TAB");
+
+		browser.keys(["Shift", "Tab"]);
+		assert.strictEqual($(browser.getActiveElement()).getAttribute("id"), beforeBusyIndicator.getAttribute("id"), "Correct element is focused with SHIFT + TAB");
+	});
+
+	it("test inactive indicator in dialog - correct element from default slot is focused", () => {
+		browser.$("#open-dialog-inactive-indicator").click();
+
+		assert.strictEqual(
+			$(browser.getActiveElement()).getAttribute("id"),
+			browser.$("#dialog-inactive-indicator-focused-button").getAttribute("id"),
+			"Correct element from default slot is focused"
+		);
 	});
 });
