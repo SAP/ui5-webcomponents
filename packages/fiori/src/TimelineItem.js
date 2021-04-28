@@ -117,7 +117,7 @@ const metadata = {
  * <br><br>
  * The component provides several properties, such as: icon, titleText, subtitleText and default slot for entry description
  * for defining an entry in the timeline.
- * 
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.TimelineItem

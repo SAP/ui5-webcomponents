@@ -330,7 +330,7 @@ const metadata = {
  * {
  *	"calendarType": "Japanese"
  * }
- * &lt;/script&gt;
+ * &lt;/script&gt;</code></pre>
  *
  * <h3>ES6 Module Import</h3>
  *

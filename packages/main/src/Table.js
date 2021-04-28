@@ -343,7 +343,7 @@ const metadata = {
  * In additition to the used mode, you can also specify the <code>ui5-table-row</code> type choosing between
  * <code>Active</code> or <code>Inactive</code>.
  * <br>
- * 
+ *
  * <ul>
  * <li>In <code>MultiSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row by pressing the
  * <code>Space</code> key when a row is on focus or via mouse click over the selection checkbox of the row.
@@ -353,7 +353,7 @@ const metadata = {
  * In order to select all the available rows at once, you can use the selection checkbox presented in the table's header.
  * </li>
  * </ul>
- * 
+ *
  * <br><br>
  * <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
  *

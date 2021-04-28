@@ -360,11 +360,10 @@ const metadata = {
  * <li>product-switch</li>
  * </ul>
  *
- * In the context of <code>ui5-shellbar</code>, you can provide a custom stable DOM refs for:
- * <ul>
- * <li>Every <code>ui5-shellbar-item</code> that you provide.
- * Example: <code><ui5-shellbar-item stable-dom-ref="messages"></ui5-shellbar-item></code></li>
- * </ul>
+ * In the context of <code>ui5-shellbar</code>, you can provide a custom stable DOM refs for each <code>ui5-shellbar-item</code>.
+ * Thanks to that, you can get a DOM reference of the item by using the <code>getStableDomRef</code> method.
+ * <br><br>
+ * <b>Example:</b> <code><ui5-shellbar-item stable-dom-ref="messages"></ui5-shellbar-item></code>
  *
  * <h3>CSS Shadow Parts</h3>
  *

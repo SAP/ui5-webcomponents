@@ -237,11 +237,10 @@ const metadata = {
  *
  * <h3>Stable DOM Refs</h3>
  *
- * In the context of <code>ui5-tabcontainer</code>, you can provide a custom stable DOM refs for:
- * <ul>
- * <li>Each <code>ui5-tab</code>
- * Example: <code><ui5-tab stable-dom-ref="in-stock"></ui5-tab></code></li>
- * </ul>
+ * In the context of <code>ui5-tabcontainer</code>, you can provide a custom stable DOM refs for each <code>ui5-tab</code>.
+ * Thanks to that, you can get a DOM reference of the tab by using the <code>getStableDomRef</code> method.
+ * <br><br>
+ * <b>Example:</b> <code>&lt;ui5-tab stable-dom-ref="in-stock">&lt;/ui5-tab></code></li>
  *
  * <h3>ES6 Module Import</h3>
  *

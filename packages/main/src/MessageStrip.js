@@ -26,8 +26,13 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-messagestrip</code> type.
 		 * <br><br>
-		 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
-		 * and <code>"Warning"</code>.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>"Information"</code></li>
+		 * <li><code>"Positive"</code></li>
+		 * <li><code>"Negative"</code></li>
+		 * <li><code>"Warning"</code></li>
+		 * </ul>
 		 *
 		 * @type {MessageStripType}
 		 * @defaultvalue "Information"

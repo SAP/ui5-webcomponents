@@ -338,20 +338,65 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-list</code> component allows displaying a list of items, advanced keyboard
- * handling support for navigating between items, and predefined modes to improve the development efficiency.
+ * handling support for navigating between items, predefined selection modes and growing capability to improve the development efficiency.
  * <br><br>
  * The <code>ui5-list</code> is а container for the available list items:
  * <ul>
  * <li><code>ui5-li</code></li>
  * <li><code>ui5-li-custom</code></li>
  * <li><code>ui5-li-groupheader</code></li>
+ * <li><code>ui5-li-notification</code></li>
+ * <li><code>ui5-li-notification-group</code></li>
+ * </ul>
+ *
+ * <h3>Usage</h3>
+ *
+ * <h4>When to use:</h4>
+ * <ul>
+ * <li>to display a homogeneous set of basic data.</li>
+ * <li>to sort, group, or filter simple datasets.</li>
+ * <li>to display a single-level hierarchy.</li>
+ * </ul>
+ *
+ * <h4>When not to use:</h4>
+ * <ul>
+ * <li>to manage complex datasets that need to be extensively sorted, grouped, filtered, or edited.</li>
+ * <li>to work with complex hierarchies - in this case use the <code>ui5-tree</code>.</li>
+ * </ul>
+ *
+ * <h3>Selection</h3>
+ *
+ * The <code>ui5-list</code> has built-in selection mechanism.
+ * To benefit from you need to enable the <code>mode</code> property and pick one of the available selection modes:
+ * <ul>
+ * <li><code>SingleSelect</code></li>
+ * <li><code>MultiSelect</code></li>
+ * <li><code>Delete</code></li>
  * </ul>
  * <br><br>
- * To benefit from the built-in selection mechanism, you can use the available
- * selection modes, such as
- * <code>SingleSelect</code>, <code>MultiSelect</code> and <code>Delete</code>.
+ *
+ * <h3>Growing</h3>
+ *
+ * The <code>ui5-list</code> has growing capability that enables applications to only load data when necessary.
+ * To benefit from it, enable the <code>growing</code> property and pick one of the available options:
+ *
+ * <ul>
+ * <li><code>"Button"</code></li>
+ * <li><code>"Scroll"</code></li>
+ * <li><code>"None" - growing is off</code></li>
+ * </ul>
+ *
+ * In <code>"Button"</code> mode, the list will display a <code>"More"</code> button
+ * at the bottom of the list, pressing of which fires <code>load-more</code> event, that can bu used by apps to load more data.
  * <br><br>
- * Additionally, the <code>ui5-list</code> provides header, footer, and customization for the list item separators.
+ *
+ * In <code>"Scroll"</code> mode the <code>load-more</code> event is triggered when the user scrolls to the bottom of the list,
+ * allowing apps to achieve an inifinite scroll effect.
+ *
+ * <h3>Header and Footer</h3>
+ *
+ * The <code>ui5-list</code> supports <code>header</code> and <code>footer</code> slots,
+ * dispalyed at the top and at the bottom of the list repectively.
  *
  * <h3>ES6 Module Import</h3>
  *
