@@ -41,10 +41,6 @@ bdi {
 }
 
 :host(:not([wrap])[required]) .ui5-label-text-wrapper {
-	max-width: calc(100% - 0.475rem);
-}
-
-:host([required]:not([wrap])) .ui5-label-text-wrapper {
 	max-width: calc(100% - 0.375rem);
 }
 
