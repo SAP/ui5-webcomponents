@@ -1,5 +1,7 @@
-commit 80dce9d2fdea525a0888e74367fe438f80ba39de
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Apr 28 10:58:09 2021 +0300
+commit 1ab4e7702a7de8237ba64c473cace47b84a4e52a
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Wed Apr 28 16:49:58 2021 +0300
 
-    chore: use only one tab for the playground app (#3183)
+    fix(ui5-busyindicator): focus handling improvements (#3189)
+    
+    Should fix #3171 as well. This has to be tested after a release is made.

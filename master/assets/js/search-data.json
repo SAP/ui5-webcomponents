@@ -86,7 +86,7 @@
   "13": {
     "id": "13",
     "title": "Busy Indicator",
-    "content": "&lt;!DOCTYPE html&gt; Busy Indicator Large ui5-busyindicator Default Medium ui5-busyindicator ui5-busyindicator with text Hello World Fetch List Data Item 1 Item 2 Item 3 Item 1 Item 2 Item 3 Medium (default) Small Medium Large Dynamic tree",
+    "content": "&lt;!DOCTYPE html&gt; Busy Indicator Large ui5-busyindicator Default Medium ui5-busyindicator ui5-busyindicator with text focus stop before Hello World focus stop after Fetch List Data Item 1 Item 2 Item 3 Item 1 Item 2 Item 3 Medium (default) Small Medium Large Dynamic tree Open Dialog with Inactive Indicator Dialog with focus issue Buttons are wrapped in busy indicator, which is inactive. button 1 button 2 button 3 Open Dialog with Active Indicator Dialog with focus issue Buttons are wrapped in busy indicator, which is active. button 1 button 2 button 3",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/BusyIndicator/",
     "relUrl": "/playground/main/pages/BusyIndicator/"
   },
