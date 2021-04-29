@@ -373,7 +373,6 @@ const metadata = {
  * <li><code>MultiSelect</code></li>
  * <li><code>Delete</code></li>
  * </ul>
- * <br><br>
  *
  * <h3>Growing</h3>
  *

@@ -272,32 +272,32 @@ const metadata = {
  * <li>Using the calendar that opens in a popup</li>
  * <li>Typing it in directly in the input field</li>
  * </ul>
- * <br><br>
  * When the user makes an entry and chooses the enter key, the calendar shows the corresponding date.
+ * <br>
  * When the user directly triggers the calendar display, the actual date is displayed.
  *
  * <h3>Formatting</h3>
  *
- * If a date is entered by typing it into
- * the input field, it must fit to the used date format.
- * <br><br>
+ * If a date is entered by typing it into the input field, it must fit to the used date format.
+ * <br>
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
  * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
- * <br><br>
+ * <br>
  * For example, if the <code>format-pattern</code> is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
  *
  * <h3>Keyboard Handling</h3>
+ *
  * The <code>ui5-date-picker</code> provides advanced keyboard handling.
  * If the <code>ui5-date-picker</code> is focused,
- * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
- * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>RIGHT</code> arrow keys
+ * you can open or close the picker by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
+ * Once the picker is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>RIGHT</code> arrow keys
  * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
  * use TAB to reach the buttons for changing month and year.
- * <br>
+ * <br><br>
  *
- * If the <code>ui5-date-picker</code> is focused and the picker dialog is not opened the user can
- * increment or decrement the corresponding field of the JS date object referenced by <code>dateValue</code> propery
+ * If the <code>ui5-date-picker</code> is focused and the picker is not opened the user can
+ * increment or decrement the corresponding field of the JS Date object referenced by <code>dateValue</code> propery
  * by using the following shortcuts:
  * <br>
  * <ul>
