@@ -144,6 +144,27 @@
 		</ui5-avatar-group>
 		<br>
 
+		<h3>Test Fired Events</h3>
+		<br>
+		<div style="width: 400px;">
+			<ui5-avatar-group type="Individual" avatar-size="XL" id="avatar-group-individual-events">
+				<ui5-avatar interactive icon="home" initials="XL" id="avatar-1-test-events"></ui5-avatar>
+				<ui5-avatar interactive initials="XL"></ui5-avatar>
+				<ui5-avatar interactive icon="home"></ui5-avatar>
+				<ui5-avatar interactive initials="XL"></ui5-avatar>
+			</ui5-avatar-group>
+		</div>
+		<br>
+		<div style="width: 400px;">
+			<ui5-avatar-group type="Group" avatar-size="XL" id="avatar-group-group-events">
+				<ui5-avatar interactive icon="home" initials="XL"></ui5-avatar>
+				<ui5-avatar interactive initials="XL"></ui5-avatar>
+				<ui5-avatar interactive icon="home"></ui5-avatar>
+				<ui5-avatar interactive initials="XL"></ui5-avatar>
+			</ui5-avatar-group>
+		</div>
+		<br>
+
 		<div class="demo-section">
 			<span>TargetRef Tag Name: </span>
 			<input type="text" id="event-target" />
@@ -246,6 +267,8 @@
 	var eventAvatarsClicked = document.getElementById("event-avatars-clicked");
 	var eventAvatarsClickedValue = eventAvatarsClicked.value;
 	var avatarGroupIndividual = document.getElementById("avatar-group-individual");
+	var avatarGroupIndividualEvents = document.getElementById("avatar-group-individual-events");
+	var avatarGroupGroupEvents = document.getElementById("avatar-group-group-events");
 	var avatarGroupGroup = document.getElementById("avatar-group-group");
 	var groupPop = document.getElementById("group-pop")
 	var individualPop = document.getElementById("individual-pop")
@@ -284,8 +307,6 @@
 		}
 		placeholder.innerHTML = html;
 
-		eventAvatarsClicked.value= ++eventAvatarsClickedValue;
-
 		groupPop.close();
 		groupPop.openBy(event.detail.targetRef);
 	}
@@ -295,12 +316,17 @@
 		popAvatar.initials = avatarRef.initials;
 		popAvatar.backgroundColor = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
 
-		eventAvatarsClicked.value= ++eventAvatarsClickedValue;
-
 		individualPop.close();
 		individualPop.openBy(avatarRef);
 	}
 
+	avatarGroupGroupEvents.addEventListener("ui5-click", function (event) {
+		eventAvatarsClicked.value= ++eventAvatarsClickedValue;
+	});
+
+	avatarGroupIndividualEvents.addEventListener("ui5-click", function (event) {
+		eventAvatarsClicked.value= ++eventAvatarsClickedValue;
+	});
 
 	avatarGroupIndividual.addEventListener("ui5-click", function (event) {
 		eventTargetRef.value = event.detail.targetRef.tagName;
