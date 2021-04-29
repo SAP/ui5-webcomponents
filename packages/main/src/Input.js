@@ -429,12 +429,13 @@ const metadata = {
  * The <code>ui5-input</code> component allows the user to enter and edit text or numeric values in one line.
  * <br>
  * The text field can be editable or read-only - see the <code>readonly</code> property.
- * And, enabled or disabled - see the <code>enabled</code> property.
+ * Also, it can be enabled or disabled - see the <code>disabled</code> property.
  *
  * <h3>Value States</h3>
  *
  * To visualize semantic states, such as <code>"Error"</code> or  <code>"Warning"</code>,
  * use the <code>valueState</code> property.
+ * <br>
  * Usually, applications would change the value state upon the <code>"change"</code> event,
  * fired when the user makes changes to the text.
  *
@@ -444,8 +445,15 @@ const metadata = {
  * to display suggestions in a drop-down right under the input.
  * <br>
  *
- * <b>Note:</b> To enable the suggestions functionality, you need to import the <code>InputSuggestions</code> module from
- * "@ui5/webcomponents/dist/features/InputSuggestions.js".
+ * <b>Note:</b> To use the suggestions functionality, you need to enable the <code>showSuggestions</code> property and
+ * <br>
+ * import the <code>InputSuggestions</code> module from "@ui5/webcomponents/dist/features/InputSuggestions.js".
+ *
+ * <h3>Highlighting</h3>
+ * Furthermore, you can define if characters within the suggestions are to be highlighted
+ * in case the input value matches parts of the suggestions text.
+ * <br>
+ * For that, use the <code>highlight</code> property.
  *
  * <h3>ES6 Module Import</h3>
  *
