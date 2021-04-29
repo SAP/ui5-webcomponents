@@ -382,7 +382,7 @@ const metadata = {
  * <ul>
  * <li><code>"Button"</code></li>
  * <li><code>"Scroll"</code></li>
- * <li><code>"None" - growing is off</code></li>
+ * <li><code>"None"</code> - growing is off</li>
  * </ul>
  *
  * In <code>"Button"</code> mode, the list will display a <code>"More"</code> button

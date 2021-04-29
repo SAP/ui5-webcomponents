@@ -428,19 +428,24 @@ const metadata = {
  *
  * The <code>ui5-input</code> component allows the user to enter and edit text or numeric values in one line.
  * <br>
- * Additionally, you can provide <code>suggestionItems</code>,
- * that are displayed in a popover right under the input.
- * <br><br>
- * The text field can be editable or read-only (<code>readonly</code> property),
- * and it can be enabled or disabled (<code>enabled</code> property).
- * To visualize semantic states, such as "error" or "warning", the <code>valueState</code> property is provided.
- * When the user makes changes to the text, the change event is fired,
- * which enables you to react on any text change.
- * <br><br>
- * <b>Note:</b> If you are using the <code>ui5-input</code> as a single npm module,
- * don't forget to import the <code>InputSuggestions</code> module from
- * "@ui5/webcomponents/dist/features/InputSuggestions.js"
- * to enable the suggestions functionality.
+ * The text field can be editable or read-only - see the <code>readonly</code> property.
+ * And, enabled or disabled - see the <code>enabled</code> property.
+ *
+ * <h3>Value States</h3>
+ *
+ * To visualize semantic states, such as <code>"Error"</code> or  <code>"Warning"</code>,
+ * use the <code>valueState</code> property.
+ * Usually, applications would change the value state upon the <code>"change"</code> event,
+ * fired when the user makes changes to the text.
+ *
+ * <h3>Suggestions</h3>
+ *
+ * Additionally, you can make use of the <code>suggestionItems</code> slot,
+ * to display suggestions in a drop-down right under the input.
+ * <br>
+ *
+ * <b>Note:</b> To enable the suggestions functionality, you need to import the <code>InputSuggestions</code> module from
+ * "@ui5/webcomponents/dist/features/InputSuggestions.js".
  *
  * <h3>ES6 Module Import</h3>
  *
