@@ -37,6 +37,7 @@ const metadata = {
 		stableDomRef: {
 			type: String,
 		},
+
 		/**
 		 * Defines the tab-index of the element, helper information for the ItemNavigation.
 		 * @private
@@ -46,6 +47,7 @@ const metadata = {
 			defaultValue: "-1",
 			noAttribute: true,
 		},
+
 		/**
 		 * Defines the index of the item inside of the ColorPalette.
 		 * @private
@@ -53,6 +55,15 @@ const metadata = {
 		 */
 		index: {
 			type: String,
+		},
+
+		/**
+		 * @private
+		 * @type {boolean}
+		 * @since 1.0.0-rc.15
+		 */
+		_disabled: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
@@ -101,6 +112,10 @@ class ColorPaletteItem extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	onBeforeRendering() {
+		this._disabled = !this.value;
 	}
 
 	get colorLabel() {
