@@ -482,6 +482,10 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
+	.wrapper.header-links {
+		margin-top: -2rem;
+	}
+
 	.sub-header {
 		font-size: 20px;
 		width: auto;
