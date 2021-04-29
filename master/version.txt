@@ -1,7 +1,5 @@
-commit 1ab4e7702a7de8237ba64c473cace47b84a4e52a
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Wed Apr 28 16:49:58 2021 +0300
+commit 28fc07a0916b8d1dadfb5310d06a18034e9115e5
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Apr 29 10:32:23 2021 +0300
 
-    fix(ui5-busyindicator): focus handling improvements (#3189)
-    
-    Should fix #3171 as well. This has to be tested after a release is made.
+    refactor(ui5-color-palette): refactor rendering of items (#3118)
