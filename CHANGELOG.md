@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.15](https://github.com/SAP/ui5-webcomponents/compare/v0.29.14...v0.29.15) (2021-04-29)
+
+
+### Bug Fixes
+
+* **ui5-busyindicator:** fix typo in styles ([#3178](https://github.com/SAP/ui5-webcomponents/issues/3178)) ([8a748a1](https://github.com/SAP/ui5-webcomponents/commit/8a748a1))
+* **ui5-busyindicator:** focus handling improvements ([#3189](https://github.com/SAP/ui5-webcomponents/issues/3189)) ([4a677cb](https://github.com/SAP/ui5-webcomponents/commit/4a677cb))
+* **ui5-carousel:** hide navigation arrows on mouse out ([#3174](https://github.com/SAP/ui5-webcomponents/issues/3174)) ([f01823c](https://github.com/SAP/ui5-webcomponents/commit/f01823c))
+* **ui5-date-picker:** changing month on previous button pressed ([a4060ea](https://github.com/SAP/ui5-webcomponents/commit/a4060ea)), closes [#3083](https://github.com/SAP/ui5-webcomponents/issues/3083)
+* **ui5-wizard:** correct aria-controls value ([#3180](https://github.com/SAP/ui5-webcomponents/issues/3180)) ([3db688d](https://github.com/SAP/ui5-webcomponents/commit/3db688d))
+
+
+### Features
+
+* **ui5-dialog:** labeling of header slots is now possible ([#3155](https://github.com/SAP/ui5-webcomponents/issues/3155)) ([51222e8](https://github.com/SAP/ui5-webcomponents/commit/51222e8)), closes [#2838](https://github.com/SAP/ui5-webcomponents/issues/2838)
+
+
+
+
+
 ## [0.29.9](https://github.com/SAP/ui5-webcomponents/compare/v0.29.8...v0.29.9) (2021-03-22)
 
 ### FIXES 
