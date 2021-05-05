@@ -110,4 +110,37 @@ describe("avatar-group rendering", () => {
 		assert.strictEqual(`+${hiddenItemsCount}`, overflowButtonText, "Overflow button shows the hidden items count correctly");
 	});
 
+	it("tests if click event is firing only once", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/AvatarGroup.html`);
+		let eventCounter = 0;
+
+		const avatar = browser.$("#avatar-1-test-events");
+		const overflowButton = browser.$("#avatar-group-individual-events").shadow$("ui5-button");
+		const avatarGroupTypeGroup = browser.$("#avatar-group-group-events");
+		const eventAvatarsClicked = browser.$("#event-avatars-clicked");
+		const getEventsCount = () => parseInt(eventAvatarsClicked.getValue())
+
+		avatar.click() // set focus (important for the keys interaction to take action)
+		assert.strictEqual(getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per mouse click interaction - Avatar");
+		avatar.keys('Enter');
+		assert.strictEqual(getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Enter' interaction - Avatar");
+		avatar.keys('Space');
+		assert.strictEqual(getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Space' interaction - Avatar");
+
+		overflowButton.click() // set focus (important for the keys interaction to take action)
+		assert.strictEqual(getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per mouse click interaction - Overflow Button");
+		overflowButton.keys('Enter');
+		assert.strictEqual(getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Enter' interaction - Overflow Button");
+		overflowButton.keys('Space');
+		assert.strictEqual(getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Space' interaction - Overflow Button");
+
+		avatarGroupTypeGroup.click() // set focus (important for the keys interaction to take action)
+		assert.strictEqual(getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per mouse click interaction - Avatar Group type Group");
+		avatarGroupTypeGroup.keys('Enter');
+		assert.strictEqual(getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Enter' interaction - Avatar Group type Group");
+		avatarGroupTypeGroup.keys('Space');
+		assert.strictEqual(getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Space' interaction - Avatar Group type Group");
+
+
+	});
 });
