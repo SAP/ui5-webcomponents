@@ -337,20 +337,23 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isEnter(event)) {
-			this._fireGroupEvent(event.target);
-		}
-
-		if (isSpace(event)) {
-			// prevent scrolling
-			event.preventDefault();
+		// when type is "Individual" the ui5-avatar and ui5-button both
+		// fire "click" event when SPACE or ENTER are pressed and
+		// AvatarGroup "click" is fired in their handlers (_onClick, _onUI5Click).
+		if (this._isGroup) {
+			if (isEnter(event)) {
+				this._fireGroupEvent(event.target);
+			} else if (isSpace(event)) {
+				// prevent scrolling
+				event.preventDefault();
+			}
 		}
 	}
 
 	_onkeyup(event) {
-		if (!event.shiftKey && isSpace(event)) {
-			event.preventDefault();
+		if (!event.shiftKey && isSpace(event) && this._isGroup) {
 			this._fireGroupEvent(event.target);
+			event.preventDefault();
 		}
 	}
 
