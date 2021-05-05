@@ -1,25 +1,5 @@
-commit 55a7add78aa7c9cc53d9ed92dff991b540707d56
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Apr 29 02:56:22 2021 -0700
+commit 95986e2b8acfb3dd7d0390e9c7449471d9925680
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Wed May 5 15:58:54 2021 +0300
 
-    Translation Delivery (#3179)
-    
-    * chore: translation delivery
-    
-    Change-Id: Id0235c2e56d6f421ca4d6332a1da782aa7853cca
-    
-    * chore: translation delivery
-    
-    Change-Id: I55f9582c2a682485e2de7889673235f891766b80
-    
-    * chore: translation delivery
-    
-    Change-Id: If9868dcdbfeae510c28b60a86ad9d56ed994a119
-    
-    * chore: translation delivery
-    
-    Change-Id: I000206f60751c71880d1ee5d0f8d2e631055c897
-    
-    * chore: translation delivery
-    
-    Change-Id: I3e22ab190ed153b784c398e1f8f28189128cfdc2
+    fix(ui5-avatar-group): click event is fired only once (#3196)
