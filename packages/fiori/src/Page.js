@@ -129,6 +129,10 @@ const metadata = {
  * <h4>Footer</h4>
  * The footer is optional and occupies the fixed bottom part of the page. Alternatively, the footer can be floating above the bottom part of the content.
  * This is enabled with the <code>floatingFooter</code> property.
+ * 
+ * <b>Note:</b> <code>ui5-page</code> occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
+ * that there is enough space for the <code>ui5-page</code> to be rendered.
+ * 
  *
  * <h3>ES6 Module Import</h3>
  *
