@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.7](https://github.com/SAP/ui5-webcomponents/compare/v0.31.6...v0.31.7) (2021-05-10)
+
+
+### Bug Fixes
+
+* **ui5-busyindicator:** focus handling improvements ([#3189](https://github.com/SAP/ui5-webcomponents/issues/3189)) ([94a2f0b](https://github.com/SAP/ui5-webcomponents/commit/94a2f0b))
+
+
+
+
+
 ## [0.31.1](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.12...v0.31.1) (2021-03-22)
 
 

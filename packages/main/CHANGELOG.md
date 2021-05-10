@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.7](https://github.com/SAP/ui5-webcomponents/compare/v0.31.6...v0.31.7) (2021-05-10)
+
+
+### Bug Fixes
+
+* **ui5-busyindicator:** focus handling improvements ([#3189](https://github.com/SAP/ui5-webcomponents/issues/3189)) ([94a2f0b](https://github.com/SAP/ui5-webcomponents/commit/94a2f0b))
+* **ui5-carousel:** hide navigation arrows on mouse out ([#3174](https://github.com/SAP/ui5-webcomponents/issues/3174)) ([1f4ca0a](https://github.com/SAP/ui5-webcomponents/commit/1f4ca0a))
+* **ui5-input:** Suggestions count is read out when expected ([#3127](https://github.com/SAP/ui5-webcomponents/issues/3127)) ([adb5571](https://github.com/SAP/ui5-webcomponents/commit/adb5571)), closes [#3051](https://github.com/SAP/ui5-webcomponents/issues/3051)
+
+
+### Features
+
+* **ui5-dialog:** labeling of header slots is now possible ([#3155](https://github.com/SAP/ui5-webcomponents/issues/3155)) ([55d8a01](https://github.com/SAP/ui5-webcomponents/commit/55d8a01)), closes [#2838](https://github.com/SAP/ui5-webcomponents/issues/2838)
+
+
+
+
+
 ## [0.31.1](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.12...v0.31.1) (2021-03-22)
 
 
