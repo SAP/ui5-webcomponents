@@ -1,5 +1,7 @@
-commit 95986e2b8acfb3dd7d0390e9c7449471d9925680
+commit 8c0225ca152449509292e39c5d2067b11b4529d6
 Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Wed May 5 15:58:54 2021 +0300
+Date:   Mon May 10 15:50:42 2021 +0300
 
-    fix(ui5-avatar-group): click event is fired only once (#3196)
+    feat(ui5-product-switch): Implement accessibility specification (#2865)
+    
+    FIXES: #2707
