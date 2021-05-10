@@ -230,8 +230,8 @@ const metadata = {
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
- * <li>[SPACE, ENTER] - Fires the <code>ui5-click</code> event if the <code>interactive</code> property is set to true.</li>
- * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, releases the <code>ui5-avatar</code> without triggering the click event.</li>
+ * <li>[SPACE, ENTER, RETURN] - Fires the <code>ui5-click</code> event if the <code>interactive</code> property is set to true.</li>
+ * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the <code>ui5-avatar</code> without triggering the click event.</li>
  * </ul>
  * <br><br>
  *

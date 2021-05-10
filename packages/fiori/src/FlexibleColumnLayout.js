@@ -235,7 +235,7 @@ const metadata = {
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
- * <li>[SPACE, ENTER] - If focus is on the layout toggle button (arrow button) trigger the associated action (such as expand/collapse the column).</li>
+ * <li>[SPACE, ENTER, RETURN] - If focus is on the layout toggle button (arrow button), once activated, it triggers the associated action (such as expand/collapse the column).</li>
  * </ul>
  * <br><br>
  *
