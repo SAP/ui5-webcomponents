@@ -1,5 +1,7 @@
-commit 267fc025cca67550bcfb24afa1b3338e10d1c100
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue May 11 11:01:07 2021 +0300
+commit 32a41489c213f89d1b577466207525a7ccb91833
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Tue May 11 12:07:36 2021 +0300
 
-    feat(ui5-panel): expose content css part (#3211)
+    fix(ui5-list): focus after element when TAB key is pressed (#3220)
+    
+    If the "More" growing button is currently focused and the TAB key is pressed, focus is returning to the last focused ui5-li in the same list (focus trap). The focus is now moved to the next interactive element after the ui5-list, when TAB key is pressed.
