@@ -265,7 +265,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	get tooltip() {
-		return this.getAttribute('title') || this.defaultTooltip;
+		return this.getAttribute("title") || this.defaultTooltip;
 	}
 
 	get defaultTooltip() {
