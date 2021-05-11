@@ -1,7 +1,5 @@
-commit 8c0225ca152449509292e39c5d2067b11b4529d6
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Mon May 10 15:50:42 2021 +0300
+commit 267fc025cca67550bcfb24afa1b3338e10d1c100
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue May 11 11:01:07 2021 +0300
 
-    feat(ui5-product-switch): Implement accessibility specification (#2865)
-    
-    FIXES: #2707
+    feat(ui5-panel): expose content css part (#3211)
