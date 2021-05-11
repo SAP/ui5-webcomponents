@@ -119,58 +119,58 @@
 	background-color: var(--ui5-avatar-accent6);
 }
 
-:host([_background-color="Accent1"]),
-:host([background-color="Accent1"]) {
+:host([_background-design="Accent1"]),
+:host([background-design="Accent1"]) {
 	background-color: var(--ui5-avatar-accent1);
 }
 
-:host([_background-color="Accent2"]),
-:host([background-color="Accent2"]) {
+:host([_background-design="Accent2"]),
+:host([background-design="Accent2"]) {
 	background-color: var(--ui5-avatar-accent2);
 }
 
-:host([_background-color="Accent3"]),
-:host([background-color="Accent3"]) {
+:host([_background-design="Accent3"]),
+:host([background-design="Accent3"]) {
 	background-color: var(--ui5-avatar-accent3);
 }
 
-:host([_background-color="Accent4"]),
-:host([background-color="Accent4"]) {
+:host([_background-design="Accent4"]),
+:host([background-design="Accent4"]) {
 	background-color: var(--ui5-avatar-accent4);
 }
 
-:host([_background-color="Accent5"]),
-:host([background-color="Accent5"]) {
+:host([_background-design="Accent5"]),
+:host([background-design="Accent5"]) {
 	background-color: var(--ui5-avatar-accent5);
 }
 
-:host([_background-color="Accent6"]),
-:host([background-color="Accent6"]) {
+:host([_background-design="Accent6"]),
+:host([background-design="Accent6"]) {
 	background-color: var(--ui5-avatar-accent6);
 }
 
-:host([_background-color="Accent7"]),
-:host([background-color="Accent7"]) {
+:host([_background-design="Accent7"]),
+:host([background-design="Accent7"]) {
 	background-color: var(--ui5-avatar-accent7);
 }
 
-:host([_background-color="Accent8"]),
-:host([background-color="Accent8"]) {
+:host([_background-design="Accent8"]),
+:host([background-design="Accent8"]) {
 	background-color: var(--ui5-avatar-accent8);
 }
 
-:host([_background-color="Accent9"]),
-:host([background-color="Accent9"]) {
+:host([_background-design="Accent9"]),
+:host([background-design="Accent9"]) {
 	background-color: var(--ui5-avatar-accent9);
 }
 
-:host([_background-color="Accent10"]),
-:host([background-color="Accent10"]) {
+:host([_background-design="Accent10"]),
+:host([background-design="Accent10"]) {
 	background-color: var(--ui5-avatar-accent10);
 }
 
-:host([_background-color="Placeholder"]),
-:host([background-color="Placeholder"]) {
+:host([_background-design="Placeholder"]),
+:host([background-design="Placeholder"]) {
 	background-color: var(--ui5-avatar-placeholder);
 }
 

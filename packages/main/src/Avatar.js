@@ -16,7 +16,7 @@ import Icon from "./Icon.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarShape from "./types/AvatarShape.js";
 import AvatarFitType from "./types/AvatarFitType.js";
-import AvatarBackgroundColor from "./types/AvatarBackgroundColor.js";
+import AvatarBackgroundDesign from "./types/AvatarBackgroundDesign.js";
 
 /**
  * @public
@@ -166,21 +166,21 @@ const metadata = {
 		 * <li><code>Accent10</code></li>
 		 * <li><code>Placeholder</code></li>
 		 * </ul>
-		 * @type {AvatarBackgroundColor}
+		 * @type {AvatarBackgroundDesign}
 		 * @defaultvalue "Accent6"
 		 * @public
 		 */
-		backgroundColor: {
-			type: AvatarBackgroundColor,
-			defaultValue: AvatarBackgroundColor.Accent6,
+		backgroundDesign: {
+			type: AvatarBackgroundDesign,
+			defaultValue: AvatarBackgroundDesign.Accent6,
 		},
 
 		/**
 		 * @private
 		 */
-		_backgroundColor: {
+		_backgroundDesign: {
 			type: String,
-			defaultValue: AvatarBackgroundColor.Accent6,
+			defaultValue: AvatarBackgroundDesign.Accent6,
 		},
 
 		/**
@@ -294,7 +294,7 @@ class Avatar extends UI5Element {
 	 */
 	get _effectiveBackgroundColor() {
 		// we read the attribute, because the "background-color" property will always have a default value
-		return this.getAttribute("background-color") || this._backgroundColor;
+		return this.getAttribute("background-design") || this._backgroundDesign;
 	}
 
 	get validInitials() {
