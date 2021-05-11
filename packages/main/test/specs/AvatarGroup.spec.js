@@ -39,13 +39,13 @@ describe("avatar-group rendering", () => {
 		});
 	});
 
-	it("tests if _background-color attribute is automatically set to avatars", () => {
+	it("tests if _background-design attribute is automatically set to avatars", () => {
 		const avatars = browser.$$("#avatar-group-group ui5-avatar");
 
 		let index = 0;
 
 		avatars.forEach(avatar => {
-			const avatarBackgroundColor = avatar.getAttribute("_background-color");
+			const avatarBackgroundColor = avatar.getAttribute("_background-design");
 
 			if (++index > 10) {
 				index = 1;
