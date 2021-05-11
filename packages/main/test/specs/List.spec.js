@@ -354,4 +354,14 @@ describe("List Tests", () => {
 
 		assert.strictEqual(item3.getProperty("focused"), true, "disabled item is skipped");
 	});
+
+	it.only('should focus next interactive element if TAB is pressed when focus is on "More" growing button', () => {
+		const growingListButton = $('#growingListButton').shadow$("div[load-more-inner]");
+		const nextInteractiveElement = $('#nextInteractiveElement');
+			
+		growingListButton.click() // focus growing button
+		growingListButton.keys("Tab") // focus next list
+
+		assert.strictEqual(nextInteractiveElement.isFocused(), true, "Focus is moved to next interactive element.");
+	});
 });
