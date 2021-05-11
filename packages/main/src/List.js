@@ -666,6 +666,11 @@ class List extends UI5Element {
 			this._onLoadMoreClick();
 			this._loadMoreActive = true;
 		}
+
+		if (isTabNext(event)) {
+			this.setPreviouslyFocusedItem(event.target);
+			this.focusAfterElement();
+		}
 	}
 
 	_onLoadMoreKeyup(event) {
