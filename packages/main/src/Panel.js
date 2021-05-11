@@ -217,6 +217,15 @@ const metadata = {
  * clockwise/counter-clockwise.</li>
  * </ul>
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-panel</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>content - Used to style the wrapper of the content</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Panel";</code>

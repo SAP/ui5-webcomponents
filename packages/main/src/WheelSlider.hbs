@@ -19,14 +19,25 @@
 	<div id="{{this._id}}--selection-frame" class="ui5-wheelslider-selection-frame"></div>
 		<div id="{{this._id}}--wrapper" class="ui5-wheelslider-wrapper">
 			{{#if expanded}}
-				<ul id="{{this._id}}--items-list">
+				<ul id="{{this._id}}--items-list" role="listbox" aria-label="{{label}}">
 					{{#each _itemsToShow}}
-						<li class="ui5-wheelslider-item" data-item-index="{{@index}}" style="list-style-type: none;">{{this}}</li>
+						<li class="ui5-wheelslider-item"
+							data-item-index="{{@index}}"
+							role="option"
+							aria-selected="{{this.selected}}"
+							style="list-style-type: none;">
+							{{this.value}}
+						</li>
 					{{/each}}
 				</ul>
 			{{else}}
-				<ul id="{{this._id}}--items-list">
-					<li class="ui5-wheelslider-item" style="list-style-type: none;">{{value}}</li>
+				<ul id="{{this._id}}--items-list" role="listbox" aria-label="{{label}}">
+					<li class="ui5-wheelslider-item"
+						role="option"
+						aria-selected="true"
+						style="list-style-type: none;">
+						{{value}}
+					</li>
 				</ul>
 			{{/if}}
 		</div>

@@ -5832,10 +5832,10 @@ linkify-it@^2.0.0:
   dependencies:
     uc.micro "^1.0.1"
 
-lit-html@2.0.0-rc.2:
-  version "2.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.0.0-rc.2.tgz#c7ac652af1df7e5d8e32a3e6130221766d09cbde"
-  integrity sha512-rl3vtIQ0jq6r0GVbg+57Et9ra+iNhiz/v5V7uPTb6VxnjJaCCYKI7WkzKNlyzjMM2N/ytih3Uxb5vyyaOpjb0Q==
+lit-html@2.0.0-rc.3:
+  version "2.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.0.0-rc.3.tgz#1c216e548630e18d3093d97f4e29563abce659af"
+  integrity sha512-Y6P8LlAyQuqvzq6l/Nc4z5/P5M/rVLYKQIRxcNwSuGajK0g4kbcBFQqZmgvqKG+ak+dHZjfm2HUw9TF5N/pkCw==
   dependencies:
     "@types/trusted-types" "^1.0.1"
 
@@ -8698,9 +8698,9 @@ serve-handler@6.1.3:
     path-to-regexp "2.2.1"
     range-parser "1.2.0"
 
-"serve@github:vercel/serve#a85bd9d03ae267a492aac683616e028c0bfc6447":
+"serve@git://github.com/vercel/serve.git#a85bd9d03ae267a492aac683616e028c0bfc6447":
   version "11.3.2"
-  resolved "https://codeload.github.com/vercel/serve/tar.gz/a85bd9d03ae267a492aac683616e028c0bfc6447"
+  resolved "git://github.com/vercel/serve.git#a85bd9d03ae267a492aac683616e028c0bfc6447"
   dependencies:
     "@zeit/schemas" "2.6.0"
     ajv "6.12.6"

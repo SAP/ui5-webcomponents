@@ -20,6 +20,9 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header HTML Element.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
+		 * <code>accessibleName</code> should be used.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -51,6 +54,20 @@ const metadata = {
 		 * @public
 		 */
 		headerText: {
+			type: String,
+		},
+
+		/**
+		 * Defines the accessible name of the dialog when <code>header</code> slot is provided.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> If <code>aria-label</code> is provided, <code>accessibleName</code> will be ignored.
+
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		accessibleName: {
 			type: String,
 		},
 
@@ -205,7 +222,22 @@ class Dialog extends Popup {
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
-		return (this.ariaLabel || this.header.length) ? undefined : "ui5-popup-header-text";
+		let ariaLabelledById;
+
+		if (this.headerText !== "" && !this.ariaLabel) {
+			ariaLabelledById = "ui5-popup-header-text";
+		}
+
+		return ariaLabelledById;
+	}
+
+	get _ariaLabel() {
+		let ariaLabel;
+
+		if (this.header.length > 0 && !!this.accessibleName) {
+			ariaLabel = this.accessibleName;
+		}
+		return this.ariaLabel ? this.ariaLabel : ariaLabel;
 	}
 
 	get _ariaModal() { // Required by Popup.js

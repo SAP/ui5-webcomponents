@@ -25,7 +25,7 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
-    "lit-html": "2.0.0-rc.2"
+    "lit-html": "2.0.0-rc.3"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.14",
