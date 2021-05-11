@@ -16,7 +16,7 @@ describe("Rating Indicator general interaction", () => {
 	it("Tests max-value property", () => {
 		const ratingIndicator = browser.$("#rating-indicator2");
 
-		assert.strictEqual(ratingIndicator.shadow$$(".ui5-rating-indicator-icon").length, 10, "Basic rating indicator renders 5 stars");
+		assert.strictEqual(ratingIndicator.shadow$$(".ui5-rating-indicator-icon").length, 10, "Basic rating indicator renders 10 stars");
 	});
 
 	it("Tests clicking on star", () => {
@@ -77,5 +77,12 @@ describe("Rating Indicator general interaction", () => {
 
 		assert.strictEqual(ratingIndicator.getAttribute("title"), TOOLTIP,
 			"The default tooltip is displayed");
+	});
+
+	it("Tests ACC attrs - title attribute provided", () => {
+		const ratingIndicator = browser.$("#rating-indicator-title").shadow$(".ui5-rating-indicator-root");
+		const TOOLTIP = "Test";
+
+		assert.strictEqual(ratingIndicator.getAttribute("title"), TOOLTIP, "The title attribute is rendered in the inner div as well.");
 	});
 });
