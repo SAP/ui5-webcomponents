@@ -38,7 +38,7 @@ bdi {
 
 :host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper,
 :host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper.ui5-label-text-wrapper-safari {
-	max-width: calc(100% - .85rem);
+	max-width: calc(100% - .8rem);
 }
 
 :host(:not([wrap])[required]) .ui5-label-text-wrapper {
