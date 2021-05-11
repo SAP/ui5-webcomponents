@@ -44,9 +44,9 @@ const metadata = {
 		 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
 		 * @type {boolean}
 		 * @public
-		 * @since 1.0.0-rc.12
+		 * @since 1.0.0-rc.15
 		 */
-		moreColors: {
+		showMoreColors: {
 			type: Boolean,
 		},
 
@@ -101,7 +101,7 @@ const metadata = {
  *
  * <h3>Usage</h3>
  * The Colorpalette is intended for users that needs to select a color from a predefined set of colors.
- * To allow users select any color from a color picker, enable the <code>more-colors</code> property.
+ * To allow users select any color from a color picker, enable the <code>show-more-colors</code> property.
  * And, to display the most recent color selection, enable the <code>show-recent-colors</code> property.
  *
  * <h3>ES6 Module Import</h3>
@@ -168,7 +168,7 @@ class ColorPalette extends UI5Element {
 			item.index = index + 1;
 		});
 
-		if (this.moreColors) {
+		if (this.showMoreColors) {
 			const ColorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
 			if (ColorPaletteMoreColors) {
 				this.moreColorsFeature = new ColorPaletteMoreColors();
@@ -250,8 +250,8 @@ class ColorPalette extends UI5Element {
 		return this.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT);
 	}
 
-	get showMoreColors() {
-		return this.moreColors && this.moreColorsFeature;
+	get _showMoreColors() {
+		return this.showMoreColors && this.moreColorsFeature;
 	}
 
 	get recentColors() {
