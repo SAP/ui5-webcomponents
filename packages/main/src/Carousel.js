@@ -86,10 +86,11 @@ const metadata = {
 		/**
 		 * If set to true the navigation is hidden.
 		 * @type {boolean}
+		 * @since 1.0.0-rc.15
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideNavigation: {
+		hideNavigationArrows: {
 			type: Boolean,
 		},
 
@@ -434,6 +435,10 @@ class Carousel extends UI5Element {
 		return index >= 0 && index <= this.pagesCount - 1;
 	}
 
+	get hasManyPages() {
+		return this.pagesCount > 1;
+	}
+
 	get styles() {
 		return {
 			content: {
@@ -450,12 +455,12 @@ class Carousel extends UI5Element {
 			content: {
 				"ui5-carousel-content": true,
 				"ui5-carousel-content-no-animation": this.supressAimation,
-				"ui5-carousel-content-has-navigation": this.showNavigation,
-				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-content-has-navigation": this.hasManyPages,
+				"ui5-carousel-content-has-navigation-and-buttons": this.hasManyPages && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.showNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-navigation-with-buttons": this.hasManyPages && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			navPrevButton: {
 				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
@@ -490,11 +495,11 @@ class Carousel extends UI5Element {
 	}
 
 	get arrows() {
-		const showArrows = this._visibleNavigationArrows && this.showNavigation && isDesktop();
+		const showArrows = this._visibleNavigationArrows && this.hasManyPages && isDesktop();
 
 		return {
-			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: !this.hideNavigationArrows && showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: !this.hideNavigationArrows && showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
@@ -516,10 +521,6 @@ class Carousel extends UI5Element {
 
 	get selectedIndexToShow() {
 		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedIndex) + 1 : this.selectedIndex + 1;
-	}
-
-	get showNavigation() {
-		return !this.hideNavigation && this.pagesCount > 1;
 	}
 
 	get ofText() {
