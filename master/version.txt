@@ -1,7 +1,10 @@
-commit 32a41489c213f89d1b577466207525a7ccb91833
+commit db04d08d6a06dec0131ff96a8fcc16c59932d9f4
 Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Tue May 11 12:07:36 2021 +0300
+Date:   Wed May 12 09:55:15 2021 +0300
 
-    fix(ui5-list): focus after element when TAB key is pressed (#3220)
+    feat(ui5-list): support pressing DELETE key (#3226)
     
-    If the "More" growing button is currently focused and the TAB key is pressed, focus is returning to the last focused ui5-li in the same list (focus trap). The focus is now moved to the next interactive element after the ui5-list, when TAB key is pressed.
+    Add DELETE shortcut key for deleting items when `mode` property is `Delete`.
+    Also, remove the delete button from the tab chain.
+    
+    Related to: #3089
