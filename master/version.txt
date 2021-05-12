@@ -1,9 +1,7 @@
-commit 1166fb4880d238d6fd55ac9b8514696b196cb5b2
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed May 12 10:32:28 2021 +0300
+commit 561c73331f720bb65526dec7a4a4a5d151e0776d
+Author: Hristo Petrov <h.petrov@sap.com>
+Date:   Wed May 12 11:16:14 2021 +0300
 
-    fix(ui5-input): change public method to private (#3224)
+    refactor(ui5-rating-indicator): remove private property "title" (#3221)
     
-    Change public method to private. Related to #3107
-    
-    BREAKING CHANGE: the isOpen method that used to return if the value state popover is open or closed has been removed.
+    Remove private property "title" on the web component level. The 'title' property of the inner div will be still synced with the provided one. In case no title is provided - the default from the internationalisation bundle will be taken.
