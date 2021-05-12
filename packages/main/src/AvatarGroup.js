@@ -70,26 +70,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines predefined size of the <code>ui5-avatar</code>.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>XS</code></li>
-		 * <li><code>S</code></li>
-		 * <li><code>M</code></li>
-		 * <li><code>L</code></li>
-		 * <li><code>XL</code></li>
-		 * </ul>
-		 * @type {AvatarSize}
-		 * @defaultValue "S"
-		 * @public
-		 */
-		avatarSize: {
-			type: String,
-			defaultValue: AvatarSize.S,
-		},
-
-		/**
 		 * @private
 		 */
 		_overflowButtonText: {
@@ -406,11 +386,6 @@ class AvatarGroup extends UI5Element {
 			if (!avatar.getAttribute("background-color")) {
 				// AvatarGroup respects colors set to ui5-avatar
 				avatar.setAttribute("_background-color", AvatarBackgroundColor[`Accent${colorIndex}`]);
-			}
-
-			if (!avatar.getAttribute("size")) {
-				// AvatarGroup respects sizes set to ui5-avatar
-				avatar.setAttribute("_size", this.avatarSize);
 			}
 
 			// last avatar should not be offset as it breaks the container width and focus styles are no set correctly
