@@ -1,7 +1,17 @@
-commit 561c73331f720bb65526dec7a4a4a5d151e0776d
-Author: Hristo Petrov <h.petrov@sap.com>
-Date:   Wed May 12 11:16:14 2021 +0300
+commit 68e65f3caa60e4134010a6e4f9cde3fec6cd51b5
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Wed May 12 02:03:16 2021 -0700
 
-    refactor(ui5-rating-indicator): remove private property "title" (#3221)
+    Translation Delivery (#3214)
     
-    Remove private property "title" on the web component level. The 'title' property of the inner div will be still synced with the provided one. In case no title is provided - the default from the internationalisation bundle will be taken.
+    * chore: translation delivery
+    
+    Change-Id: I28d7eb0bcadcaa7a36ca8ac09a4162f1d8c40c1f
+    
+    * chore: translation delivery
+    
+    Change-Id: I0dcca06ed4e937fa79aa88c233a444c644beb289
+    
+    * chore: translation delivery
+    
+    Change-Id: Ide049d728989c58ba4d40af7f5daf84866c131c5
