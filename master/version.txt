@@ -1,10 +1,5 @@
-commit db04d08d6a06dec0131ff96a8fcc16c59932d9f4
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Wed May 12 09:55:15 2021 +0300
+commit 25208e7597fc109e5862fa4160262c02bc243ca3
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed May 12 10:17:39 2021 +0300
 
-    feat(ui5-list): support pressing DELETE key (#3226)
-    
-    Add DELETE shortcut key for deleting items when `mode` property is `Delete`.
-    Also, remove the delete button from the tab chain.
-    
-    Related to: #3089
+    docs: rename param from oDate to date (#3223)
