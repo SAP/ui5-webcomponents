@@ -291,6 +291,10 @@ class RatingIndicator extends UI5Element {
 	get _ariaDisabled() {
 		return this.disabled || undefined;
 	}
+
+	get ariaReadonly() {
+		return this.readonly ? "true" : undefined;
+	}
 }
 
 RatingIndicator.define();
