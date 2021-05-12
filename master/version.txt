@@ -1,17 +1,5 @@
-commit 68e65f3caa60e4134010a6e4f9cde3fec6cd51b5
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed May 12 02:03:16 2021 -0700
+commit 2621a405276a700065047dff3fb6d34c19641270
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Wed May 12 14:42:47 2021 +0300
 
-    Translation Delivery (#3214)
-    
-    * chore: translation delivery
-    
-    Change-Id: I28d7eb0bcadcaa7a36ca8ac09a4162f1d8c40c1f
-    
-    * chore: translation delivery
-    
-    Change-Id: I0dcca06ed4e937fa79aa88c233a444c644beb289
-    
-    * chore: translation delivery
-    
-    Change-Id: Ide049d728989c58ba4d40af7f5daf84866c131c5
+    docs(ui5-table-column): Enhance documentation about minWidth property (#3230)
