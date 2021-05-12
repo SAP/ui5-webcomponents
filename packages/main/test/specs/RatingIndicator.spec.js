@@ -68,6 +68,8 @@ describe("Rating Indicator general interaction", () => {
 
 	it("Tests ACC attrs", () => {
 		const ratingIndicator = browser.$("#rating-indicator1").shadow$(".ui5-rating-indicator-root");
+		const ratingIndicatorReadOnly = browser.$("#rating-indicator-readonly").shadow$(".ui5-rating-indicator-root");
+
 		const TOOLTIP = "Rating";
 		const ARIA_LABEL = "Hello World";
 
@@ -76,5 +78,8 @@ describe("Rating Indicator general interaction", () => {
 
 		assert.strictEqual(ratingIndicator.getAttribute("title"), TOOLTIP,
 			"The default tooltip is displayed");
+
+		assert.notOk(ratingIndicator.getAttribute("aria-readonly"), "The aria-readonly attribute is not presented");
+		assert.strictEqual(ratingIndicatorReadOnly.getAttribute("aria-readonly"), 'true', "The aria-readonly attribute is presented");
 	});
 });
