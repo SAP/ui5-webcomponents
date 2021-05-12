@@ -366,10 +366,11 @@ const metadata = {
  * <li>[END] - Navigates to the last item</li>
  * </ul>
  *
- * The user can use the following keyboard shortcuts to perform selection,
+ * The user can use the following keyboard shortcuts to perform actions (such as select, delete),
  * when the <code>mode</code> property is in use:
  * <ul>
  * <li>[SPACE] - Select an item (if <code>type</code> is 'Active') when <code>mode</code> is selection</li>
+ * <li>[DELETE] - Delete an item if <code>mode</code> property is <code>Delete</code></li>
  * </ul>
  * <br><br>
  *
