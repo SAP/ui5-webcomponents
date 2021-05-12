@@ -447,8 +447,8 @@ class TimeSelection extends UI5Element {
 		return dateFormat;
 	}
 
-	formatValue(oDate) {
-		return this.getFormat().format(oDate);
+	formatValue(date) {
+		return this.getFormat().format(date);
 	}
 
 	get dateValue() {
