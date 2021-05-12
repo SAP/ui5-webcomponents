@@ -4,6 +4,8 @@
 
 .ui5-segmentedbutton-root {
 	display: flex;
+    margin: 0;
+    padding: 0;
 }
 
 ::slotted([ui5-segmentedbutton-item]) {
