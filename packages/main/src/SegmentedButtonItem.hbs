@@ -1,0 +1,47 @@
+<li
+        class="ui5-segmentedbutton-item-root"
+        ?disabled="{{disabled}}"
+        data-sap-focus-ref
+        {{> ariaPressed}}
+        dir="{{effectiveDir}}"
+        @focusout={{_onfocusout}}
+        @focusin={{_onfocusin}}
+        @click={{_onclick}}
+        @mousedown={{_onmousedown}}
+        @mouseup={{_onmouseup}}
+        @keydown={{_onkeydown}}
+        @keyup={{_onkeyup}}
+        @touchstart="{{_ontouchstart}}"
+        @touchend="{{_ontouchend}}"
+        tabindex={{tabIndexValue}}
+        aria-expanded="{{accInfo.ariaExpanded}}"
+        aria-controls="{{accInfo.ariaControls}}"
+        aria-haspopup="{{accInfo.ariaHaspopup}}"
+        aria-label="{{ariaLabelText}}"
+        title="{{accInfo.title}}"
+>
+    {{#if icon}}
+        <ui5-icon
+                style="{{styles.icon}}"
+                class="ui5-button-icon"
+                name="{{icon}}"
+                ?show-tooltip={{showIconTooltip}}
+        ></ui5-icon>
+    {{/if}}
+
+    <span id="{{_id}}-content" class="ui5-button-text">
+		<bdi>
+			<slot></slot>
+		</bdi>
+	</span>
+</li>
+
+{{#*inline "ariaPressed"}}
+    aria-pressed="{{pressed}}"
+    selected="{{pressed}}"
+    role="option"
+    aria-multiselectable="true"
+    aria-roledescription="Segmented button"
+    aria-posinset="{{posinset}}"
+    aria-setsize="{{setsize}}"
+{{/inline}}

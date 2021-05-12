@@ -6,7 +6,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
-import ToggleButton from "./ToggleButton.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
 
 // Template
 import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTemplate.lit.js";
@@ -29,7 +29,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Multiple buttons are allowed.
 		 * <br><br>
-		 * <b>Note:</b> Use the <code>ui5-togglebutton</code> for the intended design.
+		 * <b>Note:</b> Use the <code>ui5-segmentedbutton-item</code> for the intended design.
 		 * @type {sap.ui.webcomponents.main.IButton[]}
 		 * @slot buttons
 		 * @public
@@ -97,7 +97,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	static get dependencies() {
-		return [ToggleButton];
+		return [SegmentedButtonItem];
 	}
 
 	static async onDefine() {
@@ -128,7 +128,17 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		// let length = 0;
 		this.normalizeSelection();
+
+		// this.getSlottedNodes("buttons").forEach((item, index) => {
+		// 	item.posinset = index + 1;
+		// 	length += 1;
+		// });
+		//
+		// this.getSlottedNodes("buttons").forEach((item, index) => {
+		// 	item.setsize = length;
+		// });
 	}
 
 	async onAfterRendering() {
@@ -236,7 +246,7 @@ class SegmentedButton extends UI5Element {
 	 * Currently selected button.
 	 *
 	 * @readonly
-	 * @type { ui5-togglebutton }
+	 * @type { ui5-segmentedbutton-item }
 	 * @public
 	 */
 	get selectedButton() {
