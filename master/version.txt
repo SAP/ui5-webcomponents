@@ -1,5 +1,5 @@
-commit 2621a405276a700065047dff3fb6d34c19641270
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Wed May 12 14:42:47 2021 +0300
+commit 921ac5a03043b01aad23328039c56c82afbbc94a
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu May 13 10:26:39 2021 +0300
 
-    docs(ui5-table-column): Enhance documentation about minWidth property (#3230)
+    fix(ui5-label): fix required label in safari (#3182)
