@@ -1,7 +1,7 @@
 # Configuration
 
 
-## Configuration settings
+## Configuration Settings
 
 There are several configuration settings that affect all UI5 Web Components globally.
 
@@ -10,14 +10,14 @@ There are several configuration settings that affect all UI5 Web Components glob
 | [theme](#theme)                               | sap_fiori_3, sap_fiori_3_dark, sap_fiori_3_hcb, sap_fiori_3_hcw, sap_belize, sap_belize_hcb, sap_belize_hcw | sap_fiori_3   | Visual theme                                                                                                                                                                    |
 | language                                      | en, de, es, etc...                                                                                          | en            | Language to be used for translatable texts                                                                                                                                      |
 | [animationMode](#animationMode)               | full, basic, minimal, none                                                                                  | full          | Defines different animation scenarios or levels                                                                                                                                 |
-| calendarType                                  | Gregorian, Islamic, Buddhist, Japanese, Persian                                                             | Gregorian     | Default calendar type for date-related web components                                                                                                                           |
+| calendarType                                  | Gregorian, Islamic, Buddhist, Japanese, Persian                                                             | Gregorian     | Default calendar type for date-related Web Components                                                                                                                           |
 | [noConflict](#noConflict)                     | true, false                                                                                                 | false         | When set to true, all events will be fired with a "ui5-" prefix only                                                                                                            |
 | [formatSettings](#formatSettings)             | See the [Format settings](#formatSettings) section below                                                    | Empty object  | Allows to override locale-specific configuration                                                                                                                                |
 | [fetchDefaultLanguage](#fetchDefaultLanguage) | true, false                                                                                                 | false         | The default language is inlined at build time and will be used. Change this to `true` if you want the i18n to be always fetched from the network even for the default language. |
 
 ### Content Density
 
-UI5 Web Components contain different content densities for certain controls that allow your app to adapt to the device in question, allowing you to display larger controls for touch-enabled devices, and a smaller more compact design for devices that are operated by mouse. Cosy size is the default density for all components. Compact size could be set by adding a class `ui5-content-density-compact` to an html element. It cascades all the way down and enforces compact density (smaller margins/paddings, smaller touch areas, etc).
+UI5 Web Components contain different content densities for certain controls that allow your app to adapt to the device in question. Thus you can display larger controls for touch-enabled devices, and a smaller more compact design for devices that are operated by mouse. Cozy size is the default density for all components. Compact size could be set by adding a class `ui5-content-density-compact` to an HTML element. It cascades all the way down and enforces compact density (smaller margins/paddings, smaller touch areas, etc).
 
 ### Theme
 <a name="theme"></a>
@@ -34,7 +34,7 @@ The `theme` setting values above are the technical names of our themes.
 ### RTL
 **Deprecated as of 1.0.0-rc.8**
 
-In order to have RTL mode, just set the HTML attribute `dir` to `rtl` on the `body`, `html` or any other relevant region of your application.
+For RTL mode, just set the HTML attribute `dir` to `rtl` on the `body`, `html` or any other relevant region of your application.
 
 The `RTL` configuration setting should not be used by applications. It is only internally used for specific integration scenarios.
 
@@ -58,18 +58,18 @@ Animation modes allow to specify different animation scenarios or levels.
  - When `minimal`, animations of fundamental functionalities are included.
  - When `none`, all animations are completely suspended.
 
-*Please note that each component determines which animations would run for a specific mode.*
+*Please, note that each component determines which animations would run for a specific mode.*
 
 <a name="noConflict"></a>
-### No conflict
+### No Conflict
 
-By default UI5 Web Components fire all custom events twice - once with the documented name (e.g. `change`), and once more with a `ui5-` prefix (e.g. `ui5-change`).
+By default, UI5 Web Components fire all custom events twice - once with the documented name (e.g. `change`), and once more with a `ui5-` prefix (e.g. `ui5-change`).
 For example, when the `ui5-switch` is toggled, it fires a `change` event, but also a `ui5-change` event.
 
 The `noConflict` configuration setting allows certain control over this behavior:
- - When `false` (default value) all custom events are fired with and without the `ui5-` prefix.
- - When `true` all custom events are fired with the `ui5-` prefix **only**.
- This is handy for example, if the name of an event happens to collide with the name of an event provided by a third-party library.
+ - When `false` (default value), all custom events are fired with and without the `ui5-` prefix.
+ - When `true`, all custom events are fired with the `ui5-` prefix **only**.
+ This is handy, for example, if the name of an event happens to collide with the name of an event provided by a third-party library.
  - When an object is supplied, just the specified events will be fired with the `ui5-` prefix **only**.
  All other events will be fired normally - once with the prefix, and once without it.
  The format of this object is as follows:
@@ -78,13 +78,13 @@ The `noConflict` configuration setting allows certain control over this behavior
 	 "events": ["selection-change", "header-click"]
  }
  ```
- *Please note that other keys may be added to this object in the future for the purpose of name conflict resolution.*
+ *Please, note that other keys may be added to this object in the future for the purpose of name conflict resolution.*
 
  In the above example, only the `selection-change` and `header-click` events will be fired with a prefix.
  You can still use them by listening to `ui5-selection-change` and `ui5-header-click`, but the names `selection-change` and `header-click` will be
  free for use by other UI components and libraries without name collision.
 
-### Format settings
+### Format Settings
 <a name="formatSettings"></a>
 
 For example, to force the first day of week to Sunday, no matter the locale:
@@ -102,14 +102,14 @@ For example, to force the first day of week to Sunday, no matter the locale:
 firstDayOfWeek | 0 (Sunday) through 6 (Saturday) | *Depends on locale* | When set, overrides the locale's default value
 
 
-### Fetching the default language
+### Fetching the Default Language
 <a name="fetchDefaultLanguage"></a>
 
-All texts used by components are inlined during build time so that components look and feel normally when prototyping. The inlined text is decided at build time (`en` unless configured otherwise).
+All texts used by components are inlined during build time so that components have the normal look and feel when prototyping. The inlined text is decided at build time (`en` unless configured otherwise).
 
-Since the default language is inlined, it makes no sense to fetch it again from the network along with the normal assets for other locales, so the default behaviour is to use the inlined text.
+Since the default language is inlined, it makes no sense to fetch it again from the network along with the normal assets for other locales, so the default behavior is to use the inlined text.
 
-If for some reason it is necessary to fetch the default language text from the network as well, use this setting.
+If, for some reason it is necessary to fetch the default language text from the network as well, use this setting.
 
 Example:
 ```html
@@ -120,7 +120,7 @@ Example:
 </script>
 ```
 
-## Configuration script
+## Configuration Script
 
 In order to provide configuration settings, include the following ```<script>``` element in your HTML page:
 
