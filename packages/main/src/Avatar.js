@@ -182,7 +182,7 @@ const metadata = {
 		 * Receives the desired <code>&lt;img&gt;</code> tag
 		 *
 		 * <b>Note:</b> If you experience flickering of the provided image, you can hide the component until it is being defined with the following CSS:
-		 * <br />
+		 * <br /> <br />
 		 * <code>
 		 *		ui5-avatar:not(:defined) { <br />
 		 *			&nbsp;visibility: hidden; <br />
