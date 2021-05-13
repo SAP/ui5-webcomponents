@@ -1,6 +1,10 @@
 <li
-        type="button"
-        class="ui5-button-root"
+        role="option"
+        aria-roledescription="Segmented button"
+        aria-posinset="{{posinset}}"
+        aria-setsize="{{setsize}}"
+        aria-selected="{{pressed}}"
+        class="ui5-button-root ui5-segemntedbutton-item-root"
         ?disabled="{{disabled}}"
         data-sap-focus-ref
     {{> ariaPressed}}
@@ -20,7 +24,6 @@
         aria-haspopup="{{accInfo.ariaHaspopup}}"
         aria-label="{{ariaLabelText}}"
         title="{{accInfo.title}}"
-        part="button"
 >
     {{#if icon}}
         <ui5-icon
@@ -37,9 +40,6 @@
 		</bdi>
 	</span>
 
-    {{#if hasButtonType}}
-        <span class="ui5-hidden-text">{{buttonTypeText}}</span>
-    {{/if}}
 </li>
 
 {{#*inline "ariaPressed"}}{{/inline}}

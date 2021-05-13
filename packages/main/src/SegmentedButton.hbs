@@ -2,7 +2,10 @@
 	@click="{{_onclick}}"
 	@focusin="{{_onfocusin}}"
 	class="ui5-segmentedbutton-root"
-	role="group"
+	role="listbox"
+    aria-multiselectable="true"
+    aria-describedby="__text16"
+    tabindex="-1"
 	dir="{{effectiveDir}}"
 	aria-roledescription="{{ariaDescription}}"
 >

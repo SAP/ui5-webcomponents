@@ -128,17 +128,17 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		// let length = 0;
+		let length = 0;
 		this.normalizeSelection();
 
-		// this.getSlottedNodes("buttons").forEach((item, index) => {
-		// 	item.posinset = index + 1;
-		// 	length += 1;
-		// });
-		//
-		// this.getSlottedNodes("buttons").forEach((item, index) => {
-		// 	item.setsize = length;
-		// });
+		this.getSlottedNodes("buttons").forEach((item, index) => {
+			item.posinset = index + 1;
+			length += 1;
+		});
+
+		this.getSlottedNodes("buttons").forEach((item, index) => {
+			item.setsize = length;
+		});
 	}
 
 	async onAfterRendering() {
