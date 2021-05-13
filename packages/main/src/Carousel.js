@@ -460,7 +460,7 @@ class Carousel extends UI5Element {
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.hasManyPages && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-navigation-with-buttons": this.hasManyPages && (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows),
 			},
 			navPrevButton: {
 				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
