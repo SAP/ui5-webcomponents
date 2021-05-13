@@ -96,7 +96,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		inset: {
+		indent: {
 			type: Boolean,
 		},
 
