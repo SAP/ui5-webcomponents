@@ -1,5 +1,5 @@
-commit 6d54d1dad37d9c09ee5c36ef4a9189084c4c8ec5
+commit 2ba71534044a53d9823506afb5cfa9ff422d118b
 Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
-Date:   Thu May 13 16:27:21 2021 +0300
+Date:   Thu May 13 16:51:44 2021 +0300
 
-    Update Configuration.md (#3232)
+    docs: Update Public Module Imports.md (#3246)
