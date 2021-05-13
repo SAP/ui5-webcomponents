@@ -567,6 +567,10 @@ class ComboBox extends UI5Element {
 		});
 	}
 
+	async focus() {
+		return this.inner.focus();
+	}
+
 	handleArrowKeyPress(event) {
 		if (this.readonly || !this._filteredItems.length) {
 			return;
