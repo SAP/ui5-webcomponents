@@ -74,8 +74,12 @@ const metadata = {
 		 * &lt;/ui5-input>
 		 * <br>
 		 * <ui5-input show-suggestions>
+		 * <ui5-suggestion-group-item text="Group #1"></ui5-suggestion-group-item>
 		 * <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
 		 * <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
+		 * <ui5-suggestion-group-item text="Group #2"></ui5-suggestion-group-item>
+		 * <ui5-suggestion-item text="Item #3"></ui5-suggestion-item>
+		 * <ui5-suggestion-item text="Item #4"></ui5-suggestion-item>
 		 * </ui5-input>
 		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
@@ -453,7 +457,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Input
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
- * @appenddocs SuggestionItem
+ * @appenddocs SuggestionItem SuggestionGroupItem
  * @implements sap.ui.webcomponents.main.IInput
  * @public
  */

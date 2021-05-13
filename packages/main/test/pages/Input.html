@@ -53,11 +53,11 @@
 	<br/>
 	<h3>Input suggestions with grouping</h3>
 	<ui5-input id="myInputGrouping" show-suggestions style="width: 100%">
-		<ui5-suggestion-item group text="Content Density"></ui5-suggestion-item>
+		<ui5-suggestion-group-item text="Content Density"></ui5-suggestion-group-item>
 		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
-		<ui5-suggestion-item group text="Themes"></ui5-suggestion-item>
+		<ui5-suggestion-group-item text="Themes"></ui5-suggestion-group-item>
 		<ui5-suggestion-item type="Inactive" text="Inactive Quartz"></ui5-suggestion-item>
 		<ui5-suggestion-item type="Inactive" text="Inactive HCB"></ui5-suggestion-item>
 	</ui5-input>
@@ -390,15 +390,25 @@
 			}
 
 			suggestionItems.forEach(function(item, idx) {
-				var suggestion = document.createElement("ui5-suggestion-item");
-				suggestion.id = item.key;
-				suggestion.icon = "world";
-				suggestion.info = "explore";
-				suggestion.group = item.text.length === 1;
-				suggestion.infoState = "Success";
-				suggestion.description = "travel the world";
-				suggestion.text = item.text
-				input.appendChild(suggestion);
+				let suggestion;
+				const groupItem = item.text.length === 1;
+
+				if (groupItem) {
+					suggestion = document.createElement("ui5-suggestion-group-item");
+					suggestion.id = item.key;
+					suggestion.text = item.text;
+					input.appendChild(suggestion);
+				} else {
+					suggestion = document.createElement("ui5-suggestion-item");
+					suggestion.id = item.key;
+					suggestion.icon = "world";
+					suggestion.info = "explore";
+					suggestion.group = item.text.length === 1;
+					suggestion.infoState = "Success";
+					suggestion.description = "travel the world";
+					suggestion.text = item.text
+					input.appendChild(suggestion);
+				}
 			});
 
 			labelLiveChange.innerHTML = "Event [input] :: " + value;

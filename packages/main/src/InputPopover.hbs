@@ -92,7 +92,7 @@
 {{#*inline "suggestionsList"}}
 	<ui5-list separators="{{suggestionSeparators}}">
 		{{#each suggestionsTexts}}
-			{{#if group}}
+			{{#if groupItem}}
 				<ui5-li-groupheader data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-groupheader>
 			{{else}}
 				<ui5-li-suggestion-item

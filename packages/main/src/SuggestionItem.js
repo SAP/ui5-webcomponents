@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import SuggestionListItem from "./SuggestionListItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
 import ListItemType from "./types/ListItemType.js";
 
 /**
@@ -109,20 +108,6 @@ const metadata = {
 			type: ValueState,
 			defaultValue: ValueState.None,
 		},
-
-		/**
-		 * Defines the item to be displayed as a group item.
-		 * <br><br>
-		 * <b>Note:</b>
-		 * When set, the other properties, such as <code>image</code>, <code>icon</code>, <code>description</code>, etc. will be omitted
-		 * and only the <code>text</code> will be displayed.
-		 * @type {boolean}
-         * @defaultvalue false
-		 * @public
-		 */
-		group: {
-			type: Boolean,
-		},
 	},
 	slots: /** @lends  sap.ui.webcomponents.main.SuggestionItem.prototype */ {
 	},
@@ -150,7 +135,6 @@ class SuggestionItem extends UI5Element {
 	static get dependencies() {
 		return [
 			SuggestionListItem,
-			GroupHeaderListItem,
 		];
 	}
 }
