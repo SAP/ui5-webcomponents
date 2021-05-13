@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 
 import {
 	isEnter,
@@ -108,25 +107,12 @@ const metadata = {
 		 * <li> the default "More" overflow button when <code>type</code> is <code>Individual</code></li>
 		 * </ul>
 		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 *
-		 * <li> None - the aria-haspopup attribute will not be rendered.</li>
-		 * <li> Menu - Indicates the popup is a menu.</li>
-		 * <li> Listbox - Indicates the popup is a listbox.</li>
-		 * <li> Tree - Indicates the popup is a tree.</li>
-		 * <li> Grid - Indicates the popup is a grid.</li>
-		 * <li> Dialog - Indicates the popup is a dialog.</li>
-		 *
-		 * </ul>
-		 * @type {AriaHasPopup}
-		 * @defaultValue "None"
+		 * @type String
 		 * @since 1.0.0-rc.15
-		 * @public
+		 * @protected
 		 */
 		ariaHaspopup: {
-			type: AriaHasPopup,
-			defaultValue: AriaHasPopup.None,
+			type: String,
 		},
 
 		/**
@@ -362,7 +348,7 @@ class AvatarGroup extends UI5Element {
 		return this._isGroup ? undefined : this.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL);
 	}
 
-	get _ariaHasPopup() {
+	get _containerAriaHasPopup() {
 		return this._isGroup ? this._getAriaHasPopup() : undefined;
 	}
 
@@ -615,11 +601,11 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_getAriaHasPopup() {
-		if (this.ariaHaspopup === AriaHasPopup.None) {
+		if (this.ariaHaspopup === '') {
 			return;
 		}
 
-		return this.ariaHaspopup.toLowerCase();
+		return this.ariaHaspopup;
 	}
 }
 
