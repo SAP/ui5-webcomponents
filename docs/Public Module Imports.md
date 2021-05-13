@@ -1,20 +1,18 @@
-# Public module imports
+# Public Module Imports
 
-This is a comprehensive list of public module imports by package, intended for *App development*, i.e. consumption
-of the UI5 Web Components.
-
-Modules, intended purely for developing your own UI5 Web Components,
+This is a comprehensive list of public module imports by package, intended for app development, i.e. consumption
+of the UI5 Web Components. Modules, intended purely for developing your own UI5 Web Components,
 are therefore not listed here.
 
-Table of contents:
- - [Main package - @ui5/webcomponents](#main)
- - [Fiori package - @ui5/webcomponents-fiori](#fiori)
- - [Icons package - @ui5/webcomponents-icons](#icons)
- - [Icons-TNT package - @ui5/webcomponents-icons-tnt](#icons-tnt)
- - [Base package - @ui5/webcomponents-base](#base)
+Table of Contents:
+ - [Main Package - @ui5/webcomponents](#main)
+ - [Fiori Package - @ui5/webcomponents-fiori](#fiori)
+ - [Icons Package - @ui5/webcomponents-icons](#icons)
+ - [Icons-TNT Package - @ui5/webcomponents-icons-tnt](#icons-tnt)
+ - [Base Package - @ui5/webcomponents-base](#base)
 
 <a name="main"></a>
-## Main package (```@ui5/webcomponents```)
+## Main Package (```@ui5/webcomponents```)
 
 The `main` package provides general purpose UI building blocks such as buttons, labels, inputs and popups.
 
@@ -86,7 +84,7 @@ For additional `main` package assets (other themes, i18n and CLDR), use:
 
 `import "@ui5/webcomponents/dist/Assets.js";`
 
-### 3. Additional features
+### 3. Additional Features
 
 #### 3.1 Input Suggestions
 <a name="inputsuggestions"></a>
@@ -97,7 +95,7 @@ import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 
 The ```<ui5-input>``` element acts as an ```<input>``` with the Fiori design and added functionality, such as value state.
 
-An advanced feature is the so called "input suggestions", allowing the user to choose from a list of predefined options while typing.
+The so-called "input suggestions" is an advanced feature that allows the user to choose from a list of predefined options while typing.
 Since input suggestions may not always be needed, they do not come as part of the ```<ui5-input>``` itself.
 
 To enable the functionality, import the above module into your app. This will also automatically import `ui5-suggestion-item`
@@ -115,9 +113,9 @@ HTML ```<form>``` only submits a couple of standard HTML elements such as ```<in
 Web Components that function as inputs, such as UI5's ```<ui5-input>```, ```<ui5-checkbox>```, ```<ui5-textarea>``` are therefore
 not submitted by the form out of the box.
 
-Generally this is not an issue, as very few modern applications submit forms in the classic way.
+Generally, this is not an issue, as very few modern applications submit forms in the classic way.
 
-If you however need to submit forms, you can import the module above and it will enrich:
+However, if you need to submit forms, you can import the module above and it will enrich:
 - `ui5-input`
 - `ui5-textarea`
 - `ui5-checkbox`
@@ -130,7 +128,7 @@ any standard HTML input element would be.
 
 In addition, the `ui5-button` element will be able to submit the closest ```form``` it's placed in, provided you set its `submits` attribute.
 
-## Fiori package (```@ui5/webcomponents-fiori```)
+## Fiori Package (```@ui5/webcomponents-fiori```)
 <a name="fiori"></a>
 
 The `fiori` package provides essential building blocks, necessary to implement the Fiori UX concept,
@@ -166,27 +164,27 @@ For additional `fiori` package assets (other themes, i18n), use:
 
 `import "@ui5/webcomponents-fiori/dist/Assets.js";`
 
-### 3. Additional features
+### 3. Additional Features
 
-#### 3.1 Co-pilot animation for `ui5-shellbar`
+#### 3.1 CoPilot Animation for `ui5-shellbar`
 
 ```js
 `import "@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js";`
 ```
 
-By default the `ui5-shellbar` Co-pilot button ships with a simple animation for better performance.
-Importing the module above enables the detailed but more resource intensive animation instead.
+By default, the `ui5-shellbar` CoPilot button ships with a simple animation for better performance.
+Importing the module above enables the detailed but more resource-intensive animation instead.
 
-## Icons package (```@ui5/webcomponents-icons```)
+## Icons Package (```@ui5/webcomponents-icons```)
 <a name="icons"></a>
 
 The `icons` package provides assets for the rich `SAP-icons` icon collection.
 
-*Note:* The `@ui5/webcomponents-icons` package does not provide any web components per se, but rather icon assets,
-usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import
+*Note:* The `@ui5/webcomponents-icons` package does not provide any Web Components per se, but rather icon assets
+usable by other Web Components such as `ui5-icon`. You could import all icons, but it's recommended to import
 just the ones that your app will actually use.
 
-### 1. Individual icon imports
+### 1. Individual Icon Imports
 
 |    Icon asset    |                      Module import                       |
 | ---------------- | -------------------------------------------------------- |
@@ -197,13 +195,13 @@ just the ones that your app will actually use.
 
 For a complete list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
 
-### 2. All icons
+### 2. All Icons
 
 To import all icons, use:
 
 `import "@ui5/webcomponents-icons/dist/AllIcons.js";`
 
-*Note: if you use an icon which you did not import individually, the JSON, containing all icons definitions, will be fetched.*
+*Note: If you use an icon which you did not import individually, the JSON containing all icons definitions will be fetched.*
 
 ### 3. Assets
 
@@ -211,16 +209,16 @@ For additional `icons` package assets (i18n), use:
 
 `import "@ui5/webcomponents-icons/dist/Assets.js";`
 
-## Icons-TNT package (```@ui5/webcomponents-icons-tnt```)
+## Icons-TNT Package (```@ui5/webcomponents-icons-tnt```)
 <a name="icons-tnt"></a>
 
 The `icons-tnt` package provides assets for the rich `SAP-icons-TNT` icon collection.
 
-*Note:* The `@ui5/webcomponents-icons-tnt` package does not provide any web components per se, but rather icon assets,
-usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import
+*Note:* The `@ui5/webcomponents-icons-tnt` package does not provide any Web Components per se, but rather icon assets
+usable by other Web Components such as `ui5-icon`. You could import all icons, but it's recommended to import
 just the ones that your app will actually use.
 
-### 1. Individual icon imports
+### 1. Individual Icon Imports
 
 |    Icon asset    |                      Module import                       |
 | ---------------- | -------------------------------------------------------- |
@@ -230,24 +228,24 @@ just the ones that your app will actually use.
 
 For a complete list of the icons in the `SAP-icons-TNT` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT).
 
-### 2. All icons
+### 2. All Icons
 
 To import all icons, use:
 
 `import "@ui5/webcomponents-icons-tnt/dist/AllIcons.js";`
 
-*Note: if you use an icon which you did not import individually, the JSON, containing all icons definitions, will be fetched.*
+*Note: If you use an icon which you did not import individually, the JSON containing all icons definitions will be fetched.*
 
 ### 3. Assets
 
-Currently, the `icons-tnt` package assets file does not provide any assets, but still it's recommended to import it to be future proof:
+Currently, the `icons-tnt` package assets file does not provide any assets, but still it's recommended to import it to be future-proof:
 
 `import "@ui5/webcomponents-icons/dist/Assets.js";`
 
-## Base package (```@ui5/webcomponents-base```)
+## Base Package (```@ui5/webcomponents-base```)
 
 <a name="base"></a>
-The `base` package provides not only the UI5 Web Components framework, but also some features, relevant to
+The `base` package provides not only the UI5 Web Components framework, but also some features relevant to
 all UI5 Web Components.
 
 ### 1. Theming
@@ -326,7 +324,7 @@ For more general information on assets, click [here](https://sap.github.io/ui5-w
 
 Find out how you can bundle your i18n texts more efficiently [here](Assets.md#bundling).
 
-### 3. Advanced calendar types
+### 3. Advanced Calendar Types
 
 ```js
 import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";
@@ -335,9 +333,9 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 ```
 
-The `ui5-date-picker` web component supports Gregorian Calendar by default.
+The `ui5-date-picker` Web Component supports Gregorian Calendar by default.
 
-In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with this web component
+In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with this Web Component
 (by setting its `primaryCalendarType` property), you should import one or more of the modules above.
 
 ### 4. Configuration
@@ -354,7 +352,7 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 
 For more details, please check [Configuration](https://sap.github.io/ui5-webcomponents/playground/docs/configuration/).
 
-### 5. OpenUI5 integration
+### 5. OpenUI5 Integration
 
 ```js
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
@@ -368,12 +366,12 @@ When you import the above module:
  for all common entities (theme, language, etc...). In addition, changing the theme
  in OpenUI5 will also change the theme in UI5 Web Components.
  2. Fonts will not be loaded twice (just once by OpenUI5, and reused).
- 3. Locale Data assets will not be fetched twice (just once by OpenUI5, and reused).
+ 3. Locale data assets will not be fetched twice (just once by OpenUI5, and reused).
 
 Therefore, if you intend to run both frameworks in the same browser window,
 it is highly recommended to enable OpenUI5 support and benefit from these optimizations.
 
-### 6. Custom elements scoping
+### 6. Custom Elements Scoping
 
 ```js
 import { setCustomElementsScopingSuffix, setCustomElementsScopingRules } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -395,4 +393,4 @@ and then use them with the suffix:
 <ui5-button-demo>Click me</ui5-button-demo>
 ```
 
-For more information on scoping and its use cases, see [Micro-frontends and Custom elements scoping](./Scoping.md).
+For more information on scoping and its use cases, see [Micro-Frontends and Custom Elements Scoping](./Scoping.md).
