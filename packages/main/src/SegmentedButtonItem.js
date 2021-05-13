@@ -4,8 +4,8 @@ import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonIt
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
-import toggleBtnIECss from "./generated/themes/ToggleButton.ie11.css.js";
+import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.js";
+import segmentedButtonItemIECss from "./generated/themes/SegmentedButtonItem.ie11.css.js";
 
 /**
  * @public
@@ -79,7 +79,7 @@ class SegmentedButtonItem extends Button {
 	}
 
 	static get styles() {
-		return [Button.styles, toggleBtnCss, isLegacyBrowser() && toggleBtnIECss];
+		return [Button.styles, segmentedButtonItemCss, isLegacyBrowser() && segmentedButtonItemIECss];
 	}
 
 	get ariaDescription() {
