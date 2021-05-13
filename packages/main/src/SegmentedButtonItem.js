@@ -1,6 +1,7 @@
 import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
 import Button from "./Button.js";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
+import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
@@ -79,6 +80,10 @@ class SegmentedButtonItem extends Button {
 
 	static get styles() {
 		return [Button.styles, toggleBtnCss, isLegacyBrowser() && toggleBtnIECss];
+	}
+
+	get ariaDescription() {
+		return this.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);
 	}
 
 	_onclick() {

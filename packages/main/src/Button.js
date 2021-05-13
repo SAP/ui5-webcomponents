@@ -460,10 +460,6 @@ class Button extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	get ariaLabelText() {
-		return this.i18nBundle.getText(Button.typeTextMappings()[this.design]);
-	}
-
 	static typeTextMappings() {
 		return {
 			"Positive": BUTTON_ARIA_TYPE_ACCEPT,
