@@ -27,7 +27,8 @@
 }
 
 /* Shapes */
-:host([shape="Square"]) {
+:host([shape="Square"]),
+:host([shape="Square"]) ::slotted(*){
 	border-radius: .25rem;
 }
 
@@ -115,62 +116,70 @@
 	width: 3rem;
 }
 
-:host(:not([image])) {
-	background-color: var(--ui5-avatar-accent6);
+::slotted(*) {
+	border-radius: 50%;
+    width: 100%;
+    height: 100%;
 }
 
-:host([_background-color="Accent1"]),
-:host([background-color="Accent1"]) {
-	background-color: var(--ui5-avatar-accent1);
-}
-
-:host([_background-color="Accent2"]),
-:host([background-color="Accent2"]) {
-	background-color: var(--ui5-avatar-accent2);
-}
-
-:host([_background-color="Accent3"]),
-:host([background-color="Accent3"]) {
-	background-color: var(--ui5-avatar-accent3);
-}
-
-:host([_background-color="Accent4"]),
-:host([background-color="Accent4"]) {
-	background-color: var(--ui5-avatar-accent4);
-}
-
-:host([_background-color="Accent5"]),
-:host([background-color="Accent5"]) {
-	background-color: var(--ui5-avatar-accent5);
-}
-
+:host(:not([background-color]):not([_has-image])),
 :host([_background-color="Accent6"]),
 :host([background-color="Accent6"]) {
 	background-color: var(--ui5-avatar-accent6);
 }
 
-:host([_background-color="Accent7"]),
-:host([background-color="Accent7"]) {
+:host(:not([_has-image])[_background-color="Accent1"]),
+:host(:not([_has-image])[background-color="Accent1"]) {
+	background-color: var(--ui5-avatar-accent1);
+}
+
+:host(:not([_has-image])[_background-color="Accent2"]),
+:host(:not([_has-image])[background-color="Accent2"]) {
+	background-color: var(--ui5-avatar-accent2);
+}
+
+:host(:not([_has-image])[_background-color="Accent3"]),
+:host(:not([_has-image])[background-color="Accent3"]) {
+	background-color: var(--ui5-avatar-accent3);
+}
+
+:host(:not([_has-image])[_background-color="Accent4"]),
+:host(:not([_has-image])[background-color="Accent4"]) {
+	background-color: var(--ui5-avatar-accent4);
+}
+
+:host(:not([_has-image])[_background-color="Accent5"]),
+:host(:not([_has-image])[background-color="Accent5"]) {
+	background-color: var(--ui5-avatar-accent5);
+}
+
+:host(:not([_has-image])[_background-color="Accent6"]),
+:host(:not([_has-image])[background-color="Accent6"]) {
+	background-color: var(--ui5-avatar-accent6);
+}
+
+:host(:not([_has-image])[_background-color="Accent7"]),
+:host(:not([_has-image])[background-color="Accent7"]) {
 	background-color: var(--ui5-avatar-accent7);
 }
 
-:host([_background-color="Accent8"]),
-:host([background-color="Accent8"]) {
+:host(:not([_has-image])[_background-color="Accent8"]),
+:host(:not([_has-image])[background-color="Accent8"]) {
 	background-color: var(--ui5-avatar-accent8);
 }
 
-:host([_background-color="Accent9"]),
-:host([background-color="Accent9"]) {
+:host(:not([_has-image])[_background-color="Accent9"]),
+:host(:not([_has-image])[background-color="Accent9"]) {
 	background-color: var(--ui5-avatar-accent9);
 }
 
-:host([_background-color="Accent10"]),
-:host([background-color="Accent10"]) {
+:host(:not([_has-image])[_background-color="Accent10"]),
+:host(:not([_has-image])[background-color="Accent10"]) {
 	background-color: var(--ui5-avatar-accent10);
 }
 
-:host([_background-color="Placeholder"]),
-:host([background-color="Placeholder"]) {
+:host(:not([_has-image])[_background-color="Placeholder"]),
+:host(:not([_has-image])[background-color="Placeholder"]) {
 	background-color: var(--ui5-avatar-placeholder);
 }
 
