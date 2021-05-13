@@ -201,7 +201,7 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		assert.strictEqual(sliderTooltip.getAttribute("style"), "visibility: hidden;", "Slider tooltip should be shown");
 	});
 
-	/* it("Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", () => {
+	it("Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", () => {
 		const slider = browser.$("#slider-tickmarks-tooltips-labels");
 		const labelsContainer = slider.shadow$(".ui5-slider-labels");
 		const numberOfLabels = labelsContainer.$$("li").length;
@@ -215,7 +215,7 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		slider.setProperty("value", 13);
 
 		assert.strictEqual(slider.getProperty("value"), 13, "current value should not be stepped to the next step (14)");
-	}); */
+	});
 });
 
 describe("Testing events", () => {
