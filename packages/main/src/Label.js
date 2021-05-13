@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Template
 import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
@@ -122,6 +123,15 @@ class Label extends UI5Element {
 
 	static get styles() {
 		return labelCss;
+	}
+
+	get classes() {
+		return {
+			textWrapper: {
+				"ui5-label-text-wrapper": true,
+				"ui5-label-text-wrapper-safari": isSafari(),
+			},
+		};
 	}
 
 	_onclick() {
