@@ -1,4 +1,4 @@
-# Migration guides
+# Migration Guides
 
 ## Migrating from `1.0.0-rc.4` to `1.0.0-rc.5`
 
@@ -26,12 +26,12 @@ If you are using icons in your project:
 	`@ui5/webcomponents/dist/icons/search.js` | `@ui5/webcomponents-icons/dist/icons/search.js`
 	etc... | etc...
 
-	*Note:* The `ui5-icon` web component is not affected by this change, it is still in the `@ui5/webcomponents` package. Only the icons themselves (the icon assets) have been moved.
+	*Note:* The `ui5-icon` Web Component is not affected by this change, it is still in the `@ui5/webcomponents` package. Only the icons themselves (the icon assets) have been moved.
 
 
 ### New npm package: `@ui5/webcomponents-fiori` 
 
-The `ui5-shellbar` and `ui5-shellbar-item` web components were moved to a new npm package called `@ui5/webcomponents-fiori`.
+The `ui5-shellbar` and `ui5-shellbar-item` Web Components were moved to a new npm package called `@ui5/webcomponents-fiori`.
 
 If you are using `ui5-shellbar` in your project:
 
@@ -55,7 +55,7 @@ If you are using `ui5-shellbar` in your project:
 ### `ui5-icon`
 
 The `src` property was renamed to `name` and accepts icon name (such as `add`) instead of icon src (such as `sap-icon://add`).
-Note: the `src` property will continue to work until the next release due to the impact of the change, but will produce a warning in the console.
+Note: The `src` property will continue to work until the next release due to the impact of the change, but will produce a warning in the console.
 
 Current code | Change to
 -----|----
@@ -76,7 +76,7 @@ Current code | Change to
 
 In addition to the fact that `ui5-shellbar` was moved to `@ui5/webcomponents-fiori`, the `icon` slot was renamed to `startButton`.
 
-The `ui5-shellbar` CoPilot is now a static SVG by default. In order to have the animated SVG again, you need to manually import the following feature:
+The `ui5-shellbar` Co Pilot is now a static SVG by default. In order to have the animated SVG again, you need to manually import the following feature:
 ```js
 import "@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js";
 ``` 
