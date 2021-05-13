@@ -148,7 +148,60 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		assert.strictEqual(sliderTooltipValue.getText(), "2", "Slider tooltip should display value of 2");
 	});
 
-	it("Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", () => {
+	it("Slider Tooltip should become visible when slider is focused", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+		const sliderTooltip = slider.shadow$(".ui5-slider-tooltip");
+		const basicSlider = browser.$("#basic-slider");
+
+		basicSlider.click();
+
+		// initial state
+		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "hidden", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual(sliderTooltip.getAttribute("style"), "visibility: hidden;", "Slider tooltip should be shown");
+
+		slider.click();
+
+		// slider is focused
+		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual(sliderTooltip.getAttribute("style"), "visibility: visible;", "Slider tooltip should be shown");
+	});
+
+	it("Slider Tooltip should stay visible when slider is focused and mouse moves away", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+		const sliderTooltip = slider.shadow$(".ui5-slider-tooltip");
+
+		slider.click();
+
+		// slider is focused
+		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual(sliderTooltip.getAttribute("style"), "visibility: visible;", "Slider tooltip should be shown");
+
+		// move mouse away - fires mouseout
+		slider.moveTo(0, -100);
+
+		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual(sliderTooltip.getAttribute("style"), "visibility: visible;", "Slider tooltip should be shown");
+	});
+
+	it("Slider Tooltip should become hidden when slider is looses focus", () => {
+		const slider = browser.$("#basic-slider-with-tooltip");
+		const anotherSlider = browser.$("#basic-slider");
+		const sliderTooltip = slider.shadow$(".ui5-slider-tooltip");
+
+		slider.click();
+
+		// slider is focused
+		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual(sliderTooltip.getAttribute("style"), "visibility: visible;", "Slider tooltip should be shown");
+
+		// move mouse away - fires mouseout
+		anotherSlider.click();
+
+		assert.strictEqual(slider.getProperty("_tooltipVisibility"), "hidden", "Slider tooltip visibility property should be 'visible'");
+		assert.strictEqual(sliderTooltip.getAttribute("style"), "visibility: hidden;", "Slider tooltip should be shown");
+	});
+
+	/* it("Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", () => {
 		const slider = browser.$("#slider-tickmarks-tooltips-labels");
 		const labelsContainer = slider.shadow$(".ui5-slider-labels");
 		const numberOfLabels = labelsContainer.$$("li").length;
@@ -162,7 +215,7 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		slider.setProperty("value", 13);
 
 		assert.strictEqual(slider.getProperty("value"), 13, "current value should not be stepped to the next step (14)");
-	});
+	}); */
 });
 
 describe("Testing events", () => {

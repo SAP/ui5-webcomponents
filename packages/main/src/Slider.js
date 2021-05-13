@@ -158,6 +158,10 @@ class Slider extends SliderBase {
 		if (this._getInitialValue("value") === null) {
 			this._setInitialValue("value", this.value);
 		}
+
+		if (this.showTooltip) {
+			this._tooltipVisibility = "visible";
+		}
 	}
 
 	_onfocusout(event) {
@@ -171,6 +175,10 @@ class Slider extends SliderBase {
 		// Reset focus state and the stored Slider's initial
 		// value that was saved when it was first focused in
 		this._setInitialValue("value", null);
+
+		if (this.showTooltip) {
+			this._tooltipVisibility = "hidden";
+		}
 	}
 
 	/**

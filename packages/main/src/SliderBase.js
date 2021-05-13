@@ -263,7 +263,7 @@ class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_onmouseout(event) {
-		if (this.showTooltip) {
+		if (this.showTooltip && !this.shadowRoot.activeElement) {
 			this._tooltipVisibility = "hidden";
 		}
 	}
