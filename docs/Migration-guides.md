@@ -76,7 +76,7 @@ Current code | Change to
 
 In addition to the fact that `ui5-shellbar` was moved to `@ui5/webcomponents-fiori`, the `icon` slot was renamed to `startButton`.
 
-The `ui5-shellbar` Co Pilot is now a static SVG by default. In order to have the animated SVG again, you need to manually import the following feature:
+The `ui5-shellbar` CoPilot is now a static SVG by default. In order to have the animated SVG again, you need to manually import the following feature:
 ```js
 import "@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js";
 ``` 
