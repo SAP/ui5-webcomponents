@@ -2603,15 +2603,15 @@
 	<script>
 		var wiz = document.getElementById("wiz");
 
-		wiz.addEventListener("selection-change", function () {
-			console.log(event.detail.selectedStep);
+		wiz.addEventListener("step-change", function () {
+			console.log(event.detail.step);
 		});
 
 		sw.addEventListener("change", function () {
 			toStep3.removeAttribute("hidden");
 		});
 
-		sb.addEventListener("selection-change", function () {
+		sb.addEventListener("step-change", function () {
 			toStep4.removeAttribute("hidden");
 		});
 
@@ -2794,28 +2794,28 @@ The Fiori 3 guidelines recommends having a "nextStep" button in the content area
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">selection-change</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">step-change</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the step selection is changed by user interaction - either with scrolling, or by clicking on the steps within the component header.
+                        Fired when the step is changed by user interaction - either with scrolling, or by clicking on the steps within the component header.
                         </div>
                       </div>
             
                         <tr class="api-table-event-param">
                           <div class="api-table-content-event-params-wrapper">
-                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">selectedStep</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the newly selected step</div>
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">step</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the new step</div>
                           </div>
                         </tr>
                         <tr class="api-table-event-param">
                           <div class="api-table-content-event-params-wrapper">
-                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">previouslySelectedStep</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the previously selected step</div>
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">previousStep</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the previous step</div>
                           </div>
                         </tr>
                         <tr class="api-table-event-param">
                           <div class="api-table-content-event-params-wrapper">
                             <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">changeWithClick</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Boolean <br/> <strong class="api-table-event-description bold">description:</strong> the selection changed due to user's click on step within the navigation</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Boolean <br/> <strong class="api-table-event-description bold">description:</strong> the step change occurs due to user's click on step within the navigation</div>
                           </div>
                         </tr>
                   </div>
