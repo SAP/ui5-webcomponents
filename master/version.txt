@@ -1,9 +1,9 @@
-commit 8c66d5a98598082d7d58239baefa3b30d145e114
-Author: NHristov-sap <53182443+NHristov-sap@users.noreply.github.com>
-Date:   Fri May 14 10:57:16 2021 +0300
+commit ff9d7ddafe42ded6a0504530492d68ae7dac646b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri May 14 11:12:05 2021 +0300
 
-    fix(ui5-calendar): correct enable/disable of prev and next buttons (#3249)
+    refactor(ui5-button): remove iconSize property (#3227)
     
-    Prev and next buttons should be disabled when there is min and max dates set
+    iconSize is a public property that is used only for the purpose of the MessageStrip close button. Remove the property and add a Shadow Part so the MessageStrip can re-style the button. Part of #3107
     
-    Fixes #3201
+    BREAKING_CHANGE: iconSize property of ui5-button has been deprecated
