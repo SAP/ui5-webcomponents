@@ -1,10 +1,9 @@
-commit 49639e5c60c13728c92a3e3229cee3c2597cbf53
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri May 14 13:17:29 2021 +0300
+commit 2adee01fea3c670f389da91490e527d2a3df2334
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri May 14 17:19:35 2021 +0300
 
-    fix(ui5-avatar-group): visual design deviations (#3252)
+    fix(ui5-carousel): implement hideNavigationArrows property (#3228)
     
-    First and second deviations were cause because IE11 support. It was rounding incorrectly floated values.
-    The Third issue comes from base padding of ui5-button which is now removed in the context of overflow button in ui5-avatar-group
+    Implements hideNavigationArrows property. In relation to #3107
     
-    Fixes: #3197
+    BREAKING_CHANGE: hideNavigation property of ui5-carousel is deprecated in favour of hideNavigationArrows. The new property shows/hides the arrows only(not both the arrows and the dots in the bottom)
