@@ -1,5 +1,9 @@
-commit 2ba71534044a53d9823506afb5cfa9ff422d118b
-Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
-Date:   Thu May 13 16:51:44 2021 +0300
+commit eba1e64439848443779f747fd96197820729a553
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri May 14 10:43:58 2021 +0300
 
-    docs: Update Public Module Imports.md (#3246)
+    fix(ui5-list): rename inset property to indent (#3244)
+    
+    Part of #3107
+    
+    BREAKING_CHANGE: inset property of ui5-list is deprecated in favour of indent property
