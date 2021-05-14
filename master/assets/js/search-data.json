@@ -114,7 +114,7 @@
   "17": {
     "id": "17",
     "title": "Calendar",
-    "content": "&lt;!DOCTYPE html&gt; Calendar Playground Selection type for the first calendar: Single Multiple Range Show/hide weeknumbers for the first calendar: hide Calendar with preset dates",
+    "content": "&lt;!DOCTYPE html&gt; Calendar Playground Selection type for the first calendar: Single Multiple Range Show/hide weeknumbers for the first calendar: hide Calendar with preset dates Calendar with Minimum and Maximum Date &amp; Format Pattern",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Calendar/",
     "relUrl": "/playground/main/pages/Calendar/"
   },
