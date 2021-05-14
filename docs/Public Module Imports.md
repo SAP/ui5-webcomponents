@@ -61,6 +61,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Select                   | `ui5-select`             | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`             | comes with `ui5-select `                                   |
 | Segmented Button         | `ui5-segmentedbutton`    | `import "@ui5/webcomponents/dist/SegmentedButton.js";`     |
+| Segmented Button Item    | `ui5-segmentedbutton-item`| comes with `ui5-segmentedbutton `                         |
 | Suggestion Item          | `ui5-suggestion-item`    | comes with `InputSuggestions.js` feature - see below       |
 | Slider                   | `ui5-slider`             | `import "@ui5/webcomponents/dist/Slider.js";`              |
 | Step Input               | `ui5-step-input`         | `import "@ui5/webcomponents/dist/StepInput.js";`           |

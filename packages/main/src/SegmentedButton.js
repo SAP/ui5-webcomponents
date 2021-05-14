@@ -5,7 +5,7 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { SEGMENTEDBUTTON_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
+import { SEGMENTEDBUTTON_ARIA_DESCRIPTION, SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "./generated/i18n/i18n-defaults.js";
 import SegmentedButtonItem from "./SegmentedButtonItem.js";
 
 // Template
@@ -77,6 +77,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-segmentedbutton
  * @since 1.0.0-rc.6
+ * @appenddocs SegmentedButtonItem
  * @public
  */
 class SegmentedButton extends UI5Element {
@@ -128,17 +129,19 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		let length = 0;
-		this.normalizeSelection();
+		let length = 0,
+			buttons = this.getSlottedNodes("buttons");
 
-		this.getSlottedNodes("buttons").forEach((item, index) => {
-			item.posinset = index + 1;
+		buttons.forEach((item, index) => {
+			item.posInSet = index + 1;
 			length += 1;
 		});
 
-		this.getSlottedNodes("buttons").forEach((item, index) => {
-			item.setsize = length;
+		buttons.forEach((item) => {
+			item.sizeOfSet = length;
 		});
+
+		this.normalizeSelection();
 	}
 
 	async onAfterRendering() {
@@ -251,6 +254,10 @@ class SegmentedButton extends UI5Element {
 	 */
 	get selectedButton() {
 		return this._selectedButton;
+	}
+
+	get ariaDescribedBy() {
+		return this.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY);
 	}
 
 	get ariaDescription() {

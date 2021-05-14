@@ -29,7 +29,7 @@ const metadata = {
 		 * @private
 		 * @type {String}
 		 */
-		posinset: {
+		posInSet: {
 			type: String,
 		},
 
@@ -38,7 +38,7 @@ const metadata = {
 		 * @private
 		 * @type {String}
 		 */
-		setsize: {
+		sizeOfSet: {
 			type: String,
 		},
 	},
