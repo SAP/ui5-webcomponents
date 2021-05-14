@@ -173,7 +173,7 @@ describe("ARIA attributes", () => {
 
 		it("aria-haspopup is correct", () => {
 			const avatarGroup = $("#avatar-group-individual");
-			const ariaHasPopupContainer = avatarGroup.getProperty("_ariaHasPopup");
+			const ariaHasPopupContainer = avatarGroup.getProperty("_containerAriaHasPopup");
 			const overflowButtonAccInfo = avatarGroup.getProperty("_overflowButtonAccInfo");
 
 			// container
@@ -214,7 +214,7 @@ describe("ARIA attributes", () => {
 
 		it("aria-haspopup is correct", () => {
 			const avatarGroup = $("#avatar-group-group");
-			const ariaHasPopupContainer = avatarGroup.getProperty("_ariaHasPopup");
+			const ariaHasPopupContainer = avatarGroup.getProperty("_containerAriaHasPopup");
 			const overflowButtonAccInfo = avatarGroup.getProperty("_overflowButtonAccInfo");
 	
 			// container 
