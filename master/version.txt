@@ -1,5 +1,7 @@
-commit f3f12755e672958b4a781f56378fb7083afa957d
-Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
-Date:   Fri May 14 11:17:09 2021 +0300
+commit 1f73a1fdfcb636ff4259cfaa0ed354272b3129f4
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Fri May 14 01:37:56 2021 -0700
 
-    docs: update assets.md (#3231)
+    chore: translation delivery (#3236)
+    
+    Change-Id: Ia65a99235ac75fb0a7afa4c1a011ee51221081c6
