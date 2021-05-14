@@ -1,10 +1,11 @@
-commit eec4ba317818d0f4b8e7e0a78e79a01df08194b4
-Author: Hristo Petrov <h.petrov@sap.com>
-Date:   Fri May 14 12:03:41 2021 +0300
+commit baec15bfb90d90fe56184bc86a877d91c9955618
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Fri May 14 12:42:01 2021 +0300
 
-    refactor(ui5-wizard): selection-change renamed to step-change
+    feat(ui5-avatar-group): Implement accessibility specification (#3154)
     
-    We have decided to rename the selection-change event in order for its name to better represent its origins.
-    In relation to #3107.
+    Implement accessibility specification.
+    -  Support for aria-haspopup has been added to ui5-avatar and ui5-avatar-group.
+    - The interactive ui5-avatar now has role button.
     
-    BREAKING_CHANGE: The “selection-change” event has been renamed to "step-change". In addition, the event param "selectedStep" has been renamed to "step" and the event param "previouslySelectedStep" has been renamed to "previousStep".
+    Fixes: #2745
