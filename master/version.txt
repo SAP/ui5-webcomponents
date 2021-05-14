@@ -1,11 +1,10 @@
-commit baec15bfb90d90fe56184bc86a877d91c9955618
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Fri May 14 12:42:01 2021 +0300
+commit 49639e5c60c13728c92a3e3229cee3c2597cbf53
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri May 14 13:17:29 2021 +0300
 
-    feat(ui5-avatar-group): Implement accessibility specification (#3154)
+    fix(ui5-avatar-group): visual design deviations (#3252)
     
-    Implement accessibility specification.
-    -  Support for aria-haspopup has been added to ui5-avatar and ui5-avatar-group.
-    - The interactive ui5-avatar now has role button.
+    First and second deviations were cause because IE11 support. It was rounding incorrectly floated values.
+    The Third issue comes from base padding of ui5-button which is now removed in the context of overflow button in ui5-avatar-group
     
-    Fixes: #2745
+    Fixes: #3197
