@@ -1,9 +1,5 @@
-commit ff9d7ddafe42ded6a0504530492d68ae7dac646b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri May 14 11:12:05 2021 +0300
+commit f3f12755e672958b4a781f56378fb7083afa957d
+Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
+Date:   Fri May 14 11:17:09 2021 +0300
 
-    refactor(ui5-button): remove iconSize property (#3227)
-    
-    iconSize is a public property that is used only for the purpose of the MessageStrip close button. Remove the property and add a Shadow Part so the MessageStrip can re-style the button. Part of #3107
-    
-    BREAKING_CHANGE: iconSize property of ui5-button has been deprecated
+    docs: update assets.md (#3231)
