@@ -212,6 +212,15 @@ const metadata = {
  * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readonly</code>
  * property to <code>true</code>.
  *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ *
+ * The user can use the following keyboard shortcuts to toggle the checked state of the <code>ui5-checkbox</code>.
+ * <ul>
+ * <li>[SPACE, ENTER] - Toggles between different states: checked, not checked.</li>
+ * </ul>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/CheckBox";</code>
