@@ -381,7 +381,7 @@ class Avatar extends UI5Element {
 	}
 
 	_getAriaHasPopup() {
-		if (!this.interactive || this.ariaHaspopup === '') {
+		if (!this.interactive || this.ariaHaspopup === "") {
 			return;
 		}
 

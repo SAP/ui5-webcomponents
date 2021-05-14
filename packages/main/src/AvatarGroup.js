@@ -601,7 +601,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_getAriaHasPopup() {
-		if (this.ariaHaspopup === '') {
+		if (this.ariaHaspopup === "") {
 			return;
 		}
 
