@@ -1,7 +1,5 @@
-commit 1f73a1fdfcb636ff4259cfaa0ed354272b3129f4
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Fri May 14 01:37:56 2021 -0700
+commit 29d1de0046faea7ce94d602b88aad81bbd201cb6
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri May 14 11:52:33 2021 +0300
 
-    chore: translation delivery (#3236)
-    
-    Change-Id: Ia65a99235ac75fb0a7afa4c1a011ee51221081c6
+    chore: add links to the docs on the landing page of the playground (#3188)
