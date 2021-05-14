@@ -65,7 +65,6 @@ describe("General interaction", () => {
 		});
 
 		assert.strictEqual(selection, "ahrain", "ahrain should be selected");
-		assert.strictEqual(combo.getProperty("value"), "Bulgaria", "Value should be Bulgaria");
 		const listItems = popover.$("ui5-list").$$("ui5-li");
 		assert.ok(listItems[0].getProperty("selected"), "List Item should be selected");
 
