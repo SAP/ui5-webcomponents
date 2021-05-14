@@ -32,7 +32,7 @@ const offsets = {
 	},
 	[AvatarSize.M]: {
 		[AvatarGroupType.Individual]: "0.125rem",
-		[AvatarGroupType.Group]: "-1.62rem",
+		[AvatarGroupType.Group]: "-1.625rem",
 	},
 	[AvatarSize.L]: {
 		[AvatarGroupType.Individual]: "0.125rem",
@@ -40,7 +40,7 @@ const offsets = {
 	},
 	[AvatarSize.XL]: {
 		[AvatarGroupType.Individual]: "0.25rem",
-		[AvatarGroupType.Group]: "-2.7rem",
+		[AvatarGroupType.Group]: "-2.75rem",
 	},
 };
 
