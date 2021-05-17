@@ -1,7 +1,5 @@
-commit ee0956ea3e72c6489ed48aec9a675cb5da919dc7
+commit 62e3ae87b48b8f8c3a4a27f5b0bef1b6ba9fb3eb
 Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
-Date:   Mon May 17 14:37:58 2021 +0300
+Date:   Mon May 17 15:03:47 2021 +0300
 
-    docs: review of scoping.md
-    
-    Review of the documentation topic Micro-frontends and Custom Elements Scoping.
+    Update i18n.md (#3263)
