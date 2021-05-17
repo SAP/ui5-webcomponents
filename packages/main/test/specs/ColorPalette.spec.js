@@ -74,7 +74,7 @@ describe("ColorPalette interactions", () => {
 		assert.strictEqual(colorPalette.getProperty("value"), "darkblue", "Check if selected value is darkblue");
 	});
 
-	it("Tests more-colors functionality", () => {
+	it("Tests show-more-colors functionality", () => {
 		const colorPalette = browser.$("#cp3");
 		const colorPaletteMoreColorsButton = colorPalette.shadow$(".ui5-cp-more-colors");
 

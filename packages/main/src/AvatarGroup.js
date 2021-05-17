@@ -2,10 +2,20 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+
 import {
 	isEnter,
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+
+import {
+	AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL,
+	AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL,
+	AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL,
+	AVATAR_GROUP_ARIA_LABEL_GROUP,
+	AVATAR_GROUP_MOVE,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.js";
@@ -32,7 +42,7 @@ const offsets = {
 	},
 	[AvatarSize.M]: {
 		[AvatarGroupType.Individual]: "0.125rem",
-		[AvatarGroupType.Group]: "-1.62rem",
+		[AvatarGroupType.Group]: "-1.625rem",
 	},
 	[AvatarSize.L]: {
 		[AvatarGroupType.Individual]: "0.125rem",
@@ -40,7 +50,7 @@ const offsets = {
 	},
 	[AvatarSize.XL]: {
 		[AvatarGroupType.Individual]: "0.25rem",
-		[AvatarGroupType.Group]: "-2.7rem",
+		[AvatarGroupType.Group]: "-2.75rem",
 	},
 };
 
@@ -87,6 +97,22 @@ const metadata = {
 		avatarSize: {
 			type: String,
 			defaultValue: AvatarSize.S,
+		},
+
+		/**
+		 * Defines the aria-haspopup value of the <code>ui5-avatar-group</code> on:
+		 * <br><br>
+		 * <ul>
+		 * <li> the whole container when <code>type</code> property is <code>Group</code></li>
+		 * <li> the default "More" overflow button when <code>type</code> is <code>Individual</code></li>
+		 * </ul>
+		 * <br><br>
+		 * @type String
+		 * @since 1.0.0-rc.15
+		 * @protected
+		 */
+		ariaHaspopup: {
+			type: String,
 		},
 
 		/**
@@ -196,6 +222,30 @@ const metadata = {
  * <li>You want to use it for other visual content than avatars.</li>
  * </ul>
  *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-avatar-group</code> provides advanced keyboard handling.
+ * When focused, the user can use the following keyboard
+ * shortcuts in order to perform a navigation:
+ * <br>
+ * - <code>type</code> Individual:
+ * <br>
+ * <ul>
+ * <li>[TAB] - Move focus to the overflow button</li>
+ * <li>[LEFT] - Navigate one avatar to the left</li>
+ * <li>[RIGHT] - Navigate one avatar to the right</li>
+ * <li>[HOME] - Navigate to the first avatar</li>
+ * <li>[END] - Navigate to the last avatar</li>
+ * <li>[SPACE],[ENTER],[RETURN] - Trigger <code>ui5-click</code> event</li>
+ * </ul>
+ * <br>
+ * - <code>type</code> Group:
+ * <br>
+ * <ul>
+ * <li>[TAB] - Move focus to the next interactive element after the <code>ui5-avatar-group</code></li>
+ * <li>[SPACE],[ENTER],[RETURN] - Trigger <code>ui5-click</code> event</li>
+ * </ul>
+ * <br>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.AvatarGroup
@@ -217,6 +267,8 @@ class AvatarGroup extends UI5Element {
 		this._colorIndex = 0;
 		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -239,6 +291,10 @@ class AvatarGroup extends UI5Element {
 		return [
 			Button,
 		];
+	}
+
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
 	/**
@@ -265,6 +321,45 @@ class AvatarGroup extends UI5Element {
 
 	get _customOverflowButton() {
 		return this.overflowButton.length ? this.overflowButton[0] : undefined;
+	}
+
+	get _ariaLabelText() {
+		const hiddenItemsCount = this.hiddenItems.length;
+		const typeLabelKey = this._isGroup ? AVATAR_GROUP_ARIA_LABEL_GROUP : AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL;
+
+		// avatar type label
+		let text = this.i18nBundle.getText(typeLabelKey);
+
+		// add displayed-hidden avatars label
+		text += ` ${this.i18nBundle.getText(AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL, [this._itemsCount - hiddenItemsCount], [hiddenItemsCount])}`;
+
+		if (this._isGroup) {
+			// the container role is "button", add the message for complete list activation
+			text += ` ${this.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL)}`;
+		} else {
+			// the container role is "group", add the "how to navigate" message
+			text += ` ${this.i18nBundle.getText(AVATAR_GROUP_MOVE)}`;
+		}
+
+		return text;
+	}
+
+	get _overflowButtonAriaLabelText() {
+		return this._isGroup ? undefined : this.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL);
+	}
+
+	get _containerAriaHasPopup() {
+		return this._isGroup ? this._getAriaHasPopup() : undefined;
+	}
+
+	get _overflowButtonAccInfo() {
+		return {
+			ariaHaspopup: this._isGroup ? undefined : this._getAriaHasPopup(),
+		};
+	}
+
+	get _role() {
+		return this._isGroup ? "button" : "group";
 	}
 
 	get _hiddenStartIndex() {
@@ -503,6 +598,14 @@ class AvatarGroup extends UI5Element {
 		if (shouldFireEvent) {
 			this.fireEvent("overflow");
 		}
+	}
+
+	_getAriaHasPopup() {
+		if (this.ariaHaspopup === "") {
+			return;
+		}
+
+		return this.ariaHaspopup;
 	}
 }
 

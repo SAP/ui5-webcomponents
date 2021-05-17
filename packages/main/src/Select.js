@@ -249,10 +249,13 @@ const metadata = {
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-select</code> provides advanced keyboard handling.
- * If the <code>ui5-select</code> is focused,
- * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
- * Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys
- * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
+ * <br>
+ * <ul>
+ * <li>[F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - Opens/closes the drop-down.</li>
+ * <li>[UP, DOWN] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.</li>
+ * <li>[SPACE, ENTER] - If the drop-down is opened - selects the focused option.</li>
+ * <li>[ESC] - Closes the drop-down without changing the selection.</li>
+ * </ul>
  * <br>
  *
  * <h3>Stable DOM Refs</h3>
