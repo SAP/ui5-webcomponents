@@ -105,7 +105,7 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	get _calendarTimestamp() {
-		return this._firstDateTimestamp || getTodayUTCTimestamp(this._primaryCalendarType);
+		return (this._tempValue && this.getFormat().parse(this._tempValue, true).getTime() / 1000) || this._firstDateTimestamp || getTodayUTCTimestamp(this._primaryCalendarType);
 	}
 
 	/**
