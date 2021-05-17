@@ -231,7 +231,7 @@ describe("Value update", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
 	});
 
-	it("Should change the placeholder of the inner textarea", () => {
+	it("Should revert the DOM value, when escape is pressed", () => {
 		const textarea = $("#basic-textarea");
 
 		// act
