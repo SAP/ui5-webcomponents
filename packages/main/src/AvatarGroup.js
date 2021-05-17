@@ -498,7 +498,7 @@ class AvatarGroup extends UI5Element {
 			const colorIndex = this._getNextBackgroundColor();
 			avatar.interactive = !this._isGroup;
 
-			if (!avatar.getAttribute("background-design")) {
+			if (!avatar.getAttribute("_color-scheme")) {
 				// AvatarGroup respects colors set to ui5-avatar
 				avatar.setAttribute("_color-scheme", AvatarColorScheme[`Accent${colorIndex}`]);
 			}

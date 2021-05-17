@@ -57,13 +57,13 @@ describe("avatar-group rendering", () => {
 		let index = 0;
 
 		avatars.forEach(avatar => {
-			const avatarBackgroundColor = avatar.getAttribute("_background-design");
+			const avatarBackgroundColor = avatar.getAttribute("_color-scheme");
 
 			if (++index > 10) {
 				index = 1;
 			}
 
-			assert.strictEqual(avatarBackgroundColor, `Accent${index}`, "AvatarGroup avatar-size property is assigned to avatars _size property");
+			assert.strictEqual(avatarBackgroundColor, `Accent${index}`, "AvatarGroup _color-scheme property is assigned to avatars _size property");
 		});
 	});
 

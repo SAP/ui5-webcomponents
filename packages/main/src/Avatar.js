@@ -314,7 +314,7 @@ class Avatar extends UI5Element {
 	 */
 	get _effectiveBackgroundColor() {
 		// we read the attribute, because the "background-color" property will always have a default value
-		return this.getAttribute("background-design") || this._colorScheme;
+		return this.getAttribute("_color-scheme") || this._colorScheme;
 	}
 
 	get _role() {
