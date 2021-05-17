@@ -1,4 +1,4 @@
-import InvisibleMessageMode from "../types/InvisibleMessageMode.js";
+// import InvisibleMessageMode from "../types/InvisibleMessageMode.js";
 // import getSingletonElementInstance from "./getSingletonElementInstance.js";
 
 // const styles = `position: absolute;
@@ -32,7 +32,7 @@ import InvisibleMessageMode from "../types/InvisibleMessageMode.js";
  * @param {string} message String to be announced by the screen reader.
  * @param {sap.ui.core.InvisibleMessageMode} mode The mode to be inserted in the aria-live attribute.
  */
-const announce = (message, mode) => {
+const announce = () => {
 	// If no type is presented, fallback to polite announcement.
 	// const span = mode === InvisibleMessageMode.Assertive ? assertiveSpan : politeSpan;
 
@@ -40,9 +40,9 @@ const announce = (message, mode) => {
 	// span.textContent = "";
 	// span.textContent = message;
 
-	if (mode !== InvisibleMessageMode.Assertive && mode !== InvisibleMessageMode.Polite) {
-		console.warn(`You have entered an invalid mode. Valid values are: "Polite" and "Assertive". The framework will automatically set the mode to "Polite".`); // eslint-disable-line
-	}
+	// if (mode !== InvisibleMessageMode.Assertive && mode !== InvisibleMessageMode.Polite) {
+	// 	console.warn(`You have entered an invalid mode. Valid values are: "Polite" and "Assertive". The framework will automatically set the mode to "Polite".`); // eslint-disable-line
+	// }
 };
 
 export default announce;
