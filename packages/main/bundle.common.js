@@ -119,7 +119,6 @@ const testAssets = {
 		getAssetsPath,
 		setAssetsPath
 	},
-	announce,
 	getLocaleData,
 	applyDirection,
 	attachDirectionChange,
