@@ -8,23 +8,23 @@ const styles = `position: absolute;
 	top: -1000px;
 	pointer-events: none;`;
 
-const politeSpan = document.createElement("span");
-const assertiveSpan = document.createElement("span");
+// const politeSpan = document.createElement("span");
+// const assertiveSpan = document.createElement("span");
 
-politeSpan.classList.add("ui5-invisiblemessage-polite");
-assertiveSpan.classList.add("ui5-invisiblemessage-assertive");
+// politeSpan.classList.add("ui5-invisiblemessage-polite");
+// assertiveSpan.classList.add("ui5-invisiblemessage-assertive");
 
-politeSpan.setAttribute("aria-live", "polite");
-assertiveSpan.setAttribute("aria-live", "assertive");
+// politeSpan.setAttribute("aria-live", "polite");
+// assertiveSpan.setAttribute("aria-live", "assertive");
 
-politeSpan.setAttribute("role", "alert");
-assertiveSpan.setAttribute("role", "alert");
+// politeSpan.setAttribute("role", "alert");
+// assertiveSpan.setAttribute("role", "alert");
 
-politeSpan.style.cssText = styles;
-assertiveSpan.style.cssText = styles;
+// politeSpan.style.cssText = styles;
+// assertiveSpan.style.cssText = styles;
 
-getSingletonElementInstance("ui5-static-area").appendChild(politeSpan);
-getSingletonElementInstance("ui5-static-area").appendChild(assertiveSpan);
+// // getSingletonElementInstance("ui5-static-area").appendChild(politeSpan);
+// // getSingletonElementInstance("ui5-static-area").appendChild(assertiveSpan);
 
 /**
  * Inserts the string into the respective span, depending on the mode provided.
