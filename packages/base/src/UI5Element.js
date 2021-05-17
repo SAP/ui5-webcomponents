@@ -3,7 +3,7 @@ import { boot } from "./Boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import EventProvider from "./EventProvider.js";
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
-import "./StaticAreaItem.js";
+import StaticAreaItem from "./StaticAreaItem.js";
 import updateShadowRoot from "./updateShadowRoot.js";
 import { renderDeferred, renderImmediately, cancelRender } from "./Render.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
@@ -16,6 +16,7 @@ import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import { isSlot, getSlotName, getSlottedElementsList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
+import getClassCopy from "./util/getClassCopy.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import isLegacyBrowser from "./isLegacyBrowser.js";
 
@@ -442,7 +443,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_initializeState() {
-		this._state = Object.assign({}, this.constructor.getMetadata().getInitialState());
+		this._state = { ...this.constructor.getMetadata().getInitialState() };
 	}
 
 	/**
@@ -795,7 +796,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		if (!this.staticAreaItem) {
-			this.staticAreaItem = document.createElement("ui5-static-area-item");
+			this.staticAreaItem = StaticAreaItem.createInstance();
 			this.staticAreaItem.setOwnerElement(this);
 		}
 		if (!this.staticAreaItem.parentElement) {
@@ -997,9 +998,10 @@ class UI5Element extends HTMLElement {
 			window.customElements.define(tag, this);
 
 			if (altTag && !customElements.get(altTag)) {
-				class oldClassName extends this {}
 				registerTag(altTag);
-				window.customElements.define(altTag, oldClassName);
+				window.customElements.define(altTag, getClassCopy(this, () => {
+					console.log(`The ${altTag} tag is deprecated and will be removed in the next release, please use ${tag} instead.`); // eslint-disable-line
+				}));
 			}
 		}
 		return this;

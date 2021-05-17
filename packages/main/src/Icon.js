@@ -123,7 +123,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
 		/**
 		 * Fired on mouseup, space and enter if icon is interactive
 		 * @private
@@ -155,6 +155,15 @@ const metadata = {
  * <br>
  * <code>import "@ui5/webcomponents-icons-tnt/dist/antenna.js";</code>
  *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
+ * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the ui5-icon without triggering the click event.</li>
+ * </ul>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Icon.js";</code>
@@ -164,6 +173,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Icon
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-icon
+ * @implements sap.ui.webcomponents.main.IIcon
  * @public
  */
 class Icon extends UI5Element {
@@ -198,8 +208,16 @@ class Icon extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (this.interactive && isEnter(event)) {
+		if (!this.interactive) {
+			return;
+		}
+
+		if (isEnter(event)) {
 			this.fireEvent("click");
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault(); // prevent scrolling
 		}
 	}
 
@@ -211,8 +229,8 @@ class Icon extends UI5Element {
 
 	_onclick(event) {
 		if (this.interactive) {
-			event.preventDefault();
-			// Prevent the native event and fire custom event because otherwise the noConfict event won't be thrown
+			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+			event.stopPropagation();
 			this.fireEvent("click");
 		}
 	}
@@ -273,7 +291,7 @@ class Icon extends UI5Element {
 		if (iconData === ICON_NOT_FOUND) {
 			this.invalid = true;
 			/* eslint-disable-next-line */
-			return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/Assets.js".`);
+			return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/AllIcons.js".`);
 		}
 
 		if (!iconData) {

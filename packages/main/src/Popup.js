@@ -1,13 +1,12 @@
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
-import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "./popup-utils/PopupUtils.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
@@ -23,12 +22,13 @@ const metadata = {
 
 		/**
 		 * Defines the content of the Popup.
-		 * @type {Node[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			type: HTMLElement,
+			propertyName: "content",
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
@@ -92,15 +92,16 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
-		 * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. This event does not bubble.
+		 * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-open
+		 * @allowPreventDefault
 		 */
 		"before-open": {},
 
 		/**
-		 * Fired after the component is opened. This event does not bubble.
+		 * Fired after the component is opened. <b>This event does not bubble.</b>
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#after-open
@@ -108,23 +109,34 @@ const metadata = {
 		"after-open": {},
 
 		/**
-		 * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. This event does not bubble.
+		 * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#before-close
-		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
+		 * @allowPreventDefault
+		 * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
 		"before-close": {
-			escPressed: { type: Boolean },
+			detail: {
+				escPressed: { type: Boolean },
+			},
 		},
 
 		/**
-		 * Fired after the component is closed. This event does not bubble.
+		 * Fired after the component is closed. <b>This event does not bubble.</b>
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Popup#after-close
 		 */
 		"after-close": {},
+
+		/**
+		 * Fired whenever the popup content area is scrolled
+		 *
+		 * @private
+		 * @event sap.ui.webcomponents.main.Popup#scroll
+		 */
+		"scroll": {},
 	},
 };
 
@@ -310,6 +322,8 @@ class Popup extends UI5Element {
 	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
 	 * or the first focusable element otherwise.
 	 * @public
+	 * @async
+	 * @returns {Promise} Promise that resolves when the focus is applied
 	 */
 	async applyFocus() {
 		await this._waitForDomRef();
@@ -325,7 +339,7 @@ class Popup extends UI5Element {
 	}
 
 	/**
-	 * Override this method to provide custom logic for the popup's open/closed state. Maps to the "opened" property by default.
+	 * Tells if the component is opened
 	 * @public
 	 * @returns {boolean}
 	 */
@@ -339,8 +353,7 @@ class Popup extends UI5Element {
 
 	/**
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
-	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popup
-	 * @public
+	 * @protected
 	 */
 	async open(preventInitialFocus) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
@@ -443,7 +456,6 @@ class Popup extends UI5Element {
 		this.style.display = this._displayProp;
 	}
 
-
 	/**
 	 * Sets "none" display to the popup
 	 * @protected
@@ -499,10 +511,6 @@ class Popup extends UI5Element {
 
 	get _root() {
 		return this.shadowRoot.querySelector(".ui5-popup-root");
-	}
-
-	get dir() {
-		return getRTL() ? "rtl" : "ltr";
 	}
 
 	get styles() {

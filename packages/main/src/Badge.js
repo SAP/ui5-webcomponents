@@ -50,7 +50,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
 		 * @public
 		 */

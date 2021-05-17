@@ -80,8 +80,17 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-checkbox</code>.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are <code>Warning</code>, <code>Error</code>, and <code>None</code> (default).
+		 * <b>Note:</b>
+		 *
+		 * <ul>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>None</code>(default)</li>
+		 * <li><code>Negative</code></li>
+		 * <li><code>Transparent</code></li>
+		 * </ul>
 		 *
 		 * @type {ValueState}
 		 * @defaultvalue "None"
@@ -163,6 +172,18 @@ const metadata = {
 		 */
 		change: {},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
+	},
 };
 
 /**
@@ -182,14 +203,23 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * You can manually set the width of the element containing the box and the label using the <code>width</code> property.
- * If the text exceeds the available width, it is truncated.
+ * You can define the checkbox text with via the <code>text</code> property. If the text exceeds the available width, it is truncated by default.
+ * In case you prefer text to wrap, use the <code>wrap</code> property.
  * The touchable area for toggling the <code>ui5-checkbox</code> ends where the text ends.
  * <br><br>
  * You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to
  * <code>true</code>,
  * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readonly</code>
  * property to <code>true</code>.
+ *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ *
+ * The user can use the following keyboard shortcuts to toggle the checked state of the <code>ui5-checkbox</code>.
+ * <ul>
+ * <li>[SPACE, ENTER] - Toggles between different states: checked, not checked.</li>
+ * </ul>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -233,7 +263,7 @@ class CheckBox extends UI5Element {
 	}
 
 	syncLabel() {
-		this._label = Object.assign({}, this._label);
+		this._label = { ...this._label };
 		this._label.text = this.text;
 		this._label.wrap = this.wrap;
 		this._label.textDirection = this.textDirection;

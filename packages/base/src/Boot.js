@@ -6,7 +6,7 @@ import { getTheme } from "./config/Theme.js";
 import applyTheme from "./theming/applyTheme.js";
 import { getFeature } from "./FeaturesRegistry.js";
 
-let bootPromise;
+let booted = false;
 const eventProvider = new EventProvider();
 
 /**
@@ -18,28 +18,23 @@ const attachBoot = listener => {
 	eventProvider.attachEvent("boot", listener);
 };
 
-const boot = () => {
-	if (bootPromise) {
-		return bootPromise;
+const boot = async () => {
+	if (booted) {
+		return;
 	}
 
-	bootPromise = new Promise(async resolve => {
-		const OpenUI5Support = getFeature("OpenUI5Support");
-		if (OpenUI5Support) {
-			await OpenUI5Support.init();
-		}
+	const OpenUI5Support = getFeature("OpenUI5Support");
+	if (OpenUI5Support) {
+		await OpenUI5Support.init();
+	}
 
-		await whenDOMReady();
-		await applyTheme(getTheme());
-		OpenUI5Support && OpenUI5Support.attachListeners();
-		insertFontFace();
-		insertSystemCSSVars();
-		await eventProvider.fireEventAsync("boot");
-
-		resolve();
-	});
-
-	return bootPromise;
+	await whenDOMReady();
+	await applyTheme(getTheme());
+	OpenUI5Support && OpenUI5Support.attachListeners();
+	insertFontFace();
+	insertSystemCSSVars();
+	await eventProvider.fireEventAsync("boot");
+	booted = true;
 };
 
 export {

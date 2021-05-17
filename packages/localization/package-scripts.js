@@ -1,8 +1,13 @@
+const resolve = require("resolve");
+const generateHash = resolve.sync("@ui5/webcomponents-tools/lib/hash/generate.js");
+const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.js");
+const UP_TO_DATE = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`;
+
 const scripts = {
 	clean: "rimraf dist",
 	lint: "eslint . --config config/.eslintrc.js",
 	build: {
-		"default": "path-exists dist/ || nps build.all",
+		"default": `${UP_TO_DATE} || nps build.all hash`,
 		all: "nps lint clean copy.used-modules copy.cldr copy.overlay build.replace-amd build.replace-export-true build.replace-export-false build.amd-to-es6 build.replace-global-core-usage build.esm-abs-to-rel build.jsonImports copy.src",
 		"replace-amd": "replace-in-file sap.ui.define define dist/**/*.js",
 		"replace-export-true": `replace-in-file ", /* bExport= */ true" "" dist/**/*.js`,
@@ -10,7 +15,7 @@ const scripts = {
 		"amd-to-es6": "amdtoes6 --src=dist --replace --glob=**/*.js",
 		"replace-global-core-usage": "node ./lib/replace-global-core/index.js dist/",
 		"esm-abs-to-rel": "node ./lib/esm-abs-to-rel/index.js dist/",
-		jsonImports: "node ./lib/generate-json-imports/cldr.js",
+		jsonImports: "node ./lib/generate-json-imports/cldr.js"
 	},
 	copy: {
 		"used-modules": "node ./lib/copy-list/index.js ./used-modules.txt dist/",
@@ -23,6 +28,7 @@ const scripts = {
 		src: `nps "copy.src --watch --skip-initial-copy"`,
 	},
 	start: "nps watch",
+	hash: `node ${generateHash} dist/ hash.txt`
 };
 
 

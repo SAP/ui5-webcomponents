@@ -56,7 +56,7 @@
 
 	<ui5-block-layer></ui5-block-layer>
 
-	<ui5-dialog id="msg-dialog" header-text="Message dialog">
+	<ui5-dialog id="msg-dialog" header-text="Message dialog" style="--sapScrollBar_Dimension: 20px">
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
 			That´s OpenUI5.</p>
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
@@ -114,13 +114,15 @@
 	</ui5-dialog>
 
 
-	<ui5-dialog id="dialog" stretch>
+	<ui5-dialog id="dialog" accessible-name="Resizable" stretch>
 		<div slot="header">
 			<ui5-button id="header-button">focus stop</ui5-button>
+			<ui5-title id="tt" level="H2">Resizable</ui5-title>
+
 		</div>
 
 		<div style="padding: 1rem;text-align: center;">
-			<ui5-title level="H2">Hello World!</ui5-title>
+			<ui5-title level="H3">Hello World!</ui5-title>
 		</div>
 
 		<ui5-select id="mySelect">
@@ -129,6 +131,82 @@
 		</ui5-select>
 
 		<ui5-textarea id="area" placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+		<div style="padding: 1rem;text-align: center;">
+			<ui5-title level="H3">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+		<div style="padding: 1rem;text-align: center;">
+			<ui5-title level="H3">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+
+		<div style="padding: 1rem;text-align: center;">
+			<ui5-title level="H3">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+
+		<div style="padding: 1rem;text-align: center;">
+			<ui5-title level="H2">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+
+		<div style="padding: 1rem;text-align: center;">
+			<ui5-title level="H3">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
+		</ui5-textarea>
+
+
+		<div style="padding: 1rem;text-align: center;">
+			<ui5-title level="H3">Hello World!</ui5-title>
+		</div>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<ui5-textarea placeholder="Type some text" max-length="2" show-exceeded-text>
 		</ui5-textarea>
 
 		<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem; width: 100%">
@@ -195,8 +273,8 @@
 		</div>
 	</ui5-dialog>
 
-	<ui5-dialog id="draggable-dialog" draggable>
-		<div slot="header" style="flex: 1 0 0; height: 2.5rem;">Draggable dialog</div>
+	<ui5-dialog id="draggable-dialog" accessible-name="Draggable" draggable>
+		<div id="tlt" slot="header"  style="flex: 1 0 0; height: 2.5rem;">Draggable dialog</div>
 
 		<p>Move this dialog around the screen by dragging it by its header.</p>
 		<p>This feature available only on Desktop.</p>

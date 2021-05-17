@@ -97,18 +97,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the tooltip for the rating indicator.
-		 * @type {String}
-		 * @defaultvalue: undefined
-		 * @private
-		 * @since 1.0.0-rc.8
-		 */
-		title: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
 		 * @private
 		 */
 		_stars: {
@@ -142,23 +130,20 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The rating indicator is used to display a specific number of icons that are used to rate an item.
+ * The RatingIndicator is used to display a specific number of icons that are used to rate an item.
  * Additionally, it is also used to display the average and overall ratings.
  *
  * <h3>Usage</h3>
- * The reccomended number of icons is between 5 and 7.
+ * The recommended number of icons is between 5 and 7.
  *
  * <h3>Responsive Behavior</h3>
  * You can change the size of the Rating Indicator by changing its <code>font-size</code> CSS property.
  * <br>
  * Example: <code>&lt;ui5-rating-indicator style="font-size: 3rem;">&lt;/ui5-rating-indicator></code>
  *
- * <h3>Usage</h3>
- *
- * For the <code>ui5-rating-indicator</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/RatingIndicator.js";</code>
+ * <code>import "@ui5/webcomponents/dist/RatingIndicator.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -280,7 +265,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	get tooltip() {
-		return this.title || this.defaultTooltip;
+		return this.getAttribute("title") || this.defaultTooltip;
 	}
 
 	get defaultTooltip() {
@@ -293,6 +278,10 @@ class RatingIndicator extends UI5Element {
 
 	get _ariaDisabled() {
 		return this.disabled || undefined;
+	}
+
+	get ariaReadonly() {
+		return this.readonly ? "true" : undefined;
 	}
 }
 

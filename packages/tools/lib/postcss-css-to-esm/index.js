@@ -1,4 +1,3 @@
-const postcss = require('postcss');
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
@@ -25,18 +24,22 @@ const proccessCSS = css => {
 	return JSON.stringify(css);
 }
 
-module.exports = postcss.plugin('add css to esm transform plugin', function (opts) {
+module.exports = function (opts) {
 	opts = opts || {};
 
-	return function (root) {
-		let css = root.toString();
-		css = proccessCSS(css);
+	return {
+		postcssPlugin: 'postcss-css-to-esm',
+		Once (root) {
+			let css = root.toString();
+			css = proccessCSS(css);
 
-		const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\");
-		mkdirp.sync(path.dirname(targetFile));
+			const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\");
+			mkdirp.sync(path.dirname(targetFile));
 
-		const filePath = `${targetFile}.js`;
-		const defaultTheme = opts.includeDefaultTheme ? getDefaultThemeCode(opts.packageName) : ``;
-		fs.writeFileSync(filePath, `${defaultTheme}export default ${css};`);
-	}
-});
+			const filePath = `${targetFile}.js`;
+			const defaultTheme = opts.includeDefaultTheme ? getDefaultThemeCode(opts.packageName) : ``;
+			fs.writeFileSync(filePath, `${defaultTheme}export default ${css};`);
+		}
+	};
+};
+module.exports.postcss = true;

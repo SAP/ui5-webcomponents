@@ -1,20 +1,20 @@
-# How to use UI5 Web Components
+# How to Use UI5 Web Components
 
 UI5 Web Components are just HTML. Therefore, their usage is identical
-to the usage of standard HTML elements. Usually Web Components creation and manipulation
+to the usage of standard HTML elements. Usually, Web Components creation and manipulation
 will be done internally by your framework of choice.
 
-Table of contents:
+Table of Contents:
 
 - [How do I create a UI5 Web Component instance?](#create)
 - [How do I set the properties/attributes of UI5 Web Components?](#properties)
 - [How do I set the content of UI5 Web Components?](#content)
 - [How do I listen for events?](#events)
 - [How do I call public methods?](#methods)
-- [Concusion](#conclusion)
+- [Conclusion](#conclusion)
 
-<a name="create"></a>
 ## 1. How do I create a UI5 Web Component instance?
+<a name="create"></a>
 
 The simplest way is to just add it to the `<body>`.
 
@@ -32,11 +32,11 @@ document.body.appendChild(myButton);
 
 In most real-world scenarios the above will be done by your framework of choice.
 
-<a name="properties"></a>
 ## 2. How do I set the properties/attributes of UI5 Web Components?
+<a name="properties"></a>
 
 You can use attributes and properties to the same effect. Keep in mind that attribute
-names are "kebab-case" (f.e. `value-state`) while property names are "camelCase" (f.e. `valueState`).
+names are "kebab-case" (e.g. `value-state`) while property names are "camelCase" (f.e. `valueState`).
 
 Attributes can be set directly on the web component in HTML.
 
@@ -60,7 +60,7 @@ const myCb = document.getElementById("cb");
 myCb.setAttribute("value-state", "Error");
 ```
 
-A note on boolean attributes: in HTML boolean attributes may have no value
+A note on Boolean attributes: in HTML Boolean attributes may have no value
 or any value (most commonly same as their name). In any case, the presence of the attribute
 means it is "true" and its absence - "false".
 
@@ -70,13 +70,13 @@ myCb.setAttribute("checked", ""); // same as myCB.checked = true;
 myCb.removeAttribute("checked"); // same as myCB.checked = false;
 ```
 
-<a name="content"></a>
 ## 3. How do I set the content of UI5 Web Components?
+<a name="content"></a>
 
-Some UI5 Web Components do not accept children or text. They are just modified by
+Some UI5 Web Components do not accept children or text. They are only modified by
 properties and attributes.
 
-An example of such web component is the `ui5-icon`:
+An example of such a Web Component is the `ui5-icon`:
 
 ```html
 <ui5-icon name="add"></ui5-icon>
@@ -106,7 +106,7 @@ myButton.innerHTML = "New text"; // same effect as above
 myButton.childNodes[0].nodeValue = "New text" // same result again
 ```
 
-Usually you'll never have to do this manually either, as you'll bind the content of the button via the means
+Usually, you'll never have to do this manually either, as you'll bind the content of the button via the means
 provided by the framework you're using, and the framework will be the one updating it for you.
 
 Finally, there are UI5 Web Components that only accept other HTML elements.
@@ -123,7 +123,7 @@ For example `<ui5-popover>` may contain any HTML element - standard elements and
 
 Manipulating the content of such Web Components is done again with the standard DOM APIs.
 
-For example to add something else to the popover above:
+For example, to add something else to the popover above:
 
 ```js
 const popover = document.getElementsByTagName("ui5-popover")[0];
@@ -133,7 +133,7 @@ popover.appendChild(newChild);
 
 Again, normally you won't need to do this manually, but your framework will do it for you.
 
-Now let's have a look at a Web Component that is intended to have only certain children:
+Now, let's have a look at a Web Component that is intended to have only certain children:
 
 ```html
 <ui5-tabcontainer id="tc1" fixed collapsed show-overflow>
@@ -159,7 +159,7 @@ tc.appendChild(newTab);
 And finally, some UI5 Web Components may render their children in different places, depending on the purpose
 of each child.
 
-Let's have a look at the `<ui5-popover>` again. After consulting the documentation we can see that this particular
+Let's have a look at the `<ui5-popover>` again. After consulting the documentation, we can see that this particular
 Web Component accepts three categories of children: `default, footer, header`. For `footer` and `header`
 the children can be any type of HTML Element (hence `HTMLElement`), while for `default` they can be both
 HTML Elements and text (hence `Node`).
@@ -192,11 +192,11 @@ Here's a summary of `slot` types:
  | ------------------------------ | --------------------------------------------- | ------------------------------------------------------------------------------ |
  | `Node`                         | All HTML Elements and text                    | `ui5-button` default slot                                                      |
  | `HTMLElement`                  | HTML Elements only (no text)                  | `ui5-popover` `header` slot                                                    |
- 
-<a name="events"></a>
-## 4. How do I listen for events?
 
-Again, you can use standard DOM methods for this task:
+## 4. How do I listen for events?
+<a name="events"></a>
+
+For this task, you can again use standard DOM methods:
 
 ```js
 const myMessage = document.getElementsByTagName("ui5-messagestrip")[0];
@@ -215,14 +215,14 @@ For the events fired by each UI5 Web Component, consult the documentation.
 Like with most other tasks, you'll use your framework's syntax to bind to events and you'll rarely,
 if ever, need to call `addEventListener` yourself.
 
-Please note however that some frameworks (e.g. React) cannot use their standard syntax
+Please, note, however that some frameworks (e.g. React) cannot use their standard syntax
 for binding to custom events (such as `close`), but only for standard ones (such as `click`).
 So, for custom events in React you'd have to get a reference to the element and call `addEventListener` manually.
 
 For more information, please check our [React tutorial](React-tutorial.md).
 
-<a name="methods"></a>
 ## 5. How do I call public methods?
+<a name="methods"></a>
 
 Get a reference to the UI5 Web Component and call the method on it, as you would with any other HTML element.
 
@@ -231,11 +231,11 @@ const myDialog = document.getElementsByTagName("ui5-dialog")[0];
 myDialog.open();
 ```
 
-Again, consult the documentation for the available public methods for each UI5 Web Component.
+Consult the documentation for the available public methods for each UI5 Web Component.
 
-<a name="conclusion"></a>
 ## 6. Conclusion
+<a name="conclusion"></a>
 
 As you can see from this article, UI5 Web Components, being HTML elements in the first place,
-comply to the same rules. There are some novelties that come with the Web Components standard,
+comply with the same rules. There are some novelties that come with the Web Components standard,
 such as `slot`, but otherwise everything else is what you already know and use from HTML.

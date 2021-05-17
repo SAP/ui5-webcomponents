@@ -7,11 +7,17 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
+import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
+import TableMode from "./types/TableMode.js";
 
 // Texts
-import { TABLE_LOAD_MORE_TEXT } from "./generated/i18n/i18n-defaults.js";
+import {
+	LOAD_MORE_TEXT,
+	ARIA_LABEL_SELECT_ALL_CHECKBOX,
+	TABLE_HEADER_ROW_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
@@ -34,7 +40,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.ITableRow[]}
 		 * @slot rows
 		 * @public
 		 */
@@ -49,7 +55,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.ITableColumn[]}
 		 * @slot
 		 * @public
 		 */
@@ -142,7 +148,7 @@ const metadata = {
 		 */
 		growing: {
 			type: TableGrowingMode,
-			defaultvalue: TableGrowingMode.None,
+			defaultValue: TableGrowingMode.None,
 		},
 
 		/**
@@ -190,6 +196,25 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the mode of the <code>ui5-table</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>MultiSelect</code></li>
+		 * <li><code>SingleSelect</code></li>
+		 * <li><code>None</code></li>
+		 * <ul>
+		 * @type {TableMode}
+		 * @defaultvalue "None"
+		 * @since 1.0.0-rc.15
+		 * @public
+		 */
+		mode: {
+			type: TableMode,
+			defaultValue: TableMode.None,
+		},
+
 		_hiddenColumns: {
 			type: Object,
 			multiple: true,
@@ -222,13 +247,24 @@ const metadata = {
 		_inViewport: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines whether all rows are selected or not when table is in MultiSelect mode.
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.15
+		 * @private
+		 */
+		_allRowsSelected: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 		/**
-		 * Fired when a row is clicked.
+		 * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
 		 *
 		 * @event sap.ui.webcomponents.main.Table#row-click
-		 * @param {HTMLElement} row the clicked row.
+		 * @param {HTMLElement} row the activated row.
 		 * @public
 		 */
 		"row-click": {
@@ -261,6 +297,23 @@ const metadata = {
 		 * @since 1.0.0-rc.11
 		 */
 		"load-more": {},
+
+		/**
+		 * Fired when selection is changed by user interaction
+		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+		 *
+		 * @event sap.ui.webcomponents.main.Table#selection-change
+		 * @param {Array} selectedRows An array of the selected rows.
+		 * @param {Array} previouslySelectedRows An array of the previously selected rows.
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		"selection-change": {
+			detail: {
+				selectedRows: { type: Array },
+				previouslySelectedRows: { type: Array },
+			},
+		},
 	},
 };
 
@@ -278,6 +331,22 @@ const metadata = {
  * Desktop and tablet devices are supported.
  * On tablets, special consideration should be given to the number of visible columns
  * and rows due to the limited performance of some devices.
+ *
+ * <h3>Selection</h3>
+ * To benefit from the selection mechanism of <code>ui5-table</code> component, you can use the available selection modes:
+ * <code>SingleSelect</code> and <code>MultiSelect</code>.
+ * <br>
+ * In additition to the used mode, you can also specify the <code>ui5-table-row</code> type choosing between
+ * <code>Active</code> or <code>Inactive</code>.
+ * <br><br>
+ * In <code>SingleSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row via mouse or
+ * by pressing the <code>Space</code> or <code>Enter</code> keys.
+ * <br>
+ * In <code>MultiSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row by pressing the
+ * <code>Space</code> key when a row is on focus or via mouse click over the selection checkbox of the row.
+ * In order to select all the available rows at once, you can use the selection checkbox presented in the table's header.
+ * <br><br>
+ * <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -344,6 +413,7 @@ class Table extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this.tableEndObserved = false;
+		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -359,6 +429,7 @@ class Table extends UI5Element {
 			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
+			row.mode = this.mode;
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
@@ -445,6 +516,79 @@ class Table extends UI5Element {
 		this.fireEvent("load-more");
 	}
 
+	_handleSingleSelect(event) {
+		const row = this.getRowParent(event.target);
+		if (!row.selected) {
+			const previouslySelectedRows = this.selectedRows;
+			this.rows.forEach(item => {
+				if (item.selected) {
+					item.selected = false;
+				}
+			});
+			row.selected = true;
+			this.fireEvent("selection-change", {
+				selectedRows: [row],
+				previouslySelectedRows,
+			});
+		}
+	}
+
+	_handleMultiSelect(event) {
+		const row = this.getRowParent(event.target);
+		const previouslySelectedRows = this.selectedRows;
+
+		row.selected = !row.selected;
+
+		const selectedRows = this.selectedRows;
+
+		if (selectedRows.length === this.rows.length) {
+			this._allRowsSelected = true;
+		} else {
+			this._allRowsSelected = false;
+		}
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	_handleSelect(event) {
+		this[`_handle${this.mode}`](event);
+	}
+
+	_selectAll(event) {
+		const bAllSelected = event.target.checked;
+		const previouslySelectedRows = this.rows.filter(row => row.selected);
+
+		this._allRowsSelected = bAllSelected;
+
+		this.rows.forEach(row => {
+			row.selected = bAllSelected;
+		});
+
+		const selectedRows = bAllSelected ? this.rows : [];
+
+		this.fireEvent("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
+	}
+
+	getRowParent(child) {
+		const parent = child.parentElement;
+
+		if (child.hasAttribute("ui5-table-row")) {
+			return child;
+		}
+
+		if (parent && parent.hasAttribute("ui5-table-row")) {
+			return parent;
+		}
+
+		this.getRowParent(parent);
+	}
+
 	getColumnHeader() {
 		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
 	}
@@ -455,7 +599,7 @@ class Table extends UI5Element {
 	}
 
 	checkTableInViewport() {
-		this._inViewport = this.isInViewport();
+		this._inViewport = isElementInView(this.getDomRef());
 	}
 
 	popinContent(_event) {
@@ -478,7 +622,9 @@ class Table extends UI5Element {
 		});
 
 		if (visibleColumnsIndexes.length) {
-			this.columns[visibleColumnsIndexes[0]].first = true;
+			if (!this.isMultiSelect) {
+				this.columns[visibleColumnsIndexes[0]].first = true;
+			}
 			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
 		}
 
@@ -546,7 +692,20 @@ class Table extends UI5Element {
 	}
 
 	get _moreText() {
-		return this.moreText || this.i18nBundle.getText(TABLE_LOAD_MORE_TEXT);
+		return this.moreText || this.i18nBundle.getText(LOAD_MORE_TEXT);
+	}
+
+	get ariaLabelText() {
+		const headerRowText = this.i18nBundle.getText(TABLE_HEADER_ROW_TEXT);
+		const columnsTitle = this.columns.map(column => {
+			return column.textContent.trim();
+		}).join(" ");
+
+		return `${headerRowText} ${columnsTitle}`;
+	}
+
+	get ariaLabelSelectAllText() {
+		return this.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
 	}
 
 	get loadMoreAriaLabelledBy() {
@@ -569,14 +728,12 @@ class Table extends UI5Element {
 		return this._inViewport ? "absolute" : "sticky";
 	}
 
-	isInViewport() {
-		const rect = this.getDomRef().getBoundingClientRect();
+	get isMultiSelect() {
+		return this.mode === "MultiSelect";
+	}
 
-		return (
-			rect.top >= 0 && rect.left >= 0
-				&& rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-				&& rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-		);
+	get selectedRows() {
+		return this.rows.filter(row => row.selected);
 	}
 }
 

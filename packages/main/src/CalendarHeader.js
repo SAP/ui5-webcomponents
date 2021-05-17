@@ -22,6 +22,7 @@ import styles from "./generated/themes/CalendarHeader.css.js";
 
 const metadata = {
 	tag: "ui5-calendar-header",
+	languageAware: true,
 	properties: {
 		/**
 		 * Already normalized by Calendar
@@ -137,11 +138,11 @@ class CalendarHeader extends UI5Element {
 		return {
 			prevButton: {
 				"ui5-calheader-arrowbtn": true,
-				"ui5-calheader-arrowbtn-disabled": this._isPrevButtonDisabled,
+				"ui5-calheader-arrowbtn-disabled": this.isPrevButtonDisabled,
 			},
 			nextButton: {
 				"ui5-calheader-arrowbtn": true,
-				"ui5-calheader-arrowbtn-disabled": this._isNextButtonDisabled,
+				"ui5-calheader-arrowbtn-disabled": this.isNextButtonDisabled,
 			},
 		};
 	}

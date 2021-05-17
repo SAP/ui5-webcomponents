@@ -11,8 +11,11 @@
 	cursor: text;
 }
 
-:host(:not([wrap])) .ui5-label-root {
+.ui5-label-root {
 	width: 100%;
+}
+
+:host(:not([wrap])) .ui5-label-root {
 	font-weight: inherit;
 	display: inline-block;
 	white-space: nowrap;
@@ -20,8 +23,8 @@
 	overflow: hidden;
 }
 
-bdi{
-    content: "";
+bdi {
+	content: "";
 	padding-right: 0.15625rem;
 }
 
@@ -33,16 +36,21 @@ bdi{
 	max-width: 100%;
 }
 
-:host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100% - .85rem);
+:host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper,
+:host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper.ui5-label-text-wrapper-safari {
+	max-width: calc(100% - .8rem);
 }
 
 :host(:not([wrap])[required]) .ui5-label-text-wrapper {
-	max-width: calc(100% - 0.475rem);
+	max-width: calc(100% - .475rem);
+}
+
+:host(:not([wrap])[required]) .ui5-label-text-wrapper.ui5-label-text-wrapper-safari {
+	max-width: calc(100% - .425rem);
 }
 
 :host(:not([wrap])[show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100% - 0.2rem);
+	max-width: calc(100% - .2rem);
 }
 
 :host([show-colon]) .ui5-label-required-colon:before {

@@ -11,6 +11,7 @@ import {
 	isPageUpShift,
 	isPageDownShift,
 	isEscape,
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -27,7 +28,6 @@ import "@ui5/webcomponents-icons/dist/add.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
-
 
 // Styles
 import StepInputCss from "./generated/themes/StepInput.css.js";
@@ -107,7 +107,7 @@ const metadata = {
 		/**
 		 * Defines whether the <code>ui5-step-input</code> is required.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -281,6 +281,17 @@ const metadata = {
 		valueStateMessage: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
 		/**
@@ -319,13 +330,13 @@ const INITIAL_SPEED = 120; // milliseconds
  * The increase/decrease button and the up/down keyboard navigation become disabled when
  * the value reaches the max/min or a new value is entered from the input which is greater/less than the max/min.
  * <br><br>
- * <i>When to use</i>
+ * <h4>When to use:</h4>
  * <ul>
  * <li>To adjust amounts, quantities, or other values quickly.</li>
  * <li>To adjust values for a specific step.</li>
  * </ul>
  *
- * <i>When not to use</i>
+ * <h4>When not to use:</h4>
  * <ul>
  * <li>To enter a static number (for example, postal code, phone number, or ID). In this case,
  * use the regular <code>ui5-input</code> instead.</li>
@@ -334,17 +345,16 @@ const INITIAL_SPEED = 120; // milliseconds
  * <li>To enter dates and times. In this case, use date/time related components instead.</li>
  * </ul>
  *
- * For the <code>ui5-step-input</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/StepInput.js";</code>
+ * <code>import "@ui5/webcomponents/dist/StepInput.js";</code>
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.StepInput
  * @extends UI5Element
  * @tagname ui5-step-input
- * @since 1.0.0-rc.12
+ * @since 1.0.0-rc.13
  * @public
  */
 class StepInput extends UI5Element {
@@ -501,7 +511,7 @@ class StepInput extends UI5Element {
 	 * decrement buttons according to the value and min/max values (if set). Fires <code>change</code> event when requested
 	 *
 	 * @param {Float} modifier modifies the value of the component with the given modifier (positive or negative)
-	 * @param {Boolean} fireChangeEvent if <code>true</code>, fires <code>change</code> event when the value is changed
+	 * @param {boolean} fireChangeEvent if <code>true</code>, fires <code>change</code> event when the value is changed
 	 */
 	_modifyValue(modifier, fireChangeEvent) {
 		let value;
@@ -563,6 +573,11 @@ class StepInput extends UI5Element {
 	_onkeydown(event) {
 		let preventDefault = true;
 		if (this.disabled || this.readonly) {
+			return;
+		}
+
+		if (isEnter(event)) {
+			this._onInputChange();
 			return;
 		}
 

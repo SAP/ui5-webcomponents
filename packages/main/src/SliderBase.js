@@ -100,7 +100,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-
 		/**
 		 * @private
 		 */
@@ -745,7 +744,6 @@ class SliderBase extends UI5Element {
 		// make a jump of 1/10th of the Slider's length, otherwise just use the normal step property.
 		let step = this._effectiveStep;
 		step = isBigStep && ((max - min) / step > 10) ? (max - min) / 10 : step;
-
 
 		if (isEnd(event)) {
 			return max - currentValue;

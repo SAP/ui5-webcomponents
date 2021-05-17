@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<title>ui5-list / ui5-li</title>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-title>List growing="Scroll" max-height: 10.5rem;</ui5-title>
+	<br><br><br>
+
+	<section style="max-height: 10.5rem; overflow: auto;">
+		<ui5-list id="infiniteScrollEx" growing="Scroll">
+			<ui5-li-groupheader>New Items</ui5-li-groupheader>
+			<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+			<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+			<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Information">IPhone 3</ui5-li>
+			<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
+			<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Available" info-state="Success">Audio cabel</ui5-li>
+			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" info="Reuqired" info-state="Warning">DVD set</ui5-li>
+		</ui5-list>
+	</section>
+	
+
+	<br><br><br>
+	<ui5-title>List growing="Scroll" max-height: 8rem;</ui5-title>
+	<br><br><br>
+	<ui5-list id="infiniteScrollEx2" growing="Scroll" style="max-height: 8rem; overflow: auto;">
+		<ui5-li-groupheader>New Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+		<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Information">IPhone 3</ui5-li>
+		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
+		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Available" info-state="Success">Audio cabel</ui5-li>
+		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" info="Reuqired" info-state="Warning">DVD set</ui5-li>
+	</ui5-list>
+
+	<ui5-title>List growing="Scroll"</ui5-title>
+	<br><br><br>
+	<ui5-list id="infiniteScrollEx3" growing="Scroll">
+		<ui5-li-groupheader>New Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+		<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Information">IPhone 3</ui5-li>
+		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
+		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Available" info-state="Success">Audio cabel</ui5-li>
+		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" info="Reuqired" info-state="Warning">DVD set</ui5-li>
+	</ui5-list>
+
+	<script>
+		'use strict';
+
+		function template(i) {
+			var li = document.createElement("ui5-li");
+			li.textContent = "Title";
+			li.description = "my description goes here " + i;
+			li.info = "Available";
+			return li;
+		}
+
+		function insertItems(el, num) {
+			for(var i= 0; i<num; i++) {
+				el.appendChild(template(i));
+			}
+		}
+
+		[].slice.call(document.querySelectorAll("ui5-list"), this).forEach(function(list) {
+			list.addEventListener("ui5-load-more", function(e) {
+				var el = list;
+				el.busy = true;
+
+				setTimeout(function() {
+					insertItems(el, 3);
+					el.busy = false;
+				}, 1000);
+			});
+		});
+	</script>
+</body>
+</html>

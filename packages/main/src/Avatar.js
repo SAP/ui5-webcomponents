@@ -196,6 +196,17 @@ const metadata = {
 			type: String,
 		},
 
+		/**
+		 * Defines the aria-haspopup value of the <code>ui5-avatar</code> when <code>interactive</code> property is <code>true</code>.
+		 * <br><br>
+		 * @type String
+		 * @since 1.0.0-rc.15
+		 * @protected
+		 */
+		ariaHaspopup: {
+			type: String,
+		},
+
 		_tabIndex: {
 			type: String,
 			noAttribute: true,
@@ -226,6 +237,15 @@ const metadata = {
  * The shape can be circular or square. There are several predefined sizes, as well as an option to
  * set a custom size.
  *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
+ * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the <code>ui5-avatar</code> without triggering the click event.</li>
+ * </ul>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Avatar.js";</code>
@@ -236,6 +256,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-avatar
  * @since 1.0.0-rc.6
+ * @implements sap.ui.webcomponents.main.IAvatar
  * @public
  */
 class Avatar extends UI5Element {
@@ -296,6 +317,14 @@ class Avatar extends UI5Element {
 		return this.getAttribute("background-color") || this._backgroundColor;
 	}
 
+	get _role() {
+		return this.interactive ? "button" : undefined;
+	}
+
+	get _ariaHasPopup() {
+		return this._getAriaHasPopup();
+	}
+
 	get validInitials() {
 		const validInitials = /^[a-zA-Z]{1,2}$/;
 
@@ -323,17 +352,24 @@ class Avatar extends UI5Element {
 	}
 
 	_onclick(event) {
-		event.isMarked = "avatar";
 		if (this.interactive) {
-			event.preventDefault();
-			// Prevent the native event and fire custom event because otherwise the noConfict event won't be thrown
+			// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+			event.stopPropagation();
 			this.fireEvent("click");
 		}
 	}
 
 	_onkeydown(event) {
-		if (this.interactive && isEnter(event)) {
+		if (!this.interactive) {
+			return;
+		}
+
+		if (isEnter(event)) {
 			this.fireEvent("click");
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault(); // prevent scrolling
 		}
 	}
 
@@ -351,6 +387,14 @@ class Avatar extends UI5Element {
 		if (this.interactive) {
 			this.focused = true;
 		}
+	}
+
+	_getAriaHasPopup() {
+		if (!this.interactive || this.ariaHaspopup === "") {
+			return;
+		}
+
+		return this.ariaHaspopup;
 	}
 }
 

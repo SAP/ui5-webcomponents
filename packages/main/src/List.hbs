@@ -3,7 +3,7 @@
 	@focusin="{{_onfocusin}}"
 	@keydown="{{_onkeydown}}"
 >
-	<div class="ui5-list-scroll-container" @scroll="{{_onScroll}}">
+	<div class="ui5-list-scroll-container">
 		<!-- header -->
 		{{#if header.length}}
 			<slot name="header" />
@@ -36,6 +36,10 @@
 			{{/if}}
 		</ul>
 
+		{{#if growsWithButton}}
+			{{> moreRow}}
+		{{/if}}
+
 		{{#if footerText}}
 			<footer id="{{_id}}-footer" class="ui5-list-footer">
 				{{footerText}}
@@ -45,11 +49,37 @@
 		{{#if hasData}}
 			<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>
 		{{/if}}
+
+		<span tabindex="-1" aria-hidden="true" class="ui5-list-end-marker"></span>
 	</div>
 
 	{{#if busy}}
 		<div class="ui5-list-busy-row">
-			<ui5-busyindicator active size="Medium" class="ui5-list-busy-ind"></ui5-busyindicator>
+			<ui5-busyindicator
+				active size="Medium"
+				class="ui5-list-busy-ind" 
+				style="{{styles.busyInd}}"
+			></ui5-busyindicator>
 		</div>
 	{{/if}}
 </div>
+
+
+{{#*inline "moreRow"}}
+	<div load-more>
+		<div 
+			tabindex="0"
+			role="button"
+			aria-labelledby="{{_id}}-showMore-text"
+			?active="{{_loadMoreActive}}"
+			@click="{{_onLoadMoreClick}}"
+			@keydown="{{_onLoadMoreKeydown}}"
+			@keyup="{{_onLoadMoreKeyup}}"
+			@mousedown="{{_onLoadMoreMousedown}}"
+			@mouseup="{{_onLoadMoreMouseup}}"
+			load-more-inner
+		>
+			<span id="{{_id}}-showMore-text" load-more-text>{{_moreText}}</span>
+		</div>
+	</div>
+{{/inline}}

@@ -76,7 +76,7 @@ const metadata = {
 		},
 
 		_itemsToShow: {
-			type: String,
+			type: Object,
 			multiple: true,
 		},
 
@@ -108,8 +108,10 @@ const metadata = {
 		 *  Fires when new value is selected.
 		 */
 		select: {
-			value: {
-				type: String,
+			detail: {
+				value: {
+					type: String,
+				},
 			},
 		},
 	},
@@ -123,13 +125,11 @@ const CELL_SIZE_COZY = 2.875;
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- *
  * <h3>Usage</h3>
  *
- * For the <code>ui5-wheelslider</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/WheelSlider.js";</code>
+ * <code>import "@ui5/webcomponents/dist/WheelSlider.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -248,7 +248,7 @@ class WheelSlider extends UI5Element {
 
 		offsetIndex = Math.round(scrollWhere / cellSizeInPx);
 
-		if (this.value === this._itemsToShow[offsetIndex]) {
+		if (this.value === this._itemsToShow[offsetIndex].value) {
 			return;
 		}
 
@@ -259,7 +259,7 @@ class WheelSlider extends UI5Element {
 			}
 		}
 
-		this.value = this._itemsToShow[offsetIndex];
+		this.value = this._itemsToShow[offsetIndex].value;
 		this._currentElementIndex = offsetIndex;
 	}
 
@@ -311,14 +311,21 @@ class WheelSlider extends UI5Element {
 	}
 
 	_buildItemsToShow() {
-		this._itemsToShow = this._items;
+		let itemsToShow = this._items;
 		if (this.cyclic) {
-			if (this._itemsToShow.length < this._items.length * this._timesMultipliedOnCyclic()) {
+			if (itemsToShow.length < this._items.length * this._timesMultipliedOnCyclic()) {
 				for (let i = 0; i < this._timesMultipliedOnCyclic(); i++) {
-					this._itemsToShow = this._itemsToShow.concat(this._items);
+					itemsToShow = itemsToShow.concat(this._items);
 				}
 			}
 		}
+
+		this._itemsToShow = itemsToShow.map(value => {
+			return {
+				value,
+				"selected": (value === this.value),
+			};
+		});
 	}
 
 	_handleArrayBorderReached(currentIndex) {

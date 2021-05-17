@@ -307,6 +307,10 @@ class DayPicker extends CalendarPart {
 		}
 
 		this._dayNames[1].classes += " ui5-dp-firstday";
+
+		if (this.shouldHideWeekNumbers) {
+			this._dayNames.shift();
+		}
 	}
 
 	onAfterRendering() {
@@ -430,7 +434,6 @@ class DayPicker extends CalendarPart {
 		}
 	}
 
-
 	_addTimestampToSelection(timestamp) {
 		if (!this.selectedDates.includes(timestamp)) {
 			this.selectedDates = [...this.selectedDates, timestamp];
@@ -481,7 +484,6 @@ class DayPicker extends CalendarPart {
 			startDate.setDate(startDate.getDate() + 1);
 		}
 	}
-
 
 	/**
 	 * Set the hovered day as the _secondTimestamp
@@ -702,6 +704,7 @@ class DayPicker extends CalendarPart {
 		return {
 			wrapper: {
 				display: this._hidden ? "none" : "flex",
+				"justify-content": "center",
 			},
 			main: {
 				width: "100%",

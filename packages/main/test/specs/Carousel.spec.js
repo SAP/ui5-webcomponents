@@ -1,8 +1,11 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 
 describe("Carousel general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Carousel.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Carousel.html`);
+	});
 
 	it("Carousel is rendered", () => {
 		const carouselRoot = browser.$("#carousel1").shadow$(".ui5-carousel-root");
@@ -12,6 +15,8 @@ describe("Carousel general interaction", () => {
 
 	it("Carousel navigates left", () => {
 		const carousel = browser.$("#carousel1");
+		carousel.scrollIntoView();
+		carousel.moveTo();
 		const carouselRightButton = carousel.shadow$$(".ui5-carousel-navigation-button")[0];
 
 		carouselRightButton.click();
@@ -20,6 +25,8 @@ describe("Carousel general interaction", () => {
 
 	it("Carousel navigates right", () => {
 		const carousel = browser.$("#carousel1");
+		carousel.scrollIntoView();
+		carousel.moveTo();
 		const carouselLeftButton = carousel.shadow$$(".ui5-carousel-navigation-button")[1];
 
 		carouselLeftButton.click();
@@ -28,6 +35,8 @@ describe("Carousel general interaction", () => {
 
 	it("Navigation is rendered for carousel with less than 9 elements", () => {
 		const carousel = browser.$("#carousel1");
+		carousel.moveTo();
+
 		const navigation = carousel.shadow$(".ui5-carousel-navigation > div");
 
 		assert.ok(navigation.isExisting(), "Navigation is rendered");
@@ -35,6 +44,8 @@ describe("Carousel general interaction", () => {
 
 	it("Navigation is rendered for carousel with more than 9 elements", () => {
 		const carousel = browser.$("#carousel2");
+		carousel.scrollIntoView();
+		carousel.moveTo();
 		const navigation = carousel.shadow$(".ui5-carousel-navigation > ui5-label");
 
 		assert.ok(navigation.isExisting(), "Navigation is rendered");
@@ -42,6 +53,8 @@ describe("Carousel general interaction", () => {
 
 	it("Buttons are rendered in the navigation(arrows-placement)", () => {
 		const carousel = browser.$("#carousel3");
+		carousel.scrollIntoView();
+		carousel.moveTo();
 		const buttons = carousel.shadow$$(".ui5-carousel-navigation-wrapper ui5-button");
 
 		assert.strictEqual(buttons.length, 2, "Navigation is rendered");
@@ -56,7 +69,9 @@ describe("Carousel general interaction", () => {
 
 	it("Aria attributes are set", () => {
 		const carousel = browser.$("#carousel5");
-		const pageIndicatorDot1 = carousel.shadow$(".ui5-carousel-navigation-dot:first-child");
+		carousel.scrollIntoView();
+		carousel.moveTo();
+		const pageIndicatorDot1 = $('#carousel5').shadow$(".ui5-carousel-navigation-dot:first-child");
 		const pageIndicatorDot2 = carousel.shadow$(".ui5-carousel-navigation-dot:nth-child(2)");
 		const PAGE_INDICATOR_ARIA_LABEL1 = "Item 1 of 5 displayed";
 		const PAGE_INDICATOR_ARIA_LABEL2 = "Item 2 of 5 displayed";
@@ -127,6 +142,8 @@ describe("Carousel general interaction", () => {
 
 	it("Event navigate fired when pressing navigation arrows", () => {
 		const carousel = browser.$("#carousel8");
+		carousel.scrollIntoView();
+		carousel.moveTo();
 		const selectedIndex = browser.$("#result");
 		const eventCounter = browser.$("#resultCounter");
 		const navigationArrowForward = carousel.shadow$("ui5-button[arrow-forward]");
@@ -167,6 +184,8 @@ describe("Carousel general interaction", () => {
 	it("loadMore event is fired only when neccessary", () => {
 		const carousel = browser.$("#carousel9");
 		const eventCounter = browser.$("#loadmore-result");
+		carousel.scrollIntoView();
+		carousel.moveTo();
 		const navigationArrowForward = carousel.shadow$("ui5-button[arrow-forward]");
 
 		navigationArrowForward.click();
@@ -181,7 +200,7 @@ describe("Carousel general interaction", () => {
 		navigationArrowForward.click();
 		navigationArrowForward.click();
 		navigationArrowForward.click();
-		
+
 		assert.strictEqual(eventCounter.getProperty("value"), "3", "loadMore event is fired 3 times");
 	});
 });

@@ -295,7 +295,9 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * Opens the picker.
+	 * @async
 	 * @public
+	 * @returns {Promise} Resolves when the picker is open
 	 */
 	async openPicker() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
@@ -313,8 +315,9 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
-	 * Checks if a value is valid against the current date format of the TimePicker
+	 * Checks if the picker is open
 	 * @public
+	 * @returns {boolean}
 	 */
 	isOpen() {
 		return !!this._isPickerOpen;
@@ -385,20 +388,22 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Formats a Java Script date object into a string representing a locale date and time
 	 * according to the <code>formatPattern</code> property of the TimePicker instance
-	 * @param {object} oDate A Java Script date object to be formatted as string
+	 * @param {object} date A Java Script date object to be formatted as string
 	 * @public
+	 * @returns {string}
 	 */
-	formatValue(oDate) {
-		return this.getFormat().format(oDate);
+	formatValue(date) {
+		return this.getFormat().format(date);
 	}
 
 	/**
-	 * Checks if a value is valid against the current format patternt of the TimePicker.
+	 * Checks if a value is valid against the current <code>formatPattern</code> value.
 	 *
 	 * <br><br>
 	 * <b>Note:</b> an empty string is considered as valid value.
 	 * @param {string} value The value to be tested against the current date format
 	 * @public
+	 * @returns {boolean}
 	 */
 	isValid(value) {
 		return value === "" || this.getFormat().parse(value);

@@ -37,6 +37,10 @@ yarn start
 
 ## Additional
 
+### UI5 Web Components for React
+
+If your framework of choice is React and you plan to use UI5 Web components, it is worth checking out the [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) project. This wrapper project enables some additional functionalities when it comes to the usage of UI5 Web Components in React environment. For example typescript definitions, event handling, boolean properties binding, etc...
+
 ### Event Binding
 
 In order to use the events, provided by UI5 Web Components, currently you need to get a ref to the component, because React doesn't support custom events. Here is an example of what you need to do in order to use the events provided by UI5 Web Components:

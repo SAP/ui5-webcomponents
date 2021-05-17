@@ -1,4 +1,4 @@
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -177,6 +177,10 @@ class ListItem extends ListItemBase {
 		if (isSpace(event)) {
 			this.fireItemPress(event);
 		}
+
+		if (this.modeDelete && isDelete(event)) {
+			this.onDelete();
+		}
 	}
 
 	_onmousedown(event) {
@@ -283,6 +287,13 @@ class ListItem extends ListItemBase {
 
 	get modeDelete() {
 		return this._mode === ListMode.Delete;
+	}
+
+	/**
+	 * Used in UploadCollectionItem
+	 */
+	get disableDeleteButton() {
+		return false;
 	}
 
 	get typeDetail() {

@@ -36,6 +36,13 @@ const metadata = {
 
 		/**
 		 * Defines the <code>priority</code> of the item.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Low</code></li>
+		 * <li><code>Medium</code></li>
+		 * <li><code>High</code></li>
+		 * </ul>
 		 * @type {Priority}
 		 * @defaultvalue "None"
 		 * @public
@@ -86,7 +93,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 		 *
-		 * @type {HTMLElement}
+		 * @type {sap.ui.webcomponents.fiori.INotificationAction[]}
 		 * @slot
 		 * @public
 		 */
@@ -124,7 +131,7 @@ class NotificationListItemBase extends ListItemBase {
 	constructor() {
 		super();
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+		this.i18nFioriBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get metadata() {

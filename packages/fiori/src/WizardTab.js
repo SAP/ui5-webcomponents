@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 
 import WizardTabTemplate from "./generated/templates/WizardTabTemplate.lit.js";
@@ -103,69 +102,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the role of the step.
-		 * @type {boolean}
-		 * @defaultvalue listitem
-		 * @private
-		 */
-		role: {
-			type: String,
-			defaultValue: "listitem",
-		},
-
-		/**
-		 * Defines the aria-roledescription of the step.
-		 * @type {boolean}
-		 * @defaultvalue ""
-		 * @private
-		 */
-		ariaRoledescription: {
-			type: String,
-		},
-
-		/**
-		 * Defines the aria-label of the step.
-		 * @type {boolean}
-		 * @defaultvalue undefined
-		 * @private
-		 */
-		ariaLabel: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Defines the aria-labelledby of the step.
-		 * @type {boolean}
-		 * @defaultvalue undefined
-		 * @private
-		 */
-		ariaLabelledby: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Defines the aria-setsize of the step.
-		 * @type {boolean}
-		 * @defaultvalue undefined
-		 * @private
-		 */
-		ariaSetsize: {
-			type: Integer,
-		},
-
-		/**
-		 * Defines the aria-posinset of the step.
-		 * @type {boolean}
-		 * @defaultvalue undefined
-		 * @private
-		 */
-		ariaPosinset: {
-			type: Integer,
-		},
-
-		/**
 		 * Defines the tabindex of the step.
 		 * @type {String}
 		 * @defaultvalue -1
@@ -174,6 +110,10 @@ const metadata = {
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
+		},
+
+		_wizardTabAccInfo: {
+			type: Object,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.WizardTab.prototype */ {
@@ -198,10 +138,9 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * For the <code>ui5-wizard-tap</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/WizardTab.js";</code> (imported with <ui5-wizard>)
+ * <code>import "@ui5/webcomponents/dist/WizardTab.js";</code> (imported with <ui5-wizard>)
  *
  * @constructor
  * @author SAP SE
@@ -273,16 +212,18 @@ class WizardTab extends UI5Element {
 		return this.disabled ? undefined : this._tabIndex;
 	}
 
-	get ariaCurrent() {
-		return this.selected ? "step" : undefined;
-	}
-
-	get ariaDisabled() {
-		return this.disabled ? "true" : undefined;
-	}
-
 	get hasTexts() {
 		return this.heading || this.subheading;
+	}
+
+	get accInfo() {
+		return {
+			"ariaSetsize": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaSetsize,
+			"ariaPosinset": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaPosinset,
+			"ariaLabel": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaLabel,
+			"ariaCurrent": this.selected ? "true" : undefined,
+			"ariaDisabled": this.disabled ? "true" : undefined,
+		};
 	}
 }
 

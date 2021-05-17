@@ -24,11 +24,11 @@ if (languages.length === 0) {
 // There is i18n - generate the full file
 } else {
 	// Keys for the array
-	const languagesKeysString = languages.map(key => `${key},`).join("\n\t");
+	const languagesKeysString = languages.map(key => `"${key}": _${key},`).join("\n\t");
 	const languagesKeysStringArray = languages.map(key => `"${key}",`).join("\n\t");
 
 	// Actual imports for json assets
-	const assetsImportsString = languages.map(key => `import ${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");
+	const assetsImportsString = languages.map(key => `import _${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");
 
 	// static imports
 	contentStatic = `import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";

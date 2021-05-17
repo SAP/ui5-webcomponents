@@ -26,21 +26,26 @@
 	cursor: pointer;
 }
 
-:host([type="Group"]) ::slotted(ui5-avatar) {
+:host([type="Group"]) ::slotted([ui5-button]),
+:host([type="Group"]) ::slotted([ui5-avatar]) {
 	pointer-events: none;
 }
 
+::slotted([ui5-button]:not([hidden])),
 .ui5-avatar-group-overflow-btn:not([hidden]) {
+	--_ui5_button_base_padding: 0;
 	border-radius: 50%;
 	display: inline-flex;
-	text-overflow: unset;
+	text-overflow: initial;
 }
 
+::slotted([ui5-button][focused]),
 .ui5-avatar-group-overflow-btn[focused] {
 	outline: var(--_ui5_button_outline);
 	outline-offset: var(--_ui5_avatar_group_overflow_button_focus_offset);
 }
 
+:host([avatar-size="XS"]) ::slotted([ui5-button]),
 :host([avatar-size="XS"]) .ui5-avatar-group-overflow-btn {
 	height: 2rem;
 	width: 2rem;
@@ -48,6 +53,8 @@
 	font-size: .75rem;
 }
 
+::slotted([ui5-button]),
+:host([avatar-size="S"]) ::slotted([ui5-button]),
 :host([avatar-size="S"]) .ui5-avatar-group-overflow-btn {
 	height: 3rem;
 	width: 3rem;
@@ -55,6 +62,7 @@
 	font-size: 1.125rem;
 }
 
+:host([avatar-size="M"]) ::slotted([ui5-button]),
 :host([avatar-size="M"]) .ui5-avatar-group-overflow-btn {
 	height: 4rem;
 	width: 4rem;
@@ -62,6 +70,7 @@
 	font-size: 1.625rem;
 }
 
+:host([avatar-size="L"]) ::slotted([ui5-button]),
 :host([avatar-size="L"]) .ui5-avatar-group-overflow-btn {
 	height: 5rem;
 	width: 5rem;
@@ -69,6 +78,7 @@
 	font-size: 2rem;
 }
 
+:host([avatar-size="XL"]) ::slotted([ui5-button]),
 :host([avatar-size="XL"]) .ui5-avatar-group-overflow-btn {
 	height: 7rem;
 	width: 7rem;

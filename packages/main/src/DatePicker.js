@@ -82,7 +82,7 @@ const metadata = {
 		 * Defines whether the <code>ui5-date-picker</code> is required.
 		 *
 		 * @since 1.0.0-rc.9
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -220,6 +220,17 @@ const metadata = {
 		 * @public
 		 */
 		valueStateMessage: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
 			type: HTMLElement,
 		},
 	},
@@ -471,14 +482,18 @@ class DatePicker extends DateComponentBase {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
-	_updateValueAndFireEvents(value, normalizeValue, events) {
+	_updateValueAndFireEvents(value, normalizeValue, events, updateValue = true) {
 		const valid = this._checkValueValidity(value);
+
 		if (valid && normalizeValue) {
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 
-		this.value = value;
-		this._updateValueState(); // Change the value state to Error/None, but only if needed
+		if (updateValue) {
+			this.value = value;
+			this._updateValueState(); // Change the value state to Error/None, but only if needed
+		}
+
 		events.forEach(event => {
 			this.fireEvent(event, { value, valid });
 		});
@@ -521,7 +536,7 @@ class DatePicker extends DateComponentBase {
 	 * @protected
 	 */
 	async _onInputInput(event) {
-		this._updateValueAndFireEvents(event.target.value, false, ["input"]);
+		this._updateValueAndFireEvents(event.target.value, false, ["input"], false);
 	}
 
 	/**
@@ -555,8 +570,9 @@ class DatePicker extends DateComponentBase {
 	}
 
 	/**
-	 * Checks if a date is in range between minimum and maximum date.
-	 * @param {object} value
+	 * Checks if a date is between the minimum and maximum date.
+	 * @param {string} value A value to be checked
+	 * @returns {boolean}
 	 * @public
 	 */
 	isInValidRange(value = "") {
@@ -617,7 +633,7 @@ class DatePicker extends DateComponentBase {
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
 			"role": "combobox",
-			"ariaOwns": `${this._id}-responsive-popover`,
+			"ariaControls": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
@@ -670,11 +686,12 @@ class DatePicker extends DateComponentBase {
 	/**
 	 * Formats a Java Script date object into a string representing a locale date
 	 * according to the <code>formatPattern</code> property of the DatePicker instance
-	 * @param {object} oDate A Java Script date object to be formatted as string
+	 * @param {object} date A Java Script date object to be formatted as string
+	 * @returns {string} The date as string
 	 * @public
 	 */
-	formatValue(oDate) {
-		return this.getFormat().format(oDate);
+	formatValue(date) {
+		return this.getFormat().format(date);
 	}
 
 	/**
@@ -688,6 +705,8 @@ class DatePicker extends DateComponentBase {
 	/**
 	 * Opens the picker.
 	 * @public
+	 * @async
+	 * @returns {Promise} Resolves when the picker is open
 	 */
 	async openPicker() {
 		this._isPickerOpen = true;
@@ -707,7 +726,7 @@ class DatePicker extends DateComponentBase {
 
 	/**
 	 * Checks if the picker is open.
-	 * @returns {Boolean} true if the picker is open, false otherwise
+	 * @returns {boolean} true if the picker is open, false otherwise
 	 * @public
 	 */
 	isOpen() {

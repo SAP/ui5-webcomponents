@@ -21,6 +21,10 @@ const getLastFocusableElement = async container => {
 	return findFocusableElement(container, false);
 };
 
+const isElemFocusable = el => {
+	return el.hasAttribute("data-ui5-focus-redirect") || !isNodeHidden(el);
+};
+
 const findFocusableElement = async (container, forward) => {
 	let child;
 
@@ -48,7 +52,7 @@ const findFocusableElement = async (container, forward) => {
 			return null;
 		}
 
-		if (child.nodeType === 1 && !isNodeHidden(child) && !isFocusTrap(child)) {
+		if (child.nodeType === 1 && isElemFocusable(child) && !isFocusTrap(child)) {
 			if (isNodeClickable(child)) {
 				return (child && typeof child.focus === "function") ? child : null;
 			}

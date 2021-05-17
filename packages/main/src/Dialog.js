@@ -1,4 +1,5 @@
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popup from "./Popup.js";
 import "@ui5/webcomponents-icons/dist/resize-corner.js";
@@ -7,6 +8,7 @@ import Icon from "./Icon.js";
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 // Styles
+import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 
@@ -18,6 +20,9 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Defines the header HTML Element.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
+		 * <code>accessibleName</code> should be used.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -49,6 +54,20 @@ const metadata = {
 		 * @public
 		 */
 		headerText: {
+			type: String,
+		},
+
+		/**
+		 * Defines the accessible name of the dialog when <code>header</code> slot is provided.
+		 * <br><br>
+		 *
+		 * <b>Note:</b> If <code>aria-label</code> is provided, <code>accessibleName</code> will be ignored.
+
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		accessibleName: {
 			type: String,
 		},
 
@@ -132,7 +151,6 @@ const metadata = {
  * The <code>ui5-dialog</code> is usually displayed at the center of the screen.
  * Its position can be changed by the user. To enable this, you need to set the property <code>draggable</code> accordingly.
 
-
  *
  * <h3>Responsive Behavior</h3>
  * The <code>stretch</code> property can be used to stretch the
@@ -180,7 +198,19 @@ class Dialog extends Popup {
 	}
 
 	static get styles() {
-		return [PopupsCommonCss, dialogCSS];
+		return [browserScrollbarCSS, PopupsCommonCss, dialogCSS];
+	}
+
+	/**
+	 * Opens the dialog
+	 *
+	 * @param {boolean} preventInitialFocus Prevents applying the focus inside the popup
+	 * @async
+	 * @returns {Promise} Resolves when the dialog is open
+	 * @public
+	 */
+	async open(preventInitialFocus) {
+		await super.open(preventInitialFocus);
 	}
 
 	get isModal() { // Required by Popup.js
@@ -192,7 +222,22 @@ class Dialog extends Popup {
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
-		return this.ariaLabel ? undefined : "ui5-popup-header";
+		let ariaLabelledById;
+
+		if (this.headerText !== "" && !this.ariaLabel) {
+			ariaLabelledById = "ui5-popup-header-text";
+		}
+
+		return ariaLabelledById;
+	}
+
+	get _ariaLabel() {
+		let ariaLabel;
+
+		if (this.header.length > 0 && !!this.accessibleName) {
+			ariaLabel = this.accessibleName;
+		}
+		return this.ariaLabel ? this.ariaLabel : ariaLabel;
 	}
 
 	get _ariaModal() { // Required by Popup.js
@@ -210,10 +255,6 @@ class Dialog extends Popup {
 	show() {
 		super.show();
 		this._center();
-	}
-
-	_clamp(val, min, max) {
-		return Math.min(Math.max(val, min), max);
 	}
 
 	onBeforeRendering() {
@@ -375,29 +416,29 @@ class Dialog extends Popup {
 		let newLeft;
 
 		if (this._isRTL) {
-			newWidth = this._clamp(
+			newWidth = clamp(
 				this._initialWidth - (clientX - this._initialX),
 				this._minWidth,
-				this._initialLeft + this._initialWidth
+				this._initialLeft + this._initialWidth,
 			);
 
-			newLeft = this._clamp(
+			newLeft = clamp(
 				this._initialLeft + (clientX - this._initialX),
 				0,
-				this._initialX + this._initialWidth - this._minWidth
+				this._initialX + this._initialWidth - this._minWidth,
 			);
 		} else {
-			newWidth = this._clamp(
+			newWidth = clamp(
 				this._initialWidth + (clientX - this._initialX),
 				this._minWidth,
-				window.innerWidth - this._initialLeft
+				window.innerWidth - this._initialLeft,
 			);
 		}
 
-		const newHeight = this._clamp(
+		const newHeight = clamp(
 			this._initialHeight + (clientY - this._initialY),
 			this._minHeight,
-			window.innerHeight - this._initialTop
+			window.innerHeight - this._initialTop,
 		);
 
 		Object.assign(this.style, {

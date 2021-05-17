@@ -1,7 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Icon general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Icon.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Icon.html`);
+	});
 
 	it("Tests icon rendering", () => {
 		const iconRoot = browser.$("#interactive-icon").shadow$("ui5-icon-root");
@@ -14,7 +17,7 @@ describe("Icon general interaction", () => {
 			"Built-in tooltip is correct");
 	});
 
-	it("Tests if clicked event is thrown for interactive icons", () => {
+	it("Tests noConflict 'ui5-click' event is thrown for interactive icons", () => {
 		const iconRoot = browser.$("#interactive-icon").shadow$(".ui5-icon-root");
 		const input = browser.$("#click-event");
 
@@ -28,7 +31,7 @@ describe("Icon general interaction", () => {
 		assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
 	});
 
-	it("Tests if clicked event is not thrown for non interactive icons", () => {
+	it("Tests noConflict 'ui5-click' event is not thrown for non interactive icons", () => {
 		const iconRoot = browser.$("#non-interactive-icon");
 		const input = browser.$("#click-event");
 
@@ -40,5 +43,17 @@ describe("Icon general interaction", () => {
 
 		iconRoot.keys("Space");
 		assert.strictEqual(input.getAttribute("value"), "3", "Space throws event");
+	});
+
+	it("Tests native 'click' event thrown", () => {
+		browser.execute(function() {
+			window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(false);
+		});
+
+		const icon = browser.$("#myInteractiveIcon");
+		const input = browser.$("#click-event-2");
+
+		icon.click();
+		assert.strictEqual(input.getAttribute("value"), "1", "Mouse click throws event");
 	});
 });

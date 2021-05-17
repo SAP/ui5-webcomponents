@@ -50,7 +50,7 @@ const metadata = {
 		 * &lt;/ui5-multi-input>
 		 * <br> <br>
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IToken[]}
 		 * @slot
 		 * @public
 		 */
@@ -280,7 +280,7 @@ class MultiInput extends Input {
 	}
 
 	get accInfo() {
-		const ariaDescribedBy = `${this._tokensCountTextId} ${this.suggestionsTextId} ${this.valueStateTextId} ${this.suggestionsCount}`.trim();
+		const ariaDescribedBy = `${this._tokensCountTextId} ${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 		return {
 			"input": {
 				...super.accInfo.input,

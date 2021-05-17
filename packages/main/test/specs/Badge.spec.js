@@ -1,7 +1,10 @@
 const assert = require("chai").assert;
+const PORT = require("./_port.js");
 
 describe("Badge rendering", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Badge.html");
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Badge.html`);
+	});
 
 	it("tests label not rendered if not text content", () => {
 

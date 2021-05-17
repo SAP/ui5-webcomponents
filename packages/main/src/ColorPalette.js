@@ -8,14 +8,18 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
+import ColorPaletteDialogTemplate from "./generated/templates/ColorPaletteDialogTemplate.lit.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import {
 	COLORPALETTE_CONTAINER_LABEL,
+	COLOR_PALETTE_MORE_COLORS_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import ColorPaletteCss from "./generated/themes/ColorPalette.css.js";
+import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea.css.js";
 
 /**
  * @public
@@ -24,6 +28,28 @@ const metadata = {
 	tag: "ui5-color-palette",
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
+
+		/**
+		 * Defines whether the user can see the last used colors in the bottom of the <code>ui5-color-palette</code>
+		 * @type {boolean}
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		showRecentColors: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the user can choose a custom color from a color picker
+		 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
+		 * @type {boolean}
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		showMoreColors: {
+			type: Boolean,
+		},
+
 		/**
 		 *
 		 * The selected color.
@@ -32,12 +58,12 @@ const metadata = {
 		 */
 		value: {
 			type: CSSColor,
-		 },
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 		/**
 		 * Defines the <code>ui5-color-palette-item</code> items.
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IColorPaletteItem[]}
 		 * @slot colors
 		 * @public
 		 */
@@ -59,7 +85,7 @@ const metadata = {
 		change: {
 			details: {
 				color: {
-					type: "String",
+					type: String,
 				},
 			},
 		 },
@@ -70,16 +96,17 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The ColorPalette provides the users with a range of predefined colors.
+ * The ColorPalette provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
  * You can set them by using the ColorPaletteItem items as slots.
  *
  * <h3>Usage</h3>
- * The palette is intended for users, who don't want to check and remember the different values of the colors .
+ * The Colorpalette is intended for users that needs to select a color from a predefined set of colors.
+ * To allow users select any color from a color picker, enable the <code>show-more-colors</code> property.
+ * And, to display the most recent color selection, enable the <code>show-recent-colors</code> property.
  *
- * For the <code>ui5-color-palette</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/ColorPalette.js";</code>
+ * <code>import "@ui5/webcomponents/dist/ColorPalette.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -103,12 +130,21 @@ class ColorPalette extends UI5Element {
 		return ColorPaletteCss;
 	}
 
+	static get staticAreaStyles() {
+		return ColorPaletteStaticAreaCss;
+	}
+
 	static get template() {
 		return ColorPaletteTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return ColorPaletteDialogTemplate;
+	}
+
 	static get dependencies() {
-		return [ColorPaletteItem];
+		const ColorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
+		return [ColorPaletteItem].concat(ColorPaletteMoreColors ? ColorPaletteMoreColors.dependencies : []);
 	}
 
 	static async onDefine() {
@@ -123,19 +159,44 @@ class ColorPalette extends UI5Element {
 			rowSize: 5,
 			behavior: ItemNavigationBehavior.Cyclic,
 		});
+
+		this._recentColors = [];
 	}
 
 	onBeforeRendering() {
 		this.displayedColors.forEach((item, index) => {
 			item.index = index + 1;
 		});
+
+		if (this.showMoreColors) {
+			const ColorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
+			if (ColorPaletteMoreColors) {
+				this.moreColorsFeature = new ColorPaletteMoreColors();
+			} else {
+				throw new Error(`You have to import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js" module to use the more-colors functionality.`);
+			}
+		}
 	}
 
 	selectColor(item) {
 		item.focus();
-		this._itemNavigation.setCurrentItem(item);
 
-		this.value = item.value;
+		if (this.displayedColors.includes(item)) {
+			this._itemNavigation.setCurrentItem(item);
+		}
+
+		this._setColor(item.value);
+	}
+
+	_setColor(color) {
+		this.value = color;
+		if (this._recentColors[0] !== this.value) {
+			if (this._recentColors.includes(this.value)) {
+				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this.value), 1)[0]);
+			} else {
+				this._recentColors.unshift(this.value);
+			}
+		}
 
 		this.fireEvent("change", {
 			color: this.value,
@@ -161,12 +222,58 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
+	async _chooseCustomColor() {
+		const colorPicker = await this.getColorPicker();
+		this._setColor(colorPicker.color);
+		this._closeDialog();
+	}
+
+	async _closeDialog() {
+		const dialog = await this._getDialog();
+		dialog.close();
+	}
+
+	async _openMoreColorsDialog() {
+		const dialog = await this._getDialog();
+		dialog.open();
+	}
+
 	get displayedColors() {
 		return this.colors.filter(item => item.value).slice(0, 15);
 	}
 
 	get colorContainerLabel() {
 		return this.i18nBundle.getText(COLORPALETTE_CONTAINER_LABEL);
+	}
+
+	get colorPaleteMoreColorsText() {
+		return this.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT);
+	}
+
+	get _showMoreColors() {
+		return this.showMoreColors && this.moreColorsFeature;
+	}
+
+	get recentColors() {
+		if (this._recentColors.length > 5) {
+			this._recentColors = this._recentColors.slice(0, 5);
+		}
+
+		while (this._recentColors.length < 5) {
+			this._recentColors.push("");
+		}
+
+		return this._recentColors;
+	}
+
+	async _getDialog() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("[ui5-dialog]");
+	}
+
+	async getColorPicker() {
+		const dialog = await this._getDialog();
+		return dialog.content[0].querySelector("[ui5-color-picker]");
 	}
 }
 

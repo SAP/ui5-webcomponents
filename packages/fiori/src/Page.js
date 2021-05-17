@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
@@ -8,7 +7,6 @@ import PageTemplate from "./generated/templates/PageTemplate.lit.js";
 
 // Styles
 import PageCss from "./generated/themes/Page.css.js";
-
 
 /**
  * @public
@@ -26,25 +24,24 @@ const metadata = {
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
-		 * <li><code>List</code></li>
-		 * <li><code>Solid</code></li>
-		 * <li><code>Standard</code></li> (default)
+		 * <li><code>Solid</code></li> (default)
 		 * <li><code>Transparent</code></li>
+		 * <li><code>List</code></li>
 		 * </ul>
 		 * @type {PageBackgroundDesign}
-		 * @defaultvalue "Standard"
+		 * @defaultvalue "Solid"
 		 * @public
 		 */
 		backgroundDesign: {
 			type: String,
-			defaultValue: PageBackgroundDesign.Standard,
+			defaultValue: PageBackgroundDesign.Solid,
 		},
 
 		/**
-         * Disables vertical scrolling of page content.
-         * If set to true, there will be no vertical scrolling at all.
-         *
-		 * @type {Boolean}
+		 * Disables vertical scrolling of page content.
+		 * If set to true, there will be no vertical scrolling at all.
+		 *
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -56,7 +53,7 @@ const metadata = {
 		 * Defines if the footer should float over the content.
 		 * <br><br>
 		 * <b>Note:</b> When set to true the footer floats over the content with a slight offset from the bottom, otherwise it is fixed at the very bottom of the page.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue true
 		 * @public
 		 */
@@ -65,9 +62,9 @@ const metadata = {
 		},
 
 		/**
-         * Defines the footer visibility.
-         *
-		 * @type {Boolean}
+		 * Defines the footer visibility.
+		 *
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -133,10 +130,13 @@ const metadata = {
  * The footer is optional and occupies the fixed bottom part of the page. Alternatively, the footer can be floating above the bottom part of the content.
  * This is enabled with the <code>floatingFooter</code> property.
  *
+ * <b>Note:</b> <code>ui5-page</code> occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
+ * that there is enough space for the <code>ui5-page</code> to be rendered.
+ *
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/Page.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/Page.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -147,11 +147,6 @@ const metadata = {
  * @public
  */
 class Page extends UI5Element {
-	constructor() {
-		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -168,10 +163,6 @@ class Page extends UI5Element {
 		return PageTemplate;
 	}
 
-	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
-	}
-
 	get _contentBottom() {
 		return !this.floatingFooter && !this.hideFooter ? "2.75rem" : "0";
 	}
@@ -180,11 +171,16 @@ class Page extends UI5Element {
 		return this.floatingFooter && !this.hideFooter ? "3.5rem" : "0";
 	}
 
+	get _contentTop() {
+		return this.header.length ? "2.75rem" : "0rem";
+	}
+
 	get styles() {
 		return {
 			content: {
 				"padding-bottom": this.footer.length && this._contentPaddingBottom,
 				"bottom": this.footer.length && this._contentBottom,
+				"top": this._contentTop,
 			},
 		};
 	}

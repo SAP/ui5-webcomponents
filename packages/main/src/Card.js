@@ -170,6 +170,17 @@ const metadata = {
  * <h3>Keyboard handling</h3>
  * In case you enable <code>headerInteractive</code> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-card</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>heading - Used to style the heading of the card</li>
+ * <li>subheading - Used to style the subheading of the card</li>
+ * <li>status - Used to style the status of the card</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Card";</code>

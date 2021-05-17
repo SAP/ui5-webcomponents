@@ -13,9 +13,9 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
-	<ui5-title>List "infinite-scroll"</ui5-title>
+	<ui5-title>List  growing="Scroll"</ui5-title>
 	<ui5-button id="btnTrigger">scroll</ui5-button>
-	<ui5-list id="infiniteScrollEx" style="height: 200px" infinite-scroll>
+	<ui5-list id="infiniteScrollEx" style="height: 200px" growing="Scroll">
 		<ui5-li>Laptop Lenovo</ui5-li>
 		<ui5-li>IPhone 3</ui5-li>
 		<ui5-li>HP Monitor 24</ui5-li>
@@ -26,6 +26,28 @@
 		<ui5-li id="lastItem">Last Item</ui5-li>
 	</ui5-list>
 	<input id="loadMoreResult" value="0"/>
+	<br><br><br>
+
+	<ui5-title>List growing="Scroll" items don't overflow initially</ui5-title>
+
+	<ui5-input id="growingScrollTestCounter" value="0"></ui5-input>
+	<section style="max-height: 20rem; overflow: auto;">
+		<ui5-list id="growingScrollTest" growing="Scroll">
+			<ui5-li-groupheader>New Items</ui5-li-groupheader>
+		</ui5-list>
+	</section>
+
+	<br><br><br>
+
+	<ui5-list id="growingListButton" growing="Button" style="height: 300px;">
+		<ui5-li>Javascript</ui5-li>
+		<ui5-li>PHP</ui5-li>
+	</ui5-list>
+
+	<button id="nextInteractiveElement">Next Interactive element</button>
+
+	<br><br><br>
+	
 	<br/>
 	<ui5-list id="listEvents" mode="SingleSelectEnd">
 		<ui5-li id="country1">Argentina</ui5-li>
@@ -38,6 +60,7 @@
 	<ui5-input id="selectionChangeResultField" placeholder="selectionChange result"></ui5-input>
 	<ui5-input id="selectionChangeResultPreviousItemsParameter" placeholder="selectionChange previousSelection result"></ui5-input>
 
+	<br><br><br>
 	<ui5-list id="listEvents2" mode="MultiSelect">
 		<ui5-li id="country11">Argentina</ui5-li>
 		<ui5-li id="country22" selected >Bulgaria</ui5-li>
@@ -48,6 +71,7 @@
 	<ui5-input id="itemPressSelectedResultField2" placeholder="itemPress selected result"></ui5-input>
 	<ui5-input id="selectionChangeResultField2" placeholder="selectionChange result"></ui5-input>
 
+	<br><br><br>
 	<ui5-list id="list1" header-text="API: GroupHeaderListItem">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
 		<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
@@ -97,6 +121,7 @@
 				<ui5-radiobutton text="Option C" disabled="disabled"></ui5-radiobutton>
 		</ui5-li-custom>
 	</ui5-list>
+	<ui5-button id="randomBtn">Random button</ui5-button>
 
 	<ui5-list id="no-data-list" header-text="API: noDataText" separators="None" no-data-text="No Data Available"></ui5-list>
 
@@ -184,7 +209,7 @@
 			</div>
 		</ui5-list>
 
-		<ui5-list style="height: 15rem" infinite-scroll no-data-text="No data">
+		<ui5-list style="height: 15rem" growing="Scroll" no-data-text="No data">
 			<ui5-li>Test</ui5-li>
 		</ui5-list>
 	</ui5-responsive-popover>
@@ -275,6 +300,12 @@
 
 		btnOpenPopup.addEventListener("click", function() {
 			popup.openBy(btnOpenPopup);
+		});
+
+
+		var groiwngScrollTestCounter = 0;
+		growingScrollTest.addEventListener("ui5-loadMore", function(e) {
+			growingScrollTestCounter.value= ++groiwngScrollTestCounter;
 		});
 	</script>
 </body>

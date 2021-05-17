@@ -6,6 +6,7 @@ import {
 	fetchI18nBundle,
 	getI18nBundle,
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	FILEUPLOAD_BROWSE,
 	FILEUPLOADER_TITLE,
@@ -177,6 +178,17 @@ const metadata = {
 		valueStateMessage: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
@@ -213,7 +225,7 @@ const metadata = {
  * For the <code>ui5-file-uploader</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/FileUploader.js";</code>
+ * <code>import "@ui5/webcomponents/dist/FileUploader.js";</code>
  *
  * @constructor
  * @since 1.0.0-rc.6
@@ -273,6 +285,18 @@ class FileUploader extends UI5Element {
 		});
 	}
 
+	_onkeydown(event) {
+		if (isEnter(event)) {
+			this._input.click(event);
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event)) {
+			this._input.click(event);
+		}
+	}
+
 	_onfocusin() {
 		this.focused = true;
 	}
@@ -319,7 +343,7 @@ class FileUploader extends UI5Element {
 					(element, nativeInput) => {
 						nativeInput.disabled = element.disabled;
 					},
-					this._onChange.bind(this)
+					this._onChange.bind(this),
 				);
 			}
 		} else if (this.name) {

@@ -84,9 +84,9 @@ const metadata = {
 		 * <br>
 		 * <b>Note:</b>In order to be complaint with the UX guidlines and for best experience,
 		 * we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
-		 * you can set its <code>size</code><code> property to <code>XS</code> to get the required size - <code><ui5-avatar size="XS"></code>.
+		 * you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
 		 *
-		 * @type {HTMLElement}
+		 * @type {sap.ui.webcomponents.main.IAvatar}
 		 * @slot
 		 * @public
 		 */
@@ -149,11 +149,20 @@ const metadata = {
  * <h3>Usage</h3>
  * The component can be used in a standard <code>ui5-list</code>.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-li-notification</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>heading - Used to style the heading of the notification list item</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/NotificationListItem.js";</code>
+ * <code>import "@ui5/webcomponents/dist/NotificationListItem.js";</code>
  * <br>
- * <code>import @ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
+ * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListItem
@@ -161,6 +170,7 @@ const metadata = {
  * @tagname ui5-li-notification
  * @appenddocs NotificationAction
  * @since 1.0.0-rc.8
+ * @implements sap.ui.webcomponents.fiori.INotificationListItem, sap.ui.webcomponents.main.IListItem
  * @public
  */
 class NotificationListItem extends NotificationListItemBase {
@@ -221,18 +231,18 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get showMoreText() {
 		if (this._showMorePressed) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_LESS);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_LESS);
 		}
 
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
 	}
 
 	get overflowBtnAccessibleName() {
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
 	}
 
 	get closeBtnAccessibleName() {
-		return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
+		return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
 	}
 
 	get hideShowMore() {
@@ -318,23 +328,23 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get priorityText() {
 		if (this.priority === Priority.High) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Medium) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
 		}
 
 		if (this.priority === Priority.Low) {
-			return this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
+			return this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
 		}
 
 		return "";
 	}
 
 	get accInvisibleText() {
-		const notifcationTxt = this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
-		const readTxt = this.read ? this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_READ) : this.i18nBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
+		const notifcationTxt = this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
+		const readTxt = this.read ? this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : this.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 		const priorityText = this.priorityText;
 
 		return `${notifcationTxt} ${readTxt} ${priorityText}`;

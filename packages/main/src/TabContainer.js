@@ -8,6 +8,7 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -47,7 +48,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.ITab[]}
 		 * @public
 		 * @slot items
 		 */
@@ -64,7 +65,7 @@ const metadata = {
 		/**
 		 * Defines the button which will open the overflow menu. If nothing is provided to this slot, the default button will be used.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IButton}
 		 * @public
 		 * @slot
 		 * @since 1.0.0-rc.9
@@ -104,6 +105,13 @@ const metadata = {
 		 * layout for most scenarios. Set to <code>Bottom</code> only when the <code>ui5-tabcontainer</code> is at the
 		 * bottom of the page and you want the tab strip to act as a menu.
 		 *
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Top</code></li>
+		 * <li><code>Bottom</code></li>
+		 * </ul>
+		 *
 		 * @type {TabContainerTabsPlacement}
 		 * @defaultvalue "Top"
 		 * @since 1.0.0-rc.7
@@ -129,11 +137,11 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab.
+		 * Defines the alignment of the content and the <code>additionalText</code> of a tab.
 		 *
 		 * <br><br>
 		 * <b>Note:</b>
-		 * The <code>main text</code> and the <code>additionalText</code> would be displayed vertically by defualt,
+		 * The content and the <code>additionalText</code> would be displayed vertically by defualt,
 		 * but when set to <code>Inline</code>, they would be displayed horizontally.
 		 *
 		 * <br><br>
@@ -150,6 +158,16 @@ const metadata = {
 		tabLayout: {
 			type: String,
 			defaultValue: TabLayout.Standard,
+		},
+
+		/**
+		 * Defines the current media query size.
+		 *
+		 * @type {string}
+		 * @private
+		 */
+		mediaRange: {
+			type: String,
 		},
 
 		_selectedTab: {
@@ -188,12 +206,14 @@ const metadata = {
 		 *
 		 * @event sap.ui.webcomponents.main.TabContainer#tab-select
 		 * @param {HTMLElement} tab The selected <code>tab</code>.
-		 * @param {Number} tabIndex The selected <code>tab</code> index.
+		 * @param {Integer} tabIndex The selected <code>tab</code> index.
 		 * @public
 		 */
 		"tab-select": {
-			tab: { type: HTMLElement },
-			tabIndex: { type: Number },
+			detail: {
+				tab: { type: HTMLElement },
+				tabIndex: { type: Number },
+			},
 		},
 	},
 };
@@ -275,7 +295,7 @@ class TabContainer extends UI5Element {
 	constructor() {
 		super();
 
-		this._handleHeaderResize = this._handleHeaderResize.bind(this);
+		this._handleResize = this._handleResize.bind(this);
 
 		// Init ScrollEnablement
 		this._scrollEnablement = new ScrollEnablement(this);
@@ -313,11 +333,11 @@ class TabContainer extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this._getHeader(), this._handleHeaderResize);
+		ResizeHandler.register(this._getHeader(), this._handleResize);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this._getHeader(), this._handleHeaderResize);
+		ResizeHandler.deregister(this._getHeader(), this._handleResize);
 	}
 
 	_onHeaderClick(event) {
@@ -471,8 +491,9 @@ class TabContainer extends UI5Element {
 			.then(_ => this._updateScrolling());
 	}
 
-	_handleHeaderResize() {
+	_handleResize() {
 		this._updateScrolling();
+		this._updateMediaRange();
 	}
 
 	async _closeRespPopover() {
@@ -490,6 +511,10 @@ class TabContainer extends UI5Element {
 		if (!this._scrollable) {
 			this._closeRespPopover();
 		}
+	}
+
+	_updateMediaRange() {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
 	}
 
 	_getHeader() {
@@ -522,6 +547,9 @@ class TabContainer extends UI5Element {
 			header: {
 				"ui5-tc__header": true,
 				"ui5-tc__header--scrollable": this._scrollable,
+			},
+			headerInnerContainer: {
+				"ui5-tc__headerInnerContainer": true,
 			},
 			headerScrollContainer: {
 				"ui-tc__headerScrollContainer": true,

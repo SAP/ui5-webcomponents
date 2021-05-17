@@ -47,7 +47,7 @@
 	<br>
 
 	<h3>readonly</h3>
-	<ui5-rating-indicator value="1" max-value="3" readonly></ui5-rating-indicator>
+	<ui5-rating-indicator id="rating-indicator-readonly" value="1" max-value="3" readonly></ui5-rating-indicator>
 	<br>
 	<br>
 	<br>
@@ -59,6 +59,12 @@
 	<br>
 
 	<ui5-rating-indicator value="3" max-value="3"></ui5-rating-indicator>
+	<br>
+	<br>
+
+	<h3>RatingIndicator with title</h3>
+	<ui5-rating-indicator id="rating-indicator-title" title="Test" aria-label="Hello World"></ui5-rating-indicator>
+	<br>
 	<br>
 	<br>
 
@@ -80,7 +86,7 @@
 		var ratingIndicator4 = document.getElementById("rating-indicator4");
 		var changeEventInput = document.getElementById("change-event");
 
-		ratingIndicator4.addEventListener("change", event => {
+		ratingIndicator4.addEventListener("ui5-change", event => {
 			changeEventInput.value = ++changeCount;
 		});
 	</script>

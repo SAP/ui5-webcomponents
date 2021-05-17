@@ -41,6 +41,8 @@ import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
+const rgxFloat = new RegExp(/(\+|-)?\d+(\.|,)\d+/);
+
 /**
  * @public
  */
@@ -53,7 +55,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the <code>ui5-input</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IIcon}
 		 * @slot
 		 * @public
 		 */
@@ -86,7 +88,7 @@ const metadata = {
 		 * <br>
 		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
 		 * @slot suggestionItems
 		 * @public
 		 */
@@ -452,6 +454,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
  * @appenddocs SuggestionItem
+ * @implements sap.ui.webcomponents.main.IInput
  * @public
  */
 class Input extends UI5Element {
@@ -506,6 +509,9 @@ class Input extends UI5Element {
 
 		// The value that should be highlited.
 		this.highlightValue = "";
+
+		// Indicates, if the user pressed the BACKSPACE key.
+		this._backspaceKeyDown = false;
 
 		// all sementic events
 		this.EVENT_CHANGE = "change";
@@ -592,6 +598,11 @@ class Input extends UI5Element {
 			return this._handleEscape(event);
 		}
 
+		if (isBackSpace(event)) {
+			this._backspaceKeyDown = true;
+			this._selectedText = window.getSelection().toString();
+		}
+
 		if (this.showSuggestions) {
 			this.Suggestions._deselectItems();
 		}
@@ -601,6 +612,7 @@ class Input extends UI5Element {
 
 	_onkeyup(event) {
 		this._keyDown = false;
+		this._backspaceKeyDown = false;
 	}
 
 	/* Event handling */
@@ -637,9 +649,6 @@ class Input extends UI5Element {
 			// Mark that the selection has been canceled, so the popover can close
 			// and not reopen, due to receiving focus.
 			this.suggestionSelectionCanceled = true;
-
-			// Close suggestion popover
-			this._closeRespPopover(true);
 		}
 	}
 
@@ -697,12 +706,42 @@ class Input extends UI5Element {
 
 	async _handleInput(event) {
 		const inputDomRef = await this.getInputDOMRef();
+		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
 
 		this.suggestionSelectionCanceled = false;
 
-		if (this.value && this.type === InputType.Number && !isBackSpace(event) && !inputDomRef.value) {
-			// For input with type="Number", if the delimiter is entered second time, the inner input is firing event with empty value
+		if (emptyValueFiredOnNumberInput && !this._backspaceKeyDown) {
+			// For input with type="Number", if the delimiter is entered second time,
+			// the inner input is firing event with empty value
 			return;
+		}
+
+		if (emptyValueFiredOnNumberInput && this._backspaceKeyDown) {
+			// Issue: when the user removes the character(s) after the delimeter of numeric Input,
+			// the native input is firing event with an empty value and we have to manually handle this case,
+			// otherwise the entire input will be cleared as we sync the "value".
+
+			// There are tree scenarios:
+			// Example: type "123.4" and press BACKSPACE - the native input is firing event with empty value.
+			// Example: type "123.456", select/mark "456" and press BACKSPACE - the native input is firing event with empty value.
+			// Example: type "123.456", select/mark "123.456" and press BACKSPACE - the native input is firing event with empty value,
+			// but this time that's really the case.
+
+			// Perform manual handling in case of floating number
+			// and if the user did not select the entire input value
+			if (rgxFloat.test(this.value) && this._selectedText !== this.value) {
+				const newValue = this.removeFractionalPart(this.value);
+
+				// update state
+				this.value = newValue;
+				this.highlightValue = newValue;
+				this.valueBeforeItemPreview = newValue;
+
+				// fire events
+				this.fireEvent(this.EVENT_INPUT);
+				this.fireEvent("value-changed");
+				return;
+			}
 		}
 
 		if (event.target === inputDomRef) {
@@ -759,10 +798,9 @@ class Input extends UI5Element {
 
 	/**
 	 * Checks if the value state popover is open.
-	 * @returns {Boolean} true if the popover is open, false otherwise
-	 * @public
+	 * @returns {boolean} true if the value state popover is open, false otherwise
 	 */
-	isOpen() {
+	isValueStateOpened() {
 		return !!this._isPopoverOpen;
 	}
 
@@ -1029,6 +1067,10 @@ class Input extends UI5Element {
 		return this.type.toLowerCase();
 	}
 
+	get isTypeNumber() {
+		return this.type === InputType.Number;
+	}
+
 	get suggestionsTextId() {
 		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
 	}
@@ -1037,14 +1079,10 @@ class Input extends UI5Element {
 		return this.hasValueState ? `${this._id}-valueStateDesc` : "";
 	}
 
-	get suggestionsCount() {
-		return this.showSuggestions ? `${this._id}-suggestionsCount` : "";
-	}
-
 	get accInfo() {
 		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
-		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this.suggestionsCount} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId} ${this.suggestionsCount}`.trim();
+		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 
 		return {
 			"input": {
@@ -1054,7 +1092,7 @@ class Input extends UI5Element {
 				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
 				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
 				"role": this._inputAccInfo && this._inputAccInfo.role,
-				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
+				"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
 				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this),
@@ -1064,9 +1102,9 @@ class Input extends UI5Element {
 
 	get nativeInputAttributes() {
 		return {
-			"min": this.type === InputType.Number ? this._nativeInputAttributes.min : undefined,
-			"max": this.type === InputType.Number ? this._nativeInputAttributes.max : undefined,
-			"step": this.type === InputType.Number ? (this._nativeInputAttributes.step || "any") : undefined,
+			"min": this.isTypeNumber ? this._nativeInputAttributes.min : undefined,
+			"max": this.isTypeNumber ? this._nativeInputAttributes.max : undefined,
+			"step": this.isTypeNumber ? (this._nativeInputAttributes.step || "any") : undefined,
 		};
 	}
 
@@ -1090,7 +1128,7 @@ class Input extends UI5Element {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-responsive-popover-header": !this.isOpen(),
+				"ui5-responsive-popover-header": !this.isValueStateOpened(),
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
@@ -1100,7 +1138,7 @@ class Input extends UI5Element {
 	}
 
 	get styles() {
-		return {
+		const stylesObject = {
 			popoverHeader: {
 				"max-width": `${this._inputWidth}px`,
 			},
@@ -1112,10 +1150,14 @@ class Input extends UI5Element {
 			suggestionsPopover: {
 				"max-width": `${this._inputWidth}px`,
 			},
-			innerInput: {
-				padding: this.nativeInputWidth < 48 ? "0" : undefined,
-			},
+			innerInput: {},
 		};
+
+		if (this.nativeInputWidth < 48) {
+			stylesObject.innerInput.padding = "0";
+		}
+
+		return stylesObject;
 	}
 
 	get suggestionSeparators() {
@@ -1153,7 +1195,7 @@ class Input extends UI5Element {
 	}
 
 	get availableSuggestionsCount() {
-		if (this.showSuggestions) {
+		if (this.showSuggestions && (this.value || this.Suggestions.isOpened())) {
 			switch (this.suggestionsTexts.length) {
 			case 0:
 				return this.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
@@ -1170,7 +1212,7 @@ class Input extends UI5Element {
 	}
 
 	get step() {
-		return this.type === InputType.Number ? "any" : undefined;
+		return this.isTypeNumber ? "any" : undefined;
 	}
 
 	get _isPhone() {
@@ -1200,6 +1242,21 @@ class Input extends UI5Element {
 	 */
 	setCaretPosition(pos) {
 		setCaretPosition(this.nativeInput, pos);
+	}
+
+	/**
+	 * Removes the fractional part of floating-point number.
+	 * @param {String} value the numeric value of Input of type "Number"
+	 */
+	removeFractionalPart(value) {
+		if (value.includes(".")) {
+			return value.slice(0, value.indexOf("."));
+		}
+		if (value.includes(",")) {
+			return value.slice(0, value.indexOf(","));
+		}
+
+		return value;
 	}
 
 	static get dependencies() {

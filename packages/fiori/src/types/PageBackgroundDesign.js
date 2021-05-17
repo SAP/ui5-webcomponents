@@ -8,14 +8,6 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 const PageBackgroundDesigns = {
 
 	/**
-	 * Standard Page background color.
-	 *
- 	 * @type {Standard}
-	 * @public
-	 */
-	Standard: "Standard",
-
-	/**
 	 * Page background color when a List is set as the Page content.
 	 *
 	 * @type {List}

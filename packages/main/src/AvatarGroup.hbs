@@ -5,13 +5,26 @@
 		@keydown="{{_onkeydown}}" 
 		@focusin="{{_onfocusin}}" 
 		tabindex="{{_groupTabIndex}}"
-		@click="{{_onGroupClick}}"
+		@click="{{_onClick}}"
 		@ui5-click="{{_onUI5Click}}"
+		aria-label="{{_ariaLabelText}}"
+		role="{{_role}}"
+		aria-haspopup="{{_containerAriaHasPopup}}"
 	>
 		<slot></slot>
 
-		<ui5-button ?hidden="{{_overflowBtnHidden}}" tabindex="{{_overflowButtonTabIndex}}" class="ui5-avatar-group-overflow-btn">
-			{{_overflowButtonText}}
-		</ui5-button>
+		{{#if _customOverflowButton}}
+			<slot name="overflowButton"></slot>
+		{{else}}
+			<ui5-button 
+				._buttonAccInfo="{{_overflowButtonAccInfo}}" 
+				aria-label="{{_overflowButtonAriaLabelText}}"
+				?hidden="{{_overflowBtnHidden}}"
+				?non-interactive={{_isGroup}}
+				class="ui5-avatar-group-overflow-btn"
+			>
+				{{_overflowButtonText}}
+			</ui5-button>
+		{{/if}}
 	</div>
 </div>

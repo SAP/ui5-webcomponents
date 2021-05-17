@@ -15,7 +15,7 @@ See how to clone a repo [here](https://docs.github.com/en/github/creating-clonin
 
 *3.0.* Make sure you have the following prerequisites installed
 - [Yarn](https://yarnpkg.com/en)
-- [Node.js](https://nodejs.org/) (**version 12 or higher**)
+- [Node.js](https://nodejs.org/) (**version 14 or higher**)
 
 
 *3.1.* Install all dependencies
@@ -28,11 +28,14 @@ yarn
 yarn start
 ```
 Once the project is served, you can explore the components 
-on http://localhost:8080/test-resources/pages/ for the `main` package
-and http://localhost:8081/test-resources/pages/ for the `fiori` package.
+on:
+ - http://localhost:8080/test-resources/pages/ for the `main` package
+ - http://localhost:8081/test-resources/pages/ for the `fiori` package
+ - http://localhost:9191/test-resources/pages/ for the `base` package
 
-*Note: The server will reload the pages, whenever you make changes in the code.*
+The server will reload the pages, whenever you make changes in the code.
 
+*Note: If these ports are unavailable to be opened, then the pages will be served on the next available ports. See the console output for the available URLs.*
 
 ## 4. Develop 
 

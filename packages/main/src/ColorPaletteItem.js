@@ -31,11 +31,13 @@ const metadata = {
 
 		/**
 		 * Defines the stable selector that you can use via getStableDomRef method.
+		 * @type {String}
 		 * @public
 		 */
 		stableDomRef: {
 			type: String,
 		},
+
 		/**
 		 * Defines the tab-index of the element, helper information for the ItemNavigation.
 		 * @private
@@ -45,6 +47,7 @@ const metadata = {
 			defaultValue: "-1",
 			noAttribute: true,
 		},
+
 		/**
 		 * Defines the index of the item inside of the ColorPalette.
 		 * @private
@@ -53,10 +56,20 @@ const metadata = {
 		index: {
 			type: String,
 		},
+
+		/**
+		 * @private
+		 * @type {boolean}
+		 * @since 1.0.0-rc.15
+		 */
+		_disabled: {
+			type: Boolean,
+		},
 	},
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
 	},
-	events: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {},
+	events: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
+	},
 };
 
 /**
@@ -72,6 +85,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-color-palette-item
  * @since 1.0.0-rc.12
+ * @implements sap.ui.webcomponents.main.IColorPaletteItem
  * @public
  */
 class ColorPaletteItem extends UI5Element {
@@ -98,6 +112,10 @@ class ColorPaletteItem extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	onBeforeRendering() {
+		this._disabled = !this.value;
 	}
 
 	get colorLabel() {

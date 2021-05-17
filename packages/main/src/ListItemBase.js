@@ -57,7 +57,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: {
+	events: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
 		_focused: {},
 		"_forward-after": {},
 		"_forward-before": {},

@@ -70,22 +70,14 @@ const metadata = {
 		},
 	},
 
-	events: {
-		/**
-		 * @public
-		 * @event
-		 * @since 1.0.0-rc.9
-		 */
-		click: {
-
-		},
+	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
 	},
 
 	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
 		/**
 		 * If you wish to nest menus, you can pass inner menu items to the default slot.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.fiori.ISideNavigationSubItem[]}
 		 * @public
 		 * @slot items
 		 */
@@ -107,7 +99,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -116,6 +108,7 @@ const metadata = {
  * @tagname ui5-side-navigation-item
  * @public
  * @since 1.0.0-rc.8
+ * @implements sap.ui.webcomponents.fiori.ISideNavigationItem
  */
 class SideNavigationItem extends UI5Element {
 	static get metadata() {

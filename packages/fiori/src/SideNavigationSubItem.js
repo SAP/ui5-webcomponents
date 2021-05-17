@@ -44,15 +44,7 @@ const metadata = {
 		},
 	},
 
-	events: {
-		/**
-		 * @public
-		 * @event
-		 * @since 1.0.0-rc.9
-		 */
-		click: {
-
-		},
+	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
 	},
 };
 
@@ -65,7 +57,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -74,6 +66,7 @@ const metadata = {
  * @tagname ui5-side-navigation-sub-item
  * @public
  * @since 1.0.0-rc.8
+ * @implements sap.ui.webcomponents.fiori.ISideNavigationSubItem
  */
 class SideNavigationSubItem extends UI5Element {
 	static get metadata() {

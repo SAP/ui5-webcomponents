@@ -63,7 +63,7 @@ const metadata = {
 		 * &lt;/ui5-multi-combobox>
 		 * <br> <br>
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {sap.ui.webcomponents.main.IMultiComboBoxItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -76,7 +76,7 @@ const metadata = {
 		/**
 		* Defines the icon to be displayed in the <code>ui5-multi-combobox</code>.
 		*
-		* @type {HTMLElement[]}
+		* @type {sap.ui.webcomponents.main.IIcon}
 		* @slot
 		* @public
 		* @since 1.0.0-rc.9
@@ -218,6 +218,7 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @readonly
 		 * @since 1.0.0-rc.5
 		 * @public
 		 */
@@ -228,7 +229,6 @@ const metadata = {
 		_filteredItems: {
 			type: Object,
 		},
-
 
 		filterSelected: {
 			type: Boolean,
@@ -341,6 +341,15 @@ const metadata = {
  * Example: <code><ui5-mcb-item stable-dom-ref="item1"></ui5-mcb-item></code></li>
  * </ul>
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-multi-combobox</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>token-{index} - Used to style each token(where <code>token-0</code> corresponds to the first item)</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/MultiComboBox";</code>
@@ -428,11 +437,11 @@ class MultiComboBox extends UI5Element {
 	}
 
 	togglePopover() {
-		this._toggleRespPopover();
-
 		if (!isPhone()) {
 			this._inputDom.focus();
 		}
+
+		this._toggleRespPopover();
 	}
 
 	filterSelectedItems(event) {
@@ -490,7 +499,6 @@ class MultiComboBox extends UI5Element {
 
 			return;
 		}
-
 
 		this._inputLastValue = input.value;
 		this.value = input.value;

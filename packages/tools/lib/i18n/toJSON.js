@@ -30,7 +30,7 @@ const messagesJSONDist = path.normalize(`${process.argv[3]}`);
 	const outputFile = path.normalize(`${messagesJSONDist}/${filename}.json`);
 
 	fs.writeFileSync(outputFile, JSON.stringify(properties));
-	console.log(`[i18n]: "${filename}.json" has been generated!`);
+	// console.log(`[i18n]: "${filename}.json" has been generated!`);
 };
 
 mkdirp.sync(messagesJSONDist);

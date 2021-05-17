@@ -86,10 +86,11 @@ const metadata = {
 		/**
 		 * If set to true the navigation is hidden.
 		 * @type {boolean}
+		 * @since 1.0.0-rc.15
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideNavigation: {
+		hideNavigationArrows: {
 			type: Boolean,
 		},
 
@@ -152,6 +153,16 @@ const metadata = {
 		_itemWidth: {
 			type: Integer,
 		},
+
+		/**
+		 * If set to true navigation arrows are shown
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		_visibleNavigationArrows: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
@@ -200,24 +211,28 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The carousel allows the user to browse through a set of items by swiping right or left.
+ * The Carousel allows the user to browse through a set of items by swiping right or left.
  * The component is mostly used for showing a gallery of images, but can hold any other HTML element.
  *
  * <h3>Usage</h3>
  *
- * When to use
+ * <h4>When to use:</h4>
  *
- * - The items you want to display are very different from each other.
- * - You want to display the items one after the other.
- * When not to use
+ * <ul>
+ * <li>The items you want to display are very different from each other.</li>
+ * <li>You want to display the items one after the other.</li>
+ * </ul>
  *
- * - The items you want to display need to be visible at the same time.
- * - The items you want to display are uniform and very similar
+ * <h4>When not to use:</h4>
  *
- * For the <code>ui5-carousel</code>
+ * <ul>
+ * <li>The items you want to display need to be visible at the same time.</li>
+ * <li>The items you want to display are uniform and very similar.</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/Carousel.js";</code>
+ * <code>import "@ui5/webcomponents/dist/Carousel.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -331,6 +346,14 @@ class Carousel extends UI5Element {
 		}
 	}
 
+	_onmouseout() {
+		this._visibleNavigationArrows = false;
+	}
+
+	_onmouseover() {
+		this._visibleNavigationArrows = true;
+	}
+
 	navigateLeft() {
 		this._resizing = false;
 
@@ -412,6 +435,10 @@ class Carousel extends UI5Element {
 		return index >= 0 && index <= this.pagesCount - 1;
 	}
 
+	get hasManyPages() {
+		return this.pagesCount > 1;
+	}
+
 	get styles() {
 		return {
 			content: {
@@ -428,12 +455,12 @@ class Carousel extends UI5Element {
 			content: {
 				"ui5-carousel-content": true,
 				"ui5-carousel-content-no-animation": this.supressAimation,
-				"ui5-carousel-content-has-navigation": this.showNavigationArrows,
-				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-content-has-navigation": this.hasManyPages,
+				"ui5-carousel-content-has-navigation-and-buttons": this.hasManyPages && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-navigation-with-buttons": this.hasManyPages && (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows),
 			},
 			navPrevButton: {
 				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
@@ -468,11 +495,11 @@ class Carousel extends UI5Element {
 	}
 
 	get arrows() {
-		const showArrows = this.showNavigationArrows && isDesktop();
+		const showArrows = this._visibleNavigationArrows && this.hasManyPages && isDesktop();
 
 		return {
-			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: !this.hideNavigationArrows && showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: !this.hideNavigationArrows && showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
@@ -494,10 +521,6 @@ class Carousel extends UI5Element {
 
 	get selectedIndexToShow() {
 		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedIndex) + 1 : this.selectedIndex + 1;
-	}
-
-	get showNavigationArrows() {
-		return !this.hideNavigation && this.pagesCount > 1;
 	}
 
 	get ofText() {

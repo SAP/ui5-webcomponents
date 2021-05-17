@@ -4,6 +4,8 @@
     role="listbox"
     aria-activedescendant="{{ariaActiveDescendant}}"
     @keydown={{_onkeydown}}
+    @mouseout="{{_onmouseout}}"
+    @mouseover="{{_onmouseover}}"
 >
     <div class="ui5-carousel-viewport {{classes.viewport}}">
         <div class="{{classes.content}}" style="{{styles.content}}">
@@ -28,7 +30,7 @@
             </div>
         {{/if}}
 
-        {{#if showNavigationArrows}}
+        {{#if hasManyPages}}
             <div class="{{classes.navigation}}">
                 {{#if arrows.navigation}}
                     {{> arrow-back}}

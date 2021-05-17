@@ -33,9 +33,16 @@ const metadata = {
 
 		/**
 		 * Defines the action design.
+		 *
 		 * <br><br>
-		 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
-		 * "Negative", and "Transparent".
+		 * <b>Note:</b>
+		 * <ul>
+		 * <li><code>Default</code></li>
+		 * <li><code>Emphasized</code></li>
+		 * <li><code>Positive</code></li>
+		 * <li><code>Negative</code></li>
+		 * <li><code>Transparent</code></li>
+		 * </ul>
 		 *
 		 * @type {ButtonDesign}
 		 * @defaultvalue "Transparent"
@@ -61,9 +68,9 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: {
+	slots: /** @lends  sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
 	},
-	events: {
+	events: /** @lends  sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
 		click: {},
 	},
 };
@@ -78,6 +85,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.NotificationAction
  * @extends UI5Element
  * @tagname ui5-notification-action
+ * @implements sap.ui.webcomponents.fiori.INotificationAction
  * @public
  */
 class NotificationAction extends UI5Element {

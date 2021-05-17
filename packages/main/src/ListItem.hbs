@@ -84,9 +84,11 @@
 	{{#if modeDelete}}
 		<div class="ui5-li-deletebtn">
 			<ui5-button
+				tabindex="-1"
 				id="{{_id}}-deleteSelectionElement"
 				design="Transparent"
 				icon="decline"
+				?disabled="{{disableDeleteButton}}"
 				@click="{{onDelete}}"
 				title="{{deleteText}}"
 			></ui5-button>

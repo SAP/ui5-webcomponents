@@ -67,13 +67,13 @@ In order to use it, you have to use a library called [Origami](https://github.co
 
 Example:
 
-1. Install Origami:
+#### 1. Install Origami:
 
 ```bash
 npm install @codebakery/origami
 ```
 
-2. Import the OrigamiFormsModule from Origami
+#### 2. Import the OrigamiFormsModule from Origami
 
 ```js
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -90,13 +90,13 @@ import { AppComponent } from './app.component';
 export class AppModule {}
 ```
 
-3. Use Origami in your template:
+#### 3. Use Origami in your template:
 
 ```html
 <ui5-input [(ngModel)]="value" origami></ui5-input>
 ```
 
-4. Make Angular boot after UI5 Web Components are defined:
+#### 4. Make Angular boot after UI5 Web Components are defined:
 
 In the module, where you are using UI5 Web Components, you should add the ```APP_INITIALIZER``` provider. In order to do so, import ```APP_INITIALIZER``` and add it to the providers array like this (In this example we will add it in the ```app.module.ts```):
 ```js
@@ -135,7 +135,7 @@ If you need your application to run on Internet Explorer 11, there are some addi
 
 *Note* These steps have been tested with Angular 7. For other versions of Angular, there might be some differences.
 
-1. Install all needed dependencies:
+#### 1. Install all needed dependencies:
 
 ```bash
 npm install @ui5/webcomponents-ie11 --save
@@ -145,7 +145,7 @@ npm install @ui5/webcomponents-ie11 --save
 npm install --save @angular-builders/custom-webpack@7.5 @angular-builders/dev-server@7.3 @babel/core @babel/preset-env babel-loader
 ```
 
-2. After that we need to make Angular use custom webpack configuration. In angular.json add the following configuration lines:
+#### 2. After that we need to make Angular use custom webpack configuration. In angular.json add the following configuration lines:
 
 In architect object, about the build command:
 
@@ -163,7 +163,7 @@ And about the serve command:
              "builder": "@angular-builders/dev-server:generic",
 ```
 
-3. On root level create custom-webpack.config.js file with the following content(this is the config that Angular will use):
+#### 3. On root level create custom-webpack.config.js file with the following content(this is the config that Angular will use):
 ```js
 const path = require('path');
 const env = process.env.WEBPACK_ENV;
@@ -208,7 +208,7 @@ module.exports = {
 };
 ```
 
-4. Add the following import ```to app.module.ts``` file:
+#### 4. Add the following import ```to app.module.ts``` file:
 ```js
 import "@ui5/webcomponents-ie11/dist/features/IE11WithWebComponentsPolyfill.js";
 ```
