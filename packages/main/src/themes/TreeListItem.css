@@ -89,24 +89,24 @@
     color: var(--sapList_Active_TextColor);
 }
 
-/* [ui5-li]: infoState */
-:host([info-state="Warning"]) .ui5-li-tree-info {
+/* [ui5-li]: additionalTextState */
+:host([additional-text-state="Warning"]) .ui5-li-tree-info {
 	color: var(--sapCriticalTextColor);
 }
 
-:host([info-state="Success"]) .ui5-li-tree-info {
+:host([additional-text-state="Success"]) .ui5-li-tree-info {
 	color: var(--sapPositiveTextColor);
 }
 
-:host([info-state="Error"]) .ui5-li-tree-info {
+:host([additional-text-state="Error"]) .ui5-li-tree-info {
 	color: var(--sapNegativeTextColor);
 }
 
-:host([info-state="Information"]) .ui5-li-tree-info {
+:host([additional-text-state="Information"]) .ui5-li-tree-info {
 	color: var(--sapInformativeTextColor);
 }
 
-/* [ui5-li]: info */
+/* [ui5-li]: additionalText */
 .ui5-li-tree-info {
 	margin: 0 0.25rem;
 	color: var(--sapNeutralTextColor);

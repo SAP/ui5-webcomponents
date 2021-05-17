@@ -32,27 +32,27 @@
 	color: var(--sapList_Active_TextColor);
 }
 
-/* [ui5-li]: title, description, info state */
+/* [ui5-li]: title, description, additionalTextState */
 :host([active][actionable]) .ui5-li-title,
 :host([active][actionable]) .ui5-li-desc,
 :host([active][actionable]) .ui5-li-info {
 	color: var(--sapList_Active_TextColor);
 }
 
-/* [ui5-li]: infoState */
-:host([info-state="Warning"]) .ui5-li-info {
+/* [ui5-li]: additionalTextState */
+:host([additional-text-state="Warning"]) .ui5-li-info {
 	color: var(--sapCriticalTextColor);
 }
 
-:host([info-state="Success"]) .ui5-li-info {
+:host([additional-text-state="Success"]) .ui5-li-info {
 	color: var(--sapPositiveTextColor);
 }
 
-:host([info-state="Error"]) .ui5-li-info {
+:host([additional-text-state="Error"]) .ui5-li-info {
 	color: var(--sapNegativeTextColor);
 }
 
-:host([info-state="Information"]) .ui5-li-info {
+:host([additional-text-state="Information"]) .ui5-li-info {
 	color: var(--sapInformativeTextColor);
 }
 
