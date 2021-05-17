@@ -14,7 +14,7 @@ const metadata = {
 	tag: "ui5-segmentedbutton-item",
 	properties: /** @lends  sap.ui.webcomponents.main.SegmentedButtonItem.prototype */ {
 		/**
-		 * Determines whether the <code>ui5-togglebutton</code> is displayed as pressed.
+		 * Determines whether the <code>ui5-segmentedbutton-item</code> is displayed as pressed.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
