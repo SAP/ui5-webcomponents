@@ -30,15 +30,15 @@
 		const button = document.querySelector("#announce-button");
         const textarea = document.querySelector("#announce-textarea");
         const checkbox = document.querySelector("#announce-checkbox");
-        let invisibleMessage;
+        let bundle;
 
         button.addEventListener("click", function(event) {
-            invisibleMessage =  window["sap-ui-webcomponents-bundle"].invisibleMessage;
+            bundle =  window["sap-ui-webcomponents-bundle"];
 
             if (checkbox.checked) {
-                invisibleMessage.announce(textarea.value, "Assertive")
+                bundle.announce(textarea.value, "Assertive")
             } else {
-                invisibleMessage.announce(textarea.value)
+                bundle.announce(textarea.value)
             }
 		});
     </script>

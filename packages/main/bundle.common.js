@@ -119,9 +119,7 @@ const testAssets = {
 		getAssetsPath,
 		setAssetsPath
 	},
-	invisibleMessage : {
-		announce,
-	},
+	announce,
 	getLocaleData,
 	applyDirection,
 	attachDirectionChange,
