@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import Label from "./Label.js";
 
@@ -127,22 +128,22 @@ class BusyIndicator extends UI5Element {
 		super();
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-		this._preventHandler = this._preventEvent.bind(this);
+		this._keydownHandler = this._handleKeydown.bind(this);
+		this._preventEventHandler = this._preventEvent.bind(this);
 	}
 
 	onEnterDOM() {
-		this.addEventListener("keyup", this._preventHandler, {
+		this.addEventListener("keydown", this._keydownHandler, {
 			capture: true,
 		});
-
-		this.addEventListener("keydown", this._preventHandler, {
+		this.addEventListener("keyup", this._preventEventHandler, {
 			capture: true,
 		});
 	}
 
 	onExitDOM() {
-		this.removeEventListener("keyup", this._preventHandler, true);
-		this.removeEventListener("keydown", this._preventHandler, true);
+		this.removeEventListener("keydown", this._keydownHandler, true);
+		this.removeEventListener("keyup", this._preventEventHandler, true);
 	}
 
 	static get metadata() {
@@ -182,14 +183,37 @@ class BusyIndicator extends UI5Element {
 		};
 	}
 
-	get slotTabIndex() {
-		return this.active ? -1 : 0;
+	_handleKeydown(event) {
+		if (!this.active) {
+			return;
+		}
+
+		event.stopImmediatePropagation();
+
+		// move the focus to the last element in this DOM and let TAB continue to the next focusable element
+		if (isTabNext(event)) {
+			this.focusForward = true;
+			this.shadowRoot.querySelector("[data-ui5-focus-redirect]").focus();
+			this.focusForward = false;
+		}
 	}
 
 	_preventEvent(event) {
 		if (this.active) {
 			event.stopImmediatePropagation();
 		}
+	}
+
+	/**
+	 * Moves the focus to busy area when coming with SHIFT + TAB
+	 */
+	_redirectFocus(event) {
+		if (this.focusForward) {
+			return;
+		}
+
+		event.preventDefault();
+		this.shadowRoot.querySelector(".ui5-busyindicator-busy-area").focus();
 	}
 }
 
