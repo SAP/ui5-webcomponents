@@ -28,7 +28,7 @@ describe("InvisibleMessage", () => {
         checkBox.click();
         button.click();
 
-        assert.strictEqual(politeSpan.getHTML().indexOf("announcement"), 204, "value has been announced");
-        assert.strictEqual(assertiveSpan.getHTML().indexOf("announcement"), 210, "value has been announced");
+        assert.ok(politeSpan.getHTML().indexOf("announcement") > -1, "value has been announced");
+        assert.ok(assertiveSpan.getHTML().indexOf("announcement") > -1, "value has been announced");
     });
 });
