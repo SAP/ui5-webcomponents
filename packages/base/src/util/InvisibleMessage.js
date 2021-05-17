@@ -34,11 +34,11 @@ import InvisibleMessageMode from "../types/InvisibleMessageMode.js";
  */
 const announce = (message, mode) => {
 	// If no type is presented, fallback to polite announcement.
-	const span = mode === InvisibleMessageMode.Assertive ? assertiveSpan : politeSpan;
+	// const span = mode === InvisibleMessageMode.Assertive ? assertiveSpan : politeSpan;
 
-	// Set textContent to empty string in order to trigger screen reader's announcement.
-	span.textContent = "";
-	span.textContent = message;
+	// // Set textContent to empty string in order to trigger screen reader's announcement.
+	// span.textContent = "";
+	// span.textContent = message;
 
 	if (mode !== InvisibleMessageMode.Assertive && mode !== InvisibleMessageMode.Polite) {
 		console.warn(`You have entered an invalid mode. Valid values are: "Polite" and "Assertive". The framework will automatically set the mode to "Polite".`); // eslint-disable-line
