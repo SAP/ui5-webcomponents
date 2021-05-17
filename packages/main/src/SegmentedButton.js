@@ -129,16 +129,11 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		let length = 0;
 		const buttons = this.getSlottedNodes("buttons");
 
-		buttons.forEach((item, index) => {
+		buttons.forEach((item, index, arr) => {
 			item.posInSet = index + 1;
-			length += 1;
-		});
-
-		buttons.forEach((item, index) => {
-			item.sizeOfSet = length;
+			item.sizeOfSet = arr.length;
 		});
 
 		this.normalizeSelection();
