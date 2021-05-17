@@ -1,12 +1,12 @@
 import InvisibleMessageMode from "../types/InvisibleMessageMode.js";
-import getSingletonElementInstance from "./getSingletonElementInstance.js";
+// import getSingletonElementInstance from "./getSingletonElementInstance.js";
 
-const styles = `position: absolute;
-	clip: rect(1px,1px,1px,1px);
-	user-select: none;
-	left: -1000px;
-	top: -1000px;
-	pointer-events: none;`;
+// const styles = `position: absolute;
+// 	clip: rect(1px,1px,1px,1px);
+// 	user-select: none;
+// 	left: -1000px;
+// 	top: -1000px;
+// 	pointer-events: none;`;
 
 // const politeSpan = document.createElement("span");
 // const assertiveSpan = document.createElement("span");
