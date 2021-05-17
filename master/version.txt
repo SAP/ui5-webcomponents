@@ -1,9 +1,7 @@
-commit 2adee01fea3c670f389da91490e527d2a3df2334
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri May 14 17:19:35 2021 +0300
+commit ee0956ea3e72c6489ed48aec9a675cb5da919dc7
+Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
+Date:   Mon May 17 14:37:58 2021 +0300
 
-    fix(ui5-carousel): implement hideNavigationArrows property (#3228)
+    docs: review of scoping.md
     
-    Implements hideNavigationArrows property. In relation to #3107
-    
-    BREAKING_CHANGE: hideNavigation property of ui5-carousel is deprecated in favour of hideNavigationArrows. The new property shows/hides the arrows only(not both the arrows and the dots in the bottom)
+    Review of the documentation topic Micro-frontends and Custom Elements Scoping.
