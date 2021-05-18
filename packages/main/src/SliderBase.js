@@ -261,7 +261,7 @@ class SliderBase extends UI5Element {
 	 */
 	_onmouseover(event) {
 		if (this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBLE;;
+			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBLE;
 		}
 	}
 
@@ -272,7 +272,7 @@ class SliderBase extends UI5Element {
 	 */
 	_onmouseout(event) {
 		if (this.showTooltip && !this.shadowRoot.activeElement) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_HIDDEN;;
+			this._tooltipVisibility = SliderBase.TOOLTIP_HIDDEN;
 		}
 	}
 
@@ -417,7 +417,7 @@ class SliderBase extends UI5Element {
 		const newValue = SliderBase.getValueFromInteraction(event, step, min, max, domRect, directionStart);
 
 		if (isPhone() && this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBLE;;
+			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBLE;
 		}
 
 		// Mark start of a user interaction
@@ -454,7 +454,7 @@ class SliderBase extends UI5Element {
 	 */
 	handleUpBase(valueType) {
 		if (isPhone() && this.showTooltip) {
-			this._tooltipVisibility = SliderBase.TOOLTIP_HIDDEN;;
+			this._tooltipVisibility = SliderBase.TOOLTIP_HIDDEN;
 		}
 
 		SliderBase.UP_EVENTS.forEach(upEventType => window.removeEventListener(upEventType, this._upHandler));
