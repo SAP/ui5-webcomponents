@@ -436,6 +436,7 @@ class TextArea extends UI5Element {
 
 			this.value = this._lastValue;
 			nativeTextArea.value = this.value;
+			this.fireEvent("input");
 		}
 	}
 
