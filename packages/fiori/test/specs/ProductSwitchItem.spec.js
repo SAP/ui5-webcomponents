@@ -11,6 +11,6 @@ describe("ProductSwitchItem general interaction", () => {
 
 		assert.ok(productSwitchItem.shadow$(".ui5-product-switch-item-icon"), "Icon is rendered.");
 		assert.ok(productSwitchItem.shadow$(".ui5-product-switch-item-heading"), "Title is rendered.");
-		assert.ok(productSwitchItem.shadow$(".ui5-product-switch-item-subtitle"), "SubTitle is rendered.");
+		assert.ok(productSwitchItem.shadow$(".ui5-product-switch-item-subheading"), "SubTitle is rendered.");
 	});
 });

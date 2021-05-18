@@ -24,12 +24,12 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the subtitle of the <code>ui5-product-switch-item</code>.
+		 * Defines the subheading of the <code>ui5-product-switch-item</code>.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		subtitle: {
+		 subheading: {
 			type: String,
 		},
 
