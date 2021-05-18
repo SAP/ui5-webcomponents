@@ -1,5 +1,13 @@
-commit 6495028bd28561f10c492265b96c1b2391bf46fa
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue May 18 08:51:16 2021 +0300
+commit 0a33c401dad66e2ea8d48f16699e65b784b9dcab
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Tue May 18 16:04:43 2021 +0300
 
-    refactor(ui5-shellbar): rename notificationCount property to notificationsCount (#3245)
+    feat(invisibleMessage): introduce invisibleMessage util (#3192)
+    
+    * feat(invisibleMessage): introduce invisibleMessage util
+    
+    * apply comments
+    
+    * fix typo
+    
+    * apply comments
