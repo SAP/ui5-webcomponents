@@ -1,7 +1,9 @@
-commit ef2d332006b7eb755d1acf308666f894f8e6483b
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Tue May 18 18:46:06 2021 +0300
+commit a3a3a1175f6d98ebf2949ab5c6a80eddfc3f06e0
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue May 18 19:01:25 2021 +0300
 
-    fix(ui5-busyindicator): fix aria-labelledby value (#3266)
+    refactor(ui5-avatar): rename backgroundColor property to colorScheme (#3222)
     
-    Fixes: #3256
+    Part of #3107
+    
+    BREAKING_CHANGE: The "backgroundColor" property of ui5-avatar is changed to "colorScheme"

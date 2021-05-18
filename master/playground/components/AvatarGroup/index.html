@@ -2509,7 +2509,7 @@
 				function onAvatarClicked(avatarRef) {
 					const avatarIndex = avatarGroup.items.indexOf(avatarRef);
 
-					popAvatar.backgroundColor = avatarGroup.colorScheme[avatarIndex];
+					popAvatar.colorScheme = avatarGroup.colorScheme[avatarIndex];
 					popAvatar.initials = avatarRef.initials;
 					popAvatar.image = avatarRef.image;
 					popAvatar.icon = avatarRef.icon;
@@ -2528,7 +2528,7 @@
 						const color = avatarGroup.colorScheme[firstHiddenIndex + index];
 
 						html += '<div class="avatar-slot" style="padding: 5px">' +
-									'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" background-color="' + color + '"></ui5-avatar>' +
+									'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" color-scheme="' + color + '"></ui5-avatar>' +
 								'</div>';
 					});
 	
@@ -2589,7 +2589,7 @@
 		<span class="nx">avatarGroup</span><span class="p">.</span><span class="nx">hiddenItems</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">avatar</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
 			<span class="nx">html</span> <span class="o">+=</span> <span class="s2">`&lt;ui5-avatar 
 						...
-						background-color="</span><span class="p">${</span><span class="nx">avatarGroup</span><span class="p">.</span><span class="nx">colorScheme</span><span class="p">[</span><span class="nx">firstHiddenIndex</span> <span class="o">+</span> <span class="nx">index</span><span class="p">]}</span><span class="s2">"
+						color-scheme="</span><span class="p">${</span><span class="nx">avatarGroup</span><span class="p">.</span><span class="nx">colorScheme</span><span class="p">[</span><span class="nx">firstHiddenIndex</span> <span class="o">+</span> <span class="nx">index</span><span class="p">]}</span><span class="s2">"
 					&lt;/ui5-avatar&gt;`</span><span class="p">;</span>
 		<span class="p">});</span>
 
@@ -2652,7 +2652,7 @@
 						const avatarColor = avatarGroup.colorScheme[index];
 
 						html += '<div class="avatar-slot" style="padding: 3px">' +
-									'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" background-color="' + avatarColor + '"></ui5-avatar>' +
+									'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" color-scheme="' + avatarColor + '"></ui5-avatar>' +
 								'</div>';
 					});
 	
@@ -2816,7 +2816,7 @@ Do not use the <code>AvatarGroup</code> if: <ul> <li>You want to display a singl
                         <div class="cell api-table-content-cell">Array</div>
                         <div class="cell api-table-content-cell"> [0..n]</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Returns an array containing the <code>AvatarBackgroundColor</code> values that correspond to the avatars in the <code>ui5-avatar-group</code>.
+                            Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the <code>ui5-avatar-group</code>.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
