@@ -160,7 +160,7 @@ class Slider extends SliderBase {
 		}
 
 		if (this.showTooltip) {
-			this._tooltipVisibility = "visible";
+			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBLE;
 		}
 	}
 
@@ -177,7 +177,7 @@ class Slider extends SliderBase {
 		this._setInitialValue("value", null);
 
 		if (this.showTooltip) {
-			this._tooltipVisibility = "hidden";
+			this._tooltipVisibility = SliderBase.TOOLTIP_HIDDEN;
 		}
 	}
 
