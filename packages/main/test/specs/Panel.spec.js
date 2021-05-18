@@ -15,7 +15,7 @@ describe("Panel general interaction", () => {
 		assert.strictEqual(title.getText(), sExpected, "Initially the text is the expected one");
 
 		browser.execute(() => {
-			document.getElementById("panel-fixed").setAttribute("header-text", "New text");
+			document.getElementById("panel-fixed").setAttribute("heading", "New text");
 		});
 		browser.pause(500);
 
