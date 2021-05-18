@@ -86,6 +86,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the text alternative of the <code>ui5-li</code>.
+		 * If not provided a default text alternative will be set, if present.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.7
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
 		 * Indicates if the list item has text content.
 		 * @type {boolean}
 		 * @private
