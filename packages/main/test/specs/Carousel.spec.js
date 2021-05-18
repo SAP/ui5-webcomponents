@@ -67,7 +67,7 @@ describe("Carousel general interaction", () => {
 	it("Buttons are rendered in the navigation without hovering (arrows-placement)", () => {
 		const carousel = browser.$("#carousel3");
 		carousel.scrollIntoView();
-		const buttons = carousel.shadow$$(".ui5-carousel-navigation-wrapper ui5-button");
+		const buttons = carousel.shadow$$(".ui5-carousel-navigation-wrapper .ui5-carousel-navigation-button:not(.ui5-carousel-navigation-button--hidden)");
 
 		assert.strictEqual(buttons.length, 2, "Navigation is rendered");
 	});
