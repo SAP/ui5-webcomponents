@@ -224,14 +224,6 @@ class SliderBase extends UI5Element {
 		return 8;
 	}
 
-	static get TOOLTIP_VISIBLE() {
-		return "visible";
-	}
-
-	static get TOOLTIP_HIDDEN() {
-		return "hidden";
-	}
-
 	get classes() {
 		return {
 			labelContainer: {
