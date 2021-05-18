@@ -1,5 +1,5 @@
-commit 62e3ae87b48b8f8c3a4a27f5b0bef1b6ba9fb3eb
-Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
-Date:   Mon May 17 15:03:47 2021 +0300
+commit 6495028bd28561f10c492265b96c1b2391bf46fa
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue May 18 08:51:16 2021 +0300
 
-    Update i18n.md (#3263)
+    refactor(ui5-shellbar): rename notificationCount property to notificationsCount (#3245)
