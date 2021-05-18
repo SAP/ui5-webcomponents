@@ -3,11 +3,13 @@
 	@focusin="{{_onfocusin}}"
 	class="ui5-segmentedbutton-root"
 	role="listbox"
-	tabindex="-1"
 	dir="{{effectiveDir}}"
 	aria-multiselectable="true"
 	aria-describedby="{{ariaDescribedBy}}"
-	aria-roledescription="{{ariaDescription}}"
+	aria-roledescription="{{_id}}-invisibleText"
 >
 	<slot></slot>
+
+	<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{ariaDescription}}</span>
+
 </ul>
