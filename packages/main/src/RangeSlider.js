@@ -80,6 +80,22 @@ const metadata = {
  * <h3>Responsive Behavior</h3>
  * You can move the currently selected range by clicking on it and dragging it along the interval.
  *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li><code>Left or Down Arrow</code> - Moves a <code>ui5-range-slider</code> handle or the entire selection one step to the left;</li>
+ * <li><code>Right or Up Arrow</code> - Moves a <code>ui5-slider</code> handle or the entire selection one step to the right;</li>
+ * <li><code>Left or Down Arrow + Ctrl/Cmd</code> - Moves a <code>ui5-range-slider</code> handle to the left or the entire range with step equal to 1/10th of the entire range;</li>
+ * <li><code>Right or Up Arrow + Ctrl/Cmd</code> - Moves a <code>ui5-range-slider</code> handle to the right or the entire range with step equal to 1/10th of the entire range;</li>
+ * <li><code>Plus</code> - Same as <code>Right or Up Arrow</code></li>
+ * <li><code>Minus</code> - Same as <code>Left or Down Arrow</code></li>
+ * <li><code>Home</code> - Moves the entire selection or the selected handle to the beginning of the <code>ui5-range-slider</code>'s range;</li>
+ * <li><code>End</code> - Moves the entire selection or the selected handle to the end of the <code>ui5-range-slider</code>'s range;</li>
+ * <li><code>Page Up</code> - Same as <code>Right or Up Arrow + Ctrl/Cmd</code></li>
+ * <li><code>Page Down</code> - Same as <code>Left or Down Arrow + Ctrl/Cmd</code></li>
+ * <li><code>Escape</code> - Resets the <code>startValue</code> and <code>endValue</code> to the values prior the <ui5-range-slider> focusing;</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/RangeSlider";</code>
@@ -177,6 +193,10 @@ class RangeSlider extends SliderBase {
 			this._setInitialValue("startValue", this.startValue);
 			this._setInitialValue("endValue", this.endValue);
 		}
+
+		if (this.showTooltip) {
+			this._tooltipVisibility = this._constants().TOOLTIP_VISIBLE;
+		}
 	}
 
 	/**
@@ -194,10 +214,15 @@ class RangeSlider extends SliderBase {
 	_onfocusout(event) {
 		if (this._isFocusing()) {
 			this._preventFocusOut();
-		} else {
-			this._setAffectedValue(null);
-			this._setInitialValue("startValue", null);
-			this._setInitialValue("endValue", null);
+			return;
+		}
+
+		this._setAffectedValue(null);
+		this._setInitialValue("startValue", null);
+		this._setInitialValue("endValue", null);
+
+		if (this.showTooltip) {
+			this._tooltipVisibility = this._constants().TOOLTIP_HIDDEN;
 		}
 	}
 
