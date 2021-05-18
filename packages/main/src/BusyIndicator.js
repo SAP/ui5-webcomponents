@@ -175,7 +175,7 @@ class BusyIndicator extends UI5Element {
 	}
 
 	get labelId() {
-		return this.text ? this._id + "-label" : undefined;
+		return this.text ? `${this._id}-label` : undefined;
 	}
 
 	get classes() {
