@@ -23,7 +23,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
 
 		/**
-		 * Determines the content over which the <code>ui5-busyindicator</code> will appear.
+		 * Determines the content over which the component will appear.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -36,7 +36,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
 
 		/**
-		 * Defines text to be displayed below the <code>ui5-busyindicator</code>. It can be used to inform the user of the current operation.
+		 * Defines text to be displayed below the component. It can be used to inform the user of the current operation.
 		 * @type {String}
 		 * @public
 		 * @defaultvalue ""
@@ -47,7 +47,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the size of the <code>ui5-busyindicator</code>.
+		 * Defines the size of the component.
 		 *
 		 * <br><br>
 		 * <b>Note:</b>

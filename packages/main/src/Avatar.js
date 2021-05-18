@@ -63,7 +63,7 @@ const metadata = {
 		 * <br><br>
 		 * import "@ui5/webcomponents-icons/dist/{icon_name}.js"
 		 * <br>
-		 * <pre>&lt;ui5-avatar icon-src="employee"></pre>
+		 * <pre>&lt;ui5-avatar icon="employee"></pre>
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 * @type {string}
@@ -77,7 +77,7 @@ const metadata = {
 		/**
 		 * Defines the displayed initials.
 		 * <br>
-		 * Up to two Latin letters can be displayed as initials in a <code>ui5-avatar</code>.
+		 * Up to two Latin letters can be displayed as initials in a component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -88,7 +88,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the shape of the <code>ui5-avatar</code>.
+		 * Defines the shape of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -105,7 +105,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines predefined size of the <code>ui5-avatar</code>.
+		 * Defines predefined size of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -184,7 +184,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text alternative of the <code>ui5-avatar</code>.
+		 * Defines the text alternative of the component.
 		 * If not provided a default text alternative will be set, if present.
 		 *
 		 * @type {string}
@@ -197,7 +197,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-haspopup value of the <code>ui5-avatar</code> when <code>interactive</code> property is <code>true</code>.
+		 * Defines the aria-haspopup value of the component when <code>interactive</code> property is <code>true</code>.
 		 * <br><br>
 		 * @type String
 		 * @since 1.0.0-rc.15
@@ -242,7 +242,7 @@ const metadata = {
  *
  * <ul>
  * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
- * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the <code>ui5-avatar</code> without triggering the click event.</li>
+ * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the component without triggering the click event.</li>
  * </ul>
  * <br><br>
  *

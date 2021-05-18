@@ -36,9 +36,9 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-table</code> rows.
+		 * Defines the component rows.
 		 * <br><br>
-		 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
+		 * <b>Note:</b> Use the component for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.main.ITableRow[]}
 		 * @slot rows
@@ -51,7 +51,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the configuration for the columns of the <code>ui5-table</code>.
+		 * Defines the configuration for the columns of the component.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
@@ -197,7 +197,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the mode of the <code>ui5-table</code>.
+		 * Defines the mode of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -274,7 +274,7 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when the <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
+		 * Fired when the component is shown as a pop-in instead of hiding it.
 		 *
 		 * @event sap.ui.webcomponents.main.Table#popin-change
 		 * @param {Array} poppedColumns popped-in columns.

@@ -32,7 +32,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the unique identifier (icon name) of each <code>ui5-icon</code>.
+		 * Defines the unique identifier (icon name) of the component.
 		 * <br>
 		 *
 		 * To browse all available icons, see the
@@ -60,7 +60,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text alternative of the <code>ui5-icon</code>.
+		 * Defines the text alternative of the component.
 		 * If not provided a default text alternative will be set, if present.
 		 * <br><br>
 		 * <b>Note:</b> Every icon should have a text alternative in order to
@@ -75,7 +75,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-icon</code> should have a tooltip.
+		 * Defines whether the component should have a tooltip.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
