@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
 import {
 	isUp,
 	isDown,
@@ -12,14 +12,14 @@ import {
 	isPageDownShift,
 	isEscape,
 	isEnter,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+} from "@ui5/webcomponents-base/Keys.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/util/AriaLabelHelper.js";
+import { getFeature } from "@ui5/webcomponents-base/FeaturesRegistry.js";
+import Float from "@ui5/webcomponents-base/types/Float.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 import StepInputTemplate from "./generated/templates/StepInputTemplate.lit.js";
 import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
 import "@ui5/webcomponents-icons/dist/less.js";
@@ -159,7 +159,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
@@ -347,7 +347,7 @@ const INITIAL_SPEED = 120; // milliseconds
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/StepInput.js";</code>
+ * <code>import "@ui5/webcomponents/StepInput.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -453,7 +453,7 @@ class StepInput extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 

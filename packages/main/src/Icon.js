@@ -1,11 +1,11 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundleData, fetchI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/asset-registries/Icons.js";
+import createStyleInHead from "@ui5/webcomponents-base/util/createStyleInHead.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import { getI18nBundleData, fetchI18nBundle } from "@ui5/webcomponents-base/asset-registries/i18n.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/Keys.js";
+import isLegacyBrowser from "@ui5/webcomponents-base/isLegacyBrowser.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
@@ -157,7 +157,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Icon.js";</code>
+ * <code>import "@ui5/webcomponents/Icon.js";</code>
  *
  * @constructor
  * @author SAP SE

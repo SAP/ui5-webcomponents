@@ -1,5 +1,5 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 import {
 	isDown,
 	isUp,
@@ -7,10 +7,10 @@ import {
 	isRight,
 	isSpace,
 	isEnter,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
+} from "@ui5/webcomponents-base/Keys.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import Float from "@ui5/webcomponents-base/types/Float.js";
 import {
 	RATING_INDICATOR_TEXT,
 	RATING_INDICATOR_TOOLTIP_TEXT,
@@ -143,7 +143,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/RatingIndicator.js";</code>
+ * <code>import "@ui5/webcomponents/RatingIndicator.js";</code>
  *
  * @constructor
  * @author SAP SE

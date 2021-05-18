@@ -1,10 +1,10 @@
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
-import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
-import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getFeature } from "@ui5/webcomponents-base/FeaturesRegistry.js";
+import CalendarDate from "@ui5/webcomponents-localization/dates/CalendarDate.js";
+import modifyDateBy from "@ui5/webcomponents-localization/dates/modifyDateBy.js";
+import getRoundedTimestamp from "@ui5/webcomponents-localization/dates/getRoundedTimestamp.js";
+import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dates/getTodayUTCTimestamp.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/util/AriaLabelHelper.js";
 import {
 	isPageUp,
 	isPageDown,
@@ -14,8 +14,8 @@ import {
 	isPageDownShiftCtrl,
 	isShow,
 	isF4,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
+} from "@ui5/webcomponents-base/Keys.js";
+import { isPhone, isIE } from "@ui5/webcomponents-base/Device.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
@@ -31,7 +31,7 @@ import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js"
 import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
-import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
+import "@ui5/webcomponents-localization/features/calendar/Gregorian.js";
 
 // Styles
 import datePickerCss from "./generated/themes/DatePicker.css.js";
@@ -134,7 +134,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
@@ -315,13 +315,13 @@ const metadata = {
  * you need to set the <code>primaryCalendarType</code> property and import one or more of the following modules:
  * <br><br>
  *
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";</code>
+ * <code>import "@ui5/webcomponents-localization/features/calendar/Buddhist.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";</code>
+ * <code>import "@ui5/webcomponents-localization/features/calendar/Islamic.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";</code>
+ * <code>import "@ui5/webcomponents-localization/features/calendar/Japanese.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";</code>
+ * <code>import "@ui5/webcomponents-localization/features/calendar/Persian.js";</code>
  * <br><br>
  *
  * Or, you can use the global configuration and set the <code>calendarType</code> key:
@@ -334,7 +334,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/DatePicker";</code>
+ * <code>import "@ui5/webcomponents/DatePicker";</code>
  *
  * @constructor
  * @author SAP SE
@@ -388,7 +388,7 @@ class DatePicker extends DateComponentBase {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 

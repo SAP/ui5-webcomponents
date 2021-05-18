@@ -1,7 +1,7 @@
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { getNextZIndex } from "@ui5/webcomponents-base/util/PopupUtils.js";
 import ToastPlacement from "./types/ToastPlacement.js";
 
 // Template
@@ -123,7 +123,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Toast";</code>
+ * <code>import "@ui5/webcomponents/Toast";</code>
  *
  * @constructor
  * @author SAP SE

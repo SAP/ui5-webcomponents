@@ -135,7 +135,7 @@ const getES6Config = (input = "bundle.esm.js") => {
 	return [{
 		input,
 		output: {
-			dir: "dist/resources",
+			dir: "./resources",
 			format: "esm",
 			sourcemap: true,
 		},
@@ -156,7 +156,7 @@ const getES5Config = (input = "bundle.es5.js") => {
 	return [{
 		input,
 		output: {
-			dir: "dist/resources",
+			dir: "./resources",
 			format: "iife",
 			inlineDynamicImports: true,
 			name: "sap-ui-webcomponents-bundle",

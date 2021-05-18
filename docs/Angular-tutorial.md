@@ -43,7 +43,7 @@ schemas: [
 ## Step 5. Import the Components That You Are Going to Use
 
 ```js
-import "@ui5/webcomponents/dist/Button";
+import "@ui5/webcomponents/Button";
 ```
 
 ## Step 6. Use the Imported Elements in Your Application
@@ -102,7 +102,7 @@ In the module, where you are using UI5 Web Components, you should add the ```APP
 ```js
 import { ..., APP_INITIALIZER  } from '@angular/core';
 
-import CheckBox from "@ui5/webcomponents/dist/CheckBox";
+import CheckBox from "@ui5/webcomponents/CheckBox";
 
 function onAppInit(): () => Promise<any> {
   return (): Promise<any> => {
@@ -167,23 +167,23 @@ And about the serve command:
 ```js
 const path = require('path');
 const env = process.env.WEBPACK_ENV;
- 
+
 const OUTPUT_FILENAME = 'result';
 const DEST_FOLDER = 'dist';
- 
+
 const OUTPUT_FILE = `${OUTPUT_FILENAME}.js`;
 const OUTPUT_FILE_MIN = `${OUTPUT_FILENAME}.min.js`;
- 
-const { outputfile, mode } = env == 'build' 
+
+const { outputfile, mode } = env == 'build'
     ? {
         outputfile: OUTPUT_FILE_MIN,
         mode: 'production'
-    } 
+    }
     : {
         outputfile: OUTPUT_FILE,
         mode: 'development'
     };
- 
+
 module.exports = {
     mode,
     output: {

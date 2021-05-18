@@ -1,16 +1,16 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { isPhone } from "@ui5/webcomponents-base/Device.js";
 import {
 	isDown,
 	isUp,
 	isPageUp,
 	isPageDown,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import getEffectiveContentDensity from "@ui5/webcomponents-base/dist/util/getEffectiveContentDensity.js";
+} from "@ui5/webcomponents-base/Keys.js";
+import getEffectiveContentDensity from "@ui5/webcomponents-base/util/getEffectiveContentDensity.js";
 import "@ui5/webcomponents-icons/dist/navigation-up-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
-import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import ScrollEnablement from "@ui5/webcomponents-base/delegate/ScrollEnablement.js";
 import WheelSliderTemplate from "./generated/templates/WheelSliderTemplate.lit.js";
 import Button from "./Button.js";
 
@@ -129,7 +129,7 @@ const CELL_SIZE_COZY = 2.875;
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/WheelSlider.js";</code>
+ * <code>import "@ui5/webcomponents/WheelSlider.js";</code>
  *
  * @constructor
  * @author SAP SE

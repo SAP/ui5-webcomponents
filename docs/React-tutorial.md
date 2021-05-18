@@ -20,7 +20,7 @@ npm install @ui5/webcomponents --save
 ## Step 3. Import the Components That You Are Going to Use
 
 ```js
-import "@ui5/webcomponents/dist/Button";
+import "@ui5/webcomponents/Button";
 ```
 
 ## Step 4. Use the Imported Elements in Your Application

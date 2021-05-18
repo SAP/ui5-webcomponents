@@ -13,6 +13,17 @@
     "sapui5",
     "ui5"
   ],
+  "files": [
+    "/dist",
+    "!/dist/Button2.js"
+  ],
+  "exportsss": {
+    "./dist/*": "./dist/*",
+    "./*": "./dist/*",
+    "./package.json": "./package.json",
+    "./bundle.esm.js": "./bundle.esm.js",
+    "./bundle.common.js": "./bundle.common.js"
+  },
   "scripts": {
     "clean": "wc-dev clean",
     "lint": "wc-dev lint",

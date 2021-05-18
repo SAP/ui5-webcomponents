@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 const mkdirp = require('mkdirp');
 const assets = require('@ui5/webcomponents-tools/assets-meta.js');
 
@@ -17,6 +16,6 @@ export {
 	SUPPORTED_LOCALES,
 };`;
 
-mkdirp.sync("dist/generated/");
-fs.writeFileSync("dist/generated/AssetParameters.js", fileContent);
+mkdirp.sync("./generated/");
+fs.writeFileSync("./generated/AssetParameters.js", fileContent);
 

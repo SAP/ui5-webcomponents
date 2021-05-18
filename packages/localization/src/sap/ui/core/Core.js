@@ -1,7 +1,7 @@
-import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
-import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
-import getDesigntimePropertyAsArray from "@ui5/webcomponents-base/dist/util/getDesigntimePropertyAsArray.js";
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import { getLanguage } from "@ui5/webcomponents-base/config/Language.js";
+import { getCalendarType } from "@ui5/webcomponents-base/config/CalendarType.js";
+import getDesigntimePropertyAsArray from "@ui5/webcomponents-base/util/getDesigntimePropertyAsArray.js";
+import getLocale from "@ui5/webcomponents-base/locale/getLocale.js";
 
 const emptyFn = () => {};
 

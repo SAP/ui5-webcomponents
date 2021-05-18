@@ -29,7 +29,7 @@ All JS build tools support importing JSON modules (via plugins like `@rollup/plu
 
 The `localization` package provides CLDR assets.
 
-`import "@ui5/webcomponents-localization/dist/Assets.js";`
+`import "@ui5/webcomponents-localization/Assets.js";`
 
 Usually you don't need to import the assets directly from the `localization` package (unless you are developing a Web Components package of your own),
 but rather from the package(s) containing the actual Web Components you'll be using in your app.
@@ -38,7 +38,7 @@ but rather from the package(s) containing the actual Web Components you'll be us
 
 The `theme-base` package provides common parameters for all themes.
 
-`import "@ui5/webcomponents-theme-base/dist/Assets.js";`
+`import "@ui5/webcomponents-theme-base/Assets.js";`
 
 Usually you don't need to import the assets directly from the `theme-base` package (unless you are developing a Web Components package of your own),
 but rather from the package(s) containing the actual Web Components you'll be using in your app.
@@ -48,7 +48,7 @@ but rather from the package(s) containing the actual Web Components you'll be us
 The `main` package's `Assets.js` import provides package-specific additional theming parameters and i18n assets.
 All assets from the `base` and `theme-base` packages are also imported automatically so you don't have to worry about them.
 
-`import "@ui5/webcomponents/dist/Assets.js";`
+`import "@ui5/webcomponents/Assets.js";`
 
 ### `fiori` package
 
@@ -59,7 +59,7 @@ package are also imported since the `fiori` package internally uses features of 
 
 ### `icons` package
 
-The assets file for the `@ui5/webcomponents-icons` package provides i18n assets for some icons: 
+The assets file for the `@ui5/webcomponents-icons` package provides i18n assets for some icons:
 
 `import "@ui5/webcomponents-icons/dist/Assets.js";`
 

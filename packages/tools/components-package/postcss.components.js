@@ -16,6 +16,12 @@ module.exports = {
 				},
 			]
 		}),
-		postcssCSStoESM({toReplace: 'src', includeDefaultTheme: true, packageName}),
+		postcssCSStoESM({
+			toReplace: 'src',
+			srcPattern: "/src/",
+			dstPattern: "/generated/",
+			includeDefaultTheme: true,
+			packageName,
+		}),
 	]
 };

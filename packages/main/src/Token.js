@@ -1,14 +1,14 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { getTheme } from "@ui5/webcomponents-base/config/Theme.js";
 import {
 	isBackSpace,
 	isSpace,
 	isDelete,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+} from "@ui5/webcomponents-base/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
@@ -120,7 +120,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Token.js";</code>
+ * <code>import "@ui5/webcomponents/Token.js";</code>
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Token

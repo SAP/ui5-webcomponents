@@ -1,15 +1,15 @@
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import ItemNavigation from "@ui5/webcomponents-base/delegate/ItemNavigation.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 
 import {
 	isDown,
 	isUp,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+} from "@ui5/webcomponents-base/Keys.js";
 
 import ProductSwitchTemplate from "./generated/templates/ProductSwitchTemplate.lit.js";
 

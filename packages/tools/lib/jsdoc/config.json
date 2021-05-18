@@ -18,7 +18,7 @@
 			],
 			"version": "1.62",
 			"apiJsonFolder": "",
-			"apiJsonFile": "dist/api.json",
+			"apiJsonFile": "./api.json",
 			"includeSettingsInConstructor": false
 		}
 	},

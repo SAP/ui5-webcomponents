@@ -4,7 +4,7 @@
  * there is at least 1 UploadCollection subscribed.
  */
 
-import EventProvider from "@ui5/webcomponents-base/dist/EventProvider.js";
+import EventProvider from "@ui5/webcomponents-base/EventProvider.js";
 import UploadCollectionDnDOverlayMode from "../types/UploadCollectionDnDMode.js";
 
 const draggingFiles = event => {

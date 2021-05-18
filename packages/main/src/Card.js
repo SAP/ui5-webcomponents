@@ -1,8 +1,8 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/util/AriaLabelHelper.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/Keys.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
@@ -183,7 +183,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Card";</code>
+ * <code>import "@ui5/webcomponents/Card";</code>
  *
  * @constructor
  * @author SAP SE

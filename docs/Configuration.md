@@ -42,7 +42,7 @@ The `RTL` configuration setting should not be used by applications. It is only i
 
 Example:
 ```js
-import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
+import applyDirection from "@ui5/webcomponents-base/locale/applyDirection.js";
 
 document.body.dir = "rtl";
 applyDirection();
@@ -147,13 +147,13 @@ Provide the desired options in the JSON object, as shown in the example.
 The configuration script is used to set the initial configuration in a declarative manner.
 However, reading/modifying the configuration reliably can only be done programmatically.
 
-To do so, please import the desired functionality from the respective `"@ui5/webcomponents-base/dist/config/"` module.
+To do so, please import the desired functionality from the respective `"@ui5/webcomponents-base/config/"` module.
 
 ```js
-import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
-import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
-import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
-import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
+import { getTheme, setTheme } from "@ui5/webcomponents-base/config/Theme.js";
+import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/config/NoConflict.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/config/AnimationMode.js";
+import { getLanguage, setLanguage } from "@ui5/webcomponents-base/config/Language.js";
+import { getCalendarType } from "@ui5/webcomponents-base/config/CalendarType.js";
+import { getFirstDayOfWeek } from "@ui5/webcomponents-base/config/FormatSettings.js";
 ```

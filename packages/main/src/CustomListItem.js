@@ -1,4 +1,4 @@
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/Keys.js";
 import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
 

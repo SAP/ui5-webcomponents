@@ -1,15 +1,15 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
-import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
-import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
-import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import ScrollEnablement from "@ui5/webcomponents-base/delegate/ScrollEnablement.js";
+import slideDown from "@ui5/webcomponents-base/animations/slideDown.js";
+import slideUp from "@ui5/webcomponents-base/animations/slideUp.js";
+import AnimationMode from "@ui5/webcomponents-base/types/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/config/AnimationMode.js";
+import ItemNavigation from "@ui5/webcomponents-base/delegate/ItemNavigation.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/Keys.js";
+import MediaRange from "@ui5/webcomponents-base/MediaRange.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
@@ -245,11 +245,11 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/TabContainer";</code>
+ * <code>import "@ui5/webcomponents/TabContainer";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/Tab";</code> (for <code>ui5-tab</code>)
+ * <code>import "@ui5/webcomponents/Tab";</code> (for <code>ui5-tab</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/TabSeparator";</code> (for <code>ui5-tab-separator</code>)
+ * <code>import "@ui5/webcomponents/TabSeparator";</code> (for <code>ui5-tab-separator</code>)
  *
  * @constructor
  * @author SAP SE

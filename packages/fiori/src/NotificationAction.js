@@ -1,5 +1,5 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import ButtonDesign from "@ui5/webcomponents/types/ButtonDesign.js";
 
 /**
  * @public

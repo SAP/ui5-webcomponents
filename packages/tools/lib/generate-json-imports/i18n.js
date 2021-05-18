@@ -31,7 +31,7 @@ if (languages.length === 0) {
 	const assetsImportsString = languages.map(key => `import _${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");
 
 	// static imports
-	contentStatic = `import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+	contentStatic = `import { registerI18nLoader } from "@ui5/webcomponents-base/asset-registries/i18n.js";
 
 ${assetsImportsString}
 
@@ -58,7 +58,7 @@ localeIds.forEach(localeId => {
 	const dynamicImportsString = languages.map(key => `		case "${key}": return (await import("../assets/i18n/messagebundle_${key}.json")).default;`).join("\n");
 
 	// Resulting file content
-	contentDynamic = `import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+	contentDynamic = `import { registerI18nLoader } from "@ui5/webcomponents-base/asset-registries/i18n.js";
 
 	const importMessageBundle = async (localeId) => {
 		switch (localeId) {

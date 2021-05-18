@@ -1,8 +1,8 @@
-import { attachBoot } from "@ui5/webcomponents-base/dist/Boot.js";
-import { attachThemeLoaded } from "@ui5/webcomponents-base/dist/theming/ThemeLoaded.js";
-import { attachBeforeComponentRender } from "@ui5/webcomponents-base/dist/Render.js";
-import { setCreateObserverCallback, setDestroyObserverCallback } from "@ui5/webcomponents-base/dist/DOMObserver.js";
-import { setResizeHandlerObserveFn, setResizeHandlerUnobserveFn } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { attachBoot } from "@ui5/webcomponents-base/Boot.js";
+import { attachThemeLoaded } from "@ui5/webcomponents-base/theming/ThemeLoaded.js";
+import { attachBeforeComponentRender } from "@ui5/webcomponents-base/Render.js";
+import { setCreateObserverCallback, setDestroyObserverCallback } from "@ui5/webcomponents-base/DOMObserver.js";
+import { setResizeHandlerObserveFn, setResizeHandlerUnobserveFn } from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
 import whenPolyfillLoaded from "./whenPolyfillLoaded.js";
 import createComponentStyleTag from "./theming/createComponentStyleTag.js";
 import { runPonyfill } from "./theming/CSSVarsPonyfill.js";

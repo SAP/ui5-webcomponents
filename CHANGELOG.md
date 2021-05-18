@@ -168,20 +168,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 The method **registerI18nBundle** of the @ui5/webcomponents-base/asset-registries/i18n.js module is deprecated in favour of **registerI18nLoader**.
 
-The framework no longer tries to convert .properties files internally and the PropertiesFormatSupport feature is removed. This has to be done by a custom loader using the **@ui5/webcomponents-base/dist/PropertiesFileFormat.js** module.
+The framework no longer tries to convert .properties files internally and the PropertiesFormatSupport feature is removed. This has to be done by a custom loader using the **@ui5/webcomponents-base/PropertiesFileFormat.js** module.
 
 * **framework:** deprecate RenderScheduler in favor of Render.js ([#2728](https://github.com/SAP/ui5-webcomponents/issues/2728)) ([bc78857](https://github.com/SAP/ui5-webcomponents/commit/bc78857))
 
 `RenderScheduler.js` deprecated. The file will be deleted in a future release. If you were using some of its methods, import these methods from the new `Render.js` module. For example, if you were using:
- ```js 
-import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+ ```js
+import RenderScheduler from "@ui5/webcomponents-base/RenderScheduler.js";
 RenderScheduler.renderImmediately(myComponent);
 RenderScheduler.renderDeferred(myComponent);
 await RenderScheduler.whenFinished();
 ```
 change to:
 ```js
-import { renderFinished, renderImmediately, renderDeferred } from "@ui5/webcomponents-base/dist/Render.js";
+import { renderFinished, renderImmediately, renderDeferred } from "@ui5/webcomponents-base/Render.js";
 renderImmediately(myComponent);
 renderDeferred(myComponent);
 await renderFinished();
@@ -200,7 +200,7 @@ or
 
 Change the following public imports:
 
-`import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";`
+`import "@ui5/webcomponents-base/features/browsersupport/IE11.js";`
 
 to
 
@@ -209,7 +209,7 @@ to
 
 and
 
-`import "@ui5/webcomponents-base/dist/features/browsersupport/IE11WithWebComponentsPolyfill.js";`
+`import "@ui5/webcomponents-base/features/browsersupport/IE11WithWebComponentsPolyfill.js";`
 
 to
 
@@ -218,7 +218,7 @@ to
 
 **The Legacy Edge browser is no longer supported with the ES6 bundle**, therefore the following import has been removed:
 
-`import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";`
+`import "@ui5/webcomponents-base/features/browsersupport/Edge.js";`
 
 Legacy Edge is still supported with the ES5 bundle. If your app needs to support Legacy Edge, treat it as IE11 and transpile the code to ES5 as you would for IE11.
 
@@ -300,11 +300,11 @@ The startColumnAccessibleName, midColumnAccessibleName and endColumnAccessibleNa
 
 * **ui5-timeline:** move ui5-timeline to fiori package ([#2498](https://github.com/SAP/ui5-webcomponents/issues/2498)) ([e0a32f4](https://github.com/SAP/ui5-webcomponents/commit/e0a32f4))
 
-Timeline component has been moved to the "fiori" package. 
+Timeline component has been moved to the "fiori" package.
 
 If previously had:
 ```js
-import Timeline from "@ui5/webcomponents/dist/Timeline.js";
+import Timeline from "@ui5/webcomponents/Timeline.js";
 ```
 you have to change it to:
 ```js
@@ -331,7 +331,7 @@ import "@ui5/webcomponents-fiori/dist/NotificationAction.js";
 Change the distribution path of all individual `icons`, which changes all icons' public imports, by bringing the icons' modules one level up.
 
 If you previously had:
-```js 
+```js
 import "@ui5/webcomponents-icons/dist/icons/accept.js";
 ```
 
@@ -705,7 +705,7 @@ with RC.8 you should change this to:
     "@ui5/webcomponents-tools": "1.0.0-rc.8",
     "chromedriver": "latest"
   }
-``` 
+```
 Feel free to choose a version that suits your specific use case best, or `latest` if in doubt.
 
 # [1.0.0-rc.7](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.6...v1.0.0-rc.7) (2020-04-30)
@@ -1093,7 +1093,7 @@ To make the transition from v1.0.0-rc.4 to v1.0.0-rc.5 smoother, we prepared thi
 
 * **icons:** move all individual icons to a new npm package called `@ui5/webcomponents-icons`.
 
-You have to install the package 
+You have to install the package
 ```js
 npm i @ui5/webcomponents-icons --save
 ```
@@ -1101,7 +1101,7 @@ The import statements should be changed
 
 Before:
 ```js
-@ui5/webcomponents/dist/icons/add.js
+@ui5/webcomponents/icons/add.js
 ```
 
 After:
@@ -1277,8 +1277,8 @@ set the desired background directly on the tag.
 use the property allow-custom-values, note built in validation is enabled by default.
 * **Theming:** Theming.js no longer has getTheme and setTheme methods, use the Configuration.js instead.
 * **i18n, Theming:** unify assets handling ([#744](https://github.com/SAP/ui5-webcomponents/pull/744)).
-Use `"@ui5/webcomponents/dist/json-imports/i18n.js"`, instead of `"@ui5/webcomponents/dist/MessageBundleAssets.js"` to enable i18n.
-Use `"@ui5/webcomponents/dist/json-imports/Themes.js"`, instead of import `"@ui5/webcomponents/dist/ThemePropertiesProvider.js"` to enable theming.
+Use `"@ui5/webcomponents/json-imports/i18n.js"`, instead of `"@ui5/webcomponents/MessageBundleAssets.js"` to enable i18n.
+Use `"@ui5/webcomponents/json-imports/Themes.js"`, instead of import `"@ui5/webcomponents/ThemePropertiesProvider.js"` to enable theming.
 
 
 

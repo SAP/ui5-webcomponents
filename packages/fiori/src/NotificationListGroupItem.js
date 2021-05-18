@@ -1,10 +1,10 @@
-import { fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Priority from "@ui5/webcomponents/dist/types/Priority.js";
-import List from "@ui5/webcomponents/dist/List.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Popover from "@ui5/webcomponents/dist/Popover.js";
+import { fetchI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import Priority from "@ui5/webcomponents/types/Priority.js";
+import List from "@ui5/webcomponents/List.js";
+import Button from "@ui5/webcomponents/Button.js";
+import BusyIndicator from "@ui5/webcomponents/BusyIndicator.js";
+import Icon from "@ui5/webcomponents/Icon.js";
+import Popover from "@ui5/webcomponents/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
 // Texts
@@ -115,9 +115,9 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/NotificationListGroupItem.js";</code>
+ * <code>import "@ui5/webcomponents/NotificationListGroupItem.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
+ * <code>import "@ui5/webcomponents/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListGroupItem

@@ -1,4 +1,4 @@
-import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { registerFeature } from "@ui5/webcomponents-base/FeaturesRegistry.js";
 
 const CoPilotAnimation = {
 	animated: true,

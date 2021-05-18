@@ -1,5 +1,5 @@
-import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import { fetchCldr } from "@ui5/webcomponents-base/asset-registries/LocaleData.js";
+import getLocale from "@ui5/webcomponents-base/locale/getLocale.js";
 import LocaleData from "../sap/ui/core/LocaleData.js";
 
 const instances = new Map();

@@ -1,9 +1,9 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import encodeCSS from "@ui5/webcomponents-base/dist/util/encodeCSS.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import encodeCSS from "@ui5/webcomponents-base/util/encodeCSS.js";
 
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/Keys.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
 
@@ -228,7 +228,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Avatar.js";</code>
+ * <code>import "@ui5/webcomponents/Avatar.js";</code>
  *
  * @constructor
  * @author SAP SE

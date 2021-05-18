@@ -6,9 +6,9 @@ const assets = require("../../assets-meta.js");
 const DEFAULT_THEME = assets.themes.default;
 
 const getDefaultThemeCode = packageName => {
-	return `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+	return `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/asset-registries/Themes.js";
 
-import defaultThemeBase from "@ui5/webcomponents-theme-base/dist/generated/themes/${DEFAULT_THEME}/parameters-bundle.css.js";
+import defaultThemeBase from "@ui5/webcomponents-theme-base/generated/themes/${DEFAULT_THEME}/parameters-bundle.css.js";
 import defaultTheme from "./${DEFAULT_THEME}/parameters-bundle.css.js";
 
 registerThemePropertiesLoader("@ui5/webcomponents-theme-base", "${DEFAULT_THEME}", () => defaultThemeBase);
@@ -33,7 +33,14 @@ module.exports = function (opts) {
 			let css = root.toString();
 			css = proccessCSS(css);
 
-			const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\");
+			const from = root.source.input.from;
+			// convert source file to posix path
+			const src = from.split(path.sep).join(path.posix.sep);
+
+			//toReplace old
+			// /${opts.toReplace}/, "/dist/generated/"
+			const targetFile = path.normalize(src.replace(opts.srcPattern, opts.dstPattern));
+			console.log({targetFile});
 			mkdirp.sync(path.dirname(targetFile));
 
 			const filePath = `${targetFile}.js`;

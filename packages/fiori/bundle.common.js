@@ -1,21 +1,21 @@
 // FIORI features
-import "./dist/features/CoPilotAnimation.js";
+import "./features/CoPilotAnimation.js";
 
 // FIORI components
-import Bar from "./dist/Bar.js";
-import FlexibleColumnLayout from "./dist/FlexibleColumnLayout.js";
-import ProductSwitch from "./dist/ProductSwitch.js";
-import ProductSwitchItem from "./dist/ProductSwitchItem.js";
-import SideNavigation from "./dist/SideNavigation.js";
-import SideNavigationItem from "./dist/SideNavigationItem.js";
-import SideNavigationSubItem from "./dist/SideNavigationSubItem.js";
-import Page from "./dist/Page.js";
-import ShellBar from "./dist/ShellBar.js";
-import ShellBarItem from "./dist/ShellBarItem.js";
-import Timeline from "./dist/Timeline.js";
-import UploadCollection from "./dist/UploadCollection.js";
-import UploadCollectionItem from "./dist/UploadCollectionItem.js";
-import NotificationListItem from "./dist/NotificationListItem.js"
-import NotificationListGroupItem from "./dist/NotificationListGroupItem.js";
-import NotificationAction from "./dist/NotificationAction.js";
-import Wizard from "./dist/Wizard.js";
+import Bar from "./Bar.js";
+import FlexibleColumnLayout from "./FlexibleColumnLayout.js";
+import ProductSwitch from "./ProductSwitch.js";
+import ProductSwitchItem from "./ProductSwitchItem.js";
+import SideNavigation from "./SideNavigation.js";
+import SideNavigationItem from "./SideNavigationItem.js";
+import SideNavigationSubItem from "./SideNavigationSubItem.js";
+import Page from "./Page.js";
+import ShellBar from "./ShellBar.js";
+import ShellBarItem from "./ShellBarItem.js";
+import Timeline from "./Timeline.js";
+import UploadCollection from "./UploadCollection.js";
+import UploadCollectionItem from "./UploadCollectionItem.js";
+import NotificationListItem from "./NotificationListItem.js"
+import NotificationListGroupItem from "./NotificationListGroupItem.js";
+import NotificationAction from "./NotificationAction.js";
+import Wizard from "./Wizard.js";

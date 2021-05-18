@@ -1,10 +1,10 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { isIE, isPhone, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import { renderFinished } from "@ui5/webcomponents-base/Render.js";
+import { isIE, isPhone, isSafari } from "@ui5/webcomponents-base/Device.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
+import { getFeature } from "@ui5/webcomponents-base/FeaturesRegistry.js";
 import {
 	isUp,
 	isDown,
@@ -12,11 +12,11 @@ import {
 	isEnter,
 	isBackSpace,
 	isEscape,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
+} from "@ui5/webcomponents-base/Keys.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/util/AriaLabelHelper.js";
+import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/util/Caret.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
@@ -84,7 +84,7 @@ const metadata = {
 		 * <b>Note:</b> The &lt;ui5-suggestion-item> is recommended to be used as a suggestion item.
 		 * Importing the Input Suggestions Support feature:
 		 * <br>
-		 * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code>
+		 * <code>import "@ui5/webcomponents/features/InputSuggestions.js";</code>
 		 * <br>
 		 * also automatically imports the &lt;ui5-suggestion-item> for your convenience.
 		 *
@@ -255,7 +255,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
@@ -274,7 +274,7 @@ const metadata = {
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
 		 * <br><br>
 		 * <b>Note:</b>
-		 * Don`t forget to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
+		 * Don`t forget to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/features/InputSuggestions.js"</code> to enable this functionality.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -439,14 +439,14 @@ const metadata = {
  * <br><br>
  * <b>Note:</b> If you are using the <code>ui5-input</code> as a single npm module,
  * don't forget to import the <code>InputSuggestions</code> module from
- * "@ui5/webcomponents/dist/features/InputSuggestions.js"
+ * "@ui5/webcomponents/features/InputSuggestions.js"
  * to enable the suggestions functionality.
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Input.js";</code>
+ * <code>import "@ui5/webcomponents/Input.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code> (optional - for input suggestions support)
+ * <code>import "@ui5/webcomponents/features/InputSuggestions.js";</code> (optional - for input suggestions support)
  *
  * @constructor
  * @author SAP SE
@@ -548,7 +548,7 @@ class Input extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
@@ -834,7 +834,7 @@ class Input extends UI5Element {
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems", this.highlight);
 		} else {
-			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
+			throw new Error(`You have to import "@ui5/webcomponents/features/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
 	}
 

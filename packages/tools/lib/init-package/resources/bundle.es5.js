@@ -3,13 +3,13 @@ import "@ui5/webcomponents-ie11/dist/features/IE11.js";
 
 import "./bundle.esm.js";
 
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
-import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
-import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
-import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/config/AnimationMode.js";
+import { getLanguage } from "@ui5/webcomponents-base/config/Language.js";
+import { getCalendarType } from "@ui5/webcomponents-base/config/CalendarType.js";
+import { getTheme, setTheme } from "@ui5/webcomponents-base/config/Theme.js";
+import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/config/NoConflict.js";
+import { getRTL } from "@ui5/webcomponents-base/config/RTL.js";
+import { getFirstDayOfWeek } from "@ui5/webcomponents-base/config/FormatSettings.js";
 
 const configuration = {
 	getAnimationMode,

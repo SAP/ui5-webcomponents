@@ -55,3 +55,74 @@ packages/playground/docs/tutorials
 
 packages/playground/docs/pages/content/main/*
 packages/playground/docs/pages/content/fiori/*
+
+# localization
+/packages/localization/*.js
+!/packages/localization/package-scripts.js
+/packages/localization/dates
+/packages/localization/features
+/packages/localization/generated
+/packages/localization/locale
+/packages/localization/sap
+
+# main
+/packages/main/*.js
+!/packages/main/bundle*.js
+/packages/main/api.json
+/packages/main/css
+/packages/main/generated
+/packages/main/features
+/packages/main/i18n
+/packages/main/popup-utils
+/packages/main/resources
+/packages/main/test-resources
+/packages/main/timepicker-utils
+/packages/main/types
+/packages/main/webcomponentsjs
+
+# fiori
+# /packages/fiori/*.js
+# /packages/fiori/api.json
+# /packages/fiori/css
+# /packages/fiori/generated
+# /packages/fiori/features
+# /packages/fiori/i18n
+# /packages/fiori/resources
+# /packages/fiori/test-resources
+# /packages/fiori/types
+# /packages/fiori/webcomponentsjs
+# /packages/fiori/fcl-utils
+# /packages/fiori/upload-utils
+
+# fiori
+/packages/fiori/*.js
+!/packages/fiori/bundle*.js
+!/packages/fiori/package-scripts.js
+/packages/fiori/api.json
+# all folders (basically the src subfolders that appear after a copy on toplevel)
+/packages/fiori/*/
+# except the authored ones
+!/packages/fiori/config/
+!/packages/fiori/lib/
+!/packages/fiori/src/
+!/packages/fiori/test/
+
+# theme-base
+/packages/theme-base/*.js
+!/packages/theme-base/package-scripts.js
+/packages/theme-base/*/
+!/packages/theme-base/config/
+!/packages/theme-base/lib/
+!/packages/theme-base/src/
+!/packages/theme-base/test/
+
+
+# base
+/packages/base/*.js
+!/packages/base/bundle*.js
+!/packages/base/package-scripts.js
+/packages/base/*/
+!/packages/base/config/
+!/packages/base/lib/
+!/packages/base/src/
+!/packages/base/test/

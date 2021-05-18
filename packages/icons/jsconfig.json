@@ -4,7 +4,7 @@
       "allowSyntheticDefaultImports": false,
       "baseUrl": "./",
       "paths": {
-        "@ui5/webcomponents-base/dist/*": ["../base/src/*"]
+        "@ui5/webcomponents-base/*": ["../base/src/*"]
       }
     },
     "exclude": ["node_modules", "dist"]

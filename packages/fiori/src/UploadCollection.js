@@ -1,11 +1,11 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
-import List from "@ui5/webcomponents/dist/List.js";
-import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import Icon from "@ui5/webcomponents/Icon.js";
+import Label from "@ui5/webcomponents/Label.js";
+import List from "@ui5/webcomponents/List.js";
+import ListMode from "@ui5/webcomponents/types/ListMode.js";
+import Title from "@ui5/webcomponents/Title.js";
 import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
 import "@ui5/webcomponents-icons/dist/document.js";
 import {

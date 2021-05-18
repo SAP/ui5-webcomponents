@@ -32,7 +32,7 @@ Vue.config.ignoredElements = [/^ui5-/];
 ## Step 5. Import the Components That You Are Going to Use
 
 ```js
-import "@ui5/webcomponents/dist/Button";
+import "@ui5/webcomponents/Button";
 ```
 
 ## Step 6. Use the Imported Elements in Your Application

@@ -18,7 +18,8 @@ module.exports = {
 				]
 			},
 		),
-		postcssCSStoJSON({toReplace: `dist`}),
-		postcssCSStoESM({toReplace: `dist`}),
+		// packages/theme-base/dist/themes/
+		postcssCSStoJSON({toReplace: `dist`, srcPattern: "/packages/theme-base/themes/", dstPattern: "/packages/theme-base/generated/assets/themes/"}),
+		postcssCSStoESM({toReplace: `dist`, srcPattern: "/packages/theme-base/themes/", dstPattern: "/packages/theme-base/generated/themes/"}),
 	]
 };

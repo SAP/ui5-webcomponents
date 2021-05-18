@@ -1,7 +1,7 @@
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
-import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import { getClosedPopupParent } from "@ui5/webcomponents-base/util/PopupUtils.js";
+import clamp from "@ui5/webcomponents-base/util/clamp.js";
 import Popup from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
@@ -242,7 +242,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Popover.js";</code>
+ * <code>import "@ui5/webcomponents/Popover.js";</code>
  *
  * @constructor
  * @author SAP SE

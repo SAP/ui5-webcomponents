@@ -26,7 +26,7 @@ const dynamicImportLines = themesOnFileSystem.map(theme => `\t\tcase "${theme}":
 
 
 // static imports file content
-const contentStatic = `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+const contentStatic = `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/asset-registries/Themes.js";
 
 ${importLines}
 
@@ -47,7 +47,7 @@ ${availableThemesArray}
 
 
 // dynamic imports file content
-const contentDynamic = `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+const contentDynamic = `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/asset-registries/Themes.js";
 
 const loadThemeProperties = async (themeName) => {
 	switch (themeName) {

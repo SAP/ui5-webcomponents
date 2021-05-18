@@ -19,7 +19,14 @@ module.exports = function (opts) {
 			let css = root.toString();
 			css = proccessCSS(css);
 
-			const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\assets\\");
+			const from = root.source.input.from;
+			// convert source file to posix path
+			const src = from.split(path.sep).join(path.posix.sep);
+
+			//toReplace old
+			const targetFile = path.normalize(src.replace(opts.srcPattern, opts.dstPattern));
+			console.log({targetFile});
+			// const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\assets\\");
 			mkdirp.sync(path.dirname(targetFile));
 
 			const filePath = `${targetFile}.json`;

@@ -1,7 +1,7 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
 import {
 	isShow,
 	isDown,
@@ -9,11 +9,11 @@ import {
 	isSpace,
 	isLeft,
 	isRight,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+} from "@ui5/webcomponents-base/Keys.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
-import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isIE, isPhone } from "@ui5/webcomponents-base/Device.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/multiselect-all.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
@@ -352,7 +352,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/MultiComboBox";</code>
+ * <code>import "@ui5/webcomponents/MultiComboBox";</code>
  *
  *
  * @constructor

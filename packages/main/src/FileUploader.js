@@ -1,12 +1,12 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
+import { getFeature } from "@ui5/webcomponents-base/FeaturesRegistry.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 import {
 	fetchI18nBundle,
 	getI18nBundle,
-} from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+} from "@ui5/webcomponents-base/i18nBundle.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/Keys.js";
 import {
 	FILEUPLOAD_BROWSE,
 	FILEUPLOADER_TITLE,
@@ -85,7 +85,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
@@ -225,7 +225,7 @@ const metadata = {
  * For the <code>ui5-file-uploader</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/FileUploader.js";</code>
+ * <code>import "@ui5/webcomponents/FileUploader.js";</code>
  *
  * @constructor
  * @since 1.0.0-rc.6
@@ -347,7 +347,7 @@ class FileUploader extends UI5Element {
 				);
 			}
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 

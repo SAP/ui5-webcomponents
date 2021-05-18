@@ -9,31 +9,33 @@ const allThemes = assets.themes.all;
 const buildThemesCommands = {};
 const buildThemesCommandsNames = allThemes.map(theme => `build.themes.${theme}`).join(" ");
 
-buildThemesCommands["prepare"] = allThemes.map(theme => `mkdirp dist/themes/${theme}`).join(" && ");
+buildThemesCommands["prepare"] = allThemes.map(theme => `mkdirp ./themes/${theme}`).join(" && ");
 allThemes.forEach(theme => {
 	buildThemesCommands[theme] = `nps build.themes.copy_${theme}_vars build.themes.copy_${theme}_bundle`;
-	buildThemesCommands[`copy_${theme}_vars`] = `copy-and-watch "../../node_modules/@sap-theming/theming-base-content/content/Base/baseLib/${theme}/css_variables.css" dist/themes/${theme}/`;
-	buildThemesCommands[`copy_${theme}_bundle`] = `copy-and-watch "src/themes/${theme}/parameters-bundle.css" dist/themes/${theme}/`;
+	buildThemesCommands[`copy_${theme}_vars`] = `copy-and-watch "../../node_modules/@sap-theming/theming-base-content/content/Base/baseLib/${theme}/css_variables.css" ./themes/${theme}/`;
+	buildThemesCommands[`copy_${theme}_bundle`] = `copy-and-watch "src/themes/${theme}/parameters-bundle.css" ./themes/${theme}/`;
 });
 
 const generateHash = resolve.sync("@ui5/webcomponents-tools/lib/hash/generate.js");
 const hashIsUpToDate = resolve.sync("@ui5/webcomponents-tools/lib/hash/upToDate.js");
-const UP_TO_DATE = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`;
+const UP_TO_DATE = `false`;
+const UP_TO_DATE2 = `node ${hashIsUpToDate} dist/ hash.txt && echo "Up to date."`;
 
 module.exports = {
 	scripts: {
-		clean: "rimraf dist",
+		clean: "find . -type f -print0 | grep -v node_modules | git check-ignore -z --stdin | xargs -0 rm",
 		build: {
 			default: `${UP_TO_DATE} || nps clean build.src build.themes build.postcss build.jsonImports generateReport hash`,
-			src: `copy-and-watch "src/**/*.js" dist/`,
+			src: `copy-and-watch "src/**/*.js" ./`,
 			themes: {
 				default: `nps build.themes.prepare ${buildThemesCommandsNames}`,
 				...buildThemesCommands
 			},
-			postcss: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
-			jsonImports: `node "${jsonImportsScript}" dist/generated/assets/themes dist/generated/json-imports`,
+			postcss: "postcss themes/**/parameters-bundle.css --config config/postcss.themes --base themes/ --dir themes/css/",
+			jsonImports: `node "${jsonImportsScript}" ./generated/assets/themes ./generated/json-imports`,
 		},
 		generateReport: `node "${generateReportScript}"`,
-		hash: `node ${generateHash} dist/ hash.txt`,
+		hash: `echo hash`,
+		hash2: `node ${generateHash} dist/ hash.txt`,
 	},
 };

@@ -10,3 +10,6 @@ wdio.conf.js
 postcss.config.js
 package-scripts.js
 .eslintrc.js
+test-resources
+thirdparty
+generated

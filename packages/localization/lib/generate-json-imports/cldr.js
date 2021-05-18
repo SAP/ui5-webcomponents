@@ -9,7 +9,7 @@ const caseImports = allLocales.map(locale => `\t\tcase "${locale}": return (awai
 const localesKeys = allLocales.join(",");
 const localesKeysStrArray = allLocales.map(_ => `"${_}"`).join(",");
 
-const contentStatic = `import { registerLocaleDataLoader } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
+const contentStatic = `import { registerLocaleDataLoader } from "@ui5/webcomponents-base/asset-registries/LocaleData.js";
 
 ${imports}
 
@@ -28,7 +28,7 @@ const fetchCldrJson = async (localeId) => {
 Object.keys(cldrData).forEach(localeId => registerLocaleDataLoader(localeId, fetchCldrJson));
 `;
 
-const contentDynamic = `import { registerLocaleDataLoader } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
+const contentDynamic = `import { registerLocaleDataLoader } from "@ui5/webcomponents-base/asset-registries/LocaleData.js";
 
 const availableLocales = [${localesKeysStrArray}];
 
@@ -50,6 +50,6 @@ const importAndCheck = async (localeId) => {
 availableLocales.forEach(localeId => registerLocaleDataLoader(localeId, importAndCheck));
 `;
 
-mkdirp.sync("dist/generated/json-imports/");
-fs.writeFileSync("dist/generated/json-imports/LocaleData-static.js", contentStatic);
-fs.writeFileSync("dist/generated/json-imports/LocaleData.js", contentDynamic);
+mkdirp.sync("./generated/json-imports/");
+fs.writeFileSync("./generated/json-imports/LocaleData-static.js", contentStatic);
+fs.writeFileSync("./generated/json-imports/LocaleData.js", contentDynamic);

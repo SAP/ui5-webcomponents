@@ -1,8 +1,8 @@
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
-import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import getLocale from "@ui5/webcomponents-base/locale/getLocale.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/getCachedLocaleDataInstance.js";
+import modifyDateBy from "@ui5/webcomponents-localization/dates/modifyDateBy.js";
+import CalendarDate from "@ui5/webcomponents-localization/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
@@ -146,7 +146,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/DateTimePicker.js";</code>
+ * <code>import "@ui5/webcomponents/DateTimePicker.js";</code>
  *
  * @constructor
  * @author SAP SE

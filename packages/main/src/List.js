@@ -1,16 +1,16 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isTabNext, isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
-import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/delegate/ItemNavigation.js";
+import { isIE } from "@ui5/webcomponents-base/Device.js";
+import { renderFinished } from "@ui5/webcomponents-base/Render.js";
+import { getLastTabbableElement } from "@ui5/webcomponents-base/util/TabbableElements.js";
+import { isTabNext, isSpace, isEnter } from "@ui5/webcomponents-base/Keys.js";
+import NavigationMode from "@ui5/webcomponents-base/types/NavigationMode.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/util/AriaLabelHelper.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import debounce from "@ui5/webcomponents-base/util/debounce.js";
+import isElementInView from "@ui5/webcomponents-base/util/isElementInView.js";
 import ListMode from "./types/ListMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListSeparators from "./types/ListSeparators.js";
@@ -355,13 +355,13 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/List.js";</code>
+ * <code>import "@ui5/webcomponents/List.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/StandardListItem.js";</code> (for <code>ui5-li</code>)
+ * <code>import "@ui5/webcomponents/StandardListItem.js";</code> (for <code>ui5-li</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/CustomListItem.js";</code> (for <code>ui5-li-custom</code>)
+ * <code>import "@ui5/webcomponents/CustomListItem.js";</code> (for <code>ui5-li-custom</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code> (for <code>ui5-li-groupheader</code>)
+ * <code>import "@ui5/webcomponents/GroupHeaderListItem.js";</code> (for <code>ui5-li-groupheader</code>)
  *
  * @constructor
  * @author SAP SE

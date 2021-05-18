@@ -1,7 +1,7 @@
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
-import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import CalendarDate from "@ui5/webcomponents-localization/dates/CalendarDate.js";
+import modifyDateBy from "@ui5/webcomponents-localization/dates/modifyDateBy.js";
+import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dates/getTodayUTCTimestamp.js";
 import DateComponentBase from "./DateComponentBase.js";
 
 /**

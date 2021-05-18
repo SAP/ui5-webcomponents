@@ -1,9 +1,9 @@
-import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import CalendarDate from "@ui5/webcomponents-localization/dates/CalendarDate.js";
+import { renderFinished } from "@ui5/webcomponents-base/Render.js";
 import {
 	isF4,
 	isF4Shift,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+} from "@ui5/webcomponents-base/Keys.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
@@ -13,7 +13,7 @@ import YearPicker from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
 // Default calendar for bundling
-import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
+import "@ui5/webcomponents-localization/features/calendar/Gregorian.js";
 
 // Template
 import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
@@ -186,13 +186,13 @@ const metadata = {
  * you need to set the <code>primaryCalendarType</code> property and import one or more of the following modules:
  * <br><br>
  *
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";</code>
+ * <code>import "@ui5/webcomponents-localization/features/calendar/Buddhist.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";</code>
+ * <code>import "@ui5/webcomponents-localization/features/calendar/Islamic.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";</code>
+ * <code>import "@ui5/webcomponents-localization/features/calendar/Japanese.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";</code>
+ * <code>import "@ui5/webcomponents-localization/features/calendar/Persian.js";</code>
  * <br><br>
  *
  * Or, you can use the global configuration and set the <code>calendarType</code> key:
@@ -208,7 +208,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Calendar";</code>
+ * <code>import "@ui5/webcomponents/Calendar";</code>
  *
  * @constructor
  * @author SAP SE

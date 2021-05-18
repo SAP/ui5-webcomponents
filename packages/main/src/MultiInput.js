@@ -1,10 +1,10 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 import {
 	isShow,
 	isBackSpace,
 	isLeft,
 	isRight,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+} from "@ui5/webcomponents-base/Keys.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
@@ -98,7 +98,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/MultiInput";</code>
+ * <code>import "@ui5/webcomponents/MultiInput";</code>
  *
  * @constructor
  * @author SAP SE

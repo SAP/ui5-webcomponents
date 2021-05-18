@@ -1,15 +1,15 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import ItemNavigation from "@ui5/webcomponents-base/delegate/ItemNavigation.js";
+import NavigationMode from "@ui5/webcomponents-base/types/NavigationMode.js";
+import Float from "@ui5/webcomponents-base/types/Float.js";
+import clamp from "@ui5/webcomponents-base/util/clamp.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import { isPhone } from "@ui5/webcomponents-base/Device.js";
+import debounce from "@ui5/webcomponents-base/util/debounce.js";
+import Button from "@ui5/webcomponents/Button.js";
+import ResponsivePopover from "@ui5/webcomponents/ResponsivePopover.js";
 
 // Texts
 import {

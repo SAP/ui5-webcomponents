@@ -196,7 +196,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Code Refactoring
 
-* **ui5-shellbar:** move component to @ui5/webcomponents-fiori package ([#887](https://github.com/SAP/ui5-webcomponents/pull/887)) ([06f1770](https://github.com/SAP/ui5-webcomponents/commit/17c25ff123436c1f6e11513055b33977b06f1770))	
+* **ui5-shellbar:** move component to @ui5/webcomponents-fiori package ([#887](https://github.com/SAP/ui5-webcomponents/pull/887)) ([06f1770](https://github.com/SAP/ui5-webcomponents/commit/17c25ff123436c1f6e11513055b33977b06f1770))
 * **ui5-shellbar:** extract animated co-pilot SVG as add-on asset ([#904](https://github.com/SAP/ui5-webcomponents/pull/904)) ([c25e0a7](https://github.com/SAP/ui5-webcomponents/commit/59fead49d7a3222d55270584bb048190dc25e0a7))
 * **ui5-shellbar:** optimize animated co-pilot SVG size from 15kb to 8kb ([#960](https://github.com/SAP/ui5-webcomponents/pull/960)) ([42bd7cd](https://github.com/SAP/ui5-webcomponents/commit/66d8c62658648cfeb7392607e9b66548c42bd7cd))
 * **ui5-shellbar:** "icon" slot renamed to "startButton" ([#901](https://github.com/SAP/ui5-webcomponents/pull/901)) ([3e38149](https://github.com/SAP/ui5-webcomponents/commit/5ca3280ca166934ab02de92a04eccc8f53e38149))
@@ -208,7 +208,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 To get the ShellBar's coPilot animated SVG you have to import the following module:
 ```js
-	import @ui5/webcomponents/dist/features/CoPilotAnimation.js` 
+	import @ui5/webcomponents/features/CoPilotAnimation.js`
 ```
 
 * **ui5-shellbar:** "icon" slot renamed to "startButton" ([#901](https://github.com/SAP/ui5-webcomponents/pull/901)) ([3e38149](https://github.com/SAP/ui5-webcomponents/commit/5ca3280ca166934ab02de92a04eccc8f53e38149))

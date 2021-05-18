@@ -1,12 +1,12 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/util/AriaLabelHelper.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import { getFeature } from "@ui5/webcomponents-base/FeaturesRegistry.js";
+import { isIE } from "@ui5/webcomponents-base/Device.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
 import Popover from "./Popover.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
@@ -195,7 +195,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
@@ -348,7 +348,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/TextArea";</code>
+ * <code>import "@ui5/webcomponents/TextArea";</code>
  *
  * @constructor
  * @author SAP SE
@@ -414,7 +414,7 @@ class TextArea extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 

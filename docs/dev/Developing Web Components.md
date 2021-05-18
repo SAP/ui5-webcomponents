@@ -9,9 +9,9 @@ For more information on creating a new package with a demo web component inside,
 The main file, representing the web component is `Demo.js`.
 
 ```js
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 
 // Template
 import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";
@@ -74,7 +74,7 @@ export default Demo;
 Every UI5 Web Component must extend the base class `UI5Element`, provided by the `@ui5/webcomponents-base` package:
 
 ```js
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
 
 class Demo extends UI5Element {
 
@@ -90,7 +90,7 @@ Metadata is a JavaScript object, containing information about the public interfa
 Metadata is passed via the `metadata` static getter:
 
 ```js
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
 
 const metadata = {
 	tag: "ui5-demo",
@@ -123,8 +123,8 @@ however all use [lit-html](https://github.com/Polymer/lit-html) as the rendering
 The render engine is defined via the `render` static getter:
 
 ```js
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 
 const metadata = {
 	tag: "ui5-demo",
@@ -158,8 +158,8 @@ Now that we've defined the rendering technology of choice, we can pass a templat
 This is done via the `template` static getter:
 
 ```js
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 
 // Template
 import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";
@@ -204,8 +204,8 @@ For more information on that, see the [next chapter](#hbs) of this tutorial.
 You can pass CSS to be inserted in the Shadow Root of the UI5 Web Component by using the `styles` static getter:
 
 ```js
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 
 // Template
 import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";
@@ -264,8 +264,8 @@ Defining a Web Component is necessary in order to register it in the browser.
 This is done by calling the `UI5Element.define` static method:
 
 ```js
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 
 // Template
 import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";
@@ -323,9 +323,9 @@ The `fetchI18nBundle` and `getI18nBundle` methods are provided by the `i18nBundl
 So the final source code is:
 
 ```js
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 
 // Template
 import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";

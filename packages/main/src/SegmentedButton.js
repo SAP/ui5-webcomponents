@@ -1,10 +1,10 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import ItemNavigation from "@ui5/webcomponents-base/delegate/ItemNavigation.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import { renderFinished } from "@ui5/webcomponents-base/Render.js";
+import { isIE } from "@ui5/webcomponents-base/Device.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import ToggleButton from "./ToggleButton.js";
 
@@ -69,7 +69,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/SegmentedButton";</code>
+ * <code>import "@ui5/webcomponents/SegmentedButton";</code>
  *
  * @constructor
  * @author SAP SE

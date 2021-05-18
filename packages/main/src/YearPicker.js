@@ -1,4 +1,4 @@
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import DateFormat from "@ui5/webcomponents-localization/DateFormat.js";
 import {
 	isEnter,
 	isSpace,
@@ -12,11 +12,11 @@ import {
 	isEndCtrl,
 	isPageUp,
 	isPageDown,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
+} from "@ui5/webcomponents-base/Keys.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import getLocale from "@ui5/webcomponents-base/locale/getLocale.js";
+import CalendarDate from "@ui5/webcomponents-localization/dates/CalendarDate.js";
+import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dates/ExtremeDates.js";
 import CalendarPart from "./CalendarPart.js";
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
 import styles from "./generated/themes/YearPicker.css.js";

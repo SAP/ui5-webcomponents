@@ -1,6 +1,6 @@
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
-import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import getLocale from "@ui5/webcomponents-base/locale/getLocale.js";
+import { getFirstDayOfWeek } from "@ui5/webcomponents-base/config/FormatSettings.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/getCachedLocaleDataInstance.js";
 import {
 	isSpace,
 	isSpaceShift,
@@ -20,11 +20,11 @@ import {
 	isPageUpShiftCtrl,
 	isPageDownShift,
 	isPageDownShiftCtrl,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
-import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+} from "@ui5/webcomponents-base/Keys.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import CalendarDate from "@ui5/webcomponents-localization/dates/CalendarDate.js";
+import calculateWeekNumber from "@ui5/webcomponents-localization/dates/calculateWeekNumber.js";
+import CalendarType from "@ui5/webcomponents-base/types/CalendarType.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPart from "./CalendarPart.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";

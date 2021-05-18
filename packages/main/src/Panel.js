@@ -1,11 +1,11 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
-import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import slideDown from "@ui5/webcomponents-base/animations/slideDown.js";
+import slideUp from "@ui5/webcomponents-base/animations/slideUp.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/Keys.js";
+import AnimationMode from "@ui5/webcomponents-base/types/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/config/AnimationMode.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
 import TitleLevel from "./types/TitleLevel.js";
@@ -228,7 +228,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Panel";</code>
+ * <code>import "@ui5/webcomponents/Panel";</code>
  *
  * @constructor
  * @author SAP SE

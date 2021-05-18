@@ -73,7 +73,7 @@ shortcomings when it comes to handling Custom Elements, namely the binding of `b
 2. Import the desired UI5 Web Component(s) to your app:
 
 	```js
-	import "@ui5/webcomponents/dist/Button.js"; // loads and defines ui5-button
+	import "@ui5/webcomponents/Button.js"; // loads and defines ui5-button
 	```
 
 3. Use the UI5 Web Component(s) as you would use any HTML element:
@@ -159,7 +159,7 @@ yarn start:playground
 *Note: If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](/docs/dev/Playground.md)*
 
 If you wish to run the tests locally on a Windows machine, you must also manually install `Windows Build Tools 2015` and `Python 2.7`.
-See the [instructions](/docs/dev/Testing%20Web%20Components.md#24-getting-the-tests-to-run-on-windows) on how to do this. 
+See the [instructions](/docs/dev/Testing%20Web%20Components.md#24-getting-the-tests-to-run-on-windows) on how to do this.
 
 ### Production Build
 To build the UI5 Web Components project, run the following commands:

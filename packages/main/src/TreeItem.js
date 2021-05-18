@@ -1,5 +1,5 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
 
 /**
  * @public
@@ -123,7 +123,7 @@ const metadata = {
  * <code>ui5-tree-item</code> directly in your apps. The <code>ui5-li-tree</code> list item is internal for the list, and not intended for public use.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/TreeItem.js";</code>
+ * <code>import "@ui5/webcomponents/TreeItem.js";</code>
  *
  * @constructor
  * @author SAP SE

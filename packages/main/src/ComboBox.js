@@ -1,12 +1,12 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
+import { isPhone } from "@ui5/webcomponents-base/Device.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/util/AriaLabelHelper.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 import {
 	isBackSpace,
 	isDelete,
@@ -14,7 +14,7 @@ import {
 	isUp,
 	isDown,
 	isEnter,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+} from "@ui5/webcomponents-base/Keys.js";
 import * as Filters from "./ComboBoxFilters.js";
 
 import {
@@ -340,7 +340,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/ComboBox";</code>
+ * <code>import "@ui5/webcomponents/ComboBox";</code>
  *
  *
  * @constructor

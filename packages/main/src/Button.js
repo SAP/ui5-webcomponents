@@ -1,11 +1,11 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
-import { isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/Keys.js";
+import { getFeature } from "@ui5/webcomponents-base/FeaturesRegistry.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/util/AriaLabelHelper.js";
+import isLegacyBrowser from "@ui5/webcomponents-base/isLegacyBrowser.js";
+import { isPhone, isTablet } from "@ui5/webcom§ponents-base/Device.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -111,7 +111,7 @@ const metadata = {
 		 * automatically submit the nearest form element upon <code>press</code>.
 		 * <br><br>
 		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/features/InputElementsFormSupport.js";</code>
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -300,7 +300,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Button";</code>
+ * <code>import "@ui5/webcomponents/Button";</code>
  *
  * @constructor
  * @author SAP SE
@@ -356,7 +356,7 @@ class Button extends UI5Element {
 	onBeforeRendering() {
 		const FormSupport = getFeature("FormSupport");
 		if (this.submits && !FormSupport) {
-			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 
 		this.iconOnly = this.isIconOnly;

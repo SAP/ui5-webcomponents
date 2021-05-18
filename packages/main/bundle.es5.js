@@ -5,7 +5,7 @@ import "@ui5/webcomponents-ie11/dist/features/IE11.js";
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
 
 // Assets
-import "./dist/Assets-static.js";
+import "./Assets-static.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/Assets-static.js";

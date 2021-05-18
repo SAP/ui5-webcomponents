@@ -1,7 +1,7 @@
-import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
-import getEffectiveStyle from "@ui5/webcomponents-base/dist/theming/getEffectiveStyle.js";
-import { attachCustomCSSChange } from "@ui5/webcomponents-base/dist/theming/CustomStyle.js";
-import StaticAreaItem from "@ui5/webcomponents-base/dist/StaticAreaItem.js";
+import createStyleInHead from "@ui5/webcomponents-base/util/createStyleInHead.js";
+import getEffectiveStyle from "@ui5/webcomponents-base/theming/getEffectiveStyle.js";
+import { attachCustomCSSChange } from "@ui5/webcomponents-base/theming/CustomStyle.js";
+import StaticAreaItem from "@ui5/webcomponents-base/StaticAreaItem.js";
 import adaptCSSForIE from "./adaptCSSForIE.js";
 import { schedulePonyfill } from "./CSSVarsPonyfill.js";
 

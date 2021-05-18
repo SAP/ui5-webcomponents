@@ -8,7 +8,7 @@ const destDir = path.normalize("dist/");
 
 mkdirp.sync(destDir);
 
-const template = (name, pathData, ltr, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+const template = (name, pathData, ltr, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/asset-registries/Icons.js";
 
 const name = "${name}";
 const pathData = "${pathData}";
@@ -21,7 +21,7 @@ registerIcon(name, { pathData, ltr, collection, packageName });
 export default { pathData };`;
 
 
-const accTemplate = (name, pathData, ltr, accData, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+const accTemplate = (name, pathData, ltr, accData, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/asset-registries/Icons.js";
 import { ${accData.key} } from "./generated/i18n/i18n-defaults.js";
 
 const name = "${name}";

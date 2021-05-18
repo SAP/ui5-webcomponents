@@ -12,7 +12,7 @@ const getScripts = (options) => {
 	const portStep = options.portStep || 1; // step to check for available ports, if preferred port is already used
 
 	const scripts = {
-		clean: "rimraf dist && rimraf .port",
+		clean: "find . -type f -print0 | git check-ignore -z --stdin | xargs -0 rm",
 		lint: "eslint . --config config/.eslintrc.js",
 		lintfix: "eslint . --config config/.eslintrc.js --fix",
 		prepare: {
@@ -21,36 +21,36 @@ const getScripts = (options) => {
 		},
 		build: {
 			default: "nps lint prepare.es5 build.bundle",
-			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
+			templates: `mkdirp ./generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o ./generated/templates`,
 			styles: {
 				default: "nps build.styles.themes build.styles.components",
-				themes: "postcss src/**/parameters-bundle.css --config config/postcss.themes --base src --dir dist/css/",
-				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
+				themes: "postcss src/**/parameters-bundle.css --config config/postcss.themes --base src --dir ./css/",
+				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir ./css/", // When updating this, also update the new files script
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
-				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n dist/generated/i18n`,
-				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
+				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n ./generated/i18n`,
+				json: `node "${LIB}/i18n/toJSON.js" src/i18n ./generated/assets/i18n`,
 			},
 			jsonImports: {
-				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
-				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
-				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
+				default: "mkdirp ./generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
+				themes: `node "${LIB}/generate-json-imports/themes.js" ./generated/assets/themes ./generated/json-imports`,
+				i18n: `node "${LIB}/generate-json-imports/i18n.js" ./generated/assets/i18n ./generated/json-imports`,
 			},
 			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
 			samples: {
 				default: "nps build.samples.api build.samples.docs",
 				api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
-				docs: `node "${LIB}/documentation/index.js" dist/api.json`,
+				docs: `node "${LIB}/documentation/index.js" ./api.json`,
 			}
 		},
 		copy: {
 			default: "nps copy.src copy.props copy.test copy.webcomponents-polyfill-placeholder",
 			es5: "nps copy.src copy.props copy.test copy.webcomponents-polyfill",
-			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
-			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
-			test: `node "${LIB}/copy-and-watch/index.js" --silent "test/**/*.*" dist/test-resources`,
-			"webcomponents-polyfill": `node "${LIB}/copy-and-watch/index.js" --silent "${polyfillPath}" dist/webcomponentsjs/`,
+			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" ./`,
+			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" ./`,
+			test: `node "${LIB}/copy-and-watch/index.js" --silent "test/**/*.*" ./test-resources`,
+			"webcomponents-polyfill": `node "${LIB}/copy-and-watch/index.js" --silent "${polyfillPath}" ./webcomponentsjs/`,
 			"webcomponents-polyfill-placeholder": `node ${LIB}/polyfill-placeholder/index.js`
 		},
 		watch: {
@@ -81,7 +81,7 @@ const getScripts = (options) => {
 			es5: 'concurrently "nps serve" "nps watch.es5"'
 		},
 		start: "nps prepare dev",
-		serve: `node "${LIB}/serve/index.js" --dir="dist/" --port=${port} --portStep=${portStep} --packageName="${packageName}"`,
+		serve: `node "${LIB}/serve/index.js" --dir="./" --port=${port} --portStep=${portStep} --packageName="${packageName}"`,
 		test: {
 			// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
 			default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
@@ -94,9 +94,9 @@ const getScripts = (options) => {
 			lint: `node "${LIB}/scoping/lint-src.js"`,
 			testPages: {
 				default: "nps scope.testPages.clean scope.testPages.copy scope.testPages.replace",
-				clean: "rimraf dist/test-resources/pages/scoped",
-				copy: `node "${LIB}/copy-and-watch/index.js" --silent "dist/test-resources/pages/**/*" dist/test-resources/scoped`,
-				replace: `node "${LIB}/scoping/scope-test-pages.js" dist/test-resources/scoped demo`,
+				clean: "rimraf ./test-resources/pages/scoped",
+				copy: `node "${LIB}/copy-and-watch/index.js" --silent "./test-resources/pages/**/*" ./test-resources/scoped`,
+				replace: `node "${LIB}/scoping/scope-test-pages.js" ./test-resources/scoped demo`,
 			},
 			dev: 'concurrently "nps serve" "nps scope.watch"',
 			watch: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.props" "nps scope.bundle" "nps watch.styles"',

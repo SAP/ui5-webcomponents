@@ -1,5 +1,5 @@
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import getLocale from "@ui5/webcomponents-base/locale/getLocale.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/getCachedLocaleDataInstance.js";
 import TimePickerBase from "./TimePickerBase.js";
 
 import {
@@ -103,7 +103,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/TimePicker.js";</code>
+ * <code>import "@ui5/webcomponents/TimePicker.js";</code>
  *
  * @constructor
  * @author SAP SE

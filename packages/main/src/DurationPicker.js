@@ -1,4 +1,4 @@
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/fob-watch.js";
 import TimePickerBase from "./TimePickerBase.js";
 
@@ -156,7 +156,7 @@ const pad = number => {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/DurationPicker.js";</code>
+ * <code>import "@ui5/webcomponents/DurationPicker.js";</code>
  *
  * @constructor
  * @since 1.0.0-rc.7

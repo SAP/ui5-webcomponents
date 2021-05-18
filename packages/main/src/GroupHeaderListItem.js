@@ -1,4 +1,4 @@
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 import ListItemBase from "./ListItemBase.js";
 
 import { GROUP_HEADER_TEXT } from "./generated/i18n/i18n-defaults.js";

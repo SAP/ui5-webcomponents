@@ -1,5 +1,5 @@
-import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/getCachedLocaleDataInstance.js";
+import CalendarDate from "@ui5/webcomponents-localization/dates/CalendarDate.js";
 import {
 	isEnter,
 	isSpace,
@@ -13,9 +13,9 @@ import {
 	isEndCtrl,
 	isPageUp,
 	isPageDown,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+} from "@ui5/webcomponents-base/Keys.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import getLocale from "@ui5/webcomponents-base/locale/getLocale.js";
 import CalendarPart from "./CalendarPart.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 import styles from "./generated/themes/MonthPicker.css.js";

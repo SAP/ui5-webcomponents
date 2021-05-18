@@ -17,7 +17,7 @@ module.exports = {
 				},
 			]
 		},),
-		postcssCSStoJSON({toReplace: 'src'}),
-		postcssCSStoESM({toReplace: 'src'}),
+		postcssCSStoJSON({toReplace: 'src', srcPattern: "/src/", dstPattern: "/generated/assets/"}),
+		postcssCSStoESM({toReplace: 'src', srcPattern: "/src/", dstPattern: "/generated/"}),
 	]
 };

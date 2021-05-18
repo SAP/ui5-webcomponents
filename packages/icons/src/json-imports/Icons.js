@@ -1,4 +1,4 @@
-import { registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import { registerIconLoader } from "@ui5/webcomponents-base/asset-registries/Icons.js";
 
 const loadIconsBundle = async () => {
     const iconData = (await import("../generated/assets/SAP-icons.json")).default;

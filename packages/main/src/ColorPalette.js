@@ -1,14 +1,14 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
-import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import ItemNavigation from "@ui5/webcomponents-base/delegate/ItemNavigation.js";
+import CSSColor from "@ui5/webcomponents-base/types/CSSColor.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/types/ItemNavigationBehavior.js";
 import {
 	isSpace,
 	isEnter,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+} from "@ui5/webcomponents-base/Keys.js";
+import { getFeature } from "@ui5/webcomponents-base/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
 import ColorPaletteDialogTemplate from "./generated/templates/ColorPaletteDialogTemplate.lit.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
@@ -41,7 +41,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the user can choose a custom color from a color picker
-		 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
+		 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/features/ColorPaletteMoreColors.js"</code>
 		 * @type {boolean}
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -106,7 +106,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/ColorPalette.js";</code>
+ * <code>import "@ui5/webcomponents/ColorPalette.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -173,7 +173,7 @@ class ColorPalette extends UI5Element {
 			if (ColorPaletteMoreColors) {
 				this.moreColorsFeature = new ColorPaletteMoreColors();
 			} else {
-				throw new Error(`You have to import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js" module to use the more-colors functionality.`);
+				throw new Error(`You have to import "@ui5/webcomponents/features/ColorPaletteMoreColors.js" module to use the more-colors functionality.`);
 			}
 		}
 	}

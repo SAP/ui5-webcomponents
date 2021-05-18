@@ -1,4 +1,4 @@
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import Avatar from "./Avatar.js";

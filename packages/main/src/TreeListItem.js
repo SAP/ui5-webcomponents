@@ -1,7 +1,7 @@
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import { isLeft, isRight } from "@ui5/webcomponents-base/Keys.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";

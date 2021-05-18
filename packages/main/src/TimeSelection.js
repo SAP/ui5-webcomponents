@@ -1,17 +1,17 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isPhone, isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
-import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { isPhone, isIE } from "@ui5/webcomponents-base/Device.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import getLocale from "@ui5/webcomponents-base/locale/getLocale.js";
+import DateFormat from "@ui5/webcomponents-localization/DateFormat.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/getCachedLocaleDataInstance.js";
+import "@ui5/webcomponents-localization/features/calendar/Gregorian.js"; // default calendar for bundling
+import { fetchCldr } from "@ui5/webcomponents-base/asset-registries/LocaleData.js";
 import {
 	isLeft,
 	isRight,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+} from "@ui5/webcomponents-base/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import timeSelectionTemplate from "./generated/templates/TimeSelectionTemplate.lit.js";
 import WheelSlider from "./WheelSlider.js";

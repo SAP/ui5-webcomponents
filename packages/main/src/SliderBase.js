@@ -1,13 +1,13 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import Float from "@ui5/webcomponents-base/types/Float.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import { isPhone } from "@ui5/webcomponents-base/Device.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
-} from "@ui5/webcomponents-base/dist/Keys.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+} from "@ui5/webcomponents-base/Keys.js";
+import { getTheme } from "@ui5/webcomponents-base/config/Theme.js";
 
 // Styles
 import styles from "./generated/themes/SliderBase.css.js";

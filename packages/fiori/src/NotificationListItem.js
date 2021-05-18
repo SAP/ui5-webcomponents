@@ -1,14 +1,14 @@
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/Keys.js";
+import { fetchI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import { isIE } from "@ui5/webcomponents-base/Device.js";
 
-import Priority from "@ui5/webcomponents/dist/types/Priority.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import Link from "@ui5/webcomponents/dist/Link.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Popover from "@ui5/webcomponents/dist/Popover.js";
+import Priority from "@ui5/webcomponents/types/Priority.js";
+import Button from "@ui5/webcomponents/Button.js";
+import BusyIndicator from "@ui5/webcomponents/BusyIndicator.js";
+import Link from "@ui5/webcomponents/Link.js";
+import Icon from "@ui5/webcomponents/Icon.js";
+import Popover from "@ui5/webcomponents/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
 // Texts
@@ -160,9 +160,9 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/NotificationListItem.js";</code>
+ * <code>import "@ui5/webcomponents/NotificationListItem.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
+ * <code>import "@ui5/webcomponents/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListItem

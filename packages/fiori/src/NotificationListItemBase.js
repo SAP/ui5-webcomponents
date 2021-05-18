@@ -1,8 +1,8 @@
-import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isSpace } from "@ui5/webcomponents-base/Keys.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 
-import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
-import Priority from "@ui5/webcomponents/dist/types/Priority.js";
+import ListItemBase from "@ui5/webcomponents/ListItemBase.js";
+import Priority from "@ui5/webcomponents/types/Priority.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/decline.js";

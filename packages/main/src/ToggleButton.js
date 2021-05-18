@@ -1,4 +1,4 @@
-import isLegacyBrowser from "@ui5/webcomponents-base/dist/isLegacyBrowser.js";
+import isLegacyBrowser from "@ui5/webcomponents-base/isLegacyBrowser.js";
 import Button from "./Button.js";
 import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
 
@@ -41,7 +41,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/ToggleButton";</code>
+ * <code>import "@ui5/webcomponents/ToggleButton";</code>
  *
  * @constructor
  * @author SAP SE

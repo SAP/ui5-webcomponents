@@ -1,13 +1,13 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
-import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/delegate/ItemNavigation.js";
+import NavigationMode from "@ui5/webcomponents-base/types/NavigationMode.js";
+import { isIE } from "@ui5/webcomponents-base/Device.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/Keys.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import debounce from "@ui5/webcomponents-base/util/debounce.js";
+import isElementInView from "@ui5/webcomponents-base/util/isElementInView.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableMode from "./types/TableMode.js";
@@ -350,13 +350,13 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Table.js";</code>
+ * <code>import "@ui5/webcomponents/Table.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (for <code>ui5-table-column</code>)
+ * <code>import "@ui5/webcomponents/TableColumn.js";</code> (for <code>ui5-table-column</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (for <code>ui5-table-row</code>)
+ * <code>import "@ui5/webcomponents/TableRow.js";</code> (for <code>ui5-table-row</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
+ * <code>import "@ui5/webcomponents/TableCell.js";</code> (for <code>ui5-table-cell</code>)
  *
  * @constructor
  * @author SAP SE

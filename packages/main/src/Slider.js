@@ -1,6 +1,6 @@
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import Float from "@ui5/webcomponents-base/types/Float.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
+import { isEscape } from "@ui5/webcomponents-base/Keys.js";
 import SliderBase from "./SliderBase.js";
 
 // Template
@@ -77,7 +77,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Slider";</code>
+ * <code>import "@ui5/webcomponents/Slider";</code>
  *
  * @constructor
  * @author SAP SE

@@ -26,7 +26,7 @@ Documentation and tutorials about UI5 Web Components can be found [here](./playg
 ### Import the needed Web Component
 
 ```js
-import "@ui5/webcomponents/dist/Button";
+import "@ui5/webcomponents/Button";
 ```
 
 ### Instantiate the Web Component

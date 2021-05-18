@@ -640,7 +640,7 @@ Take a look the [migration guide](https://github.com/SAP/ui5-webcomponents/blob/
 
 * **icons:** Move all individual icons to a new npm package called `@ui5/webcomponents-icons`.
 
-You have to install the package 
+You have to install the package
 ```js
 npm i @ui5/webcomponents-icons --save
 ```
@@ -648,7 +648,7 @@ The import statements should be changed
 
 Before:
 ```js
-@ui5/webcomponents/dist/icons/add.js
+@ui5/webcomponents/icons/add.js
 ```
 
 After:

@@ -1,10 +1,10 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import AnimationMode from "@ui5/webcomponents-base/types/AnimationMode.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/config/AnimationMode.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 import ProgressIndicatorTemplate from "./generated/templates/ProgressIndicatorTemplate.lit.js";
 import {
 	VALUE_STATE_ERROR,
@@ -98,7 +98,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/ProgressIndicator.js";</code>
+ * <code>import "@ui5/webcomponents/ProgressIndicator.js";</code>
  *
  * @constructor
  * @author SAP SE

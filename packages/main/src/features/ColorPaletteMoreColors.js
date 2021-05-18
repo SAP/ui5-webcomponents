@@ -1,5 +1,5 @@
-import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { registerFeature } from "@ui5/webcomponents-base/FeaturesRegistry.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 
 import Dialog from "../Dialog.js";
 import Button from "../Button.js";

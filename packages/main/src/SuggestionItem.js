@@ -1,6 +1,6 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
 
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import ValueState from "@ui5/webcomponents-base/types/ValueState.js";
 import SuggestionListItem from "./SuggestionListItem.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
 import ListItemType from "./types/ListItemType.js";

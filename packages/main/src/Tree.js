@@ -1,5 +1,5 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 import TreeItem from "./TreeItem.js";
 import List from "./List.js";
 import TreeListItem from "./TreeListItem.js";
@@ -245,9 +245,9 @@ const metadata = {
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/Tree.js";</code>
+ * <code>import "@ui5/webcomponents/Tree.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/TreeItem.js";</code>
+ * <code>import "@ui5/webcomponents/TreeItem.js";</code>
  *
  * @constructor
  * @author SAP SE

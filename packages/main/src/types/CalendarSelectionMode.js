@@ -1,4 +1,4 @@
-import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
+import DataType from "@ui5/webcomponents-base/types/DataType.js";
 
 /**
  * @lends sap.ui.webcomponents.main.types.CalendarSelectionMode.prototype

@@ -1,10 +1,10 @@
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Float from "@ui5/webcomponents-base/types/Float.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/i18nBundle.js";
 import {
 	isEscape,
 	isHome,
 	isEnd,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+} from "@ui5/webcomponents-base/Keys.js";
 import SliderBase from "./SliderBase.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
 
@@ -82,7 +82,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/RangeSlider";</code>
+ * <code>import "@ui5/webcomponents/RangeSlider";</code>
  *
  *
  * @constructor

@@ -1,5 +1,5 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 import TitleLevel from "./types/TitleLevel.js";
 
 // Template
@@ -65,7 +65,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Title";</code>
+ * <code>import "@ui5/webcomponents/Title";</code>
  *
  * @constructor
  * @author SAP SE

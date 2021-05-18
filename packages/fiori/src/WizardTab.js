@@ -1,7 +1,7 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/Keys.js";
+import Icon from "@ui5/webcomponents/Icon.js";
 
 import WizardTabTemplate from "./generated/templates/WizardTabTemplate.lit.js";
 import WizardTabCss from "./generated/themes/WizardTab.css.js";
@@ -140,7 +140,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/WizardTab.js";</code> (imported with <ui5-wizard>)
+ * <code>import "@ui5/webcomponents/WizardTab.js";</code> (imported with <ui5-wizard>)
  *
  * @constructor
  * @author SAP SE

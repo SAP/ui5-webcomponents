@@ -1,21 +1,21 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import UI5Element from "@ui5/webcomponents-base/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
+import Integer from "@ui5/webcomponents-base/types/Integer.js";
 import {
 	isLeft,
 	isRight,
 	isDown,
 	isUp,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+} from "@ui5/webcomponents-base/Keys.js";
 import {
 	fetchI18nBundle,
 	getI18nBundle,
-} from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+} from "@ui5/webcomponents-base/i18nBundle.js";
+import ScrollEnablement from "@ui5/webcomponents-base/delegate/ScrollEnablement.js";
+import ResizeHandler from "@ui5/webcomponents-base/delegate/ResizeHandler.js";
+import { isDesktop } from "@ui5/webcomponents-base/Device.js";
+import AnimationMode from "@ui5/webcomponents-base/types/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/config/AnimationMode.js";
 import {
 	CAROUSEL_OF_TEXT,
 	CAROUSEL_DOT_TEXT,
@@ -231,7 +231,7 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Carousel.js";</code>
+ * <code>import "@ui5/webcomponents/Carousel.js";</code>
  *
  * @constructor
  * @author SAP SE

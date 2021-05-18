@@ -1,4 +1,4 @@
-import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isEscape } from "@ui5/webcomponents-base/Keys.js";
 
 let openedRegistry = [];
 

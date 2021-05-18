@@ -5,13 +5,13 @@ import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomp
 
 
 // Calendars
-import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";
-import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
-import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";
-import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
+import "@ui5/webcomponents-localization/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-localization/features/calendar/Islamic.js";
+import "@ui5/webcomponents-localization/features/calendar/Japanese.js";
+import "@ui5/webcomponents-localization/features/calendar/Persian.js";
 
 // CLDR
-import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocaleData.js";
+import getLocaleData from "@ui5/webcomponents-localization/locale/getLocaleData.js";
 
 // Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
 // import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
@@ -26,66 +26,66 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 // 	return await (await fetch("fr")).json();
 // });
 
-import "./dist/features/InputElementsFormSupport.js";
-import "./dist/features/InputSuggestions.js";
-import "./dist/features/ColorPaletteMoreColors.js";
+import "./features/InputElementsFormSupport.js";
+import "./features/InputSuggestions.js";
+import "./features/ColorPaletteMoreColors.js";
 
-import Avatar from "./dist/Avatar.js";
-import AvatarGroup from "./dist/AvatarGroup.js";
-import Badge from "./dist/Badge.js";
-import BusyIndicator from "./dist/BusyIndicator.js";
-import Button from "./dist/Button.js";
-import Card from "./dist/Card.js";
-import Carousel from "./dist/Carousel.js";
-import CheckBox from "./dist/CheckBox.js";
-import ColorPalette from "./dist/ColorPalette.js";
-import ColorPaletteItem from "./dist/ColorPaletteItem.js";
-import ColorPicker from "./dist/ColorPicker.js";
-import ComboBox from "./dist/ComboBox.js";
-import DatePicker from "./dist/DatePicker.js";
-import DateRangePicker from "./dist/DateRangePicker.js";
-import DateTimePicker from "./dist/DateTimePicker.js";
-import DurationPicker from "./dist/DurationPicker.js";
-import Dialog from "./dist/Dialog.js";
-import FileUploader from "./dist/FileUploader.js";
-import Icon from "./dist/Icon.js";
-import Input from "./dist/Input.js";
-import MultiInput from "./dist/MultiInput.js";
-import Label from "./dist/Label.js";
-import Link from "./dist/Link.js";
-import Popover from "./dist/Popover.js";
-import Panel from "./dist/Panel.js";
-import RadioButton from "./dist/RadioButton.js";
-import ResponsivePopover from "./dist/ResponsivePopover.js";
-import SegmentedButton from "./dist/SegmentedButton.js";
-import Select from "./dist/Select.js";
-import Slider from "./dist/Slider.js";
-import StepInput from "./dist/StepInput.js";
-import RangeSlider from "./dist/RangeSlider.js";
-import Switch from "./dist/Switch.js";
-import MessageStrip from "./dist/MessageStrip.js";
-import MultiComboBox from "./dist/MultiComboBox.js";
-import ProgressIndicator from "./dist/ProgressIndicator.js";
-import RatingIndicator from "./dist/RatingIndicator.js";
-import TabContainer from "./dist/TabContainer.js";
-import Tab from "./dist/Tab.js";
-import TabSeparator from "./dist/TabSeparator.js";
-import Table from "./dist/Table.js";
-import TableColumn from "./dist/TableColumn.js";
-import TableRow from "./dist/TableRow.js";
-import TableCell from "./dist/TableCell.js";
-import TextArea from "./dist/TextArea.js";
-import TimeSelection from "./dist/TimeSelection.js";
-import TimePicker from "./dist/TimePicker.js";
-import Title from "./dist/Title.js";
-import Toast from "./dist/Toast.js";
-import ToggleButton from "./dist/ToggleButton.js";
-import Tree from "./dist/Tree.js";
+import Avatar from "./Avatar.js";
+import AvatarGroup from "./AvatarGroup.js";
+import Badge from "./Badge.js";
+import BusyIndicator from "./BusyIndicator.js";
+import Button from "./Button.js";
+import Card from "./Card.js";
+import Carousel from "./Carousel.js";
+import CheckBox from "./CheckBox.js";
+import ColorPalette from "./ColorPalette.js";
+import ColorPaletteItem from "./ColorPaletteItem.js";
+import ColorPicker from "./ColorPicker.js";
+import ComboBox from "./ComboBox.js";
+import DatePicker from "./DatePicker.js";
+import DateRangePicker from "./DateRangePicker.js";
+import DateTimePicker from "./DateTimePicker.js";
+import DurationPicker from "./DurationPicker.js";
+import Dialog from "./Dialog.js";
+import FileUploader from "./FileUploader.js";
+import Icon from "./Icon.js";
+import Input from "./Input.js";
+import MultiInput from "./MultiInput.js";
+import Label from "./Label.js";
+import Link from "./Link.js";
+import Popover from "./Popover.js";
+import Panel from "./Panel.js";
+import RadioButton from "./RadioButton.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import SegmentedButton from "./SegmentedButton.js";
+import Select from "./Select.js";
+import Slider from "./Slider.js";
+import StepInput from "./StepInput.js";
+import RangeSlider from "./RangeSlider.js";
+import Switch from "./Switch.js";
+import MessageStrip from "./MessageStrip.js";
+import MultiComboBox from "./MultiComboBox.js";
+import ProgressIndicator from "./ProgressIndicator.js";
+import RatingIndicator from "./RatingIndicator.js";
+import TabContainer from "./TabContainer.js";
+import Tab from "./Tab.js";
+import TabSeparator from "./TabSeparator.js";
+import Table from "./Table.js";
+import TableColumn from "./TableColumn.js";
+import TableRow from "./TableRow.js";
+import TableCell from "./TableCell.js";
+import TextArea from "./TextArea.js";
+import TimeSelection from "./TimeSelection.js";
+import TimePicker from "./TimePicker.js";
+import Title from "./Title.js";
+import Toast from "./Toast.js";
+import ToggleButton from "./ToggleButton.js";
+import Tree from "./Tree.js";
 
-import List from "./dist/List.js";
-import StandardListItem from "./dist/StandardListItem.js";
-import CustomListItem from "./dist/CustomListItem.js";
-import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
+import List from "./List.js";
+import StandardListItem from "./StandardListItem.js";
+import CustomListItem from "./CustomListItem.js";
+import GroupHeaderListItem from "./GroupHeaderListItem.js";
 
 // used in test pages
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -102,7 +102,7 @@ import { _getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/di
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/directionChange.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import * as defaultTexts from "./dist/generated/i18n/i18n-defaults.js";
+import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 
 const testAssets = {
 	configuration : {
