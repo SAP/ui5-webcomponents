@@ -34,6 +34,8 @@ import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
 import { getRTL } from "./dist/config/RTL.js";
 import { getFirstDayOfWeek } from "./dist/config/FormatSettings.js";
 import { _getRegisteredNames as getIconNames } from  "./dist/asset-registries/Icons.js"
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
@@ -45,6 +47,9 @@ window["sap-ui-webcomponents-bundle"] = {
 		getCalendarType,
 		getRTL,
 		getFirstDayOfWeek,
+	},
+	invisibleMessage : {
+		announce,
 	},
 	getIconNames,
 	registerI18nLoader,
