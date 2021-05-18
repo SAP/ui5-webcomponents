@@ -18,4 +18,4 @@ Add any other context or screenshots about the feature request here.
 
 **Organization:** *(if applicable)*
 
-**Urgency:** *(High, Medium, Low)* *(For "High", please explain the reason and if possible, add info for upcoming releases and/or milestones)*
+**Urgency:** *(High, Medium, Low)* *(For "High", please explain the reason and, if possible, add info for upcoming releases and/or milestones)*
