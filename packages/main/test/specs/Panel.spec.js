@@ -8,7 +8,7 @@ describe("Panel general interaction", () => {
 
 	it("Changing the header text is reflected", () => {
 		const panel = browser.$( "#panel-fixed");
-		const title = panel.shadow$(".ui5-panel-header-title");
+		const title = panel.shadow$(".ui5-panel-heading");
 		const sExpected = "Expanded, but not expandable";
 		const sNew = "New text";
 
@@ -105,7 +105,7 @@ describe("Panel general interaction", () => {
 		it("tests whether aria attributes are set correctly with native header", () => {
 			const panelRoot = browser.$("#panel1").shadow$(".ui5-panel-root");
 			const header = browser.$("#panel1").shadow$(".ui5-panel-header");
-			const title = browser.$("#panel1").shadow$(".ui5-panel-header-title");
+			const title = browser.$("#panel1").shadow$(".ui5-panel-heading");
 			const button = browser.$("#panel1").shadow$(".ui5-panel-header-button");
 
 			assert.strictEqual(panelRoot.getAttribute("role"), "form", "The correct accessible role is applied");
@@ -125,7 +125,7 @@ describe("Panel general interaction", () => {
 			const panelWithNativeHeaderId = panelWithNativeHeader.getProperty("_id");
 
 			assert.strictEqual(nativeHeader.getAttribute("aria-labelledby"),
-				`${panelWithNativeHeaderId}-header-title`, "aria-labelledby is correct");
+				`${panelWithNativeHeaderId}-heading`, "aria-labelledby is correct");
 
 			browser.execute(() => {
 				document.getElementById("panel-expandable").setAttribute("accessible-name", "New accessible name");

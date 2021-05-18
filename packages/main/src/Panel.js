@@ -29,7 +29,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-panel</code> header area.
 		 * <br><br>
-		 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
+		 * <b>Note:</b> When a header is provided, the <code>heading</code> property is ignored.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -54,8 +54,8 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
-		 * This property is used to set the header text of the <code>ui5-panel</code>.
-		 * The text is visible in both expanded and collapsed states.
+		 * This property is used to set the heading of the <code>ui5-panel</code>.
+		 * The heading is visible in both expanded and collapsed states.
 		 * <br><br>
 		 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 		 *
@@ -63,7 +63,7 @@ const metadata = {
 		 * @defaultvalue ""
 		 * @public
 		 */
-		headerText: {
+		heading: {
 			type: String,
 		},
 
@@ -106,14 +106,14 @@ const metadata = {
 
 		/**
 		 * Defines the "aria-level" of <code>ui5-panel</code> heading,
-		 * set by the <code>headerText</code>.
+		 * set by the <code>heading</code>.
 		 * <br><br>
 		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
 		 * @type {TitleLevel}
 		 * @defaultvalue "H2"
 		 * @public
 		*/
-		headerLevel: {
+		headingLevel: {
 			type: TitleLevel,
 			defaultValue: TitleLevel.H2,
 		},
@@ -400,15 +400,15 @@ class Panel extends UI5Element {
 	}
 
 	get ariaLabelledbyReference() {
-		return (this.nonFocusableButton && this.headerText) ? `${this._id}-header-title` : undefined;
+		return (this.nonFocusableButton && this.heading) ? `${this._id}-heading` : undefined;
 	}
 
 	get header() {
-		return this.getDomRef().querySelector(`#${this._id}-header-title`);
+		return this.getDomRef().querySelector(`#${this._id}-heading`);
 	}
 
-	get headerAriaLevel() {
-		return this.headerLevel.slice(1);
+	get ariaHeadingLevel() {
+		return this.headingLevel.slice(1);
 	}
 
 	get headerTabIndex() {
@@ -424,7 +424,7 @@ class Panel extends UI5Element {
 	}
 
 	get shouldRenderH1() {
-		return !this.header.length && (this.headerText || !this.fixed);
+		return !this.header.length && (this.heading || !this.fixed);
 	}
 
 	get styles() {

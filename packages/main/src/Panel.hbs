@@ -4,7 +4,7 @@
 	role="{{accRole}}"
 	aria-label="{{effectiveAccessibleName}}"
 >
-	<!-- header: either header or h1 with header text -->
+	<!-- header: either header or h1 with heading -->
 	<div
 		@click="{{_headerClick}}"
 		@keydown="{{_headerKeyDown}}"
@@ -40,12 +40,12 @@
 			<slot name="header"></slot>
 		{{else}}
 			<div
-				id="{{_id}}-header-title"
+				id="{{_id}}-heading"
 				role="heading"
-				aria-level="{{headerAriaLevel}}"
-				class="ui5-panel-header-title"
+				aria-level="{{ariaHeadingLevel}}"
+				class="ui5-panel-heading"
 			>
-				{{headerText}}
+				{{heading}}
 			</div>
 		{{/if}}
 	</div>
