@@ -1,13 +1,7 @@
-commit 0a33c401dad66e2ea8d48f16699e65b784b9dcab
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Tue May 18 16:04:43 2021 +0300
+commit ef2d332006b7eb755d1acf308666f894f8e6483b
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Tue May 18 18:46:06 2021 +0300
 
-    feat(invisibleMessage): introduce invisibleMessage util (#3192)
+    fix(ui5-busyindicator): fix aria-labelledby value (#3266)
     
-    * feat(invisibleMessage): introduce invisibleMessage util
-    
-    * apply comments
-    
-    * fix typo
-    
-    * apply comments
+    Fixes: #3256
