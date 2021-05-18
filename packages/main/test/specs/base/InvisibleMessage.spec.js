@@ -10,8 +10,8 @@ describe("InvisibleMessage", () => {
         const politeSpan = browser.$(".ui5-invisiblemessage-polite");
         const assertiveSpan = browser.$(".ui5-invisiblemessage-assertive");
 
-        assert.ok(politeSpan, "polite span is rendered");
-        assert.ok(assertiveSpan, "assertive span not rendered");
+        assert.ok(politeSpan, "Polite span is rendered");
+        assert.ok(assertiveSpan, "Assertive span is rendered");
     });
 
     it("String annoucement", () => {
@@ -28,7 +28,7 @@ describe("InvisibleMessage", () => {
         checkBox.click();
         button.click();
 
-        assert.ok(politeSpan.getHTML().indexOf("announcement") > -1, "value has been announced");
-        assert.ok(assertiveSpan.getHTML().indexOf("announcement") > -1, "value has been announced");
+        assert.ok(politeSpan.getHTML().indexOf("announcement") > -1, "Value has been rendered.");
+        assert.ok(assertiveSpan.getHTML().indexOf("announcement") > -1, "Value has been rendered.");
     });
 });

@@ -23,10 +23,8 @@ assertiveSpan.setAttribute("role", "alert");
 politeSpan.style.cssText = styles;
 assertiveSpan.style.cssText = styles;
 
-if (!politeSpan.parentElement) {
-	getSingletonElementInstance("ui5-static-area").appendChild(politeSpan);
-	getSingletonElementInstance("ui5-static-area").appendChild(assertiveSpan);
-}
+getSingletonElementInstance("ui5-static-area").appendChild(politeSpan);
+getSingletonElementInstance("ui5-static-area").appendChild(assertiveSpan);
 
 /**
  * Inserts the string into the respective span, depending on the mode provided.
