@@ -126,7 +126,7 @@ const metadata = {
  * <ul>
  * <li>title - Used to style the title of the list item</li>
  * <li>description - Used to style the description of the list item</li>
- * <li>additionalText - Used to style the additionalText of the list item</li>
+ * <li>additional-text - Used to style the additionalText of the list item</li>
  * <li>icon - Used to style the icon of the list item</li>
  * </ul>
  *
