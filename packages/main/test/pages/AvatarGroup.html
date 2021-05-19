@@ -123,22 +123,32 @@
 		</ui5-avatar-group>
 		<br>
 		<ui5-avatar-group type="Group" avatar-size="M" id="avatar-group-group">
-			<ui5-avatar initials="M" image="./img/woman_avatar_5.png"></ui5-avatar>
+			<ui5-avatar initials="M">
+				<img src="./img/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
 			<ui5-avatar initials="M"></ui5-avatar>
 			<ui5-avatar icon="home"></ui5-avatar>
-			<ui5-avatar initials="M" image="./img/Lamp_avatar_01.jpg"></ui5-avatar>
+			<ui5-avatar initials="M">
+				<img src="./img/Lamp_avatar_01.jpg" alt="Lamp 1">
+			</ui5-avatar>
 			<ui5-avatar icon="home"></ui5-avatar>
 			<ui5-avatar initials="M"></ui5-avatar>
 			<ui5-avatar initials="M"></ui5-avatar>
-			<ui5-avatar icon="home" image="./img/John_Miller.png"></ui5-avatar>
+			<ui5-avatar icon="home">
+				<img src="./img/John_Miller.png" alt="John Miller">
+			</ui5-avatar>
 			<ui5-avatar initials="M"></ui5-avatar>
 			<ui5-avatar icon="home"></ui5-avatar>
 			<ui5-avatar initials="M"></ui5-avatar>
 			<ui5-avatar initials="M"></ui5-avatar>
-			<ui5-avatar initials="M" image="./img/woman_avatar_5.png"></ui5-avatar>
+			<ui5-avatar initials="M">
+				<img src="./img/woman_avatar_5.png" alt="Woman Avatar 5">
+			</ui5-avatar>
 			<ui5-avatar icon="home"></ui5-avatar>
 			<ui5-avatar initials="M"></ui5-avatar>
-			<ui5-avatar initials="M" image="./img/Lamp_avatar_01.jpg"></ui5-avatar>
+			<ui5-avatar initials="M">
+				<img src="./img/Lamp_avatar_01.jpg" alt="Lamp 1">
+			</ui5-avatar>
 			<ui5-avatar initials="M"></ui5-avatar>
 			<ui5-avatar initials="M"></ui5-avatar>
 		</ui5-avatar-group>
@@ -292,18 +302,24 @@
 		var html = "";
 
 		hiddenItems.forEach(function (avatar, index) {
-			var color = avatarGroup.colorScheme[firstHiddenIndex + index]
-			html += '<div class="avatar-slot" style="padding: 5px">' +
-						'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" background-color="' + color + '"></ui5-avatar>' +
-					'</div>';
+			var color = avatarGroup.colorScheme[firstHiddenIndex + index];
+			html += `<div class="avatar-slot" style="padding: 5px">
+						<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
+			if (avatar.image.length > 0) {
+				html += `<img src="${avatar.image[0].src}">`
+			}
+			html +=`</ui5-avatar></div>`;
 		});
 
 		for (var index = 0; index < hiddenItems; index++) {
 			var avatarRef = items[index];
 
-			html +=  '<div class="avatar-slot">' +
-						'<ui5-avatar interactive image="' + avatarRef.image + '" initials="' + avatarRef.initials + '" background-color="' + avatarRef._effectiveBackgroundColor + '"></ui5-avatar>' +
-					'</div>';
+			html += `<div class="avatar-slot" style="padding: 5px">
+						<ui5-avatar interactive icon="${avatarRef.icon}" initials="${avatarRef.initials}" background-color="${color}">`;
+			if (avatarRef.image.length > 0) {
+				html += `<img src="${avatarRef.image[0].src}">`
+			}
+			html +=`</ui5-avatar></div>`;
 		}
 		placeholder.innerHTML = html;
 
