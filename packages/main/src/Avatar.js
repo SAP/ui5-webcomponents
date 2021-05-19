@@ -16,7 +16,7 @@ import Icon from "./Icon.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarShape from "./types/AvatarShape.js";
 import AvatarFitType from "./types/AvatarFitType.js";
-import AvatarBackgroundColor from "./types/AvatarBackgroundColor.js";
+import AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 /**
  * @public
@@ -150,7 +150,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the background color of the desired image.
+		 * Defines the background color of the content.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -166,21 +166,21 @@ const metadata = {
 		 * <li><code>Accent10</code></li>
 		 * <li><code>Placeholder</code></li>
 		 * </ul>
-		 * @type {AvatarBackgroundColor}
+		 * @type {AvatarColorScheme}
 		 * @defaultvalue "Accent6"
 		 * @public
 		 */
-		backgroundColor: {
-			type: AvatarBackgroundColor,
-			defaultValue: AvatarBackgroundColor.Accent6,
+		colorScheme: {
+			type: AvatarColorScheme,
+			defaultValue: AvatarColorScheme.Accent6,
 		},
 
 		/**
 		 * @private
 		 */
-		_backgroundColor: {
+		_colorScheme: {
 			type: String,
-			defaultValue: AvatarBackgroundColor.Accent6,
+			defaultValue: AvatarColorScheme.Accent6,
 		},
 
 		/**
@@ -314,7 +314,7 @@ class Avatar extends UI5Element {
 	 */
 	get _effectiveBackgroundColor() {
 		// we read the attribute, because the "background-color" property will always have a default value
-		return this.getAttribute("background-color") || this._backgroundColor;
+		return this.getAttribute("_color-scheme") || this._colorScheme;
 	}
 
 	get _role() {
