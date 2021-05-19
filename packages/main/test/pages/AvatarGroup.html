@@ -107,13 +107,13 @@
 				<p>this is footer</p>
 			</div>
 		</ui5-popover>
-		<ui5-avatar-group type="Individual" id="avatar-group-individual">
-			<ui5-avatar interactive size="XL" icon="home" initials="XL" id="avatar-1"></ui5-avatar>
-			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
+		<ui5-avatar-group aria-haspopup="menu" type="Individual" id="avatar-group-individual">
+			<ui5-avatar interactive size="XL" aria-haspopup="menu" icon="home" initials="XL" id="avatar-1"></ui5-avatar>
+			<ui5-avatar interactive size="XL" aria-haspopup="dialog" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" aria-haspopup="listbox" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" aria-haspopup="tree" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" aria-haspopup="grid" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" aria-haspopup="none" initials="XL"></ui5-avatar>
 			<ui5-avatar interactive size="XL" icon="home"></ui5-avatar>
 			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
 			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
@@ -122,7 +122,7 @@
 			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
 		</ui5-avatar-group>
 		<br>
-		<ui5-avatar-group type="Group" id="avatar-group-group">
+		<ui5-avatar-group aria-haspopup="menu" type="Group" id="avatar-group-group">
 			<ui5-avatar size="M" initials="M" image="./img/woman_avatar_5.png"></ui5-avatar>
 			<ui5-avatar size="M" initials="M"></ui5-avatar>
 			<ui5-avatar size="M" icon="home"></ui5-avatar>
@@ -294,7 +294,7 @@
 		hiddenItems.forEach(function (avatar, index) {
 			var color = avatarGroup.colorScheme[firstHiddenIndex + index]
 			html += '<div class="avatar-slot" style="padding: 5px">' +
-						'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" background-color="' + color + '"></ui5-avatar>' +
+						'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" color-scheme="' + color + '"></ui5-avatar>' +
 					'</div>';
 		});
 
@@ -302,7 +302,7 @@
 			var avatarRef = items[index];
 
 			html +=  '<div class="avatar-slot">' +
-						'<ui5-avatar interactive image="' + avatarRef.image + '" initials="' + avatarRef.initials + '" background-color="' + avatarRef._effectiveBackgroundColor + '"></ui5-avatar>' +
+						'<ui5-avatar interactive image="' + avatarRef.image + '" initials="' + avatarRef.initials + '" color-scheme="' + avatarRef._effectiveBackgroundColor + '"></ui5-avatar>' +
 					'</div>';
 		}
 		placeholder.innerHTML = html;
@@ -314,7 +314,7 @@
 	function onAvatarClicked(avatarGroup, avatarRef) {
 		popAvatar.image = avatarRef.image;
 		popAvatar.initials = avatarRef.initials;
-		popAvatar.backgroundColor = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
+		popAvatar.colorScheme = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
 
 		individualPop.close();
 		individualPop.openBy(avatarRef);

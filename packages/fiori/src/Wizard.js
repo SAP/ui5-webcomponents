@@ -127,19 +127,19 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
-		 * Fired when the step selection is changed by user interaction - either with scrolling,
+		 * Fired when the step is changed by user interaction - either with scrolling,
 		 * or by clicking on the steps within the component header.
 		 *
-		 * @event sap.ui.webcomponents.fiori.Wizard#selection-change
-		 * @param {HTMLElement} selectedStep the newly selected step
-		 * @param {HTMLElement} previouslySelectedStep the previously selected step
-		 * @param {Boolean} changeWithClick the selection changed due to user's click on step within the navigation
+		 * @event sap.ui.webcomponents.fiori.Wizard#step-change
+		 * @param {HTMLElement} step the new step
+		 * @param {HTMLElement} previousStep the previous step
+		 * @param {Boolean} changeWithClick the step change occurs due to user's click on step within the navigation
 		 * @public
 		 */
-		"selection-change": {
+		"step-change": {
 			detail: {
-				selectedStep: { type: HTMLElement },
-				previouslySelectedStep: { type: HTMLElement },
+				step: { type: HTMLElement },
+				previousStep: { type: HTMLElement },
 				changeWithClick: { Boolean },
 			},
 		},
@@ -637,7 +637,7 @@ class Wizard extends UI5Element {
 		}
 
 		// If the calculated index is in range,
-		// change selection and fire "selection-change".
+		// change selection and fire "step-change".
 		if (newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
 			const stepToSelect = this.slottedSteps[newlySelectedIndex];
 
@@ -668,7 +668,7 @@ class Wizard extends UI5Element {
 		}
 
 		if (bExpanded || (!bExpanded && (newlySelectedIndex === 0 || newlySelectedIndex === this.steps.length - 1))) {
-			// Change selection and fire "selection-change".
+			// Change selection and fire "step-change".
 			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
 		}
 	}
@@ -965,9 +965,9 @@ class Wizard extends UI5Element {
 			selectedStep.selected = false;
 			stepToSelect.selected = true;
 
-			this.fireEvent("selection-change", {
-				selectedStep: stepToSelect,
-				previouslySelectedStep: selectedStep,
+			this.fireEvent("step-change", {
+				step: stepToSelect,
+				previousStep: selectedStep,
 				changeWithClick,
 			});
 

@@ -62,7 +62,7 @@
 				function onAvatarClicked(avatarRef) {
 					const avatarIndex = avatarGroup.items.indexOf(avatarRef);
 
-					popAvatar.backgroundColor = avatarGroup.colorScheme[avatarIndex];
+					popAvatar.colorScheme = avatarGroup.colorScheme[avatarIndex];
 					popAvatar.initials = avatarRef.initials;
 					popAvatar.image = avatarRef.image;
 					popAvatar.icon = avatarRef.icon;
@@ -81,7 +81,7 @@
 						const color = avatarGroup.colorScheme[firstHiddenIndex + index];
 
 						html += '<div class="avatar-slot" style="padding: 5px">' +
-									'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" background-color="' + color + '"></ui5-avatar>' +
+									'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" color-scheme="' + color + '"></ui5-avatar>' +
 								'</div>';
 					});
 	
@@ -143,7 +143,7 @@
 		avatarGroup.hiddenItems.forEach((avatar, index) => {
 			html += `<ui5-avatar 
 						...
-						background-color="${avatarGroup.colorScheme[firstHiddenIndex + index]}"
+						color-scheme="${avatarGroup.colorScheme[firstHiddenIndex + index]}"
 					</ui5-avatar>`;
 		});
 
@@ -206,7 +206,7 @@
 						const avatarColor = avatarGroup.colorScheme[index];
 
 						html += '<div class="avatar-slot" style="padding: 3px">' +
-									'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" background-color="' + avatarColor + '"></ui5-avatar>' +
+									'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" color-scheme="' + avatarColor + '"></ui5-avatar>' +
 								'</div>';
 					});
 	

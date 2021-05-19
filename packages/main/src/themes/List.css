@@ -6,7 +6,7 @@
 	width: 100%;
 }
 
-:host([inset]) .ui5-list-root {
+:host([indent]) .ui5-list-root {
 	padding: 2rem;
 }
 

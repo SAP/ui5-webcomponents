@@ -6,6 +6,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Popover from "./Popover.js";
 
@@ -427,8 +428,16 @@ class TextArea extends UI5Element {
 		return this.getDomRef().querySelector("textarea");
 	}
 
-	_onkeydown() {
+	_onkeydown(event) {
 		this._keyDown = true;
+
+		if (isEscape(event)) {
+			const nativeTextArea = this.getInputDomRef();
+
+			this.value = this.previousValue;
+			nativeTextArea.value = this.value;
+			this.fireEvent("input");
+		}
 	}
 
 	_onkeyup() {
@@ -438,6 +447,7 @@ class TextArea extends UI5Element {
 	_onfocusin() {
 		this.focused = true;
 		this._openValueStateMsgPopover = true;
+		this.previousValue = this.getInputDomRef().value;
 	}
 
 	_onfocusout() {

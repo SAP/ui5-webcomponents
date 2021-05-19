@@ -97,18 +97,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the tooltip for the rating indicator.
-		 * @type {String}
-		 * @defaultvalue: undefined
-		 * @private
-		 * @since 1.0.0-rc.8
-		 */
-		title: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
 		 * @private
 		 */
 		_stars: {
@@ -277,7 +265,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	get tooltip() {
-		return this.title || this.defaultTooltip;
+		return this.getAttribute("title") || this.defaultTooltip;
 	}
 
 	get defaultTooltip() {
