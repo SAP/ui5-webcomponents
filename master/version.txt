@@ -1,7 +1,13 @@
-commit 0c7e58bfef5b394708e984d406527ba0fc71976d
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Wed May 19 08:21:53 2021 +0300
+commit 7b608851af0b2a713d460a5eed540afde405ae9d
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Wed May 19 09:52:16 2021 +0300
 
-    fix(ui5-list): prevent scrolling with space (#3272)
+    fix(ui5-textarea): revert value on escape (#3261)
     
-    Prevent default behavior of the keydown event when SPACE key is pressed, to avoid scrolling of the page. Part of: #3089
+    * fix(ui5-textarea): revert value on escape
+    
+    * change test name
+    
+    * fire input event
+    
+    * rename variable
