@@ -1,13 +1,5 @@
-commit 7b608851af0b2a713d460a5eed540afde405ae9d
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Wed May 19 09:52:16 2021 +0300
+commit 81f18d717c649600ee9a7a2e7afadd1b3442be11
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed May 19 11:18:09 2021 +0300
 
-    fix(ui5-textarea): revert value on escape (#3261)
-    
-    * fix(ui5-textarea): revert value on escape
-    
-    * change test name
-    
-    * fire input event
-    
-    * rename variable
+    docs: remove ie11 section from angular tutorial (#3275)
