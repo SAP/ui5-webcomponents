@@ -24,7 +24,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-messagestrip</code> type.
+		 * Defines the component type.
 		 * <br><br>
 		 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and <code>"Warning"</code>.
@@ -64,7 +64,7 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-messagestrip</code>.
+		 * Defines the text of the component.
 		 * <br><br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
@@ -77,9 +77,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the content to be displayed as graphical element within the <code>ui5-messagestrip</code>.
+		 * Defines the content to be displayed as graphical element within the component.
 		 * <br><br>
-		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be used.
+		 * <b>Note:</b> If no icon is given, the default icon for the component type will be used.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
 		 *

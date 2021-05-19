@@ -36,7 +36,7 @@ const metadata = {
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
-		 * Comma-separated list of file types that the <code>ui5-file-uploader</code> should accept.
+		 * Comma-separated list of file types that the component should accept.
 		 * <br><br>
 		 * <b>Note:</b> Please make sure you are adding the <code>.</code> in front on the file type, e.g. <code>.png</code> in case you want to accept png's only.
 		 * @type {string}
@@ -48,7 +48,7 @@ const metadata = {
 		},
 
 		/**
-		 * If set to "true", the input field of <code>ui5-file-uploader</code> will not be rendered. Only the default slot that is passed will be rendered.
+		 * If set to "true", the input field of component will not be rendered. Only the default slot that is passed will be rendered.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -58,9 +58,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether <code>ui5-file-uploader</code> is in disabled state.
+		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-file-uploader</code> is completely noninteractive.
+		 * <b>Note:</b> A disabledcomponent is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -81,7 +81,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the name with which the <code>ui5-file-uploader</code> will be submitted in an HTML form.
+		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
@@ -89,7 +89,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the <code>ui5-file-uploader</code> so that it can be submitted as
+		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
 		 * @type {string}
@@ -101,7 +101,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines a short hint intended to aid the user with data entry when the <code>ui5-file-uploader</code> has no value.
+		 * Defines a short hint intended to aid the user with data entry when the component has no value.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -121,7 +121,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-file-uploader</code>.
+		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -151,7 +151,7 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
-		 * By default the <code>ui5-file-uploader</code> contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
+		 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot content
@@ -163,13 +163,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-file-uploader</code>.
+		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the <code>ui5-file-uploader</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.9
 		 * @slot
@@ -404,7 +404,7 @@ class FileUploader extends UI5Element {
 	}
 
 	/**
-	 * in case when ui5-file-uploader is not placed in the DOM, return empty FileList, like native input would do
+	 * in case when the component is not placed in the DOM, return empty FileList, like native input would do
 	 * @private
 	 */
 	static get _emptyFilesList() {
