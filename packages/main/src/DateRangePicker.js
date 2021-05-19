@@ -168,6 +168,14 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
+	 onResponsivePopoverAfterClose() {
+		this._tempValue = ""; // reset _tempValue on popover close
+		super.onResponsivePopoverAfterClose();
+	}
+
+	/**
+	 * @override
+	 */
 	isValid(value) {
 		const parts = this._splitValueByDelimiter(value);
 		return parts.length <= 2 && parts.every(dateString => super.isValid(dateString)); // must be at most 2 dates and each must be valid
@@ -211,7 +219,6 @@ class DateRangePicker extends DatePicker {
 
 		const newValue = this._buildValue(...event.detail.dates); // the value will be normalized so we don't need to order them here
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
-		this._tempValue = "";
 		this._focusInputAfterClose = true;
 		this.closePicker();
 	}
