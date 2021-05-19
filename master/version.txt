@@ -1,5 +1,10 @@
-commit 922ab70e4b6a560e0c0e0d85ab7d3b0aa7cce600
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed May 19 15:23:54 2021 +0300
+commit 580e28928edf218a5bcab1c06209e11fa1b68400
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed May 19 19:11:29 2021 +0300
 
-    docs: remove tags from component API documentation (#3265)
+    feat(ui5-checkbox): add support  for "Success" value state (#3278)
+    
+    Add support  for "Success" value state
+    
+    Fixes: #3198
+    Closes: #3198
