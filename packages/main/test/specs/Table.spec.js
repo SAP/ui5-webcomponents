@@ -77,7 +77,7 @@ describe("Table general interaction", () => {
 
 	describe("Growing Table on 'More' button press", () => {
 		it("tests the 'load-more' event", () => {
-			browser.url(`http://localhost:${PORT}/test-resources/pages/TableLoadMore.html`);
+			browser.url(`http://localhost:${PORT}/test-resources/pages/TableGrowingWithButton.html`);
 
 			const inputResult = browser.$("#inputLoadMoreCounter");
 			const loadMoreTrigger = browser.$("#tbl").shadow$("[growing-button-inner]");
