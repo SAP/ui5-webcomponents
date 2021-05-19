@@ -87,7 +87,7 @@ const metadata = {
  * <li><code>Home</code> - Moves the <code>ui5-slider</code> handle to the beginning of the range;</li>
  * <li><code>End</code> - Moves the <code>ui5-slider</code> handle to the end of the range;</li>
  * <li><code>Page Up</code> - Same as <code>Right/Up + Ctrl/Cmd</code></li>
- * <li><code>Page Down</code> - Same as <code>Left/Down + Ctrl/Cmd<code></li>
+ * <li><code>Page Down</code> - Same as <code>Left/Down + Ctrl/Cmd</code></li>
  * <li><code>Escape</code> - Resets the value after interaction, to the position prior the <ui5-slider> focusing;</li>
  * </ul>
  *
