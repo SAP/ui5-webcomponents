@@ -92,7 +92,7 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.11
+		 * @since 1.0.0-rc.15
 		 * @public
 		 */
 		growingButtonText: {
@@ -107,7 +107,7 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.11
+		 * @since 1.0.0-rc.15
 		 * @public
 		 */
 		 growingButtonSubtext: {
