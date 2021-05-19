@@ -74,7 +74,7 @@
 				function onAvatarClicked(avatarRef) {
 					const avatarIndex = avatarGroup.items.indexOf(avatarRef);
 
-					popAvatar.backgroundColor = avatarGroup.colorScheme[avatarIndex];
+					popAvatar.colorScheme = avatarGroup.colorScheme[avatarIndex];
 					popAvatar.initials = avatarRef.initials;
 					popAvatar.image = avatarRef.image;
 					popAvatar.icon = avatarRef.icon;
@@ -160,7 +160,7 @@
 		avatarGroup.hiddenItems.forEach((avatar, index) => {
 			html += `<ui5-avatar 
 						...
-						background-color="${avatarGroup.colorScheme[firstHiddenIndex + index]}"
+						color-scheme="${avatarGroup.colorScheme[firstHiddenIndex + index]}"
 					</ui5-avatar>`;
 		});
 

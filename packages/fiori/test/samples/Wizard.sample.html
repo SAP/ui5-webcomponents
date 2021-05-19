@@ -156,15 +156,15 @@
 	<script>
 		var wiz = document.getElementById("wiz");
 
-		wiz.addEventListener("selection-change", function () {
-			console.log(event.detail.selectedStep);
+		wiz.addEventListener("step-change", function () {
+			console.log(event.detail.step);
 		});
 
 		sw.addEventListener("change", function () {
 			toStep3.removeAttribute("hidden");
 		});
 
-		sb.addEventListener("selection-change", function () {
+		sb.addEventListener("step-change", function () {
 			toStep4.removeAttribute("hidden");
 		});
 

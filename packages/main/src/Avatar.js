@@ -14,7 +14,8 @@ import AvatarCss from "./generated/themes/Avatar.css.js";
 import Icon from "./Icon.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarShape from "./types/AvatarShape.js";
-import AvatarBackgroundColor from "./types/AvatarBackgroundColor.js";
+import AvatarFitType from "./types/AvatarFitType.js";
+import AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 /**
  * @public
@@ -138,21 +139,21 @@ const metadata = {
 		 * <li><code>Accent10</code></li>
 		 * <li><code>Placeholder</code></li>
 		 * </ul>
-		 * @type {AvatarBackgroundColor}
+		 * @type {AvatarColorScheme}
 		 * @defaultvalue "Accent6"
 		 * @public
 		 */
-		backgroundColor: {
-			type: AvatarBackgroundColor,
-			defaultValue: AvatarBackgroundColor.Accent6,
+		colorScheme: {
+			type: AvatarColorScheme,
+			defaultValue: AvatarColorScheme.Accent6,
 		},
 
 		/**
 		 * @private
 		 */
-		_backgroundColor: {
+		_colorScheme: {
 			type: String,
-			defaultValue: AvatarBackgroundColor.Accent6,
+			defaultValue: AvatarColorScheme.Accent6,
 		},
 
 		/**
@@ -165,6 +166,17 @@ const metadata = {
 		 * @since 1.0.0-rc.7
 		 */
 		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines the aria-haspopup value of the <code>ui5-avatar</code> when <code>interactive</code> property is <code>true</code>.
+		 * <br><br>
+		 * @type String
+		 * @since 1.0.0-rc.15
+		 * @protected
+		 */
+		ariaHaspopup: {
 			type: String,
 		},
 
@@ -220,6 +232,15 @@ const metadata = {
  *
  * The shape can be circular or square. There are several predefined sizes, as well as an option to
  * set a custom size.
+ *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
+ * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the <code>ui5-avatar</code> without triggering the click event.</li>
+ * </ul>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -289,7 +310,15 @@ class Avatar extends UI5Element {
 	 */
 	get _effectiveBackgroundColor() {
 		// we read the attribute, because the "background-color" property will always have a default value
-		return this.getAttribute("background-color") || this._backgroundColor;
+		return this.getAttribute("_color-scheme") || this._colorScheme;
+	}
+
+	get _role() {
+		return this.interactive ? "button" : undefined;
+	}
+
+	get _ariaHasPopup() {
+		return this._getAriaHasPopup();
 	}
 
 	get validInitials() {
@@ -351,6 +380,14 @@ class Avatar extends UI5Element {
 		if (this.interactive) {
 			this.focused = true;
 		}
+	}
+
+	_getAriaHasPopup() {
+		if (!this.interactive || this.ariaHaspopup === "") {
+			return;
+		}
+
+		return this.ariaHaspopup;
 	}
 }
 

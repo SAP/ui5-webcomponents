@@ -128,58 +128,58 @@
 	background-color: var(--ui5-avatar-accent6);
 }
 
-:host(:not([_has-image])[_background-color="Accent1"]),
-:host(:not([_has-image])[background-color="Accent1"]) {
+:host([_color-scheme="Accent1"]),
+:host([color-scheme="Accent1"]) {
 	background-color: var(--ui5-avatar-accent1);
 }
 
-:host(:not([_has-image])[_background-color="Accent2"]),
-:host(:not([_has-image])[background-color="Accent2"]) {
+:host([_color-scheme="Accent2"]),
+:host([color-scheme="Accent2"]) {
 	background-color: var(--ui5-avatar-accent2);
 }
 
-:host(:not([_has-image])[_background-color="Accent3"]),
-:host(:not([_has-image])[background-color="Accent3"]) {
+:host([_color-scheme="Accent3"]),
+:host([color-scheme="Accent3"]) {
 	background-color: var(--ui5-avatar-accent3);
 }
 
-:host(:not([_has-image])[_background-color="Accent4"]),
-:host(:not([_has-image])[background-color="Accent4"]) {
+:host([_color-scheme="Accent4"]),
+:host([color-scheme="Accent4"]) {
 	background-color: var(--ui5-avatar-accent4);
 }
 
-:host(:not([_has-image])[_background-color="Accent5"]),
-:host(:not([_has-image])[background-color="Accent5"]) {
+:host([_color-scheme="Accent5"]),
+:host([color-scheme="Accent5"]) {
 	background-color: var(--ui5-avatar-accent5);
 }
 
-:host(:not([_has-image])[_background-color="Accent6"]),
-:host(:not([_has-image])[background-color="Accent6"]) {
+:host([_color-scheme="Accent6"]),
+:host([color-scheme="Accent6"]) {
 	background-color: var(--ui5-avatar-accent6);
 }
 
-:host(:not([_has-image])[_background-color="Accent7"]),
-:host(:not([_has-image])[background-color="Accent7"]) {
+:host([_color-scheme="Accent7"]),
+:host([color-scheme="Accent7"]) {
 	background-color: var(--ui5-avatar-accent7);
 }
 
-:host(:not([_has-image])[_background-color="Accent8"]),
-:host(:not([_has-image])[background-color="Accent8"]) {
+:host([_color-scheme="Accent8"]),
+:host([color-scheme="Accent8"]) {
 	background-color: var(--ui5-avatar-accent8);
 }
 
-:host(:not([_has-image])[_background-color="Accent9"]),
-:host(:not([_has-image])[background-color="Accent9"]) {
+:host([_color-scheme="Accent9"]),
+:host([color-scheme="Accent9"]) {
 	background-color: var(--ui5-avatar-accent9);
 }
 
-:host(:not([_has-image])[_background-color="Accent10"]),
-:host(:not([_has-image])[background-color="Accent10"]) {
+:host([_color-scheme="Accent10"]),
+:host([color-scheme="Accent10"]) {
 	background-color: var(--ui5-avatar-accent10);
 }
 
-:host(:not([_has-image])[_background-color="Placeholder"]),
-:host(:not([_has-image])[background-color="Placeholder"]) {
+:host([_color-scheme="Placeholder"]),
+:host([color-scheme="Placeholder"]) {
 	background-color: var(--ui5-avatar-placeholder);
 }
 
