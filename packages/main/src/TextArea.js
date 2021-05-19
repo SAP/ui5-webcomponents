@@ -434,7 +434,7 @@ class TextArea extends UI5Element {
 		if (isEscape(event)) {
 			const nativeTextArea = this.getInputDomRef();
 
-			this.value = this._lastValue;
+			this.value = this.previousValue;
 			nativeTextArea.value = this.value;
 			this.fireEvent("input");
 		}
@@ -447,7 +447,7 @@ class TextArea extends UI5Element {
 	_onfocusin() {
 		this.focused = true;
 		this._openValueStateMsgPopover = true;
-		this._lastValue = this.getInputDomRef().value;
+		this.previousValue = this.getInputDomRef().value;
 	}
 
 	_onfocusout() {
