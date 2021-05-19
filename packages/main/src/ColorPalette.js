@@ -30,7 +30,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
 
 		/**
-		 * Defines whether the user can see the last used colors in the bottom of the <code>ui5-color-palette</code>
+		 * Defines whether the user can see the last used colors in the bottom of the component
 		 * @type {boolean}
 		 * @public
 		 * @since 1.0.0-rc.15
