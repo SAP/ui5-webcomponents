@@ -672,6 +672,9 @@ class List extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault(); // prevent scroll
+		}
 		if (isTabNext(event)) {
 			this._handleTabNext(event);
 		}

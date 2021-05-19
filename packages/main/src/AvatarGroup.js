@@ -25,7 +25,7 @@ import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 import Button from "./Button.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
-import AvatarBackgroundColor from "./types/AvatarBackgroundColor.js";
+import AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 const OVERFLOW_BTN_CLASS = "ui5-avatar-group-overflow-btn";
 const AVATAR_GROUP_OVERFLOW_BTN_SELECTOR = `.${OVERFLOW_BTN_CLASS}`;
@@ -309,7 +309,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	/**
-	 * Returns an array containing the <code>AvatarBackgroundColor</code> values that correspond to the avatars in the <code>ui5-avatar-group</code>.
+	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the <code>ui5-avatar-group</code>.
 	 * @readonly
 	 * @type { Array }
 	 * @defaultValue []
@@ -498,9 +498,9 @@ class AvatarGroup extends UI5Element {
 			const colorIndex = this._getNextBackgroundColor();
 			avatar.interactive = !this._isGroup;
 
-			if (!avatar.getAttribute("background-color")) {
+			if (!avatar.getAttribute("_color-scheme")) {
 				// AvatarGroup respects colors set to ui5-avatar
-				avatar.setAttribute("_background-color", AvatarBackgroundColor[`Accent${colorIndex}`]);
+				avatar.setAttribute("_color-scheme", AvatarColorScheme[`Accent${colorIndex}`]);
 			}
 
 			if (!avatar.getAttribute("size")) {
