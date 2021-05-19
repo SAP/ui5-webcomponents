@@ -1,10 +1,5 @@
-commit 580e28928edf218a5bcab1c06209e11fa1b68400
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed May 19 19:11:29 2021 +0300
+commit 44c39faa30805e5cd4ed3f5dbc5a5cf1f28e2d94
+Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
+Date:   Wed May 19 19:19:25 2021 +0300
 
-    feat(ui5-checkbox): add support  for "Success" value state (#3278)
-    
-    Add support  for "Success" value state
-    
-    Fixes: #3198
-    Closes: #3198
+    Update Angular-tutorial.md (#3277)
