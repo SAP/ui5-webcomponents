@@ -1,5 +1,5 @@
-commit 81f18d717c649600ee9a7a2e7afadd1b3442be11
+commit 922ab70e4b6a560e0c0e0d85ab7d3b0aa7cce600
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed May 19 11:18:09 2021 +0300
+Date:   Wed May 19 15:23:54 2021 +0300
 
-    docs: remove ie11 section from angular tutorial (#3275)
+    docs: remove tags from component API documentation (#3265)
