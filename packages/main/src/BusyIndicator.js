@@ -174,6 +174,10 @@ class BusyIndicator extends UI5Element {
 		return this.i18nBundle.getText(BUSY_INDICATOR_TITLE);
 	}
 
+	get labelId() {
+		return this.text ? `${this._id}-label` : undefined;
+	}
+
 	get classes() {
 		return {
 			root: {
