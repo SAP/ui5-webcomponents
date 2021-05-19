@@ -80,7 +80,7 @@ describe("Table general interaction", () => {
 			browser.url(`http://localhost:${PORT}/test-resources/pages/TableLoadMore.html`);
 
 			const inputResult = browser.$("#inputLoadMoreCounter");
-			const loadMoreTrigger = browser.$("#tbl").shadow$("[load-more-inner]");
+			const loadMoreTrigger = browser.$("#tbl").shadow$("[growing-button-inner]");
 
 			// act
 			loadMoreTrigger.click();

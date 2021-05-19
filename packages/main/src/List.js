@@ -535,7 +535,7 @@ class List extends UI5Element {
 		return this.growing === ListGrowingMode.Button;
 	}
 
-	get _moreText() {
+	get _growingButtonText() {
 		return this.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
