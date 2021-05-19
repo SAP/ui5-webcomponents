@@ -6,7 +6,7 @@ import "@ui5/webcomponents-icons/dist/message-information.js";
 import "@ui5/webcomponents-icons/dist/message-success.js";
 import "@ui5/webcomponents-icons/dist/message-error.js";
 import "@ui5/webcomponents-icons/dist/message-warning.js";
-import MessageStripType from "./types/MessageStripType.js";
+import MessageStripDesign from "./types/MessageStripDesign.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -24,18 +24,19 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-messagestrip</code> type.
+		 * Defines the <code>ui5-messagestrip</code> design.
 		 * <br><br>
 		 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and <code>"Warning"</code>.
 		 *
-		 * @type {MessageStripType}
+		 * @type {MessageStripDesign}
 		 * @defaultvalue "Information"
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		type: {
-			type: MessageStripType,
-			defaultValue: MessageStripType.Information,
+		design: {
+			type: MessageStripDesign,
+			defaultValue: MessageStripDesign.Information,
 		},
 
 		/**
@@ -79,7 +80,7 @@ const metadata = {
 		/**
 		 * Defines the content to be displayed as graphical element within the <code>ui5-messagestrip</code>.
 		 * <br><br>
-		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be used.
+		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> design will be used.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
 		 *
@@ -112,7 +113,7 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-messagestrip</code> component enables the embedding of app-related messages.
- * It displays 4 types of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative.
+ * It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative.
  * Each message can have a Close button, so that it can be removed from the UI, if needed.
  *
  * <h3>Usage</h3>
@@ -170,7 +171,7 @@ class MessageStrip extends UI5Element {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
-	static typeClassesMappings() {
+	static designClassesMappings() {
 		return {
 			"Information": "ui5-messagestrip-root--info",
 			"Positive": "ui5-messagestrip-root--positive",
@@ -189,7 +190,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get hiddenText() {
-		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}`;
+		return `Message Strip ${this.design} ${this.noCloseButton ? "" : "closable"}`;
 	}
 
 	get _closeButtonText() {
@@ -202,7 +203,7 @@ class MessageStrip extends UI5Element {
 				"ui5-messagestrip-root": true,
 				"ui5-messagestrip-root-no-icon": this.noIcon,
 				"ui5-messagestrip-root-no-close-button": this.noCloseButton,
-				[this.typeClasses]: true,
+				[this.designClasses]: true,
 			},
 		};
 	}
@@ -212,11 +213,11 @@ class MessageStrip extends UI5Element {
 	}
 
 	get standardIconName() {
-		return MessageStrip.iconMappings()[this.type];
+		return MessageStrip.iconMappings()[this.design];
 	}
 
-	get typeClasses() {
-		return MessageStrip.typeClassesMappings()[this.type];
+	get designClasses() {
+		return MessageStrip.designClassesMappings()[this.design];
 	}
 }
 
