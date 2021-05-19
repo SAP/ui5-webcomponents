@@ -134,7 +134,7 @@ const metadata = {
 
 const CONSTANTS = {
 	TOOLTIP_VISIBLE: "visible",
-	TOOLTIP_HIDDEN: "hidden"
+	TOOLTIP_HIDDEN: "hidden",
 };
 
 /**
