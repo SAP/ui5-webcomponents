@@ -78,16 +78,16 @@ const metadata = {
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
- * <li><code>Left/Down Arrow</code> - Moves the <code>ui5-slider</code> handle one step to the left, effectively decreasing the <code>ui5-slider</code>'s value by <code>step</code> amount;</li>
- * <li><code>Right/Up Arrow</code> - Moves the <code>ui5-slider</code> handle one step to the right, effectively increasing the <code>ui5-slider</code>'s value by <code>step</code> amount;</li>
- * <li><code>Left/Down Arrow + Ctrl/Cmd</code> - Moves the <code>ui5-slider</code> handle to the left with step equal to 1/10th of the entire range, effectively decreasing the <code>ui5-slider</code>'s value by 1/10th of the range;</li>
- * <li><code>Right/Up Arrow + Ctrl/Cmd</code> - Moves the <code>ui5-slider</code> handle to the right with step equal to 1/10th of the entire range, effectively increasing the <code>ui5-slider</code>'s value by 1/10th of the range;</li>
- * <li><code>Plus</code> - Same as <code>Right/Up Arrow</code></li>
- * <li><code>Minus</code> - Same as <code>Left/Down Arrow</code></li>
+ * <li><code>Left or Down Arrow</code> - Moves the <code>ui5-slider</code> handle one step to the left, effectively decreasing the <code>ui5-slider</code>'s value by <code>step</code> amount;</li>
+ * <li><code>Right or Up Arrow</code> - Moves the <code>ui5-slider</code> handle one step to the right, effectively increasing the <code>ui5-slider</code>'s value by <code>step</code> amount;</li>
+ * <li><code>Left or Down Arrow + Ctrl/Cmd</code> - Moves the <code>ui5-slider</code> handle to the left with step equal to 1/10th of the entire range, effectively decreasing the <code>ui5-slider</code>'s value by 1/10th of the range;</li>
+ * <li><code>Right or Up Arrow + Ctrl/Cmd</code> - Moves the <code>ui5-slider</code> handle to the right with step equal to 1/10th of the entire range, effectively increasing the <code>ui5-slider</code>'s value by 1/10th of the range;</li>
+ * <li><code>Plus</code> - Same as <code>Right or Up Arrow</code></li>
+ * <li><code>Minus</code> - Same as <code>Left or Down Arrow</code></li>
  * <li><code>Home</code> - Moves the <code>ui5-slider</code> handle to the beginning of the range;</li>
  * <li><code>End</code> - Moves the <code>ui5-slider</code> handle to the end of the range;</li>
- * <li><code>Page Up</code> - Same as <code>Right/Up + Ctrl/Cmd</code></li>
- * <li><code>Page Down</code> - Same as <code>Left/Down + Ctrl/Cmd</code></li>
+ * <li><code>Page Up</code> - Same as <code>Right or Up + Ctrl/Cmd</code></li>
+ * <li><code>Page Down</code> - Same as <code>Left or Down + Ctrl/Cmd</code></li>
  * <li><code>Escape</code> - Resets the value after interaction, to the position prior the <ui5-slider> focusing;</li>
  * </ul>
  *
