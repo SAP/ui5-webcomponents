@@ -9,7 +9,11 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
-import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
+import {
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	VALUE_STATE_SUCCESS,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
@@ -88,8 +92,8 @@ const metadata = {
 		 * <li><code>Warning</code></li>
 		 * <li><code>Error</code></li>
 		 * <li><code>None</code>(default)</li>
-		 * <li><code>Negative</code></li>
-		 * <li><code>Transparent</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
 		 * @type {ValueState}
@@ -321,6 +325,7 @@ class CheckBox extends UI5Element {
 		return {
 			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
 		};
 	}
 
