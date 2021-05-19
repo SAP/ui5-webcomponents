@@ -38,7 +38,7 @@ const metadata = {
 		/**
 		 * Defines the component rows.
 		 * <br><br>
-		 * <b>Note:</b> Use the component for the intended design.
+		 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.main.ITableRow[]}
 		 * @slot rows
@@ -274,7 +274,7 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when the component is shown as a pop-in instead of hiding it.
+		 * Fired when <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
 		 *
 		 * @event sap.ui.webcomponents.main.Table#popin-change
 		 * @param {Array} poppedColumns popped-in columns.

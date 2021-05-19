@@ -140,7 +140,7 @@ const metadata = {
 			propertyName: "items",
 		},
 		/**
-		 * Defines the overflow button of component.
+		 * Defines the overflow button of the component.
 		 * <b>Note:</b> We recommend using the <code>ui5-button</code> component.
 		 * <br><br>
 		 * <b>Note:</b> If this slot is not used, the component will

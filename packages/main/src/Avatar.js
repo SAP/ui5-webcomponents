@@ -77,7 +77,7 @@ const metadata = {
 		/**
 		 * Defines the displayed initials.
 		 * <br>
-		 * Up to two Latin letters can be displayed as initials in a component.
+		 * Up to two Latin letters can be displayed as initials.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
