@@ -24,6 +24,14 @@
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "npm run build"
   },
+  "exports": {
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json",
+    "./bundle.esm.js": "./bundle.esm.js",
+    "./bundle.es5.js": "./bundle.es5.js",
+    "./bundle.common.js": "./bundle.common.js",
+    "./*": "./dist/*"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/SAP/ui5-webcomponents.git",

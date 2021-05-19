@@ -13,6 +13,14 @@
     "sapui5",
     "ui5"
   ],
+  "exports": {
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json",
+    "./bundle.esm.js": "./bundle.esm.js",
+    "./bundle.es5.js": "./bundle.es5.js",
+    "./bundle.common.js": "./bundle.common.js",
+    "./*": "./dist/*"
+  },
   "scripts": {
     "clean": "wc-dev clean",
     "lint": "wc-dev lint",
