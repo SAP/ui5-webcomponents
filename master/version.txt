@@ -1,7 +1,7 @@
-commit 18ea76d8c02bebde700528db25677925affa911a
+commit eca59f575c4397f92ff4dc2f755262f46110a20c
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu May 20 12:52:35 2021 +0300
+Date:   Thu May 20 15:30:12 2021 +0300
 
-    fix(ui5-shellbar): menu button arrow position (#3285)
+    fix(ui5-li-tree): fix arrow flickering (#3293)
     
-    Fixes: #3199
+    Fixes: #3238

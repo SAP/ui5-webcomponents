@@ -2949,7 +2949,7 @@
 <section>
 	<h3>Growing Table with "More" button</h3>
 	<div class="snippet">
-		<ui5-table id="myTbl" growing="Button" more-subtext="[4 / 12]">
+		<ui5-table id="myTbl" growing="Button" growing-button-subtext="[4 / 12]">
 			<ui5-table-column id="column-1" slot="columns" width="350px">
 				<ui5-label>Product</ui5-label>
 			</ui5-table-column>
@@ -2973,7 +2973,7 @@
 			</ui5-table-column>
 		</ui5-table>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-table</span> <span class="na">id=</span><span class="s">"tbl"</span> <span class="na">growing=</span><span class="s">"Button"</span> <span class="na">more-subtext=</span><span class="s">"[4 / 12]"</span><span class="nt">&gt;&lt;/ui5-table&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-table</span> <span class="na">id=</span><span class="s">"tbl"</span> <span class="na">growing=</span><span class="s">"Button"</span> <span class="na">growing-button-subtext=</span><span class="s">"[4 / 12]"</span><span class="nt">&gt;&lt;/ui5-table&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
 	<span class="nx">tbl</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">load-more</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -3246,7 +3246,7 @@
 			if (loads === 3) {
 				growingTable.growing = "None";
 			} else {
-				growingTable.setAttribute("more-subtext", loads * rows + " of 12");
+				growingTable.setAttribute("growing-button-subtext", loads * rows + " of 12");
 			}
 		}
 
@@ -3944,6 +3944,36 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          growingButtonSubtext
+                            <br>
+                            <code>growing-button-subtext</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the subtext that will be displayed under the <code>growingButtonText</code>.
+            
+            <br><br> <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          growingButtonText
+                            <br>
+                            <code>growing-button-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the text that will be displayed inside the growing button at the bottom of the table, meant for loading more rows upon press.
+            
+            <br><br> <b>Note:</b> If not specified a built-in text will be displayed. <br> <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           mode
                             <br>
                         </div>
@@ -3952,36 +3982,6 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the mode of the component. <br><br> Available options are: <ul> <li><code>MultiSelect</code></li> <li><code>SingleSelect</code></li> <li><code>None</code></li> <ul>
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          moreSubtext
-                            <br>
-                            <code>more-subtext</code>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the subtext that will be displayed under the <code>moreText</code>.
-            
-            <br><br> <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          moreText
-                            <br>
-                            <code>more-text</code>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the text that will be displayed inside the <code>More</code> button at the bottom of the table, meant for loading more rows upon press.
-            
-            <br><br> <b>Note:</b> If not specified a built-in text will be displayed. <br> <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.11</div>
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
