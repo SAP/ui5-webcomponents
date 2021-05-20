@@ -1,5 +1,7 @@
-commit 15c41172343896a74f6bb4635d28ec9bce781396
-Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
-Date:   Thu May 20 12:40:52 2021 +0300
+commit 18ea76d8c02bebde700528db25677925affa911a
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu May 20 12:52:35 2021 +0300
 
-    Update Vue-tutorial.md (#3286)
+    fix(ui5-shellbar): menu button arrow position (#3285)
+    
+    Fixes: #3199
