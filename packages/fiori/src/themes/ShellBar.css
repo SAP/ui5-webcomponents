@@ -231,10 +231,13 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-left {
-	flex-basis: 50%;
 	max-width: calc(50% - 1.5rem);
 	justify-content: flex-start;
 	margin-right: 0.5rem;
+}
+
+.ui5-shellbar-with-coPilot .ui5-shellbar-overflow-container-left {
+	flex-basis: 50%;
 }
 
 .ui5-shellbar-menu-button {
@@ -276,7 +279,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
 	display: flex;
-	float: right;
+	justify-content: flex-end;
 }
 
 .ui5-shellbar-overflow-button {
@@ -360,7 +363,7 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-search-field {
-	width: 240px;
+	flex-grow: 1;
 	min-width: 240px;
 	margin-left: 0.5rem;
 }
