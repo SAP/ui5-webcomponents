@@ -1,5 +1,9 @@
-commit 44c39faa30805e5cd4ed3f5dbc5a5cf1f28e2d94
-Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
-Date:   Wed May 19 19:19:25 2021 +0300
+commit 1523e250684444f9032dd559f0456cadfa1a9102
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu May 20 09:55:08 2021 +0300
 
-    Update Angular-tutorial.md (#3277)
+    fix(ui5-li-tree): info text visual appearance (#3280)
+    
+    There was a separate CSS class .ui5-li-tree-info which add the same styles as .ui5-li-info. Now, ui5-tree-item uses .ui5-li-info CSS class.
+    
+    Fixes: #3130
