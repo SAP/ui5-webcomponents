@@ -72,9 +72,9 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen.
+		 * Determines whether the component should be stretched to fullscreen.
 		 * <br><br>
-		 * <b>Note:</b> The <code>ui5-dialog</code> will be stretched to approximately
+		 * <b>Note:</b> The component will be stretched to approximately
 		 * 90% of the viewport.
 		 *
 		 * @type {boolean}
@@ -86,10 +86,10 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-dialog</code> is draggable.
+		 * Determines whether the component is draggable.
 		 * If this property is set to true, the Dialog will be draggable by its header.
 		 * <br><br>
-		 * <b>Note:</b> The <code>ui5-dialog</code> can be draggable only in desktop mode.
+		 * <b>Note:</b> The component can be draggable only in desktop mode.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @since 1.0.0-rc.9
@@ -100,11 +100,11 @@ const metadata = {
 		},
 
 		/**
-		 * Configures the <code>ui5-dialog</code> to be resizable.
+		 * Configures the component to be resizable.
 		 * If this property is set to true, the Dialog will have a resize handle in its bottom right corner in LTR languages.
 		 * In RTL languages, the resize handle will be placed in the bottom left corner.
 		 * <br><br>
-		 * <b>Note:</b> The <code>ui5-dialog</code> can be resizable only in desktop mode.
+		 * <b>Note:</b> The component can be resizable only in desktop mode.
 		 * <br>
 		 * <b>Note:</b> Upon resizing, externally defined height and width styling will be ignored.
 		 * @type {boolean}

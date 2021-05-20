@@ -12,7 +12,7 @@ const metadata = {
 	tag: "ui5-suggestion-item",
 	properties: /** @lends  sap.ui.webcomponents.main.SuggestionItem.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-suggestion-item</code>.
+		 * Defines the text of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""

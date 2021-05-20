@@ -139,7 +139,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-li-tree</code>.
+		 * Defines the text of the component.
 		 * <br><br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *

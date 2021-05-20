@@ -13,7 +13,7 @@ const metadata = {
 	tag: "ui5-togglebutton",
 	properties: /** @lends  sap.ui.webcomponents.main.ToggleButton.prototype */ {
 		/**
-		 * Determines whether the <code>ui5-togglebutton</code> is displayed as pressed.
+		 * Determines whether the component is displayed as pressed.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
