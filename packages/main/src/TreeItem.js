@@ -96,7 +96,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
 
 		/**
-		 * Defines the items of this <code>ui5-tree-item</code>.
+		 * Defines the items of this component.
 		 *
 		 * @type {sap.ui.webcomponents.main.ITreeItem[]}
 		 * @slot items

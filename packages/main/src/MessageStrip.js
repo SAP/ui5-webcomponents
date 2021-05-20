@@ -2,10 +2,10 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/message-information.js";
-import "@ui5/webcomponents-icons/dist/message-success.js";
-import "@ui5/webcomponents-icons/dist/message-error.js";
-import "@ui5/webcomponents-icons/dist/message-warning.js";
+import "@ui5/webcomponents-icons/dist/information.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -24,7 +24,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-messagestrip</code> type.
+		 * Defines the component type.
 		 * <br><br>
 		 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and <code>"Warning"</code>.
@@ -64,7 +64,7 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-messagestrip</code>.
+		 * Defines the text of the component.
 		 * <br><br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
@@ -77,9 +77,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the content to be displayed as graphical element within the <code>ui5-messagestrip</code>.
+		 * Defines the content to be displayed as graphical element within the component.
 		 * <br><br>
-		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be used.
+		 * <b>Note:</b> If no icon is given, the default icon for the component type will be used.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
 		 *
@@ -181,10 +181,10 @@ class MessageStrip extends UI5Element {
 
 	static iconMappings() {
 		return {
-			"Information": "message-information",
-			"Positive": "message-success",
-			"Negative": "message-error",
-			"Warning": "message-warning",
+			"Information": "information",
+			"Positive": "sys-enter-2",
+			"Negative": "error",
+			"Warning": "alert",
 		};
 	}
 

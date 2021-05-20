@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Template
 import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
@@ -15,7 +16,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Label.prototype */  {
 
 		/**
-		 * Defines whether an asterisk character is added to the <code>ui5-label</code> text.
+		 * Defines whether an asterisk character is added to the component text.
 		 * <br><br>
 		 * <b>Note:</b> Usually indicates that user input is required.
 		 *
@@ -28,7 +29,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-label</code> should wrap, when there is not enough space.
+		 * Determines whether the component should wrap, when there is not enough space.
 		 * <br><br>
 		 * <b>Note:</b> By default the text would truncate.
 		 *
@@ -41,7 +42,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether semi-colon is added to the <code>ui5-label</code> text.
+		 * Defines whether semi-colon is added to the component text.
 		 * <br><br>
 		 * <b>Note:</b> Usually used in forms.
 		 * @type {boolean}
@@ -68,7 +69,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Label.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-label</code>.
+		 * Defines the text of the component.
 		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
@@ -122,6 +123,15 @@ class Label extends UI5Element {
 
 	static get styles() {
 		return labelCss;
+	}
+
+	get classes() {
+		return {
+			textWrapper: {
+				"ui5-label-text-wrapper": true,
+				"ui5-label-text-wrapper-safari": isSafari(),
+			},
+		};
 	}
 
 	_onclick() {
