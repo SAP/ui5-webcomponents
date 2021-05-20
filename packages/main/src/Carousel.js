@@ -86,10 +86,11 @@ const metadata = {
 		/**
 		 * If set to true the navigation is hidden.
 		 * @type {boolean}
+		 * @since 1.0.0-rc.15
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideNavigation: {
+		hideNavigationArrows: {
 			type: Boolean,
 		},
 
@@ -152,11 +153,21 @@ const metadata = {
 		_itemWidth: {
 			type: Integer,
 		},
+
+		/**
+		 * If set to true navigation arrows are shown
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		_visibleNavigationArrows: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
-		 * Defines the content of the <code>ui5-carousel</code>.
+		 * Defines the content of the component.
 		 * @type {HTMLElement[]}
 		 * @slot content
 		 * @public
@@ -186,7 +197,7 @@ const metadata = {
 		},
 
 		/**
-		 * Fired for the last items of the <code>ui5-carousel</code> if it is scrolled and the direction of scrolling is to the end.
+		 * Fired for the last items of the component if it is scrolled and the direction of scrolling is to the end.
 		 * The number of items for which the event is fired is controlled by the <code>infiniteScrollOffset</code> property.
 		 * @event sap.ui.webcomponents.main.Carousel#load-more
 		 * @public
@@ -335,6 +346,14 @@ class Carousel extends UI5Element {
 		}
 	}
 
+	_onmouseout() {
+		this._visibleNavigationArrows = false;
+	}
+
+	_onmouseover() {
+		this._visibleNavigationArrows = true;
+	}
+
 	navigateLeft() {
 		this._resizing = false;
 
@@ -416,6 +435,10 @@ class Carousel extends UI5Element {
 		return index >= 0 && index <= this.pagesCount - 1;
 	}
 
+	get hasManyPages() {
+		return this.pagesCount > 1;
+	}
+
 	get styles() {
 		return {
 			content: {
@@ -432,12 +455,12 @@ class Carousel extends UI5Element {
 			content: {
 				"ui5-carousel-content": true,
 				"ui5-carousel-content-no-animation": this.supressAimation,
-				"ui5-carousel-content-has-navigation": this.showNavigationArrows,
-				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-content-has-navigation": this.hasManyPages,
+				"ui5-carousel-content-has-navigation-and-buttons": this.hasManyPages && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-navigation-with-buttons": this.hasManyPages && (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows),
 			},
 			navPrevButton: {
 				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
@@ -472,11 +495,11 @@ class Carousel extends UI5Element {
 	}
 
 	get arrows() {
-		const showArrows = this.showNavigationArrows && isDesktop();
+		const showArrows = this._visibleNavigationArrows && this.hasManyPages && isDesktop();
 
 		return {
-			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: !this.hideNavigationArrows && showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: !this.hideNavigationArrows && showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
@@ -498,10 +521,6 @@ class Carousel extends UI5Element {
 
 	get selectedIndexToShow() {
 		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedIndex) + 1 : this.selectedIndex + 1;
-	}
-
-	get showNavigationArrows() {
-		return !this.hideNavigation && this.pagesCount > 1;
 	}
 
 	get ofText() {

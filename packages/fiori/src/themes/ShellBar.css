@@ -128,7 +128,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
 	display: inline-block;
-	margin-left: 0.5rem;
+	margin-left: 0.375rem;
 	width: 10px;
 	height: 10px;
 	width: 0px;
@@ -325,11 +325,11 @@ slot[name="profile"] {
 	margin-left: 1rem;
 }
 
-:host(:not([notification-count])) .ui5-shellbar-bell-button {
+:host(:not([notifications-count])) .ui5-shellbar-bell-button {
 	position: relative;
 }
 
-:host([notification-count]:not([notification-count=""])) .ui5-shellbar-bell-button::before,
+:host([notifications-count]:not([notifications-count=""])) .ui5-shellbar-bell-button::before,
 .ui5-shellbar-button[data-count]::before {
 	position: absolute;
 	width: auto;
@@ -350,8 +350,8 @@ slot[name="profile"] {
 	box-sizing: border-box;
 }
 
-:host([notification-count]:not([notification-count=""])) .ui5-shellbar-bell-button::before {
-	content: attr(data-ui5-notification-count);
+:host([notifications-count]:not([notifications-count=""])) .ui5-shellbar-bell-button::before {
+	content: attr(data-ui5-notifications-count);
 }
 
 .ui5-shellbar-button[data-count]::before {
@@ -473,7 +473,7 @@ slot[name="profile"] {
 }
 
 [dir="rtl"] .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
-	margin-right: .5rem;
+	margin-right: 0.375rem;
 	margin-left: 0;
 }
 

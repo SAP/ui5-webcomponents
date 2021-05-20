@@ -27,7 +27,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Defines the content of the <code>ui5-card</code>.
+		 * Defines the content of the component.
 		 * @type {HTMLElement[]}
 		 * @slot content
 		 * @public
@@ -69,7 +69,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Defines the title displayed in the <code>ui5-card</code> header.
+		 * Defines the title displayed in the component header.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -79,7 +79,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the subheading displayed in the <code>ui5-card</code> header.
+		 * Defines the subheading displayed in the component header.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -89,7 +89,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the status displayed in the <code>ui5-card</code> header.
+		 * Defines the status displayed in the component header.
 		 * <br><br>
 		 * <b>Note:</b> If the <code>action</code> slot is set, the <code>status</code> will not be displayed,
 		 * you can either have <code>action</code>, or <code>status</code>.
@@ -102,7 +102,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the <code>ui5-card</code> header would be interactive,
+		 * Defines if the component header would be interactive,
 		 * e.g gets hover effect, gets focused and <code>headerPress</code> event is fired, when it is pressed.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -113,7 +113,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-label attribute for the <code>ui5-card</code>
+		 * Defines the aria-label attribute for the component
 		 *
 		 * @type {String}
 		 * @since 1.0.0-rc.9
@@ -125,7 +125,7 @@ const metadata = {
 		},
 
 		/**
-		 * Receives id(or many ids) of the elements that label the <code>ui5-card</code>
+		 * Receives id(or many ids) of the elements that label the component
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -145,7 +145,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-card</code> header is activated
+		 * Fired when the component header is activated
 		 * by mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.

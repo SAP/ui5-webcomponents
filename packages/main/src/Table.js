@@ -36,7 +36,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-table</code> rows.
+		 * Defines the component rows.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
@@ -51,7 +51,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the configuration for the columns of the <code>ui5-table</code>.
+		 * Defines the configuration for the columns of the component.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
@@ -82,7 +82,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text that will be displayed inside the <code>More</code> button at the bottom of the table,
+		 * Defines the text that will be displayed inside the growing button at the bottom of the table,
 		 * meant for loading more rows upon press.
 		 *
 		 * <br><br>
@@ -92,25 +92,25 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.11
+		 * @since 1.0.0-rc.15
 		 * @public
 		 */
-		moreText: {
+		growingButtonText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the subtext that will be displayed under the <code>moreText</code>.
+		 * Defines the subtext that will be displayed under the <code>growingButtonText</code>.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.11
+		 * @since 1.0.0-rc.15
 		 * @public
 		 */
-		moreSubtext: {
+		 growingButtonSubtext: {
 			type: String,
 		},
 
@@ -197,7 +197,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the mode of the <code>ui5-table</code>.
+		 * Defines the mode of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -274,7 +274,7 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when the <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
+		 * Fired when <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
 		 *
 		 * @event sap.ui.webcomponents.main.Table#popin-change
 		 * @param {Array} poppedColumns popped-in columns.
@@ -691,8 +691,8 @@ class Table extends UI5Element {
 		return !isIE() && this.growing === TableGrowingMode.Scroll;
 	}
 
-	get _moreText() {
-		return this.moreText || this.i18nBundle.getText(LOAD_MORE_TEXT);
+	get _growingButtonText() {
+		return this.growingButtonText || this.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get ariaLabelText() {
@@ -710,10 +710,10 @@ class Table extends UI5Element {
 
 	get loadMoreAriaLabelledBy() {
 		if (this.moreDataText) {
-			return `${this._id}-showMore-text ${this._id}-showMore-desc`;
+			return `${this._id}-growingButton-text ${this._id}-growingButton-subtext`;
 		}
 
-		return `${this._id}-showMore-text`;
+		return `${this._id}-growingButton-text`;
 	}
 
 	get tableEndDOM() {

@@ -24,9 +24,9 @@ const metadata = {
 	tag: "ui5-wheelslider",
 	properties: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
 		/**
-		 * Defines whether the <code>ui5-wheelslider</code> is disabled
+		 * Defines whether the component is disabled
 		 * (default is set to <code>false</code>).
-		 * A disabled <code>ui5-wheelslider</code> can't be pressed or
+		 * A disabled component can't be pressed or
 		 * focused, and it is not in the tab chain.
 		 *
 		 * @type {boolean}
@@ -76,7 +76,7 @@ const metadata = {
 		},
 
 		_itemsToShow: {
-			type: String,
+			type: Object,
 			multiple: true,
 		},
 
@@ -248,7 +248,7 @@ class WheelSlider extends UI5Element {
 
 		offsetIndex = Math.round(scrollWhere / cellSizeInPx);
 
-		if (this.value === this._itemsToShow[offsetIndex]) {
+		if (this.value === this._itemsToShow[offsetIndex].value) {
 			return;
 		}
 
@@ -259,7 +259,7 @@ class WheelSlider extends UI5Element {
 			}
 		}
 
-		this.value = this._itemsToShow[offsetIndex];
+		this.value = this._itemsToShow[offsetIndex].value;
 		this._currentElementIndex = offsetIndex;
 	}
 
@@ -311,14 +311,21 @@ class WheelSlider extends UI5Element {
 	}
 
 	_buildItemsToShow() {
-		this._itemsToShow = this._items;
+		let itemsToShow = this._items;
 		if (this.cyclic) {
-			if (this._itemsToShow.length < this._items.length * this._timesMultipliedOnCyclic()) {
+			if (itemsToShow.length < this._items.length * this._timesMultipliedOnCyclic()) {
 				for (let i = 0; i < this._timesMultipliedOnCyclic(); i++) {
-					this._itemsToShow = this._itemsToShow.concat(this._items);
+					itemsToShow = itemsToShow.concat(this._items);
 				}
 			}
 		}
+
+		this._itemsToShow = itemsToShow.map(value => {
+			return {
+				value,
+				"selected": (value === this.value),
+			};
+		});
 	}
 
 	_handleArrayBorderReached(currentIndex) {

@@ -126,6 +126,17 @@ const metadata = {
  * <br><br>
  * <b>Note:</b> <code>ui5-product-switch-item</code> is not supported when used outside of <code>ui5-product-switch</code>.
  * <br><br>
+ *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-product-switch</code> provides advanced keyboard handling.
+ * When focused, the user can use the following keyboard
+ * shortcuts in order to perform a navigation:
+ * <br>
+ * <ul>
+ * <li>[SPACE/ENTER/RETURN] - Trigger <code>ui5-click</code> event</li>
+ * </ul>
+ * <br><br>
+ *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code>
  *
