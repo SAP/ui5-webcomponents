@@ -466,10 +466,6 @@ class Carousel extends UI5Element {
 			return true;
 		}
 
-		if (this.hidePageIndicator && this.hideNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation) {
-			return false;
-		}
-
 		if (this.hidePageIndicator) {
 			return false;
 		}
