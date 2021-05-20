@@ -43,7 +43,7 @@
 }
 
 :host(:not([level="1"])) {
-    border-bottom: none;
+    border-color: var(--sapList_AlternatingBackground);
 }
 
 :host([_toggle-button-end][selected]:not([level="1"])){
