@@ -4,10 +4,10 @@ about: Suggest improvements or report missing/unclear documentation.
 
 ---
 
-### **Description of the issue**
+### **Issue Description**
 A clear and concise description of the documentation issue.
 
-### **Describe the issue type**
+### **Issue Type**
 
 - [ ] Documentation is unclear
 - [ ] Documentation is incorrect

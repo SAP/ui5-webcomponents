@@ -3,13 +3,13 @@ name: Bug report
 about: Create a report to help us improve
 
 ---
-### **Description of the bug**
+### **Bug Description**
 A clear and concise description of what the bug is.
 
 ### **Expected Behavior**
 A clear and concise description of what you expect to happen.
 
-### **Steps To Reproduce**
+### **Steps to Reproduce**
 1. Go to '...'
 2. ...
 3. ...
@@ -23,7 +23,7 @@ If possible, please provide an isolated example by forking [CodeSandbox](https:/
 - Browser: {...}
 - Affected component: {...}
 
-### **Log output / Stack Trace / Screenshots**
+### **Log Output / Stack Trace / Screenshots**
 ```
 {...}
 ```
@@ -33,13 +33,13 @@ If possible, please provide an isolated example by forking [CodeSandbox](https:/
 - [ ] High
 - [ ] Very High
 
-The priority indicates how severe is the issue. To set the appropriate priority consider the following criterias:
+The priority indicates the severity of the issue. To set the appropriate priority consider the following criteria:
 - Breaks entire application or system - High or Very High
 - Accessibility issue - Medium or High
 - Functional issue - Medium or High
 - Visual issue - Low or Medium
 
-**Note:** the priority might be re-evaluated by the issue processor.
+**Note:** The priority might be re-evaluated by the issue processor.
 
 ### **Stakeholder Info** (if applicable)
 
