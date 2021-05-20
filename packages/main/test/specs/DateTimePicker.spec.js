@@ -102,6 +102,33 @@ describe("DateTimePicker general interaction", () => {
 		assert.strictEqual(newValue.toUpperCase(), "14/04/2020, 01:02:03 AM", "The new date/time is correctly selected.");
 	});
 
+	it("tests selection of new date without changing the time section", () => {
+		const PREVIOUS_VALUE = "14/04/2020, 01:02:03 AM";
+		const dtPicker = browser.$("#dtSeconds");
+
+		// act
+		openPickerById("dtSeconds");
+
+		// assert
+		const currentValue = dtPicker.shadow$("ui5-input").getValue();
+		assert.strictEqual(currentValue, PREVIOUS_VALUE,  "The initial date/time is correctly set.");
+
+		// act
+		const picker = getPicker("dtSeconds");
+
+		// select the next day (the right from the selected)
+		const selectedDay = picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$(".ui5-dp-item--selected");
+		selectedDay.click();
+		browser.keys("ArrowRight");
+		browser.keys("Space");
+
+		picker.$("#ok").click();
+
+		// assert
+		const newValue = dtPicker.shadow$("ui5-input").getValue();
+		assert.strictEqual(newValue.toUpperCase(), "15/04/2020, 01:02:03 AM", "The new date/time is correctly selected.");
+	});
+
 	it("tests change event is fired on submit", () => {
 		// test submit from empty value to current date/time value
 		openPickerById("dt1");
