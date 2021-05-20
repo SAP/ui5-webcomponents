@@ -1,4 +1,4 @@
-@import "./LoadMoreRow.css";
+@import "./GrowingButton.css";
 
 :host(:not([hidden])) {
 	display: inline-block;
@@ -70,7 +70,7 @@ tr {
 	z-index: 1;
 }
 
-:host([busy]) [load-more] {
+:host([busy]) [growing-button] {
 	opacity: 0.72;
 }
 
