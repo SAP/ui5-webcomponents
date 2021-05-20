@@ -15,6 +15,7 @@
   ],
   "exports": {
     "./.port": "./.port",
+    "./src/*": "./src/*",
     "./dist/*": "./dist/*",
     "./package.json": "./package.json",
     "./bundle.esm.js": "./bundle.esm.js",
