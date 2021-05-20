@@ -54,7 +54,7 @@ const metadata = {
 	defaultSlot: "items",
 	properties: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
-		 * Defines the value of the <code>ui5-combobox</code>.
+		 * Defines the value of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -66,7 +66,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the "live" value of the <code>ui5-combobox</code>.
+		 * Defines the "live" value of the component.
 		 * <br><br>
 		 * <b>Note:</b> The property is updated upon typing.
 		 *
@@ -84,7 +84,7 @@ const metadata = {
 
 		/**
 		 * Defines a short hint intended to aid the user with data entry when the
-		 * <code>ui5-combobox</code> has no value.
+		 * component has no value.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -95,9 +95,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether <code>ui5-combobox</code> is in disabled state.
+		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-combobox</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled component is completely uninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -108,7 +108,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-combobox</code>.
+		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -129,9 +129,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-combobox</code> is readonly.
+		 * Defines whether the component is readonly.
 		 * <br><br>
-		 * <b>Note:</b> A read-only <code>ui5-combobox</code> is not editable,
+		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
@@ -143,7 +143,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-combobox</code> is required.
+		 * Defines whether the component is required.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -165,7 +165,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the filter type of the <code>ui5-combobox</code>.
+		 * Defines the filter type of the component.
 		 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code> and <code>Contains</code>.
 		 *
 		 * @type {string}
@@ -232,14 +232,7 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
-		 * Defines the <code>ui5-combobox</code> items.
-		 * <br><br>
-		 * Example: <br>
-		 * &lt;ui5-combobox><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br>
-		 * &lt;/ui5-combobox>
-		 * <br> <br>
+		 * Defines the component items.
 		 *
 		 * @type {sap.ui.webcomponents.main.IComboBoxItem[]}
 		 * @slot items
@@ -252,7 +245,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-combobox</code>.
+		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.

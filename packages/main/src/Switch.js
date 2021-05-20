@@ -27,10 +27,10 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
 		/**
-		 * Defines if the <code>ui5-switch</code> is checked.
+		 * Defines if the component is checked.
 		 * <br><br>
 		 * <b>Note:</b> The property can be changed with user interaction,
-		 * either by cliking/tapping on the <code>ui5-switch</code>, or by
+		 * either by cliking/tapping on the component, or by
 		 * pressing the <code>Enter</code> or <code>Space</code> key.
 		 *
 		 * @type {boolean}
@@ -42,9 +42,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-switch</code> is disabled.
+		 * Defines whether the component is disabled.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-switch</code> is noninteractive.
+		 * <b>Note:</b> A disabled component is noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -55,7 +55,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text of the <code>ui5-switch</code> when switched on.
+		 * Defines the text of the component when switched on.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
@@ -68,7 +68,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text of the <code>ui5-switch</code> when switched off.
+		 * Defines the text of the component when switched off.
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
@@ -80,7 +80,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-switch</code> type.
+		 * Defines the component type.
 		 * <br><br>
 		 * <b>Note:</b> If <code>graphical</code> type is set,
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
@@ -95,7 +95,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-switch</code> checked state changes.
+		 * Fired when the component checked state changes.
 		 *
 		 * @public
 		 * @event
