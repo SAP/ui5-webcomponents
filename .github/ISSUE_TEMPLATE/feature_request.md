@@ -3,19 +3,28 @@ name: Feature request
 about: Suggest an idea for this project
 
 ---
+### **Description of the feature request**
+A clear and concise description of what feature is missing.
+Is your feature request related to a problem? Please describe.
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+### **Describe the solution you'd like**
+A clear and concise description of the solution you would like to have.
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
+### **Describe alternatives you've considered**
 A clear and concise description of any alternative solutions or features you've considered.
 
-**Additional context**
+### **Additional context**
 Add any other context or screenshots about the feature request here.
 
-**Organization:** *(if applicable)*
+### **Priority**
+- [ ] Low
+- [x] Medium
+- [ ] High
+- [ ] Very High
 
-**Urgency:** *(High, Medium, Low)* *(For "High", please explain the reason and, if possible, add info for upcoming releases and/or milestones)*
+A clear and concise description on how urgent is the requirement. If possible, please provide upcoming releases and milestones.
+
+### **Stakeholder Info** (if applicable)
+
+- Organization: {...}
+- Bussiness impact: {...}
