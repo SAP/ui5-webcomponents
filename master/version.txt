@@ -1,7 +1,9 @@
-commit eca59f575c4397f92ff4dc2f755262f46110a20c
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu May 20 15:30:12 2021 +0300
+commit b972f40c059a19a69abfcd92632702497f8cc1bb
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu May 20 15:49:32 2021 +0300
 
-    fix(ui5-li-tree): fix arrow flickering (#3293)
+    refactor(ui5-messagestrip): update icons for better contrast ratio (#3288)
     
-    Fixes: #3238
+    This is to full-fill global requirement of the VD team. It turns out that the currently used message/value state icons do not cover the contrast ratio criteria. The change replaces the icons in the MessageStrip component with the recommended icons.
+    
+    Fixes: #3287
