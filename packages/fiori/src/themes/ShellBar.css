@@ -128,7 +128,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
 	display: inline-block;
-	margin-left: 0.5rem;
+	margin-left: 0.375rem;
 	width: 10px;
 	height: 10px;
 	width: 0px;
@@ -470,7 +470,7 @@ slot[name="profile"] {
 }
 
 [dir="rtl"] .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
-	margin-right: .5rem;
+	margin-right: 0.375rem;
 	margin-left: 0;
 }
 
