@@ -71,7 +71,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
-		 * Defines the text that will be displayed when there is no data and <code>showNoData</code> is present.
+		 * Defines the text that will be displayed when there is no data and <code>hideNoData</code> is present.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -120,8 +120,9 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		showNoData: {
+		hideNoData: {
 			type: Boolean,
 		},
 
@@ -437,7 +438,7 @@ class Table extends UI5Element {
 			return !this._hiddenColumns[index];
 		});
 
-		this._noDataDisplayed = !this.rows.length && this.showNoData;
+		this._noDataDisplayed = !this.rows.length && this.hideNoData;
 		this.visibleColumnsCount = this.visibleColumns.length;
 	}
 
