@@ -4,7 +4,7 @@
 		aria-posinset="{{posInSet}}"
 		aria-setsize="{{sizeOfSet}}"
 		aria-selected="{{pressed}}"
-		class="ui5-segmentedbutton-item-root"
+		class="ui5-button-root"
 		?disabled="{{disabled}}"
 		data-sap-focus-ref
 	{{> ariaPressed}}
@@ -28,13 +28,13 @@
 	{{#if icon}}
 		<ui5-icon
 				style="{{styles.icon}}"
-				class="ui5-segmentedbutton-item-icon"
+				class="ui5-button-icon"
 				name="{{icon}}"
 				?show-tooltip={{showIconTooltip}}
 		></ui5-icon>
 	{{/if}}
 
-	<span id="{{_id}}-content" class="ui5-segmentedbutton-item-text">
+	<span id="{{_id}}-content" class="ui5-button-text">
 		<bdi>
 			<slot></slot>
 		</bdi>
