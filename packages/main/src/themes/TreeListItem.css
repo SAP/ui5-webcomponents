@@ -6,11 +6,6 @@
     position: relative;
 }
 
-:host([_minimal]) .ui5-li-tree-toggle-box {
-	width: 0;
-	min-width: 0;
-}
-
 :host([_minimal]) .ui5-li-icon {
     padding: 0;
 }
@@ -46,25 +41,26 @@
     border-color: var(--sapList_AlternatingBackground);
 }
 
-:host([_toggle-button-end][selected]:not([level="1"])){
+:host(:not([level="1"])) .ui5-li-root-tree {
+    background: var(--sapList_AlternatingBackground);
+}
+
+:host([selected]) .ui5-li-root-tree {
+    background: var(--sapList_SelectionBackgroundColor);
+}
+
+:host([selected]:not([level="1"])){
     border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
-:host([_toggle-button-end]:not([selected])) .ui5-li-root-tree:hover {
+.ui5-li-root-tree:hover,
+:host(:not([level="1"])) .ui5-li-root-tree:hover {
     background: var(--sapList_Hover_Background);
     cursor: pointer;
 }
 
-:host(:not([level="1"]):not([selected])) .ui5-li-root-tree {
-    background: var(--sapList_AlternatingBackground);
-}
-
-:host([_toggle-button-end]:not([level="1"])) .ui5-li-root-tree {
-    background: var(--ui5-listitem-background-color);
-}
-
-:host([_toggle-button-end][selected]:not([level="1"])) .ui5-li-root-tree {
-    background: var(--sapList_SelectionBackgroundColor);
+:host([selected]) .ui5-li-root-tree:hover {
+	background : var(--sapList_Hover_SelectionBackground);
 }
 
 .ui5-li-tree-toggle-box {
