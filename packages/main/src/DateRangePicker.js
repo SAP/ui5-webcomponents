@@ -92,6 +92,10 @@ class DateRangePicker extends DatePicker {
 		return this._extractLastTimestamp(this.value);
 	}
 
+	get _tempTimestamp() {
+		return this._tempValue && this.getFormat().parse(this._tempValue, true).getTime() / 1000;
+	}
+
 	/**
 	 * Required by DatePicker.js
 	 * @override
@@ -105,7 +109,7 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	get _calendarTimestamp() {
-		return (this._tempValue && this.getFormat().parse(this._tempValue, true).getTime() / 1000) || this._firstDateTimestamp || getTodayUTCTimestamp(this._primaryCalendarType);
+		return this._tempTimestamp || this._firstDateTimestamp || getTodayUTCTimestamp(this._primaryCalendarType);
 	}
 
 	/**
