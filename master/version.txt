@@ -1,5 +1,5 @@
-commit 62a0cc38c488afa47988e0a74a39c287bdd6ed71
+commit 13221f524fd43172d6198a4a8a3fdd74f21cbfa6
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri May 21 11:35:58 2021 +0300
+Date:   Fri May 21 16:33:27 2021 +0300
 
-    fix(playground): fix links (#3295)
+    docs: improve ui5-table sample (#3300)
