@@ -29,7 +29,7 @@
 			{{/each}}
 
 			{{#unless rows.length}}
-				{{#if hideNoData}}
+				{{#unless hideNoData}}
 					<tr class="ui5-table-no-data-row-root" role="row">
 						<td colspan="{{visibleColumnsCount}}" role="cell">
 
@@ -38,7 +38,7 @@
 							</div>
 						</td>
 					</tr>
-				{{/if}}
+				{{/unless}}
 			{{/unless}}
 
 			{{#if growsWithButton}}
