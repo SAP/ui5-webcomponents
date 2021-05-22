@@ -8,6 +8,7 @@ import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 
@@ -133,7 +134,7 @@ const metadata = {
 		 * @event sap.ui.webcomponents.fiori.Wizard#step-change
 		 * @param {HTMLElement} step the new step
 		 * @param {HTMLElement} previousStep the previous step
-		 * @param {Boolean} changeWithClick the step change occurs due to user's click on step within the navigation
+		 * @param {Boolean} changeWithClick the step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation
 		 * @public
 		 */
 		"step-change": {
@@ -427,7 +428,7 @@ class Wizard extends UI5Element {
 	 */
 	onSelectionChangeRequested(event) {
 		this.selectionRequestedByClick = true;
-		this.changeSelectionByStepClick(event.target);
+		this.changeSelectionByStepAction(event.target);
 	}
 
 	/**
@@ -649,16 +650,20 @@ class Wizard extends UI5Element {
 	/**
 	 * Called upon <code>onSelectionChangeRequested</code>.
 	 * Selects the external step (ui5-wizard-step),
-	 * based on the clicked step in the header (ui5-wizard-tab).
+	 * based on the clicked or activated via keyboard step in the header (ui5-wizard-tab).
 	 * @param {HTMLElement} stepInHeader the step equivalent in the header
 	 * @private
 	 */
-	changeSelectionByStepClick(stepInHeader) {
+	async changeSelectionByStepAction(stepInHeader) {
 		const stepRefId = stepInHeader.getAttribute("data-ui5-content-ref-id");
 		const selectedStep = this.selectedStep;
 		const stepToSelect = this.getStepByRefId(stepRefId);
 		const bExpanded = stepInHeader.getAttribute(EXPANDED_STEP) === "true";
-		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
+		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);		
+		const firstFocusableElement = await getFirstFocusableElement(stepToSelect.firstElementChild);
+
+		// Focus the first found focusable element within the step content corresponding to the currently focused tab
+		firstFocusableElement.focus();
 
 		// If the currently selected (active) step is clicked,
 		// just scroll to its starting point and stop.

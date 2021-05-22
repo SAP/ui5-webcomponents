@@ -83,10 +83,15 @@ describe("Wizard general interaction", () => {
 		const wiz = browser.$("#wizTest");
 		const step1 = browser.$("#st1");
 		const step2 = browser.$("#st2");
+
 		const step1InHeader = wiz.shadow$(`[data-ui5-index="1"]`);
 		const step2InHeader = wiz.shadow$(`[data-ui5-index="2"]`);
 		const inpStepChangeCounter =  browser.$("#inpStepChangeCounter");
 		const inpStepChangeCause =  browser.$("#inpStepChangeCause");
+
+		const wizardStep = browser.$("ui5-wizard-step");
+		const messageStrip = wizardStep.shadow$("ui5-messagestrip")
+		const firstFocusableElement = messageStrip.shadow$(`ui5-button`);
 
 		// act - click on the first step in the header
 		step1InHeader.click();
@@ -100,6 +105,16 @@ describe("Wizard general interaction", () => {
 			"First step is enabled.");
 		assert.strictEqual(step1InHeader.getAttribute("disabled"), null,
 			"First step in header is enabled.");
+
+		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
+
+		step1InHeader.keys(["Shift", "Tab"]);
+		step2InHeader.keys("Space");
+		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
+
+		step1InHeader.keys(["Shift", "Tab"]);
+		step2InHeader.keys("Enter");
+		assert.strictEqual(firstFocusableElement.getAttribute("focused"), "true", "The First focusable element in the step content is focused.");
 
 		// assert - that second step in the content and in the header are not selected
 		assert.strictEqual(step2.getAttribute("selected"), null,
@@ -126,6 +141,7 @@ describe("Wizard general interaction", () => {
 		// act - bring the focus to the first step in the header
 		// act - use keyboard to move to step2
 		step1InHeader.click();
+		step1InHeader.keys(["Shift", "Tab"]);
 		step1InHeader.keys("ArrowRight");
 		step2InHeader.keys("Space");
 
@@ -146,29 +162,34 @@ describe("Wizard general interaction", () => {
 		// assert - step-change second time
 		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "2", "Event step-change fired 2nd time.");
 
-		// act - use keyboard to move back to step1
-		step2InHeader.keys("ArrowLeft");
+		// act - move back to step1 then move the focus to the step 2 and press enter
+		step1InHeader.click();
+		step1InHeader.keys(["Shift", "Tab"]);
+		step1InHeader.keys("ArrowRight");
 		step1InHeader.keys("Enter");
 
 		// assert - that first step in the content and in the header are  selected
-		assert.strictEqual(step1.getAttribute("selected"), "true",
+		assert.strictEqual(step2.getAttribute("selected"), "true",
 			"First step in the content is not selected.");
-		assert.strictEqual(step1InHeader.getAttribute("selected"), "true",
+		assert.strictEqual(step2InHeader.getAttribute("selected"), "true",
 			"First step  in the header not is selected.");
-		assert.strictEqual(step1.getAttribute("disabled"), null,
+		assert.strictEqual(step2.getAttribute("disabled"), null,
 			"First step is enabled.");
-		assert.strictEqual(step1InHeader.getAttribute("disabled"), null,
+		assert.strictEqual(step2InHeader.getAttribute("disabled"), null,
 			"First step in header is enabled.");
 
-		// assert - that second step in the content and in the header are not selected
-		assert.strictEqual(step2.getAttribute("selected"), null,
+		// assert - that first step in the content and in the header are not selected
+		assert.strictEqual(step1.getAttribute("selected"), null,
 			"Second step in the content is not selected.");
-		assert.strictEqual(step2InHeader.getAttribute("selected"), null,
+		assert.strictEqual(step1InHeader.getAttribute("selected"), null,
 			"Second step in the header is not selected.");
 
 		// assert - step-change second time
-		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "3",
-			"Event step-change fired 3rd time.");
+		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "4",
+			"Event step-change fired 4th time.");
+
+		// Activate the first step for the next tests
+		step1InHeader.click();
 	});
 
 	it("move to next step by scroll", () => {
@@ -191,8 +212,8 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(step2.getAttribute("disabled"), null, "Second step is enabled.");
 		assert.strictEqual(step2InHeader.getAttribute("disabled"), null, "Second step in header is enabled.");
 
-		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "4",
-			"Event step-change fired 4th time due to scrolling.");
+		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "6",
+			"Event step-change fired 6th time due to scrolling.");
 
 		// assert - step-change fired not because of user click
 		assert.strictEqual(inpStepChangeCause.getProperty("value"), "false",
@@ -219,7 +240,7 @@ describe("Wizard general interaction", () => {
 			"Third step in the content is selected.");
 		assert.strictEqual(step3InHeader.getAttribute("selected"), "true",
 			"Third step in the header is selected.");
-		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "5",
+		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "7",
 			"Event step-change fired once for 5th time due to scrolling.");
 	});
 
