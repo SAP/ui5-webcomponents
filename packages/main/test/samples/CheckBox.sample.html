@@ -79,4 +79,64 @@
 	</xmp></pre>
 </section>
 
+<section>
+	<h3>CheckBox with indeterminate</h3>
+	<div class="snippet">
+		<ui5-checkbox id="result-cb" text="Select / deselect all" indeterminate checked></ui5-checkbox>
+		<hr />
+		<div style="display: flex; flex-direction: column; align-items: flex-start;">
+			<ui5-checkbox id="cb1" text="English" checked></ui5-checkbox>
+			<ui5-checkbox id="cb2" text="German"></ui5-checkbox>
+			<ui5-checkbox id="cb3" text="French"></ui5-checkbox>
+		</div>
+		<script>
+			var resultCb = document.querySelector("#result-cb");
+			var langCbs = Array.from(document.querySelectorAll("[id^=cb]"));
+
+			langCbs.forEach(cbEl => {
+				cbEl.addEventListener("ui5-change", event => {
+					const hasChecked = langCbs.some(cb => cb.checked);
+					const hasUnchecked = langCbs.some(cb => !cb.checked);
+
+					resultCb.indeterminate = hasChecked && hasUnchecked;
+					resultCb.checked = hasChecked;
+				});
+			});
+
+			resultCb.addEventListener("ui5-change", event => {
+				langCbs.forEach(cb => cb.checked = event.target.checked);
+			});
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-checkbox id="result-cb" text="Select / deselect all" indeterminate checked></ui5-checkbox>
+<hr />
+<div style="display: flex; flex-direction: column; align-items: flex-start;">
+	<ui5-checkbox id="cb1" text="English" checked></ui5-checkbox>
+	<ui5-checkbox id="cb2" text="German"></ui5-checkbox>
+	<ui5-checkbox id="cb3" text="French"></ui5-checkbox>
+</div>
+<script>
+	var resultCb = document.querySelector("#result-cb");
+	var langCbs = Array.from(document.querySelectorAll("[id^=cb]"));
+
+	langCbs.forEach(function (cbEl) {
+		cbEl.addEventListener("ui5-change", function (event) {
+			const hasChecked = langCbs.some(function (cb) { return cb.checked });
+			const hasUnchecked = langCbs.some(function (cb) { return !cb.checked });
+
+			resultCb.indeterminate = hasChecked && hasUnchecked;
+			resultCb.checked = hasChecked;
+		});
+	});
+
+	resultCb.addEventListener("ui5-change", function (event) {
+		langCbs.forEach(function (cb) {
+			cb.checked = event.target.checked;
+		});
+	});
+</script>
+	</xmp></pre>
+</section>
+
 <!-- JSDoc marker -->
