@@ -11,7 +11,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
 | Avatar                   | `ui5-avatar`         | `import "@ui5/webcomponents/dist/Avatar.js";`              |
 | Badge                    | `ui5-badge`          | `import "@ui5/webcomponents/dist/Badge.js";`               |
-| Busy Indicator           | `ui5-busyindicator`  | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
+| Busy Indicator           | `ui5-busy-indicator`  | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`         | `import "@ui5/webcomponents/dist/Button.js";`              |
 | Card                     | `ui5-card`           | `import "@ui5/webcomponents/dist/Card.js";`                |
 | Carousel                 | `ui5-carousel`       | `import "@ui5/webcomponents/dist/Carousel.js";`            |

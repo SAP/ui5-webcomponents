@@ -18,7 +18,7 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-busyindicator",
+	tag: "ui5-busy-indicator",
 	languageAware: true,
 	slots: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
 
@@ -85,17 +85,17 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-busyindicator</code> signals that some operation is going on and that the
+ * The <code>ui5-busy-indicator</code> signals that some operation is going on and that the
  * user must wait. It does not block the current UI screen so other operations could be triggered in parallel.
  * It displays 3 dots and each dot expands and shrinks at a different rate, resulting in a cascading flow of animation.
  *
  * <h3>Usage</h3>
- * For the <code>ui5-busyindicator</code> you can define the size, the text and whether it is shown or hidden.
+ * For the <code>ui5-busy-indicator</code> you can define the size, the text and whether it is shown or hidden.
  * In order to hide it, use the "active" property.
  * <br><br>
- * In order to show busy state over an HTML element, simply nest the HTML element in a <code>ui5-busyindicator</code> instance.
+ * In order to show busy state over an HTML element, simply nest the HTML element in a <code>ui5-busy-indicator</code> instance.
  * <br>
- * <b>Note:</b> Since <code>ui5-busyindicator</code> has <code>display: inline-block;</code> by default and no width of its own,
+ * <b>Note:</b> Since <code>ui5-busy-indicator</code> has <code>display: inline-block;</code> by default and no width of its own,
  * whenever you need to wrap a block-level element, you should set <code>display: block</code> to the busy indicator as well.
  *
  * <h4>When to use:</h4>
@@ -119,7 +119,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.BusyIndicator
  * @extends UI5Element
- * @tagname ui5-busyindicator
+ * @tagname ui5-busy-indicator
  * @public
  * @since 0.12.0
  */
@@ -181,8 +181,8 @@ class BusyIndicator extends UI5Element {
 	get classes() {
 		return {
 			root: {
-				"ui5-busyindicator-root": true,
-				"ui5-busyindicator-root--ie": isIE(),
+				"ui5-busy-indicator-root": true,
+				"ui5-busy-indicator-root--ie": isIE(),
 			},
 		};
 	}
@@ -217,7 +217,7 @@ class BusyIndicator extends UI5Element {
 		}
 
 		event.preventDefault();
-		this.shadowRoot.querySelector(".ui5-busyindicator-busy-area").focus();
+		this.shadowRoot.querySelector(".ui5-busy-indicator-busy-area").focus();
 	}
 }
 
