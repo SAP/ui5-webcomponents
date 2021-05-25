@@ -95,26 +95,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the index of the initially selected item.
+		 * Defines the page of the initially selected item.
 		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
-		selectedIndex: {
+		selectedPage: {
 			type: Integer,
 			defaultValue: 0,
-		},
-
-		/**
-		 * Defines when the <code>load-more</code> event is fired. If not applied the event will not be fired.
-		 * @type {Integer}
-		 * @defaultvalue 1
-		 * @public
-		 * @since 1.0.0-rc.8
-		 */
-		infiniteScrollOffset: {
-			type: Integer,
-			defaultValue: 1,
 		},
 
 		/**
@@ -181,29 +169,22 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 
 		/**
-		 * Fired whenever the <code>selectedIndex</code> changes due to user interaction,
+		 * Fired whenever the <code>selectedPage</code> changes due to user interaction,
 		 * when the user clicks on the navigation arrows or while resizing,
 		 * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
 		 *
 		 * @event
-		 * @param {Integer} selectedIndex the current <code>selectedIndex</code>.
+		 * @param {Integer} selectedPage the current <code>selectedPage</code>.
+		 * @param {Array} visibleItemsIndices the indices of the visible items <code>selectedPage</code>.
 		 * @public
 		 * @since 1.0.0-rc.7
 		 */
 		navigate: {
 			detail: {
-				selectedIndex: { type: Integer },
+				selectedPage: { type: Integer },
+				visibleItemsIndices: { type: Array },
 			},
 		},
-
-		/**
-		 * Fired for the last items of the component if it is scrolled and the direction of scrolling is to the end.
-		 * The number of items for which the event is fired is controlled by the <code>infiniteScrollOffset</code> property.
-		 * @event sap.ui.webcomponents.main.Carousel#load-more
-		 * @public
-		 * @since 1.0.0-rc.8
-		 */
-		"load-more": {},
 	},
 };
 
@@ -277,7 +258,7 @@ class Carousel extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.validateSelectedIndex();
+		this.validateSelectedPage();
 	}
 
 	onAfterRendering() {
@@ -293,10 +274,10 @@ class Carousel extends UI5Element {
 		ResizeHandler.deregister(this, this._onResizeBound);
 	}
 
-	validateSelectedIndex() {
-		if (!this.isIndexInRange(this.selectedIndex)) {
-			this.selectedIndex = 0;
-			console.warn(`The "selectedIndex" is out of range, changed to: ${0}`); // eslint-disable-line
+	validateSelectedPage() {
+		if (!this.isIndexInRange(this.selectedPage)) {
+			this.selectedPage = 0;
+			console.warn(`The "selectedPage" is out of range, changed to: ${0}`); // eslint-disable-line
 		}
 	}
 
@@ -316,9 +297,9 @@ class Carousel extends UI5Element {
 			return;
 		}
 
-		if (this.selectedIndex > this.pagesCount - 1) {
-			this.selectedIndex = this.pagesCount - 1;
-			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		if (this.selectedPage > this.pagesCount - 1) {
+			this.selectedPage = this.pagesCount - 1;
+			this.fireEvent("navigate", { selectedPage: this.selectedPage });
 		}
 	}
 
@@ -357,42 +338,38 @@ class Carousel extends UI5Element {
 	navigateLeft() {
 		this._resizing = false;
 
-		const peviousSelectedIndex = this.selectedIndex;
+		const previousSelectedPage = this.selectedPage;
 
-		if (this.selectedIndex - 1 < 0) {
+		if (this.selectedPage - 1 < 0) {
 			if (this.cyclic) {
-				this.selectedIndex = this.pagesCount - 1;
+				this.selectedPage = this.pagesCount - 1;
 			}
 		} else {
-			--this.selectedIndex;
+			--this.selectedPage;
 		}
 
-		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
+		if (previousSelectedPage !== this.selectedPage) {
+			this.fireEvent("navigate", { selectedPage: this.selectedPage });
 		}
 	}
 
 	navigateRight() {
 		this._resizing = false;
 
-		const peviousSelectedIndex = this.selectedIndex;
+		const previousSelectedPage = this.selectedPage;
 
-		if (this.selectedIndex + 1 > this.pagesCount - 1) {
+		if (this.selectedPage + 1 > this.pagesCount - 1) {
 			if (this.cyclic) {
-				this.selectedIndex = 0;
+				this.selectedPage = 0;
 			} else {
 				return;
 			}
 		} else {
-			++this.selectedIndex;
+			++this.selectedPage;
 		}
 
-		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
-		}
-
-		if (this.pagesCount - this.selectedIndex <= this.infiniteScrollOffset + 1) {
-			this.fireEvent("load-more");
+		if (previousSelectedPage !== this.selectedPage) {
+			this.fireEvent("navigate", { selectedPage: this.selectedPage });
 		}
 	}
 
@@ -428,7 +405,7 @@ class Carousel extends UI5Element {
 	}
 
 	isItemInViewport(index) {
-		return index >= this.selectedIndex && index <= this.selectedIndex + this.effectiveItemsPerPage - 1;
+		return index >= this.selectedPage && index <= this.selectedPage + this.effectiveItemsPerPage - 1;
 	}
 
 	isIndexInRange(index) {
@@ -442,7 +419,7 @@ class Carousel extends UI5Element {
 	get styles() {
 		return {
 			content: {
-				transform: `translateX(${this._isRTL ? "" : "-"}${this.selectedIndex * this._itemWidth}px`,
+				transform: `translateX(${this._isRTL ? "" : "-"}${this.selectedPage * this._itemWidth}px`,
 			},
 		};
 	}
@@ -486,7 +463,7 @@ class Carousel extends UI5Element {
 
 		for (let index = 0; index < pages; index++) {
 			dots.push({
-				active: index === this.selectedIndex,
+				active: index === this.selectedPage,
 				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [pages]),
 			});
 		}
@@ -504,11 +481,11 @@ class Carousel extends UI5Element {
 	}
 
 	get hasPrev() {
-		return this.cyclic || this.selectedIndex - 1 >= 0;
+		return this.cyclic || this.selectedPage - 1 >= 0;
 	}
 
 	get hasNext() {
-		return this.cyclic || this.selectedIndex + 1 <= this.pagesCount - 1;
+		return this.cyclic || this.selectedPage + 1 <= this.pagesCount - 1;
 	}
 
 	get supressAimation() {
@@ -519,8 +496,8 @@ class Carousel extends UI5Element {
 		return this.effectiveDir === "rtl";
 	}
 
-	get selectedIndexToShow() {
-		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedIndex) + 1 : this.selectedIndex + 1;
+	get selectedPageToShow() {
+		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedPage) + 1 : this.selectedPage + 1;
 	}
 
 	get ofText() {
@@ -528,7 +505,7 @@ class Carousel extends UI5Element {
 	}
 
 	get ariaActiveDescendant() {
-		return this.content.length ? `${this._id}-carousel-item-${this.selectedIndex + 1}` : undefined;
+		return this.content.length ? `${this._id}-carousel-item-${this.selectedPage + 1}` : undefined;
 	}
 
 	get nextPageText() {

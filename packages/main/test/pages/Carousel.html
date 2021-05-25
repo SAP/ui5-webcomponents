@@ -374,7 +374,7 @@
     </ui5-carousel>
 
     <ui5-title>Carousel with out of range index</ui5-title>
-    <ui5-carousel id="carousel7" items-per-page-s="1" items-per-page-m="4" items-per-page-l="8" selected-index="15">
+    <ui5-carousel id="carousel7" items-per-page-s="1" items-per-page-m="4" items-per-page-l="8" selected-page="15">
         <ui5-button>Button 1</ui5-button>
         <ui5-button>Button 2</ui5-button>
         <ui5-button>Button 3</ui5-button>
@@ -399,34 +399,13 @@
     <ui5-input id="result"></ui5-input>
     <ui5-input id="resultCounter"></ui5-input>
 
-    <ui5-carousel id="carousel9" infinite-scroll-offset="2">
-        <ui5-button>Button 1</ui5-button>
-        <ui5-button>Button 2</ui5-button>
-        <ui5-button>Button 3</ui5-button>
-        <ui5-button>Button 4</ui5-button>
-        <ui5-button>Button 5</ui5-button>
-        <ui5-button>Button 6</ui5-button>
-        <ui5-button>Button 7</ui5-button>
-        <ui5-button>Button 8</ui5-button>
-        <ui5-button>Button 9</ui5-button>
-        <ui5-button>Button 10</ui5-button>
-    </ui5-carousel>
-    <ui5-input id="loadmore-result" value="0"></ui5-input>
-
 </body>
 
 <script>
     var counter = 0;
     carousel8.addEventListener("ui5-navigate", function (event) {
-        result.value = event.detail.selectedIndex;
+        result.value = event.detail.selectedPage;
         resultCounter.value = ++counter;
-    });
-
-    var loadMoreConter = 0,
-        loadMoreInput = document.getElementById("loadmore-result");
-
-    carousel9.addEventListener("ui5-loadMore", function (event) {
-        loadMoreInput.value = ++loadMoreConter;
     });
 </script>
 
