@@ -1,7 +1,8 @@
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
 import ToggleButton from "./ToggleButton.js";
-import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import ButtonDesign from "./types/ButtonDesign.js";
+
+import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @public
