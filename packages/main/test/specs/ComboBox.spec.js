@@ -326,4 +326,19 @@ describe("General interaction", () => {
 		arrow.click();
 		assert.strictEqual(listItem.shadow$(".ui5-li-info").getText(), "DZ", "Additional item text should be displayed");
 	});
+
+	it ("Tests setting value programatically", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/ComboBox.html`);
+
+		const combo = $("#combo");
+		const btn = $("#value-set-btn");
+		const inner = combo.shadow$("input");
+
+		assert.strictEqual(combo.getProperty("value"), "Bulgaria", "Initial Value should be Bulgaria");
+
+		btn.click();
+
+		assert.strictEqual(combo.getProperty("value"), "new value", "ComboBox value should be set to 'new value'");
+		assert.strictEqual(inner.getProperty("value"), "new value", "ComboBox value should be set to 'new value'");
+	});
 });
