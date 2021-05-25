@@ -1,5 +1,10 @@
-commit d2d4397d7f81be5ed5672983269c101a3b167e50
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue May 25 11:11:01 2021 +0300
+commit 67913d34a7a7cd08841569e15179f27de8137c46
+Author: Hristo Petrov <h.petrov@sap.com>
+Date:   Tue May 25 12:09:21 2021 +0300
 
-    fix(ui5-table): introduce hide-no-data property (#3302)
+    refactor(ui5-slider): show tooltips on focus (#3235)
+    
+    - Tooltips will become and remain visible when the focus is
+    on the slider/handle.
+    - In case the slider looses the focus and the mouse is not
+    over it, the tooltip will be hidden.
