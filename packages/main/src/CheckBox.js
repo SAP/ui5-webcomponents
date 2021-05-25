@@ -57,6 +57,26 @@ const metadata = {
 		},
 
 		/**
+		* Determines whether the component is displayed as partially selected.
+		* <br><br>
+		* <b>Note:</b> This property leads only to visual change of the checkbox and the state cannot be achieved by user interaction.
+		* <b>Note:</b> The visual state depends on the value of the selected property:
+		* <ul>
+		* <li> If the component is checked and indeterminate, it will be displayed as partially selected
+		* <li> If the component is checked and it is not indeterminate, it will be displayed as checked
+		* <li> If the component is not checked, it will be displayed as not checked regardless value of the indeterminate attribute
+		* </ul>
+		*
+		* @type {boolean}
+		* @defaultvalue false
+		* @public
+		* @since 1.0.0-rc.15
+		*/
+		indeterminate: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines if the component is checked.
 		 * <br><br>
 		 * <b>Note:</b> The property can be changed with user interaction,
@@ -349,6 +369,10 @@ class CheckBox extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
+	get ariaChecked() {
+		return this.indeterminate && this.checked ? "mixed" : this.checked;
+	}
+
 	get ariaLabelledBy() {
 		if (!this.ariaLabelText) {
 			return this.text ? `${this._id}-label` : undefined;
@@ -372,6 +396,10 @@ class CheckBox extends UI5Element {
 	get tabIndex() {
 		const tabindex = this.getAttribute("tabindex");
 		return this.disabled ? undefined : tabindex || "0";
+	}
+
+	get isCompletelyChecked() {
+		return this.checked && !this.indeterminate;
 	}
 
 	static get dependencies() {
