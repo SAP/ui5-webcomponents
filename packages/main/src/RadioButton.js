@@ -70,7 +70,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		selected: {
+		checked: {
 			type: Boolean,
 		},
 
@@ -183,12 +183,12 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
 		/**
-		 * Fired when the component selected state changes.
+		 * Fired when the component checked state changes.
 		 *
 		 * @event
 		 * @public
 		 */
-		select: {},
+		 change: {},
 	},
 };
 
@@ -199,7 +199,7 @@ const metadata = {
  *
  * The <code>ui5-radiobutton</code> component enables users to select a single option from a set of options.
  * When a <code>ui5-radiobutton</code> is selected by the user, the
- * <code>select</code> event is fired.
+ * <code>change</code> event is fired.
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
  * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
  * <br>
@@ -264,8 +264,8 @@ class RadioButton extends UI5Element {
 	syncGroup() {
 		const oldGroup = this._name;
 		const currentGroup = this.name;
-		const oldSelected = this._selected;
-		const currentSelected = this.selected;
+		const oldChecked = this._checked;
+		const currentChecked = this.checked;
 
 		if (currentGroup !== oldGroup) {
 			if (oldGroup) {
@@ -281,20 +281,20 @@ class RadioButton extends UI5Element {
 			RadioButtonGroup.enforceSingleSelection(this, currentGroup);
 		}
 
-		if (this.name && currentSelected !== oldSelected) {
+		if (this.name && currentChecked !== oldChecked) {
 			RadioButtonGroup.updateTabOrder(this.name);
 		}
 
 		this._name = this.name;
-		this._selected = this.selected;
+		this._checked= this.checked;
 	}
 
 	_enableFormSupport() {
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
-				nativeInput.disabled = element.disabled || !element.selected;
-				nativeInput.value = element.selected ? element.value : "";
+				nativeInput.disabled = element.disabled || !element.checked;
+				nativeInput.value = element.checked ? element.value : "";
 			});
 		} else if (this.value) {
 			console.warn(`In order for the "value" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
@@ -357,8 +357,8 @@ class RadioButton extends UI5Element {
 		}
 
 		if (!this.name) {
-			this.selected = !this.selected;
-			this.fireEvent("select");
+			this.checked = !this.checked;
+			this.fireEvent("change");
 			return this;
 		}
 
@@ -367,7 +367,7 @@ class RadioButton extends UI5Element {
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readonly || this.selected);
+		return !(this.disabled || this.readonly || this.checked);
 	}
 
 	valueStateTextMappings() {

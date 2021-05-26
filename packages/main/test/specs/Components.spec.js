@@ -62,7 +62,7 @@ describe("General assertions", () => {
 
 		// RadioButton
 		assertBooleanProperty(radiobutton, "readonly");
-		assertBooleanProperty(radiobutton, "selected");
+		assertBooleanProperty(radiobutton, "checked");
 		assertBooleanProperty(radiobutton, "disabled");
 
 		// Switch
