@@ -26,7 +26,7 @@
     "@buxlabs/amd-to-es6": "^0.16.0",
     "@openui5/sap.ui.core": "1.87.3",
     "@ui5/webcomponents-tools": "1.0.0-rc.14",
-    "chromedriver": "89.0.0",
+    "chromedriver": "90.0.1",
     "copy-and-watch": "^0.1.5",
     "escodegen": "^2.0.0",
     "esprima": "^4.0.1",
