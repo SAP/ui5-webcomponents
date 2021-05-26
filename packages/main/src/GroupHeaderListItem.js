@@ -25,6 +25,7 @@ const metadata = {
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
+		
 		accessibleName: {
 			type: String,
 		},
