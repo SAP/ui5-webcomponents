@@ -773,7 +773,6 @@ class List extends UI5Element {
 			}
 
 			event.stopImmediatePropagation();
-			event.stopPropagation();
 			return;
 		}
 
@@ -785,9 +784,9 @@ class List extends UI5Element {
 			} else {
 				this.focusPreviouslyFocusedItem();
 			}
-		}
 
-		event.stopPropagation();
+			event.stopImmediatePropagation();
+		}
 
 		this.setForwardingFocus(false);
 	}
@@ -855,7 +854,7 @@ class List extends UI5Element {
 	onForwardBefore(event) {
 		this.setPreviouslyFocusedItem(event.target);
 		this.focusBeforeElement();
-		event.stopPropagation();
+		event.stopImmediatePropagation();
 	}
 
 	onForwardAfter(event) {
