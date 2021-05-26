@@ -10,6 +10,11 @@
     "sapui5",
     "ui5"
   ],
+  "exports": {
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json",
+    "./*": "./dist/*"
+  },
   "scripts": {
     "clean": "nps clean",
     "build": "nps build",
