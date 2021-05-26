@@ -659,7 +659,7 @@ class Wizard extends UI5Element {
 		const selectedStep = this.selectedStep;
 		const stepToSelect = this.getStepByRefId(stepRefId);
 		const bExpanded = stepInHeader.getAttribute(EXPANDED_STEP) === "true";
-		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);		
+		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 		const firstFocusableElement = await getFirstFocusableElement(stepToSelect.firstElementChild);
 
 		// Focus the first found focusable element within the step content corresponding to the currently focused tab
