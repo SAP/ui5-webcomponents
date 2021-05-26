@@ -35,7 +35,7 @@
 <body style="background-color: var(--sapBackgroundColor);">
 	<!-- <ui5-button id="btnOpenPopover" design="Emphasized" icon="employee">Open Popover</ui5-button>
 
-	<ui5-popover id="popoverToOpen" header-text="Popover">
+	<ui5-popover id="popoverToOpen" title-text="Popover">
 		<div style="padding: 1rem;text-align: center;">
 			<ui5-title level="H2">Hello World!</ui5-title>
 		</div>
@@ -60,7 +60,7 @@
 
 	<ui5-button id="btn">Click me !</ui5-button>
 
-	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top" aria-label="This popover is important">
+	<ui5-popover title-text="My Heading" id="pop" style="width: 300px" placement-type="Top" aria-label="This popover is important">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -153,13 +153,13 @@
 		Open Big Popover
 	</ui5-button>
 
-	<ui5-popover placement-type="Bottom" id="big-popover" header-text="hello world">
+	<ui5-popover placement-type="Bottom" id="big-popover" title-text="hello world">
 		<ui5-list id="bigList"></ui5-list>
 	</ui5-popover>
 
 	<ui5-button id="btnPopModal">Opens modal popover!</ui5-button>
 
-	<ui5-popover id="modalPopover" modal header-text="Modal popover">
+	<ui5-popover id="modalPopover" modal title-text="Modal popover">
 		<ui5-list>
 			<ui5-li>Hello</ui5-li>
 			<ui5-li>Again</ui5-li>
@@ -173,7 +173,7 @@
 
 	<ui5-button id="btnPopModalNoLayer">Opens modal popover with no block layer!</ui5-button>
 
-	<ui5-popover id="modalPopoverNoLayer" modal header-text="Modal popover" hide-backdrop>
+	<ui5-popover id="modalPopoverNoLayer" modal title-text="Modal popover" hide-backdrop>
 		<ui5-list>
 			<ui5-li>Hello</ui5-li>
 			<ui5-li>Again</ui5-li>
@@ -187,7 +187,7 @@
 
 	<ui5-button id="btnPopFocus">Opens popover with initial focus!</ui5-button>
 
-	<ui5-popover id="popFocus" initial-focus="focusMe" header-text="Popover header">
+	<ui5-popover id="popFocus" initial-focus="focusMe" title-text="Popover header">
 		<ui5-list>
 			<ui5-li>Hello</ui5-li>
 			<ui5-li>Again</ui5-li>
@@ -237,7 +237,7 @@
 	<ui5-title>placement-type="Bottom"</ui5-title>
 	<ui5-button id="btnFullWidthBottom" style="width: 100%">Click me !</ui5-button>
 
-	<ui5-popover header-text="My Heading" id="popFullWidth" style="width: 300px" >
+	<ui5-popover title-text="My Heading" id="popFullWidth" style="width: 300px" >
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -249,32 +249,7 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<ui5-popover allow-target-overlap header-text="My Heading" id="popFullWidthTargetOverlap" style="width: 300px" >
-		<div slot="header">
-			<ui5-button id="first-focusable">I am in the header</ui5-button>
-		</div>
-
-		<ui5-list>
-			<ui5-li>Hello</ui5-li>
-			<ui5-li>World</ui5-li>
-			<ui5-li>Again</ui5-li>
-		</ui5-list>
-	</ui5-popover>
-
-
-	<ui5-popover header-text="My Heading" id="popFullWidthLeft" style="width: 300px" placement-type="Left">
-		<div slot="header">
-			<ui5-button id="first-focusable">I am in the header</ui5-button>
-		</div>
-
-		<ui5-list>
-			<ui5-li>Hello</ui5-li>
-			<ui5-li>World</ui5-li>
-			<ui5-li>Again</ui5-li>
-		</ui5-list>
-	</ui5-popover>
-
-	<ui5-popover header-text="My Heading" id="popFullWidthLeftTargetOverlap" style="width: 300px" placement-type="Left" allow-target-overlap>
+	<ui5-popover allow-target-overlap title-text="My Heading" id="popFullWidthTargetOverlap" style="width: 300px" >
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -287,7 +262,7 @@
 	</ui5-popover>
 
 
-	<ui5-popover header-text="My Heading" id="popFullWidthTop" style="width: 300px" placement-type="Top">
+	<ui5-popover title-text="My Heading" id="popFullWidthLeft" style="width: 300px" placement-type="Left">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -299,7 +274,32 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<ui5-popover header-text="My Heading" id="popFullWidthBottom" style="width: 300px" placement-type="Bottom">
+	<ui5-popover title-text="My Heading" id="popFullWidthLeftTargetOverlap" style="width: 300px" placement-type="Left" allow-target-overlap>
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+
+	<ui5-popover title-text="My Heading" id="popFullWidthTop" style="width: 300px" placement-type="Top">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+	<ui5-popover title-text="My Heading" id="popFullWidthBottom" style="width: 300px" placement-type="Bottom">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -335,7 +335,7 @@
 	<ui5-button id="btnOpenXLeft">Open Popup Left aligned</ui5-button>
 
 	<ui5-popover
-		header-text="My Heading"
+		title-text="My Heading"
 		id="popXLeft" horizontal-align="Left"
 		style="width: 300px">
 		<div slot="header">
@@ -354,7 +354,7 @@
 	<ui5-button id="btnOpenXRight">Open Popup Right aligned</ui5-button>
 
 	<ui5-popover
-		header-text="My Heading"
+		title-text="My Heading"
 		id="popXRight" horizontal-align="Right"
 		style="width: 300px">
 		<div slot="header">
@@ -395,7 +395,7 @@
 
 	<ui5-button id="btnOpenPopoverWithDiv">Open Popover with div Inside</ui5-button>
 
-	<ui5-popover id="popWithDiv" header-text="Newsletter subscription" modal>
+	<ui5-popover id="popWithDiv" title-text="Newsletter subscription" modal>
 		<div id="divContent">I'm a div, which can't get focus. Click me and see where focus goes.</div>
 		<div slot="footer" class="popover-footer">
 			<ui5-button design="Emphasized">Subscribe</ui5-button>
@@ -406,7 +406,7 @@
 		<ui5-button id="btnRightEdge">Popover on right edge of screen</ui5-button>
 	</div>
 
-	<ui5-popover header-text="Header" id="popoverRightEdge" placement-type="Top">
+	<ui5-popover title-text="Header" id="popoverRightEdge" placement-type="Top">
 		<ui5-label>Input field: </ui5-label>
 		<ui5-input></ui5-input>
 	</ui5-popover>

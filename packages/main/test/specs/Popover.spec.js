@@ -10,7 +10,7 @@ describe("Attributes propagation", () => {
 		const popover = $("#pop");
 		const selector = "h2=New text";
 
-		popover.setAttribute("header-text", "New text");
+		popover.setAttribute("title-text", "New text");
 		assert.ok($(selector), "The new header text was set correctly");
 	});
 

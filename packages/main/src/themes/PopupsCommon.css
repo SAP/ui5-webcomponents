@@ -42,7 +42,7 @@
 
 .ui5-popup-header-root,
 .ui5-popup-footer-root,
-:host([header-text]) .ui5-popup-header-text {
+:host([title-text]) .ui5-popup-title-text {
     margin: 0;
     color: var(--sapPageHeader_TextColor);
     font-size: 1rem;
@@ -65,7 +65,7 @@
     padding: 0;
 }
 
-:host([header-text]) .ui5-popup-header-text {
+:host([title-text]) .ui5-popup-title-text {
     padding: 0 0.25rem;
     text-align: center;
     min-height: 3rem;
@@ -78,7 +78,7 @@
     display: inline-block;
 }
 
-:host(:not([header-text])) .ui5-popup-header-text {
+:host(:not([title-text])) .ui5-popup-title-text {
     display: none;
 }
 

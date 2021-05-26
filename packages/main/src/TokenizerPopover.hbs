@@ -1,7 +1,7 @@
 <ui5-responsive-popover
 	tokenizer-popover="true"
 	style={{styles.popover}}
-	header-text={{morePopoverTitle}}
+	title-text={{morePopoverTitle}}
 	?content-only-on-desktop="{{hasValueState}}"
 	no-arrow
 	placement-type="Bottom"
@@ -11,7 +11,7 @@
 		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
 			{{#if _isPhone}}
 				<div class="row" style="{{styles.popoverHeaderTitle}}">
-					<ui5-title level="H5" class="ui5-responsive-popover-header-text">Remove</ui5-title>
+					<ui5-title level="H5" class="ui5-responsive-popover-title-text">Remove</ui5-title>
 					<ui5-button
 						class="ui5-responsive-popover-close-btn"
 						icon="decline"

@@ -47,13 +47,13 @@ const metadata = {
 		/**
 		 * Defines the header text.
 		 * <br><br>
-		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>titleText</code> is ignored.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		headerText: {
+		titleText: {
 			type: String,
 		},
 
@@ -224,8 +224,8 @@ class Dialog extends Popup {
 	get _ariaLabelledBy() { // Required by Popup.js
 		let ariaLabelledById;
 
-		if (this.headerText !== "" && !this.ariaLabel) {
-			ariaLabelledById = "ui5-popup-header-text";
+		if (this.titleText !== "" && !this.ariaLabel) {
+			ariaLabelledById = "ui5-popup-title-text";
 		}
 
 		return ariaLabelledById;
@@ -249,7 +249,7 @@ class Dialog extends Popup {
 	}
 
 	get _displayHeader() {
-		return this.header.length || this.headerText;
+		return this.header.length || this.titleText;
 	}
 
 	show() {

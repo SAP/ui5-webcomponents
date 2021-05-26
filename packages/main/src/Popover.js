@@ -26,13 +26,13 @@ const metadata = {
 		/**
 		 * Defines the header text.
 		 * <br><br>
-		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>titleText</code> is ignored.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		headerText: {
+		titleText: {
 			type: String,
 		},
 
@@ -554,7 +554,7 @@ class Popover extends Popup {
 
 		if (this._displayHeader) {
 			const headerDomRef = this.shadowRoot.querySelector(".ui5-popup-header-root")
-				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
+				|| this.shadowRoot.querySelector(".ui5-popup-title-text");
 
 			if (headerDomRef) {
 				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
@@ -747,7 +747,7 @@ class Popover extends Popup {
 	 * Hook for descendants to hide header.
 	 */
 	get _displayHeader() {
-		return this.header.length || this.headerText;
+		return this.header.length || this.titleText;
 	}
 
 	/**
