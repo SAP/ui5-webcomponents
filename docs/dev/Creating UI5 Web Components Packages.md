@@ -113,7 +113,7 @@ The initialization script will create several NPM scripts for you in `package.js
 
 Task | Purpose
 -----|-------
-clean | Deletes the `dist/` directory with the build output.
+clean | Delete the `dist/` directory with the build output.
 build | Production build to the `dist/` directory.
 lint | Run a static code scan with `eslint`.
 start | Build the project for development, run the dev server and watch for changes.
