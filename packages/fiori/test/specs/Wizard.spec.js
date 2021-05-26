@@ -241,7 +241,7 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(step3InHeader.getAttribute("selected"), "true",
 			"Third step in the header is selected.");
 		assert.strictEqual(inpStepChangeCounter.getProperty("value"), "7",
-			"Event step-change fired once for 5th time due to scrolling.");
+			"Event step-change fired once for 7th time due to scrolling.");
 	});
 
 	it("tests no scrolling to step, if the step was not changed", ()=>{
