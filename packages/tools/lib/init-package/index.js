@@ -107,6 +107,19 @@ const updatePackageFile = () => {
 		"prepublishOnly": "npm run build"
 	};
 
+	// make convinient exports (no dist in component path)
+	// export the rest that is used directly or via require.resolve in scripts
+	packageContent.exports = {
+		"./.port": "./.port",
+		"./src/*": "./src/*",
+		"./dist/*": "./dist/*",
+		"./package.json": "./package.json",
+		"./bundle.esm.js": "./bundle.esm.js",
+		"./bundle.es5.js": "./bundle.es5.js",
+		"./bundle.common.js": "./bundle.common.js",
+		"./*": "./dist/*"
+	}
+
 	packageContent.ui5 = {
 		webComponentsPackage: true
 	};
