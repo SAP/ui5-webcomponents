@@ -1,5 +1,10 @@
-commit 43dab1476a90643f7292e0ddfccfd65c224ef4be
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu May 27 10:41:45 2021 +0300
+commit 290b60b7fb645c7db08a4fa477b7fa45486821b7
+Author: Nikolay Hristov <53182443+NHristov-sap@users.noreply.github.com>
+Date:   Thu May 27 10:53:39 2021 +0300
 
-    chore: update chromedriver (#3317)
+    fix(ui5-daterange-picker): month is not changed when select first dat… (#3255)
+    
+    Until now, when the user navigates to a month in the future or in the past, and the first date of the range is
+    selected, the picker goes back to the current month. Now this is fixed - on a date click the month stays unchanged.
+    
+    Fixes #3129
