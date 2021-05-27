@@ -1,10 +1,5 @@
-commit 290b60b7fb645c7db08a4fa477b7fa45486821b7
-Author: Nikolay Hristov <53182443+NHristov-sap@users.noreply.github.com>
-Date:   Thu May 27 10:53:39 2021 +0300
+commit 51fb1a39530a1c8b7f6c33198985b803444cbb37
+Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
+Date:   Thu May 27 12:50:32 2021 +0300
 
-    fix(ui5-daterange-picker): month is not changed when select first dat… (#3255)
-    
-    Until now, when the user navigates to a month in the future or in the past, and the first date of the range is
-    selected, the picker goes back to the current month. Now this is fixed - on a date click the month stays unchanged.
-    
-    Fixes #3129
+    fix(ui5-shellbar): fix search field width (#3296)
