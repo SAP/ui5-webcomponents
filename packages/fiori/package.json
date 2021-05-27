@@ -13,6 +13,16 @@
     "sapui5",
     "ui5"
   ],
+  "exports": {
+    "./.port": "./.port",
+    "./src/*": "./src/*",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json",
+    "./bundle.esm.js": "./bundle.esm.js",
+    "./bundle.es5.js": "./bundle.es5.js",
+    "./bundle.common.js": "./bundle.common.js",
+    "./*": "./dist/*"
+  },
   "scripts": {
     "clean": "wc-dev clean",
     "lint": "wc-dev lint",
@@ -38,6 +48,6 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.14",
-    "chromedriver": "89.0.0"
+    "chromedriver": "90.0.1"
   }
 }
