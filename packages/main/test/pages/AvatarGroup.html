@@ -294,7 +294,7 @@
 		hiddenItems.forEach(function (avatar, index) {
 			var color = avatarGroup.colorScheme[firstHiddenIndex + index]
 			html += '<div class="avatar-slot" style="padding: 5px">' +
-						'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" background-color="' + color + '"></ui5-avatar>' +
+						'<ui5-avatar interactive icon="' + avatar.icon + '" image="' + avatar.image + '" initials="' + avatar.initials + '" color-scheme="' + color + '"></ui5-avatar>' +
 					'</div>';
 		});
 
@@ -302,7 +302,7 @@
 			var avatarRef = items[index];
 
 			html +=  '<div class="avatar-slot">' +
-						'<ui5-avatar interactive image="' + avatarRef.image + '" initials="' + avatarRef.initials + '" background-color="' + avatarRef._effectiveBackgroundColor + '"></ui5-avatar>' +
+						'<ui5-avatar interactive image="' + avatarRef.image + '" initials="' + avatarRef.initials + '" color-scheme="' + avatarRef._effectiveBackgroundColor + '"></ui5-avatar>' +
 					'</div>';
 		}
 		placeholder.innerHTML = html;
@@ -314,7 +314,7 @@
 	function onAvatarClicked(avatarGroup, avatarRef) {
 		popAvatar.image = avatarRef.image;
 		popAvatar.initials = avatarRef.initials;
-		popAvatar.backgroundColor = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
+		popAvatar.colorScheme = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
 
 		individualPop.close();
 		individualPop.openBy(avatarRef);

@@ -132,6 +132,11 @@ const metadata = {
 	},
 };
 
+const CONSTANTS = {
+	TOOLTIP_VISIBLE: "visible",
+	TOOLTIP_HIDDEN: "hidden",
+};
+
 /**
  * @class
  *
@@ -253,7 +258,7 @@ class SliderBase extends UI5Element {
 	 */
 	_onmouseover(event) {
 		if (this.showTooltip) {
-			this._tooltipVisibility = "visible";
+			this._tooltipVisibility = this._constants().TOOLTIP_VISIBLE;
 		}
 	}
 
@@ -263,8 +268,8 @@ class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_onmouseout(event) {
-		if (this.showTooltip) {
-			this._tooltipVisibility = "hidden";
+		if (this.showTooltip && !this.shadowRoot.activeElement) {
+			this._tooltipVisibility = this._constants().TOOLTIP_HIDDEN;
 		}
 	}
 
@@ -409,7 +414,7 @@ class SliderBase extends UI5Element {
 		const newValue = SliderBase.getValueFromInteraction(event, step, min, max, domRect, directionStart);
 
 		if (isPhone() && this.showTooltip) {
-			this._tooltipVisibility = "visible";
+			this._tooltipVisibility = this._constants().TOOLTIP_VISIBLE;
 		}
 
 		// Mark start of a user interaction
@@ -446,7 +451,7 @@ class SliderBase extends UI5Element {
 	 */
 	handleUpBase(valueType) {
 		if (isPhone() && this.showTooltip) {
-			this._tooltipVisibility = "hidden";
+			this._tooltipVisibility = this._constants().TOOLTIP_HIDDEN;
 		}
 
 		SliderBase.UP_EVENTS.forEach(upEventType => window.removeEventListener(upEventType, this._upHandler));
@@ -833,6 +838,15 @@ class SliderBase extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
+	}
+
+	/**
+	 * Gets stored constants for internal use.
+	 *
+	 * @private
+	 */
+	_constants() {
+		return CONSTANTS;
 	}
 }
 

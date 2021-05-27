@@ -6,6 +6,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Popover from "./Popover.js";
 
@@ -57,9 +58,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-textarea</code> is read-only.
+		 * Defines whether the component is read-only.
 		 * <br><br>
-		 * <b>Note:</b> A read-only <code>ui5-textarea</code> is not editable,
+		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
@@ -71,7 +72,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-textarea</code> is required.
+		 * Defines whether the component is required.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -94,7 +95,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-textarea</code>.
+		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -151,12 +152,12 @@ const metadata = {
 
 		/**
 		 * Determines whether the characters exceeding the maximum allowed character count are visible
-		 * in the <code>ui5-textarea</code>.
+		 * in the component.
 		 * <br><br>
 		 * If set to <code>false</code>, the user is not allowed to enter more characters than what is set in the
 		 * <code>maxlength</code> property.
 		 * If set to <code>true</code> the characters exceeding the <code>maxlength</code> value are selected on
-		 * paste and the counter below the <code>ui5-textarea</code> displays their number.
+		 * paste and the counter below the component displays their number.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -167,7 +168,7 @@ const metadata = {
 		},
 
 		/**
-		 * Enables the <code>ui5-textarea</code> to automatically grow and shrink dynamically with its content.
+		 * Enables the component to automatically grow and shrink dynamically with its content.
 		 * <br><br>
 		 * <b>Note:</b> If set to <code>true</code>, the CSS <code>height</code> property is ignored.
 		 * @type {boolean}
@@ -191,7 +192,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the name with which the <code>ui5-textarea</code> will be submitted in an HTML form.
+		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
@@ -199,7 +200,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the <code>ui5-textarea</code> so that it can be submitted as
+		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
 		 * @type {string}
@@ -275,13 +276,13 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-textarea</code>.
+		 * Defines the value state message that will be displayed as pop up under the component.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed if the <code>ui5-textarea</code> has
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed if the component has
 		 * <code>valueState</code> of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
 		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.7
@@ -305,7 +306,7 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
-		 * Fired when the text has changed and the focus leaves the <code>ui5-textarea</code>.
+		 * Fired when the text has changed and the focus leaves the component.
 		 *
 		 * @event
 		 * @public
@@ -313,7 +314,7 @@ const metadata = {
 		change: {},
 
 		/**
-		 * Fired when the value of the <code>ui5-textarea</code> changes at each keystroke or when
+		 * Fired when the value of the component changes at each keystroke or when
 		 * something is pasted.
 		 *
 		 * @event
@@ -427,8 +428,16 @@ class TextArea extends UI5Element {
 		return this.getDomRef().querySelector("textarea");
 	}
 
-	_onkeydown() {
+	_onkeydown(event) {
 		this._keyDown = true;
+
+		if (isEscape(event)) {
+			const nativeTextArea = this.getInputDomRef();
+
+			this.value = this.previousValue;
+			nativeTextArea.value = this.value;
+			this.fireEvent("input");
+		}
 	}
 
 	_onkeyup() {
@@ -438,6 +447,7 @@ class TextArea extends UI5Element {
 	_onfocusin() {
 		this.focused = true;
 		this._openValueStateMsgPopover = true;
+		this.previousValue = this.getInputDomRef().value;
 	}
 
 	_onfocusout() {

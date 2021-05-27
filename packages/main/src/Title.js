@@ -16,7 +16,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Title.prototype */ {
 
 		/**
-		 * Defines whether the <code>ui5-title</code> would wrap.
+		 * Defines whether the component would wrap.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -27,7 +27,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-title</code> level.
+		 * Defines the component level.
 		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
 		 *
 		 * @type {TitleLevel}
@@ -41,7 +41,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Title.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-title</code>.
+		 * Defines the text of the component.
 		 * <br><br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *

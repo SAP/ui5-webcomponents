@@ -25,7 +25,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
 
 		/**
-		 * Defines the buttons of <code>ui5-segmentedbutton</code>.
+		 * Defines the buttons of component.
 		 * <br><br>
 		 * <b>Note:</b> Multiple buttons are allowed.
 		 * <br><br>
