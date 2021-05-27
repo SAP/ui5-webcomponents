@@ -1,10 +1,5 @@
-commit 67913d34a7a7cd08841569e15179f27de8137c46
-Author: Hristo Petrov <h.petrov@sap.com>
-Date:   Tue May 25 12:09:21 2021 +0300
+commit 43dab1476a90643f7292e0ddfccfd65c224ef4be
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu May 27 10:41:45 2021 +0300
 
-    refactor(ui5-slider): show tooltips on focus (#3235)
-    
-    - Tooltips will become and remain visible when the focus is
-    on the slider/handle.
-    - In case the slider looses the focus and the mouse is not
-    over it, the tooltip will be hidden.
+    chore: update chromedriver (#3317)
