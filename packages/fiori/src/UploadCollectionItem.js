@@ -326,13 +326,11 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	async _onRenameCancel(event) {
-
 		this._editing = false;
 
 		if (isEscape(event)) {
 			await renderFinished();
-			const editingBtn = this.shadowRoot.getElementById(this._id + "-editing-button");
-			editingBtn.focus();
+			this.shadowRoot.getElementById(`${this._id}-editing-button`).focus();
 		} else {
 			this._focus();
 		}
