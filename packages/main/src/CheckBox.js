@@ -59,8 +59,9 @@ const metadata = {
 		/**
 		* Defines whether the component is displayed as partially checked.
 		* <br><br>
-		* <b>Note:</b> This property leads only to visual change of the checkbox and the state cannot be achieved by user interaction.
-		* <b>Note:</b> The visual state depends on the value of the selected property:
+		* <b>Note:</b> The indeterminate state can be set only programatically and can’t be achieved by user
+		* interaction and the resulting visual state depends on the values of the <code>indeterminate</code>
+		* and <code>checked</code> properties:
 		* <ul>
 		* <li> If the component is checked and indeterminate, it will be displayed as partially checked
 		* <li> If the component is checked and it is not indeterminate, it will be displayed as checked
