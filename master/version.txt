@@ -1,5 +1,5 @@
-commit 51fb1a39530a1c8b7f6c33198985b803444cbb37
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Thu May 27 12:50:32 2021 +0300
+commit 5a285033c503753d908932f515c00c0b0cc533b1
+Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
+Date:   Thu May 27 15:14:27 2021 +0300
 
-    fix(ui5-shellbar): fix search field width (#3296)
+    Update Developing Web Components.md (#3325)
