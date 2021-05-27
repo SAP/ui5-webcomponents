@@ -376,7 +376,8 @@ class Select extends UI5Element {
 		let lastSelectedOptionIndex = -1,
 			firstEnabledOptionIndex = -1;
 		const opts = this.options.map((opt, index) => {
-			if (opt.selected) {
+			if (opt.selected || opt.textContent === this.value) {
+				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
 				lastSelectedOptionIndex = index;
 			}
 			if (!opt.disabled && (firstEnabledOptionIndex === -1)) {
@@ -582,7 +583,7 @@ class Select extends UI5Element {
 		this.fireEvent("change", { selectedOption });
 
 		//  Angular two way data binding
-		this.selectedItem = selectedOption;
+		this.selectedItem = selectedOption.textContent;
 		this.fireEvent("selected-item-changed");
 	}
 
