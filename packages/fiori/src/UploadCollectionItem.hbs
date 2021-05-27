@@ -12,11 +12,9 @@
 					<div class="ui5-uci-edit-container">
 						<ui5-input
 							id="ui5-uci-edit-input"
-							value="{{_fileNameWithoutExtension}}"
 							data-sap-focus-ref
+							@focusin="{{_onInputFocusin}}"
 							@keyup="{{_onInputKeyUp}}"
-							@keydown="{{_onInputKeydown}}"
-							@ui5-change="{{_onInputChange}}"
 						></ui5-input>
 						<span class="ui5-uci-file-extension">{{_fileExtension}}</span>
 					</div>

@@ -269,37 +269,32 @@ class UploadCollectionItem extends ListItem {
 	constructor() {
 		super();
 		this.i18nFioriBundle = getI18nBundle("@ui5/webcomponents-fiori");
-
-		this._editPressed = false; // indicates if the edit btn has been pressed
-		this.doNotCloseInput = false; // Indicates whether the input should be closed when using keybord for navigation
-		this.isEnter = false;
 	}
 
-	onAfterRendering() {
-		if (this._editPressed) {
-			this._editing = true;
-			this._editPressed = false;
-			this.focusAndSelectText();
-		}
-	}
-
-	async focusAndSelectText() {
-		await this.focus();
+	async _initInputField() {
+		await renderFinished();
 
 		const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
+		inp.value = this._fileNameWithoutExtension;
 
 		await renderFinished();
-		if (inp.getFocusDomRef()) {
-			inp.getFocusDomRef().setSelectionRange(0, this._fileNameWithoutExtension.length);
+
+		const inpFocusDomRef = inp.getFocusDomRef();
+
+		if (inpFocusDomRef) {
+			inpFocusDomRef.focus();
+			inpFocusDomRef.setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
 	}
 
 	/**
 	 * @override
 	 */
-	onDetailClick(event) {
+	async onDetailClick(event) {
 		super.onDetailClick(event);
 		this._editing = true;
+
+		await this._initInputField();
 	}
 
 	_onDetailKeyup(event) {
@@ -308,79 +303,39 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
-	/**
-	 * @override
-	 */
-	_onfocusout(event) {
-		super._onfocusout(event);
-
-		const path = event.path || (event.composedPath && event.composedPath());
-
-		this._editPressed = this.isDetailPressed(event);
-
-		if (!this._editPressed && path.indexOf(this) > -1) {
-			this._editing = false;
-		}
-	}
-
-	_onInputKeydown(event) {
-		this.isEnter = isEnter(event);
-		this.isEscape = isEscape(event);
+	_onInputFocusin(event) {
+		// prevent focusing the whole upload collection item.
+		event.stopPropagation();
 	}
 
 	_onInputKeyUp(event) {
-		this.doNotCloseInput = true;
-		this.tempValue = event.target.value + this._fileExtension;
-
-		if (this.isEscape) {
-			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
-			return this._onRenameCancel();
-		}
-	}
-
-	isDetailPressed(event) {
-		const path = event.path || (event.composedPath && event.composedPath());
-
-		return path.some(e => {
-			return e.classList && e.classList.contains("ui5-uci-edit");
-		});
-	}
-
-	_onInputChange(event) {
-		if (this.shadowRoot.getElementById("ui5-uci-edit-cancel").active) {
-			return;
-		}
-
-		if ((!this.isEnter && this.doNotCloseInput) || this.isEscape) {
-			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
-			this.isEscape = false;
-			return;
-		}
-
-		this._editing = false;
-		this.fileName = event.target.value + this._fileExtension;
-		this.fireEvent("rename");
-
-		if (this.isEnter) {
-			this._focus();
+		if (isEscape(event)) {
+			this._onRenameCancel(event);
+		} else if (isEnter(event)) {
+			this._onRename();
 		}
 	}
 
 	_onRename(event) {
-		this.doNotCloseInput = false;
+		const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
+		this.fileName = inp.value + this._fileExtension;
+		this.fireEvent("rename");
+
 		this._editing = false;
 		this._focus();
 	}
 
-	_onRenameCancel(event) {
-		if (!this.isEscape) {
-			[this.fileName, this.tempValue] = [this.tempValue, this.fileName];
-		}
+	async _onRenameCancel(event) {
 
 		this._editing = false;
-		this.doNotCloseInput = false;
 
-		this._focus();
+		if (isEscape(event)) {
+			await renderFinished();
+			const editingBtn = this.shadowRoot.getElementById(this._id + "-editing-button");
+			editingBtn.focus();
+		} else {
+			this._focus();
+		}
 	}
 
 	_focus() {
