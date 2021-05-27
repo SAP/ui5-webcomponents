@@ -1,25 +1,5 @@
-commit d974906c8b863074eb806c108baefac08b31bfea
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu May 27 05:27:10 2021 -0700
+commit 9c8ce88731a3d6419319693a4faa94a4e8c31fea
+Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
+Date:   Thu May 27 15:37:50 2021 +0300
 
-    Translation Delivery (#3254)
-    
-    * chore: translation delivery
-    
-    Change-Id: Icf44cef2e64eed0a7a22a16f53519ef8e9774e72
-    
-    * chore: translation delivery
-    
-    Change-Id: Ia5784de96cf9f4e51bca545b36ec4064c1f5fd8d
-    
-    * chore: translation delivery
-    
-    Change-Id: I22818f535ff91838d463cae164543e59b3ab6e5a
-    
-    * chore: translation delivery
-    
-    Change-Id: I975141fcdf6dfcf6f6dcb678322b25dce99e91e1
-    
-    * chore: translation delivery
-    
-    Change-Id: I66ece714e1d3d756e2b96ffb03fde43aa58d468c
+    docs: review of Development Workflow.md (#3326)
