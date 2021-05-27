@@ -662,7 +662,7 @@ class Wizard extends UI5Element {
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 		const firstFocusableElement = await getFirstFocusableElement(stepToSelect.firstElementChild);
 
-		// Focus the first found focusable element within the step content corresponding to the currently focused tab
+		// Focus the first focusable element within the step content corresponding to the currently focused tab
 		firstFocusableElement.focus();
 
 		// If the currently selected (active) step is clicked,
