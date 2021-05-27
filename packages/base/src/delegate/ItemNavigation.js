@@ -271,7 +271,7 @@ class ItemNavigation {
 		}
 
 		if (currentItem.isUI5Element) {
-			return currentItem.getDomRef();
+			return currentItem.getFocusDomRef();
 		}
 
 		if (!this.rootWebComponent.getDomRef()) {

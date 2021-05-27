@@ -354,6 +354,10 @@ class UploadCollectionItem extends ListItem {
 		this.fireEvent("terminate");
 	}
 
+	getFocusDomRef() {
+		return this.getDomRef();
+	}
+
 	get list() {
 		return this.assignedSlot.parentElement;
 	}
