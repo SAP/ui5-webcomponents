@@ -102,7 +102,7 @@ const metadata = {
 		 * Defines the placement of the tab strip (tab buttons area) relative to the actual tabs' content.
 		 * <br><br>
 		 * <b>Note:</b> By default the tab strip is displayed above the tabs' content area and this is the recommended
-		 * layout for most scenarios. Set to <code>Bottom</code> only when the <code>ui5-tabcontainer</code> is at the
+		 * layout for most scenarios. Set to <code>Bottom</code> only when the component is at the
 		 * bottom of the page and you want the tab strip to act as a menu.
 		 *
 		 * <br><br>

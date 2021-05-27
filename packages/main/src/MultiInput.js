@@ -41,14 +41,7 @@ const metadata = {
 	},
 	slots: /** @lends  sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
-		 * Defines the <code>ui5-multi-input</code> tokens.
-		 * <br><br>
-		 * Example: <br>
-		 * &lt;ui5-multi-input><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-token slot="tokens" text="Token 1">&lt;/ui5-token><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-token slot="tokens" text="Token 2">&lt;/ui5-token><br>
-		 * &lt;/ui5-multi-input>
-		 * <br> <br>
+		 * Defines the component tokens.
 		 *
 		 * @type {sap.ui.webcomponents.main.IToken[]}
 		 * @slot

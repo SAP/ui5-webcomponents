@@ -1,11 +1,11 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * Different types of AvatarBackgroundColor.
- * @lends sap.ui.webcomponents.main.types.AvatarBackgroundColor.prototype
+ * Different types of AvatarColorSchemes.
+ * @lends sap.ui.webcomponents.main.types.AvatarColorScheme.prototype
  * @public
  */
-const AvatarBackGroundColors = {
+const AvatarColorSchemes = {
 	/**
 	 *
 	 * @public
@@ -86,19 +86,19 @@ const AvatarBackGroundColors = {
 
 /**
  * @class
- * Different types of AvatarBackgroundColor.
+ * Different types of AvatarColorScheme.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.AvatarBackgroundColor
+ * @alias sap.ui.webcomponents.main.types.AvatarColorScheme
  * @public
  * @enum {string}
  */
-class AvatarBackgroundColor extends DataType {
+class AvatarColorScheme extends DataType {
 	static isValid(value) {
-		return !!AvatarBackGroundColors[value];
+		return !!AvatarColorSchemes[value];
 	}
 }
 
-AvatarBackgroundColor.generateTypeAccessors(AvatarBackGroundColors);
+AvatarColorScheme.generateTypeAccessors(AvatarColorSchemes);
 
-export default AvatarBackgroundColor;
+export default AvatarColorScheme;

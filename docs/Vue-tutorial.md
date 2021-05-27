@@ -1,27 +1,27 @@
-# Get Started with UI5 Web Components & VueJS
+# Get Started with UI5 Web Components & Vue.js
 
-In this tutorial you will learn how to add UI5 Web Components to your application. The UI5 Web Components can be added both to new VueJS applications, as well as already existing ones.
+In this tutorial you will learn how to add UI5 Web Components to your application. You can add UI5 Web Components both to new Vue.js applications and to already existing ones.
 
-## Step 1. Install Vue CLI
+### Step 1. Install Vue CLI
 
 ```bash
 npm install -g @vue/cli
 ```
 
-## Step 2. Init New App
+### Step 2. Init a new app
 
 ```bash
 vue create ui5-web-components-application
 cd ui5-web-components-application
 ```
 
-## Step 3. Add UI5 Web Components
+### Step 3. Add UI5 Web Components
 
 ```bash
 npm install @ui5/webcomponents --save
 ```
 
-## Step 4. Add UI5 Web Components to Vue ignoredElement
+### Step 4. Add UI5 Web Components to Vue `ignoredElement`
 
 Add the following line to your ```main.js``` file:
 
@@ -29,19 +29,19 @@ Add the following line to your ```main.js``` file:
 Vue.config.ignoredElements = [/^ui5-/];
 ```
 
-## Step 5. Import the Components That You Are Going to Use
+### Step 5. Import the components that you are going to use
 
 ```js
 import "@ui5/webcomponents/dist/Button";
 ```
 
-## Step 6. Use the Imported Elements in Your Application
+### Step 6. Use the imported elements in your application
 
 ```html
 <ui5-button>Hello world!</ui5-button>
 ```
 
-## Step 7: Launch the Application
+### Step 7. Launch the application
 
 ```bash
 yarn serve
@@ -51,7 +51,7 @@ yarn serve
 
 ### Two-Way Data Binding
 
-`v-model` binding doesn't work as expected for custom elements. In order to use two way data binding, you should bind and update the value yourself like this:
+`v-model` binding doesn't work as expected for custom elements. In order to use two-way data binding, you need to bind and update the value yourself like this:
 
 ```html
 <ui5-input
