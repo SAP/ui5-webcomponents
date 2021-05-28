@@ -1,5 +1,5 @@
-commit 70f5563c3b974fbf75098165de150906a0964ed2
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Fri May 28 09:18:27 2021 +0300
+commit 0a112eaf482bb3d26c41cfee96a19491639e4d45
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri May 28 09:32:10 2021 +0300
 
-    feat(ui5-wizard): set initial focus when a step is changed (#3310)
+    fix(ui5-datetime-picker): selecting only date value now works correct (#3294)
