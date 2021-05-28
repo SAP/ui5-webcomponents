@@ -73,8 +73,8 @@
 				suggestionItems.forEach(function(item) {
 					var li = document.createElement("ui5-suggestion-item");
 					li.icon = "world";
-					li.info = "explore";
-					li.infoState = "Success";
+					li.additionalText = "explore";
+					li.additionalTextState = "Success";
 					li.description = "travel the world";
 					li.text = item;
 					input.appendChild(li);
@@ -111,8 +111,8 @@
 		suggestionItems.forEach(item => {
 			var li = document.createElement("ui5-suggestion-item");
 			li.icon = "world";
-			li.info = "explore";
-			li.infoState = "Success";
+			li.additionalText = "explore";
+			li.additionalTextState = "Success";
 			li.description = "travel the world";
 			li.text = item;
 			input.appendChild(li);
