@@ -47,12 +47,12 @@
 
 <body class="body-bg">
 	<div id="nav" class="navbar">
-		<ui5-togglebutton id="menu-btn" icon="menu" design="Transparent"></ui5-togglebutton>
+		<ui5-toggle-button id="menu-btn" icon="menu" design="Transparent"></ui5-toggle-button>
 		<ui5-title level="H5">UI5 webcomponents</ui5-title>
-		<ui5-togglebutton id="btnCompact">Compact</ui5-togglebutton>
-		<ui5-togglebutton id="btnRTL">RTL</ui5-togglebutton>
-		<ui5-togglebutton id="btnTheme">HCB</ui5-togglebutton>
-		<ui5-togglebutton id="btnLightDark">Dark/Light</ui5-togglebutton>
+		<ui5-toggle-button id="btnCompact">Compact</ui5-toggle-button>
+		<ui5-toggle-button id="btnRTL">RTL</ui5-toggle-button>
+		<ui5-toggle-button id="btnTheme">HCB</ui5-toggle-button>
+		<ui5-toggle-button id="btnLightDark">Dark/Light</ui5-toggle-button>
 	</div>
 
 	<div id="side-nav" class="sidenav">
@@ -182,11 +182,11 @@
 		</section>
 
 		<section class="row row-centered">
-			<ui5-togglebutton>Yes/No</ui5-togglebutton>
-			<ui5-togglebutton>I/O</ui5-togglebutton>
-			<ui5-togglebutton pressed>Toggle Button pressed</ui5-togglebutton>
-			<ui5-togglebutton design="Positive">On/Off</ui5-togglebutton>
-			<ui5-togglebutton pressed design="Negative" icon="menu">Menu</ui5-togglebutton>
+			<ui5-toggle-button>Yes/No</ui5-toggle-button>
+			<ui5-toggle-button>I/O</ui5-toggle-button>
+			<ui5-toggle-button pressed>Toggle Button pressed</ui5-toggle-button>
+			<ui5-toggle-button design="Positive">On/Off</ui5-toggle-button>
+			<ui5-toggle-button pressed design="Negative" icon="menu">Menu</ui5-toggle-button>
 			<ui5-button id="openPopoverButton">Open Popover</ui5-button>
 			<ui5-popover header-text="Popover" id="hello-popover">
 				<div style="padding: 1rem;text-align: center;">
@@ -234,9 +234,9 @@
 				</div>
 			</ui5-dialog>
 
-			<ui5-togglebutton pressed design="Negative">Euro/BGN</ui5-togglebutton>
-			<ui5-togglebutton>Light/Dark</ui5-togglebutton>
-			<ui5-togglebutton pressed>BG/EN</ui5-togglebutton>
+			<ui5-toggle-button pressed design="Negative">Euro/BGN</ui5-toggle-button>
+			<ui5-toggle-button>Light/Dark</ui5-toggle-button>
+			<ui5-toggle-button pressed>BG/EN</ui5-toggle-button>
 		</section>
 
 		<section class="row row-centered">
@@ -349,10 +349,10 @@
 
 		<section class="row">
 			<ui5-tabcontainer style="width:80%" show-overflow selected-key="item1">
-				<ui5-tab key="item1" text="Products" icon="product" design="Negative">
-					<ui5-togglebutton pressed design="Positive">Cucumber</ui5-togglebutton>
+				<ui5-tab key="item1" text="Products" icon="product" semantic-color="Negative">
+					<ui5-toggle-button pressed design="Positive">Cucumber</ui5-toggle-button>
 					<ui5-button>Banana</ui5-button>
-					<ui5-togglebutton pressed design="Negative">Tomato</ui5-togglebutton>
+					<ui5-toggle-button pressed design="Negative">Tomato</ui5-toggle-button>
 				</ui5-tab>
 
 				<ui5-tab-separator></ui5-tab-separator>
@@ -376,9 +376,9 @@
 
 			<ui5-tabcontainer style="width:80%" show-overflow selected-key="item2">
 					<ui5-tab key="item1" text="Products">
-						<ui5-togglebutton pressed design="Positive">Cucumber</ui5-togglebutton>
+						<ui5-toggle-button pressed design="Positive">Cucumber</ui5-toggle-button>
 						<ui5-button>Banana</ui5-button>
-						<ui5-togglebutton pressed design="Negative">Tomato</ui5-togglebutton>
+						<ui5-toggle-button pressed design="Negative">Tomato</ui5-toggle-button>
 					</ui5-tab>
 
 					<ui5-tab key="item2" text="Drinks">

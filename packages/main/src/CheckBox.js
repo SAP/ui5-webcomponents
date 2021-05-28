@@ -57,6 +57,27 @@ const metadata = {
 		},
 
 		/**
+		* Defines whether the component is displayed as partially checked.
+		* <br><br>
+		* <b>Note:</b> The indeterminate state can be set only programatically and can’t be achieved by user
+		* interaction and the resulting visual state depends on the values of the <code>indeterminate</code>
+		* and <code>checked</code> properties:
+		* <ul>
+		* <li> If the component is checked and indeterminate, it will be displayed as partially checked
+		* <li> If the component is checked and it is not indeterminate, it will be displayed as checked
+		* <li> If the component is not checked, it will be displayed as not checked regardless value of the indeterminate attribute
+		* </ul>
+		*
+		* @type {boolean}
+		* @defaultvalue false
+		* @public
+		* @since 1.0.0-rc.15
+		*/
+		indeterminate: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines if the component is checked.
 		 * <br><br>
 		 * <b>Note:</b> The property can be changed with user interaction,
@@ -307,7 +328,13 @@ class CheckBox extends UI5Element {
 
 	toggle() {
 		if (this.canToggle()) {
-			this.checked = !this.checked;
+			if (this.indeterminate) {
+				this.indeterminate = false;
+				this.checked = true;
+			} else {
+				this.checked = !this.checked;
+			}
+
 			this.fireEvent("change");
 			// Angular two way data binding
 			this.fireEvent("value-changed");
@@ -349,6 +376,10 @@ class CheckBox extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
+	get ariaChecked() {
+		return this.indeterminate && this.checked ? "mixed" : this.checked;
+	}
+
 	get ariaLabelledBy() {
 		if (!this.ariaLabelText) {
 			return this.text ? `${this._id}-label` : undefined;
@@ -372,6 +403,10 @@ class CheckBox extends UI5Element {
 	get tabIndex() {
 		const tabindex = this.getAttribute("tabindex");
 		return this.disabled ? undefined : tabindex || "0";
+	}
+
+	get isCompletelyChecked() {
+		return this.checked && !this.indeterminate;
 	}
 
 	static get dependencies() {

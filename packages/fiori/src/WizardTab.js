@@ -20,22 +20,24 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>heading</code> of the step.
+		 * Defines the <code>titleText</code> of the step.
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
+		 * @since 1.0.0-rc.15
 		 */
-		heading: {
+		titleText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the <code>subheading</code> of the step.
+		 * Defines the <code>subtitleText</code> of the step.
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
+		 * @since 1.0.0-rc.15
 		 */
-		subheading: {
+		subtitleText: {
 			type: String,
 		},
 
@@ -210,7 +212,7 @@ class WizardTab extends UI5Element {
 	}
 
 	get hasTexts() {
-		return this.heading || this.subheading;
+		return this.titleText || this.subtitleText;
 	}
 
 	get accInfo() {

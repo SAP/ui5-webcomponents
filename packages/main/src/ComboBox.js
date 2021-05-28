@@ -51,7 +51,6 @@ import StandardListItem from "./StandardListItem.js";
 const metadata = {
 	tag: "ui5-combobox",
 	languageAware: true,
-	defaultSlot: "items",
 	properties: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
 		 * Defines the value of the component.
