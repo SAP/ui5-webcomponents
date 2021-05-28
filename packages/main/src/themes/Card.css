@@ -29,7 +29,7 @@
 	outline: none;
 }
 
-:host([subheading]) .ui5-card-header {
+:host([subtitleText]) .ui5-card-header {
 	align-items: flex-start;
 }
 
@@ -105,7 +105,7 @@
 	white-space: nowrap;
 }
 
-.ui5-card-header .ui5-card-header-text .ui5-card-heading {
+.ui5-card-header .ui5-card-header-text .ui5-card-title {
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontHeader5Size);
 	font-weight: normal;
@@ -113,7 +113,7 @@
 	max-height: 3.5rem;
 }
 
-.ui5-card-header .ui5-card-header-text .ui5-card-subheading {
+.ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	font-weight: normal;
@@ -122,8 +122,8 @@
 	max-height: 2.1rem;
 }
 
-.ui5-card-header .ui5-card-header-text .ui5-card-heading,
-.ui5-card-header .ui5-card-header-text .ui5-card-subheading {
+.ui5-card-header .ui5-card-header-text .ui5-card-title,
+.ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
 	text-align: left;
 	text-overflow: ellipsis;
 	white-space: normal;
@@ -146,10 +146,10 @@
 	margin-right: auto;
 }
 
-[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-heading {
+[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-title {
 	text-align: right;
 }
 
-[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-subheading {
+[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
 	text-align: right;
 }
