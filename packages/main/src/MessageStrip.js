@@ -45,8 +45,9 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		noIcon: {
+		hideIcon: {
 			type: Boolean,
 		},
 
@@ -57,7 +58,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		noCloseButton: {
+		hideCloseButton: {
 			type: Boolean,
 		},
 	},
@@ -189,7 +190,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get hiddenText() {
-		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}`;
+		return `Message Strip ${this.type} ${this.hideCloseButton ? "" : "closable"}`;
 	}
 
 	get _closeButtonText() {
@@ -200,8 +201,8 @@ class MessageStrip extends UI5Element {
 		return {
 			root: {
 				"ui5-messagestrip-root": true,
-				"ui5-messagestrip-root-no-icon": this.noIcon,
-				"ui5-messagestrip-root-no-close-button": this.noCloseButton,
+				"ui5-messagestrip-root-hide-icon": this.hideIcon,
+				"ui5-messagestrip-root-hide-close-button": this.hideCloseButton,
 				[this.typeClasses]: true,
 			},
 		};
