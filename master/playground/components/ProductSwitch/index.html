@@ -2460,17 +2460,17 @@
 	<h3>Basic sample</h3>
 	<div class="snippet">
 		<ui5-product-switch style="display:flex;">
-			<ui5-product-switch-item heading="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-product-switch-item>
-			<ui5-product-switch-item heading="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-product-switch-item>
-			<ui5-product-switch-item heading="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-product-switch-item>
-			<ui5-product-switch-item heading="Travel & Expense" subtitle="Concur" icon="sap-icon://flight"></ui5-product-switch-item>
+			<ui5-product-switch-item title-text="Home" subtitle-text="Central Home" icon="home"></ui5-product-switch-item>
+			<ui5-product-switch-item title-text="Analytics Cloud" subtitle-text="Analytics Cloud" icon="business-objects-experience"></ui5-product-switch-item>
+			<ui5-product-switch-item title-text="Catalog" subtitle-text="Ariba" icon="contacts"></ui5-product-switch-item>
+			<ui5-product-switch-item title-text="Travel & Expense" subtitle-text="Concur" icon="flight"></ui5-product-switch-item>
 		</ui5-product-switch>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-product-switch&gt;</span>
-	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Home"</span> <span class="na">subtitle=</span><span class="s">"Central Home"</span> <span class="na">icon=</span><span class="s">"sap-icon://home"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Analytics Cloud"</span> <span class="na">subtitle=</span><span class="s">"Analytics Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://business-objects-experience"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Catalog"</span> <span class="na">subtitle=</span><span class="s">"Ariba"</span> <span class="na">icon=</span><span class="s">"sap-icon://contacts"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Travel &amp; Expense"</span> <span class="na">subtitle=</span><span class="s">"Concur"</span> <span class="na">icon=</span><span class="s">"sap-icon://flight"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Home"</span> <span class="na">subtitle-text=</span><span class="s">"Central Home"</span> <span class="na">icon=</span><span class="s">"home"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Analytics Cloud"</span> <span class="na">subtitle-text=</span><span class="s">"Analytics Cloud"</span> <span class="na">icon=</span><span class="s">"business-objects-experience"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Catalog"</span> <span class="na">subtitle-text=</span><span class="s">"Ariba"</span> <span class="na">icon=</span><span class="s">"contacts"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Travel &amp; Expense"</span> <span class="na">subtitle-text=</span><span class="s">"Concur"</span> <span class="na">icon=</span><span class="s">"flight"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
 <span class="nt">&lt;/ui5-product-switch&gt;</span>
 	</code></pre></figure></pre>
 </section>
@@ -2488,20 +2488,20 @@
 		</ui5-shellbar>
 		<ui5-popover id="productswitch-popover" placement-type="Bottom">
 			<ui5-product-switch>
-					<ui5-product-switch-item heading="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Guided Buying" icon="sap-icon://credit-card"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Strategic Procurement" icon="sap-icon://cart-3"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Travel & Expense" subtitle="Concur" icon="sap-icon://flight"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Vendor Management" subtitle="Fieldglass" icon="sap-icon://shipping-status"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Human Capital Management" icon="sap-icon://customer"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Sales Cloud" subtitle="Sales Cloud" icon="sap-icon://sales-notification"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Commerce Cloud" subtitle="Commerce Cloud" icon="sap-icon://retail-store"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Marketing Cloud" subtitle="Marketing Cloud" icon="sap-icon://marketing-campaign"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Service Cloud" icon="sap-icon://family-care"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Customer Data Cloud" icon="sap-icon://customer-briefing"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="S/4HANA" icon="sap-icon://batch-payments"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Home" subtitle-text="Central Home" icon="home"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Analytics Cloud" subtitle-text="Analytics Cloud" icon="business-objects-experience"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Catalog" subtitle-text="Ariba" icon="contacts"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Guided Buying" icon="credit-card"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Strategic Procurement" icon="cart-3"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Travel & Expense" subtitle-text="Concur" icon="flight"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Vendor Management" subtitle-text="Fieldglass" icon="shipping-status"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Human Capital Management" icon="customer"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Sales Cloud" subtitle-text="Sales Cloud" icon="sales-notification"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Commerce Cloud" subtitle-text="Commerce Cloud" icon="retail-store"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Marketing Cloud" subtitle-text="Marketing Cloud" icon="marketing-campaign"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Service Cloud" icon="family-care"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="Customer Data Cloud" icon="customer-briefing"></ui5-product-switch-item>
+				<ui5-product-switch-item title-text="S/4HANA" icon="batch-payments"></ui5-product-switch-item>
 			</ui5-product-switch>
 		</ui5-popover>
 
@@ -2521,7 +2521,7 @@
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-shellbar</span>
 	<span class="na">id=</span><span class="s">"shellbar"</span>
-	<span class="na">heading=</span><span class="s">"Corporate Portal"</span>
+	<span class="na">title-text=</span><span class="s">"Corporate Portal"</span>
 	<span class="na">secondary-title=</span><span class="s">"secondary title"</span>
 	<span class="na">logo=</span><span class="s">"../../../assets/images/sap-logo-svg.svg"</span>
 	<span class="na">show-product-switch</span>
@@ -2529,20 +2529,20 @@
 <span class="nt">&lt;/ui5-shellbar&gt;</span>
 <span class="nt">&lt;ui5-popover</span> <span class="na">id=</span><span class="s">"productswitch-popover"</span> <span class="na">placement-type=</span><span class="s">"Bottom"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-product-switch&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Home"</span> <span class="na">subtitle=</span><span class="s">"Central Home"</span> <span class="na">icon=</span><span class="s">"sap-icon://home"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Analytics Cloud"</span> <span class="na">subtitle=</span><span class="s">"Analytics Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://business-objects-experience"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Catalog"</span> <span class="na">subtitle=</span><span class="s">"Ariba"</span> <span class="na">icon=</span><span class="s">"sap-icon://contacts"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Guided Buying"</span> <span class="na">icon=</span><span class="s">"sap-icon://credit-card"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Strategic Procurement"</span> <span class="na">icon=</span><span class="s">"sap-icon://cart-3"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Travel &amp; Expense"</span> <span class="na">subtitle=</span><span class="s">"Concur"</span> <span class="na">icon=</span><span class="s">"sap-icon://flight"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Vendor Management"</span> <span class="na">subtitle=</span><span class="s">"Fieldglass"</span> <span class="na">icon=</span><span class="s">"sap-icon://shipping-status"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Human Capital Management"</span> <span class="na">icon=</span><span class="s">"sap-icon://customer"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Sales Cloud"</span> <span class="na">subtitle=</span><span class="s">"Sales Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://sales-notification"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Commerce Cloud"</span> <span class="na">subtitle=</span><span class="s">"Commerce Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://retail-store"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Marketing Cloud"</span> <span class="na">subtitle=</span><span class="s">"Marketing Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://marketing-campaign"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Service Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://family-care"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Customer Data Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://customer-briefing"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"S/4HANA"</span> <span class="na">icon=</span><span class="s">"sap-icon://batch-payments"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Home"</span> <span class="na">subtitle-text=</span><span class="s">"Central Home"</span> <span class="na">icon=</span><span class="s">"home"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Analytics Cloud"</span> <span class="na">subtitle-text=</span><span class="s">"Analytics Cloud"</span> <span class="na">icon=</span><span class="s">"business-objects-experience"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Catalog"</span> <span class="na">subtitle-text=</span><span class="s">"Ariba"</span> <span class="na">icon=</span><span class="s">"contacts"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Guided Buying"</span> <span class="na">icon=</span><span class="s">"credit-card"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Strategic Procurement"</span> <span class="na">icon=</span><span class="s">"cart-3"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Travel &amp; Expense"</span> <span class="na">subtitle-text=</span><span class="s">"Concur"</span> <span class="na">icon=</span><span class="s">"flight"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Vendor Management"</span> <span class="na">subtitle-text=</span><span class="s">"Fieldglass"</span> <span class="na">icon=</span><span class="s">"shipping-status"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Human Capital Management"</span> <span class="na">icon=</span><span class="s">"customer"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Sales Cloud"</span> <span class="na">subtitle-text=</span><span class="s">"Sales Cloud"</span> <span class="na">icon=</span><span class="s">"sales-notification"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Commerce Cloud"</span> <span class="na">subtitle-text=</span><span class="s">"Commerce Cloud"</span> <span class="na">icon=</span><span class="s">"retail-store"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Marketing Cloud"</span> <span class="na">subtitle-text=</span><span class="s">"Marketing Cloud"</span> <span class="na">icon=</span><span class="s">"marketing-campaign"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Service Cloud"</span> <span class="na">icon=</span><span class="s">"family-care"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"Customer Data Cloud"</span> <span class="na">icon=</span><span class="s">"customer-briefing"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+		<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">title-text=</span><span class="s">"S/4HANA"</span> <span class="na">icon=</span><span class="s">"batch-payments"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
 	<span class="nt">&lt;/ui5-product-switch&gt;</span>
 <span class="nt">&lt;/ui5-popover&gt;</span>
 
@@ -2550,7 +2550,7 @@
 	<span class="kd">var</span> <span class="nx">shellBar</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">shellbar</span><span class="dl">"</span><span class="p">);</span>
 	<span class="kd">var</span> <span class="nx">popover</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">productswitch-popover</span><span class="dl">"</span><span class="p">);</span>
 
-	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">product-switch-click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">product-switch-click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
 		<span class="k">if</span> <span class="p">(</span><span class="nx">popover</span><span class="p">.</span><span class="nx">opened</span><span class="p">)</span> <span class="p">{</span>
 			<span class="nx">popover</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
 		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -2608,7 +2608,7 @@ The <code>ui5-product-switch</code> is an SAP Fiori specific web component that 
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3> The <code>ui5-product-switch-item</code> web component represents the items displayed in the <code>ui5-product-switch</code> web component. <br><br> <b>Note:</b> <code>ui5-product-switch-item</code> is not supported when used outside of <code>ui5-product-switch</code>. <br><br>
 
-<h3>Keyboard Handling</h3> The <code>ui5-product-switch</code> provides advanced keyboard handling. When focused, the user can use the following keyboard shortcuts in order to perform a navigation: <br> <ul> <li>[SPACE/ENTER/RETURN] - Trigger <code>ui5-click</code> event</li> </ul> <br><br>
+<h3>Keyboard Handling</h3> The <code>ui5-product-switch</code> provides advanced keyboard handling. When focused, the user can use the following keyboard shortcuts in order to perform a navigation: <br> <ul> <li>[SPACE/ENTER/RETURN] - Trigger <code>ui5-click</code> event</li> </ul>
 
 <h3>ES6 Module Import</h3> <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code>
           <section class="component-api space-top">
@@ -2626,40 +2626,31 @@ The <code>ui5-product-switch</code> is an SAP Fiori specific web component that 
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          heading
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the title of the <code>ui5-product-switch-item</code>.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           icon
                             <br>
                         </div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the icon to be displayed as a graphical element within the <code>ui5-product-switch-item</code>. <br><br> Example: <br> <pre>ui5-product-switch-item icon="palette"</pre>
+                            Defines the icon to be displayed as a graphical element within the component. <br><br> Example: <br> <pre>ui5-product-switch-item icon="palette"</pre>
             
             See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          subtitle
+                          subtitleText
                             <br>
+                            <code>subtitle-text</code>
                         </div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the subtitle of the <code>ui5-product-switch-item</code>.
+                            Defines the subtitle of the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           target
                             <br>
@@ -2670,7 +2661,7 @@ The <code>ui5-product-switch</code> is an SAP Fiori specific web component that 
                             Defines a target where the <code>targetSrc</code> content must be open. <br><br> Available options are: <ul> <li><code>_self</code></li> <li><code>_top</code></li> <li><code>_blank</code></li> <li><code>_parent</code></li> <li><code>_search</code></li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           targetSrc
                             <br>
@@ -2679,7 +2670,20 @@ The <code>ui5-product-switch</code> is an SAP Fiori specific web component that 
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>ui5-product-switch-item</code> target URI. Supports standard hyperlink behavior.
+                            Defines the component target URI. Supports standard hyperlink behavior.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          titleText
+                            <br>
+                            <code>title-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the title of the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
                         </div>
                       </div>
             

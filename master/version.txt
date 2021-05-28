@@ -1,9 +1,9 @@
-commit 4343100939dd6d6b9b10efe441eeea78ef8cb36c
+commit 2461b73e406bc0a5f2b3079acdd19e8fd776b212
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri May 28 14:56:03 2021 +0300
+Date:   Fri May 28 15:03:11 2021 +0300
 
-    refactor(ui5-tabcontainer): deprecate tabsPlacement (#3338)
+    refactor(ui5-product-switch-item): rename heading/subtitle to titleText/subtitleText (#3270)
     
-    Hide the tabsPlacement, but keep it working for some time as it is consumed in production, until we introduce the feature on stakeholder's side. Part of: #3107
+    The "subtitle" property has been removed, use "subheading" property instead. Related to: https://github.com/SAP/ui5-webcomponents/issues/3107
     
-    BREAKING_CHANGE: tabsPlacement has been removed as it is not specified in SAP Fiori 3 design system
+    BREAKING_CHANGE: The `heading ` and `subtitle` properties have been renamed to `titleText` and `subtitleText`.
