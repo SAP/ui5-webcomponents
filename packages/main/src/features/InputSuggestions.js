@@ -123,7 +123,7 @@ class Suggestions {
 		this._beforeOpen();
 
 		if (this._getItems().length) {
-			this.responsivePopover.open(this._getComponent());
+			this.responsivePopover.openBy(this._getComponent());
 		}
 	}
 
