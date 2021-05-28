@@ -29,16 +29,21 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the component should wrap, when there is not enough space.
+		 * Determines the wrapping type of the component.
 		 * <br><br>
-		 * <b>Note:</b> By default the text would truncate.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
+		 * The available options are:
+		 * <ul>
+		 * <li><code>None</code> - The label will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The label will wrap. The words won't break based on hyphenation.</li>
+		 * </ul>
+		 * 
+		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
-		wrap: {
-			type: Boolean,
+		wrappingType: {
+			type: String,
+			defaultValue: "None",
 		},
 
 		/**
@@ -93,7 +98,7 @@ const metadata = {
  * It informs the user about what data is displayed or expected in the value holder.
  * <br><br>
  * The <code>ui5-label</code> appearance can be influenced by properties,
- * such as <code>required</code> and <code>wrap</code>.
+ * such as <code>required</code> and <code>wrappingType</code>.
  * The appearance of the Label can be configured in a limited way by using the design property.
  * For a broader choice of designs, you can use custom styles.
  *

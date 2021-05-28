@@ -43,7 +43,6 @@ describe("General assertions", () => {
 		assertBooleanProperty(dialog, "stretch");
 
 		//  Label
-		assertBooleanProperty(label, "wrap");
 		assertBooleanProperty(label, "required");
 
 		//Link

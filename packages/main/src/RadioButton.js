@@ -258,6 +258,11 @@ class RadioButton extends UI5Element {
 
 	onBeforeRendering() {
 		this.syncGroup();
+
+		/* temporary workaround. remove after all wrap properties in the relevant components are renamed to wrappingType */
+		this._wrappingType = this.wrap ? "Normal" : "None";
+		/* end */
+
 		this._enableFormSupport();
 	}
 

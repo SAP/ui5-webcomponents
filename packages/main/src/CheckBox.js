@@ -290,7 +290,9 @@ class CheckBox extends UI5Element {
 	syncLabel() {
 		this._label = { ...this._label };
 		this._label.text = this.text;
-		this._label.wrap = this.wrap;
+		/* temporary workaround. remove after all wrap properties in the relevant components are renamed to wrappingType */
+		this._label.wrappingType = this.wrap ? "Normal" : "None";
+		/* end */
 		this._label.textDirection = this.textDirection;
 	}
 
