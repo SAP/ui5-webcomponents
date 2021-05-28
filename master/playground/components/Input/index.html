@@ -2519,8 +2519,8 @@
 				suggestionItems.forEach(function(item) {
 					var li = document.createElement("ui5-suggestion-item");
 					li.icon = "world";
-					li.info = "explore";
-					li.infoState = "Success";
+					li.additionalText = "explore";
+					li.additionalTextState = "Success";
 					li.description = "travel the world";
 					li.text = item;
 					input.appendChild(li);
@@ -2556,8 +2556,8 @@
 		<span class="nx">suggestionItems</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">{</span>
 			<span class="kd">var</span> <span class="nx">li</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-suggestion-item</span><span class="dl">"</span><span class="p">);</span>
 			<span class="nx">li</span><span class="p">.</span><span class="nx">icon</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">world</span><span class="dl">"</span><span class="p">;</span>
-			<span class="nx">li</span><span class="p">.</span><span class="nx">info</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">explore</span><span class="dl">"</span><span class="p">;</span>
-			<span class="nx">li</span><span class="p">.</span><span class="nx">infoState</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Success</span><span class="dl">"</span><span class="p">;</span>
+			<span class="nx">li</span><span class="p">.</span><span class="nx">additionalText</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">explore</span><span class="dl">"</span><span class="p">;</span>
+			<span class="nx">li</span><span class="p">.</span><span class="nx">additionalTextState</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Success</span><span class="dl">"</span><span class="p">;</span>
 			<span class="nx">li</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">travel the world</span><span class="dl">"</span><span class="p">;</span>
 			<span class="nx">li</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">item</span><span class="p">;</span>
 			<span class="nx">input</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">li</span><span class="p">);</span>
@@ -3008,6 +3008,32 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          additionalText
+                            <br>
+                            <code>additional-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the <code>additionalText</code>, displayed in the end of the item.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          additionalTextState
+                            <br>
+                            <code>additional-text-state</code>
+                        </div>
+                        <div class="cell api-table-content-cell">ValueState</div>
+                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the state of the <code>additionalText</code>. <br><br> Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           description
                             <br>
                         </div>
@@ -3060,29 +3086,6 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the <code>image</code> source URI. <br><br> <b>Note:</b> The <code>image</code> would be displayed in the beginning of the item.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          info
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>info</code>, displayed in the end of the item.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          infoState
-                            <br>
-                            <code>info-state</code>
-                        </div>
-                        <div class="cell api-table-content-cell">ValueState</div>
-                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the state of the <code>info</code>. <br><br> Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">

@@ -1,9 +1,9 @@
-commit 2461b73e406bc0a5f2b3079acdd19e8fd776b212
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri May 28 15:03:11 2021 +0300
+commit c3604430a72d81b7918fff7e058ab76b7664e7a5
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Fri May 28 15:17:36 2021 +0300
 
-    refactor(ui5-product-switch-item): rename heading/subtitle to titleText/subtitleText (#3270)
+    fix(ui5-upload-collection): rename noDnd property to hideDragOverlay (#3335)
     
-    The "subtitle" property has been removed, use "subheading" property instead. Related to: https://github.com/SAP/ui5-webcomponents/issues/3107
+    Part of #3107
     
-    BREAKING_CHANGE: The `heading ` and `subtitle` properties have been renamed to `titleText` and `subtitleText`.
+    BREAKING_CHANGE: The property noDnd has been renamed to hideDragOverlay

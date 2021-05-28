@@ -2458,17 +2458,17 @@
 	<h3>Basic List</h3>
 	<div class="snippet">
 		<ui5-list id="myList" class="full-width">
-			<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" info="In-stock" info-state="Success">Pineapple</ui5-li>
-			<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" info="Expires" info-state="Warning">Orange</ui5-li>
-			<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Information">Blueberry</ui5-li>
-			<ui5-li icon="nutrition-activity" description="The tropical stone fruit" info="Re-stock" info-state="Error">Mango</ui5-li>
+			<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" additional-text="In-stock" additional-text-state="Success">Pineapple</ui5-li>
+			<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" additional-text="Expires" additional-text-state="Warning">Orange</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" additional-text="Re-stock" additional-text-state="Information">Blueberry</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The tropical stone fruit" additional-text="Re-stock" additional-text-state="Error">Mango</ui5-li>
 		</ui5-list>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"myList"</span> <span class="na">class=</span><span class="s">"full-width"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"Tropical plant with an edible fruit"</span> <span class="na">info=</span><span class="s">"In-stock"</span> <span class="na">info-state=</span><span class="s">"Success"</span><span class="nt">&gt;</span>Pineapple<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"Occurs between red and yellow"</span> <span class="na">info=</span><span class="s">"Expires"</span> <span class="na">info-state=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Orange<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The yellow lengthy fruit"</span> <span class="na">info=</span><span class="s">"Re-stock"</span> <span class="na">info-state=</span><span class="s">"Information"</span><span class="nt">&gt;</span>Blueberry<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The tropical stone fruit"</span> <span class="na">info=</span><span class="s">"Re-stock"</span> <span class="na">info-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Mango<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"Tropical plant with an edible fruit"</span> <span class="na">additional-text=</span><span class="s">"In-stock"</span> <span class="na">additional-text-state=</span><span class="s">"Success"</span><span class="nt">&gt;</span>Pineapple<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"Occurs between red and yellow"</span> <span class="na">additional-text=</span><span class="s">"Expires"</span> <span class="na">additional-text-state=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Orange<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The yellow lengthy fruit"</span> <span class="na">additional-text=</span><span class="s">"Re-stock"</span> <span class="na">additional-text-state=</span><span class="s">"Information"</span><span class="nt">&gt;</span>Blueberry<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The tropical stone fruit"</span> <span class="na">additional-text=</span><span class="s">"Re-stock"</span> <span class="na">additional-text-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Mango<span class="nt">&lt;/ui5-li&gt;</span>
 <span class="nt">&lt;/ui5-list&gt;</span>
 	</code></pre></figure></pre>
 </section>
@@ -2478,25 +2478,25 @@
 	<h3>List with  growing="Scroll"</h3>
 	<div class="snippet">
 		<ui5-list id="infiniteScrollEx" style="height: 300px" growing="Scroll">
-			<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" info="In-stock" info-state="Success">Pineapple</ui5-li>
-			<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" info="Expires" info-state="Warning">Orange</ui5-li>
-			<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Error">Banana</ui5-li>
-			<ui5-li icon="nutrition-activity" description="The tropical stone fruit" info="Re-stock" info-state="Error">Mango</ui5-li>
-			<ui5-li icon="nutrition-activity" description="An apple is a sweet, edible fruit produced by an apple tree " info="In-stock" info-state="Success">Apple</ui5-li>
-			<ui5-li icon="nutrition-activity" description="The peach (Prunus persica) is a deciduous tree native to the region of Northwest China" info="Expires" info-state="Warning">Peach</ui5-li>
-			<ui5-li icon="nutrition-activity" description="The pomelo is the largest citrus fruit from the family Rutaceae and the principal ancestor of the grapefruit" info="Re-stock" info-state="Error">Pomelo</ui5-li>
-			<ui5-li icon="nutrition-activity" description="The pear (/ˈpɛər/) tree and shrub are a species of genus Pyrus, bearing the pomaceous fruit of the same name." info="Re-stock" info-state="Error">Pear</ui5-li>
+			<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" additional-text="In-stock" additional-text-state="Success">Pineapple</ui5-li>
+			<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" additional-text="Expires" additional-text-state="Warning">Orange</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" additional-text="Re-stock" additional-text-state="Error">Banana</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The tropical stone fruit" additional-text="Re-stock" additional-text-state="Error">Mango</ui5-li>
+			<ui5-li icon="nutrition-activity" description="An apple is a sweet, edible fruit produced by an apple tree " additional-text="In-stock" additional-text-state="Success">Apple</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The peach (Prunus persica) is a deciduous tree native to the region of Northwest China" additional-text="Expires" additional-text-state="Warning">Peach</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The pomelo is the largest citrus fruit from the family Rutaceae and the principal ancestor of the grapefruit" additional-text="Re-stock" additional-text-state="Error">Pomelo</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The pear (/ˈpɛər/) tree and shrub are a species of genus Pyrus, bearing the pomaceous fruit of the same name." additional-text="Re-stock" additional-text-state="Error">Pear</ui5-li>
 		</ui5-list>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"infiniteScrollEx"</span> <span class="na">style=</span><span class="s">"height: 300px"</span> <span class="na">growing=</span><span class="s">"Scroll"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"Tropical plant with an edible fruit"</span> <span class="na">info=</span><span class="s">"In-stock"</span> <span class="na">info-state=</span><span class="s">"Success"</span><span class="nt">&gt;</span>Pineapple<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"Occurs between red and yellow"</span> <span class="na">info=</span><span class="s">"Expires"</span> <span class="na">info-state=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Orange<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The yellow lengthy fruit"</span> <span class="na">info=</span><span class="s">"Re-stock"</span> <span class="na">info-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Banana<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The tropical stone fruit"</span> <span class="na">info=</span><span class="s">"Re-stock"</span> <span class="na">info-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Mango<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"An apple is a sweet, edible fruit produced by an apple tree "</span> <span class="na">info=</span><span class="s">"In-stock"</span> <span class="na">info-state=</span><span class="s">"Success"</span><span class="nt">&gt;</span>Apple<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The peach (Prunus persica) is a deciduous tree native to the region of Northwest China"</span> <span class="na">info=</span><span class="s">"Expires"</span> <span class="na">info-state=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Peach<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The pomelo is the largest citrus fruit from the family Rutaceae and the principal ancestor of the grapefruit"</span> <span class="na">info=</span><span class="s">"Re-stock"</span> <span class="na">info-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Pomelo<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The pear (/ˈpɛər/) tree and shrub are a species of genus Pyrus, bearing the pomaceous fruit of the same name."</span> <span class="na">info=</span><span class="s">"Re-stock"</span> <span class="na">info-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Pear<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"Tropical plant with an edible fruit"</span> <span class="na">additional-text=</span><span class="s">"In-stock"</span> <span class="na">additional-text-state=</span><span class="s">"Success"</span><span class="nt">&gt;</span>Pineapple<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"Occurs between red and yellow"</span> <span class="na">additional-text=</span><span class="s">"Expires"</span> <span class="na">additional-text-state=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Orange<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The yellow lengthy fruit"</span> <span class="na">additional-text=</span><span class="s">"Re-stock"</span> <span class="na">additional-text-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Banana<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The tropical stone fruit"</span> <span class="na">additional-text=</span><span class="s">"Re-stock"</span> <span class="na">additional-text-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Mango<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"An apple is a sweet, edible fruit produced by an apple tree "</span> <span class="na">additional-text=</span><span class="s">"In-stock"</span> <span class="na">additional-text-state=</span><span class="s">"Success"</span><span class="nt">&gt;</span>Apple<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The peach (Prunus persica) is a deciduous tree native to the region of Northwest China"</span> <span class="na">additional-text=</span><span class="s">"Expires"</span> <span class="na">additional-text-state=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Peach<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The pomelo is the largest citrus fruit from the family Rutaceae and the principal ancestor of the grapefruit"</span> <span class="na">additional-text=</span><span class="s">"Re-stock"</span> <span class="na">additional-text-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Pomelo<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"nutrition-activity"</span> <span class="na">description=</span><span class="s">"The pear (/ˈpɛər/) tree and shrub are a species of genus Pyrus, bearing the pomaceous fruit of the same name."</span> <span class="na">additional-text=</span><span class="s">"Re-stock"</span> <span class="na">additional-text-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Pear<span class="nt">&lt;/ui5-li&gt;</span>
 <span class="nt">&lt;/ui5-list&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
@@ -2523,8 +2523,8 @@
 			var li = document.createElement("ui5-li");
 			li.textContent = "Fruit name";
 			li.description = "the description goes here " + i;
-			li.info = "Available";
-			li.infoState = "Success";
+			li.additionalText = "Available";
+			li.additionalTextState = "Success";
 			li.icon = "nutrition-activity" 
 			return li;
 		}
@@ -2970,7 +2970,7 @@ This is a list item, providing the most common use cases such as <code>text</cod
 
 <h3>CSS Shadow Parts</h3>
 
-<ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM. <br> The <code>ui5-li</code> exposes the following CSS Shadow Parts: <ul> <li>title - Used to style the title of the list item</li> <li>description - Used to style the description of the list item</li> <li>info - Used to style the info of the list item</li> <li>icon - Used to style the icon of the list item</li> </ul>
+<ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM. <br> The <code>ui5-li</code> exposes the following CSS Shadow Parts: <ul> <li>title - Used to style the title of the list item</li> <li>description - Used to style the description of the list item</li> <li>additional-text - Used to style the additionalText of the list item</li> <li>icon - Used to style the icon of the list item</li> </ul>
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -2984,6 +2984,32 @@ This is a list item, providing the most common use cases such as <code>text</cod
                       <div class="cell api-table-header-cell">Description</div>
                     </div>
             
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          additionalText
+                            <br>
+                            <code>additional-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the <code>additionalText</code>, displayed in the end of the list item.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          additionalTextState
+                            <br>
+                            <code>additional-text-state</code>
+                        </div>
+                        <div class="cell api-table-content-cell">ValueState</div>
+                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the state of the <code>additionalText</code>. <br> Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           description
@@ -3028,31 +3054,6 @@ This is a list item, providing the most common use cases such as <code>text</cod
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the <code>image</code> source URI. <br><br> <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          info
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>info</code>, displayed in the end of the list item.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v0.13.0</div>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          infoState
-                            <br>
-                            <code>info-state</code>
-                        </div>
-                        <div class="cell api-table-content-cell">ValueState</div>
-                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the state of the <code>info</code>. <br> Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v0.13.0</div>
                         </div>
                       </div>
                       <div class="row api-table-roll-even">

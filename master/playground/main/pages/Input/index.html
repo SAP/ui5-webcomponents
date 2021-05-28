@@ -397,9 +397,9 @@
 				var suggestion = document.createElement("ui5-suggestion-item");
 				suggestion.id = item.key;
 				suggestion.icon = "world";
-				suggestion.info = "explore";
+				suggestion.additionalText = "explore";
 				suggestion.group = item.text.length === 1;
-				suggestion.infoState = "Success";
+				suggestion.additionalTextState = "Success";
 				suggestion.description = "travel the world";
 				suggestion.text = item.text
 				input.appendChild(suggestion);
