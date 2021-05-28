@@ -137,7 +137,6 @@ const metadata = {
  * <ul>
  * <li>[SPACE/ENTER/RETURN] - Trigger <code>ui5-click</code> event</li>
  * </ul>
- * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code>
