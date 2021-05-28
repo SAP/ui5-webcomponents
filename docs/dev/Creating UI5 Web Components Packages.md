@@ -107,7 +107,7 @@ That's it!
 
 ## Understanding the project structure
 
-### package.json
+### `package.json`
 
 The initialization script will create several NPM scripts for you in `package.json`.
 
