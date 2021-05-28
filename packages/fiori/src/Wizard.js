@@ -8,6 +8,7 @@ import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 
@@ -127,19 +128,19 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
 		/**
-		 * Fired when the step selection is changed by user interaction - either with scrolling,
+		 * Fired when the step is changed by user interaction - either with scrolling,
 		 * or by clicking on the steps within the component header.
 		 *
-		 * @event sap.ui.webcomponents.fiori.Wizard#selection-change
-		 * @param {HTMLElement} selectedStep the newly selected step
-		 * @param {HTMLElement} previouslySelectedStep the previously selected step
-		 * @param {Boolean} changeWithClick the selection changed due to user's click on step within the navigation
+		 * @event sap.ui.webcomponents.fiori.Wizard#step-change
+		 * @param {HTMLElement} step the new step
+		 * @param {HTMLElement} previousStep the previous step
+		 * @param {Boolean} changeWithClick the step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation
 		 * @public
 		 */
-		"selection-change": {
+		"step-change": {
 			detail: {
-				selectedStep: { type: HTMLElement },
-				previouslySelectedStep: { type: HTMLElement },
+				step: { type: HTMLElement },
+				previousStep: { type: HTMLElement },
 				changeWithClick: { Boolean },
 			},
 		},
@@ -427,7 +428,7 @@ class Wizard extends UI5Element {
 	 */
 	onSelectionChangeRequested(event) {
 		this.selectionRequestedByClick = true;
-		this.changeSelectionByStepClick(event.target);
+		this.changeSelectionByStepAction(event.target);
 	}
 
 	/**
@@ -637,7 +638,7 @@ class Wizard extends UI5Element {
 		}
 
 		// If the calculated index is in range,
-		// change selection and fire "selection-change".
+		// change selection and fire "step-change".
 		if (newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
 			const stepToSelect = this.slottedSteps[newlySelectedIndex];
 
@@ -649,16 +650,20 @@ class Wizard extends UI5Element {
 	/**
 	 * Called upon <code>onSelectionChangeRequested</code>.
 	 * Selects the external step (ui5-wizard-step),
-	 * based on the clicked step in the header (ui5-wizard-tab).
+	 * based on the clicked or activated via keyboard step in the header (ui5-wizard-tab).
 	 * @param {HTMLElement} stepInHeader the step equivalent in the header
 	 * @private
 	 */
-	changeSelectionByStepClick(stepInHeader) {
+	async changeSelectionByStepAction(stepInHeader) {
 		const stepRefId = stepInHeader.getAttribute("data-ui5-content-ref-id");
 		const selectedStep = this.selectedStep;
 		const stepToSelect = this.getStepByRefId(stepRefId);
 		const bExpanded = stepInHeader.getAttribute(EXPANDED_STEP) === "true";
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
+		const firstFocusableElement = await getFirstFocusableElement(stepToSelect.firstElementChild);
+
+		// Focus the first focusable element within the step content corresponding to the currently focused tab
+		firstFocusableElement.focus();
 
 		// If the currently selected (active) step is clicked,
 		// just scroll to its starting point and stop.
@@ -668,7 +673,7 @@ class Wizard extends UI5Element {
 		}
 
 		if (bExpanded || (!bExpanded && (newlySelectedIndex === 0 || newlySelectedIndex === this.steps.length - 1))) {
-			// Change selection and fire "selection-change".
+			// Change selection and fire "step-change".
 			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
 		}
 	}
@@ -965,9 +970,9 @@ class Wizard extends UI5Element {
 			selectedStep.selected = false;
 			stepToSelect.selected = true;
 
-			this.fireEvent("selection-change", {
-				selectedStep: stepToSelect,
-				previouslySelectedStep: selectedStep,
+			this.fireEvent("step-change", {
+				step: stepToSelect,
+				previousStep: selectedStep,
 				changeWithClick,
 			});
 

@@ -2,10 +2,20 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+
 import {
 	isEnter,
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+
+import {
+	AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL,
+	AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL,
+	AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL,
+	AVATAR_GROUP_ARIA_LABEL_GROUP,
+	AVATAR_GROUP_MOVE,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.js";
@@ -15,7 +25,7 @@ import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 import Button from "./Button.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
-import AvatarBackgroundColor from "./types/AvatarBackgroundColor.js";
+import AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 const OVERFLOW_BTN_CLASS = "ui5-avatar-group-overflow-btn";
 const AVATAR_GROUP_OVERFLOW_BTN_SELECTOR = `.${OVERFLOW_BTN_CLASS}`;
@@ -32,7 +42,7 @@ const offsets = {
 	},
 	[AvatarSize.M]: {
 		[AvatarGroupType.Individual]: "0.125rem",
-		[AvatarGroupType.Group]: "-1.62rem",
+		[AvatarGroupType.Group]: "-1.625rem",
 	},
 	[AvatarSize.L]: {
 		[AvatarGroupType.Individual]: "0.125rem",
@@ -40,7 +50,7 @@ const offsets = {
 	},
 	[AvatarSize.XL]: {
 		[AvatarGroupType.Individual]: "0.25rem",
-		[AvatarGroupType.Group]: "-2.7rem",
+		[AvatarGroupType.Group]: "-2.75rem",
 	},
 };
 
@@ -90,6 +100,22 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the aria-haspopup value of the component on:
+		 * <br><br>
+		 * <ul>
+		 * <li> the whole container when <code>type</code> property is <code>Group</code></li>
+		 * <li> the default "More" overflow button when <code>type</code> is <code>Individual</code></li>
+		 * </ul>
+		 * <br><br>
+		 * @type String
+		 * @since 1.0.0-rc.15
+		 * @protected
+		 */
+		ariaHaspopup: {
+			type: String,
+		},
+
+		/**
 		 * @private
 		 */
 		_overflowButtonText: {
@@ -100,7 +126,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
 		/**
-		 * Defines the items of the <code>ui5-avatar-group</code>. Use the <code>ui5-avatar</code> component as an item.
+		 * Defines the items of the component. Use the <code>ui5-avatar</code> component as an item.
 		 * <br><br>
 		 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
 		 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
@@ -114,10 +140,10 @@ const metadata = {
 			propertyName: "items",
 		},
 		/**
-		 * Defines the overflow button of <code>ui5-avatar-group</code>.
+		 * Defines the overflow button of the component.
 		 * <b>Note:</b> We recommend using the <code>ui5-button</code> component.
 		 * <br><br>
-		 * <b>Note:</b> If this slot is not used, the <code>ui5-avatar-group</code> will
+		 * <b>Note:</b> If this slot is not used, the component will
 		 * display the built-in overflow button.
 		 * @type {HTMLElement}
 		 * @slot overflowButton
@@ -130,7 +156,7 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
 		/**
-		* Fired when the <code>ui5-avatar-group</code> is activated either with a
+		* Fired when the component is activated either with a
 		* click/tap or by using the Enter or Space key.
 		* @param {HTMLElement} targetRef The DOM ref of the clicked item.
 		* @param {boolean} overflowButtonClicked indicates if the overflow button is clicked
@@ -146,7 +172,7 @@ const metadata = {
 		},
 		/**
 		* Fired when the count of visible <code>ui5-avatar</code> elements in the
-		* <code>ui5-avatar-group</code> has changed
+		* component has changed
 		* @event
 		* @public
 		* @since 1.0.0-rc.13
@@ -196,6 +222,30 @@ const metadata = {
  * <li>You want to use it for other visual content than avatars.</li>
  * </ul>
  *
+ * <h3>Keyboard Handling</h3>
+ * The component provides advanced keyboard handling.
+ * When focused, the user can use the following keyboard
+ * shortcuts in order to perform a navigation:
+ * <br>
+ * - <code>type</code> Individual:
+ * <br>
+ * <ul>
+ * <li>[TAB] - Move focus to the overflow button</li>
+ * <li>[LEFT] - Navigate one avatar to the left</li>
+ * <li>[RIGHT] - Navigate one avatar to the right</li>
+ * <li>[HOME] - Navigate to the first avatar</li>
+ * <li>[END] - Navigate to the last avatar</li>
+ * <li>[SPACE],[ENTER],[RETURN] - Trigger <code>ui5-click</code> event</li>
+ * </ul>
+ * <br>
+ * - <code>type</code> Group:
+ * <br>
+ * <ul>
+ * <li>[TAB] - Move focus to the next interactive element after the component</li>
+ * <li>[SPACE],[ENTER],[RETURN] - Trigger <code>ui5-click</code> event</li>
+ * </ul>
+ * <br>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.AvatarGroup
@@ -217,6 +267,8 @@ class AvatarGroup extends UI5Element {
 		this._colorIndex = 0;
 		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -241,6 +293,10 @@ class AvatarGroup extends UI5Element {
 		];
 	}
 
+	static async onDefine() {
+		await fetchI18nBundle("@ui5/webcomponents");
+	}
+
 	/**
 	 * Returns an array containing the <code>ui5-avatar</code> instances that are currently not displayed due to lack of space.
 	 * @readonly
@@ -253,7 +309,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	/**
-	 * Returns an array containing the <code>AvatarBackgroundColor</code> values that correspond to the avatars in the <code>ui5-avatar-group</code>.
+	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
 	 * @readonly
 	 * @type { Array }
 	 * @defaultValue []
@@ -265,6 +321,45 @@ class AvatarGroup extends UI5Element {
 
 	get _customOverflowButton() {
 		return this.overflowButton.length ? this.overflowButton[0] : undefined;
+	}
+
+	get _ariaLabelText() {
+		const hiddenItemsCount = this.hiddenItems.length;
+		const typeLabelKey = this._isGroup ? AVATAR_GROUP_ARIA_LABEL_GROUP : AVATAR_GROUP_ARIA_LABEL_INDIVIDUAL;
+
+		// avatar type label
+		let text = this.i18nBundle.getText(typeLabelKey);
+
+		// add displayed-hidden avatars label
+		text += ` ${this.i18nBundle.getText(AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL, [this._itemsCount - hiddenItemsCount], [hiddenItemsCount])}`;
+
+		if (this._isGroup) {
+			// the container role is "button", add the message for complete list activation
+			text += ` ${this.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL)}`;
+		} else {
+			// the container role is "group", add the "how to navigate" message
+			text += ` ${this.i18nBundle.getText(AVATAR_GROUP_MOVE)}`;
+		}
+
+		return text;
+	}
+
+	get _overflowButtonAriaLabelText() {
+		return this._isGroup ? undefined : this.i18nBundle.getText(AVATAR_GROUP_SHOW_COMPLETE_LIST_LABEL);
+	}
+
+	get _containerAriaHasPopup() {
+		return this._isGroup ? this._getAriaHasPopup() : undefined;
+	}
+
+	get _overflowButtonAccInfo() {
+		return {
+			ariaHaspopup: this._isGroup ? undefined : this._getAriaHasPopup(),
+		};
+	}
+
+	get _role() {
+		return this._isGroup ? "button" : "group";
 	}
 
 	get _hiddenStartIndex() {
@@ -403,9 +498,9 @@ class AvatarGroup extends UI5Element {
 			const colorIndex = this._getNextBackgroundColor();
 			avatar.interactive = !this._isGroup;
 
-			if (!avatar.getAttribute("background-color")) {
+			if (!avatar.getAttribute("_color-scheme")) {
 				// AvatarGroup respects colors set to ui5-avatar
-				avatar.setAttribute("_background-color", AvatarBackgroundColor[`Accent${colorIndex}`]);
+				avatar.setAttribute("_color-scheme", AvatarColorScheme[`Accent${colorIndex}`]);
 			}
 
 			if (!avatar.getAttribute("size")) {
@@ -503,6 +598,14 @@ class AvatarGroup extends UI5Element {
 		if (shouldFireEvent) {
 			this.fireEvent("overflow");
 		}
+	}
+
+	_getAriaHasPopup() {
+		if (this.ariaHaspopup === "") {
+			return;
+		}
+
+		return this.ariaHaspopup;
 	}
 }
 

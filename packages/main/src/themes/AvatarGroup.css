@@ -33,6 +33,7 @@
 
 ::slotted([ui5-button]:not([hidden])),
 .ui5-avatar-group-overflow-btn:not([hidden]) {
+	--_ui5_button_base_padding: 0;
 	border-radius: 50%;
 	display: inline-flex;
 	text-overflow: initial;

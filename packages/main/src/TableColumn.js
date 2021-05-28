@@ -52,7 +52,7 @@ const metadata = {
 		},
 
 		/**
-		 * According to your <code>minWidth</code> settings, the <code>ui5-table-column</code> can be hidden
+		 * According to your <code>minWidth</code> settings, the component can be hidden
 		 * in different screen sizes.
 		 * <br><br>
 		 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.

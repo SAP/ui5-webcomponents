@@ -15,11 +15,11 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.TimePickerBase.prototype */ {
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
-		 * <code>ui5-time-picker</code> has no value.
+		 * component has no value.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
-		 * Passing an empty string as the value of this property will make the <code>ui5-time-picker</code> appear empty - without placeholder or format pattern.
+		 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 		 *
 		 * @type {string}
 		 * @defaultvalue undefined
