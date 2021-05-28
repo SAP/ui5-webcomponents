@@ -126,6 +126,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
 		hideArrow: {
 			type: Boolean,
