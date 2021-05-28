@@ -2472,23 +2472,43 @@
 <section>
 	<h3>CheckBox states</h3>
 	<div class="snippet">
+		<ui5-checkbox text="Success" value-state="Success"></ui5-checkbox>
 		<ui5-checkbox text="Error" value-state="Error"></ui5-checkbox>
 		<ui5-checkbox text="Warning" value-state="Warning"></ui5-checkbox>
+		<ui5-checkbox text="Information" value-state="Information"></ui5-checkbox>
 		<ui5-checkbox text="Disabled" disabled checked></ui5-checkbox>
 		<ui5-checkbox text="Readonly" readonly checked></ui5-checkbox>
+		<ui5-checkbox text="Success disabled" disabled value-state="Success" checked></ui5-checkbox>
 		<ui5-checkbox text="Error disabled" disabled value-state="Error" checked></ui5-checkbox>
 		<ui5-checkbox text="Warning disabled " disabled value-state="Warning" checked></ui5-checkbox>
+		<ui5-checkbox text="Information disabled " disabled value-state="Information" checked></ui5-checkbox>
+		<ui5-checkbox text="Success readonly" readonly value-state="Success" checked></ui5-checkbox>
 		<ui5-checkbox text="Error readonly" readonly value-state="Error" checked></ui5-checkbox>
 		<ui5-checkbox text="Warning readonly" readonly value-state="Warning" checked></ui5-checkbox>
+		<ui5-checkbox text="Information readonly" readonly value-state="Information" checked></ui5-checkbox>
+		<ui5-checkbox text="Success indeterminate" value-state="Success" indeterminate checked></ui5-checkbox>
+		<ui5-checkbox text="Error indeterminate" value-state="Error" indeterminate checked></ui5-checkbox>
+		<ui5-checkbox text="Warning indeterminate" value-state="Warning" indeterminate checked></ui5-checkbox>
+		<ui5-checkbox text="Information indeterminate" value-state="Information" indeterminate checked></ui5-checkbox>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Error"</span> <span class="na">value-state=</span><span class="s">"Error"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Success"</span> <span class="na">value-state=</span><span class="s">"Success"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Error"</span> <span class="na">value-state=</span><span class="s">"Error"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
 <span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Warning"</span> <span class="na">value-state=</span><span class="s">"Warning"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Information"</span> <span class="na">value-state=</span><span class="s">"Information"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
 <span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Disabled"</span> <span class="na">disabled</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
 <span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Readonly"</span> <span class="na">readonly</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Success disabled"</span> <span class="na">disabled</span> <span class="na">value-state=</span><span class="s">"Success"</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
 <span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Error disabled"</span> <span class="na">disabled</span> <span class="na">value-state=</span><span class="s">"Error"</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
 <span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Warning disabled "</span> <span class="na">disabled</span> <span class="na">value-state=</span><span class="s">"Warning"</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Information disabled "</span> <span class="na">disabled</span> <span class="na">value-state=</span><span class="s">"Information"</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Success readonly"</span> <span class="na">readonly</span> <span class="na">value-state=</span><span class="s">"Success"</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
 <span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Error readonly"</span> <span class="na">readonly</span> <span class="na">value-state=</span><span class="s">"Error"</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
 <span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Warning readonly"</span> <span class="na">readonly</span> <span class="na">value-state=</span><span class="s">"Warning"</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Information readonly"</span> <span class="na">readonly</span> <span class="na">value-state=</span><span class="s">"Information"</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Success indeterminate"</span> <span class="na">value-state=</span><span class="s">"Success"</span> <span class="na">indeterminate</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Error indeterminate"</span> <span class="na">value-state=</span><span class="s">"Error"</span> <span class="na">indeterminate</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Warning indeterminate"</span> <span class="na">value-state=</span><span class="s">"Warning"</span> <span class="na">indeterminate</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Information indeterminate"</span> <span class="na">value-state=</span><span class="s">"Information"</span> <span class="na">indeterminate</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -2500,6 +2520,65 @@
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"ui5-checkbox with 'wrap' set and some long text."</span> <span class="na">wrap</span> <span class="na">style=</span><span class="s">"width:200px"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
 <span class="nt">&lt;ui5-checkbox</span> <span class="na">text=</span><span class="s">"Another ui5-checkbox with very long text here"</span> <span class="na">wrap</span> <span class="na">style=</span><span class="s">"width:200px"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>CheckBox with indeterminate</h3>
+	<div class="snippet">
+		<ui5-checkbox id="result-cb" text="Select / deselect all" indeterminate checked></ui5-checkbox>
+		<hr />
+		<div style="display: flex; flex-direction: column; align-items: flex-start;">
+			<ui5-checkbox id="cb1" text="English" checked></ui5-checkbox>
+			<ui5-checkbox id="cb2" text="German"></ui5-checkbox>
+			<ui5-checkbox id="cb3" text="French"></ui5-checkbox>
+		</div>
+		<script>
+			var resultCb = document.querySelector("#result-cb");
+			var langCbs = Array.from(document.querySelectorAll("[id^=cb]"));
+
+			langCbs.forEach(cbEl => {
+				cbEl.addEventListener("ui5-change", event => {
+					const hasChecked = langCbs.some(cb => cb.checked);
+					const hasUnchecked = langCbs.some(cb => !cb.checked);
+
+					resultCb.indeterminate = hasChecked && hasUnchecked;
+					resultCb.checked = hasChecked;
+				});
+			});
+
+			resultCb.addEventListener("ui5-change", event => {
+				langCbs.forEach(cb => cb.checked = event.target.checked);
+			});
+		</script>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-checkbox</span> <span class="na">id=</span><span class="s">"result-cb"</span> <span class="na">text=</span><span class="s">"Select / deselect all"</span> <span class="na">indeterminate</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;hr</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"display: flex; flex-direction: column; align-items: flex-start;"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-checkbox</span> <span class="na">id=</span><span class="s">"cb1"</span> <span class="na">text=</span><span class="s">"English"</span> <span class="na">checked</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+	<span class="nt">&lt;ui5-checkbox</span> <span class="na">id=</span><span class="s">"cb2"</span> <span class="na">text=</span><span class="s">"German"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+	<span class="nt">&lt;ui5-checkbox</span> <span class="na">id=</span><span class="s">"cb3"</span> <span class="na">text=</span><span class="s">"French"</span><span class="nt">&gt;&lt;/ui5-checkbox&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+	<span class="kd">var</span> <span class="nx">resultCb</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#result-cb</span><span class="dl">"</span><span class="p">);</span>
+	<span class="kd">var</span> <span class="nx">langCbs</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">[id^=cb]</span><span class="dl">"</span><span class="p">));</span>
+
+	<span class="nx">langCbs</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">cbEl</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">cbEl</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-change</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+			<span class="kd">const</span> <span class="nx">hasChecked</span> <span class="o">=</span> <span class="nx">langCbs</span><span class="p">.</span><span class="nx">some</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">cb</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">cb</span><span class="p">.</span><span class="nx">checked</span> <span class="p">});</span>
+			<span class="kd">const</span> <span class="nx">hasUnchecked</span> <span class="o">=</span> <span class="nx">langCbs</span><span class="p">.</span><span class="nx">some</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">cb</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="nx">cb</span><span class="p">.</span><span class="nx">checked</span> <span class="p">});</span>
+
+			<span class="nx">resultCb</span><span class="p">.</span><span class="nx">indeterminate</span> <span class="o">=</span> <span class="nx">hasChecked</span> <span class="o">&amp;&amp;</span> <span class="nx">hasUnchecked</span><span class="p">;</span>
+			<span class="nx">resultCb</span><span class="p">.</span><span class="nx">checked</span> <span class="o">=</span> <span class="nx">hasChecked</span><span class="p">;</span>
+		<span class="p">});</span>
+	<span class="p">});</span>
+
+	<span class="nx">resultCb</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-change</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">langCbs</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">cb</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">cb</span><span class="p">.</span><span class="nx">checked</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">checked</span><span class="p">;</span>
+		<span class="p">});</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -2559,6 +2638,18 @@ The user can use the following keyboard shortcuts to toggle the checked state of
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          indeterminate
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the component is displayed as partially checked. <br><br> <b>Note:</b> The indeterminate state can be set only programatically and can’t be achieved by user interaction and the resulting visual state depends on the values of the <code>indeterminate</code> and <code>checked</code> properties: <ul> <li> If the component is checked and indeterminate, it will be displayed as partially checked <li> If the component is checked and it is not indeterminate, it will be displayed as checked <li> If the component is not checked, it will be displayed as not checked regardless value of the indeterminate attribute </ul>
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           name
                             <br>
                         </div>
@@ -2572,7 +2663,7 @@ The user can use the following keyboard shortcuts to toggle the checked state of
             <br><br> <b>Note:</b> When set, a native <code>input</code> HTML element will be created inside the component so that it can be submitted as part of an HTML form. Do not use this property unless you need to submit a form.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           readonly
                             <br>
@@ -2583,7 +2674,7 @@ The user can use the following keyboard shortcuts to toggle the checked state of
                             Defines whether the component is read-only. <br><br> <b>Note:</b> A red-only component is not editable, but still provides visual feedback upon user interaction.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           text
                             <br>
@@ -2594,7 +2685,7 @@ The user can use the following keyboard shortcuts to toggle the checked state of
                             Defines the text of the component.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           valueState
                             <br>
@@ -2610,7 +2701,7 @@ The user can use the following keyboard shortcuts to toggle the checked state of
             <ul> <li><code>Warning</code></li> <li><code>Error</code></li> <li><code>None</code>(default)</li> <li><code>Success</code></li> <li><code>Information</code></li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           wrap
                             <br>

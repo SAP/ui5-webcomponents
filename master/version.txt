@@ -1,5 +1,9 @@
-commit 4ac6d23606059e8ac4060d3648c888bf46b781cc
+commit 42a1326d5d3b08823aadf5f58876a82e151dfd4d
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri May 28 10:12:34 2021 +0300
+Date:   Fri May 28 10:20:30 2021 +0300
 
-    fix(ui5-li-tree): hover and active visual state (#3298)
+    feat(ui5-checkbox): add indeterminate state (#3309)
+    
+    Added new property attribute which determines whether the component is displayed as partially checked.
+    
+    Fixes: #3217
