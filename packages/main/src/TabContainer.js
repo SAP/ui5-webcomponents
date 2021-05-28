@@ -354,8 +354,8 @@ class TabContainer extends UI5Element {
 		if (this._scrollableBack && (target.offsetLeft - leftArrowWidth < headerScrollContainer.scrollLeft)) {
 			this._scrollEnablement.move(target.offsetLeft - leftArrowWidth - headerScrollContainer.scrollLeft, 0, true);
 			this._updateScrolling();
-		} else if (this._scrollableForward && (target.offsetLeft + target.offsetWidth  > headerScrollContainer.scrollLeft + headerScrollContainer.offsetWidth - rightArrowWidth)) {
-			this._scrollEnablement.move(target.offsetLeft + target.offsetWidth  - headerScrollContainer.scrollLeft - headerScrollContainer.offsetWidth + rightArrowWidth, 0, true);
+		} else if (this._scrollableForward && (target.offsetLeft + target.offsetWidth > headerScrollContainer.scrollLeft + headerScrollContainer.offsetWidth - rightArrowWidth)) {
+			this._scrollEnablement.move(target.offsetLeft + target.offsetWidth - headerScrollContainer.scrollLeft - headerScrollContainer.offsetWidth + rightArrowWidth, 0, true);
 			this._updateScrolling();
 		}
 	}
