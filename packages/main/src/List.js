@@ -36,7 +36,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-list</code> header.
+		 * Defines the component header.
 		 * <br><br>
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
@@ -50,7 +50,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the items of the <code>ui5-list</code>.
+		 * Defines the items of the component.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 		 *
@@ -66,7 +66,7 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-list</code> header text.
+		 * Defines the component header text.
 		 * <br><br>
 		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 		 *
@@ -101,7 +101,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the mode of the <code>ui5-list</code>.
+		 * Defines the mode of the component.
 		 * <br><br>
 		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
 		 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
@@ -116,7 +116,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text that is displayed when the <code>ui5-list</code> contains no items.
+		 * Defines the text that is displayed when the component contains no items.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -147,7 +147,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-list</code> will have growing capability either by pressing a <code>More</code> button,
+		 * Defines whether the component will have growing capability either by pressing a <code>More</code> button,
 		 * or via user scroll. In both cases <code>load-more</code> event is fired.
 		 * <br><br>
 		 *
@@ -290,7 +290,7 @@ const metadata = {
 		 * Fired when the Delete button of any item is pressed.
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
-		 * when the <code>ui5-list</code> <code>mode</code> property is set to <code>Delete</code>.
+		 * when the component <code>mode</code> property is set to <code>Delete</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.List#item-delete
 		 * @param {HTMLElement} item the deleted item.
@@ -535,7 +535,7 @@ class List extends UI5Element {
 		return this.growing === ListGrowingMode.Button;
 	}
 
-	get _moreText() {
+	get _growingButtonText() {
 		return this.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
@@ -672,6 +672,9 @@ class List extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault(); // prevent scroll
+		}
 		if (isTabNext(event)) {
 			this._handleTabNext(event);
 		}

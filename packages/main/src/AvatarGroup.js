@@ -25,7 +25,7 @@ import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 import Button from "./Button.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
-import AvatarBackgroundColor from "./types/AvatarBackgroundColor.js";
+import AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 const OVERFLOW_BTN_CLASS = "ui5-avatar-group-overflow-btn";
 const AVATAR_GROUP_OVERFLOW_BTN_SELECTOR = `.${OVERFLOW_BTN_CLASS}`;
@@ -100,7 +100,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the aria-haspopup value of the <code>ui5-avatar-group</code> on:
+		 * Defines the aria-haspopup value of the component on:
 		 * <br><br>
 		 * <ul>
 		 * <li> the whole container when <code>type</code> property is <code>Group</code></li>
@@ -126,7 +126,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
 		/**
-		 * Defines the items of the <code>ui5-avatar-group</code>. Use the <code>ui5-avatar</code> component as an item.
+		 * Defines the items of the component. Use the <code>ui5-avatar</code> component as an item.
 		 * <br><br>
 		 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
 		 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
@@ -140,10 +140,10 @@ const metadata = {
 			propertyName: "items",
 		},
 		/**
-		 * Defines the overflow button of <code>ui5-avatar-group</code>.
+		 * Defines the overflow button of the component.
 		 * <b>Note:</b> We recommend using the <code>ui5-button</code> component.
 		 * <br><br>
-		 * <b>Note:</b> If this slot is not used, the <code>ui5-avatar-group</code> will
+		 * <b>Note:</b> If this slot is not used, the component will
 		 * display the built-in overflow button.
 		 * @type {HTMLElement}
 		 * @slot overflowButton
@@ -156,7 +156,7 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
 		/**
-		* Fired when the <code>ui5-avatar-group</code> is activated either with a
+		* Fired when the component is activated either with a
 		* click/tap or by using the Enter or Space key.
 		* @param {HTMLElement} targetRef The DOM ref of the clicked item.
 		* @param {boolean} overflowButtonClicked indicates if the overflow button is clicked
@@ -172,7 +172,7 @@ const metadata = {
 		},
 		/**
 		* Fired when the count of visible <code>ui5-avatar</code> elements in the
-		* <code>ui5-avatar-group</code> has changed
+		* component has changed
 		* @event
 		* @public
 		* @since 1.0.0-rc.13
@@ -223,7 +223,7 @@ const metadata = {
  * </ul>
  *
  * <h3>Keyboard Handling</h3>
- * The <code>ui5-avatar-group</code> provides advanced keyboard handling.
+ * The component provides advanced keyboard handling.
  * When focused, the user can use the following keyboard
  * shortcuts in order to perform a navigation:
  * <br>
@@ -241,7 +241,7 @@ const metadata = {
  * - <code>type</code> Group:
  * <br>
  * <ul>
- * <li>[TAB] - Move focus to the next interactive element after the <code>ui5-avatar-group</code></li>
+ * <li>[TAB] - Move focus to the next interactive element after the component</li>
  * <li>[SPACE],[ENTER],[RETURN] - Trigger <code>ui5-click</code> event</li>
  * </ul>
  * <br>
@@ -309,7 +309,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	/**
-	 * Returns an array containing the <code>AvatarBackgroundColor</code> values that correspond to the avatars in the <code>ui5-avatar-group</code>.
+	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
 	 * @readonly
 	 * @type { Array }
 	 * @defaultValue []
@@ -498,9 +498,9 @@ class AvatarGroup extends UI5Element {
 			const colorIndex = this._getNextBackgroundColor();
 			avatar.interactive = !this._isGroup;
 
-			if (!avatar.getAttribute("background-color")) {
+			if (!avatar.getAttribute("_color-scheme")) {
 				// AvatarGroup respects colors set to ui5-avatar
-				avatar.setAttribute("_background-color", AvatarBackgroundColor[`Accent${colorIndex}`]);
+				avatar.setAttribute("_color-scheme", AvatarColorScheme[`Accent${colorIndex}`]);
 			}
 
 			if (!avatar.getAttribute("size")) {

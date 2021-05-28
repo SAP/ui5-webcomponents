@@ -7,7 +7,7 @@ const metadata = {
 	tag: "ui5-cb-item",
 	properties: /** @lends  sap.ui.webcomponents.main.ComboBoxItem.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-cb-item</code>.
+		 * Defines the text of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -15,7 +15,7 @@ const metadata = {
 		 */
 		text: { type: String },
 		/**
-		 * Defines the additional text of the <code>ui5-cb-item</code>.
+		 * Defines the additional text of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
