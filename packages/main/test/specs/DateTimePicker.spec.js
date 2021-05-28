@@ -103,30 +103,32 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	it("tests selection of new date without changing the time section", () => {
-		const PREVIOUS_VALUE = "14/04/2020, 01:02:03 AM";
+		const PREVIOUS_VALUE = "14/04/2020, 01:02:03 am";
 		const dtPicker = browser.$("#dtSeconds");
-
-		// act
-		openPickerById("dtSeconds");
-
 		// assert
 		const currentValue = dtPicker.shadow$("ui5-input").getValue();
 		assert.strictEqual(currentValue, PREVIOUS_VALUE,  "The initial date/time is correctly set.");
 
+		browser.keys("Tab");
+		browser.keys(["Shift", "Tab"]);
+		browser.keys("Backspace");
+		browser.keys("wrongtext");
+		browser.keys("Tab");
+
+		openPickerById("dtSeconds");
 		// act
 		const picker = getPicker("dtSeconds");
-
 		// select the next day (the right from the selected)
-		const selectedDay = picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$(".ui5-dp-item--selected");
+		const selectedDay = picker.$("ui5-calendar").shadow$("ui5-daypicker").shadow$(".ui5-dp-item--now");
+		const timestamp = selectedDay.getAttribute("data-sap-timestamp");
+		const date = new Date(timestamp * 1000);
+		const selectedDate = `${date.getDate() < 10 ? "0" : ""}${date.getDate()}/${date.getMonth() + 1 < 10 ? "0" : ""}${date.getMonth() + 1}/${date.getFullYear()}`;
 		selectedDay.click();
-		browser.keys("ArrowRight");
-		browser.keys("Space");
-
 		picker.$("#ok").click();
-
 		// assert
 		const newValue = dtPicker.shadow$("ui5-input").getValue();
-		assert.strictEqual(newValue.toUpperCase(), "15/04/2020, 01:02:03 AM", "The new date/time is correctly selected.");
+		const result = newValue.indexOf(selectedDate) > -1;
+		assert.ok(result, "The new date/time is correctly selected.");
 	});
 
 	it("tests change event is fired on submit", () => {
