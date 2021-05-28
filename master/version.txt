@@ -1,9 +1,9 @@
-commit 42a1326d5d3b08823aadf5f58876a82e151dfd4d
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri May 28 10:20:30 2021 +0300
+commit 4347195422998cdf2824811553b7a03c93ddf413
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri May 28 14:54:24 2021 +0300
 
-    feat(ui5-checkbox): add indeterminate state (#3309)
+    refactor(ui5-toggle-button): rename tag name (#3337)
     
-    Added new property attribute which determines whether the component is displayed as partially checked.
+    The change is part of: #3107
     
-    Fixes: #3217
+    BREAKING_CHANGE: The tag name ui5-togglebutton has been renamed to ui5-toggle-button
