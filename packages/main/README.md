@@ -52,7 +52,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | TimePicker               | `ui5-time-picker`    | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toast                    | `ui5-toast`          | `import "@ui5/webcomponents/dist/Toast.js";`               |
-| Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
+| Toggle Button            | `ui5-toggle-button`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 
 For a complete list of all public module imports from the `main` package, click [here](../../docs/Public%20Module%20Imports.md#main):
 

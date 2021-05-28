@@ -115,7 +115,7 @@ const metadata = {
 		 * @type {TabContainerTabsPlacement}
 		 * @defaultvalue "Top"
 		 * @since 1.0.0-rc.7
-		 * @public
+		 * @private
 		 */
 		tabsPlacement: {
 			type: TabContainerTabsPlacement,

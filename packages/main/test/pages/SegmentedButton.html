@@ -26,14 +26,14 @@
 			<h2>Segmentedbutton example</h2>
 			<div class="sample" id="main-sample">
 				<ui5-segmented-button id="segButtonSingle">
-					<ui5-togglebutton>Button</ui5-togglebutton>
+					<ui5-togggle-button>Button</ui5-togggle-button>
 				</ui5-segmented-button>
 
 				<section>
 					<ui5-segmented-button id="segButton1">
-						<ui5-togglebutton icon="employee" pressed></ui5-togglebutton>
-						<ui5-togglebutton>ToggleButton</ui5-togglebutton>
-						<ui5-togglebutton>Button</ui5-togglebutton>
+						<ui5-togggle-button icon="employee" pressed></ui5-togggle-button>
+						<ui5-togggle-button>ToggleButton</ui5-togggle-button>
+						<ui5-togggle-button>Button</ui5-togggle-button>
 					</ui5-segmented-button>
 				</section>
 
@@ -41,10 +41,10 @@
 					<h1>Example with 4 buttons</h1>
 
 					<ui5-segmented-button>
-						<ui5-togglebutton>Button</ui5-togglebutton>
-						<ui5-togglebutton>Button</ui5-togglebutton>
-						<ui5-togglebutton>Click</ui5-togglebutton>
-						<ui5-togglebutton pressed>Pressed ToggleButton</ui5-togglebutton>
+						<ui5-togggle-button>Button</ui5-togggle-button>
+						<ui5-togggle-button>Button</ui5-togggle-button>
+						<ui5-togggle-button>Click</ui5-togggle-button>
+						<ui5-togggle-button pressed>Pressed ToggleButton</ui5-togggle-button>
 					</ui5-segmented-button>
 				</section>
 
@@ -52,11 +52,11 @@
 					<h1>Example with 5 buttons</h1>
 
 					<ui5-segmented-button id="segButton2">
-						<ui5-togglebutton pressed>Word</ui5-togglebutton>
-						<ui5-togglebutton pressed>Pressed ToggleButton With Bigger Text</ui5-togglebutton>
-						<ui5-togglebutton pressed>Button</ui5-togglebutton>
-						<ui5-togglebutton pressed>Pressed ToggleButton</ui5-togglebutton>
-						<ui5-togglebutton pressed>A</ui5-togglebutton>
+						<ui5-togggle-button pressed>Word</ui5-togggle-button>
+						<ui5-togggle-button pressed>Pressed ToggleButton With Bigger Text</ui5-togggle-button>
+						<ui5-togggle-button pressed>Button</ui5-togggle-button>
+						<ui5-togggle-button pressed>Pressed ToggleButton</ui5-togggle-button>
+						<ui5-togggle-button pressed>A</ui5-togggle-button>
 					</ui5-segmented-button>
 				</section>
 
@@ -64,9 +64,9 @@
 					<h1>Example with Icons and custom width</h1>
 
 					<ui5-segmented-button style="width: 500px;">
-						<ui5-togglebutton icon="employee"></ui5-togglebutton>
-						<ui5-togglebutton icon="menu" pressed></ui5-togglebutton>
-						<ui5-togglebutton icon="factory"></ui5-togglebutton>
+						<ui5-togggle-button icon="employee"></ui5-togggle-button>
+						<ui5-togggle-button icon="menu" pressed></ui5-togggle-button>
+						<ui5-togggle-button icon="factory"></ui5-togggle-button>
 					</ui5-segmented-button>
 				</section>
 
@@ -74,9 +74,9 @@
 					<h1>SegmentedButton with 100% width</h1>
 
 					<ui5-segmented-button style="width: 100%;">
-						<ui5-togglebutton pressed>Pressed ToggleButton</ui5-togglebutton>
-						<ui5-togglebutton>ToggleButton</ui5-togglebutton>
-						<ui5-togglebutton>ToggleButton</ui5-togglebutton>
+						<ui5-togggle-button pressed>Pressed ToggleButton</ui5-togggle-button>
+						<ui5-togggle-button>ToggleButton</ui5-togggle-button>
+						<ui5-togggle-button>ToggleButton</ui5-togggle-button>
 					</ui5-segmented-button>
 				</section>
 
@@ -84,9 +84,9 @@
 					<h1>SegmentedButton wrapped in a container with set width</h1>
 					<div style="width: 500px;">
 						<ui5-segmented-button style="width: 100%;">
-							<ui5-togglebutton icon="employee" pressed></ui5-togglebutton>
-							<ui5-togglebutton icon="menu"></ui5-togglebutton>
-							<ui5-togglebutton icon="accept"></ui5-togglebutton>
+							<ui5-togggle-button icon="employee" pressed></ui5-togggle-button>
+							<ui5-togggle-button icon="menu"></ui5-togggle-button>
+							<ui5-togggle-button icon="accept"></ui5-togggle-button>
 						</ui5-segmented-button>
 					</div>
 				</section>
@@ -99,15 +99,15 @@
 		<p>the focus hould go to the first button</p>
 		<ui5-button id="button1">Press</ui5-button>
 		<ui5-segmented-button id="testSB1">
-			<ui5-togglebutton id="testSB1ToggleBtn" icon="employee"></ui5-togglebutton>
-			<ui5-togglebutton icon="menu"></ui5-togglebutton>
-			<ui5-togglebutton icon="accept"></ui5-togglebutton>
+			<ui5-togggle-button id="testSB1ToggleBtn" icon="employee"></ui5-togggle-button>
+			<ui5-togggle-button icon="menu"></ui5-togggle-button>
+			<ui5-togggle-button icon="accept"></ui5-togggle-button>
 		</ui5-segmented-button>
 		<ui5-button id="button2">Press</ui5-button>
 		<ui5-segmented-button id="testSB2">
-			<ui5-togglebutton icon="employee"></ui5-togglebutton>
-			<ui5-togglebutton id="testSB2ToggleBtn" icon="menu" pressed></ui5-togglebutton>
-			<ui5-togglebutton icon="accept"></ui5-togglebutton>
+			<ui5-togggle-button icon="employee"></ui5-togggle-button>
+			<ui5-togggle-button id="testSB2ToggleBtn" icon="menu" pressed></ui5-togggle-button>
+			<ui5-togggle-button icon="accept"></ui5-togggle-button>
 		</ui5-segmented-button>
 	</section>
 </body>
