@@ -67,13 +67,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>notificationCount</code>,
+		 * Defines the <code>notificationsCount</code>,
 		 * displayed in the notification icon top-right corner.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		notificationCount: {
+		notificationsCount: {
 			type: String,
 		},
 
@@ -897,6 +897,7 @@ class ShellBar extends UI5Element {
 			wrapper: {
 				"ui5-shellbar-root": true,
 				"ui5-shellbar-with-searchfield": this.searchField.length,
+				"ui5-shellbar-with-coPilot": this.showCoPilot,
 			},
 			button: {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
@@ -1018,7 +1019,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get _notificationsText() {
-		return this.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationCount);
+		return this.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount);
 	}
 
 	get _cancelBtnText() {

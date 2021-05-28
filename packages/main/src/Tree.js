@@ -18,7 +18,7 @@ const metadata = {
 	tag: "ui5-tree",
 	properties: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
 		/**
-		 * Defines the mode of the <code>ui5-tree</code>. Since the tree uses a <code>ui5-list</code> to display its structure,
+		 * Defines the mode of the component. Since the tree uses a <code>ui5-list</code> to display its structure,
 		 * the tree modes are exactly the same as the list modes, and are all applicable.
 		 *
 		 * <br><br>
@@ -43,7 +43,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text that is displayed when the <code>ui5-tree</code> contains no items.
+		 * Defines the text that is displayed when the component contains no items.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -54,7 +54,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-tree</code> header text.
+		 * Defines the component header text.
 		 * <br><br>
 		 * <b>Note:</b> If the <code>header</code> slot is set, this property is ignored.
 		 *
@@ -67,7 +67,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-tree</code> footer text.
+		 * Defines the component footer text.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -111,7 +111,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
 
 		/**
-		 * Defines the items of the <code>ui5-tree</code>. Tree items may have other tree items as children.
+		 * Defines the items of the component. Tree items may have other tree items as children.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-tree-item</code> for the intended design.
 		 *
@@ -126,7 +126,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-tree</code> header.
+		 * Defines the component header.
 		 * <br><br>
 		 * <b>Note:</b> When the <code>header</code> slot is set, the
 		 * <code>headerText</code> property is ignored.
@@ -175,7 +175,7 @@ const metadata = {
 		 * Fired when the Delete button of any tree item is pressed.
 		 * <br><br>
 		 * <b>Note:</b> A Delete button is displayed on each item,
-		 * when the <code>ui5-tree</code> <code>mode</code> property is set to <code>Delete</code>.
+		 * when the component <code>mode</code> property is set to <code>Delete</code>.
 		 *
 		 * @event sap.ui.webcomponents.main.Tree#item-delete
 		 * @param {HTMLElement} item the deleted item.

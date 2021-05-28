@@ -28,7 +28,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-button</code> design.
+		 * Defines the component design.
 		 *
 		 * <br><br>
 		 * <b>Note:</b>
@@ -51,9 +51,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-button</code> is disabled
+		 * Defines whether the component is disabled
 		 * (default is set to <code>false</code>).
-		 * A disabled <code>ui5-button</code> can't be pressed or
+		 * A disabled component can't be pressed or
 		 * focused, and it is not in the tab chain.
 		 *
 		 * @type {boolean}
@@ -65,12 +65,10 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the icon to be displayed as graphical element within the <code>ui5-button</code>.
+		 * Defines the icon to be displayed as graphical element within the component.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
 		 * Example:
-		 * <br>
-		 * <pre>ui5-button icon="palette"</pre>
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
@@ -83,7 +81,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the icon should be displayed after the <code>ui5-button</code> text.
+		 * Defines whether the icon should be displayed after the component text.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -94,7 +92,7 @@ const metadata = {
 		},
 
 		/**
-		 * When set to <code>true</code>, the <code>ui5-button</code> will
+		 * When set to <code>true</code>, the component will
 		 * automatically submit the nearest form element upon <code>press</code>.
 		 * <br><br>
 		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
@@ -122,7 +120,7 @@ const metadata = {
 		},
 
 		/**
-		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
+		 * Used to switch the active state (pressed or not) of the component.
 		 * @private
 		 */
 		active: {
@@ -224,7 +222,7 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-button</code>.
+		 * Defines the text of the component.
 		 * <br><br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
@@ -239,7 +237,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-button</code> is activated either with a
+		 * Fired when the component is activated either with a
 		 * mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event will not be fired if the <code>disabled</code>
