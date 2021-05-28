@@ -1,5 +1,5 @@
-commit 9c8ce88731a3d6419319693a4faa94a4e8c31fea
-Author: LilyanaOviPe <82088805+LilyanaOviPe@users.noreply.github.com>
-Date:   Thu May 27 15:37:50 2021 +0300
+commit 70f5563c3b974fbf75098165de150906a0964ed2
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Fri May 28 09:18:27 2021 +0300
 
-    docs: review of Development Workflow.md (#3326)
+    feat(ui5-wizard): set initial focus when a step is changed (#3310)
