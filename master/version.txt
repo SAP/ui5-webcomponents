@@ -1,9 +1,9 @@
-commit 4347195422998cdf2824811553b7a03c93ddf413
+commit 4343100939dd6d6b9b10efe441eeea78ef8cb36c
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri May 28 14:54:24 2021 +0300
+Date:   Fri May 28 14:56:03 2021 +0300
 
-    refactor(ui5-toggle-button): rename tag name (#3337)
+    refactor(ui5-tabcontainer): deprecate tabsPlacement (#3338)
     
-    The change is part of: #3107
+    Hide the tabsPlacement, but keep it working for some time as it is consumed in production, until we introduce the feature on stakeholder's side. Part of: #3107
     
-    BREAKING_CHANGE: The tag name ui5-togglebutton has been renamed to ui5-toggle-button
+    BREAKING_CHANGE: tabsPlacement has been removed as it is not specified in SAP Fiori 3 design system
