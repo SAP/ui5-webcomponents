@@ -38,7 +38,7 @@
 						aria-describedby="{{_id}}-valueStateDesc"
 						/>
 					</div>
-					<ui5-togglebutton
+					<ui5-toggle-button
 						slot="header"
 						class="ui5-multi-combobox-toggle-button"
 						icon="multiselect-all"
@@ -46,7 +46,7 @@
 						?pressed={{_showAllItemsButtonPressed}}
 						?disabled={{allItemsSelected}}
 						@click="{{filterSelectedItems}}"
-					></ui5-togglebutton>
+					></ui5-toggle-button>
 				</div>
 			{{#if hasValueStateMessage}}
 				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">

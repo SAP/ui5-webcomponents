@@ -29,7 +29,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Multiple buttons are allowed.
 		 * <br><br>
-		 * <b>Note:</b> Use the <code>ui5-togglebutton</code> for the intended design.
+		 * <b>Note:</b> Use the <code>ui5-toggle-button</code> for the intended design.
 		 * @type {sap.ui.webcomponents.main.IButton[]}
 		 * @slot buttons
 		 * @public
@@ -236,7 +236,7 @@ class SegmentedButton extends UI5Element {
 	 * Currently selected button.
 	 *
 	 * @readonly
-	 * @type { ui5-togglebutton }
+	 * @type { ui5-toggle-button }
 	 * @public
 	 */
 	get selectedButton() {
