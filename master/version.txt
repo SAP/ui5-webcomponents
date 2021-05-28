@@ -1,5 +1,9 @@
-commit 0a112eaf482bb3d26c41cfee96a19491639e4d45
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri May 28 09:32:10 2021 +0300
+commit bd18bb93b22683c19756b2ac2b261aa8e7d04396
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri May 28 09:45:10 2021 +0300
 
-    fix(ui5-datetime-picker): selecting only date value now works correct (#3294)
+    fix(ui5-flexible-column-layout): column borders in high contrast themes (#3328)
+    
+    CSS parameters points to wrong values. Now, they are aligned to correct values for high contrast Fiori 3 themes.
+    
+    Fixes: #3320
