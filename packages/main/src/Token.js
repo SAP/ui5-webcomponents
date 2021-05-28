@@ -36,9 +36,9 @@ const metadata = {
 		text: { type: String },
 
 		/**
-		 * Defines whether the <code>ui5-token</code> is read-only.
+		 * Defines whether the component is read-only.
 		 * <br><br>
-		 * <b>Note:</b> A read-only <code>ui5-token</code> can not be deleted or selected,
+		 * <b>Note:</b> A read-only component can not be deleted or selected,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
@@ -53,7 +53,8 @@ const metadata = {
 		 */
 		overflows: { type: Boolean },
 
-		/** Defines whether the <code>ui5-token</code> is selected or not.
+		/**
+		 * Defines whether the component is selected or not.
 		 *
 		 * @type {boolean}
 		 * @public
@@ -102,7 +103,7 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when the a <code>ui5-token</code> is selected by user interaction with mouse or clicking space.
+		 * Fired when the the component is selected by user interaction with mouse or by clicking space.
 		 *
 		 * @event
 		 * @public

@@ -32,7 +32,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the unique identifier (icon name) of each <code>ui5-icon</code>.
+		 * Defines the unique identifier (icon name) of the component.
 		 * <br>
 		 *
 		 * To browse all available icons, see the
@@ -60,7 +60,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text alternative of the <code>ui5-icon</code>.
+		 * Defines the text alternative of the component.
 		 * If not provided a default text alternative will be set, if present.
 		 * <br><br>
 		 * <b>Note:</b> Every icon should have a text alternative in order to
@@ -75,7 +75,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-icon</code> should have a tooltip.
+		 * Defines whether the component should have a tooltip.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -154,6 +154,15 @@ const metadata = {
  * For the SAP Fiori Tools icon collection (supported since 1.0.0-rc.10), you have to import an icon from the <code>@ui5/webcomponents-icons-tnt</code> package:
  * <br>
  * <code>import "@ui5/webcomponents-icons-tnt/dist/antenna.js";</code>
+ *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
+ * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the ui5-icon without triggering the click event.</li>
+ * </ul>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  *

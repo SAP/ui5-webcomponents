@@ -32,27 +32,27 @@
 	color: var(--sapList_Active_TextColor);
 }
 
-/* [ui5-li]: title, description, info state */
+/* [ui5-li]: title, description, additionalTextState */
 :host([active][actionable]) .ui5-li-title,
 :host([active][actionable]) .ui5-li-desc,
-:host([active][actionable]) .ui5-li-info {
+:host([active][actionable]) .ui5-li-additional-text {
 	color: var(--sapList_Active_TextColor);
 }
 
-/* [ui5-li]: infoState */
-:host([info-state="Warning"]) .ui5-li-info {
+/* [ui5-li]: additionalTextState */
+:host([additional-text-state="Warning"]) .ui5-li-additional-text {
 	color: var(--sapCriticalTextColor);
 }
 
-:host([info-state="Success"]) .ui5-li-info {
+:host([additional-text-state="Success"]) .ui5-li-additional-text {
 	color: var(--sapPositiveTextColor);
 }
 
-:host([info-state="Error"]) .ui5-li-info {
+:host([additional-text-state="Error"]) .ui5-li-additional-text {
 	color: var(--sapNegativeTextColor);
 }
 
-:host([info-state="Information"]) .ui5-li-info {
+:host([additional-text-state="Information"]) .ui5-li-additional-text {
 	color: var(--sapInformativeTextColor);
 }
 
@@ -105,7 +105,7 @@
 	font-size: var(--_ui5_list_item_title_size);
 }
 
-.ui5-li-info,
+.ui5-li-additional-text,
 .ui5-li-title,
 .ui5-li-desc {
 	white-space: nowrap;
@@ -118,7 +118,7 @@
 	font-size: var(--sapFontSize);
 }
 
-.ui5-li-info {
+.ui5-li-additional-text {
 	margin: 0 0.25rem;
 	color: var(--sapNeutralTextColor);
 	font-size: 0.875rem;
@@ -127,7 +127,7 @@
 	max-width: 40%;
 }
 
-:host([description]) .ui5-li-info {
+:host([description]) .ui5-li-additional-text {
 	align-self: flex-end;
 }
 
@@ -206,7 +206,7 @@
 	margin: .5rem 0 .5rem 0.75rem;
 }
 
-[dir="rtl"] .ui5-li-info {
+[dir="rtl"] .ui5-li-additional-text {
 	text-align: left;
 }
 

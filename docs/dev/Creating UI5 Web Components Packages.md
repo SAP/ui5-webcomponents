@@ -1,13 +1,13 @@
-# Creating a custom UI5 Web Components package
+# Creating a Custom UI5 Web Components Package
 
 This tutorial explains how to:
- - create an NPM package for your own UI5 Web Components
- - use UI5 Web Components' standard build tools: `@ui5/webcomponents-tools`
- - gain all `@ui5/webcomponents` capabilities such as HBS template support, i18n, theming, test setup, etc... 
+ - Create an NPM package for your own UI5 Web Components.
+ - Use UI5 Web Components' standard build tools: `@ui5/webcomponents-tools`.
+ - Gain all `@ui5/webcomponents` capabilities such as HBS template support, i18n, theming, test setup, etc.
  
 *Note:* Whether you use `npm` or `yarn` is a matter of preference.
  
-## Step 1 - create an empty NPM package
+## Step 1. Create an empty NPM package
 
 `npm init`
 
@@ -17,7 +17,7 @@ or
 
 The name that you give to your package will be used by the UI5 Web Components tools as the namespace for resource registration.
 
-## Step 2 - add the UI5 Web Components packages as dependencies
+## Step 2. Add the UI5 Web Components packages as dependencies
 
 With `npm`:
  - `npm i --save @ui5/webcomponents-base @ui5/webcomponents-theme-base @ui5/webcomponents-tools`
@@ -29,22 +29,22 @@ or with `yarn`:
  - `yarn add -D chromedriver` 
  - (Optional) `yarn add @ui5/webcomponents-ie11`
 
-These three `@ui5/` packages will serve as foundation for your own package and web components.
+These three `@ui5/` packages will serve as foundation for your own package and Web Components.
 
 Package | Description
 ----------------|-----------------------
-`@ui5/webcomponents-base` | Base classes and Framework
+`@ui5/webcomponents-base` | Base classes and framework
 `@ui5/webcomponents-theme-base` | Base theming assets
 `@ui5/webcomponents-tools` | Build and configuration assets
 `@ui5/webcomponents-ie11` | (Optional) Internet Explorer 11 polyfills and adapter code
 
 *Note:* `chromedriver` is a peer dependency of `@ui5/webcomponents-tools` so that you get to choose the exact version, 
-if necessary. This is useful if, for example, you manually update Chrome on your system and you'd prefer to not have
+if necessary. This is useful if, for example, you manually update Chrome on your system and you'd prefer not to have
 a fixed `chromedriver` version packaged with `@ui5/webcomponents-tools`. 
 
 *Note:* `@ui5/webcomponents-ie11` is optional and should not be installed unless you need Internet Explorer 11 support.
 
-## Step 3 - run the package initialization script
+## Step 3. Run the package initialization script
 
 Run the initialization script, optionally with parameters from the following table:
 
@@ -61,14 +61,14 @@ to get all the default values, or:
 
 `npx wc-init-ui5-package --port=8081 --tag=my-new-component`
 
-to change the port and the tag of the sample web component that will be created in the empty package.
+to change the port and the tag of the sample Web Component that will be created in the empty package.
 
-*Please note that the usage of the `ui5-` prefix is strongly discouraged, although not forbidden, for third-party components.
-This is due to the possibility of name clashes in the future. If you insist on using it*
+*Please, note that the usage of the `ui5-` prefix is strongly discouraged, although not forbidden, for third-party components.
+This is due to the possibility of name clashes in the future.*
 
 The initialization script will set the directory structure and copy a couple of files. 
 
-## Step 4 - run the dev server and test the build
+## Step 4. Run the dev server and test the build
 
 To run the dev server:
 
@@ -82,7 +82,7 @@ and once the project is built for the first time, open in your browser:
 
 `http://localhost:8080/test-resources/pages/index.html`
 
-*Note:* If you chose a different `port` earlier, change `8080` to its value.
+*Note:* If you've chosen a different `port` earlier, change `8080` to its value.
 
 You can also run the tests:
 
@@ -107,20 +107,20 @@ That's it!
 
 ## Understanding the project structure
 
-### package.json
+### `package.json`
 
 The initialization script will create several NPM scripts for you in `package.json`.
 
 Task | Purpose
 -----|-------
-clean | Deletes the `dist/` directory with the build output
-build | Production build to the `dist/` directory
-lint | Run a static code scan with `eslint`
-start | Build the project for development, run the dev server and watch for changes
-watch | Watch for changes only
-serve | Run the dev server only
-test | Run the dev server and execute the specs from the `test/specs/` directory
-create-ui5-element | Create an empty web component with the given name
+clean | Delete the `dist/` directory with the build output.
+build | Production build to the `dist/` directory.
+lint | Run a static code scan with `eslint`.
+start | Build the project for development, run the dev server and watch for changes.
+watch | Watch for changes only.
+serve | Run the dev server only.
+test | Run the dev server and execute the specs from the `test/specs/` directory.
+create-ui5-element | Create an empty Web Component with the given name.
 
 ### Files in the main directory
 
@@ -128,21 +128,21 @@ The initialization script will create several files in your package's main direc
 
 File | Purpose
 ------|-------
-.eslintignore | Excludes the `dist/` and `test/` directories from static code scans
-package-scripts.js | An [nps](https://www.npmjs.com/package/nps) package scripts configuration file
-bundle.esm.js | Entry point for the ES6 bundle, used for development and tests. Intended for modern browsers.
-bundle.es5.js | Entry point for the ES5 bundle, used for development and tests. Intended for IE11 only. Delete this file if you don't need IE11 support.
+.eslintignore | Excludes the `dist/` and `test/` directories from static code scans.
+package-scripts.js | An [nps](https://www.npmjs.com/package/nps) package scripts configuration file.
+bundle.esm.js | Entry point for the ES6 bundle used for development and tests. Intended for modern browsers.
+bundle.es5.js | Entry point for the ES5 bundle used for development and tests. Intended for IE11 only. Delete this file if you don't need IE11 support.
 
 You'll likely only need to change `bundle.esm.js` to import your new components there.
 
 ### The `config/` directory
 
-The `config/` directory serves as a central place for most build and test tools' configuration assets. Normally you 
+The `config/` directory serves as a central place for most build and test tools configuration assets. Normally, you 
 don't need to change any files there.
 
 #### Custom configuration
 
-The files in the `config/` directory simply import UI5 Web Components' default configuration for all tasks: `rollup`, `wdio`, `eslint`, etc...
+The files in the `config/` directory simply import UI5 Web Components default configuration for all tasks: `rollup`, `wdio`, `eslint`, etc.
 
 If you need to customize any configuration, simply put your own content into the respective file in `config/`.
 
@@ -153,7 +153,7 @@ Examples:
 	 ```js
 	module.exports = require("@ui5/webcomponents-tools/components-package/eslint.js");
 	```
-	As you can see, this is just a proxy to UI5 Web Components' default configuration.
+	As you can see, this is just a proxy to UI5 Web Components default configuration.
 	Put your own content instead:
 	```js
 	module.exports = {
@@ -175,7 +175,7 @@ Examples:
 	module.exports = require("@ui5/webcomponents-tools/components-package/wdio.js");
 	```
 	
-	Again, this is a proxy to UI5 Web Components' default configuration.
+	Again, this is a proxy to UI5 Web Components default configuration.
 	
 	You could just paste the content of `@ui5/webcomponents-tools/components-package/wdio.js` here and modify at will.
 	
@@ -192,22 +192,21 @@ Examples:
 
 ### The `src/` directory
 
-This is where you'll do most of the development. 
-Let's see the necessary files for a `my-first-component` component.
+This is where you'll do most of the development. Let's see the necessary files for a `my-first-component` component.
 
 #### Class and template files
 
-The main files describing a web component are:
+The main files describing a Web Component are:
 
 File | Purpose
 ------------|-------------
-`src/MyFirstComponent.js` | Web component class
+`src/MyFirstComponent.js` | Web Component class
 `src/MyFirstComponent.hbs` | Handlebars template
 
 In order to understand how a UI5 Web Component works and what lies behind these two files, make sure you check the
 [Developing Web Components](./Developing%20Web%20Components.md) section of the documentation.
 
-For the purposes of this tutorial however, you don't need to understand their internals, as they are automatically generated by the
+For the purposes of this tutorial, however, you don't need to understand their internals, as they are automatically generated by the
 script and are in a working state already. 
 
 #### Theming-related files
@@ -219,17 +218,17 @@ In addition, you can define your own CSS Vars and provide different values for t
 
 File | Purpose
 ------------|-------------
-`src/themes/MyFirstComponent.css` | All CSS rules for the web component, same for all themes. Will be inserted in the shadow root.
-`src/themes/sap_belize/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize` theme.
-`src/themes/sap_belize_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme.
-`src/themes/sap_belize_hcw/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcw` theme.
-`src/themes/sap_fiori_3/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3` theme.
-`src/themes/sap_fiori_3_dark/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_dark` theme.
-`src/themes/sap_fiori_3_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_hcb` theme.
-`src/themes/sap_fiori_3_hcw/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_hcw` theme.
+`src/themes/MyFirstComponent.css` | All CSS rules for the Web Component, same for all themes; will be inserted in the shadow root.
+`src/themes/sap_belize/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize` theme
+`src/themes/sap_belize_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme
+`src/themes/sap_belize_hcw/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcw` theme
+`src/themes/sap_fiori_3/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3` theme
+`src/themes/sap_fiori_3_dark/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_dark` theme
+`src/themes/sap_fiori_3_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_hcb` theme
+`src/themes/sap_fiori_3_hcw/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_hcw` theme
 
 *Note:* It's up to you whether to put the CSS Vars directly in the `parameters-bundle.css` files for the different themes or to 
-import them from separate `.css` files. You could have for example a `MyFirstComponent-params.css` file for each theme and
+import them from separate `.css` files. You could have, for example, a `MyFirstComponent-params.css` file for each theme and
 import it into the `parameters-bundle.css` file: `@import "MyFirstComponent-params.css";`.
 
 Again, to know more about how these files work, you could have a look at the [Developing Web Components](./Developing%20Web%20Components.md#css) section of the documentation.
@@ -265,12 +264,10 @@ PLEASE_WAIT=Espere
 
 File | Purpose
 ------------|-------------
-`src/Assets.js` | Entry point for your package's assets
+`src/Assets.js` | Entry point for your package assets.
 
 This module imports all base assets (such as `CLDR` and the base theme parameters), but also your own
-package's assets (i18n and package-specific theme parameters). 
-Users of your package will have to import this module in their production applications in order to get additional themes support
-and i18n support. 
+package assets (i18n and package-specific theme parameters). Users of your package will have to import this module in their production applications in order to get additional themes support and i18n support. 
 
 *Note:* For easier development and testing, `Assets.js` is also imported in the dev/test bundle `bundle.esm.js` by the initialization script.
 
@@ -278,7 +275,7 @@ and i18n support.
 
 File | Purpose
 ------------|-------------
-`test/pages/*` | Simple `.html` pages used for development and tests
+`test/pages/*` | Simple `.html` pages used for development and tests.
 `src/specs/*` | Test specs, based on [WDIO](https://www.npmjs.com/package/wdio). They use the test pages for setup.
 
 You can execute all specs by running `yarn test` or `npm run test`.
@@ -305,7 +302,7 @@ import "my-ui5-webcomponents/dist/SomeOtherComponent.js";
 import "my-ui5-webcomponents/dist/YetAnotherComponent.js";
 ```
 
-*Note about assets:* The `Assets.js` module may import some relatively big `JSON` modules, containing CLDR data, i18n texts and theming parameters.
-Therefore, it is recommended to guide your package's users to bundle their apps efficiently by configuring `rollup` or `webpack`,
+*Note about assets:* The `Assets.js` module may import some relatively big `JSON` modules containing CLDR data, i18n texts and theming parameters.
+Therefore, it is recommended to guide your package users to bundle their apps efficiently by configuring `rollup` or `webpack`,
 depending on their choice, to not include the content of the assets `JSON` modules in their javascript bundle. 
 See the [Efficient asset bundling](../Assets.md#bundling) section of our [Assets](../Assets.md) documentation for details.

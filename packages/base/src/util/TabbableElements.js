@@ -17,7 +17,7 @@ const getTabbables = (nodes, tabbables) => {
 	}
 
 	Array.from(nodes).forEach(currentNode => {
-		if (currentNode.nodeType === Node.TEXT_NODE || currentNode.nodeType === Node.COMMENT_NODE) {
+		if (currentNode.nodeType === Node.TEXT_NODE || currentNode.nodeType === Node.COMMENT_NODE || currentNode.hasAttribute("data-sap-no-tab-ref")) {
 			return;
 		}
 

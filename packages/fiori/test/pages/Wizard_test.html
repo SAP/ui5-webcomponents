@@ -41,18 +41,18 @@
 					<ui5-label wrap>Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
 					</ui5-label>
 
-					<ui5-input id="inpSelectionChangeCounter"></ui5-input>
+					<ui5-input id="inpStepChangeCounter"></ui5-input>
 					<ui5-button id="btnOpenDialog" style="width: 150px; align-self: flex-end;">Open Wizard Dialog</ui5-button>
 
 					<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 						<ui5-label>Configure step-switch-threshold</ui5-label>
 						<ui5-segmentedbutton id="setting">
-							<ui5-togglebutton threshold="0.3">0.5</ui5-togglebutton>
-							<ui5-togglebutton threshold="0.7" pressed>default (0.7)</ui5-togglebutton>
-							<ui5-togglebutton threshold="1">1</ui5-togglebutton>
+							<ui5-toggle-button threshold="0.3">0.5</ui5-toggle-button>
+							<ui5-toggle-button threshold="0.7" pressed>default (0.7)</ui5-toggle-button>
+							<ui5-toggle-button threshold="1">1</ui5-toggle-button>
 						</ui5-segmentedbutton>
 					</div>
-					
+
 				</div>
 
 				<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
@@ -65,7 +65,7 @@
 						Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 					</ui5-label>
 
-					<ui5-input id="inpSelectionChangeCause" placeholder="step changed via click"></ui5-input>
+					<ui5-input id="inpStepChangeCause" placeholder="step changed via click"></ui5-input>
 
 					<div style="display: flex; flex-direction: column;">
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
@@ -121,26 +121,26 @@
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Availability</ui5-label>
 							<ui5-segmentedbutton id="segButton1">
-								<ui5-togglebutton icon="employee" pressed>In stock</ui5-togglebutton>
-								<ui5-togglebutton>In depot</ui5-togglebutton>
-								<ui5-togglebutton>Damaged</ui5-togglebutton>
-								<ui5-togglebutton>Out of stock</ui5-togglebutton>
+								<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
+								<ui5-toggle-button>In depot</ui5-toggle-button>
+								<ui5-toggle-button>Damaged</ui5-toggle-button>
+								<ui5-toggle-button>Out of stock</ui5-toggle-button>
 							</ui5-segmentedbutton>
 						</div>
 
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Size</ui5-label>
 							<ui5-segmentedbutton id="sb">
-								<ui5-togglebutton icon="employee" pressed>Small</ui5-togglebutton>
-								<ui5-togglebutton>Medium</ui5-togglebutton>
-								<ui5-togglebutton>Largr</ui5-togglebutton>
+								<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
+								<ui5-toggle-button>Medium</ui5-toggle-button>
+								<ui5-toggle-button>Largr</ui5-toggle-button>
 							</ui5-segmentedbutton>
 						</div>
 					</div>
 				</div>
 
 				<span id="scrollMarkerSt3"></span>
-	
+
 				<ui5-button id="toStep22" design="Emphasized">Step 2</ui5-button>
 				<ui5-button id="toStep4" design="Emphasized">Step 4</ui5-button>
 			</ui5-wizard-step>
@@ -257,19 +257,19 @@
 								<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 									<ui5-label>Availability</ui5-label>
 									<ui5-segmentedbutton>
-										<ui5-togglebutton icon="employee" pressed>In stock</ui5-togglebutton>
-										<ui5-togglebutton>In depot</ui5-togglebutton>
-										<ui5-togglebutton>Damaged</ui5-togglebutton>
-										<ui5-togglebutton>Out of stock</ui5-togglebutton>
+										<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
+										<ui5-toggle-button>In depot</ui5-toggle-button>
+										<ui5-toggle-button>Damaged</ui5-toggle-button>
+										<ui5-toggle-button>Out of stock</ui5-toggle-button>
 									</ui5-segmentedbutton>
 								</div>
 
 								<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 									<ui5-label>Size</ui5-label>
 									<ui5-segmentedbutton>
-										<ui5-togglebutton icon="employee" pressed>Small</ui5-togglebutton>
-										<ui5-togglebutton>Medium</ui5-togglebutton>
-										<ui5-togglebutton>Largr</ui5-togglebutton>
+										<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
+										<ui5-toggle-button>Medium</ui5-toggle-button>
+										<ui5-toggle-button>Largr</ui5-toggle-button>
 									</ui5-segmentedbutton>
 								</div>
 							</div>
@@ -316,10 +316,10 @@
 		var wiz = document.getElementById("wizTest");
 		var wizInDialog = document.getElementById("wizInDialog");
 		var counter = 0;
-		wiz.addEventListener("ui5-selection-change", function (event) {
-			console.log(event.detail.selectedStep);
-			inpSelectionChangeCounter.value = ++counter;
-			inpSelectionChangeCause.value = event.detail.changeWithClick;
+		wiz.addEventListener("ui5-step-change", function (event) {
+			console.log(event.detail.step);
+			inpStepChangeCounter.value = ++counter;
+			inpStepChangeCause.value = event.detail.changeWithClick;
 		});
 
 		toStep2.addEventListener("click", function () {
@@ -385,7 +385,7 @@
 			dialog.open();
 		});
 
-		setting.addEventListener("selection-change", function (event) {
+		setting.addEventListener("step-change", function (event) {
 			wiz.setAttribute("step-switch-threshold", event.detail.selectedButton.getAttribute("threshold"));
 		});
 	</script>

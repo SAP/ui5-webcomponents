@@ -250,4 +250,26 @@ describe("Calendar general interaction", () => {
 
 		assert.deepEqual(selectedDates, [971740800, 971913600], "Change event is fired with proper data");
 	});
+
+	it("Previous and next buttons are disabled when necessary", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/Calendar.html`);
+		const calendarHeader = browser.$("#calendar4").shadow$("ui5-calendar-header");
+		const prevButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-prev]`);
+		const nextButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-next]`);
+
+		assert.ok(prevButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Previous Button is disabled");
+		assert.notOk(nextButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Next Button is enabled");
+
+		nextButton.click();
+
+		assert.notOk(prevButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Previous Button is enabled");
+		assert.notOk(nextButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Next Button is enabled");
+
+		nextButton.click();
+		nextButton.click();
+
+		assert.notOk(prevButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Previous Button is enabled");
+		assert.ok(nextButton.hasClass("ui5-calheader-arrowbtn-disabled"), "Next Button is disabled");
+	});
+
 });

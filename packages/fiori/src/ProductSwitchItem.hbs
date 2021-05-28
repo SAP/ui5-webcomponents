@@ -13,6 +13,7 @@
 	</a>
 {{else}}
 	<div
+		role="listitem"
 		class="ui5-product-switch-item-root"
 		data-sap-focus-ref
 		@focusout="{{_onfocusout}}"
@@ -33,11 +34,11 @@
 		></ui5-icon>
 	{{/if}}
 	<span class="ui5-product-switch-item-text-content">
-		{{#if heading}}
-			<span class="ui5-product-switch-item-heading">{{heading}}</span>
+		{{#if titleText}}
+			<span class="ui5-product-switch-item-title">{{titleText}}</span>
 		{{/if}}
-		{{#if subtitle}}
-			<span class="ui5-product-switch-item-subtitle">{{subtitle}}</span>
+		{{#if subtitleText}}
+			<span class="ui5-product-switch-item-subtitle">{{subtitleText}}</span>
 		{{/if}}
 	</span>
 {{/inline}}

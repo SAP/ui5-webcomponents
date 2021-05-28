@@ -21,9 +21,9 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.Link.prototype */  {
 
 		/**
-		 * Defines whether the <code>ui5-link</code> is disabled.
+		 * Defines whether the component is disabled.
 		 * <br><br>
-		 * <b>Note:</b> When disabled, the <code>ui5-link</code> cannot be triggered by the user.
+		 * <b>Note:</b> When disabled, the component cannot be triggered by the user.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -34,7 +34,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-link</code> href.
+		 * Defines the component href.
 		 * <br><br>
 		 * <b>Note:</b> Standard hyperlink behavior is supported.
 		 *
@@ -47,7 +47,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-link</code> target.
+		 * Defines the component target.
 		 * <br><br>
 		 * <b>Notes:</b>
 		 *
@@ -70,7 +70,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-link</code> design.
+		 * Defines the component design.
 		 * <br><br>
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
@@ -84,7 +84,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-link</code> text should wrap
+		 * Defines whether the component text should wrap
 		 * when there is no sufficient space.
 		 * <br><br>
 		 * <b>Note:</b> The text is truncated by default.
@@ -129,7 +129,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-link</code>.
+		 * Defines the text of the component.
 		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
@@ -143,7 +143,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-link</code> is triggered either with a mouse/tap
+		 * Fired when the component is triggered either with a mouse/tap
 		 * or by using the Enter key.
 		 *
 		 * @event
