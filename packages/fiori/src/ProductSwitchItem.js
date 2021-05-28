@@ -14,27 +14,29 @@ const metadata = {
 	tag: "ui5-product-switch-item",
 	properties: /** @lends sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
 		/**
-		  * Defines the title of the <code>ui5-product-switch-item</code>.
+		  * Defines the title of the component.
 		  * @type {string}
 		  * @defaultvalue ""
+		  * @since 1.0.0-rc.15
 		  * @public
 		  */
-		heading: {
+		titleText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the subheading of the <code>ui5-product-switch-item</code>.
+		 * Defines the subtitle of the component.
 		 * @type {string}
 		 * @defaultvalue ""
+		 * @since 1.0.0-rc.15
 		 * @public
 		 */
-		 subheading: {
+		 subtitleText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the icon to be displayed as a graphical element within the <code>ui5-product-switch-item</code>.
+		 * Defines the icon to be displayed as a graphical element within the component.
 		 * <br><br>
 		 * Example:
 		 * <br>
@@ -72,7 +74,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-product-switch-item</code> target URI. Supports standard hyperlink behavior.
+		 * Defines the component target URI. Supports standard hyperlink behavior.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -82,7 +84,7 @@ const metadata = {
 		},
 
 		/**
-		 * Used to switch the active state (pressed or not) of the <code>ui5-product-switch-item</code>.
+		 * Used to switch the active state (pressed or not) of the component.
 		 * @private
 		 */
 		active: {

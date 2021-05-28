@@ -16,8 +16,8 @@
 }
 
 :host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-icon,
-:host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-heading,
-:host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subheading {
+:host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-title,
+:host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle {
 	color:var(--sapList_Active_TextColor);
 }
 
@@ -68,8 +68,8 @@
 	max-width: 10.25rem;
 }
 
-.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subheading,
-.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-heading {
+.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle,
+.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-title {
 	line-height: 1.25rem;
 	white-space: nowrap;
 	overflow: hidden;
@@ -78,12 +78,12 @@
 	pointer-events: none;
 }
 
-.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-heading {
+.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-title {
 	font-size:var( --sapFontHeader6Size);
 	color:var(--sapGroup_TitleTextColor);
 }
 
-.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subheading {
+.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle {
 	font-size:var( --sapFontSmallSize);
 	color:var(--sapContent_LabelColor);
 }
@@ -123,12 +123,12 @@
 	}
 
 
-	.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subheading,
-	.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-heading {
+	.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle,
+	.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-title {
 		line-height: normal;
 	}
 
-	.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subheading {
+	.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle {
 		font-size: var(--sapFontSize);
 		padding-top: .75rem;
 	}
