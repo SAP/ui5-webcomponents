@@ -225,3 +225,27 @@ describe("when enabled", () => {
 		});
 	});
 });
+
+describe("Value update", () => {
+	before(() => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/TextArea.html`);
+	});
+
+	it("Should revert the DOM value, when escape is pressed", () => {
+		const textarea = $("#basic-textarea");
+
+		// act
+		textarea.click();
+		textarea.keys("1");
+		textarea.keys("2");
+
+		// assert
+		assert.strictEqual(textarea.getProperty("value"), "12", "Value is updated");
+
+		// act
+		textarea.keys("Escape");
+
+		// assert
+		assert.strictEqual(textarea.getProperty("value"), "", "Value is reverted");
+	});
+});

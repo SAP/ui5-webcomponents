@@ -3,52 +3,46 @@ name: Bug report
 about: Create a report to help us improve
 
 ---
-
-**Describe the bug**
+### **Bug Description**
 A clear and concise description of what the bug is.
 
-**To reproduce**
-Steps to reproduce the behavior:
+### **Expected Behavior**
+A clear and concise description of what you expect to happen.
+
+### **Steps to Reproduce**
 1. Go to '...'
 2. ...
 3. ...
 
-**Isolated example**
-Please provide an isolated example if possible, by forking [CodeSandbox](https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html)
+### **Isolated Example**
+If possible, please provide an isolated example by forking [CodeSandbox](https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html).
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Context**
-- UI5 Web Components version
+### **Context**
+- UI5 Web Components version: {...}
 - OS/Platform: {...}
-- Browser *(if relevant)*: {...}
-- Other information: {...}
+- Browser: {...}
+- Affected component: {...}
 
-**Affected components** *(if known)*
-
-**Log output / Any errors** in the console
+### **Log Output / Stack Trace / Screenshots**
 ```
 {...}
 ```
+### **Priority**
+- [ ] Low
+- [x] Medium
+- [ ] High
+- [ ] Very High
 
-**Organization:** *(if applicable)*
+The priority indicates the severity of the issue. To set the appropriate priority consider the following criteria:
+- Breaks entire application or system - High or Very High
+- Accessibility issue - Medium or High
+- Functional issue - Medium or High
+- Visual issue - Low or Medium
 
-**Priority:** *(optional)* *(Low, Medium, High or Very High)*
+**Note:** The priority might be re-evaluated by the issue processor.
 
-Setting priority would indicate the importance of the issue
-and would help the process of dispatching and processing.
+### **Stakeholder Info** (if applicable)
 
-To set the appropriate priority, you need to consider the impact
-and if the issue:
-- Breaks entire application or system - High and Very High
-- Is accessibility one (Screan Reader, Keyboard Handling) - Medium and High
-- Is functional one and makes a single component unusable - Medium and High
-- Is visual, styling one - Low and Medium
+- Organization: {...}
+- Bussiness impact: {...}
 
-Note: the priority would be re-evaluated by the issue processors, according to the project internal criterias
-
-**Business impact:** *(mandatory for "Very High")*

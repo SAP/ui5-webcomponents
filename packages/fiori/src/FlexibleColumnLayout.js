@@ -77,8 +77,9 @@ const metadata = {
 		* @type {boolean}
 		* @defaultvalue false
 		* @public
+		* @since 1.0.0-rc.15
 		*/
-		noArrows: {
+		hideArrows: {
 			type: Boolean,
 		},
 
@@ -230,6 +231,14 @@ const metadata = {
  * The <code>FlexibleColumnLayout</code> automatically displays the maximum possible number of columns based on <code>layout</code> property and the window size.
  * The component would display 1 column for window size smaller than 599px, up to two columns between 599px and 1023px,
  * and 3 columns for sizes bigger than 1023px.
+ *
+ * <br><br>
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li>[SPACE, ENTER, RETURN] - If focus is on the layout toggle button (arrow button), once activated, it triggers the associated action (such as expand/collapse the column).</li>
+ * </ul>
+ * <br><br>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -584,11 +593,11 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get showStartArrow() {
-		return this.noArrows ? false : this.startArrowVisibility;
+		return this.hideArrows ? false : this.startArrowVisibility;
 	}
 
 	get showEndArrow() {
-		return this.noArrows ? false : this.endArrowVisibility;
+		return this.hideArrows ? false : this.endArrowVisibility;
 	}
 
 	get startArrowVisibility() {

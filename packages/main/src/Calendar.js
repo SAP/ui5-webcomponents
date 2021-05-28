@@ -93,7 +93,7 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * Fired when the selected dates change.
-		 * <b>Note:</b> If you call <code>preventDefault()</code> for this event, <code>ui5-calendar</code> will not
+		 * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
 		 * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
 		 *
 		 * @event sap.ui.webcomponents.main.Calendar#selected-dates-change

@@ -183,4 +183,25 @@ describe("DateRangePicker general interaction", () => {
 		assert.strictEqual(daterangepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is on none");
 	});
 
+	it("Month is not changed in multiselect mode", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#daterange-picker1");
+		const daterangepicker = browser.$("#daterange-picker1");
+		const calendarHeader = browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-calendar-header`);
+		const dayPicker = browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
+		const dayOne = dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item" )[15];
+		const nextButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-next]`);
+		const monthButton = calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`);
+		const monthName = monthButton.innerHTML;
+
+		daterangepicker.click();
+		browser.keys("F4");
+
+		nextButton.click();
+		nextButton.click();
+		dayOne.click();
+
+		assert.strictEqual(monthButton.innerHTML, monthName, "The month is not changed after selecting the first date in the future");
+	});
+
 });

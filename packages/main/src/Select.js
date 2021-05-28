@@ -54,7 +54,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-select</code> options.
+		 * Defines the component options.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> Only one selected option is allowed.
@@ -73,13 +73,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state message that will be displayed as pop up under the <code>ui5-select</code>.
+		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the <code>ui5-select</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement[]}
 		 * @since 1.0.0-rc.9
 		 * @slot
@@ -103,9 +103,9 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.Select.prototype */  {
 
 		/**
-		 * Defines whether <code>ui5-select</code> is in disabled state.
+		 * Defines whether the component is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-select</code> is noninteractive.
+		 * <b>Note:</b> A disabled component is noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -116,8 +116,8 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the name with which the <code>ui5-select</code> will be submitted in an HTML form.
-		 * The value of the <code>ui5-select</code> will be the value of the currently selected <code>ui5-option</code>.
+		 * Determines the name with which the component will be submitted in an HTML form.
+		 * The value of the component will be the value of the currently selected <code>ui5-option</code>.
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
@@ -137,7 +137,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-select</code>.
+		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -158,7 +158,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-select</code> is required.
+		 * Defines whether the component is required.
 		 *
 		 * @since 1.0.0-rc.9
 		 * @type {boolean}
@@ -249,10 +249,13 @@ const metadata = {
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-select</code> provides advanced keyboard handling.
- * If the <code>ui5-select</code> is focused,
- * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
- * Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys
- * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
+ * <br>
+ * <ul>
+ * <li>[F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - Opens/closes the drop-down.</li>
+ * <li>[UP, DOWN] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.</li>
+ * <li>[SPACE, ENTER] - If the drop-down is opened - selects the focused option.</li>
+ * <li>[ESC] - Closes the drop-down without changing the selection.</li>
+ * </ul>
  * <br>
  *
  * <h3>Stable DOM Refs</h3>
@@ -704,6 +707,10 @@ class Select extends UI5Element {
 		} else {
 			this.closeValueStatePopover();
 		}
+	}
+
+	get selectedOptionIcon() {
+		return this.selectedOption.icon;
 	}
 
 	async _getPopover() {

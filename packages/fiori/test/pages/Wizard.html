@@ -32,7 +32,7 @@
 <body style="background-color: var(--sapBackgroundColor);">
 	<h2>Wizard</h2>
 	<ui5-wizard id="wiz" style="height: 700px">
-		<ui5-wizard-step heading="Product type" icon="sap-icon://product" disabled>
+		<ui5-wizard-step title-text="Product type" icon="sap-icon://product" disabled>
 			<div style="display: flex; min-height: 200px; flex-direction: column;">
 				<ui5-title>1. Product Type</ui5-title><br>
 
@@ -48,7 +48,7 @@
 			<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Product Information" subheading="(Optional)" disabled>
+		<ui5-wizard-step title-text="Product Information" subtitle-text="(Optional)" disabled>
 			<div style="display: flex;flex-direction: column">
 				<ui5-title>2. Product Information</ui5-title><br>
 				<ui5-label wrap>
@@ -85,7 +85,7 @@
 			<ui5-button id="toStep3" design="Emphasized" hidden>Step 3</ui5-button>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Options" disabled>
+		<ui5-wizard-step title-text="Options" disabled>
 			<div style="display: flex; flex-direction: column;">
 				<ui5-title>3. Options</ui5-title><br>
 
@@ -105,19 +105,19 @@
 					<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 						<ui5-label>Availability</ui5-label>
 						<ui5-segmentedbutton>
-							<ui5-togglebutton icon="employee" pressed>In stock</ui5-togglebutton>
-							<ui5-togglebutton>In depot</ui5-togglebutton>
-							<ui5-togglebutton>Damaged</ui5-togglebutton>
-							<ui5-togglebutton>Out of stock</ui5-togglebutton>
+							<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
+							<ui5-toggle-button>In depot</ui5-toggle-button>
+							<ui5-toggle-button>Damaged</ui5-toggle-button>
+							<ui5-toggle-button>Out of stock</ui5-toggle-button>
 						</ui5-segmentedbutton>
 					</div>
 
 					<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 						<ui5-label>Size</ui5-label>
 						<ui5-segmentedbutton id="sb">
-							<ui5-togglebutton icon="employee" pressed>Small</ui5-togglebutton>
-							<ui5-togglebutton>Medium</ui5-togglebutton>
-							<ui5-togglebutton>Large</ui5-togglebutton>
+							<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
+							<ui5-toggle-button>Medium</ui5-toggle-button>
+							<ui5-toggle-button>Large</ui5-toggle-button>
 						</ui5-segmentedbutton>
 					</div>
 				</div>
@@ -126,7 +126,7 @@
 			<ui5-button id="toStep4" design="Emphasized" hidden>Step 4</ui5-button>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Pricing" selected>
+		<ui5-wizard-step title-text="Pricing" selected>
 			<div style="display: flex; flex-direction: column;">
 				<ui5-title>4. Pricing</ui5-title><br>
 				<ui5-label wrap>
@@ -160,7 +160,7 @@
 
 	<h2>Wizard non-standard</h2>
 	<ui5-wizard style="height: 700px">
-		<ui5-wizard-step heading="Product type" icon="sap-icon://product" selected>
+		<ui5-wizard-step title-text="Product type" icon="sap-icon://product" selected>
 			<div style="display: flex; min-height: 200px; flex-direction: column;">
 				<ui5-title>1. Product Type</ui5-title><br>
 
@@ -174,7 +174,7 @@
 			</div>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Product Information" subheading="(Optional)" disabled>
+		<ui5-wizard-step title-text="Product Information" subtitle-text="(Optional)" disabled>
 			<div style="display: flex;flex-direction: column">
 				<ui5-title>2. Product Information</ui5-title><br>
 				<ui5-label wrap>
@@ -210,7 +210,7 @@
 
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Options" selected>
+		<ui5-wizard-step title-text="Options" selected>
 			<div style="display: flex; flex-direction: column;">
 				<ui5-title>3. Options</ui5-title><br>
 
@@ -230,19 +230,19 @@
 					<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 						<ui5-label>Availability</ui5-label>
 						<ui5-segmentedbutton>
-							<ui5-togglebutton icon="employee" pressed>In stock</ui5-togglebutton>
-							<ui5-togglebutton>In depot</ui5-togglebutton>
-							<ui5-togglebutton>Damaged</ui5-togglebutton>
-							<ui5-togglebutton>Out of stock</ui5-togglebutton>
+							<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
+							<ui5-toggle-button>In depot</ui5-toggle-button>
+							<ui5-toggle-button>Damaged</ui5-toggle-button>
+							<ui5-toggle-button>Out of stock</ui5-toggle-button>
 						</ui5-segmentedbutton>
 					</div>
 
 					<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 						<ui5-label>Size</ui5-label>
 						<ui5-segmentedbutton>
-							<ui5-togglebutton icon="employee" pressed>Small</ui5-togglebutton>
-							<ui5-togglebutton>Medium</ui5-togglebutton>
-							<ui5-togglebutton>Large</ui5-togglebutton>
+							<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
+							<ui5-toggle-button>Medium</ui5-toggle-button>
+							<ui5-toggle-button>Large</ui5-toggle-button>
 						</ui5-segmentedbutton>
 					</div>
 				</div>
@@ -251,7 +251,7 @@
 			<ui5-button design="Emphasized" hidden>Step 4</ui5-button>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Pricing" disabled>
+		<ui5-wizard-step title-text="Pricing" disabled>
 			<div style="display: flex; flex-direction: column;">
 				<ui5-title>4. Pricing</ui5-title><br>
 				<ui5-label wrap>
@@ -281,7 +281,7 @@
 
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Final" selected disabled>
+		<ui5-wizard-step title-text="Final" selected disabled>
 			<div style="display: flex; flex-direction: column;">
 				<ui5-title>5. Final</ui5-title><br>
 				<ui5-label wrap>
@@ -314,7 +314,7 @@
 
 	<h2>Wizard non-standard 2</h2>
 	<ui5-wizard style="height: 700px">
-		<ui5-wizard-step heading="Product type" icon="sap-icon://product" selected disabled>
+		<ui5-wizard-step title-text="Product type" icon="sap-icon://product" selected disabled>
 			<div style="display: flex; min-height: 200px; flex-direction: column;">
 				<ui5-title>1. Product Type</ui5-title><br>
 
@@ -328,7 +328,7 @@
 			</div>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Product Information" subheading="(Optional)" selected disabled>
+		<ui5-wizard-step title-text="Product Information" subtitle-text="(Optional)" selected disabled>
 			<div style="display: flex;flex-direction: column">
 				<ui5-title>2. Product Information</ui5-title><br>
 				<ui5-label wrap>
@@ -365,16 +365,13 @@
 			<ui5-button design="Emphasized" hidden>Step 3</ui5-button>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Options" selected>
+		<ui5-wizard-step title-text="Options" selected>
 			<div style="display: flex; flex-direction: column;">
 				<ui5-title>3. Options</ui5-title><br>
 
 				<ui5-label wrap>
 					Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 				</ui5-label>
-				<ui5-messagestrip>
-					The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
-				</ui5-messagestrip><br>
 
 				<div style="display: flex; flex-direction: column;">
 					<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
@@ -385,19 +382,19 @@
 					<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 						<ui5-label>Availability</ui5-label>
 						<ui5-segmentedbutton>
-							<ui5-togglebutton icon="employee" pressed>In stock</ui5-togglebutton>
-							<ui5-togglebutton>In depot</ui5-togglebutton>
-							<ui5-togglebutton>Damaged</ui5-togglebutton>
-							<ui5-togglebutton>Out of stock</ui5-togglebutton>
+							<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
+							<ui5-toggle-button>In depot</ui5-toggle-button>
+							<ui5-toggle-button>Damaged</ui5-toggle-button>
+							<ui5-toggle-button>Out of stock</ui5-toggle-button>
 						</ui5-segmentedbutton>
 					</div>
 
 					<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 						<ui5-label>Size</ui5-label>
 						<ui5-segmentedbutton>
-							<ui5-togglebutton icon="employee" pressed>Small</ui5-togglebutton>
-							<ui5-togglebutton>Medium</ui5-togglebutton>
-							<ui5-togglebutton>Large</ui5-togglebutton>
+							<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
+							<ui5-toggle-button>Medium</ui5-toggle-button>
+							<ui5-toggle-button>Large</ui5-toggle-button>
 						</ui5-segmentedbutton>
 					</div>
 				</div>
@@ -406,7 +403,7 @@
 			<ui5-button design="Emphasized" hidden>Step 4</ui5-button>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Pricing" selected disabled>
+		<ui5-wizard-step title-text="Pricing" selected disabled>
 			<div style="display: flex; flex-direction: column;">
 				<ui5-title>4. Pricing</ui5-title><br>
 				<ui5-label wrap>
@@ -439,7 +436,7 @@
 
 	<h2>Wizard non-standard 3</h2>
 	<ui5-wizard style="height: 700px">
-		<ui5-wizard-step heading="Product type" icon="sap-icon://product" selected disabled>
+		<ui5-wizard-step title-text="Product type" icon="sap-icon://product" selected disabled>
 			<div style="display: flex; min-height: 200px; flex-direction: column;">
 				<ui5-title>1. Product Type</ui5-title><br>
 
@@ -452,7 +449,7 @@
 			</div>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Product Information" subheading="(Optional)" selected>
+		<ui5-wizard-step title-text="Product Information" subtitle-text="(Optional)" selected>
 			<div style="display: flex;flex-direction: column">
 				<ui5-title>2. Product Information</ui5-title><br>
 				<ui5-label wrap>
@@ -489,16 +486,13 @@
 			<ui5-button design="Emphasized" hidden>Step 3</ui5-button>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Options" selected disabled>
+		<ui5-wizard-step title-text="Options" selected disabled>
 			<div style="display: flex; flex-direction: column;">
 				<ui5-title>3. Options</ui5-title><br>
 
 				<ui5-label wrap>
 					Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 				</ui5-label>
-				<ui5-messagestrip>
-					The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
-				</ui5-messagestrip><br>
 
 				<div style="display: flex; flex-direction: column;">
 					<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
@@ -509,19 +503,19 @@
 					<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 						<ui5-label>Availability</ui5-label>
 						<ui5-segmentedbutton>
-							<ui5-togglebutton icon="employee" pressed>In stock</ui5-togglebutton>
-							<ui5-togglebutton>In depot</ui5-togglebutton>
-							<ui5-togglebutton>Damaged</ui5-togglebutton>
-							<ui5-togglebutton>Out of stock</ui5-togglebutton>
+							<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
+							<ui5-toggle-button>In depot</ui5-toggle-button>
+							<ui5-toggle-button>Damaged</ui5-toggle-button>
+							<ui5-toggle-button>Out of stock</ui5-toggle-button>
 						</ui5-segmentedbutton>
 					</div>
 
 					<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 						<ui5-label>Size</ui5-label>
 						<ui5-segmentedbutton>
-							<ui5-togglebutton icon="employee" pressed>Small</ui5-togglebutton>
-							<ui5-togglebutton>Medium</ui5-togglebutton>
-							<ui5-togglebutton>Large</ui5-togglebutton>
+							<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
+							<ui5-toggle-button>Medium</ui5-toggle-button>
+							<ui5-toggle-button>Large</ui5-toggle-button>
 						</ui5-segmentedbutton>
 					</div>
 				</div>
@@ -530,15 +524,12 @@
 			<ui5-button design="Emphasized" hidden>Step 4</ui5-button>
 		</ui5-wizard-step>
 
-		<ui5-wizard-step heading="Pricing" selected disabled>
+		<ui5-wizard-step title-text="Pricing" selected disabled>
 			<div style="display: flex; flex-direction: column;">
 				<ui5-title>4. Pricing</ui5-title><br>
 				<ui5-label wrap>
 					Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 				</ui5-label>
-				<ui5-messagestrip>
-					The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
-				</ui5-messagestrip><br>
 
 				<div style="display: flex; flex-direction: column;">
 					<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
@@ -563,39 +554,39 @@
 
 	<ui5-dialog id="dialog" stretch header-heading="Wizard">
 		<ui5-wizard id="wiz2">
-			<ui5-wizard-step icon="sap-icon://home" heading="Product type">
+			<ui5-wizard-step icon="sap-icon://home" title-text="Product type">
 				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br>
-	
+
 					<ui5-messagestrip>
 						The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 					</ui5-messagestrip><br>
-	
+
 					<ui5-label wrap>Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
 					</ui5-label>
 				</div>
-	
+
 				<ui5-button id="toStep22" design="Emphasized">Step 2</ui5-button>
 			</ui5-wizard-step>
-	
-			<ui5-wizard-step heading="Product Information" selected>
+
+			<ui5-wizard-step title-text="Product Information" selected>
 				<div style="display: flex;flex-direction: column">
 					<ui5-title>2. Product Information</ui5-title><br>
 					<ui5-label wrap>
 						Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 					</ui5-label>
-	
+
 					<div style="display: flex; flex-direction: column;">
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Name</ui5-label>
 							<ui5-input placeholder="product name..."></ui5-input>
 						</div>
-	
+
 						<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 							<ui5-label>Weight</ui5-label>
 							<ui5-input value="3.65"></ui5-input>
 						</div>
-	
+
 						<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 							<ui5-label>Manifacturer</ui5-label>
 							<ui5-select>
@@ -604,59 +595,59 @@
 								<ui5-option>Huawei</ui5-option>
 							</ui5-select>
 						</div>
-	
+
 						<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 							<ui5-label>5 years guarantee included</ui5-label>
 							<ui5-switch id="sw2"></ui5-switch>
 						</div>
 					</div>
 				</div>
-	
+
 				<ui5-button id="toStep32" design="Emphasized" hidden>Step 3</ui5-button>
 			</ui5-wizard-step>
-	
-			<ui5-wizard-step heading="Options" disabled>
+
+			<ui5-wizard-step title-text="Options" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>3. Options</ui5-title><br>
-	
+
 					<ui5-label wrap>
 						Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 					</ui5-label>
 					<ui5-messagestrip>
 						The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 					</ui5-messagestrip><br>
-	
+
 					<div style="display: flex; flex-direction: column;">
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Manifacture date</ui5-label>
 							<ui5-date-picker></ui5-date-picker>
 						</div>
-	
+
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Availability</ui5-label>
 							<ui5-segmentedbutton>
-								<ui5-togglebutton icon="employee" pressed>In stock</ui5-togglebutton>
-								<ui5-togglebutton>In depot</ui5-togglebutton>
-								<ui5-togglebutton>Damaged</ui5-togglebutton>
-								<ui5-togglebutton>Out of stock</ui5-togglebutton>
+								<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
+								<ui5-toggle-button>In depot</ui5-toggle-button>
+								<ui5-toggle-button>Damaged</ui5-toggle-button>
+								<ui5-toggle-button>Out of stock</ui5-toggle-button>
 							</ui5-segmentedbutton>
 						</div>
-	
+
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Size</ui5-label>
 							<ui5-segmentedbutton id="sb2">
-								<ui5-togglebutton icon="employee" pressed>Small</ui5-togglebutton>
-								<ui5-togglebutton>Medium</ui5-togglebutton>
-								<ui5-togglebutton>Largr</ui5-togglebutton>
+								<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
+								<ui5-toggle-button>Medium</ui5-toggle-button>
+								<ui5-toggle-button>Largr</ui5-toggle-button>
 							</ui5-segmentedbutton>
 						</div>
 					</div>
 				</div>
-	
+
 				<ui5-button id="toStep42" design="Emphasized" hidden>Step 4</ui5-button>
 			</ui5-wizard-step>
-	
-			<ui5-wizard-step heading="Pricing" disabled>
+
+			<ui5-wizard-step title-text="Pricing" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>4. Pricing</ui5-title><br>
 					<ui5-label wrap>
@@ -665,25 +656,25 @@
 					<ui5-messagestrip>
 						The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 					</ui5-messagestrip><br>
-	
+
 					<div style="display: flex; flex-direction: column;">
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Price</ui5-label>
 							<ui5-input placeholder="product price..."></ui5-input>
 						</div>
-	
+
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Quantity</ui5-label>
 							<ui5-input placeholder="product quantity..."></ui5-input>
 						</div>
-	
+
 						<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 							<ui5-label>Vat included</ui5-label>
 							<ui5-switch checked></ui5-switch>
 						</div>
 					</div>
 				</div>
-	
+
 				<ui5-button id="finalize2" design="Emphasized">Finalize</ui5-button>
 			</ui5-wizard-step>
 		</ui5-wizard>
@@ -692,15 +683,15 @@
 	<script>
 		var wiz = document.getElementById("wiz");
 
-		wiz.addEventListener("selection-change", function () {
-			console.log(event.detail.selectedStep);
+		wiz.addEventListener("step-change", function () {
+			console.log(event.detail.step);
 		});
 
 		sw.addEventListener("change", function () {
 			toStep3.removeAttribute("hidden");
 		});
 
-		sb.addEventListener("selection-change", function () {
+		sb.addEventListener("step-change", function () {
 			toStep4.removeAttribute("hidden");
 		});
 
@@ -733,15 +724,15 @@
 			dialog.open();
 		});
 
-		wiz2.addEventListener("selection-change", function () {
-			console.log(event.detail.selectedStep);
+		wiz2.addEventListener("step-change", function () {
+			console.log(event.detail.step);
 		});
 
 		sw2.addEventListener("change", function () {
 			toStep32.removeAttribute("hidden");
 		});
 
-		sb2.addEventListener("selection-change", function () {
+		sb2.addEventListener("step-change", function () {
 			toStep42.removeAttribute("hidden");
 		});
 
