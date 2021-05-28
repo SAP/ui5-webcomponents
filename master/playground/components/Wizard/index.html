@@ -2474,7 +2474,7 @@
 
 	<div class="snippet">
 		<ui5-wizard id="wiz">
-			<ui5-wizard-step icon="product" heading="Product type" selected>
+			<ui5-wizard-step icon="product" title-text="Product type" selected>
 				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br>
 
@@ -2489,7 +2489,7 @@
 				<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step icon="hint" heading="Product Information" disabled>
+			<ui5-wizard-step icon="hint" title-text="Product Information" disabled>
 				<div style="display: flex;flex-direction: column">
 					<ui5-title>2. Product Information</ui5-title><br>
 					<ui5-label wrap>
@@ -2526,7 +2526,7 @@
 				<ui5-button id="toStep3" design="Emphasized" hidden>Step 3</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step icon="action-settings" heading="Options" disabled>
+			<ui5-wizard-step icon="action-settings" title-text="Options" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>3. Options</ui5-title><br>
 
@@ -2567,7 +2567,7 @@
 				<ui5-button id="toStep4" design="Emphasized" hidden>Step 4</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step icon="lead" heading="Pricing" disabled>
+			<ui5-wizard-step icon="lead" title-text="Pricing" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>4. Pricing</ui5-title><br>
 					<ui5-label wrap>
@@ -2655,14 +2655,14 @@
 	</script>
 
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-wizard</span> <span class="na">id=</span><span class="s">"wiz"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-wizard-step</span> <span class="na">icon=</span><span class="s">"product"</span> <span class="na">heading=</span><span class="s">"Product type"</span> <span class="na">selected</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-wizard-step</span> <span class="na">icon=</span><span class="s">"product"</span> <span class="na">title-text=</span><span class="s">"Product type"</span> <span class="na">selected</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;ui5-title&gt;</span>1. Product Type<span class="nt">&lt;/ui5-title&gt;</span>
 
 		<span class="c">&lt;!-- Move to step 2 --&gt;</span>
 		<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"toStep2"</span><span class="nt">&gt;</span>Step 2<span class="nt">&lt;/ui5-button&gt;</span>
 	<span class="nt">&lt;/ui5-wizard-step&gt;</span>
 
-	<span class="nt">&lt;ui5-wizard-step</span> <span class="na">icon=</span><span class="s">"hint"</span> <span class="na">heading=</span><span class="s">"Product Information"</span> <span class="na">disabled</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-wizard-step</span> <span class="na">icon=</span><span class="s">"hint"</span> <span class="na">title-text=</span><span class="s">"Product Information"</span> <span class="na">disabled</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;ui5-title&gt;</span>2. Product Information<span class="nt">&lt;/ui5-title&gt;</span>
 
 		<span class="nt">&lt;div&gt;</span>
@@ -2674,7 +2674,7 @@
 		<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"toStep3"</span> <span class="na">hidden</span><span class="nt">&gt;</span>Step 3<span class="nt">&lt;/ui5-button&gt;</span>
 	<span class="nt">&lt;/ui5-wizard-step&gt;</span>
 
-	<span class="nt">&lt;ui5-wizard-step</span> <span class="na">icon=</span><span class="s">"action-settings"</span> <span class="na">heading=</span><span class="s">"Options"</span> <span class="na">disabled</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-wizard-step</span> <span class="na">icon=</span><span class="s">"action-settings"</span> <span class="na">title-text=</span><span class="s">"Options"</span> <span class="na">disabled</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;ui5-title&gt;</span>3. Options<span class="nt">&lt;/ui5-title&gt;&lt;br&gt;</span>
 
 		<span class="nt">&lt;ui5-segmentedbutton</span> <span class="na">id=</span><span class="s">"sb"</span><span class="nt">&gt;</span>
@@ -2687,7 +2687,7 @@
 		<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"toStep4"</span> <span class="na">hidden</span><span class="nt">&gt;</span>Step 4<span class="nt">&lt;/ui5-button&gt;</span>
 	<span class="nt">&lt;/ui5-wizard-step&gt;</span>
 
-	<span class="nt">&lt;ui5-wizard-step</span> <span class="na">icon=</span><span class="s">"lead"</span> <span class="na">heading=</span><span class="s">"Pricing"</span> <span class="na">disabled</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-wizard-step</span> <span class="na">icon=</span><span class="s">"lead"</span> <span class="na">title-text=</span><span class="s">"Pricing"</span> <span class="na">disabled</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;ui5-title&gt;</span>4. Pricing<span class="nt">&lt;/ui5-title&gt;&lt;br&gt;</span>
 		<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"finalize"</span><span class="nt">&gt;</span>Finalize<span class="nt">&lt;/ui5-button&gt;</span>
 	<span class="nt">&lt;/ui5-wizard-step&gt;</span>
@@ -2738,7 +2738,7 @@
 
 The <code>ui5-wizard</code> helps users complete a complex task by dividing it into sections and guiding the user through it. It has two main areas - a navigation area at the top showing the step sequence and a content area below it.
 
-<h3>Structure</h3> <h4>Navigation area</h4> The top most area of the <code>ui5-wizard</code> is occupied by the navigation area. It shows the sequence of steps, where the recommended number of steps is between 3 and 8 steps. <ul> <li> Steps can have different visual representations - numbers or icons. <li> Steps might have labels for better readability - heading and subheding.</li> <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code></li> </ul>
+<h3>Structure</h3> <h4>Navigation area</h4> The top most area of the <code>ui5-wizard</code> is occupied by the navigation area. It shows the sequence of steps, where the recommended number of steps is between 3 and 8 steps. <ul> <li> Steps can have different visual representations - numbers or icons. <li> Steps might have labels for better readability - titleText and subTitleText.</li> <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code></li> </ul>
 
 <b>Note:</b> If no selected step is defined, the first step will be auto selected. <br> <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
 
@@ -2756,7 +2756,7 @@ The Fiori 3 guidelines recommends having a "nextStep" button in the content area
 
 <h4>When not to use:</h4> When the task has less than 3 steps.
 
-<h3>Responsive Behavior</h3> On small widths the step's heading, subheading and separators in the navigation area will start truncate and shrink and from particular point they will hide to free as much space as possible.
+<h3>Responsive Behavior</h3> On small widths the step's titleText, subtitleText and separators in the navigation area will start truncate and shrink and from particular point they will hide to free as much space as possible.
 
 <h3>ES6 Module Import</h3> <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
           <section class="component-api space-top">
@@ -2832,7 +2832,7 @@ The Fiori 3 guidelines recommends having a "nextStep" button in the content area
 
 A component that represents a logical step as part of the <code>ui5-wizard</code>. It is meant to aggregate arbitrary HTML elements that forms the content of a single step.
 
-<h3>Structure</h3> <ul> <li>Each wizard step has arbitrary content</li> <li>Each wizard step might have texts - defined by the <code>heading</code> and <code>subheading</code> properties</li> <li>Each wizard step might have an icon - defined by the <code>icon</code> property</li> <li>Each wizard step might display a number in place of the <code>icon</code>, when it's missing</li> </ul>
+<h3>Structure</h3> <ul> <li>Each wizard step has arbitrary content</li> <li>Each wizard step might have texts - defined by the <code>titleText</code> and <code>subtitleText</code> properties</li> <li>Each wizard step might have an icon - defined by the <code>icon</code> property</li> <li>Each wizard step might display a number in place of the <code>icon</code>, when it's missing</li> </ul>
 
 <h3>Usage</h3> The <code>ui5-wizard-step</code> component should be used only as slot of the <code>ui5-wizard</code> component and should not be used standalone.
           <section class="component-api space-top">
@@ -2876,19 +2876,6 @@ A component that represents a logical step as part of the <code>ui5-wizard</code
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          heading
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">String</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>heading</code> of the step. <br><br>
-            
-            <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header. <br> <b>Note:</b> the text will hide on small sizes (about 559 px).
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           icon
                             <br>
                         </div>
@@ -2902,7 +2889,7 @@ A component that represents a logical step as part of the <code>ui5-wizard</code
             The SAP-icons font provides numerous options. See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           selected
                             <br>
@@ -2915,17 +2902,34 @@ A component that represents a logical step as part of the <code>ui5-wizard</code
             <b>Note:</b> Step can't be <code>selected</code> and <code>disabled</code> at the same time. In this case the <code>selected</code> property would take precedence.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          subheading
+                          subtitleText
                             <br>
+                            <code>subtitle-text</code>
                         </div>
                         <div class="cell api-table-content-cell">String</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>subheading</code> of the step. <br><br>
+                            Defines the <code>subtitleText</code> of the step. <br><br>
             
             <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header. <br> <b>Note:</b> the text will hide on small sizes (about 559 px).
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          titleText
+                            <br>
+                            <code>title-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the <code>titleText</code> of the step. <br><br>
+            
+            <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header. <br> <b>Note:</b> the text will hide on small sizes (about 559 px).
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
                         </div>
                       </div>
             

@@ -30,7 +30,7 @@
 			style="width: 500px"
 			show-suggestions
 			placeholder="Search for a country ..."
-			highlight>
+		>
 		</ui5-input>
 	</div>
 
@@ -67,7 +67,7 @@
 	</ui5-input>
 
 	<h3>Input suggestions with highlighing</h3>
-	<ui5-input id="myInputHighlighted" highlight show-suggestions style="width: 100%">
+	<ui5-input id="myInputHighlighted" show-suggestions style="width: 100%">
 		<ui5-suggestion-item text="Adam D" description="Administrative Support"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Aanya Sing" description="Administrative Support"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Allen K" description="Technical Support"></ui5-suggestion-item>
@@ -292,7 +292,7 @@
 	<ui5-input aria-labelledby="enterNameLabel"></ui5-input>
 
 	<h3>Input suggestions with highlighing and XSS test</h3>
-	<ui5-input highlight show-suggestions style="width: 100%">
+	<ui5-input show-suggestions style="width: 100%">
 		<ui5-suggestion-item text="<script>alert('XSS')</script>" description="Administrative Support"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Aanya Sing" description="<b onmouseover=alert('XSS')></b>">
 		</ui5-suggestion-item>

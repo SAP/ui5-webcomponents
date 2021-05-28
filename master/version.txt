@@ -1,9 +1,9 @@
-commit c3604430a72d81b7918fff7e058ab76b7664e7a5
-Author: Georgi <georgi.minkov@sap.com>
-Date:   Fri May 28 15:17:36 2021 +0300
+commit 39cc473f64893bc96ff056584b7d4d01c245b227
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri May 28 16:56:16 2021 +0300
 
-    fix(ui5-upload-collection): rename noDnd property to hideDragOverlay (#3335)
+    fix(ui5-popover): rename noArrow property to hideArrow (#3351)
     
     Part of #3107
     
-    BREAKING_CHANGE: The property noDnd has been renamed to hideDragOverlay
+    BREAKING_CHANGE: rename noArrow property to hideArrow
