@@ -24,6 +24,7 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
+		 * @since 1.0.0-rc.15
 		 */
 		titleText: {
 			type: String,
@@ -34,6 +35,7 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
+		 * @since 1.0.0-rc.15
 		 */
 		subtitleText: {
 			type: String,
