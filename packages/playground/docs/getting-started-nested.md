@@ -7,7 +7,7 @@ permalink: /playground/
 
 # Getting Started
 
-UI5 Web Components carry fundamental UI5 qualities, along with others, to provide enterprise-grade features, Fiori UX, and themeability. The goal is to achieve easy consumption of UI5 controls and to lower the entry barrier to use UI5 controls for own applications. By making the consumption of the full-stack UI5 optional, UI5 Web Components allow you to avoid the complexity of the UI5 rendering stack. In general, the UI5 Web Components are targeting web developers who want to have more flexibility to use just HTML tags or arbitrary JS frameworks.
+The UI5 Web Components share fundamental UI5 qualities with others to provide enterprise-grade features, Fiori UX and themeability. The goal is to achieve an easy consumption of UI5 controls to lower the entry barrier to use UI5 controls for own applications and to avoid complexity of the UI5 rendering-stack by making the consumption of the full-stack UI5 optional. In general, the UI5 Web Components target web developers who want to have more flexibility to use just HTML tags or arbitrary JS frameworks.
 
 UI5 Web Components are shipped as ES6 modules and published on NPM. If you are already using a framework that handles bundling of ES6 modules, skip forward to [Installation](#installation) or check the Tutorials section.
 
@@ -44,13 +44,13 @@ npm install @ui5/webcomponents --save
 
 This command downloads the published source code of UI5 web components to the `node_modules` folder. Now you can add them to your code to get them on the web page.
 
-## Read the Docs
+## Documentation
 
 Browse the available UI5 Web Components and check their API in the [playground](./playground/docs/).
 
 ## Usage
 
-### Import the needed Web Component
+### 1. Import the needed Web Component.
 
 ```js
 // src/main.js
@@ -59,7 +59,7 @@ import "@ui5/webcomponents/dist/Button.js";
 
 This line runs the code that registers the `<ui5-button>` tag with the browser. Now when the browser sees such a tag, it knows how to render it.
 
-### Instantiate the Web Component
+### 2. Instantiate the Web Component.
 
 Next, change the application markup in the same file to display the button on the page:
 ```js
@@ -72,7 +72,7 @@ document.querySelector('#app').innerHTML = `
 
 Check the browser to see the displayed button. You can now use UI5 Web Components just like normal HTML elements - set attributes on them, attach events, and more as descirbed in the documentation.
 
-### Production Build
+### 3. Production Build
 
 If you want to deploy your project on a static hosting or in a nodejs based project, run:
 
@@ -94,4 +94,5 @@ dist/assets/vendor.c05c7785.js 114.92kb / brotli: 24.30kb
 
 The contents of the `dist` folder is ready to be deployed for productive usage. The hashes in the file names make them safe for caching and the produced bundle is optimized for production.
 
-### Enjoy UI5 Web Components
+### 4. Enjoy UI5 Web Components.
+
