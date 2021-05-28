@@ -53,6 +53,10 @@ const getFetchDefaultLanguage = () => {
 	return initialConfig.fetchDefaultLanguage;
 };
 
+/**
+ *
+ * @returns { import("./config/NoConflict.js").NoConflictType }
+ */
 const getNoConflict = () => {
 	initConfiguration();
 	return initialConfig.noConflict;

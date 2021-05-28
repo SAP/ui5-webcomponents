@@ -1,3 +1,4 @@
+// @ts-check
 import { getNoConflict as getConfiguredNoConflict } from "../InitialConfiguration.js";
 
 // Fire these events even with noConflict: true
@@ -9,13 +10,21 @@ const shouldFireOriginalEvent = eventName => {
 	return excludeList.includes(eventName);
 };
 
+/* @type {Boolean | { events: Array<string> }} */
+/** @typedef { Boolean | { events: Array<string> } } NoConflictType */
+/** @type {NoConflictType} */
 let noConflict;
 
 const shouldNotFireOriginalEvent = eventName => {
 	const nc = getNoConflict();
-	return !(nc.events && nc.events.includes && nc.events.includes(eventName));
+	// return !(nc.events && nc.events.includes && nc.events.includes(eventName));
+	return !(typeof nc !== "boolean" && nc.events && nc.events.includes && nc.events.includes(eventName));
 };
 
+/**
+ *
+ * @returns { NoConflictType } whether the noConflict configuration is set
+ */
 const getNoConflict = () => {
 	if (noConflict === undefined) {
 		noConflict = getConfiguredNoConflict();
@@ -40,6 +49,10 @@ const skipOriginalEvent = eventName => {
 	return !shouldNotFireOriginalEvent(eventName);
 };
 
+/**
+ *
+ * @param {NoConflictType} noConflictData
+ */
 const setNoConflict = noConflictData => {
 	noConflict = noConflictData;
 };

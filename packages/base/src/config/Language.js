@@ -1,3 +1,4 @@
+// @ts-check
 import {
 	getLanguage as getConfiguredLanguage,
 	getFetchDefaultLanguage as getConfiguredFetchDefaultLanguage,
@@ -5,7 +6,9 @@ import {
 import { fireLanguageChange } from "../locale/languageChange.js";
 import { reRenderAllUI5Elements } from "../Render.js";
 
+/** @type {String} */
 let language;
+/** @type {Boolean} */
 let fetchDefaultLanguage;
 
 /**
@@ -23,7 +26,7 @@ const getLanguage = () => {
  * Changes the current language, re-fetches all message bundles, updates all language-aware components
  * and returns a promise that resolves when all rendering is done
  *
- * @param newLanguage
+ * @param {String} newLanguage
  * @returns {Promise<void>}
  */
 const setLanguage = async newLanguage => {
@@ -42,7 +45,7 @@ const setLanguage = async newLanguage => {
  * fetched over the network instead of using the inlined one.
  * <b>Note:</b> By default the language will not be fetched.
  *
- * @param {Boolean} fetchDefaultLanguage
+ * @param {Boolean} fetchDefaultLang
  */
 const setFetchDefaultLanguage = fetchDefaultLang => {
 	fetchDefaultLanguage = fetchDefaultLang;
