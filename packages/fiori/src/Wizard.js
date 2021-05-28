@@ -161,7 +161,7 @@ const metadata = {
  * It shows the sequence of steps, where the recommended number of steps is between 3 and 8 steps.
  * <ul>
  * <li> Steps can have different visual representations - numbers or icons.
- * <li> Steps might have labels for better readability - heading and subheding.</li>
+ * <li> Steps might have labels for better readability - titleText and subTitleText.</li>
  * <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code></li>
  * </ul>
  *
@@ -205,7 +205,7 @@ const metadata = {
  * When the task has less than 3 steps.
  *
  * <h3>Responsive Behavior</h3>
- * On small widths the step's heading, subtitleText and separators in the navigation area
+ * On small widths the step's titleText, subtitleText and separators in the navigation area
  * will start truncate and shrink and from particular point they will hide to free as much space as possible.
  *
  * <h3>ES6 Module Import</h3>
