@@ -82,7 +82,7 @@ and once the project is built for the first time, open in your browser:
 
 `http://localhost:8080/test-resources/pages/index.html`
 
-*Note:* If you choose a different `port` earlier, change `8080` to its value.
+*Note:* If you've chosen a different `port` earlier, change `8080` to its value.
 
 You can also run the tests:
 
@@ -196,7 +196,7 @@ This is where you'll do most of the development. Let's see the necessary files f
 
 #### Class and template files
 
-The main files describing a Web Ccomponent are:
+The main files describing a Web Component are:
 
 File | Purpose
 ------------|-------------
@@ -218,7 +218,7 @@ In addition, you can define your own CSS Vars and provide different values for t
 
 File | Purpose
 ------------|-------------
-`src/themes/MyFirstComponent.css` | All CSS rules for the Web Ccomponent, same for all themes; will be inserted in the shadow root.
+`src/themes/MyFirstComponent.css` | All CSS rules for the Web Component, same for all themes; will be inserted in the shadow root.
 `src/themes/sap_belize/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize` theme
 `src/themes/sap_belize_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme
 `src/themes/sap_belize_hcw/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcw` theme
