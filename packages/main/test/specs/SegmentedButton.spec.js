@@ -7,14 +7,14 @@ describe("SegmentedButton general interaction", () => {
 	});
 
 	it("tests if pressed attribute is applied", () => {
-		const segmentedButtonItem =  browser.$("#segButton1 > ui5-segmentedbutton-item:first-child");
+		const segmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:first-child");
 
 		assert.ok(segmentedButtonItem.getProperty("pressed"), "SegmentedButtonItem has property pressed");
 	});
 
 	it("tests if pressed attribute is switched to the newly pressed button", () => {
-		const firstSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmentedbutton-item:first-child");
-		const lastSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmentedbutton-item:last-child");
+		const firstSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:first-child");
+		const lastSegmentedButtonItem =  browser.$("#segButton1 > ui5-segmented-button-item:last-child");
 
 		lastSegmentedButtonItem.click();
 
@@ -23,10 +23,10 @@ describe("SegmentedButton general interaction", () => {
 	});
 
 	it("tests if pressed attribute is applied only to last child when all buttons are pressed", () => {
-		const segmentedButtonItem1 =  browser.$("#segButton2 > ui5-segmentedbutton-item:first-child");
-		const segmentedButtonItem2 =  browser.$("#segButton2 > ui5-segmentedbutton-item:nth-child(2)");
-		const segmentedButtonItem3 =  browser.$("#segButton2 > ui5-segmentedbutton-item:nth-child(3)");
-		const segmentedButtonItem4 =  browser.$("#segButton2 > ui5-segmentedbutton-item:last-child");
+		const segmentedButtonItem1 =  browser.$("#segButton2 > ui5-segmented-button-item:first-child");
+		const segmentedButtonItem2 =  browser.$("#segButton2 > ui5-segmented-button-item:nth-child(2)");
+		const segmentedButtonItem3 =  browser.$("#segButton2 > ui5-segmented-button-item:nth-child(3)");
+		const segmentedButtonItem4 =  browser.$("#segButton2 > ui5-segmented-button-item:last-child");
 
 		// only last button should be pressed
 		assert.ok(!segmentedButtonItem1.getProperty("pressed"), "SegmentedButtonItem should not be pressed");

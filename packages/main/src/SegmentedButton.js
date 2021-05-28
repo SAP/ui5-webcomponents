@@ -29,7 +29,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Multiple buttons are allowed.
 		 * <br><br>
-		 * <b>Note:</b> Use the <code>ui5-segmentedbutton-item</code> for the intended design.
+		 * <b>Note:</b> Use the <code>ui5-segmented-button-item</code> for the intended design.
 		 * @type {sap.ui.webcomponents.main.IButton[]}
 		 * @slot buttons
 		 * @public
@@ -244,7 +244,7 @@ class SegmentedButton extends UI5Element {
 	 * Currently selected button.
 	 *
 	 * @readonly
-	 * @type { ui5-segmentedbutton-item }
+	 * @type { ui5-segmented-button-item }
 	 * @public
 	 */
 	get selectedButton() {

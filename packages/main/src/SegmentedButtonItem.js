@@ -8,7 +8,7 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  * @public
  */
 const metadata = {
-	tag: "ui5-segmentedbutton-item",
+	tag: "ui5-segmented-button-item",
 	properties: /** @lends  sap.ui.webcomponents.main.SegmentedButtonItem.prototype */ {
 		/**
 		 * Defines the <code>ui5-button</code> design.
@@ -96,12 +96,12 @@ const metadata = {
  *
  *<h3 class="comment-api-title">Overview</h3>
  *
- * Users can use the <code>ui5-segmentedbutton-item</code> as part of a <code>ui5-segmentedbutton</code>.
+ * Users can use the <code>ui5-segmented-button-item</code> as part of a <code>ui5-segmentedbutton</code>.
  * <br><br>
- * Clicking or tapping on a <code>ui5-segmentedbutton-item</code> changes its state to <code>pressed</code>.
+ * Clicking or tapping on a <code>ui5-segmented-button-item</code> changes its state to <code>pressed</code>.
  * The button returns to its initial state when the user clicks or taps on it again.
  * By applying additional custom CSS-styling classes, apps can give a different style to any
- * <code>ui5-segmentedbutton-item</code>.
+ * <code>ui5-segmented-button-item</code>.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -111,7 +111,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.SegmentedButtonItem
  * @extends Button
- * @tagname ui5-segmentedbutton-item
+ * @tagname ui5-segmented-button-item
  * @public
  */
 class SegmentedButtonItem extends ToggleButton {
