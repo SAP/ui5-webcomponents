@@ -18,7 +18,8 @@ import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-segmentedbutton",
+	tag: "ui5-segmented-button",
+	altTag: "ui5-segmentedbutton",
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */  {},
 	managedSlots: true,
@@ -61,7 +62,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-segmentedbutton</code> shows a group of buttons. When the user clicks or taps
+ * The <code>ui5-segmented-button</code> shows a group of buttons. When the user clicks or taps
  * one of the buttons, it stays in a pressed state. It automatically resizes the buttons
  * to fit proportionally within the component. When no width is set, the component uses the available width.
  * <br><br>
@@ -75,7 +76,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.SegmentedButton
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-segmentedbutton
+ * @tagname ui5-segmented-button
  * @since 1.0.0-rc.6
  * @public
  */
