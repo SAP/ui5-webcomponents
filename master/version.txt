@@ -1,9 +1,9 @@
-commit 39cc473f64893bc96ff056584b7d4d01c245b227
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri May 28 16:56:16 2021 +0300
+commit a7a0da1c18f53f0402dff64637a767e4fa1e8ad1
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Fri May 28 17:20:20 2021 +0300
 
-    fix(ui5-popover): rename noArrow property to hideArrow (#3351)
+    fix(ui5-tab): rename semanticColor property to design (#3336)
     
     Part of #3107
     
-    BREAKING_CHANGE: rename noArrow property to hideArrow
+    BREAKING_CHANGE: The property `semanticColor` is renamed to `design`

@@ -2618,15 +2618,15 @@
 					<ui5-tab text="Products" additional-text="125">
 					</ui5-tab>
 					<ui5-tab-separator></ui5-tab-separator>
-					<ui5-tab icon="sap-icon://menu2" text="Laptops" semantic-color="Positive" additional-text="25">
+					<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25">
 					</ui5-tab>
-					<ui5-tab icon="sap-icon://menu" text="Monitors" selected semantic-color="Critical" additional-text="45">
+					<ui5-tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additional-text="45">
 					</ui5-tab>
-					<ui5-tab icon="sap-icon://menu2" text="Keyboards" semantic-color="Negative" additional-text="15">
+					<ui5-tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15">
 					</ui5-tab>
-					<ui5-tab icon="sap-icon://menu2" disabled text="Disabled"  semantic-color="Negative" additional-text="40">
+					<ui5-tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40">
 					</ui5-tab>
-					<ui5-tab icon="sap-icon://menu2" text="Neutral" semantic-color="Neutral" additional-text="40">
+					<ui5-tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40">
 					</ui5-tab>
 					<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40">
 					</ui5-tab>
@@ -2952,6 +2952,19 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          hideArrows
+                            <br>
+                            <code>hide-arrows</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the visibility of the arrows, used for expanding and shrinking the columns.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           layout
                             <br>
                         </div>
@@ -2961,7 +2974,7 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                             Defines the columns layout and their proportion. <br><br> <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 599px, two columns between 599px and 1023px and three columns for sizes bigger than 1023px. <br><br> Available options are: <ul> <li><code>OneColumn</code></li> <li><code>TwoColumnsStartExpanded</code></li> <li><code>TwoColumnsMidExpanded</code></li> <li><code>ThreeColumnsMidExpanded</code></li> <li><code>ThreeColumnsEndExpanded</code></li> <li><code>ThreeColumnsStartExpandedEndHidden</code></li> <li><code>ThreeColumnsMidExpandedEndHidden</code></li> <li><code>MidColumnFullScreen</code></li> <li><code>EndColumnFullScreen</code></li> </ul> <br><br> <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns in 67%/33% proportion.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           midColumnVisible
                             (readonly)
@@ -2972,18 +2985,6 @@ The <code>FlexibleColumnLayout</code> automatically displays the maximum possibl
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Returns if the <code>middle</code> column is visible.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          noArrows
-                            <br>
-                            <code>no-arrows</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the visibility of the arrows, used for expanding and shrinking the columns.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">

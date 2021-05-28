@@ -2575,8 +2575,8 @@ provided by the framework you’re using, and the framework will be the one upda
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">id=</span><span class="s">"tc1"</span> <span class="na">fixed</span> <span class="na">collapsed</span> <span class="na">show-overflow</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Laptops"</span> <span class="na">additional-text=</span><span class="s">"125"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
 	<span class="nt">&lt;ui5-tab-separator&gt;&lt;/ui5-tab-separator&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Phones"</span> <span class="na">icon-color=</span><span class="s">"Positive"</span> <span class="na">additional-text=</span><span class="s">"25"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
-	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tablets"</span>  <span class="na">icon-color=</span><span class="s">"Negative"</span> <span class="na">additional-text=</span><span class="s">"40"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Phones"</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">additional-text=</span><span class="s">"25"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tablets"</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">additional-text=</span><span class="s">"40"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
 <span class="nt">&lt;/ui5-tabcontainer&gt;</span>
 </code></pre></div></div>
 
@@ -2587,7 +2587,7 @@ provided by the framework you’re using, and the framework will be the one upda
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">tc</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">tc1</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">newTab</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-tab</span><span class="dl">"</span><span class="p">);</span>
 <span class="nx">newTab</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Smart Watches</span><span class="dl">"</span><span class="p">;</span>
-<span class="nx">newTab</span><span class="p">.</span><span class="nx">iconColor</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Positive</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">newTab</span><span class="p">.</span><span class="nx">design</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Positive</span><span class="dl">"</span><span class="p">;</span>
 <span class="nx">tc</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">newTab</span><span class="p">);</span>
 </code></pre></div></div>
 
