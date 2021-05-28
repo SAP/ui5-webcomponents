@@ -128,7 +128,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
 	display: inline-block;
-	margin-left: 0.5rem;
+	margin-left: 0.375rem;
 	width: 10px;
 	height: 10px;
 	width: 0px;
@@ -231,10 +231,13 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-left {
-	flex-basis: 50%;
 	max-width: calc(50% - 1.5rem);
 	justify-content: flex-start;
 	margin-right: 0.5rem;
+}
+
+.ui5-shellbar-with-coPilot .ui5-shellbar-overflow-container-left {
+	flex-basis: 50%;
 }
 
 .ui5-shellbar-menu-button {
@@ -276,7 +279,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
 	display: flex;
-	float: right;
+	justify-content: flex-end;
 }
 
 .ui5-shellbar-overflow-button {
@@ -360,9 +363,10 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-search-field {
-	width: 240px;
+	flex-grow: 1;
 	min-width: 240px;
 	margin-left: 0.5rem;
+	max-width: 25rem;
 }
 
 .ui5-shellbar-search-full-width-wrapper .ui5-shellbar-search-full-field {
@@ -470,7 +474,7 @@ slot[name="profile"] {
 }
 
 [dir="rtl"] .ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
-	margin-right: .5rem;
+	margin-right: 0.375rem;
 	margin-left: 0;
 }
 

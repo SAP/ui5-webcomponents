@@ -71,7 +71,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
-		 * Defines the text that will be displayed when there is no data and <code>showNoData</code> is present.
+		 * Defines the text that will be displayed when there is no data and <code>hideNoData</code> is not present.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -82,7 +82,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text that will be displayed inside the <code>More</code> button at the bottom of the table,
+		 * Defines the text that will be displayed inside the growing button at the bottom of the table,
 		 * meant for loading more rows upon press.
 		 *
 		 * <br><br>
@@ -92,25 +92,25 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.11
+		 * @since 1.0.0-rc.15
 		 * @public
 		 */
-		moreText: {
+		growingButtonText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the subtext that will be displayed under the <code>moreText</code>.
+		 * Defines the subtext that will be displayed under the <code>growingButtonText</code>.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
-		 * @since 1.0.0-rc.11
+		 * @since 1.0.0-rc.15
 		 * @public
 		 */
-		moreSubtext: {
+		 growingButtonSubtext: {
 			type: String,
 		},
 
@@ -120,8 +120,9 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		showNoData: {
+		hideNoData: {
 			type: Boolean,
 		},
 
@@ -437,7 +438,7 @@ class Table extends UI5Element {
 			return !this._hiddenColumns[index];
 		});
 
-		this._noDataDisplayed = !this.rows.length && this.showNoData;
+		this._noDataDisplayed = !this.rows.length && !this.hideNoData;
 		this.visibleColumnsCount = this.visibleColumns.length;
 	}
 
@@ -691,8 +692,8 @@ class Table extends UI5Element {
 		return !isIE() && this.growing === TableGrowingMode.Scroll;
 	}
 
-	get _moreText() {
-		return this.moreText || this.i18nBundle.getText(LOAD_MORE_TEXT);
+	get _growingButtonText() {
+		return this.growingButtonText || this.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get ariaLabelText() {
@@ -710,10 +711,10 @@ class Table extends UI5Element {
 
 	get loadMoreAriaLabelledBy() {
 		if (this.moreDataText) {
-			return `${this._id}-showMore-text ${this._id}-showMore-desc`;
+			return `${this._id}-growingButton-text ${this._id}-growingButton-subtext`;
 		}
 
-		return `${this._id}-showMore-text`;
+		return `${this._id}-growingButton-text`;
 	}
 
 	get tableEndDOM() {
