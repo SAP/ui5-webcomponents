@@ -103,7 +103,7 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	it("tests selection of new date without changing the time section", () => {
-		const PREVIOUS_VALUE = "14/04/2020, 01:02:03 am";
+		const PREVIOUS_VALUE = "14/04/2020, 01:02:03 AM";
 		const dtPicker = browser.$("#dtSeconds");
 		// assert
 		const currentValue = dtPicker.shadow$("ui5-input").getValue();
