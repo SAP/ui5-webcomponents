@@ -4,6 +4,14 @@
 	id="{{_id}}-select"
 	@click="{{_onclick}}"
 >
+	{{#if selectedOptionIcon}}
+		<ui5-icon
+			aria-hidden="true"
+			class="ui5-select-option-icon"
+			name="{{selectedOptionIcon}}"
+			dir="{{effectiveDir}}"
+		></ui5-icon>
+	{{/if}}
 	<div class="ui5-select-label-root"
 		data-sap-focus-ref
 		tabindex="{{tabIndex}}"

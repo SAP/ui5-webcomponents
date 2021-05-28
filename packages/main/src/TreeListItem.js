@@ -73,25 +73,25 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>info</code>, displayed in the end of the tree item.
+		 * Defines the <code>additionalText</code>, displayed in the end of the tree item.
 		 * @type {string}
 		 * @public
-		 * @since 1.0.0-rc.12
+		 * @since 1.0.0-rc.15
 		 */
-		info: {
+		additionalText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the state of the <code>info</code>.
+		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
-		 * @since 1.0.0-rc.12
+		 * @since 1.0.0-rc.15
 		 */
-		infoState: {
+		additionalTextState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
 		},
@@ -207,7 +207,7 @@ const metadata = {
  * The <code>ui5-li-tree</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>title - Used to style the title of the tree list item</li>
- * <li>info - Used to style the info of the tree list item</li>
+ * <li>additionalText - Used to style the additionalText of the tree list item</li>
  * <li>icon - Used to style the icon of the tree list item</li>
  * </ul>
  *

@@ -709,6 +709,10 @@ class Select extends UI5Element {
 		}
 	}
 
+	get selectedOptionIcon() {
+		return this.selectedOption.icon;
+	}
+
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector("[ui5-popover]");
