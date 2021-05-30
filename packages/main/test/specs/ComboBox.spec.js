@@ -328,3 +328,20 @@ describe("General interaction", () => {
 		assert.strictEqual(listItem.shadow$(".ui5-li-info").getText(), "DZ", "Additional item text should be displayed");
 	});
 });
+
+describe("Accessibility", () => {
+
+	it ("Announce item on selection", () => {
+		const combo = $("#combo");
+		const arrow = combo.shadow$("[input-icon]");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const invisibleMessageSpan = $(".ui5-invisiblemessage-polite");
+		const itemAnnouncement = "List item 1 of 11";
+
+		arrow.click();
+
+		input.keys("ArrowDown");
+
+		assert.strictEqual(invisibleMessageSpan.getHTML(false), itemAnnouncement, "Span value is correct.")
+	});
+});
