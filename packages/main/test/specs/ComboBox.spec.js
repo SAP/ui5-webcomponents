@@ -336,12 +336,19 @@ describe("Accessibility", () => {
 		const arrow = combo.shadow$("[input-icon]");
 		const input = combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = $(".ui5-invisiblemessage-polite");
-		const itemAnnouncement = "List item 1 of 11";
+		const itemAnnouncement1 = "List item 1 of 11 Selected";
+		const itemAnnouncement2 = "List item 2 of 11 Selected";
 
 		arrow.click();
 
+		assert.strictEqual(invisibleMessageSpan.getHTML(false), "", "Span value should be empty.")
+
 		input.keys("ArrowDown");
 
-		assert.strictEqual(invisibleMessageSpan.getHTML(false), itemAnnouncement, "Span value is correct.")
+		assert.strictEqual(invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Span value is correct.")
+
+		input.keys("ArrowDown");
+
+		assert.strictEqual(invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
 	});
 });

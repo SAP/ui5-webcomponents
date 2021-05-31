@@ -26,6 +26,7 @@ import {
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
 	LIST_ITEM_POSITION,
+	LIST_ITEM_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -730,8 +731,9 @@ class ComboBox extends UI5Element {
 
 	announceSelectedItem(indexOfItem) {
 		const itemPositionText = this.i18nBundle.getText(LIST_ITEM_POSITION, [indexOfItem + 1], [this._filteredItems.length]);
+		const itemSelectionText = this.i18nBundle.getText(LIST_ITEM_SELECTED);
 
-		announce(`${itemPositionText}`, "Polite");
+		announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
 	}
 
 	get _headerTitleText() {
