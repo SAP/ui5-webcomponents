@@ -380,7 +380,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (this.selectedPage >= this.items.length - (this.effectiveItemsPerPage + 1)) {
-			this.fireEvent("navigate", { visibleItemsIndexes: visibleItemsIndexes });
+			this.fireEvent("navigate", { visibleItemsIndexes });
 		}
 	}
 
