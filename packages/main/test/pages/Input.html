@@ -402,11 +402,10 @@
 					suggestion = document.createElement("ui5-suggestion-item");
 					suggestion.id = item.key;
 					suggestion.icon = "world";
-					suggestion.info = "explore";
-					suggestion.group = item.text.length === 1;
-					suggestion.infoState = "Success";
 					suggestion.description = "travel the world";
 					suggestion.text = item.text
+					suggestion.additionalText = "explore";
+					suggestion.additionalTextState = "Success";
 					input.appendChild(suggestion);
 				}
 			});
