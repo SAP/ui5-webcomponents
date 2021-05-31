@@ -93,9 +93,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the tooltip of the tree list item.
+		 * Defines the tooltip of the component.
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @private
 		 * @since 1.0.0-rc.15
 		 */
