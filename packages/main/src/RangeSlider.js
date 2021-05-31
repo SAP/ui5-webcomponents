@@ -195,7 +195,7 @@ class RangeSlider extends SliderBase {
 		}
 
 		if (this.showTooltip) {
-			this._tooltipVisibility = this._constants().TOOLTIP_VISIBLE;
+			this._tooltipVisibility = SliderBase.CONSTANTS.TOOLTIP_VISIBLE;
 		}
 	}
 
@@ -222,7 +222,7 @@ class RangeSlider extends SliderBase {
 		this._setInitialValue("endValue", null);
 
 		if (this.showTooltip) {
-			this._tooltipVisibility = this._constants().TOOLTIP_HIDDEN;
+			this._tooltipVisibility = SliderBase.CONSTANTS.TOOLTIP_HIDDEN;
 		}
 	}
 
