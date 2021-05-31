@@ -92,7 +92,7 @@ const metadata = {
 		 * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code>
 		 * <br>
 		 * automatically imports the &lt;ui5-suggestion-item> and &lt;ui5-suggestion-group-item> for your convenience.
-		 * 
+		 *
 		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
 		 * @slot suggestionItems
 		 * @public
