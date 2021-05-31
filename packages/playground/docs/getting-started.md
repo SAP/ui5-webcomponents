@@ -7,13 +7,14 @@ permalink: /playground
 
 # Getting Started
 
-UI5 Web Components share fundamental UI5 qualities with others to provide enterprise-grade features, Fiori UX and themeability. The goal is to achieve an easy consumption of UI5 controls to lower the entry barrier to use UI5 controls for own applications and to avoid complexity of the UI5 rendering-stack by making the consumption of the full-stack UI5 optional. In general, the UI5 Web Components target web developers who want to have more flexibility to use just HTML tags or arbitrary JS frameworks.
+UI5 Web Components are framework-independent UI elements incorporating the SAP Fiori design. UI5 Web Components share the fundamental enterprise-grade features of UI5 such as stability, accessibility and theming support.
+The UI5 Web Components project aims to achieve easier consumption of UI5 controls, lower entry barrier to UI5 controls use for own applications and less complexity of the UI5 rendering-stack by making the utilization of the full-stack UI5 optional. UI5 Web Components target web developers who want to have more flexibility to use just HTML tags or arbitrary JS frameworks.
 
 UI5 Web Components are shipped as ES6 modules and published on NPM. If you are already using a framework that handles bundling of ES6 modules, skip forward to [Installation](#installation) or check the Tutorials section.
 
 ## Creating a project
 
-Any ES6 module-capable frontend tooling can be used, but in case you don’t already have a preference, you can start a new project using [Vite](https://vite.dev). The only prerequisite is to have [Node.js](https://nodejs.org/) installed.
+Any ES6 module-capable front-end tooling can be used, but in case you don’t already have a preference, you can start a new project using [Vite](https://vite.dev). The only prerequisite is to have [Node.js](https://nodejs.org/) installed.
 
 ```console
 npm init @vitejs/app
