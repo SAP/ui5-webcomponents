@@ -75,7 +75,7 @@ const metadata = {
  * <li>The entire range can be moved along the interval.</li>
  * </ul>
  * <h3>Usage</h3>
- * The most common usecase is to select and move sub-ranges on a continuous numerical scale.
+ * The most common use case is to select and move sub-ranges on a continuous numerical scale.
  *
  * <h3>Responsive Behavior</h3>
  * You can move the currently selected range by clicking on it and dragging it along the interval.
@@ -83,17 +83,17 @@ const metadata = {
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
- * <li><code>Left or Down Arrow</code> - Moves a <code>ui5-range-slider</code> handle or the entire selection one step to the left;</li>
- * <li><code>Right or Up Arrow</code> - Moves a <code>ui5-slider</code> handle or the entire selection one step to the right;</li>
- * <li><code>Left or Down Arrow + Ctrl/Cmd</code> - Moves a <code>ui5-range-slider</code> handle to the left or the entire range with step equal to 1/10th of the entire range;</li>
- * <li><code>Right or Up Arrow + Ctrl/Cmd</code> - Moves a <code>ui5-range-slider</code> handle to the right or the entire range with step equal to 1/10th of the entire range;</li>
+ * <li><code>Left or Down Arrow</code> - Moves a component's handle or the entire selection one step to the left;</li>
+ * <li><code>Right or Up Arrow</code> - Moves a component's handle or the entire selection one step to the right;</li>
+ * <li><code>Left or Down Arrow + Ctrl/Cmd</code> - Moves a component's handle to the left or the entire range with step equal to 1/10th of the entire range;</li>
+ * <li><code>Right or Up Arrow + Ctrl/Cmd</code> - Moves a component's handle to the right or the entire range with step equal to 1/10th of the entire range;</li>
  * <li><code>Plus</code> - Same as <code>Right or Up Arrow</code></li>
  * <li><code>Minus</code> - Same as <code>Left or Down Arrow</code></li>
- * <li><code>Home</code> - Moves the entire selection or the selected handle to the beginning of the <code>ui5-range-slider</code>'s range;</li>
- * <li><code>End</code> - Moves the entire selection or the selected handle to the end of the <code>ui5-range-slider</code>'s range;</li>
+ * <li><code>Home</code> - Moves the entire selection or the selected handle to the beginning of the component's range;</li>
+ * <li><code>End</code> - Moves the entire selection or the selected handle to the end of the component's range;</li>
  * <li><code>Page Up</code> - Same as <code>Right or Up Arrow + Ctrl/Cmd</code></li>
  * <li><code>Page Down</code> - Same as <code>Left or Down Arrow + Ctrl/Cmd</code></li>
- * <li><code>Escape</code> - Resets the <code>startValue</code> and <code>endValue</code> to the values prior the <ui5-range-slider> focusing;</li>
+ * <li><code>Escape</code> - Resets the <code>startValue</code> and <code>endValue</code> to the values prior the component being focused;</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
