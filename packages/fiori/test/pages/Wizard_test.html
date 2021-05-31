@@ -30,7 +30,7 @@
 
 	<div class="stretch">
 		<ui5-wizard id="wizTest">
-			<ui5-wizard-step id="st1" icon="sap-icon://product" selected heading="Product type">
+			<ui5-wizard-step id="st1" icon="sap-icon://product" selected title-text="Product type">
 				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br>
 
@@ -46,11 +46,11 @@
 
 					<div style="display: flex; flex-direction: row; margin-top: 1rem; justify-content: flex-end; align-items: center;">
 						<ui5-label>Configure step-switch-threshold</ui5-label>
-						<ui5-segmentedbutton id="setting">
+						<ui5-segmented-button id="setting">
 							<ui5-toggle-button threshold="0.3">0.5</ui5-toggle-button>
 							<ui5-toggle-button threshold="0.7" pressed>default (0.7)</ui5-toggle-button>
 							<ui5-toggle-button threshold="1">1</ui5-toggle-button>
-						</ui5-segmentedbutton>
+						</ui5-segmented-button>
 					</div>
 
 				</div>
@@ -58,7 +58,7 @@
 				<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step  id="st2" heading="Product Information" disabled>
+			<ui5-wizard-step  id="st2" title-text="Product Information" disabled>
 				<div style="display: flex;flex-direction: column">
 					<ui5-title>2. Product Information</ui5-title><br>
 					<ui5-label wrap>
@@ -101,7 +101,7 @@
 				<ui5-button id="toStep3" design="Emphasized">Step 3</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step  id="st3" heading="Options" disabled>
+			<ui5-wizard-step  id="st3" title-text="Options" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>3. Options</ui5-title><br>
 
@@ -120,21 +120,21 @@
 
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Availability</ui5-label>
-							<ui5-segmentedbutton id="segButton1">
+							<ui5-segmented-button id="segButton1">
 								<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
 								<ui5-toggle-button>In depot</ui5-toggle-button>
 								<ui5-toggle-button>Damaged</ui5-toggle-button>
 								<ui5-toggle-button>Out of stock</ui5-toggle-button>
-							</ui5-segmentedbutton>
+							</ui5-segmented-button>
 						</div>
 
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Size</ui5-label>
-							<ui5-segmentedbutton id="sb">
+							<ui5-segmented-button id="sb">
 								<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
 								<ui5-toggle-button>Medium</ui5-toggle-button>
 								<ui5-toggle-button>Largr</ui5-toggle-button>
-							</ui5-segmentedbutton>
+							</ui5-segmented-button>
 						</div>
 					</div>
 				</div>
@@ -145,7 +145,7 @@
 				<ui5-button id="toStep4" design="Emphasized">Step 4</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step  id="st4" heading="Pricing" disabled>
+			<ui5-wizard-step  id="st4" title-text="Pricing" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>4. Pricing</ui5-title><br>
 					<ui5-label wrap>
@@ -179,7 +179,7 @@
 
 		<ui5-dialog id="dialog" stretch header-heading="Wizard">
 				<ui5-wizard id="wizInDialog">
-					<ui5-wizard-step icon="sap-icon://product" selected heading="Product type">
+					<ui5-wizard-step icon="sap-icon://product" selected title-text="Product type">
 						<div style="display: flex; min-height: 200px; flex-direction: column;">
 							<ui5-title>1. Product Type</ui5-title><br>
 
@@ -196,7 +196,7 @@
 						<ui5-button id="toStep2InDialog" design="Emphasized">Step 2</ui5-button>
 					</ui5-wizard-step>
 
-					<ui5-wizard-step heading="Product Information">
+					<ui5-wizard-step title-text="Product Information">
 						<div style="display: flex;flex-direction: column">
 							<ui5-title>2. Product Information</ui5-title><br>
 							<ui5-label wrap>
@@ -237,7 +237,7 @@
 						<ui5-button id="toStep3InDialog" design="Emphasized">Step 3</ui5-button>
 					</ui5-wizard-step>
 
-					<ui5-wizard-step heading="Options">
+					<ui5-wizard-step title-text="Options">
 						<div style="display: flex; flex-direction: column;">
 							<ui5-title>3. Options</ui5-title><br>
 
@@ -256,21 +256,21 @@
 
 								<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 									<ui5-label>Availability</ui5-label>
-									<ui5-segmentedbutton>
+									<ui5-segmented-button>
 										<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
 										<ui5-toggle-button>In depot</ui5-toggle-button>
 										<ui5-toggle-button>Damaged</ui5-toggle-button>
 										<ui5-toggle-button>Out of stock</ui5-toggle-button>
-									</ui5-segmentedbutton>
+									</ui5-segmented-button>
 								</div>
 
 								<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 									<ui5-label>Size</ui5-label>
-									<ui5-segmentedbutton>
+									<ui5-segmented-button>
 										<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
 										<ui5-toggle-button>Medium</ui5-toggle-button>
 										<ui5-toggle-button>Largr</ui5-toggle-button>
-									</ui5-segmentedbutton>
+									</ui5-segmented-button>
 								</div>
 							</div>
 						</div>
@@ -278,7 +278,7 @@
 						<ui5-button id="toStep4InDialog" design="Emphasized">Step 4</ui5-button>
 					</ui5-wizard-step>
 
-					<ui5-wizard-step heading="Pricing">
+					<ui5-wizard-step title-text="Pricing">
 						<div style="display: flex; flex-direction: column;">
 							<ui5-title>4. Pricing</ui5-title><br>
 							<ui5-label wrap>

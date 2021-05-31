@@ -7,7 +7,7 @@ const metadata = {
 	tag: "ui5-wizard-step",
 	properties: /** @lends sap.ui.webcomponents.fiori.WizardStep.prototype */ {
 		/**
-		 * Defines the <code>heading</code> of the step.
+		 * Defines the <code>titleText</code> of the step.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
@@ -16,13 +16,14 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		heading: {
+		titleText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the <code>subheading</code> of the step.
+		 * Defines the <code>subtitleText</code> of the step.
 		 * <br><br>
 		 *
 		 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
@@ -31,8 +32,9 @@ const metadata = {
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		subheading: {
+		subtitleText: {
 			type: String,
 		},
 
@@ -146,7 +148,7 @@ const metadata = {
  * <h3>Structure</h3>
  * <ul>
  * <li>Each wizard step has arbitrary content</li>
- * <li>Each wizard step might have texts - defined by the <code>heading</code> and <code>subheading</code> properties</li>
+ * <li>Each wizard step might have texts - defined by the <code>titleText</code> and <code>subtitleText</code> properties</li>
  * <li>Each wizard step might have an icon - defined by the <code>icon</code> property</li>
  * <li>Each wizard step might display a number in place of the <code>icon</code>, when it's missing</li>
  * </ul>

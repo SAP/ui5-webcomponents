@@ -139,8 +139,8 @@ Now, let's have a look at a Web Component that is intended to have only certain 
 <ui5-tabcontainer id="tc1" fixed collapsed show-overflow>
 	<ui5-tab text="Laptops" additional-text="125"></ui5-tab>
 	<ui5-tab-separator></ui5-tab-separator>
-	<ui5-tab text="Phones" icon-color="Positive" additional-text="25"></ui5-tab>
-	<ui5-tab text="Tablets"  icon-color="Negative" additional-text="40"></ui5-tab>
+	<ui5-tab text="Phones" design="Positive" additional-text="25"></ui5-tab>
+	<ui5-tab text="Tablets" design="Negative" additional-text="40"></ui5-tab>
 </ui5-tabcontainer>
 ```
 
@@ -152,7 +152,7 @@ The manipulation is exactly the same as with the other Web Components. For examp
 const tc = document.getElementById("tc1");
 const newTab = document.createElement("ui5-tab");
 newTab.text = "Smart Watches";
-newTab.iconColor = "Positive";
+newTab.design = "Positive";
 tc.appendChild(newTab);
 ```
 

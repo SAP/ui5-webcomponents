@@ -80,9 +80,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the component semantic color.
+		 * Defines the component's design color.
 		 * <br><br>
-		 * The color is applied to:
+		 * The design is applied to:
 		 * <ul>
 		 * <li>the component icon</li>
 		 * <li>the <code>text</code> when the component overflows</li>
@@ -90,15 +90,15 @@ const metadata = {
 		 * </ul>
 		 *
 		 * <br><br>
-		 * Available semantic colors are: <code>"Default"</code>, <code>"Neutral"</code>, <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
+		 * Available designs are: <code>"Default"</code>, <code>"Neutral"</code>, <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> The color value depends on the current theme.
+		 * <b>Note:</b> The design depends on the current theme.
 		 * @type {SemanticColor}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
-		semanticColor: {
+		design: {
 			type: SemanticColor,
 			defaultValue: SemanticColor.Default,
 		},
@@ -271,8 +271,8 @@ class Tab extends UI5Element {
 			classes.push("ui5-tab-strip-item--mixedMode");
 		}
 
-		if (this.semanticColor !== SemanticColor.Default) {
-			classes.push(`ui5-tab-strip-item--${this.semanticColor.toLowerCase()}`);
+		if (this.design !== SemanticColor.Default) {
+			classes.push(`ui5-tab-strip-item--${this.design.toLowerCase()}`);
 		}
 
 		return classes.join(" ");
@@ -281,8 +281,8 @@ class Tab extends UI5Element {
 	get headerSemanticIconClasses() {
 		const classes = ["ui5-tab-strip-item-semanticIcon"];
 
-		if (this.semanticColor !== SemanticColor.Default) {
-			classes.push(`ui5-tab-strip-item-semanticIcon--${this.semanticColor.toLowerCase()}`);
+		if (this.design !== SemanticColor.Default) {
+			classes.push(`ui5-tab-strip-item-semanticIcon--${this.design.toLowerCase()}`);
 		}
 
 		return classes.join(" ");
@@ -291,8 +291,8 @@ class Tab extends UI5Element {
 	get overflowClasses() {
 		const classes = ["ui5-tab-overflow-item"];
 
-		if (this.semanticColor !== SemanticColor.Default) {
-			classes.push(`ui5-tab-overflow-item--${this.semanticColor.toLowerCase()}`);
+		if (this.design !== SemanticColor.Default) {
+			classes.push(`ui5-tab-overflow-item--${this.design.toLowerCase()}`);
 		}
 
 		if (this.disabled) {

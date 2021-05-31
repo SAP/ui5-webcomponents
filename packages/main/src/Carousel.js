@@ -95,6 +95,17 @@ const metadata = {
 		},
 
 		/**
+		 * If set to true the page indicator is hidden.
+		 * @type {boolean}
+		 * @since 1.0.0-rc.15
+		 * @defaultvalue false
+		 * @public
+		 */
+		hidePageIndicator: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the index of the initially selected item.
 		 * @type {Integer}
 		 * @defaultvalue 0
@@ -277,6 +288,10 @@ class Carousel extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation) {
+			this._visibleNavigationArrows = true;
+		}
+
 		this.validateSelectedIndex();
 	}
 
@@ -347,17 +362,21 @@ class Carousel extends UI5Element {
 	}
 
 	_onmouseout() {
-		this._visibleNavigationArrows = false;
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Content) {
+			this._visibleNavigationArrows = false;
+		}
 	}
 
 	_onmouseover() {
-		this._visibleNavigationArrows = true;
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Content) {
+			this._visibleNavigationArrows = true;
+		}
 	}
 
 	navigateLeft() {
 		this._resizing = false;
 
-		const peviousSelectedIndex = this.selectedIndex;
+		const previousSelectedIndex = this.selectedIndex;
 
 		if (this.selectedIndex - 1 < 0) {
 			if (this.cyclic) {
@@ -367,7 +386,7 @@ class Carousel extends UI5Element {
 			--this.selectedIndex;
 		}
 
-		if (peviousSelectedIndex !== this.selectedIndex) {
+		if (previousSelectedIndex !== this.selectedIndex) {
 			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
 		}
 	}
@@ -375,7 +394,7 @@ class Carousel extends UI5Element {
 	navigateRight() {
 		this._resizing = false;
 
-		const peviousSelectedIndex = this.selectedIndex;
+		const previousSelectedIndex = this.selectedIndex;
 
 		if (this.selectedIndex + 1 > this.pagesCount - 1) {
 			if (this.cyclic) {
@@ -387,7 +406,7 @@ class Carousel extends UI5Element {
 			++this.selectedIndex;
 		}
 
-		if (peviousSelectedIndex !== this.selectedIndex) {
+		if (previousSelectedIndex !== this.selectedIndex) {
 			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
 		}
 
@@ -435,6 +454,25 @@ class Carousel extends UI5Element {
 		return index >= 0 && index <= this.pagesCount - 1;
 	}
 
+	/**
+	 * @private
+	 */
+	get renderNavigation() {
+		if (!this.hasManyPages) {
+			return false;
+		}
+
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows) {
+			return true;
+		}
+
+		if (this.hidePageIndicator) {
+			return false;
+		}
+
+		return true;
+	}
+
 	get hasManyPages() {
 		return this.pagesCount > 1;
 	}
@@ -450,17 +488,18 @@ class Carousel extends UI5Element {
 	get classes() {
 		return {
 			viewport: {
+				"ui5-carousel-viewport": true,
 				"ui5-carousel-viewport--single": this.pagesCount === 1,
 			},
 			content: {
 				"ui5-carousel-content": true,
-				"ui5-carousel-content-no-animation": this.supressAimation,
-				"ui5-carousel-content-has-navigation": this.hasManyPages,
-				"ui5-carousel-content-has-navigation-and-buttons": this.hasManyPages && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-content-no-animation": this.suppressAnimation,
+				"ui5-carousel-content-has-navigation": this.renderNavigation,
+				"ui5-carousel-content-has-navigation-and-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.hasManyPages && (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows),
+				"ui5-carousel-navigation-with-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
 			},
 			navPrevButton: {
 				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
@@ -511,7 +550,7 @@ class Carousel extends UI5Element {
 		return this.cyclic || this.selectedIndex + 1 <= this.pagesCount - 1;
 	}
 
-	get supressAimation() {
+	get suppressAnimation() {
 		return this._resizing || getAnimationMode() === AnimationMode.None;
 	}
 
