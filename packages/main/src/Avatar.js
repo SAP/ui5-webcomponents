@@ -14,7 +14,6 @@ import AvatarCss from "./generated/themes/Avatar.css.js";
 import Icon from "./Icon.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarShape from "./types/AvatarShape.js";
-import AvatarFitType from "./types/AvatarFitType.js";
 import AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 /**
