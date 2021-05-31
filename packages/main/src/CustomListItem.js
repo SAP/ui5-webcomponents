@@ -24,8 +24,8 @@ const metadata = {
 	},
 	properties: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
 		/**
-		 * Defines the text alternative of the <code>ui5-li</code>.
-		 * If not provided a default text alternative will be set, if present.
+		 * Defines the text alternative of the component.
+		 * Note: If not provided a default text alternative will be set, if present.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
