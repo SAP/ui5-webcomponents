@@ -175,14 +175,14 @@ const metadata = {
 		 *
 		 * @event
 		 * @param {Integer} selectedPage the current <code>selectedPage</code>.
-		 * @param {Array} visibleItemsIndices the indices of the visible items <code>selectedPage</code>.
+		 * @param {Array} visibleItemsIndexes the indices of the visible items <code>selectedPage</code>.
 		 * @public
 		 * @since 1.0.0-rc.7
 		 */
 		navigate: {
 			detail: {
 				selectedPage: { type: Integer },
-				visibleItemsIndices: { type: Array },
+				visibleItemsIndexes: { type: Array },
 			},
 		},
 	},
@@ -357,6 +357,13 @@ class Carousel extends UI5Element {
 		this._resizing = false;
 
 		const previousSelectedPage = this.selectedPage;
+		const visibleItemsIndexes = [];
+
+		for (let index = 0; index < this.items.length; index++) {
+			if (this.isItemInViewport(index)) {
+				visibleItemsIndexes.push(index);
+			}
+		}
 
 		if (this.selectedPage + 1 > this.pagesCount - 1) {
 			if (this.cyclic) {
@@ -370,6 +377,10 @@ class Carousel extends UI5Element {
 
 		if (previousSelectedPage !== this.selectedPage) {
 			this.fireEvent("navigate", { selectedPage: this.selectedPage });
+		}
+
+		if (this.selectedPage >= this.items.length - (this.effectiveItemsPerPage + 1)) {
+			this.fireEvent("navigate", { visibleItemsIndexes: visibleItemsIndexes });
 		}
 	}
 
