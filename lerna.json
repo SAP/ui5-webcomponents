@@ -10,7 +10,7 @@
 		"packages/fiori",
 		"packages/ie"
 	],
-	"version": "0.29.16",
+	"version": "0.29.17",
 	"command": {
 		"publish": {
 			"conventionalCommits": true

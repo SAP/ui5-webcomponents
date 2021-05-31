@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.17](https://github.com/SAP/ui5-webcomponents/compare/v0.29.16...v0.29.17) (2021-05-31)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** fix column borders in HCB?HCW themes ([#3328](https://github.com/SAP/ui5-webcomponents/issues/3328)) ([a77654a](https://github.com/SAP/ui5-webcomponents/commit/a77654a)), closes [#3320](https://github.com/SAP/ui5-webcomponents/issues/3320)
+* **ui5-li-tree:** fix info text visual appearance ([#3280](https://github.com/SAP/ui5-webcomponents/issues/3280)) ([d2a08d9](https://github.com/SAP/ui5-webcomponents/commit/d2a08d9)), closes [#3130](https://github.com/SAP/ui5-webcomponents/issues/3130)
+
+
+
+
+
 ## [0.29.16](https://github.com/SAP/ui5-webcomponents/compare/v0.29.15...v0.29.16) (2021-05-12)
 
 
