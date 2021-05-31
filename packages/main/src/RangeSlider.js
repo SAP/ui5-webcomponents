@@ -93,7 +93,7 @@ const metadata = {
  * <li><code>End</code> - Moves the entire selection or the selected handle to the end of the component's range;</li>
  * <li><code>Page Up</code> - Same as <code>Right or Up Arrow + Ctrl/Cmd</code></li>
  * <li><code>Page Down</code> - Same as <code>Left or Down Arrow + Ctrl/Cmd</code></li>
- * <li><code>Escape</code> - Resets the <code>startValue</code> and <code>endValue</code> to the values prior the component being focused;</li>
+ * <li><code>Escape</code> - Resets the <code>startValue</code> and <code>endValue</code> properties to the values prior the component focusing;</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
