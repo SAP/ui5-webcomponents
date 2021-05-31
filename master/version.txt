@@ -1,5 +1,5 @@
-commit 1db62143b71704fc99cce1a5bfbdcaffb8de2625
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon May 31 13:36:53 2021 +0300
+commit c5db8c53746099d499e1844666de93c086d171d6
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Mon May 31 14:50:46 2021 +0300
 
-    docs: fix typo in sample (#3364)
+    docs: add instructions for getting started from scratch (#3353)
