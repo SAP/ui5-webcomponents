@@ -2,19 +2,19 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
  * @lends sap.ui.webcomponents.main.types.TabContainerTabsPlacement.prototype
- * @public
+ * @private
  */
 const TabContainerTabsPlacements = {
 	/**
 	 * The tab strip is displayed above the tab content (Default)
-	 * @public
+	 * @private
 	 * @type {Top}
 	 */
 	Top: "Top",
 
 	/**
 	 * The tab strip is displayed below the tab content
-	 * @public
+	 * @private
 	 * @type {Bottom}
 	 */
 	Bottom: "Bottom",
@@ -26,7 +26,7 @@ const TabContainerTabsPlacements = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.types.TabContainerTabsPlacement
- * @public
+ * @private
  * @enum {string}
  */
 class TabContainerTabsPlacement extends DataType {

@@ -1,6 +1,6 @@
 {{#if showSuggestions}}
 	<ui5-responsive-popover
-		no-arrow
+		hide-arrow
 		_disable-initial-focus
 		placement-type="Bottom"
 		horizontal-align="Left"
@@ -68,7 +68,7 @@
 			_disable-initial-focus
 			prevent-focus-restore
 			no-padding
-			no-arrow
+			hide-arrow
 			class="ui5-valuestatemessage-popover"
 			placement-type="Bottom"
 			horizontal-align="Left"
@@ -98,9 +98,9 @@
 				<ui5-li-suggestion-item
 					image="{{this.image}}"
 					icon="{{this.icon}}"
-					info="{{this.info}}"
+					additionalText="{{this.additionalText}}"
 					type="{{this.type}}"
-					info-state="{{this.infoState}}"
+					additional-text-state="{{this.additionalText}}"
 					@ui5-_item-press="{{ fnOnSuggestionItemPress }}"
 					data-ui5-key="{{key}}"
 				>

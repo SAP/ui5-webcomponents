@@ -88,23 +88,25 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>info</code>, displayed in the end of the item.
+		 * Defines the <code>additionalText</code>, displayed in the end of the item.
 		 * @type {string}
+		 * @since 1.0.0-rc.15
 		 * @public
 		 */
-		info: {
+		additionalText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the state of the <code>info</code>.
+		 * Defines the state of the <code>additionalText</code>.
 		 * <br><br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
 		 * @type {ValueState}
          * @defaultvalue "None"
+		 * @since 1.0.0-rc.15
 		 * @public
 		 */
-		infoState: {
+		additionalTextState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
 		},

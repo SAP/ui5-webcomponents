@@ -65,8 +65,8 @@ class Suggestions {
 				image: suggestion.image || undefined,
 				icon: suggestion.icon || undefined,
 				type: suggestion.type || undefined,
-				info: suggestion.info || undefined,
-				infoState: suggestion.infoState,
+				additionalText: suggestion.additionalText || undefined,
+				additionalTextState: suggestion.additionalTextState,
 				groupItem: suggestion.groupItem,
 				key: idx,
 			});

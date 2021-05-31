@@ -155,7 +155,7 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @public
+		 * @private
 		 * @sicne 1.0.0-rc.8
 		 */
 		highlight: {
@@ -831,13 +831,13 @@ class Input extends UI5Element {
 
 	enableSuggestions() {
 		if (this.Suggestions) {
-			this.Suggestions.highlight = this.highlight;
 			return;
 		}
 
 		const Suggestions = getFeature("InputSuggestions");
+
 		if (Suggestions) {
-			this.Suggestions = new Suggestions(this, "suggestionItems", this.highlight);
+			this.Suggestions = new Suggestions(this, "suggestionItems", true);
 		} else {
 			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
 		}

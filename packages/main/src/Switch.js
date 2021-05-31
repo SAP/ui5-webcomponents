@@ -6,6 +6,7 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import Icon from "./Icon.js";
+import SwitchDesign from "./types/SwitchDesign.js";
 
 import {
 	SWITCH_ON,
@@ -27,12 +28,25 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
 		/**
+		 * Defines the component design.
+		 * <br><br>
+		 * <b>Note:</b> If <code>Graphical</code> type is set,
+		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
+		 *
+		 * @public
+		 * @type {SwitchDesign}
+		 * @defaultValue "Textual"
+		 */
+		design: {
+			type: SwitchDesign,
+			defaultValue: SwitchDesign.Textual,
+		},
+
+		/**
 		 * Defines if the component is checked.
 		 * <br><br>
 		 * <b>Note:</b> The property can be changed with user interaction,
-		 * either by cliking/tapping on the component, or by
-		 * pressing the <code>Enter</code> or <code>Space</code> key.
-		 *
+		 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -77,19 +91,6 @@ const metadata = {
 		 */
 		textOff: {
 			type: String,
-		},
-
-		/**
-		 * Defines the component type.
-		 * <br><br>
-		 * <b>Note:</b> If <code>graphical</code> type is set,
-		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		graphical: {
-			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
@@ -194,6 +195,10 @@ class Switch extends UI5Element {
 			// Angular two way data binding;
 			this.fireEvent("value-changed");
 		}
+	}
+
+	get graphical() {
+		return this.design === SwitchDesign.Graphical;
 	}
 
 	get _textOn() {
