@@ -7,13 +7,13 @@ permalink: /playground/
 
 # Getting Started
 
-The UI5 Web Components share fundamental UI5 qualities with others to provide enterprise-grade features, Fiori UX and themeability. The goal is to achieve an easy consumption of UI5 controls to lower the entry barrier to use UI5 controls for own applications and to avoid complexity of the UI5 rendering-stack by making the consumption of the full-stack UI5 optional. In general, the UI5 Web Components target web developers who want to have more flexibility to use just HTML tags or arbitrary JS frameworks.
+UI5 Web Components share fundamental UI5 qualities with others to provide enterprise-grade features, Fiori UX and themeability. The goal is to achieve an easy consumption of UI5 controls to lower the entry barrier to use UI5 controls for own applications and to avoid complexity of the UI5 rendering-stack by making the consumption of the full-stack UI5 optional. In general, the UI5 Web Components target web developers who want to have more flexibility to use just HTML tags or arbitrary JS frameworks.
 
 UI5 Web Components are shipped as ES6 modules and published on NPM. If you are already using a framework that handles bundling of ES6 modules, skip forward to [Installation](#installation) or check the Tutorials section.
 
 ## Creating a project
 
-In case you don't have an existing project with frontend tooling, you can start a new one using [Vite](https://vite.dev). The only prerequisite is to have [Node.js](https://nodejs.org/) installed.
+Any ES6 module-capable frontend tooling can be used, but in case you don’t have an existing preference, you can start a new project using [Vite](https://vite.dev). The only prerequisite is to have [Node.js](https://nodejs.org/) installed.
 
 ```console
 npm init @vitejs/app
@@ -70,7 +70,7 @@ document.querySelector('#app').innerHTML = `
 `
 ```
 
-Check the browser to see the displayed button. You can now use UI5 Web Components just like normal HTML elements - set attributes on them, attach events, and more as descirbed in the documentation.
+Check the browser to see the displayed button. You can now use UI5 Web Components just like normal HTML elements - set attributes on them, attach events, and more as described in the documentation.
 
 ### 3. Production Build
 
