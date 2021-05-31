@@ -325,6 +325,6 @@ describe("General interaction", () => {
 		const listItem = popover.$("ui5-list").$$("ui5-li")[0];
 
 		arrow.click();
-		assert.strictEqual(listItem.shadow$(".ui5-li-info").getText(), "DZ", "Additional item text should be displayed");
+		assert.strictEqual(listItem.shadow$(".ui5-li-additional-text").getText(), "DZ", "Additional item text should be displayed");
 	});
 });
