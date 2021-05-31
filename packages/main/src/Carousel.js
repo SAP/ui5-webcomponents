@@ -416,7 +416,7 @@ class Carousel extends UI5Element {
 	}
 
 	isItemInViewport(index) {
-		return index >= this.selectedPage -1 && index <= this.selectedPage -1 + this.effectiveItemsPerPage;
+		return index >= this.selectedPage - 1 && index <= this.selectedPage - 1 + this.effectiveItemsPerPage;
 	}
 
 	isIndexInRange(index) {
@@ -492,7 +492,7 @@ class Carousel extends UI5Element {
 	}
 
 	get hasPrev() {
-		return this.cyclic || this.selectedPage -1 >= 1;
+		return this.cyclic || this.selectedPage - 1 >= 1;
 	}
 
 	get hasNext() {
