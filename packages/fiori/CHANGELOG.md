@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.8](https://github.com/SAP/ui5-webcomponents/compare/v0.31.7...v0.31.8) (2021-05-31)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** column borders in high contrast themes ([#3328](https://github.com/SAP/ui5-webcomponents/issues/3328)) ([d9fe9f3](https://github.com/SAP/ui5-webcomponents/commit/d9fe9f3)), closes [#3320](https://github.com/SAP/ui5-webcomponents/issues/3320)
+
+
+
+
+
 ## [0.31.7](https://github.com/SAP/ui5-webcomponents/compare/v0.31.6...v0.31.7) (2021-05-10)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

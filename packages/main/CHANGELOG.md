@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.8](https://github.com/SAP/ui5-webcomponents/compare/v0.31.7...v0.31.8) (2021-05-31)
+
+
+### Bug Fixes
+
+* **ui5-avatar-group:** click event is fired only once ([#3196](https://github.com/SAP/ui5-webcomponents/issues/3196)) ([3ed5c04](https://github.com/SAP/ui5-webcomponents/commit/3ed5c04))
+* **ui5-li-tree:** info text visual appearance ([#3280](https://github.com/SAP/ui5-webcomponents/issues/3280)) ([89b09d3](https://github.com/SAP/ui5-webcomponents/commit/89b09d3)), closes [#3130](https://github.com/SAP/ui5-webcomponents/issues/3130)
+* **ui5-rating-indicator:** Aria-readonly attribute is added when RatingIndicator in not editable ([#3219](https://github.com/SAP/ui5-webcomponents/issues/3219)) ([f4e2d6e](https://github.com/SAP/ui5-webcomponents/commit/f4e2d6e))
+
+
+
+
+
 ## [0.31.7](https://github.com/SAP/ui5-webcomponents/compare/v0.31.6...v0.31.7) (2021-05-10)
 
 
