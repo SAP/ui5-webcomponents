@@ -42,11 +42,11 @@ Install ```@ui5/webcomponents```
 npm install @ui5/webcomponents --save
 ```
 
-This command downloads the published source code of UI5 web components to the `node_modules` folder. Now you can add them to your code to get them on the web page.
+This command downloads the published source code of the UI5 Web Components to the `node_modules` folder. Now you can add them to your code to get them on the web page.
 
 ## Documentation
 
-Browse the available UI5 Web Components and check their API in the [playground](./playground/docs/).
+Take a look at the available UI5 Web Components documentation in the [playground](./playground/docs/).
 
 ## Usage
 
@@ -72,9 +72,9 @@ document.querySelector('#app').innerHTML = `
 
 Check the browser to see the displayed button. You can now use UI5 Web Components just like normal HTML elements - set attributes on them, attach events, and more as described in the documentation.
 
-### 3. Production Build
+### 3. Run a Production Build
 
-If you want to deploy your project on a static hosting or in a nodejs based project, run:
+If you want to deploy your project on a static hosting or in a Node.js project, run:
 
 ```console
 npm run build
