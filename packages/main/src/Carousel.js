@@ -167,7 +167,7 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
-		 * Defines the content of the <code>ui5-carousel</code>.
+		 * Defines the content of the component.
 		 * @type {HTMLElement[]}
 		 * @slot content
 		 * @public
@@ -197,7 +197,7 @@ const metadata = {
 		},
 
 		/**
-		 * Fired for the last items of the <code>ui5-carousel</code> if it is scrolled and the direction of scrolling is to the end.
+		 * Fired for the last items of the component if it is scrolled and the direction of scrolling is to the end.
 		 * The number of items for which the event is fired is controlled by the <code>infiniteScrollOffset</code> property.
 		 * @event sap.ui.webcomponents.main.Carousel#load-more
 		 * @public

@@ -1,10 +1,10 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.types.MessageStripType.prototype
+ * @lends sap.ui.webcomponents.main.types.MessageStripDesign.prototype
  * @public
  */
-const MessageStripTypes = {
+const MessageStripDesigns = {
 	/**
 	 * Message should be just an information
 	 * @public
@@ -39,16 +39,16 @@ const MessageStripTypes = {
  * Defines different types of MessageStrip.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.MessageStripType
+ * @alias sap.ui.webcomponents.main.types.MessageStripDesign
  * @public
  * @enum {string}
  */
-class MessageStripType extends DataType {
+class MessageStripDesign extends DataType {
 	static isValid(value) {
-		return !!MessageStripTypes[value];
+		return !!MessageStripDesigns[value];
 	}
 }
 
-MessageStripType.generateTypeAccessors(MessageStripTypes);
+MessageStripDesign.generateTypeAccessors(MessageStripDesigns);
 
-export default MessageStripType;
+export default MessageStripDesign;

@@ -2,11 +2,11 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/message-information.js";
-import "@ui5/webcomponents-icons/dist/message-success.js";
-import "@ui5/webcomponents-icons/dist/message-error.js";
-import "@ui5/webcomponents-icons/dist/message-warning.js";
-import MessageStripType from "./types/MessageStripType.js";
+import "@ui5/webcomponents-icons/dist/information.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import MessageStripDesign from "./types/MessageStripDesign.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -24,18 +24,19 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-messagestrip</code> type.
+		 * Defines the component type.
 		 * <br><br>
 		 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and <code>"Warning"</code>.
 		 *
-		 * @type {MessageStripType}
+		 * @type {MessageStripDesign}
 		 * @defaultvalue "Information"
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		type: {
-			type: MessageStripType,
-			defaultValue: MessageStripType.Information,
+		design: {
+			type: MessageStripDesign,
+			defaultValue: MessageStripDesign.Information,
 		},
 
 		/**
@@ -45,8 +46,9 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		noIcon: {
+		hideIcon: {
 			type: Boolean,
 		},
 
@@ -57,14 +59,14 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		noCloseButton: {
+		hideCloseButton: {
 			type: Boolean,
 		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-messagestrip</code>.
+		 * Defines the text of the component.
 		 * <br><br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
@@ -77,9 +79,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the content to be displayed as graphical element within the <code>ui5-messagestrip</code>.
+		 * Defines the content to be displayed as graphical element within the component.
 		 * <br><br>
-		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be used.
+		 * <b>Note:</b> If no icon is given, the default icon for the component type will be used.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
 		 *
@@ -112,7 +114,7 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-messagestrip</code> component enables the embedding of app-related messages.
- * It displays 4 types of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative.
+ * It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative.
  * Each message can have a Close button, so that it can be removed from the UI, if needed.
  *
  * <h3>Usage</h3>
@@ -170,7 +172,7 @@ class MessageStrip extends UI5Element {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 
-	static typeClassesMappings() {
+	static designClassesMappings() {
 		return {
 			"Information": "ui5-messagestrip-root--info",
 			"Positive": "ui5-messagestrip-root--positive",
@@ -181,15 +183,15 @@ class MessageStrip extends UI5Element {
 
 	static iconMappings() {
 		return {
-			"Information": "message-information",
-			"Positive": "message-success",
-			"Negative": "message-error",
-			"Warning": "message-warning",
+			"Information": "information",
+			"Positive": "sys-enter-2",
+			"Negative": "error",
+			"Warning": "alert",
 		};
 	}
 
 	get hiddenText() {
-		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}`;
+		return `Message Strip ${this.design} ${this.hideCloseButton ? "" : "closable"}`;
 	}
 
 	get _closeButtonText() {
@@ -200,9 +202,9 @@ class MessageStrip extends UI5Element {
 		return {
 			root: {
 				"ui5-messagestrip-root": true,
-				"ui5-messagestrip-root-no-icon": this.noIcon,
-				"ui5-messagestrip-root-no-close-button": this.noCloseButton,
-				[this.typeClasses]: true,
+				"ui5-messagestrip-root-hide-icon": this.hideIcon,
+				"ui5-messagestrip-root-hide-close-button": this.hideCloseButton,
+				[this.designClasses]: true,
 			},
 		};
 	}
@@ -212,11 +214,11 @@ class MessageStrip extends UI5Element {
 	}
 
 	get standardIconName() {
-		return MessageStrip.iconMappings()[this.type];
+		return MessageStrip.iconMappings()[this.design];
 	}
 
-	get typeClasses() {
-		return MessageStrip.typeClassesMappings()[this.type];
+	get designClasses() {
+		return MessageStrip.designClassesMappings()[this.design];
 	}
 }
 

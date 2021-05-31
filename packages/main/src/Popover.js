@@ -37,7 +37,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines on which side the <code>ui5-popover</code> is placed at.
+		 * Determines on which side the component is placed at.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -57,7 +57,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the horizontal alignment of the <code>ui5-popover</code>.
+		 * Determines the horizontal alignment of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -77,7 +77,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the vertical alignment of the <code>ui5-popover</code>.
+		 * Determines the vertical alignment of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -97,7 +97,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-popover</code> should close when
+		 * Defines whether the component should close when
 		 * clicking/tapping outside of the popover.
 		 * If enabled, it blocks any interaction with the background.
 		 *
@@ -121,18 +121,19 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-popover</code> arrow is hidden.
+		 * Determines whether the component arrow is hidden.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		noArrow: {
+		hideArrow: {
 			type: Boolean,
 		},
 
 		/**
-		 * Determines if there is no enough space, the <code>ui5-popover</code> can be placed
+		 * Determines if there is no enough space, the component can be placed
 		 * over the target.
 		 *
 		 * @type {boolean}
@@ -498,7 +499,7 @@ class Popover extends Popup {
 		this._width = width;
 		this._height = height;
 
-		const arrowOffset = this.noArrow ? 0 : arrowSize;
+		const arrowOffset = this.hideArrow ? 0 : arrowSize;
 
 		// calc popover positions
 		switch (placementType) {

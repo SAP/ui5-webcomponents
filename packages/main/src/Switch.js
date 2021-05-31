@@ -6,6 +6,7 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import Icon from "./Icon.js";
+import SwitchDesign from "./types/SwitchDesign.js";
 
 import {
 	SWITCH_ON,
@@ -27,12 +28,25 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
 		/**
-		 * Defines if the <code>ui5-switch</code> is checked.
+		 * Defines the component design.
+		 * <br><br>
+		 * <b>Note:</b> If <code>Graphical</code> type is set,
+		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
+		 *
+		 * @public
+		 * @type {SwitchDesign}
+		 * @defaultValue "Textual"
+		 */
+		design: {
+			type: SwitchDesign,
+			defaultValue: SwitchDesign.Textual,
+		},
+
+		/**
+		 * Defines if the component is checked.
 		 * <br><br>
 		 * <b>Note:</b> The property can be changed with user interaction,
-		 * either by cliking/tapping on the <code>ui5-switch</code>, or by
-		 * pressing the <code>Enter</code> or <code>Space</code> key.
-		 *
+		 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -42,9 +56,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-switch</code> is disabled.
+		 * Defines whether the component is disabled.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-switch</code> is noninteractive.
+		 * <b>Note:</b> A disabled component is noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -55,7 +69,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text of the <code>ui5-switch</code> when switched on.
+		 * Defines the text of the component when switched on.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
@@ -68,7 +82,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text of the <code>ui5-switch</code> when switched off.
+		 * Defines the text of the component when switched off.
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
@@ -78,24 +92,11 @@ const metadata = {
 		textOff: {
 			type: String,
 		},
-
-		/**
-		 * Defines the <code>ui5-switch</code> type.
-		 * <br><br>
-		 * <b>Note:</b> If <code>graphical</code> type is set,
-		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		graphical: {
-			type: Boolean,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-switch</code> checked state changes.
+		 * Fired when the component checked state changes.
 		 *
 		 * @public
 		 * @event
@@ -194,6 +195,10 @@ class Switch extends UI5Element {
 			// Angular two way data binding;
 			this.fireEvent("value-changed");
 		}
+	}
+
+	get graphical() {
+		return this.design === SwitchDesign.Graphical;
 	}
 
 	get _textOn() {

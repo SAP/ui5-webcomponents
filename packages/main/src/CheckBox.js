@@ -9,7 +9,11 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
-import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
+import {
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	VALUE_STATE_SUCCESS,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
@@ -26,9 +30,9 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
 
 		/**
-		 * Defines whether the <code>ui5-checkbox</code> is disabled.
+		 * Defines whether the component is disabled.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-checkbox</code> is completely noninteractive.
+		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -39,9 +43,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-checkbox</code> is read-only.
+		 * Defines whether the component is read-only.
 		 * <br><br>
-		 * <b>Note:</b> A red-only <code>ui5-checkbox</code> is not editable,
+		 * <b>Note:</b> A red-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
@@ -53,10 +57,31 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the <code>ui5-checkbox</code> is checked.
+		* Defines whether the component is displayed as partially checked.
+		* <br><br>
+		* <b>Note:</b> The indeterminate state can be set only programatically and can’t be achieved by user
+		* interaction and the resulting visual state depends on the values of the <code>indeterminate</code>
+		* and <code>checked</code> properties:
+		* <ul>
+		* <li> If the component is checked and indeterminate, it will be displayed as partially checked
+		* <li> If the component is checked and it is not indeterminate, it will be displayed as checked
+		* <li> If the component is not checked, it will be displayed as not checked regardless value of the indeterminate attribute
+		* </ul>
+		*
+		* @type {boolean}
+		* @defaultvalue false
+		* @public
+		* @since 1.0.0-rc.15
+		*/
+		indeterminate: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines if the component is checked.
 		 * <br><br>
 		 * <b>Note:</b> The property can be changed with user interaction,
-		 * either by cliking/tapping on the <code>ui5-checkbox</code>, or by
+		 * either by cliking/tapping on the component, or by
 		 * pressing the Enter or Space key.
 		 *
 		 * @type {boolean}
@@ -68,7 +93,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text of the <code>ui5-checkbox</code>.
+		 * Defines the text of the component.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -79,7 +104,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-checkbox</code>.
+		 * Defines the value state of the component.
 		 *
 		 * <br><br>
 		 * <b>Note:</b>
@@ -88,8 +113,8 @@ const metadata = {
 		 * <li><code>Warning</code></li>
 		 * <li><code>Error</code></li>
 		 * <li><code>None</code>(default)</li>
-		 * <li><code>Negative</code></li>
-		 * <li><code>Transparent</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
 		 * @type {ValueState}
@@ -102,7 +127,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-checkbox</code> text wraps when there is not enough space.
+		 * Defines whether the component text wraps when there is not enough space.
 		 * <br><br>
 		 * <b>Note:</b> By default, the text truncates when there is not enough space.
 		 *
@@ -115,7 +140,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the name with which the <code>ui5-checkbox</code> will be submitted in an HTML form.
+		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
 		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
@@ -123,7 +148,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the <code>ui5-checkbox</code> so that it can be submitted as
+		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
 		 * @type {string}
@@ -165,7 +190,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-checkbox</code> checked state changes.
+		 * Fired when the component checked state changes.
 		 *
 		 * @public
 		 * @event
@@ -303,7 +328,13 @@ class CheckBox extends UI5Element {
 
 	toggle() {
 		if (this.canToggle()) {
-			this.checked = !this.checked;
+			if (this.indeterminate) {
+				this.indeterminate = false;
+				this.checked = true;
+			} else {
+				this.checked = !this.checked;
+			}
+
 			this.fireEvent("change");
 			// Angular two way data binding
 			this.fireEvent("value-changed");
@@ -321,6 +352,7 @@ class CheckBox extends UI5Element {
 		return {
 			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
 		};
 	}
 
@@ -342,6 +374,10 @@ class CheckBox extends UI5Element {
 
 	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get ariaChecked() {
+		return this.indeterminate && this.checked ? "mixed" : this.checked;
 	}
 
 	get ariaLabelledBy() {
@@ -367,6 +403,10 @@ class CheckBox extends UI5Element {
 	get tabIndex() {
 		const tabindex = this.getAttribute("tabindex");
 		return this.disabled ? undefined : tabindex || "0";
+	}
+
+	get isCompletelyChecked() {
+		return this.checked && !this.indeterminate;
 	}
 
 	static get dependencies() {

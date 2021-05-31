@@ -33,9 +33,9 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
 		/**
-		 * Determines whether the <code>ui5-radiobutton</code> is disabled.
+		 * Determines whether the component is disabled.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-radiobutton</code> is completely noninteractive.
+		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -46,9 +46,9 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-radiobutton</code> is read-only.
+		 * Determines whether the component is read-only.
 		 * <br><br>
-		 * <b>Note:</b> A read-only <code>ui5-radiobutton</code> is not editable,
+		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
@@ -60,10 +60,10 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-radiobutton</code> is selected or not.
+		 * Determines whether the component is selected or not.
 		 * <br><br>
 		 * <b>Note:</b> The property value can be changed with user interaction,
-		 * either by cliking/tapping on the <code>ui5-radiobutton</code>,
+		 * either by cliking/tapping on the component,
 		 * or by using the Space or Enter key.
 		 *
 		 * @type {boolean}
@@ -75,7 +75,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text of the <code>ui5-radiobutton</code>.
+		 * Defines the text of the component.
 		 *
 		 * @type  {string}
 		 * @defaultvalue ""
@@ -86,7 +86,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-radiobutton</code>.
+		 * Defines the value state of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -105,7 +105,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the name of the <code>ui5-radiobutton</code>.
+		 * Defines the name of the component.
 		 * Radio buttons with the same <code>name</code> will form a radio button group.
 		 *
 		 * <br><br>
@@ -122,7 +122,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the <code>ui5-radiobutton</code> so that it can be submitted as
+		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form.
 		 *
 		 * @type {string}
@@ -134,7 +134,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the form value of the <code>ui5-radiobutton</code>.
+		 * Defines the form value of the component.
 		 * When a form with a radio button group is submitted, the group's value
 		 * will be the value of the currently selected radio button.
 		 * <br>
@@ -150,7 +150,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-radiobutton</code> text wraps when there is not enough space.
+		 * Defines whether the component text wraps when there is not enough space.
 		 * <br><br>
 		 * <b>Note:</b> By default, the text truncates when there is not enough space.
 		 *
@@ -183,7 +183,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-radiobutton</code> selected state changes.
+		 * Fired when the component selected state changes.
 		 *
 		 * @event
 		 * @public

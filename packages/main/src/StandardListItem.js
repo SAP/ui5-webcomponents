@@ -62,25 +62,25 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>info</code>, displayed in the end of the list item.
+		 * Defines the <code>additionalText</code>, displayed in the end of the list item.
 		 * @type {string}
 		 * @public
-		 * @since 0.13.0
+		 * @since 1.0.0-rc.15
 		 */
-		info: {
+		additionalText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the state of the <code>info</code>.
+		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Erorr"</code>.
 		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
-		 * @since 0.13.0
+		 * @since 1.0.0-rc.15
 		 */
-		infoState: {
+		additionalTextState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
 		},
@@ -96,7 +96,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-li</code>.
+		 * Defines the text of the component.
 		 * <br><br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
@@ -126,7 +126,7 @@ const metadata = {
  * <ul>
  * <li>title - Used to style the title of the list item</li>
  * <li>description - Used to style the description of the list item</li>
- * <li>info - Used to style the info of the list item</li>
+ * <li>additional-text - Used to style the additionalText of the list item</li>
  * <li>icon - Used to style the icon of the list item</li>
  * </ul>
  *

@@ -27,7 +27,7 @@
 
 	<div class="snippet">
 		<ui5-wizard id="wiz">
-			<ui5-wizard-step icon="product" heading="Product type" selected>
+			<ui5-wizard-step icon="product" title-text="Product type" selected>
 				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br>
 
@@ -42,7 +42,7 @@
 				<ui5-button id="toStep2" design="Emphasized">Step 2</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step icon="hint" heading="Product Information" disabled>
+			<ui5-wizard-step icon="hint" title-text="Product Information" disabled>
 				<div style="display: flex;flex-direction: column">
 					<ui5-title>2. Product Information</ui5-title><br>
 					<ui5-label wrap>
@@ -79,7 +79,7 @@
 				<ui5-button id="toStep3" design="Emphasized" hidden>Step 3</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step icon="action-settings" heading="Options" disabled>
+			<ui5-wizard-step icon="action-settings" title-text="Options" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>3. Options</ui5-title><br>
 
@@ -99,19 +99,19 @@
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Availability</ui5-label>
 							<ui5-segmentedbutton id="segButton1">
-								<ui5-togglebutton icon="employee" pressed>In stock</ui5-togglebutton>
-								<ui5-togglebutton>In depot</ui5-togglebutton>
-								<ui5-togglebutton>Damaged</ui5-togglebutton>
-								<ui5-togglebutton>Out of stock</ui5-togglebutton>
+								<ui5-toggle-button icon="employee" pressed>In stock</ui5-toggle-button>
+								<ui5-toggle-button>In depot</ui5-toggle-button>
+								<ui5-toggle-button>Damaged</ui5-toggle-button>
+								<ui5-toggle-button>Out of stock</ui5-toggle-button>
 							</ui5-segmentedbutton>
 						</div>
 
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 1rem">
 							<ui5-label>Size</ui5-label>
 							<ui5-segmentedbutton id="sb">
-								<ui5-togglebutton icon="employee" pressed>Small</ui5-togglebutton>
-								<ui5-togglebutton>Medium</ui5-togglebutton>
-								<ui5-togglebutton>Large</ui5-togglebutton>
+								<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
+								<ui5-toggle-button>Medium</ui5-toggle-button>
+								<ui5-toggle-button>Large</ui5-toggle-button>
 							</ui5-segmentedbutton>
 						</div>
 					</div>
@@ -120,7 +120,7 @@
 				<ui5-button id="toStep4" design="Emphasized" hidden>Step 4</ui5-button>
 			</ui5-wizard-step>
 
-			<ui5-wizard-step icon="lead" heading="Pricing" disabled>
+			<ui5-wizard-step icon="lead" title-text="Pricing" disabled>
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>4. Pricing</ui5-title><br>
 					<ui5-label wrap>
@@ -209,14 +209,14 @@
 
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-wizard id="wiz">
-	<ui5-wizard-step icon="product" heading="Product type" selected>
+	<ui5-wizard-step icon="product" title-text="Product type" selected>
 		<ui5-title>1. Product Type</ui5-title>
 
 		<!-- Move to step 2 -->
 		<ui5-button id="toStep2">Step 2</ui5-button>
 	</ui5-wizard-step>
 
-	<ui5-wizard-step icon="hint" heading="Product Information" disabled>
+	<ui5-wizard-step icon="hint" title-text="Product Information" disabled>
 		<ui5-title>2. Product Information</ui5-title>
 
 		<div>
@@ -228,20 +228,20 @@
 		<ui5-button id="toStep3" hidden>Step 3</ui5-button>
 	</ui5-wizard-step>
 
-	<ui5-wizard-step icon="action-settings" heading="Options" disabled>
+	<ui5-wizard-step icon="action-settings" title-text="Options" disabled>
 		<ui5-title>3. Options</ui5-title><br>
 
 		<ui5-segmentedbutton id="sb">
-			<ui5-togglebutton icon="employee" pressed>Small</ui5-togglebutton>
-			<ui5-togglebutton>Medium</ui5-togglebutton>
-			<ui5-togglebutton>Large</ui5-togglebutton>
+			<ui5-toggle-button icon="employee" pressed>Small</ui5-toggle-button>
+			<ui5-toggle-button>Medium</ui5-toggle-button>
+			<ui5-toggle-button>Large</ui5-toggle-button>
 		</ui5-segmentedbutton>
 
 		<!-- Move to step 4 -->
 		<ui5-button id="toStep4" hidden>Step 4</ui5-button>
 	</ui5-wizard-step>
 
-	<ui5-wizard-step icon="lead" heading="Pricing" disabled>
+	<ui5-wizard-step icon="lead" title-text="Pricing" disabled>
 		<ui5-title>4. Pricing</ui5-title><br>
 		<ui5-button id="finalize">Finalize</ui5-button>
 	</ui5-wizard-step>

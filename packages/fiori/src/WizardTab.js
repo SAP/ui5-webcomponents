@@ -1,8 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WizardTabTemplate from "./generated/templates/WizardTabTemplate.lit.js";
 import WizardTabCss from "./generated/themes/WizardTab.css.js";
 
@@ -20,22 +20,24 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>heading</code> of the step.
+		 * Defines the <code>titleText</code> of the step.
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
+		 * @since 1.0.0-rc.15
 		 */
-		heading: {
+		titleText: {
 			type: String,
 		},
 
 		/**
-		 * Defines the <code>subheading</code> of the step.
+		 * Defines the <code>subtitleText</code> of the step.
 		 * @type {String}
 		 * @defaultvalue ""
 		 * @private
+		 * @since 1.0.0-rc.15
 		 */
-		subheading: {
+		subtitleText: {
 			type: String,
 		},
 
@@ -181,11 +183,8 @@ class WizardTab extends UI5Element {
 			return;
 		}
 
-		if (isSpace(event)) {
+		if (isSpace(event) || isEnter(event)) {
 			event.preventDefault();
-		}
-
-		if (isEnter(event)) {
 			this.fireEvent("selection-change-requested");
 		}
 	}
@@ -213,7 +212,7 @@ class WizardTab extends UI5Element {
 	}
 
 	get hasTexts() {
-		return this.heading || this.subheading;
+		return this.titleText || this.subtitleText;
 	}
 
 	get accInfo() {
