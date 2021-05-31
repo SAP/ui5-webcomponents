@@ -95,14 +95,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the page of the initially selected item.
+		 * Defines the initially selected page.
 		 * @type {Integer}
-		 * @defaultvalue 0
+		 * @defaultvalue 1
 		 * @public
 		 */
 		selectedPage: {
 			type: Integer,
-			defaultValue: 0,
+			defaultValue: 1,
 		},
 
 		/**
@@ -276,8 +276,8 @@ class Carousel extends UI5Element {
 
 	validateSelectedPage() {
 		if (!this.isIndexInRange(this.selectedPage)) {
-			this.selectedPage = 0;
-			console.warn(`The "selectedPage" is out of range, changed to: ${0}`); // eslint-disable-line
+			this.selectedPage = 1;
+			console.warn(`The "selectedPage" is out of range, changed to: ${1}`); // eslint-disable-line
 		}
 	}
 
@@ -297,8 +297,8 @@ class Carousel extends UI5Element {
 			return;
 		}
 
-		if (this.selectedPage > this.pagesCount - 1) {
-			this.selectedPage = this.pagesCount - 1;
+		if (this.selectedPage > this.pagesCount) {
+			this.selectedPage = this.pagesCount;
 			this.fireEvent("navigate", { selectedPage: this.selectedPage });
 		}
 	}
@@ -340,7 +340,7 @@ class Carousel extends UI5Element {
 
 		const previousSelectedPage = this.selectedPage;
 
-		if (this.selectedPage - 1 < 0) {
+		if (this.selectedPage - 1 < 1) {
 			if (this.cyclic) {
 				this.selectedPage = this.pagesCount - 1;
 			}
@@ -365,9 +365,9 @@ class Carousel extends UI5Element {
 			}
 		}
 
-		if (this.selectedPage + 1 > this.pagesCount - 1) {
+		if (this.selectedPage + 1 > this.pagesCount) {
 			if (this.cyclic) {
-				this.selectedPage = 0;
+				this.selectedPage = 1;
 			} else {
 				return;
 			}
@@ -379,7 +379,7 @@ class Carousel extends UI5Element {
 			this.fireEvent("navigate", { selectedPage: this.selectedPage });
 		}
 
-		if (this.selectedPage >= this.items.length - (this.effectiveItemsPerPage + 1)) {
+		if (this.selectedPage >= this.items.length - (this.effectiveItemsPerPage)) {
 			this.fireEvent("navigate", { visibleItemsIndexes });
 		}
 	}
@@ -416,7 +416,7 @@ class Carousel extends UI5Element {
 	}
 
 	isItemInViewport(index) {
-		return index >= this.selectedPage && index <= this.selectedPage + this.effectiveItemsPerPage - 1;
+		return index >= this.selectedPage -1 && index <= this.selectedPage -1 + this.effectiveItemsPerPage;
 	}
 
 	isIndexInRange(index) {
@@ -474,7 +474,7 @@ class Carousel extends UI5Element {
 
 		for (let index = 0; index < pages; index++) {
 			dots.push({
-				active: index === this.selectedPage,
+				active: index + 1 === this.selectedPage,
 				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [pages]),
 			});
 		}
@@ -492,11 +492,11 @@ class Carousel extends UI5Element {
 	}
 
 	get hasPrev() {
-		return this.cyclic || this.selectedPage - 1 >= 0;
+		return this.cyclic || this.selectedPage -1 >= 1;
 	}
 
 	get hasNext() {
-		return this.cyclic || this.selectedPage + 1 <= this.pagesCount - 1;
+		return this.cyclic || this.selectedPage <= this.pagesCount;
 	}
 
 	get supressAimation() {
@@ -508,7 +508,7 @@ class Carousel extends UI5Element {
 	}
 
 	get selectedPageToShow() {
-		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedPage) + 1 : this.selectedPage + 1;
+		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedPage) : this.selectedPage;
 	}
 
 	get ofText() {
@@ -516,7 +516,7 @@ class Carousel extends UI5Element {
 	}
 
 	get ariaActiveDescendant() {
-		return this.content.length ? `${this._id}-carousel-item-${this.selectedPage + 1}` : undefined;
+		return this.content.length ? `${this._id}-carousel-item-${this.selectedPage}` : undefined;
 	}
 
 	get nextPageText() {

@@ -30,7 +30,7 @@ describe("Carousel general interaction", () => {
 		const carouselLeftButton = carousel.shadow$$(".ui5-carousel-navigation-button")[1];
 
 		carouselLeftButton.click();
-		assert.equal(carousel.getAttribute("selected-page"), "0", "Second view is in place");
+		assert.equal(carousel.getAttribute("selected-page"), "1", "Second view is in place");
 	});
 
 	it("Navigation is rendered for carousel with less than 9 elements", () => {
@@ -134,10 +134,10 @@ describe("Carousel general interaction", () => {
 	it("Invalid selectedPage normalized", () => {
 		const carousel = browser.$("#carousel7");
 		const selectedPage = carousel.getProperty("selectedPage");
-		const NORMALIZED_INDEX = 0;
+		const NORMALIZED_PAGE = 1;
 
-		assert.strictEqual(selectedPage, NORMALIZED_INDEX,
-			"Although '15' is set, the actual selectedPage is changed to 0.");
+		assert.strictEqual(selectedPage, NORMALIZED_PAGE,
+			"Although '15' is set, the actual selectedPage is changed to 1.");
 	});
 
 	it("Event navigate fired when pressing navigation arrows", () => {
@@ -151,33 +151,33 @@ describe("Carousel general interaction", () => {
 
 		// using the navigtion arrows
 		navigationArrowForward.click(); // forward
-		assert.strictEqual(selectedPage.getProperty("value"), "1", "The selectedPage is correct.");
+		assert.strictEqual(selectedPage.getProperty("value"), "2", "The selectedPage is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "1", "The navigate event is fired.");
 
 		navigationArrowForward.click(); // forward
-		assert.strictEqual(selectedPage.getProperty("value"), "2", "The selectedPage is correct.");
+		assert.strictEqual(selectedPage.getProperty("value"), "3", "The selectedPage is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "2", "The navigate event is fired.");
 
 		navigationArrowsBack.click(); // back
-		assert.strictEqual(selectedPage.getProperty("value"), "1", "The selectedPage is correct");
+		assert.strictEqual(selectedPage.getProperty("value"), "2", "The selectedPage is correct");
 		assert.strictEqual(eventCounter.getProperty("value"), "3", "The navigate event is fired.");
 
 		navigationArrowsBack.click(); // back
-		assert.strictEqual(selectedPage.getProperty("value"), "0", "The selectedPage is correct.");
+		assert.strictEqual(selectedPage.getProperty("value"), "1", "The selectedPage is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "4", "The navigate event is fired.");
 
 		// using the keyboard navigation
 		carousel.click();
 		carousel.keys("ArrowRight");
-		assert.strictEqual(selectedPage.getProperty("value"), "1", "The selectedPage is correct.");
+		assert.strictEqual(selectedPage.getProperty("value"), "2", "The selectedPage is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "5", "The navigate event is fired.");
 
 		carousel.keys("ArrowLeft");
-		assert.strictEqual(selectedPage.getProperty("value"), "0", "The selectedPage is correct.");
+		assert.strictEqual(selectedPage.getProperty("value"), "1", "The selectedPage is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "6", "The navigate event is fired.");
 
 		carousel.keys("ArrowLeft");
-		assert.strictEqual(selectedPage.getProperty("value"), "0", "The selectedPage is correct.");
+		assert.strictEqual(selectedPage.getProperty("value"), "1", "The selectedPage is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "6", "The navigate event is not fired as no previous item.");
 	});
 });
