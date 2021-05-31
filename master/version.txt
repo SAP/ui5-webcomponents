@@ -1,9 +1,9 @@
-commit 998be7627623db0b6ae38268828fe2321f1d7baa
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri May 28 17:37:04 2021 +0300
+commit b3b42f6b62e8d9b1e5632f70bfc65d5aa2f1e686
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon May 31 12:59:31 2021 +0300
 
-    feat(ui5-switch): implement design property (#3257)
+    refactor(ui5-segmented-button): rename tag name (#3345)
     
-    Part of #3107. To keep the door open for new predefined designs in future, we decided to change the boolean property to enum as more flexible solution.
+    As part of #3107 we decided to change the tag name mainly for better readability.
     
-    BREAKING_CHANGE: Deprecate graphical property in favour of design prope
+    BREAKING_CHANGE: Component's tag name has been renamed from ui5-segmentedbutton to ui5-segmented-button.
