@@ -1,9 +1,5 @@
-commit b3b42f6b62e8d9b1e5632f70bfc65d5aa2f1e686
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon May 31 12:59:31 2021 +0300
+commit 1db62143b71704fc99cce1a5bfbdcaffb8de2625
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon May 31 13:36:53 2021 +0300
 
-    refactor(ui5-segmented-button): rename tag name (#3345)
-    
-    As part of #3107 we decided to change the tag name mainly for better readability.
-    
-    BREAKING_CHANGE: Component's tag name has been renamed from ui5-segmentedbutton to ui5-segmented-button.
+    docs: fix typo in sample (#3364)
