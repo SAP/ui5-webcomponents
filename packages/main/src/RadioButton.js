@@ -286,7 +286,7 @@ class RadioButton extends UI5Element {
 		}
 
 		this._name = this.name;
-		this._checked= this.checked;
+		this._checked = this.checked;
 	}
 
 	_enableFormSupport() {
