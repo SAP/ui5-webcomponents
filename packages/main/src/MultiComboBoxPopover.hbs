@@ -2,7 +2,7 @@
 	placement-type="Bottom"
 	horizontal-align="Left"
 	class="ui5-multi-combobox-all-items-responsive-popover"
-	no-arrow
+	hide-arrow
 	_disable-initial-focus
 	@ui5-selection-change={{_listSelectionChange}}
 	@ui5-after-close={{_toggle}}
@@ -38,7 +38,7 @@
 						aria-describedby="{{_id}}-valueStateDesc"
 						/>
 					</div>
-					<ui5-togglebutton
+					<ui5-toggle-button
 						slot="header"
 						class="ui5-multi-combobox-toggle-button"
 						icon="multiselect-all"
@@ -46,7 +46,7 @@
 						?pressed={{_showAllItemsButtonPressed}}
 						?disabled={{allItemsSelected}}
 						@click="{{filterSelectedItems}}"
-					></ui5-togglebutton>
+					></ui5-toggle-button>
 				</div>
 			{{#if hasValueStateMessage}}
 				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
@@ -69,7 +69,7 @@
 		{{#each _filteredItems}}
 				<ui5-li
 					type="{{../_listItemsType}}"
-					info={{this.additionalText}}
+					additional-text={{this.additionalText}}
 					?selected={{this.selected}}
 					data-ui5-token-id="{{this._id}}"
 					data-ui5-stable="{{this.stableDomRef}}"
@@ -95,7 +95,7 @@
 		_disable-initial-focus
 		prevent-focus-restore
 		no-padding
-		no-arrow
+		hide-arrow
 		class="ui5-valuestatemessage-popover"
 		placement-type="Bottom"
 		horizontal-align="Left"
