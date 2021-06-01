@@ -1,5 +1,5 @@
-commit c5db8c53746099d499e1844666de93c086d171d6
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Mon May 31 14:50:46 2021 +0300
+commit d61a9b206ec6b462732e374ac6d20b0f62662e9a
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Tue Jun 1 10:24:35 2021 +0300
 
-    docs: add instructions for getting started from scratch (#3353)
+    fix(ui5-tabcontainer): tabs are scrolled into view on key navigation (#3354)
