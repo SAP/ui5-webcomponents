@@ -5,7 +5,7 @@
 		aria-setsize="{{sizeOfSet}}"
 		aria-selected="{{pressed}}"
 		class="ui5-button-root"
-		?disabled="{{disabled}}"
+		aria-disabled="{{disabled}}"
 		data-sap-focus-ref
 	{{> ariaPressed}}
 		dir="{{effectiveDir}}"
@@ -19,9 +19,6 @@
 		@touchstart="{{_ontouchstart}}"
 		@touchend="{{_ontouchend}}"
 		tabindex={{tabIndexValue}}
-		aria-expanded="{{accInfo.ariaExpanded}}"
-		aria-controls="{{accInfo.ariaControls}}"
-		aria-haspopup="{{accInfo.ariaHaspopup}}"
 		aria-label="{{ariaLabelText}}"
 		title="{{accInfo.title}}"
 >
