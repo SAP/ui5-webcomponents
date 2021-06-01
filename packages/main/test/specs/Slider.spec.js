@@ -37,11 +37,11 @@ describe("Slider basic interactions", () => {
 		assert.strictEqual(slider.getProperty("value"), 8, "Slider current value should be 8");
 	});
 
-	it("Slider with floating min, max and step property", () => {
+	it("Slider with floating minValue, maxValue and step property", () => {
 		const slider = browser.$("#basic-slider");
 
-		slider.setProperty("min", -12.5);
-		slider.setProperty("max", 47.5);
+		slider.setProperty("minValue", -12.5);
+		slider.setProperty("maxValue", 47.5);
 		slider.setProperty("step", 1.25);
 		slider.setProperty("value", 21.25);
 
@@ -103,23 +103,23 @@ describe("Properties synchronization and normalization", () => {
 		assert.strictEqual(slider.getProperty("_labels").length, 6, "Labels must be 6 - 1 for every 4 tickmarks (and 8 current value points)");
 	});
 
-	it("If min property is set to a greater number than the max property their effective values should be swapped, their real ones - not", () => {
+	it("If minValue property is set to a greater number than the maxValue property their effective values should be swapped, their real ones - not", () => {
 		const slider = browser.$("#basic-slider");
 
 		slider.setProperty("value", 2);
-		slider.setProperty("max", 10);
-		slider.setProperty("min", 100);
+		slider.setProperty("maxValue", 10);
+		slider.setProperty("minValue", 100);
 
-		assert.strictEqual(slider.getProperty("max"), 10, "min property itself should not be normalized");
-		assert.strictEqual(slider.getProperty("min"), 100, "max property itself should not be normalized");
-		assert.strictEqual(slider.getProperty("value"), 10, "value property should be within the boundaries of the normalized 'effective' min and max values");
+		assert.strictEqual(slider.getProperty("maxValue"), 10, "minValue property itself should not be normalized");
+		assert.strictEqual(slider.getProperty("minValue"), 100, "maxValue property itself should not be normalized");
+		assert.strictEqual(slider.getProperty("value"), 10, "value property should be within the boundaries of the normalized 'effective' minValue and maxValue values");
 	});
 
 	it("Should keep the current value between the boundaries of min and max properties", () => {
 		const slider = browser.$("#basic-slider");
 
-		slider.setProperty("min", 100);
-		slider.setProperty("max", 200);
+		slider.setProperty("minValue", 100);
+		slider.setProperty("maxValue", 200);
 		slider.setProperty("value", 300);
 
 		assert.strictEqual(slider.getProperty("value"), 200, "value prop should always be lower than the max value");
@@ -248,9 +248,9 @@ describe("Accessibility", () => {
 		assert.strictEqual(sliderHandle.getAttribute("aria-labelledby"),
 			`${sliderId}-sliderDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(sliderHandle.getAttribute("aria-valuemin"),
-			`${slider.getProperty("min")}`, "aria-valuemin is set correctly");
+			`${slider.getProperty("minValue")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(sliderHandle.getAttribute("aria-valuemax"),
-			`${slider.getProperty("max")}`, "aria-valuemax is set correctly");
+			`${slider.getProperty("maxValue")}`, "aria-valuemax is set correctly");
 		assert.strictEqual(sliderHandle.getAttribute("aria-valuenow"),
 			`${slider.getProperty("value")}`, "aria-valuenow is set correctly");
 	});

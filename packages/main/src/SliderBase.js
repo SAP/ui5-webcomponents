@@ -23,8 +23,9 @@ const metadata = {
 		 * @type {Float}
 		 * @defaultvalue 0
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		min: {
+		minValue: {
 			type: Float,
 			defaultValue: 0,
 		},
@@ -34,13 +35,14 @@ const metadata = {
 		 * @type {Float}
 		 * @defaultvalue 100
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
-		max: {
+		maxValue: {
 			type: Float,
 			defaultValue: 100,
 		},
 		/**
-		 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
+		 * Defines the size of the slider's selection intervals (e.g. minValue = 0, maxValue = 10, step = 5 would result in possible selection of the values 0, 5, 10).
 		 * <br><br>
 		 * <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
 		 *
@@ -159,8 +161,8 @@ class SliderBase extends UI5Element {
 
 		this._stateStorage = {
 			step: null,
-			min: null,
-			max: null,
+			minValue: null,
+			maxValue: null,
 			labelInterval: null,
 		};
 	}
@@ -406,8 +408,8 @@ class SliderBase extends UI5Element {
 	 * @protected
 	 */
 	handleDownBase(event) {
-		const min = this._effectiveMin;
-		const max = this._effectiveMax;
+		const min = this._effectiveMinValue;
+		const max = this._effectiveMaxValue;
 		const domRect = this.getBoundingClientRect();
 		const directionStart = this.directionStart;
 		const step = this._effectiveStep;
@@ -486,7 +488,7 @@ class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Locks the given value between min and max boundaries based on slider properties
+	 * Locks the given value between minValue and maxValue boundaries based on slider properties
 	 *
 	 * @protected
 	 */
@@ -582,20 +584,20 @@ class SliderBase extends UI5Element {
 		}
 
 		// Recalculate the tickmarks and labels and update the stored state.
-		if (this.isPropertyUpdated("min", "max", ...values)) {
-			this.storePropertyState("min", "max");
+		if (this.isPropertyUpdated("minValue", "maxValue", ...values)) {
+			this.storePropertyState("minValue", "maxValue");
 
 			// Here the value props are changed programatically (not by user interaction)
 			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
-			// min and max bounderies and update the previous state reference.
+			// minValue and maxValue bounderies and update the previous state reference.
 			values.forEach(valueType => {
-				const normalizedValue = SliderBase.clipValue(this[valueType], this._effectiveMin, this._effectiveMax);
+				const normalizedValue = SliderBase.clipValue(this[valueType], this._effectiveMinValue, this._effectiveMaxValue);
 				this.updateValue(valueType, normalizedValue);
 				this.storePropertyState(valueType);
 			});
 		}
 
-		// Labels must be updated if any of the min/max/step/labelInterval props are changed
+		// Labels must be updated if any of the minValue/maxValue/step/labelInterval props are changed
 		if (this.labelInterval && this.showTickmarks) {
 			this._createLabels();
 		}
@@ -677,8 +679,8 @@ class SliderBase extends UI5Element {
 
 		// Convert number values to strings to let the CSS do calculations better
 		// rounding/subpixel behavior" and the most precise tickmarks distribution
-		const maxStr = String(this._effectiveMax);
-		const minStr = String(this._effectiveMin);
+		const maxStr = String(this._effectiveMaxValue);
+		const minStr = String(this._effectiveMinValue);
 		const stepStr = String(this._effectiveStep);
 		const tickmarkWidth = "1px";
 
@@ -712,7 +714,7 @@ class SliderBase extends UI5Element {
 
 		const labelInterval = this.labelInterval;
 		const step = this._effectiveStep;
-		const newNumberOfLabels = (this._effectiveMax - this._effectiveMin) / (step * labelInterval);
+		const newNumberOfLabels = (this._effectiveMaxValue - this._effectiveMinValue) / (step * labelInterval);
 
 		// If the required labels are already rendered
 		if (newNumberOfLabels === this._oldNumberOfLabels) {
@@ -732,7 +734,7 @@ class SliderBase extends UI5Element {
 		// "floor" the number of labels anyway.
 		for (let i = 0; i <= newNumberOfLabels; i++) {
 			// Format the label numbers with the same decimal precision as the value of the step property
-			const labelItemNumber = ((i * step * labelInterval) + this._effectiveMin).toFixed(stepPrecision);
+			const labelItemNumber = ((i * step * labelInterval) + this._effectiveMinValue).toFixed(stepPrecision);
 			this._labelValues.push(labelItemNumber);
 		}
 	}
@@ -742,8 +744,8 @@ class SliderBase extends UI5Element {
 		const isBigStep = SliderBase._isBigStepAction(event);
 
 		const currentValue = this[affectedValue];
-		const min = this._effectiveMin;
-		const max = this._effectiveMax;
+		const min = this._effectiveMinValue;
+		const max = this._effectiveMaxValue;
 
 		// If the action key corresponds to a long step and the slider has more than 10 normal steps,
 		// make a jump of 1/10th of the Slider's length, otherwise just use the normal step property.
@@ -828,12 +830,12 @@ class SliderBase extends UI5Element {
 		return step;
 	}
 
-	get _effectiveMin() {
-		return Math.min(this.min, this.max);
+	get _effectiveMinValue() {
+		return Math.min(this.minValue, this.maxValue);
 	}
 
-	get _effectiveMax() {
-		return Math.max(this.min, this.max);
+	get _effectiveMaxValue() {
+		return Math.max(this.minValue, this.maxValue);
 	}
 
 	get tabIndex() {

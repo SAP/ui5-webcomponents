@@ -90,7 +90,7 @@ describe("Testing Range Slider interactions", () => {
 		assert.strictEqual(rangeSlider.getProperty("endValue"), 11, "endValue should swapped with the startValue and should be 11");
 	});
 
-	it("Dragging the whole range selection should always keep the initially selected range and be within min/max values", () => {
+	it("Dragging the whole range selection should always keep the initially selected range and be within minValue/maxValue values", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks");
 		const startHandle = rangeSlider.shadow$(".ui5-slider-handle--start");
 		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
@@ -183,38 +183,38 @@ describe("Properties synchronization and normalization", () => {
 		assert.strictEqual(rangeSlider.getProperty("endValue"), 21, "The current value should be 'stepified' by 7");
 	});
 
-	it("If min property is set to a greater number than the max property their effective values should be swapped, their real ones - not", () => {
+	it("If minValue property is set to a greater number than the maxValue property their effective values should be swapped, their real ones - not", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
 
 		rangeSlider.setProperty("startValue", 2);
-		rangeSlider.setProperty("max", 10);
-		rangeSlider.setProperty("min", 100);
+		rangeSlider.setProperty("maxValue", 10);
+		rangeSlider.setProperty("minValue", 100);
 
-		assert.strictEqual(rangeSlider.getProperty("min"), 100, "min property itself should not be normalized");
-		assert.strictEqual(rangeSlider.getProperty("max"), 10, "max property itself should not be normalized");
-		assert.strictEqual(rangeSlider.getProperty("startValue"), 10, "startValue property should be within the boundaries of the effective (swapped) min and max props");
+		assert.strictEqual(rangeSlider.getProperty("minValue"), 100, "minValue property itself should not be normalized");
+		assert.strictEqual(rangeSlider.getProperty("maxValue"), 10, "maxValue property itself should not be normalized");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 10, "startValue property should be within the boundaries of the effective (swapped) minValue and maxValue props");
 	});
 
-	it("Should keep the current values between the boundaries of min and max properties", () => {
+	it("Should keep the current values between the boundaries of minValue and maxValue properties", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
 
-		rangeSlider.setProperty("min", 100);
-		rangeSlider.setProperty("max", 200);
+		rangeSlider.setProperty("minValue", 100);
+		rangeSlider.setProperty("maxValue", 200);
 
 		rangeSlider.setProperty("endValue", 300);
 
-		assert.strictEqual(rangeSlider.getProperty("endValue"), 200, "value prop should always be lower than the max value");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 200, "value prop should always be lower than the maxValue value");
 
 		rangeSlider.setProperty("startValue", 99);
 
-		assert.strictEqual(rangeSlider.getProperty("startValue"), 100, "value prop should always be greater than the min value");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 100, "value prop should always be greater than the minValue value");
 	});
 
 	it("Should not 'stepify' current value if it is not in result of user interaction", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
 
-		rangeSlider.setProperty("min", 0);
-		rangeSlider.setProperty("max", 44);
+		rangeSlider.setProperty("minValue", 0);
+		rangeSlider.setProperty("maxValue", 44);
 		rangeSlider.setProperty("step", 1.25);
 		rangeSlider.setProperty("startValue", 14);
 		rangeSlider.setProperty("endValue", 24);
@@ -226,8 +226,8 @@ describe("Properties synchronization and normalization", () => {
 	it("If the step property or the labelInterval are changed, the tickmarks and labels must be updated also", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
 
-		rangeSlider.setProperty("max", 0);
-		rangeSlider.setProperty("min", 40);
+		rangeSlider.setProperty("maxValue", 0);
+		rangeSlider.setProperty("minValue", 40);
 		rangeSlider.setProperty("step", 1);
 
 		assert.strictEqual(rangeSlider.getProperty("_labels").length, 21, "Labels must be 21 - 1 for every 2 tickmarks (and steps)");
@@ -273,9 +273,9 @@ describe("Accessibility", () => {
 		assert.strictEqual(rangeSliderProgressBar.getAttribute("aria-labelledby"),
 			`${rangeSliderId}-sliderDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(rangeSliderProgressBar.getAttribute("aria-valuemin"),
-			`${rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
+			`${rangeSlider.getProperty("minValue")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(rangeSliderProgressBar.getAttribute("aria-valuemax"),
-			`${rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
+			`${rangeSlider.getProperty("maxValue")}`, "aria-valuemax is set correctly");
 		assert.strictEqual(rangeSliderProgressBar.getAttribute("aria-valuetext"),
 			`From ${rangeSlider.getProperty("startValue")} to ${rangeSlider.getProperty("endValue")}`, "aria-valuetext is set correctly");
 	});
@@ -288,9 +288,9 @@ describe("Accessibility", () => {
 		assert.strictEqual(startHandle.getAttribute("aria-labelledby"),
 			`${rangeSliderId}-startHandleDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(startHandle.getAttribute("aria-valuemin"),
-			`${rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
+			`${rangeSlider.getProperty("minValue")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(startHandle.getAttribute("aria-valuemax"),
-			`${rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
+			`${rangeSlider.getProperty("maxValue")}`, "aria-valuemax is set correctly");
 		assert.strictEqual(startHandle.getAttribute("aria-valuenow"),
 			`${rangeSlider.getProperty("startValue")}`, "aria-valuenow is set correctly");
 	});
@@ -303,9 +303,9 @@ describe("Accessibility", () => {
 		assert.strictEqual(endHandle.getAttribute("aria-labelledby"),
 			`${rangeSliderId}-endHandleDesc`, "aria-labelledby is set correctly");
 		assert.strictEqual(endHandle.getAttribute("aria-valuemin"),
-			`${rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
+			`${rangeSlider.getProperty("minValue")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(endHandle.getAttribute("aria-valuemax"),
-			`${rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
+			`${rangeSlider.getProperty("maxValue")}`, "aria-valuemax is set correctly");
 		assert.strictEqual(endHandle.getAttribute("aria-valuenow"),
 			`${rangeSlider.getProperty("endValue")}`, "aria-valuenow is set correctly");
 	});
@@ -859,7 +859,7 @@ describe("Accessibility: Testing keyboard handling", () => {
 			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
 		});
 
-		assert.strictEqual(rangeSlider.getProperty("endValue"), 100, "The original end-value is set to min and switched as a start-value");
+		assert.strictEqual(rangeSlider.getProperty("endValue"), 100, "The original end-value is set to minValue and switched as a start-value");
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), endHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
 
 		browser.keys("Home");
@@ -868,7 +868,7 @@ describe("Accessibility: Testing keyboard handling", () => {
 			return document.getElementById("basic-range-slider").shadowRoot.activeElement;
 		});
 
-		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "The original end-value is set to min and switched as a start-value");
+		assert.strictEqual(rangeSlider.getProperty("startValue"), 0, "The original end-value is set to minValue and switched as a start-value");
 		assert.strictEqual($(innerFocusedElement).getAttribute("class"), startHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
 	});
 });
@@ -880,8 +880,8 @@ describe("Testing resize handling and RTL support", () => {
 		const endHandle = rangeSlider.shadow$(".ui5-slider-handle--end");
 
 		rangeSlider.setAttribute("dir", "rtl");
-		rangeSlider.setProperty("min", 0);
-		rangeSlider.setProperty("max", 10);
+		rangeSlider.setProperty("minValue", 0);
+		rangeSlider.setProperty("maxValue", 10);
 		rangeSlider.setProperty("step", 1);
 		rangeSlider.setProperty("startValue", 0);
 		rangeSlider.setProperty("endValue", 4);
@@ -918,8 +918,8 @@ describe("Testing resize handling and RTL support", () => {
 		const rangeSlider = browser.$("#range-slider-tickmarks-labels");
 
 		rangeSlider.setAttribute("dir", "ltr");
-		rangeSlider.setProperty("min", 0);
-		rangeSlider.setProperty("max", 44);
+		rangeSlider.setProperty("minValue", 0);
+		rangeSlider.setProperty("maxValue", 44);
 		rangeSlider.setProperty("step", 1.25);
 
 		browser.setWindowSize(400, 2000);

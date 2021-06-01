@@ -44,8 +44,8 @@ const metadata = {
  * <h3>Structure</h3>
  * The most important properties of the Slider are:
  * <ul>
- * <li>min - The minimum value of the slider range</li>
- * <li>max - The maximum value of the slider range</li>
+ * <li>minValue - The minimum value of the slider range</li>
+ * <li>maxValue - The maximum value of the slider range</li>
  * <li>value - The current value of the slider</li>
  * <li>step - Determines the increments in which the slider will move</li>
  * <li>showTooltip - Determines if a tooltip should be displayed above the handle</li>
@@ -211,7 +211,7 @@ class Slider extends SliderBase {
 			return;
 		}
 
-		const newValue = this.constructor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
+		const newValue = this.constructor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMinValue, this._effectiveMaxValue, this.getBoundingClientRect(), this.directionStart);
 
 		this._updateHandleAndProgress(newValue);
 		this.updateValue("value", newValue);
@@ -244,8 +244,8 @@ class Slider extends SliderBase {
 	 * @private
 	 */
 	_updateHandleAndProgress(newValue) {
-		const max = this._effectiveMax;
-		const min = this._effectiveMin;
+		const max = this._effectiveMaxValue;
+		const min = this._effectiveMinValue;
 
 		// The progress (completed) percentage of the slider.
 		this._progressPercentage = (newValue - min) / (max - min);
@@ -254,8 +254,8 @@ class Slider extends SliderBase {
 	}
 
 	_handleActionKeyPress(event) {
-		const min = this._effectiveMin;
-		const max = this._effectiveMax;
+		const min = this._effectiveMinValue;
+		const max = this._effectiveMaxValue;
 		const currentValue = this.value;
 		const newValue = isEscape(event) ? this._getInitialValue("value") : this.constructor.clipValue(this._handleActionKeyPressBase(event, "value") + currentValue, min, max);
 

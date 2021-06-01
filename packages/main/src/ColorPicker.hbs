@@ -17,16 +17,16 @@
         <ui5-slider
             disabled="{{inputsDisabled}}"
             class="ui5-color-picker-hue-slider"
-            min="0"
-            max="1530"
+            min-value="0"
+            max-value="1530"
             value="{{_hue}}"
             @ui5-input="{{_handleHueInput}}"
         ></ui5-slider>
         <ui5-slider
             disabled="{{inputsDisabled}}"
             class="ui5-color-picker-alpha-slider"
-            min="0"
-            max="1"
+            min-value="0"
+            max-value="1"
             step="0.01"
             value="{{_alpha}}"
             @ui5-input="{{_handleAlphaInput}}"

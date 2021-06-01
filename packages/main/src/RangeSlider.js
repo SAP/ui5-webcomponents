@@ -61,8 +61,8 @@ const metadata = {
  * <h3>Structure</h3>
  * The most important properties of the Range Slider are:
  * <ul>
- * <li>min - The minimum value of the slider range</li>
- * <li>max - The maximum value of the slider range</li>
+ * <li>minValue - The minimum value of the slider range</li>
+ * <li>maxValue - The maximum value of the slider range</li>
  * <li>value - The current value of the slider</li>
  * <li>step - Determines the increments in which the slider will move</li>
  * <li>showTooltip - Determines if a tooltip should be displayed above the handle</li>
@@ -224,8 +224,8 @@ class RangeSlider extends SliderBase {
 		// Set the target of the interaction based on the focused inner element
 		this._setAffectedValueByFocusedElement();
 
-		const min = this._effectiveMin;
-		const max = this._effectiveMax;
+		const min = this._effectiveMinValue;
+		const max = this._effectiveMaxValue;
 		const affectedValue = this._valueAffected;
 
 		// If home/end key is pressed and no single handle is focused the active element
@@ -244,7 +244,7 @@ class RangeSlider extends SliderBase {
 			return;
 		}
 
-		// Update a single value if one of the handles is focused or the range if not already at min or max
+		// Update a single value if one of the handles is focused or the range if not already at minValue or maxValue
 		if (affectedValue && !this._isPressInCurrentRange) {
 			const newValue = this.constructor.clipValue(newValueOffset + this[affectedValue], min, max);
 			this.update(affectedValue, newValue, null);
@@ -392,7 +392,7 @@ class RangeSlider extends SliderBase {
 	 * @private
 	 */
 	_updateValueOnHandleDrag(event) {
-		const newValue = this.constructor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
+		const newValue = this.constructor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMinValue, this._effectiveMaxValue, this.getBoundingClientRect(), this.directionStart);
 		this.update(this._valueAffected, newValue, null);
 	}
 
@@ -561,8 +561,8 @@ class RangeSlider extends SliderBase {
 			return [this.startValue, this.endValue];
 		}
 
-		const min = this._effectiveMin;
-		const max = this._effectiveMax;
+		const min = this._effectiveMinValue;
+		const max = this._effectiveMaxValue;
 		const selectedRange = this.endValue - this.startValue;
 
 		// Computes the new value based on the difference of the current cursor location from the start of the interaction
@@ -585,8 +585,8 @@ class RangeSlider extends SliderBase {
 	 * @private
 	 */
 	_calculateStartValueByOffset(currentPageXPos, initialStartHandlePageXPos) {
-		const min = this._effectiveMin;
-		const max = this._effectiveMax;
+		const min = this._effectiveMinValue;
+		const max = this._effectiveMaxValue;
 		const step = this._effectiveStep;
 		const dom = this.getBoundingClientRect();
 
@@ -622,8 +622,8 @@ class RangeSlider extends SliderBase {
 	 * @private
 	 */
 	_updateHandlesAndRange(newValue) {
-		const max = this._effectiveMax;
-		const min = this._effectiveMin;
+		const max = this._effectiveMaxValue;
+		const min = this._effectiveMinValue;
 		const prevStartValue = this.getStoredPropertyState("startValue");
 		const prevEndValue = this.getStoredPropertyState("endValue");
 		const affectedValue = this._valueAffected;
