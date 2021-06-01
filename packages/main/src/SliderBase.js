@@ -841,7 +841,6 @@ class SliderBase extends UI5Element {
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
 	}
-
 }
 
 export default SliderBase;
