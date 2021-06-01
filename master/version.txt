@@ -1,9 +1,5 @@
-commit e7c4900a606576c0bc23467e9218834673fa8554
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jun 1 10:37:50 2021 +0300
+commit a9edc74e0236754e150a18a24fae251011a1ca14
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Jun 1 11:00:29 2021 +0300
 
-    docs: improve Button sample (#3365)
-    
-    Replace disabled with design="Default" in the "Button Design" section.
-    
-    part of: #3107 (comment)
+    fix(ui5-multi-combobox): Fix failing test (#3366)
