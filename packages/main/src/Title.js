@@ -16,14 +16,21 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Title.prototype */ {
 
 		/**
-		 * Defines whether the component would wrap.
+		 * Determines the wrapping type of the component.
+		 * <br><br>
+		 * The available options are:
+		 * <ul>
+		 * <li><code>None</code> - The title will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The title will wrap. The words won't break based on hyphenation.</li>
+		 * </ul>
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
+		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
-		*/
-		wrap: {
-			type: Boolean,
+		 */
+		wrappingType: {
+			type: String,
+			defaultValue: "None",
 		},
 
 		/**
