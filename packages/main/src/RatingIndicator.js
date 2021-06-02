@@ -52,7 +52,7 @@ const metadata = {
 		 * @defaultvalue 5
 		 * @public
 		 */
-		maxValue: {
+		max: {
 			type: Integer,
 			defaultValue: 5,
 		},
@@ -188,7 +188,7 @@ class RatingIndicator extends UI5Element {
 	calcState() {
 		this._stars = [];
 
-		for (let i = 1; i < this.maxValue + 1; i++) {
+		for (let i = 1; i < this.max + 1; i++) {
 			const remainder = Math.round((this.value - Math.floor(this.value)) * 10);
 			let halfStar = false,
 				tempValue = this.value;
@@ -240,7 +240,7 @@ class RatingIndicator extends UI5Element {
 			if (down && this.value > 0) {
 				this.value = Math.round(this.value - 1);
 				this.fireEvent("change");
-			} else if (up && this.value < this.maxValue) {
+			} else if (up && this.value < this.max) {
 				this.value = Math.round(this.value + 1);
 				this.fireEvent("change");
 			}
