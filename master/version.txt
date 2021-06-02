@@ -1,7 +1,7 @@
-commit b2b6c56f4a2d17a5f6ae0a6535bfe59a2f915d0f
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Wed Jun 2 15:09:28 2021 +0300
+commit b12a30ba7fa7e9b432fa1f46821351d91412928a
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Jun 2 17:00:00 2021 +0300
 
-    fix(ui5-color-palette): updated sample (#3373)
+    fix(ui5-select): enable home/end keys (#3372)
     
-    Updating sample to align with recommendations
+    Now, Home and End keyboard keys are enabled.
