@@ -102,7 +102,6 @@ const metadata = {
 			type: String,
 			noAttribute: true,
 		},
-
 	},
 	slots: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
 		/**
@@ -389,6 +388,19 @@ class AvatarGroup extends UI5Element {
 		}
 
 		return button.offsetWidth;
+	}
+
+	get classes() {
+		return {
+			overflowButton: {
+				"ui5-avatar-group-overflow-btn": true,
+				"ui5-avatar-group-overflow-btn-xs": this.items[0].size === "XS",
+				"ui5-avatar-group-overflow-btn-s": this.items[0].size === "S",
+				"ui5-avatar-group-overflow-btn-m": this.items[0].size === "M",
+				"ui5-avatar-group-overflow-btn-l": this.items[0].size === "L",
+				"ui5-avatar-group-overflow-btn-xl": this.items[0].size === "XL",
+			},
+		};
 	}
 
 	onAfterRendering() {
