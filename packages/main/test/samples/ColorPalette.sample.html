@@ -111,6 +111,7 @@
 	<script>
 		colorPaletteInPopover.addEventListener("change", function(event) {
 			inpSelectedColor.value = event.detail.color;
+			palettePopover.close();
 		});
 		btnOpenPopover.addEventListener("click", function(event) {
 			palettePopover.openBy(btnOpenPopover);
@@ -135,6 +136,7 @@
 <script>
 	colorPaletteInPopover.addEventListener("change", event => {
 		inpSelectedColor.value = event.detail.color;
+		palettePopover.close();
 	});
 
 	btnOpenPopover.addEventListener("click", event => {
