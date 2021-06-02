@@ -8,7 +8,7 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.CalendarDate.prototype */ {
 
 		/**
-		 * The date formatted according to the <code>formatPattern</code> property of the <code>ui5-calendar</code> that hosts the <code>ui5-date</code>
+		 * The date formatted according to the <code>formatPattern</code> property of the <code>ui5-calendar</code> that hosts the component
 		 *
 		 * @type {string}
 		 * @public

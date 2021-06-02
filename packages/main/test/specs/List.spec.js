@@ -369,7 +369,7 @@ describe("List Tests", () => {
 	});
 
 	it('should focus next interactive element if TAB is pressed when focus is on "More" growing button', () => {
-		const growingListButton = $('#growingListButton').shadow$("div[load-more-inner]");
+		const growingListButton = $('#growingListButton').shadow$("div[growing-button-inner]");
 		const nextInteractiveElement = $('#nextInteractiveElement');
 			
 		growingListButton.click() // focus growing button

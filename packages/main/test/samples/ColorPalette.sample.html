@@ -91,7 +91,7 @@
 			header-text="Pick a color"
 			placement-type="Bottom"
 			horizontal-align="Left"
-			no-arrow>
+			hide-arrow>
 				<ui5-color-palette id="colorPaletteInPopover" show-more-colors>
 					<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 					<ui5-color-palette-item value="pink"></ui5-color-palette-item>
@@ -111,6 +111,7 @@
 	<script>
 		colorPaletteInPopover.addEventListener("change", function(event) {
 			inpSelectedColor.value = event.detail.color;
+			palettePopover.close();
 		});
 		btnOpenPopover.addEventListener("click", function(event) {
 			palettePopover.openBy(btnOpenPopover);
@@ -135,6 +136,7 @@
 <script>
 	colorPaletteInPopover.addEventListener("change", event => {
 		inpSelectedColor.value = event.detail.color;
+		palettePopover.close();
 	});
 
 	btnOpenPopover.addEventListener("click", event => {

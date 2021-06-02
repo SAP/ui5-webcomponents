@@ -106,7 +106,9 @@ const getPlugins = ({ transpile }) => {
 	plugins.push(nodeResolve());
 
 	if (!process.env.DEV) {
-		plugins.push(terser());
+		plugins.push(terser({
+			numWorkers: 1,
+		}));
 	}
 
 	if (process.env.DEV) {

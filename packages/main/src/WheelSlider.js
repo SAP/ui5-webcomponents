@@ -24,9 +24,9 @@ const metadata = {
 	tag: "ui5-wheelslider",
 	properties: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
 		/**
-		 * Defines whether the <code>ui5-wheelslider</code> is disabled
+		 * Defines whether the component is disabled
 		 * (default is set to <code>false</code>).
-		 * A disabled <code>ui5-wheelslider</code> can't be pressed or
+		 * A disabled component can't be pressed or
 		 * focused, and it is not in the tab chain.
 		 *
 		 * @type {boolean}

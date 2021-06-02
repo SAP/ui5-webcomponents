@@ -1,4 +1,4 @@
-@import "./LoadMoreRow.css";
+@import "./GrowingButton.css";
 
 :host(:not([hidden])) {
 	display: block;

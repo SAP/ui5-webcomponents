@@ -18,7 +18,7 @@ const metadata = {
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
-		 * Defines the cells of the <code>ui5-table-row</code>.
+		 * Defines the cells of the component.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 		 *
@@ -45,7 +45,7 @@ const metadata = {
 			defaultValue: TableMode.None,
 		},
 		/**
-		 * Defines the visual indication and behavior of the <code>ui5-table-row</code>.
+		 * Defines the visual indication and behavior of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>

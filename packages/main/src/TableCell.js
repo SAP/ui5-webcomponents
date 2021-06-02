@@ -12,7 +12,7 @@ const metadata = {
 	tag: "ui5-table-cell",
 	slots: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 		/**
-		 * Specifies the content of the <code>ui5-table-cell</code>.
+		 * Specifies the content of the component.
 		 *
 		 * @type {Node[]}
 		 * @slot

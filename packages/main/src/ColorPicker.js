@@ -27,7 +27,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.ColorPicker.prototype */ {
 
 		/**
-		 * Defines the currently selected color of the <code>ui5-color-picker</code>.
+		 * Defines the currently selected color of the component.
 		 * <br><br>
 		 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
 		 * @type {String}

@@ -125,8 +125,9 @@ describe("Testing Range Slider interactions", () => {
 });
 
 describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
-
 	it("Range Slider tooltips are displayed showing the current value", () => {
+		browser.url(`http://localhost:${PORT}/test-resources/pages/RangeSlider.html`);
+
 		const rangeSlider = browser.$("#basic-range-slider-with-tooltip");
 		const rangeSliderStartTooltip = rangeSlider.shadow$(".ui5-slider-tooltip--start");
 		const rangeSliderStartTooltipValue = rangeSliderStartTooltip.shadow$(".ui5-slider-tooltip-value");
@@ -150,6 +151,50 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 		rangeSlider.moveTo();
 
 		assert.strictEqual(rangeSliderEndTooltipValue.getText(), "115", "Range Slider end tooltip should display value of 65");
+	});
+
+	it("Range Slider tooltips should become visible when range slider is focused", () => {
+		const rangeSlider = browser.$("#basic-range-slider-with-tooltip");
+		const rangeSliderStartTooltip = rangeSlider.shadow$(".ui5-slider-tooltip--start");
+		const rangeSliderEndTooltip = rangeSlider.shadow$(".ui5-slider-tooltip--end");
+		const otherRangeSlider = browser.$("#basic-range-slider");
+
+		otherRangeSlider.moveTo();
+		otherRangeSlider.click();
+		browser.keys("Tab");
+
+		assert.strictEqual(rangeSlider.getProperty("_tooltipVisibility"), "visible", "Range Slider tooltips visibility property should be 'visible'");
+		assert.strictEqual(rangeSliderStartTooltip.getAttribute("style"), "visibility: visible;", "Range Slider start tooltip should be shown");
+		assert.strictEqual(rangeSliderEndTooltip.getAttribute("style"), "visibility: visible;", "Range Slider end tooltip should be shown");
+	});
+
+	it("Range Slider tooltips should stay visible when mouse is moved out but range slider is still focused", () => {
+		const rangeSlider = browser.$("#basic-range-slider-with-tooltip");
+		const rangeSliderStartTooltip = rangeSlider.shadow$(".ui5-slider-tooltip--start");
+		const rangeSliderEndTooltip = rangeSlider.shadow$(".ui5-slider-tooltip--end");
+		const otherRangeSlider = browser.$("#basic-range-slider");
+
+		rangeSlider.moveTo();
+		otherRangeSlider.moveTo();
+
+		assert.strictEqual(rangeSlider.getProperty("_tooltipVisibility"), "visible", "Range Slider tooltips visibility property should be 'visible'");
+		assert.strictEqual(rangeSliderStartTooltip.getAttribute("style"), "visibility: visible;", "Range Slider start tooltip should be shown");
+		assert.strictEqual(rangeSliderEndTooltip.getAttribute("style"), "visibility: visible;", "Range Slider end tooltip should be shown");
+	});
+
+	it("Range Slider tooltips should become hidden if the range slider looses the focus", () => {
+		const rangeSlider = browser.$("#basic-range-slider-with-tooltip");
+		const rangeSliderStartTooltip = rangeSlider.shadow$(".ui5-slider-tooltip--start");
+		const rangeSliderEndTooltip = rangeSlider.shadow$(".ui5-slider-tooltip--end");
+		const otherRangeSlider = browser.$("#basic-range-slider");
+
+		otherRangeSlider.moveTo();
+		otherRangeSlider.click();
+
+		assert.strictEqual(rangeSlider.getProperty("_tooltipVisibility"), "hidden", "Range Slider tooltips visibility property should be 'hidden'");
+		assert.strictEqual(rangeSliderStartTooltip.getAttribute("style"), "visibility: hidden;", "Range Slider start tooltip should be hidden");
+		assert.strictEqual(rangeSliderEndTooltip.getAttribute("style"), "visibility: hidden;", "Range Slider end tooltip should be hidden");
+
 	});
 
 	it("Range Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", () => {

@@ -106,23 +106,23 @@
 	background: var(--sapObjectHeader_Background);
 }
 
-.ui5-wiz-step-heading,
-.ui5-wiz-step-subheading {
+.ui5-wiz-step-title-text,
+.ui5-wiz-step-subtitle-text {
 	color: var(--sapContent_LabelColor);
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
 
-:host([data-ui5-wizard-expanded-tab-prev="true"]) .ui5-wiz-step-heading,
-:host([data-ui5-wizard-expanded-tab-prev="true"]) .ui5-wiz-step-subheading,
+:host([data-ui5-wizard-expanded-tab-prev="true"]) .ui5-wiz-step-title-text,
+:host([data-ui5-wizard-expanded-tab-prev="true"]) .ui5-wiz-step-subtitle-text,
 :host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-texts,
-:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-heading,
-:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-subheading {
+:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-title-text,
+:host([data-ui5-wizard-expanded-tab="false"]) .ui5-wiz-step-subtitle-text {
 	display: none;
 }
 
-.ui5-wiz-step-subheading {
+.ui5-wiz-step-subtitle-text {
 	font-size: var(--sapFontSmallSize);
 }
 

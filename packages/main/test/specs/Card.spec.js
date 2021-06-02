@@ -55,10 +55,10 @@ describe("Card general interaction", () => {
 		const card2 = $("#card3").shadow$(".ui5-card-root");
 		const card2Id = $("#card3").getProperty("_id");
 		const header2 = $("#card3").shadow$(".ui5-card-header");
-		const EXPECTED_ARIA_LABELLEDBY_CARD = `${card1Id}-heading ${card1Id}-desc`;
-		const EXPECTED_ARIA_LABELLEDBY_HEADER = `${card1Id}-subheading ${card1Id}-status ${card1Id}-avatar`;
-		const EXPECTED_ARIA_LABELLEDBY_CARD2 = `${card2Id}-heading ${card2Id}-desc`;
-		const EXPECTED_ARIA_LABELLEDBY_HEADER2 = `${card2Id}-subheading`;
+		const EXPECTED_ARIA_LABELLEDBY_CARD = `${card1Id}-title ${card1Id}-desc`;
+		const EXPECTED_ARIA_LABELLEDBY_HEADER = `${card1Id}-subtitle ${card1Id}-status ${card1Id}-avatar`;
+		const EXPECTED_ARIA_LABELLEDBY_CARD2 = `${card2Id}-title ${card2Id}-desc`;
+		const EXPECTED_ARIA_LABELLEDBY_HEADER2 = `${card2Id}-subtitle`;
 
 		assert.strictEqual(card1.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLEDBY_CARD,
 			"The aria-labelledby of card is correctly set internally.");

@@ -22,7 +22,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Toast.prototype */ {
 
 		/**
-		 * Defines the duration in milliseconds for which <code>ui5-toast</code>
+		 * Defines the duration in milliseconds for which component
 		 * remains on the screen before it's automatically closed.
 		 * <br><br>
 		 * <b>Note:</b> The minimum supported value is <code>500</code> ms
@@ -38,7 +38,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the placement of the <code>ui5-toast</code> web component.
+		 * Defines the placement of the component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -63,7 +63,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates whether <code>ui5-toast</code> is open (visible).
+		 * Indicates whether the component is open (visible).
 		 * @type {boolean}
 		 * @private
 		 */
@@ -72,7 +72,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates whether <code>ui5-toast</code> is hovered.
+		 * Indicates whether the component is hovered.
 		 * @type {boolean}
 		 * @private
 		 */
@@ -82,7 +82,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Toast.prototype */ {
 		/**
-		 * Defines the text of the <code>ui5-toast</code> web component.
+		 * Defines the text of the component.
 		 * <br><br>
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
@@ -158,7 +158,7 @@ class Toast extends UI5Element {
 	}
 
 	/**
-	 * Shows the <code>ui5-toast</code>.
+	 * Shows the component.
 	 * @public
 	 */
 	show() {
