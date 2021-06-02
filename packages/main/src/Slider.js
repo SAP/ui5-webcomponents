@@ -75,6 +75,22 @@ const metadata = {
  * <li>handle - Used to style the handle of the <code>ui5-slider</code></li>
  * </ul>
  *
+ * <h3>Keyboard Handling</h3>
+ *
+ * <ul>
+ * <li><code>Left or Down Arrow</code> - Moves the <code>ui5-slider</code> handle one step to the left, effectively decreasing the <code>ui5-slider</code>'s value by <code>step</code> amount;</li>
+ * <li><code>Right or Up Arrow</code> - Moves the <code>ui5-slider</code> handle one step to the right, effectively increasing the <code>ui5-slider</code>'s value by <code>step</code> amount;</li>
+ * <li><code>Left or Down Arrow + Ctrl/Cmd</code> - Moves the <code>ui5-slider</code> handle to the left with step equal to 1/10th of the entire range, effectively decreasing the <code>ui5-slider</code>'s value by 1/10th of the range;</li>
+ * <li><code>Right or Up Arrow + Ctrl/Cmd</code> - Moves the <code>ui5-slider</code> handle to the right with step equal to 1/10th of the entire range, effectively increasing the <code>ui5-slider</code>'s value by 1/10th of the range;</li>
+ * <li><code>Plus</code> - Same as <code>Right or Up Arrow</code></li>
+ * <li><code>Minus</code> - Same as <code>Left or Down Arrow</code></li>
+ * <li><code>Home</code> - Moves the <code>ui5-slider</code> handle to the beginning of the range;</li>
+ * <li><code>End</code> - Moves the <code>ui5-slider</code> handle to the end of the range;</li>
+ * <li><code>Page Up</code> - Same as <code>Right or Up + Ctrl/Cmd</code></li>
+ * <li><code>Page Down</code> - Same as <code>Left or Down + Ctrl/Cmd</code></li>
+ * <li><code>Escape</code> - Resets the value after interaction, to the position prior the <ui5-slider> focusing;</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Slider";</code>
@@ -158,6 +174,10 @@ class Slider extends SliderBase {
 		if (this._getInitialValue("value") === null) {
 			this._setInitialValue("value", this.value);
 		}
+
+		if (this.showTooltip) {
+			this._tooltipVisibility = this._constants().TOOLTIP_VISIBLE;
+		}
 	}
 
 	_onfocusout(event) {
@@ -171,6 +191,10 @@ class Slider extends SliderBase {
 		// Reset focus state and the stored Slider's initial
 		// value that was saved when it was first focused in
 		this._setInitialValue("value", null);
+
+		if (this.showTooltip) {
+			this._tooltipVisibility = this._constants().TOOLTIP_HIDDEN;
+		}
 	}
 
 	/**

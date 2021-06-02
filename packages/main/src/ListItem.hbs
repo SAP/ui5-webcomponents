@@ -48,7 +48,7 @@
 			{{> selectionElement}}
 		{{/if}}
 
-		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{_accInfo.listItemAriaLabel}}</span>
+		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{_accInfo.listItemAriaLabel}} {{accessibleName}}</span>
 </li>
 
 {{#*inline "listItemPreContent"}}{{/inline}}
@@ -85,6 +85,7 @@
 		<div class="ui5-li-deletebtn">
 			<ui5-button
 				tabindex="-1"
+				data-sap-no-tab-ref
 				id="{{_id}}-deleteSelectionElement"
 				design="Transparent"
 				icon="decline"

@@ -83,13 +83,13 @@ const metadata = {
 		 * are dragged. If you don't intend to use drag and drop, set this property.
 		 * <br><br>
 		 * <b>Note:</b> It is up to the application developer to add handler for <code>drop</code> event and handle it.
-		 * <code>ui5-upload-collection</code> only shows an overlay.
+		 * <code>ui5-upload-collection</code> only displays an overlay.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		noDnd: {
+		hideDragOverlay: {
 			type: Boolean,
 		},
 
@@ -238,7 +238,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	onEnterDOM() {
-		if (this.noDnd) {
+		if (this.hideDragOverlay) {
 			return;
 		}
 
@@ -246,7 +246,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	onExitDOM() {
-		if (this.noDnd) {
+		if (this.hideDragOverlay) {
 			return;
 		}
 
@@ -254,7 +254,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	_ondragenter(event) {
-		if (this.noDnd) {
+		if (this.hideDragOverlay) {
 			return;
 		}
 
@@ -266,7 +266,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	_ondrop(event) {
-		if (this.noDnd) {
+		if (this.hideDragOverlay) {
 			return;
 		}
 
@@ -278,15 +278,15 @@ class UploadCollection extends UI5Element {
 	}
 
 	_ondragover(event) {
-		if (this.noDnd) {
+		if (this.hideDragOverlay) {
 			return;
 		}
 
 		event.preventDefault();
 	}
 
-	_ondragleave(event) {
-		if (this.noDnd) {
+	_ondragleave() {
+		if (this.hideDragOverlay) {
 			return;
 		}
 

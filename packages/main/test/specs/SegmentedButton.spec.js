@@ -7,14 +7,14 @@ describe("SegmentedButton general interaction", () => {
 	});
 
 	it("tests if pressed attribute is applied", () => {
-		const toggleButton =  browser.$("#segButton1 > ui5-togglebutton:first-child");
+		const toggleButton =  browser.$("#segButton1 > ui5-toggle-button:first-child");
 
 		assert.ok(toggleButton.getProperty("pressed"), "ToggleButton has property pressed");
 	});
 
 	it("tests if pressed attribute is switched to the newly pressed button", () => {
-		const firstToggleButton =  browser.$("#segButton1 > ui5-togglebutton:first-child");
-		const lastToggleButton =  browser.$("#segButton1 > ui5-togglebutton:last-child");
+		const firstToggleButton =  browser.$("#segButton1 > ui5-toggle-button:first-child");
+		const lastToggleButton =  browser.$("#segButton1 > ui5-toggle-button:last-child");
 
 		lastToggleButton.click();
 
@@ -23,10 +23,10 @@ describe("SegmentedButton general interaction", () => {
 	});
 
 	it("tests if pressed attribute is applied only to last child when all buttons are pressed", () => {
-		const toggleButton1 =  browser.$("#segButton2 > ui5-togglebutton:first-child");
-		const toggleButton2 =  browser.$("#segButton2 > ui5-togglebutton:nth-child(2)");
-		const toggleButton3 =  browser.$("#segButton2 > ui5-togglebutton:nth-child(3)");
-		const toggleButton4 =  browser.$("#segButton2 > ui5-togglebutton:last-child");
+		const toggleButton1 =  browser.$("#segButton2 > ui5-toggle-button:first-child");
+		const toggleButton2 =  browser.$("#segButton2 > ui5-toggle-button:nth-child(2)");
+		const toggleButton3 =  browser.$("#segButton2 > ui5-toggle-button:nth-child(3)");
+		const toggleButton4 =  browser.$("#segButton2 > ui5-toggle-button:last-child");
 
 		// only last button should be pressed
 		assert.ok(!toggleButton1.getProperty("pressed"), "ToggleButton should not be pressed");

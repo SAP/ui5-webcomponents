@@ -77,8 +77,9 @@ const metadata = {
 		* @type {boolean}
 		* @defaultvalue false
 		* @public
+		* @since 1.0.0-rc.15
 		*/
-		noArrows: {
+		hideArrows: {
 			type: Boolean,
 		},
 
@@ -592,11 +593,11 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get showStartArrow() {
-		return this.noArrows ? false : this.startArrowVisibility;
+		return this.hideArrows ? false : this.startArrowVisibility;
 	}
 
 	get showEndArrow() {
-		return this.noArrows ? false : this.endArrowVisibility;
+		return this.hideArrows ? false : this.endArrowVisibility;
 	}
 
 	get startArrowVisibility() {
