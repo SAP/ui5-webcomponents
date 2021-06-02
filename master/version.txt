@@ -1,5 +1,7 @@
-commit c830aa375e62b7d62686fc54c522baebee697508
-Author: Hristo Petrov <h.petrov@sap.com>
-Date:   Wed Jun 2 12:20:09 2021 +0300
+commit b2b6c56f4a2d17a5f6ae0a6535bfe59a2f915d0f
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Wed Jun 2 15:09:28 2021 +0300
 
-    refactor(ui5-range-slider): show tooltips on focus (#3308)
+    fix(ui5-color-palette): updated sample (#3373)
+    
+    Updating sample to align with recommendations

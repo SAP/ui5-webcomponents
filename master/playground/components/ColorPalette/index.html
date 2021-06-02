@@ -2554,6 +2554,7 @@
 	<script>
 		colorPaletteInPopover.addEventListener("change", function(event) {
 			inpSelectedColor.value = event.detail.color;
+			palettePopover.close();
 		});
 		btnOpenPopover.addEventListener("click", function(event) {
 			palettePopover.openBy(btnOpenPopover);
@@ -2577,6 +2578,7 @@
 <span class="nt">&lt;script&gt;</span>
 	<span class="nx">colorPaletteInPopover</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
 		<span class="nx">inpSelectedColor</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">color</span><span class="p">;</span>
+		<span class="nx">palettePopover</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
 	<span class="p">});</span>
 
 	<span class="nx">btnOpenPopover</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
