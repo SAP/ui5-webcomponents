@@ -51,6 +51,7 @@ const metadata = {
 		 * @type {Integer}
 		 * @defaultvalue 5
 		 * @public
+		 * @since 1.0.0-rc.15
 		 */
 		max: {
 			type: Integer,
