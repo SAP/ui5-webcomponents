@@ -455,8 +455,8 @@ class Select extends UI5Element {
 			this._handleEndKey(event);
 		} else if (isEnter(event)) {
 			this._handleSelectionChange();
-		}  else {
-			this._handleArrowNavigation(event, true);
+		} else {
+			this._handleArrowNavigation(event);
 		}
 	}
 
