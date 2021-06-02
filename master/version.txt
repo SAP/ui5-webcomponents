@@ -1,5 +1,5 @@
-commit a9edc74e0236754e150a18a24fae251011a1ca14
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Jun 1 11:00:29 2021 +0300
+commit c830aa375e62b7d62686fc54c522baebee697508
+Author: Hristo Petrov <h.petrov@sap.com>
+Date:   Wed Jun 2 12:20:09 2021 +0300
 
-    fix(ui5-multi-combobox): Fix failing test (#3366)
+    refactor(ui5-range-slider): show tooltips on focus (#3308)
