@@ -84,17 +84,21 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the component text should wrap
-		 * when there is no sufficient space.
+		 * Determines the wrapping type of the component.
 		 * <br><br>
-		 * <b>Note:</b> The text is truncated by default.
+		 * The available options are:
+		 * <ul>
+		 * <li><code>None</code> - The link will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The link will wrap. The words won't break based on hyphenation.</li>
+		 * </ul>
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
+		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
-		wrap: {
-			type: Boolean,
+		wrappingType: {
+			type: String,
+			defaultValue: "None",
 		},
 
 		/**
@@ -174,13 +178,13 @@ const metadata = {
  * by using the <code>design</code> property.
  * <br><br>
  * If the <code>href</code> property is set, the link behaves as the HTML
- * anchor tag (<code>&lt;a>&lt;a/></code>) and opens the specified URL in the given target frame (<code>target</code> property).
+ * anchor tag (<code>&lt;a&gt;&lt;a&#47;&gt;</code>) and opens the specified URL in the given target frame (<code>target</code> property).
  * To specify where the linked content is opened, you can use the <code>target</code> property.
  *
  * <h3>Responsive behavior</h3>
  *
  * If there is not enough space, the text of the <code>ui5-link</code> becomes truncated.
- * If the <code>wrap</code> property is set to <code>true</code>, the text is displayed
+ * If the <code>wrappingType</code> property is set to <code>"Normal"</code>, the text is displayed
  * on several lines instead of being truncated.
  *
  * <h3>ES6 Module Import</h3>
