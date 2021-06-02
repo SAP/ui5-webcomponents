@@ -36,7 +36,7 @@ const metadata = {
 		 * <li><code>None</code> - The label will be truncated with an ellipsis.</li>
 		 * <li><code>Normal</code> - The label will wrap. The words won't break based on hyphenation.</li>
 		 * </ul>
-		 * 
+		 *
 		 * @type {string}
 		 * @defaultvalue "None"
 		 * @public
