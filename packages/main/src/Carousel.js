@@ -109,7 +109,7 @@ const metadata = {
 		 * Defines the index of the initially selected item.
 		 * @type {Integer}
 		 * @defaultvalue 0
-		 * @public
+		 * @private
 		 */
 		selectedIndex: {
 			type: Integer,
@@ -186,14 +186,12 @@ const metadata = {
 		 *
 		 * @event
 		 * @param {Integer} selectedIndex the current <code>selectedIndex</code>.
-		 * @param {Array} visibleItemsIndexes the indices of the visible items <code>selectedIndex</code>.
 		 * @public
 		 * @since 1.0.0-rc.7
 		 */
-		navigate: {
+		 navigate: {
 			detail: {
-				selectedIndex: { type: Integer },
-				visibleItemsIndexes: { type: Array },
+				selectedPage: { type: Integer },
 			},
 		},
 	},
@@ -291,8 +289,8 @@ class Carousel extends UI5Element {
 
 	validateSelectedIndex() {
 		if (!this.isIndexInRange(this.selectedIndex)) {
-			this.selectedIndex = 1;
-			console.warn(`The "selectedIndex" is out of range, changed to: ${1}`); // eslint-disable-line
+			this.selectedIndex = 0;
+			console.warn(`The "selectedIndex" is out of range, changed to: ${0}`); // eslint-disable-line
 		}
 	}
 
@@ -312,8 +310,8 @@ class Carousel extends UI5Element {
 			return;
 		}
 
-		if (this.selectedIndex > this.pagesCount) {
-			this.selectedIndex = this.pagesCount;
+		if (this.selectedIndex > this.pagesCount - 1) {
+			this.selectedIndex = this.pagesCount - 1;
 			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
 		}
 	}
@@ -359,7 +357,7 @@ class Carousel extends UI5Element {
 
 		const previousSelectedIndex = this.selectedIndex;
 
-		if (this.selectedIndex - 1 < 1) {
+		if (this.selectedIndex - 1 < 0) {
 			if (this.cyclic) {
 				this.selectedIndex = this.pagesCount - 1;
 			}
@@ -377,9 +375,9 @@ class Carousel extends UI5Element {
 
 		const previousSelectedIndex = this.selectedIndex;
 
-		if (this.selectedIndex + 1 > this.pagesCount) {
+		if (this.selectedIndex + 1 > this.pagesCount - 1) {
 			if (this.cyclic) {
-				this.selectedIndex = 1;
+				this.selectedIndex = 0;
 			} else {
 				return;
 			}
@@ -390,10 +388,12 @@ class Carousel extends UI5Element {
 		if (previousSelectedIndex !== this.selectedIndex) {
 			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
 		}
+	}
 
-		if (this.selectedIndex >= this.items.length - (this.effectiveItemsPerPage)) {
-			this.fireEvent("navigate", { visibleItemsIndexes });
-		}
+	navigateTo(itemIndex) {
+		this._resizing = false;
+		this.selectedIndex = itemIndex;
+		this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
 	}
 
 	/**
@@ -428,7 +428,7 @@ class Carousel extends UI5Element {
 	}
 
 	isItemInViewport(index) {
-		return index >= this.selectedIndex - 1 && index <= this.selectedIndex - 1 + this.effectiveItemsPerPage;
+		return index >= this.selectedIndex && index <= this.selectedIndex + this.effectiveItemsPerPage - 1;
 	}
 
 	isIndexInRange(index) {
@@ -506,7 +506,7 @@ class Carousel extends UI5Element {
 
 		for (let index = 0; index < pages; index++) {
 			dots.push({
-				active: index + 1 === this.selectedIndex,
+				active: index === this.selectedIndex,
 				ariaLabel: this.i18nBundle.getText(CAROUSEL_DOT_TEXT, [index + 1], [pages]),
 			});
 		}
@@ -524,11 +524,11 @@ class Carousel extends UI5Element {
 	}
 
 	get hasPrev() {
-		return this.cyclic || this.selectedIndex - 1 >= 1;
+		return this.cyclic || this.selectedIndex - 1 >= 0;
 	}
 
 	get hasNext() {
-		return this.cyclic || this.selectedIndex <= this.pagesCount;
+		return this.cyclic || this.selectedIndex + 1 <= this.pagesCount - 1;
 	}
 
 	get suppressAnimation() {
@@ -540,7 +540,7 @@ class Carousel extends UI5Element {
 	}
 
 	get selectedIndexToShow() {
-		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedIndex) : this.selectedIndex;
+		return this._isRTL ? this.pagesCount - (this.pagesCount - this.selectedIndex) + 1 : this.selectedIndex + 1;
 	}
 
 	get ofText() {
@@ -548,7 +548,7 @@ class Carousel extends UI5Element {
 	}
 
 	get ariaActiveDescendant() {
-		return this.content.length ? `${this._id}-carousel-item-${this.selectedIndex}` : undefined;
+		return this.content.length ? `${this._id}-carousel-item-${this.selectedIndex + 1}` : undefined;
 	}
 
 	get nextPageText() {
@@ -557,6 +557,18 @@ class Carousel extends UI5Element {
 
 	get previousPageText() {
 		return this.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
+	}
+
+	get visibleItemsIndices() {
+		const visibleItemsIndices = [];
+
+		this.items.forEach((item, index) => {
+			if (this.isItemInViewport(index)) {
+				visibleItemsIndices.push(index);
+			}
+		});
+
+		return visibleItemsIndices;
 	}
 
 	static get dependencies() {

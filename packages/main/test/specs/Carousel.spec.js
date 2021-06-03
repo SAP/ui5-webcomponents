@@ -30,7 +30,7 @@ describe("Carousel general interaction", () => {
 		const carouselLeftButton = carousel.shadow$$(".ui5-carousel-navigation-button")[1];
 
 		carouselLeftButton.click();
-		assert.equal(carousel.getAttribute("selected-index"), "1", "Second view is in place");
+		assert.equal(carousel.getAttribute("selected-index"), "0", "Second view is in place");
 	});
 
 	it("Navigation is rendered for carousel with less than 9 elements", () => {
@@ -146,10 +146,10 @@ describe("Carousel general interaction", () => {
 	it("Invalid selectedIndex normalized", () => {
 		const carousel = browser.$("#carousel7");
 		const selectedIndex = carousel.getProperty("selectedIndex");
-		const NORMALIZED_PAGE = 1;
+		const NORMALIZED_INDEX = 0;
 
-		assert.strictEqual(selectedIndex, NORMALIZED_PAGE,
-			"Although '15' is set, the actual selectedIndex is changed to 1.");
+		assert.strictEqual(selectedIndex, NORMALIZED_INDEX,
+			"Although '15' is set, the actual selectedIndex is changed to 0.");
 	});
 
 	it("Event navigate fired when pressing navigation arrows", () => {
@@ -163,34 +163,54 @@ describe("Carousel general interaction", () => {
 
 		// using the navigation arrows
 		navigationArrowForward.click(); // forward
-		assert.strictEqual(selectedIndex.getProperty("value"), "2", "The selectedIndex is correct.");
+		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "1", "The navigate event is fired.");
 
 		navigationArrowForward.click(); // forward
-		assert.strictEqual(selectedIndex.getProperty("value"), "3", "The selectedIndex is correct.");
+		assert.strictEqual(selectedIndex.getProperty("value"), "2", "The selectedIndex is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "2", "The navigate event is fired.");
 
 		navigationArrowsBack.click(); // back
-		assert.strictEqual(selectedIndex.getProperty("value"), "2", "The selectedIndex is correct");
+		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct");
 		assert.strictEqual(eventCounter.getProperty("value"), "3", "The navigate event is fired.");
 
 		navigationArrowsBack.click(); // back
-		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct.");
+		assert.strictEqual(selectedIndex.getProperty("value"), "0", "The selectedIndex is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "4", "The navigate event is fired.");
 
 		// using the keyboard navigation
 		carousel.click();
 		carousel.keys("ArrowRight");
-		assert.strictEqual(selectedIndex.getProperty("value"), "2", "The selectedIndex is correct.");
+		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "5", "The navigate event is fired.");
 
 		carousel.keys("ArrowLeft");
-		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct.");
+		assert.strictEqual(selectedIndex.getProperty("value"), "0", "The selectedIndex is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "6", "The navigate event is fired.");
 
 		carousel.keys("ArrowLeft");
-		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct.");
+		assert.strictEqual(selectedIndex.getProperty("value"), "0", "The selectedIndex is correct.");
 		assert.strictEqual(eventCounter.getProperty("value"), "6", "The navigate event is not fired as no previous item.");
 	});
 
+	it("hide-page-indicator property", () => {
+		const carousel = browser.$("#carouselHiddenPageIndicator");
+		carousel.scrollIntoView();
+
+		assert.strictEqual(carousel.shadow$$(".ui5-carousel-navigation > *").length, 0, "carousel has not rendered a page indicator")
+	})
+
+	it("navigateTo method and visibleItemsIndices", () => {
+		const carousel = browser.$("#carousel9");
+
+		carousel.scrollIntoView();
+
+		assert.deepEqual(carousel.getProperty("visibleItemsIndices"), [ 0, 1 ], "The indices before navigation are correct.");
+
+		browser.execute(() => {
+			document.getElementById("carousel9").navigateTo(1);
+		})
+
+		assert.deepEqual(carousel.getProperty("visibleItemsIndices"), [ 1, 2 ], "The indices after navigation are correct.");
+	})
 });
