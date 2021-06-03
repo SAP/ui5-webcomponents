@@ -1,7 +1,5 @@
-commit b12a30ba7fa7e9b432fa1f46821351d91412928a
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Jun 2 17:00:00 2021 +0300
+commit 448c7266b8c0b18abb88dcff5773da7422267517
+Author: Georgi <georgi.minkov@sap.com>
+Date:   Thu Jun 3 14:23:03 2021 +0300
 
-    fix(ui5-select): enable home/end keys (#3372)
-    
-    Now, Home and End keyboard keys are enabled.
+    fix(ui5-title): rename wrap property to wrappingType (#3379)
