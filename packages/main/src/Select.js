@@ -257,6 +257,8 @@ const metadata = {
  * <li>[UP, DOWN] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.</li>
  * <li>[SPACE, ENTER] - If the drop-down is opened - selects the focused option.</li>
  * <li>[ESC] - Closes the drop-down without changing the selection.</li>
+ * <li>[HOME] - Navigates to first option</li>
+ * <li>[END] - Navigates to the last option</li>
  * </ul>
  * <br>
  *
