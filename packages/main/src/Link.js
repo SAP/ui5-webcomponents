@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
+import WrappingType from "./types/WrappingType.js";
 
 // Template
 import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
@@ -84,12 +85,11 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the wrapping type of the component.
-		 * <br><br>
-		 * The available options are:
+		 * Defines how the text of a component will be displayed when there is not enough space.
+		 * Available options are:
 		 * <ul>
-		 * <li><code>None</code> - The link will be truncated with an ellipsis.</li>
-		 * <li><code>Normal</code> - The link will wrap. The words won't break based on hyphenation.</li>
+		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 		 * </ul>
 		 *
 		 * @type {string}
@@ -97,8 +97,8 @@ const metadata = {
 		 * @public
 		 */
 		wrappingType: {
-			type: String,
-			defaultValue: "None",
+			type: WrappingType,
+			defaultValue: WrappingType.None,
 		},
 
 		/**
