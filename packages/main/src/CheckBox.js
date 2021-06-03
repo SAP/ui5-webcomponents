@@ -9,6 +9,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
+import WrappingType from "./types/WrappingType.js";
 import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
@@ -291,7 +292,7 @@ class CheckBox extends UI5Element {
 		this._label = { ...this._label };
 		this._label.text = this.text;
 		/* temporary workaround. remove after all wrap properties in the relevant components are renamed to wrappingType */
-		this._label.wrappingType = this.wrap ? "Normal" : "None";
+		this._label.wrappingType = this.wrap ? WrappingType.Normal : WrappingType.None;
 		/* end */
 		this._label.textDirection = this.textDirection;
 	}

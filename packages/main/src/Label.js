@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import WrappingType from "./types/WrappingType.js";
 
 // Template
 import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
@@ -29,21 +30,20 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the wrapping type of the component.
-		 * <br><br>
-		 * The available options are:
+		 * Defines how the text of a component will be displayed when there is not enough space.
+		 * Available options are:
 		 * <ul>
-		 * <li><code>None</code> - The label will be truncated with an ellipsis.</li>
-		 * <li><code>Normal</code> - The label will wrap. The words won't break based on hyphenation.</li>
+		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 */
-		wrappingType: {
-			type: String,
-			defaultValue: "None",
+		 wrappingType: {
+			type: WrappingType,
+			defaultValue: WrappingType.None,
 		},
 
 		/**
