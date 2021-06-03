@@ -21,4 +21,13 @@ describe("Rendering", () => {
 		assert.ok(titleH5.startsWith("<h5"), "h5 tag is rendered for level='H5'");
 		assert.ok(titleH6.startsWith("<h6"), "h6 tag is rendered for level='H6'");
 	});
+
+	it("should wrap the text of the title", () => {
+		const wrappingTitle = browser.$("#wrapping-title");
+		const truncatedTitle = browser.$("#truncated-title");
+
+		assert.strictEqual(truncatedTitle.getSize().height, 16, "truncated title should be single line");
+
+		assert.ok(wrappingTitle.getSize().height > truncatedTitle.getSize().height, "wrapping title should span more than a single line");
+	});
 });
