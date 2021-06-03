@@ -38,7 +38,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Responsive Popover       | `ui5-responsive-popover`| `import "@ui5/webcomponents/dist/ResponsivePopover.js";`|
 | Select                   | `ui5-select`         | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`         | comes with ui5-select                                      |
-| Segmented Button         | `ui5-segmentedbutton`|`import "@ui5/webcomponents/dist/SegmentedButton.js";`      |
+| Segmented Button         | `ui5-segmented-button`|`import "@ui5/webcomponents/dist/SegmentedButton.js";`      |
 | Suggestion Item          | `ui5-suggestion-item`|`import "@ui5/webcomponents/dist/SuggestionItem.js";`       |
 | Switch                   | `ui5-switch`         | `import "@ui5/webcomponents/dist/Switch.js";`              |
 | Tab Container            | `ui5-tabcontainer`   | `import "@ui5/webcomponents/dist/TabContainer.js";`        |

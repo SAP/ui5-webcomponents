@@ -58,7 +58,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Responsive Popover       | `ui5-responsive-popover` | `import "@ui5/webcomponents/dist/ResponsivePopover.js";`   |
 | Select                   | `ui5-select`             | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`             | comes with `ui5-select `                                   |
-| Segmented Button         | `ui5-segmentedbutton`    | `import "@ui5/webcomponents/dist/SegmentedButton.js";`     |
+| Segmented Button         | `ui5-segmented-button`    | `import "@ui5/webcomponents/dist/SegmentedButton.js";`     |
 | Suggestion Item          | `ui5-suggestion-item`    | comes with `InputSuggestions.js` feature - see below       |
 | Slider                   | `ui5-slider`             | `import "@ui5/webcomponents/dist/Slider.js";`              |
 | Step Input               | `ui5-step-input`         | `import "@ui5/webcomponents/dist/StepInput.js";`           |
