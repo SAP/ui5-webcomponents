@@ -11,8 +11,8 @@
 	</div>
 	<div class="ui5-tli-bubble" tabindex="{{_tabIndex}}" role="option" data-sap-focus-ref>
 		<div class="ui5-tli-title">
-			{{#if itemName}}
-				{{> itemName}}
+			{{#if name}}
+				{{> name}}
 			{{/if}}
 
 			<span>{{titleText}}</span>
@@ -28,12 +28,10 @@
 	</div>
 </div>
 
-{{#*inline "itemName"}}
-	{{#if itemNameClickable}}
-		<ui5-link @click="{{onItemNamePress}}">{{itemName}}</ui5-link>
+{{#*inline "name"}}
+	{{#if nameClickable}}
+		<ui5-link @click="{{onNamePress}}" class="ui5-tli-title-name-clickable">{{name}}{{{&nbsp;}}}</ui5-link>
+	{{else}}
+		<span class="ui5-tli-title-name">{{name}}{{{&nbsp;}}}</span>
 	{{/if}}
-
-	{{#unless itemNameClickable}}
-		<span>{{itemName}}</span>
-	{{/unless}}
 {{/inline}}
