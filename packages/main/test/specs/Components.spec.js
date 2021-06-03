@@ -26,7 +26,6 @@ describe("General assertions", () => {
 		const radiobutton = browser.$("#radioBtn");
 		const sw = browser.$("#sw");
 		const toggleBtn = browser.$("#toggleBtn");
-		const title = browser.$("#title");
 
 		// Button
 		assertBooleanProperty(button, "submits");
@@ -68,9 +67,6 @@ describe("General assertions", () => {
 		// Switch
 		assertBooleanProperty(sw, "checked");
 		assertBooleanProperty(sw, "disabled");
-
-		// Title
-		assertBooleanProperty(title, "wrap");
 
 		// ToggleButton
 		assertBooleanProperty(toggleBtn, "pressed");
