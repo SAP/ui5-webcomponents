@@ -53,7 +53,7 @@ const metadata = {
 		 * @private
 		 * @since 1.0.0-rc.15
 		 */
-			title: {
+		title: {
 			type: String,
 		},
 
