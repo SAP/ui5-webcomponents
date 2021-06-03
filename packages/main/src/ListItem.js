@@ -47,6 +47,17 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the tooltip of the component.
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+			title: {
+			type: String,
+		},
+
+		/**
 		 * Indicates if the list item is actionable, e.g has hover and pressed effects.
 		 *
 		 * @type {boolean}
