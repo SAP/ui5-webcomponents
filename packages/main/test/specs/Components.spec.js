@@ -47,7 +47,6 @@ describe("General assertions", () => {
 		assertBooleanProperty(label, "required");
 
 		//Link
-		assertBooleanProperty(link, "wrap");
 		assertBooleanProperty(link, "disabled");
 
 		// Input
