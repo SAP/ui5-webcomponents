@@ -27,9 +27,20 @@
 	font-weight: normal;
 }
 
+.ui5-select-option-icon {
+	padding-left: 0.5rem;
+	color: var(--sapField_TextColor);
+	align-self: center;
+}
+
 :host [dir="rtl"].ui5-select-root .ui5-select-label-root {
 	padding-left: 0;
 	padding-right: 0.5rem;
+}
+
+:host [dir="rtl"] .ui5-select-option-icon {
+	padding-right: 0.5rem;
+	padding-left: 0;
 }
 
 :host(:not([disabled])) {

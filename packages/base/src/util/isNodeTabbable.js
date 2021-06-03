@@ -15,13 +15,13 @@ const isNodeTabbable = node => {
 		return false;
 	}
 
-	if (nodeName === "a" || /input|select|textarea|button|object/.test(nodeName)) {
-		return !node.disabled;
-	}
-
 	const tabIndex = node.getAttribute("tabindex");
 	if (tabIndex !== null && tabIndex !== undefined) {
 		return parseInt(tabIndex) >= 0;
+	}
+
+	if (nodeName === "a" || /input|select|textarea|button|object/.test(nodeName)) {
+		return !node.disabled;
 	}
 };
 
