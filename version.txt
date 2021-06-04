@@ -1,8 +1,5 @@
-commit 71f3f4c12d902781844d4e361f208727b863ac45
-Merge: d245fa3 20acae2
+commit d3c4701e7ff351954d87780d6fceef9230e948bb
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Apr 23 09:11:18 2021 +0300
+Date:   Thu May 27 10:41:45 2021 +0300
 
-    Merge tag 'v1.0.0-rc.14' into latest-release-website
-    
-    chore: release 1.0.0-rc
+    chore: update chromedriver (#3317)
