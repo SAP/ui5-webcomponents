@@ -3,6 +3,11 @@ import { getCalendarType as getConfiguredCalendarType } from "../InitialConfigur
 
 let calendarType;
 
+/**
+ *	Get the configured or default calendar type
+ * @returns { String } the effective calendar type
+ * @public
+ */
 const getCalendarType = () => {
 	if (calendarType === undefined) {
 		calendarType = getConfiguredCalendarType();

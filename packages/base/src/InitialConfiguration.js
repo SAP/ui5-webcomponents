@@ -56,6 +56,10 @@ const getNoConflict = () => {
 	return initialConfig.noConflict;
 };
 
+/**
+ * Get the configured calendar type
+ * @returns { String } the name of the configured calendar type
+ */
 const getCalendarType = () => {
 	initConfiguration();
 	return initialConfig.calendarType;
