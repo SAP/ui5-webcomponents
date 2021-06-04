@@ -84,11 +84,11 @@ class DateRangePicker extends DatePicker {
 		return [DatePicker.styles, DateRangePickerCss];
 	}
 
-	get _firstDateTimestamp() {
+	get _startDateTimestamp() {
 		return this._extractFirstTimestamp(this.value);
 	}
 
-	get _lastDateTimestamp() {
+	get _endDateTimestamp() {
 		return this._extractLastTimestamp(this.value);
 	}
 
@@ -109,7 +109,7 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	get _calendarTimestamp() {
-		return this._tempTimestamp || this._firstDateTimestamp || getTodayUTCTimestamp(this._primaryCalendarType);
+		return this._tempTimestamp || this._startDateTimestamp || getTodayUTCTimestamp(this._primaryCalendarType);
 	}
 
 	/**
@@ -127,25 +127,25 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
-	 * Currently selected first date represented as JavaScript Date instance.
+	 * Returns the start date of the currently selected range as JavaScript Date instance.
 	 *
 	 * @readonly
 	 * @type { Date }
 	 * @public
 	 */
 	get startDateValue() {
-		return CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000).toLocalJSDate();
+		return CalendarDate.fromTimestamp(this._startDateTimestamp * 1000).toLocalJSDate();
 	}
 
 	/**
-	 * Currently selected last date represented as JavaScript Date instance.
+	 * Returns the end date of the currently selected range as JavaScript Date instance.
 	 *
 	 * @readonly
 	 * @type { Date }
 	 * @public
 	 */
 	get endDateValue() {
-		return CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000).toLocalJSDate();
+		return CalendarDate.fromTimestamp(this._endDateTimestamp * 1000).toLocalJSDate();
 	}
 
 	/**
@@ -231,7 +231,7 @@ class DateRangePicker extends DatePicker {
 	 * @override
 	 */
 	async _modifyDateValue(amount, unit) {
-		if (!this._lastDateTimestamp) { // If empty or only one date -> treat as datepicker entirely
+		if (!this._endDateTimestamp) { // If empty or only one date -> treat as datepicker entirely
 			return super._modifyDateValue(amount, unit);
 		}
 
@@ -240,17 +240,17 @@ class DateRangePicker extends DatePicker {
 		let newValue;
 
 		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date -> change it and keep the seoond date
-			const firstDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
-			const newFirstDateTimestamp = firstDateModified.valueOf() / 1000;
-			if (newFirstDateTimestamp > this._lastDateTimestamp) { // dates flipped -> move the caret to the same position but on the last date
+			const startDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._startDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
+			const newStartDateTimestamp = startDateModified.valueOf() / 1000;
+			if (newStartDateTimestamp > this._endDateTimestamp) { // dates flipped -> move the caret to the same position but on the last date
 				caretPos += Math.ceil(this.value.length / 2);
 			}
-			newValue = this._buildValue(newFirstDateTimestamp, this._lastDateTimestamp); // the value will be normalized so we don't try to order them here
+			newValue = this._buildValue(newStartDateTimestamp, this._endDateTimestamp); // the value will be normalized so we don't try to order them here
 		} else {
-			const lastDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
-			const newLastDateTimestamp = lastDateModified.valueOf() / 1000;
-			newValue = this._buildValue(this._firstDateTimestamp, newLastDateTimestamp); // the value will be normalized so we don't try to order them here
-			if (newLastDateTimestamp < this._firstDateTimestamp) { // dates flipped -> move the caret to the same position but on the first date
+			const endDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._endDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
+			const newEndDateTimestamp = endDateModified.valueOf() / 1000;
+			newValue = this._buildValue(this._startDateTimestamp, newEndDateTimestamp); // the value will be normalized so we don't try to order them here
+			if (newEndDateTimestamp < this._startDateTimestamp) { // dates flipped -> move the caret to the same position but on the first date
 				caretPos -= Math.ceil(this.value.length / 2);
 			}
 		}
