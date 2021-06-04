@@ -41,7 +41,7 @@ describe("DateRangePicker general interaction", () => {
 		assert.strictEqual(daterangepicker.getProperty("delimiter"), "@", "The delimiter is set to @");
 	});
 
-	it("firstDateValue and lastDateValue getter", () => {
+	it("startDateValue and endDateValue getter", () => {
 		browser.url(`http://localhost:${PORT}/test-resources/pages/DateRangePicker.html`);
 		const daterangepicker = browser.$("#daterange-picker4");
 
@@ -51,20 +51,20 @@ describe("DateRangePicker general interaction", () => {
 
 		const res = browser.execute(() => {
 			const myDRP = document.getElementById("daterange-picker4");
-			const firstDateValue = myDRP.firstDateValue;
-			const lastDateValue = myDRP.lastDateValue;
+			const startDateValue = myDRP.startDateValue;
+			const endDateValue = myDRP.endDateValue;
 
-			return {firstDateValue, lastDateValue};
+			return {startDateValue, endDateValue};
 		});
 
-		assert.deepEqual(new Date(res.firstDateValue), new Date(2019, 8, 27), "The first date is in JS Date format");
-		assert.deepEqual(new Date(res.lastDateValue), new Date(2019, 9, 10), "The last date is JS Date format");
+		assert.deepEqual(new Date(res.startDateValue), new Date(2019, 8, 27), "The first date is in JS Date format");
+		assert.deepEqual(new Date(res.endDateValue), new Date(2019, 9, 10), "The last date is JS Date format");
 	});
 
 	it("Initially setting the same date as first & last is possible", () => {
 		const daterangepicker = browser.$("#daterange-picker5");
 
-		assert.strictEqual(daterangepicker.getProperty("firstDateValue"), daterangepicker.getProperty("lastDateValue"), "Initially properties are set correctly");
+		assert.strictEqual(daterangepicker.getProperty("startDateValue"), daterangepicker.getProperty("endDateValue"), "Initially properties are set correctly");
 	});
 
 	it("Setting the same date as first & last is possible", () => {
@@ -72,7 +72,7 @@ describe("DateRangePicker general interaction", () => {
 
 		daterangepicker.setProperty("value", "Aug 5, 2020 - Aug 5, 2020");
 
-		assert.strictEqual(daterangepicker.getProperty("firstDateValue"), daterangepicker.getProperty("lastDateValue"), "Properties are set correctly");
+		assert.strictEqual(daterangepicker.getProperty("startDateValue"), daterangepicker.getProperty("endDateValue"), "Properties are set correctly");
 	})
 
 	it("Change event fired once", () => {

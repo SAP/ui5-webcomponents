@@ -133,7 +133,7 @@ class DateRangePicker extends DatePicker {
 	 * @type { Date }
 	 * @public
 	 */
-	get firstDateValue() {
+	get startDateValue() {
 		return CalendarDate.fromTimestamp(this._firstDateTimestamp * 1000).toLocalJSDate();
 	}
 
@@ -144,7 +144,7 @@ class DateRangePicker extends DatePicker {
 	 * @type { Date }
 	 * @public
 	 */
-	get lastDateValue() {
+	get endDateValue() {
 		return CalendarDate.fromTimestamp(this._lastDateTimestamp * 1000).toLocalJSDate();
 	}
 
