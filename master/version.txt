@@ -1,12 +1,5 @@
-commit 8cba688ef7c0e6fef43ffe208cc68226dc11e2e2
-Author: Yavor Ivanov <d3xter666@users.noreply.github.com>
-Date:   Fri Jun 4 08:53:19 2021 +0300
+commit c94301a7ec4242e2934294f3e019d12bc0f12600
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Jun 4 11:00:38 2021 +0300
 
-    fix(ui5-popover): Calculate max content height (#3386)
-    
-    Resolves https://github.com/SAP/ui5-webcomponents/issues/3131
-    
-    This fix steps on the following commit: https://github.com/SAP/ui5-webcomponents/commit/e35cc1ae9f3830fa137b3d683dc10481e13743f4
-    It enhances it in a way that Popover.MIN_OFFSET is taken into account into Popover's
-    maxContentHeight.
-    Popover.MIN_OFFSET is used when calculating the offset of the Popover from the top, but has never been extracted from the content's height.
+    chore: fix vitejs url in docs (#3392)
