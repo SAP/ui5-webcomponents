@@ -1,5 +1,10 @@
-commit c94301a7ec4242e2934294f3e019d12bc0f12600
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Jun 4 11:00:38 2021 +0300
+commit 22f354a08a3076a23ca5de5ecf96473bb01b919f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jun 4 16:47:11 2021 +0300
 
-    chore: fix vitejs url in docs (#3392)
+    docs(Switch, Carousel):  improve docs (#3395)
+    
+    Document Carousel's behaviour or desktop/mobile.
+    
+    Fixes: #2345
+    Closes: #2345
