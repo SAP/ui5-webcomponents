@@ -117,8 +117,8 @@ const metadata = {
 	},
 };
 
-const CELL_SIZE_COMPACT = 2;
-const CELL_SIZE_COZY = 2.875;
+const CELL_SIZE_COMPACT = 32;
+const CELL_SIZE_COZY = 46;
 
 /**
  * @class
@@ -230,7 +230,7 @@ class WheelSlider extends UI5Element {
 		if (this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length) {
 			const itemComputedStyle = getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item"));
 			const itemHeightValue = itemComputedStyle.getPropertyValue("--_ui5_wheelslider_item_height");
-			const onlyDigitsValue = itemHeightValue.replace("rem", "");
+			const onlyDigitsValue = itemHeightValue.replace("px", "");
 			return Number(onlyDigitsValue) || defaultSize;
 		}
 
@@ -238,7 +238,7 @@ class WheelSlider extends UI5Element {
 	}
 
 	_updateScrolling() {
-		const cellSizeInPx = this._itemCellHeight * 16,
+		const cellSizeInPx = this._itemCellHeight,
 			scrollWhere = this._scroller.scrollContainer.scrollTop;
 		let offsetIndex;
 
@@ -287,8 +287,9 @@ class WheelSlider extends UI5Element {
 	_selectElementByIndex(currentIndex) {
 		let index = currentIndex;
 		const itemsCount = this._itemsToShow.length;
-		const cellSizeInPx = this._itemCellHeight * 16;
-		const scrollBy = cellSizeInPx * index;
+		const cellSizeInPx = this._itemCellHeight;
+		const additionalOffset = getEffectiveContentDensity(this) === "compact" ? this._itemCellHeight : 0;
+		const scrollBy = cellSizeInPx * index - additionalOffset;
 
 		if (this.cyclic) {
 			index = this._handleArrayBorderReached(index);
