@@ -69,7 +69,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text of the component when switched on.
+		 * Defines the text, displayed when the component is checked.
 		 *
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
@@ -82,7 +82,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the text of the component when switched off.
+		 * Defines the text, displayed when the component is not checked.
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
