@@ -197,9 +197,9 @@
 	--_ui5_wheelslider_item_width: 64px;
 	--_ui5_wheelslider_item_height: 32px;
 	--_ui5_wheelslider_height: 224px;
-	--_ui5_wheelslider_selection_frame_margin_top: calc(calc(var(--_ui5_wheelslider_item_height) * 2) + var(--_ui5_wheelslider_item_height));
+	--_ui5_wheelslider_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 2);
 	--_ui5_wheelslider_arrows_visibility: visible;
-	--_ui5_wheelslider_mobile_selection_frame_margin_top: 160px;
+	--_ui5_wheelslider_mobile_selection_frame_margin_top: 128px;
 
 	--_ui5_switch_height: var(--_ui5_switch_compact_height);
 	--_ui5_switch_width: var(--_ui5_switch_compact_width);

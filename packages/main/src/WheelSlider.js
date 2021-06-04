@@ -225,7 +225,7 @@ class WheelSlider extends UI5Element {
 	}
 
 	get _itemCellHeight() {
-		const defaultSize = getEffectiveContentDensity(this) === "compact" ? CELL_SIZE_COMPACT : CELL_SIZE_COZY;
+		const defaultSize = getEffectiveContentDensity(document.body) === "compact" ? CELL_SIZE_COMPACT : CELL_SIZE_COZY;
 
 		if (this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length) {
 			const itemComputedStyle = getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item"));
@@ -288,8 +288,7 @@ class WheelSlider extends UI5Element {
 		let index = currentIndex;
 		const itemsCount = this._itemsToShow.length;
 		const cellSizeInPx = this._itemCellHeight;
-		const additionalOffset = getEffectiveContentDensity(this) === "compact" ? this._itemCellHeight : 0;
-		const scrollBy = cellSizeInPx * index - additionalOffset;
+		const scrollBy = cellSizeInPx * index;
 
 		if (this.cyclic) {
 			index = this._handleArrayBorderReached(index);
