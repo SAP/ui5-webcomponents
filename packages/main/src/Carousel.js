@@ -233,7 +233,7 @@ const metadata = {
  * There are several ways to perform navigation:
  * <ul>
  * <li>on desktop - the user can navigate using the navigation arrows or with keyboard shorcuts.</li>
- * <li>on mobile - the user can use swipe gestures</li>
+ * <li>on mobile - the user can use swipe gestures.</li>
  * </ul>
  *
  * <h3>Usage</h3>
