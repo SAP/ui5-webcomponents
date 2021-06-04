@@ -40,7 +40,7 @@ You should see a message that a server is running on `Local: http://localhost:30
 Install ```@ui5/webcomponents```
 
 ```bash
-npm install @ui5/webcomponents --save
+npm install @ui5/webcomponents
 ```
 
 This command downloads the published source code of the UI5 Web Components to the `node_modules` folder. Now you can add them to your code to get them on the web page.
