@@ -278,17 +278,23 @@ class Link extends UI5Element {
 	_onkeydown(event) {
 		if (isEnter(event)) {
 			this.fireEvent("click");
+			this.href && window.open(this.href, this.target).focus();
+		} else if (isSpace(event)) {
 			event.preventDefault();
 		}
+
 		event.isMarked = "link";
 	}
 
 	_onkeyup(event) {
-		if (isSpace(event)) {
-			this.fireEvent("click");
-			event.preventDefault();
+		if (!isSpace(event)) {
+			event.isMarked = "link";
+			return;
 		}
-		event.isMarked = "link";
+
+		this.fireEvent("click");
+		event.preventDefault();
+		this.href && window.open(this.href, this.target).focus();
 	}
 }
 
