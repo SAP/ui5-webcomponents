@@ -13,6 +13,7 @@ import {
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Label from "./Label.js";
+import WrappingType from "./types/WrappingType.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 
 // Template
@@ -258,6 +259,11 @@ class RadioButton extends UI5Element {
 
 	onBeforeRendering() {
 		this.syncGroup();
+
+		/* temporary workaround. remove after all wrap properties in the relevant components are renamed to wrappingType */
+		this._wrappingType = this.wrap ? WrappingType.Normal : WrappingType.None;
+		/* end */
+
 		this._enableFormSupport();
 	}
 
