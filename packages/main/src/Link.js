@@ -92,7 +92,7 @@ const metadata = {
 		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 */
