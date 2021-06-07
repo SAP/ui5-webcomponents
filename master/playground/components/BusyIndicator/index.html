@@ -2474,18 +2474,18 @@
 
 <div class="component-package">@ui5/webcomponents</div>
 
-<div class="control-tag">&lt;ui5-busyindicator&gt;</div>
+<div class="control-tag">&lt;ui5-busy-indicator&gt;</div>
 
 <section>
 		<h3>Busy Indicator with different size</h3>
 		<div class="snippet flex center">
-			<ui5-busyindicator active size="Small"></ui5-busyindicator>
-			<ui5-busyindicator active size="Medium"></ui5-busyindicator>
-			<ui5-busyindicator active size="Large"></ui5-busyindicator>
+			<ui5-busy-indicator active size="Small"></ui5-busy-indicator>
+			<ui5-busy-indicator active size="Medium"></ui5-busy-indicator>
+			<ui5-busy-indicator active size="Large"></ui5-busy-indicator>
 		</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-busyindicator</span> <span class="na">active</span> <span class="na">size=</span><span class="s">"Small"</span><span class="nt">&gt;&lt;/ui5-busyindicator&gt;</span>
-<span class="nt">&lt;ui5-busyindicator</span> <span class="na">active</span> <span class="na">size=</span><span class="s">"Medium"</span><span class="nt">&gt;&lt;/ui5-busyindicator&gt;</span>
-<span class="nt">&lt;ui5-busyindicator</span> <span class="na">active</span> <span class="na">size=</span><span class="s">"Large"</span><span class="nt">&gt;&lt;/ui5-busyindicator&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-busy-indicator</span> <span class="na">active</span> <span class="na">size=</span><span class="s">"Small"</span><span class="nt">&gt;&lt;/ui5-busy-indicator&gt;</span>
+<span class="nt">&lt;ui5-busy-indicator</span> <span class="na">active</span> <span class="na">size=</span><span class="s">"Medium"</span><span class="nt">&gt;&lt;/ui5-busy-indicator&gt;</span>
+<span class="nt">&lt;ui5-busy-indicator</span> <span class="na">active</span> <span class="na">size=</span><span class="s">"Large"</span><span class="nt">&gt;&lt;/ui5-busy-indicator&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -2495,24 +2495,24 @@
 	<div class="snippet flex">
 		<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
 
-		<ui5-busyindicator id="busy-container" size="Medium">
+		<ui5-busy-indicator id="busy-container" size="Medium">
 			<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items"></ui5-list>
-		</ui5-busyindicator>
+		</ui5-busy-indicator>
 
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"fetch-btn"</span> <span class="na">style=</span><span class="s">"width: 120px;"</span><span class="nt">&gt;</span>Fetch List Data<span class="nt">&lt;/ui5-button&gt;</span>
 
-<span class="nt">&lt;ui5-busyindicator</span> <span class="na">id=</span><span class="s">"busy-container"</span> <span class="na">size=</span><span class="s">"Medium"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;ui5-busy-indicator</span> <span class="na">id=</span><span class="s">"busy-container"</span> <span class="na">size=</span><span class="s">"Medium"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"fetch-list"</span> <span class="na">no-data-text=</span><span class="s">"No Data"</span> <span class="na">header-text=</span><span class="s">"Available Items"</span><span class="nt">&gt;&lt;/ui5-list&gt;</span>
-<span class="nt">&lt;/ui5-busyindicator&gt;</span>
+<span class="nt">&lt;/ui5-busy-indicator&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
-	<span class="kd">const</span> <span class="nx">busyIndocator</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">busy-container</span><span class="dl">"</span><span class="p">);</span>
+	<span class="kd">const</span> <span class="nx">busyIndicator</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">busy-container</span><span class="dl">"</span><span class="p">);</span>
 	<span class="kd">const</span> <span class="nx">list</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">fetch-list</span><span class="dl">"</span><span class="p">);</span>
 	<span class="kd">const</span> <span class="nx">fetchBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">fetch-btn</span><span class="dl">"</span><span class="p">);</span>
 
 	<span class="nx">fetchBtn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
-		<span class="nx">busyIndocator</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+		<span class="nx">busyIndicator</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
 		<span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
 			<span class="kd">const</span> <span class="nx">elements</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">UI5</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Web</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Components</span><span class="dl">"</span><span class="p">].</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">title</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -2521,7 +2521,7 @@
 				<span class="nx">list</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">el</span><span class="p">);</span>
 			<span class="p">});</span>
 
-			<span class="nx">busyIndocator</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+			<span class="nx">busyIndicator</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 		<span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
 	<span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>
@@ -2529,11 +2529,11 @@
 </section>
 
 	<script>
-		var busyIndocator = document.getElementById("busy-container");
+		var busyIndicator = document.getElementById("busy-container");
 		var list = document.getElementById("fetch-list");
 
 		document.getElementById("fetch-btn").addEventListener("click", function(event) {
-			busyIndocator.active = true;
+			busyIndicator.active = true;
 
 			setTimeout(function() {
 				var elements = ["UI5", "Web", "Components"].forEach(function(title) {
@@ -2542,7 +2542,7 @@
 					list.appendChild(el);
 				});
 
-				busyIndocator.active = false;
+				busyIndicator.active = false;
 			}, 2000);
 		});
 	</script>
@@ -2554,9 +2554,9 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3>
 
-The <code>ui5-busyindicator</code> signals that some operation is going on and that the user must wait. It does not block the current UI screen so other operations could be triggered in parallel. It displays 3 dots and each dot expands and shrinks at a different rate, resulting in a cascading flow of animation.
+The <code>ui5-busy-indicator</code> signals that some operation is going on and that the user must wait. It does not block the current UI screen so other operations could be triggered in parallel. It displays 3 dots and each dot expands and shrinks at a different rate, resulting in a cascading flow of animation.
 
-<h3>Usage</h3> For the <code>ui5-busyindicator</code> you can define the size, the text and whether it is shown or hidden. In order to hide it, use the "active" property. <br><br> In order to show busy state over an HTML element, simply nest the HTML element in a <code>ui5-busyindicator</code> instance. <br> <b>Note:</b> Since <code>ui5-busyindicator</code> has <code>display: inline-block;</code> by default and no width of its own, whenever you need to wrap a block-level element, you should set <code>display: block</code> to the busy indicator as well.
+<h3>Usage</h3> For the <code>ui5-busy-indicator</code> you can define the size, the text and whether it is shown or hidden. In order to hide it, use the "active" property. <br><br> In order to show busy state over an HTML element, simply nest the HTML element in a <code>ui5-busy-indicator</code> instance. <br> <b>Note:</b> Since <code>ui5-busy-indicator</code> has <code>display: inline-block;</code> by default and no width of its own, whenever you need to wrap a block-level element, you should set <code>display: block</code> to the busy indicator as well.
 
 <h4>When to use:</h4> <ul> <li>The user needs to be able to cancel the operation.</li> <li>Only part of the application or a particular control is affected.</li> </ul>
 

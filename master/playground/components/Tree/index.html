@@ -2568,7 +2568,7 @@
 <section>
 	<h3>Tree with dynamic content</h3>
 	<div class="snippet">
-		<ui5-busyindicator id="busy" class="full-width">
+		<ui5-busy-indicator id="busy" class="full-width">
 			<ui5-tree id="treeDynamic" mode="None" class="full-width">
 				<ui5-tree-item text="Has pre-loaded children">
 					<ui5-tree-item text="Child 1"></ui5-tree-item>
@@ -2579,9 +2579,9 @@
 
 				<ui5-tree-item id="dynamicNode" text="Has children, but not yet loaded" has-children></ui5-tree-item>
 			</ui5-tree>
-		</ui5-busyindicator>
+		</ui5-busy-indicator>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-busyindicator</span> <span class="na">id=</span><span class="s">"busy"</span> <span class="na">class=</span><span class="s">"full-width"</span><span class="nt">&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-busy-indicator</span> <span class="na">id=</span><span class="s">"busy"</span> <span class="na">class=</span><span class="s">"full-width"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-tree</span> <span class="na">id=</span><span class="s">"treeDynamic"</span> <span class="na">mode=</span><span class="s">"None"</span> <span class="na">class=</span><span class="s">"full-width"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;ui5-tree-item</span> <span class="na">text=</span><span class="s">"Has pre-loaded children"</span><span class="nt">&gt;</span>
 			<span class="nt">&lt;ui5-tree-item</span> <span class="na">text=</span><span class="s">"Child 1"</span><span class="nt">&gt;&lt;/ui5-tree-item&gt;</span>
@@ -2592,7 +2592,7 @@
 
 		<span class="nt">&lt;ui5-tree-item</span> <span class="na">id=</span><span class="s">"dynamicNode"</span> <span class="na">text=</span><span class="s">"Has children, but not yet loaded"</span> <span class="na">has-children</span><span class="nt">&gt;&lt;/ui5-tree-item&gt;</span>
 	<span class="nt">&lt;/ui5-tree&gt;</span>
-<span class="nt">&lt;/ui5-busyindicator&gt;</span>
+<span class="nt">&lt;/ui5-busy-indicator&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
 	<span class="kd">var</span> <span class="nx">busyIndicator</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">busy</span><span class="dl">"</span><span class="p">);</span>

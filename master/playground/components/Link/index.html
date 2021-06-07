@@ -2475,11 +2475,11 @@
 
 <h3>Usage</h3>
 
-You can set the <code>ui5-link</code> to be enabled or disabled. <br><br> To create a visual hierarchy in large lists of links, you can set the less important links as <code>Subtle</code> or the more important ones as <code>Emphasized</code>, by using the <code>design</code> property. <br><br> If the <code>href</code> property is set, the link behaves as the HTML anchor tag (<code>&lt;a>&lt;a/></code>) and opens the specified URL in the given target frame (<code>target</code> property). To specify where the linked content is opened, you can use the <code>target</code> property.
+You can set the <code>ui5-link</code> to be enabled or disabled. <br><br> To create a visual hierarchy in large lists of links, you can set the less important links as <code>Subtle</code> or the more important ones as <code>Emphasized</code>, by using the <code>design</code> property. <br><br> If the <code>href</code> property is set, the link behaves as the HTML anchor tag (<code>&lt;a&gt;&lt;a&#47;&gt;</code>) and opens the specified URL in the given target frame (<code>target</code> property). To specify where the linked content is opened, you can use the <code>target</code> property.
 
 <h3>Responsive behavior</h3>
 
-If there is not enough space, the text of the <code>ui5-link</code> becomes truncated. If the <code>wrap</code> property is set to <code>true</code>, the text is displayed on several lines instead of being truncated.
+If there is not enough space, the text of the <code>ui5-link</code> becomes truncated. If the <code>wrappingType</code> property is set to <code>"Normal"</code>, the text is displayed on several lines instead of being truncated.
 
 <h3>ES6 Module Import</h3>
 
@@ -2547,13 +2547,14 @@ If there is not enough space, the text of the <code>ui5-link</code> becomes trun
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          wrap
+                          wrappingType
                             <br>
+                            <code>wrapping-type</code>
                         </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell">WrappingType</div>
+                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the component text should wrap when there is no sufficient space. <br><br> <b>Note:</b> The text is truncated by default.
+                            Defines how the text of a component will be displayed when there is not enough space. Available options are: <ul> <li><code>None</code> - The text will be truncated with an ellipsis.</li> <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li> </ul>
                         </div>
                       </div>
             

@@ -1,10 +1,7 @@
-commit 22f354a08a3076a23ca5de5ecf96473bb01b919f
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jun 4 16:47:11 2021 +0300
+commit d48b4c65da553ee3f3168a3ad14ee8431b200e4b
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Jun 7 11:18:52 2021 +0300
 
-    docs(Switch, Carousel):  improve docs (#3395)
+    fix(ui5-table-row): prevent space only when target is table row (#3393)
     
-    Document Carousel's behaviour or desktop/mobile.
-    
-    Fixes: #2345
-    Closes: #2345
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/3390
