@@ -1,7 +1,9 @@
-commit d48b4c65da553ee3f3168a3ad14ee8431b200e4b
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Jun 7 11:18:52 2021 +0300
+commit ad365f4af6c43fd7b5a1676ad6f07dad5ce9e543
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jun 7 17:32:18 2021 +0300
 
-    fix(ui5-table-row): prevent space only when target is table row (#3393)
+    refactor(ui5-daterange-picker): rename first/lastDateValue (#3397)
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/3390
+    Part of #3107 (comment)
+    
+    BREAKING_CHANGE: The readonly properties `firstDateValue` and `lastDateValue` have been renamed to `startDateValue` and `endDateValue`.
