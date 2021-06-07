@@ -277,7 +277,7 @@ class Link extends UI5Element {
 
 	_onkeydown(event) {
 		if (isEnter(event)) {
-			this.fireEvent("click");
+			this.fireEvent({ name: "click", cancelable: true});
 			this.href && window.open(this.href, this.target).focus();
 		} else if (isSpace(event)) {
 			event.preventDefault();
@@ -292,7 +292,7 @@ class Link extends UI5Element {
 			return;
 		}
 
-		this.fireEvent("click");
+		this.fireEvent({ name: "click", cancelable: true});
 		event.preventDefault();
 		this.href && window.open(this.href, this.target).focus();
 	}
