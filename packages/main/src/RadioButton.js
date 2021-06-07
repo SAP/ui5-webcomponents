@@ -33,7 +33,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 
 		/**
-		 * Determines whether the component is disabled.
+		 * Defines whether the component is disabled.
 		 * <br><br>
 		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
@@ -46,7 +46,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the component is read-only.
+		 * Defines whether the component is read-only.
 		 * <br><br>
 		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
@@ -60,10 +60,10 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the component is selected or not.
+		 * Defines whether the component is checked or not.
 		 * <br><br>
 		 * <b>Note:</b> The property value can be changed with user interaction,
-		 * either by cliking/tapping on the component,
+		 * either by clicking/tapping on the component,
 		 * or by using the Space or Enter key.
 		 *
 		 * @type {boolean}
@@ -188,7 +188,7 @@ const metadata = {
 		 * @event
 		 * @public
 		 */
-		 change: {},
+		change: {},
 	},
 };
 
