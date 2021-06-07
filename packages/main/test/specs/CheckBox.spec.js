@@ -20,7 +20,7 @@ describe("CheckBox general interaction", () => {
 		checkBox.keys("Space");
 		checkBox.keys("Enter");
 
-		assert.strictEqual(field.getProperty("value"), "3", "Select event should be fired 3 times");
+		assert.strictEqual(field.getProperty("value"), "3", "Change event should be fired 3 times");
 	});
 
 	it("tests change event not fired, when disabled", () => {
@@ -31,7 +31,7 @@ describe("CheckBox general interaction", () => {
 		checkBox.keys("Space");
 		checkBox.keys("Enter");
 
-		assert.strictEqual(field.getProperty("value"), "3", "Select event should not be called any more");
+		assert.strictEqual(field.getProperty("value"), "3", "Change event should not be called any more");
 	});
 
 	it("tests truncating and wrapping", () => {
