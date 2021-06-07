@@ -11,7 +11,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
 | Avatar                   | `ui5-avatar`         | `import "@ui5/webcomponents/dist/Avatar.js";`              |
 | Badge                    | `ui5-badge`          | `import "@ui5/webcomponents/dist/Badge.js";`               |
-| Busy Indicator           | `ui5-busyindicator`  | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
+| Busy Indicator           | `ui5-busy-indicator`  | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`         | `import "@ui5/webcomponents/dist/Button.js";`              |
 | Card                     | `ui5-card`           | `import "@ui5/webcomponents/dist/Card.js";`                |
 | Carousel                 | `ui5-carousel`       | `import "@ui5/webcomponents/dist/Carousel.js";`            |
@@ -38,7 +38,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Responsive Popover       | `ui5-responsive-popover`| `import "@ui5/webcomponents/dist/ResponsivePopover.js";`|
 | Select                   | `ui5-select`         | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`         | comes with ui5-select                                      |
-| Segmented Button         | `ui5-segmentedbutton`|`import "@ui5/webcomponents/dist/SegmentedButton.js";`      |
+| Segmented Button         | `ui5-segmented-button`|`import "@ui5/webcomponents/dist/SegmentedButton.js";`      |
 | Suggestion Item          | `ui5-suggestion-item`|`import "@ui5/webcomponents/dist/SuggestionItem.js";`       |
 | Switch                   | `ui5-switch`         | `import "@ui5/webcomponents/dist/Switch.js";`              |
 | Tab Container            | `ui5-tabcontainer`   | `import "@ui5/webcomponents/dist/TabContainer.js";`        |
@@ -52,7 +52,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | TimePicker               | `ui5-time-picker`    | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toast                    | `ui5-toast`          | `import "@ui5/webcomponents/dist/Toast.js";`               |
-| Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
+| Toggle Button            | `ui5-toggle-button`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 
 For a complete list of all public module imports from the `main` package, click [here](../../docs/Public%20Module%20Imports.md#main):
 

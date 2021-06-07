@@ -23,7 +23,7 @@ describe("Attributes propagation", () => {
 		assert.ok(popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "Initially popover has arrow.");
 
 		browser.execute(() => {
-			document.getElementById("pop").toggleAttribute("no-arrow");
+			document.getElementById("pop").toggleAttribute("hide-arrow");
 		});
 
 		assert.ok(!popover.shadow$(".ui5-popover-arrow").isDisplayedInViewport(), "The arrow was hidden.");

@@ -4,10 +4,10 @@
 {{#*inline "header"}}
 	{{#if phone}}
 		<div class="ui5-dt-picker-header">
-			<ui5-segmentedbutton style="width: 8rem">
-				<ui5-togglebutton key="Date" ?pressed="{{showDateView}}" @click="{{_dateTimeSwitchChange}}">{{btnDateLabel}}</ui5-togglebutton>
-				<ui5-togglebutton key="Time" ?pressed="{{showTimeView}}" @click="{{_dateTimeSwitchChange}}">{{btnTimeLabel}}</ui5-togglebutton>
-			</ui5-segmentedbutton>
+			<ui5-segmented-button style="width: 8rem">
+				<ui5-toggle-button key="Date" ?pressed="{{showDateView}}" @click="{{_dateTimeSwitchChange}}">{{btnDateLabel}}</ui5-toggle-button>
+				<ui5-toggle-button key="Time" ?pressed="{{showTimeView}}" @click="{{_dateTimeSwitchChange}}">{{btnTimeLabel}}</ui5-toggle-button>
+			</ui5-segmented-button>
 		</div>
 	{{/if}}
 {{/inline}}

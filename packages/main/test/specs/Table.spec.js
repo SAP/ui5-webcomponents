@@ -425,5 +425,19 @@ describe("Table general interaction", () => {
 			assert.strictEqual(selectionChangeCount.getProperty("value"), "", "Space key over a row in a default mode table should not trigger selection-change event");
 			assert.strictEqual(rowClickCount.getProperty("value"), "2", "Space key over an Inctive row should not trigger row-click event");
 		});
+
+		it ("tests adding spaces to input fields in a row", () => {
+			browser.url(`http://localhost:${PORT}/test-resources/pages/Table.html`);
+
+			const input = $("#myInput");
+			const inner = input.shadow$("input");
+
+			inner.click();
+			inner.keys("a");
+			inner.keys("Space");
+			inner.keys("b");
+
+			assert.strictEqual(inner.getValue(), "a b", "space should be visible");
+		});
 	});
 });
