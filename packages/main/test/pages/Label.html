@@ -58,21 +58,21 @@
 		<h2>Required labels</h2>
 		<ui5-label id="required-label" required>Required</ui5-label><span>native span</span>
 		<ui5-label id="required-label-2" required show-colon>Required semi-colon</ui5-label><span>native span</span>
-		<ui5-label id="required-label-3" required show-colon wrap>Required semi-colon wrapped</ui5-label><span>native span</span>
+		<ui5-label id="required-label-3" required show-colon wrapping-type="Normal">Required semi-colon wrapped</ui5-label><span>native span</span>
 	</section>
 
 	<section class="group">
 		<h2>Wrapping label</h2>
 		<ui5-label style="width: 200px" id="wrapping-label-1">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
 		<ui5-label style="width: 200px" id="wrapping-label-2" show-colon>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
-		<ui5-label style="width: 200px" id="wrapping-label" wrap>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
-		<ui5-label style="width: 200px" id="wrapping-label-3" wrap required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 200px" id="wrapping-label" wrapping-type="Normal">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 200px" id="wrapping-label-3" wrapping-type="Normal" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
 		<ui5-label style="width: 100px" id="truncated-label" required >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
 		<ui5-label style="width: 100px" id="truncated-label-2" show-colon required >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
-		<ui5-label style="width: 100px" id="truncated-label-3" show-colon required wrap >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 100px" id="truncated-label-3" show-colon required wrapping-type="Normal">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
 
 		<div>
-			<ui5-label style="width: 500px; text-align: right;" id="wrapping-label-4" wrap>Must be right-aligned using `text-align: right` and wrap.</ui5-label>
+			<ui5-label style="width: 600px; text-align: right;" id="wrapping-label-4" wrapping-type="Normal">Must be right-aligned using `text-align: right` and wrapping-type="Normal".</ui5-label>
 		</div>
 	</section>
 	
@@ -90,7 +90,7 @@
 		<br>
 
 		<div style="display: flex; align-items: center">
-			<ui5-label id="label-for-native-input" for="native-input" style="width: 100px" show-colon wrap required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+			<ui5-label id="label-for-native-input" for="native-input" style="width: 100px" show-colon wrapping-type="Normal" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 			<input style="width: 320px; margin: 0 16px;" id="native-input"></input>
 		</div>
 
