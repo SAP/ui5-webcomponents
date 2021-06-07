@@ -120,7 +120,7 @@ class ResponsivePopover extends Popover {
 	 * @async
 	 * @returns {Promise} Resolves when the responsive popover is open
 	 */
-	async open(opener) {
+	async openBy(opener) {
 		this.style.display = this._isPhone ? "contents" : "";
 
 		if (this.isOpen() || (this._dialog && this._dialog.isOpen())) {
@@ -133,7 +133,7 @@ class ResponsivePopover extends Popover {
 				this._minWidth = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
 			}
 
-			await this.openBy(opener);
+			await super.openBy(opener);
 		} else {
 			this.style.zIndex = getNextZIndex();
 			await this._dialog.open();
