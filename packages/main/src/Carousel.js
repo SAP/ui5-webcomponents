@@ -180,7 +180,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 
 		/**
-		 * Fired whenever the <code>selectedIndex</code> changes due to user interaction,
+		 * Fired whenever the <code>selectedIndex</code> property changes due to user interaction,
 		 * when the user clicks on the navigation arrows or while resizing,
 		 * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
 		 *
@@ -189,9 +189,9 @@ const metadata = {
 		 * @public
 		 * @since 1.0.0-rc.7
 		 */
-		 navigate: {
+		navigate: {
 			detail: {
-				selectedPage: { type: Integer },
+				selectedIndex: { type: Integer },
 			},
 		},
 	},
@@ -390,6 +390,12 @@ class Carousel extends UI5Element {
 		}
 	}
 
+	/**
+	 * Changes the currently displayed page.
+	 * @param {Integer} itemIndex The index of the target page
+	 * @since 1.0.0-rc.15
+	 * @public
+	 */
 	navigateTo(itemIndex) {
 		this._resizing = false;
 		this.selectedIndex = itemIndex;
@@ -559,6 +565,12 @@ class Carousel extends UI5Element {
 		return this.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
 	}
 
+	/**
+	 * The indices of the currently visible items of the component.
+	 * @readonly
+	 * @since 1.0.0-rc.15
+	 * @returns {Integer[]} the indices of the visible items
+	 */
 	get visibleItemsIndices() {
 		const visibleItemsIndices = [];
 
