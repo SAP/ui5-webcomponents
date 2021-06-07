@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import WrappingType from "./types/WrappingType.js";
 
 // Template
 import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
@@ -29,16 +30,20 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the component should wrap, when there is not enough space.
-		 * <br><br>
-		 * <b>Note:</b> By default the text would truncate.
+		 * Defines how the text of a component will be displayed when there is not enough space.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
+		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
+		 * </ul>
 		 *
-		 * @type {boolean}
-		 * @defaultvalue false
+		 * @type {WrappingType}
+		 * @defaultvalue "None"
 		 * @public
 		 */
-		wrap: {
-			type: Boolean,
+		 wrappingType: {
+			type: WrappingType,
+			defaultValue: WrappingType.None,
 		},
 
 		/**
@@ -93,7 +98,7 @@ const metadata = {
  * It informs the user about what data is displayed or expected in the value holder.
  * <br><br>
  * The <code>ui5-label</code> appearance can be influenced by properties,
- * such as <code>required</code> and <code>wrap</code>.
+ * such as <code>required</code> and <code>wrappingType</code>.
  * The appearance of the Label can be configured in a limited way by using the design property.
  * For a broader choice of designs, you can use custom styles.
  *
