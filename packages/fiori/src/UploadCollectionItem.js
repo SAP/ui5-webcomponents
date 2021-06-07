@@ -39,7 +39,7 @@ const metadata = {
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
 		/**
-		 * Holds <code>File</code>, associated with this item.
+		 * Holds an instance of <code>File</code> associated with this item.
 		 *
 		 * @type {File}
 		 * @defaultvalue null
@@ -73,13 +73,24 @@ const metadata = {
 		},
 
 		/**
-		 * Removes delete option from <code>ui5-upload-collection</code> with <code>mode</code> <code>Delete</code> for this item.
+		 * Disables the delete button.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		noDelete: {
+		disableDeleteButton: {
+			type: Boolean,
+		},
+
+		/**
+		 * By default, the Delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.
+		 * Setting this property to <code>true</code> will hide the delete button.
+		 * 
+		 * @type {boolean}
+		 * @defaultvalue false
+		 */
+		hideDeleteButton: {
 			type: Boolean,
 		},
 
@@ -90,7 +101,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		noRetry: {
+		hideRetryButton: {
 			type: Boolean,
 		},
 
@@ -101,7 +112,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		noTerminate: {
+		hideTerminateButton: {
 			type: Boolean,
 		},
 
@@ -405,8 +416,22 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * @override
 	 */
-	get disableDeleteButton() {
-		return this.noDelete;
+	get renderDeleteButton() {
+		return !this.hideDeleteButton;
+	}
+
+	/**
+	 * @override
+	 */
+	get placeSelectionElementAfter() {
+		return true;
+	}
+
+	/**
+	 * @override
+	 */
+	get placeSelectionElementBefore() {
+		return false;
 	}
 
 	get _fileNameWithoutExtension() {
@@ -442,11 +467,11 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _showRetry() {
-		return !this.noRetry && this.uploadState === UploadState.Error;
+		return !this.hideRetryButton && this.uploadState === UploadState.Error;
 	}
 
 	get _showTerminate() {
-		return !this.noTerminate && this.uploadState === UploadState.Uploading;
+		return !this.hideTerminateButton && this.uploadState === UploadState.Uploading;
 	}
 
 	get _retryButtonTooltip() {

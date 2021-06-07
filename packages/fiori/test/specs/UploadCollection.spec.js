@@ -37,7 +37,7 @@ describe("UploadCollection", () => {
 
 			assert.ok(uploadingStateItem.shadow$("ui5-button[icon=stop]").isDisplayed(), "'Terminate' button is displayed'");
 			assert.notOk(uploadingStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
-			assert.notOk(uploadingStateItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "detail button should be hidden");
+			assert.notOk(uploadingStateItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "delete button should be hidden");
 		});
 
 		it("should show 'Retry' button when uploadState is 'Error'", () => {
@@ -55,6 +55,30 @@ describe("UploadCollection", () => {
 			browser.execute(() => {
 				document.getElementById("errorState").removeAttribute("_editing");
 			});
+		});
+
+		it("visibility of buttons", () => {
+			const defaultItem = browser.$("#uc3-default");
+			assert.strictEqual(defaultItem.shadow$(".ui5-li-deletebtn").isDisplayed(), true, "delete button is visible");
+
+			const defaultItemHiddenDelete = browser.$("#uc3-default-hidden-delete");
+			assert.strictEqual(defaultItemHiddenDelete.shadow$(".ui5-li-deletebtn").isDisplayed(), false, "delete button is not visible");
+
+			const errorItem = browser.$("#uc3-error");
+			assert.strictEqual(errorItem.shadow$(".ui5-li-deletebtn").isDisplayed(), true, "delete button is visible");
+			assert.strictEqual(errorItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), true, "retry button is visible");
+
+			const errorItemHiddenRetry = browser.$("#uc3-error-hidden-retry");
+			assert.strictEqual(errorItemHiddenRetry.shadow$(".ui5-li-deletebtn").isDisplayed(), true, "delete button is visible");
+			assert.strictEqual(errorItemHiddenRetry.shadow$("ui5-button[icon=refresh]").isDisplayed(), false, "retry button is not visible");
+
+			const uploadingItem = browser.$("#uc3-uploading");
+			assert.strictEqual(uploadingItem.shadow$(".ui5-li-deletebtn").isDisplayed(), false, "delete button is not visible");
+			assert.strictEqual(uploadingItem.shadow$("ui5-button[icon=stop]").isDisplayed(), true, "terminate button is visible");
+
+			const uploadingItemHiddenTerminate = browser.$("#uc3-uploading-hidden-terminate");
+			assert.strictEqual(uploadingItemHiddenTerminate.shadow$(".ui5-li-deletebtn").isDisplayed(), false, "delete button is not visible");
+			assert.strictEqual(uploadingItemHiddenTerminate.shadow$("ui5-button[icon=stop]").isDisplayed(), false, "terminate button is visible");
 		});
 	});
 
