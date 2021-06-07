@@ -51,7 +51,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the number of items per page on small size (up to 640px). One item per page shown by default.
+		 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
@@ -62,7 +62,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
+		 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
@@ -73,7 +73,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the number of items per page on large size (more than 1024px). One item per page shown by default.
+		 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
@@ -84,7 +84,11 @@ const metadata = {
 		},
 
 		/**
-		 * If set to true the navigation is hidden.
+		 * Defines the visibility of the navigation arrows.
+		 * If set to true the navigation arrows will be hidden.
+		 * <br><br>
+		 * <b>Note:</b> The navigation arrows are never displayed on touch devices.
+		 * In this case, the user can swipe to navigate through the items.
 		 * @type {boolean}
 		 * @since 1.0.0-rc.15
 		 * @defaultvalue false
@@ -95,7 +99,8 @@ const metadata = {
 		},
 
 		/**
-		 * If set to true the page indicator is hidden.
+		 * Defines the visibility of the paging indicator.
+		 * If set to true the page indicator will be hidden.
 		 * @type {boolean}
 		 * @since 1.0.0-rc.15
 		 * @defaultvalue false
@@ -150,7 +155,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the carousel width in pixels
+		 * Defines the carousel width in pixels.
 		 * @private
 		 */
 		_width: {
@@ -158,7 +163,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the carousel item width in pixels
+		 * Defines the carousel item width in pixels.
 		 * @private
 		 */
 		_itemWidth: {
@@ -166,7 +171,7 @@ const metadata = {
 		},
 
 		/**
-		 * If set to true navigation arrows are shown
+		 * If set to true navigation arrows are shown.
 		 * @private
 		 * @since 1.0.0-rc.15
 		 */
@@ -222,8 +227,14 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The Carousel allows the user to browse through a set of items by swiping right or left.
+ * The Carousel allows the user to browse through a set of items.
  * The component is mostly used for showing a gallery of images, but can hold any other HTML element.
+ * <br>
+ * There are several ways to perform navigation:
+ * <ul>
+ * <li>on desktop - the user can navigate using the navigation arrows or with keyboard shorcuts.</li>
+ * <li>on mobile - the user can use swipe gestures.</li>
+ * </ul>
  *
  * <h3>Usage</h3>
  *
@@ -239,6 +250,16 @@ const metadata = {
  * <ul>
  * <li>The items you want to display need to be visible at the same time.</li>
  * <li>The items you want to display are uniform and very similar.</li>
+ * </ul>
+ *
+ * <h3>Keyboard Handling</h3>
+ * When the <code>ui5-carousel</code> is focused the user can navigate between the items
+ * with the following keyboard shortcuts:
+ * <br>
+ *
+ * <ul>
+ * <li>[UP/DOWN] - Navigates to previous and next item</li>
+ * <li>[LEFT/RIGHT] - Navigates to previous and next item</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
