@@ -85,10 +85,14 @@
 	box-sizing: border-box;
 	vertical-align: top;
 	margin-top: -1px;
-	min-width: 9rem;
+	min-width: 9.125rem;
 	position: relative;
 	padding: 0px 2.5rem 0px 2.4375rem;
 	outline: none;
+}
+
+:host .ui5-step-input-root {
+	white-space: nowrap;
 }
 
 :host .ui5-step-input-input[text-align=left] {
