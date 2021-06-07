@@ -14,7 +14,7 @@
 							id="ui5-uci-edit-input"
 							data-sap-focus-ref
 							@focusin="{{_onInputFocusin}}"
-							@keyup="{{_onInputKeyUp}}"
+							@keydown="{{_onInputKeyDown}}"
 						></ui5-input>
 						<span class="ui5-uci-file-extension">{{_fileExtension}}</span>
 					</div>
@@ -48,8 +48,16 @@
 		</div>
 		<div class="ui5-uci-edit-buttons">
 			{{#if _editing}}
-				<ui5-button design="Transparent" class="ui5-uci-edit-rename-btn" @click="{{_onRename}}">{{_renameBtnText}}</ui5-button>
-				<ui5-button design="Transparent" id="ui5-uci-edit-cancel" @click="{{_onRenameCancel}}">{{_cancelRenameBtnText}}</ui5-button>
+				<ui5-button
+						design="Transparent"
+						class="ui5-uci-edit-rename-btn"
+						@click="{{_onRename}}"
+						@keyup="{{_onRenameKeyup}}">{{_renameBtnText}}</ui5-button>
+				<ui5-button
+						design="Transparent"
+						id="ui5-uci-edit-cancel"
+						@click="{{_onRenameCancel}}"
+						@keyup="{{_onRenameCancelKeyup}}">{{_cancelRenameBtnText}}</ui5-button>
 			{{else}}
 				{{#if _showRetry}}
 					<ui5-button
@@ -57,6 +65,7 @@
 						design="Transparent"
 						title="{{_retryButtonTooltip}}"
 						@click="{{_onRetry}}"
+						@keyup="{{_onRetryKeyup}}"
 					></ui5-button>
 				{{/if}}
 				{{#if _showTerminate}}
@@ -64,7 +73,8 @@
 						icon="stop"
 						design="Transparent"
 						title="{{_terminateButtonTooltip}}"
-						@click="{{_onTerminate}}">
+						@click="{{_onTerminate}}"
+						@keyup="{{_onTerminateKeyup}}">
 					</ui5-button>
 				{{/if}}
 

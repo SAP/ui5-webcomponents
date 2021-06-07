@@ -308,11 +308,13 @@ class UploadCollectionItem extends ListItem {
 		event.stopPropagation();
 	}
 
-	_onInputKeyUp(event) {
+	_onInputKeyDown(event) {
 		if (isEscape(event)) {
 			this._onRenameCancel(event);
 		} else if (isEnter(event)) {
 			this._onRename();
+		} else if (isSpace(event)) {
+			event.stopImmediatePropagation();
 		}
 	}
 
@@ -325,6 +327,12 @@ class UploadCollectionItem extends ListItem {
 		this._focus();
 	}
 
+	_onRenameKeyup(event) {
+		if (isSpace(event)) {
+			this._onRename(event);
+		}
+	}
+
 	async _onRenameCancel(event) {
 		this._editing = false;
 
@@ -333,6 +341,12 @@ class UploadCollectionItem extends ListItem {
 			this.shadowRoot.getElementById(`${this._id}-editing-button`).focus();
 		} else {
 			this._focus();
+		}
+	}
+
+	_onRenameCancelKeyup(event) {
+		if (isSpace(event)) {
+			this._onRenameCancel(event);
 		}
 	}
 
@@ -348,8 +362,20 @@ class UploadCollectionItem extends ListItem {
 		this.fireEvent("retry");
 	}
 
+	_onRetryKeyup(event) {
+		if (isSpace(event)) {
+			this._onRetry(event);
+		}
+	}
+
 	_onTerminate(event) {
 		this.fireEvent("terminate");
+	}
+
+	_onTerminateKeyup(event) {
+		if (isSpace(event)) {
+			this._onTerminate(event);
+		}
 	}
 
 	getFocusDomRef() {
